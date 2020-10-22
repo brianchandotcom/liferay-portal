@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,14 +33,12 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
@@ -76,61 +75,43 @@ public class ViewConflictsDisplayContext {
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_resolvedConflictsCounter = new AtomicInteger();
+		JSONArray resolvedConflictsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		JSONArray unresolvedConflictsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (Map.Entry<Long, List<ConflictInfo>> entry :
+				conflictInfoMap.entrySet()) {
+
+			for (ConflictInfo conflictInfo : entry.getValue()) {
+				JSONObject jsonObject = _getConflictJSONObject(
+					conflictInfo, entry.getKey());
+
+				if (conflictInfo.isResolved()) {
+					resolvedConflictsJSONArray.put(jsonObject);
+				}
+				else {
+					unresolvedConflictsJSONArray.put(jsonObject);
+				}
+			}
+		}
 
 		_resolvedConflictsReactData = HashMapBuilder.<String, Object>put(
-			"conflicts",
-			() -> {
-				JSONArray conflictsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				for (Map.Entry<Long, List<ConflictInfo>> entry :
-						conflictInfoMap.entrySet()) {
-
-					for (ConflictInfo conflictInfo : entry.getValue()) {
-						if (conflictInfo.isResolved()) {
-							conflictsJSONArray.put(
-								_getConflictJSONObject(
-									conflictInfo, entry.getKey()));
-
-							_resolvedConflictsCounter.getAndIncrement();
-						}
-					}
-				}
-
-				return conflictsJSONArray;
-			}
+			"conflicts", resolvedConflictsJSONArray
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
 
-		_unresolvedConflictsCounter = new AtomicInteger();
+		_resolvedConflicts = resolvedConflictsJSONArray.length();
 
 		_unresolvedConflictsReactData = HashMapBuilder.<String, Object>put(
-			"conflicts",
-			() -> {
-				JSONArray conflictsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				for (Map.Entry<Long, List<ConflictInfo>> entry :
-						conflictInfoMap.entrySet()) {
-
-					for (ConflictInfo conflictInfo : entry.getValue()) {
-						if (!conflictInfo.isResolved()) {
-							conflictsJSONArray.put(
-								_getConflictJSONObject(
-									conflictInfo, entry.getKey()));
-
-							_unresolvedConflictsCounter.getAndIncrement();
-						}
-					}
-				}
-
-				return conflictsJSONArray;
-			}
+			"conflicts", unresolvedConflictsJSONArray
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
+
+		_unresolvedConflicts = unresolvedConflictsJSONArray.length();
 	}
 
 	public CTCollection getCtCollection() {
@@ -144,7 +125,7 @@ public class ViewConflictsDisplayContext {
 	public String getResolvedConflictsTitle() {
 		return StringBundler.concat(
 			_language.get(_httpServletRequest, "automatically-resolved"), " (",
-			_resolvedConflictsCounter.toString(), ")");
+			_resolvedConflicts, ")");
 	}
 
 	public Map<String, Object> getUnresolvedConflictsReactData() {
@@ -154,11 +135,11 @@ public class ViewConflictsDisplayContext {
 	public String getUnresolvedConflictsTitle() {
 		return StringBundler.concat(
 			_language.get(_httpServletRequest, "needs-manual-resolution"), " (",
-			_unresolvedConflictsCounter.toString(), ")");
+			_unresolvedConflicts, ")");
 	}
 
 	public boolean hasResolvedConflicts() {
-		if (_resolvedConflictsCounter.get() > 0) {
+		if (_resolvedConflicts > 0) {
 			return true;
 		}
 
@@ -166,7 +147,7 @@ public class ViewConflictsDisplayContext {
 	}
 
 	public boolean hasUnresolvedConflicts() {
-		if (_unresolvedConflictsCounter.get() > 0) {
+		if (_unresolvedConflicts > 0) {
 			return true;
 		}
 
@@ -369,10 +350,10 @@ public class ViewConflictsDisplayContext {
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final AtomicInteger _resolvedConflictsCounter;
+	private final int _resolvedConflicts;
 	private final Map<String, Object> _resolvedConflictsReactData;
 	private final ThemeDisplay _themeDisplay;
-	private final AtomicInteger _unresolvedConflictsCounter;
+	private final int _unresolvedConflicts;
 	private final Map<String, Object> _unresolvedConflictsReactData;
 
 }

@@ -227,13 +227,6 @@ public class FinderCacheImpl
 
 	@Override
 	public void putResult(FinderPath finderPath, Object[] args, Object result) {
-		putResult(finderPath, args, result, true);
-	}
-
-	@Override
-	public void putResult(
-		FinderPath finderPath, Object[] args, Object result, boolean quiet) {
-
 		if (!_valueObjectFinderCacheEnabled || !CacheRegistryUtil.isActive() ||
 			(result == null)) {
 
@@ -333,13 +326,19 @@ public class FinderCacheImpl
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		if (quiet) {
-			PortalCacheHelperUtil.putWithoutReplicator(
-				portalCache, cacheKey, cacheValue);
-		}
-		else {
-			portalCache.put(cacheKey, cacheValue);
-		}
+		PortalCacheHelperUtil.putWithoutReplicator(
+			portalCache, cacheKey, cacheValue);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#putResult(FinderPath, Object[], Object)}
+	 */
+	@Deprecated
+	public void putResult(
+		FinderPath finderPath, Object[] args, Object result, boolean quiet) {
+
+		putResult(finderPath, args, result);
 	}
 
 	public void removeByEntityCache(Class<?> clazz, BaseModel<?> baseModel) {

@@ -46,6 +46,11 @@ public interface FinderCache {
 
 	public void putResult(FinderPath finderPath, Object[] args, Object result);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#putResult(FinderPath, Object[], Object)}
+	 */
+	@Deprecated
 	public void putResult(
 		FinderPath finderPath, Object[] args, Object result, boolean quiet);
 

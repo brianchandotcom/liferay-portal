@@ -40,7 +40,7 @@ public abstract class BaseURLPatternMapperCorrectnessTestCase
 			createValues());
 
 		for (Map.Entry<String, Integer[]> entry :
-				expectedURLPatternMatches.entrySet()) {
+				expectedURLPatternIndexesMap.entrySet()) {
 
 			String urlPath = entry.getKey();
 			Integer[] expectedURLPatternIndexes = entry.getValue();
@@ -63,7 +63,7 @@ public abstract class BaseURLPatternMapperCorrectnessTestCase
 			createValues());
 
 		for (Map.Entry<String, Integer[]> entry :
-				expectedURLPatternMatches.entrySet()) {
+				expectedURLPatternIndexesMap.entrySet()) {
 
 			String urlPath = entry.getKey();
 			Integer[] expectedURLPatternIndexes = entry.getValue();

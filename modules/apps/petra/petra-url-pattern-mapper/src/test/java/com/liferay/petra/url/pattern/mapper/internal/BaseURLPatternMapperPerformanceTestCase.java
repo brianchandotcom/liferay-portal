@@ -35,7 +35,7 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternMatches.keySet()) {
+			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
 				urlPatternMapper.consumeValues(
 					__ -> {
 					},
@@ -70,7 +70,7 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternMatches.keySet()) {
+			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
 				urlPatternMapper.consumeValues(bitSet::set, urlPath);
 
 				for (int j = bitSet.nextSetBit(0); j >= 0;
@@ -96,7 +96,7 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternMatches.keySet()) {
+			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
 				urlPatternMapper.getValue(urlPath);
 			}
 		}
@@ -118,7 +118,7 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternMatches.keySet()) {
+			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
 				urlPatternMapper.getValues(urlPath);
 			}
 		}

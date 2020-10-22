@@ -37,7 +37,7 @@ public abstract class BaseURLPatternMapperTestCase {
 		return values;
 	}
 
-	protected static final Map<String, Integer[]> expectedURLPatternMatches =
+	protected static final Map<String, Integer[]> expectedURLPatternIndexesMap =
 		new HashMap<String, Integer[]>() {
 			{
 				put(null, new Integer[0]);

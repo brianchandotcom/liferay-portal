@@ -34,18 +34,18 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Samuel Trong Tran
  */
-public class ViewEntryDisplayContext {
+public class ViewEntryDisplayContext<T extends BaseModel<T>> {
 
 	public ViewEntryDisplayContext(
-		CTCollectionLocalService ctCollectionLocalService,
+		T baseModel, CTCollectionLocalService ctCollectionLocalService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
-		Language language, long modelClassNameId, long modelClassPK) {
+		Language language, long modelClassNameId) {
 
+		_baseModel = baseModel;
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntry = ctEntry;
 		_language = language;
-		_model = _getModel(ctEntry, modelClassNameId, modelClassPK);
 		_modelClassNameId = modelClassNameId;
 	}
 
@@ -75,7 +75,7 @@ public class ViewEntryDisplayContext {
 			httpServletRequest, _ctEntry);
 	}
 
-	public <T extends BaseModel<T>> String getEntryTitle(Locale locale) {
+	public String getEntryTitle(Locale locale) {
 		if (_ctEntry != null) {
 			return _ctDisplayRendererRegistry.getTitle(
 				_ctEntry.getCtCollectionId(), _ctEntry, locale);
@@ -83,7 +83,7 @@ public class ViewEntryDisplayContext {
 
 		return _ctDisplayRendererRegistry.getTitle(
 			CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, locale, (T)_model,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, locale, _baseModel,
 			_modelClassNameId);
 	}
 
@@ -95,7 +95,7 @@ public class ViewEntryDisplayContext {
 		return _ctEntry.getUserId();
 	}
 
-	public <T extends BaseModel<T>> void renderEntry(
+	public void renderEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -112,26 +112,15 @@ public class ViewEntryDisplayContext {
 		_ctDisplayRendererRegistry.renderCTEntry(
 			httpServletRequest, httpServletResponse,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, 0, (T)_model,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, 0, _baseModel,
 			_modelClassNameId, null);
 	}
 
-	private <T extends BaseModel<T>> T _getModel(
-		CTEntry ctEntry, long modelClassNameId, long modelClassPK) {
-
-		if (ctEntry != null) {
-			return null;
-		}
-
-		return _ctDisplayRendererRegistry.fetchCTModel(
-			modelClassNameId, modelClassPK);
-	}
-
+	private final T _baseModel;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntry _ctEntry;
 	private final Language _language;
-	private final BaseModel<?> _model;
 	private final long _modelClassNameId;
 
 }

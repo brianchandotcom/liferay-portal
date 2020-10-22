@@ -18,21 +18,6 @@
 
 <%
 DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAccessFromDesktopDisplayContext(request);
-
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-Folder folder = null;
-
-if ((row != null) && (row.getObject() instanceof Folder)) {
-	folder = (Folder)row.getObject();
-}
-else {
-	folder = (Folder)request.getAttribute("info_panel.jsp-folder");
-
-	if (folder == null) {
-		folder = ActionUtil.getFolder(liferayPortletRequest);
-	}
-}
 %>
 
 <liferay-ui:icon
@@ -59,7 +44,7 @@ else {
 
 		<br /><br />
 
-		<aui:input cssClass="webdav-url-resource" id='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "webDavURL" %>' name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, folder, null) %>" />
+		<aui:input cssClass="webdav-url-resource" id='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "webDavURL" %>' name="webDavURL" type="resource" value="<%= dlAccessFromDesktopDisplayContext.getWebDAVURL() %>" />
 	</div>
 </div>
 

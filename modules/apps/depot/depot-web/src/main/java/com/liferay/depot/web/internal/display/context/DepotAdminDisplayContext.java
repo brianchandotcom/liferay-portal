@@ -158,6 +158,8 @@ public class DepotAdminDisplayContext {
 
 		_depotEntrySearch.setResults(
 			stream.map(
+				this::_getGroup
+			).map(
 				Group::getGroupId
 			).map(
 				_depotEntryLocalService::fetchGroupDepotEntry
@@ -168,6 +170,16 @@ public class DepotAdminDisplayContext {
 		_depotEntrySearch.setTotal(groupSearch.getTotal());
 
 		return _depotEntrySearch;
+	}
+
+	private Group _getGroup(Group group) {
+		Group stagingGroup = group.getStagingGroup();
+
+		if (stagingGroup != null) {
+			return stagingGroup;
+		}
+
+		return group;
 	}
 
 	private PortletURL _getPortletURL() {

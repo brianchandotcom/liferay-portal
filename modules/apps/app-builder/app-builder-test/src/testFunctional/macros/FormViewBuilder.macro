@@ -331,6 +331,10 @@ definition {
 		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
 	}
 
+	macro gotoRules {
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
+	}
+
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}

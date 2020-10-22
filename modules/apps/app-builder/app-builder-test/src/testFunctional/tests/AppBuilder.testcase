@@ -781,7 +781,6 @@ definition {
 		FormViewBuilder.save();
 
 		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App One");
-
 	}
 
 	@description = "Delete an existing Form View with no active publishing through the kebab/action menu"

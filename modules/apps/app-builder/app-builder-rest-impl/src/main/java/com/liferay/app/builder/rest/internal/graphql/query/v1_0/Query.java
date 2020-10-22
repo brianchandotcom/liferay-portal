@@ -86,7 +86,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {app(appId: ___){active, appDeployments, dataDefinitionId, dataDefinitionName, dataLayoutId, dataListViewId, dataRecordCollectionId, dateCreated, dateModified, id, name, scope, siteId, userId, version}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {app(appId: ___){active, appDeployments, dataDefinitionId, dataDefinitionName, dataLayoutId, dataListViewId, dataRecordCollectionId, dateCreated, dateModified, id, name, scope, siteId, userId, version, workflowDefinitionName, workflowDefinitionVersion}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public App app(@GraphQLName("appId") Long appId) throws Exception {

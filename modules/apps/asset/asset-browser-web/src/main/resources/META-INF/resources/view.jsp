@@ -94,7 +94,7 @@
 
 						<h5>
 							<c:choose>
-								<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
+								<c:when test="<%= !assetBrowserDisplayContext.isMultipleSelection() %>">
 									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 										<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 									</aui:a>
@@ -149,7 +149,7 @@
 						name="title"
 					>
 						<c:choose>
-							<c:when test="<%= (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) && !assetBrowserDisplayContext.isMultipleSelection() %>">
+							<c:when test="<%= !assetBrowserDisplayContext.isMultipleSelection() %>">
 								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 								</aui:a>

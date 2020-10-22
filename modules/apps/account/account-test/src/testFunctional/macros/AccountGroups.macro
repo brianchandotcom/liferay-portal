@@ -1,0 +1,21 @@
+definition {
+
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add Account Group");
+
+		PortletEntry.inputName(name = "${accountGroupName}");
+
+		if (isSet(accountGroupDescription)) {
+			PortletEntry.inputDescription(description = "${accountGroupDescription}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

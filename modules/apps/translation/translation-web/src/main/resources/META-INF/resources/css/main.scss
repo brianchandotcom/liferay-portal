@@ -14,7 +14,8 @@ $productMenuWidth: 320px;
 		}
 	}
 
-	.translation-edit {
+	.translation-edit,
+	.translation-import {
 		nav {
 			height: auto;
 			left: 0;
@@ -76,7 +77,8 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.translation-edit-body-form {
+		.translation-edit-body-form,
+		.translation-import-body-form {
 			margin-top: $toolbarHeight;
 
 			@include media-breakpoint-up(lg) {

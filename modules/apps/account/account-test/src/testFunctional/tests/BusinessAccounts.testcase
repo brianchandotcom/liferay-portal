@@ -644,6 +644,47 @@ definition {
 	}
 
 	@priority = "4"
+	test AssignToAccountGroup {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account added for Account Group.",
+			accountName = "Account for Account Group");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group.",
+			accountGroupName = "Test Account Group");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
+
+		AccountGroups.viewAccountDefault();
+
+		AccountGroups.addAssignee(
+			accountGroupName = "Test Account Group",
+			assigneeName = "Account for Account Group",
+			assigneeType = "Accounts");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
+
+		AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
+	}
+
+	@priority = "4"
 	test CancelAccountCreation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

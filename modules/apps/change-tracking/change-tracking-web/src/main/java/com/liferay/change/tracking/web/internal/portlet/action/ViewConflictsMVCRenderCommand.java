@@ -14,7 +14,9 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -27,8 +29,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -68,16 +74,22 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 			activeCtCollectionId = ctPreferences.getCtCollectionId();
 		}
 
+		long ctCollectionId = ParamUtil.getLong(
+			renderRequest, "ctCollectionId");
+
 		try {
-			ViewConflictsDisplayContext viewConflictsDisplayContext =
-				new ViewConflictsDisplayContext(
-					activeCtCollectionId, _ctCollectionLocalService,
-					_ctDisplayRendererRegistry, _ctEntryLocalService, _language,
-					_portal, renderRequest, renderResponse);
+			CTCollection ctCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollectionId);
+
+			Map<Long, List<ConflictInfo>> conflictInfoMap =
+				_ctCollectionLocalService.checkConflicts(ctCollection);
 
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_CONFLICTS_DISPLAY_CONTEXT,
-				viewConflictsDisplayContext);
+				new ViewConflictsDisplayContext(
+					activeCtCollectionId, ctCollection, conflictInfoMap,
+					_ctDisplayRendererRegistry, _ctEntryLocalService, _language,
+					_portal, renderRequest, renderResponse));
 
 			return "/publications/view_conflicts.jsp";
 		}

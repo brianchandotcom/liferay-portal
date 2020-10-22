@@ -18,12 +18,10 @@ import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,7 +31,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,36 +56,25 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewConflictsDisplayContext {
 
 	public ViewConflictsDisplayContext(
-			long activeCtCollectionId,
-			CTCollectionLocalService ctCollectionLocalService,
-			CTDisplayRendererRegistry ctDisplayRendererRegistry,
-			CTEntryLocalService ctEntryLocalService, Language language,
-			Portal portal, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws PortalException {
+		long activeCtCollectionId, CTCollection ctCollection,
+		Map<Long, List<ConflictInfo>> conflictInfoMap,
+		CTDisplayRendererRegistry ctDisplayRendererRegistry,
+		CTEntryLocalService ctEntryLocalService, Language language,
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_activeCtCollectionId = activeCtCollectionId;
+		_ctCollection = ctCollection;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
 		_language = language;
 		_portal = portal;
-
 		_renderRequest = renderRequest;
-
-		long ctCollectionId = ParamUtil.getLong(
-			_renderRequest, "ctCollectionId");
-
-		_ctCollection = ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
+		_renderResponse = renderResponse;
 
 		_httpServletRequest = _portal.getHttpServletRequest(_renderRequest);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_renderResponse = renderResponse;
-
-		Map<Long, List<ConflictInfo>> conflictInfoMap =
-			ctCollectionLocalService.checkConflicts(_ctCollection);
 
 		_resolvedConflictsCounter = new AtomicInteger();
 

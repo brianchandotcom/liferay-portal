@@ -535,8 +535,8 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		DDMFormField ddmFormField2 = new DDMFormField("field2", "text");
 
 		when(
-			ddmFormInstanceRecordExporterImpl.getNontransientDDMFormFieldsMap(
-				ddmStructureVersion)
+			ddmFormInstanceRecordExporterImpl.
+				getNontransientDDMFormFieldsReferencesMap(ddmStructureVersion)
 		).thenReturn(
 			LinkedHashMapBuilder.<String, DDMFormField>put(
 				"field1", ddmFormField1
@@ -565,13 +565,13 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		inOrder.verify(
 			ddmFormInstanceRecordExporterImpl, Mockito.times(1)
-		).getNontransientDDMFormFieldsMap(
+		).getNontransientDDMFormFieldsReferencesMap(
 			ddmStructureVersion
 		);
 	}
 
 	@Test
-	public void testGetNontransientDDMFormFieldsMap() {
+	public void testGetNontransientDDMFormFieldsReferencesMap() {
 		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
 			new DDMFormInstanceRecordExporterImpl();
 
@@ -586,8 +586,8 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 			ddmForm
 		);
 
-		ddmFormInstanceRecordExporterImpl.getNontransientDDMFormFieldsMap(
-			ddmStructureVersion);
+		ddmFormInstanceRecordExporterImpl.
+			getNontransientDDMFormFieldsReferencesMap(ddmStructureVersion);
 
 		InOrder inOrder = Mockito.inOrder(ddmStructureVersion, ddmForm);
 
@@ -597,7 +597,7 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		inOrder.verify(
 			ddmForm, Mockito.times(1)
-		).getNontransientDDMFormFieldsMap(
+		).getNontransientDDMFormFieldsReferencesMap(
 			true
 		);
 	}

@@ -7,6 +7,20 @@ definition {
 	property testray.main.component.name = "Setup Wizard";
 
 	@priority = "4"
+	test BasicConfigurationVisualLook {
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "SetupWizard#BasicConfigurationVisualLook";
+
+		SetupWizard.viewDefaultPortalNamePG();
+
+		WaitForElementPresent(locator1 = "SetupWizard#BASIC_CONFIGURATION");
+
+		SikuliAssertElementPresent(locator1 = "SetupWizard#SETUP_WIZARD_BASIC_CONFIGURATION_PNG");
+
+		takeScreenshot();
+	}
+
+	@priority = "4"
 	test HypersonicToMySQL {
 		property database.types = "mysql";
 		property test.name.skip.portal.instance = "SetupWizard#HypersonicToMySQL";

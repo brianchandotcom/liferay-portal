@@ -349,6 +349,10 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getDepotEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static java.util.List<com.liferay.depot.model.DepotEntry>
 		getDepotEntryGroupRelsByUuidAndCompanyId(String uuid, long companyId) {
 

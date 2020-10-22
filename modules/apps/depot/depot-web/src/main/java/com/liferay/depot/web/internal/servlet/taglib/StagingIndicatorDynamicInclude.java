@@ -222,6 +222,8 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 				"items",
 				_createJSONArray(
 					JSONUtil.put(
+						"className", "lfr-portal-tooltip"
+					).put(
 						"href", liveGroupURL
 					).put(
 						"label",
@@ -231,6 +233,13 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"symbolLeft", "radio-button"
 					).put(
 						"symbolRight", _getSymbolRight(liveGroupURL)
+					).put(
+						"title",
+						_language.get(
+							httpServletRequest,
+							"the-connection-to-the-remote-live-asset-library-" +
+								"cannot-be-established-due-to-a-network-" +
+									"problem")
 					),
 					JSONUtil.put(
 						"href",

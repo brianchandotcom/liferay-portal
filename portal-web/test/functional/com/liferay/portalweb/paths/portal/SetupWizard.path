@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>BASIC_CONFIGURATION</td>
+	<td>//div[@id='main-content']/form</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_SAVE_MESSAGE</td>
 	<td>//p[@class='lfr-setup-notice']</td>
 	<td></td>
@@ -16,6 +21,11 @@
 <tr>
 	<td>CONFIGURATION_SAVE_LOCATION</td>
 	<td>//span[@class='lfr-inline-code']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_WIZARD_BASIC_CONFIGURATION_PNG</td>
+	<td>portal/screenshots/setupwizard/setup_wizard_basic_configuration.png</td>
 	<td></td>
 </tr>
 <tr>

@@ -1046,6 +1046,7 @@
 		<reference entity="Layout" package-path="com.liferay.portal" />
 		<reference entity="LayoutSetBranch" package-path="com.liferay.portal" />
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
+		<reference entity="PortletPreferenceValue" package-path="com.liferay.portal" />
 		<reference entity="RecentLayoutRevision" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
@@ -1876,7 +1877,53 @@
 		<reference entity="LayoutRevision" package-path="com.liferay.portal" />
 		<reference entity="Portlet" package-path="com.liferay.portal" />
 		<reference entity="PortletItem" package-path="com.liferay.portal" />
+		<reference entity="PortletPreferenceValue" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity change-tracking-enabled="true" local-service="true" name="PortletPreferenceValue" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="portletPreferenceValueId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="portletPreferencesId" type="long" />
+		<column name="name" type="String" />
+		<column name="index" type="int" />
+		<column name="smallValue" type="String" />
+		<column name="largeValue" type="String" />
+		<column name="readOnly" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="index" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="PortletPreferencesId" return-type="Collection">
+			<finder-column name="portletPreferencesId" />
+		</finder>
+		<finder name="P_N" return-type="Collection">
+			<finder-column name="portletPreferencesId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="P_N_I" return-type="PortletPreferenceValue" unique="true">
+			<finder-column name="portletPreferencesId" />
+			<finder-column name="name" />
+			<finder-column name="index" />
+		</finder>
+		<finder name="P_N_SV" return-type="Collection">
+			<finder-column name="portletPreferencesId" />
+			<finder-column name="name" />
+			<finder-column name="smallValue" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="RecentLayoutBranch" plural-name="RecentLayoutBranchs" remote-service="false" uuid="false">
 

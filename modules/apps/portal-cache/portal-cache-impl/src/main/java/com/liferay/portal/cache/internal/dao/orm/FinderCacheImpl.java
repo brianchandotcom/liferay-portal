@@ -299,8 +299,7 @@ public class FinderCacheImpl
 		_clearCache(_getCacheNameWithoutPagination(cacheName));
 
 		ArgumentsResolver argumentsResolver =
-			_argumentsResolverServiceTrackerMap.getService(
-				baseModel.getModelClassName());
+			_argumentsResolverServiceTrackerMap.getService(cacheName);
 
 		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
 			removeResult(
@@ -350,8 +349,7 @@ public class FinderCacheImpl
 		_clearCache(_getCacheNameWithPagination(cacheName));
 
 		ArgumentsResolver argumentsResolver =
-			_argumentsResolverServiceTrackerMap.getService(
-				baseModel.getModelClassName());
+			_argumentsResolverServiceTrackerMap.getService(cacheName);
 
 		for (FinderPath finderPath :
 				_getFinderPaths(_getCacheNameWithoutPagination(cacheName))) {
@@ -416,7 +414,15 @@ public class FinderCacheImpl
 				bundleContext, FinderPath.class, "cache.name");
 		_argumentsResolverServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ArgumentsResolver.class, "model.class.name");
+				bundleContext, ArgumentsResolver.class, null,
+				(serviceReference, emitter) -> {
+					ArgumentsResolver argumentsResolver =
+						bundleContext.getService(serviceReference);
+
+					emitter.emit(argumentsResolver.getClassName());
+
+					bundleContext.ungetService(serviceReference);
+				});
 	}
 
 	@Deactivate

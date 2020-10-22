@@ -16,13 +16,18 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.model.BaseModel;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Tina Tian
  */
+@ProviderType
 public interface ArgumentsResolver {
 
 	public Object[] getArguments(
 		FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
 		boolean original);
+
+	public String getClassName();
 
 }

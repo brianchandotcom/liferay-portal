@@ -2032,6 +2032,16 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	public boolean isVersionLTE_7_3_0() {
+		if (_dtdVersion.isPreviousVersionThan("7.3.0") ||
+			_dtdVersion.isSameVersionAs("7.3.0")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String javaAnnotationToString(JavaAnnotation javaAnnotation) {
 		StringBundler sb = new StringBundler();
 

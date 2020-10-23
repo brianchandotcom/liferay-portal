@@ -45,94 +45,9 @@ const ItemSelectorPreview = ({
 
 	const isMounted = useIsMounted();
 
-	useEffect(() => {
-		document.documentElement.addEventListener('keydown', handleOnKeyDown);
-
-		const updateCurrentItemHandler = Liferay.on(
-			'updateCurrentItem',
-			updateCurrentItem
-		);
-
-		Liferay.component('ItemSelectorPreview', ItemSelectorPreview);
-
-		return () => {
-			document.documentElement.removeEventListener(
-				'keydown',
-				handleOnKeyDown
-			);
-
-			Liferay.detach(updateCurrentItemHandler);
-			Liferay.component('ItemSelectorPreview', null);
-		};
-	}, [handleOnKeyDown, updateCurrentItem]);
-
-	useEffect(() => {
-		const sidenavToggle = infoButtonRef.current;
-
-		if (sidenavToggle) {
-			Liferay.SideNavigation.initialize(sidenavToggle, {
-				container: '.sidenav-container',
-				position: 'right',
-				typeMobile: 'fixed',
-				width: '320px',
-			});
-		}
-	}, [infoButtonRef]);
-
 	const close = useCallback(() => {
 		ReactDOM.unmountComponentAtNode(container);
 	}, [container]);
-
-	const handleClickBack = () => {
-		close();
-
-		if (reloadOnHide) {
-			const frame = window.frameElement;
-
-			if (frame) {
-				frame.contentWindow.location.reload();
-			}
-		}
-	};
-
-	const handleClickDone = () => {
-
-		// LPS-120692
-
-		close();
-
-		handleSelectedItem(currentItem);
-	};
-
-	const handleClickEdit = () => {
-		const itemTitle = currentItem.title;
-		const editDialogTitle = `${Liferay.Language.get(
-			'edit'
-		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
-
-		const editEntityBaseZIndex = Liferay.zIndex.WINDOW;
-
-		Liferay.Util.editEntity(
-			{
-				dialog: {
-					destroyOnHide: true,
-					zIndex: editEntityBaseZIndex + 100,
-				},
-				id: 'Edit_' + itemTitle,
-				stack: false,
-				title: editDialogTitle,
-				uri: editItemURL,
-				urlParams: {
-					entityURL: currentItem.url,
-					saveFileEntryId: currentItem.fileentryid,
-					saveFileName: itemTitle,
-					saveParamName: 'imageSelectorFileName',
-					saveURL: uploadItemURL,
-				},
-			},
-			handleSaveEdit
-		);
-	};
 
 	const handleClickNext = useCallback(() => {
 		if (itemList.length > 1) {
@@ -181,9 +96,79 @@ const ItemSelectorPreview = ({
 		[close, handleClickNext, handleClickPrevious, isMounted]
 	);
 
+	const currentItem = itemList[currentItemIndex];
+
 	const updateItemList = (newItemList) => {
 		setItemList(newItemList);
 		setReloadOnHide(true);
+	};
+
+	const updateCurrentItem = useCallback(
+		({url, value}) => {
+			if (isMounted()) {
+				const newItemList = [...itemList];
+
+				newItemList[currentItemIndex] = {...currentItem, url, value};
+
+				updateItemList(newItemList);
+			}
+		},
+		[currentItem, currentItemIndex, isMounted, itemList]
+	);
+
+	useEffect(() => {
+		document.documentElement.addEventListener('keydown', handleOnKeyDown);
+
+		const updateCurrentItemHandler = Liferay.on(
+			'updateCurrentItem',
+			updateCurrentItem
+		);
+
+		Liferay.component('ItemSelectorPreview', ItemSelectorPreview);
+
+		return () => {
+			document.documentElement.removeEventListener(
+				'keydown',
+				handleOnKeyDown
+			);
+
+			Liferay.detach(updateCurrentItemHandler);
+			Liferay.component('ItemSelectorPreview', null);
+		};
+	}, [handleOnKeyDown, updateCurrentItem]);
+
+	useEffect(() => {
+		const sidenavToggle = infoButtonRef.current;
+
+		if (sidenavToggle) {
+			Liferay.SideNavigation.initialize(sidenavToggle, {
+				container: '.sidenav-container',
+				position: 'right',
+				typeMobile: 'fixed',
+				width: '320px',
+			});
+		}
+	}, [infoButtonRef]);
+
+	const handleClickBack = () => {
+		close();
+
+		if (reloadOnHide) {
+			const frame = window.frameElement;
+
+			if (frame) {
+				frame.contentWindow.location.reload();
+			}
+		}
+	};
+
+	const handleClickDone = () => {
+
+		// LPS-120692
+
+		close();
+
+		handleSelectedItem(currentItem);
 	};
 
 	const handleSaveEdit = (e) => {
@@ -221,20 +206,35 @@ const ItemSelectorPreview = ({
 		setCurrentItemIndex(updatedItemList.length - 1);
 	};
 
-	const updateCurrentItem = useCallback(
-		({url, value}) => {
-			if (isMounted()) {
-				const newItemList = [...itemList];
+	const handleClickEdit = () => {
+		const itemTitle = currentItem.title;
+		const editDialogTitle = `${Liferay.Language.get(
+			'edit'
+		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
 
-				newItemList[currentItemIndex] = {...currentItem, url, value};
+		const editEntityBaseZIndex = Liferay.zIndex.WINDOW;
 
-				updateItemList(newItemList);
-			}
-		},
-		[currentItem, currentItemIndex, isMounted, itemList]
-	);
-
-	const currentItem = itemList[currentItemIndex];
+		Liferay.Util.editEntity(
+			{
+				dialog: {
+					destroyOnHide: true,
+					zIndex: editEntityBaseZIndex + 100,
+				},
+				id: 'Edit_' + itemTitle,
+				stack: false,
+				title: editDialogTitle,
+				uri: editItemURL,
+				urlParams: {
+					entityURL: currentItem.url,
+					saveFileEntryId: currentItem.fileentryid,
+					saveFileName: itemTitle,
+					saveParamName: 'imageSelectorFileName',
+					saveURL: uploadItemURL,
+				},
+			},
+			handleSaveEdit
+		);
+	};
 
 	return (
 		<div className="fullscreen item-selector-preview">

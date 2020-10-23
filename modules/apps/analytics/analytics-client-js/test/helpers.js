@@ -27,24 +27,6 @@ export const flushPromises = () =>
 	new Promise((resolve) => setImmediate(resolve));
 
 /**
- * Sends dummy events to test the Analytics API
- *
- * @param {Analytics} analyticsInstance - Analytics instance.
- * @param {number} eventsNumber - Number of events to send.
- */
-export const sendDummyEvents = (analyticsInstance, eventsNumber) => {
-	const events = getDummyEvents(eventsNumber);
-
-	events.forEach((event) => {
-		analyticsInstance.send(
-			event.eventId,
-			event.applicationId,
-			event.properties
-		);
-	});
-};
-
-/**
  * Generate a single dummy event.
  *
  * @param {Number} [eventId] - Event id.
@@ -76,6 +58,24 @@ export const getDummyEvents = (eventsNumber = 5) => {
 	}
 
 	return events;
+};
+
+/**
+ * Sends dummy events to test the Analytics API
+ *
+ * @param {Analytics} analyticsInstance - Analytics instance.
+ * @param {number} eventsNumber - Number of events to send.
+ */
+export const sendDummyEvents = (analyticsInstance, eventsNumber) => {
+	const events = getDummyEvents(eventsNumber);
+
+	events.forEach((event) => {
+		analyticsInstance.send(
+			event.eventId,
+			event.applicationId,
+			event.properties
+		);
+	});
 };
 
 /**

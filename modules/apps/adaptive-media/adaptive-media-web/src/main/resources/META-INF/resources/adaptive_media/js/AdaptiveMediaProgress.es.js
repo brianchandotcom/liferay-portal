@@ -49,35 +49,6 @@ const AdaptiveMediaProgress = ({
 
 	const [imagesFailed, setImagesFailed] = useState(0);
 
-	const onClickRetry = () => {
-		setImagesFailed(0);
-
-		startProgress();
-	};
-
-	const startProgress = useCallback(
-		(backgroundTaskUrl) => {
-			fetch(backgroundTaskUrl);
-
-			if (isMounted()) {
-				setShowLoadingIndicator(true);
-			}
-
-			disableEntryIcon(
-				document.getElementById(
-					`${namespace}icon-adapt-remaining${uuid}`
-				)
-			);
-
-			disableEntryIcon(
-				document.getElementById(`${namespace}icon-disable-${uuid}`)
-			);
-
-			return delay(updateProgress, intervalSpeed);
-		},
-		[delay, intervalSpeed, isMounted, namespace, updateProgress, uuid]
-	);
-
 	const updateProgress = useCallback(() => {
 		fetch(percentageUrl)
 			.then((res) => res.json())
@@ -118,6 +89,35 @@ const AdaptiveMediaProgress = ({
 		tooltip,
 		uuid,
 	]);
+
+	const startProgress = useCallback(
+		(backgroundTaskUrl) => {
+			fetch(backgroundTaskUrl);
+
+			if (isMounted()) {
+				setShowLoadingIndicator(true);
+			}
+
+			disableEntryIcon(
+				document.getElementById(
+					`${namespace}icon-adapt-remaining${uuid}`
+				)
+			);
+
+			disableEntryIcon(
+				document.getElementById(`${namespace}icon-disable-${uuid}`)
+			);
+
+			return delay(updateProgress, intervalSpeed);
+		},
+		[delay, intervalSpeed, isMounted, namespace, updateProgress, uuid]
+	);
+
+	const onClickRetry = () => {
+		setImagesFailed(0);
+
+		startProgress();
+	};
 
 	useEffect(() => {
 		if (autoStartProgress) {

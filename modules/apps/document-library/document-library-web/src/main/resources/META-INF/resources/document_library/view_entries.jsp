@@ -42,17 +42,11 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 				<c:when test="<%= fileEntry != null %>">
 
 					<%
-					boolean draggable = false;
-
-					if (!BrowserSnifferUtil.isMobile(request) && (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE))) {
-						draggable = true;
-					}
-
 					row.setData(
 						HashMapBuilder.<String, Object>put(
 							"actions", StringUtil.merge(dlViewEntriesDisplayContext.getAvailableActions(fileEntry))
 						).put(
-							"draggable", draggable
+							"draggable", dlViewEntriesDisplayContext.isDraggable(fileEntry)
 						).put(
 							"title", fileEntry.getTitle()
 						).build());
@@ -314,17 +308,11 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 				<c:otherwise>
 
 					<%
-					boolean draggable = false;
-
-					if (!BrowserSnifferUtil.isMobile(request) && (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE))) {
-						draggable = true;
-					}
-
 					row.setData(
 						HashMapBuilder.<String, Object>put(
 							"actions", StringUtil.merge(dlViewEntriesDisplayContext.getAvailableActions(curFolder))
 						).put(
-							"draggable", draggable
+							"draggable", dlViewEntriesDisplayContext.isDraggable(curFolder)
 						).put(
 							"folder", true
 						).put(

@@ -223,6 +223,36 @@ public class DLViewEntriesDisplayContext {
 		return false;
 	}
 
+	public boolean isDraggable(FileEntry fileEntry) throws PortalException {
+		if (!BrowserSnifferUtil.isMobile(_httpServletRequest) &&
+			(DLFileEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), fileEntry,
+				ActionKeys.DELETE) ||
+			 DLFileEntryPermission.contains(
+				 _themeDisplay.getPermissionChecker(), fileEntry,
+				 ActionKeys.UPDATE))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isDraggable(Folder folder) throws PortalException {
+		if (!BrowserSnifferUtil.isMobile(_httpServletRequest) &&
+			(DLFolderPermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.DELETE) ||
+			 DLFolderPermission.contains(
+				 _themeDisplay.getPermissionChecker(), folder,
+				 ActionKeys.UPDATE))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isIconDisplayStyle() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;

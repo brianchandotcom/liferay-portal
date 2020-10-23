@@ -114,7 +114,7 @@ class UserNameFields extends PortletBase {
 			this._loadingAnimationMarkupText
 		);
 
-		dom.addClasses(this.userNameFieldsNode, 'hide');
+		this.userNameFieldsNode.classList.add('hide');
 	}
 
 	_cleanUp() {
@@ -222,7 +222,7 @@ class UserNameFields extends PortletBase {
 			loadingUserNameFields.remove();
 		}
 
-		dom.removeClasses(this.userNameFieldsNode, 'hide');
+		this.userNameFieldsNode.classList.remove('hide');
 	}
 
 	/**

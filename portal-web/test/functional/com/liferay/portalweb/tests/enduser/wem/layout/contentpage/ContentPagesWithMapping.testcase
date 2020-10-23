@@ -546,7 +546,7 @@ definition {
 				navTab = "Fragments");
 		}
 
-		task ("Map Manual URL to Container") {
+		task ("Add From Content Field link to Container") {
 			PageEditor.editLayoutContainer(
 				entryTitle = "Web Content Title",
 				field = "Display Page URL",
@@ -557,7 +557,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Assert mapped URL work in view mode") {
+		task ("Assert mapped link work in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");

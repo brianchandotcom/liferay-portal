@@ -50,14 +50,7 @@
 			</references>
 		</staged-model>
 	</JournalArticle>
-	<DLFileEntry>
-		<staged-model group-id="37510" uuid="cc56d2bf-6742-b121-3b6f-8679b8dc5ebd" fileVersionUuid="9e3d7284-6c04-c997-1d2b-abe68cd62ddd" version="1.0" bin-path="/group/37510/com.liferay.document.library.kernel.model.DLFileEntry/37636/1.0" path="/group/37510/com.liferay.document.library.kernel.model.DLFileEntry/37636.xml" user-uuid="f5392d35-6f3f-9e64-11a3-8d4edc0702d2" asset-entry-priority="0.0">
-			<references>
-				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37590" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="37510" group-key="Site A-staging" live-group-id="37502" type="strong" uuid="d79ce26b-b81b-8875-a30b-1dd4e363bc95" company-id="20101" missing="false"/>
-				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37634" group-id="37510" group-key="Site A-staging" live-group-id="37502" type="parent" uuid="62dff0b1-2c8f-1dc5-c874-fb1abba65455" company-id="20101" missing="false"/>
-			</references>
-		</staged-model>
-	</DLFileEntry>
+	<DLFileEntry/>
 	<Repository>
 		<staged-model group-id="37510" uuid="d79ce26b-b81b-8875-a30b-1dd4e363bc95" hidden="true" repositoryClassName="com.liferay.portal.repository.portletrepository.PortletRepository" path="/group/37510/com.liferay.portal.kernel.model.Repository/37590.xml" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" user-uuid="1c024dfa-26a5-7062-a308-4a71bce5863f" asset-entry-priority="0.0"/>
 	</Repository>

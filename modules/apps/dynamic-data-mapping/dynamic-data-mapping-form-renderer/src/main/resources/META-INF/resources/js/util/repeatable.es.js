@@ -18,6 +18,23 @@ const NESTED_FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)#(.+)\$(\w+)\$(
 
 export const generateInstanceId = () => Math.random().toString(36).substr(2, 8);
 
+export const parseName = (name) => {
+	let parsed = {};
+	const result = FIELD_NAME_REGEX.exec(name);
+
+	if (result) {
+		parsed = {
+			editingLanguageId: result[5],
+			fieldName: result[2],
+			instanceId: result[3],
+			portletNamespace: result[1],
+			repeatedIndex: Number(result[4]),
+		};
+	}
+
+	return parsed;
+};
+
 export const generateName = (name, props = {}) => {
 	const parsedName = parseName(name);
 	const {
@@ -29,6 +46,26 @@ export const generateName = (name, props = {}) => {
 	} = props;
 
 	return `${portletNamespace}ddm$$${fieldName}$${instanceId}$${repeatedIndex}$$${editingLanguageId}`;
+};
+
+export const parseNestedFieldName = (name) => {
+	let parsed = {};
+	const result = NESTED_FIELD_NAME_REGEX.exec(name);
+
+	if (result) {
+		parsed = {
+			fieldName: result[5],
+			instanceId: result[6],
+			locale: result[8],
+			parentFieldName: result[2],
+			parentInstanceId: result[3],
+			parentRepeatedIndex: Number(result[4]),
+			portletNamespace: result[1],
+			repeatedIndex: Number(result[7]),
+		};
+	}
+
+	return parsed;
 };
 
 export const generateNestedFieldName = (name, parentFieldName) => {
@@ -71,41 +108,4 @@ export const getRepeatedIndex = (name) => {
 	}
 
 	return parsedName.repeatedIndex;
-};
-
-export const parseName = (name) => {
-	let parsed = {};
-	const result = FIELD_NAME_REGEX.exec(name);
-
-	if (result) {
-		parsed = {
-			editingLanguageId: result[5],
-			fieldName: result[2],
-			instanceId: result[3],
-			portletNamespace: result[1],
-			repeatedIndex: Number(result[4]),
-		};
-	}
-
-	return parsed;
-};
-
-export const parseNestedFieldName = (name) => {
-	let parsed = {};
-	const result = NESTED_FIELD_NAME_REGEX.exec(name);
-
-	if (result) {
-		parsed = {
-			fieldName: result[5],
-			instanceId: result[6],
-			locale: result[8],
-			parentFieldName: result[2],
-			parentInstanceId: result[3],
-			parentRepeatedIndex: Number(result[4]),
-			portletNamespace: result[1],
-			repeatedIndex: Number(result[7]),
-		};
-	}
-
-	return parsed;
 };

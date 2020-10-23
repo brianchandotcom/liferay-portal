@@ -80,6 +80,12 @@ export const addColumn = (
 	});
 };
 
+export const isEmptyColumn = (pages, pageIndex, rowIndex, columnIndex) => {
+	return (
+		pages[pageIndex].rows[rowIndex].columns[columnIndex].fields.length === 0
+	);
+};
+
 export const addFieldToColumn = (
 	pages,
 	pageIndex,
@@ -162,12 +168,6 @@ export const getParentField = (pages, fieldName) => {
 	);
 
 	return parentField;
-};
-
-export const isEmptyColumn = (pages, pageIndex, rowIndex, columnIndex) => {
-	return (
-		pages[pageIndex].rows[rowIndex].columns[columnIndex].fields.length === 0
-	);
 };
 
 export const isEmptyRow = (pages, pageIndex, rowIndex) => {
@@ -255,6 +255,21 @@ export const removeFields = (pages, pageIndex, rowIndex, columnIndex) => {
 	);
 };
 
+export const rowHasFields = (pages, pageIndex, rowIndex) => {
+	let hasFields = false;
+	const page = pages[Number(pageIndex)];
+
+	if (page) {
+		const row = page.rows[Number(rowIndex)];
+
+		if (row && row.columns) {
+			hasFields = row.columns.some((column) => column.fields.length);
+		}
+	}
+
+	return hasFields;
+};
+
 export const removeEmptyRows = (pages, pageIndex) => {
 	return pages[pageIndex].rows.reduce((result, next, index) => {
 		if (rowHasFields(pages, pageIndex, index)) {
@@ -293,6 +308,12 @@ export const findFieldByFieldName = (pages, fieldName) => {
 
 export const findFieldByName = (pages, name) => {
 	return findField(pages, (field) => field.name === name);
+};
+
+export const getRow = (pages, pageIndex, rowIndex) => {
+	const currentPage = pages[Number(pageIndex)];
+
+	return currentPage.rows[Number(rowIndex)];
 };
 
 export const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
@@ -339,27 +360,6 @@ export const getField = (context, pageIndex, rowIndex, columnIndex) => {
 	}
 
 	return field;
-};
-
-export const getRow = (pages, pageIndex, rowIndex) => {
-	const currentPage = pages[Number(pageIndex)];
-
-	return currentPage.rows[Number(rowIndex)];
-};
-
-export const rowHasFields = (pages, pageIndex, rowIndex) => {
-	let hasFields = false;
-	const page = pages[Number(pageIndex)];
-
-	if (page) {
-		const row = page.rows[Number(rowIndex)];
-
-		if (row && row.columns) {
-			hasFields = row.columns.some((column) => column.fields.length);
-		}
-	}
-
-	return hasFields;
 };
 
 export const getIndexes = (node) => {

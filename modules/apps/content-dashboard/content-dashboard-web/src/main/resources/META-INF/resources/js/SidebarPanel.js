@@ -20,6 +20,13 @@ import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
 
 import Sidebar from './components/Sidebar';
 
+const initialState = {
+	data: null,
+	error: null,
+	loading: false,
+	open: true,
+};
+
 const dataReducer = (state, action) => {
 	switch (action.type) {
 		case 'CLOSE_SIDEBAR':
@@ -73,13 +80,6 @@ const dataReducer = (state, action) => {
 	}
 };
 
-const initialState = {
-	data: null,
-	error: null,
-	loading: false,
-	open: true,
-};
-
 const SidebarPanel = React.forwardRef(
 	({fetchURL, onClose, viewComponent: View}, ref) => {
 		const CurrentView = useRef(View);
@@ -87,6 +87,12 @@ const SidebarPanel = React.forwardRef(
 		const isMounted = useIsMounted();
 
 		const [state, dispatch] = useReducer(dataReducer, initialState);
+
+		const safeDispatch = (action) => {
+			if (isMounted()) {
+				dispatch(action);
+			}
+		};
 
 		const getData = (fetchURL) => {
 			safeDispatch({type: 'LOAD_DATA'});
@@ -119,12 +125,6 @@ const SidebarPanel = React.forwardRef(
 
 		const onCloseHandle = () =>
 			onClose ? onClose() : safeDispatch({type: 'CLOSE_SIDEBAR'});
-
-		const safeDispatch = (action) => {
-			if (isMounted()) {
-				dispatch(action);
-			}
-		};
 
 		useEffect(() => {
 			getData(fetchURL);

@@ -702,6 +702,15 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 	}
 
+	macro setCurrentInstanceLanguageCP {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "${newLanguage}");
+	}
+
 	macro tearDownAuthenticationCP {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "User Authentication",

@@ -1809,7 +1809,7 @@ definition {
 			configurationName = "Language",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
+		PortalSettings.setCurrentInstanceLanguageCP(newLanguage = "Spanish (Spain)");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1855,10 +1855,10 @@ definition {
 			ddlDataDefinitionName = "Data Definition",
 			ddlListName = "List Name");
 
-		PortletEntry.viewLocale(locale = "en-US");
+		PortletEntry.viewLocale(locale = "es-ES");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text English",
+			ddlRecordFieldData = "Text Spanish",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1870,12 +1870,12 @@ definition {
 
 		DDLRecord.editCP(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "Text English");
+			ddlRecordFieldData = "Text Spanish");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(locale = "en-US");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Spanish",
+			ddlRecordFieldData = "Text English",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1932,16 +1932,16 @@ definition {
 
 		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
 
-		PortletEntry.viewLocale(locale = "en-US");
+		PortletEntry.viewLocale(locale = "es-ES");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text en-US",
+			ddlRecordFieldData = "Text es-ES",
 			fieldName = "Text");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(locale = "en-US");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Spanish",
+			ddlRecordFieldData = "Text English",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1971,6 +1971,8 @@ definition {
 			ddlListName = "List Name Display",
 			ddlRecordFieldData = "remove",
 			fieldFieldLabel = "Text");
+
+		PortalSettings.setCurrentInstanceLanguageCP(newLanguage = "English (United States)");
 	}
 
 	@description = "This is a use case for LPS-59272."

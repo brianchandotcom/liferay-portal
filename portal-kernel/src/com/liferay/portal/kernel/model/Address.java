@@ -57,6 +57,8 @@ public interface Address extends AddressModel, PersistedModel {
 
 	public Country getCountry();
 
+	public String getPhoneNumber();
+
 	public Region getRegion();
 
 	public ListType getType();

@@ -390,6 +390,11 @@ public class AddressWrapper
 		return model.getName();
 	}
 
+	@Override
+	public String getPhoneNumber() {
+		return model.getPhoneNumber();
+	}
+
 	/**
 	 * Returns the primary of this address.
 	 *

@@ -63,6 +63,28 @@ export default ({
 		},
 	});
 
+	const isValidTopic = (topic) => {
+		const hyphens = /-+/g;
+		if (hyphens.test(topic)) {
+			const error = {
+				message: lang.sub(
+					Liferay.Language.get(
+						'the-x-cannot-contain-the-following-invalid-characters-x'
+					),
+					[
+						Liferay.Language.get('topic-name'),
+						' - & \' @ \\\\ ] } : , = > / < \\n [ {  | + # ` ? \\" \\r ; / * ~',
+					]
+				),
+			};
+			setError(error);
+
+			return false;
+		}
+
+		return true;
+	};
+
 	const createTopic = () => {
 		if (isValidTopic(topicName.current.value)) {
 			if (currentSectionId) {
@@ -84,28 +106,6 @@ export default ({
 				});
 			}
 		}
-	};
-
-	const isValidTopic = (topic) => {
-		const hyphens = /-+/g;
-		if (hyphens.test(topic)) {
-			const error = {
-				message: lang.sub(
-					Liferay.Language.get(
-						'the-x-cannot-contain-the-following-invalid-characters-x'
-					),
-					[
-						Liferay.Language.get('topic-name'),
-						' - & \' @ \\\\ ] } : , = > / < \\n [ {  | + # ` ? \\" \\r ; / * ~',
-					]
-				),
-			};
-			setError(error);
-
-			return false;
-		}
-
-		return true;
 	};
 
 	const {observer, onClose: close} = useModal({

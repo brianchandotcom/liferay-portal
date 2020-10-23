@@ -71,12 +71,6 @@ export default withRouter(
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
 
-		sectionTitle =
-			sectionTitle || sectionTitle === '0'
-				? sectionTitle
-				: question.messageBoardSection &&
-				  question.messageBoardSection.title;
-
 		const {
 			loading,
 			data: {messageBoardThreadByFriendlyUrlPath: question = {}} = {},
@@ -89,6 +83,12 @@ export default withRouter(
 				siteKey: context.siteKey,
 			},
 		});
+
+		sectionTitle =
+			sectionTitle || sectionTitle === '0'
+				? sectionTitle
+				: question.messageBoardSection &&
+				  question.messageBoardSection.title;
 
 		const {
 			data: {messageBoardThreadMessageBoardMessages = {}} = {},

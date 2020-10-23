@@ -27,13 +27,6 @@ const Component = ({
 	selectURL,
 	title,
 }) => {
-	const onDestroyPortlet = function () {
-		Liferay.detach('destroyPortlet', onDestroyPortlet);
-		Liferay.detach(namespace + 'openDialog', onSelectPublication);
-	};
-
-	Liferay.on('destroyPortlet', onDestroyPortlet);
-
 	const onSelectPublication = function () {
 		openSelectionModal({
 			onSelect: (event) => {
@@ -48,6 +41,13 @@ const Component = ({
 			url: selectURL,
 		});
 	};
+
+	const onDestroyPortlet = function () {
+		Liferay.detach('destroyPortlet', onDestroyPortlet);
+		Liferay.detach(namespace + 'openDialog', onSelectPublication);
+	};
+
+	Liferay.on('destroyPortlet', onDestroyPortlet);
 
 	Liferay.on(namespace + 'openDialog', onSelectPublication);
 

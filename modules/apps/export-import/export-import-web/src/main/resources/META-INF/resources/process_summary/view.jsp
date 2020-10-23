@@ -17,7 +17,9 @@
 <%@ include file="/process_summary/init.jsp" %>
 
 <clay:container-fluid>
-	<%@ include file="/process_summary/process_summary_pages.jspf" %>
+	<c:if test="<%= GroupCapabilityUtil.isSupportsPages(liveGroup) %>">
+		<%@ include file="/process_summary/process_summary_pages.jspf" %>
+	</c:if>
 
 	<%@ include file="/process_summary/process_summary_dates.jspf" %>
 

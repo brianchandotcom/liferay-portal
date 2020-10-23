@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 
@@ -39,12 +40,59 @@ import java.util.List;
  */
 public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
-	@Override
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public Address addAddress(
 			long userId, String className, long classPK, String street1,
 			String street2, String street3, String city, String zip,
 			long regionId, long countryId, long typeId, boolean mailing,
 			boolean primary, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addAddress(
+			userId, className, classPK, null, null, street1, street2, street3,
+			city, zip, regionId, countryId, null, typeId, mailing, primary,
+			null, serviceContext);
+	}
+
+	@Override
+	public Address addAddress(
+			long userId, String className, long classPK, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId, long typeId,
+			boolean mailing, boolean primary, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addAddress(
+			userId, className, classPK, name, description, street1, street2,
+			street3, city, zip, regionId, countryId, null, typeId, mailing,
+			primary, null, serviceContext);
+	}
+
+	@Override
+	public Address addAddress(
+			long userId, String className, long classPK, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber, long typeId, boolean mailing, boolean primary,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addAddress(
+			userId, className, classPK, name, description, street1, street2,
+			street3, city, zip, regionId, countryId, null, typeId, mailing,
+			primary, null, serviceContext);
+	}
+
+	@Override
+	public Address addAddress(
+			long userId, String className, long classPK, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber, long typeId, boolean mailing, boolean primary,
+			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -79,6 +127,15 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Address copyAddress(
+			long addressId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
@@ -110,6 +167,14 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCountryAddresses(long countryId) {
+	}
+
+	@Override
+	public void deleteRegionAddresses(long regionId) {
+	}
+
+	@Override
 	public List<Address> getAddresses() {
 		return addressPersistence.findAll();
 	}
@@ -124,9 +189,37 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Address> getAddresses(
+		long companyId, String className, long classPK, int start, int end,
+		OrderByComparator<Address> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public int getAddressesCount(
+		long companyId, String className, long classPK) {
+
+		return 0;
+	}
+
+	@Override
 	public Address updateAddress(
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId, long typeId,
+			boolean mailing, boolean primary)
+		throws PortalException {
+
+		updateAddress(
+			addressId, null, null, street1, street2, street3, city, zip,
+			regionId, countryId, null, typeId, mailing, primary);
+	}
+
+	@Override
+	public Address updateAddress(
+			long addressId, String name, String description, String street1,
+			String street2, String street3, String city, String zip,
+			long regionId, long countryId, String phoneNumber, long typeId,
 			boolean mailing, boolean primary)
 		throws PortalException {
 

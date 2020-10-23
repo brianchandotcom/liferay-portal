@@ -54,6 +54,23 @@ AUI.add(
 			'<span class="email">{userEmailAddress}</span>' +
 			'</div>';
 
+		var InviteMembersList = A.Component.create({
+			AUGMENTS: [A.AutoCompleteBase],
+
+			EXTENDS: A.Base,
+
+			prototype: {
+				initializer(config) {
+					var instance = this;
+
+					instance._listNode = A.one(config.listNode);
+
+					instance._bindUIACBase();
+					instance._syncUIACBase();
+				},
+			},
+		});
+
 		var InviteMembers = A.Component.create({
 			ATTRS: {
 				availableUsersURL: {
@@ -485,23 +502,6 @@ AUI.add(
 					instance._inviteMembersList.sendRequest();
 
 					instance._bindUI();
-				},
-			},
-		});
-
-		var InviteMembersList = A.Component.create({
-			AUGMENTS: [A.AutoCompleteBase],
-
-			EXTENDS: A.Base,
-
-			prototype: {
-				initializer(config) {
-					var instance = this;
-
-					instance._listNode = A.one(config.listNode);
-
-					instance._bindUIACBase();
-					instance._syncUIACBase();
 				},
 			},
 		});

@@ -55,6 +55,12 @@ const ImagePreviewer = ({alt, imageURL}) => {
 
 	const isMounted = useIsMounted();
 
+	const updateToolbar = (zoom) => {
+		setCurrentZoom(zoom);
+		setZoomInDisabled(ZOOM_LEVELS_REVERSED[0] === zoom);
+		setZoomOutDisabled(ZOOM_LEVELS[0] >= zoom);
+	};
+
 	const applyZoom = (zoom) => {
 		const imageElement = image.current;
 
@@ -107,12 +113,6 @@ const ImagePreviewer = ({alt, imageURL}) => {
 			updateToolbar(getFittingZoom());
 		}
 	}, 250);
-
-	const updateToolbar = (zoom) => {
-		setCurrentZoom(zoom);
-		setZoomInDisabled(ZOOM_LEVELS_REVERSED[0] === zoom);
-		setZoomOutDisabled(ZOOM_LEVELS[0] >= zoom);
-	};
 
 	useEventListener('resize', handleWindowResize, false, window);
 

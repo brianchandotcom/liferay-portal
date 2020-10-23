@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_SELECT_BUTTON</td>
+	<td>//button[contains(@id,'selectLayoutButton')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TYPE_DESCRIPTION</td>
 	<td>//p[contains(@class,'text')]</td>
 	<td></td>

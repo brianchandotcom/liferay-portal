@@ -68,6 +68,38 @@ const EditTagsModal = ({
 
 	const fileEntriesLength = fileEntries && fileEntries.length;
 
+	const fetchTags = useCallback(
+		(url, method, bodyData) => {
+			const init = {
+				body: JSON.stringify(bodyData),
+				headers: {'Content-Type': 'application/json'},
+				method,
+			};
+
+			return fetch(`${pathModule}${url}`, init)
+				.then((response) => response.json())
+				.catch(() => {
+					onModalClose();
+				});
+		},
+		[onModalClose, pathModule]
+	);
+
+	const getDescription = (size) => {
+		if (size === 1) {
+			return Liferay.Language.get(
+				'you-are-editing-the-tags-for-the-selected-item'
+			);
+		}
+
+		return Liferay.Util.sub(
+			Liferay.Language.get(
+				'you-are-editing-the-common-tags-for-x-items.-select-edit-or-replace-current-tags'
+			),
+			size
+		);
+	};
+
 	// This makes the component fetch selected items only after mounting it
 	// (a.k.a. first render).
 
@@ -111,38 +143,6 @@ const EditTagsModal = ({
 		repositoryId,
 		selectAll,
 	]);
-
-	const fetchTags = useCallback(
-		(url, method, bodyData) => {
-			const init = {
-				body: JSON.stringify(bodyData),
-				headers: {'Content-Type': 'application/json'},
-				method,
-			};
-
-			return fetch(`${pathModule}${url}`, init)
-				.then((response) => response.json())
-				.catch(() => {
-					onModalClose();
-				});
-		},
-		[onModalClose, pathModule]
-	);
-
-	const getDescription = (size) => {
-		if (size === 1) {
-			return Liferay.Language.get(
-				'you-are-editing-the-tags-for-the-selected-item'
-			);
-		}
-
-		return Liferay.Util.sub(
-			Liferay.Language.get(
-				'you-are-editing-the-common-tags-for-x-items.-select-edit-or-replace-current-tags'
-			),
-			size
-		);
-	};
 
 	const handleMultipleSelectedOptionChange = (value) => {
 		setAppend(value === 'add');

@@ -1437,6 +1437,8 @@ AUI.add(
 			NotificationRecipientsEditorFormConfig
 		);
 
+		var NotificationsEditorForm;
+
 		var NotificationsEditorFormConfig = {
 			ATTRS: {
 				notificationTypes: {
@@ -1768,7 +1770,7 @@ AUI.add(
 			},
 		};
 
-		var NotificationsEditorForm = A.Component.create(
+		NotificationsEditorForm = A.Component.create(
 			NotificationsEditorFormConfig
 		);
 

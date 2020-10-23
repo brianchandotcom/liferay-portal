@@ -23,13 +23,17 @@ import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
@@ -123,6 +127,11 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address.setZip(zip);
 		address.setRegionId(regionId);
 		address.setCountryId(countryId);
+
+		if (Validator.isNotNull(phoneNumber)) {
+			_addAddressPhone(addressId, phoneNumber);
+		}
+
 		address.setTypeId(typeId);
 		address.setMailing(mailing);
 		address.setPrimary(primary);
@@ -144,8 +153,9 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			address.getDescription(), address.getStreet1(),
 			address.getStreet2(), address.getStreet3(), address.getCity(),
 			address.getZip(), address.getRegionId(), address.getCountryId(),
-			null, address.getTypeId(), address.isMailing(), address.isPrimary(),
-			address.getExternalReferenceCode(), serviceContext);
+			address.getPhoneNumber(), address.getTypeId(), address.isMailing(),
+			address.isPrimary(), address.getExternalReferenceCode(),
+			serviceContext);
 	}
 
 	@Override
@@ -155,6 +165,10 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	)
 	public Address deleteAddress(Address address) {
 		addressPersistence.remove(address);
+
+		_phoneLocalService.deletePhones(
+			address.getCompanyId(), address.getClassName(),
+			address.getAddressId());
 
 		return address;
 	}
@@ -241,8 +255,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		return updateAddress(
 			addressId, address.getName(), address.getDescription(), street1,
-			street2, street3, city, zip, regionId, countryId, null, typeId,
-			mailing, primary);
+			street2, street3, city, zip, regionId, countryId,
+			address.getPhoneNumber(), typeId, mailing, primary);
 	}
 
 	@Override
@@ -268,6 +282,21 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address.setZip(zip);
 		address.setRegionId(regionId);
 		address.setCountryId(countryId);
+
+		if (Validator.isNotNull(phoneNumber)) {
+			List<Phone> phones = _phoneLocalService.getPhones(
+				address.getCompanyId(), Address.class.getName(), addressId);
+
+			if (ListUtil.isEmpty(phones)) {
+				_addAddressPhone(addressId, phoneNumber);
+			}
+			else {
+				Phone phone = phones.get(0);
+
+				phone.setNumber(phoneNumber);
+			}
+		}
+
 		address.setTypeId(typeId);
 		address.setMailing(mailing);
 		address.setPrimary(primary);
@@ -352,6 +381,20 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 
 		validate(addressId, companyId, classNameId, classPK, mailing, primary);
+	}
+
+	private void _addAddressPhone(long addressId, String phoneNumber)
+		throws PortalException {
+
+		ListType listType = listTypeLocalService.getListType(
+			"phone-number", Address.class.getName() + ListTypeConstants.PHONE);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		_phoneLocalService.addPhone(
+			serviceContext.getUserId(), Address.class.getName(), addressId,
+			phoneNumber, null, listType.getListTypeId(), false, serviceContext);
 	}
 
 	@BeanReference(type = PhoneLocalService.class)

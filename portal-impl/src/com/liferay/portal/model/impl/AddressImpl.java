@@ -18,10 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,6 +48,20 @@ public class AddressImpl extends AddressBaseImpl {
 		}
 
 		return country;
+	}
+
+	@Override
+	public String getPhoneNumber() {
+		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
+			getCompanyId(), getModelClassName(), getAddressId());
+
+		if (phones.isEmpty()) {
+			return null;
+		}
+
+		Phone phone = phones.get(0);
+
+		return phone.getNumber();
 	}
 
 	@Override

@@ -220,6 +220,124 @@ definition {
 			substructureName = "2");
 	}
 
+	@description = "This is a use case for LRQA-61632. Can select a great grand child page in Link to Page field."
+	@priority = "4"
+	test SelectGreatGrandChildPageInLinkToPageField {
+		task ("Add a parent page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page");
+		}
+
+		task ("Add a child page under parent page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page",
+				parentLayoutName = "Test Parent Page");
+		}
+
+		task ("Add 12 grand child pages under child page") {
+			for (var n : list "1,2,3,4,5,6,7,8,9,10,11,12") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Grand Child Page ${n}",
+					parentLayoutName = "Test Child Page");
+			}
+		}
+
+		task ("Add a great grand page under the 12th grand child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Great Grand Child Page",
+				parentLayoutName = "Test Grand Child Page 12");
+		}
+
+		task ("Add a structure with Link to Page field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "Link to Page",
+				fieldFieldLabel = "Link to Page",
+				fieldName = "LinktoPage");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Select the great grand child page in Link to Page field") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			AssertClick(
+				key_fieldName = "LinktoPage",
+				locator1 = "Button#SELECT_CONTENT",
+				value1 = "Select");
+
+			for (var pageName : list "Test Parent Page,Test Child Page") {
+				Click(
+					key_pageName = "${pageName}",
+					locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
+			}
+
+			for (var n : list "9,10,11,12") {
+				ScrollWebElementIntoView(
+					key_pageName = "Test Grand Child Page ${n}",
+					locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
+			}
+
+			Click(
+				key_pageName = "Test Grand Child Page 12",
+				locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
+
+			Click(
+				key_pageName = "Test Great Grand Child Page",
+				locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
+
+			Click(locator1 = "Button#SELECT");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Web Content Display to parent page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Select the web content article") {
+			Navigator.gotoSitePage(
+				pageName = "Test Parent Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+		}
+
+		task ("Click the link in Web Content Display") {
+			WebContent.viewPGViaWCD(
+				linkName = "Link to Page",
+				linkToPage = "true");
+
+			Click(
+				key_contentText = "Link to Page",
+				locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+		}
+
+		task ("Assert the page redirects to the great grand child page") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Great Grand Child Page");
+		}
+	}
+
 	@priority = "4"
 	test ValidateDDMNavigation {
 		property testray.component.names = "Web Content Administration";

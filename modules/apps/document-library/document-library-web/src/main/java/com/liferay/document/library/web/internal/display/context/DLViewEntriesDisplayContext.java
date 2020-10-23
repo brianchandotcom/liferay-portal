@@ -21,6 +21,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
+import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
+import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.document.library.web.internal.search.EntriesChecker;
 import com.liferay.document.library.web.internal.search.EntriesMover;
@@ -156,6 +158,15 @@ public class DLViewEntriesDisplayContext {
 
 	public String getDisplayStyle() {
 		return _dlAdminDisplayContext.getDisplayStyle();
+	}
+
+	public String[] getEntryColumns() {
+		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
+			new DLPortletInstanceSettingsHelper(
+				(DLRequestHelper)_liferayPortletRequest.getAttribute(
+					DLRequestHelper.class.getName()));
+
+		return dlPortletInstanceSettingsHelper.getEntryColumns();
 	}
 
 	public String getRedirect() {

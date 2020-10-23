@@ -19,10 +19,6 @@
 <%
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
-String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() && Validator.isNotNull(dlViewEntriesDisplayContext.getRedirect())) {
@@ -188,8 +184,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 						<c:otherwise>
 
 							<%
-							for (int i = 0; i < entryColumns.length; i++) {
-								String curEntryColumn = entryColumns[i];
+							for (String curEntryColumn : dlViewEntriesDisplayContext.getEntryColumns()) {
 							%>
 
 								<c:choose>
@@ -385,8 +380,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 						<c:otherwise>
 
 							<%
-							for (int i = 0; i < entryColumns.length; i++) {
-								String curEntryColumn = entryColumns[i];
+							for (String curEntryColumn : dlViewEntriesDisplayContext.getEntryColumns()) {
 							%>
 
 								<c:choose>

@@ -20,6 +20,14 @@ import {Link as InternalLink, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 
+const ExternalLink = ({children, to, ...props}) => {
+	return (
+		<a href={to} {...props}>
+			{children}
+		</a>
+	);
+};
+
 const BackButton = ({backURL}) => {
 	const [backButtonContainer, setBackButtonContainer] = useState(null);
 	const Link =
@@ -52,14 +60,6 @@ const BackButton = ({backURL}) => {
 			</Link>
 		</li>,
 		backButtonContainer
-	);
-};
-
-const ExternalLink = ({children, to, ...props}) => {
-	return (
-		<a href={to} {...props}>
-			{children}
-		</a>
 	);
 };
 

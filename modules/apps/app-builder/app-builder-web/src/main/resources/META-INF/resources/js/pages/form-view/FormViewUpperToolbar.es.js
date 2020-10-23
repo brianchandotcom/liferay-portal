@@ -39,6 +39,18 @@ export default ({newCustomObject, showTranslationManager}) => {
 		initialAvailableLanguageIds,
 	} = state;
 
+	const onEditingLanguageIdChange = useCallback(
+		(editingLanguageId) => {
+			setEditingLanguageId(editingLanguageId);
+
+			dispatch({
+				payload: editingLanguageId,
+				type: DataLayoutBuilderActions.UPDATE_EDITING_LANGUAGE_ID,
+			});
+		},
+		[dispatch]
+	);
+
 	useEffect(() => {
 		if (dataDefinition.defaultLanguageId) {
 			setDefaultLanguageId(dataDefinition.defaultLanguageId);
@@ -61,18 +73,6 @@ export default ({newCustomObject, showTranslationManager}) => {
 			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_NAME,
 		});
 	};
-
-	const onEditingLanguageIdChange = useCallback(
-		(editingLanguageId) => {
-			setEditingLanguageId(editingLanguageId);
-
-			dispatch({
-				payload: editingLanguageId,
-				type: DataLayoutBuilderActions.UPDATE_EDITING_LANGUAGE_ID,
-			});
-		},
-		[dispatch]
-	);
 
 	const onKeyDown = (event) => {
 		if (event.keyCode === 13) {

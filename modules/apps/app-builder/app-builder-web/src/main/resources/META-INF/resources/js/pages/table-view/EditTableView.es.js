@@ -49,14 +49,6 @@ const EditTableView = withRouter(({history}) => {
 	const [defaultLanguageId, setDefaultLanguageId] = useState('');
 	const [editingLanguageId, setEditingLanguageId] = useState('');
 
-	useEffect(() => {
-		if (dataDefinition.defaultLanguageId) {
-			setDefaultLanguageId(dataDefinition.defaultLanguageId);
-
-			onEditingLanguageIdChange(dataDefinition.defaultLanguageId);
-		}
-	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
-
 	const onEditingLanguageIdChange = useCallback(
 		(editingLanguageId) => {
 			setEditingLanguageId(editingLanguageId);
@@ -68,6 +60,14 @@ const EditTableView = withRouter(({history}) => {
 		},
 		[dispatch]
 	);
+
+	useEffect(() => {
+		if (dataDefinition.defaultLanguageId) {
+			setDefaultLanguageId(dataDefinition.defaultLanguageId);
+
+			onEditingLanguageIdChange(dataDefinition.defaultLanguageId);
+		}
+	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
 
 	const onError = ({title}) => {
 		errorToast(title);

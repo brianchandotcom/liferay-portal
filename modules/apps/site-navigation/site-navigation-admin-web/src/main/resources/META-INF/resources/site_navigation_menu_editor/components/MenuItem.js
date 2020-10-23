@@ -33,6 +33,18 @@ import {
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 
+const deleteItem = (items, itemId) =>
+	items.reduce(
+		(acc, item) =>
+			item.siteNavigationMenuItemId === itemId
+				? [...acc, ...item.children]
+				: [
+						...acc,
+						{...item, children: deleteItem(item.children, itemId)},
+				  ],
+		[]
+	);
+
 export const MenuItem = ({item}) => {
 	const {deleteSiteNavigationMenuItemURL, portletNamespace} = useConstants();
 	const {siteNavigationMenuItemId, title, type} = item;
@@ -126,15 +138,3 @@ MenuItem.propTypes = {
 		type: PropTypes.string.isRequired,
 	}),
 };
-
-const deleteItem = (items, itemId) =>
-	items.reduce(
-		(acc, item) =>
-			item.siteNavigationMenuItemId === itemId
-				? [...acc, ...item.children]
-				: [
-						...acc,
-						{...item, children: deleteItem(item.children, itemId)},
-				  ],
-		[]
-	);

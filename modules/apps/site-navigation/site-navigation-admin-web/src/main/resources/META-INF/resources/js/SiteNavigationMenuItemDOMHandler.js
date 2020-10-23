@@ -162,6 +162,17 @@ const setDragging = function (menuItem, dragging = false) {
 };
 
 /**
+ * Mutates all selected menu items and sets their status to unselected.
+ */
+const unselectAll = function () {
+	const selectedMenuItem = toElement(`.${MENU_ITEM_SELECTED_CLASSNAME}`);
+
+	if (selectedMenuItem) {
+		removeClasses(selectedMenuItem, MENU_ITEM_SELECTED_CLASSNAME);
+	}
+};
+
+/**
  * Mutates the given menu item by changing it's status to selected. Only a
  * single menu item can be selected, so any other selected menu item will be
  * unselected.
@@ -171,17 +182,6 @@ const setDragging = function (menuItem, dragging = false) {
 const setSelected = function (menuItem) {
 	unselectAll();
 	addClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
-};
-
-/**
- * Mutates all selected menu items and sets their status to unselected.
- */
-const unselectAll = function () {
-	const selectedMenuItem = toElement(`.${MENU_ITEM_SELECTED_CLASSNAME}`);
-
-	if (selectedMenuItem) {
-		removeClasses(selectedMenuItem, MENU_ITEM_SELECTED_CLASSNAME);
-	}
 };
 
 export {

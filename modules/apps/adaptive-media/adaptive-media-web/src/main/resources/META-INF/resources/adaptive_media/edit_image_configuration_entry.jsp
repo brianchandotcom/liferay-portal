@@ -47,11 +47,17 @@ else {
 automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
 %>
 
+<portlet:actionURL name="/adaptive_media/edit_image_configuration_entry" var="editImageConfigurationEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
+</portlet:actionURL>
+
 <div class="container-view">
 	<react:component
 		module="adaptive_media/js/EditAdaptiveMedia.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"actionUrl", editImageConfigurationEntryURL
+			).put(
                 "amImageConfigurationEntry", amImageConfigurationEntry
 			).put(
 				"automaticUuid", automaticUuid
@@ -67,10 +73,6 @@ automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
 		%>'
 	/>
 </div>
-
-<portlet:actionURL name="/adaptive_media/edit_image_configuration_entry" var="editImageConfigurationEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
-</portlet:actionURL>
 
 <liferay-frontend:edit-form
 	action="<%= editImageConfigurationEntryURL %>"

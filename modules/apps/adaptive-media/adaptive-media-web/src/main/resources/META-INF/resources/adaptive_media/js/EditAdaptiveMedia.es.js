@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import {normalizeFriendlyURL} from 'frontend-js-web';
+import {fetch, normalizeFriendlyURL, objectToFormData} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
@@ -26,6 +26,7 @@ import { alphanumeric, required, validate } from "./utils/formValidations.es";
 const STR_BLANK = " ";
 
 const EditAdaptiveMedia = ({
+	actionUrl,
 	amImageConfigurationEntry,
 	automaticUuid,
 	configurationEntryEditable,
@@ -69,6 +70,7 @@ const EditAdaptiveMedia = ({
 			[maxHeightId]: maxHeight,
 			[highResolutionId]: addHighResolution,
 			[newUuidId]: configurationEntryUuid,
+			[`${namespace}uuid`]: configurationEntryUuid,
 		},
 		validate: () => {
 			let err = validate(
@@ -91,6 +93,17 @@ const EditAdaptiveMedia = ({
 		},
 		onSubmit: () => {
 			console.log(values);
+
+			fetch(actionUrl, {
+				body: objectToFormData(values),
+				method: 'POST',
+			})
+			.then(() => {
+				Liferay.Util.navigate(redirect);
+			})
+			.catch(() => {
+				Liferay.Util.navigate(redirect);
+			});
 		},
 	});
 
@@ -115,6 +128,7 @@ const EditAdaptiveMedia = ({
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
 			<div class="sheet sheet-lg">
+
 				{!configurationEntryEditable && (
 					<div class="alert alert-info">
 						{Liferay.Language.get(

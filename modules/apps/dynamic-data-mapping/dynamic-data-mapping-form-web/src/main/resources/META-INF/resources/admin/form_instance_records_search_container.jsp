@@ -20,8 +20,6 @@
 DDMFormViewFormInstanceRecordsDisplayContext ddmFormViewFormInstanceRecordsDisplayContext = ddmFormAdminDisplayContext.getFormViewRecordsDisplayContext();
 
 PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletURL();
-
-int availableLocalesCount = ddmFormViewFormInstanceRecordsDisplayContext.getAvailableLocalesCount();
 %>
 
 <clay:management-toolbar
@@ -58,7 +56,7 @@ int availableLocalesCount = ddmFormViewFormInstanceRecordsDisplayContext.getAvai
 			>
 
 				<%
-				if (availableLocalesCount > 1) {
+				if (ddmFormViewFormInstanceRecordsDisplayContext.getAvailableLocalesCount() > 1) {
 				%>
 
 					<liferay-ui:search-container-column-text

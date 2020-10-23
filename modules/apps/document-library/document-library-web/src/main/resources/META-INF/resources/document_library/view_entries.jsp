@@ -19,11 +19,6 @@
 <%
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(request);
 
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
-String currentFolder = ParamUtil.getString(request, "curFolder");
-String deltaFolder = ParamUtil.getString(request, "deltaFolder");
-
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
@@ -32,14 +27,6 @@ DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.get
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
-
-PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder");
-portletURL.setParameter("navigation", navigation);
-portletURL.setParameter("curFolder", currentFolder);
-portletURL.setParameter("deltaFolder", deltaFolder);
-portletURL.setParameter("folderId", String.valueOf(folderId));
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 

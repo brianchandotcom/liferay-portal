@@ -83,6 +83,8 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 	const pageInput = useRef();
 	const showPageInputButton = useRef();
 
+	const isMounted = useIsMounted();
+
 	if (showPageInput) {
 		setTimeout(() => {
 			if (isMounted()) {
@@ -90,57 +92,6 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 			}
 		}, 100);
 	}
-
-	const isMounted = useIsMounted();
-
-	const goToPage = (page) => {
-		setNextPageDisabled(page === totalPages);
-		setPreviousPageDisabled(page === 1);
-
-		if (!loadedPages[page] || !loadedPages[page].loaded) {
-			setCurrentPageLoading(true);
-
-			loadCurrentPage(page);
-		}
-
-		imageContainer.current.scrollTop = 0;
-
-		setCurrentPage(page);
-	};
-
-	const handleBlurPageInput = (event) => {
-		processPageInput(event.currentTarget.value);
-
-		hidePageInput(false);
-	};
-
-	const handleKeyDownPageInput = (event) => {
-		const code = event.keyCode || event.charCode;
-
-		if (code === KEY_CODE_ENTER) {
-			processPageInput(event.currentTarget.value);
-
-			hidePageInput();
-		}
-		else if (code === KEY_CODE_ESC) {
-			hidePageInput();
-		}
-		else if (VALID_KEY_CODES.indexOf(code) === -1) {
-			event.preventDefault();
-		}
-	};
-
-	const hidePageInput = (returnFocus = true) => {
-		setShowPageInput(false);
-
-		if (returnFocus) {
-			setTimeout(() => {
-				if (isMounted()) {
-					showPageInputButton.current.focus();
-				}
-			}, 100);
-		}
-	};
 
 	const loadPage = (page) => {
 		let pagePromise = loadedPages[page] && loadedPages[page].pagePromise;
@@ -183,6 +134,21 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 			});
 	}, WAIT_BETWEEN_GO_TO_PAGE);
 
+	const goToPage = (page) => {
+		setNextPageDisabled(page === totalPages);
+		setPreviousPageDisabled(page === 1);
+
+		if (!loadedPages[page] || !loadedPages[page].loaded) {
+			setCurrentPageLoading(true);
+
+			loadCurrentPage(page);
+		}
+
+		imageContainer.current.scrollTop = 0;
+
+		setCurrentPage(page);
+	};
+
 	const processPageInput = (value) => {
 		let pageNumber = Number.parseInt(value, 10);
 
@@ -191,6 +157,40 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 			: currentPage;
 
 		goToPage(pageNumber);
+	};
+
+	const hidePageInput = (returnFocus = true) => {
+		setShowPageInput(false);
+
+		if (returnFocus) {
+			setTimeout(() => {
+				if (isMounted()) {
+					showPageInputButton.current.focus();
+				}
+			}, 100);
+		}
+	};
+
+	const handleBlurPageInput = (event) => {
+		processPageInput(event.currentTarget.value);
+
+		hidePageInput(false);
+	};
+
+	const handleKeyDownPageInput = (event) => {
+		const code = event.keyCode || event.charCode;
+
+		if (code === KEY_CODE_ENTER) {
+			processPageInput(event.currentTarget.value);
+
+			hidePageInput();
+		}
+		else if (code === KEY_CODE_ESC) {
+			hidePageInput();
+		}
+		else if (VALID_KEY_CODES.indexOf(code) === -1) {
+			event.preventDefault();
+		}
 	};
 
 	useEffect(() => {

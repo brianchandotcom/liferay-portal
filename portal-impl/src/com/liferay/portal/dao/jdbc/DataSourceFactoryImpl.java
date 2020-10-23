@@ -149,7 +149,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				_populateIBMCipherSuites(
 					Class.forName("com.mysql.cj.protocol.ExportControlled"));
 			}
-			catch (Exception exception) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 		}
 

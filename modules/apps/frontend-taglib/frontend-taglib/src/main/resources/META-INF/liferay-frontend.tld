@@ -508,19 +508,13 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a navigable form for multiple section forms. Its default navigation is a side navigation box with links to each section. The navigation can be configured as a progressive step navigation positioned above the form, or as vertically stacked accordion style sections that expand when clicked.</description>
+		<description>Creates a navigable form for multiple section forms. The navigation is a side navigation box with links to each section that renders as a progressive step navigation positioned above the form.</description>
 		<name>form-navigator-steps</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FormNavigatorStepsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>A URL for the form's cancel button.</description>
 			<name>backURL</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A type of navigation to be used. Options are <![CDATA[<code>steps</code>]]> and <![CDATA[<code>panel</code>]]>. The default display style is side navigation.</description>
-			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -551,11 +545,6 @@
 		<attribute>
 			<description>An ID for the component instance. It's referenced by the navigator's categories and sections.</description>
 			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>markupView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

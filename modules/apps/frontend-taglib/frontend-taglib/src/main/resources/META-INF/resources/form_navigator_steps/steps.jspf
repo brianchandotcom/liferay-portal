@@ -38,9 +38,7 @@
 			<div class="form-navigator-content">
 
 				<%
-				for (int i = 0; i < formNavigatorEntries.size(); i++) {
-					final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
-
+				for (final FormNavigatorEntry<Object> formNavigatorEntry : formNavigatorEntries) {
 					String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
 				%>
 
@@ -49,15 +47,7 @@
 					<div class="form-section <%= (curSection.equals(formNavigatorEntry.getKey()) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
 
 						<%
-						PortalIncludeUtil.include(
-							pageContext,
-							new PortalIncludeUtil.HTMLRenderer() {
-
-								public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-									formNavigatorEntry.include(request, response);
-								}
-
-							});
+						PortalIncludeUtil.include(pageContext, formNavigatorEntry::include);
 						%>
 
 					</div>
@@ -116,7 +106,7 @@
 
 						Boolean show = (Boolean)request.getAttribute(WebKeys.FORM_NAVIGATOR_SECTION_SHOW + sectionId);
 
-						if ((show != null) && !show.booleanValue()) {
+						if ((show != null) && !show) {
 							continue;
 						}
 
@@ -177,38 +167,31 @@
 <aui:script use="anim,aui-event-input,aui-tabview,aui-url,history,io-form,scrollview">
 	var formNode = A.one('#<portlet:namespace /><%= formName %>');
 
-	Liferay.component(
-		'<portlet:namespace /><%= formName %>Tabview',
-		function() {
-			return new A.TabView(
-				{
-					boundingBox: '#<portlet:namespace />tabsBoundingBox',
-					srcNode: '#<portlet:namespace />tabs',
-					type: 'list'
-				}
-			).render();
-		}
-	);
+	Liferay.component('<portlet:namespace /><%= formName %>Tabview', function () {
+		return new A.TabView({
+			boundingBox: '#<portlet:namespace />tabsBoundingBox',
+			srcNode: '#<portlet:namespace />tabs',
+			type: 'list',
+		}).render();
+	});
 
 	var tabview = Liferay.component('<portlet:namespace /><%= formName %>Tabview');
 
 	var listNode = tabview.get('listNode');
 
-	var scrollAnim = new A.Anim(
-		{
-			duration: 0.3,
-			node: listNode,
-			to: {
-				scrollLeft: function() {
-					var activeTabNode = tabview.getActiveTab();
+	var scrollAnim = new A.Anim({
+		duration: 0.3,
+		node: listNode,
+		to: {
+			scrollLeft: function () {
+				var activeTabNode = tabview.getActiveTab();
 
-					var scrollLeft = listNode.get('scrollLeft');
+				var scrollLeft = listNode.get('scrollLeft');
 
-					return activeTabNode.getX() + scrollLeft - listNode.getX();
-				}
-			}
-		}
-	);
+				return activeTabNode.getX() + scrollLeft - listNode.getX();
+			},
+		},
+	});
 
 	function selectTabBySectionId(sectionId) {
 		var instance = this;
@@ -219,7 +202,7 @@
 
 		var tabIndex = tabview.indexOf(tab);
 
-		if (tab && (tabIndex > -1)) {
+		if (tab && tabIndex > -1) {
 			tabview.selectChild(tabIndex);
 		}
 
@@ -276,69 +259,73 @@
 
 	var history = new A.HistoryHash();
 
-	tabview.after(
-		'selectionChange',
-		function(event) {
-			var tab = event.newVal;
+	tabview.after('selectionChange', function (event) {
+		var tab = event.newVal;
 
-			var tabIndex = tabview.indexOf(tab);
+		var tabIndex = tabview.indexOf(tab);
 
-			tabview.each(
-				function(item, index) {
-					var node = tabview.item(index).get('boundingBox');
+		tabview.each(function (item, index) {
+			var node = tabview.item(index).get('boundingBox');
 
-					if (tabview.indexOf(item) < tabIndex) {
-						node.addClass('complete');
-						node.one('.divider').setHTML(Liferay.Util.getLexiconIconTpl('check'));
-					}
-					else if (tabview.indexOf(item) === tabIndex) {
-						node.one('.divider').setHTML(Liferay.Util.getLexiconIconTpl('circle'));
-					}
-					else {
-						node.one('.divider').setHTML(Liferay.Util.getLexiconIconTpl('live'));
-					}
+			if (tabview.indexOf(item) < tabIndex) {
+				node.addClass('complete');
+				node.one('.divider').setHTML(
+					Liferay.Util.getLexiconIconTpl('check')
+				);
+			}
+			else if (tabview.indexOf(item) === tabIndex) {
+				node.one('.divider').setHTML(
+					Liferay.Util.getLexiconIconTpl('circle')
+				);
+			}
+			else {
+				node.one('.divider').setHTML(
+					Liferay.Util.getLexiconIconTpl('live')
+				);
+			}
+		});
+
+		var boundingBox = tab.get('boundingBox');
+
+		var sectionId = boundingBox.getData('sectionId');
+
+		history.addValue('<portlet:namespace />tab', sectionId);
+	});
+
+	A.on('history:change', function (event) {
+		var state = event.newVal;
+
+		var changed = event.changed.<portlet:namespace />tab;
+
+		var removed = event.removed.<portlet:namespace />tab;
+
+		if (
+			event.src === A.HistoryHash.SRC_HASH ||
+			event.src === A.HistoryBase.SRC_ADD
+		) {
+			if (changed) {
+				selectTabBySectionId(changed.newVal);
+			}
+			else if (removed) {
+				tabview.selectChild(0);
+			}
+			else if (state) {
+				var sectionId = state.<portlet:namespace />tab;
+
+				if (!sectionId) {
+					sectionId = '<portlet:namespace />' + state.tab;
 				}
-			);
 
-			var boundingBox = tab.get('boundingBox');
-
-			var sectionId = boundingBox.getData('sectionId');
-
-			history.addValue('<portlet:namespace />tab', sectionId);
-		}
-	);
-
-	A.on(
-		'history:change',
-		function(event) {
-			var state = event.newVal;
-
-			var changed = event.changed.<portlet:namespace />tab;
-
-			var removed = event.removed.<portlet:namespace />tab;
-
-			if (event.src === A.HistoryHash.SRC_HASH || event.src === A.HistoryBase.SRC_ADD) {
-				if (changed) {
-					selectTabBySectionId(changed.newVal);
-				}
-				else if (removed) {
-					tabview.selectChild(0);
-				}
-				else if (state) {
-					var sectionId = state.<portlet:namespace />tab;
-
-					if (!sectionId) {
-						sectionId = '<portlet:namespace />' + state.tab;
-					}
-
-					selectTabBySectionId(sectionId);
-				}
+				selectTabBySectionId(sectionId);
 			}
 		}
-	);
+	});
 
 	if (<%= error %>) {
-		history.addValue('<portlet:namespace />tab', '<portlet:namespace /><%= errorSection %>');
+		history.addValue(
+			'<portlet:namespace />tab',
+			'<portlet:namespace /><%= errorSection %>'
+		);
 	}
 	else {
 		var currentUrl = new A.Url(location.href);
@@ -346,11 +333,15 @@
 		var currentAnchor = currentUrl.getAnchor();
 
 		if (!currentAnchor) {
-			currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
+			currentAnchor = currentUrl.getParameter(
+				'<portlet:namespace />historyKey'
+			);
 		}
 
 		if (currentAnchor) {
-			var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
+			var locationSectionId = currentAnchor.substring(
+				currentAnchor.indexOf('=') + 1
+			);
 
 			if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
 				locationSectionId = '<portlet:namespace />' + locationSectionId;
@@ -373,7 +364,9 @@
 				focusField = formNode.one('#<portlet:namespace /><%= focusField %>');
 			</c:when>
 			<c:otherwise>
-				focusField = formNode.one('.form-section.active input:not([type="hidden"]).field');
+				focusField = formNode.one(
+					'.form-section.active input:not([type="hidden"]).field'
+				);
 			</c:otherwise>
 		</c:choose>
 
@@ -389,34 +382,31 @@
 
 		formNode.on('autofields:update', updateSectionError);
 
-		var updateSectionOnError = function(event) {
+		var updateSectionOnError = function (event) {
 			var form = event.form;
 
 			if (form.formNode.compareTo(formNode)) {
 				var validator = form.formValidator;
 
-				validator.on(
-					'submitError',
-					function() {
-						var errorClass = validator.get('errorClass');
+				validator.on('submitError', function () {
+					var errorClass = validator.get('errorClass');
 
-						var errorField = formNode.one('.' + errorClass);
+					var errorField = formNode.one('.' + errorClass);
 
-						if (errorField) {
-							var errorSection = errorField.ancestor('.form-section');
+					if (errorField) {
+						var errorSection = errorField.ancestor('.form-section');
 
-							var errorSectionId = errorSection.attr('id');
+						var errorSectionId = errorSection.attr('id');
 
-							selectTabBySectionId(errorSectionId);
+						selectTabBySectionId(errorSectionId);
 
-							updateSectionError();
-						}
+						updateSectionError();
 					}
-				);
+				});
 			}
 		};
 
-		var detachUpdateSection = function(event) {
+		var detachUpdateSection = function (event) {
 			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 				Liferay.detach('form:registered', updateSectionOnError);
 

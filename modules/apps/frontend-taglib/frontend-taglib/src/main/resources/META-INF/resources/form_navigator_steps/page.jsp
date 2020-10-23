@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
+<%@ include file="/form_navigator_steps/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_form_navigator_init") + StringPool.UNDERLINE;
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_form_navigator_steps_init") + StringPool.UNDERLINE;
 
 String tabs1Param = randomNamespace + "tabs1";
 String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + id, null));
@@ -54,7 +54,7 @@ for (int i = 0; i < categoryKeys.length; i++) {
 			%>
 
 				<liferay-ui:section>
-					<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+					<%@ include file="/form_navigator_steps/steps.jspf" %>
 				</liferay-ui:section>
 
 			<%
@@ -75,7 +75,7 @@ for (int i = 0; i < categoryKeys.length; i++) {
 		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
 		%>
 
-		<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+		<%@ include file="/form_navigator_steps/steps.jspf" %>
 	</c:otherwise>
 </c:choose>
 
@@ -90,10 +90,12 @@ for (int i = 0; i < categoryKeys.length; i++) {
 <aui:script require="metal-dom/src/dom">
 	var dom = metalDomSrcDom.default;
 
-	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+	var redirectField = dom.toElement(
+		'input[name="<portlet:namespace />redirect"]'
+	);
 	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
-	var updateRedirectField = function(event) {
+	var updateRedirectField = function (event) {
 		var redirectURL = new URL(redirectField.value, window.location.origin);
 
 		redirectURL.searchParams.set(tabs1Param, event.id);
@@ -103,7 +105,7 @@ for (int i = 0; i < categoryKeys.length; i++) {
 		Liferay.Util.Session.set('<portlet:namespace /><%= id %>', event.id);
 	};
 
-	var clearFormNavigatorHandles = function(event) {
+	var clearFormNavigatorHandles = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.detach('showTab', updateRedirectField);
 			Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
@@ -116,11 +118,9 @@ for (int i = 0; i < categoryKeys.length; i++) {
 		var tabs1Value = currentURL.searchParams.get(tabs1Param);
 
 		if (tabs1Value) {
-			updateRedirectField(
-				{
-					id: tabs1Value
-				}
-			);
+			updateRedirectField({
+				id: tabs1Value,
+			});
 		}
 
 		Liferay.on('showTab', updateRedirectField);

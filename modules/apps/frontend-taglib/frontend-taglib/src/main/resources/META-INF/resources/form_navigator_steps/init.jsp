@@ -14,26 +14,35 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.taglib.util.PortalIncludeUtil" %>
+
+<%@ page import="java.util.ArrayList" %>
 
 <%
-String backURL = (String)request.getAttribute("liferay-ui:form-navigator:backURL");
-String[][] categorySectionKeys = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySectionKeys");
-String[][] categorySectionLabels = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySectionLabels");
-String[] categoryKeys = (String[])request.getAttribute("liferay-ui:form-navigator:categoryKeys");
-String[] categoryLabels = (String[])request.getAttribute("liferay-ui:form-navigator:categoryLabels");
-String displayStyle = (String)request.getAttribute("liferay-ui:form-navigator:displayStyle");
-Object formModelBean = request.getAttribute("liferay-ui:form-navigator:formModelBean");
-String formName = GetterUtil.getString((String)request.getAttribute("liferay-ui:form-navigator:formName"));
-String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:htmlBottom");
-String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
-String id = (String)request.getAttribute("liferay-ui:form-navigator:id");
-boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
+String backURL = (String)request.getAttribute("liferay-frontend:form-navigator-steps:backURL");
+String[][] categorySectionKeys = (String[][])request.getAttribute("liferay-frontend:form-navigator-steps:categorySectionKeys");
+String[][] categorySectionLabels = (String[][])request.getAttribute("liferay-frontend:form-navigator-steps:categorySectionLabels");
+String[] categoryKeys = (String[])request.getAttribute("liferay-frontend:form-navigator-steps:categoryKeys");
+String[] categoryLabels = (String[])request.getAttribute("liferay-frontend:form-navigator-steps:categoryLabels");
+Object formModelBean = request.getAttribute("liferay-frontend:form-navigator-steps:formModelBean");
+String formName = GetterUtil.getString((String)request.getAttribute("liferay-frontend:form-navigator-steps:formName"));
+String htmlBottom = (String)request.getAttribute("liferay-frontend:form-navigator-steps:htmlBottom");
+String htmlTop = (String)request.getAttribute("liferay-frontend:form-navigator-steps:htmlTop");
+String id = (String)request.getAttribute("liferay-frontend:form-navigator-steps:id");
+boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:form-navigator-steps:showButtons"));
 
 if (Validator.isNull(backURL)) {
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	backURL = redirect;
+	backURL = ParamUtil.getString(request, "redirect");
 }
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -58,9 +67,5 @@ if (Validator.isNotNull(historyKey)) {
 <%!
 private String _getSectionId(String name) {
 	return TextFormatter.format(name, TextFormatter.M);
-}
-
-private String _getSectionJsp(String name) {
-	return TextFormatter.format(name, TextFormatter.N);
 }
 %>

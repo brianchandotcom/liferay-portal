@@ -14,15 +14,16 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -36,10 +37,6 @@ public class FormNavigatorStepsTag extends IncludeTag {
 
 	public String getBackURL() {
 		return _backURL;
-	}
-
-	public String getDisplayStyle() {
-		return _displayStyle;
 	}
 
 	public Object getFormModelBean() {
@@ -62,20 +59,12 @@ public class FormNavigatorStepsTag extends IncludeTag {
 		return _id;
 	}
 
-	public String getMarkupView() {
-		return _markupView;
-	}
-
 	public boolean isShowButtons() {
 		return _showButtons;
 	}
 
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
-	}
-
-	public void setDisplayStyle(String displayStyle) {
-		_displayStyle = displayStyle;
 	}
 
 	public void setFormModelBean(Object formModelBean) {
@@ -98,8 +87,11 @@ public class FormNavigatorStepsTag extends IncludeTag {
 		_id = id;
 	}
 
-	public void setMarkupView(String markupView) {
-		_markupView = markupView;
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setShowButtons(boolean showButtons) {
@@ -111,13 +103,11 @@ public class FormNavigatorStepsTag extends IncludeTag {
 		super.cleanUp();
 
 		_backURL = null;
-		_displayStyle = "form";
 		_formModelBean = null;
 		_formName = "fm";
 		_htmlBottom = null;
 		_htmlTop = null;
 		_id = null;
-		_markupView = null;
 		_showButtons = true;
 	}
 
@@ -181,52 +171,47 @@ public class FormNavigatorStepsTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/form_navigator/" + _markupView +
-				"/page.jsp";
-		}
-
-		return "/html/taglib/ui/form_navigator/page.jsp";
+		return "/form_navigator_steps/page.jsp";
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:backURL", _backURL);
+			"liferay-frontend:form-navigator-steps:backURL", _backURL);
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:categoryKeys", getCategoryKeys());
+			"liferay-frontend:form-navigator-steps:categoryKeys",
+			getCategoryKeys());
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:categoryLabels", getCategoryLabels());
+			"liferay-frontend:form-navigator-steps:categoryLabels",
+			getCategoryLabels());
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:categorySectionKeys",
+			"liferay-frontend:form-navigator-steps:categorySectionKeys",
 			getCategorySectionKeys());
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:categorySectionLabels",
+			"liferay-frontend:form-navigator-steps:categorySectionLabels",
 			getCategorySectionLabels());
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:displayStyle", _displayStyle);
+			"liferay-frontend:form-navigator-steps:formModelBean",
+			_formModelBean);
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:formModelBean", _formModelBean);
+			"liferay-frontend:form-navigator-steps:formName", _formName);
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:formName", _formName);
+			"liferay-frontend:form-navigator-steps:htmlBottom", _htmlBottom);
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
+			"liferay-frontend:form-navigator-steps:htmlTop", _htmlTop);
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:htmlTop", _htmlTop);
-		httpServletRequest.setAttribute("liferay-ui:form-navigator:id", _id);
+			"liferay-frontend:form-navigator-steps:id", _id);
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:showButtons",
+			"liferay-frontend:form-navigator-steps:showButtons",
 			String.valueOf(_showButtons));
 	}
 
 	private String _backURL;
-	private String _displayStyle = "form";
 	private Object _formModelBean;
 	private String _formName = "fm";
 	private String _htmlBottom;
 	private String _htmlTop;
 	private String _id;
-	private String _markupView;
 	private boolean _showButtons = true;
 
 }

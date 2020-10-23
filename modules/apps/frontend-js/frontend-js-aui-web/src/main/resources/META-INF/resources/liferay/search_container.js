@@ -34,7 +34,11 @@ AUI.add(
 
 			NAME: 'searchcontainer',
 
-			constructor(config) {
+			// NOTE: Do not convert the constructor to an object concise method.
+			//
+			// See: https://stackoverflow.com/a/45119651/2103996
+
+			constructor: function constructor(config) {
 				var id = config.id;
 
 				config.boundingBox = config.boundingBox || '#' + id;

@@ -64,6 +64,14 @@ function CartItem({item: cartItem}) {
 		[itemQuantity, setItemQuantity] = useState(quantity),
 		[itemPrice, updateItemPrice] = useState(price);
 
+	const {
+		isGettingRemoved,
+		isRemovalCanceled,
+		isRemoved,
+		isShowingErrors,
+		removalTimeoutRef,
+	} = itemState;
+
 	const options = parseOptions(rawOptions);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,14 +172,6 @@ function CartItem({item: cartItem}) {
 		}, // eslint-disable-next-line react-hooks/exhaustive-deps
 		[AJAX, cartItem, cartItemId, orderId]
 	);
-
-	const {
-		isGettingRemoved,
-		isRemovalCanceled,
-		isRemoved,
-		isShowingErrors,
-		removalTimeoutRef,
-	} = itemState;
 
 	return (
 		<div

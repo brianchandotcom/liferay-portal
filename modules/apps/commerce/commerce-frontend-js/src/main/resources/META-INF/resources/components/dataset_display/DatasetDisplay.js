@@ -176,6 +176,19 @@ function DatasetDisplay(props) {
 			});
 	}
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const refreshData = (successNotification) =>
+		getData(
+			props.apiUrl,
+			props.currentUrl,
+			delta,
+			filters.filter((e) => !!e.value),
+			pageNumber,
+			searchParam,
+			sorting,
+			successNotification
+		);
+
 	useEffect(() => {
 		if (props.apiUrl) {
 			getData(
@@ -245,19 +258,6 @@ function DatasetDisplay(props) {
 			setHighlightedItemsValue(highlightedItemsValue.concat(val));
 		}
 	}
-
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const refreshData = (successNotification) =>
-		getData(
-			props.apiUrl,
-			props.currentUrl,
-			delta,
-			filters.filter((e) => !!e.value),
-			pageNumber,
-			searchParam,
-			sorting,
-			successNotification
-		);
 
 	useEffect(() => {
 		if (wrapperRef.current) {

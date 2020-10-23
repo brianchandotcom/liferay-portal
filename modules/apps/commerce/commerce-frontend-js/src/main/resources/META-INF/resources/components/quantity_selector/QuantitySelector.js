@@ -95,6 +95,9 @@ function QuantitySelector(props) {
 		return updateCurrentQuantity(parseInt(value, 10));
 	}
 
+	const decreaseQuantity = throttle(_decreaseQuantity, THROTTLE_TIMEOUT),
+		increaseQuantity = throttle(_increaseQuantity, THROTTLE_TIMEOUT);
+
 	function handleInputKeyUp(e) {
 		switch (e.key) {
 			case 'ArrowUp':
@@ -108,9 +111,6 @@ function QuantitySelector(props) {
 				break;
 		}
 	}
-
-	const decreaseQuantity = throttle(_decreaseQuantity, THROTTLE_TIMEOUT),
-		increaseQuantity = throttle(_increaseQuantity, THROTTLE_TIMEOUT);
 
 	function handleSelectChange() {
 		const {value} = inputRef.current;

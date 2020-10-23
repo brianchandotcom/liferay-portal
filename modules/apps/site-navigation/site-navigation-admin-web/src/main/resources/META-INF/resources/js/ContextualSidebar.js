@@ -43,6 +43,30 @@ function ContextualSidebar({
 
 	const namespace = Liferay.Util.getPortletNamespace(portletId);
 
+	const confirmUnsavedChanges = () => {
+		const form = document.querySelector(`.sidebar-body form`);
+
+		const error = form ? form.querySelector('[role="alert"]') : null;
+
+		let confirmChanged;
+
+		if (!error) {
+			confirmChanged = confirm(
+				Liferay.Language.get(
+					'you-have-unsaved-changes.-do-you-want-to-save-them'
+				)
+			);
+
+			if (confirmChanged) {
+				if (form) {
+					form.submit();
+				}
+			}
+		}
+
+		return confirmChanged;
+	};
+
 	const openSidebar = useCallback(
 		(title, url, requestBody) => {
 			if (changed) {
@@ -140,30 +164,6 @@ function ContextualSidebar({
 		siteNavigationMenuName,
 		visible,
 	]);
-
-	const confirmUnsavedChanges = () => {
-		const form = document.querySelector(`.sidebar-body form`);
-
-		const error = form ? form.querySelector('[role="alert"]') : null;
-
-		let confirmChanged;
-
-		if (!error) {
-			confirmChanged = confirm(
-				Liferay.Language.get(
-					'you-have-unsaved-changes.-do-you-want-to-save-them'
-				)
-			);
-
-			if (confirmChanged) {
-				if (form) {
-					form.submit();
-				}
-			}
-		}
-
-		return confirmChanged;
-	};
 
 	const closeSidebar = useCallback(() => {
 		setChanged(false);

@@ -17,22 +17,12 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(request);
-
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
-
-EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
-
-entriesChecker.setCssClass("entry-selector");
-
-entriesChecker.setRememberCheckBoxStateURLRegex(dlAdminDisplayContext.getRememberCheckBoxStateURLRegex());
-
-EntriesMover entriesMover = new EntriesMover(dlTrashHelper.isTrashEnabled(scopeGroupId, repositoryId));
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 
@@ -48,14 +38,11 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 	<%
 	DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
-
-	SearchContainer<Object> dlSearchContainer = dlAdminDisplayContext.getSearchContainer();
 	%>
 
 	<liferay-ui:search-container
 		id="entries"
-		searchContainer="<%= dlSearchContainer %>"
-		total="<%= dlSearchContainer.getTotal() %>"
+		searchContainer="<%= dlViewEntriesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="Object"
@@ -71,14 +58,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 					if (!BrowserSnifferUtil.isMobile(request) && (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE))) {
 						draggable = true;
-
-						if (dlSearchContainer.getRowMover() == null) {
-							dlSearchContainer.setRowMover(entriesMover);
-						}
-					}
-
-					if (dlSearchContainer.getRowChecker() == null) {
-						dlSearchContainer.setRowChecker(entriesChecker);
 					}
 
 					row.setData(
@@ -176,7 +155,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 											cssClass="entry-display-style file-card"
 											html="<%= customThumbnailHtml %>"
 											resultRow="<%= row %>"
-											rowChecker="<%= entriesChecker %>"
+											rowChecker="<%= searchContainer.getRowChecker() %>"
 											title="<%= latestFileVersion.getTitle() %>"
 											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 										>
@@ -190,7 +169,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 											cssClass="entry-display-style file-card"
 											icon="documents-and-media"
 											resultRow="<%= row %>"
-											rowChecker="<%= entriesChecker %>"
+											rowChecker="<%= searchContainer.getRowChecker() %>"
 											title="<%= latestFileVersion.getTitle() %>"
 											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 										>
@@ -204,7 +183,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 											cssClass="entry-display-style file-card"
 											imageUrl="<%= thumbnailSrc %>"
 											resultRow="<%= row %>"
-											rowChecker="<%= entriesChecker %>"
+											rowChecker="<%= searchContainer.getRowChecker() %>"
 											title="<%= latestFileVersion.getTitle() %>"
 											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 										>
@@ -348,18 +327,10 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 				<c:otherwise>
 
 					<%
-					if (dlSearchContainer.getRowChecker() == null) {
-						dlSearchContainer.setRowChecker(entriesChecker);
-					}
-
 					boolean draggable = false;
 
 					if (!BrowserSnifferUtil.isMobile(request) && (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE))) {
 						draggable = true;
-
-						if (dlSearchContainer.getRowMover() == null) {
-							dlSearchContainer.setRowMover(entriesMover);
-						}
 					}
 
 					row.setData(
@@ -407,7 +378,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 									actionJsp="/document_library/folder_action.jsp"
 									actionJspServletContext="<%= application %>"
 									resultRow="<%= row %>"
-									rowChecker="<%= entriesChecker %>"
+									rowChecker="<%= searchContainer.getRowChecker() %>"
 									text="<%= curFolder.getName() %>"
 									url="<%= folderActionDisplayContext.getRowURL(curFolder) %>"
 								>
@@ -511,7 +482,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 			displayStyle="<%= dlViewEntriesDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			resultRowSplitter="<%= new DLResultRowSplitter() %>"
-			searchContainer="<%= dlSearchContainer %>"
 		/>
 	</liferay-ui:search-container>
 </div>

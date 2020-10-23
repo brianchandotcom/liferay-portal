@@ -121,7 +121,6 @@ page import="com.liferay.document.library.web.internal.display.context.util.IGRe
 page import="com.liferay.document.library.web.internal.helper.DLTrashHelper" %><%@
 page import="com.liferay.document.library.web.internal.portlet.action.EditFileEntryMVCActionCommand" %><%@
 page import="com.liferay.document.library.web.internal.search.EntriesChecker" %><%@
-page import="com.liferay.document.library.web.internal.search.EntriesMover" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DDMStructurePermission" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryTypePermission" %><%@

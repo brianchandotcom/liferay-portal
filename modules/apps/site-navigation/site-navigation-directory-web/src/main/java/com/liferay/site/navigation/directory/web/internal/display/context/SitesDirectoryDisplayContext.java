@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.site.navigation.directory.web.internal.configuration.SitesDirectoryPortletInstanceConfiguration;
-import com.liferay.taglib.ui.SitesDirectoryTag;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -104,29 +103,27 @@ public class SitesDirectoryDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (Objects.equals(getSites(), SitesDirectoryTag.SITES_TOP_LEVEL)) {
+		if (Objects.equals(getSites(), _SITES_TOP_LEVEL)) {
 		}
-		else if (Objects.equals(getSites(), SitesDirectoryTag.SITES_CHILDREN) &&
+		else if (Objects.equals(getSites(), _SITES_CHILDREN) &&
 				 !branchGroups.isEmpty()) {
 
 			rootGroup = branchGroups.get(0);
 		}
-		else if (Objects.equals(getSites(), SitesDirectoryTag.SITES_SIBLINGS) &&
+		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
 				 (branchGroups.size() > 1)) {
 
 			rootGroup = branchGroups.get(1);
 		}
-		else if (Objects.equals(getSites(), SitesDirectoryTag.SITES_SIBLINGS) &&
+		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
 				 group.isRoot()) {
 		}
-		else if (Objects.equals(
-					getSites(), SitesDirectoryTag.SITES_PARENT_LEVEL) &&
+		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
 				 (branchGroups.size() > 2)) {
 
 			rootGroup = branchGroups.get(2);
 		}
-		else if (Objects.equals(
-					getSites(), SitesDirectoryTag.SITES_PARENT_LEVEL) &&
+		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
 				 (branchGroups.size() == 2)) {
 		}
 
@@ -211,23 +208,21 @@ public class SitesDirectoryDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (Objects.equals(getSites(), SitesDirectoryTag.SITES_TOP_LEVEL)) {
+		if (Objects.equals(getSites(), _SITES_TOP_LEVEL)) {
 		}
-		else if (Objects.equals(getSites(), SitesDirectoryTag.SITES_CHILDREN) &&
+		else if (Objects.equals(getSites(), _SITES_CHILDREN) &&
 				 !branchGroups.isEmpty()) {
 		}
-		else if (Objects.equals(getSites(), SitesDirectoryTag.SITES_SIBLINGS) &&
+		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
 				 (branchGroups.size() > 1)) {
 		}
-		else if (Objects.equals(getSites(), SitesDirectoryTag.SITES_SIBLINGS) &&
+		else if (Objects.equals(getSites(), _SITES_SIBLINGS) &&
 				 group.isRoot()) {
 		}
-		else if (Objects.equals(
-					getSites(), SitesDirectoryTag.SITES_PARENT_LEVEL) &&
+		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
 				 (branchGroups.size() > 2)) {
 		}
-		else if (Objects.equals(
-					getSites(), SitesDirectoryTag.SITES_PARENT_LEVEL) &&
+		else if (Objects.equals(getSites(), _SITES_PARENT_LEVEL) &&
 				 (branchGroups.size() == 2)) {
 		}
 		else {
@@ -236,6 +231,14 @@ public class SitesDirectoryDisplayContext {
 
 		return false;
 	}
+
+	private static final String _SITES_CHILDREN = "children";
+
+	private static final String _SITES_PARENT_LEVEL = "parent-level";
+
+	private static final String _SITES_SIBLINGS = "siblings";
+
+	private static final String _SITES_TOP_LEVEL = "top-level";
 
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;

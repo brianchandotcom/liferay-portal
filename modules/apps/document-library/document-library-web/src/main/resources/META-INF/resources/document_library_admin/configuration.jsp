@@ -16,6 +16,10 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<%
+DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
+%>
+
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<liferay-portlet:param name="serviceName" value="<%= DLConstants.SERVICE_NAME %>" />
 	<liferay-portlet:param name="settingsScope" value="group" />

@@ -222,6 +222,11 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
+
+					<%
+					DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
+					%>
+
 					<liferay-comment:discussion
 						className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
 						classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"

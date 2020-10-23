@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="VariableNameCheck" files="portal-tools-bundle-support/src/main/java/com/liferay/portal/tools/bundle/support/maven/CreateTokenMojo\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaDeprecatedJavadocCheck" files=".*" />
 		<suppress checks="JavaModuleTestCheck" files="pmd/src/test/java/com/liferay/pmd/rules/junit/AssertFailJUnitRuleTest\.java" />

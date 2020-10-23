@@ -37,7 +37,6 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -152,12 +151,6 @@ public abstract class BaseSegmentsEntryProvider
 		return stream.filter(
 			segmentsEntry -> isMember(
 				className, classPK, context, segmentsEntry, segmentsEntryIds)
-		).sorted(
-			(segmentsEntry1, segmentsEntry2) -> {
-				Date modifiedDate = segmentsEntry2.getModifiedDate();
-
-				return modifiedDate.compareTo(segmentsEntry1.getModifiedDate());
-			}
 		).mapToLong(
 			SegmentsEntry::getSegmentsEntryId
 		).toArray();

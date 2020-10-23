@@ -64,6 +64,17 @@ public class DDMFormValuesTestUtil {
 		return createDDMFormFieldValue(StringUtil.randomString(), name, value);
 	}
 
+	public static DDMFormFieldValue createDDMFormFieldValueWithReference(
+		String name, String reference, Value value) {
+
+		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+			StringUtil.randomString(), name, value);
+
+		ddmFormFieldValue.setFieldReference(reference);
+
+		return ddmFormFieldValue;
+	}
+
 	public static DDMFormValues createDDMFormValues(DDMForm ddmForm) {
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 

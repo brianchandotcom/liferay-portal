@@ -366,6 +366,10 @@ public class DepotEntryLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.depot.model.DepotEntry>
 		getDepotEntryGroupRelsByUuidAndCompanyId(String uuid, long companyId) {

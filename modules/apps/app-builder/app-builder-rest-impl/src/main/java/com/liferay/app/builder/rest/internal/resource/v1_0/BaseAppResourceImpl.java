@@ -189,7 +189,7 @@ public abstract class BaseAppResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dataRecordCollectionId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dataRecordCollectionId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___, "version": ___, "workflowDefinitionName": ___, "workflowDefinitionVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -314,7 +314,7 @@ public abstract class BaseAppResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dataRecordCollectionId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dataRecordCollectionId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___, "version": ___, "workflowDefinitionName": ___, "workflowDefinitionVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

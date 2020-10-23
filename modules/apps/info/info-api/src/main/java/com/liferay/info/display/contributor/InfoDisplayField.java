@@ -22,7 +22,9 @@ import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class InfoDisplayField {
 
 	public InfoDisplayField(String key, String label) {

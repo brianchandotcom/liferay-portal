@@ -34,6 +34,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 			<div class="btn-group-item">
 				<clay:link
 					borderless="<%= true %>"
+					data-senna-off="<%= true %>"
 					displayType="secondary"
 					href="<%= rssURL.toString() %>"
 					icon="rss-full"

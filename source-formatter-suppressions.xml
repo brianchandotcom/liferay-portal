@@ -65,6 +65,7 @@
 		<suppress checks="TryWithResourcesCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/nio/intraband/blocking/ExecutorIntrabandTest\.java" />
 		<suppress checks="VariableDeclarationAsUsedCheck" files="portal-impl/src/com/liferay/portal/action/UpdateLayoutAction\.java" />
 		<suppress checks="VariableNameCheck" files="portal-impl/test/unit/com/liferay/portal/jsonwebservice/FooService\.java" />
+		<suppress checks="VariableNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/display/context/BaseDisplayContext\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="CDNCheck" files="test\.properties" />

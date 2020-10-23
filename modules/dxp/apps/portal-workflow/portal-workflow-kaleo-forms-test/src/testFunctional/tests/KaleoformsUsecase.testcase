@@ -3989,8 +3989,6 @@ definition {
 
 	@priority = "4"
 	test UpdateDueDate {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4858,6 +4856,8 @@ definition {
 			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.clickRevertSortDirection();
 
 		Workflow.viewCompletedTask(
 			workflowAssetTitle = "Kaleo Forms Process",

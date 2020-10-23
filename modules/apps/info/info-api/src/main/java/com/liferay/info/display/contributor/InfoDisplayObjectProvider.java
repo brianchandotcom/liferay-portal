@@ -20,7 +20,9 @@ import java.util.Locale;
 
 /**
  * @author Jürgen Kappler
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public interface InfoDisplayObjectProvider<T> extends Serializable {
 
 	public long getClassNameId();

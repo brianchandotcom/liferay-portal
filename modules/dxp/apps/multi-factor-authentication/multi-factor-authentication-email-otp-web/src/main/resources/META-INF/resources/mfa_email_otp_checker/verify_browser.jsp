@@ -40,7 +40,7 @@ long mfaEmailOTPSetAtTime = GetterUtil.getLong(request.getAttribute(MFAEmailOTPW
 <div id="<portlet:namespace />messageContainer"></div>
 
 <div id="<portlet:namespace />phaseTwo">
-	<aui:input label="enter-the-otp-from-the-email" name="otp" showRequiredLabel="yes" />
+	<aui:input autocomplete="off" label="enter-the-otp-from-the-email" name="otp" showRequiredLabel="yes" />
 </div>
 
 <aui:button-row>

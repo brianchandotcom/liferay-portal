@@ -60,6 +60,10 @@ public interface CacheKeyGenerator extends Cloneable {
 		return getCacheKey(sb.getStrings());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isCallingGetCacheKeyThreadSafe();
 
 }

@@ -204,6 +204,9 @@ public class DDMFormFieldFactoryHelper {
 				ddmFormFieldOptions.addOptionLabel(
 					optionValues[i], _defaultLocale, optionLabel);
 			}
+
+			ddmFormFieldOptions.addOptionReference(
+				optionValues[i], optionValues[i]);
 		}
 
 		return ddmFormFieldOptions;

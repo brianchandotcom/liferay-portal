@@ -159,6 +159,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return depotEntryPersistence.fetchByGroupId(groupId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public List<DepotEntry> getDepotEntryGroupRelsByUuidAndCompanyId(
 		String uuid, long companyId) {

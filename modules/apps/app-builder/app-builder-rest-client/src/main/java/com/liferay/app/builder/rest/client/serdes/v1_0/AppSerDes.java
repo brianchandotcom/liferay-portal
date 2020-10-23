@@ -241,6 +241,30 @@ public class AppSerDes {
 			sb.append("\"");
 		}
 
+		if (app.getWorkflowDefinitionName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowDefinitionName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(app.getWorkflowDefinitionName()));
+
+			sb.append("\"");
+		}
+
+		if (app.getWorkflowDefinitionVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowDefinitionVersion\": ");
+
+			sb.append(app.getWorkflowDefinitionVersion());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -376,6 +400,24 @@ public class AppSerDes {
 			map.put("version", String.valueOf(app.getVersion()));
 		}
 
+		if (app.getWorkflowDefinitionName() == null) {
+			map.put("workflowDefinitionName", null);
+		}
+		else {
+			map.put(
+				"workflowDefinitionName",
+				String.valueOf(app.getWorkflowDefinitionName()));
+		}
+
+		if (app.getWorkflowDefinitionVersion() == null) {
+			map.put("workflowDefinitionVersion", null);
+		}
+		else {
+			map.put(
+				"workflowDefinitionVersion",
+				String.valueOf(app.getWorkflowDefinitionVersion()));
+		}
+
 		return map;
 	}
 
@@ -484,6 +526,21 @@ public class AppSerDes {
 			else if (Objects.equals(jsonParserFieldName, "version")) {
 				if (jsonParserFieldValue != null) {
 					app.setVersion((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowDefinitionName")) {
+
+				if (jsonParserFieldValue != null) {
+					app.setWorkflowDefinitionName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowDefinitionVersion")) {
+
+				if (jsonParserFieldValue != null) {
+					app.setWorkflowDefinitionVersion(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (jsonParserFieldName.equals("status")) {

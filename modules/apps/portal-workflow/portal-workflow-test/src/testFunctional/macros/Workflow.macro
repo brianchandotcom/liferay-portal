@@ -286,6 +286,10 @@ definition {
 			workflowTask = "${workflowTask}");
 	}
 
+	macro clickRevertSortDirection {
+		Click(locator1 = "MyWorkflowTasks#REVERSE_SORT_DIRECTION_BUTTON");
+	}
+
 	macro completeWorkflowBlogInstance {
 		var key_workflowInstanceTitle = "${workflowInstanceName}";
 
@@ -813,6 +817,8 @@ definition {
 
 		MenuItem.click(menuItem = "Update Due Date");
 
+		SelectFrame(locator1 = "MyWorkflowTasks#IFRAME_UPDATE_DUE_DATE");
+
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;
 
@@ -862,6 +868,8 @@ definition {
 		var key_workflowTask = "${workflowTask}";
 
 		MenuItem.click(menuItem = "Update Due Date");
+
+		SelectFrame(locator1 = "MyWorkflowTasks#IFRAME_UPDATE_DUE_DATE");
 
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;

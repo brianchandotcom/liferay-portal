@@ -476,6 +476,67 @@ public class App {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
+	@Schema
+	public String getWorkflowDefinitionName() {
+		return workflowDefinitionName;
+	}
+
+	public void setWorkflowDefinitionName(String workflowDefinitionName) {
+		this.workflowDefinitionName = workflowDefinitionName;
+	}
+
+	@JsonIgnore
+	public void setWorkflowDefinitionName(
+		UnsafeSupplier<String, Exception>
+			workflowDefinitionNameUnsafeSupplier) {
+
+		try {
+			workflowDefinitionName = workflowDefinitionNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String workflowDefinitionName;
+
+	@Schema
+	public Integer getWorkflowDefinitionVersion() {
+		return workflowDefinitionVersion;
+	}
+
+	public void setWorkflowDefinitionVersion(
+		Integer workflowDefinitionVersion) {
+
+		this.workflowDefinitionVersion = workflowDefinitionVersion;
+	}
+
+	@JsonIgnore
+	public void setWorkflowDefinitionVersion(
+		UnsafeSupplier<Integer, Exception>
+			workflowDefinitionVersionUnsafeSupplier) {
+
+		try {
+			workflowDefinitionVersion =
+				workflowDefinitionVersionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer workflowDefinitionVersion;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -684,6 +745,30 @@ public class App {
 			sb.append(_escape(version));
 
 			sb.append("\"");
+		}
+
+		if (workflowDefinitionName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowDefinitionName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowDefinitionName));
+
+			sb.append("\"");
+		}
+
+		if (workflowDefinitionVersion != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowDefinitionVersion\": ");
+
+			sb.append(workflowDefinitionVersion);
 		}
 
 		sb.append("}");

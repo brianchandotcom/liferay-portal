@@ -40,10 +40,9 @@ if (Validator.isNotNull(backURL)) {
 	<aui:input name="commerceChannelIds" type="hidden" />
 	<aui:input name="mvccVersion" type="hidden" value="<%= (commerceInventoryWarehouse == null) ? 0 : commerceInventoryWarehouse.getMvccVersion() %>" />
 
-	<liferay-ui:form-navigator
+	<liferay-frontend:form-navigator
 		formModelBean="<%= commerceInventoryWarehouse %>"
 		id="<%= CommerceInventoryWarehouseFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_WAREHOUSE %>"
-		markupView="lexicon"
 	/>
 </aui:form>
 

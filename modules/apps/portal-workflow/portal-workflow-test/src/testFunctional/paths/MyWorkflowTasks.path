@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVERSE_SORT_DIRECTION_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -127,6 +132,11 @@
 	<td></td>
 </tr>
 <!--DIALOG_BOX-->
+<tr>
+	<td>IFRAME_UPDATE_DUE_DATE</td>
+	<td>//iframe[@title='Update Due Date']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DIALOG_BOX_DUE_DATE</td>
 	<td>//input[contains(@id,'_dueDate')] | //label[contains(@for,'dateInput')]/following-sibling::input</td>

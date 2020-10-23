@@ -35,11 +35,10 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSetti
 	<aui:input name="termsOfUseJournalArticleResourcePrimKey" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey() %>" />
 
 	<div class="lfr-form-content" id="<portlet:namespace />fileEntryContainer">
-		<liferay-ui:form-navigator
+		<liferay-frontend:form-navigator
 			backURL="<%= catalogURL %>"
 			formModelBean="<%= cpDefinitionVirtualSetting %>"
 			id="<%= CPDefinitionVirtualSettingFormNavigatorConstants.FORM_NAVIGATOR_ID_CP_DEFINITION_VIRTUAL_SETTING %>"
-			markupView="lexicon"
 		/>
 	</div>
 </aui:form>

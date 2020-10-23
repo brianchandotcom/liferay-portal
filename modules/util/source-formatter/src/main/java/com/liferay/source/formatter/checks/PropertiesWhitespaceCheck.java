@@ -41,11 +41,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 			String line = null;
 			String previousLine = StringPool.BLANK;
 
-			int lineNumber = 0;
-
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineNumber++;
-
 				if (line.startsWith(StringPool.TAB)) {
 					line = StringUtil.replace(
 						line, CharPool.TAB, StringPool.FOUR_SPACES);
@@ -56,33 +52,24 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 						line, " \t", " " + StringPool.FOUR_SPACES);
 				}
 
+				if (previousLine.matches("\\s*[^\\s#].*[,=]\\\\")) {
+					String leadingSpaces = _getLeadingSpaces(line);
+
+					String expectedLeadingSpaces = _getLeadingSpaces(
+						previousLine);
+
+					if (previousLine.endsWith("=\\")) {
+						expectedLeadingSpaces += StringPool.FOUR_SPACES;
+					}
+
+					if (!leadingSpaces.equals(expectedLeadingSpaces)) {
+						line = StringUtil.replaceFirst(
+							line, leadingSpaces, expectedLeadingSpaces);
+					}
+				}
+
 				sb.append(line);
 				sb.append("\n");
-
-				if (!previousLine.matches("\\s+[^\\s#].*[,=]\\\\")) {
-					previousLine = line;
-
-					continue;
-				}
-
-				int leadingSpaceCount = _getLeadingSpaceCount(line);
-
-				int expectedLeadingSpaceCount = _getLeadingSpaceCount(
-					previousLine);
-
-				if (previousLine.endsWith("=\\")) {
-					expectedLeadingSpaceCount += 4;
-				}
-
-				if (leadingSpaceCount != expectedLeadingSpaceCount) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Line starts with '", leadingSpaceCount,
-							"' spaces, but '", expectedLeadingSpaceCount,
-							"' spaces are expected"),
-						lineNumber);
-				}
 
 				previousLine = line;
 			}
@@ -102,16 +89,14 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 		return false;
 	}
 
-	private int _getLeadingSpaceCount(String line) {
-		int leadingSpaceCount = 0;
-
-		while (line.startsWith(StringPool.SPACE)) {
-			line = line.substring(1);
-
-			leadingSpaceCount++;
+	private String _getLeadingSpaces(String line) {
+		for (int i = 0; i < line.length(); i++) {
+			if (line.charAt(i) != CharPool.SPACE) {
+				return line.substring(0, i);
+			}
 		}
 
-		return leadingSpaceCount;
+		return line;
 	}
 
 }

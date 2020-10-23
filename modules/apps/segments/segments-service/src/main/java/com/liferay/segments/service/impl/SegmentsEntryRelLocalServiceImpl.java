@@ -159,12 +159,13 @@ public class SegmentsEntryRelLocalServiceImpl
 	public boolean hasSegmentsEntryRel(
 		long segmentsEntryId, long classNameId, long classPK) {
 
-		SegmentsEntryRel segmentsEntryRel =
-			segmentsEntryRelPersistence.fetchByS_CN_CPK(
-				segmentsEntryId, classNameId, classPK);
+		List<SegmentsEntryRel> segmentsEntryRels =
+			segmentsEntryRelPersistence.findByCN_CPK(classNameId, classPK);
 
-		if (segmentsEntryRel != null) {
-			return true;
+		for (SegmentsEntryRel segmentsEntryRel : segmentsEntryRels) {
+			if (segmentsEntryRel.getSegmentsEntryId() == segmentsEntryId) {
+				return true;
+			}
 		}
 
 		return false;

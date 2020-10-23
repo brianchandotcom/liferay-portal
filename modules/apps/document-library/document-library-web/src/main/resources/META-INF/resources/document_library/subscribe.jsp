@@ -27,6 +27,8 @@ if (folder != null) {
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
+DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServiceSettings();
+
 boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryAddedEnabled() || dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled();
 %>
 

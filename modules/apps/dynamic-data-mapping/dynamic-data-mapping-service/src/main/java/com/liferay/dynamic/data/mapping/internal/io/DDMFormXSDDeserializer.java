@@ -141,6 +141,7 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 		setDDMFormFieldMultiple(dynamicElementElement, ddmFormField);
 		setDDMFormFieldNamespace(dynamicElementElement, ddmFormField);
 		setDDMFormFieldReadOnly(dynamicElementElement, ddmFormField);
+		setDDMFormFieldReference(dynamicElementElement, ddmFormField);
 		setDDMFormFieldRepeatable(dynamicElementElement, ddmFormField);
 		setDDMFormFieldRequired(dynamicElementElement, ddmFormField);
 		setDDMFormFieldShowLabel(dynamicElementElement, ddmFormField);
@@ -347,6 +348,13 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 			dynamicElementElement.attributeValue("readOnly"));
 
 		ddmFormField.setReadOnly(readOnly);
+	}
+
+	protected void setDDMFormFieldReference(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		ddmFormField.setFieldReference(
+			dynamicElementElement.attributeValue("fieldReference"));
 	}
 
 	protected void setDDMFormFieldRepeatable(

@@ -508,17 +508,19 @@ definition {
 				locator1 = "Questions#VOTE_BUTTON_DISABLED");
 		}
 
-		for (var locatorName : list "Questions#QUESTIONS_BELL_BUTTON,Icon#MOVE_TO_RECYCLE_BIN,Button#EDIT,Button#REPLY,CKEditor#BODY_FIELD_IFRAME") {
-			AssertElementNotPresent(locator1 = "${locatorName}");
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+
+		AssertElementNotPresent(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		AssertElementNotPresent(locator1 = "Button#EDIT");
+
+		AssertElementNotPresent(locator1 = "Button#REPLY");
+
+		for (var text : list "Delete,Mark as answer") {
+			AssertElementNotPresent(
+				key_text = "${text}",
+				locator1 = "Button#ANY");
 		}
-
-		AssertElementNotPresent(
-			key_text = "Delete",
-			locator1 = "Button#ANY");
-
-		AssertElementNotPresent(
-			key_text = "Mark as answer",
-			locator1 = "Button#ANY");
 	}
 
 	macro viewNoSearchResults {
@@ -631,17 +633,19 @@ definition {
 				locator1 = "Questions#VOTE_BUTTON");
 		}
 
-		for (var locatorName : list "Questions#QUESTIONS_BELL_BUTTON,Icon#MOVE_TO_RECYCLE_BIN,Button#EDIT,Button#REPLY") {
-			AssertVisible(locator1 = "${locatorName}");
+		AssertVisible(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+
+		AssertVisible(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		AssertVisible(locator1 = "Button#EDIT");
+
+		AssertVisible(locator1 = "Button#REPLY");
+
+		for (var text : list "Delete,Mark as answer") {
+			AssertVisible(
+				key_text = "${text}",
+				locator1 = "Button#ANY");
 		}
-
-		AssertVisible(
-			key_text = "Delete",
-			locator1 = "Button#ANY");
-
-		AssertVisible(
-			key_text = "Mark as answer",
-			locator1 = "Button#ANY");
 	}
 
 	macro voteQuestion {

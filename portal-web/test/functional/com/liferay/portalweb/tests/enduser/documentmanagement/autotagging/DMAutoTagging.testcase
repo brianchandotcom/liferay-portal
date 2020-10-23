@@ -180,7 +180,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Site AutoTag Disabled");
 
 		AutoTagging.disableAutoTagging(
-			disableAutoTaggingFor = "Settings",
+			disableAutoTaggingFor = "Site Settings",
 			site = "Site AutoTag Disabled");
 
 		JSONDocument.addFileWithUploadedFile(

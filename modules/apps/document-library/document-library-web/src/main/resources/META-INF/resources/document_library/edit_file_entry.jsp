@@ -90,6 +90,8 @@ if (fileEntry != null) {
 
 boolean saveAsDraft = false;
 
+DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
+
 if ((checkedOut || pending) && !dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
 	saveAsDraft = true;
 }

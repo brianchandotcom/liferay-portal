@@ -122,6 +122,46 @@ export const useDropClear = (targetItem) => {
 	setDropClearRef(targetItem);
 };
 
+const getHoverPosition = (monitor, targetItem) => {
+	const clientOffset = monitor.getClientOffset();
+	const targetItemBoundingRect = targetItem.getBoundingClientRect();
+	const targetItemHeight = targetItem.getBoundingClientRect().height;
+
+	const hoverTopLimit = targetItemHeight / 2;
+	const hoverClientY = clientOffset.y - targetItemBoundingRect.top;
+
+	return {hoverClientY, hoverTopLimit, targetItemBoundingRect};
+};
+
+const getDropPosition = ({monitor, targetItem}) => {
+	const {hoverClientY, hoverTopLimit} = getHoverPosition(monitor, targetItem);
+
+	return hoverClientY < hoverTopLimit ? POSITIONS.top : POSITIONS.bottom;
+};
+
+const getDropIndicatorPosition = ({
+	monitor,
+	targetItem,
+	windowScrollPosition,
+}) => {
+	const {
+		hoverClientY,
+		hoverTopLimit,
+		targetItemBoundingRect,
+	} = getHoverPosition(monitor, targetItem);
+
+	const positionY =
+		hoverClientY < hoverTopLimit
+			? targetItemBoundingRect.top
+			: targetItemBoundingRect.bottom;
+
+	return {
+		clientX: targetItemBoundingRect.left,
+		clientY: positionY + windowScrollPosition,
+		width: targetItemBoundingRect.width,
+	};
+};
+
 export const useDropTarget = (targetItem) => {
 	const {
 		dropTargetColumn,
@@ -218,44 +258,4 @@ export const useDropTarget = (targetItem) => {
 	});
 
 	setDropTargetRef(targetItem);
-};
-
-const getHoverPosition = (monitor, targetItem) => {
-	const clientOffset = monitor.getClientOffset();
-	const targetItemBoundingRect = targetItem.getBoundingClientRect();
-	const targetItemHeight = targetItem.getBoundingClientRect().height;
-
-	const hoverTopLimit = targetItemHeight / 2;
-	const hoverClientY = clientOffset.y - targetItemBoundingRect.top;
-
-	return {hoverClientY, hoverTopLimit, targetItemBoundingRect};
-};
-
-const getDropIndicatorPosition = ({
-	monitor,
-	targetItem,
-	windowScrollPosition,
-}) => {
-	const {
-		hoverClientY,
-		hoverTopLimit,
-		targetItemBoundingRect,
-	} = getHoverPosition(monitor, targetItem);
-
-	const positionY =
-		hoverClientY < hoverTopLimit
-			? targetItemBoundingRect.top
-			: targetItemBoundingRect.bottom;
-
-	return {
-		clientX: targetItemBoundingRect.left,
-		clientY: positionY + windowScrollPosition,
-		width: targetItemBoundingRect.width,
-	};
-};
-
-const getDropPosition = ({monitor, targetItem}) => {
-	const {hoverClientY, hoverTopLimit} = getHoverPosition(monitor, targetItem);
-
-	return hoverClientY < hoverTopLimit ? POSITIONS.top : POSITIONS.bottom;
 };

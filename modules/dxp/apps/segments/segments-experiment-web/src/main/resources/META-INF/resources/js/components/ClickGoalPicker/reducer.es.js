@@ -49,13 +49,6 @@ export function reducer(state, action) {
 	return state;
 }
 
-export function getInitialState(target) {
-	return {
-		...INITIAL_STATE,
-		selectedTarget: target,
-	};
-}
-
 const INITIAL_STATE = {
 
 	/**
@@ -93,5 +86,12 @@ const INITIAL_STATE = {
 	 */
 	selectedTarget: '',
 };
+
+export function getInitialState(target) {
+	return {
+		...INITIAL_STATE,
+		selectedTarget: target,
+	};
+}
 
 export const StateContext = React.createContext(INITIAL_STATE);

@@ -16,6 +16,60 @@ import SegmentsExperimentsSidebar from '../../src/main/resources/META-INF/resour
 import SegmentsExperimentsContext from '../../src/main/resources/META-INF/resources/js/context.es';
 import {DEFAULT_ESTIMATED_DAYS, segmentsGoals} from './fixtures.es';
 
+/*
+ * A default mock of the APIService createVariant service.
+ */
+const _createVariantMock = (variant) =>
+	Promise.resolve({
+		segmentsExperimentRel: {
+			name: variant.name,
+			segmentsExperienceId: JSON.stringify(Math.random()),
+			segmentsExperimentId: JSON.stringify(Math.random()),
+			segmentsExperimentRelId: JSON.stringify(Math.random()),
+			split: 0.0,
+		},
+	});
+
+const _editExperimentStatusMockGenerator = (experiment) => ({status}) => {
+	return Promise.resolve({
+		segmentsExperiment: {
+			...experiment,
+			status: {
+				value: status,
+			},
+		},
+	});
+};
+
+const _getEstimatedTimeMock = () =>
+	Promise.resolve({
+		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value,
+	});
+
+const _publishExperienceMockGenerator = (experiment) => ({
+	status,
+	winnerSegmentsExperienceId,
+}) =>
+	Promise.resolve({
+		segmentsExperiment: {
+			...experiment,
+			status: {
+				label: 'completed',
+				value: status,
+			},
+		},
+		winnerSegmentsExperienceId,
+	});
+
+const _runExperimentMockGenerator = (segmentsExperiment) => ({status}) =>
+	Promise.resolve({
+		segmentsExperiment: {
+			...segmentsExperiment,
+			editable: false,
+			status: {label: 'running', value: status},
+		},
+	});
+
 export default function renderApp({
 	classNameId = '',
 	classPK = '',
@@ -95,57 +149,3 @@ export default function renderApp({
 		},
 	};
 }
-
-/*
- * A default mock of the APIService createVariant service.
- */
-const _createVariantMock = (variant) =>
-	Promise.resolve({
-		segmentsExperimentRel: {
-			name: variant.name,
-			segmentsExperienceId: JSON.stringify(Math.random()),
-			segmentsExperimentId: JSON.stringify(Math.random()),
-			segmentsExperimentRelId: JSON.stringify(Math.random()),
-			split: 0.0,
-		},
-	});
-
-const _getEstimatedTimeMock = () =>
-	Promise.resolve({
-		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value,
-	});
-
-const _publishExperienceMockGenerator = (experiment) => ({
-	status,
-	winnerSegmentsExperienceId,
-}) =>
-	Promise.resolve({
-		segmentsExperiment: {
-			...experiment,
-			status: {
-				label: 'completed',
-				value: status,
-			},
-		},
-		winnerSegmentsExperienceId,
-	});
-
-const _runExperimentMockGenerator = (segmentsExperiment) => ({status}) =>
-	Promise.resolve({
-		segmentsExperiment: {
-			...segmentsExperiment,
-			editable: false,
-			status: {label: 'running', value: status},
-		},
-	});
-
-const _editExperimentStatusMockGenerator = (experiment) => ({status}) => {
-	return Promise.resolve({
-		segmentsExperiment: {
-			...experiment,
-			status: {
-				value: status,
-			},
-		},
-	});
-};

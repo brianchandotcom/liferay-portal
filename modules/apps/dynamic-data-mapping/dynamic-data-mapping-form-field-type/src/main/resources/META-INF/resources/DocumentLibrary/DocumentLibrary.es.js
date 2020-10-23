@@ -244,6 +244,18 @@ const Main = ({
 		}
 	};
 
+	const handleFieldChanged = (event) => {
+		const selectedItem = event.selectedItem;
+
+		if (selectedItem) {
+			const {value} = selectedItem;
+
+			setCurrentValue(value);
+
+			onChange(event, value);
+		}
+	};
+
 	const handleSelectButtonClicked = ({
 		itemSelectorAuthToken,
 		portletNamespace,
@@ -262,18 +274,6 @@ const Main = ({
 		itemSelectorDialog.on('visibleChange', handleVisibleChange);
 
 		itemSelectorDialog.open();
-	};
-
-	const handleFieldChanged = (event) => {
-		const selectedItem = event.selectedItem;
-
-		if (selectedItem) {
-			const {value} = selectedItem;
-
-			setCurrentValue(value);
-
-			onChange(event, value);
-		}
 	};
 
 	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();

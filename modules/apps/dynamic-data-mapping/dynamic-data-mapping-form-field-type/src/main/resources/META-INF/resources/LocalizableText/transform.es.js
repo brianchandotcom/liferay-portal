@@ -12,6 +12,19 @@
  * details.
  */
 
+export const convertValueToJSON = (value) => {
+	if (value && typeof value === 'string') {
+		try {
+			return JSON.parse(value);
+		}
+		catch (e) {
+			console.warn('Unable to parse JSON', value);
+		}
+	}
+
+	return value;
+};
+
 export const getEditingValue = ({defaultLocale, editingLocale, value}) => {
 	const valueJSON = convertValueToJSON(value);
 
@@ -35,19 +48,6 @@ export const getInitialInternalValue = ({editingLocale, value}) => {
 const convertValueToString = (value) => {
 	if (value && typeof value === 'object') {
 		return JSON.stringify(value);
-	}
-
-	return value;
-};
-
-export const convertValueToJSON = (value) => {
-	if (value && typeof value === 'string') {
-		try {
-			return JSON.parse(value);
-		}
-		catch (e) {
-			console.warn('Unable to parse JSON', value);
-		}
 	}
 
 	return value;

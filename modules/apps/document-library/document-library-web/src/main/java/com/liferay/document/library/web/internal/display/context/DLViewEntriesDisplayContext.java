@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
@@ -30,9 +31,11 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,6 +54,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,6 +74,8 @@ public class DLViewEntriesDisplayContext {
 		_dlAdminDisplayContext =
 			(DLAdminDisplayContext)liferayPortletRequest.getAttribute(
 				DLAdminDisplayContext.class.getName());
+		_dlRequestHelper = (DLRequestHelper)liferayPortletRequest.getAttribute(
+			DLRequestHelper.class.getName());
 		_dlTrashHelper = (DLTrashHelper)liferayPortletRequest.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER);
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
@@ -163,11 +171,33 @@ public class DLViewEntriesDisplayContext {
 
 	public String[] getEntryColumns() {
 		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
-			new DLPortletInstanceSettingsHelper(
-				(DLRequestHelper)_liferayPortletRequest.getAttribute(
-					DLRequestHelper.class.getName()));
+			new DLPortletInstanceSettingsHelper(_dlRequestHelper);
 
 		return dlPortletInstanceSettingsHelper.getEntryColumns();
+	}
+
+	public FileVersion getLatestFileVersion(FileEntry fileEntry)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		User user = _themeDisplay.getUser();
+
+		if ((_themeDisplay.getUserId() == fileEntry.getUserId()) ||
+			permissionChecker.isContentReviewer(
+				user.getCompanyId(), _themeDisplay.getScopeGroupId()) ||
+			DLFileEntryPermission.contains(
+				permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			return fileVersion.toEscapedModel();
+		}
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		return fileVersion.toEscapedModel();
 	}
 
 	public String getRedirect() {
@@ -213,6 +243,27 @@ public class DLViewEntriesDisplayContext {
 		}
 
 		return searchContainer;
+	}
+
+	public String getThumbnailSrc(FileVersion fileVersion) throws Exception {
+		return DLURLHelperUtil.getThumbnailSrc(
+			fileVersion.getFileEntry(), fileVersion, _themeDisplay);
+	}
+
+	public String getViewFileEntryURL(FileEntry fileEntry) {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view_file_entry");
+		portletURL.setParameter(
+			"redirect",
+			HttpUtil.removeParameter(
+				_dlRequestHelper.getCurrentURL(),
+				_liferayPortletResponse.getNamespace() + "ajax"));
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+
+		return portletURL.toString();
 	}
 
 	public boolean isDescriptiveDisplayStyle() {
@@ -346,6 +397,7 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
+	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashHelper _dlTrashHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

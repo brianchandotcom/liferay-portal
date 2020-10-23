@@ -64,15 +64,9 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 						row.setPrimaryKey(String.valueOf(fileShortcut.getFileShortcutId()));
 					}
 
-					FileVersion latestFileVersion = fileEntry.getFileVersion();
+					FileVersion latestFileVersion = dlViewEntriesDisplayContext.getLatestFileVersion(fileEntry);
 
-					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-						latestFileVersion = fileEntry.getLatestFileVersion();
-					}
-
-					latestFileVersion = latestFileVersion.toEscapedModel();
-
-					String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
+					String thumbnailSrc = dlViewEntriesDisplayContext.getThumbnailSrc(latestFileVersion);
 					%>
 
 					<c:choose>
@@ -110,15 +104,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 							%>
 
 							<liferay-ui:search-container-column-text>
-
-								<%
-								PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-								rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
-								rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
-								rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-								%>
-
 								<c:choose>
 									<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">
 										<liferay-util:buffer
@@ -139,7 +124,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 											resultRow="<%= row %>"
 											rowChecker="<%= searchContainer.getRowChecker() %>"
 											title="<%= latestFileVersion.getTitle() %>"
-											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
+											url="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
 										>
 											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
 										</liferay-frontend:html-vertical-card>
@@ -153,7 +138,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 											resultRow="<%= row %>"
 											rowChecker="<%= searchContainer.getRowChecker() %>"
 											title="<%= latestFileVersion.getTitle() %>"
-											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
+											url="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
 										>
 											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>
@@ -167,7 +152,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 											resultRow="<%= row %>"
 											rowChecker="<%= searchContainer.getRowChecker() %>"
 											title="<%= latestFileVersion.getTitle() %>"
-											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
+											url="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
 										>
 											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
 										</liferay-frontend:vertical-card>
@@ -183,15 +168,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 								<c:choose>
 									<c:when test='<%= curEntryColumn.equals("name") %>'>
-
-										<%
-										PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-										rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
-										rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
-										rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-										%>
-
 										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand table-cell-minw-200 table-title"
 											name="name"
@@ -201,7 +177,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 												fileVersion="<%= latestFileVersion %>"
 											/>
 
-											<aui:a href="<%= rowURL.toString() %>"><%= latestFileVersion.getTitle() %></aui:a>
+											<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= latestFileVersion.getTitle() %></aui:a>
 
 											<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 												<span class="inline-item inline-item-after state-icon">

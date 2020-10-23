@@ -1127,12 +1127,6 @@
 				};
 			}
 
-			var detachEventHandles = function () {
-				AArray.invoke(eventHandles, 'detach');
-
-				iframeDocument.purge(true);
-			};
-
 			var eventHandles = [
 				iframeBody.delegate('submit', detachEventHandles, 'form'),
 
@@ -1152,6 +1146,12 @@
 					'.btn-cancel,.lfr-hide-dialog'
 				),
 			];
+
+			function detachEventHandles() {
+				AArray.invoke(eventHandles, 'detach');
+
+				iframeDocument.purge(true);
+			}
 
 			Liferay.fire('modalIframeLoaded', {
 				src: event.dialog.iframe.node.getAttribute('src'),

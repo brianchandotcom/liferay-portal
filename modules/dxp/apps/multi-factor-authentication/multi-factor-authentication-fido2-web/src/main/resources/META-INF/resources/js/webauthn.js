@@ -83,7 +83,7 @@ export function credentialToObject(credential) {
 function decodeCredentialCreationOptions(request) {
 	const excludeCredentials = request.excludeCredentials.map((credential) => ({
 		...credential,
-		id: base64Url.toBytearray(credential.id),
+		id: base64Url.toByteArray(credential.id),
 	}));
 
 	return {

@@ -1392,7 +1392,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<property name="blacklist.config.name" value="com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" />
+							<property name="blacklist.config.name" value="com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config" />
 
 							<gradle-execute dir="modules/apps/static/portal-bundle-blacklist/portal-bundle-blacklist-test" task="test">
 								<arg value="test" />

@@ -1,7 +1,7 @@
 @component-name = "portal-bundle-blacklist"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";
+	property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 	property osgi.module.configurations = "blacklistBundleSymbolicNames=";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -193,7 +193,7 @@ definition {
 
 		OSGiConfig.deployOSGiConfigFile(
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
-			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config");
+			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 	}

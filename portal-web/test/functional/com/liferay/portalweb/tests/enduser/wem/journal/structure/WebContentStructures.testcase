@@ -220,6 +220,204 @@ definition {
 			substructureName = "2");
 	}
 
+	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@priority = "4"
+	test SelectDifferentTypePagesInLinkToPageField {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page");
+		}
+
+		task ("Add a page based on Blank") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a page based on Search") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				collectionName = "Global Templates",
+				pageName = "Test Search",
+				pageTemplateName = "Search");
+		}
+
+		task ("Add a page based on Full Page Application") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "Test Full Page Application",
+				sitePageType = "Full Page Application");
+		}
+
+		task ("Add a page based on Page Set") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "Test Page Set",
+				sitePageType = "Page Set");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page",
+				parentLayoutName = "Test Page Set");
+		}
+
+		task ("Add a page based on Embedded") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "Test Embedded",
+				pageTypeURL = "https://www.liferay.com",
+				sitePageType = "Embedded");
+		}
+
+		task ("Add a page based on Link to a Page of This Site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				linkPageName = "Test Content Page",
+				pageName = "Test Link To A Page Of This Site",
+				sitePageType = "Link to a Page of This Site");
+		}
+
+		task ("Add a page based on Panel") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				componentName = "Collaboration",
+				pageName = "Test Panel",
+				sitePageType = "Panel");
+		}
+
+		task ("Add a page based on Link to URL") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				pageName = "Test Link To URL",
+				pageTypeURL = "https://www.liferay.com",
+				sitePageType = "Link to URL");
+		}
+
+		task ("Add a structure with 9 Link to Page fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Page Set,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
+				DynamicDataMapping.addField(
+					field = "Link to Page",
+					fieldFieldLabel = "${fieldLabel}",
+					fieldName = StringUtil.replace("${fieldLabel}", " ", ""));
+			}
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Select the relevant page in each field") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			for (var partialPageName : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
+				AssertClick(
+					key_fieldName = StringUtil.replace("${partialPageName}", " ", ""),
+					locator1 = "Button#SELECT_CONTENT",
+					value1 = "Select");
+
+				Click(
+					key_pageName = "Test ${partialPageName}",
+					locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
+
+				Click(locator1 = "Button#SELECT");
+			}
+
+			AssertClick(
+				key_fieldName = "PageSet",
+				locator1 = "Button#SELECT_CONTENT",
+				value1 = "Select");
+
+			Click(
+				key_pageName = "Test Page Set",
+				locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
+
+			Click(
+				key_pageName = "Test Child Page",
+				locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
+
+			Click(locator1 = "Button#SELECT");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Web Content Display to Test Widget Page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Select the web content article") {
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+		}
+
+		task ("Assert access to given pages via Web Content Display") {
+			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Panel") {
+				Click(
+					key_contentText = "${fieldLabel}",
+					locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+
+				ControlMenu.viewHeaderTitle(headerTitle = "Test ${fieldLabel}");
+
+				Navigator.gotoSitePage(
+					pageName = "Test Widget Page",
+					siteName = "Test Site Name");
+			}
+
+			Click(
+				key_contentText = "Link To A Page Of This Site",
+				locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Test Site Name");
+
+			Click(
+				key_contentText = "Page Set",
+				locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Child Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page",
+				siteName = "Test Site Name");
+
+			Click(
+				key_contentText = "Link To URL",
+				locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
+	}
+
 	@description = "This is a use case for LRQA-61632. Can select a great grand child page in Link to Page field."
 	@priority = "4"
 	test SelectGreatGrandChildPageInLinkToPageField {

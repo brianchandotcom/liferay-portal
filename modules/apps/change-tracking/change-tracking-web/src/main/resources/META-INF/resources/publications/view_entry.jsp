@@ -17,7 +17,7 @@
 <%@ include file="/publications/init.jsp" %>
 
 <%
-ViewEntryDisplayContext viewEntryDisplayContext = (ViewEntryDisplayContext)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
+ViewEntryDisplayContext<?> viewEntryDisplayContext = (ViewEntryDisplayContext<?>)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
 %>
 
 <div class="publications-diff-table-wrapper">

@@ -31,6 +31,8 @@ export default function multipleUndo({numberOfActions, store, type}) {
 			return;
 		}
 
+		let isUndoAction, remainingUndos, undosToUndo, updateHistoryAction;
+
 		let updatedStore = store;
 
 		const multipleUndoDispatch = (originalType) => (action) => {
@@ -52,8 +54,6 @@ export default function multipleUndo({numberOfActions, store, type}) {
 				});
 			}
 		};
-
-		let isUndoAction, remainingUndos, undosToUndo, updateHistoryAction;
 
 		if (type === UNDO_TYPES.undo) {
 			isUndoAction = {isUndo: true};

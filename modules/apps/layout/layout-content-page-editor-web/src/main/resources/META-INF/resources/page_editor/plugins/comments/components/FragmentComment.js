@@ -72,6 +72,20 @@ export default function FragmentComment({
 		'page-editor__fragment-comment--with-resolve-mask': showResolveMask,
 	});
 
+	const isMounted = useIsMounted();
+
+	const hideComment = (onHide) => {
+		setHidden(true);
+
+		setTimeout(() => {
+			if (isMounted()) {
+				setShowDeleteMask(false);
+				setShowResolveMask(false);
+				onHide();
+			}
+		}, 1000);
+	};
+
 	const handleResolveButtonClick = () => {
 		setChangingResolved(true);
 
@@ -106,20 +120,6 @@ export default function FragmentComment({
 
 				setChangingResolved(false);
 			});
-	};
-
-	const isMounted = useIsMounted();
-
-	const hideComment = (onHide) => {
-		setHidden(true);
-
-		setTimeout(() => {
-			if (isMounted()) {
-				setShowDeleteMask(false);
-				setShowResolveMask(false);
-				onHide();
-			}
-		}, 1000);
 	};
 
 	useEffect(() => {

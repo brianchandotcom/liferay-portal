@@ -30,10 +30,6 @@ function renderExperiencesSection() {
 	);
 }
 
-function experiencesActivate() {
-	this.dispatch(this.Actions.loadReducer(ExperienceReducer, Experience.name));
-}
-
 /**
  * Entry-point for "Experience" (toolbar drop-down) functionality.
  */
@@ -59,4 +55,8 @@ export default class Experience {
 	deactivate() {
 		this.dispatch(this.Actions.unloadReducer(Experience.name));
 	}
+}
+
+function experiencesActivate() {
+	this.dispatch(this.Actions.loadReducer(ExperienceReducer, Experience.name));
 }

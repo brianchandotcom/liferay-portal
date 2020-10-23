@@ -638,7 +638,9 @@
 		<field name="subjectToVAT" type="boolean" />
 		<field name="idd" type="String" />
 		<field name="zipRequired" type="boolean" />
-		<field name="position" type="double" />
+		<field name="position" type="double">
+			<validator name="number" />
+		</field>
 		<field name="active" type="boolean" />
 		<field name="groupFilterEnabled" type="boolean" />
 		<field name="lastPublishDate" type="Date" />

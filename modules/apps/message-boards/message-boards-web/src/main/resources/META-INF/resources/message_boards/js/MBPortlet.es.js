@@ -109,7 +109,7 @@ export default function MBPortlet({
 	 * keeping the current message.
 	 *
 	 */
-	const openAdvancedReply =  () => {
+	const openAdvancedReply = () => {
 		const bodyInput = rootNode.querySelector(`#${namespace}body`);
 		bodyInput.value = window[
 			`${namespace}replyMessageBody${replyToMessageId}`

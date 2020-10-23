@@ -39,6 +39,102 @@ const INITIAL_STATE = {
 export const AddPanelContext = React.createContext(INITIAL_STATE);
 const AddPanelContextProvider = AddPanelContext.Provider;
 
+const updateUsedPortlet = ({item, portlet, used}) => {
+	if (portlet.portletId === item.itemId && !portlet.instanceable) {
+		portlet.used = used;
+
+		if (portlet.portletItems?.length) {
+			portlet.portletItems.map((portletItem) => {
+				portletItem.used = used;
+			});
+		}
+	}
+};
+
+const updateUsedCategoryPortlet = ({category, item, used}) => {
+	if (category.portlets?.length) {
+		category.portlets.map((portlet) => {
+			updateUsedPortlet({item, portlet, used});
+		});
+	}
+
+	return category.categories?.length
+		? {
+				...category,
+				categories: category.categories.map((category) =>
+					updateUsedCategoryPortlet({category, item, used})
+				),
+		  }
+		: category;
+};
+
+export const updateUsedWidget = ({item, used = true, widgets}) =>
+	widgets.map((collection) => {
+		updateUsedCategoryPortlet({category: collection, item, used});
+
+		return {
+			...collection,
+			portlets: collection.portlets.map((portlet) => {
+				updateUsedPortlet({item, portlet, used});
+
+				return {...portlet};
+			}),
+		};
+	});
+
+const normalizeWidget = (widget) => {
+	return {
+		data: {
+			instanceable: widget.instanceable,
+			portletId: widget.portletId,
+			portletItemId: widget.portletItemId || null,
+			used: widget.used,
+		},
+		disabled: !widget.instanceable && widget.used,
+		icon: widget.instanceable ? 'cards2' : 'square-hole',
+		itemId: widget.portletId,
+		label: widget.title,
+		portletItems: widget.portletItems?.length
+			? widget.portletItems.map(normalizeWidget)
+			: null,
+		type: LAYOUT_DATA_ITEM_TYPES.widget,
+	};
+};
+
+const normalizeCollections = (collection) => {
+	const normalizedElement = {
+		children: collection.portlets.map(normalizeWidget),
+		collectionId: collection.path,
+		label: collection.title,
+	};
+
+	if (collection.categories?.length) {
+		normalizedElement.collections = collection.categories.map(
+			normalizeCollections
+		);
+	}
+
+	return normalizedElement;
+};
+
+export const normalizeContent = (content) => {
+	return {
+		category: content.type,
+		data: {
+			className: content.className,
+			classPK: content.classPK,
+			draggable: content.draggable,
+			instanceable: content.instanceable,
+			portletId: content.portletId,
+		},
+		disabled: !content.draggable,
+		icon: content.icon,
+		itemId: `${content.portletId}_${content.classPK}`,
+		label: content.title,
+		type: LAYOUT_DATA_ITEM_TYPES.content,
+	};
+};
+
 const AddPanel = ({
 	addContentsURLs,
 	contents,
@@ -126,102 +222,6 @@ const AddPanel = ({
 			</AddPanelContextProvider>
 		</div>
 	);
-};
-
-const updateUsedPortlet = ({item, portlet, used}) => {
-	if (portlet.portletId === item.itemId && !portlet.instanceable) {
-		portlet.used = used;
-
-		if (portlet.portletItems?.length) {
-			portlet.portletItems.map((portletItem) => {
-				portletItem.used = used;
-			});
-		}
-	}
-};
-
-const updateUsedCategoryPortlet = ({category, item, used}) => {
-	if (category.portlets?.length) {
-		category.portlets.map((portlet) => {
-			updateUsedPortlet({item, portlet, used});
-		});
-	}
-
-	return category.categories?.length
-		? {
-				...category,
-				categories: category.categories.map((category) =>
-					updateUsedCategoryPortlet({category, item, used})
-				),
-		  }
-		: category;
-};
-
-export const updateUsedWidget = ({item, used = true, widgets}) =>
-	widgets.map((collection) => {
-		updateUsedCategoryPortlet({category: collection, item, used});
-
-		return {
-			...collection,
-			portlets: collection.portlets.map((portlet) => {
-				updateUsedPortlet({item, portlet, used});
-
-				return {...portlet};
-			}),
-		};
-	});
-
-const normalizeCollections = (collection) => {
-	const normalizedElement = {
-		children: collection.portlets.map(normalizeWidget),
-		collectionId: collection.path,
-		label: collection.title,
-	};
-
-	if (collection.categories?.length) {
-		normalizedElement.collections = collection.categories.map(
-			normalizeCollections
-		);
-	}
-
-	return normalizedElement;
-};
-
-const normalizeWidget = (widget) => {
-	return {
-		data: {
-			instanceable: widget.instanceable,
-			portletId: widget.portletId,
-			portletItemId: widget.portletItemId || null,
-			used: widget.used,
-		},
-		disabled: !widget.instanceable && widget.used,
-		icon: widget.instanceable ? 'cards2' : 'square-hole',
-		itemId: widget.portletId,
-		label: widget.title,
-		portletItems: widget.portletItems?.length
-			? widget.portletItems.map(normalizeWidget)
-			: null,
-		type: LAYOUT_DATA_ITEM_TYPES.widget,
-	};
-};
-
-export const normalizeContent = (content) => {
-	return {
-		category: content.type,
-		data: {
-			className: content.className,
-			classPK: content.classPK,
-			draggable: content.draggable,
-			instanceable: content.instanceable,
-			portletId: content.portletId,
-		},
-		disabled: !content.draggable,
-		icon: content.icon,
-		itemId: `${content.portletId}_${content.classPK}`,
-		label: content.title,
-		type: LAYOUT_DATA_ITEM_TYPES.content,
-	};
 };
 
 AddPanel.propTypes = {

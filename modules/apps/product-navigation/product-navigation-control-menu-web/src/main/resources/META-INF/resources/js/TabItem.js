@@ -23,6 +23,21 @@ import addPortlet from './addPortlet';
 import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 import {useDragSymbol} from './useDragAndDrop';
 
+const addItem = ({item, plid, setWidgets, widgets}) => {
+	const targetItem = document.querySelector('.portlet-dropzone');
+
+	addPortlet({item, plid, targetItem});
+
+	if (!item.data.instanceable) {
+		const updatedWidgets = updateUsedWidget({
+			item,
+			widgets,
+		});
+
+		setWidgets(updatedWidgets);
+	}
+};
+
 const TabItem = ({item}) => {
 	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
 
@@ -74,21 +89,6 @@ const TabItem = ({item}) => {
 			)}
 		</li>
 	);
-};
-
-const addItem = ({item, plid, setWidgets, widgets}) => {
-	const targetItem = document.querySelector('.portlet-dropzone');
-
-	addPortlet({item, plid, targetItem});
-
-	if (!item.data.instanceable) {
-		const updatedWidgets = updateUsedWidget({
-			item,
-			widgets,
-		});
-
-		setWidgets(updatedWidgets);
-	}
 };
 
 TabItem.propTypes = {

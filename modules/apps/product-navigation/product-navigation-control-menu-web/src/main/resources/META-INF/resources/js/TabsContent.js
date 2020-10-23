@@ -26,6 +26,43 @@ const CONTENT_TAB_ID = 'content';
 const EMPTY_COLLECTIONS = {collections: []};
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
+const collectionFilter = (collections, searchValue) => {
+	const searchValueLowerCase = searchValue.toLowerCase();
+
+	const itemFilter = (item) =>
+		item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1;
+
+	const hasChildren = (collection) => {
+		if (collection.children?.length) {
+			return true;
+		}
+
+		return collection.collections?.some(hasChildren) ?? false;
+	};
+
+	return collections
+		.reduce((acc, collection) => {
+			if (itemFilter(collection)) {
+				return [...acc, collection];
+			}
+			else {
+				const updateCollection = {
+					...collection,
+					children: collection.children.filter(itemFilter),
+					...(collection.collections?.length && {
+						collections: collectionFilter(
+							collection.collections,
+							searchValueLowerCase
+						),
+					}),
+				};
+
+				return [...acc, updateCollection];
+			}
+		}, [])
+		.filter(hasChildren);
+};
+
 const TabsContent = ({tab, tabIndex}) => {
 	const {getContentsURL, namespace} = useContext(AddPanelContext);
 
@@ -131,43 +168,6 @@ const TabsContent = ({tab, tabIndex}) => {
 			)}
 		</>
 	);
-};
-
-const collectionFilter = (collections, searchValue) => {
-	const searchValueLowerCase = searchValue.toLowerCase();
-
-	const itemFilter = (item) =>
-		item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1;
-
-	const hasChildren = (collection) => {
-		if (collection.children?.length) {
-			return true;
-		}
-
-		return collection.collections?.some(hasChildren) ?? false;
-	};
-
-	return collections
-		.reduce((acc, collection) => {
-			if (itemFilter(collection)) {
-				return [...acc, collection];
-			}
-			else {
-				const updateCollection = {
-					...collection,
-					children: collection.children.filter(itemFilter),
-					...(collection.collections?.length && {
-						collections: collectionFilter(
-							collection.collections,
-							searchValueLowerCase
-						),
-					}),
-				};
-
-				return [...acc, updateCollection];
-			}
-		}, [])
-		.filter(hasChildren);
 };
 
 TabsContent.propTypes = {

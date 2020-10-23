@@ -197,9 +197,6 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		properties.put(
 			"com.liferay.portlet.use-default-template",
 			Boolean.TRUE.toString());
-		properties.put(
-			"com.liferay.portlet.webdav-storage-token",
-			TestUploadPortlet.MVC_PATH);
 		properties.put("javax.portlet.display-name", "Test Upload Portlet");
 		properties.put("javax.portlet.expiration-cache", "0");
 		properties.put(

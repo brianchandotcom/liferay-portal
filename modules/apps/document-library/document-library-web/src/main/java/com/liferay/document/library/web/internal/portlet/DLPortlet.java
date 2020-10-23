@@ -54,7 +54,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.struts-path=document_library",
 		"com.liferay.portlet.use-default-template=true",
-		"com.liferay.portlet.webdav-storage-token=document_library",
 		"javax.portlet.display-name=Documents and Media",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-display-default-configuration-icons=true",

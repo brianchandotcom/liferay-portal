@@ -79,7 +79,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
-		"com.liferay.portlet.webdav-storage-token=dynamic_data_lists",
 		"javax.portlet.display-name=Dynamic Data Lists",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",

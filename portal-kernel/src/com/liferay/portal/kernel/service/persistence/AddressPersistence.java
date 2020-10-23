@@ -622,6 +622,292 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public int countByUserId(long userId);
 
 	/**
+	 * Returns all the addresses where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @return the matching addresses
+	 */
+	public java.util.List<Address> findByRegionId(long regionId);
+
+	/**
+	 * Returns a range of all the addresses where regionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param regionId the region ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public java.util.List<Address> findByRegionId(
+		long regionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the addresses where regionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param regionId the region ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public java.util.List<Address> findByRegionId(
+		long regionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the addresses where regionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param regionId the region ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	public java.util.List<Address> findByRegionId(
+		long regionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first address in the ordered set where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public Address findByRegionId_First(
+			long regionId,
+			com.liferay.portal.kernel.util.OrderByComparator<Address>
+				orderByComparator)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the first address in the ordered set where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByRegionId_First(
+		long regionId,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator);
+
+	/**
+	 * Returns the last address in the ordered set where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public Address findByRegionId_Last(
+			long regionId,
+			com.liferay.portal.kernel.util.OrderByComparator<Address>
+				orderByComparator)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the last address in the ordered set where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByRegionId_Last(
+		long regionId,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator);
+
+	/**
+	 * Returns the addresses before and after the current address in the ordered set where regionId = &#63;.
+	 *
+	 * @param addressId the primary key of the current address
+	 * @param regionId the region ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next address
+	 * @throws NoSuchAddressException if a address with the primary key could not be found
+	 */
+	public Address[] findByRegionId_PrevAndNext(
+			long addressId, long regionId,
+			com.liferay.portal.kernel.util.OrderByComparator<Address>
+				orderByComparator)
+		throws NoSuchAddressException;
+
+	/**
+	 * Removes all the addresses where regionId = &#63; from the database.
+	 *
+	 * @param regionId the region ID
+	 */
+	public void removeByRegionId(long regionId);
+
+	/**
+	 * Returns the number of addresses where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @return the number of matching addresses
+	 */
+	public int countByRegionId(long regionId);
+
+	/**
+	 * Returns all the addresses where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @return the matching addresses
+	 */
+	public java.util.List<Address> findByCountryId(long countryId);
+
+	/**
+	 * Returns a range of all the addresses where countryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public java.util.List<Address> findByCountryId(
+		long countryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the addresses where countryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public java.util.List<Address> findByCountryId(
+		long countryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the addresses where countryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	public java.util.List<Address> findByCountryId(
+		long countryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first address in the ordered set where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public Address findByCountryId_First(
+			long countryId,
+			com.liferay.portal.kernel.util.OrderByComparator<Address>
+				orderByComparator)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the first address in the ordered set where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByCountryId_First(
+		long countryId,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator);
+
+	/**
+	 * Returns the last address in the ordered set where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public Address findByCountryId_Last(
+			long countryId,
+			com.liferay.portal.kernel.util.OrderByComparator<Address>
+				orderByComparator)
+		throws NoSuchAddressException;
+
+	/**
+	 * Returns the last address in the ordered set where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public Address fetchByCountryId_Last(
+		long countryId,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator);
+
+	/**
+	 * Returns the addresses before and after the current address in the ordered set where countryId = &#63;.
+	 *
+	 * @param addressId the primary key of the current address
+	 * @param countryId the country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next address
+	 * @throws NoSuchAddressException if a address with the primary key could not be found
+	 */
+	public Address[] findByCountryId_PrevAndNext(
+			long addressId, long countryId,
+			com.liferay.portal.kernel.util.OrderByComparator<Address>
+				orderByComparator)
+		throws NoSuchAddressException;
+
+	/**
+	 * Removes all the addresses where countryId = &#63; from the database.
+	 *
+	 * @param countryId the country ID
+	 */
+	public void removeByCountryId(long countryId);
+
+	/**
+	 * Returns the number of addresses where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @return the number of matching addresses
+	 */
+	public int countByCountryId(long countryId);
+
+	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID

@@ -61,7 +61,7 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 >
 
 	<%
-	SearchContainer<Object> dlSearchContainer = dlAdminDisplayContext.getSearchContainer();
+	SearchContainer<RepositoryEntry> dlSearchContainer = dlAdminDisplayContext.getSearchContainer();
 	%>
 
 	<div class="document-container" id="<portlet:namespace />entriesContainer">

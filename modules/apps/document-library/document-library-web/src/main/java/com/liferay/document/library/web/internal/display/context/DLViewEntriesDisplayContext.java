@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -187,8 +188,10 @@ public class DLViewEntriesDisplayContext {
 		return folderActionDisplayContext.getRowURL(folder);
 	}
 
-	public SearchContainer<Object> getSearchContainer() throws PortalException {
-		SearchContainer<Object> searchContainer =
+	public SearchContainer<RepositoryEntry> getSearchContainer()
+		throws PortalException {
+
+		SearchContainer<RepositoryEntry> searchContainer =
 			_dlAdminDisplayContext.getSearchContainer();
 
 		EntriesChecker entriesChecker = new EntriesChecker(

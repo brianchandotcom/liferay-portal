@@ -19,25 +19,7 @@ Folder curFolder = null;
 FileEntry fileEntry = null;
 FileShortcut fileShortcut = null;
 
-if (result instanceof AssetEntry) {
-	AssetEntry assetEntry = (AssetEntry)result;
-
-	if (Objects.equals(assetEntry.getClassName(), DLFileEntryConstants.getClassName())) {
-		fileEntry = DLAppLocalServiceUtil.getFileEntry(assetEntry.getClassPK());
-
-		fileEntry = fileEntry.toEscapedModel();
-	}
-	else {
-		fileShortcut = DLAppLocalServiceUtil.getFileShortcut(assetEntry.getClassPK());
-
-		fileShortcut = fileShortcut.toEscapedModel();
-
-		fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
-
-		fileEntry = fileEntry.toEscapedModel();
-	}
-}
-else if (result instanceof FileEntry) {
+if (result instanceof FileEntry) {
 	fileEntry = (FileEntry)result;
 
 	fileEntry = fileEntry.toEscapedModel();

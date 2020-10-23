@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.document.library.constants.DLPortletKeys;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -77,6 +79,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -269,7 +272,7 @@ public class DLAdminDisplayContext {
 		return _rootFolderName;
 	}
 
-	public SearchContainer<Object> getSearchContainer() {
+	public SearchContainer<RepositoryEntry> getSearchContainer() {
 		if (_searchContainer == null) {
 			try {
 				if (isSearch()) {
@@ -400,7 +403,7 @@ public class DLAdminDisplayContext {
 		}
 	}
 
-	private SearchContainer<Object> _getDLSearchContainer()
+	private SearchContainer<RepositoryEntry> _getDLSearchContainer()
 		throws PortalException {
 
 		String navigation = ParamUtil.getString(
@@ -459,10 +462,11 @@ public class DLAdminDisplayContext {
 				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
 		}
 
-		SearchContainer<Object> dlSearchContainer = new SearchContainer(
-			_liferayPortletRequest, null, null, "curEntry",
-			_dlPortletInstanceSettings.getEntriesPerPage(), portletURL, null,
-			null);
+		SearchContainer<RepositoryEntry> dlSearchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, null, null, "curEntry",
+				_dlPortletInstanceSettings.getEntriesPerPage(), portletURL,
+				null, null);
 
 		dlSearchContainer.setHeaderNames(
 			ListUtil.fromArray(
@@ -477,7 +481,7 @@ public class DLAdminDisplayContext {
 			orderByModel = true;
 		}
 
-		OrderByComparator<Object> orderByComparator =
+		OrderByComparator<RepositoryEntry> orderByComparator =
 			DLUtil.getRepositoryModelOrderByComparator(
 				orderByCol, orderByType, orderByModel);
 
@@ -485,7 +489,7 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setOrderByComparator(orderByComparator);
 		dlSearchContainer.setOrderByType(orderByType);
 
-		List<Object> results = new ArrayList<>();
+		List<RepositoryEntry> results = new ArrayList<>();
 		int total = 0;
 
 		if (fileEntryTypeId >= 0) {
@@ -584,8 +588,23 @@ public class DLAdminDisplayContext {
 
 					dlSearchContainer.setTotal(total);
 
-					results.addAll(
-						AssetEntryServiceUtil.getEntries(assetEntryQuery));
+					for (AssetEntry assetEntry :
+							AssetEntryServiceUtil.getEntries(assetEntryQuery)) {
+
+						if (Objects.equals(
+								assetEntry.getClassName(),
+								DLFileEntryConstants.getClassName())) {
+
+							results.add(
+								DLAppLocalServiceUtil.getFileEntry(
+									assetEntry.getClassNameId()));
+						}
+						else {
+							results.add(
+								DLAppLocalServiceUtil.getFileShortcut(
+									assetEntry.getClassPK()));
+						}
+					}
 				}
 				else {
 					long repositoryId = getRepositoryId();
@@ -598,12 +617,13 @@ public class DLAdminDisplayContext {
 					dlSearchContainer.setTotal(total);
 
 					results =
-						DLAppServiceUtil.
-							getFoldersAndFileEntriesAndFileShortcuts(
-								repositoryId, folderId, status, true,
-								dlSearchContainer.getStart(),
-								dlSearchContainer.getEnd(),
-								dlSearchContainer.getOrderByComparator());
+						(List)
+							DLAppServiceUtil.
+								getFoldersAndFileEntriesAndFileShortcuts(
+									repositoryId, folderId, status, true,
+									dlSearchContainer.getStart(),
+									dlSearchContainer.getEnd(),
+									dlSearchContainer.getOrderByComparator());
 				}
 			}
 			else if (navigation.equals("mine")) {
@@ -653,7 +673,7 @@ public class DLAdminDisplayContext {
 		return dlSearchContainer;
 	}
 
-	private Hits _getHits(SearchContainer<Object> searchContainer)
+	private Hits _getHits(SearchContainer<RepositoryEntry> searchContainer)
 		throws PortalException {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
@@ -691,15 +711,14 @@ public class DLAdminDisplayContext {
 		return DLAppServiceUtil.search(searchRepositoryId, searchContext);
 	}
 
-	private List<Object> _getSearchResults(Hits hits) throws PortalException {
-		List<Object> searchResults = new ArrayList<>();
+	private List<RepositoryEntry> _getSearchResults(Hits hits)
+		throws PortalException {
+
+		List<RepositoryEntry> searchResults = new ArrayList<>();
 
 		for (SearchResult searchResult :
 				SearchResultUtil.getSearchResults(
 					hits, _httpServletRequest.getLocale())) {
-
-			FileEntry fileEntry = null;
-			Folder folder = null;
 
 			String className = searchResult.getClassName();
 
@@ -717,7 +736,7 @@ public class DLAdminDisplayContext {
 						 FileEntry.class.isAssignableFrom(
 							 Class.forName(className))) {
 
-					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 						searchResult.getClassPK());
 
 					searchResults.add(fileEntry);
@@ -725,7 +744,7 @@ public class DLAdminDisplayContext {
 				else if (className.equals(DLFolder.class.getName()) ||
 						 className.equals(Folder.class.getName())) {
 
-					folder = DLAppLocalServiceUtil.getFolder(
+					Folder folder = DLAppLocalServiceUtil.getFolder(
 						searchResult.getClassPK());
 
 					searchResults.add(folder);
@@ -739,11 +758,13 @@ public class DLAdminDisplayContext {
 		return searchResults;
 	}
 
-	private SearchContainer<Object> _getSearchSearchContainer()
+	private SearchContainer<RepositoryEntry> _getSearchSearchContainer()
 		throws PortalException {
 
-		SearchContainer<Object> searchContainer = new SearchContainer(
-			_liferayPortletRequest, getSearchSearchContainerURL(), null, null);
+		SearchContainer<RepositoryEntry> searchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getSearchSearchContainerURL(), null,
+				null);
 
 		Hits hits = _getHits(searchContainer);
 
@@ -775,7 +796,7 @@ public class DLAdminDisplayContext {
 	private Long _repositoryId;
 	private long _rootFolderId;
 	private String _rootFolderName;
-	private SearchContainer<Object> _searchContainer;
+	private SearchContainer<RepositoryEntry> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final VersioningStrategy _versioningStrategy;
 

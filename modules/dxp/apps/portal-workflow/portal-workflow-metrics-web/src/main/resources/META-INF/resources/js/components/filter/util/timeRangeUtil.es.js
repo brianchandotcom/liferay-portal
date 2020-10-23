@@ -21,6 +21,10 @@ const convertQueryDate = (date = '', format = 'L') => {
 	return moment.utc(decodeURIComponent(date), null, 'en').format(format);
 };
 
+const parseDateMoment = (date, format = 'L') => {
+	return moment.utc(date, format, 'en');
+};
+
 const formatDateTime = (date, format, isEndDate) => {
 	let dateTime = parseDateMoment(date, format || 'L');
 
@@ -35,6 +39,33 @@ const formatDescriptionDate = (date) => {
 		getLocaleDateFormat('ll'),
 		defaultDateFormat
 	);
+};
+
+const getFormatPattern = (dateEndMoment, dateStartMoment, isAmPm) => {
+	let dateStartPattern = Liferay.Language.get('mmm-dd-yyyy');
+
+	if (dateEndMoment.diff(dateStartMoment, 'days') <= 1) {
+		if (isAmPm) {
+			dateStartPattern = Liferay.Language.get('mmm-dd-hh-mm-a');
+		}
+		else {
+			dateStartPattern = Liferay.Language.get('mmm-dd-hh-mm');
+		}
+	}
+	else if (dateEndMoment.diff(dateStartMoment, 'years') < 1) {
+		dateStartPattern = Liferay.Language.get('mmm-dd');
+	}
+
+	let dateEndPattern = dateStartPattern;
+
+	if (dateEndMoment.diff(dateStartMoment, 'days') > 90) {
+		dateEndPattern = Liferay.Language.get('mmm-dd-yyyy');
+	}
+
+	return {
+		dateEndPattern,
+		dateStartPattern,
+	};
 };
 
 const formatTimeRange = (timeRange, isAmPm) => {
@@ -75,33 +106,6 @@ const getCustomTimeRange = (dateEnd, dateStart) => {
 	return customTimeRange;
 };
 
-const getFormatPattern = (dateEndMoment, dateStartMoment, isAmPm) => {
-	let dateStartPattern = Liferay.Language.get('mmm-dd-yyyy');
-
-	if (dateEndMoment.diff(dateStartMoment, 'days') <= 1) {
-		if (isAmPm) {
-			dateStartPattern = Liferay.Language.get('mmm-dd-hh-mm-a');
-		}
-		else {
-			dateStartPattern = Liferay.Language.get('mmm-dd-hh-mm');
-		}
-	}
-	else if (dateEndMoment.diff(dateStartMoment, 'years') < 1) {
-		dateStartPattern = Liferay.Language.get('mmm-dd');
-	}
-
-	let dateEndPattern = dateStartPattern;
-
-	if (dateEndMoment.diff(dateStartMoment, 'days') > 90) {
-		dateEndPattern = Liferay.Language.get('mmm-dd-yyyy');
-	}
-
-	return {
-		dateEndPattern,
-		dateStartPattern,
-	};
-};
-
 const getTimeRangeParams = (dateStartEncoded = '', dateEndEncoded = '') => {
 	let params = {};
 
@@ -119,10 +123,6 @@ const getTimeRangeParams = (dateStartEncoded = '', dateEndEncoded = '') => {
 	}
 
 	return params;
-};
-
-const parseDateMoment = (date, format = 'L') => {
-	return moment.utc(date, format, 'en');
 };
 
 const parseDateItems = (isAmPm) => (items) => {

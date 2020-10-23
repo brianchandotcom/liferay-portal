@@ -63,6 +63,15 @@ const AutocompleteMultiSelect = ({
 		setHighlighted(true);
 	};
 
+	const handleSelect = useCallback(
+		(item) => {
+			const newSelectedItems = [...selectedItems, item];
+
+			handleChange(newSelectedItems);
+		},
+		[handleChange, selectedItems]
+	);
+
 	const handleKeyDown = useCallback(
 		({keyCode}) => {
 			const keyArrowDown = 40;
@@ -101,15 +110,6 @@ const AutocompleteMultiSelect = ({
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fieldId, selectedItems]
-	);
-
-	const handleSelect = useCallback(
-		(item) => {
-			const newSelectedItems = [...selectedItems, item];
-
-			handleChange(newSelectedItems);
-		},
-		[handleChange, selectedItems]
 	);
 
 	useEffect(() => {

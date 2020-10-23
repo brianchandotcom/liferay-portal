@@ -16,6 +16,27 @@ import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.
 import {useFilterStatic} from '../../shared/components/filter/hooks/useFilterStatic.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
+const slaStatusConstants = {
+	onTime: 'OnTime',
+	overdue: 'Overdue',
+	untracked: 'Untracked',
+};
+
+const slaStatuses = [
+	{
+		key: slaStatusConstants.onTime,
+		name: Liferay.Language.get('on-time'),
+	},
+	{
+		key: slaStatusConstants.overdue,
+		name: Liferay.Language.get('overdue'),
+	},
+	{
+		key: slaStatusConstants.untracked,
+		name: Liferay.Language.get('untracked'),
+	},
+];
+
 const SLAStatusFilter = ({
 	className,
 	filterKey = filterConstants.slaStatus.key,
@@ -59,27 +80,6 @@ const SLAStatusFilter = ({
 		/>
 	);
 };
-
-const slaStatusConstants = {
-	onTime: 'OnTime',
-	overdue: 'Overdue',
-	untracked: 'Untracked',
-};
-
-const slaStatuses = [
-	{
-		key: slaStatusConstants.onTime,
-		name: Liferay.Language.get('on-time'),
-	},
-	{
-		key: slaStatusConstants.overdue,
-		name: Liferay.Language.get('overdue'),
-	},
-	{
-		key: slaStatusConstants.untracked,
-		name: Liferay.Language.get('untracked'),
-	},
-];
 
 export default SLAStatusFilter;
 export {slaStatusConstants};

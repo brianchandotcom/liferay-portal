@@ -16,6 +16,13 @@ import {useFilterFetch} from '../../shared/components/filter/hooks/useFilterFetc
 import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
+const unassigned = {
+	dividerAfter: true,
+	id: -1,
+	key: '-1',
+	name: Liferay.Language.get('unassigned'),
+};
+
 const AssigneeFilter = ({
 	className,
 	filterKey = filterConstants.assignee.key,
@@ -65,13 +72,6 @@ const AssigneeFilter = ({
 			{...options}
 		/>
 	);
-};
-
-const unassigned = {
-	dividerAfter: true,
-	id: -1,
-	key: '-1',
-	name: Liferay.Language.get('unassigned'),
 };
 
 export default AssigneeFilter;

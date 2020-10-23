@@ -11,19 +11,6 @@
 
 import {useMemo} from 'react';
 
-const useFilterName = (
-	multiple,
-	selectedItems = [],
-	title,
-	withSelectionTitle
-) =>
-	useFilterNameWithLabel({
-		multiple,
-		selectedItems,
-		title,
-		withSelectionTitle,
-	});
-
 const useFilterNameWithLabel = ({
 	labelPropertyName = 'name',
 	multiple,
@@ -41,5 +28,18 @@ const useFilterNameWithLabel = ({
 		return title;
 	}, [labelPropertyName, multiple, selectedItems, title, withSelectionTitle]);
 };
+
+const useFilterName = (
+	multiple,
+	selectedItems = [],
+	title,
+	withSelectionTitle
+) =>
+	useFilterNameWithLabel({
+		multiple,
+		selectedItems,
+		title,
+		withSelectionTitle,
+	});
 
 export {useFilterName, useFilterNameWithLabel};

@@ -16,6 +16,10 @@ import React, {useCallback, useEffect, useState} from 'react';
 import PromisesResolver from '../promises-resolver/PromisesResolver.es';
 import {DropDown} from './AutocompleteDropDown.es';
 
+const formatRegExp = (value) => {
+	return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
 const Autocomplete = ({
 	children,
 	defaultValue = '',
@@ -64,6 +68,17 @@ const Autocomplete = ({
 		setDropDownVisible(true);
 	};
 
+	const handleSelect = useCallback(
+		(item) => {
+			onSelect(item);
+			setActiveItem(-1);
+			setDropDownVisible(false);
+			setSelected(true);
+			setValue(item.name);
+		},
+		[onSelect]
+	);
+
 	const handleKeyDown = useCallback(
 		({keyCode}) => {
 			const item = dropDownItems[activeItem];
@@ -82,17 +97,6 @@ const Autocomplete = ({
 			}
 		},
 		[activeItem, dropDownItems, handleSelect]
-	);
-
-	const handleSelect = useCallback(
-		(item) => {
-			onSelect(item);
-			setActiveItem(-1);
-			setDropDownVisible(false);
-			setSelected(true);
-			setValue(item.name);
-		},
-		[onSelect]
 	);
 
 	useEffect(() => {
@@ -156,10 +160,6 @@ const Autocomplete = ({
 			</ClayAutocomplete>
 		</PromisesResolver>
 	);
-};
-
-const formatRegExp = (value) => {
-	return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
 Autocomplete.DropDown = DropDown;

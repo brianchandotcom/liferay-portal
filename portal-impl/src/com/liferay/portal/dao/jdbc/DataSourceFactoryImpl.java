@@ -136,8 +136,11 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	@Override
 	public DataSource initDataSource(Properties properties) throws Exception {
 		String jndiName = properties.getProperty("jndi.name");
+		String driverClassName = properties.getProperty("driverClassName");
 
-		if (JavaDetector.isIBM()) {
+		if (JavaDetector.isIBM() &&
+			(Validator.isNotNull(jndiName) ||
+			 driverClassName.startsWith("com.mysql.cj"))) {
 
 			// https://issues.liferay.com/browse/LPS-120753
 

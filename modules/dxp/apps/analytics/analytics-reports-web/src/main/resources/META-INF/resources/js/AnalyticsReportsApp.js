@@ -21,6 +21,12 @@ import {StoreContextProvider} from './context/store';
 
 import '../css/analytics-reports-app.scss';
 
+const initialState = {
+	data: null,
+	error: null,
+	loading: false,
+};
+
 const dataReducer = (state, action) => {
 	switch (action.type) {
 		case 'LOAD_DATA':
@@ -53,18 +59,18 @@ const dataReducer = (state, action) => {
 	}
 };
 
-const initialState = {
-	data: null,
-	error: null,
-	loading: false,
-};
-
 export default function ({context}) {
 	const {analyticsReportsDataURL} = context;
 
 	const isMounted = useIsMounted();
 
 	const [state, dispatch] = useReducer(dataReducer, initialState);
+
+	const safeDispatch = (action) => {
+		if (isMounted()) {
+			dispatch(action);
+		}
+	};
 
 	const getData = (fetchURL, timeSpanKey, timeSpanOffset) => {
 		safeDispatch({type: 'LOAD_DATA'});
@@ -92,12 +98,6 @@ export default function ({context}) {
 					type: 'SET_ERROR',
 				});
 			});
-	};
-
-	const safeDispatch = (action) => {
-		if (isMounted()) {
-			dispatch(action);
-		}
 	};
 
 	useEffect(() => {

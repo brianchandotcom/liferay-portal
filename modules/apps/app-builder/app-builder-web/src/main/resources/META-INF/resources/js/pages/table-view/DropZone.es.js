@@ -25,6 +25,15 @@ import ColumnOverlay from './ColumnOverlay.es';
 import DropZonePlaceholder from './DropZonePlaceholder.es';
 import EditTableViewContext from './EditTableViewContext.es';
 
+const generateItem = (columns) =>
+	columns.reduce(
+		(acc, column) => ({
+			...acc,
+			[column]: `-`,
+		}),
+		{}
+	);
+
 const generateItems = (columns, rows = 10) => {
 	const items = [];
 
@@ -34,15 +43,6 @@ const generateItems = (columns, rows = 10) => {
 
 	return items;
 };
-
-const generateItem = (columns) =>
-	columns.reduce(
-		(acc, column) => ({
-			...acc,
-			[column]: `-`,
-		}),
-		{}
-	);
 
 const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 	const [{canDrop, overTarget}, drop] = useDrop({

@@ -32,6 +32,14 @@ const CustomObjectPopover = ({
 	const [hasError, setHasError] = useState(false);
 	const [isLoading, setLoading] = useState(false);
 
+	const validate = (value) => {
+		const invalid = value.trim() === '';
+
+		setHasError(invalid);
+
+		return !invalid;
+	};
+
 	const handleSubmit = () => {
 		const name = nameInputRef.current.value;
 
@@ -44,14 +52,6 @@ const CustomObjectPopover = ({
 		else {
 			nameInputRef.current.focus();
 		}
-	};
-
-	const validate = (value) => {
-		const invalid = value.trim() === '';
-
-		setHasError(invalid);
-
-		return !invalid;
 	};
 
 	const resetForm = () => {

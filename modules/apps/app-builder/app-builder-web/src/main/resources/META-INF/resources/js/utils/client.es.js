@@ -38,11 +38,39 @@ export const parseResponse = (response) =>
 		}
 	});
 
+export const getURL = (path, params) => {
+	params = {
+		['p_auth']: Liferay.authToken,
+		t: Date.now(),
+		...params,
+	};
+
+	const uri = new URL(`${window.location.origin}${path}`);
+	const keys = Object.keys(params);
+
+	keys.forEach((key) => {
+		if (Array.isArray(params[key])) {
+			params[key].forEach((value) => uri.searchParams.append(key, value));
+		}
+		else {
+			uri.searchParams.set(key, params[key]);
+		}
+	});
+
+	return uri.toString();
+};
+
 export const addItem = (endpoint, item) =>
 	fetch(getURL(endpoint), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
 		method: 'POST',
+	}).then((response) => parseResponse(response));
+
+export const deleteItem = (endpoint) =>
+	fetch(getURL(endpoint), {
+		headers: HEADERS,
+		method: 'DELETE',
 	}).then((response) => parseResponse(response));
 
 export const confirmDelete = (endpoint, options = {}) => (item) =>
@@ -75,39 +103,11 @@ export const confirmDelete = (endpoint, options = {}) => (item) =>
 		}
 	});
 
-export const deleteItem = (endpoint) =>
-	fetch(getURL(endpoint), {
-		headers: HEADERS,
-		method: 'DELETE',
-	}).then((response) => parseResponse(response));
-
 export const getItem = (endpoint, params) =>
 	fetch(getURL(endpoint, params), {
 		headers: HEADERS,
 		method: 'GET',
 	}).then((response) => parseResponse(response));
-
-export const getURL = (path, params) => {
-	params = {
-		['p_auth']: Liferay.authToken,
-		t: Date.now(),
-		...params,
-	};
-
-	const uri = new URL(`${window.location.origin}${path}`);
-	const keys = Object.keys(params);
-
-	keys.forEach((key) => {
-		if (Array.isArray(params[key])) {
-			params[key].forEach((value) => uri.searchParams.append(key, value));
-		}
-		else {
-			uri.searchParams.set(key, params[key]);
-		}
-	});
-
-	return uri.toString();
-};
 
 export const request = ({endpoint, method = 'GET', params = {}}) =>
 	fetch(getURL(endpoint, params), {

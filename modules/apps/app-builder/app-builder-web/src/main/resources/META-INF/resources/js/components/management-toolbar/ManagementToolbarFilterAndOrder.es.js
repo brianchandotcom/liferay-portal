@@ -104,6 +104,13 @@ export default ({columns = [], disabled, filters = []}) => {
 
 	const enableDoneButton = filterItems.length > 0;
 
+	const onSortButtonClick = (asc, newColumn) => {
+		dispatch({
+			sort: `${newColumn}:${asc ? 'asc' : 'desc'}`,
+			type: 'SORT',
+		});
+	};
+
 	const orderByItems = () => {
 		if (sortableColumns.length === 0) {
 			return [];
@@ -152,13 +159,6 @@ export default ({columns = [], disabled, filters = []}) => {
 		});
 
 		setDropDownActive(false);
-	};
-
-	const onSortButtonClick = (asc, newColumn) => {
-		dispatch({
-			sort: `${newColumn}:${asc ? 'asc' : 'desc'}`,
-			type: 'SORT',
-		});
 	};
 
 	return (

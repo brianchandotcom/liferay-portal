@@ -99,12 +99,10 @@ renderResponse.setTitle(title);
 		</aui:button-row>
 	</liferay-util:buffer>
 
-	<liferay-ui:form-navigator
-		displayStyle="steps"
+	<liferay-frontend:form-navigator-steps
 		formName="fm"
 		htmlBottom="<%= htmlBottom %>"
 		id="kaleo.form"
-		markupView="lexicon"
 		showButtons="<%= false %>"
 	/>
 

@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+
 <%@ page import="com.liferay.dynamic.data.lists.constants.DDLRecordConstants" %><%@
 page import="com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException" %><%@
 page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@

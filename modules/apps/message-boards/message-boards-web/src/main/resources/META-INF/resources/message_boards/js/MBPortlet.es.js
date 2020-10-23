@@ -95,19 +95,11 @@ export default function MBPortlet({
 
 	if (viewRemovedAttachmentsLink) {
 		viewRemovedAttachmentsLink.addEventListener('click', () => {
-			Liferay.Util.openWindow({
-				dialog: {
-					on: {
-						visibleChange: (event) => {
-							if (!event.newVal) {
-								updateRemovedAttachments();
-							}
-						},
-					},
-				},
+			Liferay.Util.openModal({
 				id: namespace + 'openRemovedPageAttachments',
+				onClose: updateRemovedAttachments,
 				title: Liferay.Language.get('removed-attachments'),
-				uri: viewTrashAttachmentsURL,
+				url: viewTrashAttachmentsURL,
 			});
 		});
 	}

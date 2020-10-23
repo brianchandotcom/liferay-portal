@@ -42,6 +42,14 @@ const RatingsLike = ({
 		setAnimatedButton(false);
 	};
 
+	const handleSendVoteRequest = (score) => {
+		sendVoteRequest(score).then(({totalScore} = {}) => {
+			if (isMounted() && totalScore) {
+				setTotalLikes(Math.round(totalScore));
+			}
+		});
+	};
+
 	const toggleLiked = () => {
 		if (!liked) {
 			setAnimatedButton(true);
@@ -62,14 +70,6 @@ const RatingsLike = ({
 		return liked
 			? Liferay.Language.get('unlike-this')
 			: Liferay.Language.get('like-this');
-	};
-
-	const handleSendVoteRequest = (score) => {
-		sendVoteRequest(score).then(({totalScore} = {}) => {
-			if (isMounted() && totalScore) {
-				setTotalLikes(Math.round(totalScore));
-			}
-		});
 	};
 
 	return (

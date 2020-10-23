@@ -64,23 +64,6 @@ const RatingsStars = ({
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
-	const handleVote = (index) => {
-		let value, label;
-		const starScore = starScores[index];
-
-		if (starScore) {
-			value = starScore.value;
-			label = starScore.label;
-		}
-		else {
-			value = SCORE_UNVOTE;
-			label = getLabelScore(SCORE_UNVOTE);
-		}
-
-		setScore(label);
-		handleSendVoteRequest(value);
-	};
-
 	const handleSendVoteRequest = useCallback(
 		(score) => {
 			sendVoteRequest(score).then(
@@ -100,6 +83,23 @@ const RatingsStars = ({
 		},
 		[formatAverageScore, getLabelScore, isMounted, sendVoteRequest]
 	);
+
+	const handleVote = (index) => {
+		let value, label;
+		const starScore = starScores[index];
+
+		if (starScore) {
+			value = starScore.value;
+			label = starScore.label;
+		}
+		else {
+			value = SCORE_UNVOTE;
+			label = getLabelScore(SCORE_UNVOTE);
+		}
+
+		setScore(label);
+		handleSendVoteRequest(value);
+	};
 
 	const getTitle = useCallback(() => {
 		if (inititalTitle !== undefined) {

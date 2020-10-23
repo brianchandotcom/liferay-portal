@@ -368,64 +368,19 @@
 
 				const TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
-				editor.on('imageAdd', (event) => {
-					const eventData = event.data;
+				const _onUploadError = () => {
+					var image = this._tempImage;
 
-					let file = eventData.file;
-					const image = eventData.el.$;
-
-					const randomId = eventData.randomId || A.guid();
-
-					image.setAttribute(ATTR_DATA_RANDOM_ID, randomId);
-
-					image.classList.add(CSS_UPLOADING_IMAGE);
-
-					this._tempImage = image;
-
-					let uploader = eventData.uploader;
-
-					if (uploader) {
-						uploader.on('uploadcomplete', _onUploadComplete);
-						uploader.on('uploaderror', _onUploadError);
-						uploader.on('uploadprogress', _onUploadProgress);
-					}
-					else {
-						file = new A.FileHTML5(file);
-
-						uploader = new A.Uploader({
-							fileFieldName: 'imageSelectorFileName',
-							uploadURL: editor.config.uploadUrl,
-						});
-
-						uploader.on('uploadcomplete', _onUploadComplete);
-						uploader.on('uploaderror', _onUploadError);
-						uploader.on('uploadprogress', _onUploadProgress);
-
-						uploader.set('postVarsPerFile', {
-							randomId,
-						});
-
-						uploader.upload(file);
+					if (image) {
+						image.parentElement.remove();
 					}
 
-					file.progressbar = _createProgressBar(image);
-				});
-
-				const _createProgressBar = (image) => {
-					const imageContainerNode = A.Node.create(
-						TPL_IMAGE_CONTAINER
-					);
-					const progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
-
-					A.one(image).wrap(imageContainerNode);
-
-					imageContainerNode.appendChild(progressBarNode);
-
-					const progressbar = new A.ProgressBar({
-						boundingBox: progressBarNode,
-					}).render();
-
-					return progressbar;
+					Liferay.Util.openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred-while-uploading-your-file'
+						),
+						type: 'danger',
+					});
 				};
 
 				const _onUploadComplete = (event) => {
@@ -495,21 +450,6 @@
 					}
 				};
 
-				const _onUploadError = () => {
-					var image = this._tempImage;
-
-					if (image) {
-						image.parentElement.remove();
-					}
-
-					Liferay.Util.openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-error-occurred-while-uploading-your-file'
-						),
-						type: 'danger',
-					});
-				};
-
 				const _onUploadProgress = (event) => {
 					var percentLoaded = Math.round(event.percentLoaded);
 
@@ -523,6 +463,66 @@
 						progressbar.set('value', Math.ceil(percentLoaded));
 					}
 				};
+
+				const _createProgressBar = (image) => {
+					const imageContainerNode = A.Node.create(
+						TPL_IMAGE_CONTAINER
+					);
+					const progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
+
+					A.one(image).wrap(imageContainerNode);
+
+					imageContainerNode.appendChild(progressBarNode);
+
+					const progressbar = new A.ProgressBar({
+						boundingBox: progressBarNode,
+					}).render();
+
+					return progressbar;
+				};
+
+				editor.on('imageAdd', (event) => {
+					const eventData = event.data;
+
+					let file = eventData.file;
+					const image = eventData.el.$;
+
+					const randomId = eventData.randomId || A.guid();
+
+					image.setAttribute(ATTR_DATA_RANDOM_ID, randomId);
+
+					image.classList.add(CSS_UPLOADING_IMAGE);
+
+					this._tempImage = image;
+
+					let uploader = eventData.uploader;
+
+					if (uploader) {
+						uploader.on('uploadcomplete', _onUploadComplete);
+						uploader.on('uploaderror', _onUploadError);
+						uploader.on('uploadprogress', _onUploadProgress);
+					}
+					else {
+						file = new A.FileHTML5(file);
+
+						uploader = new A.Uploader({
+							fileFieldName: 'imageSelectorFileName',
+							uploadURL: editor.config.uploadUrl,
+						});
+
+						uploader.on('uploadcomplete', _onUploadComplete);
+						uploader.on('uploaderror', _onUploadError);
+						uploader.on('uploadprogress', _onUploadProgress);
+
+						uploader.set('postVarsPerFile', {
+							randomId,
+						});
+
+						uploader.upload(file);
+					}
+
+					file.progressbar = _createProgressBar(image);
+				});
 			});
 		},
 	});

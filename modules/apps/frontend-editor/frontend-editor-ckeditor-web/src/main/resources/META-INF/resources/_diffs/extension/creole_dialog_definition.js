@@ -26,14 +26,6 @@ CKEDITOR.on(
 
 			var onShow = dialogDefinition.onShow;
 
-			dialogDefinition.onShow = function () {
-				if (typeof onShow === 'function') {
-					onShow.apply(this, arguments);
-				}
-
-				centerDialog();
-			};
-
 			var centerDialog = function () {
 				var dialogSize = dialog.getSize();
 
@@ -41,6 +33,14 @@ CKEDITOR.on(
 				var y = window.innerHeight / 2 - dialogSize.height / 2;
 
 				dialog.move(x, y, false);
+			};
+
+			dialogDefinition.onShow = function () {
+				if (typeof onShow === 'function') {
+					onShow.apply(this, arguments);
+				}
+
+				centerDialog();
 			};
 
 			var debounce = function (fn, delay) {

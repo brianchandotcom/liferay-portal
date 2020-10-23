@@ -40,8 +40,8 @@
  */
 
 (function () {
-	if (!Parse) {
-		var Parse = {};
+	if (!window.Parse) {
+		var Parse = (window.parse = {});
 	}
 	if (!Parse.Simple) {
 		Parse.Simple = {};

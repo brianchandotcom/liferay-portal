@@ -133,6 +133,34 @@ const ChangeTrackingConflictsView = ({conflicts, spritemap}) => {
 		);
 	};
 
+	const getQuickActionMenu = (conflict) => {
+		if (!conflict.actions) {
+			return '';
+		}
+
+		const items = [];
+
+		for (let i = 0; i < conflict.actions.length; i++) {
+			const action = conflict.actions[i];
+
+			items.push(
+				<ClayList.QuickActionMenu.Item
+					className="lfr-portal-tooltip"
+					href={action.href}
+					spritemap={spritemap}
+					symbol={action.symbol}
+					title={action.label}
+				/>
+			);
+		}
+
+		return (
+			<ClayList.ItemField>
+				<ClayList.QuickActionMenu>{items}</ClayList.QuickActionMenu>
+			</ClayList.ItemField>
+		);
+	};
+
 	const getListItems = () => {
 		const items = [];
 
@@ -184,34 +212,6 @@ const ChangeTrackingConflictsView = ({conflicts, spritemap}) => {
 		}
 
 		return items;
-	};
-
-	const getQuickActionMenu = (conflict) => {
-		if (!conflict.actions) {
-			return '';
-		}
-
-		const items = [];
-
-		for (let i = 0; i < conflict.actions.length; i++) {
-			const action = conflict.actions[i];
-
-			items.push(
-				<ClayList.QuickActionMenu.Item
-					className="lfr-portal-tooltip"
-					href={action.href}
-					spritemap={spritemap}
-					symbol={action.symbol}
-					title={action.label}
-				/>
-			);
-		}
-
-		return (
-			<ClayList.ItemField>
-				<ClayList.QuickActionMenu>{items}</ClayList.QuickActionMenu>
-			</ClayList.ItemField>
-		);
 	};
 
 	const handleDeltaChange = (delta) => {

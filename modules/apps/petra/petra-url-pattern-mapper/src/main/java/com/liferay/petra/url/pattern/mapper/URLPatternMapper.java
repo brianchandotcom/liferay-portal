@@ -14,6 +14,8 @@
 
 package com.liferay.petra.url.pattern.mapper;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -21,6 +23,7 @@ import java.util.function.Consumer;
 /**
  * @author Carlos Sierra Andrés
  */
+@ProviderType
 public interface URLPatternMapper<T> {
 
 	public void consumeValues(Consumer<T> consumer, String urlPath);

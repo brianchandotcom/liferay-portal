@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,9 +88,8 @@ public class CommerceProductOptionDataSetDataProvider
 					_getDDMFormFieldTypeLabel(
 						cpDefinitionOptionRel.getDDMFormFieldTypeName(),
 						locale),
-					HtmlUtil.escape(
-						cpDefinitionOptionRel.getName(
-							LanguageUtil.getLanguageId(locale))),
+					cpDefinitionOptionRel.getName(
+						LanguageUtil.getLanguageId(locale)),
 					cpDefinitionOptionRel.getPriority(),
 					LanguageUtil.get(
 						locale,

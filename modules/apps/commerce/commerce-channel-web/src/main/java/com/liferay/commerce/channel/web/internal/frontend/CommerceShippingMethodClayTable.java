@@ -181,11 +181,10 @@ public class CommerceShippingMethodClayTable
 
 			shippingMethods.add(
 				new ShippingMethod(
-					HtmlUtil.escape(commerceShippingDescription),
-					entry.getKey(), HtmlUtil.escape(commerceShippingName),
-					HtmlUtil.escape(
+					commerceShippingDescription,
+					entry.getKey(), commerceShippingName,
 						commerceShippingEngine.getName(
-							themeDisplay.getLocale())),
+							themeDisplay.getLocale()),
 					CommerceChannelClayTableUtil.getLabelField(
 						_isActive(commerceShippingMethod),
 						themeDisplay.getLocale())));

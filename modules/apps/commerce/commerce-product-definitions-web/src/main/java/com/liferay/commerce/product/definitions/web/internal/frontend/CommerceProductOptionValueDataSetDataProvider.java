@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -103,9 +102,8 @@ public class CommerceProductOptionValueDataSetDataProvider
 						commerceCurrency, _getPrice(cpDefinitionOptionValueRel),
 						locale),
 					cpDefinitionOptionValueRel.getKey(),
-					HtmlUtil.escape(
-						cpDefinitionOptionValueRel.getName(
-							LanguageUtil.getLanguageId(locale))),
+					cpDefinitionOptionValueRel.getName(
+						LanguageUtil.getLanguageId(locale)),
 					cpDefinitionOptionValueRel.getPriority(),
 					LanguageUtil.get(
 						locale,

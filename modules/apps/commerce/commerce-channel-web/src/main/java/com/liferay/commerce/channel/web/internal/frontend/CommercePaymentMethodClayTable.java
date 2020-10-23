@@ -184,12 +184,11 @@ public class CommercePaymentMethodClayTable
 
 			paymentMethods.add(
 				new PaymentMethod(
-					HtmlUtil.escape(commercePaymentDescription),
+					commercePaymentDescription,
 					commercePaymentMethod.getKey(),
-					HtmlUtil.escape(commercePaymentName),
-					HtmlUtil.escape(
+					commercePaymentName,
 						commercePaymentMethod.getName(
-							themeDisplay.getLocale())),
+							themeDisplay.getLocale()),
 					CommerceChannelClayTableUtil.getLabelField(
 						_isActive(commercePaymentMethodGroupRel),
 						themeDisplay.getLocale())));

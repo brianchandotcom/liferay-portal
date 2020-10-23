@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -109,8 +108,7 @@ public class CommerceProductImageDataSetDataProvider
 						title, "rounded", "lg",
 						CommerceMediaResolverUtil.getThumbnailUrl(
 							cpAttachmentFileEntryId)),
-					HtmlUtil.escape(title),
-					HtmlUtil.escape(fileEntry.getExtension()),
+					title, fileEntry.getExtension(),
 					cpAttachmentFileEntry.getPriority(),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago", modifiedDateDescription,

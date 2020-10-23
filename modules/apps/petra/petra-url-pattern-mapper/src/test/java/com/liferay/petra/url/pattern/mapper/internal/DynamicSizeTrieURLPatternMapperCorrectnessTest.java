@@ -15,11 +15,15 @@
 package com.liferay.petra.url.pattern.mapper.internal;
 
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -27,6 +31,21 @@ import org.junit.Test;
  */
 public class DynamicSizeTrieURLPatternMapperCorrectnessTest
 	extends BaseURLPatternMapperCorrectnessTestCase {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(DynamicSizeTrieURLPatternMapper.class);
+
+				Collections.addAll(
+					assertClasses,
+					DynamicSizeTrieURLPatternMapper.class.getDeclaredClasses());
+			}
+
+		};
 
 	@Test
 	public void testConstructor() {

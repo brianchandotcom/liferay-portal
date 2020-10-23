@@ -151,7 +151,7 @@ definition {
 			pageName = "Theme Test Page",
 			siteName = "Guest");
 
-		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme73_WAR_testtheme. Returning the default theme.");
+		AssertConsoleTextPresent(value1 = "No theme found for specified theme id testtheme74_WAR_testtheme. Returning the default theme.");
 
 		SikuliAssertElementNotPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 

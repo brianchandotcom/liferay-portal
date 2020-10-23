@@ -402,6 +402,31 @@ const ApplicationsMenu = ({
 		return getOpenMenuTooltip(keyLabel);
 	}, []);
 
+	const fetchCategoriesPromiseRef = useRef();
+
+	const fetchCategories = () => {
+		if (!fetchCategoriesPromiseRef.current) {
+			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
+				.then((response) => response.json())
+				.then(({items, portletNamespace, sites}) => {
+					setAppsPanelData({
+						categories: items,
+						portletNamespace,
+						selectedPortletId,
+						sites,
+					});
+				})
+				.catch(() => {
+					fetchCategoriesPromiseRef.current = null;
+				});
+		}
+	};
+
+	const handleTriggerButtonClick = () => {
+		fetchCategories();
+		setVisible(true);
+	};
+
 	useEventListener(
 		'keydown',
 		(event) => {
@@ -427,31 +452,6 @@ const ApplicationsMenu = ({
 		true,
 		window
 	);
-
-	const fetchCategoriesPromiseRef = useRef();
-
-	const fetchCategories = () => {
-		if (!fetchCategoriesPromiseRef.current) {
-			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
-				.then((response) => response.json())
-				.then(({items, portletNamespace, sites}) => {
-					setAppsPanelData({
-						categories: items,
-						portletNamespace,
-						selectedPortletId,
-						sites,
-					});
-				})
-				.catch(() => {
-					fetchCategoriesPromiseRef.current = null;
-				});
-		}
-	};
-
-	const handleTriggerButtonClick = () => {
-		fetchCategories();
-		setVisible(true);
-	};
 
 	return (
 		<>

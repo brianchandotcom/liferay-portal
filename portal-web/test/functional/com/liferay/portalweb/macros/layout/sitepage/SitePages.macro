@@ -24,17 +24,46 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
+		Alert.viewSuccessMessage();
+
 		if ("${sitePageType}" == "Embedded") {
+			Page._addPageTypeEmbedded(pageTypeURL = "${pageTypeURL}");
+		}
+		else if ("${sitePageType}" == "Full Page Application") {
+			if (isSet(portlet)) {
+				Page._addPageTypeFullPageApplication(portlet = "${portlet}");
+			}
+		}
+		else if ("${sitePageType}" == "Link to a Page of This Site") {
+			if (isSet(linkPageName)) {
+				Click(locator1 = "SitePagesEditPage#LINK_TO_PAGE_SELECT_BUTTON");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Pause(locator1 = "3000");
+
+				AssertClick.assertPartialTextClickAt(
+					key_nodeName = "${linkPageName}",
+					locator1 = "Treeview#NODE_UNSELECTED",
+					value1 = "${linkPageName}");
+
+				SelectFrameTop();
+			}
+		}
+		else if ("${sitePageType}" == "Link to URL") {
 			Type(
-				locator1 = "SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD",
+				locator1 = "TextInput#URL",
 				value1 = "${pageTypeURL}");
+		}
+		else if ("${sitePageType}" == "Panel") {
+			if (isSet(componentName)) {
+				Page._addPageTypePanel(componentName = "${componentName}");
+			}
 		}
 
 		if (isSet(inheritChanges)) {
 			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertVisible(locator1 = "TextInput#NAME");
 

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -236,7 +237,10 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 					).put(
 						"title",
 						_language.get(
-							httpServletRequest,
+							ResourceBundleUtil.getBundle(
+								"content.Language",
+								_portal.getLocale(httpServletRequest),
+								getClass()),
 							"the-connection-to-the-remote-live-asset-library-" +
 								"cannot-be-established-due-to-a-network-" +
 									"problem")

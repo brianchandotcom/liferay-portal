@@ -261,6 +261,20 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
+	public void testCountByRegionId() throws Exception {
+		_persistence.countByRegionId(RandomTestUtil.nextLong());
+
+		_persistence.countByRegionId(0L);
+	}
+
+	@Test
+	public void testCountByCountryId() throws Exception {
+		_persistence.countByCountryId(RandomTestUtil.nextLong());
+
+		_persistence.countByCountryId(0L);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

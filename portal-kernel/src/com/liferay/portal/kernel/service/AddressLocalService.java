@@ -77,11 +77,43 @@ public interface AddressLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Address addAddress(Address address);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public Address addAddress(
 			long userId, String className, long classPK, String street1,
 			String street2, String street3, String city, String zip,
 			long regionId, long countryId, long typeId, boolean mailing,
 			boolean primary, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Address addAddress(
+			long userId, String className, long classPK, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId, long typeId,
+			boolean mailing, boolean primary, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Address addAddress(
+			long userId, String className, long classPK, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber, long typeId, boolean mailing, boolean primary,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Address addAddress(
+			long userId, String className, long classPK, String name,
+			String description, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId,
+			String phoneNumber, long typeId, boolean mailing, boolean primary,
+			String externalReferenceCode, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Address copyAddress(
+			long addressId, String className, long classPK,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -131,6 +163,10 @@ public interface AddressLocalService
 	public Address deleteAddress(long addressId) throws PortalException;
 
 	public void deleteAddresses(long companyId, String className, long classPK);
+
+	public void deleteAddressesByCountry(long countryId) throws PortalException;
+
+	public void deleteAddressesByRegion(long regionId) throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -278,6 +314,11 @@ public interface AddressLocalService
 	public List<Address> getAddresses(
 		long companyId, String className, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Address> getAddresses(
+		long companyId, String className, long classPK, int start, int end,
+		OrderByComparator<Address> orderByComparator);
+
 	/**
 	 * Returns the number of addresses.
 	 *
@@ -285,6 +326,10 @@ public interface AddressLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAddressesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAddressesCount(
+		long companyId, String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -324,6 +369,13 @@ public interface AddressLocalService
 	public Address updateAddress(
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId, long typeId,
+			boolean mailing, boolean primary)
+		throws PortalException;
+
+	public Address updateAddress(
+			long addressId, String name, String description, String street1,
+			String street2, String street3, String city, String zip,
+			long regionId, long countryId, String phoneNumber, long typeId,
 			boolean mailing, boolean primary)
 		throws PortalException;
 

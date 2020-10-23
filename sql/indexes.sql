@@ -1,6 +1,8 @@
 create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing);
 create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_);
 create index IX_CBAD282F on Address (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_5A2093E7 on Address (countryId);
+create index IX_C8E3E87D on Address (regionId);
 create index IX_5BC8B0D4 on Address (userId);
 create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId);
 

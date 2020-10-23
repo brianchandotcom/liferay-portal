@@ -70,10 +70,6 @@ export const generateFieldName = (
 	}
 };
 
-export const getFieldValue = (pages, fieldName) => {
-	return getFieldProperty(pages, fieldName, 'value');
-};
-
 export const getFieldProperty = (pages, fieldName, propertyName) => {
 	const visitor = new PagesVisitor(pages);
 	let propertyValue;
@@ -89,6 +85,10 @@ export const getFieldProperty = (pages, fieldName, propertyName) => {
 	);
 
 	return propertyValue;
+};
+
+export const getFieldValue = (pages, fieldName) => {
+	return getFieldProperty(pages, fieldName, 'value');
 };
 
 export const getField = (pages, fieldName) => {

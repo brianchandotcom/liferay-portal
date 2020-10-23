@@ -59,6 +59,101 @@ const clearAllConditionFieldValues = (condition) => {
 	return condition;
 };
 
+const fieldWithOptions = (fieldType) => {
+	return (
+		fieldType === 'radio' ||
+		fieldType === 'checkbox_multiple' ||
+		fieldType === 'select'
+	);
+};
+
+const getFieldType = (fieldName, pages) => {
+	return getFieldProperty(pages, fieldName, 'type');
+};
+
+const optionBelongsToRule = (condition, options) => {
+	return options.some(
+		(option) => option.value === condition.operands[1].value
+	);
+};
+
+const getExpressionFields = (
+	action,
+	regex = DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION
+) => {
+	return action.expression.match(regex);
+};
+
+const targetFieldExists = (target, pages) => {
+	const visitor = new PagesVisitor(pages);
+
+	let targetFieldExists = false;
+
+	visitor.mapFields(
+		({fieldName}) => {
+			if (target === fieldName) {
+				targetFieldExists = true;
+			}
+		},
+		true,
+		true
+	);
+
+	return targetFieldExists;
+};
+
+const syncActions = (pages, actions) => {
+	actions.forEach((action) => {
+		if (action.action === 'auto-fill') {
+			const {inputs, outputs} = action;
+
+			Object.keys(inputs)
+				.filter((key) => !targetFieldExists(inputs[key], pages))
+				.map((key) => {
+					inputs[key] = '';
+				});
+
+			Object.keys(outputs)
+				.filter((key) => !targetFieldExists(outputs[key], pages))
+				.map((key) => {
+					outputs[key] = '';
+				});
+		}
+		else if (action.action === 'calculate') {
+			const expressionFields = getExpressionFields(action);
+
+			if (expressionFields && expressionFields.length > 0) {
+				expressionFields.forEach((field) => {
+					if (!targetFieldExists(field, pages)) {
+						const inexistentField = new RegExp(field, 'g');
+
+						action.expression = action.expression.replace(
+							inexistentField,
+							''
+						);
+					}
+				});
+			}
+
+			if (!targetFieldExists(action.target, pages)) {
+				action.target = '';
+			}
+		}
+		else if (action.action === 'jump-to-page') {
+			const target = parseInt(action.target, 10) + 1;
+
+			if (pages.length < 3 || target > pages.length) {
+				action.target = '';
+			}
+		}
+		else if (!targetFieldExists(action.target, pages)) {
+			action.target = '';
+		}
+	});
+
+	return actions;
+};
+
 const formatRules = (pages, rules) => {
 	const visitor = new PagesVisitor(pages);
 
@@ -202,18 +297,6 @@ const fieldNameBelongsToCondition = (fieldName, conditions) => {
 		.some((fieldFound) => fieldFound === true);
 };
 
-const fieldWithOptions = (fieldType) => {
-	return (
-		fieldType === 'radio' ||
-		fieldType === 'checkbox_multiple' ||
-		fieldType === 'select'
-	);
-};
-
-const findInvalidRule = (rule) => {
-	return findRuleByFieldName('', [rule]);
-};
-
 const findRuleByFieldName = (fieldName, rules) => {
 	return rules.some(
 		(rule) =>
@@ -222,11 +305,8 @@ const findRuleByFieldName = (fieldName, rules) => {
 	);
 };
 
-const getExpressionFields = (
-	action,
-	regex = DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION
-) => {
-	return action.expression.match(regex);
+const findInvalidRule = (rule) => {
+	return findRuleByFieldName('', [rule]);
 };
 
 const getFieldOptions = (fieldName, pages) => {
@@ -240,86 +320,6 @@ const getFieldOptions = (fieldName, pages) => {
 	options = field ? field.options : [];
 
 	return options;
-};
-
-const getFieldType = (fieldName, pages) => {
-	return getFieldProperty(pages, fieldName, 'type');
-};
-
-const optionBelongsToRule = (condition, options) => {
-	return options.some(
-		(option) => option.value === condition.operands[1].value
-	);
-};
-
-const syncActions = (pages, actions) => {
-	actions.forEach((action) => {
-		if (action.action === 'auto-fill') {
-			const {inputs, outputs} = action;
-
-			Object.keys(inputs)
-				.filter((key) => !targetFieldExists(inputs[key], pages))
-				.map((key) => {
-					inputs[key] = '';
-				});
-
-			Object.keys(outputs)
-				.filter((key) => !targetFieldExists(outputs[key], pages))
-				.map((key) => {
-					outputs[key] = '';
-				});
-		}
-		else if (action.action === 'calculate') {
-			const expressionFields = getExpressionFields(action);
-
-			if (expressionFields && expressionFields.length > 0) {
-				expressionFields.forEach((field) => {
-					if (!targetFieldExists(field, pages)) {
-						const inexistentField = new RegExp(field, 'g');
-
-						action.expression = action.expression.replace(
-							inexistentField,
-							''
-						);
-					}
-				});
-			}
-
-			if (!targetFieldExists(action.target, pages)) {
-				action.target = '';
-			}
-		}
-		else if (action.action === 'jump-to-page') {
-			const target = parseInt(action.target, 10) + 1;
-
-			if (pages.length < 3 || target > pages.length) {
-				action.target = '';
-			}
-		}
-		else if (!targetFieldExists(action.target, pages)) {
-			action.target = '';
-		}
-	});
-
-	return actions;
-};
-
-const targetFieldExists = (target, pages) => {
-	const visitor = new PagesVisitor(pages);
-
-	let targetFieldExists = false;
-
-	visitor.mapFields(
-		({fieldName}) => {
-			if (target === fieldName) {
-				targetFieldExists = true;
-			}
-		},
-		true,
-		true
-	);
-
-	return targetFieldExists;
 };
 
 export default {

@@ -157,6 +157,20 @@ AUI.add(
 			'<div class="clear"></div>' +
 			'</div>';
 
+		var ContactsResult = A.Base.create(
+			'contactsResult',
+			A.Base,
+			[A.AutoCompleteBase],
+			{
+				initializer(config) {
+					this._listNode = A.one(config.listNode);
+
+					this._bindUIACBase();
+					this._syncUIACBase();
+				},
+			}
+		);
+
 		var ContactsCenter = A.Component.create({
 			AUGMENTS: [Liferay.PortletBase],
 
@@ -1325,20 +1339,6 @@ AUI.add(
 		});
 
 		Liferay.ContactsCenter = ContactsCenter;
-
-		var ContactsResult = A.Base.create(
-			'contactsResult',
-			A.Base,
-			[A.AutoCompleteBase],
-			{
-				initializer(config) {
-					this._listNode = A.one(config.listNode);
-
-					this._bindUIACBase();
-					this._syncUIACBase();
-				},
-			}
-		);
 	},
 	'',
 	{

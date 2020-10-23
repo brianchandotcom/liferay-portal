@@ -70,20 +70,26 @@ public class ViewEntryDisplayContext<T extends BaseModel<T>> {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (_ctEntry != null) {
-			_ctDisplayRendererRegistry.renderCTEntry(
-				httpServletRequest, httpServletResponse,
-				_ctEntry.getCtCollectionId(), _ctEntry,
-				CTEntryDiffDisplay.TYPE_AFTER);
+		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+		long ctEntryId = 0;
+		String diffType = null;
 
-			return;
+		if (_ctEntry != null) {
+			ctCollectionId = _ctEntry.getCtCollectionId();
+
+			ctSQLMode = _ctDisplayRendererRegistry.getCTSQLMode(
+				ctCollectionId, _ctEntry);
+
+			ctEntryId = _ctEntry.getCtEntryId();
+
+			diffType = CTEntryDiffDisplay.TYPE_AFTER;
 		}
 
 		_ctDisplayRendererRegistry.renderCTEntry(
-			httpServletRequest, httpServletResponse,
-			CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, 0, _baseModel,
-			_modelClassNameId, null);
+			httpServletRequest, httpServletResponse, ctCollectionId, ctSQLMode,
+			ctEntryId, _baseModel, _modelClassNameId, diffType);
 	}
 
 	private final T _baseModel;

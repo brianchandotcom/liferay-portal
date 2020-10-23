@@ -68,8 +68,21 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
-		T baseModel = _ctDisplayRendererRegistry.fetchCTModel(
-			modelClassNameId, modelClassPK);
+		T baseModel = null;
+
+		if (ctEntry == null) {
+			baseModel = _ctDisplayRendererRegistry.fetchCTModel(
+				modelClassNameId, modelClassPK);
+		}
+		else {
+			modelClassNameId = ctEntry.getModelClassNameId();
+
+			baseModel = _ctDisplayRendererRegistry.fetchCTModel(
+				ctEntry.getCtCollectionId(),
+				_ctDisplayRendererRegistry.getCTSQLMode(
+					ctEntry.getCtCollectionId(), ctEntry),
+				modelClassNameId, ctEntry.getModelClassPK());
+		}
 
 		return new ViewEntryDisplayContext<>(
 			baseModel, _ctCollectionLocalService, _ctDisplayRendererRegistry,

@@ -37,6 +37,22 @@ export default function PageStructureSidebarSection({
 		let initialY = 0;
 		let maxHeight = 0;
 
+		const handleResize = (event) => {
+			const delta = event.clientY - initialY;
+
+			setPanelHeight(
+				Math.max(Math.min(maxHeight, initialHeight - delta), MIN_HEIGHT)
+			);
+		};
+
+		const handleResizeEnd = () => {
+			document.body.removeEventListener('mousemove', handleResize);
+			document.body.removeEventListener('mouseleave', handleResizeEnd);
+			document.body.removeEventListener('mouseup', handleResizeEnd);
+
+			setResizing(false);
+		};
+
 		const handleResizeStart = (event) => {
 			initialHeight = panelElement.getBoundingClientRect().height;
 			initialY = event.clientY;
@@ -53,22 +69,6 @@ export default function PageStructureSidebarSection({
 			document.body.addEventListener('mouseup', handleResizeEnd);
 
 			setResizing(true);
-		};
-
-		const handleResize = (event) => {
-			const delta = event.clientY - initialY;
-
-			setPanelHeight(
-				Math.max(Math.min(maxHeight, initialHeight - delta), MIN_HEIGHT)
-			);
-		};
-
-		const handleResizeEnd = () => {
-			document.body.removeEventListener('mousemove', handleResize);
-			document.body.removeEventListener('mouseleave', handleResizeEnd);
-			document.body.removeEventListener('mouseup', handleResizeEnd);
-
-			setResizing(false);
 		};
 
 		handlerElement.addEventListener('mousedown', handleResizeStart);

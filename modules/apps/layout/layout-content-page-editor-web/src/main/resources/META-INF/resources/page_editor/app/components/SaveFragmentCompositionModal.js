@@ -61,6 +61,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 		},
 	});
 
+	const [loading, setLoading] = useState(false);
 	const [thumbnail, setThumbnail] = useState({});
 
 	const handleSubmit = (event) => {
@@ -103,8 +104,6 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 	const handleThumbnailSelected = (image) => {
 		setThumbnail(image);
 	};
-
-	const [loading, setLoading] = useState(false);
 
 	const nameInputId = `${config.portletNamespace}fragmentCompositionName`;
 	const descriptionInputId = `${config.portletNamespace}fragmentCompositionDescription`;

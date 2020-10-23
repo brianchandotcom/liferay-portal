@@ -15,6 +15,12 @@
 import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
+const layoutServiceFetch = (url, options, onNetworkStatus) => {
+	return serviceFetch(url, options, onNetworkStatus, {
+		requestGenerateDraft: true,
+	});
+};
+
 export default {
 
 	/**
@@ -264,10 +270,4 @@ export default {
 			onNetworkStatus
 		);
 	},
-};
-
-const layoutServiceFetch = (url, options, onNetworkStatus) => {
-	return serviceFetch(url, options, onNetworkStatus, {
-		requestGenerateDraft: true,
-	});
 };

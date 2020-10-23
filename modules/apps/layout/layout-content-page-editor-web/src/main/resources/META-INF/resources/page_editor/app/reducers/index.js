@@ -30,21 +30,6 @@ import sidebarReducer from './sidebarReducer';
 import undoReducer from './undoReducer';
 import widgetsReducer from './widgetsReducer';
 
-/**
- * Runs the base reducer plus any dynamically loaded reducers that have
- * been registered from plugins.
- */
-export function reducer(state, action) {
-	const nextState = undoReducer(state, action);
-
-	return [combinedReducer, ...Object.values(state.reducers || {})].reduce(
-		(nextState, nextReducer) => {
-			return nextReducer(nextState, action);
-		},
-		nextState
-	);
-}
-
 const combinedReducer = (state, action) =>
 	Object.entries({
 		collections: collectionsReducer,
@@ -70,3 +55,18 @@ const combinedReducer = (state, action) =>
 		}),
 		state
 	);
+
+/**
+ * Runs the base reducer plus any dynamically loaded reducers that have
+ * been registered from plugins.
+ */
+export function reducer(state, action) {
+	const nextState = undoReducer(state, action);
+
+	return [combinedReducer, ...Object.values(state.reducers || {})].reduce(
+		(nextState, nextReducer) => {
+			return nextReducer(nextState, action);
+		},
+		nextState
+	);
+}

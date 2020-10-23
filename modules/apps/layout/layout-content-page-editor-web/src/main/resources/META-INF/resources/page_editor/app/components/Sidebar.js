@@ -77,6 +77,27 @@ export default function Sidebar() {
 		registerPanel = register(sidebarPanelId, promise, {app, panel});
 	}
 
+	const togglePlugin = () => {
+		if (hasError) {
+			setHasError(false);
+		}
+
+		if (registerPanel) {
+			registerPanel.then((plugin) => {
+				if (
+					plugin &&
+					typeof plugin.activate === 'function' &&
+					isMounted()
+				) {
+					plugin.activate();
+				}
+				else if (!plugin) {
+					setHasError(true);
+				}
+			});
+		}
+	};
+
 	useEffect(
 		() => {
 			if (panel) {
@@ -158,27 +179,6 @@ export default function Sidebar() {
 				sidebarPanelId: panel.sidebarPanelId,
 			})
 		);
-	};
-
-	const togglePlugin = () => {
-		if (hasError) {
-			setHasError(false);
-		}
-
-		if (registerPanel) {
-			registerPanel.then((plugin) => {
-				if (
-					plugin &&
-					typeof plugin.activate === 'function' &&
-					isMounted()
-				) {
-					plugin.activate();
-				}
-				else if (!plugin) {
-					setHasError(true);
-				}
-			});
-		}
 	};
 
 	return createPortal(

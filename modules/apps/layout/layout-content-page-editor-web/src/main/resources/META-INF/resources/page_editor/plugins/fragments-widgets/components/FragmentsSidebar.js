@@ -24,6 +24,101 @@ import TabsPanel from './TabsPanel';
 
 const BASIC_COMPONENT_COLLECTION = 'BASIC_COMPONENT';
 
+const collectionFilter = (collections, searchValue) => {
+	const searchValueLowerCase = searchValue.toLowerCase();
+
+	const itemFilter = (item) =>
+		item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1;
+
+	const hasChildren = (collection) => {
+		if (collection.children?.length) {
+			return true;
+		}
+
+		return collection.collections?.some(hasChildren) ?? false;
+	};
+
+	return collections
+		.reduce((acc, collection) => {
+			if (itemFilter(collection)) {
+				return [...acc, collection];
+			}
+			else {
+				const updateCollection = {
+					...collection,
+					children: collection.children.filter(itemFilter),
+					...(collection.collections?.length && {
+						collections: collectionFilter(
+							collection.collections,
+							searchValueLowerCase
+						),
+					}),
+				};
+
+				return [...acc, updateCollection];
+			}
+		}, [])
+		.filter(hasChildren);
+};
+
+const normalizeWidget = (widget) => {
+	return {
+		data: {
+			instanceable: widget.instanceable,
+			portletId: widget.portletId,
+			portletItemId: widget.portletItemId || null,
+			used: widget.used,
+		},
+		disabled: !widget.instanceable && widget.used,
+		icon: widget.instanceable ? 'cards2' : 'square-hole',
+		itemId: widget.portletId,
+		label: widget.title,
+		portletItems: widget.portletItems?.length
+			? widget.portletItems.map(normalizeWidget)
+			: null,
+		preview: '',
+		type: LAYOUT_DATA_ITEM_TYPES.fragment,
+	};
+};
+
+const normalizeCollections = (collection) => {
+	const normalizedElement = {
+		children: collection.portlets.map(normalizeWidget),
+		collectionId: collection.path,
+		label: collection.title,
+	};
+
+	if (collection.categories?.length) {
+		normalizedElement.collections = collection.categories.map(
+			normalizeCollections
+		);
+	}
+
+	return normalizedElement;
+};
+
+const normalizeFragmentEntry = (fragmentEntry, collectionId) => {
+	if (!fragmentEntry.fragmentEntryKey) {
+		return fragmentEntry;
+	}
+
+	return {
+		data: {
+			fragmentEntryKey: fragmentEntry.fragmentEntryKey,
+			groupId: fragmentEntry.groupId,
+			type: fragmentEntry.type,
+		},
+		icon: fragmentEntry.icon,
+		itemId: fragmentEntry.fragmentEntryKey,
+		label: fragmentEntry.name,
+		preview:
+			collectionId !== BASIC_COMPONENT_COLLECTION
+				? fragmentEntry.imagePreviewURL
+				: null,
+		type: LAYOUT_DATA_ITEM_TYPES.fragment,
+	};
+};
+
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
@@ -88,98 +183,3 @@ export default function FragmentsSidebar() {
 		</>
 	);
 }
-
-const normalizeCollections = (collection) => {
-	const normalizedElement = {
-		children: collection.portlets.map(normalizeWidget),
-		collectionId: collection.path,
-		label: collection.title,
-	};
-
-	if (collection.categories?.length) {
-		normalizedElement.collections = collection.categories.map(
-			normalizeCollections
-		);
-	}
-
-	return normalizedElement;
-};
-
-const normalizeFragmentEntry = (fragmentEntry, collectionId) => {
-	if (!fragmentEntry.fragmentEntryKey) {
-		return fragmentEntry;
-	}
-
-	return {
-		data: {
-			fragmentEntryKey: fragmentEntry.fragmentEntryKey,
-			groupId: fragmentEntry.groupId,
-			type: fragmentEntry.type,
-		},
-		icon: fragmentEntry.icon,
-		itemId: fragmentEntry.fragmentEntryKey,
-		label: fragmentEntry.name,
-		preview:
-			collectionId !== BASIC_COMPONENT_COLLECTION
-				? fragmentEntry.imagePreviewURL
-				: null,
-		type: LAYOUT_DATA_ITEM_TYPES.fragment,
-	};
-};
-
-const normalizeWidget = (widget) => {
-	return {
-		data: {
-			instanceable: widget.instanceable,
-			portletId: widget.portletId,
-			portletItemId: widget.portletItemId || null,
-			used: widget.used,
-		},
-		disabled: !widget.instanceable && widget.used,
-		icon: widget.instanceable ? 'cards2' : 'square-hole',
-		itemId: widget.portletId,
-		label: widget.title,
-		portletItems: widget.portletItems?.length
-			? widget.portletItems.map(normalizeWidget)
-			: null,
-		preview: '',
-		type: LAYOUT_DATA_ITEM_TYPES.fragment,
-	};
-};
-
-const collectionFilter = (collections, searchValue) => {
-	const searchValueLowerCase = searchValue.toLowerCase();
-
-	const itemFilter = (item) =>
-		item.label.toLowerCase().indexOf(searchValueLowerCase) !== -1;
-
-	const hasChildren = (collection) => {
-		if (collection.children?.length) {
-			return true;
-		}
-
-		return collection.collections?.some(hasChildren) ?? false;
-	};
-
-	return collections
-		.reduce((acc, collection) => {
-			if (itemFilter(collection)) {
-				return [...acc, collection];
-			}
-			else {
-				const updateCollection = {
-					...collection,
-					children: collection.children.filter(itemFilter),
-					...(collection.collections?.length && {
-						collections: collectionFilter(
-							collection.collections,
-							searchValueLowerCase
-						),
-					}),
-				};
-
-				return [...acc, updateCollection];
-			}
-		}, [])
-		.filter(hasChildren);
-};

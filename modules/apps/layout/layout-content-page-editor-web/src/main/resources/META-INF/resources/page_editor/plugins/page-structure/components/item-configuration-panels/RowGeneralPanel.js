@@ -39,6 +39,8 @@ export const RowGeneralPanel = ({item}) => {
 		(state) => state.selectedViewportSize
 	);
 
+	const rowConfig = getResponsiveConfig(item.config, selectedViewportSize);
+
 	const handleConfigurationValueChanged = (identifier, value) => {
 		let itemConfig = {[identifier]: value};
 
@@ -83,8 +85,6 @@ export const RowGeneralPanel = ({item}) => {
 			})
 		);
 	};
-
-	const rowConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
 	return (
 		<>

@@ -23,59 +23,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Arthur Chan
  */
-public class StaticSizeTrieURLPatternMapperTest
-	extends SimpleURLPatternMapperTest {
+public class DynamicSizeTrieURLPatternMapperCorrectnessTest
+	extends BaseURLPatternMapperCorrectnessTestCase {
 
 	@Test
 	public void testConstructor() {
-		super.testConstructor();
-
-		try {
-			Map<String, Integer> map = new HashMap<>();
-
-			for (int i = 0; i < 65; i++) {
-				map.put("*.key" + i, i);
-			}
-
-			createURLPatternMapper(map);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-		}
-
-		try {
-			Map<String, Integer> map = new HashMap<>();
-
-			for (int i = 0; i < (Long.SIZE + 1); i++) {
-				map.put("key" + i, i);
-			}
-
-			createURLPatternMapper(map);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-		}
-	}
-
-	@Override
-	@Test
-	public void testGetValue() {
-		super.testGetValue();
-
 		Map<String, Integer> map = new HashMap<>();
 
-		for (int i = 0; i < Long.SIZE; i++) {
+		for (int i = 0; i < 1024; i++) {
 			map.put("*.key" + i, i);
 		}
 
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			map);
 
-		for (int i = 0; i < Long.SIZE; i++) {
+		for (int i = 0; i < 1024; i++) {
 			Assert.assertTrue(i == urlPatternMapper.getValue("*.key" + i));
 		}
 	}
@@ -84,7 +48,7 @@ public class StaticSizeTrieURLPatternMapperTest
 	protected URLPatternMapper<Integer> createURLPatternMapper(
 		Map<String, Integer> values) {
 
-		return new StaticSizeTrieURLPatternMapper<>(values);
+		return new DynamicSizeTrieURLPatternMapper<>(values);
 	}
 
 }

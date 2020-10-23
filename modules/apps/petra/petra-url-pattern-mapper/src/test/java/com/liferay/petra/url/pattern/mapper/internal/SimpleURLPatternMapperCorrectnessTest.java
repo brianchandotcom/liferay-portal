@@ -25,22 +25,35 @@ import org.junit.Test;
 /**
  * @author Arthur Chan
  */
-public class DynamicSizeTrieURLPatternMapperTest
+public class SimpleURLPatternMapperCorrectnessTest
 	extends BaseURLPatternMapperCorrectnessTestCase {
 
 	@Test
 	public void testConstructor() {
-		Map<String, Integer> map = new HashMap<>();
+		try {
+			createURLPatternMapper(
+				new HashMap() {
+					{
+						put("", 0);
+					}
+				});
 
-		for (int i = 0; i < 1024; i++) {
-			map.put("*.key" + i, i);
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
-		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
-			map);
+		try {
+			createURLPatternMapper(
+				new HashMap() {
+					{
+						put(null, 0);
+					}
+				});
 
-		for (int i = 0; i < 1024; i++) {
-			Assert.assertTrue(i == urlPatternMapper.getValue("*.key" + i));
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 
@@ -48,7 +61,7 @@ public class DynamicSizeTrieURLPatternMapperTest
 	protected URLPatternMapper<Integer> createURLPatternMapper(
 		Map<String, Integer> values) {
 
-		return new DynamicSizeTrieURLPatternMapper<>(values);
+		return new SimpleURLPatternMapper<>(values);
 	}
 
 }

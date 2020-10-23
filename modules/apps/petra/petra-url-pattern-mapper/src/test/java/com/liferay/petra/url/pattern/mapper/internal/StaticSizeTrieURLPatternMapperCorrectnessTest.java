@@ -23,20 +23,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Arthur Chan
+ * @author Brian Wing Shun Chan
  */
-public class SimpleURLPatternMapperTest
-	extends BaseURLPatternMapperCorrectnessTestCase {
+public class StaticSizeTrieURLPatternMapperCorrectnessTest
+	extends SimpleURLPatternMapperCorrectnessTest {
 
 	@Test
 	public void testConstructor() {
+		super.testConstructor();
+
 		try {
-			createURLPatternMapper(
-				new HashMap() {
-					{
-						put("", 0);
-					}
-				});
+			Map<String, Integer> map = new HashMap<>();
+
+			for (int i = 0; i < 65; i++) {
+				map.put("*.key" + i, i);
+			}
+
+			createURLPatternMapper(map);
 
 			Assert.fail();
 		}
@@ -44,12 +47,13 @@ public class SimpleURLPatternMapperTest
 		}
 
 		try {
-			createURLPatternMapper(
-				new HashMap() {
-					{
-						put(null, 0);
-					}
-				});
+			Map<String, Integer> map = new HashMap<>();
+
+			for (int i = 0; i < (Long.SIZE + 1); i++) {
+				map.put("key" + i, i);
+			}
+
+			createURLPatternMapper(map);
 
 			Assert.fail();
 		}
@@ -58,10 +62,29 @@ public class SimpleURLPatternMapperTest
 	}
 
 	@Override
+	@Test
+	public void testGetValue() {
+		super.testGetValue();
+
+		Map<String, Integer> map = new HashMap<>();
+
+		for (int i = 0; i < Long.SIZE; i++) {
+			map.put("*.key" + i, i);
+		}
+
+		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
+			map);
+
+		for (int i = 0; i < Long.SIZE; i++) {
+			Assert.assertTrue(i == urlPatternMapper.getValue("*.key" + i));
+		}
+	}
+
+	@Override
 	protected URLPatternMapper<Integer> createURLPatternMapper(
 		Map<String, Integer> values) {
 
-		return new SimpleURLPatternMapper<>(values);
+		return new StaticSizeTrieURLPatternMapper<>(values);
 	}
 
 }

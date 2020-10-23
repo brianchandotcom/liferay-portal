@@ -43,7 +43,6 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.LanguageTag;
 import com.liferay.taglib.ui.RatingsTag;
-import com.liferay.taglib.ui.SitesDirectoryTag;
 import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
@@ -657,25 +656,11 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void sitesDirectory() throws Exception {
-		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
-
-		setUp(sitesDirectoryTag);
-
-		sitesDirectoryTag.runTag();
 	}
 
 	@Override
 	public void sitesDirectory(String displayStyle, String sites)
 		throws Exception {
-
-		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
-
-		setUp(sitesDirectoryTag);
-
-		sitesDirectoryTag.setDisplayStyle(displayStyle);
-		sitesDirectoryTag.setSites(sites);
-
-		sitesDirectoryTag.runTag();
 	}
 
 	@Override

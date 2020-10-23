@@ -3701,21 +3701,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>sites-directory</name>
-		<tag-class>com.liferay.taglib.ui.SitesDirectoryTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>displayStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>sites</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a success message to display to the user.</description>
 		<name>success</name>
 		<tag-class>com.liferay.taglib.ui.SuccessTag</tag-class>

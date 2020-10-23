@@ -23,6 +23,12 @@ import {SidebarContext} from '../sidebar/SidebarContext.es';
 export default ({data, field, summary, totalEntries, type}) => {
 	const {portletNamespace, toggleSidebar} = useContext(SidebarContext);
 
+	const formatDate = (field) => {
+		const locale = themeDisplay.getLanguageId().split('_', 1).join('');
+
+		return moment(field).locale(locale).format('L');
+	};
+
 	const checkType = (field, type) => {
 		switch (type) {
 			case 'color':
@@ -32,12 +38,6 @@ export default ({data, field, summary, totalEntries, type}) => {
 			default:
 				return field;
 		}
-	};
-
-	const formatDate = (field) => {
-		const locale = themeDisplay.getLanguageId().split('_', 1).join('');
-
-		return moment(field).locale(locale).format('L');
 	};
 
 	data = removeEmptyValues(data);

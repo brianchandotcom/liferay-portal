@@ -44,62 +44,51 @@ export default ({
 				) : null}
 
 				<ul>
-					{payload.map(
-						(
-							{
-								dataKey,
-								payload,
-								fill = fill == undefined ? payload.fill : null,
-								value,
-							},
-							index
-						) => {
-							dataKey = !showHeader
-								? payload.label
-								: getColumnLabel(dataKey, field);
+					{payload.map(({dataKey, fill, payload, value}, index) => {
+						dataKey = !showHeader
+							? payload.label
+							: getColumnLabel(dataKey, field);
 
-							return (
-								<li key={`tooltip-${index}`}>
-									{showBullet ? (
-										<svg height="12" width="12">
-											{roundBullet ? (
-												<circle
-													cx="6"
-													cy="6"
-													fill={fill}
-													r="6"
-													strokeWidth="0"
-												/>
-											) : (
-												<rect
-													fill={fill}
-													height="12"
-													width="12"
-												/>
-											)}
-										</svg>
-									) : null}
-									<div id="tooltip-label">
-										{`${dataKey}: ${value} `}
-										{value == 1
-											? `${Liferay.Language.get(
-													'entry'
-											  ).toLowerCase()} `
-											: `${Liferay.Language.get(
-													'entries'
-											  ).toLowerCase()} `}
-										<b>
-											(
-											{roundPercentage(
-												getPercentage(value)
-											)}
-											)
-										</b>
-									</div>
-								</li>
-							);
-						}
-					)}
+						fill = fill == undefined ? payload.fill : null;
+
+						return (
+							<li key={`tooltip-${index}`}>
+								{showBullet ? (
+									<svg height="12" width="12">
+										{roundBullet ? (
+											<circle
+												cx="6"
+												cy="6"
+												fill={fill}
+												r="6"
+												strokeWidth="0"
+											/>
+										) : (
+											<rect
+												fill={fill}
+												height="12"
+												width="12"
+											/>
+										)}
+									</svg>
+								) : null}
+								<div id="tooltip-label">
+									{`${dataKey}: ${value} `}
+									{value == 1
+										? `${Liferay.Language.get(
+												'entry'
+										  ).toLowerCase()} `
+										: `${Liferay.Language.get(
+												'entries'
+										  ).toLowerCase()} `}
+									<b>
+										({roundPercentage(getPercentage(value))}
+										)
+									</b>
+								</div>
+							</li>
+						);
+					})}
 				</ul>
 			</div>
 		);

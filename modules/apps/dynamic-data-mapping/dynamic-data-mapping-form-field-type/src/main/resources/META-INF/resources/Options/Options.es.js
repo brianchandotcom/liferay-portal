@@ -223,24 +223,6 @@ const Options = ({
 				Liferay.Language.get('option').toLowerCase()
 	);
 
-	const getSynchronizedValue = (fields) => {
-		const _fields = [...fields];
-
-		_fields.pop();
-
-		const availableLanguageIds = Object.getOwnPropertyNames(
-			normalizedValue
-		);
-
-		return availableLanguageIds.reduce(
-			(value, languageId) => ({
-				...value,
-				[languageId]: synchronizeValue(_fields, languageId),
-			}),
-			{[editingLanguageId]: [..._fields]}
-		);
-	};
-
 	const synchronizeValue = (fields, languageId) => {
 		if (editingLanguageId === languageId) {
 			return [...fields];
@@ -270,6 +252,24 @@ const Options = ({
 				label: field.label,
 			};
 		});
+	};
+
+	const getSynchronizedValue = (fields) => {
+		const _fields = [...fields];
+
+		_fields.pop();
+
+		const availableLanguageIds = Object.getOwnPropertyNames(
+			normalizedValue
+		);
+
+		return availableLanguageIds.reduce(
+			(value, languageId) => ({
+				...value,
+				[languageId]: synchronizeValue(_fields, languageId),
+			}),
+			{[editingLanguageId]: [..._fields]}
+		);
 	};
 
 	const clone = (...args) => {
@@ -331,9 +331,38 @@ const Options = ({
 		return [fields, index, property, value];
 	};
 
+	const handleDelete = (fields, index) => {
+		fields.splice(index, 1);
+
+		return [fields];
+	};
+
+	const move = (fields, data) => {
+		const {itemPosition, targetPosition} = data;
+
+		if (itemPosition === fields.length - 1) {
+			return [fields];
+		}
+
+		const item = {...fields[itemPosition]};
+		const newTargetPosition =
+			targetPosition > itemPosition ? targetPosition - 1 : targetPosition;
+
+		fields.splice(itemPosition, 1);
+		fields.splice(newTargetPosition, 0, item);
+
+		return [fields];
+	};
+
 	const normalize = (fields) => {
 		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
 	};
+
+	const composedAdd = compose(clone, dedup, add, set);
+	const composedBlur = compose(clone, normalize, set);
+	const composedChange = compose(clone, dedup, change, set);
+	const composedDelete = compose(clone, handleDelete, set);
+	const composedMove = compose(clone, move, set);
 
 	const handleConfirmDelete = (index, option) => {
 		if (
@@ -367,35 +396,6 @@ const Options = ({
 			composedDelete(index);
 		}
 	};
-
-	const handleDelete = (fields, index) => {
-		fields.splice(index, 1);
-
-		return [fields];
-	};
-
-	const move = (fields, data) => {
-		const {itemPosition, targetPosition} = data;
-
-		if (itemPosition === fields.length - 1) {
-			return [fields];
-		}
-
-		const item = {...fields[itemPosition]};
-		const newTargetPosition =
-			targetPosition > itemPosition ? targetPosition - 1 : targetPosition;
-
-		fields.splice(itemPosition, 1);
-		fields.splice(newTargetPosition, 0, item);
-
-		return [fields];
-	};
-
-	const composedAdd = compose(clone, dedup, add, set);
-	const composedBlur = compose(clone, normalize, set);
-	const composedChange = compose(clone, dedup, change, set);
-	const composedDelete = compose(clone, handleDelete, set);
-	const composedMove = compose(clone, move, set);
 
 	return (
 		<div className="ddm-field-options-container">

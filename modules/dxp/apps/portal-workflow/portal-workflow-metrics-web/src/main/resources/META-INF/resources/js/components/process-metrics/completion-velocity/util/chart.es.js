@@ -120,6 +120,30 @@ export const formatWeekDateWithYear = (date, timeRange) => {
 	)} - ${lastDayOfWeek.format(Liferay.Language.get('dd-yyyy'))}`;
 };
 
+export const getRangeKey = (timeRange) => {
+	const endDate = moment.utc(timeRange.dateEnd);
+	const startDate = moment.utc(timeRange.dateStart);
+
+	const diff = parseInt(moment.duration(endDate.diff(startDate)).asDays());
+
+	const diffList = [
+		TODAY,
+		YESTERDAY,
+		LAST_7_DAYS,
+		LAST_30_DAYS,
+		LAST_90_DAYS,
+		LAST_180_DAYS,
+		LAST_YEAR,
+	];
+
+	const diffItem = diffList.find((key) => key >= diff);
+	if (typeof diffItem !== 'undefined') {
+		return diffItem;
+	}
+
+	return LAST_YEAR;
+};
+
 export const formatXAxisDate = (date, isAmPm, timeRangeKey, timeRange) => {
 	const currentDate = moment.utc(date);
 	const rangeUnit = getRangeKey(timeRange);
@@ -224,30 +248,6 @@ export const getAxisMeasuresFromData = (data) =>
 				.filter((value) => typeof value === 'number')
 		)
 	);
-
-export const getRangeKey = (timeRange) => {
-	const endDate = moment.utc(timeRange.dateEnd);
-	const startDate = moment.utc(timeRange.dateStart);
-
-	const diff = parseInt(moment.duration(endDate.diff(startDate)).asDays());
-
-	const diffList = [
-		TODAY,
-		YESTERDAY,
-		LAST_7_DAYS,
-		LAST_30_DAYS,
-		LAST_90_DAYS,
-		LAST_180_DAYS,
-		LAST_YEAR,
-	];
-
-	const diffItem = diffList.find((key) => key >= diff);
-	if (typeof diffItem !== 'undefined') {
-		return diffItem;
-	}
-
-	return LAST_YEAR;
-};
 
 export const getXAxisIntervals = (timeRange, keys, type) => {
 	const endDate = moment.utc(timeRange.dateEnd);

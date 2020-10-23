@@ -16,6 +16,22 @@ import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.
 import {useFilterStatic} from '../../shared/components/filter/hooks/useFilterStatic.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
+const processStatusConstants = {
+	completed: 'Completed',
+	pending: 'Pending',
+};
+
+const processStatuses = [
+	{
+		key: processStatusConstants.completed,
+		name: Liferay.Language.get('completed'),
+	},
+	{
+		key: processStatusConstants.pending,
+		name: Liferay.Language.get('pending'),
+	},
+];
+
 const ProcessStatusFilter = ({
 	className,
 	filterKey = filterConstants.processStatus.key,
@@ -59,22 +75,6 @@ const ProcessStatusFilter = ({
 		/>
 	);
 };
-
-const processStatusConstants = {
-	completed: 'Completed',
-	pending: 'Pending',
-};
-
-const processStatuses = [
-	{
-		key: processStatusConstants.completed,
-		name: Liferay.Language.get('completed'),
-	},
-	{
-		key: processStatusConstants.pending,
-		name: Liferay.Language.get('pending'),
-	},
-];
 
 export default ProcessStatusFilter;
 export {processStatusConstants};

@@ -30,6 +30,24 @@ const useReindexActions = () => {
 	const getReindexStatus = (key) =>
 		reindexStatuses.find((item) => key === item.key) || {};
 
+	const sendSuccess = (
+		key,
+		label = Liferay.Language.get('workflow-indexes')
+	) => {
+		const message = INDEXES_GROUPS_KEYS.includes(key)
+			? Liferay.Language.get('all-x-have-reindexed-successfully')
+			: Liferay.Language.get('x-has-reindexed-successfully');
+
+		toaster.success(sub(message, [label]));
+	};
+
+	const sendError = () => {
+		toaster.danger(Liferay.Language.get('your-request-has-failed'));
+	};
+
+	const isReindexing = (key) =>
+		reindexStatuses.findIndex((item) => key === item.key) > -1;
+
 	const getStatuses = useCallback(
 		() => {
 			const cancelInterval = schedule(() => {
@@ -90,24 +108,6 @@ const useReindexActions = () => {
 					...prevStatuses.filter((item) => item.key !== key),
 				]);
 			});
-	};
-
-	const isReindexing = (key) =>
-		reindexStatuses.findIndex((item) => key === item.key) > -1;
-
-	const sendError = () => {
-		toaster.danger(Liferay.Language.get('your-request-has-failed'));
-	};
-
-	const sendSuccess = (
-		key,
-		label = Liferay.Language.get('workflow-indexes')
-	) => {
-		const message = INDEXES_GROUPS_KEYS.includes(key)
-			? Liferay.Language.get('all-x-have-reindexed-successfully')
-			: Liferay.Language.get('x-has-reindexed-successfully');
-
-		toaster.success(sub(message, [label]));
 	};
 
 	return {

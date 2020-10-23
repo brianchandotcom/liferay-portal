@@ -22,6 +22,11 @@ import {
 	parseDateMoment,
 } from '../util/timeRangeUtil.es';
 
+const updateErrors = (errors, fieldName, message) => ({
+	...(errors || {}),
+	[fieldName]: message,
+});
+
 const validateDate = (dateEndMoment, dateStartMoment) => {
 	const dateNow = moment.utc();
 	let errors;
@@ -93,11 +98,6 @@ const validateRangeConsistency = (dateEndMoment, dateStartMoment) => {
 
 	return errors;
 };
-
-const updateErrors = (errors, fieldName, message) => ({
-	...(errors || {}),
-	[fieldName]: message,
-});
 
 const useCustomTimeRange = (prefixKey, withoutRouteParams) => {
 	const [errors, setErrors] = useState(undefined);

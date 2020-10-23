@@ -12,6 +12,14 @@
 import {formatNumber} from './numeral.es';
 
 /**
+ * Return true if number is valid
+ * @param {number} number
+ */
+const isValidNumber = (number) => {
+	return !isNaN(number) && number !== Infinity ? true : false;
+};
+
+/**
  * Returns the percent number passing as
  * parameter the current number and total number.
  * @param {number} number1
@@ -35,14 +43,6 @@ const getFormattedPercentage = (number1, number2) => {
 	const percentage = getPercentage(number1, number2);
 
 	return formatNumber(percentage, '0[.]00%');
-};
-
-/**
- * Return true if number is valid
- * @param {number} number
- */
-const isValidNumber = (number) => {
-	return !isNaN(number) && number !== Infinity ? true : false;
 };
 
 const capitalize = (str) =>

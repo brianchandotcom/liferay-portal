@@ -27,23 +27,6 @@ const SLAInfo = ({processId}) => {
 	const {fetchData} = useFetch({url});
 	const {fetchData: fetchSLABlocked} = useFetch({url: `${url}&status=2`});
 
-	const getSLACount = () => {
-		fetchData().then(({totalCount}) => {
-			if (totalCount === 0) {
-				setAlert({
-					content: `${Liferay.Language.get(
-						'no-slas-are-defined-for-this-process'
-					)}`,
-					link: `/sla/${processId}/new`,
-					linkText: Liferay.Language.get('add-a-new-sla'),
-				});
-			}
-			else {
-				getSLABlockedCount();
-			}
-		});
-	};
-
 	const getSLABlockedCount = () => {
 		fetchSLABlocked().then(({totalCount}) => {
 			if (totalCount > 0) {
@@ -59,6 +42,23 @@ const SLAInfo = ({processId}) => {
 					link: `/sla/${processId}/list/${defaultDelta}/1`,
 					linkText: Liferay.Language.get('set-up-slas'),
 				});
+			}
+		});
+	};
+
+	const getSLACount = () => {
+		fetchData().then(({totalCount}) => {
+			if (totalCount === 0) {
+				setAlert({
+					content: `${Liferay.Language.get(
+						'no-slas-are-defined-for-this-process'
+					)}`,
+					link: `/sla/${processId}/new`,
+					linkText: Liferay.Language.get('add-a-new-sla'),
+				});
+			}
+			else {
+				getSLABlockedCount();
 			}
 		});
 	};

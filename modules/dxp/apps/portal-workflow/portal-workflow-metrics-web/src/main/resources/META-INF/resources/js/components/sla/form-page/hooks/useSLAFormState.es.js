@@ -154,6 +154,8 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 
 	const updateSLA = usePut({body, url: `/slas/${id}`});
 
+	const getNodeKeys = (nodes) => nodes.map(({compositeId}) => compositeId);
+
 	const changeNodesKeys = (type, nodeKeys, callback) => (selectedNodes) => {
 		const selectedNodeKeys = getNodeKeys(selectedNodes);
 
@@ -193,8 +195,6 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 			)
 		);
 	};
-
-	const getNodeKeys = (nodes) => nodes.map(({compositeId}) => compositeId);
 
 	const getPauseNodeTags = (pauseNodes, pauseNodeKeys) => {
 		const nodeKeys = pauseNodeKeys || [];

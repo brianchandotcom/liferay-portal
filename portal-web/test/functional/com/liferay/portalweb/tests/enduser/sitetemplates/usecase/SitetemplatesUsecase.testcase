@@ -214,7 +214,7 @@ definition {
 			portlet = "Site Templates");
 
 		LAR.importPortlet(
-			failureExpected = "true",
+			importSchemaVersionMismatching = "true",
 			larFileName = "class-site-template-7.0.lar",
 			uploadFrom = "dependencies");
 	}

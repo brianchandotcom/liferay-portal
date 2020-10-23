@@ -200,6 +200,15 @@ definition {
 				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
 				value1 = "The file ${larFileName} cannot be imported.");
 		}
+		else if (isSet(importSchemaVersionMismatching)) {
+			AssertTextEquals(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
+				value1 = "The file ${larFileName} cannot be imported.");
+
+			AssertTextPresent(
+				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
+				value1 = "LAR schema version 1.0.0 does not match deployed export/import schema version 4.0.0.");
+		}
 		else if (isSet(importValidationMissingItem)) {
 			AssertTextEquals(
 				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER",
@@ -546,6 +555,7 @@ definition {
 			failureExpected = "${failureExpected}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",
+			importSchemaVersionMismatching = "${importSchemaVersionMismatching}",
 			larFileName = "${larFileName}",
 			mirrorWithOverwriting = "${mirrorWithOverwriting}",
 			portletName = "${portletName}",

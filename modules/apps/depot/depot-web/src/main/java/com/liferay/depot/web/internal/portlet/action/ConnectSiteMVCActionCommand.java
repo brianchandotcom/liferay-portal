@@ -68,8 +68,24 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 			if (!depotGroup.isStaged() && toGroup.isStaged()) {
 				throw new DepotEntryGroupRelToGroupException.MustNotBeStaged();
 			}
-			else if (depotGroup.isStaged() && !toGroup.isStaged()) {
-				throw new DepotEntryGroupRelToGroupException.MustBeStaged();
+			else if (depotGroup.isStaged()) {
+				if (!toGroup.isStaged()) {
+					throw new DepotEntryGroupRelToGroupException.MustBeStaged();
+				}
+
+				if (depotGroup.isStagedRemotely() &&
+					!toGroup.isStagedRemotely()) {
+
+					throw new DepotEntryGroupRelToGroupException.
+						MustBeRemotelyStaged();
+				}
+
+				if (!depotGroup.isStagedRemotely() &&
+					toGroup.isStagedRemotely()) {
+
+					throw new DepotEntryGroupRelToGroupException.
+						MustBeLocallyStaged();
+				}
 			}
 
 			if (toGroup.isStaged()) {

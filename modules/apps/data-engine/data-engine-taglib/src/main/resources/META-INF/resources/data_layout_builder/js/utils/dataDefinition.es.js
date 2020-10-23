@@ -14,26 +14,6 @@
 
 import {getLocalizedValue} from './lang.es';
 
-export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
-	let hasFieldSet = false;
-
-	forEachDataDefinitionField(dataDefinition, (dataDefinitionField) => {
-		const {customProperties, fieldType} = dataDefinitionField;
-
-		if (
-			fieldType === 'fieldset' &&
-			customProperties &&
-			customProperties.ddmStructureId == dataDefinitionId
-		) {
-			hasFieldSet = true;
-		}
-
-		return hasFieldSet;
-	});
-
-	return hasFieldSet;
-};
-
 export const forEachDataDefinitionField = (
 	dataDefinition = {dataDefinitionFields: []},
 	fn
@@ -61,6 +41,26 @@ export const forEachDataDefinitionField = (
 	}
 
 	return false;
+};
+
+export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
+	let hasFieldSet = false;
+
+	forEachDataDefinitionField(dataDefinition, (dataDefinitionField) => {
+		const {customProperties, fieldType} = dataDefinitionField;
+
+		if (
+			fieldType === 'fieldset' &&
+			customProperties &&
+			customProperties.ddmStructureId == dataDefinitionId
+		) {
+			hasFieldSet = true;
+		}
+
+		return hasFieldSet;
+	});
+
+	return hasFieldSet;
 };
 
 export const getDataDefinitionField = (

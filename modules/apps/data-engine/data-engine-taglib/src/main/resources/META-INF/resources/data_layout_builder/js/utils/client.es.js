@@ -42,12 +42,33 @@ function fetchItem(url, options) {
 	});
 }
 
+export const getURL = (path, params) => {
+	params = {
+		['p_auth']: Liferay.authToken,
+		t: Date.now(),
+		...params,
+	};
+
+	const uri = new URL(`${window.location.origin}${path}`);
+	const keys = Object.keys(params);
+
+	keys.forEach((key) => uri.searchParams.set(key, params[key]));
+
+	return uri.toString();
+};
+
 export const addItem = (endpoint, item) =>
 	fetchItem(getURL(endpoint), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
 		method: 'POST',
 	});
+
+export const deleteItem = (endpoint) => {
+	return fetch(getURL(endpoint), {
+		method: 'DELETE',
+	});
+};
 
 export const confirmDelete = (endpoint) => (item) =>
 	new Promise((resolve, reject) => {
@@ -65,12 +86,6 @@ export const confirmDelete = (endpoint) => (item) =>
 		}
 	});
 
-export const deleteItem = (endpoint) => {
-	return fetch(getURL(endpoint), {
-		method: 'DELETE',
-	});
-};
-
 export const request = (endpoint, method = 'GET') =>
 	fetch(getURL(endpoint), {
 		headers: HEADERS,
@@ -82,21 +97,6 @@ export const getItem = (endpoint) => {
 		headers: HEADERS,
 		method: 'GET',
 	}).then((response) => response.json());
-};
-
-export const getURL = (path, params) => {
-	params = {
-		['p_auth']: Liferay.authToken,
-		t: Date.now(),
-		...params,
-	};
-
-	const uri = new URL(`${window.location.origin}${path}`);
-	const keys = Object.keys(params);
-
-	keys.forEach((key) => uri.searchParams.set(key, params[key]));
-
-	return uri.toString();
 };
 
 export const updateItem = (endpoint, item, params) =>

@@ -20,13 +20,6 @@ const HEADERS = {
 	'Content-Type': 'application/json',
 };
 
-export const addItem = (endpoint, item) =>
-	fetch(getURL(endpoint), {
-		body: JSON.stringify(item),
-		headers: HEADERS,
-		method: 'POST',
-	}).then((response) => response.json());
-
 export const getURL = (path, params) => {
 	params = {
 		['p_auth']: Liferay.authToken,
@@ -41,6 +34,13 @@ export const getURL = (path, params) => {
 
 	return uri.toString();
 };
+
+export const addItem = (endpoint, item) =>
+	fetch(getURL(endpoint), {
+		body: JSON.stringify(item),
+		headers: HEADERS,
+		method: 'POST',
+	}).then((response) => response.json());
 
 export const updateItem = (endpoint, item, params) =>
 	fetch(getURL(endpoint, params), {

@@ -1,0 +1,52 @@
+task deployDispatchSamples(type: Copy)
+
+File dispatchIntegrationTestSamplesDeployDir = file("${project.'liferay.home'}/tmp_talend_sample")
+
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:dispatch:dispatch-api")
+	testIntegrationCompile project(":core:petra:petra-string")
+
+	testIntegrationRuntime ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
+}
+
+deployDispatchSamples {
+
+	description = "Assembles the dispatch integration test sample files and deploys it to Liferay."
+	group "build"
+
+	destinationDir = dispatchIntegrationTestSamplesDeployDir
+
+	if (!destinationDir.exists()) {
+		destinationDir.mkdir()
+	}
+
+	from configurations.testIntegrationRuntime
+
+	include "*.zip"
+
+}
+
+testIntegration {
+	dependsOn {
+		configurations.testIntegrationRuntime
+
+		deployDispatchSamples
+	}
+
+	doLast {
+		File destinationDir = dispatchIntegrationTestSamplesDeployDir
+
+		if (destinationDir.exists()) {
+			for (File file: destinationDir.listFiles() ) {
+				file.delete();
+			}
+
+			destinationDir.delete();
+
+			logger.lifecycle "Removed Dispatch samples directory: {}", dispatchIntegrationTestSamplesDeployDir
+		}
+
+	}
+}

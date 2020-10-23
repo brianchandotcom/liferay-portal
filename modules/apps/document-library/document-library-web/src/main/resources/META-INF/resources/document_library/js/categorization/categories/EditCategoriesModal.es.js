@@ -110,6 +110,25 @@ const EditCategoriesModal = ({
 		setVocabularies(newVocabularies);
 	};
 
+	const fetchCategories = useCallback(
+		(url, method, bodyData) => {
+			const init = {
+				body: JSON.stringify(bodyData),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method,
+			};
+
+			return fetch(`${pathModule}${url}`, init)
+				.then((response) => response.json())
+				.catch(() => {
+					onModalClose();
+				});
+		},
+		[onModalClose, pathModule]
+	);
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -234,25 +253,6 @@ const EditCategoriesModal = ({
 		repositoryId,
 		selectAll,
 	]);
-
-	const fetchCategories = useCallback(
-		(url, method, bodyData) => {
-			const init = {
-				body: JSON.stringify(bodyData),
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				method,
-			};
-
-			return fetch(`${pathModule}${url}`, init)
-				.then((response) => response.json())
-				.catch(() => {
-					onModalClose();
-				});
-		},
-		[onModalClose, pathModule]
-	);
 
 	return (
 		<ClayModal observer={observer} size="md">

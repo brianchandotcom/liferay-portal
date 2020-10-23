@@ -27,10 +27,6 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(translateDisplayContext.getTitle());
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" />
-</liferay-util:html-top>
-
 <div class="translation">
 	<aui:form action="<%= translateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translation-edit" name="translate_fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

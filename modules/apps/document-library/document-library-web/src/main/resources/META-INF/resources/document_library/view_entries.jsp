@@ -19,8 +19,6 @@
 <%
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(request);
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
@@ -40,13 +38,9 @@ String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != dlAdminDisplayContext.getRootFolderId())) {
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	if (Validator.isNotNull(redirect)) {
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(redirect);
-	}
+if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() && Validator.isNotNull(dlViewEntriesDisplayContext.getRedirect())) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(dlViewEntriesDisplayContext.getRedirect());
 }
 %>
 

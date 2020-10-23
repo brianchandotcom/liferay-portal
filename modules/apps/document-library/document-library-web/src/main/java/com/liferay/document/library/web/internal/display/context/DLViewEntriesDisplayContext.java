@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
+
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +38,16 @@ public class DLViewEntriesDisplayContext {
 		return _dlAdminDisplayContext.getDisplayStyle();
 	}
 
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		return _redirect;
+	}
+
 	public boolean isDescriptiveDisplayStyle() {
 		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
@@ -51,7 +64,20 @@ public class DLViewEntriesDisplayContext {
 		return false;
 	}
 
+	public boolean isRootFolder() {
+		long folderId = _dlAdminDisplayContext.getFolderId();
+
+		if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+			(folderId != _dlAdminDisplayContext.getRootFolderId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final HttpServletRequest _httpServletRequest;
+	private String _redirect;
 
 }

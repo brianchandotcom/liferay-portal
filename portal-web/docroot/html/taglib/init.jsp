@@ -21,10 +21,7 @@ page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %><%@
-page import="com.liferay.taglib.util.PortalIncludeUtil" %><%@
 page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
-
-<%@ page import="java.io.IOException" %>
 
 <portlet:defineObjects />
 

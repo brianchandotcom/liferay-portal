@@ -100,7 +100,7 @@
 							sampleFileEntryRemove.classList.remove('hide');
 
 							sampleFileEntryNameInput.innerHTML =
-								'<a>' + value.title + '</a>';
+								'<a>' + Liferay.Util.escape(value.title) + '</a>';
 						}
 					},
 				},
@@ -133,7 +133,7 @@
 				.querySelector('#lfr-definition-virtual-sample-button-row-message')
 				.classList.remove('hide');
 
-			sampleFileEntryNameInput.innerHTML =
+			sampleFileEntryNameInput.innerText =
 				'<liferay-ui:message key="none" />';
 
 			sampleFileEntryRemove.classList.add('hide');

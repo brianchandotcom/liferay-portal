@@ -125,7 +125,7 @@ if (cpDisplayLayout != null) {
 						if (selectedItem) {
 							pagesContainerInput.value = selectedItem.id;
 
-							displayPageNameInput.innerHTML = selectedItem.name;
+							displayPageNameInput.innerText = selectedItem.name;
 
 							displayPageItemRemove.classList.remove('hide');
 						}
@@ -153,7 +153,7 @@ if (cpDisplayLayout != null) {
 	var assetCategoryId = <%= (assetCategory == null) ? "null" : assetCategory.getCategoryId() %>;
 
 	var assetCategoryName =
-		'<%= (assetCategory == null) ? "" : assetCategory.getTitle(locale) %>';
+		'<%= (assetCategory == null) ? "" : HtmlUtil.escapeJS(assetCategory.getTitle(locale)) %>';
 
 	var categoriesContainer = document.querySelector(
 		'#<portlet:namespace />categoriesContainer'

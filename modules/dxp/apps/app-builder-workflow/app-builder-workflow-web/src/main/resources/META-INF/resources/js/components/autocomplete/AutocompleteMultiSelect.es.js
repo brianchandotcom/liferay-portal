@@ -54,6 +54,17 @@ function AutocompleteMultiSelect({
 		target.value = '';
 	};
 
+	const onSelect = (item) => {
+		const newSelectedItems = [...selectedItems, item];
+
+		setSearch('');
+		onChange(newSelectedItems);
+
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	};
+
 	const onKeyDown = ({key}) => {
 		const item = filteredItems[activeItem];
 
@@ -89,17 +100,6 @@ function AutocompleteMultiSelect({
 		);
 
 		onChange(newSelectedItems);
-	};
-
-	const onSelect = (item) => {
-		const newSelectedItems = [...selectedItems, item];
-
-		setSearch('');
-		onChange(newSelectedItems);
-
-		if (inputRef.current) {
-			inputRef.current.focus();
-		}
 	};
 
 	useEffect(() => {

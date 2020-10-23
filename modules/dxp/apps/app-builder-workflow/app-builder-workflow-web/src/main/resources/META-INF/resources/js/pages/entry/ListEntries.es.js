@@ -170,6 +170,8 @@ export default function ListEntries({history}) {
 			languageId: userLanguageId,
 		});
 
+	const refetch = () => doFetch(query, appWorkflowDefinitionId);
+
 	const onCloseModal = (isRefetch) => {
 		setModalVisible(false);
 		setSelectedEntry();
@@ -259,8 +261,6 @@ export default function ListEntries({history}) {
 				return {...entry, ...workflowValues};
 			});
 	};
-
-	const refetch = () => doFetch(query, appWorkflowDefinitionId);
 
 	useEffect(() => {
 		if (!isEqualObjects(query, previousQuery)) {

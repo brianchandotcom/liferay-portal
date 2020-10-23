@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -131,6 +132,8 @@ public class DDMFormInstanceRecordExporterImpl
 		ddmFormFieldsLabel.put(
 			_MODIFIED_DATE, LanguageUtil.get(locale, "modified-date"));
 		ddmFormFieldsLabel.put(_AUTHOR, LanguageUtil.get(locale, _AUTHOR));
+		ddmFormFieldsLabel.put(
+			_LANGUAGE_ID, LanguageUtil.get(locale, "default-language"));
 
 		return ddmFormFieldsLabel;
 	}
@@ -192,7 +195,8 @@ public class DDMFormInstanceRecordExporterImpl
 					ddmFormFieldsValue.put(
 						entry.getKey(),
 						getDDMFormFieldValue(
-							entry.getValue(), ddmFormFieldValuesMap, ddmFormValues.getDefaultLocale()));
+							entry.getValue(), ddmFormFieldValuesMap,
+							ddmFormValues.getDefaultLocale()));
 				}
 			}
 
@@ -211,6 +215,10 @@ public class DDMFormInstanceRecordExporterImpl
 
 			ddmFormFieldsValue.put(
 				_AUTHOR, ddmFormInstanceRecordVersion.getUserName());
+
+			ddmFormFieldsValue.put(
+				_LANGUAGE_ID,
+				LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale()));
 
 			ddmFormFieldValues.add(ddmFormFieldsValue);
 		}
@@ -318,6 +326,8 @@ public class DDMFormInstanceRecordExporterImpl
 		ddmFormInstanceVersionLocalService;
 
 	private static final String _AUTHOR = "author";
+
+	private static final String _LANGUAGE_ID = "languageId";
 
 	private static final String _MODIFIED_DATE = "modifiedDate";
 

@@ -25,7 +25,6 @@ import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,35 +63,6 @@ public class ViewEntryDisplayContext<T extends BaseModel<T>> {
 		return StringBundler.concat(
 			_language.get(resourceBundle, "publication"), " : ",
 			ctCollection.getName());
-	}
-
-	public String getEntryDescription(HttpServletRequest httpServletRequest) {
-		if (_ctEntry == null) {
-			return null;
-		}
-
-		return _ctDisplayRendererRegistry.getEntryDescription(
-			httpServletRequest, _ctEntry);
-	}
-
-	public String getEntryTitle(Locale locale) {
-		if (_ctEntry != null) {
-			return _ctDisplayRendererRegistry.getTitle(
-				_ctEntry.getCtCollectionId(), _ctEntry, locale);
-		}
-
-		return _ctDisplayRendererRegistry.getTitle(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, locale, _baseModel,
-			_modelClassNameId);
-	}
-
-	public long getUserId() {
-		if (_ctEntry == null) {
-			return 0;
-		}
-
-		return _ctEntry.getUserId();
 	}
 
 	public void renderEntry(

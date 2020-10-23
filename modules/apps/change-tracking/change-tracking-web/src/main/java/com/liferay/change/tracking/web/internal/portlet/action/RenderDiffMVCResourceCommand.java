@@ -63,8 +63,7 @@ public class RenderDiffMVCResourceCommand extends BaseMVCResourceCommand {
 			ctCollection, _ctDisplayRendererRegistry, ctEntry,
 			_ctEntryLocalService,
 			_portal.getHttpServletRequest(resourceRequest),
-			_portal.getHttpServletResponse(resourceResponse), _language,
-			_portal.getLocale(resourceRequest));
+			_portal.getHttpServletResponse(resourceResponse), _language);
 
 		resourceRequest.setAttribute(
 			CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);

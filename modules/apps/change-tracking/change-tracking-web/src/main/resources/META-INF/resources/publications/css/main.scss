@@ -76,28 +76,6 @@
 		border-right: solid 1px #e7e7ed;
 		vertical-align: top;
 	}
-
-	.publications-header-td {
-		.alert {
-			margin-bottom: 4px;
-			margin-top: 12px;
-		}
-
-		.autofit-row {
-			.autofit-col:first-child {
-				padding-right: 0;
-			}
-		}
-
-		.publication-description {
-			color: #6b6c7e;
-		}
-
-		.publication-name {
-			font-size: 1rem;
-			font-weight: 600;
-		}
-	}
 }
 
 .publications-discard-container {
@@ -130,6 +108,27 @@
 
 		.publications-radio-label {
 			font-weight: 600;
+		}
+	}
+}
+
+.publications-modal {
+	.modal-description {
+		color: #6b6c7e;
+		font-size: 14px;
+		font-weight: normal;
+	}
+
+	.modal-header.publications-conflicts-header {
+		height: auto;
+
+		.alert {
+			margin-top: 16px;
+			width: 100%;
+
+			.btn {
+				margin-right: 16px;
+			}
 		}
 	}
 }
@@ -256,11 +255,6 @@
 	.taglib-empty-result-message {
 		margin-top: 20px;
 	}
-}
-
-.publications-view-header-button {
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
 }
 
 .select-publication-table {

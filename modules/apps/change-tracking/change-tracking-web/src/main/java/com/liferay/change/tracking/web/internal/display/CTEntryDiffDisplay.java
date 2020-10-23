@@ -19,11 +19,8 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,8 +39,7 @@ public class CTEntryDiffDisplay {
 		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
 		CTEntryLocalService ctEntryLocalService,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Language language,
-		Locale locale) {
+		HttpServletResponse httpServletResponse, Language language) {
 
 		_ctCollection = ctCollection;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
@@ -52,31 +48,6 @@ public class CTEntryDiffDisplay {
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_language = language;
-		_locale = locale;
-	}
-
-	public String getEntryDescription() {
-		return _ctDisplayRendererRegistry.getEntryDescription(
-			_httpServletRequest, _ctEntry);
-	}
-
-	public String getEntryTitle() throws PortalException {
-		if (isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION)) {
-			if (_ctCollection.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
-
-				return _ctDisplayRendererRegistry.getTitle(
-					_ctEntry.getCtCollectionId(), _ctEntry, _locale);
-			}
-
-			return _ctDisplayRendererRegistry.getTitle(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry, _locale);
-		}
-
-		return _ctDisplayRendererRegistry.getTitle(
-			_ctDisplayRendererRegistry.getCtCollectionId(
-				_ctCollection, _ctEntry),
-			_ctEntry, _locale);
 	}
 
 	public String getLeftTitle() {
@@ -100,10 +71,6 @@ public class CTEntryDiffDisplay {
 		return StringBundler.concat(
 			_language.get(_httpServletRequest, "publication"), " : ",
 			_ctCollection.getName());
-	}
-
-	public long getUserId() {
-		return _ctEntry.getUserId();
 	}
 
 	public boolean isChangeType(int changeType) {
@@ -150,6 +117,5 @@ public class CTEntryDiffDisplay {
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final Language _language;
-	private final Locale _locale;
 
 }

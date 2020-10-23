@@ -12,39 +12,75 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
+import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import React from 'react';
+import React, {useState} from 'react';
 
-class ChangeTrackingConflictsView extends React.Component {
-	constructor(props) {
-		super(props);
+const ChangeTrackingConflictsView = ({conflicts, spritemap}) => {
+	const [delta, setDelta] = useState(20);
+	const [page, setPage] = useState(1);
+	const [viewConflict, setViewConflict] = useState(null);
 
-		const {conflicts, spritemap} = props;
+	/* eslint-disable no-unused-vars */
+	const {observer, onClose} = useModal({
+		onClose: () => setViewConflict(null),
+	});
 
-		this.conflicts = conflicts;
-		this.spritemap = spritemap;
+	const getAlertFooter = (conflict) => {
+		if (
+			!conflict.dismissURL &&
+			(!conflict.actions || conflict.actions.length === 0)
+		) {
+			return '';
+		}
 
-		this.state = {
-			delta: 20,
-			page: 1,
-		};
-	}
+		const buttons = [];
 
-	_filterConflicts(conflicts) {
-		if (conflicts.length > 5) {
-			conflicts = conflicts.slice(
-				this.state.delta * (this.state.page - 1),
-				this.state.delta * this.state.page
+		if (conflict.actions) {
+			for (let i = 0; i < conflict.actions.length; i++) {
+				const action = conflict.actions[i];
+
+				buttons.push(
+					<a className="btn btn-secondary btn-sm" href={action.href}>
+						<span className="inline-item inline-item-before">
+							<ClayIcon
+								spritemap={spritemap}
+								symbol={action.symbol}
+							/>
+						</span>
+
+						{action.label}
+					</a>
+				);
+			}
+		}
+
+		if (conflict.dismissURL) {
+			buttons.push(
+				<a
+					className="btn btn-secondary btn-sm"
+					href={conflict.dismissURL}
+				>
+					{Liferay.Language.get('dismiss')}
+				</a>
 			);
 		}
 
-		return conflicts;
-	}
+		return (
+			<ClayAlert.Footer>
+				<div className="btn-group-sm" role="group">
+					{buttons}
+				</div>
+			</ClayAlert.Footer>
+		);
+	};
 
-	_getDismissAction(conflict) {
+	const getDismissAction = (conflict) => {
 		if (!conflict.dismissURL) {
 			return '';
 		}
@@ -52,16 +88,16 @@ class ChangeTrackingConflictsView extends React.Component {
 		return (
 			<ClayList.ItemField>
 				<a
-					className="btn btn-outline-secondary btn-sm"
+					className="btn btn-secondary btn-sm"
 					href={conflict.dismissURL}
 				>
 					{Liferay.Language.get('dismiss')}
 				</a>
 			</ClayList.ItemField>
 		);
-	}
+	};
 
-	_getDropdownMenu(conflict) {
+	const getDropdownMenu = (conflict) => {
 		if (!conflict.actions) {
 			return '';
 		}
@@ -83,32 +119,39 @@ class ChangeTrackingConflictsView extends React.Component {
 				<ClayDropDownWithItems
 					alignmentPosition={Align.BottomLeft}
 					items={items}
-					spritemap={this.spritemap}
+					spritemap={spritemap}
 					trigger={
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							small
-							spritemap={this.spritemap}
+							spritemap={spritemap}
 							symbol="ellipsis-v"
 						/>
 					}
 				/>
 			</ClayList.ItemField>
 		);
-	}
+	};
 
-	_getListItems() {
+	const getListItems = () => {
 		const items = [];
 
-		const conflicts = this._filterConflicts(this.conflicts);
+		let filteredConflicts = conflicts.slice(0);
 
-		for (let i = 0; i < conflicts.length; i++) {
-			const conflict = conflicts[i];
+		if (filteredConflicts.length > 5) {
+			filteredConflicts = filteredConflicts.slice(
+				delta * (page - 1),
+				delta * page
+			);
+		}
+
+		for (let i = 0; i < filteredConflicts.length; i++) {
+			const conflict = filteredConflicts[i];
 
 			items.push(
 				<ClayList.Item flex>
 					<ClayList.ItemField expand>
-						<a onClick={() => this._openWindow(conflict)}>
+						<a onClick={() => setViewConflict(conflict)}>
 							<ClayList.ItemText
 								className="conflicts-description-text"
 								subtext
@@ -131,19 +174,19 @@ class ChangeTrackingConflictsView extends React.Component {
 						</a>
 					</ClayList.ItemField>
 
-					{this._getDismissAction(conflict)}
+					{getDismissAction(conflict)}
 
-					{this._getQuickActionMenu(conflict)}
+					{getQuickActionMenu(conflict)}
 
-					{this._getDropdownMenu(conflict)}
+					{getDropdownMenu(conflict)}
 				</ClayList.Item>
 			);
 		}
 
 		return items;
-	}
+	};
 
-	_getQuickActionMenu(conflict) {
+	const getQuickActionMenu = (conflict) => {
 		if (!conflict.actions) {
 			return '';
 		}
@@ -157,7 +200,7 @@ class ChangeTrackingConflictsView extends React.Component {
 				<ClayList.QuickActionMenu.Item
 					className="lfr-portal-tooltip"
 					href={action.href}
-					spritemap={this.spritemap}
+					spritemap={spritemap}
 					symbol={action.symbol}
 					title={action.label}
 				/>
@@ -169,138 +212,86 @@ class ChangeTrackingConflictsView extends React.Component {
 				<ClayList.QuickActionMenu>{items}</ClayList.QuickActionMenu>
 			</ClayList.ItemField>
 		);
-	}
+	};
 
-	_handleDeltaChange(delta) {
-		this.setState({
-			delta,
-			page: 1,
-		});
-	}
+	const handleDeltaChange = (delta) => {
+		setDelta(delta);
+		setPage(1);
+	};
 
-	_handlePageChange(page) {
-		this.setState({
-			page,
-		});
-	}
-
-	_openWindow(conflict) {
-		AUI().use('liferay-portlet-url', 'liferay-util-window', () => {
-			const portletURL = Liferay.PortletURL.createURL(conflict.viewURL);
-
-			portletURL.setParameter(
-				'alertDescription',
-				conflict.conflictDescription
-			);
-			portletURL.setParameter(
-				'alertResolution',
-				conflict.conflictResolution
-			);
-			portletURL.setParameter('alertType', conflict.alertType);
-
-			const header = [];
-
-			if (conflict.actions) {
-				for (let i = 0; i < conflict.actions.length; i++) {
-					const action = conflict.actions[i];
-
-					header.push({
-						cssClass:
-							'btn btn-outline-secondary btn-sm publications-view-header-button',
-						discardDefaultButtonCssClasses: true,
-						labelHTML:
-							'<span class="inline-item inline-item-before">' +
-							'<svg class="lexicon-icon" focusable="false">' +
-							'<use href="' +
-							this.spritemap +
-							'#' +
-							action.symbol +
-							' " />' +
-							'</svg></span>' +
-							action.label,
-						on: {
-							click() {
-								Liferay.Util.navigate(action.href);
-							},
-						},
-					});
-				}
-			}
-
-			if (conflict.dismissURL) {
-				header.push({
-					cssClass:
-						'btn btn-outline-secondary btn-sm publications-view-header-button',
-					discardDefaultButtonCssClasses: true,
-					label: Liferay.Language.get('dismiss'),
-					on: {
-						click() {
-							Liferay.Util.navigate(conflict.dismissURL);
-						},
-					},
-				});
-			}
-
-			header.push({
-				cssClass: 'close btn btn-unstyled',
-				discardDefaultButtonCssClasses: true,
-				labelHTML:
-					'<svg class="lexicon-icon" focusable="false"><use href="' +
-					this.spritemap +
-					'#times" /></svg>',
-				on: {
-					click() {
-						dialog.hide();
-					},
-				},
-			});
-
-			const dialog = Liferay.Util.Window.getWindow({
-				dialog: {
-					destroyOnHide: true,
-					resizable: false,
-					toolbars: {
-						header,
-					},
-				},
-				title: Liferay.Language.get('conflicting-change'),
-				uri: portletURL.toString(),
-			});
-		});
-	}
-
-	_renderPagination() {
-		if (this.conflicts.length <= 5) {
+	const renderPagination = () => {
+		if (conflicts.length <= 5) {
 			return '';
 		}
 
 		return (
 			<ClayPaginationBarWithBasicItems
-				activeDelta={this.state.delta}
-				activePage={this.state.page}
+				activeDelta={delta}
+				activePage={page}
 				deltas={[4, 8, 20, 40, 60].map((size) => ({
 					label: size,
 				}))}
 				ellipsisBuffer={3}
-				onDeltaChange={(delta) => this._handleDeltaChange(delta)}
-				onPageChange={(page) => this._handlePageChange(page)}
-				totalItems={this.conflicts.length}
+				onDeltaChange={(delta) => handleDeltaChange(delta)}
+				onPageChange={(page) => setPage(page)}
+				totalItems={conflicts.length}
 			/>
 		);
-	}
+	};
 
-	render() {
+	const renderViewModal = () => {
+		if (!viewConflict) {
+			return '';
+		}
+
 		return (
-			<>
-				<ClayList showQuickActionsOnHover>
-					{this._getListItems()}
-				</ClayList>
+			<ClayModal
+				className="publications-modal"
+				observer={observer}
+				size="full-screen"
+				spritemap={spritemap}
+			>
+				<ClayModal.Header>
+					<div className="autofit-row">
+						<div className="autofit-col">
+							<div className="modal-title">
+								{viewConflict.title}
+							</div>
+							<div className="modal-description">
+								{viewConflict.description}
+							</div>
+						</div>
+					</div>
+				</ClayModal.Header>
+				<ClayModal.Header
+					className="publications-conflicts-header"
+					withTitle={false}
+				>
+					<ClayAlert
+						displayType={viewConflict.alertType}
+						spritemap={spritemap}
+						title={viewConflict.conflictDescription + ':'}
+					>
+						{viewConflict.conflictResolution}
 
-				{this._renderPagination()}
-			</>
+						{getAlertFooter(viewConflict)}
+					</ClayAlert>
+				</ClayModal.Header>
+				<ClayModal.Body url={viewConflict.viewURL}></ClayModal.Body>
+			</ClayModal>
 		);
-	}
-}
+	};
+
+	return (
+		<>
+			{renderViewModal()}
+
+			<ClayList showQuickActionsOnHover>{getListItems()}</ClayList>
+
+			{renderPagination()}
+		</>
+	);
+};
 
 export default function (props) {
 	return <ChangeTrackingConflictsView {...props} />;

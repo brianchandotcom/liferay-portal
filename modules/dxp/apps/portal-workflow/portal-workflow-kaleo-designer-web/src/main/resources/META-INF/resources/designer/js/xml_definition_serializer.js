@@ -116,7 +116,7 @@ AUI.add(
 			return XMLUtil.format(buffer);
 		};
 
-		var appendXMLActions = function (
+		function appendXMLActions(
 			buffer,
 			actions,
 			notifications,
@@ -196,9 +196,9 @@ AUI.add(
 			if (hasAction || hasNotification || hasAssignment) {
 				buffer.push(xmlActions.close);
 			}
-		};
+		}
 
-		var appendXMLAssignments = function (
+		function appendXMLAssignments(
 			buffer,
 			dataAssignments,
 			wrapperNodeName,
@@ -380,13 +380,9 @@ AUI.add(
 
 				buffer.push(xmlAssignments.close);
 			}
-		};
+		}
 
-		var appendXMLNotifications = function (
-			buffer,
-			notifications,
-			nodeName
-		) {
+		function appendXMLNotifications(buffer, notifications, nodeName) {
 			if (
 				notifications &&
 				notifications.name &&
@@ -481,9 +477,9 @@ AUI.add(
 					buffer.push(xmlNotification.close);
 				});
 			}
-		};
+		}
 
-		var appendXMLTaskTimers = function (buffer, taskTimers) {
+		function appendXMLTaskTimers(buffer, taskTimers) {
 			if (taskTimers && taskTimers.name && taskTimers.name.length > 0) {
 				var xmlTaskTimers = XMLUtil.createObj('task-timers');
 
@@ -564,9 +560,9 @@ AUI.add(
 
 				buffer.push(xmlTaskTimers.close);
 			}
-		};
+		}
 
-		var appendXMLTransitions = function (buffer, transitions) {
+		function appendXMLTransitions(buffer, transitions) {
 			if (transitions && transitions.length > 0) {
 				var xmlTransition = XMLUtil.createObj('transition');
 				var xmlTransitions = XMLUtil.createObj('transitions');
@@ -597,11 +593,11 @@ AUI.add(
 
 				buffer.push(xmlTransitions.close);
 			}
-		};
+		}
 
-		var isValidValue = function (array, index) {
+		function isValidValue(array, index) {
 			return array && array[index] !== undefined;
-		};
+		}
 
 		Liferay.KaleoDesignerXMLDefinitionSerializer = serializeDefinition;
 	},

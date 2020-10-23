@@ -1405,34 +1405,16 @@ public class JenkinsResultsParserUtil {
 	public static String getJenkinsMasterName(String jenkinsSlaveName) {
 		jenkinsSlaveName = jenkinsSlaveName.replaceAll("([^\\.]+).*", "$1");
 
-		Properties buildProperties = null;
+		Map<String, List<String>> jenkinsNodeMap = getJenkinsNodeMap();
 
-		try {
-			buildProperties = getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build properties", ioException);
-		}
+		if (jenkinsNodeMap != null) {
+			for (Map.Entry<String, List<String>> entry :
+					jenkinsNodeMap.entrySet()) {
 
-		Map<String, List<String>> jenkinsNodeMap = new HashMap<>();
-
-		for (Object propertyName : buildProperties.keySet()) {
-			Matcher jenkinsSlavesPropertyNameMatcher =
-				_jenkinsSlavesPropertyNamePattern.matcher(
-					propertyName.toString());
-
-			if (jenkinsSlavesPropertyNameMatcher.matches()) {
-				String jenkinsMasterName =
-					jenkinsSlavesPropertyNameMatcher.group(1);
-
-				List<String> jenkinsSlaveNames = getSlaves(
-					buildProperties, jenkinsMasterName, null, false);
-
-				jenkinsNodeMap.put(jenkinsMasterName, jenkinsSlaveNames);
+				List<String> jenkinsSlaveNames = entry.getValue();
 
 				if (jenkinsSlaveNames.contains(jenkinsSlaveName)) {
-					return jenkinsMasterName;
+					return entry.getKey();
 				}
 			}
 		}
@@ -1444,18 +1426,20 @@ public class JenkinsResultsParserUtil {
 		sb.append(".\n");
 		sb.append("Jenkins Node Map:\n");
 
-		for (Map.Entry<String, List<String>> entry :
-				jenkinsNodeMap.entrySet()) {
+		if (jenkinsNodeMap != null) {
+			for (Map.Entry<String, List<String>> entry :
+					jenkinsNodeMap.entrySet()) {
 
-			sb.append(entry.getKey());
-			sb.append("\n    ");
+				sb.append(entry.getKey());
+				sb.append("\n    ");
 
-			for (String jenkinsNodeName : entry.getValue()) {
-				sb.append(" ");
-				sb.append(jenkinsNodeName);
+				for (String jenkinsNodeName : entry.getValue()) {
+					sb.append(" ");
+					sb.append(jenkinsNodeName);
+				}
+
+				sb.append("\n");
 			}
-
-			sb.append("\n");
 		}
 
 		NotificationUtil.sendEmail(
@@ -1486,6 +1470,58 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return jenkinsMasters;
+	}
+
+	public static Map<String, List<String>> getJenkinsNodeMap() {
+		Retryable<Map<String, List<String>>> retryable =
+			new Retryable<Map<String, List<String>>>(false, 2, 10, true) {
+
+				@Override
+				public Map<String, List<String>> execute() {
+					Properties buildProperties = null;
+					Map<String, List<String>> jenkinsNodeMap = new HashMap<>();
+
+					try {
+						buildProperties = getBuildProperties(_checkCache);
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(
+							"Unable to get build properties", ioException);
+					}
+
+					for (Object propertyName : buildProperties.keySet()) {
+						Matcher jenkinsSlavesPropertyNameMatcher =
+							_jenkinsSlavesPropertyNamePattern.matcher(
+								propertyName.toString());
+
+						if (jenkinsSlavesPropertyNameMatcher.matches()) {
+							String jenkinsMasterName =
+								jenkinsSlavesPropertyNameMatcher.group(1);
+
+							List<String> jenkinsSlaveNames = getSlaves(
+								buildProperties, jenkinsMasterName, null,
+								false);
+
+							jenkinsNodeMap.put(
+								jenkinsMasterName, jenkinsSlaveNames);
+						}
+					}
+
+					if (jenkinsNodeMap.isEmpty()) {
+						_checkCache = false;
+
+						throw new RuntimeException(
+							"Unable to load Jenkins node map");
+					}
+
+					return jenkinsNodeMap;
+				}
+
+				private boolean _checkCache = true;
+
+			};
+
+		return retryable.executeWithRetries();
 	}
 
 	public static Properties getJenkinsProperties() throws IOException {

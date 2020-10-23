@@ -5997,6 +5997,21 @@ alter database lportal set read_committed_snapshot on;
 go]]></replacevalue>
 								</replacefilter>
 							</replace>
+
+							<if>
+								<isset property="databases.size" />
+								<then>
+									<echo append="true" file="create.sql">
+create database lportal${databases.size};
+go
+
+alter database lportal${databases.size} set allow_snapshot_isolation on;
+go
+
+alter database lportal${databases.size} set read_committed_snapshot on;
+go</echo>
+								</then>
+							</if>
 						</then>
 					</elseif>
 					<elseif>

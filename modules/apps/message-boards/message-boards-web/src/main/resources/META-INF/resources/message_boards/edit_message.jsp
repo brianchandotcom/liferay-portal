@@ -474,7 +474,7 @@ Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
 ).put(
 	"messageId", (message != null) ? messageId : null
 ).put(
-	"rootNode", liferayPortletResponse.getNamespace() + "mbEditPageContainer"
+	"rootNodeId", liferayPortletResponse.getNamespace() + "mbEditPageContainer"
 ).build();
 %>
 

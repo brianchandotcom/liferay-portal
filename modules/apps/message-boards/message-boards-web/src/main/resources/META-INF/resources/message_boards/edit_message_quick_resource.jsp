@@ -237,7 +237,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		).put(
 			"replyToMessageId", parentMessageId
 		).put(
-			"rootNode", liferayPortletResponse.getNamespace() + "addQuickReply" + parentMessageId
+			"rootNodeId", liferayPortletResponse.getNamespace() + "addQuickReply" + parentMessageId
 		).build()
 	%>'
 	module="message_boards/js/MBPortlet.es"

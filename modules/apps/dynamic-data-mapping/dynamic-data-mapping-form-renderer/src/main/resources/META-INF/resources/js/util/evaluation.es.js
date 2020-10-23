@@ -23,63 +23,6 @@ const EVALUATOR_URL =
 
 let controller = null;
 
-const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
-	const {
-		defaultLanguageId,
-		editingLanguageId,
-		pages,
-		portletNamespace,
-	} = evaluatorContext;
-
-	if (controller) {
-		controller.abort();
-	}
-
-	if (window.AbortController) {
-		controller = new AbortController();
-	}
-
-	makeFetch({
-		body: convertToFormData({
-			languageId: editingLanguageId,
-			p_auth: Liferay.authToken,
-			portletNamespace,
-			serializedFormContext: JSON.stringify({
-				...evaluatorContext,
-				groupId: themeDisplay.getScopeGroupId(),
-				portletNamespace,
-			}),
-			trigger: fieldName,
-		}),
-		signal: controller && controller.signal,
-		url: EVALUATOR_URL,
-	})
-		.then((newPages) => {
-			const mergedPages = mergePages(
-				defaultLanguageId,
-				editingLanguageId,
-				fieldName,
-				newPages,
-				pages
-			);
-
-			callback(null, mergedPages);
-		})
-		.catch((error) => callback(error));
-}, 600);
-
-export const evaluate = (fieldName, evaluatorContext) => {
-	return new Promise((resolve, reject) => {
-		doEvaluate(fieldName, evaluatorContext, (error, pages) => {
-			if (error) {
-				return reject(error);
-			}
-
-			resolve(pages);
-		});
-	});
-};
-
 export const mergeFieldOptions = (field, newField) => {
 	let newValue = {...newField.value};
 
@@ -160,4 +103,61 @@ export const mergePages = (
 		false,
 		true
 	);
+};
+
+const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
+	const {
+		defaultLanguageId,
+		editingLanguageId,
+		pages,
+		portletNamespace,
+	} = evaluatorContext;
+
+	if (controller) {
+		controller.abort();
+	}
+
+	if (window.AbortController) {
+		controller = new AbortController();
+	}
+
+	makeFetch({
+		body: convertToFormData({
+			languageId: editingLanguageId,
+			p_auth: Liferay.authToken,
+			portletNamespace,
+			serializedFormContext: JSON.stringify({
+				...evaluatorContext,
+				groupId: themeDisplay.getScopeGroupId(),
+				portletNamespace,
+			}),
+			trigger: fieldName,
+		}),
+		signal: controller && controller.signal,
+		url: EVALUATOR_URL,
+	})
+		.then((newPages) => {
+			const mergedPages = mergePages(
+				defaultLanguageId,
+				editingLanguageId,
+				fieldName,
+				newPages,
+				pages
+			);
+
+			callback(null, mergedPages);
+		})
+		.catch((error) => callback(error));
+}, 600);
+
+export const evaluate = (fieldName, evaluatorContext) => {
+	return new Promise((resolve, reject) => {
+		doEvaluate(fieldName, evaluatorContext, (error, pages) => {
+			if (error) {
+				return reject(error);
+			}
+
+			resolve(pages);
+		});
+	});
 };

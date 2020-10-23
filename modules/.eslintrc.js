@@ -37,6 +37,14 @@ config = {
 	},
 	rules: {
 		'no-empty': ['error', {allowEmptyCatch: true}],
+		'no-use-before-define': [
+			'error',
+			{
+				classes: true,
+				functions: false,
+				variables: true,
+			},
+		],
 		'notice/notice': [
 			'error',
 			{

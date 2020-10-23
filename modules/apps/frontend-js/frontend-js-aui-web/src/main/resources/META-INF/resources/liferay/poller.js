@@ -65,175 +65,6 @@ AUI.add(
 		var _escapedCloseCurlyBrace = '[$CLOSE_CURLY_BRACE$]';
 		var _escapedOpenCurlyBrace = '[$OPEN_CURLY_BRACE$]';
 
-		var _cancelRequestTimer = function () {
-			clearTimeout(_timerId);
-
-			_timerId = null;
-		};
-
-		var _createRequestTimer = function () {
-			_cancelRequestTimer();
-
-			if (_enabled) {
-				if (Poller.isSupportsComet()) {
-					_receive();
-				}
-				else {
-					_timerId = setTimeout(_receive, Poller.getDelay());
-				}
-			}
-		};
-
-		var _freezeConnection = function () {
-			_frozen = true;
-
-			_cancelRequestTimer();
-		};
-
-		var _getReceiveUrl = function () {
-			return _receiveChannel;
-		};
-
-		var _getSendUrl = function () {
-			return _sendChannel;
-		};
-
-		var _processResponse = function (id, obj) {
-			var response = JSON.parse(obj.responseText);
-			var send = false;
-
-			if (Array.isArray(response)) {
-				var meta = response.shift();
-
-				for (var i = 0; i < response.length; i++) {
-					var chunk = response[i].payload;
-
-					var chunkData = chunk.data;
-
-					var portletId = chunk.portletId;
-
-					var portlet = _portlets[portletId];
-
-					if (portlet) {
-						var currentPortletId = _portletIdsMap[portletId];
-
-						if (chunkData && currentPortletId) {
-							chunkData.initialRequest = portlet.initialRequest;
-						}
-
-						portlet.listener.call(
-							portlet.scope || Poller,
-							chunkData,
-							chunk.chunkId
-						);
-
-						if (chunkData && chunkData.pollerHintHighConnectivity) {
-							_requestDelay = _delays[0];
-							_delayIndex = 0;
-						}
-
-						if (portlet.initialRequest && currentPortletId) {
-							send = true;
-
-							portlet.initialRequest = false;
-						}
-					}
-				}
-
-				if ('startPolling' in _metaData) {
-					delete _metaData.startPolling;
-				}
-
-				if (send) {
-					_send();
-				}
-
-				if (!meta.suspendPolling) {
-					_thawConnection();
-				}
-				else {
-					_freezeConnection();
-				}
-			}
-		};
-
-		var _receive = function () {
-			if (!_suspended && !_frozen) {
-				_metaData.userId = _getEncryptedUserId();
-				_metaData.timestamp = new Date().getTime();
-
-				AObject.each(_portlets, _updatePortletIdsMap);
-
-				var requestStr = JSON.stringify([_metaData]);
-
-				const body = new URLSearchParams();
-				body.append('pollerRequest', requestStr);
-
-				Liferay.Util.fetch(_getReceiveUrl(), {
-					body,
-					method: 'POST',
-				})
-					.then((response) => {
-						return response.text();
-					})
-					.then((responseText) => {
-						_processResponse(null, {responseText});
-					});
-			}
-		};
-
-		var _releaseLock = function () {
-			_locked = false;
-		};
-
-		var _sendComplete = function () {
-			_releaseLock();
-			_send();
-		};
-
-		var _send = function () {
-			if (
-				_enabled &&
-				!_locked &&
-				_sendQueue.length &&
-				!_suspended &&
-				!_frozen
-			) {
-				_locked = true;
-
-				var data = _sendQueue.shift();
-
-				_metaData.userId = _getEncryptedUserId();
-				_metaData.timestamp = new Date().getTime();
-
-				AObject.each(_portlets, _updatePortletIdsMap);
-
-				var requestStr = JSON.stringify([_metaData].concat(data));
-
-				const body = new URLSearchParams();
-				body.append('pollerRequest', requestStr);
-
-				Liferay.Util.fetch(_getSendUrl(), {
-					body,
-					method: 'POST',
-				})
-					.then((response) => {
-						return response.text();
-					})
-					.then(_sendComplete);
-			}
-		};
-
-		var _thawConnection = function () {
-			_frozen = false;
-
-			_createRequestTimer();
-		};
-
-		var _updatePortletIdsMap = function (item, index) {
-			_portletIdsMap[index] = item.initialRequest;
-		};
-
 		var Poller = {
 			addListener(key, listener, scope) {
 				_portlets[key] = {
@@ -373,6 +204,175 @@ AUI.add(
 
 			url: _url,
 		};
+
+		function _cancelRequestTimer() {
+			clearTimeout(_timerId);
+
+			_timerId = null;
+		}
+
+		function _createRequestTimer() {
+			_cancelRequestTimer();
+
+			if (_enabled) {
+				if (Poller.isSupportsComet()) {
+					_receive();
+				}
+				else {
+					_timerId = setTimeout(_receive, Poller.getDelay());
+				}
+			}
+		}
+
+		function _freezeConnection() {
+			_frozen = true;
+
+			_cancelRequestTimer();
+		}
+
+		function _getReceiveUrl() {
+			return _receiveChannel;
+		}
+
+		function _getSendUrl() {
+			return _sendChannel;
+		}
+
+		function _processResponse(id, obj) {
+			var response = JSON.parse(obj.responseText);
+			var send = false;
+
+			if (Array.isArray(response)) {
+				var meta = response.shift();
+
+				for (var i = 0; i < response.length; i++) {
+					var chunk = response[i].payload;
+
+					var chunkData = chunk.data;
+
+					var portletId = chunk.portletId;
+
+					var portlet = _portlets[portletId];
+
+					if (portlet) {
+						var currentPortletId = _portletIdsMap[portletId];
+
+						if (chunkData && currentPortletId) {
+							chunkData.initialRequest = portlet.initialRequest;
+						}
+
+						portlet.listener.call(
+							portlet.scope || Poller,
+							chunkData,
+							chunk.chunkId
+						);
+
+						if (chunkData && chunkData.pollerHintHighConnectivity) {
+							_requestDelay = _delays[0];
+							_delayIndex = 0;
+						}
+
+						if (portlet.initialRequest && currentPortletId) {
+							send = true;
+
+							portlet.initialRequest = false;
+						}
+					}
+				}
+
+				if ('startPolling' in _metaData) {
+					delete _metaData.startPolling;
+				}
+
+				if (send) {
+					_send();
+				}
+
+				if (!meta.suspendPolling) {
+					_thawConnection();
+				}
+				else {
+					_freezeConnection();
+				}
+			}
+		}
+
+		function _receive() {
+			if (!_suspended && !_frozen) {
+				_metaData.userId = _getEncryptedUserId();
+				_metaData.timestamp = new Date().getTime();
+
+				AObject.each(_portlets, _updatePortletIdsMap);
+
+				var requestStr = JSON.stringify([_metaData]);
+
+				const body = new URLSearchParams();
+				body.append('pollerRequest', requestStr);
+
+				Liferay.Util.fetch(_getReceiveUrl(), {
+					body,
+					method: 'POST',
+				})
+					.then((response) => {
+						return response.text();
+					})
+					.then((responseText) => {
+						_processResponse(null, {responseText});
+					});
+			}
+		}
+
+		function _releaseLock() {
+			_locked = false;
+		}
+
+		function _send() {
+			if (
+				_enabled &&
+				!_locked &&
+				_sendQueue.length &&
+				!_suspended &&
+				!_frozen
+			) {
+				_locked = true;
+
+				var data = _sendQueue.shift();
+
+				_metaData.userId = _getEncryptedUserId();
+				_metaData.timestamp = new Date().getTime();
+
+				AObject.each(_portlets, _updatePortletIdsMap);
+
+				var requestStr = JSON.stringify([_metaData].concat(data));
+
+				const body = new URLSearchParams();
+				body.append('pollerRequest', requestStr);
+
+				Liferay.Util.fetch(_getSendUrl(), {
+					body,
+					method: 'POST',
+				})
+					.then((response) => {
+						return response.text();
+					})
+					.then(_sendComplete);
+			}
+		}
+
+		function _sendComplete() {
+			_releaseLock();
+			_send();
+		}
+
+		function _thawConnection() {
+			_frozen = false;
+
+			_createRequestTimer();
+		}
+
+		function _updatePortletIdsMap(item, index) {
+			_portletIdsMap[index] = item.initialRequest;
+		}
 
 		A.getWin().on('focus', () => {
 			_metaData.startPolling = true;

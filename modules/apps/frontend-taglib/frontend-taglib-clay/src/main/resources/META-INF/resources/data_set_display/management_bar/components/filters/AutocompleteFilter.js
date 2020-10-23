@@ -179,17 +179,6 @@ function AutocompleteFilter({
 		setInfiniteLoaderRendered(true);
 	}, []);
 
-	useEffect(() => {
-		if (scrollingAreaRendered && infiniteLoaderRendered && loaderVisible) {
-			setObserver();
-		}
-	}, [
-		scrollingAreaRendered,
-		infiniteLoaderRendered,
-		loaderVisible,
-		setObserver,
-	]);
-
 	const setObserver = useCallback(() => {
 		if (
 			!scrollingArea.current ||
@@ -214,6 +203,17 @@ function AutocompleteFilter({
 
 		observer.observe(infiniteLoader.current);
 	}, []);
+
+	useEffect(() => {
+		if (scrollingAreaRendered && infiniteLoaderRendered && loaderVisible) {
+			setObserver();
+		}
+	}, [
+		scrollingAreaRendered,
+		infiniteLoaderRendered,
+		loaderVisible,
+		setObserver,
+	]);
 
 	let actionType = 'edit';
 

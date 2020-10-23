@@ -828,12 +828,6 @@ definition {
 			pageName = "Panel Test Page",
 			sitePageType = "Panel");
 
-		SitePages.configurePage(
-			componentName = "Collaboration",
-			pageName = "Panel Test Page",
-			privacy = "Public Pages",
-			sitePageType = "Panel");
-
 		Navigator.gotoPage(pageName = "Panel Test Page");
 
 		Page.viewPanelPortletListPG(
@@ -908,13 +902,8 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "page-type-test-site-name");
 
 		SitePages.addPublicPage(
-			pageName = "Panel Page",
-			sitePageType = "Panel");
-
-		SitePages.configurePage(
 			componentName = "Community",
 			pageName = "Panel Page",
-			privacy = "Public Pages",
 			sitePageType = "Panel");
 
 		Page.viewPanelPortletListCP(

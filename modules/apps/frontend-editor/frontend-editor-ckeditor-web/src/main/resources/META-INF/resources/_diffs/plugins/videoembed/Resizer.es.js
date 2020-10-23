@@ -15,6 +15,11 @@
 (function () {
 	const IMAGE_HANDLES = ['tl', 'tr', 'bl', 'br'];
 
+	const positionElement = (el, left, top) => {
+		el.style.left = `${left}px`;
+		el.style.top = `${top}px`;
+	};
+
 	const POSITION_ELEMENT_FN = {
 		bl(handle, left, top, box) {
 			positionElement(handle, -3 + left, box.height - 4 + top);
@@ -35,11 +40,6 @@
 		tr(handle, left, top, box) {
 			positionElement(handle, box.width - 4 + left, -3 + top);
 		},
-	};
-
-	const positionElement = (el, left, top) => {
-		el.style.left = `${left}px`;
-		el.style.top = `${top}px`;
 	};
 
 	const getBoundingBox = (window, el) => {

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_SPECIFIC_PAGE_LINK</td>
+	<td>//a[contains(@class,'collapse-icon')][normalize-space(text())='${key_pageName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZED_BUTTON</td>
 	<td>//button[contains(@class,'localized-trigger')][contains(@id,'JournalPortlet_${key_fieldName}')]</td>
 	<td></td>

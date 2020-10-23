@@ -39,6 +39,22 @@ const getMaskConfig = (dataType, symbols) => {
 	return config;
 };
 
+const getValue = (dataType, symbols, value) => {
+	let newValue = value;
+
+	let decimalSymbol = symbols.decimalSymbol;
+
+	if (newValue && !newValue.includes('.') && symbols.decimalSymbol != ',') {
+		decimalSymbol = ',';
+	}
+
+	if (dataType === 'integer' && newValue) {
+		newValue = String(Math.round(newValue.replace(decimalSymbol, '.')));
+	}
+
+	return newValue;
+};
+
 const Numeric = ({
 	dataType = 'integer',
 	defaultLanguageId,
@@ -61,12 +77,16 @@ const Numeric = ({
 
 	useEffect(() => {
 		if (prevEditingLanguageId !== editingLanguageId && localizable) {
-			const newValue =
+			let newValue =
 				localizedValue[editingLanguageId] !== undefined
 					? localizedValue[editingLanguageId]
 					: localizedValue[defaultLanguageId];
+
+			newValue = getValue(dataType, symbols, newValue);
+
 			setCurrentValue(newValue);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		defaultLanguageId,
 		editingLanguageId,
@@ -80,23 +100,7 @@ const Numeric = ({
 		let maskInstance = null;
 
 		if (inputRef.current) {
-			let newValue = value;
-
-			let decimalSymbol = symbols.decimalSymbol;
-
-			if (
-				newValue &&
-				!newValue.includes('.') &&
-				symbols.decimalSymbol != ','
-			) {
-				decimalSymbol = ',';
-			}
-
-			if (dataType === 'integer' && value) {
-				newValue = String(
-					Math.round(newValue.replace(decimalSymbol, '.'))
-				);
-			}
+			const newValue = getValue(dataType, symbols, value);
 
 			const mask = createNumberMask(getMaskConfig(dataType, symbols));
 

@@ -146,10 +146,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 
 			try {
-				Class<?> clazz = Class.forName(
-					"com.mysql.cj.protocol.ExportControlled");
-
-				_populateIBMCipherSuites(clazz);
+				_populateIBMCipherSuites(
+					Class.forName("com.mysql.cj.protocol.ExportControlled"));
 			}
 			catch (Exception exception) {
 			}

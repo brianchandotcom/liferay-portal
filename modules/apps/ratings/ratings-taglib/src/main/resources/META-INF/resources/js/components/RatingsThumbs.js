@@ -98,6 +98,25 @@ const RatingsThumbs = ({
 		setAnimatedButtonDown(false);
 	};
 
+	const handleSendVoteRequest = useCallback(
+		(score) => {
+			sendVoteRequest(score).then(({totalEntries, totalScore} = {}) => {
+				if (isMounted() && totalEntries && totalScore) {
+					const positiveVotes = Math.round(totalScore);
+
+					dispatch({
+						payload: {
+							negativeVotes: totalEntries - positiveVotes,
+							positiveVotes,
+						},
+						type: UPDATE_VOTES,
+					});
+				}
+			});
+		},
+		[isMounted, sendVoteRequest]
+	);
+
 	const voteUp = useCallback(() => {
 		if (pressed !== PRESSED_UP) {
 			setAnimatedButtonUp(true);
@@ -145,25 +164,6 @@ const RatingsThumbs = ({
 			return Liferay.Language.get('rate-this-as-bad');
 		}
 	}, [inititalTitle, pressed]);
-
-	const handleSendVoteRequest = useCallback(
-		(score) => {
-			sendVoteRequest(score).then(({totalEntries, totalScore} = {}) => {
-				if (isMounted() && totalEntries && totalScore) {
-					const positiveVotes = Math.round(totalScore);
-
-					dispatch({
-						payload: {
-							negativeVotes: totalEntries - positiveVotes,
-							positiveVotes,
-						},
-						type: UPDATE_VOTES,
-					});
-				}
-			});
-		},
-		[isMounted, sendVoteRequest]
-	);
 
 	return (
 		<ClayTooltipProvider>

@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
@@ -254,6 +255,12 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 			"Autor"
 		);
 
+		when(
+			_language.get(locale, "default-language")
+		).thenReturn(
+			"Idioma"
+		);
+
 		LocalizedValue localizedValue1 = new LocalizedValue();
 
 		localizedValue1.addString(locale, "Campo 1");
@@ -299,6 +306,7 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		Assert.assertEquals(
 			"Data de Modificação", ddmFormFieldsLabel.get("modifiedDate"));
 		Assert.assertEquals("Autor", ddmFormFieldsLabel.get("author"));
+		Assert.assertEquals("Idioma", ddmFormFieldsLabel.get("languageId"));
 	}
 
 	@Test
@@ -492,6 +500,9 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		Assert.assertEquals(modifiedDate, valuesMap.get("modifiedDate"));
 
 		Assert.assertEquals("aprovado", valuesMap.get("status"));
+
+		Assert.assertEquals(
+			LocaleUtil.US.toString(), valuesMap.get("languageId"));
 
 		InOrder inOrder = Mockito.inOrder(
 			ddmFormInstanceRecordExporterImpl, ddmFormInstanceRecord,

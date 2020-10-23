@@ -90,14 +90,14 @@ const Languages = ({
 		);
 	};
 
-	const handleOnItemDrop = (currentIndex, newIndex) => {
-		moveItem(currentIndex, newIndex);
-	};
-
 	const moveItem = (currentIndex, newIndex) => {
 		setCustomLocales((languages) =>
 			move(languages, currentIndex, newIndex)
 		);
+	};
+
+	const handleOnItemDrop = (currentIndex, newIndex) => {
+		moveItem(currentIndex, newIndex);
 	};
 
 	useEffect(() => {

@@ -20,6 +20,14 @@ const addSpy = jest.fn().mockImplementation(() => callOrder.push('addSpy'));
 const spy1 = jest.fn().mockImplementation(() => callOrder.push('spy1'));
 const spy2 = jest.fn().mockImplementation(() => callOrder.push('spy2'));
 
+class MyClass {
+	add(n1, n2) {
+		addSpy();
+
+		return n1 + n2;
+	}
+}
+
 describe('Ajax', () => {
 	beforeEach(() => {
 		addSpy.mockClear();
@@ -247,11 +255,3 @@ describe('Ajax', () => {
 		expect(retVal).toEqual(3);
 	});
 });
-
-class MyClass {
-	add(n1, n2) {
-		addSpy();
-
-		return n1 + n2;
-	}
-}

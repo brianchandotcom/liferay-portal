@@ -43,6 +43,105 @@ const VALUE_NULL = '';
 const WINDOW_STATE_KEY = 'p_p_state';
 
 /**
+ * Compares two parameters and returns a boolean indicating if they're equal
+ * or not.
+ * @param {?Array.<string>} parameter1 The first parameter to compare.
+ * @param {?Array.<string>} parameter2 The second parameter to compare.
+ * @return {boolean}
+ * @review
+ */
+
+const isParameterEqual = function (parameter1, parameter2) {
+	let result = false;
+
+	// The values are either string arrays or undefined.
+
+	if (parameter1 === undefined && parameter2 === undefined) {
+		result = true;
+	}
+
+	if (parameter1 === undefined || parameter2 === undefined) {
+		result = false;
+	}
+
+	if (parameter1.length !== parameter2.length) {
+		result = false;
+	}
+
+	for (let i = parameter1.length - 1; i >= 0; i--) {
+		if (parameter1[i] !== parameter2[i]) {
+			result = false;
+		}
+	}
+
+	return result;
+};
+
+/**
+ * Returns true if input state differs from the current page state.
+ * Throws exception if input state is malformed.
+ * @param {Object} pageRenderState The (current) page render state.
+ * @param {RenderState} newState The new state to be set.
+ * @param {string} portletId The portlet ID.
+ * @return {boolean}  True if the two state are different.
+ * @review
+ */
+
+const stateChanged = function (pageRenderState, newState, portletId) {
+	let result = false;
+
+	if (pageRenderState && pageRenderState.portlets) {
+		const portletData = pageRenderState.portlets[portletId];
+
+		if (portletData) {
+			const oldState = pageRenderState.portlets[portletId].state;
+
+			if (
+				!newState.portletMode ||
+				!newState.windowState ||
+				!newState.parameters
+			) {
+				throw new Error(`Error decoding state: ${newState}`);
+			}
+
+			if (
+				newState.porletMode !== oldState.portletMode ||
+				newState.windowState !== oldState.windowState
+			) {
+				result = true;
+			}
+			else {
+
+				// Has a parameter changed or been added?
+
+				const newKeys = Object.keys(newState.parameters);
+
+				newKeys.forEach((key) => {
+					const newParameter = newState.parameters[key];
+					const oldParameter = oldState.parameters[key];
+
+					if (!isParameterEqual(newParameter, oldParameter)) {
+						result = true;
+					}
+				});
+
+				// Make sure no parameter was deleted
+
+				const oldKeys = Object.keys(oldState.parameters);
+
+				oldKeys.forEach((key) => {
+					if (!newState.parameters[key]) {
+						result = true;
+					}
+				});
+			}
+		}
+	}
+
+	return result;
+};
+
+/**
  * Decodes the update strings.
  * The update string is a JSON object containing the entire page state.
  * This decoder returns an object containing the portlet data for portlets whose
@@ -314,6 +413,39 @@ const generatePortletModeAndWindowStateString = function (
 };
 
 /**
+ * Compares the values of the named parameter in the new render state
+ * with the values of that parameter in the current state.
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} portletId The portlet ID.
+ * @param {RenderState} state The new render state.
+ * @param {string} name The name of the parameter to check.
+ * @return {boolean} True if the new parameter's value is different from the current value.
+ * @review
+ */
+
+const isParameterInStateEqual = function (
+	pageRenderState,
+	portletId,
+	state,
+	name
+) {
+	let result = false;
+
+	if (pageRenderState && pageRenderState.portlets) {
+		const portletData = pageRenderState.portlets[portletId];
+
+		if (state.parameters[name] && portletData.state.parameters[name]) {
+			const newParameter = state.parameters[name];
+			const oldParameter = portletData.state.parameters[name];
+
+			result = isParameterEqual(newParameter, oldParameter);
+		}
+	}
+
+	return result;
+};
+
+/**
  * Gets the updated public parameters for the given portlet ID and new render state.
  * Returns an object whose properties are the group indexes of the
  * updated public parameters. The values are the new public parameter values.
@@ -357,6 +489,31 @@ const getUpdatedPublicRenderParameters = function (
 	}
 
 	return publicRenderParameters;
+};
+
+/**
+ * Function for checking if a parameter is public.
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} portletId  The portlet ID.
+ * @param {string} name  The name of the parameter to check.
+ * @return {boolean}
+ * @review
+ */
+
+const isPublicParameter = function (pageRenderState, portletId, name) {
+	let result = false;
+
+	if (pageRenderState && pageRenderState.portlets) {
+		const portletData = pageRenderState.portlets[portletId];
+
+		if (portletData && portletData.pubParms) {
+			const keys = Object.keys(portletData.pubParms);
+
+			result = keys.includes(name);
+		}
+	}
+
+	return result;
 };
 
 /**
@@ -554,163 +711,6 @@ const getUrl = function (
 	}
 
 	return Promise.resolve(url);
-};
-
-/**
- * Compares two parameters and returns a boolean indicating if they're equal
- * or not.
- * @param {?Array.<string>} parameter1 The first parameter to compare.
- * @param {?Array.<string>} parameter2 The second parameter to compare.
- * @return {boolean}
- * @review
- */
-
-const isParameterEqual = function (parameter1, parameter2) {
-	let result = false;
-
-	// The values are either string arrays or undefined.
-
-	if (parameter1 === undefined && parameter2 === undefined) {
-		result = true;
-	}
-
-	if (parameter1 === undefined || parameter2 === undefined) {
-		result = false;
-	}
-
-	if (parameter1.length !== parameter2.length) {
-		result = false;
-	}
-
-	for (let i = parameter1.length - 1; i >= 0; i--) {
-		if (parameter1[i] !== parameter2[i]) {
-			result = false;
-		}
-	}
-
-	return result;
-};
-
-/**
- * Compares the values of the named parameter in the new render state
- * with the values of that parameter in the current state.
- * @param {Object} pageRenderState The page render state.
- * @param {string} portletId The portlet ID.
- * @param {RenderState} state The new render state.
- * @param {string} name The name of the parameter to check.
- * @return {boolean} True if the new parameter's value is different from the current value.
- * @review
- */
-
-const isParameterInStateEqual = function (
-	pageRenderState,
-	portletId,
-	state,
-	name
-) {
-	let result = false;
-
-	if (pageRenderState && pageRenderState.portlets) {
-		const portletData = pageRenderState.portlets[portletId];
-
-		if (state.parameters[name] && portletData.state.parameters[name]) {
-			const newParameter = state.parameters[name];
-			const oldParameter = portletData.state.parameters[name];
-
-			result = isParameterEqual(newParameter, oldParameter);
-		}
-	}
-
-	return result;
-};
-
-/**
- * Function for checking if a parameter is public.
- * @param {Object} pageRenderState The page render state.
- * @param {string} portletId  The portlet ID.
- * @param {string} name  The name of the parameter to check.
- * @return {boolean}
- * @review
- */
-
-const isPublicParameter = function (pageRenderState, portletId, name) {
-	let result = false;
-
-	if (pageRenderState && pageRenderState.portlets) {
-		const portletData = pageRenderState.portlets[portletId];
-
-		if (portletData && portletData.pubParms) {
-			const keys = Object.keys(portletData.pubParms);
-
-			result = keys.includes(name);
-		}
-	}
-
-	return result;
-};
-
-/**
- * Returns true if input state differs from the current page state.
- * Throws exception if input state is malformed.
- * @param {Object} pageRenderState The (current) page render state.
- * @param {RenderState} newState The new state to be set.
- * @param {string} portletId The portlet ID.
- * @return {boolean}  True if the two state are different.
- * @review
- */
-
-const stateChanged = function (pageRenderState, newState, portletId) {
-	let result = false;
-
-	if (pageRenderState && pageRenderState.portlets) {
-		const portletData = pageRenderState.portlets[portletId];
-
-		if (portletData) {
-			const oldState = pageRenderState.portlets[portletId].state;
-
-			if (
-				!newState.portletMode ||
-				!newState.windowState ||
-				!newState.parameters
-			) {
-				throw new Error(`Error decoding state: ${newState}`);
-			}
-
-			if (
-				newState.porletMode !== oldState.portletMode ||
-				newState.windowState !== oldState.windowState
-			) {
-				result = true;
-			}
-			else {
-
-				// Has a parameter changed or been added?
-
-				const newKeys = Object.keys(newState.parameters);
-
-				newKeys.forEach((key) => {
-					const newParameter = newState.parameters[key];
-					const oldParameter = oldState.parameters[key];
-
-					if (!isParameterEqual(newParameter, oldParameter)) {
-						result = true;
-					}
-				});
-
-				// Make sure no parameter was deleted
-
-				const oldKeys = Object.keys(oldState.parameters);
-
-				oldKeys.forEach((key) => {
-					if (!newState.parameters[key]) {
-						result = true;
-					}
-				});
-			}
-		}
-	}
-
-	return result;
 };
 
 /**

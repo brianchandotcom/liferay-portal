@@ -74,6 +74,13 @@ function Comparator({
 		[portletNamespace, resourceURL, sourceVersion]
 	);
 
+	const [diff, setDiff] = useState(diffHtmlResults);
+	const [diffURL, setDiffURL] = useState(getDiffURL(targetVersion));
+	const [filterQuery, setFilterQuery] = useState('');
+	const [selectedLanguageId, setSelectedLanguageId] = useState(languageId);
+	const [selectedVersion, setSelectedVersion] = useState(null);
+	const [visibleVersions, setVisibleVersions] = useState(selectableVersions);
+
 	const handleFilterChange = useCallback(
 		(event) => {
 			const query = event.target.value.toLowerCase();
@@ -92,13 +99,6 @@ function Comparator({
 		},
 		[selectableVersions]
 	);
-
-	const [diff, setDiff] = useState(diffHtmlResults);
-	const [diffURL, setDiffURL] = useState(getDiffURL(targetVersion));
-	const [filterQuery, setFilterQuery] = useState('');
-	const [selectedLanguageId, setSelectedLanguageId] = useState(languageId);
-	const [selectedVersion, setSelectedVersion] = useState(null);
-	const [visibleVersions, setVisibleVersions] = useState(selectableVersions);
 
 	const diffCache = useRef({[diffURL]: diff});
 	const formRef = useRef();

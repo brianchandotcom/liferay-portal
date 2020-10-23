@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_social_activities_web_portlet_SocialActivitiesPortlet" root-portlet-id="com_liferay_social_activities_web_portlet_SocialActivitiesPortlet" scope-group-id="37344" private-layout="false" self-path="/group/37344/portlet/com_liferay_social_activities_web_portlet_SocialActivitiesPortlet/25/portlet.xml">
-	<portlet-preferences path="/group/37344/portlet/com_liferay_social_activities_web_portlet_SocialActivitiesPortlet/preferences/layout/0/25/portlet-preferences.xml">
-		<preference-data/>
-	</portlet-preferences>
-</portlet>

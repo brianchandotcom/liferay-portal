@@ -1,0 +1,50 @@
+<Layout>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>3</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>93d4fb72-fd8b-a0b6-218d-b10003291b6c</__uuid>
+  <__plid>16</__plid>
+  <__groupId>37344</__groupId>
+  <__companyId>20101</__companyId>
+  <__userId>20130</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2020-08-25 09:50:38.400 UTC</__createDate>
+  <__modifiedDate>2020-10-23 08:38:42.74 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__parentPlid>0</__parentPlid>
+  <__privateLayout>false</__privateLayout>
+  <__layoutId>1</__layoutId>
+  <__parentLayoutId>0</__parentLayoutId>
+  <__classNameId>0</__classNameId>
+  <__classPK>0</__classPK>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Staging Test Page&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__title></__title>
+  <__description></__description>
+  <__keywords></__keywords>
+  <__robots></__robots>
+  <__type>portlet</__type>
+  <__typeSettings>last-import-date=1603442322058
+last-import-user-name=Test Test
+last-import-user-uuid=f5392d35-6f3f-9e64-11a3-8d4edc0702d2
+layout-template-id=2_columns_ii
+</__typeSettings>
+  <__hidden>false</__hidden>
+  <__system>false</__system>
+  <__friendlyURL>/staging-test-page</__friendlyURL>
+  <__iconImageId>0</__iconImageId>
+  <__themeId></__themeId>
+  <__colorSchemeId></__colorSchemeId>
+  <__styleBookEntryId>0</__styleBookEntryId>
+  <__css></__css>
+  <__priority>1</__priority>
+  <__masterLayoutPlid>0</__masterLayoutPlid>
+  <__layoutPrototypeUuid></__layoutPrototypeUuid>
+  <__layoutPrototypeLinkEnabled>false</__layoutPrototypeLinkEnabled>
+  <__sourcePrototypeLayoutUuid></__sourcePrototypeLayoutUuid>
+  <__publishDate>2020-08-25 09:50:38.400 UTC</__publishDate>
+  <__status>0</__status>
+  <__statusByUserId>0</__statusByUserId>
+  <__statusByUserName></__statusByUserName>
+  <__columnBitmask>0</__columnBitmask>
+</Layout>

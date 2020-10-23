@@ -18,25 +18,6 @@ import SidebarPanel from '../SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 
-const actions = {
-	showInfo({fetchURL, portletNamespace, rowId}) {
-		selectRow(portletNamespace, rowId);
-		showSidebar({
-			View: SidebarPanelInfoView,
-			fetchURL,
-			portletNamespace,
-		});
-	},
-	showMetrics({fetchURL, portletNamespace, rowId}) {
-		selectRow(portletNamespace, rowId);
-		showSidebar({
-			View: SidebarPanelMetricsView,
-			fetchURL,
-			portletNamespace,
-		});
-	},
-};
-
 const deselectAllRows = (portletNamespace) => {
 	const activeRows = document.querySelectorAll(
 		`[data-searchcontainerid="${portletNamespace}content"] tr.active`
@@ -87,6 +68,25 @@ const showSidebar = ({View, fetchURL, portletNamespace}) => {
 	else {
 		sidebarPanel.open(fetchURL, View);
 	}
+};
+
+const actions = {
+	showInfo({fetchURL, portletNamespace, rowId}) {
+		selectRow(portletNamespace, rowId);
+		showSidebar({
+			View: SidebarPanelInfoView,
+			fetchURL,
+			portletNamespace,
+		});
+	},
+	showMetrics({fetchURL, portletNamespace, rowId}) {
+		selectRow(portletNamespace, rowId);
+		showSidebar({
+			View: SidebarPanelMetricsView,
+			fetchURL,
+			portletNamespace,
+		});
+	},
 };
 
 export default function propsTransformer({

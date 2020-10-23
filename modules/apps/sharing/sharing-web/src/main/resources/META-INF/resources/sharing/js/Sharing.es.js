@@ -38,6 +38,47 @@ function filterDuplicateItems(items) {
 	);
 }
 
+const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
+	return (
+		<ClayDropDown.ItemList>
+			{sourceItems.map((item) => (
+				<ClayDropDown.Item
+					key={item.id}
+					onClick={() => onItemClick(item)}
+				>
+					<div className="autofit-row autofit-row-center">
+						<div className="autofit-col mr-3">
+							<ClaySticker
+								className={`sticker-user-icon ${
+									item.portraitURL ? '' : item.userId % 10
+								}`}
+								size="lg"
+							>
+								{item.portraitURL ? (
+									<div className="sticker-overlay">
+										<img
+											className="sticker-img"
+											src={item.portraitURL}
+										/>
+									</div>
+								) : (
+									<ClayIcon symbol="user" />
+								)}
+							</ClaySticker>
+						</div>
+
+						<div className="autofit-col">
+							<strong>{item.fullName}</strong>
+
+							<span>{item.emailAddress}</span>
+						</div>
+					</div>
+				</ClayDropDown.Item>
+			))}
+		</ClayDropDown.ItemList>
+	);
+};
+
 const Sharing = ({
 	autocompleteUserURL,
 	classNameId,
@@ -358,47 +399,6 @@ const Sharing = ({
 				}
 			/>
 		</ClayForm>
-	);
-};
-
-const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
-	return (
-		<ClayDropDown.ItemList>
-			{sourceItems.map((item) => (
-				<ClayDropDown.Item
-					key={item.id}
-					onClick={() => onItemClick(item)}
-				>
-					<div className="autofit-row autofit-row-center">
-						<div className="autofit-col mr-3">
-							<ClaySticker
-								className={`sticker-user-icon ${
-									item.portraitURL ? '' : item.userId % 10
-								}`}
-								size="lg"
-							>
-								{item.portraitURL ? (
-									<div className="sticker-overlay">
-										<img
-											className="sticker-img"
-											src={item.portraitURL}
-										/>
-									</div>
-								) : (
-									<ClayIcon symbol="user" />
-								)}
-							</ClaySticker>
-						</div>
-
-						<div className="autofit-col">
-							<strong>{item.fullName}</strong>
-
-							<span>{item.emailAddress}</span>
-						</div>
-					</div>
-				</ClayDropDown.Item>
-			))}
-		</ClayDropDown.ItemList>
 	);
 };
 

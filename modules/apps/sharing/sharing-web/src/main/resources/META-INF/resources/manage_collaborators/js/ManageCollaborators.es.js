@@ -149,6 +149,21 @@ const ManageCollaborators = ({
 		setDeleteSharingEntryIds(deleteSharingEntryIds);
 	};
 
+	const setCollaborator = (updatedCollaborator) => {
+		setCurrentCollaborators(
+			currentCollaborators.map((collaborator) => {
+				if (collaborator.userId === updatedCollaborator.userId) {
+					return {
+						...collaborator,
+						...updatedCollaborator,
+					};
+				}
+
+				return collaborator;
+			})
+		);
+	};
+
 	const handleExpirationDateCheckboxChange = (event) => {
 		const checkbox = event.target;
 
@@ -208,6 +223,23 @@ const ManageCollaborators = ({
 		}
 
 		delay(() => findExpirationDateError(), 0);
+	};
+
+	const showNotification = (message, error) => {
+		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
+
+		const openToastParams = {
+			message,
+		};
+
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error');
+			openToastParams.type = 'danger';
+		}
+
+		closeDialog();
+
+		parentOpenToast(openToastParams);
 	};
 
 	const handleSaveButtonClick = () => {
@@ -280,38 +312,6 @@ const ManageCollaborators = ({
 			...sharingEntryIdsAndShareables,
 			[sharingEntryId]: shareable,
 		});
-	};
-
-	const setCollaborator = (updatedCollaborator) => {
-		setCurrentCollaborators(
-			currentCollaborators.map((collaborator) => {
-				if (collaborator.userId === updatedCollaborator.userId) {
-					return {
-						...collaborator,
-						...updatedCollaborator,
-					};
-				}
-
-				return collaborator;
-			})
-		);
-	};
-
-	const showNotification = (message, error) => {
-		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
-
-		const openToastParams = {
-			message,
-		};
-
-		if (error) {
-			openToastParams.title = Liferay.Language.get('error');
-			openToastParams.type = 'danger';
-		}
-
-		closeDialog();
-
-		parentOpenToast(openToastParams);
 	};
 
 	useEffect(() => {

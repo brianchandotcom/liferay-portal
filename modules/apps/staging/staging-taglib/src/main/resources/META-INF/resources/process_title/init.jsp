@@ -24,11 +24,13 @@ BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.g
 
 String backgroundTaskName = backgroundTaskDisplay.getDisplayName(request);
 
-boolean processPrivateLayout = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout");
+if (GroupCapabilityUtil.isSupportsPages(liveGroup)) {
+	boolean processPrivateLayout = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout");
 
-String publicPagesDescription = processPrivateLayout ? LanguageUtil.get(request, "private-pages") : LanguageUtil.get(request, "public-pages");
+	String publicPagesDescription = processPrivateLayout ? LanguageUtil.get(request, "private-pages") : LanguageUtil.get(request, "public-pages");
 
-backgroundTaskName = String.format("%s (%s)", backgroundTaskName, publicPagesDescription);
+	backgroundTaskName = String.format("%s (%s)", backgroundTaskName, publicPagesDescription);
+}
 
 String domId = liferayPortletResponse.getNamespace() + "backgroundTaskName" + String.valueOf(backgroundTask.getBackgroundTaskId());
 %>

@@ -26,8 +26,8 @@ const validate = (fields, values) => {
 		for (let validation of validations) {
 			const error = validation(values[inputName]);
 			if (error) {
-			errors[inputName] = error;
-			break;
+				errors[inputName] = error;
+				break;
 			}
 		}
 	});

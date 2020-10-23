@@ -23,6 +23,8 @@ import {HelpMessage, RequiredMark} from './utils/formComponents.es';
 import Input from './utils/input.es';
 import { alphanumeric, required, validate } from "./utils/formValidations.es";
 
+const STR_BLANK = " ";
+
 const EditAdaptiveMedia = ({
 	amImageConfigurationEntry,
 	automaticUuid,
@@ -68,26 +70,37 @@ const EditAdaptiveMedia = ({
 			[highResolutionId]: addHighResolution,
 			[newUuidId]: configurationEntryUuid,
 		},
-		validate: (values) =>
-			validate(
+		validate: () => {
+			let err = validate(
 				{
 					[nameId]: [required],
 					[newUuidId]: [alphanumeric],
 				},
 				values
-			),
-		onSubmit: (values) => {
+			);
+
+			if (!values[maxWidthId] && !values[maxHeightId]) {
+				err[maxWidthId] = Liferay.Language.get(
+					'at-least-one-value-is-required'
+				);
+
+				err[maxHeightId] = STR_BLANK;
+			}
+
+			return err;
+		},
+		onSubmit: () => {
 			console.log(values);
 		},
 	});
+
+	const {errors, handleChange, setFieldValue, values} = formik;
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
 			Liferay.Util.navigate(redirect);
 		}
 	}, [redirect]);
-
-	const {errors, handleChange, setFieldValue, values} = formik;
 
 	const updateUuid = (event)  => {
 		const nameValue = event.target.value;
@@ -149,6 +162,7 @@ const EditAdaptiveMedia = ({
 						<ClayLayout.Col md="3">
 							<Input
 								disabled={!configurationEntryEditable}
+								error={errors[maxWidthId]}
 								label={Liferay.Language.get('max-width-px')}
 								name={maxWidthId}
 								onChange={handleChange}
@@ -159,6 +173,7 @@ const EditAdaptiveMedia = ({
 						<ClayLayout.Col md="3">
 							<Input
 								disabled={!configurationEntryEditable}
+								error={errors[maxHeightId]}
 								label={Liferay.Language.get('max-height-px')}
 								name={maxHeightId}
 								onChange={handleChange}

@@ -36,6 +36,7 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 	const dispatch = useContext(DispatchContext);
 	const {errors, experiment, variants} = useContext(StateContext);
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
+	const [creatingVariant, setCreatingVariant] = useState(false);
 
 	const {
 		observer: creatingVariantObserver,
@@ -43,14 +44,15 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 	} = useModal({
 		onClose: () => setCreatingVariant(false),
 	});
+
+	const [editingVariant, setEditingVariant] = useState({active: false});
+
 	const {
 		observer: editingVariantObserver,
 		onClose: editingVariantOnClose,
 	} = useModal({
 		onClose: () => setEditingVariant({active: false}),
 	});
-	const [creatingVariant, setCreatingVariant] = useState(false);
-	const [editingVariant, setEditingVariant] = useState({active: false});
 
 	const publishable =
 		experiment.status.value === STATUS_FINISHED_WINNER ||

@@ -287,14 +287,17 @@ definition {
 			assertCheckboxMissing = "${assertCheckboxMissing}",
 			categoryName = "${categoryName}",
 			collectionName = "${collectionName}",
+			componentName = "${componentName}",
 			customDescription = "${customDescription}",
 			customTitle = "${customTitle}",
 			inheritChanges = "${inheritChanges}",
+			linkPageName = "${linkPageName}",
 			navigationMenus = "${navigationMenus}",
 			openGraph = "${openGraph}",
 			pageName = "${pageName}",
 			pageTemplateName = "${pageTemplateName}",
 			pageTypeURL = "${pageTypeURL}",
+			portlet = "${portlet}",
 			sitePageType = "${sitePageType}",
 			vocabularyName = "${vocabularyName}");
 	}

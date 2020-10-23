@@ -49,7 +49,7 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		System.out.println("Iterated 100 thousand times in " + delta + " ms");
 
-		Assert.assertTrue(delta < 6000);
+		Assert.assertTrue(delta < 10000);
 	}
 
 	/**

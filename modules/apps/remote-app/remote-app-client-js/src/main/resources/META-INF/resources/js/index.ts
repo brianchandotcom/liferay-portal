@@ -52,23 +52,6 @@ type GettableProperties =
 	| 'userName';
 
 /**
- * Payloads may only contain properties which we can send across iframes
- * using the `postMessage` API. Complex properties like functions cannot
- * be sent because the "Structured clone algorithm" does not support
- * them.
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
- */
-type Payload = {[key: string]: StructuredClonable};
-
-type PromiseMap<T = unknown> = {
-	[key: string]: {
-		reject: (reason?: any) => void;
-		resolve: (value?: T) => void;
-	};
-};
-
-/**
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
  */
 type StructuredClonable =
@@ -92,6 +75,23 @@ type StructuredClonable =
 	| string
 	| undefined
 	| {[key: string]: StructuredClonable};
+
+/**
+ * Payloads may only contain properties which we can send across iframes
+ * using the `postMessage` API. Complex properties like functions cannot
+ * be sent because the "Structured clone algorithm" does not support
+ * them.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
+ */
+type Payload = {[key: string]: StructuredClonable};
+
+type PromiseMap<T = unknown> = {
+	[key: string]: {
+		reject: (reason?: any) => void;
+		resolve: (value?: T) => void;
+	};
+};
 
 type State =
 	| 'disposed'

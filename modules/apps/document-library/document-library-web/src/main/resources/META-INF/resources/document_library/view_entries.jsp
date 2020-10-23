@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(request);
+
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 String currentFolder = ParamUtil.getString(request, "curFolder");
@@ -28,8 +30,6 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
-String displayStyle = dlAdminDisplayContext.getDisplayStyle();
 
 FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
 
@@ -134,7 +134,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					%>
 
 					<c:choose>
-						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<c:when test="<%= dlViewEntriesDisplayContext.isDescriptiveDisplayStyle() %>">
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 									<liferay-ui:search-container-column-image
@@ -161,7 +161,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								path="/document_library/file_entry_action.jsp"
 							/>
 						</c:when>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
+						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
 
 							<%
 							row.setCssClass("entry-card lfr-asset-item");
@@ -398,7 +398,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					%>
 
 					<c:choose>
-						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<c:when test="<%= dlViewEntriesDisplayContext.isDescriptiveDisplayStyle() %>">
 							<liferay-ui:search-container-column-icon
 								icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 								toggleRowChecker="<%= true %>"
@@ -413,7 +413,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								path="/document_library/folder_action.jsp"
 							/>
 						</c:when>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
+						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
 
 							<%
 							row.setCssClass("entry-card lfr-asset-folder");
@@ -527,7 +527,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= dlViewEntriesDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			resultRowSplitter="<%= new DLResultRowSplitter() %>"
 			searchContainer="<%= dlSearchContainer %>"

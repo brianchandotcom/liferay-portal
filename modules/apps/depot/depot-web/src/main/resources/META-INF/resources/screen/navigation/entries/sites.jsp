@@ -56,6 +56,14 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		<liferay-ui:message key="an-unstaged-asset-library-cannot-be-connected-to-a-staged-site" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= DepotEntryGroupRelToGroupException.MustBeLocallyStaged.class %>">
+		<liferay-ui:message key="a-locally-staged-asset-library-cannot-be-connected-to-a-remotely-staged-site" />
+	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= DepotEntryGroupRelToGroupException.MustBeRemotelyStaged.class %>">
+		<liferay-ui:message key="a-remotely-staged-asset-library-cannot-be-connected-to-a-locally-staged-site" />
+	</liferay-ui:error>
+
 	<c:if test="<%= depotAdminSitesDisplayContext.isLiveDepotEntry() %>">
 		<clay:alert
 			displayType="info"

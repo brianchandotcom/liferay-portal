@@ -26,7 +26,7 @@ definition {
 
 		if ("${sitePageType}" == "Embedded") {
 			Type(
-				locator1 = "SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD",
+				locator1 = "TextInput#URL",
 				value1 = "${pageTypeURL}");
 		}
 

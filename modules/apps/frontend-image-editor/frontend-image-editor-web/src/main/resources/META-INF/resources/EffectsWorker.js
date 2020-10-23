@@ -13,175 +13,6 @@
  */
 
 /**
- * Lagrange filter implementation.
- *
- * @see  https://coderwall.com/p/gqlbuw/introduction-created-instagram-filter-with-javascript
- * @see  http://www.instructables.com/id/How-to-make-Instagram-Filters-in-Photoshop/
- * @see  https://gist.github.com/maccesch/995144
- *
- * @param {Event} event The event message passed to the worker. It contains:
- *                      - imageData: The ImageData to transform
- *                      - effect: The effect to apply
- */
-onmessage = function (event) {
-	var imageData = event.data.imageData;
-	var effect = event.data.effect;
-	var controlPoints = getControlPoints(effect);
-
-	if (controlPoints) {
-		var dataLength = imageData.data.length;
-
-		if (dataLength) {
-			importScripts('EffectsHelper.js');
-
-			var redCurve = generateColorCurve(controlPoints.red);
-			var greenCurve = generateColorCurve(controlPoints.green);
-			var blueCurve = generateColorCurve(controlPoints.blue);
-
-			var data = imageData.data;
-
-			for (var i = 0; i < dataLength; i += 4) {
-				var red = data[i];
-				var green = data[i + 1];
-				var blue = data[i + 2];
-				var alpha = data[i + 3];
-
-				data[i] = redCurve.valueOf(red);
-				data[i + 1] = greenCurve.valueOf(green);
-				data[i + 2] = blueCurve.valueOf(blue);
-
-				if (controlPoints.desaturate) {
-					data[i] =
-						data[i] * DESATURATION_MATRIX[0] +
-						data[i + 1] * DESATURATION_MATRIX[1] +
-						data[i + 2] * DESATURATION_MATRIX[2] +
-						alpha * DESATURATION_MATRIX[3] +
-						DESATURATION_MATRIX[4];
-					data[i + 1] =
-						data[i] * DESATURATION_MATRIX[5] +
-						data[i + 1] * DESATURATION_MATRIX[6] +
-						data[i + 2] * DESATURATION_MATRIX[7] +
-						alpha * DESATURATION_MATRIX[8] +
-						DESATURATION_MATRIX[9];
-					data[i + 2] =
-						data[i] * DESATURATION_MATRIX[10] +
-						data[i + 1] * DESATURATION_MATRIX[11] +
-						data[i + 2] * DESATURATION_MATRIX[12] +
-						alpha * DESATURATION_MATRIX[13] +
-						DESATURATION_MATRIX[14];
-					data[i + 3] =
-						data[i] * DESATURATION_MATRIX[15] +
-						data[i + 1] * DESATURATION_MATRIX[16] +
-						data[i + 2] * DESATURATION_MATRIX[17] +
-						alpha * DESATURATION_MATRIX[18] +
-						DESATURATION_MATRIX[19];
-				}
-			}
-		}
-	}
-
-	postMessage(imageData);
-
-	close();
-};
-
-/**
- * Gets the arrays (r,g,b) of control points for a given effect
- *
- * @param  {String} effect The name of the effect
- * @return {Array<Array<Number>>} Multidimensional array with the
- * three channel control points
- *
- * @see  http://www.instructables.com/id/How-to-make-Instagram-Filters-in-Photoshop
- */
-var getControlPoints = function (effect) {
-	var controlPoints;
-
-	switch (effect.toLowerCase()) {
-		case 'ruby':
-			controlPoints = CONTROL_POINTS_RUBY;
-			break;
-		case 'absinthe':
-			controlPoints = CONTROL_POINTS_ABSINTHE;
-			break;
-		case 'chroma':
-			controlPoints = CONTROL_POINTS_CHROMA;
-			break;
-		case 'atari':
-			controlPoints = CONTROL_POINTS_ATARI;
-			break;
-		case 'tripel':
-			controlPoints = CONTROL_POINTS_TRIPEL;
-			break;
-		case 'ailis':
-			controlPoints = CONTROL_POINTS_AILIS;
-			break;
-		case 'flatfoot':
-			controlPoints = CONTROL_POINTS_FLATFOOT;
-			break;
-		case 'pyrexia':
-			controlPoints = CONTROL_POINTS_PYREXIA;
-			break;
-		case 'umbra':
-			controlPoints = CONTROL_POINTS_UMBRA;
-			break;
-		case 'rouge':
-			controlPoints = CONTROL_POINTS_ROUGE;
-			break;
-		case 'idyll':
-			controlPoints = CONTROL_POINTS_IDYLL;
-			break;
-		case 'glimmer':
-			controlPoints = CONTROL_POINTS_GLIMMER;
-			break;
-		case 'elysium':
-			controlPoints = CONTROL_POINTS_ELYSIUM;
-			break;
-		case 'nucleus':
-			controlPoints = CONTROL_POINTS_NUCLEUS;
-			break;
-		case 'amber':
-			controlPoints = CONTROL_POINTS_AMBER;
-			break;
-		case 'paella':
-			controlPoints = CONTROL_POINTS_PAELLA;
-			break;
-		case 'aureus':
-			controlPoints = CONTROL_POINTS_AUREUS;
-			break;
-		case 'expanse':
-			controlPoints = CONTROL_POINTS_EXPANSE;
-			break;
-		case 'orchid':
-		default:
-			controlPoints = CONTROL_POINTS_ORCHID;
-			break;
-	}
-
-	return controlPoints;
-};
-
-/**
- * [generateColorCurve description]
- * @param  {[type]} controlPoints [description]
- * @return {[type]}               [description]
- */
-var generateColorCurve = function (controlPoints) {
-	var curve = new Lagrange(
-		controlPoints[0][0],
-		controlPoints[0][1],
-		controlPoints[1][0],
-		controlPoints[1][1]
-	);
-
-	controlPoints.slice(2).forEach((controlPoint) => {
-		curve.addPoint(controlPoint[0], controlPoint[1]);
-	});
-
-	return curve;
-};
-
-/**
  * Static matrix to desaturate an image. Necessary for some
  * effects that are expected to return grayscale images.
  * @type {Array}
@@ -796,4 +627,173 @@ var CONTROL_POINTS_AUREUS = {
 		[185, 208],
 		[255, 255],
 	],
+};
+
+/**
+ * Gets the arrays (r,g,b) of control points for a given effect
+ *
+ * @param  {String} effect The name of the effect
+ * @return {Array<Array<Number>>} Multidimensional array with the
+ * three channel control points
+ *
+ * @see  http://www.instructables.com/id/How-to-make-Instagram-Filters-in-Photoshop
+ */
+var getControlPoints = function (effect) {
+	var controlPoints;
+
+	switch (effect.toLowerCase()) {
+		case 'ruby':
+			controlPoints = CONTROL_POINTS_RUBY;
+			break;
+		case 'absinthe':
+			controlPoints = CONTROL_POINTS_ABSINTHE;
+			break;
+		case 'chroma':
+			controlPoints = CONTROL_POINTS_CHROMA;
+			break;
+		case 'atari':
+			controlPoints = CONTROL_POINTS_ATARI;
+			break;
+		case 'tripel':
+			controlPoints = CONTROL_POINTS_TRIPEL;
+			break;
+		case 'ailis':
+			controlPoints = CONTROL_POINTS_AILIS;
+			break;
+		case 'flatfoot':
+			controlPoints = CONTROL_POINTS_FLATFOOT;
+			break;
+		case 'pyrexia':
+			controlPoints = CONTROL_POINTS_PYREXIA;
+			break;
+		case 'umbra':
+			controlPoints = CONTROL_POINTS_UMBRA;
+			break;
+		case 'rouge':
+			controlPoints = CONTROL_POINTS_ROUGE;
+			break;
+		case 'idyll':
+			controlPoints = CONTROL_POINTS_IDYLL;
+			break;
+		case 'glimmer':
+			controlPoints = CONTROL_POINTS_GLIMMER;
+			break;
+		case 'elysium':
+			controlPoints = CONTROL_POINTS_ELYSIUM;
+			break;
+		case 'nucleus':
+			controlPoints = CONTROL_POINTS_NUCLEUS;
+			break;
+		case 'amber':
+			controlPoints = CONTROL_POINTS_AMBER;
+			break;
+		case 'paella':
+			controlPoints = CONTROL_POINTS_PAELLA;
+			break;
+		case 'aureus':
+			controlPoints = CONTROL_POINTS_AUREUS;
+			break;
+		case 'expanse':
+			controlPoints = CONTROL_POINTS_EXPANSE;
+			break;
+		case 'orchid':
+		default:
+			controlPoints = CONTROL_POINTS_ORCHID;
+			break;
+	}
+
+	return controlPoints;
+};
+
+/**
+ * [generateColorCurve description]
+ * @param  {[type]} controlPoints [description]
+ * @return {[type]}               [description]
+ */
+var generateColorCurve = function (controlPoints) {
+	var curve = new Lagrange(
+		controlPoints[0][0],
+		controlPoints[0][1],
+		controlPoints[1][0],
+		controlPoints[1][1]
+	);
+
+	controlPoints.slice(2).forEach((controlPoint) => {
+		curve.addPoint(controlPoint[0], controlPoint[1]);
+	});
+
+	return curve;
+};
+
+/**
+ * Lagrange filter implementation.
+ *
+ * @see  https://coderwall.com/p/gqlbuw/introduction-created-instagram-filter-with-javascript
+ * @see  http://www.instructables.com/id/How-to-make-Instagram-Filters-in-Photoshop/
+ * @see  https://gist.github.com/maccesch/995144
+ *
+ * @param {Event} event The event message passed to the worker. It contains:
+ *                      - imageData: The ImageData to transform
+ *                      - effect: The effect to apply
+ */
+onmessage = function (event) {
+	var imageData = event.data.imageData;
+	var effect = event.data.effect;
+	var controlPoints = getControlPoints(effect);
+
+	if (controlPoints) {
+		var dataLength = imageData.data.length;
+
+		if (dataLength) {
+			importScripts('EffectsHelper.js');
+
+			var redCurve = generateColorCurve(controlPoints.red);
+			var greenCurve = generateColorCurve(controlPoints.green);
+			var blueCurve = generateColorCurve(controlPoints.blue);
+
+			var data = imageData.data;
+
+			for (var i = 0; i < dataLength; i += 4) {
+				var red = data[i];
+				var green = data[i + 1];
+				var blue = data[i + 2];
+				var alpha = data[i + 3];
+
+				data[i] = redCurve.valueOf(red);
+				data[i + 1] = greenCurve.valueOf(green);
+				data[i + 2] = blueCurve.valueOf(blue);
+
+				if (controlPoints.desaturate) {
+					data[i] =
+						data[i] * DESATURATION_MATRIX[0] +
+						data[i + 1] * DESATURATION_MATRIX[1] +
+						data[i + 2] * DESATURATION_MATRIX[2] +
+						alpha * DESATURATION_MATRIX[3] +
+						DESATURATION_MATRIX[4];
+					data[i + 1] =
+						data[i] * DESATURATION_MATRIX[5] +
+						data[i + 1] * DESATURATION_MATRIX[6] +
+						data[i + 2] * DESATURATION_MATRIX[7] +
+						alpha * DESATURATION_MATRIX[8] +
+						DESATURATION_MATRIX[9];
+					data[i + 2] =
+						data[i] * DESATURATION_MATRIX[10] +
+						data[i + 1] * DESATURATION_MATRIX[11] +
+						data[i + 2] * DESATURATION_MATRIX[12] +
+						alpha * DESATURATION_MATRIX[13] +
+						DESATURATION_MATRIX[14];
+					data[i + 3] =
+						data[i] * DESATURATION_MATRIX[15] +
+						data[i + 1] * DESATURATION_MATRIX[16] +
+						data[i + 2] * DESATURATION_MATRIX[17] +
+						alpha * DESATURATION_MATRIX[18] +
+						DESATURATION_MATRIX[19];
+				}
+			}
+		}
+	}
+
+	postMessage(imageData);
+
+	close();
 };

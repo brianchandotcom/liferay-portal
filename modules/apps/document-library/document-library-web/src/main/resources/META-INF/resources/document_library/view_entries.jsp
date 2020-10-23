@@ -19,10 +19,7 @@
 <%
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
-FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
 
 String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 
@@ -35,11 +32,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 %>
 
 <div class="document-container" id="<portlet:namespace />entriesContainer">
-
-	<%
-	DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
-	%>
-
 	<liferay-ui:search-container
 		id="entries"
 		searchContainer="<%= dlViewEntriesDisplayContext.getSearchContainer() %>"
@@ -62,7 +54,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 					row.setData(
 						HashMapBuilder.<String, Object>put(
-							"actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(fileEntry))
+							"actions", StringUtil.merge(dlViewEntriesDisplayContext.getAvailableActions(fileEntry))
 						).put(
 							"draggable", draggable
 						).put(
@@ -335,7 +327,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 					row.setData(
 						HashMapBuilder.<String, Object>put(
-							"actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(curFolder))
+							"actions", StringUtil.merge(dlViewEntriesDisplayContext.getAvailableActions(curFolder))
 						).put(
 							"draggable", draggable
 						).put(
@@ -380,7 +372,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 									resultRow="<%= row %>"
 									rowChecker="<%= searchContainer.getRowChecker() %>"
 									text="<%= curFolder.getName() %>"
-									url="<%= folderActionDisplayContext.getRowURL(curFolder) %>"
+									url="<%= dlViewEntriesDisplayContext.getRowURL(curFolder) %>"
 								>
 									<liferay-frontend:horizontal-card-col>
 										<liferay-frontend:horizontal-card-icon
@@ -409,7 +401,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 												icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 											/>
 
-											<aui:a href="<%= folderActionDisplayContext.getRowURL(curFolder) %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
+											<aui:a href="<%= dlViewEntriesDisplayContext.getRowURL(curFolder) %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
 										</liferay-ui:search-container-column-text>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("description") %>'>
@@ -490,6 +482,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 request.setAttribute("edit_file_entry.jsp-checkedOut", true);
 %>
 
-<c:if test="<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
+<c:if test="<%= dlViewEntriesDisplayContext.isVersioningStrategyOverridable() %>">
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>

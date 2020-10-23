@@ -29,8 +29,6 @@ import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
-import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
-import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -50,10 +48,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -66,11 +60,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -218,87 +210,6 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(false);
 			}
 		).build();
-	}
-
-	public List<String> getAvailableActions(FileEntry fileEntry)
-		throws PortalException {
-
-		List<String> availableActions = new ArrayList<>();
-
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-
-		if (DLFileEntryPermission.contains(
-				permissionChecker, fileEntry, ActionKeys.DELETE)) {
-
-			availableActions.add("deleteEntries");
-		}
-
-		if (DLFileEntryPermission.contains(
-				permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-
-			availableActions.add("move");
-
-			if (fileEntry.isCheckedOut()) {
-				availableActions.add("checkin");
-			}
-			else {
-				availableActions.add("checkout");
-			}
-
-			if (!RepositoryUtil.isExternalRepository(
-					fileEntry.getRepositoryId()) &&
-				!_hasWorkflowDefinitionLink(fileEntry) &&
-				!_isCheckedOutByAnotherUser(fileEntry)) {
-
-				if (_hasValidAssetVocabularies(
-						_themeDisplay.getScopeGroupId())) {
-
-					availableActions.add("editCategories");
-				}
-
-				availableActions.add("editTags");
-			}
-		}
-
-		if (DLFileEntryPermission.contains(
-				permissionChecker, fileEntry, ActionKeys.VIEW)) {
-
-			availableActions.add("download");
-		}
-
-		return availableActions;
-	}
-
-	public List<String> getAvailableActions(Folder folder)
-		throws PortalException {
-
-		List<String> availableActions = new ArrayList<>();
-
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-
-		if (DLFolderPermission.contains(
-				permissionChecker, folder, ActionKeys.DELETE)) {
-
-			availableActions.add("deleteEntries");
-		}
-
-		if (DLFolderPermission.contains(
-				permissionChecker, folder, ActionKeys.UPDATE) &&
-			!folder.isMountPoint()) {
-
-			availableActions.add("move");
-		}
-
-		if (DLFolderPermission.contains(
-				permissionChecker, folder, ActionKeys.VIEW) &&
-			!RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
-
-			availableActions.add("download");
-		}
-
-		return availableActions;
 	}
 
 	@Override
@@ -848,36 +759,12 @@ public class DLAdminManagementToolbarDisplayContext
 		return _hasValidAssetVocabularies;
 	}
 
-	private boolean _hasWorkflowDefinitionLink(FileEntry fileEntry) {
-		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
-			return false;
-		}
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		if (_hasWorkflowDefinitionLink(
-				dlFileEntry.getFolderId(), dlFileEntry.getFileEntryTypeId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _hasWorkflowDefinitionLink(
 		long folderId, long fileEntryTypeId) {
 
 		return DLUtil.hasWorkflowDefinitionLink(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 			folderId, fileEntryTypeId);
-	}
-
-	private boolean _isCheckedOutByAnotherUser(FileEntry fileEntry) {
-		if (fileEntry.isCheckedOut() && !fileEntry.hasLock()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isEnableOnBulk() {

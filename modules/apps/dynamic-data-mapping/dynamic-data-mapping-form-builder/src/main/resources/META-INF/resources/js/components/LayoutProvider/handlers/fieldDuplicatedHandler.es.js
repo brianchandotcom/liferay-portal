@@ -28,6 +28,25 @@ import {
 	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
 
+export const getLabel = (originalField, editingLanguageId) => {
+	return sub(Liferay.Language.get('copy-of-x'), [
+		getFieldLocalizedValue(
+			originalField.settingsContext.pages,
+			'label',
+			editingLanguageId
+		),
+	]);
+};
+
+export const getValidation = (originalField) => {
+	const validation = getSettingsContextProperty(
+		originalField.settingsContext,
+		'validation'
+	);
+
+	return validation;
+};
+
 export const createDuplicatedField = (originalField, props, blacklist = []) => {
 	const {editingLanguageId, fieldNameGenerator} = props;
 	const newFieldName = fieldNameGenerator(
@@ -110,25 +129,6 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 		'validation',
 		getValidation(duplicatedField)
 	);
-};
-
-export const getLabel = (originalField, editingLanguageId) => {
-	return sub(Liferay.Language.get('copy-of-x'), [
-		getFieldLocalizedValue(
-			originalField.settingsContext.pages,
-			'label',
-			editingLanguageId
-		),
-	]);
-};
-
-export const getValidation = (originalField) => {
-	const validation = getSettingsContextProperty(
-		originalField.settingsContext,
-		'validation'
-	);
-
-	return validation;
 };
 
 export const duplicateField = (

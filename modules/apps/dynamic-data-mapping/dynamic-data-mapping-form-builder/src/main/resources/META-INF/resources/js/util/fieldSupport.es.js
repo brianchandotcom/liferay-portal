@@ -20,77 +20,6 @@ import {
 
 import {FIELD_TYPE_FIELDSET} from './constants.es';
 
-export const createField = (props, event) => {
-	const {
-		defaultLanguageId,
-		editingLanguageId,
-		fieldNameGenerator,
-		spritemap,
-	} = props;
-	const {
-		fieldType,
-		skipFieldNameGeneration = false,
-		useFieldName = '',
-	} = event;
-
-	let newFieldName = useFieldName;
-
-	if (!useFieldName) {
-		if (skipFieldNameGeneration) {
-			const {settingsContext} = fieldType;
-			const visitor = new PagesVisitor(settingsContext.pages);
-
-			visitor.mapFields(({fieldName, value}) => {
-				if (fieldName === 'name') {
-					newFieldName = value;
-				}
-			});
-		}
-		else {
-			newFieldName = fieldNameGenerator(getDefaultFieldName());
-		}
-	}
-
-	const newField = {
-		...fieldType,
-		fieldName: newFieldName,
-		fieldReference: newFieldName,
-		name: newFieldName,
-		settingsContext: {
-			...fieldType.settingsContext,
-			pages: normalizeSettingsContextPages(
-				fieldType.settingsContext.pages,
-				defaultLanguageId,
-				editingLanguageId,
-				fieldType,
-				newFieldName
-			),
-			type: fieldType.name,
-		},
-	};
-
-	const {fieldName, fieldReference, name, settingsContext} = newField;
-
-	return {
-		...getFieldProperties(
-			settingsContext,
-			defaultLanguageId,
-			editingLanguageId
-		),
-		fieldName,
-		fieldReference,
-		instanceId: generateInstanceId(8),
-		name,
-		settingsContext,
-		spritemap,
-		type: fieldType.name,
-	};
-};
-
-export const formatFieldName = (instanceId, languageId, value) => {
-	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
-};
-
 export const generateId = (length, allowOnlyNumbers = false) => {
 	let text = '';
 
@@ -115,12 +44,6 @@ export const getDefaultFieldName = (isOptionField = false) => {
 		: Liferay.Language.get('field');
 
 	return defaultFieldName + generateId(8, true);
-};
-
-export const getField = (pages, fieldName) => {
-	const visitor = new PagesVisitor(pages);
-
-	return visitor.findField((field) => field.fieldName === fieldName);
 };
 
 export const getFieldProperties = (
@@ -170,84 +93,6 @@ export const getFieldProperties = (
 	);
 
 	return properties;
-};
-
-export const getParentField = (pages, fieldName) => {
-	let parentField = null;
-	const visitor = new PagesVisitor(pages);
-
-	visitor.visitFields((field) => {
-		const nestedFieldsVisitor = new PagesVisitor(field.nestedFields || []);
-
-		if (nestedFieldsVisitor.containsField(fieldName)) {
-			parentField = field;
-		}
-
-		return false;
-	});
-
-	return parentField;
-};
-
-export const getParentFieldSet = (pages, fieldName) => {
-	let parentField = getParentField(pages, fieldName);
-
-	while (parentField) {
-		if (isFieldSet(parentField)) {
-			return parentField;
-		}
-
-		parentField = getParentField(pages, parentField.fieldName);
-	}
-
-	return null;
-};
-
-export const isFieldSet = (field) =>
-	field.type === FIELD_TYPE_FIELDSET && field.ddmStructureId;
-
-export const isFieldSetChild = (pages, fieldName) => {
-	return !!getParentFieldSet(pages, fieldName);
-};
-
-export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
-	let value = field.value;
-
-	if (field.dataType === 'json' && typeof value === 'object') {
-		value = JSON.stringify(value);
-	}
-
-	if (field.localizable && field.localizedValue) {
-		let localizedValue = field.localizedValue[editingLanguageId];
-
-		if (localizedValue === undefined) {
-			localizedValue = field.localizedValue[defaultLanguageId];
-		}
-
-		if (localizedValue !== undefined) {
-			value = localizedValue;
-		}
-	}
-	else if (
-		field.dataType === 'ddm-options' &&
-		value[editingLanguageId] === undefined
-	) {
-		value = {
-			...value,
-			[editingLanguageId]: value[defaultLanguageId],
-		};
-	}
-
-	return {
-		...field,
-		defaultLanguageId,
-		editingLanguageId,
-		localizedValue: {
-			...(field.localizedValue || {}),
-			[editingLanguageId]: value,
-		},
-		value,
-	};
 };
 
 export const normalizeSettingsContextPages = (
@@ -319,4 +164,159 @@ export const normalizeSettingsContextPages = (
 		false,
 		true
 	);
+};
+
+export const createField = (props, event) => {
+	const {
+		defaultLanguageId,
+		editingLanguageId,
+		fieldNameGenerator,
+		spritemap,
+	} = props;
+	const {
+		fieldType,
+		skipFieldNameGeneration = false,
+		useFieldName = '',
+	} = event;
+
+	let newFieldName = useFieldName;
+
+	if (!useFieldName) {
+		if (skipFieldNameGeneration) {
+			const {settingsContext} = fieldType;
+			const visitor = new PagesVisitor(settingsContext.pages);
+
+			visitor.mapFields(({fieldName, value}) => {
+				if (fieldName === 'name') {
+					newFieldName = value;
+				}
+			});
+		}
+		else {
+			newFieldName = fieldNameGenerator(getDefaultFieldName());
+		}
+	}
+
+	const newField = {
+		...fieldType,
+		fieldName: newFieldName,
+		fieldReference: newFieldName,
+		name: newFieldName,
+		settingsContext: {
+			...fieldType.settingsContext,
+			pages: normalizeSettingsContextPages(
+				fieldType.settingsContext.pages,
+				defaultLanguageId,
+				editingLanguageId,
+				fieldType,
+				newFieldName
+			),
+			type: fieldType.name,
+		},
+	};
+
+	const {fieldName, fieldReference, name, settingsContext} = newField;
+
+	return {
+		...getFieldProperties(
+			settingsContext,
+			defaultLanguageId,
+			editingLanguageId
+		),
+		fieldName,
+		fieldReference,
+		instanceId: generateInstanceId(8),
+		name,
+		settingsContext,
+		spritemap,
+		type: fieldType.name,
+	};
+};
+
+export const formatFieldName = (instanceId, languageId, value) => {
+	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
+};
+
+export const getField = (pages, fieldName) => {
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.findField((field) => field.fieldName === fieldName);
+};
+
+export const getParentField = (pages, fieldName) => {
+	let parentField = null;
+	const visitor = new PagesVisitor(pages);
+
+	visitor.visitFields((field) => {
+		const nestedFieldsVisitor = new PagesVisitor(field.nestedFields || []);
+
+		if (nestedFieldsVisitor.containsField(fieldName)) {
+			parentField = field;
+		}
+
+		return false;
+	});
+
+	return parentField;
+};
+
+export const isFieldSet = (field) =>
+	field.type === FIELD_TYPE_FIELDSET && field.ddmStructureId;
+
+export const getParentFieldSet = (pages, fieldName) => {
+	let parentField = getParentField(pages, fieldName);
+
+	while (parentField) {
+		if (isFieldSet(parentField)) {
+			return parentField;
+		}
+
+		parentField = getParentField(pages, parentField.fieldName);
+	}
+
+	return null;
+};
+
+export const isFieldSetChild = (pages, fieldName) => {
+	return !!getParentFieldSet(pages, fieldName);
+};
+
+export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
+	let value = field.value;
+
+	if (field.dataType === 'json' && typeof value === 'object') {
+		value = JSON.stringify(value);
+	}
+
+	if (field.localizable && field.localizedValue) {
+		let localizedValue = field.localizedValue[editingLanguageId];
+
+		if (localizedValue === undefined) {
+			localizedValue = field.localizedValue[defaultLanguageId];
+		}
+
+		if (localizedValue !== undefined) {
+			value = localizedValue;
+		}
+	}
+	else if (
+		field.dataType === 'ddm-options' &&
+		value[editingLanguageId] === undefined
+	) {
+		value = {
+			...value,
+			[editingLanguageId]: value[defaultLanguageId],
+		};
+	}
+
+	return {
+		...field,
+		defaultLanguageId,
+		editingLanguageId,
+		localizedValue: {
+			...(field.localizedValue || {}),
+			[editingLanguageId]: value,
+		},
+		value,
+	};
 };

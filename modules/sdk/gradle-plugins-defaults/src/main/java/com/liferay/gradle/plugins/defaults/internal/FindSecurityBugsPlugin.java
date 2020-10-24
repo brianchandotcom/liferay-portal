@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import java.io.File;
 
 import java.nio.file.Path;
+
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -356,16 +357,19 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					findSecurityBugsJavaExec.systemProperty(
 						"findsecbugs.injection.customconfigfile." +
 							"PathTraversalDetector",
-						"liferay-config/liferay-PathTraversalDetector-PATH_TRAVERSAL_IN.txt|PATH_TRAVERSAL_IN:" +
-							"liferay-config/liferay-PathTraversalDetector-PATH_TRAVERSAL_OUT.txt|PATH_TRAVERSAL_OUT");
+						"liferay-config/liferay-PathTraversalDetector-" +
+							"PATH_TRAVERSAL_IN.txt|PATH_TRAVERSAL_IN:" +
+								"liferay-config/liferay-" +
+									"PathTraversalDetector-" +
+										"PATH_TRAVERSAL_OUT.txt|" +
+											"PATH_TRAVERSAL_OUT");
 					findSecurityBugsJavaExec.systemProperty(
 						"findsecbugs.injection.customconfigfile." +
 							"SqlInjectionDetector",
 						"liferay-config/liferay-SqlInjectionDetector.txt|" +
 							"SQL_INJECTION_HIBERNATE");
 					findSecurityBugsJavaExec.systemProperty(
-						"findsecbugs.injection.customconfigfile." +
-							"SSRFDetector",
+						"findsecbugs.injection.customconfigfile.SSRFDetector",
 						"liferay-config/liferay-SSRFDetector.txt|" +
 							"URLCONNECTION_SSRF_FD");
 					findSecurityBugsJavaExec.systemProperty(
@@ -388,15 +392,16 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					Path directoryPath = directoryFile.toPath();
 
 					while (directoryPath != null) {
-						File falsePositivesTxtFile =
-							new File(
-								directoryPath.toFile(),
-						"find-security-bugs-false-positives.txt");
+						File falsePositivesTxtFile = new File(
+							directoryPath.toFile(),
+							"find-security-bugs-false-positives.txt");
 
-					if (falsePositivesTxtFile.exists()) {
-						customConfigFile =
-							customConfigFile + File.pathSeparator +
-								FileUtil.getAbsolutePath(falsePositivesTxtFile);
+						if (falsePositivesTxtFile.exists()) {
+							String absolutePath = FileUtil.getAbsolutePath(
+								falsePositivesTxtFile);
+
+							customConfigFile +=
+								File.pathSeparator + absolutePath;
 						}
 
 						directoryPath = directoryPath.getParent();

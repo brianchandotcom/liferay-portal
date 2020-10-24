@@ -37,7 +37,7 @@
 			<@liferay_ui["user-portrait"] user=user />
 		</div>
 
-		<div class="minium-user-nav__name">${user_name}</div>
+		<div class="minium-user-nav__name">${htmlUtil.escape(user_name)}</div>
 	<#else>
 		<a class="main-link" href="${sign_in_url}">
 			<div class="main-link__label">${sign_in_text}</div>

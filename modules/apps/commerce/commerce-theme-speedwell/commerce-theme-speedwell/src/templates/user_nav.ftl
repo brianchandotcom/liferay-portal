@@ -13,7 +13,7 @@
 		<div class="speedwell-user-nav__avatar ${userImageCssClass}">
 			<@liferay_ui["user-portrait"] user=user />
 
-			<div class="speedwell-user-nav__name">${user_name}</div>
+			<div class="speedwell-user-nav__name">${htmlUtil.escape(user_name)}</div>
 		</div>
 
 		<div class="speedwell-user-nav__menu">

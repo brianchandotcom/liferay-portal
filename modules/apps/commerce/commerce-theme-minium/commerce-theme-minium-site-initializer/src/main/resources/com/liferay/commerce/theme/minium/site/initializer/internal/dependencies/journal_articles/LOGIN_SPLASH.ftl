@@ -1,3 +1,3 @@
 <#if (splashImage.getData())?? && splashImage.getData() != "">
-	<img alt="${splashImage.getAttribute("alt")}" data-fileentryid="${splashImage.getAttribute("fileEntryId")}" src="${splashImage.getData()}" />
+	<img alt="${htmlUtil.escapeAttribute(splashImage.getAttribute("alt"))}" data-fileentryid="${htmlUtil.escapeAttribute(splashImage.getAttribute("fileEntryId"))}" src="${htmlUtil.escapeAttribute(splashImage.getData())}" />
 </#if>

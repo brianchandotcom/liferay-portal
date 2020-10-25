@@ -1,14 +1,29 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
-import { getUid } from 'metal';
-import { buildFragment, globalEval, globalEvalStyles, match } from 'metal-dom';
+import {getUid} from 'metal';
+import {buildFragment, globalEval, globalEvalStyles, match} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
-import globals from '../globals/globals';
-import RequestScreen from './RequestScreen';
-import Surface from '../surface/Surface';
-import UA from 'metal-useragent';
 import Uri from 'metal-uri';
+import UA from 'metal-useragent';
+
+import globals from '../globals/globals';
+import Surface from '../surface/Surface';
 import utils from '../utils/utils';
+import RequestScreen from './RequestScreen';
 
 class HtmlScreen extends RequestScreen {
 
@@ -71,14 +86,21 @@ class HtmlScreen extends RequestScreen {
 	 * @param {Element} newStyle
 	 */
 	appendStyleIntoDocument_(newStyle) {
-		var isTemporaryStyle = match(newStyle, HtmlScreen.selectors.stylesTemporary);
+		var isTemporaryStyle = match(
+			newStyle,
+			HtmlScreen.selectors.stylesTemporary
+		);
 		if (isTemporaryStyle) {
 			this.pendingStyles.push(newStyle);
 		}
 		if (newStyle.id) {
 			var styleInDoc = globals.document.getElementById(newStyle.id);
 			if (styleInDoc) {
-				styleInDoc.parentNode.insertBefore(newStyle, styleInDoc.nextSibling);
+				styleInDoc.parentNode.insertBefore(
+					newStyle,
+					styleInDoc.nextSibling
+				);
+
 				return;
 			}
 		}
@@ -103,13 +125,16 @@ class HtmlScreen extends RequestScreen {
 	 * Copies attributes from the <html> tag of content to the given node.
 	 */
 	copyNodeAttributesFromContent_(content, node) {
-		content = content.replace(/[<]\s*html/ig, '<senna');
-		content = content.replace(/\/html\s*\>/ig, '/senna>');
+		content = content.replace(/[<]\s*html/gi, '<senna');
+		content = content.replace(/\/html\s*\>/gi, '/senna>');
 		let placeholder;
 		if (UA.isIe) {
-			const tempNode = globals.document.createRange().createContextualFragment(content);
+			const tempNode = globals.document
+				.createRange()
+				.createContextualFragment(content);
 			placeholder = tempNode.querySelector('senna');
-		} else {
+		}
+		else {
 			node.innerHTML = content;
 			placeholder = node.querySelector('senna');
 		}
@@ -142,10 +167,15 @@ class HtmlScreen extends RequestScreen {
 	 */
 	evaluateScripts(surfaces) {
 		var evaluateTrackedScripts = this.evaluateTrackedResources_(
-			globalEval.runScriptsInElement, HtmlScreen.selectors.scripts,
-			HtmlScreen.selectors.scriptsTemporary, HtmlScreen.selectors.scriptsPermanent);
+			globalEval.runScriptsInElement,
+			HtmlScreen.selectors.scripts,
+			HtmlScreen.selectors.scriptsTemporary,
+			HtmlScreen.selectors.scriptsPermanent
+		);
 
-		return evaluateTrackedScripts.then(() => super.evaluateScripts(surfaces));
+		return evaluateTrackedScripts.then(() =>
+			super.evaluateScripts(surfaces)
+		);
 	}
 
 	/**
@@ -154,9 +184,12 @@ class HtmlScreen extends RequestScreen {
 	evaluateStyles(surfaces) {
 		this.pendingStyles = [];
 		var evaluateTrackedStyles = this.evaluateTrackedResources_(
-			globalEvalStyles.runStylesInElement, HtmlScreen.selectors.styles,
-			HtmlScreen.selectors.stylesTemporary, HtmlScreen.selectors.stylesPermanent,
-			this.appendStyleIntoDocument_.bind(this));
+			globalEvalStyles.runStylesInElement,
+			HtmlScreen.selectors.styles,
+			HtmlScreen.selectors.stylesTemporary,
+			HtmlScreen.selectors.stylesPermanent,
+			this.appendStyleIntoDocument_.bind(this)
+		);
 
 		return evaluateTrackedStyles.then(() => super.evaluateStyles(surfaces));
 	}
@@ -166,8 +199,12 @@ class HtmlScreen extends RequestScreen {
 	 * @return {CancellablePromise}
 	 */
 	evaluateFavicon_() {
-		const resourcesInVirtual = this.virtualQuerySelectorAll_(HtmlScreen.selectors.favicon);
-		const resourcesInDocument = this.querySelectorAll_(HtmlScreen.selectors.favicon);
+		const resourcesInVirtual = this.virtualQuerySelectorAll_(
+			HtmlScreen.selectors.favicon
+		);
+		const resourcesInDocument = this.querySelectorAll_(
+			HtmlScreen.selectors.favicon
+		);
 
 		return new CancellablePromise((resolve) => {
 			utils.removeElementsFromDocument(resourcesInDocument);
@@ -190,12 +227,19 @@ class HtmlScreen extends RequestScreen {
 	 *     complete.
 	 * @private
 	 */
-	evaluateTrackedResources_(evaluatorFn, selector, selectorTemporary, selectorPermanent, opt_appendResourceFn) {
+	evaluateTrackedResources_(
+		evaluatorFn,
+		selector,
+		selectorTemporary,
+		selectorPermanent,
+		opt_appendResourceFn
+	) {
 		var tracked = this.virtualQuerySelectorAll_(selector);
 		var temporariesInDoc = this.querySelectorAll_(selectorTemporary);
 		var permanentsInDoc = this.querySelectorAll_(selectorPermanent);
 
 		// Adds permanent resources in document to cache.
+
 		permanentsInDoc.forEach((resource) => {
 			var resourceKey = this.getResourceKey_(resource);
 			if (resourceKey) {
@@ -206,21 +250,29 @@ class HtmlScreen extends RequestScreen {
 		var frag = buildFragment();
 		tracked.forEach((resource) => {
 			var resourceKey = this.getResourceKey_(resource);
+
 			// Do not load permanent resources if already in document.
+
 			if (!HtmlScreen.permanentResourcesInDoc[resourceKey]) {
 				frag.appendChild(resource);
 			}
+
 			// If resource has key and is permanent add to cache.
+
 			if (resourceKey && match(resource, selectorPermanent)) {
 				HtmlScreen.permanentResourcesInDoc[resourceKey] = true;
 			}
 		});
 
 		return new CancellablePromise((resolve) => {
-			evaluatorFn(frag, () => {
-				utils.removeElementsFromDocument(temporariesInDoc);
-				resolve();
-			}, opt_appendResourceFn);
+			evaluatorFn(
+				frag,
+				() => {
+					utils.removeElementsFromDocument(temporariesInDoc);
+					resolve();
+				},
+				opt_appendResourceFn
+			);
 		});
 	}
 
@@ -230,7 +282,10 @@ class HtmlScreen extends RequestScreen {
 	flip(surfaces) {
 		return super.flip(surfaces).then(() => {
 			utils.clearNodeAttributes(globals.document.documentElement);
-			utils.copyNodeAttributes(this.virtualDocument, globals.document.documentElement);
+			utils.copyNodeAttributes(
+				this.virtualDocument,
+				globals.document.documentElement
+			);
 			this.evaluateFavicon_();
 			this.updateMetaTags_();
 		});
@@ -242,7 +297,9 @@ class HtmlScreen extends RequestScreen {
 		if (currentMetaNodes) {
 			utils.removeElementsFromDocument(currentMetaNodes);
 			if (metasFromVirtualDocument) {
-				metasFromVirtualDocument.forEach((meta) => globals.document.head.appendChild(meta));
+				metasFromVirtualDocument.forEach((meta) =>
+					globals.document.head.appendChild(meta)
+				);
 			}
 		}
 	}
@@ -263,10 +320,13 @@ class HtmlScreen extends RequestScreen {
 	getSurfaceContent(surfaceId) {
 		var surface = this.virtualDocument.querySelector('#' + surfaceId);
 		if (surface) {
-			var defaultChild = surface.querySelector('#' + surfaceId + '-' + Surface.DEFAULT);
+			var defaultChild = surface.querySelector(
+				'#' + surfaceId + '-' + Surface.DEFAULT
+			);
 			if (defaultChild) {
 				return defaultChild.innerHTML;
 			}
+
 			return surface.innerHTML; // If default content not found, use surface content
 		}
 	}
@@ -283,17 +343,17 @@ class HtmlScreen extends RequestScreen {
 	 * @inheritDoc
 	 */
 	load(path) {
-		return super.load(path)
-			.then(content => {
-				this.allocateVirtualDocumentForContent(content);
-				this.resolveTitleFromVirtualDocument();
-				this.resolveMetaTagsFromVirtualDocument();
-				this.assertSameBodyIdInVirtualDocument();
-				if (UA.isIe) {
-					this.makeTemporaryStylesHrefsUnique_();
-				}
-				return content;
-			});
+		return super.load(path).then((content) => {
+			this.allocateVirtualDocumentForContent(content);
+			this.resolveTitleFromVirtualDocument();
+			this.resolveMetaTagsFromVirtualDocument();
+			this.assertSameBodyIdInVirtualDocument();
+			if (UA.isIe) {
+				this.makeTemporaryStylesHrefsUnique_();
+			}
+
+			return content;
+		});
 	}
 
 	/**
@@ -302,8 +362,12 @@ class HtmlScreen extends RequestScreen {
 	 * IE11. https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7940171/
 	 */
 	makeTemporaryStylesHrefsUnique_() {
-		var temporariesInDoc = this.virtualQuerySelectorAll_(HtmlScreen.selectors.stylesTemporary);
-		temporariesInDoc.forEach((style) => this.replaceStyleAndMakeUnique_(style));
+		var temporariesInDoc = this.virtualQuerySelectorAll_(
+			HtmlScreen.selectors.stylesTemporary
+		);
+		temporariesInDoc.forEach((style) =>
+			this.replaceStyleAndMakeUnique_(style)
+		);
 	}
 
 	/**
@@ -328,9 +392,11 @@ class HtmlScreen extends RequestScreen {
 	 */
 	runFaviconInElement_(elements) {
 		return new CancellablePromise((resolve) => {
-			elements.forEach((element) => document.head.appendChild(
-				UA.isIe ? element : utils.setElementWithRandomHref(element)
-			));
+			elements.forEach((element) =>
+				document.head.appendChild(
+					UA.isIe ? element : utils.setElementWithRandomHref(element)
+				)
+			);
 			resolve();
 		});
 	}
@@ -341,7 +407,9 @@ class HtmlScreen extends RequestScreen {
 	 * @return {array.<Element>}
 	 */
 	virtualQuerySelectorAll_(selector) {
-		return Array.prototype.slice.call(this.virtualDocument.querySelectorAll(selector));
+		return Array.prototype.slice.call(
+			this.virtualDocument.querySelectorAll(selector)
+		);
 	}
 
 	/**
@@ -350,7 +418,9 @@ class HtmlScreen extends RequestScreen {
 	 * @return {array.<Element>}
 	 */
 	querySelectorAll_(selector) {
-		return Array.prototype.slice.call(globals.document.querySelectorAll(selector));
+		return Array.prototype.slice.call(
+			globals.document.querySelectorAll(selector)
+		);
 	}
 
 	/**
@@ -384,13 +454,13 @@ class HtmlScreen extends RequestScreen {
 	setTitleSelector(titleSelector) {
 		this.titleSelector = titleSelector;
 	}
-
 }
 
 /**
  * Helper selector for ignore favicon when exist data-senna-track.
  */
-const ignoreFavicon = ':not([rel="Shortcut Icon"]):not([rel="shortcut icon"]):not([rel="icon"]):not([href$="favicon.icon"])';
+const ignoreFavicon =
+	':not([rel="Shortcut Icon"]):not([rel="shortcut icon"]):not([rel="icon"]):not([href$="favicon.icon"])';
 
 /**
  * Helper selectors for tracking resources.
@@ -399,13 +469,14 @@ const ignoreFavicon = ':not([rel="Shortcut Icon"]):not([rel="shortcut icon"]):no
  * @static
  */
 HtmlScreen.selectors = {
-	favicon: 'link[rel="Shortcut Icon"],link[rel="shortcut icon"],link[rel="icon"],link[href$="favicon.icon"]',
+	favicon:
+		'link[rel="Shortcut Icon"],link[rel="shortcut icon"],link[rel="icon"],link[href$="favicon.icon"]',
 	scripts: 'script[data-senna-track]',
 	scriptsPermanent: 'script[data-senna-track="permanent"]',
 	scriptsTemporary: 'script[data-senna-track="temporary"]',
 	styles: `style[data-senna-track],link[data-senna-track]${ignoreFavicon}`,
 	stylesPermanent: `style[data-senna-track="permanent"],link[data-senna-track="permanent"]${ignoreFavicon}`,
-	stylesTemporary: `style[data-senna-track="temporary"],link[data-senna-track="temporary"]${ignoreFavicon}`
+	stylesTemporary: `style[data-senna-track="temporary"],link[data-senna-track="temporary"]${ignoreFavicon}`,
 };
 
 /**

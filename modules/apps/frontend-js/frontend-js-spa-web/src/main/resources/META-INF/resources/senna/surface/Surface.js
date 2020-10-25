@@ -1,9 +1,24 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
-import globals from '../globals/globals';
-import { Disposable, isDefAndNotNull } from 'metal';
-import { append, removeChildren, exitDocument } from 'metal-dom';
+import {Disposable, isDefAndNotNull} from 'metal';
+import {append, exitDocument, removeChildren} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
+
+import globals from '../globals/globals';
 
 class Surface extends Disposable {
 
@@ -17,7 +32,9 @@ class Surface extends Disposable {
 		super();
 
 		if (!id) {
-			throw new Error('Surface element id not specified. A surface element requires a valid id.');
+			throw new Error(
+				'Surface element id not specified. A surface element requires a valid id.'
+			);
 		}
 
 		/**
@@ -83,7 +100,8 @@ class Surface extends Disposable {
 			child = this.getChild(screenId);
 			if (child) {
 				removeChildren(child);
-			} else {
+			}
+			else {
 				child = this.createChild(screenId);
 				this.transition(child, null);
 			}
@@ -107,6 +125,7 @@ class Surface extends Disposable {
 	createChild(screenId) {
 		var child = globals.document.createElement('div');
 		child.setAttribute('id', this.makeId_(screenId));
+
 		return child;
 	}
 
@@ -130,6 +149,7 @@ class Surface extends Disposable {
 			return this.element;
 		}
 		this.element = globals.document.getElementById(this.id);
+
 		return this.element;
 	}
 
@@ -207,6 +227,7 @@ class Surface extends Disposable {
 			to = this.defaultChild;
 		}
 		this.activeChild = to;
+
 		return this.transition(from, to).thenAlways(() => {
 			if (from && from !== to) {
 				exitDocument(from);
@@ -241,30 +262,30 @@ class Surface extends Disposable {
 	 */
 	transition(from, to) {
 		var transitionFn = this.transitionFn || Surface.defaultTransition;
+
 		return CancellablePromise.resolve(transitionFn.call(this, from, to));
 	}
-
 }
 
 /**
-   * Holds the default surface name. Elements on the page must contain a child
-   * element containing the default content, this element must be as following:
-   *
-   * Example:
-   * <code>
-   *   <div id="mysurface">
-   *     <div id="mysurface-default">Default surface content.</div>
-   *   </div>
-   * </code>
-   *
-   * The default content is relevant for the initial page content. When a
-   * screen doesn't provide content for the surface the default content is
-   * restored into the page.
-   *
-   * @type {!String}
-   * @default default
-   * @static
-   */
+ * Holds the default surface name. Elements on the page must contain a child
+ * element containing the default content, this element must be as following:
+ *
+ * Example:
+ * <code>
+ *   <div id="mysurface">
+ *     <div id="mysurface-default">Default surface content.</div>
+ *   </div>
+ * </code>
+ *
+ * The default content is relevant for the initial page content. When a
+ * screen doesn't provide content for the surface the default content is
+ * restored into the page.
+ *
+ * @type {!String}
+ * @default default
+ * @static
+ */
 Surface.DEFAULT = 'default';
 
 /**
@@ -291,7 +312,7 @@ Surface.DEFAULT = 'default';
  * @param {?Element=} to The surface element to be flipped.
  * @static
  */
-Surface.defaultTransition = function(from, to) {
+Surface.defaultTransition = function (from, to) {
 	if (from) {
 		from.style.display = 'none';
 		from.classList.remove('flipped');

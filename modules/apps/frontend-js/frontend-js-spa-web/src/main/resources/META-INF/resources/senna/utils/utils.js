@@ -1,8 +1,23 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
-import { exitDocument } from 'metal-dom';
-import globals from '../globals/globals';
+import {exitDocument} from 'metal-dom';
 import Uri from 'metal-uri';
+
+import globals from '../globals/globals';
 
 /**
  * A collection of static utility functions.
@@ -16,7 +31,11 @@ class utils {
 	 * @static
 	 */
 	static copyNodeAttributes(source, target) {
-		Array.prototype.slice.call(source.attributes).forEach((attribute) => target.setAttribute(attribute.name, attribute.value));
+		Array.prototype.slice
+			.call(source.attributes)
+			.forEach((attribute) =>
+				target.setAttribute(attribute.name, attribute.value)
+			);
 	}
 
 	/**
@@ -25,7 +44,10 @@ class utils {
 	 * @static
 	 */
 	static getCurrentBrowserPath() {
-		return this.getCurrentBrowserPathWithoutHash() + globals.window.location.hash;
+		return (
+			this.getCurrentBrowserPathWithoutHash() +
+			globals.window.location.hash
+		);
 	}
 
 	/**
@@ -34,7 +56,9 @@ class utils {
 	 * @static
 	 */
 	static getCurrentBrowserPathWithoutHash() {
-		return globals.window.location.pathname + globals.window.location.search;
+		return (
+			globals.window.location.pathname + globals.window.location.search
+		);
 	}
 
 	/**
@@ -49,9 +73,10 @@ class utils {
 			offsetTop += node.offsetTop;
 			node = node.offsetParent;
 		} while (node);
+
 		return {
 			offsetLeft,
-			offsetTop
+			offsetTop,
 		};
 	}
 
@@ -62,6 +87,7 @@ class utils {
 	 */
 	static getUrlPath(url) {
 		var uri = new Uri(url);
+
 		return uri.getPathname() + uri.getSearch() + uri.getHash();
 	}
 
@@ -72,6 +98,7 @@ class utils {
 	 */
 	static getUrlPathWithoutHash(url) {
 		var uri = new Uri(url);
+
 		return uri.getPathname() + uri.getSearch();
 	}
 
@@ -82,6 +109,7 @@ class utils {
 	 */
 	static getUrlPathWithoutHashAndSearch(url) {
 		var uri = new Uri(url);
+
 		return uri.getPathname();
 	}
 
@@ -94,10 +122,16 @@ class utils {
 	static isCurrentBrowserPath(url) {
 		if (url) {
 			const currentBrowserPath = this.getCurrentBrowserPathWithoutHash();
+
 			// the getUrlPath will create a Uri and will normalize the path and
 			// remove the trailling '/' for properly comparing paths.
-			return utils.getUrlPathWithoutHash(url) === this.getUrlPath(currentBrowserPath);
+
+			return (
+				utils.getUrlPathWithoutHash(url) ===
+				this.getUrlPath(currentBrowserPath)
+			);
 		}
+
 		return false;
 	}
 
@@ -119,8 +153,10 @@ class utils {
 	static isWebUri(url) {
 		try {
 			return new Uri(url);
-		} catch (err) {
+		}
+		catch (err) {
 			console.error(`${err.message} ${url}`);
+
 			return false;
 		}
 	}
@@ -131,7 +167,9 @@ class utils {
 	 * @static
 	 */
 	static clearNodeAttributes(node) {
-		Array.prototype.slice.call(node.attributes).forEach((attribute) => node.removeAttribute(attribute.name));
+		Array.prototype.slice
+			.call(node.attributes)
+			.forEach((attribute) => node.removeAttribute(attribute.name));
 	}
 
 	/**
@@ -143,15 +181,16 @@ class utils {
 	}
 
 	/**
-	* Removes trailing slash in path.
-	* @param {!string}
-	* @return {string}
-	*/
+	 * Removes trailing slash in path.
+	 * @param {!string}
+	 * @return {string}
+	 */
 	static removePathTrailingSlash(path) {
 		var length = path ? path.length : 0;
 		if (length > 1 && path[length - 1] === '/') {
 			path = path.substr(0, length - 1);
 		}
+
 		return path;
 	}
 
@@ -162,6 +201,7 @@ class utils {
 	 */
 	static setElementWithRandomHref(element) {
 		element.href = element.href + '?q=' + Math.random();
+
 		return element;
 	}
 
@@ -173,9 +213,9 @@ class utils {
 	static setReferrer(referrer) {
 		Object.defineProperty(globals.document, 'referrer', {
 			configurable: true,
-			get: function() {
+			get() {
 				return referrer;
-			}
+			},
 		});
 	}
 }

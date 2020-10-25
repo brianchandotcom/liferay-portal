@@ -1,19 +1,34 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
 import dom from 'metal-dom';
-import globals from '../../src/globals/globals';
+
 import AppDataAttributeHandler from '../../src/app/AppDataAttributeHandler';
+import globals from '../../src/globals/globals';
 import Screen from '../../src/screen/Screen';
 
-describe('AppDataAttributeHandler', function() {
-
+describe('AppDataAttributeHandler', () => {
 	before(() => {
 		globals.document.body.setAttribute('data-senna', '');
 		globals.window.senna = {
-			Screen: Screen
+			Screen,
 		};
 
 		// Prevent log messages from showing up in test output.
+
 		sinon.stub(console, 'log');
 	});
 
@@ -81,7 +96,10 @@ describe('AppDataAttributeHandler', function() {
 	it('should get base element', () => {
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
-		assert.strictEqual(globals.document.body, appDataAttributeHandler.getBaseElement());
+		assert.strictEqual(
+			globals.document.body,
+			appDataAttributeHandler.getBaseElement()
+		);
 	});
 
 	it('should add app surfaces from document', () => {
@@ -139,7 +157,10 @@ describe('AppDataAttributeHandler', function() {
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
-		assert.ok(appDataAttributeHandler.getApp().routes[0].getPath() instanceof RegExp);
+		assert.ok(
+			appDataAttributeHandler.getApp().routes[0].getPath() instanceof
+				RegExp
+		);
 		appDataAttributeHandler.dispose();
 		exitDocumentRouteElement('regex:[a-z]');
 	});
@@ -169,7 +190,10 @@ describe('AppDataAttributeHandler', function() {
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
-		assert.strictEqual('/base', appDataAttributeHandler.getApp().getBasePath());
+		assert.strictEqual(
+			'/base',
+			appDataAttributeHandler.getApp().getBasePath()
+		);
 		appDataAttributeHandler.dispose();
 		globals.document.body.removeAttribute('data-senna-base-path');
 	});
@@ -179,39 +203,64 @@ describe('AppDataAttributeHandler', function() {
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
-		assert.strictEqual('a', appDataAttributeHandler.getApp().getLinkSelector());
+		assert.strictEqual(
+			'a',
+			appDataAttributeHandler.getApp().getLinkSelector()
+		);
 		appDataAttributeHandler.dispose();
 		globals.document.body.removeAttribute('data-senna-link-selector');
 	});
 
 	it('should set loading css class from data attribute', () => {
-		globals.document.body.setAttribute('data-senna-loading-css-class', 'loading');
+		globals.document.body.setAttribute(
+			'data-senna-loading-css-class',
+			'loading'
+		);
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
-		assert.strictEqual('loading', appDataAttributeHandler.getApp().getLoadingCssClass());
+		assert.strictEqual(
+			'loading',
+			appDataAttributeHandler.getApp().getLoadingCssClass()
+		);
 		appDataAttributeHandler.dispose();
 		globals.document.body.removeAttribute('data-senna-loading-css-class');
 	});
 
 	it('should set update scroll position to false from data attribute', () => {
-		globals.document.body.setAttribute('data-senna-update-scroll-position', 'false');
+		globals.document.body.setAttribute(
+			'data-senna-update-scroll-position',
+			'false'
+		);
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
-		assert.strictEqual(false, appDataAttributeHandler.getApp().getUpdateScrollPosition());
+		assert.strictEqual(
+			false,
+			appDataAttributeHandler.getApp().getUpdateScrollPosition()
+		);
 		appDataAttributeHandler.dispose();
-		globals.document.body.removeAttribute('data-senna-update-scroll-position');
+		globals.document.body.removeAttribute(
+			'data-senna-update-scroll-position'
+		);
 	});
 
 	it('should set update scroll position to true from data attribute', () => {
-		globals.document.body.setAttribute('data-senna-update-scroll-position', 'true');
+		globals.document.body.setAttribute(
+			'data-senna-update-scroll-position',
+			'true'
+		);
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
-		assert.strictEqual(true, appDataAttributeHandler.getApp().getUpdateScrollPosition());
+		assert.strictEqual(
+			true,
+			appDataAttributeHandler.getApp().getUpdateScrollPosition()
+		);
 		appDataAttributeHandler.dispose();
-		globals.document.body.removeAttribute('data-senna-update-scroll-position');
+		globals.document.body.removeAttribute(
+			'data-senna-update-scroll-position'
+		);
 	});
 
 	it('should dispatch app from data attribute', () => {
@@ -219,41 +268,56 @@ describe('AppDataAttributeHandler', function() {
 		var appDataAttributeHandler = new AppDataAttributeHandler();
 		appDataAttributeHandler.setBaseElement(globals.document.body);
 		appDataAttributeHandler.handle();
+
 		return appDataAttributeHandler.getApp().on('endNavigate', () => {
 			appDataAttributeHandler.dispose();
 			globals.document.body.removeAttribute('data-senna-dispatch');
 		});
 	});
-
 });
 
 function enterDocumentRouteElement(path) {
-	dom.enterDocument('<link href="' + path + '" rel="senna-route" type="senna.Screen"></link>');
+	dom.enterDocument(
+		'<link href="' +
+			path +
+			'" rel="senna-route" type="senna.Screen"></link>'
+	);
+
 	return document.querySelector('link[href="' + path + '"]');
 }
 
 function enterDocumentRouteElementMissingPath() {
-	dom.enterDocument('<link id="routeElementMissingPath" rel="senna-route" type="senna.Screen"></link>');
+	dom.enterDocument(
+		'<link id="routeElementMissingPath" rel="senna-route" type="senna.Screen"></link>'
+	);
+
 	return document.getElementById('routeElementMissingPath');
 }
 
 function enterDocumentRouteElementMissingScreenType(path) {
 	dom.enterDocument('<link href="' + path + '" rel="senna-route"></link>');
+
 	return document.querySelector('link[href="' + path + '"]');
 }
 
 function enterDocumentSurfaceElement(surfaceId) {
 	dom.enterDocument('<div id="' + surfaceId + '" data-senna-surface></div>');
+
 	return document.getElementById(surfaceId);
 }
 
 function enterDocumentSurfaceElementMissingId(surfaceId) {
-	dom.enterDocument('<div data-id="' + surfaceId + '" data-senna-surface></div>');
+	dom.enterDocument(
+		'<div data-id="' + surfaceId + '" data-senna-surface></div>'
+	);
+
 	return document.getElementById(surfaceId);
 }
 
 function exitDocumentRouteElement(path) {
-	return dom.exitDocument(document.querySelector('link[href="' + path + '"]'));
+	return dom.exitDocument(
+		document.querySelector('link[href="' + path + '"]')
+	);
 }
 
 function exitDocumentRouteElementMissingPath() {
@@ -265,5 +329,7 @@ function exitDocumentSurfaceElement(surfaceId) {
 }
 
 function exitDocumentSurfaceElementMissingId(surfaceId) {
-	return dom.exitDocument(document.querySelector('[data-id="' + surfaceId + '"]'));
+	return dom.exitDocument(
+		document.querySelector('[data-id="' + surfaceId + '"]')
+	);
 }

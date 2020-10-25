@@ -1,7 +1,21 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
-import { isDefAndNotNull, isFunction, isString } from 'metal';
-import { extractData, parse, toRegex } from 'metal-path-parser';
+import {isDefAndNotNull, isFunction, isString} from 'metal';
+import {extractData, parse, toRegex} from 'metal-path-parser';
 
 class Route {
 
@@ -36,19 +50,20 @@ class Route {
 	}
 
 	/**
-	* Builds parsed data (regex and tokens) for this route.
-	* @return {!Object}
-	* @protected
-	*/
+	 * Builds parsed data (regex and tokens) for this route.
+	 * @return {!Object}
+	 * @protected
+	 */
 	buildParsedData_() {
 		if (!this.parsedData_) {
 			var tokens = parse(this.path);
 			var regex = toRegex(tokens);
 			this.parsedData_ = {
 				regex,
-				tokens
+				tokens,
 			};
 		}
+
 		return this.parsedData_;
 	}
 
@@ -62,6 +77,7 @@ class Route {
 		if (isString(this.path)) {
 			return extractData(this.buildParsedData_().tokens, path);
 		}
+
 		return {};
 	}
 
@@ -82,8 +98,8 @@ class Route {
 	}
 
 	/**
- 	 * Matches if the router can handle the tested path.
- 	 * @param {!string} value Path to test (may contain the querystring part).
+	 * Matches if the router can handle the tested path.
+	 * @param {!string} value Path to test (may contain the querystring part).
 	 * @return {boolean} Returns true if matches any route.
 	 */
 	matchesPath(value) {
@@ -101,7 +117,6 @@ class Route {
 
 		return false;
 	}
-
 }
 
 export default Route;

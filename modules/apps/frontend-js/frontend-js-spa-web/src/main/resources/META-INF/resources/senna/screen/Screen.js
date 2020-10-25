@@ -1,9 +1,24 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 'use strict';
 
-import { getUid } from 'metal';
-import { globalEval } from 'metal-dom';
-import Cacheable from '../cacheable/Cacheable';
+import {getUid} from 'metal';
+import {globalEval} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
+
+import Cacheable from '../cacheable/Cacheable';
 
 class Screen extends Cacheable {
 
@@ -116,11 +131,12 @@ class Screen extends Cacheable {
 	 *     pause the navigation until it is resolved.
 	 */
 	evaluateScripts(surfaces) {
-		Object.keys(surfaces).forEach(sId => {
+		Object.keys(surfaces).forEach((sId) => {
 			if (surfaces[sId].activeChild) {
 				globalEval.runScriptsInElement(surfaces[sId].activeChild);
 			}
 		});
+
 		return CancellablePromise.resolve();
 	}
 
@@ -147,7 +163,7 @@ class Screen extends Cacheable {
 
 		var transitions = [];
 
-		Object.keys(surfaces).forEach(sId => {
+		Object.keys(surfaces).forEach((sId) => {
 			var surface = surfaces[sId];
 			var deferred = surface.show(this.id);
 			transitions.push(deferred);
@@ -205,6 +221,7 @@ class Screen extends Cacheable {
 	 */
 	load() {
 		console.log('Screen [' + this + '] load');
+
 		return CancellablePromise.resolve();
 	}
 
@@ -248,7 +265,6 @@ class Screen extends Cacheable {
 	toString() {
 		return this.id;
 	}
-
 }
 
 /**
@@ -256,7 +272,7 @@ class Screen extends Cacheable {
  * @return {boolean} Whether a given instance implements
  * <code>Screen</code>.
  */
-Screen.isImplementedBy = function(object) {
+Screen.isImplementedBy = function (object) {
 	return object instanceof Screen;
 };
 

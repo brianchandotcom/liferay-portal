@@ -15,6 +15,7 @@
 package com.liferay.asset.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -101,8 +102,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
 
-		_assetCategoryLocalService.addAssetEntryAssetCategory(
-			assetEntry.getEntryId(), assetCategory);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			assetEntry.getEntryId(), assetCategory.getCategoryId());
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(assetEntry);
@@ -205,8 +206,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
 
-		_assetCategoryLocalService.addAssetEntryAssetCategory(
-			assetEntry.getEntryId(), assetCategory);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			assetEntry.getEntryId(), assetCategory.getCategoryId());
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
@@ -376,6 +377,10 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
 
 	@Inject
 	private AssetEntryInfoItemFieldSetProvider

@@ -16,8 +16,8 @@
 
 import UA from 'metal-useragent';
 
-import globals from '../../src/globals/globals';
-import RequestScreen from '../../src/screen/RequestScreen';
+import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
+import RequestScreen from '../../../src/main/resources/META-INF/resources/senna/screen/RequestScreen';
 
 describe('RequestScreen', function () {
 	beforeEach(() => {

@@ -137,7 +137,7 @@ class App extends EventEmitter {
 		 * the scroll position changes automatically, and especially so if your app
 		 * does transitions, or changes the contents of the page in any way.
 		 * Ultimately this leads to an horrible user experience. The good news is,
-		 * however, that there’s a potential fix: history.scrollRestoration.
+		 * however, that there's a potential fix: history.scrollRestoration.
 		 * https://developers.google.com/web/updates/2015/09/history-api-scroll-restoration
 		 * @type {boolean}
 		 * @protected

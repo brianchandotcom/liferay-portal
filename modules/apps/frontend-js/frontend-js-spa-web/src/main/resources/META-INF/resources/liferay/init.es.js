@@ -16,9 +16,9 @@
 
 import {async} from 'metal';
 import {match} from 'metal-dom';
-import {utils, version} from 'senna';
-import globals from 'senna/lib/globals/globals';
 
+import globals from '../senna/globals/globals';
+import {utils, version} from '../senna/senna';
 import App from './app/App.es';
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import RenderURLScreen from './screen/RenderURLScreen.es';

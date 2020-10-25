@@ -18,13 +18,13 @@ import {dom, exitDocument} from 'metal-dom';
 import {EventEmitter} from 'metal-events';
 import CancellablePromise from 'metal-promise';
 
-import App from '../../src/app/App';
-import globals from '../../src/globals/globals';
-import Route from '../../src/route/Route';
-import HtmlScreen from '../../src/screen/HtmlScreen';
-import Screen from '../../src/screen/Screen';
-import Surface from '../../src/surface/Surface';
-import utils from '../../src/utils/utils';
+import App from '../../../src/main/resources/META-INF/resources/senna/app/App';
+import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
+import Route from '../../../src/main/resources/META-INF/resources/senna/route/Route';
+import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';
+import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
+import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
+import utils from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 class StubScreen extends Screen {}
 StubScreen.prototype.activate = sinon.spy();

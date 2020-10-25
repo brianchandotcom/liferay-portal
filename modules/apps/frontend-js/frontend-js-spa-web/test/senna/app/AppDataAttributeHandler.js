@@ -16,9 +16,9 @@
 
 import dom from 'metal-dom';
 
-import AppDataAttributeHandler from '../../src/app/AppDataAttributeHandler';
-import globals from '../../src/globals/globals';
-import Screen from '../../src/screen/Screen';
+import AppDataAttributeHandler from '../../../src/main/resources/META-INF/resources/senna/app/AppDataAttributeHandler';
+import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
+import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 
 describe('AppDataAttributeHandler', () => {
 	before(() => {

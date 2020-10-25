@@ -16,7 +16,7 @@
 
 import {core} from 'metal';
 
-import Route from '../../src/route/Route';
+import Route from '../../../src/main/resources/META-INF/resources/senna/route/Route';
 
 describe('Route', () => {
 	describe('Constructor', () => {

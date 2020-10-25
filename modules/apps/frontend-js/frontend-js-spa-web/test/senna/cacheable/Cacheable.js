@@ -14,7 +14,7 @@
 
 'use strict';
 
-import Cacheable from '../../src/cacheable/Cacheable';
+import Cacheable from '../../../src/main/resources/META-INF/resources/senna/cacheable/Cacheable';
 
 describe('Cacheable', () => {
 	it('should not be cacheable by default', () => {

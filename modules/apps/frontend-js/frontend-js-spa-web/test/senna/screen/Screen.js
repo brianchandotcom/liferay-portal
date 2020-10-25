@@ -17,8 +17,8 @@
 import dom from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
-import Screen from '../../src/screen/Screen';
-import Surface from '../../src/surface/Surface';
+import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
+import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 
 describe('Screen', () => {
 	before(() => {

@@ -16,8 +16,8 @@
 
 import Uri from 'metal-uri';
 
-import globals from '../../src/globals/globals';
-import utils from '../../src/utils/utils';
+import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
+import utils from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('utils', () => {
 	before(() => {

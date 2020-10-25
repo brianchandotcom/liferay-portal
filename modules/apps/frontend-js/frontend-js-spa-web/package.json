@@ -2,8 +2,15 @@
 	"dependencies": {
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
+		"metal-ajax": "2.1.1",
+		"metal-debounce": "^2.0.2",
 		"metal-dom": "2.16.8",
-		"senna": "2.7.9"
+		"metal-events": "2.16.8",
+		"metal-path-parser": "1.0.4",
+		"metal-promise": "3.0.5",
+		"metal-structs": "1.0.2",
+		"metal-uri": "2.4.0",
+		"metal-useragent": "3.0.1"
 	},
 	"name": "frontend-js-spa-web",
 	"scripts": {

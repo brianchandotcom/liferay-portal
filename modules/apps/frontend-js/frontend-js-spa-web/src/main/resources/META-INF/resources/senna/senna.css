@@ -1,4 +1,4 @@
-/* Loading */
+/* ---------- Loading ---------- */
 
 .senna-loading .senna-loading-bar {
   animation: shift-rightwards 1s ease-in-out infinite;
@@ -31,7 +31,7 @@
   }
 }
 
-/* Transition */
+/* ---------- Transition ---------- */
 
 [class^="senna-transition-"] .flipped {
   animation-duration: 0.40s;

@@ -12,8 +12,7 @@
  * details.
  */
 
-import {utils} from 'senna';
-
+import {utils} from '../../senna/senna';
 import EventScreen from './EventScreen.es';
 
 /**

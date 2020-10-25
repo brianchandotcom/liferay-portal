@@ -18,7 +18,7 @@ import {core} from 'metal';
 import dom from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
-import Surface from '../../src/surface/Surface';
+import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 
 describe('Surface', () => {
 	describe('Constructor', () => {

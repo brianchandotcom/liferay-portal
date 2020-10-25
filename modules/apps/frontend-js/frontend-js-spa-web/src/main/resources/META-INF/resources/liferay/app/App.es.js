@@ -15,8 +15,8 @@
 import {openToast} from 'frontend-js-web';
 import core from 'metal';
 import dom from 'metal-dom';
-import {App} from 'senna';
 
+import {App} from '../../senna/senna';
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
 

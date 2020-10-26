@@ -72,10 +72,7 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 				});
 			}
 
-			var newSelectedCard = dom.closest(
-				event.delegateTarget,
-				'.form-check-card'
-			);
+			var newSelectedCard = event.delegateTarget.closest('.form-check-card');
 
 			if (newSelectedCard) {
 				newSelectedCard.classList.add('active');

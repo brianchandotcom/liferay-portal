@@ -12,18 +12,21 @@
  * details.
  */
 
-const alphanumeric = value =>
+const alphanumeric = (value) =>
 	/^[a-zA-Z0-9_-]+$/.test(value)
-	? undefined
-	: Liferay.Language.get('please-enter-only-alphanumeric-characters-dashes-or-underscores');
+		? undefined
+		: Liferay.Language.get(
+				'please-enter-only-alphanumeric-characters-dashes-or-underscores'
+		  );
 
-const required = value => (value ? undefined : Liferay.Language.get('this-field-is-required'));
+const required = (value) =>
+	value ? undefined : Liferay.Language.get('this-field-is-required');
 
 const validate = (fields, values) => {
 	const errors = {};
 
 	Object.entries(fields).forEach(([inputName, validations]) => {
-		for (let validation of validations) {
+		for (const validation of validations) {
 			const error = validation(values[inputName]);
 			if (error) {
 				errors[inputName] = error;
@@ -32,7 +35,7 @@ const validate = (fields, values) => {
 		}
 	});
 
-  return errors;
+	return errors;
 };
 
-export { alphanumeric, required, validate };
+export {alphanumeric, required, validate};

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
@@ -51,4 +51,3 @@ const RequiredMark = () => {
 };
 
 export {ErrorFeedback, HelpMessage, RequiredMark};
-

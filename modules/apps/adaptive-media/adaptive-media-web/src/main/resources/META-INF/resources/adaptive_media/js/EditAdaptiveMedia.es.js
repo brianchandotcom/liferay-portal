@@ -20,10 +20,10 @@ import {fetch, normalizeFriendlyURL, objectToFormData} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
+import {alphanumeric, required, validate} from './utils/formValidations.es';
 import Input from './utils/input.es';
-import { alphanumeric, required, validate } from "./utils/formValidations.es";
 
-const STR_BLANK = " ";
+const STR_BLANK = ' ';
 
 const EditAdaptiveMedia = ({
 	actionUrl,
@@ -64,16 +64,32 @@ const EditAdaptiveMedia = ({
 
 	const formik = useFormik({
 		initialValues: {
-			[nameId]: amImageConfigurationEntry ? amImageConfigurationEntry.name : '',
-			[descriptionId]: amImageConfigurationEntry ? amImageConfigurationEntry.description : '',
-			[maxWidthId]: maxWidth,
-			[maxHeightId]: maxHeight,
+			[descriptionId]: amImageConfigurationEntry
+				? amImageConfigurationEntry.description
+				: '',
 			[highResolutionId]: addHighResolution,
+			[maxHeightId]: maxHeight,
+			[maxWidthId]: maxWidth,
+			[nameId]: amImageConfigurationEntry
+				? amImageConfigurationEntry.name
+				: '',
 			[newUuidId]: configurationEntryUuid,
 			[`${namespace}uuid`]: configurationEntryUuid,
 		},
+		onSubmit: () => {
+			fetch(actionUrl, {
+				body: objectToFormData(values),
+				method: 'POST',
+			})
+				.then(() => {
+					Liferay.Util.navigate(redirect);
+				})
+				.catch(() => {
+					Liferay.Util.navigate(redirect);
+				});
+		},
 		validate: () => {
-			let err = validate(
+			const err = validate(
 				{
 					[nameId]: [required],
 					[newUuidId]: [alphanumeric],
@@ -91,20 +107,6 @@ const EditAdaptiveMedia = ({
 
 			return err;
 		},
-		onSubmit: () => {
-			console.log(values);
-
-			fetch(actionUrl, {
-				body: objectToFormData(values),
-				method: 'POST',
-			})
-			.then(() => {
-				Liferay.Util.navigate(redirect);
-			})
-			.catch(() => {
-				Liferay.Util.navigate(redirect);
-			});
-		},
 	});
 
 	const {errors, handleChange, setFieldValue, values} = formik;
@@ -115,7 +117,7 @@ const EditAdaptiveMedia = ({
 		}
 	}, [redirect]);
 
-	const updateUuid = (event)  => {
+	const updateUuid = (event) => {
 		const nameValue = event.target.value;
 
 		if (automaticId && !amImageConfigurationEntry) {
@@ -127,10 +129,9 @@ const EditAdaptiveMedia = ({
 
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
-			<div class="sheet sheet-lg">
-
+			<div className="sheet sheet-lg">
 				{!configurationEntryEditable && (
-					<div class="alert alert-info">
+					<div className="alert alert-info">
 						{Liferay.Language.get(
 							'the-images-for-this-resolution-are-already-adapted'
 						)}
@@ -197,7 +198,7 @@ const EditAdaptiveMedia = ({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					{!amImageConfigurationEntry &&
+					{!amImageConfigurationEntry && (
 						<ClayCheckbox
 							checked={addHighResolution}
 							label={Liferay.Language.get(
@@ -208,7 +209,7 @@ const EditAdaptiveMedia = ({
 								setAddHighResolution(!addHighResolution)
 							}
 						/>
-					}
+					)}
 				</div>
 
 				<div className="sheet-section">

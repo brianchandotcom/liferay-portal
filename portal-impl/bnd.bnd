@@ -34,7 +34,6 @@ Export-Package:\
 	com.liferay.portlet.asset.service.permission,\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary,\
-	com.liferay.portlet.documentlibrary.antivirus,\
 	com.liferay.portlet.documentlibrary.asset,\
 	com.liferay.portlet.documentlibrary.lar,\
 	com.liferay.portlet.documentlibrary.service.permission,\

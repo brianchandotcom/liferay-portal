@@ -1374,6 +1374,8 @@ definition {
 				value1 = "${userMiddleNameEdit}");
 		}
 
+		PortletEntry.save();
+
 		if (isSet(userScreenNameEdit)) {
 			Type(
 				locator1 = "TextInput#SCREEN_NAME",
@@ -1382,9 +1384,6 @@ definition {
 			Button.clickSave();
 
 			User.confirmPassword(password = "${password}");
-		}
-		else {
-			PortletEntry.save();
 		}
 	}
 

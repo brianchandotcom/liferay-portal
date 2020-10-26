@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.listener.BaseEntityModelListener;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
@@ -114,10 +116,33 @@ public class ExpandoColumnModelListener
 	@Override
 	protected boolean isExcluded(ExpandoColumn expandoColumn) {
 		if (isCustomField(
-				Organization.class.getName(), expandoColumn.getTableId()) ||
-			isCustomField(User.class.getName(), expandoColumn.getTableId())) {
+				Organization.class.getName(), expandoColumn.getTableId())) {
 
 			return false;
+		}
+
+		if (isCustomField(User.class.getName(), expandoColumn.getTableId())) {
+			AnalyticsConfiguration analyticsConfiguration =
+				analyticsConfigurationTracker.getAnalyticsConfiguration(
+					expandoColumn.getCompanyId());
+
+			if (ArrayUtil.isEmpty(
+					analyticsConfiguration.syncedUserFieldNames())) {
+
+				return true;
+			}
+
+			for (String syncedUserFieldName :
+					analyticsConfiguration.syncedUserFieldNames()) {
+
+				if (Objects.equals(
+						expandoColumn.getName(), syncedUserFieldName)) {
+
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		return true;

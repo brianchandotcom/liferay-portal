@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.dispatch.constants;
+package com.liferay.dispatch.repository;
+
+import com.liferay.dispatch.repository.exception.DispatchRepositoryException;
 
 /**
- * @author Riccardo Ferrari
- * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
-public class DispatchWebKeys {
+public interface DispatchFileValidator {
 
-	public static final String DISPATCH_TRIGGER = "DISPATCH_TRIGGER";
+	public void validateExtension(String fileName)
+		throws DispatchRepositoryException;
 
-	public static final String FILE_NAME = "fileName";
+	public void validateSize(long size) throws DispatchRepositoryException;
 
 }

@@ -29,6 +29,12 @@ public class DispatchConstants {
 	public static final String EXECUTOR_DESTINATION_NAME =
 		"liferay/dispatch/executor";
 
+	public static final String FILE_VALIDATOR_TYPE_DEFAULT = "default";
+
+	public static final int REPOSITORY_DEFAULT_PARENT_FOLDER_ID = 0;
+
+	public static final String REPOSITORY_FOLDER_NAME = "dispatch";
+
 	public static final String SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL =
 		"dispatch.general";
 

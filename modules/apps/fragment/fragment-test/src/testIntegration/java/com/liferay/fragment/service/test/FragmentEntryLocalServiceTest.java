@@ -27,6 +27,7 @@ import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -801,6 +802,47 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			actualFragmentEntries.toString(),
 			originalFragmentEntries.size() + 2, actualFragmentEntries.size());
+	}
+
+	@Test
+	public void testGetFragmentEntriesByUuidAndCompanyId() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			FragmentCollection fragmentCollection =
+				FragmentTestUtil.addFragmentCollection(group.getGroupId());
+
+			FragmentEntry fragmentEntry1 =
+				FragmentEntryTestUtil.addFragmentEntry(
+					_fragmentCollection.getFragmentCollectionId(),
+					RandomTestUtil.randomString());
+
+			FragmentEntry fragmentEntry2 =
+				FragmentEntryTestUtil.addFragmentEntry(
+					fragmentCollection.getFragmentCollectionId(),
+					RandomTestUtil.randomString());
+
+			List<FragmentEntry> fragmentEntries1 =
+				_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(
+					fragmentEntry1.getUuid(), _group.getCompanyId());
+
+			Assert.assertEquals(
+				fragmentEntries1.toString(), 1, fragmentEntries1.size());
+
+			Assert.assertEquals(fragmentEntry1, fragmentEntries1.get(0));
+
+			List<FragmentEntry> fragmentEntries2 =
+				_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(
+					fragmentEntry2.getUuid(), group.getCompanyId());
+
+			Assert.assertEquals(
+				fragmentEntries2.toString(), 1, fragmentEntries2.size());
+
+			Assert.assertEquals(fragmentEntry2, fragmentEntries2.get(0));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test

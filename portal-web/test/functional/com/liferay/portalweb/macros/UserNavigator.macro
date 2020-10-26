@@ -69,9 +69,8 @@ definition {
 	}
 
 	macro gotoUser {
-		var key_userScreenName = "${userScreenName}";
-
 		AssertClick(
+			key_userScreenName = "${userScreenName}",
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
 			value1 = "${userScreenName}");
 

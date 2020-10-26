@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.Serializable;
@@ -43,6 +43,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,9 +99,8 @@ public class JournalContentSearchLocalServiceImpl
 			for (PortletPreferences portletPreferences :
 					portletPreferencesList) {
 
-				long plid = portletPreferences.getPlid();
-
-				Layout layout = layoutLocalService.fetchLayout(plid);
+				Layout layout = layoutLocalService.fetchLayout(
+					portletPreferences.getPlid());
 
 				if (layout == null) {
 					continue;
@@ -109,10 +109,8 @@ public class JournalContentSearchLocalServiceImpl
 				String portletId = portletPreferences.getPortletId();
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
-					PortletPreferencesFactoryUtil.fromXML(
-						companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
-						portletPreferences.getPreferences());
+					_portletPreferenceValueLocalService.getPreferences(
+						portletPreferences);
 
 				String articleId = displayInformationProvider.getClassPK(
 					jxPortletPreferences);
@@ -333,6 +331,10 @@ public class JournalContentSearchLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentSearchLocalServiceImpl.class);
+
+	@Reference
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 	private ServiceTrackerMap<String, DisplayInformationProvider>
 		_serviceTrackerMap;

@@ -48,7 +48,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -412,9 +411,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			portletPreferencesList,
 		PortletPreferences jxPortletPreferences) {
 
-		String portletPreferencesXml = PortletPreferencesFactoryUtil.toXML(
-			jxPortletPreferences);
-
 		long plid = 0L;
 
 		if (jxPortletPreferences instanceof PortletPreferencesImpl) {
@@ -427,18 +423,15 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesImpl : portletPreferencesList) {
 
-			if ((plid != portletPreferencesImpl.getPlid()) ||
-				Objects.equals(
-					portletPreferencesImpl.getPreferences(),
-					portletPreferencesXml)) {
-
+			if (plid != portletPreferencesImpl.getPlid()) {
 				continue;
 			}
 
-			portletPreferencesImpl.setPreferences(portletPreferencesXml);
-
-			_portletPreferencesLocalService.updatePortletPreferences(
-				portletPreferencesImpl);
+			_portletPreferencesLocalService.updatePreferences(
+				portletPreferencesImpl.getOwnerId(),
+				portletPreferencesImpl.getOwnerType(),
+				portletPreferencesImpl.getPlid(),
+				portletPreferencesImpl.getPortletId(), jxPortletPreferences);
 		}
 	}
 

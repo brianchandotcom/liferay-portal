@@ -33,15 +33,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -148,14 +147,9 @@ public class JournalArticleLayoutClassedModelUsageRecorder
 				AssetPublisherPortletKeys.ASSET_PUBLISHER, privateLayout);
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			String preferencesXML = portletPreferences.getPreferences();
-
-			if (Validator.isNull(preferencesXML)) {
-				continue;
-			}
-
 			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
+				_portletPreferenceValueLocalService.getPreferences(
+					portletPreferences);
 
 			String selectionStyle = jxPortletPreferences.getValue(
 				"selectionStyle", "dynamic");
@@ -215,5 +209,9 @@ public class JournalArticleLayoutClassedModelUsageRecorder
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 }

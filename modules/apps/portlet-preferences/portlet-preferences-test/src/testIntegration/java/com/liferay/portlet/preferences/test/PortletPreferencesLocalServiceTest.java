@@ -1212,11 +1212,10 @@ public class PortletPreferencesLocalServiceTest
 		String multipleValuesPortletPreferencesAsXML = getPortletPreferencesXML(
 			_NAME, _MULTIPLE_VALUES);
 
-		portletPreferences.setPreferences(
+		portletPreferencesLocalService.updatePreferences(
+			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),
+			portletPreferences.getPlid(), portletPreferences.getPortletId(),
 			multipleValuesPortletPreferencesAsXML);
-
-		portletPreferencesLocalService.updatePortletPreferences(
-			portletPreferences);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			portletPreferencesLocalService.getPreferences(
@@ -1414,11 +1413,11 @@ public class PortletPreferencesLocalServiceTest
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		return (PortletPreferencesImpl)portletPreferencesFactory.fromXML(
-			TestPropsValues.getCompanyId(), portletPreferences.getOwnerId(),
-			portletPreferences.getOwnerType(), portletPreferences.getPlid(),
-			portletPreferences.getPortletId(),
-			portletPreferences.getPreferences());
+		return (PortletPreferencesImpl)
+			portletPreferencesLocalService.getPreferences(
+				TestPropsValues.getCompanyId(), portletPreferences.getOwnerId(),
+				portletPreferences.getOwnerType(), portletPreferences.getPlid(),
+				portletPreferences.getPortletId());
 	}
 
 	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};

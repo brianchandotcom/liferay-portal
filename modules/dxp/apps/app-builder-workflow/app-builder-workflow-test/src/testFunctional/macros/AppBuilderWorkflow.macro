@@ -32,9 +32,15 @@ definition {
 	}
 
 	macro assertEntryAppVersion {
-		AssertElementPresent(
-			key_versionNumber = "${versionNumber}",
-			locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
+		var key_versionNumber = "${versionNumber}";
+
+		if (IsElementNotPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION")) {
+			DetailsView.nextEntry();
+			AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
+		}
+		else {
+			AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
+		}
 	}
 
 	macro assertFieldDisabled {

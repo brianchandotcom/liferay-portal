@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_CONTAINER</td>
+	<td>//div[contains(@class,'container-view')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'contextual-sidebar-visible')]</td>
 	<td></td>

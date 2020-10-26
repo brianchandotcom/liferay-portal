@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_CONTENT_IMAGE</td>
-	<td>//div[@class='journal-content-article']/img</td>
+	<td>//div[contains(@class,'journal-content-article')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

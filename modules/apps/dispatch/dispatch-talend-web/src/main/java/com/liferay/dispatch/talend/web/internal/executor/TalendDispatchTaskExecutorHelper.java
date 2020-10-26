@@ -16,6 +16,7 @@ package com.liferay.dispatch.talend.web.internal.executor;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.web.internal.configuration.DispatchTalendConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
@@ -24,6 +25,8 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -45,14 +48,17 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @Component(
 	configurationPid = "com.liferay.dispatch.talend.web.internal.configuration.DispatchTalendConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = TalendDispatchTaskExecutorHelper.class
+	service = DispatchFileRepository.class
 )
-public class TalendDispatchTaskExecutorHelper {
+public class TalendDispatchTaskExecutorHelper
+	implements DispatchFileRepository {
 
+	@Override
 	public FileEntry addFileEntry(
 			long companyId, long userId, long dispatchTriggerId,
 			String fileName, long size, String contentType,
@@ -68,21 +74,41 @@ public class TalendDispatchTaskExecutorHelper {
 			inputStream);
 	}
 
-	public FileEntry getFileEntry(long dispatchTriggerId)
-		throws PortalException {
+	@Override
+	public FileEntry fetchFileEntry(long dispatchTriggerId) {
+		try {
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.getDispatchTrigger(
+					dispatchTriggerId);
 
-		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
+			Company company = _companyLocalService.getCompany(
+				dispatchTrigger.getCompanyId());
 
-		Company company = _companyLocalService.getCompany(
-			dispatchTrigger.getCompanyId());
+			Folder folder = _getFolder(
+				company.getGroupId(), dispatchTrigger.getUserId());
 
-		Folder folder = _getFolder(
-			company.getGroupId(), dispatchTrigger.getUserId());
+			return PortletFileRepositoryUtil.fetchPortletFileEntry(
+				company.getGroupId(), folder.getFolderId(),
+				String.valueOf(dispatchTriggerId));
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to fetch file entry", portalException);
+			}
+		}
 
-		return PortletFileRepositoryUtil.fetchPortletFileEntry(
-			company.getGroupId(), folder.getFolderId(),
-			String.valueOf(dispatchTriggerId));
+		return null;
+	}
+
+	@Override
+	public String fetchFileEntryName(long dispatchTriggerId) {
+		FileEntry fileEntry = fetchFileEntry(dispatchTriggerId);
+
+		if (fileEntry != null) {
+			return fileEntry.getFileName();
+		}
+
+		return null;
 	}
 
 	@Activate
@@ -154,6 +180,9 @@ public class TalendDispatchTaskExecutorHelper {
 		throw new FileExtensionException(
 			"Invalid file extension for " + fileName);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TalendDispatchTaskExecutorHelper.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

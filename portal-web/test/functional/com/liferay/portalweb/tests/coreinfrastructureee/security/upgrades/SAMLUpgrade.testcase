@@ -25,6 +25,7 @@ definition {
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
@@ -35,6 +36,7 @@ definition {
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml-encryption";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");

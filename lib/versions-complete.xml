@@ -6638,7 +6638,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/isoparser.jar</file-name>
-				<version>1.9.41.2</version>
+				<version>1.9.41.2.LIFERAY-PATCHED-1</version>
 				<project-name>ISO Parser</project-name>
 				<project-url>https://github.com/tballison/mp4parser</project-url>
 				<licenses>

@@ -1353,40 +1353,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editDetailsViaMyAccount {
-		AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
-
-		if (isSet(userFirstNameEdit)) {
-			Type(
-				locator1 = "TextInput#FIRST_NAME",
-				value1 = "${userFirstNameEdit}");
-		}
-
-		if (isSet(userLastNameEdit)) {
-			Type(
-				locator1 = "TextInput#LAST_NAME",
-				value1 = "${userLastNameEdit}");
-		}
-
-		if (isSet(userMiddleNameEdit)) {
-			Type(
-				locator1 = "TextInput#MIDDLE_NAME",
-				value1 = "${userMiddleNameEdit}");
-		}
-
-		PortletEntry.save();
-
-		if (isSet(userScreenNameEdit)) {
-			Type(
-				locator1 = "TextInput#SCREEN_NAME",
-				value1 = "${userScreenNameEdit}");
-
-			Button.clickSave();
-
-			User.confirmPassword(password = "${password}");
-		}
-	}
-
 	macro editDetailsViaProfile {
 		Click.mouseOverClick(locator1 = "Icon#EDIT_PENCIL");
 
@@ -1418,20 +1384,6 @@ definition {
 			value1 = "${languageName}");
 
 		PortletEntry.save();
-	}
-
-	macro editEmailViaMyAccount {
-		Navigator.openURL();
-
-		Navigator.gotoAccountSettings();
-
-		Type(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
-
-		Button.clickSave();
-
-		User.confirmPassword(password = "${password}");
 	}
 
 	macro editPasswordCP {

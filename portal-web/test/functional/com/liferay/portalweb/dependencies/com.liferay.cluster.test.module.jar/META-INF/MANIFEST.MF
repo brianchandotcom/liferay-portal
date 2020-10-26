@@ -1,20 +1,20 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1572286820215
+Bnd-LastModified: 1603746509711
 Bundle-ManifestVersion: 2
 Bundle-Name: Liferay Cluster Test Module
 Bundle-SymbolicName: com.liferay.cluster.test.module
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 3.0.0
-Created-By: 1.8.0_121 (Oracle Corporation)
+Created-By: 1.8.0_265 (Private Build)
 Import-Package: aQute.bnd.annotation.metatype;version="[1.45,2)",com.l
  iferay.portal.configuration.metatype.annotations;version="[1.3,2)",co
  m.liferay.portal.configuration.metatype.bnd.util;version="[2.0,3)",co
  m.liferay.portal.kernel.cluster;version="[8.0,9)",com.liferay.portal.
  kernel.concurrent;version="[8.0,9)",com.liferay.portal.kernel.log;ver
- sion="[7.0,8)",com.liferay.portal.kernel.messaging;version="[9.0,10)"
- ,com.liferay.portal.kernel.module.framework;version="[1.3,2)",com.lif
- eray.portal.kernel.scheduler;version="[9.0,10)",com.liferay.portal.ke
- rnel.util;version="[10.0,11)",org.osgi.service.component;version="[1.
+ sion="[7.0,8)",com.liferay.portal.kernel.messaging;version="[9.1,10)"
+ ,com.liferay.portal.kernel.module.framework;version="[1.4,2)",com.lif
+ eray.portal.kernel.scheduler;version="[9.1,10)",com.liferay.portal.ke
+ rnel.util;version="[11.0,12)",org.osgi.service.component;version="[1.
  3,2)"
 Javac-Debug: on
 Javac-Deprecation: off

@@ -815,6 +815,20 @@ definition {
 			value1 = "${webContentTitle} is not approved.");
 	}
 
+	macro clickMarginOfContentContainer {
+		var elementHeight = selenium.getElementHeight("WCEditWebContent#CONTENT_CONTAINER");
+		var offSetY = MathUtil.product("50","${elementHeight}");
+		var offSetY = MathUtil.quotient("${offSetY}","100");
+
+		var elementWidth = selenium.getElementWidth("WCEditWebContent#CONTENT_CONTAINER");
+		var offSetX = MathUtil.product("2","${elementWidth}");
+		var offSetX = MathUtil.quotient("${offSetX}","100");
+
+		Click.clickAt(
+			locator1 = "WCEditWebContent#CONTENT_CONTAINER",
+			value1 = "${offSetX},${offSetY}");
+	}
+
 	macro copyCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${webContentTitle}",

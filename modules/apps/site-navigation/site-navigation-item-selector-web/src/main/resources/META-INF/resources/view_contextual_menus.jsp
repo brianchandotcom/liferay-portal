@@ -48,7 +48,7 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 					data-contextualMenu='<%= jsonObject.getString("value") %>'
 					displayType="unstyled"
 				>
-					<img class="contextual-menu-image p-5" src="<%= jsonObject.getString("imageURL") %>" />
+					<img alt="<%= jsonObject.getString("title") %>" class="contextual-menu-image p-5" src="<%= jsonObject.getString("imageURL") %>" />
 				</clay:button>
 
 				<p class="font-weight-bold mt-3">

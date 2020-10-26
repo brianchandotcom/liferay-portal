@@ -115,7 +115,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 	public List<LabelItem> getFilterLabelItems() {
 		String scope = ParamUtil.getString(httpServletRequest, "scope");
 
-		if (Validator.isNull(scope)) {
+		if (Validator.isNull(scope) || scope.equals("current")) {
 			return null;
 		}
 

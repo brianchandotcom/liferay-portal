@@ -59,7 +59,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-69593."
+	@description = "This is a use case for LPS-69593 and LRQA-61632. Assert the selected image is kept in Image field under localized."
 	@priority = "4"
 	test ViewFieldTranslations {
 		property test.name.skip.portal.instance = "DDMStructureWithImageField#ViewFieldTranslations";
@@ -98,11 +98,18 @@ definition {
 			fieldName = "image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 
-		PortletEntry.changeLocale(locale = "en-US");
+		PortletEntry.publish();
+
+		WebContentAdmin.gotoEntry(entry = "English (United States) Title");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
 			fieldValue = "English (United States) Title");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			locator1 = "TextInput#IMAGE_INPUT",
+			value1 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "image",
@@ -114,6 +121,11 @@ definition {
 			fieldName = "title",
 			fieldValue = "Spanish (Spain) Title");
 
+		AssertAttributeValue(
+			attribute1 = "value",
+			locator1 = "TextInput#IMAGE_INPUT",
+			value1 = "Document_3.png");
+
 		FormFields.viewTextValueAlt(
 			fieldName = "image",
 			fieldValue = "Spanish (Spain) Image Description");
@@ -123,6 +135,11 @@ definition {
 		FormFields.viewTextValue(
 			fieldName = "title",
 			fieldValue = "Portuguese (Brazil) Title");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			locator1 = "TextInput#IMAGE_INPUT",
+			value1 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "image",

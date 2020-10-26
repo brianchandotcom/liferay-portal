@@ -206,6 +206,22 @@ definition {
 			userContact = "edit");
 	}
 
+	@description = "This is a use case for LPS-120825."
+	@priority = "4"
+	test UpdateUserInformation {
+		UserBar.viewUserDefaultIcon();
+
+		User.editEmailViaMyAccount(userEmailAddress = "testadmin@liferay.com");
+
+		User.editDetailsViaMyAccount(userScreenNameEdit = "testscreen");
+
+		User.viewUserInfomation(
+			userEmailAddress = "testadmin@liferay.com",
+			userFirstName = "Test",
+			userLastName = "Test",
+			userScreenName = "testscreen");
+	}
+
 	@description = "This is a use case for LPS-105387."
 	@priority = "5"
 	test UpdateUserPortrait {

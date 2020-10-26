@@ -274,6 +274,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_INPUT</td>
+	<td>//input[contains(@id,'image')][contains(@readonly,'readonly')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INITIAL_URL</td>
 	<td>//input[contains(@id,'_initUrl')]</td>
 	<td></td>

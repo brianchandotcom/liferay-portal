@@ -178,7 +178,7 @@ export default ({
 												'there-are-no-table-views-yet'
 											)
 										)}
-										endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`}
+										endpoint={`/o/headless-admin-workflow/v1.0/workflow-definitions?page=-1&pageSize=-1`}
 										itemType="WORKFLOW_PROCESS"
 										title={
 											<>

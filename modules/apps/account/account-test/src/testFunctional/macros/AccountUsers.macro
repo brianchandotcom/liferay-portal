@@ -105,6 +105,10 @@ definition {
 
 		Button.clickSave();
 
+		if (IsElementPresent(locator1 = "IFrame#CONFIRM_PASSWORD")) {
+			User.confirmPassword(password = "${password}");
+		}
+
 		Alert.viewSuccessMessage();
 	}
 

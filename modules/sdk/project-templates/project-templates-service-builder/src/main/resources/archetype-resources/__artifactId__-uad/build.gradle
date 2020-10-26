@@ -1,0 +1,24 @@
+dependencies {
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "@biz.aQute.bnd.version@"
+#end
+#if (${liferayVersion.startsWith("7.2")})
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
+#end
+#if (${addOnOptions.equals("true")} && (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")}))
+  compileOnly group: "com.liferay", name: "com.liferay.user.associated.data.api"
+#end
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+#end
+#if (${liferayVersion.startsWith("7.2")})
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning"
+#end
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+	compileOnly group: "org.osgi", name: "org.osgi.core"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+#else
+	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
+#end
+}

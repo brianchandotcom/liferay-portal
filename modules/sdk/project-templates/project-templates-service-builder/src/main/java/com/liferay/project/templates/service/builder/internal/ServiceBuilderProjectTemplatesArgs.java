@@ -24,6 +24,10 @@ import com.liferay.project.templates.extensions.ProjectTemplatesArgsExt;
 public class ServiceBuilderProjectTemplatesArgs
 	implements ProjectTemplatesArgsExt {
 
+	public String getAddOnOptions() {
+		return _addOnOptions;
+	}
+
 	public String getDependencyInjector() {
 		return _dependencyInjector;
 	}
@@ -33,9 +37,19 @@ public class ServiceBuilderProjectTemplatesArgs
 		return "service-builder";
 	}
 
+	public void setAddOnOptions(String addOnOptions) {
+		_addOnOptions = addOnOptions;
+	}
+
 	public void setDependencyInjector(String dependencyInjector) {
 		_dependencyInjector = dependencyInjector;
 	}
+
+	@Parameter(
+		description = "Set to true for add on options.",
+		names = "--add-ons"
+	)
+	private String _addOnOptions = "false";
 
 	@Parameter(
 		description = "Specify the preferred dependency injection method. (ds|spring)",

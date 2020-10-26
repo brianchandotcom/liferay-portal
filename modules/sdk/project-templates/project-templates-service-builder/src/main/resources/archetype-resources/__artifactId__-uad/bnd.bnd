@@ -1,0 +1,6 @@
+Bundle-Name: ${artifactId}-uad
+Bundle-SymbolicName: ${package}.uad
+Bundle-Version: ${version}
+#if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}) && (${dependencyInjector} == "ds"))
+-dsannotations-options: inherit
+#end

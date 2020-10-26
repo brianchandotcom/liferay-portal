@@ -15,6 +15,12 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="true">
+			<directory>__artifactId__-uad</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
 			<directory></directory>
 			<includes>
 				<include>.gitignore</include>
@@ -24,6 +30,10 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="addOnOptions">
+			<defaultValue>false</defaultValue>
+			<validationRegex>(true|false)</validationRegex>
+		</requiredProperty>
 		<requiredProperty key="apiPath">
 			<defaultValue>:${artifactId}-api</defaultValue>
 		</requiredProperty>

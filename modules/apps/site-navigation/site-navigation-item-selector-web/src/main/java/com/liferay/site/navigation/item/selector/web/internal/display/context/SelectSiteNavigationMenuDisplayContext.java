@@ -74,25 +74,15 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws Exception {
-		long siteNavigationMenuId = ParamUtil.getLong(
-			_httpServletRequest, "siteNavigationMenuId");
-
-		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
-			_httpServletRequest, "parentSiteNavigationMenuItemId");
-
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		breadcrumbEntries.add(_getAllBreadcrumbEntry());
 
-		if (siteNavigationMenuId == 0) {
-			breadcrumbEntries.addAll(
-				_getLayoutBreadcrumbEntries(
-					siteNavigationMenuId, parentSiteNavigationMenuItemId));
+		if (getSiteNavigationMenuId() == 0) {
+			breadcrumbEntries.addAll(_getLayoutBreadcrumbEntries());
 		}
 		else {
-			breadcrumbEntries.addAll(
-				_getSiteNavigationMenuBreadcrumbEntries(
-					siteNavigationMenuId, parentSiteNavigationMenuItemId));
+			breadcrumbEntries.addAll(_getSiteNavigationMenuBreadcrumbEntries());
 		}
 
 		return breadcrumbEntries;
@@ -102,10 +92,32 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return _itemSelectedEventName;
 	}
 
+	public long getParentSiteNavigationMenuItemId() {
+		if (_parentSiteNavigationMenuItemId != null) {
+			return _parentSiteNavigationMenuItemId;
+		}
+
+		_parentSiteNavigationMenuItemId = ParamUtil.getLong(
+			_httpServletRequest, "parentSiteNavigationMenuItemId");
+
+		return _parentSiteNavigationMenuItemId;
+	}
+
 	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
 		throws PortletException {
 
 		return _getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId, -1);
+	}
+
+	public long getSiteNavigationMenuId() {
+		if (_siteNavigationMenuId != null) {
+			return _siteNavigationMenuId;
+		}
+
+		_siteNavigationMenuId = ParamUtil.getLong(
+			_httpServletRequest, "siteNavigationMenuId");
+
+		return _siteNavigationMenuId;
 	}
 
 	public SearchContainer<Map<String, String>>
@@ -117,14 +129,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 				_getPortletRequest(), _portletURL, null,
 				"there-are-no-navigation-menus");
 
-		long siteNavigationMenuId = ParamUtil.getLong(
-			_httpServletRequest, "siteNavigationMenuId");
-		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
-			_httpServletRequest, "parentSiteNavigationMenuItemId");
-
 		List<Map<String, String>> siteNavigationMenuItems =
-			_getSiteNavigationMenuItems(
-				siteNavigationMenuId, parentSiteNavigationMenuItemId);
+			_getSiteNavigationMenuItems();
 
 		searchContainer.setResults(siteNavigationMenuItems);
 		searchContainer.setTotal(siteNavigationMenuItems.size());
@@ -194,20 +200,20 @@ public class SelectSiteNavigationMenuDisplayContext {
 			LanguageUtil.get(resourceBundle, "all"), backURL);
 	}
 
-	private List<BreadcrumbEntry> _getAncestorsBreadcrumbEntries(
-			long siteNavigationMenuId, long siteNavigationMenuItemId)
+	private List<BreadcrumbEntry> _getAncestorsBreadcrumbEntries()
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
-				siteNavigationMenuItemId);
+				getSiteNavigationMenuId());
 
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(
 				_getSiteNavigationMenuItemName(siteNavigationMenuItem),
-				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
+				getSelectSiteNavigationMenuLevelURL(
+					getSiteNavigationMenuId())));
 
 		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
 					0) {
@@ -223,15 +229,14 @@ public class SelectSiteNavigationMenuDisplayContext {
 				_createBreadcrumbEntry(
 					_getSiteNavigationMenuItemName(siteNavigationMenuItem),
 					_getSelectSiteNavigationMenuLevelURL(
-						siteNavigationMenuId,
+						getSiteNavigationMenuId(),
 						siteNavigationMenuItem.getSiteNavigationMenuItemId())));
 		}
 
 		return breadcrumbEntries;
 	}
 
-	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
+	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries()
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
@@ -242,12 +247,13 @@ public class SelectSiteNavigationMenuDisplayContext {
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(
 				LanguageUtil.get(resourceBundle, "public-pages-hierarchy"),
-				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
+				getSelectSiteNavigationMenuLevelURL(
+					getSiteNavigationMenuId())));
 
-		if (parentSiteNavigationMenuItemId != 0) {
+		if (getParentSiteNavigationMenuItemId() != 0) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				_themeDisplay.getScopeGroupId(), false,
-				parentSiteNavigationMenuItemId);
+				getParentSiteNavigationMenuItemId());
 
 			List<Layout> ancestors = layout.getAncestors();
 
@@ -258,14 +264,15 @@ public class SelectSiteNavigationMenuDisplayContext {
 					_createBreadcrumbEntry(
 						ancestor.getName(_themeDisplay.getLocale()),
 						_getSelectSiteNavigationMenuLevelURL(
-							siteNavigationMenuId, ancestor.getLayoutId())));
+							getSiteNavigationMenuId(),
+							ancestor.getLayoutId())));
 			}
 
 			breadcrumbEntries.add(
 				_createBreadcrumbEntry(
 					layout.getName(_themeDisplay.getLocale()),
 					_getSelectSiteNavigationMenuLevelURL(
-						siteNavigationMenuId, layout.getLayoutId())));
+						getSiteNavigationMenuId(), layout.getLayoutId())));
 		}
 
 		return breadcrumbEntries;
@@ -319,25 +326,23 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return portletURL.toString();
 	}
 
-	private List<BreadcrumbEntry> _getSiteNavigationMenuBreadcrumbEntries(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
+	private List<BreadcrumbEntry> _getSiteNavigationMenuBreadcrumbEntries()
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
-				siteNavigationMenuId);
+				getSiteNavigationMenuId());
 
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(
 				siteNavigationMenu.getName(),
-				getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId)));
+				getSelectSiteNavigationMenuLevelURL(
+					getSiteNavigationMenuId())));
 
-		if (parentSiteNavigationMenuItemId != 0) {
-			breadcrumbEntries.addAll(
-				_getAncestorsBreadcrumbEntries(
-					siteNavigationMenuId, parentSiteNavigationMenuItemId));
+		if (getParentSiteNavigationMenuItemId() != 0) {
+			breadcrumbEntries.addAll(_getAncestorsBreadcrumbEntries());
 		}
 
 		return breadcrumbEntries;
@@ -354,16 +359,16 @@ public class SelectSiteNavigationMenuDisplayContext {
 			siteNavigationMenuItem, _themeDisplay.getLocale());
 	}
 
-	private List<Map<String, String>> _getSiteNavigationMenuItems(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
+	private List<Map<String, String>> _getSiteNavigationMenuItems()
 		throws PortalException, PortletException {
 
 		List<Map<String, String>> siteNavigationItems = new ArrayList<>();
 
-		if (siteNavigationMenuId > 0) {
+		if (getSiteNavigationMenuId() > 0) {
 			List<SiteNavigationMenuItem> siteNavigationMenuItems =
 				SiteNavigationMenuItemServiceUtil.getSiteNavigationMenuItems(
-					siteNavigationMenuId, parentSiteNavigationMenuItemId);
+					getSiteNavigationMenuId(),
+					getParentSiteNavigationMenuItemId());
 
 			for (SiteNavigationMenuItem siteNavigationMenuItem :
 					siteNavigationMenuItems) {
@@ -375,7 +380,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 					).put(
 						"selectSiteNavigationMenuLevelURL",
 						_getSelectSiteNavigationMenuLevelURL(
-							siteNavigationMenuId,
+							getSiteNavigationMenuId(),
 							siteNavigationMenuItem.
 								getSiteNavigationMenuItemId())
 					).build());
@@ -384,7 +389,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 		else {
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 				_themeDisplay.getScopeGroupId(), false,
-				parentSiteNavigationMenuItemId);
+				getParentSiteNavigationMenuItemId());
 
 			for (Layout layout : layouts) {
 				siteNavigationItems.add(
@@ -393,7 +398,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 					).put(
 						"selectSiteNavigationMenuLevelURL",
 						_getSelectSiteNavigationMenuLevelURL(
-							siteNavigationMenuId, layout.getLayoutId())
+							getSiteNavigationMenuId(), layout.getLayoutId())
 					).build());
 			}
 		}
@@ -403,7 +408,9 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
+	private Long _parentSiteNavigationMenuItemId;
 	private final PortletURL _portletURL;
+	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
 	private final ThemeDisplay _themeDisplay;

@@ -18,12 +18,10 @@
 
 <%
 SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = (SelectSiteNavigationMenuDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT);
-
-long siteNavigationMenuId = ParamUtil.getLong(request, "siteNavigationMenuId", -1);
 %>
 
 <c:choose>
-	<c:when test="<%= siteNavigationMenuId != -1 %>">
+	<c:when test="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
 		<liferay-util:include page="/select_site_navigation_menu_level.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

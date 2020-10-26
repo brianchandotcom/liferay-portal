@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAML_SELECTED_ROLE</td>
+	<td>//select[contains(@id,'saml-role')]//option[contains(@selected,'')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

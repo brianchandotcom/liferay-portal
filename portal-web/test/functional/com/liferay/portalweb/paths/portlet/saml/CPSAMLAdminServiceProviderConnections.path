@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SERVICE_PROVIDER_CONNECTION_DROPDOWN</td>
+	<td>//div[contains(@class,'icon-menu')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SERVICE_PROVIDER_CONNECTION_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_enabled')]</td>
 	<td></td>

@@ -37,7 +37,7 @@ const EditAppBody = ({
 	const {
 		dispatch,
 		state: {
-			app: {dataLayoutId, dataListViewId, workflowProcessId},
+			app: {dataLayoutId, dataListViewId, workflowDefinitionName},
 		},
 	} = useContext(EditAppContext);
 
@@ -64,7 +64,7 @@ const EditAppBody = ({
 			type: UPDATE_DATA_LIST_VIEW_ID,
 		},
 		WORKFLOW_PROCESS: {
-			id: workflowProcessId ?? '',
+			id: workflowDefinitionName ?? '',
 			items: [
 				{
 					dateCreated: null,
@@ -76,7 +76,11 @@ const EditAppBody = ({
 						),
 					},
 				},
-				...filteredItems,
+				...filteredItems.map(({name, title, ...restProps}) => ({
+					...restProps,
+					id: name,
+					name: {[defaultLanguageId]: title},
+				})),
 			],
 			type: UPDATE_WORKFLOW_PROCESS_ID,
 		},
@@ -100,14 +104,14 @@ const EditAppBody = ({
 				<ClayLayout.ContentCol expand>
 					<ListItems
 						defaultLanguageId={defaultLanguageId}
-						isEmpty={filteredItems.length === 0}
+						isEmpty={stepItems[itemType].items.length === 0}
 						isLoading={isLoading}
 						itemId={stepItems[itemType].id}
 						items={stepItems[itemType].items}
 						keywords={searchText}
-						onChange={(id) => {
+						onChange={(item) => {
 							dispatch({
-								id,
+								...item,
 								type: stepItems[itemType].type,
 							});
 						}}

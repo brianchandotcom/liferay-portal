@@ -48,7 +48,7 @@ const ListItems = ({defaultLanguageId, itemId, items, onChange}) => {
 							'selectable-active': id === itemId,
 						})}
 						key={index}
-						onClick={() => onChange(id)}
+						onClick={() => onChange(items[index])}
 					>
 						<Cell align="left">
 							{getLocalizedValue(defaultLanguageId, name)}
@@ -58,7 +58,9 @@ const ListItems = ({defaultLanguageId, itemId, items, onChange}) => {
 						<Cell align={'right'}>
 							<ClayRadioGroup
 								inline
-								onSelectedValueChange={onChange}
+								onSelectedValueChange={() =>
+									onChange(items[index])
+								}
 								selectedValue={itemId}
 							>
 								<ClayRadio value={id} />

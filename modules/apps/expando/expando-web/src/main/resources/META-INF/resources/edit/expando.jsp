@@ -153,7 +153,7 @@ else {
 				</c:choose>
 
 				<div class="form-text">
-					<liferay-ui:message key="custom-field-key-help" />
+					<liferay-ui:message arguments="&lt;liferay-expando:custom-attribute /&gt;" key="custom-field-key-help" translateArguments="<%= false %>" />
 				</div>
 			</aui:field-wrapper>
 

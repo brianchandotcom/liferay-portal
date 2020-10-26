@@ -313,7 +313,9 @@ renderResponse.setTitle(headerTitle);
 
 					<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
-					<aui:input label="name" name="title" />
+					<aui:input label="title" name="title" />
+
+					<aui:input label="file-name" name="fileName" />
 
 					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 						<aui:input name="description" />
@@ -644,20 +646,25 @@ renderResponse.setTitle(headerTitle);
 		});
 	}
 
-	function <portlet:namespace />updateTitle() {
+	function <portlet:namespace />updateFileNameAndTitle() {
 		var titleElement = document.getElementById('<portlet:namespace />title');
+		var fileNameElement = document.getElementById(
+			'<portlet:namespace />fileName'
+		);
 
 		if (titleElement && !titleElement.value) {
 			var fileElement = document.getElementById('<portlet:namespace />file');
 
 			if (fileElement && fileElement.value) {
 				titleElement.value = fileElement.value.replace(/^.*[\\\/]/, '');
+				fileNameElement.value = fileElement.value.replace(/^.*[\\\/]/, '');
 			}
 		}
 
 		var formComponent = Liferay.Form.get('<portlet:namespace />fm');
 
 		formComponent.formValidator.validateField('<portlet:namespace />title');
+		formComponent.formValidator.validateField('<portlet:namespace />fileName');
 	}
 </script>
 

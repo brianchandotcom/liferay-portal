@@ -19,6 +19,8 @@ package com.liferay.fragment.internal.constants;
  */
 public class PortletFragmentEntryProcessorWebKeys {
 
+	public static final String ALL_PORTLETS = "ALL_PORTLETS";
+
 	public static final String
 		PORTLET_FRAGMENT_ENTRY_PROCESSOR_DISPLAY_CONTEXT =
 			"PORTLET_FRAGMENT_ENTRY_PROCESSOR_DISPLAY_CONTEXT";

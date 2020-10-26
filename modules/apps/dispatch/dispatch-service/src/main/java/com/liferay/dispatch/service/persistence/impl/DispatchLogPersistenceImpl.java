@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1672,22 +1671,21 @@ public class DispatchLogPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new DispatchLogModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DispatchLog.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByDispatchTriggerId = _createFinderPath(
+		_finderPathWithPaginationFindByDispatchTriggerId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDispatchTriggerId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1695,17 +1693,17 @@ public class DispatchLogPersistenceImpl
 			},
 			new String[] {"dispatchTriggerId"}, true);
 
-		_finderPathWithoutPaginationFindByDispatchTriggerId = _createFinderPath(
+		_finderPathWithoutPaginationFindByDispatchTriggerId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByDispatchTriggerId", new String[] {Long.class.getName()},
 			new String[] {"dispatchTriggerId"}, true);
 
-		_finderPathCountByDispatchTriggerId = _createFinderPath(
+		_finderPathCountByDispatchTriggerId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByDispatchTriggerId", new String[] {Long.class.getName()},
 			new String[] {"dispatchTriggerId"}, false);
 
-		_finderPathWithPaginationFindByDTI_S = _createFinderPath(
+		_finderPathWithPaginationFindByDTI_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDTI_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1714,12 +1712,12 @@ public class DispatchLogPersistenceImpl
 			},
 			new String[] {"dispatchTriggerId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByDTI_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByDTI_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDTI_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"dispatchTriggerId", "status"}, true);
 
-		_finderPathCountByDTI_S = _createFinderPath(
+		_finderPathCountByDTI_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDTI_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"dispatchTriggerId", "status"}, false);
@@ -1730,12 +1728,6 @@ public class DispatchLogPersistenceImpl
 		entityCache.removeCache(DispatchLogImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1807,27 +1799,13 @@ public class DispatchLogPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DispatchLogModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1876,6 +1854,16 @@ public class DispatchLogPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DispatchLogImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DispatchLogTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

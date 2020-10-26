@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -52,7 +52,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1409,10 +1408,8 @@ public class MessagePersistenceImpl
 			messageModelImpl.getRemoteMessageId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByF_R, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByF_R, args, messageModelImpl, false);
+		finderCache.putResult(_finderPathCountByF_R, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathFetchByF_R, args, messageModelImpl);
 	}
 
 	/**
@@ -1856,22 +1853,21 @@ public class MessagePersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new MessageModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", Message.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1879,17 +1875,17 @@ public class MessagePersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathWithPaginationFindByFolderId = _createFinderPath(
+		_finderPathWithPaginationFindByFolderId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFolderId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1897,22 +1893,22 @@ public class MessagePersistenceImpl
 			},
 			new String[] {"folderId"}, true);
 
-		_finderPathWithoutPaginationFindByFolderId = _createFinderPath(
+		_finderPathWithoutPaginationFindByFolderId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFolderId",
 			new String[] {Long.class.getName()}, new String[] {"folderId"},
 			true);
 
-		_finderPathCountByFolderId = _createFinderPath(
+		_finderPathCountByFolderId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFolderId",
 			new String[] {Long.class.getName()}, new String[] {"folderId"},
 			false);
 
-		_finderPathFetchByF_R = _createFinderPath(
+		_finderPathFetchByF_R = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"folderId", "remoteMessageId"}, true);
 
-		_finderPathCountByF_R = _createFinderPath(
+		_finderPathCountByF_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"folderId", "remoteMessageId"}, false);
@@ -1923,12 +1919,6 @@ public class MessagePersistenceImpl
 		entityCache.removeCache(MessageImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -2000,27 +1990,13 @@ public class MessagePersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class MessageModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2068,6 +2044,16 @@ public class MessagePersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return MessageImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return MessageTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

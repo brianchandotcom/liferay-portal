@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -43,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1155,19 +1154,16 @@ public class LVEntryLocalizationPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByLvEntryId_LanguageId, args, Long.valueOf(1),
-			false);
+			_finderPathCountByLvEntryId_LanguageId, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByLvEntryId_LanguageId, args,
-			lvEntryLocalizationModelImpl, false);
+			lvEntryLocalizationModelImpl);
 
 		args = new Object[] {lvEntryLocalizationModelImpl.getHeadId()};
 
+		finderCache.putResult(_finderPathCountByHeadId, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByHeadId, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByHeadId, args, lvEntryLocalizationModelImpl,
-			false);
+			_finderPathFetchByHeadId, args, lvEntryLocalizationModelImpl);
 	}
 
 	/**
@@ -1602,22 +1598,21 @@ public class LVEntryLocalizationPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new LVEntryLocalizationModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", LVEntryLocalization.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByLvEntryId = _createFinderPath(
+		_finderPathWithPaginationFindByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1625,32 +1620,32 @@ public class LVEntryLocalizationPersistenceImpl
 			},
 			new String[] {"lvEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByLvEntryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLvEntryId",
 			new String[] {Long.class.getName()}, new String[] {"lvEntryId"},
 			true);
 
-		_finderPathCountByLvEntryId = _createFinderPath(
+		_finderPathCountByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLvEntryId",
 			new String[] {Long.class.getName()}, new String[] {"lvEntryId"},
 			false);
 
-		_finderPathFetchByLvEntryId_LanguageId = _createFinderPath(
+		_finderPathFetchByLvEntryId_LanguageId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLvEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"lvEntryId", "languageId"}, true);
 
-		_finderPathCountByLvEntryId_LanguageId = _createFinderPath(
+		_finderPathCountByLvEntryId_LanguageId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByLvEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"lvEntryId", "languageId"}, false);
 
-		_finderPathFetchByHeadId = _createFinderPath(
+		_finderPathFetchByHeadId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
 
-		_finderPathCountByHeadId = _createFinderPath(
+		_finderPathCountByHeadId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"},
 			false);
@@ -1660,12 +1655,6 @@ public class LVEntryLocalizationPersistenceImpl
 		entityCache.removeCache(LVEntryLocalizationImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private BundleContext _bundleContext;
@@ -1699,27 +1688,13 @@ public class LVEntryLocalizationPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		LVEntryLocalizationPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class LVEntryLocalizationModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1772,6 +1747,16 @@ public class LVEntryLocalizationPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return LVEntryLocalizationImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return LVEntryLocalizationTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

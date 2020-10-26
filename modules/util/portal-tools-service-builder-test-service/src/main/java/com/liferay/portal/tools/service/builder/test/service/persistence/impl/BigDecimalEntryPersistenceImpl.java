@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -2563,26 +2563,25 @@ public class BigDecimalEntryPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new BigDecimalEntryModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", BigDecimalEntry.class.getName()));
+			new HashMapDictionary<>());
 
 		bigDecimalEntryToLVEntryTableMapper = TableMapperFactory.getTableMapper(
 			"BigDecimalEntries_LVEntries", "companyId", "bigDecimalEntryId",
 			"lvEntryId", this, lvEntryPersistence);
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByBigDecimalValue = _createFinderPath(
+		_finderPathWithPaginationFindByBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBigDecimalValue",
 			new String[] {
 				BigDecimal.class.getName(), Integer.class.getName(),
@@ -2590,17 +2589,17 @@ public class BigDecimalEntryPersistenceImpl
 			},
 			new String[] {"bigDecimalValue"}, true);
 
-		_finderPathWithoutPaginationFindByBigDecimalValue = _createFinderPath(
+		_finderPathWithoutPaginationFindByBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBigDecimalValue",
 			new String[] {BigDecimal.class.getName()},
 			new String[] {"bigDecimalValue"}, true);
 
-		_finderPathCountByBigDecimalValue = _createFinderPath(
+		_finderPathCountByBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBigDecimalValue",
 			new String[] {BigDecimal.class.getName()},
 			new String[] {"bigDecimalValue"}, false);
 
-		_finderPathWithPaginationFindByGtBigDecimalValue = _createFinderPath(
+		_finderPathWithPaginationFindByGtBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtBigDecimalValue",
 			new String[] {
 				BigDecimal.class.getName(), Integer.class.getName(),
@@ -2608,12 +2607,12 @@ public class BigDecimalEntryPersistenceImpl
 			},
 			new String[] {"bigDecimalValue"}, true);
 
-		_finderPathWithPaginationCountByGtBigDecimalValue = _createFinderPath(
+		_finderPathWithPaginationCountByGtBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtBigDecimalValue",
 			new String[] {BigDecimal.class.getName()},
 			new String[] {"bigDecimalValue"}, false);
 
-		_finderPathWithPaginationFindByLtBigDecimalValue = _createFinderPath(
+		_finderPathWithPaginationFindByLtBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtBigDecimalValue",
 			new String[] {
 				BigDecimal.class.getName(), Integer.class.getName(),
@@ -2621,7 +2620,7 @@ public class BigDecimalEntryPersistenceImpl
 			},
 			new String[] {"bigDecimalValue"}, true);
 
-		_finderPathWithPaginationCountByLtBigDecimalValue = _createFinderPath(
+		_finderPathWithPaginationCountByLtBigDecimalValue = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtBigDecimalValue",
 			new String[] {BigDecimal.class.getName()},
 			new String[] {"bigDecimalValue"}, false);
@@ -2631,12 +2630,6 @@ public class BigDecimalEntryPersistenceImpl
 		entityCache.removeCache(BigDecimalEntryImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
 	}
@@ -2680,27 +2673,13 @@ public class BigDecimalEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BigDecimalEntryPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class BigDecimalEntryModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2751,6 +2730,16 @@ public class BigDecimalEntryPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return BigDecimalEntryImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return BigDecimalEntryTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

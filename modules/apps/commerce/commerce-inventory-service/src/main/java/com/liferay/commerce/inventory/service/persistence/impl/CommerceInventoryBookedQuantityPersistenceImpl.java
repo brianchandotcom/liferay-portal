@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -50,7 +50,6 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2381,23 +2380,21 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new CommerceInventoryBookedQuantityModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name",
-				CommerceInventoryBookedQuantity.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindBySku = _createFinderPath(
+		_finderPathWithPaginationFindBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySku",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -2405,15 +2402,15 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			},
 			new String[] {"sku"}, true);
 
-		_finderPathWithoutPaginationFindBySku = _createFinderPath(
+		_finderPathWithoutPaginationFindBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
 			new String[] {String.class.getName()}, new String[] {"sku"}, true);
 
-		_finderPathCountBySku = _createFinderPath(
+		_finderPathCountBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
 			new String[] {String.class.getName()}, new String[] {"sku"}, false);
 
-		_finderPathWithPaginationFindByLtExpirationDate = _createFinderPath(
+		_finderPathWithPaginationFindByLtExpirationDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtExpirationDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
@@ -2421,12 +2418,12 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			},
 			new String[] {"expirationDate"}, true);
 
-		_finderPathWithPaginationCountByLtExpirationDate = _createFinderPath(
+		_finderPathWithPaginationCountByLtExpirationDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtExpirationDate",
 			new String[] {Date.class.getName()},
 			new String[] {"expirationDate"}, false);
 
-		_finderPathWithPaginationFindByC_S = _createFinderPath(
+		_finderPathWithPaginationFindByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -2435,12 +2432,12 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			},
 			new String[] {"companyId", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByC_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, true);
 
-		_finderPathCountByC_S = _createFinderPath(
+		_finderPathCountByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, false);
@@ -2451,12 +2448,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			CommerceInventoryBookedQuantityImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private BundleContext _bundleContext;
@@ -2504,27 +2495,13 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryBookedQuantityId"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class CommerceInventoryBookedQuantityModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2580,6 +2557,16 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return CommerceInventoryBookedQuantityImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return CommerceInventoryBookedQuantityTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

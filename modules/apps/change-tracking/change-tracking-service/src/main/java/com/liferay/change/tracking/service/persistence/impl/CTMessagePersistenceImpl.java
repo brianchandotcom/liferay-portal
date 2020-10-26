@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -45,7 +45,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1079,22 +1078,21 @@ public class CTMessagePersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new CTMessageModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", CTMessage.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCTCollectionId = _createFinderPath(
+		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1102,12 +1100,12 @@ public class CTMessagePersistenceImpl
 			},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByCTCollectionId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathCountByCTCollectionId = _createFinderPath(
+		_finderPathCountByCTCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
@@ -1118,12 +1116,6 @@ public class CTMessagePersistenceImpl
 		entityCache.removeCache(CTMessageImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1192,27 +1184,13 @@ public class CTMessagePersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class CTMessageModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1261,6 +1239,16 @@ public class CTMessagePersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return CTMessageImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return CTMessageTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

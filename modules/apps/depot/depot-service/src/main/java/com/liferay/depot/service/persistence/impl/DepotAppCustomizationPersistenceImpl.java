@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1213,20 +1212,18 @@ public class DepotAppCustomizationPersistenceImpl
 			depotAppCustomizationModelImpl.isEnabled()
 		};
 
+		finderCache.putResult(_finderPathCountByD_E, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByD_E, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByD_E, args, depotAppCustomizationModelImpl, false);
+			_finderPathFetchByD_E, args, depotAppCustomizationModelImpl);
 
 		args = new Object[] {
 			depotAppCustomizationModelImpl.getDepotEntryId(),
 			depotAppCustomizationModelImpl.getPortletId()
 		};
 
+		finderCache.putResult(_finderPathCountByD_P, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByD_P, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByD_P, args, depotAppCustomizationModelImpl, false);
+			_finderPathFetchByD_P, args, depotAppCustomizationModelImpl);
 	}
 
 	/**
@@ -1665,22 +1662,21 @@ public class DepotAppCustomizationPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new DepotAppCustomizationModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DepotAppCustomization.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByDepotEntryId = _createFinderPath(
+		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1688,32 +1684,32 @@ public class DepotAppCustomizationPersistenceImpl
 			},
 			new String[] {"depotEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByDepotEntryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
 			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
 			true);
 
-		_finderPathCountByDepotEntryId = _createFinderPath(
+		_finderPathCountByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
 			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
 			false);
 
-		_finderPathFetchByD_E = _createFinderPath(
+		_finderPathFetchByD_E = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"depotEntryId", "enabled"}, true);
 
-		_finderPathCountByD_E = _createFinderPath(
+		_finderPathCountByD_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"depotEntryId", "enabled"}, false);
 
-		_finderPathFetchByD_P = _createFinderPath(
+		_finderPathFetchByD_P = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"depotEntryId", "portletId"}, true);
 
-		_finderPathCountByD_P = _createFinderPath(
+		_finderPathCountByD_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"depotEntryId", "portletId"}, false);
@@ -1724,12 +1720,6 @@ public class DepotAppCustomizationPersistenceImpl
 		entityCache.removeCache(DepotAppCustomizationImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1799,27 +1789,13 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DepotAppCustomizationModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1872,6 +1848,16 @@ public class DepotAppCustomizationPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DepotAppCustomizationImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DepotAppCustomizationTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

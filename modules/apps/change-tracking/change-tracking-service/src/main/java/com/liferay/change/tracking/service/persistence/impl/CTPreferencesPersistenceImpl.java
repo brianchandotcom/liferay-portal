@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -45,7 +45,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1426,10 +1425,9 @@ public class CTPreferencesPersistenceImpl
 			ctPreferencesModelImpl.getUserId()
 		};
 
+		finderCache.putResult(_finderPathCountByC_U, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByC_U, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByC_U, args, ctPreferencesModelImpl, false);
+			_finderPathFetchByC_U, args, ctPreferencesModelImpl);
 	}
 
 	/**
@@ -1851,22 +1849,21 @@ public class CTPreferencesPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new CTPreferencesModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", CTPreferences.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCollectionId = _createFinderPath(
+		_finderPathWithPaginationFindByCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1874,17 +1871,17 @@ public class CTPreferencesPersistenceImpl
 			},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByCollectionId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
-		_finderPathCountByCollectionId = _createFinderPath(
+		_finderPathCountByCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 
-		_finderPathWithPaginationFindByPreviousCollectionId = _createFinderPath(
+		_finderPathWithPaginationFindByPreviousCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByPreviousCollectionId",
 			new String[] {
@@ -1893,24 +1890,22 @@ public class CTPreferencesPersistenceImpl
 			},
 			new String[] {"previousCtCollectionId"}, true);
 
-		_finderPathWithoutPaginationFindByPreviousCollectionId =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByPreviousCollectionId",
-				new String[] {Long.class.getName()},
-				new String[] {"previousCtCollectionId"}, true);
+		_finderPathWithoutPaginationFindByPreviousCollectionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByPreviousCollectionId", new String[] {Long.class.getName()},
+			new String[] {"previousCtCollectionId"}, true);
 
-		_finderPathCountByPreviousCollectionId = _createFinderPath(
+		_finderPathCountByPreviousCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByPreviousCollectionId", new String[] {Long.class.getName()},
 			new String[] {"previousCtCollectionId"}, false);
 
-		_finderPathFetchByC_U = _createFinderPath(
+		_finderPathFetchByC_U = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, true);
 
-		_finderPathCountByC_U = _createFinderPath(
+		_finderPathCountByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, false);
@@ -1921,12 +1916,6 @@ public class CTPreferencesPersistenceImpl
 		entityCache.removeCache(CTPreferencesImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1995,27 +1984,13 @@ public class CTPreferencesPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class CTPreferencesModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2064,6 +2039,16 @@ public class CTPreferencesPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return CTPreferencesImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return CTPreferencesTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -1774,10 +1774,9 @@ public class DLFileVersionPreviewPersistenceImpl
 			dlFileVersionPreviewModelImpl.getFileVersionId()
 		};
 
+		finderCache.putResult(_finderPathCountByF_F, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByF_F, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByF_F, args, dlFileVersionPreviewModelImpl, false);
+			_finderPathFetchByF_F, args, dlFileVersionPreviewModelImpl);
 
 		args = new Object[] {
 			dlFileVersionPreviewModelImpl.getFileEntryId(),
@@ -1785,11 +1784,9 @@ public class DLFileVersionPreviewPersistenceImpl
 			dlFileVersionPreviewModelImpl.getPreviewStatus()
 		};
 
+		finderCache.putResult(_finderPathCountByF_F_P, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByF_F_P, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByF_F_P, args, dlFileVersionPreviewModelImpl,
-			false);
+			_finderPathFetchByF_F_P, args, dlFileVersionPreviewModelImpl);
 	}
 
 	/**
@@ -2428,22 +2425,21 @@ public class DLFileVersionPreviewPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new DLFileVersionPreviewModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DLFileVersionPreview.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByFileEntryId = _createFinderPath(
+		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2451,17 +2447,17 @@ public class DLFileVersionPreviewPersistenceImpl
 			},
 			new String[] {"fileEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByFileEntryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
 			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
 			true);
 
-		_finderPathCountByFileEntryId = _createFinderPath(
+		_finderPathCountByFileEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
 			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
 			false);
 
-		_finderPathWithPaginationFindByFileVersionId = _createFinderPath(
+		_finderPathWithPaginationFindByFileVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileVersionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2469,27 +2465,27 @@ public class DLFileVersionPreviewPersistenceImpl
 			},
 			new String[] {"fileVersionId"}, true);
 
-		_finderPathWithoutPaginationFindByFileVersionId = _createFinderPath(
+		_finderPathWithoutPaginationFindByFileVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileVersionId",
 			new String[] {Long.class.getName()}, new String[] {"fileVersionId"},
 			true);
 
-		_finderPathCountByFileVersionId = _createFinderPath(
+		_finderPathCountByFileVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileVersionId",
 			new String[] {Long.class.getName()}, new String[] {"fileVersionId"},
 			false);
 
-		_finderPathFetchByF_F = _createFinderPath(
+		_finderPathFetchByF_F = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"fileEntryId", "fileVersionId"}, true);
 
-		_finderPathCountByF_F = _createFinderPath(
+		_finderPathCountByF_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"fileEntryId", "fileVersionId"}, false);
 
-		_finderPathFetchByF_F_P = _createFinderPath(
+		_finderPathFetchByF_F_P = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_F_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2498,7 +2494,7 @@ public class DLFileVersionPreviewPersistenceImpl
 			new String[] {"fileEntryId", "fileVersionId", "previewStatus"},
 			true);
 
-		_finderPathCountByF_F_P = _createFinderPath(
+		_finderPathCountByF_F_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2513,12 +2509,6 @@ public class DLFileVersionPreviewPersistenceImpl
 		entityCache.removeCache(DLFileVersionPreviewImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -2591,27 +2581,13 @@ public class DLFileVersionPreviewPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DLFileVersionPreviewModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2664,6 +2640,16 @@ public class DLFileVersionPreviewPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DLFileVersionPreviewImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DLFileVersionPreviewTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

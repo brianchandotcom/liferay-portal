@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -2076,7 +2076,7 @@ public class AssetCategoryPropertyPersistenceImpl
 	 * Clears the cache for all asset category properties.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2090,7 +2090,7 @@ public class AssetCategoryPropertyPersistenceImpl
 	 * Clears the cache for the asset category property.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2130,10 +2130,9 @@ public class AssetCategoryPropertyPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByCA_K, args, Long.valueOf(1), false);
+			_finderPathCountByCA_K, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByCA_K, args, assetCategoryPropertyModelImpl,
-			false);
+			_finderPathFetchByCA_K, args, assetCategoryPropertyModelImpl);
 	}
 
 	/**
@@ -2805,24 +2804,21 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		_argumentsResolverServiceRegistration = registry.registerService(
 			ArgumentsResolver.class,
-			new AssetCategoryPropertyModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", AssetCategoryProperty.class.getName()
-			).build());
+			new AssetCategoryPropertyModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2830,17 +2826,17 @@ public class AssetCategoryPropertyPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathWithPaginationFindByCategoryId = _createFinderPath(
+		_finderPathWithPaginationFindByCategoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCategoryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2848,17 +2844,17 @@ public class AssetCategoryPropertyPersistenceImpl
 			},
 			new String[] {"categoryId"}, true);
 
-		_finderPathWithoutPaginationFindByCategoryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCategoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCategoryId",
 			new String[] {Long.class.getName()}, new String[] {"categoryId"},
 			true);
 
-		_finderPathCountByCategoryId = _createFinderPath(
+		_finderPathCountByCategoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCategoryId",
 			new String[] {Long.class.getName()}, new String[] {"categoryId"},
 			false);
 
-		_finderPathWithPaginationFindByC_K = _createFinderPath(
+		_finderPathWithPaginationFindByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_K",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -2867,22 +2863,22 @@ public class AssetCategoryPropertyPersistenceImpl
 			},
 			new String[] {"companyId", "key_"}, true);
 
-		_finderPathWithoutPaginationFindByC_K = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "key_"}, true);
 
-		_finderPathCountByC_K = _createFinderPath(
+		_finderPathCountByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "key_"}, false);
 
-		_finderPathFetchByCA_K = _createFinderPath(
+		_finderPathFetchByCA_K = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"categoryId", "key_"}, true);
 
-		_finderPathCountByCA_K = _createFinderPath(
+		_finderPathCountByCA_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"categoryId", "key_"}, false);
@@ -2892,12 +2888,6 @@ public class AssetCategoryPropertyPersistenceImpl
 		EntityCacheUtil.removeCache(AssetCategoryPropertyImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY =
@@ -2927,31 +2917,13 @@ public class AssetCategoryPropertyPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"key"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class AssetCategoryPropertyModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -3004,6 +2976,16 @@ public class AssetCategoryPropertyPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return AssetCategoryPropertyImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return AssetCategoryPropertyTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -4333,11 +4333,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			layoutClassedModelUsageModelImpl.getGroupId()
 		};
 
+		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, layoutClassedModelUsageModelImpl,
-			false);
+			_finderPathFetchByUUID_G, args, layoutClassedModelUsageModelImpl);
 
 		args = new Object[] {
 			layoutClassedModelUsageModelImpl.getClassNameId(),
@@ -4348,10 +4346,10 @@ public class LayoutClassedModelUsagePersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByC_C_CK_CT_P, args, Long.valueOf(1), false);
+			_finderPathCountByC_C_CK_CT_P, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C_CK_CT_P, args,
-			layoutClassedModelUsageModelImpl, false);
+			layoutClassedModelUsageModelImpl);
 	}
 
 	/**
@@ -5050,22 +5048,21 @@ public class LayoutClassedModelUsagePersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new LayoutClassedModelUsageModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", LayoutClassedModelUsage.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -5073,27 +5070,27 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathFetchByUUID_G = _createFinderPath(
+		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = _createFinderPath(
+		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -5102,17 +5099,17 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByPlid = _createFinderPath(
+		_finderPathWithPaginationFindByPlid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -5120,15 +5117,15 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"plid"}, true);
 
-		_finderPathWithoutPaginationFindByPlid = _createFinderPath(
+		_finderPathWithoutPaginationFindByPlid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
 			new String[] {Long.class.getName()}, new String[] {"plid"}, true);
 
-		_finderPathCountByPlid = _createFinderPath(
+		_finderPathCountByPlid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
 			new String[] {Long.class.getName()}, new String[] {"plid"}, false);
 
-		_finderPathWithPaginationFindByC_C = _createFinderPath(
+		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5137,17 +5134,17 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"classNameId", "classPK"}, true);
 
-		_finderPathWithoutPaginationFindByC_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
 
-		_finderPathCountByC_C = _createFinderPath(
+		_finderPathCountByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
-		_finderPathWithPaginationFindByC_C_T = _createFinderPath(
+		_finderPathWithPaginationFindByC_C_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5156,7 +5153,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "type_"}, true);
 
-		_finderPathWithoutPaginationFindByC_C_T = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_C_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5164,7 +5161,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "type_"}, true);
 
-		_finderPathCountByC_C_T = _createFinderPath(
+		_finderPathCountByC_C_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5172,7 +5169,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "type_"}, false);
 
-		_finderPathWithPaginationFindByCK_CT_P = _createFinderPath(
+		_finderPathWithPaginationFindByCK_CT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCK_CT_P",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -5181,7 +5178,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"containerKey", "containerType", "plid"}, true);
 
-		_finderPathWithoutPaginationFindByCK_CT_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByCK_CT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCK_CT_P",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -5189,7 +5186,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"containerKey", "containerType", "plid"}, true);
 
-		_finderPathCountByCK_CT_P = _createFinderPath(
+		_finderPathCountByCK_CT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCK_CT_P",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -5197,7 +5194,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			new String[] {"containerKey", "containerType", "plid"}, false);
 
-		_finderPathFetchByC_C_CK_CT_P = _createFinderPath(
+		_finderPathFetchByC_C_CK_CT_P = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_CK_CT_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5210,7 +5207,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			true);
 
-		_finderPathCountByC_C_CK_CT_P = _createFinderPath(
+		_finderPathCountByC_C_CK_CT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_CK_CT_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -5229,12 +5226,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 		entityCache.removeCache(LayoutClassedModelUsageImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -5310,27 +5301,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class LayoutClassedModelUsageModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -5383,6 +5360,16 @@ public class LayoutClassedModelUsagePersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return LayoutClassedModelUsageImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return LayoutClassedModelUsageTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

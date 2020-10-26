@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -56,7 +56,6 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -13706,22 +13705,21 @@ public class MicroblogsEntryPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new MicroblogsEntryModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", MicroblogsEntry.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13729,17 +13727,17 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathWithPaginationFindByUserId = _createFinderPath(
+		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13747,16 +13745,16 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"userId"}, true);
 
-		_finderPathWithoutPaginationFindByUserId = _createFinderPath(
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
-		_finderPathCountByUserId = _createFinderPath(
+		_finderPathCountByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_finderPathWithPaginationFindByU_T = _createFinderPath(
+		_finderPathWithPaginationFindByU_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13765,17 +13763,17 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"userId", "type_"}, true);
 
-		_finderPathWithoutPaginationFindByU_T = _createFinderPath(
+		_finderPathWithoutPaginationFindByU_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"userId", "type_"}, true);
 
-		_finderPathCountByU_T = _createFinderPath(
+		_finderPathCountByU_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"userId", "type_"}, false);
 
-		_finderPathWithPaginationFindByCCNI_CCPK = _createFinderPath(
+		_finderPathWithPaginationFindByCCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCCNI_CCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13784,22 +13782,22 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"creatorClassNameId", "creatorClassPK"}, true);
 
-		_finderPathWithoutPaginationFindByCCNI_CCPK = _createFinderPath(
+		_finderPathWithoutPaginationFindByCCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCCNI_CCPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"creatorClassNameId", "creatorClassPK"}, true);
 
-		_finderPathCountByCCNI_CCPK = _createFinderPath(
+		_finderPathCountByCCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCNI_CCPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"creatorClassNameId", "creatorClassPK"}, false);
 
-		_finderPathWithPaginationCountByCCNI_CCPK = _createFinderPath(
+		_finderPathWithPaginationCountByCCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCCNI_CCPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"creatorClassNameId", "creatorClassPK"}, false);
 
-		_finderPathWithPaginationFindByCCNI_T = _createFinderPath(
+		_finderPathWithPaginationFindByCCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCCNI_T",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13808,17 +13806,17 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"creatorClassNameId", "type_"}, true);
 
-		_finderPathWithoutPaginationFindByCCNI_T = _createFinderPath(
+		_finderPathWithoutPaginationFindByCCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCCNI_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"creatorClassNameId", "type_"}, true);
 
-		_finderPathCountByCCNI_T = _createFinderPath(
+		_finderPathCountByCCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCNI_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"creatorClassNameId", "type_"}, false);
 
-		_finderPathWithPaginationFindByT_P = _createFinderPath(
+		_finderPathWithPaginationFindByT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_P",
 			new String[] {
 				Integer.class.getName(), Long.class.getName(),
@@ -13827,17 +13825,17 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"type_", "parentMicroblogsEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByT_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_P",
 			new String[] {Integer.class.getName(), Long.class.getName()},
 			new String[] {"type_", "parentMicroblogsEntryId"}, true);
 
-		_finderPathCountByT_P = _createFinderPath(
+		_finderPathCountByT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_P",
 			new String[] {Integer.class.getName(), Long.class.getName()},
 			new String[] {"type_", "parentMicroblogsEntryId"}, false);
 
-		_finderPathWithPaginationFindByC_CCNI_CCPK = _createFinderPath(
+		_finderPathWithPaginationFindByC_CCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CCNI_CCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13847,7 +13845,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"companyId", "creatorClassNameId", "creatorClassPK"},
 			true);
 
-		_finderPathWithoutPaginationFindByC_CCNI_CCPK = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_CCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CCNI_CCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -13855,7 +13853,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"companyId", "creatorClassNameId", "creatorClassPK"},
 			true);
 
-		_finderPathCountByC_CCNI_CCPK = _createFinderPath(
+		_finderPathCountByC_CCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CCNI_CCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -13863,7 +13861,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"companyId", "creatorClassNameId", "creatorClassPK"},
 			false);
 
-		_finderPathWithPaginationCountByC_CCNI_CCPK = _createFinderPath(
+		_finderPathWithPaginationCountByC_CCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_CCNI_CCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -13871,7 +13869,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"companyId", "creatorClassNameId", "creatorClassPK"},
 			false);
 
-		_finderPathWithPaginationFindByC_CCNI_T = _createFinderPath(
+		_finderPathWithPaginationFindByC_CCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CCNI_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13880,7 +13878,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "creatorClassNameId", "type_"}, true);
 
-		_finderPathWithoutPaginationFindByC_CCNI_T = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_CCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CCNI_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13888,7 +13886,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "creatorClassNameId", "type_"}, true);
 
-		_finderPathCountByC_CCNI_T = _createFinderPath(
+		_finderPathCountByC_CCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CCNI_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13896,7 +13894,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "creatorClassNameId", "type_"}, false);
 
-		_finderPathWithPaginationFindByCCNI_CCPK_T = _createFinderPath(
+		_finderPathWithPaginationFindByCCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13906,7 +13904,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"creatorClassNameId", "creatorClassPK", "type_"},
 			true);
 
-		_finderPathWithoutPaginationFindByCCNI_CCPK_T = _createFinderPath(
+		_finderPathWithoutPaginationFindByCCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13915,7 +13913,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"creatorClassNameId", "creatorClassPK", "type_"},
 			true);
 
-		_finderPathCountByCCNI_CCPK_T = _createFinderPath(
+		_finderPathCountByCCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13924,7 +13922,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"creatorClassNameId", "creatorClassPK", "type_"},
 			false);
 
-		_finderPathWithPaginationCountByCCNI_CCPK_T = _createFinderPath(
+		_finderPathWithPaginationCountByCCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13933,7 +13931,7 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"creatorClassNameId", "creatorClassPK", "type_"},
 			false);
 
-		_finderPathWithPaginationFindByC_CCNI_CCPK_T = _createFinderPath(
+		_finderPathWithPaginationFindByC_CCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13946,7 +13944,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByC_CCNI_CCPK_T = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_CCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13957,7 +13955,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			true);
 
-		_finderPathCountByC_CCNI_CCPK_T = _createFinderPath(
+		_finderPathCountByC_CCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13968,7 +13966,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			false);
 
-		_finderPathWithPaginationCountByC_CCNI_CCPK_T = _createFinderPath(
+		_finderPathWithPaginationCountByC_CCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_CCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13979,7 +13977,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			false);
 
-		_finderPathWithPaginationFindByU_C_T_S = _createFinderPath(
+		_finderPathWithPaginationFindByU_C_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C_T_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -13992,7 +13990,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByU_C_T_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByU_C_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_C_T_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -14003,7 +14001,7 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			true);
 
-		_finderPathCountByU_C_T_S = _createFinderPath(
+		_finderPathCountByU_C_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_T_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -14020,12 +14018,6 @@ public class MicroblogsEntryPersistenceImpl
 		entityCache.removeCache(MicroblogsEntryImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -14128,27 +14120,13 @@ public class MicroblogsEntryPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class MicroblogsEntryModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -14199,6 +14177,16 @@ public class MicroblogsEntryPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return MicroblogsEntryImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return MicroblogsEntryTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

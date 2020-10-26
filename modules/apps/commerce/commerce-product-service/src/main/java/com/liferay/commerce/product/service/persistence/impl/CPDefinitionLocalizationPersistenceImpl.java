@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -43,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -978,11 +977,10 @@ public class CPDefinitionLocalizationPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByCPDefinitionId_LanguageId, args, Long.valueOf(1),
-			false);
+			_finderPathCountByCPDefinitionId_LanguageId, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByCPDefinitionId_LanguageId, args,
-			cpDefinitionLocalizationModelImpl, false);
+			cpDefinitionLocalizationModelImpl);
 	}
 
 	/**
@@ -1428,22 +1426,21 @@ public class CPDefinitionLocalizationPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new CPDefinitionLocalizationModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", CPDefinitionLocalization.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCPDefinitionId = _createFinderPath(
+		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1451,22 +1448,22 @@ public class CPDefinitionLocalizationPersistenceImpl
 			},
 			new String[] {"CPDefinitionId"}, true);
 
-		_finderPathWithoutPaginationFindByCPDefinitionId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, true);
 
-		_finderPathCountByCPDefinitionId = _createFinderPath(
+		_finderPathCountByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
 
-		_finderPathFetchByCPDefinitionId_LanguageId = _createFinderPath(
+		_finderPathFetchByCPDefinitionId_LanguageId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "languageId"}, true);
 
-		_finderPathCountByCPDefinitionId_LanguageId = _createFinderPath(
+		_finderPathCountByCPDefinitionId_LanguageId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -1477,12 +1474,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 		entityCache.removeCache(CPDefinitionLocalizationImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private BundleContext _bundleContext;
@@ -1517,27 +1508,13 @@ public class CPDefinitionLocalizationPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalizationPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class CPDefinitionLocalizationModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1591,6 +1568,16 @@ public class CPDefinitionLocalizationPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return CPDefinitionLocalizationImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return CPDefinitionLocalizationTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

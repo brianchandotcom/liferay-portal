@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +51,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1157,7 +1156,7 @@ public class OAuthTokenPersistenceImpl
 	 * Clears the cache for all o auth tokens.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1171,7 +1170,7 @@ public class OAuthTokenPersistenceImpl
 	 * Clears the cache for the o auth token.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1206,9 +1205,9 @@ public class OAuthTokenPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByU_G_S_M_T, args, Long.valueOf(1), false);
+			_finderPathCountByU_G_S_M_T, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByU_G_S_M_T, args, oAuthTokenModelImpl, false);
+			_finderPathFetchByU_G_S_M_T, args, oAuthTokenModelImpl);
 	}
 
 	/**
@@ -1649,24 +1648,21 @@ public class OAuthTokenPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new OAuthTokenModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", OAuthToken.class.getName()
-			).build());
+			ArgumentsResolver.class, new OAuthTokenModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByG_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
 			new String[] {
 				String.class.getName(), String.class.getName(),
@@ -1675,17 +1671,17 @@ public class OAuthTokenPersistenceImpl
 			},
 			new String[] {"gadgetKey", "serviceName"}, true);
 
-		_finderPathWithoutPaginationFindByG_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"gadgetKey", "serviceName"}, true);
 
-		_finderPathCountByG_S = _createFinderPath(
+		_finderPathCountByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"gadgetKey", "serviceName"}, false);
 
-		_finderPathFetchByU_G_S_M_T = _createFinderPath(
+		_finderPathFetchByU_G_S_M_T = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_G_S_M_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1697,7 +1693,7 @@ public class OAuthTokenPersistenceImpl
 			},
 			true);
 
-		_finderPathCountByU_G_S_M_T = _createFinderPath(
+		_finderPathCountByU_G_S_M_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_G_S_M_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1714,12 +1710,6 @@ public class OAuthTokenPersistenceImpl
 		EntityCacheUtil.removeCache(OAuthTokenImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_OAUTHTOKEN =
@@ -1745,31 +1735,13 @@ public class OAuthTokenPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuthTokenPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class OAuthTokenModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1818,6 +1790,16 @@ public class OAuthTokenPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return OAuthTokenImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return OAuthTokenTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

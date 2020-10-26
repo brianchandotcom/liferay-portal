@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -65,7 +65,6 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -21067,19 +21066,17 @@ public class BlogsEntryPersistenceImpl
 			blogsEntryModelImpl.getUuid(), blogsEntryModelImpl.getGroupId()
 		};
 
+		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, blogsEntryModelImpl, false);
+			_finderPathFetchByUUID_G, args, blogsEntryModelImpl);
 
 		args = new Object[] {
 			blogsEntryModelImpl.getGroupId(), blogsEntryModelImpl.getUrlTitle()
 		};
 
+		finderCache.putResult(_finderPathCountByG_UT, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByG_UT, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByG_UT, args, blogsEntryModelImpl, false);
+			_finderPathFetchByG_UT, args, blogsEntryModelImpl);
 	}
 
 	/**
@@ -21572,22 +21569,21 @@ public class BlogsEntryPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new BlogsEntryModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", BlogsEntry.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -21595,27 +21591,27 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathFetchByUUID_G = _createFinderPath(
+		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = _createFinderPath(
+		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -21624,17 +21620,17 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -21642,17 +21638,17 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			true);
 
-		_finderPathCountByGroupId = _createFinderPath(
+		_finderPathCountByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -21660,27 +21656,27 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathFetchByG_UT = _createFinderPath(
+		_finderPathFetchByG_UT = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_UT",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "urlTitle"}, true);
 
-		_finderPathCountByG_UT = _createFinderPath(
+		_finderPathCountByG_UT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UT",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "urlTitle"}, false);
 
-		_finderPathWithPaginationFindByG_LtD = _createFinderPath(
+		_finderPathWithPaginationFindByG_LtD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LtD",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21689,12 +21685,12 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate"}, true);
 
-		_finderPathWithPaginationCountByG_LtD = _createFinderPath(
+		_finderPathWithPaginationCountByG_LtD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LtD",
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"groupId", "displayDate"}, false);
 
-		_finderPathWithPaginationFindByG_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -21703,17 +21699,17 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByG_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, true);
 
-		_finderPathCountByG_S = _createFinderPath(
+		_finderPathCountByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, false);
 
-		_finderPathWithPaginationFindByG_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByG_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotS",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -21722,12 +21718,12 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "status"}, true);
 
-		_finderPathWithPaginationCountByG_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByG_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotS",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, false);
 
-		_finderPathWithPaginationFindByC_U = _createFinderPath(
+		_finderPathWithPaginationFindByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21736,17 +21732,17 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "userId"}, true);
 
-		_finderPathWithoutPaginationFindByC_U = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, true);
 
-		_finderPathCountByC_U = _createFinderPath(
+		_finderPathCountByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, false);
 
-		_finderPathWithPaginationFindByC_LtD = _createFinderPath(
+		_finderPathWithPaginationFindByC_LtD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtD",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21755,12 +21751,12 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "displayDate"}, true);
 
-		_finderPathWithPaginationCountByC_LtD = _createFinderPath(
+		_finderPathWithPaginationCountByC_LtD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtD",
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"companyId", "displayDate"}, false);
 
-		_finderPathWithPaginationFindByC_S = _createFinderPath(
+		_finderPathWithPaginationFindByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -21769,17 +21765,17 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByC_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, true);
 
-		_finderPathCountByC_S = _createFinderPath(
+		_finderPathCountByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_finderPathWithPaginationFindByC_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByC_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -21788,12 +21784,12 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "status"}, true);
 
-		_finderPathWithPaginationCountByC_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByC_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_finderPathWithPaginationFindByLtD_S = _createFinderPath(
+		_finderPathWithPaginationFindByLtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
@@ -21802,12 +21798,12 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByLtD_S = _createFinderPath(
+		_finderPathWithPaginationCountByLtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
 			new String[] {Date.class.getName(), Integer.class.getName()},
 			new String[] {"displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByG_U_LtD = _createFinderPath(
+		_finderPathWithPaginationFindByG_U_LtD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_LtD",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21816,14 +21812,14 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "displayDate"}, true);
 
-		_finderPathWithPaginationCountByG_U_LtD = _createFinderPath(
+		_finderPathWithPaginationCountByG_U_LtD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_LtD",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
 			},
 			new String[] {"groupId", "userId", "displayDate"}, false);
 
-		_finderPathWithPaginationFindByG_U_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21832,7 +21828,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByG_U_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21840,7 +21836,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, true);
 
-		_finderPathCountByG_U_S = _createFinderPath(
+		_finderPathCountByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21848,7 +21844,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, false);
 
-		_finderPathWithPaginationCountByG_U_S = _createFinderPath(
+		_finderPathWithPaginationCountByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21856,7 +21852,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, false);
 
-		_finderPathWithPaginationFindByG_U_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByG_U_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21865,7 +21861,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, true);
 
-		_finderPathWithPaginationCountByG_U_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByG_U_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21873,7 +21869,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, false);
 
-		_finderPathWithPaginationFindByG_D_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_D_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21882,7 +21878,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, true);
 
-		_finderPathWithoutPaginationFindByG_D_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_D_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21890,7 +21886,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, true);
 
-		_finderPathCountByG_D_S = _createFinderPath(
+		_finderPathCountByG_D_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21898,7 +21894,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByG_GtD_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_GtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtD_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21907,7 +21903,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByG_GtD_S = _createFinderPath(
+		_finderPathWithPaginationCountByG_GtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_GtD_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21915,7 +21911,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByG_LtD_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_LtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LtD_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21924,7 +21920,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByG_LtD_S = _createFinderPath(
+		_finderPathWithPaginationCountByG_LtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LtD_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21932,7 +21928,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByG_LtD_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByG_LtD_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LtD_NotS",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21941,7 +21937,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByG_LtD_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByG_LtD_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LtD_NotS",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -21949,7 +21945,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByC_U_S = _createFinderPath(
+		_finderPathWithPaginationFindByC_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21958,7 +21954,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByC_U_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21966,7 +21962,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "status"}, true);
 
-		_finderPathCountByC_U_S = _createFinderPath(
+		_finderPathCountByC_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21974,7 +21970,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "status"}, false);
 
-		_finderPathWithPaginationFindByC_U_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByC_U_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21983,7 +21979,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "status"}, true);
 
-		_finderPathWithPaginationCountByC_U_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByC_U_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_U_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -21991,7 +21987,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "status"}, false);
 
-		_finderPathWithPaginationFindByC_LtD_S = _createFinderPath(
+		_finderPathWithPaginationFindByC_LtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtD_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -22000,7 +21996,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByC_LtD_S = _createFinderPath(
+		_finderPathWithPaginationCountByC_LtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtD_S",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -22008,7 +22004,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByC_LtD_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByC_LtD_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtD_NotS",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -22017,7 +22013,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByC_LtD_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByC_LtD_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtD_NotS",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
@@ -22025,7 +22021,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"companyId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByG_U_LtD_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_U_LtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_LtD_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -22035,7 +22031,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByG_U_LtD_S = _createFinderPath(
+		_finderPathWithPaginationCountByG_U_LtD_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_LtD_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -22043,7 +22039,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "displayDate", "status"}, false);
 
-		_finderPathWithPaginationFindByG_U_LtD_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByG_U_LtD_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_LtD_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -22053,7 +22049,7 @@ public class BlogsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "displayDate", "status"}, true);
 
-		_finderPathWithPaginationCountByG_U_LtD_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByG_U_LtD_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_LtD_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -22067,12 +22063,6 @@ public class BlogsEntryPersistenceImpl
 		entityCache.removeCache(BlogsEntryImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -22175,27 +22165,13 @@ public class BlogsEntryPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class BlogsEntryModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -22244,6 +22220,16 @@ public class BlogsEntryPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return BlogsEntryImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return BlogsEntryTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

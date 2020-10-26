@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -6005,10 +6005,9 @@ public class LVEntryVersionPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByLvEntryId_Version, args, Long.valueOf(1), false);
+			_finderPathCountByLvEntryId_Version, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByLvEntryId_Version, args, lvEntryVersionModelImpl,
-			false);
+			_finderPathFetchByLvEntryId_Version, args, lvEntryVersionModelImpl);
 
 		args = new Object[] {
 			lvEntryVersionModelImpl.getUuid(),
@@ -6017,10 +6016,9 @@ public class LVEntryVersionPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByUUID_G_Version, args, Long.valueOf(1), false);
+			_finderPathCountByUUID_G_Version, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByUUID_G_Version, args, lvEntryVersionModelImpl,
-			false);
+			_finderPathFetchByUUID_G_Version, args, lvEntryVersionModelImpl);
 
 		args = new Object[] {
 			lvEntryVersionModelImpl.getGroupId(),
@@ -6029,10 +6027,9 @@ public class LVEntryVersionPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByG_UGK_Version, args, Long.valueOf(1), false);
+			_finderPathCountByG_UGK_Version, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByG_UGK_Version, args, lvEntryVersionModelImpl,
-			false);
+			_finderPathFetchByG_UGK_Version, args, lvEntryVersionModelImpl);
 	}
 
 	/**
@@ -6813,27 +6810,26 @@ public class LVEntryVersionPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new LVEntryVersionModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", LVEntryVersion.class.getName()));
+			new HashMapDictionary<>());
 
 		lvEntryVersionToBigDecimalEntryTableMapper =
 			TableMapperFactory.getTableMapper(
 				"BigDecimalEntries_LVEntries", "companyId", "lvEntryVersionId",
 				"bigDecimalEntryId", this, bigDecimalEntryPersistence);
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByLvEntryId = _createFinderPath(
+		_finderPathWithPaginationFindByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -6841,28 +6837,28 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"lvEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByLvEntryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLvEntryId",
 			new String[] {Long.class.getName()}, new String[] {"lvEntryId"},
 			true);
 
-		_finderPathCountByLvEntryId = _createFinderPath(
+		_finderPathCountByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLvEntryId",
 			new String[] {Long.class.getName()}, new String[] {"lvEntryId"},
 			false);
 
-		_finderPathFetchByLvEntryId_Version = _createFinderPath(
+		_finderPathFetchByLvEntryId_Version = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLvEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"lvEntryId", "version"}, true);
 
-		_finderPathCountByLvEntryId_Version = _createFinderPath(
+		_finderPathCountByLvEntryId_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByLvEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"lvEntryId", "version"}, false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -6870,17 +6866,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathWithPaginationFindByUuid_Version = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Version",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -6889,17 +6885,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "version"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_Version = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Version",
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"uuid_", "version"}, true);
 
-		_finderPathCountByUuid_Version = _createFinderPath(
+		_finderPathCountByUuid_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Version",
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"uuid_", "version"}, false);
 
-		_finderPathWithPaginationFindByUUID_G = _createFinderPath(
+		_finderPathWithPaginationFindByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6908,17 +6904,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathWithoutPaginationFindByUUID_G = _createFinderPath(
+		_finderPathWithoutPaginationFindByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = _createFinderPath(
+		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathFetchByUUID_G_Version = _createFinderPath(
+		_finderPathFetchByUUID_G_Version = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6926,7 +6922,7 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "groupId", "version"}, true);
 
-		_finderPathCountByUUID_G_Version = _createFinderPath(
+		_finderPathCountByUUID_G_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6934,7 +6930,7 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "groupId", "version"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6943,17 +6939,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C_Version = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6962,7 +6958,7 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId", "version"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C_Version = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6970,7 +6966,7 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId", "version"}, true);
 
-		_finderPathCountByUuid_C_Version = _createFinderPath(
+		_finderPathCountByUuid_C_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -6978,7 +6974,7 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId", "version"}, false);
 
-		_finderPathWithPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -6986,17 +6982,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			true);
 
-		_finderPathCountByGroupId = _createFinderPath(
+		_finderPathCountByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathWithPaginationFindByGroupId_Version = _createFinderPath(
+		_finderPathWithPaginationFindByGroupId_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId_Version",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -7005,17 +7001,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"groupId", "version"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId_Version = _createFinderPath(
+		_finderPathWithoutPaginationFindByGroupId_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "version"}, true);
 
-		_finderPathCountByGroupId_Version = _createFinderPath(
+		_finderPathCountByGroupId_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "version"}, false);
 
-		_finderPathWithPaginationFindByG_UGK = _createFinderPath(
+		_finderPathWithPaginationFindByG_UGK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UGK",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -7024,17 +7020,17 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"groupId", "uniqueGroupKey"}, true);
 
-		_finderPathWithoutPaginationFindByG_UGK = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_UGK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UGK",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "uniqueGroupKey"}, true);
 
-		_finderPathCountByG_UGK = _createFinderPath(
+		_finderPathCountByG_UGK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UGK",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "uniqueGroupKey"}, false);
 
-		_finderPathFetchByG_UGK_Version = _createFinderPath(
+		_finderPathFetchByG_UGK_Version = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_UGK_Version",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -7042,7 +7038,7 @@ public class LVEntryVersionPersistenceImpl
 			},
 			new String[] {"groupId", "uniqueGroupKey", "version"}, true);
 
-		_finderPathCountByG_UGK_Version = _createFinderPath(
+		_finderPathCountByG_UGK_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UGK_Version",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -7055,12 +7051,6 @@ public class LVEntryVersionPersistenceImpl
 		entityCache.removeCache(LVEntryVersionImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
 	}
@@ -7107,27 +7097,13 @@ public class LVEntryVersionPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class LVEntryVersionModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -7178,6 +7154,16 @@ public class LVEntryVersionPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return LVEntryVersionImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return LVEntryVersionTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

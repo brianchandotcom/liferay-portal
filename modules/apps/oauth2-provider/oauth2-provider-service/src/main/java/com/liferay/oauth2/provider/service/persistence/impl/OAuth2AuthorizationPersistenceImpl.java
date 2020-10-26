@@ -41,8 +41,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -3096,8 +3096,7 @@ public class OAuth2AuthorizationPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new OAuth2AuthorizationModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", OAuth2Authorization.class.getName()));
+			new HashMapDictionary<>());
 
 		oAuth2AuthorizationToOAuth2ScopeGrantTableMapper =
 			TableMapperFactory.getTableMapper(
@@ -3105,19 +3104,19 @@ public class OAuth2AuthorizationPersistenceImpl
 				"OA2Auths_OA2ScopeGrants", "companyId", "oAuth2AuthorizationId",
 				"oAuth2ScopeGrantId", this, OAuth2ScopeGrant.class);
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUserId = _createFinderPath(
+		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -3125,16 +3124,16 @@ public class OAuth2AuthorizationPersistenceImpl
 			},
 			new String[] {"userId"}, true);
 
-		_finderPathWithoutPaginationFindByUserId = _createFinderPath(
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
-		_finderPathCountByUserId = _createFinderPath(
+		_finderPathCountByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_finderPathWithPaginationFindByOAuth2ApplicationId = _createFinderPath(
+		_finderPathWithPaginationFindByOAuth2ApplicationId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOAuth2ApplicationId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -3142,61 +3141,57 @@ public class OAuth2AuthorizationPersistenceImpl
 			},
 			new String[] {"oAuth2ApplicationId"}, true);
 
-		_finderPathWithoutPaginationFindByOAuth2ApplicationId =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByOAuth2ApplicationId",
-				new String[] {Long.class.getName()},
-				new String[] {"oAuth2ApplicationId"}, true);
+		_finderPathWithoutPaginationFindByOAuth2ApplicationId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByOAuth2ApplicationId", new String[] {Long.class.getName()},
+			new String[] {"oAuth2ApplicationId"}, true);
 
-		_finderPathCountByOAuth2ApplicationId = _createFinderPath(
+		_finderPathCountByOAuth2ApplicationId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByOAuth2ApplicationId", new String[] {Long.class.getName()},
 			new String[] {"oAuth2ApplicationId"}, false);
 
-		_finderPathWithPaginationFindByAccessTokenContentHash =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByAccessTokenContentHash",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"companyId", "accessTokenContentHash"}, true);
+		_finderPathWithPaginationFindByAccessTokenContentHash = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByAccessTokenContentHash",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "accessTokenContentHash"}, true);
 
 		_finderPathWithoutPaginationFindByAccessTokenContentHash =
-			_createFinderPath(
+			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByAccessTokenContentHash",
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "accessTokenContentHash"}, true);
 
-		_finderPathCountByAccessTokenContentHash = _createFinderPath(
+		_finderPathCountByAccessTokenContentHash = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByAccessTokenContentHash",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "accessTokenContentHash"}, false);
 
-		_finderPathWithPaginationFindByRefreshTokenContentHash =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByRefreshTokenContentHash",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"companyId", "refreshTokenContentHash"}, true);
+		_finderPathWithPaginationFindByRefreshTokenContentHash = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByRefreshTokenContentHash",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "refreshTokenContentHash"}, true);
 
 		_finderPathWithoutPaginationFindByRefreshTokenContentHash =
-			_createFinderPath(
+			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByRefreshTokenContentHash",
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "refreshTokenContentHash"}, true);
 
-		_finderPathCountByRefreshTokenContentHash = _createFinderPath(
+		_finderPathCountByRefreshTokenContentHash = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByRefreshTokenContentHash",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -3208,12 +3203,6 @@ public class OAuth2AuthorizationPersistenceImpl
 		entityCache.removeCache(OAuth2AuthorizationImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 
 		TableMapperFactory.removeTableMapper(
 			"OA2Auths_OA2ScopeGrants#oAuth2AuthorizationId");
@@ -3291,27 +3280,13 @@ public class OAuth2AuthorizationPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class OAuth2AuthorizationModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -3364,6 +3339,16 @@ public class OAuth2AuthorizationPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return OAuth2AuthorizationImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return OAuth2AuthorizationTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

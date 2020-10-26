@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.model.PluginSettingTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -48,7 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -945,7 +944,7 @@ public class PluginSettingPersistenceImpl
 	 * Clears the cache for all plugin settings.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -959,7 +958,7 @@ public class PluginSettingPersistenceImpl
 	 * Clears the cache for the plugin setting.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -994,9 +993,9 @@ public class PluginSettingPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByC_I_T, args, Long.valueOf(1), false);
+			_finderPathCountByC_I_T, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByC_I_T, args, pluginSettingModelImpl, false);
+			_finderPathFetchByC_I_T, args, pluginSettingModelImpl);
 	}
 
 	/**
@@ -1421,24 +1420,21 @@ public class PluginSettingPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new PluginSettingModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", PluginSetting.class.getName()
-			).build());
+			ArgumentsResolver.class, new PluginSettingModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1446,17 +1442,17 @@ public class PluginSettingPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathFetchByC_I_T = _createFinderPath(
+		_finderPathFetchByC_I_T = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_I_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1464,7 +1460,7 @@ public class PluginSettingPersistenceImpl
 			},
 			new String[] {"companyId", "pluginId", "pluginType"}, true);
 
-		_finderPathCountByC_I_T = _createFinderPath(
+		_finderPathCountByC_I_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_I_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1477,12 +1473,6 @@ public class PluginSettingPersistenceImpl
 		EntityCacheUtil.removeCache(PluginSettingImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_PLUGINSETTING =
@@ -1511,31 +1501,13 @@ public class PluginSettingPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"active"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class PluginSettingModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1584,6 +1556,16 @@ public class PluginSettingPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return PluginSettingImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return PluginSettingTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.model.UserIdMapperTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -48,7 +48,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1162,7 +1161,7 @@ public class UserIdMapperPersistenceImpl
 	 * Clears the cache for all user ID mappers.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1176,7 +1175,7 @@ public class UserIdMapperPersistenceImpl
 	 * Clears the cache for the user ID mapper.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1207,20 +1206,18 @@ public class UserIdMapperPersistenceImpl
 			userIdMapperModelImpl.getUserId(), userIdMapperModelImpl.getType()
 		};
 
+		FinderCacheUtil.putResult(_finderPathCountByU_T, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathCountByU_T, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_T, args, userIdMapperModelImpl, false);
+			_finderPathFetchByU_T, args, userIdMapperModelImpl);
 
 		args = new Object[] {
 			userIdMapperModelImpl.getType(),
 			userIdMapperModelImpl.getExternalUserId()
 		};
 
+		FinderCacheUtil.putResult(_finderPathCountByT_E, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathCountByT_E, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByT_E, args, userIdMapperModelImpl, false);
+			_finderPathFetchByT_E, args, userIdMapperModelImpl);
 	}
 
 	/**
@@ -1644,24 +1641,21 @@ public class UserIdMapperPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new UserIdMapperModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", UserIdMapper.class.getName()
-			).build());
+			ArgumentsResolver.class, new UserIdMapperModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUserId = _createFinderPath(
+		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1669,31 +1663,31 @@ public class UserIdMapperPersistenceImpl
 			},
 			new String[] {"userId"}, true);
 
-		_finderPathWithoutPaginationFindByUserId = _createFinderPath(
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
-		_finderPathCountByUserId = _createFinderPath(
+		_finderPathCountByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_finderPathFetchByU_T = _createFinderPath(
+		_finderPathFetchByU_T = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "type_"}, true);
 
-		_finderPathCountByU_T = _createFinderPath(
+		_finderPathCountByU_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "type_"}, false);
 
-		_finderPathFetchByT_E = _createFinderPath(
+		_finderPathFetchByT_E = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"type_", "externalUserId"}, true);
 
-		_finderPathCountByT_E = _createFinderPath(
+		_finderPathCountByT_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_E",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"type_", "externalUserId"}, false);
@@ -1703,12 +1697,6 @@ public class UserIdMapperPersistenceImpl
 		EntityCacheUtil.removeCache(UserIdMapperImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_USERIDMAPPER =
@@ -1737,31 +1725,13 @@ public class UserIdMapperPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class UserIdMapperModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1810,6 +1780,16 @@ public class UserIdMapperPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return UserIdMapperImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return UserIdMapperTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

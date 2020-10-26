@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -46,7 +46,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1523,11 +1522,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 			commerceAddressRestrictionModelImpl.getCommerceCountryId()
 		};
 
+		finderCache.putResult(_finderPathCountByC_C_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByC_C_C, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByC_C_C, args, commerceAddressRestrictionModelImpl,
-			false);
+			_finderPathFetchByC_C_C, args, commerceAddressRestrictionModelImpl);
 	}
 
 	/**
@@ -2003,23 +2000,21 @@ public class CommerceAddressRestrictionPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new CommerceAddressRestrictionModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name",
-				CommerceAddressRestriction.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCommerceCountryId = _createFinderPath(
+		_finderPathWithPaginationFindByCommerceCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceCountryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2027,17 +2022,17 @@ public class CommerceAddressRestrictionPersistenceImpl
 			},
 			new String[] {"commerceCountryId"}, true);
 
-		_finderPathWithoutPaginationFindByCommerceCountryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCommerceCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] {Long.class.getName()},
 			new String[] {"commerceCountryId"}, true);
 
-		_finderPathCountByCommerceCountryId = _createFinderPath(
+		_finderPathCountByCommerceCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceCountryId", new String[] {Long.class.getName()},
 			new String[] {"commerceCountryId"}, false);
 
-		_finderPathWithPaginationFindByC_C = _createFinderPath(
+		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2046,24 +2041,24 @@ public class CommerceAddressRestrictionPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK"}, true);
 
-		_finderPathWithoutPaginationFindByC_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
 
-		_finderPathCountByC_C = _createFinderPath(
+		_finderPathCountByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
-		_finderPathFetchByC_C_C = _createFinderPath(
+		_finderPathFetchByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "commerceCountryId"}, true);
 
-		_finderPathCountByC_C_C = _createFinderPath(
+		_finderPathCountByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -2076,12 +2071,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		entityCache.removeCache(CommerceAddressRestrictionImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private BundleContext _bundleContext;
@@ -2116,27 +2105,13 @@ public class CommerceAddressRestrictionPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAddressRestrictionPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class CommerceAddressRestrictionModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2190,6 +2165,16 @@ public class CommerceAddressRestrictionPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return CommerceAddressRestrictionImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return CommerceAddressRestrictionTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

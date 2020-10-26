@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,7 +53,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9923,7 +9922,7 @@ public class TasksEntryPersistenceImpl
 	 * Clears the cache for all tasks entries.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -9937,7 +9936,7 @@ public class TasksEntryPersistenceImpl
 	 * Clears the cache for the tasks entry.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -10397,24 +10396,21 @@ public class TasksEntryPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new TasksEntryModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", TasksEntry.class.getName()
-			).build());
+			ArgumentsResolver.class, new TasksEntryModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10422,17 +10418,17 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			true);
 
-		_finderPathCountByGroupId = _createFinderPath(
+		_finderPathCountByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathWithPaginationFindByUserId = _createFinderPath(
+		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10440,16 +10436,16 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"userId"}, true);
 
-		_finderPathWithoutPaginationFindByUserId = _createFinderPath(
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
-		_finderPathCountByUserId = _createFinderPath(
+		_finderPathCountByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_finderPathWithPaginationFindByAssigneeUserId = _createFinderPath(
+		_finderPathWithPaginationFindByAssigneeUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssigneeUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10457,17 +10453,17 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"assigneeUserId"}, true);
 
-		_finderPathWithoutPaginationFindByAssigneeUserId = _createFinderPath(
+		_finderPathWithoutPaginationFindByAssigneeUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssigneeUserId",
 			new String[] {Long.class.getName()},
 			new String[] {"assigneeUserId"}, true);
 
-		_finderPathCountByAssigneeUserId = _createFinderPath(
+		_finderPathCountByAssigneeUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssigneeUserId",
 			new String[] {Long.class.getName()},
 			new String[] {"assigneeUserId"}, false);
 
-		_finderPathWithPaginationFindByResolverUserId = _createFinderPath(
+		_finderPathWithPaginationFindByResolverUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResolverUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10475,17 +10471,17 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"resolverUserId"}, true);
 
-		_finderPathWithoutPaginationFindByResolverUserId = _createFinderPath(
+		_finderPathWithoutPaginationFindByResolverUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResolverUserId",
 			new String[] {Long.class.getName()},
 			new String[] {"resolverUserId"}, true);
 
-		_finderPathCountByResolverUserId = _createFinderPath(
+		_finderPathCountByResolverUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByResolverUserId",
 			new String[] {Long.class.getName()},
 			new String[] {"resolverUserId"}, false);
 
-		_finderPathWithPaginationFindByG_U = _createFinderPath(
+		_finderPathWithPaginationFindByG_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10494,17 +10490,17 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId"}, true);
 
-		_finderPathWithoutPaginationFindByG_U = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "userId"}, true);
 
-		_finderPathCountByG_U = _createFinderPath(
+		_finderPathCountByG_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "userId"}, false);
 
-		_finderPathWithPaginationFindByG_A = _createFinderPath(
+		_finderPathWithPaginationFindByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10513,17 +10509,17 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "assigneeUserId"}, true);
 
-		_finderPathWithoutPaginationFindByG_A = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "assigneeUserId"}, true);
 
-		_finderPathCountByG_A = _createFinderPath(
+		_finderPathCountByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "assigneeUserId"}, false);
 
-		_finderPathWithPaginationFindByG_R = _createFinderPath(
+		_finderPathWithPaginationFindByG_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10532,17 +10528,17 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "resolverUserId"}, true);
 
-		_finderPathWithoutPaginationFindByG_R = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "resolverUserId"}, true);
 
-		_finderPathCountByG_R = _createFinderPath(
+		_finderPathCountByG_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "resolverUserId"}, false);
 
-		_finderPathWithPaginationFindByU_S = _createFinderPath(
+		_finderPathWithPaginationFindByU_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10551,22 +10547,22 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"userId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByU_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByU_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"userId", "status"}, true);
 
-		_finderPathCountByU_S = _createFinderPath(
+		_finderPathCountByU_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"userId", "status"}, false);
 
-		_finderPathWithPaginationCountByU_S = _createFinderPath(
+		_finderPathWithPaginationCountByU_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"userId", "status"}, false);
 
-		_finderPathWithPaginationFindByA_S = _createFinderPath(
+		_finderPathWithPaginationFindByA_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10575,22 +10571,22 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"assigneeUserId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByA_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByA_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"assigneeUserId", "status"}, true);
 
-		_finderPathCountByA_S = _createFinderPath(
+		_finderPathCountByA_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"assigneeUserId", "status"}, false);
 
-		_finderPathWithPaginationCountByA_S = _createFinderPath(
+		_finderPathWithPaginationCountByA_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"assigneeUserId", "status"}, false);
 
-		_finderPathWithPaginationFindByG_U_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10599,7 +10595,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByG_U_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10607,7 +10603,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, true);
 
-		_finderPathCountByG_U_S = _createFinderPath(
+		_finderPathCountByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10615,7 +10611,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, false);
 
-		_finderPathWithPaginationCountByG_U_S = _createFinderPath(
+		_finderPathWithPaginationCountByG_U_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10623,7 +10619,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "userId", "status"}, false);
 
-		_finderPathWithPaginationFindByG_A_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10632,7 +10628,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "assigneeUserId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByG_A_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10640,7 +10636,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "assigneeUserId", "status"}, true);
 
-		_finderPathCountByG_A_S = _createFinderPath(
+		_finderPathCountByG_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10648,7 +10644,7 @@ public class TasksEntryPersistenceImpl
 			},
 			new String[] {"groupId", "assigneeUserId", "status"}, false);
 
-		_finderPathWithPaginationCountByG_A_S = _createFinderPath(
+		_finderPathWithPaginationCountByG_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10661,12 +10657,6 @@ public class TasksEntryPersistenceImpl
 		EntityCacheUtil.removeCache(TasksEntryImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_TASKSENTRY =
@@ -10715,31 +10705,13 @@ public class TasksEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		TasksEntryPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class TasksEntryModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -10788,6 +10760,16 @@ public class TasksEntryPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return TasksEntryImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return TasksEntryTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

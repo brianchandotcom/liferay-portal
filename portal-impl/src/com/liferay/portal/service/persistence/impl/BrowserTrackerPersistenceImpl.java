@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.model.BrowserTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.BrowserTrackerImpl;
@@ -46,7 +46,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -326,7 +325,7 @@ public class BrowserTrackerPersistenceImpl
 	 * Clears the cache for all browser trackers.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -340,7 +339,7 @@ public class BrowserTrackerPersistenceImpl
 	 * Clears the cache for the browser tracker.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -371,9 +370,9 @@ public class BrowserTrackerPersistenceImpl
 		Object[] args = new Object[] {browserTrackerModelImpl.getUserId()};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByUserId, args, Long.valueOf(1), false);
+			_finderPathCountByUserId, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByUserId, args, browserTrackerModelImpl, false);
+			_finderPathFetchByUserId, args, browserTrackerModelImpl);
 	}
 
 	/**
@@ -794,28 +793,26 @@ public class BrowserTrackerPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new BrowserTrackerModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", BrowserTracker.class.getName()
-			).build());
+			ArgumentsResolver.class,
+			new BrowserTrackerModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathFetchByUserId = _createFinderPath(
+		_finderPathFetchByUserId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
-		_finderPathCountByUserId = _createFinderPath(
+		_finderPathCountByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
@@ -825,12 +822,6 @@ public class BrowserTrackerPersistenceImpl
 		EntityCacheUtil.removeCache(BrowserTrackerImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_BROWSERTRACKER =
@@ -856,31 +847,13 @@ public class BrowserTrackerPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BrowserTrackerPersistenceImpl.class);
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class BrowserTrackerModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -931,6 +904,16 @@ public class BrowserTrackerPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return BrowserTrackerImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return BrowserTrackerTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -12567,7 +12567,7 @@ public class DLFolderPersistenceImpl
 	 * Clears the cache for all document library folders.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -12581,7 +12581,7 @@ public class DLFolderPersistenceImpl
 	 * Clears the cache for the document library folder.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -12613,19 +12613,18 @@ public class DLFolderPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+			_finderPathCountByUUID_G, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByUUID_G, args, dlFolderModelImpl, false);
+			_finderPathFetchByUUID_G, args, dlFolderModelImpl);
 
 		args = new Object[] {
 			dlFolderModelImpl.getRepositoryId(),
 			dlFolderModelImpl.isMountPoint()
 		};
 
+		FinderCacheUtil.putResult(_finderPathCountByR_M, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathCountByR_M, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByR_M, args, dlFolderModelImpl, false);
+			_finderPathFetchByR_M, args, dlFolderModelImpl);
 
 		args = new Object[] {
 			dlFolderModelImpl.getGroupId(),
@@ -12633,9 +12632,9 @@ public class DLFolderPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByG_P_N, args, Long.valueOf(1), false);
+			_finderPathCountByG_P_N, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_N, args, dlFolderModelImpl, false);
+			_finderPathFetchByG_P_N, args, dlFolderModelImpl);
 	}
 
 	/**
@@ -13645,29 +13644,26 @@ public class DLFolderPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new DLFolderModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", DLFolder.class.getName()
-			).build());
+			ArgumentsResolver.class, new DLFolderModelArgumentsResolver());
 
 		dlFolderToDLFileEntryTypeTableMapper =
 			TableMapperFactory.getTableMapper(
 				"DLFileEntryTypes_DLFolders", "companyId", "folderId",
 				"fileEntryTypeId", this, dlFileEntryTypePersistence);
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -13675,27 +13671,27 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathFetchByUUID_G = _createFinderPath(
+		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = _createFinderPath(
+		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -13704,17 +13700,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13722,17 +13718,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			true);
 
-		_finderPathCountByGroupId = _createFinderPath(
+		_finderPathCountByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13740,17 +13736,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathWithPaginationFindByRepositoryId = _createFinderPath(
+		_finderPathWithPaginationFindByRepositoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRepositoryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13758,17 +13754,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"repositoryId"}, true);
 
-		_finderPathWithoutPaginationFindByRepositoryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByRepositoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRepositoryId",
 			new String[] {Long.class.getName()}, new String[] {"repositoryId"},
 			true);
 
-		_finderPathCountByRepositoryId = _createFinderPath(
+		_finderPathCountByRepositoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRepositoryId",
 			new String[] {Long.class.getName()}, new String[] {"repositoryId"},
 			false);
 
-		_finderPathWithPaginationFindByG_P = _createFinderPath(
+		_finderPathWithPaginationFindByG_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13777,17 +13773,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "parentFolderId"}, true);
 
-		_finderPathWithoutPaginationFindByG_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentFolderId"}, true);
 
-		_finderPathCountByG_P = _createFinderPath(
+		_finderPathCountByG_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentFolderId"}, false);
 
-		_finderPathWithPaginationFindByC_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByC_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -13796,22 +13792,22 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"companyId", "status"}, true);
 
-		_finderPathWithPaginationCountByC_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByC_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_finderPathFetchByR_M = _createFinderPath(
+		_finderPathFetchByR_M = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_M",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"repositoryId", "mountPoint"}, true);
 
-		_finderPathCountByR_M = _createFinderPath(
+		_finderPathCountByR_M = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_M",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"repositoryId", "mountPoint"}, false);
 
-		_finderPathWithPaginationFindByR_P = _createFinderPath(
+		_finderPathWithPaginationFindByR_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13820,17 +13816,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"repositoryId", "parentFolderId"}, true);
 
-		_finderPathWithoutPaginationFindByR_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByR_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"repositoryId", "parentFolderId"}, true);
 
-		_finderPathCountByR_P = _createFinderPath(
+		_finderPathCountByR_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"repositoryId", "parentFolderId"}, false);
 
-		_finderPathWithPaginationFindByP_N = _createFinderPath(
+		_finderPathWithPaginationFindByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -13839,17 +13835,17 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"parentFolderId", "name"}, true);
 
-		_finderPathWithoutPaginationFindByP_N = _createFinderPath(
+		_finderPathWithoutPaginationFindByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"parentFolderId", "name"}, true);
 
-		_finderPathCountByP_N = _createFinderPath(
+		_finderPathCountByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"parentFolderId", "name"}, false);
 
-		_finderPathWithPaginationFindByG_M_P = _createFinderPath(
+		_finderPathWithPaginationFindByG_M_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13858,7 +13854,7 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "mountPoint", "parentFolderId"}, true);
 
-		_finderPathWithoutPaginationFindByG_M_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_M_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13866,7 +13862,7 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "mountPoint", "parentFolderId"}, true);
 
-		_finderPathCountByG_M_P = _createFinderPath(
+		_finderPathCountByG_M_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13874,7 +13870,7 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "mountPoint", "parentFolderId"}, false);
 
-		_finderPathFetchByG_P_N = _createFinderPath(
+		_finderPathFetchByG_P_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13882,7 +13878,7 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "parentFolderId", "name"}, true);
 
-		_finderPathCountByG_P_N = _createFinderPath(
+		_finderPathCountByG_P_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13890,7 +13886,7 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "parentFolderId", "name"}, false);
 
-		_finderPathWithPaginationFindByF_C_P_NotS = _createFinderPath(
+		_finderPathWithPaginationFindByF_C_P_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_C_P_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13901,7 +13897,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"folderId", "companyId", "parentFolderId", "status"},
 			true);
 
-		_finderPathWithPaginationCountByF_C_P_NotS = _createFinderPath(
+		_finderPathWithPaginationCountByF_C_P_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByF_C_P_NotS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13910,7 +13906,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"folderId", "companyId", "parentFolderId", "status"},
 			false);
 
-		_finderPathWithPaginationFindByG_M_P_H = _createFinderPath(
+		_finderPathWithPaginationFindByG_M_P_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_P_H",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13921,7 +13917,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "mountPoint", "parentFolderId", "hidden_"},
 			true);
 
-		_finderPathWithoutPaginationFindByG_M_P_H = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_M_P_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M_P_H",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13930,7 +13926,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "mountPoint", "parentFolderId", "hidden_"},
 			true);
 
-		_finderPathCountByG_M_P_H = _createFinderPath(
+		_finderPathCountByG_M_P_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M_P_H",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13939,7 +13935,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "mountPoint", "parentFolderId", "hidden_"},
 			false);
 
-		_finderPathWithPaginationFindByG_M_T_H = _createFinderPath(
+		_finderPathWithPaginationFindByG_M_T_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_T_H",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13950,7 +13946,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "mountPoint", "treePath", "hidden_"},
 			true);
 
-		_finderPathWithPaginationCountByG_M_T_H = _createFinderPath(
+		_finderPathWithPaginationCountByG_M_T_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M_T_H",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -13959,7 +13955,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "mountPoint", "treePath", "hidden_"},
 			false);
 
-		_finderPathWithPaginationFindByG_P_H_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_P_H_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_H_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13970,7 +13966,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "parentFolderId", "hidden_", "status"},
 			true);
 
-		_finderPathWithoutPaginationFindByG_P_H_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_P_H_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_H_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13979,7 +13975,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "parentFolderId", "hidden_", "status"},
 			true);
 
-		_finderPathCountByG_P_H_S = _createFinderPath(
+		_finderPathCountByG_P_H_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_H_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -13988,7 +13984,7 @@ public class DLFolderPersistenceImpl
 			new String[] {"groupId", "parentFolderId", "hidden_", "status"},
 			false);
 
-		_finderPathWithPaginationFindByG_M_P_H_S = _createFinderPath(
+		_finderPathWithPaginationFindByG_M_P_H_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_P_H_S",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -14001,7 +13997,7 @@ public class DLFolderPersistenceImpl
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByG_M_P_H_S = _createFinderPath(
+		_finderPathWithoutPaginationFindByG_M_P_H_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M_P_H_S",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -14013,7 +14009,7 @@ public class DLFolderPersistenceImpl
 			},
 			true);
 
-		_finderPathCountByG_M_P_H_S = _createFinderPath(
+		_finderPathCountByG_M_P_H_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M_P_H_S",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -14030,12 +14026,6 @@ public class DLFolderPersistenceImpl
 		EntityCacheUtil.removeCache(DLFolderImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 
 		TableMapperFactory.removeTableMapper("DLFileEntryTypes_DLFolders");
 	}
@@ -14096,31 +14086,13 @@ public class DLFolderPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "hidden"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DLFolderModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -14168,6 +14140,16 @@ public class DLFolderPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DLFolderImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DLFolderTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

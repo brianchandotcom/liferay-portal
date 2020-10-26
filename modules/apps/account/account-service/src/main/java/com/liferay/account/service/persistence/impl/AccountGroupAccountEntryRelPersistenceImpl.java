@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1486,11 +1485,10 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			accountGroupAccountEntryRelModelImpl.getAccountEntryId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByAGI_AEI, args, Long.valueOf(1), false);
+		finderCache.putResult(_finderPathCountByAGI_AEI, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByAGI_AEI, args,
-			accountGroupAccountEntryRelModelImpl, false);
+			accountGroupAccountEntryRelModelImpl);
 	}
 
 	/**
@@ -1944,23 +1942,21 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new AccountGroupAccountEntryRelModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name",
-				AccountGroupAccountEntryRel.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByAccountGroupId = _createFinderPath(
+		_finderPathWithPaginationFindByAccountGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1968,17 +1964,17 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			},
 			new String[] {"accountGroupId"}, true);
 
-		_finderPathWithoutPaginationFindByAccountGroupId = _createFinderPath(
+		_finderPathWithoutPaginationFindByAccountGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountGroupId",
 			new String[] {Long.class.getName()},
 			new String[] {"accountGroupId"}, true);
 
-		_finderPathCountByAccountGroupId = _createFinderPath(
+		_finderPathCountByAccountGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountGroupId",
 			new String[] {Long.class.getName()},
 			new String[] {"accountGroupId"}, false);
 
-		_finderPathWithPaginationFindByAccountEntryId = _createFinderPath(
+		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1986,22 +1982,22 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			},
 			new String[] {"accountEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByAccountEntryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
 			new String[] {Long.class.getName()},
 			new String[] {"accountEntryId"}, true);
 
-		_finderPathCountByAccountEntryId = _createFinderPath(
+		_finderPathCountByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
 			new String[] {Long.class.getName()},
 			new String[] {"accountEntryId"}, false);
 
-		_finderPathFetchByAGI_AEI = _createFinderPath(
+		_finderPathFetchByAGI_AEI = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByAGI_AEI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountGroupId", "accountEntryId"}, true);
 
-		_finderPathCountByAGI_AEI = _createFinderPath(
+		_finderPathCountByAGI_AEI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAGI_AEI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountGroupId", "accountEntryId"}, false);
@@ -2013,12 +2009,6 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			AccountGroupAccountEntryRelImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -2088,27 +2078,13 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class AccountGroupAccountEntryRelModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2164,6 +2140,16 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return AccountGroupAccountEntryRelImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return AccountGroupAccountEntryRelTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

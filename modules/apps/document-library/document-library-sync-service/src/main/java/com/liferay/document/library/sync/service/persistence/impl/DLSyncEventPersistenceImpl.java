@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -863,10 +862,9 @@ public class DLSyncEventPersistenceImpl
 
 		Object[] args = new Object[] {dlSyncEventModelImpl.getTypePK()};
 
+		finderCache.putResult(_finderPathCountByTypePK, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByTypePK, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByTypePK, args, dlSyncEventModelImpl, false);
+			_finderPathFetchByTypePK, args, dlSyncEventModelImpl);
 	}
 
 	/**
@@ -1289,22 +1287,21 @@ public class DLSyncEventPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new DLSyncEventModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DLSyncEvent.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByModifiedTime = _createFinderPath(
+		_finderPathWithPaginationFindByModifiedTime = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedTime",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1312,16 +1309,16 @@ public class DLSyncEventPersistenceImpl
 			},
 			new String[] {"modifiedTime"}, true);
 
-		_finderPathWithPaginationCountByModifiedTime = _createFinderPath(
+		_finderPathWithPaginationCountByModifiedTime = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByModifiedTime",
 			new String[] {Long.class.getName()}, new String[] {"modifiedTime"},
 			false);
 
-		_finderPathFetchByTypePK = _createFinderPath(
+		_finderPathFetchByTypePK = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
 			new String[] {Long.class.getName()}, new String[] {"typePK"}, true);
 
-		_finderPathCountByTypePK = _createFinderPath(
+		_finderPathCountByTypePK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTypePK",
 			new String[] {Long.class.getName()}, new String[] {"typePK"},
 			false);
@@ -1332,12 +1329,6 @@ public class DLSyncEventPersistenceImpl
 		entityCache.removeCache(DLSyncEventImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1409,27 +1400,13 @@ public class DLSyncEventPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DLSyncEventModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1478,6 +1455,16 @@ public class DLSyncEventPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DLSyncEventImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DLSyncEventTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

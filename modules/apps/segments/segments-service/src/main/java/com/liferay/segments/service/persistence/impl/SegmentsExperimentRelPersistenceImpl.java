@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchExperimentRelException;
@@ -999,10 +999,9 @@ public class SegmentsExperimentRelPersistenceImpl
 			segmentsExperimentRelModelImpl.getSegmentsExperienceId()
 		};
 
+		finderCache.putResult(_finderPathCountByS_S, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByS_S, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByS_S, args, segmentsExperimentRelModelImpl, false);
+			_finderPathFetchByS_S, args, segmentsExperimentRelModelImpl);
 	}
 
 	/**
@@ -1671,22 +1670,21 @@ public class SegmentsExperimentRelPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new SegmentsExperimentRelModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", SegmentsExperimentRel.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindBySegmentsExperimentId = _createFinderPath(
+		_finderPathWithPaginationFindBySegmentsExperimentId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findBySegmentsExperimentId",
 			new String[] {
@@ -1695,25 +1693,23 @@ public class SegmentsExperimentRelPersistenceImpl
 			},
 			new String[] {"segmentsExperimentId"}, true);
 
-		_finderPathWithoutPaginationFindBySegmentsExperimentId =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findBySegmentsExperimentId",
-				new String[] {Long.class.getName()},
-				new String[] {"segmentsExperimentId"}, true);
+		_finderPathWithoutPaginationFindBySegmentsExperimentId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findBySegmentsExperimentId", new String[] {Long.class.getName()},
+			new String[] {"segmentsExperimentId"}, true);
 
-		_finderPathCountBySegmentsExperimentId = _createFinderPath(
+		_finderPathCountBySegmentsExperimentId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBySegmentsExperimentId", new String[] {Long.class.getName()},
 			new String[] {"segmentsExperimentId"}, false);
 
-		_finderPathFetchByS_S = _createFinderPath(
+		_finderPathFetchByS_S = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
 			true);
 
-		_finderPathCountByS_S = _createFinderPath(
+		_finderPathCountByS_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
@@ -1725,12 +1721,6 @@ public class SegmentsExperimentRelPersistenceImpl
 		entityCache.removeCache(SegmentsExperimentRelImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1803,27 +1793,13 @@ public class SegmentsExperimentRelPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class SegmentsExperimentRelModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1876,6 +1852,16 @@ public class SegmentsExperimentRelPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return SegmentsExperimentRelImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return SegmentsExperimentRelTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

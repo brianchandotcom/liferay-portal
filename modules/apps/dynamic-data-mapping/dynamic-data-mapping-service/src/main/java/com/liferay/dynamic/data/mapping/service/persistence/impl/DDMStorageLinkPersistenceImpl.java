@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -2881,10 +2881,9 @@ public class DDMStorageLinkPersistenceImpl
 
 		Object[] args = new Object[] {ddmStorageLinkModelImpl.getClassPK()};
 
+		finderCache.putResult(_finderPathCountByClassPK, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByClassPK, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByClassPK, args, ddmStorageLinkModelImpl, false);
+			_finderPathFetchByClassPK, args, ddmStorageLinkModelImpl);
 	}
 
 	/**
@@ -3519,22 +3518,21 @@ public class DDMStorageLinkPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new DDMStorageLinkModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DDMStorageLink.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -3542,17 +3540,17 @@ public class DDMStorageLinkPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -3561,27 +3559,27 @@ public class DDMStorageLinkPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathFetchByClassPK = _createFinderPath(
+		_finderPathFetchByClassPK = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
 			true);
 
-		_finderPathCountByClassPK = _createFinderPath(
+		_finderPathCountByClassPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
 			false);
 
-		_finderPathWithPaginationFindByStructureId = _createFinderPath(
+		_finderPathWithPaginationFindByStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -3589,17 +3587,17 @@ public class DDMStorageLinkPersistenceImpl
 			},
 			new String[] {"structureId"}, true);
 
-		_finderPathWithoutPaginationFindByStructureId = _createFinderPath(
+		_finderPathWithoutPaginationFindByStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
 			new String[] {Long.class.getName()}, new String[] {"structureId"},
 			true);
 
-		_finderPathCountByStructureId = _createFinderPath(
+		_finderPathCountByStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureId",
 			new String[] {Long.class.getName()}, new String[] {"structureId"},
 			false);
 
-		_finderPathWithPaginationFindByStructureVersionId = _createFinderPath(
+		_finderPathWithPaginationFindByStructureVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureVersionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -3607,18 +3605,17 @@ public class DDMStorageLinkPersistenceImpl
 			},
 			new String[] {"structureVersionId"}, true);
 
-		_finderPathWithoutPaginationFindByStructureVersionId =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByStructureVersionId", new String[] {Long.class.getName()},
-				new String[] {"structureVersionId"}, true);
+		_finderPathWithoutPaginationFindByStructureVersionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByStructureVersionId", new String[] {Long.class.getName()},
+			new String[] {"structureVersionId"}, true);
 
-		_finderPathCountByStructureVersionId = _createFinderPath(
+		_finderPathCountByStructureVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByStructureVersionId", new String[] {Long.class.getName()},
 			new String[] {"structureVersionId"}, false);
 
-		_finderPathWithPaginationCountByStructureVersionId = _createFinderPath(
+		_finderPathWithPaginationCountByStructureVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByStructureVersionId",
 			new String[] {Long.class.getName()},
 			new String[] {"structureVersionId"}, false);
@@ -3629,12 +3626,6 @@ public class DDMStorageLinkPersistenceImpl
 		entityCache.removeCache(DDMStorageLinkImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -3709,27 +3700,13 @@ public class DDMStorageLinkPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DDMStorageLinkModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -3780,6 +3757,16 @@ public class DDMStorageLinkPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DDMStorageLinkImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DDMStorageLinkTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

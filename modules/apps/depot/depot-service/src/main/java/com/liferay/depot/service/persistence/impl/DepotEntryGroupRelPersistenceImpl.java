@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -52,7 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3913,20 +3912,18 @@ public class DepotEntryGroupRelPersistenceImpl
 			depotEntryGroupRelModelImpl.getGroupId()
 		};
 
+		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, depotEntryGroupRelModelImpl, false);
+			_finderPathFetchByUUID_G, args, depotEntryGroupRelModelImpl);
 
 		args = new Object[] {
 			depotEntryGroupRelModelImpl.getDepotEntryId(),
 			depotEntryGroupRelModelImpl.getToGroupId()
 		};
 
+		finderCache.putResult(_finderPathCountByD_TGI, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByD_TGI, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByD_TGI, args, depotEntryGroupRelModelImpl, false);
+			_finderPathFetchByD_TGI, args, depotEntryGroupRelModelImpl);
 	}
 
 	/**
@@ -4399,22 +4396,21 @@ public class DepotEntryGroupRelPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new DepotEntryGroupRelModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DepotEntryGroupRel.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -4422,27 +4418,27 @@ public class DepotEntryGroupRelPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathFetchByUUID_G = _createFinderPath(
+		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = _createFinderPath(
+		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -4451,17 +4447,17 @@ public class DepotEntryGroupRelPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByDepotEntryId = _createFinderPath(
+		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -4469,17 +4465,17 @@ public class DepotEntryGroupRelPersistenceImpl
 			},
 			new String[] {"depotEntryId"}, true);
 
-		_finderPathWithoutPaginationFindByDepotEntryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
 			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
 			true);
 
-		_finderPathCountByDepotEntryId = _createFinderPath(
+		_finderPathCountByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
 			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
 			false);
 
-		_finderPathWithPaginationFindByToGroupId = _createFinderPath(
+		_finderPathWithPaginationFindByToGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -4487,17 +4483,17 @@ public class DepotEntryGroupRelPersistenceImpl
 			},
 			new String[] {"toGroupId"}, true);
 
-		_finderPathWithoutPaginationFindByToGroupId = _createFinderPath(
+		_finderPathWithoutPaginationFindByToGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByToGroupId",
 			new String[] {Long.class.getName()}, new String[] {"toGroupId"},
 			true);
 
-		_finderPathCountByToGroupId = _createFinderPath(
+		_finderPathCountByToGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToGroupId",
 			new String[] {Long.class.getName()}, new String[] {"toGroupId"},
 			false);
 
-		_finderPathWithPaginationFindByDDMSA_TGI = _createFinderPath(
+		_finderPathWithPaginationFindByDDMSA_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMSA_TGI",
 			new String[] {
 				Boolean.class.getName(), Long.class.getName(),
@@ -4506,27 +4502,27 @@ public class DepotEntryGroupRelPersistenceImpl
 			},
 			new String[] {"ddmStructuresAvailable", "toGroupId"}, true);
 
-		_finderPathWithoutPaginationFindByDDMSA_TGI = _createFinderPath(
+		_finderPathWithoutPaginationFindByDDMSA_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMSA_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			new String[] {"ddmStructuresAvailable", "toGroupId"}, true);
 
-		_finderPathCountByDDMSA_TGI = _createFinderPath(
+		_finderPathCountByDDMSA_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMSA_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			new String[] {"ddmStructuresAvailable", "toGroupId"}, false);
 
-		_finderPathFetchByD_TGI = _createFinderPath(
+		_finderPathFetchByD_TGI = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"depotEntryId", "toGroupId"}, true);
 
-		_finderPathCountByD_TGI = _createFinderPath(
+		_finderPathCountByD_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"depotEntryId", "toGroupId"}, false);
 
-		_finderPathWithPaginationFindByS_TGI = _createFinderPath(
+		_finderPathWithPaginationFindByS_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_TGI",
 			new String[] {
 				Boolean.class.getName(), Long.class.getName(),
@@ -4535,12 +4531,12 @@ public class DepotEntryGroupRelPersistenceImpl
 			},
 			new String[] {"searchable", "toGroupId"}, true);
 
-		_finderPathWithoutPaginationFindByS_TGI = _createFinderPath(
+		_finderPathWithoutPaginationFindByS_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			new String[] {"searchable", "toGroupId"}, true);
 
-		_finderPathCountByS_TGI = _createFinderPath(
+		_finderPathCountByS_TGI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			new String[] {"searchable", "toGroupId"}, false);
@@ -4551,12 +4547,6 @@ public class DepotEntryGroupRelPersistenceImpl
 		entityCache.removeCache(DepotEntryGroupRelImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -4628,27 +4618,13 @@ public class DepotEntryGroupRelPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DepotEntryGroupRelModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -4700,6 +4676,16 @@ public class DepotEntryGroupRelPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DepotEntryGroupRelImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DepotEntryGroupRelTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

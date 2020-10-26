@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -9274,7 +9274,7 @@ public class OrganizationPersistenceImpl
 	 * Clears the cache for all organizations.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -9288,7 +9288,7 @@ public class OrganizationPersistenceImpl
 	 * Clears the cache for the organization.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -9320,10 +9320,9 @@ public class OrganizationPersistenceImpl
 			organizationModelImpl.getName()
 		};
 
+		FinderCacheUtil.putResult(_finderPathCountByC_N, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathCountByC_N, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_N, args, organizationModelImpl, false);
+			_finderPathFetchByC_N, args, organizationModelImpl);
 
 		args = new Object[] {
 			organizationModelImpl.getCompanyId(),
@@ -9331,9 +9330,9 @@ public class OrganizationPersistenceImpl
 		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByC_ERC, args, Long.valueOf(1), false);
+			_finderPathCountByC_ERC, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByC_ERC, args, organizationModelImpl, false);
+			_finderPathFetchByC_ERC, args, organizationModelImpl);
 	}
 
 	/**
@@ -10627,10 +10626,7 @@ public class OrganizationPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new OrganizationModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", Organization.class.getName()
-			).build());
+			ArgumentsResolver.class, new OrganizationModelArgumentsResolver());
 
 		organizationToGroupTableMapper = TableMapperFactory.getTableMapper(
 			"Groups_Orgs", "companyId", "organizationId", "groupId", this,
@@ -10640,19 +10636,19 @@ public class OrganizationPersistenceImpl
 			"Users_Orgs", "companyId", "organizationId", "userId", this,
 			userPersistence);
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -10660,17 +10656,17 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -10679,17 +10675,17 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10697,17 +10693,17 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByCompanyId = _createFinderPath(
+		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathWithPaginationFindByLocations = _createFinderPath(
+		_finderPathWithPaginationFindByLocations = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLocations",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -10715,17 +10711,17 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByLocations = _createFinderPath(
+		_finderPathWithoutPaginationFindByLocations = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLocations",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
-		_finderPathCountByLocations = _createFinderPath(
+		_finderPathCountByLocations = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLocations",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathWithPaginationFindByC_P = _createFinderPath(
+		_finderPathWithPaginationFindByC_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10734,17 +10730,17 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId", "parentOrganizationId"}, true);
 
-		_finderPathWithoutPaginationFindByC_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "parentOrganizationId"}, true);
 
-		_finderPathCountByC_P = _createFinderPath(
+		_finderPathCountByC_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "parentOrganizationId"}, false);
 
-		_finderPathWithPaginationFindByC_T = _createFinderPath(
+		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -10753,22 +10749,22 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId", "treePath"}, true);
 
-		_finderPathWithPaginationCountByC_T = _createFinderPath(
+		_finderPathWithPaginationCountByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "treePath"}, false);
 
-		_finderPathFetchByC_N = _createFinderPath(
+		_finderPathFetchByC_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, true);
 
-		_finderPathCountByC_N = _createFinderPath(
+		_finderPathCountByC_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
 
-		_finderPathWithPaginationFindByC_LikeN = _createFinderPath(
+		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -10777,12 +10773,12 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId", "name"}, true);
 
-		_finderPathWithPaginationCountByC_LikeN = _createFinderPath(
+		_finderPathWithPaginationCountByC_LikeN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
 
-		_finderPathWithPaginationFindByO_C_P = _createFinderPath(
+		_finderPathWithPaginationFindByO_C_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_C_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10794,7 +10790,7 @@ public class OrganizationPersistenceImpl
 			},
 			true);
 
-		_finderPathWithPaginationCountByO_C_P = _createFinderPath(
+		_finderPathWithPaginationCountByO_C_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByO_C_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -10804,7 +10800,7 @@ public class OrganizationPersistenceImpl
 			},
 			false);
 
-		_finderPathWithPaginationFindByC_P_LikeN = _createFinderPath(
+		_finderPathWithPaginationFindByC_P_LikeN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_LikeN",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10813,7 +10809,7 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId", "parentOrganizationId", "name"}, true);
 
-		_finderPathWithPaginationCountByC_P_LikeN = _createFinderPath(
+		_finderPathWithPaginationCountByC_P_LikeN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_P_LikeN",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -10821,12 +10817,12 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId", "parentOrganizationId", "name"}, false);
 
-		_finderPathFetchByC_ERC = _createFinderPath(
+		_finderPathFetchByC_ERC = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, true);
 
-		_finderPathCountByC_ERC = _createFinderPath(
+		_finderPathCountByC_ERC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
@@ -10836,12 +10832,6 @@ public class OrganizationPersistenceImpl
 		EntityCacheUtil.removeCache(OrganizationImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 
 		TableMapperFactory.removeTableMapper("Groups_Orgs");
 		TableMapperFactory.removeTableMapper("Users_Orgs");
@@ -10908,31 +10898,13 @@ public class OrganizationPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type", "groups"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class OrganizationModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -10981,6 +10953,16 @@ public class OrganizationPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return OrganizationImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return OrganizationTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

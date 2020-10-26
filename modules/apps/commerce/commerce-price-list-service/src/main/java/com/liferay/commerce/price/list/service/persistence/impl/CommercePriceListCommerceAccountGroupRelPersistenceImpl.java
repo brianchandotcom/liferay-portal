@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2228,11 +2227,10 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				getCommerceAccountGroupId()
 		};
 
-		finderCache.putResult(
-			_finderPathCountByC_C, args, Long.valueOf(1), false);
+		finderCache.putResult(_finderPathCountByC_C, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByC_C, args,
-			commercePriceListCommerceAccountGroupRelModelImpl, false);
+			commercePriceListCommerceAccountGroupRelModelImpl);
 	}
 
 	/**
@@ -2757,23 +2755,21 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new CommercePriceListCommerceAccountGroupRelModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name",
-				CommercePriceListCommerceAccountGroupRel.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -2781,17 +2777,17 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -2800,17 +2796,17 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByCommercePriceListId = _createFinderPath(
+		_finderPathWithPaginationFindByCommercePriceListId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommercePriceListId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2818,25 +2814,23 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			},
 			new String[] {"commercePriceListId"}, true);
 
-		_finderPathWithoutPaginationFindByCommercePriceListId =
-			_createFinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommercePriceListId",
-				new String[] {Long.class.getName()},
-				new String[] {"commercePriceListId"}, true);
+		_finderPathWithoutPaginationFindByCommercePriceListId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCommercePriceListId", new String[] {Long.class.getName()},
+			new String[] {"commercePriceListId"}, true);
 
-		_finderPathCountByCommercePriceListId = _createFinderPath(
+		_finderPathCountByCommercePriceListId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommercePriceListId", new String[] {Long.class.getName()},
 			new String[] {"commercePriceListId"}, false);
 
-		_finderPathFetchByC_C = _createFinderPath(
+		_finderPathFetchByC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceAccountGroupId"},
 			true);
 
-		_finderPathCountByC_C = _createFinderPath(
+		_finderPathCountByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceAccountGroupId"},
@@ -2848,12 +2842,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			CommercePriceListCommerceAccountGroupRelImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private BundleContext _bundleContext;
@@ -2897,27 +2885,13 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			"uuid", "commercePriceListCommerceAccountGroupRelId", "order"
 		});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class
 		CommercePriceListCommerceAccountGroupRelModelArgumentsResolver
@@ -2976,6 +2950,17 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return CommercePriceListCommerceAccountGroupRelImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
+				getTableName();
 		}
 
 		private Object[] _getValue(

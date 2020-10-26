@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,7 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1897,7 +1896,7 @@ public class RegionPersistenceImpl
 	 * Clears the cache for all regions.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1911,7 +1910,7 @@ public class RegionPersistenceImpl
 	 * Clears the cache for the region.
 	 *
 	 * <p>
-	 * The <code>EntityCache</code> and <code>com.liferay.portal.kernel.dao.orm.FinderCache</code> are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1940,10 +1939,8 @@ public class RegionPersistenceImpl
 			regionModelImpl.getCountryId(), regionModelImpl.getRegionCode()
 		};
 
-		FinderCacheUtil.putResult(
-			_finderPathCountByC_R, args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_R, args, regionModelImpl, false);
+		FinderCacheUtil.putResult(_finderPathCountByC_R, args, Long.valueOf(1));
+		FinderCacheUtil.putResult(_finderPathFetchByC_R, args, regionModelImpl);
 	}
 
 	/**
@@ -2356,24 +2353,21 @@ public class RegionPersistenceImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_argumentsResolverServiceRegistration = registry.registerService(
-			ArgumentsResolver.class, new RegionModelArgumentsResolver(),
-			HashMapBuilder.<String, Object>put(
-				"model.class.name", Region.class.getName()
-			).build());
+			ArgumentsResolver.class, new RegionModelArgumentsResolver());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCountryId = _createFinderPath(
+		_finderPathWithPaginationFindByCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2381,17 +2375,17 @@ public class RegionPersistenceImpl
 			},
 			new String[] {"countryId"}, true);
 
-		_finderPathWithoutPaginationFindByCountryId = _createFinderPath(
+		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
 			new String[] {Long.class.getName()}, new String[] {"countryId"},
 			true);
 
-		_finderPathCountByCountryId = _createFinderPath(
+		_finderPathCountByCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
 			new String[] {Long.class.getName()}, new String[] {"countryId"},
 			false);
 
-		_finderPathWithPaginationFindByActive = _createFinderPath(
+		_finderPathWithPaginationFindByActive = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
 			new String[] {
 				Boolean.class.getName(), Integer.class.getName(),
@@ -2399,27 +2393,27 @@ public class RegionPersistenceImpl
 			},
 			new String[] {"active_"}, true);
 
-		_finderPathWithoutPaginationFindByActive = _createFinderPath(
+		_finderPathWithoutPaginationFindByActive = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
 			new String[] {Boolean.class.getName()}, new String[] {"active_"},
 			true);
 
-		_finderPathCountByActive = _createFinderPath(
+		_finderPathCountByActive = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
 			new String[] {Boolean.class.getName()}, new String[] {"active_"},
 			false);
 
-		_finderPathFetchByC_R = _createFinderPath(
+		_finderPathFetchByC_R = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "regionCode"}, true);
 
-		_finderPathCountByC_R = _createFinderPath(
+		_finderPathCountByC_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "regionCode"}, false);
 
-		_finderPathWithPaginationFindByC_A = _createFinderPath(
+		_finderPathWithPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -2428,12 +2422,12 @@ public class RegionPersistenceImpl
 			},
 			new String[] {"countryId", "active_"}, true);
 
-		_finderPathWithoutPaginationFindByC_A = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"countryId", "active_"}, true);
 
-		_finderPathCountByC_A = _createFinderPath(
+		_finderPathCountByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"countryId", "active_"}, false);
@@ -2443,12 +2437,6 @@ public class RegionPersistenceImpl
 		EntityCacheUtil.removeCache(RegionImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final String _SQL_SELECT_REGION =
@@ -2477,31 +2465,13 @@ public class RegionPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"active"});
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceRegistrations.add(
-				registry.registerService(
-					FinderPath.class, finderPath,
-					HashMapBuilder.<String, Object>put(
-						"cache.name", cacheName
-					).build()));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return FinderCacheUtil.getFinderCache();
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class RegionModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -2549,6 +2519,16 @@ public class RegionPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return RegionImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return RegionTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

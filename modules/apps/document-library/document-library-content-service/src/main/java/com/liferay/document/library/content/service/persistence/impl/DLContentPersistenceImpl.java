@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -2363,10 +2363,9 @@ public class DLContentPersistenceImpl
 			dlContentModelImpl.getVersion()
 		};
 
+		finderCache.putResult(_finderPathCountByC_R_P_V, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByC_R_P_V, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByC_R_P_V, args, dlContentModelImpl, false);
+			_finderPathFetchByC_R_P_V, args, dlContentModelImpl);
 	}
 
 	/**
@@ -2989,22 +2988,21 @@ public class DLContentPersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new DLContentModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", DLContent.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByC_R = _createFinderPath(
+		_finderPathWithPaginationFindByC_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3013,17 +3011,17 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId"}, true);
 
-		_finderPathWithoutPaginationFindByC_R = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "repositoryId"}, true);
 
-		_finderPathCountByC_R = _createFinderPath(
+		_finderPathCountByC_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "repositoryId"}, false);
 
-		_finderPathWithPaginationFindByC_R_P = _createFinderPath(
+		_finderPathWithPaginationFindByC_R_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3032,7 +3030,7 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_"}, true);
 
-		_finderPathWithoutPaginationFindByC_R_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByC_R_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3040,7 +3038,7 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_"}, true);
 
-		_finderPathCountByC_R_P = _createFinderPath(
+		_finderPathCountByC_R_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3048,7 +3046,7 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_"}, false);
 
-		_finderPathWithPaginationFindByC_R_LikeP = _createFinderPath(
+		_finderPathWithPaginationFindByC_R_LikeP = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3057,7 +3055,7 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_"}, true);
 
-		_finderPathWithPaginationCountByC_R_LikeP = _createFinderPath(
+		_finderPathWithPaginationCountByC_R_LikeP = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3065,7 +3063,7 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_"}, false);
 
-		_finderPathFetchByC_R_P_V = _createFinderPath(
+		_finderPathFetchByC_R_P_V = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3074,7 +3072,7 @@ public class DLContentPersistenceImpl
 			new String[] {"companyId", "repositoryId", "path_", "version"},
 			true);
 
-		_finderPathCountByC_R_P_V = _createFinderPath(
+		_finderPathCountByC_R_P_V = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3089,12 +3087,6 @@ public class DLContentPersistenceImpl
 		entityCache.removeCache(DLContentImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -3169,27 +3161,13 @@ public class DLContentPersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class DLContentModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -3238,6 +3216,16 @@ public class DLContentPersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return DLContentImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return DLContentTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

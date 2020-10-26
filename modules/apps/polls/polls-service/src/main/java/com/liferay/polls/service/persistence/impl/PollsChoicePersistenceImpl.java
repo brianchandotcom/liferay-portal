@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -52,7 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2302,19 +2301,17 @@ public class PollsChoicePersistenceImpl
 			pollsChoiceModelImpl.getUuid(), pollsChoiceModelImpl.getGroupId()
 		};
 
+		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, pollsChoiceModelImpl, false);
+			_finderPathFetchByUUID_G, args, pollsChoiceModelImpl);
 
 		args = new Object[] {
 			pollsChoiceModelImpl.getQuestionId(), pollsChoiceModelImpl.getName()
 		};
 
+		finderCache.putResult(_finderPathCountByQ_N, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByQ_N, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByQ_N, args, pollsChoiceModelImpl, false);
+			_finderPathFetchByQ_N, args, pollsChoiceModelImpl);
 	}
 
 	/**
@@ -2771,22 +2768,21 @@ public class PollsChoicePersistenceImpl
 
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class, new PollsChoiceModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", PollsChoice.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByUuid = _createFinderPath(
+		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
@@ -2794,27 +2790,27 @@ public class PollsChoicePersistenceImpl
 			},
 			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
-		_finderPathCountByUuid = _createFinderPath(
+		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
-		_finderPathFetchByUUID_G = _createFinderPath(
+		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = _createFinderPath(
+		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -2823,17 +2819,17 @@ public class PollsChoicePersistenceImpl
 			},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = _createFinderPath(
+		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByQuestionId = _createFinderPath(
+		_finderPathWithPaginationFindByQuestionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByQuestionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2841,22 +2837,22 @@ public class PollsChoicePersistenceImpl
 			},
 			new String[] {"questionId"}, true);
 
-		_finderPathWithoutPaginationFindByQuestionId = _createFinderPath(
+		_finderPathWithoutPaginationFindByQuestionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByQuestionId",
 			new String[] {Long.class.getName()}, new String[] {"questionId"},
 			true);
 
-		_finderPathCountByQuestionId = _createFinderPath(
+		_finderPathCountByQuestionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByQuestionId",
 			new String[] {Long.class.getName()}, new String[] {"questionId"},
 			false);
 
-		_finderPathFetchByQ_N = _createFinderPath(
+		_finderPathFetchByQ_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByQ_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"questionId", "name"}, true);
 
-		_finderPathCountByQ_N = _createFinderPath(
+		_finderPathCountByQ_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByQ_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"questionId", "name"}, false);
@@ -2867,12 +2863,6 @@ public class PollsChoicePersistenceImpl
 		entityCache.removeCache(PollsChoiceImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -2944,27 +2934,13 @@ public class PollsChoicePersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class PollsChoiceModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -3013,6 +2989,16 @@ public class PollsChoicePersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return PollsChoiceImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return PollsChoiceTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,7 +47,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1318,11 +1317,9 @@ public class PushNotificationsDevicePersistenceImpl
 			pushNotificationsDeviceModelImpl.getToken()
 		};
 
+		finderCache.putResult(_finderPathCountByToken, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByToken, args, Long.valueOf(1), false);
-		finderCache.putResult(
-			_finderPathFetchByToken, args, pushNotificationsDeviceModelImpl,
-			false);
+			_finderPathFetchByToken, args, pushNotificationsDeviceModelImpl);
 	}
 
 	/**
@@ -1764,32 +1761,31 @@ public class PushNotificationsDevicePersistenceImpl
 		_argumentsResolverServiceRegistration = _bundleContext.registerService(
 			ArgumentsResolver.class,
 			new PushNotificationsDeviceModelArgumentsResolver(),
-			MapUtil.singletonDictionary(
-				"model.class.name", PushNotificationsDevice.class.getName()));
+			new HashMapDictionary<>());
 
-		_finderPathWithPaginationFindAll = _createFinderPath(
+		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = _createFinderPath(
+		_finderPathWithoutPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
 			new String[0], true);
 
-		_finderPathCountAll = _createFinderPath(
+		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathFetchByToken = _createFinderPath(
+		_finderPathFetchByToken = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
 			new String[] {String.class.getName()}, new String[] {"token"},
 			true);
 
-		_finderPathCountByToken = _createFinderPath(
+		_finderPathCountByToken = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToken",
 			new String[] {String.class.getName()}, new String[] {"token"},
 			false);
 
-		_finderPathWithPaginationFindByU_P = _createFinderPath(
+		_finderPathWithPaginationFindByU_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1798,17 +1794,17 @@ public class PushNotificationsDevicePersistenceImpl
 			},
 			new String[] {"userId", "platform"}, true);
 
-		_finderPathWithoutPaginationFindByU_P = _createFinderPath(
+		_finderPathWithoutPaginationFindByU_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "platform"}, true);
 
-		_finderPathCountByU_P = _createFinderPath(
+		_finderPathCountByU_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "platform"}, false);
 
-		_finderPathWithPaginationCountByU_P = _createFinderPath(
+		_finderPathWithPaginationCountByU_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "platform"}, false);
@@ -1819,12 +1815,6 @@ public class PushNotificationsDevicePersistenceImpl
 		entityCache.removeCache(PushNotificationsDeviceImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
-
-		for (ServiceRegistration<FinderPath> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -1895,27 +1885,13 @@ public class PushNotificationsDevicePersistenceImpl
 		}
 	}
 
-	private FinderPath _createFinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
-
-		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, baseModelResult);
-
-		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					FinderPath.class, finderPath,
-					MapUtil.singletonDictionary("cache.name", cacheName)));
-		}
-
-		return finderPath;
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
 	}
 
 	private ServiceRegistration<ArgumentsResolver>
 		_argumentsResolverServiceRegistration;
-	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
-		new HashSet<>();
 
 	private static class PushNotificationsDeviceModelArgumentsResolver
 		implements ArgumentsResolver {
@@ -1968,6 +1944,16 @@ public class PushNotificationsDevicePersistenceImpl
 			}
 
 			return null;
+		}
+
+		@Override
+		public String getClassName() {
+			return PushNotificationsDeviceImpl.class.getName();
+		}
+
+		@Override
+		public String getTableName() {
+			return PushNotificationsDeviceTable.INSTANCE.getTableName();
 		}
 
 		private Object[] _getValue(

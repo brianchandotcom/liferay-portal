@@ -40,8 +40,8 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 		searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuItemSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="java.util.Map"
-			modelVar="siteNavigationMenuItemMap"
+			className="com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuEntry"
+			modelVar="siteNavigationMenuEntry"
 		>
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
@@ -53,8 +53,8 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 					symbol="page"
 				/>
 
-				<a href="<%= siteNavigationMenuItemMap.get("selectSiteNavigationMenuLevelURL") %>">
-					<%= siteNavigationMenuItemMap.get("name") %>
+				<a href="<%= siteNavigationMenuEntry.getURL() %>">
+					<%= siteNavigationMenuEntry.getName() %>
 				</a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

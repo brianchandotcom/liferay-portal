@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,7 +42,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
@@ -120,16 +118,16 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return _siteNavigationMenuId;
 	}
 
-	public SearchContainer<Map<String, String>>
+	public SearchContainer<SiteNavigationMenuEntry>
 			getSiteNavigationMenuItemSearchContainer()
 		throws PortalException, PortletException {
 
-		SearchContainer<Map<String, String>> searchContainer =
+		SearchContainer<SiteNavigationMenuEntry> searchContainer =
 			new SearchContainer<>(
 				_getPortletRequest(), _portletURL, null,
 				"there-are-no-navigation-menus");
 
-		List<Map<String, String>> siteNavigationMenuItems =
+		List<SiteNavigationMenuEntry> siteNavigationMenuItems =
 			_getSiteNavigationMenuItems();
 
 		searchContainer.setResults(siteNavigationMenuItems);
@@ -359,10 +357,10 @@ public class SelectSiteNavigationMenuDisplayContext {
 			siteNavigationMenuItem, _themeDisplay.getLocale());
 	}
 
-	private List<Map<String, String>> _getSiteNavigationMenuItems()
+	private List<SiteNavigationMenuEntry> _getSiteNavigationMenuItems()
 		throws PortalException, PortletException {
 
-		List<Map<String, String>> siteNavigationItems = new ArrayList<>();
+		List<SiteNavigationMenuEntry> siteNavigationItems = new ArrayList<>();
 
 		if (getSiteNavigationMenuId() > 0) {
 			List<SiteNavigationMenuItem> siteNavigationMenuItems =
@@ -374,33 +372,27 @@ public class SelectSiteNavigationMenuDisplayContext {
 					siteNavigationMenuItems) {
 
 				siteNavigationItems.add(
-					HashMapBuilder.put(
-						"name",
-						_getSiteNavigationMenuItemName(siteNavigationMenuItem)
-					).put(
-						"selectSiteNavigationMenuLevelURL",
+					SiteNavigationMenuEntry.of(
+						_getSiteNavigationMenuItemName(siteNavigationMenuItem),
 						_getSelectSiteNavigationMenuLevelURL(
 							getSiteNavigationMenuId(),
 							siteNavigationMenuItem.
-								getSiteNavigationMenuItemId())
-					).build());
+								getSiteNavigationMenuItemId())));
 			}
-		}
-		else {
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				_themeDisplay.getScopeGroupId(), false,
-				getParentSiteNavigationMenuItemId());
 
-			for (Layout layout : layouts) {
-				siteNavigationItems.add(
-					HashMapBuilder.put(
-						"name", layout.getName(_themeDisplay.getLocale())
-					).put(
-						"selectSiteNavigationMenuLevelURL",
-						_getSelectSiteNavigationMenuLevelURL(
-							getSiteNavigationMenuId(), layout.getLayoutId())
-					).build());
-			}
+			return siteNavigationItems;
+		}
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			_themeDisplay.getScopeGroupId(), false,
+			getParentSiteNavigationMenuItemId());
+
+		for (Layout layout : layouts) {
+			siteNavigationItems.add(
+				SiteNavigationMenuEntry.of(
+					layout.getName(_themeDisplay.getLocale()),
+					_getSelectSiteNavigationMenuLevelURL(
+						getSiteNavigationMenuId(), layout.getLayoutId())));
 		}
 
 		return siteNavigationItems;

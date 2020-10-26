@@ -1009,7 +1009,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		long repositoryId = ParamUtil.getLong(
 			uploadPortletRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
-		String sourceFileName = uploadPortletRequest.getFileName("file");
+		String sourceFileName = ParamUtil.getString(
+			uploadPortletRequest, "fileName",
+			uploadPortletRequest.getFileName("file"));
 		String title = ParamUtil.getString(uploadPortletRequest, "title");
 		String description = ParamUtil.getString(
 			uploadPortletRequest, "description");
@@ -1042,7 +1044,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 cmd.equals(Constants.ADD_DYNAMIC)) &&
 				(size == 0)) {
 
-				contentType = MimeTypesUtil.getContentType(title);
+				contentType = MimeTypesUtil.getContentType(sourceFileName);
 			}
 
 			if (cmd.equals(Constants.ADD) ||

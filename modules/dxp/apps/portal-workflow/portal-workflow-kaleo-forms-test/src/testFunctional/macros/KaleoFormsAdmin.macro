@@ -44,6 +44,10 @@ definition {
 	}
 
 	macro addProcess {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Kaleo Forms Admin");

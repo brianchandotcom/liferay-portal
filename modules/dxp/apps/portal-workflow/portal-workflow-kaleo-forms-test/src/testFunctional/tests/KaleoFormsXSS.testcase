@@ -50,14 +50,6 @@ definition {
 	test AddProcess {
 		property test.name.skip.portal.instance = "KaleoFormsXSS#AddProcess";
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -68,6 +60,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",

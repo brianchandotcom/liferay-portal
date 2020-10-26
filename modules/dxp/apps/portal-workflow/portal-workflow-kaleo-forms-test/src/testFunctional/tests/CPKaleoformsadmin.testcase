@@ -173,14 +173,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -191,6 +183,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -231,14 +231,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -249,6 +241,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -407,14 +407,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "${kfProcessName} Description",
-			kfProcessName = "${kfProcessName}");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "${kfFieldSetName}",
 			kfProcessName = "${kfProcessName}");
@@ -425,6 +417,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "${kfProcessName} Description",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "${kfFieldSetName}",
@@ -485,14 +485,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "${kfProcessName} Description",
-			kfProcessName = "${kfProcessName}");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "${kfFieldSetName}",
 			kfProcessName = "${kfProcessName}");
@@ -503,6 +495,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "${kfProcessName} Description",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "${kfFieldSetName}",
@@ -688,14 +688,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -706,6 +698,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -748,14 +748,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -766,6 +758,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -891,14 +891,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -909,6 +901,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -982,14 +982,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1000,6 +992,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.editFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1137,14 +1137,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1155,6 +1147,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1231,14 +1231,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1249,6 +1241,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1326,14 +1326,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1344,6 +1336,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1433,14 +1433,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1451,6 +1443,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1583,14 +1583,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1601,6 +1593,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1653,14 +1653,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1671,6 +1663,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1745,14 +1745,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1763,6 +1755,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1822,14 +1822,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1840,6 +1832,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -1941,14 +1941,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -1959,6 +1951,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2060,14 +2060,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2078,6 +2070,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2180,14 +2180,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2198,6 +2190,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2299,14 +2299,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2317,6 +2309,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2442,14 +2442,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2460,6 +2452,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2525,14 +2525,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2543,6 +2535,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.editFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2578,14 +2578,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2596,6 +2588,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2614,14 +2614,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2632,6 +2624,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
@@ -2825,14 +2825,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "Kaleo Forms Process Description",
-			kfProcessName = "Kaleo Forms Process");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",
 			kfProcessName = "Kaleo Forms Process");
@@ -2843,6 +2835,14 @@ definition {
 			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "New Kaleo Field Set",

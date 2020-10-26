@@ -156,7 +156,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					</div>
 				</li>
 
-				<aui:script require="metal-dom/src/dom as dom">
+				<aui:script>
 					var closeCustomizationOptions = document.getElementById(
 						'<%= portletNamespace %>closeCustomizationOptions'
 					);
@@ -166,7 +166,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 
 					if (closeCustomizationOptions && controlMenu) {
 						closeCustomizationOptions.addEventListener('click', function (event) {
-							dom.toggleClasses(controlMenu, 'open');
+							controlMenu.classList.toggle('open');
 						});
 					}
 
@@ -176,7 +176,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 
 					if (customizationButton && controlMenu) {
 						customizationButton.addEventListener('click', function (event) {
-							dom.toggleClasses(controlMenu, 'open');
+							controlMenu.classList.toggle('open');
 						});
 					}
 				</aui:script>

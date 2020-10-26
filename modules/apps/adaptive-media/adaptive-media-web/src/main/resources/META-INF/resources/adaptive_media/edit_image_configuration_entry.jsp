@@ -47,31 +47,42 @@ else {
 automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
 %>
 
-<portlet:actionURL name="/adaptive_media/edit_image_configuration_entry" var="editImageConfigurationEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
-</portlet:actionURL>
-
 <div class="container-view">
-	<react:component
-		module="adaptive_media/js/EditAdaptiveMedia.es"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"actionUrl", editImageConfigurationEntryURL
-			).put(
-                "amImageConfigurationEntry", amImageConfigurationEntry
-			).put(
-				"automaticUuid", automaticUuid
-			).put(
-				"configurationEntryEditable", configurationEntryEditable
-            ).put(
-				"configurationEntryUuid", configurationEntryUuid
-			).put(
-				"namespace", liferayPortletResponse.getNamespace()
-			).put(
-				"redirect", redirect
-			).build()
-		%>'
-	/>
+	<div class="adaptive-media-errors">
+		<liferay-ui:error exception="<%= AMImageConfigurationException.DuplicateAMImageConfigurationNameException.class %>" message="a-configuration-with-this-name-already-exists" />
+		<liferay-ui:error exception="<%= AMImageConfigurationException.DuplicateAMImageConfigurationUuidException.class %>" message="a-configuration-with-this-id-already-exists" />
+		<liferay-ui:error exception="<%= AMImageConfigurationException.InvalidHeightException.class %>" message="please-enter-a-max-height-value-larger-than-0" />
+		<liferay-ui:error exception="<%= AMImageConfigurationException.InvalidNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= AMImageConfigurationException.InvalidUuidException.class %>" message="please-enter-a-valid-identifier" />
+		<liferay-ui:error exception="<%= AMImageConfigurationException.InvalidWidthException.class %>" message="please-enter-a-max-width-value-larger-than-0" />
+		<liferay-ui:error exception="<%= AMImageConfigurationException.RequiredWidthOrHeightException.class %>" message="please-enter-a-max-width-or-max-height-value-larger-than-0" />
+	</div>
+	<div>
+		<portlet:actionURL name="/adaptive_media/edit_image_configuration_entry" var="editImageConfigurationEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
+		</portlet:actionURL>
+
+		<react:component
+			module="adaptive_media/js/EditAdaptiveMedia.es"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"actionUrl", editImageConfigurationEntryURL
+				).put(
+					"amImageConfigurationEntry", amImageConfigurationEntry
+				).put(
+					"automaticUuid", automaticUuid
+				).put(
+					"configurationEntryEditable", configurationEntryEditable
+				).put(
+					"configurationEntryUuid", configurationEntryUuid
+				).put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).put(
+					"redirect", redirect
+				).build()
+			%>'
+		/>
+	</div>
 </div>
 
 <liferay-frontend:edit-form

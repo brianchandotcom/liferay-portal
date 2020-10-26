@@ -581,7 +581,6 @@ definition {
 					imageFileName = "${webContentImage}",
 					navTab = "Documents and Media");
 			}
-
 			else {
 				ItemSelector.uploadFile(
 					navTab = "Web Content Images",
@@ -598,9 +597,16 @@ definition {
 		if (isSet(webContentImageUnderDocumentsAndMedia)) {
 			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
-			ItemSelector.uploadFile(
-				navTab = "Documents and Media",
-				uploadFileName = "${webContentImageUnderDocumentsAndMedia}");
+			if (isSet(imageFileName)) {
+				ItemSelector.selectDMImage(
+					imageFileName = "${imageFileName}",
+					navTab = "Documents and Media");
+			}
+			else {
+				ItemSelector.uploadFile(
+					navTab = "Documents and Media",
+					uploadFileName = "${webContentImageUnderDocumentsAndMedia}");
+			}
 		}
 
 		if (isSet(webContentInteger)) {

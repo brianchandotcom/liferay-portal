@@ -1390,7 +1390,9 @@ definition {
 
 		AccountUsers.editUser(
 			accountUser = "userfn userln",
-			editFirstName = "edituserfn");
+			editEmailAddress = "edituserfn@liferay.com",
+			editFirstName = "edituserfn",
+			password = "test");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -1407,6 +1409,8 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Account with User");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.viewAssignee(assigneeName = "edituserfn@liferay.com");
 
 		Accounts.viewAssignee(assigneeName = "edituserfn");
 	}

@@ -36,10 +36,7 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 	>
 
 		<%
-		JSONArray levelsJSONArray = siteNavigationMenuContextualMenusItemSelectorViewDisplayContext.getLevelsJSONArray();
-
-		for (Object o : levelsJSONArray) {
-			JSONObject jsonObject = (JSONObject)o;
+		for (JSONObject jsonObject : (Iterable<JSONObject>)siteNavigationMenuContextualMenusItemSelectorViewDisplayContext.getLevelsJSONArray()) {
 		%>
 
 			<clay:col

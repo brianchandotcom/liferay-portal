@@ -75,7 +75,6 @@ export default function MBPortlet({
 	}
 
 	const searchContainerId = `${namespace}messageAttachments`;
-	let _searchContainer;
 
 	Liferay.componentReady(searchContainerId).then((searchContainer) => {
 		searchContainer
@@ -85,8 +84,6 @@ export default function MBPortlet({
 				removeAttachment.bind(this),
 				'.delete-attachment'
 			);
-
-		_searchContainer = searchContainer;
 	});
 
 	const viewRemovedAttachmentsLink = document.getElementById(
@@ -139,11 +136,15 @@ export default function MBPortlet({
 		const deleteURL = link.getAttribute('data-url');
 
 		fetch(deleteURL).then(() => {
-			_searchContainer.deleteRow(
-				link.ancestor('tr'),
-				link.getAttribute('data-rowid')
+			Liferay.componentReady(searchContainerId).then(
+				(searchContainer) => {
+					searchContainer.deleteRow(
+						link.ancestor('tr'),
+						link.getAttribute('data-rowid')
+					);
+					searchContainer.updateDataStore();
+				}
 			);
-			_searchContainer.updateDataStore();
 
 			updateRemovedAttachments();
 		});
@@ -240,32 +241,40 @@ export default function MBPortlet({
 			.then((res) => res.json())
 			.then((attachments) => {
 				if (attachments.active.length > 0) {
-					const searchContainerData = _searchContainer.getData();
+					Liferay.componentReady(searchContainerId).then(
+						(searchContainer) => {
+							const searchContainerData = searchContainer.getData();
 
-					document
-						.getElementById(namespace + 'fileAttachments')
-						.classList.remove('hide');
+							document
+								.getElementById(namespace + 'fileAttachments')
+								.classList.remove('hide');
 
-					attachments.active.forEach((attachment) => {
-						if (searchContainerData.indexOf(attachment.id) == -1) {
-							_searchContainer.addRow(
-								[
-									attachment.title,
-									attachment.size,
-									`<a class="delete-attachment" data-rowId="${
+							attachments.active.forEach((attachment) => {
+								if (
+									searchContainerData.indexOf(
 										attachment.id
-									}" data-url="${
-										attachment.deleteURL
-									}" href="javascript:;">${Liferay.Language.get(
-										'move-to-recycle-bin'
-									)}</a>`,
-								],
-								attachment.id.toString()
-							);
+									) == -1
+								) {
+									searchContainer.addRow(
+										[
+											attachment.title,
+											attachment.size,
+											`<a class="delete-attachment" data-rowId="${
+												attachment.id
+											}" data-url="${
+												attachment.deleteURL
+											}" href="javascript:;">${Liferay.Language.get(
+												'move-to-recycle-bin'
+											)}</a>`,
+										],
+										attachment.id.toString()
+									);
 
-							_searchContainer.updateDataStore();
+									searchContainer.updateDataStore();
+								}
+							});
 						}
-					});
+					);
 				}
 
 				const deletedAttachmentsElement = document.getElementById(

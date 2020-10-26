@@ -56,6 +56,7 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 			return;
 		}
 
+		String action = (String)message.get("action");
 		EntityModelListener entityModelListener =
 			(EntityModelListener)message.get("entityModelListener");
 
@@ -66,7 +67,7 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 			ShardedModel shardedModel = (ShardedModel)baseModel;
 
 			entityModelListener.addAnalyticsMessage(
-				"update",
+				action,
 				entityModelListener.getAttributeNames(
 					shardedModel.getCompanyId()),
 				baseModel);

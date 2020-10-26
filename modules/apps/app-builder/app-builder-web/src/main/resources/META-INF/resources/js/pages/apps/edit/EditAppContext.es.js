@@ -162,32 +162,12 @@ const reducer = (state, action) => {
 			return uppdateAppDeployment(state, PRODUCT_MENU, newAppDeployment);
 		}
 		case UPDATE_WORKFLOW_PROCESS_ID: {
-			const {
-				active,
-				appDeployments,
-				dataLayoutId,
-				dataListViewId,
-				name,
-				scope,
-			} = state.app;
-
-			const app = {
-				active,
-				appDeployments,
-				dataLayoutId,
-				dataListViewId,
-				name,
-				scope,
-			};
-
-			if (action.id) {
-				app.workflowProcessId = action.id;
-			}
-
 			return {
 				...state,
 				app: {
-					...app,
+					...state.app,
+					workflowDefinitionName: action.id,
+					workflowDefinitionVersion: action.version,
 				},
 			};
 		}

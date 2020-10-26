@@ -51,16 +51,23 @@
 
 				String cssClass = "selector-button";
 
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("assetclassname", assetEntry.getClassName());
-				data.put("assetclassnameid", assetEntry.getClassNameId());
-				data.put("assetclasspk", assetEntry.getClassPK());
-				data.put("assettitle", assetRenderer.getTitle(locale));
-				data.put("assettitlemap", JSONFactoryUtil.looseSerialize(LocalizationUtil.getLocalizationMap(assetEntry.getTitle())));
-				data.put("assettype", assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId()));
-				data.put("entityid", assetEntry.getEntryId());
-				data.put("groupdescriptivename", group.getDescriptiveName(locale));
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"assetclassname", assetEntry.getClassName()
+				).put(
+					"assetclassnameid", assetEntry.getClassNameId()
+				).put(
+					"assetclasspk", assetEntry.getClassPK()
+				).put(
+					"assettitle", assetRenderer.getTitle(locale)
+				).put(
+					"assettitlemap", JSONFactoryUtil.looseSerialize(LocalizationUtil.getLocalizationMap(assetEntry.getTitle()))
+				).put(
+					"assettype", assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())
+				).put(
+					"entityid", assetEntry.getEntryId()
+				).put(
+					"groupdescriptivename", group.getDescriptiveName(locale)
+				).build();
 
 				if (assetBrowserDisplayContext.isMultipleSelection()) {
 					row.setData(data);

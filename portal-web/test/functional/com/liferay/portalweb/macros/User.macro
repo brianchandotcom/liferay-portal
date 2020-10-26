@@ -2880,6 +2880,36 @@ definition {
 		}
 	}
 
+	macro viewUserInfomation {
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "${userScreenName}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "${userEmailAddress}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "${userFirstName}");
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "${userLastName}");
+
+		if (isSet(userBirthday)) {
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
+				value1 = "${userBirthday}");
+		}
+
+		if (isSet(userJobTitle)) {
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
+				value1 = "${userJobTitle}");
+		}
+	}
+
 	macro viewUserInfomationOrganizationSitesCP {
 		UserNavigator.gotoMemberships();
 

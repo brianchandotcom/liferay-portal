@@ -793,7 +793,6 @@ definition {
 		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
 	}
 
-	@ignore
 	@priority = "5"
 	test MultipleUsersandOrganizations {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#MultipleUsersandOrganizations";

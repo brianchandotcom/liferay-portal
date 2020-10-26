@@ -9,4 +9,5 @@ Export-Package:\
 	com.liferay.asset.display.page.portlet,\
 	com.liferay.asset.display.page.service,\
 	com.liferay.asset.display.page.service.persistence,\
+	com.liferay.asset.display.page.upgrade,\
 	com.liferay.asset.display.page.util

@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>BODY_FIELD_WEB_CONTENT_ARTICLE</td>
-	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')]</td>
+	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')][contains(@id,'Editor')]</td>
 	<td></td>
 </tr>
 <tr>

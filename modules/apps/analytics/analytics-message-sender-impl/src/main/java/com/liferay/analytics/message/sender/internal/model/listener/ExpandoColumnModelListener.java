@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -96,8 +95,6 @@ public class ExpandoColumnModelListener
 						_getTableDynamicQuery(
 							classNameLocalService.getClassNameId(
 								Organization.class.getName()),
-							classNameLocalService.getClassNameId(
-								User.class.getName()),
 							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
 			});
 
@@ -167,17 +164,14 @@ public class ExpandoColumnModelListener
 	}
 
 	private DynamicQuery _getTableDynamicQuery(
-		long organizationClassNameId, long userClassNameId, String name) {
+		long organizationClassNameId, String name) {
 
 		DynamicQuery dynamicQuery = expandoTableLocalService.dynamicQuery();
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				classNameIdProperty.eq(organizationClassNameId),
-				classNameIdProperty.eq(userClassNameId)));
+		dynamicQuery.add(classNameIdProperty.eq(organizationClassNameId));
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 

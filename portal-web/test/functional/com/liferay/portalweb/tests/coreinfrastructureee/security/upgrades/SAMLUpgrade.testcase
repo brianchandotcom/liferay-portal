@@ -1,0 +1,45 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property dummy.socket.proxy.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.component.names = "SAML";
+	property testray.main.component.name = "Upgrades Security";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@priority = "5"
+	test ViewSAMLConfigurationAfterUpgrade72101 {
+		property data.archive.type = "data-archive-saml";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+
+		Upgrade.viewSAMLSPConnectionConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSAMLWithEncryptionConfigurationAfterUpgrade72101 {
+		property data.archive.type = "data-archive-saml-encryption";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+
+		Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+	}
+
+}

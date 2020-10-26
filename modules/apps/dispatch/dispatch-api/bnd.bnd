@@ -2,6 +2,7 @@ Bundle-Name: Liferay Dispatch API
 Bundle-SymbolicName: com.liferay.dispatch.api
 Bundle-Version: 2.0.0
 Export-Package:\
+	com.liferay.dispatch.configuration,\
 	com.liferay.dispatch.constants,\
 	com.liferay.dispatch.exception,\
 	com.liferay.dispatch.executor,\
@@ -9,3 +10,7 @@ Export-Package:\
 	com.liferay.dispatch.security.permission,\
 	com.liferay.dispatch.service,\
 	com.liferay.dispatch.service.persistence
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dispatch.lang)";\
+		resource.bundle.base.name="content.Language"

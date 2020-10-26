@@ -698,6 +698,80 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-61632. Add web content with required HTML field."
+	@priority = "4"
+	test AddWebContentWithRequiredHTMLField {
+		task ("Add a web content structure with a required HTML field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "HTML",
+				fieldFieldLabel = "HTML",
+				fieldName = "HTML");
+
+			DynamicDataMapping.editFieldRequired(fieldFieldLabel = "HTML");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Assert the alert message when publish without content in HTML field") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			Button.clickPublish();
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_VALIDATION",
+				value1 = "This field is required.");
+		}
+
+		task ("Assert the alert message is still shown after click the outside of HTML field") {
+			WebContent.clickMarginOfContentContainer();
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_VALIDATION",
+				value1 = "This field is required.");
+		}
+
+		task ("Assert the alert message is still shown after clear content of HTML field") {
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "Web Content Content");
+
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "");
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_VALIDATION",
+				value1 = "This field is required.");
+		}
+
+		task ("Type content in HTML field then Publish") {
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "Web Content Content");
+
+			PortletEntry.publish();
+
+			WebContent.viewTitle(webContentTitle = "Web Content Title");
+		}
+	}
+
 	@priority = "4"
 	test AddWebContentWithStructure {
 		property testray.component.names = "Web Content Administration";

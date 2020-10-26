@@ -306,10 +306,10 @@ public class BlogsEntryStagedModelDataHandler
 				long smallImageFileEntryId = MapUtil.getLong(
 					fileEntryIds, entry.getSmallImageFileEntryId(), 0);
 
-				importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
-
-				if (smallImageFileEntryId == 0) {
-					importedEntry.setSmallImage(false);
+				if (smallImageFileEntryId != 0) {
+					importedEntry.setSmallImage(entry.isSmallImage());
+					importedEntry.setSmallImageFileEntryId(
+						smallImageFileEntryId);
 				}
 
 				importedEntry = _blogsEntryLocalService.updateBlogsEntry(

@@ -30,3 +30,15 @@ Files.deleteIfExists apiBuildGradlePath
 Files.deleteIfExists buildGradlePath
 Files.deleteIfExists serviceBuildGradlePath
 Files.deleteIfExists serviceBuildSettingsPath
+
+ServiceBuilderProjectTemplatesArgs serviceBuilderProjectTemplatesArgs =
+	(ServiceBuilderProjectTemplatesArgs)
+		projectTemplatesArgs.getProjectTemplatesArgsExt();
+
+String addOnOptions = serviceBuilderProjectTemplatesArgs.getAddOnOptions();
+
+if (addOnOptions.equals("true") {
+	Path uadPath = projectPath.resolve(request.artifactId + "-uad")
+
+	Files.deleteIfExists uadPath
+}

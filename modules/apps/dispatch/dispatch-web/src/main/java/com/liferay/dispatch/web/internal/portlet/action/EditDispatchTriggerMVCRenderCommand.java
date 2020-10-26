@@ -48,7 +48,7 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				Collections.emptySet(), _dispatchTriggerLocalService,
+				_dispatchTriggerLocalService, Collections.emptySet(),
 				renderRequest);
 
 		renderRequest.setAttribute(

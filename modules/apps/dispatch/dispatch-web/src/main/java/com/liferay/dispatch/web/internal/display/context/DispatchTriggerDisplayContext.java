@@ -43,12 +43,11 @@ import javax.portlet.RenderRequest;
 public class DispatchTriggerDisplayContext {
 
 	public DispatchTriggerDisplayContext(
-		Set<String> scheduledTaskExecutorServiceTypes,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
-		RenderRequest renderRequest) {
+		Set<String> taskExecutorTypes, RenderRequest renderRequest) {
 
-		_scheduledTaskExecutorServiceTypes = scheduledTaskExecutorServiceTypes;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
+		_taskExecutorTypes = taskExecutorTypes;
 
 		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
 
@@ -115,10 +114,6 @@ public class DispatchTriggerDisplayContext {
 		return _rowChecker;
 	}
 
-	public Set<String> getScheduledTaskExecutorServiceTypes() {
-		return _scheduledTaskExecutorServiceTypes;
-	}
-
 	public SearchContainer<DispatchTrigger> getSearchContainer()
 		throws PortalException {
 
@@ -152,11 +147,15 @@ public class DispatchTriggerDisplayContext {
 		return _searchContainer;
 	}
 
+	public Set<String> getTaskExecutorTypes() {
+		return _taskExecutorTypes;
+	}
+
 	private final Format _dateFormatDateTime;
 	private final DispatchRequestHelper _dispatchRequestHelper;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private RowChecker _rowChecker;
-	private final Set<String> _scheduledTaskExecutorServiceTypes;
 	private SearchContainer<DispatchTrigger> _searchContainer;
+	private final Set<String> _taskExecutorTypes;
 
 }

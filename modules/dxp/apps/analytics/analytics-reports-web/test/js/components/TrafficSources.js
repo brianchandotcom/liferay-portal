@@ -331,7 +331,7 @@ describe('TrafficSources', () => {
 
 		expect(
 			getByText(
-				'your-page-has-no-incoming-traffic-from-search-engines-yet'
+				'your-page-has-no-incoming-traffic-from-traffic-channels-yet'
 			)
 		).toBeInTheDocument();
 	});

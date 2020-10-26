@@ -230,6 +230,10 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"biz.aQute.bnd");
 		}
 
+		File uadModuleDir = new File(gradleProjectDir, _name + "-uad");
+
+		testNotExists(uadModuleDir, "bnd.bnd");
+
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);

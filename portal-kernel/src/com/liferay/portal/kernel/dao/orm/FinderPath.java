@@ -32,6 +32,24 @@ import java.util.Map;
  */
 public class FinderPath {
 
+	public static String[] decodeDSLQueryCacheName(String cacheName) {
+		return StringUtil.split(cacheName, _TABLE_SEPARATOR);
+	}
+
+	public static String encodeDSLQueryCacheName(String[] tableNames) {
+		StringBundler sb = new StringBundler((tableNames.length * 2) - 1);
+
+		for (int i = 0; i < tableNames.length; i++) {
+			sb.append(tableNames[i]);
+
+			if ((i + 1) < tableNames.length) {
+				sb.append(_TABLE_SEPARATOR);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #FinderPath(String, String, String[], String[], boolean)}
@@ -273,6 +291,8 @@ public class FinderPath {
 		FinderCache.class.getName() + "#BaseModel";
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
+
+	private static final String _TABLE_SEPARATOR = "_T_";
 
 	private static final Map<String, String> _encodedTypes = _getEncodedTypes();
 

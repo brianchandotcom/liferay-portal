@@ -42,10 +42,12 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -360,6 +362,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			targetPortletIds.remove(portletPreferences.getPortletId());
 
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				_portletPreferenceValueLocalService.getPreferences(
+					portletPreferences);
+
 			PortletPreferences targetPortletPreferences =
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
@@ -367,11 +373,12 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					portletPreferences.getPortletId());
 
 			if (targetPortletPreferences != null) {
-				targetPortletPreferences.setPreferences(
-					portletPreferences.getPreferences());
-
-				_portletPreferencesLocalService.updatePortletPreferences(
-					targetPortletPreferences);
+				_portletPreferencesLocalService.updatePreferences(
+					targetPortletPreferences.getOwnerId(),
+					targetPortletPreferences.getOwnerType(),
+					targetPortletPreferences.getPlid(),
+					targetPortletPreferences.getPortletId(),
+					jxPortletPreferences);
 			}
 			else {
 				_portletPreferencesLocalService.addPortletPreferences(
@@ -381,7 +388,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					portletPreferences.getPortletId(),
 					_portletLocalService.getPortletById(
 						portletPreferences.getPortletId()),
-					portletPreferences.getPreferences());
+					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 			}
 		}
 
@@ -663,6 +670,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -112,12 +112,8 @@ public class AssetEntriesCheckerHelper {
 		}
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				layout.getCompanyId(), portletPreferencesModel.getOwnerId(),
-				portletPreferencesModel.getOwnerType(),
-				portletPreferencesModel.getPlid(),
-				portletPreferencesModel.getPortletId(),
-				portletPreferencesModel.getPreferences());
+			_portletPreferenceValueLocalService.getPreferences(
+				portletPreferencesModel);
 
 		if (!_assetPublisherWebHelper.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
@@ -365,6 +361,10 @@ public class AssetEntriesCheckerHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

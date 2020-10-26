@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 
 /**
  * @author Sergio González
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants}
  */
+@Deprecated
 public class FormNavigatorConstants {
 
 	public static final String CATEGORY_KEY_COMPANY_SETTINGS_CONFIGURATION =

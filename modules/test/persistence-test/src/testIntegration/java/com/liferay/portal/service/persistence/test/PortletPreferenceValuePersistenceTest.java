@@ -250,7 +250,7 @@ public class PortletPreferenceValuePersistenceTest {
 			"PortletPreferenceValue", "mvccVersion", true, "ctCollectionId",
 			true, "portletPreferenceValueId", true, "companyId", true,
 			"portletPreferencesId", true, "name", true, "index", true,
-			"smallValue", true, "largeValue", true, "readOnly", true);
+			"smallValue", true, "readOnly", true);
 	}
 
 	@Test

@@ -234,6 +234,11 @@ public class PortletPreferenceValueWrapper
 		return model.getSmallValue();
 	}
 
+	@Override
+	public String getValue() {
+		return model.getValue();
+	}
+
 	/**
 	 * Returns <code>true</code> if this portlet preference value is read only.
 	 *
@@ -357,6 +362,11 @@ public class PortletPreferenceValueWrapper
 	@Override
 	public void setSmallValue(String smallValue) {
 		model.setSmallValue(smallValue);
+	}
+
+	@Override
+	public void setValue(String value) {
+		model.setValue(value);
 	}
 
 	@Override

@@ -347,9 +347,9 @@ create index IX_D699243F on PortletItem (groupId, name[$COLUMN_LENGTH:75$], port
 create index IX_E922D6C0 on PortletItem (groupId, portletId[$COLUMN_LENGTH:200$], classNameId);
 
 create index IX_4462FCD on PortletPreferenceValue (portletPreferencesId, ctCollectionId);
-create index IX_B94C124C on PortletPreferenceValue (portletPreferencesId, name[$COLUMN_LENGTH:75$], ctCollectionId);
-create unique index IX_B517784D on PortletPreferenceValue (portletPreferencesId, name[$COLUMN_LENGTH:75$], index_, ctCollectionId);
-create index IX_2E0FE9EA on PortletPreferenceValue (portletPreferencesId, name[$COLUMN_LENGTH:75$], smallValue[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_B94C124C on PortletPreferenceValue (portletPreferencesId, name[$COLUMN_LENGTH:255$], ctCollectionId);
+create unique index IX_B517784D on PortletPreferenceValue (portletPreferencesId, name[$COLUMN_LENGTH:255$], index_, ctCollectionId);
+create index IX_2E0FE9EA on PortletPreferenceValue (portletPreferencesId, name[$COLUMN_LENGTH:255$], smallValue[$COLUMN_LENGTH:255$], ctCollectionId);
 
 create index IX_F0B8A3A0 on PortletPreferences (companyId, ownerId, ownerType, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
 create index IX_31DA3CB8 on PortletPreferences (ownerId, ctCollectionId);

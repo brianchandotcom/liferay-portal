@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -57,9 +58,8 @@ public class PortletPreferenceValueTable
 	public final Column<PortletPreferenceValueTable, String> smallValue =
 		createColumn(
 			"smallValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<PortletPreferenceValueTable, String> largeValue =
-		createColumn(
-			"largeValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<PortletPreferenceValueTable, Clob> largeValue =
+		createColumn("largeValue", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<PortletPreferenceValueTable, Boolean> readOnly =
 		createColumn(
 			"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

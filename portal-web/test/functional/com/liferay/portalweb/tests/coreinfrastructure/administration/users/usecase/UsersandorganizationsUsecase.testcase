@@ -840,23 +840,9 @@ definition {
 			orgName = "Organization Name 1",
 			tagName = "alpha");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Organization Name 2",
-			orgType = "Organization");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addSiteCP(orgName = "Organization Name 2");
+		JSONOrganization.addOrganization(
+			organizationName = "Organization Name 2",
+			organizationSite = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -872,29 +858,9 @@ definition {
 		var count = "1";
 
 		while ("${count}" != "5") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.addCP(
-				orgName = "Suborganization Name ${count}",
-				orgType = "Organization");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			UsersAndOrganizationsNavigator.gotoOrganizations();
-
-			Organization.searchCP(
-				orgName = "Suborganization Name ${count}",
-				searchTerm = "Suborganization Name ${count}");
-
-			Organization.selectParentOrganizationCP(
-				orgName = "Suborganization Name ${count}",
-				parentOrgName = "Organization Name 2");
+			JSONOrganization.addOrganization(
+				organizationName = "Suborganization Name ${count}",
+				parentOrganizationName = "Organization Name 2");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -963,19 +929,13 @@ definition {
 			userName = "userfn1 userln1",
 			userScreenName = "usersn1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name 1",
+			userEmailAddress = "userea3@liferay.com");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Organization Name 1",
-			userFirstName = "userfn3",
-			userLastName = "userln3",
-			userName = "userfn3 userln3",
-			userScreenName = "usersn3");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name 1",
+			userEmailAddress = "userea5@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -984,36 +944,19 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
-			orgName = "Organization Name 1",
-			userFirstName = "userfn5",
-			userLastName = "userln5",
-			userName = "userfn5 userln5",
-			userScreenName = "usersn5");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		var key_orgName = "Organization Name 1";
-
-		Click(locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME");
+		LexiconEntry.gotoEntry(rowEntry = "Organization Name 1");
 
 		for (var userName : list "userfn1 userln1,userfn3 userln3,userfn5 userln5") {
-			var key_userScreenName = "${userName}";
-
 			AssertTextEquals(
+				key_userScreenName = "${userName}",
 				locator1 = "UsersAndOrganizations#USER_TABLE_NAME",
 				value1 = "${userName}");
 		}
 
 		for (var userName : list "userfn2 userln2,userfn4 userln4") {
-			var key_userScreenName = "${userName}";
-
-			AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_NAME");
+			AssertElementNotPresent(
+				key_userScreenName = "${userName}",
+				locator1 = "UsersAndOrganizations#USER_TABLE_NAME");
 		}
 
 		ApplicationsMenu.gotoPortlet(
@@ -1021,15 +964,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		var key_siteName = "Organization Name 1";
+		LexiconEntry.viewNoEntry(rowEntry = "Organization Name 1");
 
-		AssertElementNotPresent(locator1 = "Sites#SITE_TABLE_NAME");
-
-		var key_siteName = "Organization Name 2";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Organization Name 2");
+		LexiconEntry.viewEntryName(rowEntry = "Organization Name 2");
 
 		ProductMenu.viewNoSite(site = "Organization Name 1");
 
@@ -1041,38 +978,15 @@ definition {
 
 		Site.viewNoMySitesViaMySitesPG(siteName = "Organization Name 2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Organization Name 2",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userName = "Test Test",
-			userScreenName = "test");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name 2",
+			userEmailAddress = "test@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.viewNoMySitesViaMySitesPG(siteName = "Organization Name 1");
+		LexiconEntry.viewNoEntry(rowEntry = "Organization Name 1");
 
-		Site.viewMySitesViaMySitesPG(
-			memberCount = "1",
-			siteName = "Organization Name 2");
-
-		Site.gotoSiteViaMySitesPG(siteName = "Organization Name 2");
-
-		SelectWindow(locator1 = "Home - Organization Name 2 - ${siteName}");
-
-		Page.viewSpecificPG(pageNameList = "Home,Wiki");
-
-		AssertTextEquals(
-			key_portletTitleName = "Message Boards",
-			locator1 = "Portlet#SPECIFIC_TITLE",
-			value1 = "Message Boards");
+		LexiconEntry.viewEntryName(rowEntry = "Organization Name 2");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

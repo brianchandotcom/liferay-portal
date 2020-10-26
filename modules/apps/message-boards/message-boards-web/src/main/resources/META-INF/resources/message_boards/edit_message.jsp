@@ -499,5 +499,4 @@ Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
 <liferay-frontend:component
 	context="<%= taglibContext %>"
 	module="message_boards/js/MBPortlet.es"
-	servletContext="<%= application %>"
 />

@@ -240,7 +240,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 		).build()
 	%>'
 	module="message_boards/js/MBPortlet.es"
-	servletContext="<%= application %>"
 />
 
 <aui:script>

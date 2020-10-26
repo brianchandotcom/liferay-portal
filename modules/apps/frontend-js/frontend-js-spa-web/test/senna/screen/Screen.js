@@ -12,137 +12,125 @@
  * details.
  */
 
-'use strict';
-
 import dom from 'metal-dom';
-import CancellablePromise from 'metal-promise';
 
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 
 describe('Screen', () => {
-	before(() => {
-
-		// Prevent log messages from showing up in test output.
-
-		sinon.stub(console, 'log');
-	});
-
-	after(() => {
-		console.log.restore();
-	});
-
-	it('should expose lifecycle activate', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle activate', () => {
+		expect(() => {
 			new Screen().activate();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle deactivate', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle deactivate', () => {
+		expect(() => {
 			new Screen().deactivate();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle beforeActivate', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle beforeActivate', () => {
+		expect(() => {
 			new Screen().beforeActivate();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle beforeDeactivate', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle beforeDeactivate', () => {
+		expect(() => {
 			new Screen().beforeDeactivate();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle load', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle load', () => {
+		expect(() => {
 			new Screen().load();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle getSurfaceContent', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle getSurfaceContent', () => {
+		expect(() => {
 			new Screen().getSurfaceContent();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle dispose', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle dispose', () => {
+		expect(() => {
 			new Screen().dispose();
-		});
+		}).not.toThrow();
 	});
 
-	it('should expose lifecycle flip', () => {
-		assert.doesNotThrow(() => {
+	it('exposes lifecycle flip', () => {
+		expect(() => {
 			new Screen().flip({});
-		});
+		}).not.toThrow();
 	});
 
-	it('should wait to flip all surfaces', (done) => {
+	it('waits to flip all surfaces', (done) => {
 		var surfaces = {
 			surface1: new Surface('surface1'),
 			surface2: new Surface('surface2'),
 		};
-		var stub1 = sinon.stub();
-		var stub2 = sinon.stub();
+		var stub1 = jest.fn();
+		var stub2 = jest.fn();
+
 		surfaces.surface1.show = () => {
 			stub1();
 
-			return CancellablePromise.resolve();
+			return Promise.resolve();
 		};
 		surfaces.surface2.show = () => {
 			stub2();
 
-			return CancellablePromise.resolve();
+			return Promise.resolve();
 		};
+
 		new Screen().flip(surfaces).then(() => {
-			assert.strictEqual(1, stub1.callCount);
-			assert.strictEqual(1, stub2.callCount);
+			expect(stub1).toHaveBeenCalledTimes(1);
+			expect(stub2).toHaveBeenCalledTimes(1);
 			done();
 		});
 	});
 
-	it('should get screen id', () => {
+	it('gets screen id', () => {
 		var screen = new Screen();
-		assert.ok(screen.getId());
+		expect(screen.getId()).toBeTruthy();
 		screen.setId('otherId');
-		assert.strictEqual('otherId', screen.getId());
+		expect(screen.getId()).toBe('otherId');
 	});
 
-	it('should get screen title', () => {
+	it('gets screen title', () => {
 		var screen = new Screen();
-		assert.strictEqual(null, screen.getTitle());
+		expect(screen.getTitle()).toBeNull();
 		screen.setTitle('other');
-		assert.strictEqual('other', screen.getTitle());
+		expect(screen.getTitle()).toBe('other');
 	});
 
-	it('should check if object implements a screen', () => {
-		assert.ok(Screen.isImplementedBy(new Screen()));
+	it('checks if object implements a screen', () => {
+		expect(Screen.isImplementedBy(new Screen())).toBe(true);
 	});
 
-	it('should evaluate surface scripts', (done) => {
+	it('evaluates surface scripts', (done) => {
 		enterDocumentSurfaceElement(
 			'surfaceId',
 			'<script>window.sentinel=true;</script>'
 		);
 		var surface = new Surface('surfaceId');
 		var screen = new Screen();
-		assert.ok(!window.sentinel);
+		expect(window.sentinel).toBeFalsy();
 		screen
 			.evaluateScripts({
 				surfaceId: surface,
 			})
 			.then(() => {
-				assert.ok(window.sentinel);
+				expect(window.sentinel).toBe(true);
 				delete window.sentinel;
 				exitDocumentSurfaceElement('surfaceId');
 				done();
 			});
 	});
 
-	it('should evaluate surface styles', (done) => {
+	it('evaluates surface styles', (done) => {
 		enterDocumentSurfaceElement(
 			'surfaceId',
 			'<style>body{background-color:rgb(0, 255, 0);}</style>'
@@ -178,8 +166,5 @@ function exitDocumentSurfaceElement(surfaceId) {
 }
 
 function assertComputedStyle(property, value) {
-	assert.strictEqual(
-		value,
-		window.getComputedStyle(document.body, null)[property]
-	);
+	expect(window.getComputedStyle(document.body, null)[property]).toBe(value);
 }

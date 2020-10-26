@@ -12,121 +12,111 @@
  * details.
  */
 
-'use strict';
-
-import {core} from 'metal';
-
 import Route from '../../../src/main/resources/META-INF/resources/senna/route/Route';
 
 describe('Route', () => {
 	describe('Constructor', () => {
-		it('should throws error when path and handler not specified', () => {
-			assert.throws(() => {
+		it('throws error when path and handler not specified', () => {
+			expect(() => {
 				new Route();
-			}, Error);
+			}).toThrow();
 		});
 
-		it('should throws error when path is null', () => {
-			assert.throws(() => {
-				new Route(null, core.nullFunction);
-			}, Error);
+		it('throws error when path is null', () => {
+			expect(() => {
+				new Route(null, jest.fn());
+			}).toThrow();
 		});
 
-		it('should throws error when path is undefined', () => {
-			assert.throws(() => {
-				new Route(undefined, core.nullFunction);
-			}, Error);
+		it('throws error when path is undefined', () => {
+			expect(() => {
+				new Route(undefined, jest.fn());
+			}).toThrow();
 		});
 
-		it('should throws error when handler not specified', () => {
-			assert.throws(() => {
+		it('throws error when handler not specified', () => {
+			expect(() => {
 				new Route('/path');
-			}, Error);
+			}).toThrow();
 		});
 
-		it('should throws error when handler not a function', () => {
-			assert.throws(() => {
+		it('throws error when handler not a function', () => {
+			expect(() => {
 				new Route('/path', {});
-			}, Error);
+			}).toThrow();
 		});
 
-		it('should not throws error when handler is a function', () => {
-			assert.doesNotThrow(() => {
-				new Route('/path', core.nullFunction);
-			});
+		it('does not throw error when handler is a function', () => {
+			expect(() => {
+				new Route('/path', jest.fn());
+			}).not.toThrow();
 		});
 
-		it('should set path and handler from constructor', () => {
-			var route = new Route('/path', core.nullFunction);
-			assert.strictEqual('/path', route.getPath());
-			assert.strictEqual(core.nullFunction, route.getHandler());
+		it('sets path and handler from constructor', () => {
+			const handler = jest.fn();
+			const route = new Route('/path', handler);
+			expect(route.getPath()).toBe('/path');
+			expect(route.getHandler()).toEqual(handler);
 		});
 	});
 
 	describe('Matching', () => {
-		it('should match route by string path', () => {
-			var route = new Route('/path', core.nullFunction);
-			assert.ok(route.matchesPath('/path'));
+		it('matches route by string path', () => {
+			const route = new Route('/path', jest.fn());
+			expect(route.matchesPath('/path')).toBeTruthy();
 		});
 
-		it('should match route by string path with params', () => {
-			var route = new Route('/path/:foo(\\d+)', core.nullFunction);
-			assert.ok(route.matchesPath('/path/10'));
-			assert.ok(route.matchesPath('/path/10/'));
-			assert.ok(!route.matchesPath('/path/abc'));
-			assert.ok(!route.matchesPath('/path'));
+		it('matches route by string path with params', () => {
+			const route = new Route('/path/:foo(\\d+)', jest.fn());
+			expect(route.matchesPath('/path/10')).toBeTruthy();
+			expect(route.matchesPath('/path/10/')).toBeTruthy();
+			expect(!route.matchesPath('/path/abc')).toBeTruthy();
+			expect(!route.matchesPath('/path')).toBeTruthy();
 		});
 
-		it('should match route by regex path', () => {
-			var route = new Route(/\/path/, core.nullFunction);
-			assert.ok(route.matchesPath('/path'));
+		it('matches route by regex path', () => {
+			const route = new Route(/\/path/, jest.fn());
+			expect(route.matchesPath('/path')).toBeTruthy();
 		});
 
-		it('should match route by function path', () => {
-			var route = new Route((path) => {
+		it('matches route by function path', () => {
+			const route = new Route((path) => {
 				return path === '/path';
-			}, core.nullFunction);
-			assert.ok(route.matchesPath('/path'));
+			}, jest.fn());
+			expect(route.matchesPath('/path')).toBeTruthy();
 		});
 
-		it('should not match any route', () => {
-			var route = new Route('/path', core.nullFunction);
-			assert.ok(!route.matchesPath('/invalid'));
+		it('does not match any route', () => {
+			const route = new Route('/path', jest.fn());
+			expect(!route.matchesPath('/invalid')).toBeTruthy();
 		});
 
-		it('should not match any route for invalid path', () => {
-			var route = new Route({}, core.nullFunction);
-			assert.ok(!route.matchesPath('/invalid'));
+		it('does not match any route for invalid path', () => {
+			const route = new Route({}, jest.fn());
+			expect(!route.matchesPath('/invalid')).toBeTruthy();
 		});
 	});
 
 	describe('Extracting params', () => {
-		it('should extract params from path matching route', () => {
-			var route = new Route(
-				'/path/:foo(\\d+)/:bar(\\w+)',
-				core.nullFunction
-			);
-			var params = route.extractParams('/path/123/abc');
-			var expected = {
+		it('extracts params from path matching route', () => {
+			const route = new Route('/path/:foo(\\d+)/:bar(\\w+)', jest.fn());
+			const params = route.extractParams('/path/123/abc');
+			expect(params).toEqual({
 				foo: '123',
 				bar: 'abc',
-			};
-			assert.deepEqual(expected, params);
+			});
 		});
 
-		it('should return null if try to extract params from non matching route', () => {
-			var route = new Route(
-				'/path/:foo(\\d+)/:bar(\\w+)',
-				core.nullFunction
-			);
-			var params = route.extractParams('/path/abc/123');
-			assert.strictEqual(null, params);
+		it('returns null if try to extract params from non matching route', () => {
+			const route = new Route('/path/:foo(\\d+)/:bar(\\w+)', jest.fn());
+			const params = route.extractParams('/path/abc/123');
+			expect(params).toBeNull();
 		});
 
-		it('should return empty object if trying to extract params from path given as function', () => {
-			var route = new Route(core.nullFunction, core.nullFunction);
-			var params = route.extractParams('/path/123/abc');
-			assert.deepEqual({}, params);
+		it('returns empty object if trying to extract params from path given as function', () => {
+			const route = new Route(jest.fn(), jest.fn());
+			const params = route.extractParams('/path/123/abc');
+			expect(params).toEqual({});
 		});
 	});
 });

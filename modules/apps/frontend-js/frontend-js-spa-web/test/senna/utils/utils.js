@@ -12,33 +12,31 @@
  * details.
  */
 
-'use strict';
-
 import Uri from 'metal-uri';
 
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import utils from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('utils', () => {
-	before(() => {
+	beforeAll(() => {
 		globals.window = {
+			history: {
+				pushState: 1,
+			},
 			location: {
+				hash: '#hash',
 				hostname: 'hostname',
 				pathname: '/path',
 				search: '?a=1',
-				hash: '#hash',
-			},
-			history: {
-				pushState: 1,
 			},
 		};
 	});
 
-	after(() => {
+	afterAll(() => {
 		globals.window = window;
 	});
 
-	it('should copy attributes from source node to target node', () => {
+	it('copies attributes from source node to target node', () => {
 		var nodeA = document.createElement('div');
 		nodeA.setAttribute('a', 'valueA');
 		nodeA.setAttribute('b', 'valueB');
@@ -46,80 +44,77 @@ describe('utils', () => {
 		var nodeB = document.createElement('div');
 		utils.copyNodeAttributes(nodeA, nodeB);
 
-		assert.strictEqual(nodeA.attributes.length, nodeB.attributes.length);
-		assert.strictEqual(nodeA.getAttribute('a'), nodeB.getAttribute('a'));
-		assert.strictEqual(nodeA.getAttribute('b'), nodeB.getAttribute('b'));
-		assert.strictEqual(nodeB.getAttribute('a'), 'valueA');
-		assert.strictEqual(nodeB.getAttribute('b'), 'valueB');
+		expect(nodeA.attributes.length).toBe(nodeB.attributes.length);
+		expect(nodeA.getAttribute('a')).toBe(nodeB.getAttribute('a'));
+		expect(nodeA.getAttribute('b')).toBe(nodeB.getAttribute('b'));
+		expect(nodeB.getAttribute('a')).toBe('valueA');
+		expect(nodeB.getAttribute('b')).toBe('valueB');
 	});
 
-	it('should clear attributes from a given node', () => {
+	it('clears attributes from a given node', () => {
 		var node = document.createElement('div');
 		node.setAttribute('a', 'valueA');
 		node.setAttribute('b', 'valueB');
 
 		utils.clearNodeAttributes(node);
 
-		assert.strictEqual(node.getAttribute('a'), null);
-		assert.strictEqual(node.getAttribute('b'), null);
-		assert.strictEqual(node.attributes.length, 0);
+		expect(node.getAttribute('a')).toBeNull();
+		expect(node.getAttribute('b')).toBeNull();
+		expect(node.attributes.length).toBe(0);
 	});
 
-	it('should get path from url', () => {
-		assert.strictEqual(
-			'/path?a=1#hash',
-			utils.getUrlPath('http://hostname/path?a=1#hash')
+	it('gets path from url', () => {
+		expect(utils.getUrlPath('http://hostname/path?a=1#hash')).toBe(
+			'/path?a=1#hash'
 		);
 	});
 
-	it('should get path from url excluding hashbang', () => {
-		assert.strictEqual(
-			'/path?a=1',
+	it('gets path from url excluding hashbang', () => {
+		expect(
 			utils.getUrlPathWithoutHash('http://hostname/path?a=1#hash')
-		);
+		).toBe('/path?a=1');
 	});
 
-	it('should get path from url excluding hashbang and search', () => {
-		assert.strictEqual(
-			'/path',
+	it('gets path from url excluding hashbang and search', () => {
+		expect(
 			utils.getUrlPathWithoutHashAndSearch(
 				'http://hostname/path?a=1#hash'
 			)
-		);
+		).toBe('/path');
 	});
 
-	it('should test if path is current browser path', () => {
-		assert.ok(utils.isCurrentBrowserPath('http://hostname/path?a=1'));
-		assert.ok(utils.isCurrentBrowserPath('http://hostname/path?a=1#hash'));
-		assert.ok(!utils.isCurrentBrowserPath('http://hostname/path1?a=1'));
-		assert.ok(
+	it('tests if path is current browser path', () => {
+		expect(
+			utils.isCurrentBrowserPath('http://hostname/path?a=1')
+		).toBeTruthy();
+		expect(
+			utils.isCurrentBrowserPath('http://hostname/path?a=1#hash')
+		).toBeTruthy();
+		expect(
+			!utils.isCurrentBrowserPath('http://hostname/path1?a=1')
+		).toBeTruthy();
+		expect(
 			!utils.isCurrentBrowserPath('http://hostname/path1?a=1#hash')
-		);
-		assert.ok(!utils.isCurrentBrowserPath());
+		).toBeTruthy();
+		expect(!utils.isCurrentBrowserPath()).toBeTruthy();
 	});
 
-	it('should get current browser path', () => {
-		assert.strictEqual('/path?a=1#hash', utils.getCurrentBrowserPath());
+	it('gets current browser path', () => {
+		expect(utils.getCurrentBrowserPath()).toBe('/path?a=1#hash');
 	});
 
-	it('should get current browser path excluding hashbang', () => {
-		assert.strictEqual(
-			'/path?a=1',
-			utils.getCurrentBrowserPathWithoutHash()
-		);
+	it('gets current browser path excluding hashbang', () => {
+		expect(utils.getCurrentBrowserPathWithoutHash()).toBe('/path?a=1');
 	});
 
-	it('should test if Html5 history is supported', () => {
-		assert.ok(utils.isHtml5HistorySupported());
+	it('tests if Html5 history is supported', () => {
+		expect(utils.isHtml5HistorySupported()).toBeTruthy();
 		globals.window.history = null;
-		assert.ok(!utils.isHtml5HistorySupported());
+		expect(!utils.isHtml5HistorySupported()).toBeTruthy();
 	});
 
-	it('should test if a given url is a valid web (http/https) uri', () => {
-		assert.ok(
-			!utils.isWebUri('tel:+999999999'),
-			'tel:+999999999 is not a valid url'
-		);
-		assert.instanceOf(utils.isWebUri('http://localhost:12345'), Uri);
+	it('tests if a given url is a valid web (http/https) uri', () => {
+		expect(utils.isWebUri('tel:+999999999')).toBeFalsy();
+		expect(utils.isWebUri('http://localhost:12345')).toBeInstanceOf(Uri);
 	});
 });

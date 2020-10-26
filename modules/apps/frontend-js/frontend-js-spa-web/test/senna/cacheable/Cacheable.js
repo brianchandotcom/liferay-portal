@@ -12,35 +12,33 @@
  * details.
  */
 
-'use strict';
-
 import Cacheable from '../../../src/main/resources/META-INF/resources/senna/cacheable/Cacheable';
 
 describe('Cacheable', () => {
-	it('should not be cacheable by default', () => {
-		assert.ok(!new Cacheable().isCacheable());
+	it('is not cacheable by default', () => {
+		expect(!new Cacheable().isCacheable()).toBeTruthy();
 	});
 
-	it('should be cacheable', () => {
-		var cacheable = new Cacheable();
+	it('is set to cacheable', () => {
+		const cacheable = new Cacheable();
 		cacheable.setCacheable(true);
-		assert.ok(cacheable.isCacheable());
+		expect(cacheable.isCacheable()).toBeTruthy();
 	});
 
-	it('should clear cache when toggle cacheable state', () => {
-		var cacheable = new Cacheable();
+	it('is cache when toggle cacheable state', () => {
+		const cacheable = new Cacheable();
 		cacheable.setCacheable(true);
 		cacheable.addCache('data');
-		assert.strictEqual('data', cacheable.getCache());
+		expect(cacheable.getCache()).toBe('data');
 		cacheable.setCacheable(false);
-		assert.strictEqual(null, cacheable.getCache());
+		expect(cacheable.getCache()).toBeNull();
 	});
 
-	it('should clear cache on dispose', () => {
-		var cacheable = new Cacheable();
+	it('clears cache on dispose', () => {
+		const cacheable = new Cacheable();
 		cacheable.setCacheable(true);
 		cacheable.addCache('data');
 		cacheable.dispose();
-		assert.strictEqual(null, cacheable.getCache());
+		expect(cacheable.getCache()).toBeNull();
 	});
 });

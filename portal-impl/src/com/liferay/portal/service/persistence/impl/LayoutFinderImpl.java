@@ -16,8 +16,8 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
 import com.liferay.portal.kernel.model.LayoutTable;
+import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
 import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -106,6 +108,16 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
+			Expression<String> valueExpression =
+				PortletPreferenceValueTable.INSTANCE.smallValue;
+
+			if (preferencesValue.length() >
+					PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
+
+				valueExpression = DSLFunctionFactoryUtil.castClobText(
+					PortletPreferenceValueTable.INSTANCE.largeValue);
+			}
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				DSLQueryFactoryUtil.selectDistinct(
 					LayoutTable.INSTANCE.plid.as("layoutPlid"),
@@ -117,6 +129,12 @@ public class LayoutFinderImpl
 					PortletPreferencesTable.INSTANCE,
 					PortletPreferencesTable.INSTANCE.plid.eq(
 						LayoutTable.INSTANCE.plid)
+				).innerJoinON(
+					PortletPreferenceValueTable.INSTANCE,
+					PortletPreferenceValueTable.INSTANCE.portletPreferencesId.
+						eq(
+							PortletPreferencesTable.INSTANCE.
+								portletPreferencesId)
 				).where(
 					LayoutTable.INSTANCE.companyId.eq(
 						companyId
@@ -128,13 +146,10 @@ public class LayoutFinderImpl
 								portletId.concat("_INSTANCE_%"))
 						).withParentheses()
 					).and(
-						DSLFunctionFactoryUtil.castClobText(
-							PortletPreferencesTable.INSTANCE.preferences
-						).like(
-							StringBundler.concat(
-								"%<preference><name>", preferencesKey,
-								"</name><value>", preferencesValue, "</value>%")
-						)
+						PortletPreferenceValueTable.INSTANCE.name.eq(
+							preferencesKey)
+					).and(
+						valueExpression.eq(preferencesValue)
 					)
 				));
 

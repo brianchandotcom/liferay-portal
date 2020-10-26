@@ -36,7 +36,10 @@ import javax.servlet.http.HttpServletResponse;
  * </p>
  *
  * @author Sergio González
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry}
  */
+@Deprecated
 public interface FormNavigatorEntry<T> {
 
 	/**

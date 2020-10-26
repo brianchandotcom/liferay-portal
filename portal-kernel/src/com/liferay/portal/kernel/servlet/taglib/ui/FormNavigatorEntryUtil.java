@@ -35,7 +35,10 @@ import java.util.Optional;
 
 /**
  * @author Sergio González
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryUtil}
  */
+@Deprecated
 public class FormNavigatorEntryUtil {
 
 	public static <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(

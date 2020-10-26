@@ -50,14 +50,19 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 		'click',
 		'.select-master-layout-option',
 		function (event) {
-			dom.removeClasses(
-				document.querySelectorAll('.form-check-card.active'),
-				'active'
-			);
-			dom.addClasses(
-				dom.closest(event.delegateTarget, '.form-check-card'),
-				'active'
-			);
+			var activeCards = document.querySelectorAll('.form-check-card.active');
+
+			if (activeCards.length) {
+				activeCards.forEach(function (card) {
+					card.classList.remove('active');
+				});
+			}
+
+			var newSelectedCard = event.delegateTarget.closest('.form-check-card');
+
+			if (newSelectedCard) {
+				newSelectedCard.classList.add('active');
+			}
 
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escape(eventName) %>',

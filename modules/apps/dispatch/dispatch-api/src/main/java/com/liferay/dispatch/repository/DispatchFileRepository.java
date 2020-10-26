@@ -12,16 +12,25 @@
  * details.
  */
 
-package com.liferay.dispatch.constants;
+package com.liferay.dispatch.repository;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+
+import java.io.InputStream;
 
 /**
- * @author Riccardo Ferrari
- * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
-public class DispatchWebKeys {
+public interface DispatchFileRepository {
 
-	public static final String DISPATCH_TRIGGER = "DISPATCH_TRIGGER";
+	public FileEntry addFileEntry(
+			long userId, long dispatchTriggerId, String fileName, long size,
+			String contentType, InputStream inputStream)
+		throws PortalException;
 
-	public static final String FILE_NAME = "fileName";
+	public FileEntry fetchFileEntry(long dispatchTriggerId);
+
+	public String fetchFileEntryName(long dispatchTriggerId);
 
 }

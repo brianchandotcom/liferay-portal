@@ -12,16 +12,28 @@
  * details.
  */
 
-package com.liferay.dispatch.constants;
+package com.liferay.dispatch.repository.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Riccardo Ferrari
- * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
-public class DispatchWebKeys {
+public class DispatchRepositoryException extends PortalException {
 
-	public static final String DISPATCH_TRIGGER = "DISPATCH_TRIGGER";
+	public DispatchRepositoryException() {
+	}
 
-	public static final String FILE_NAME = "fileName";
+	public DispatchRepositoryException(String msg) {
+		super(msg);
+	}
+
+	public DispatchRepositoryException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public DispatchRepositoryException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

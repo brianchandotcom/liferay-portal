@@ -69,7 +69,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 		</div>
 
 		<div class="<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
-			<aui:input helpMessage='<%= LanguageUtil.format(request, "remote-x-url-help-message", StringUtil.toLowerCase(liveGroup.getScopeSimpleName(themeDisplay)), false) %>' label='<%= LanguageUtil.format(request, "remote-x-url", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
+			<aui:input helpMessage='<%= LanguageUtil.format(request, "remote-x-url-help-message", new String[] {StringUtil.toLowerCase(liveGroup.getScopeSimpleName(themeDisplay)), "http://localhost:8080/group/asset-library-id"}, false) %>' label='<%= LanguageUtil.format(request, "remote-x-url", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
 		</div>
 	</div>
 </div>

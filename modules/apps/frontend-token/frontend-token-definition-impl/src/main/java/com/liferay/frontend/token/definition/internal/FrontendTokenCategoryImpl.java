@@ -18,7 +18,7 @@ import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenCategory;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.frontend.token.definition.FrontendTokenSet;
-import com.liferay.frontend.token.definition.internal.util.CachedJSONTranslator;
+import com.liferay.frontend.token.definition.internal.json.JSONLocalizer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -37,8 +37,8 @@ public class FrontendTokenCategoryImpl implements FrontendTokenCategory {
 
 		_frontendTokenDefinitionImpl = frontendTokenDefinitionImpl;
 
-		_cachedJSONTranslator =
-			frontendTokenDefinitionImpl.createCachedJSONTranslator(jsonObject);
+		_jsonLocalizer = frontendTokenDefinitionImpl.createCachedJSONTranslator(
+			jsonObject);
 
 		JSONArray frontendTokenSetsJSONArray = jsonObject.getJSONArray(
 			"frontendTokenSets");
@@ -82,15 +82,15 @@ public class FrontendTokenCategoryImpl implements FrontendTokenCategory {
 
 	@Override
 	public String getJSON(Locale locale) {
-		return _cachedJSONTranslator.getJSON(locale);
+		return _jsonLocalizer.getJSON(locale);
 	}
 
-	private final CachedJSONTranslator _cachedJSONTranslator;
 	private final FrontendTokenDefinitionImpl _frontendTokenDefinitionImpl;
 	private final Collection<FrontendTokenMapping> _frontendTokenMappings =
 		new ArrayList<>();
 	private final Collection<FrontendToken> _frontendTokens = new ArrayList<>();
 	private final Collection<FrontendTokenSet> _frontendTokenSets =
 		new ArrayList<>();
+	private final JSONLocalizer _jsonLocalizer;
 
 }

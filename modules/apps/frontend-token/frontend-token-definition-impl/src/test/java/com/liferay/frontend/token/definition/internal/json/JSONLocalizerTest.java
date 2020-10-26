@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.token.definition.internal.util;
+package com.liferay.frontend.token.definition.internal.json;
 
 import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionImplTest;
 import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionRegistryImplTest;
@@ -38,7 +38,7 @@ import org.mockito.Mockito;
 /**
  * @author Iván Zaera
  */
-public class CachedJSONTranslatorTest {
+public class JSONLocalizerTest {
 
 	@Test
 	public void testGetTranslatedToExistingLocale() {
@@ -54,35 +54,34 @@ public class CachedJSONTranslatorTest {
 				pkg.getName() + ".dependencies.Language", LocaleUtil.ENGLISH)
 		);
 
-		CachedJSONTranslator cachedJSONTranslator = new CachedJSONTranslator(
+		JSONLocalizer jsonLocalizer = new JSONLocalizer(
 			_FRONTEND_TOKEN_DEFINITION_JSON, new JSONFactoryImpl(),
 			resourceBundleLoader, "theme_id");
 
 		Assert.assertEquals(
 			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON,
-			cachedJSONTranslator.getJSON(LocaleUtil.ENGLISH));
+			jsonLocalizer.getJSON(LocaleUtil.ENGLISH));
 	}
 
 	@Test
 	public void testGetTranslatedToMissingLocale() {
-		CachedJSONTranslator cachedJSONTranslator = new CachedJSONTranslator(
+		JSONLocalizer jsonLocalizer = new JSONLocalizer(
 			_FRONTEND_TOKEN_DEFINITION_JSON, new JSONFactoryImpl(),
 			Mockito.mock(ResourceBundleLoader.class), "theme_id");
 
 		Assert.assertEquals(
 			_FRONTEND_TOKEN_DEFINITION_JSON,
-			cachedJSONTranslator.getJSON(LocaleUtil.SPAIN));
+			jsonLocalizer.getJSON(LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testGetUnstranslated() {
-		CachedJSONTranslator cachedJSONTranslator = new CachedJSONTranslator(
+		JSONLocalizer jsonLocalizer = new JSONLocalizer(
 			_FRONTEND_TOKEN_DEFINITION_JSON, new JSONFactoryImpl(),
 			Mockito.mock(ResourceBundleLoader.class), "theme_id");
 
 		Assert.assertEquals(
-			_FRONTEND_TOKEN_DEFINITION_JSON,
-			cachedJSONTranslator.getJSON(null));
+			_FRONTEND_TOKEN_DEFINITION_JSON, jsonLocalizer.getJSON(null));
 	}
 
 	@Test
@@ -99,13 +98,13 @@ public class CachedJSONTranslatorTest {
 				pkg.getName() + ".dependencies.Language", LocaleUtil.ENGLISH)
 		);
 
-		CachedJSONTranslator cachedJSONTranslator = new CachedJSONTranslator(
+		JSONLocalizer jsonLocalizer = new JSONLocalizer(
 			_FRONTEND_TOKEN_DEFINITION_JSON, new JSONFactoryImpl(),
 			resourceBundleLoader, "theme_id");
 
 		Assert.assertSame(
-			cachedJSONTranslator.getJSON(LocaleUtil.ENGLISH),
-			cachedJSONTranslator.getJSON(LocaleUtil.ENGLISH));
+			jsonLocalizer.getJSON(LocaleUtil.ENGLISH),
+			jsonLocalizer.getJSON(LocaleUtil.ENGLISH));
 	}
 
 	private static final String _FRONTEND_TOKEN_DEFINITION_JSON;

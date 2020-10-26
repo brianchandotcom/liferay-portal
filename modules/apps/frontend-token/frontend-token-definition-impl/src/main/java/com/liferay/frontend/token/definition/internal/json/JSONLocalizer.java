@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.token.definition.internal.util;
+package com.liferay.frontend.token.definition.internal.json;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,9 +38,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Iván Zaera
  */
-public class CachedJSONTranslator {
+public class JSONLocalizer {
 
-	public CachedJSONTranslator(
+	public JSONLocalizer(
 		String json, JSONFactory jsonFactory,
 		ResourceBundleLoader resourceBundleLoader, String themeId) {
 
@@ -66,7 +66,7 @@ public class CachedJSONTranslator {
 			try {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(_json);
 
-				translateJSONObject(jsonObject, locale);
+				_localize(jsonObject, locale);
 
 				json = _jsonFactory.looseSerializeDeep(jsonObject);
 			}
@@ -84,7 +84,7 @@ public class CachedJSONTranslator {
 		return json;
 	}
 
-	protected void translateJSONObject(JSONObject jsonObject, Locale locale) {
+	private void _localize(JSONObject jsonObject, Locale locale) {
 		if (locale == null) {
 			return;
 		}
@@ -124,7 +124,7 @@ public class CachedJSONTranslator {
 				Object object = jsonObject.get(key);
 
 				if (object instanceof JSONObject) {
-					translateJSONObject((JSONObject)object, locale);
+					_localize((JSONObject)object, locale);
 				}
 				else if (object instanceof JSONArray) {
 					JSONArray jsonArray = (JSONArray)object;
@@ -133,8 +133,7 @@ public class CachedJSONTranslator {
 						Object childObject = jsonArray.get(i);
 
 						if (childObject instanceof JSONObject) {
-							translateJSONObject(
-								(JSONObject)childObject, locale);
+							_localize((JSONObject)childObject, locale);
 						}
 					}
 				}
@@ -146,8 +145,7 @@ public class CachedJSONTranslator {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CachedJSONTranslator.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONLocalizer.class);
 
 	private static final Set<String> _localizableKeys = new HashSet<>(
 		Arrays.asList("label"));

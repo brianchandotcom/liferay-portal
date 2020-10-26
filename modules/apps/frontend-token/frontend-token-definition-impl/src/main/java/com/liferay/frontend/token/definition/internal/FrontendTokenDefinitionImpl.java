@@ -19,7 +19,7 @@ import com.liferay.frontend.token.definition.FrontendTokenCategory;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.frontend.token.definition.FrontendTokenSet;
-import com.liferay.frontend.token.definition.internal.util.CachedJSONTranslator;
+import com.liferay.frontend.token.definition.internal.json.JSONLocalizer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,7 +42,7 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		_resourceBundleLoader = resourceBundleLoader;
 		_themeId = themeId;
 
-		_cachedJSONTranslator = createCachedJSONTranslator(jsonObject);
+		_jsonLocalizer = createCachedJSONTranslator(jsonObject);
 
 		JSONArray frontendTokenCategoriesJSONArray = jsonObject.getJSONArray(
 			"frontendTokenCategories");
@@ -90,22 +90,19 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 
 	@Override
 	public String getJSON(Locale locale) {
-		return _cachedJSONTranslator.getJSON(locale);
+		return _jsonLocalizer.getJSON(locale);
 	}
 
 	public String getThemeId() {
 		return _themeId;
 	}
 
-	protected CachedJSONTranslator createCachedJSONTranslator(
-		JSONObject jsonObject) {
-
-		return new CachedJSONTranslator(
+	protected JSONLocalizer createCachedJSONTranslator(JSONObject jsonObject) {
+		return new JSONLocalizer(
 			_jsonFactory.looseSerializeDeep(jsonObject), _jsonFactory,
 			_resourceBundleLoader, _themeId);
 	}
 
-	private final CachedJSONTranslator _cachedJSONTranslator;
 	private final Collection<FrontendTokenCategory> _frontendTokenCategories =
 		new ArrayList<>();
 	private final Collection<FrontendTokenMapping> _frontendTokenMappings =
@@ -114,6 +111,7 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 	private final Collection<FrontendTokenSet> _frontendTokenSets =
 		new ArrayList<>();
 	private final JSONFactory _jsonFactory;
+	private final JSONLocalizer _jsonLocalizer;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _themeId;
 

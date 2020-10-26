@@ -32,7 +32,7 @@ public interface FrontendToken {
 
 	public Collection<FrontendTokenMapping> getFrontendTokenMappings();
 
-	public Collection<FrontendTokenMapping> getFrontendTokenMappingsByType(
+	public Collection<FrontendTokenMapping> getFrontendTokenMappings(
 		String type);
 
 	public FrontendTokenSet getFrontendTokenSet();

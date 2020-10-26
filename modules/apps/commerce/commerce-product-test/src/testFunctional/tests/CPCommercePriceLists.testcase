@@ -134,7 +134,6 @@ definition {
 
 	test AssertPriceListHaveRequiredNameAndCurrency {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListHaveRequiredNameAndCurrency";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

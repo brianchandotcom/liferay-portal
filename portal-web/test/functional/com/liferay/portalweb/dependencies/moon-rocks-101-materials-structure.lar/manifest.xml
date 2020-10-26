@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7305" export-date="Tue, 01 Sep 2020 08:48:58 +0000" type="portlet" company-id="20098" company-group-id="20124" group-id="20122" user-personal-site-group-id="20123" private-layout="true" root-portlet-id="com_liferay_document_library_web_portlet_DLAdminPortlet" schema-version="1.0.0"/>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7400" export-date="Mon, 26 Oct 2020 07:33:17 +0000" type="portlet" company-id="20097" company-group-id="20123" group-id="20121" user-personal-site-group-id="20122" private-layout="true" root-portlet-id="com_liferay_document_library_web_portlet_DLAdminPortlet" schema-version="4.0.0"/>
 	<missing-references/>
-	<portlet portlet-id="com_liferay_document_library_web_portlet_DLAdminPortlet" layout-id="1" path="/group/20122/portlet/com_liferay_document_library_web_portlet_DLAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup"/>
+	<portlet portlet-id="com_liferay_document_library_web_portlet_DLAdminPortlet" layout-id="1" path="/group/20121/portlet/com_liferay_document_library_web_portlet_DLAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
 	<manifest-summary>
 		<staged-model manifest-summary-key="com.liferay.document.library.kernel.model.DLFileEntryType"/>
 		<staged-model manifest-summary-key="com.liferay.document.library.kernel.model.DLFileEntry"/>

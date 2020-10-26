@@ -297,6 +297,12 @@ public class PortletPreferenceValueLocalServiceUtil {
 		return getService().getPortletPreferenceValuesCount();
 	}
 
+	public static javax.portlet.PortletPreferences getPreferences(
+		com.liferay.portal.kernel.model.PortletPreferences portletPreferences) {
+
+		return getService().getPreferences(portletPreferences);
+	}
+
 	/**
 	 * Updates the portlet preference value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

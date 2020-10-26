@@ -68,7 +68,7 @@ public class PortletPreferenceValueModelImpl
 		{"portletPreferenceValueId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"portletPreferencesId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"index_", Types.INTEGER}, {"smallValue", Types.VARCHAR},
-		{"largeValue", Types.VARCHAR}, {"readOnly", Types.BOOLEAN}
+		{"largeValue", Types.CLOB}, {"readOnly", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -83,12 +83,12 @@ public class PortletPreferenceValueModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("index_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("smallValue", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("largeValue", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("largeValue", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortletPreferenceValue (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferenceValueId LONG not null,companyId LONG,portletPreferencesId LONG,name VARCHAR(75) null,index_ INTEGER,smallValue VARCHAR(75) null,largeValue VARCHAR(75) null,readOnly BOOLEAN,primary key (portletPreferenceValueId, ctCollectionId))";
+		"create table PortletPreferenceValue (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferenceValueId LONG not null,companyId LONG,portletPreferencesId LONG,name VARCHAR(255) null,index_ INTEGER,smallValue VARCHAR(255) null,largeValue TEXT null,readOnly BOOLEAN,primary key (portletPreferenceValueId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table PortletPreferenceValue";

@@ -1000,10 +1000,10 @@ create table PortletPreferenceValue (
 	portletPreferenceValueId LONG not null,
 	companyId LONG,
 	portletPreferencesId LONG,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	index_ INTEGER,
-	smallValue VARCHAR(75) null,
-	largeValue VARCHAR(75) null,
+	smallValue VARCHAR(255) null,
+	largeValue TEXT null,
 	readOnly BOOLEAN,
 	primary key (portletPreferenceValueId, ctCollectionId)
 );

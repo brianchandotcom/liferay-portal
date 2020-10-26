@@ -147,7 +147,9 @@ export default function TrafficSources({
 												)
 											}
 										>
-											{entry.value > 0 ? (
+											{entry.value > 0 &&
+											entry.countryKeywords !==
+												undefined ? (
 												<ClayButton
 													className="font-weight-semi-bold px-0 py-1 text-primary"
 													displayType="link"

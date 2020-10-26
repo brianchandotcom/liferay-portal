@@ -42,8 +42,8 @@ export default function MBPortlet({
 }) {
 	const rootNode = document.getElementById(rootNodeId);
 
-	const workflowActionInputNode = rootNode.querySelector(
-		`#${namespace}workflowAction`
+	const workflowActionInputNode = document.getElementById(
+		`${namespace}workflowAction`
 	);
 
 	const publishButton = rootNode.querySelector(
@@ -57,7 +57,7 @@ export default function MBPortlet({
 		});
 	}
 
-	const saveDrafButton = rootNode.querySelector(`#${namespace}saveButton`);
+	const saveDrafButton = document.getElementById(`${namespace}saveButton`);
 
 	if (saveDrafButton) {
 		saveDrafButton.addEventListener('click', () => {
@@ -110,7 +110,7 @@ export default function MBPortlet({
 	 *
 	 */
 	const openAdvancedReply = () => {
-		const bodyInput = rootNode.querySelector(`#${namespace}body`);
+		const bodyInput = document.getElementById(`${namespace}body`);
 		bodyInput.value = window[
 			`${namespace}replyMessageBody${replyToMessageId}`
 		].getHTML();
@@ -177,13 +177,13 @@ export default function MBPortlet({
 	 *
 	 */
 	const submitMBForm = () => {
-		rootNode.querySelector(
-			`#${namespace}${constants.CMD}`
+		document.getElementById(
+			`${namespace}${constants.CMD}`
 		).value = currentAction;
 
 		updateMultipleMBMessageAttachments();
 
-		const bodyInput = rootNode.querySelector(`#${namespace}body`);
+		const bodyInput = document.getElementById(`${namespace}body`);
 
 		if (replyToMessageId) {
 			bodyInput.value = window[
@@ -207,8 +207,8 @@ export default function MBPortlet({
 	 */
 
 	const updateMultipleMBMessageAttachments = () => {
-		const selectedFileNameContainer = rootNode.querySelector(
-			`#${namespace}selectedFileNameContainer`
+		const selectedFileNameContainer = document.getElementById(
+			`${namespace}selectedFileNameContainer`
 		);
 
 		if (selectedFileNameContainer) {

@@ -39,4 +39,8 @@ public class DropdownItem extends NavigationItem {
 		put("target", target);
 	}
 
+	public void setType(String type) {
+		put("type", type);
+	}
+
 }

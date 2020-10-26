@@ -21,8 +21,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.taglib.clay.sample.web.constants.ClaySamplePortletKeys" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.CardsDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleFileCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleHorizontalCard" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleImageCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleUserCard" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleVerticalCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %><%@

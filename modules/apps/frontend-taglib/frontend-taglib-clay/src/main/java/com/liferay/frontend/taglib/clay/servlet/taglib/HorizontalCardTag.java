@@ -257,7 +257,7 @@ public class HorizontalCardTag extends BaseContainerTag {
 
 	@Override
 	protected String getHydratedModuleName() {
-		return "frontend-taglib-clay/HorizontalCard";
+		return "frontend-taglib-clay/cards/HorizontalCard";
 	}
 
 	@Override

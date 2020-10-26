@@ -12,37 +12,32 @@
  * details.
  */
 
-import {ClayCardWithUser} from '@clayui/card';
+import {ClayCardWithHorizontal} from '@clayui/card';
 import React, {useState} from 'react';
 
-const getDataAttributes = (data) => {
-	return data
-		? Object.entries(data).reduce((acc, [key, value]) => {
-				acc[`data-${key}`] = value;
+import getDataAttributes from './get_data_attributes';
 
-				return acc;
-		  }, {})
-		: {};
-};
-
-export default function UserCard({
+export default function HorizontalCard({
 	actions = [],
 	componentId: _componentId,
 	cssClass,
+	disabled,
+	href,
 	inputName,
 	inputValue,
-	labels = [],
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
-	selected: initialSelected,
 	selectable,
+	selected: initialSelected,
+	symbol,
+	title,
 	...otherProps
 }) {
 	const [selected, setSelected] = useState(initialSelected);
 
 	return (
-		<ClayCardWithUser
+		<ClayCardWithHorizontal
 			actions={actions?.map(({data, ...rest}) => {
 				const dataAttributes = getDataAttributes(data);
 
@@ -52,27 +47,24 @@ export default function UserCard({
 				};
 			})}
 			checkboxProps={{
-				name: inputName,
-				value: inputValue,
+				name: inputName ?? '',
+				value: inputValue ?? '',
 			}}
 			className={cssClass}
-			labels={labels?.map(({data, label, style: _style, ...rest}) => {
-				const dataAttributes = getDataAttributes(data);
-
-				return {
-					value: label,
-					...dataAttributes,
-					...rest,
-				};
-			})}
+			disabled={disabled}
+			href={href}
+			interactive={false}
 			onSelectChange={
 				selectable
-					? () => {
-							setSelected(!selected);
+					? (selected) => {
+							setSelected(selected);
 					  }
 					: null
 			}
+			selectable={selectable}
 			selected={selected}
+			symbol={symbol}
+			title={title}
 			{...otherProps}
 		/>
 	);

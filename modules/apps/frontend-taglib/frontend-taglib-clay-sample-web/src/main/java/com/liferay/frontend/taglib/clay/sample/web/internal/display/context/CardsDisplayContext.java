@@ -34,16 +34,41 @@ public class CardsDisplayContext {
 			return _actionDropdownItems;
 		}
 
-		_actionDropdownItems = DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref("#1");
-				dropdownItem.setLabel("Edit");
-				dropdownItem.setSeparator(true);
+		_actionDropdownItems = DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref("#1");
+							dropdownItem.setLabel("Group 1 - Option 1");
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setHref("#2");
+							dropdownItem.setLabel("Group 1 - Option 2");
+						}
+					).add(
+						dropdownItem -> dropdownItem.setType("divider")
+					).build());
+
+				dropdownGroupItem.setLabel("Group 1");
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref("#2");
-				dropdownItem.setLabel("Save");
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref("#3");
+							dropdownItem.setLabel("Group 2 - Option 1");
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setHref("#4");
+							dropdownItem.setLabel("Group 2 - Option 2");
+						}
+					).build());
+
+				dropdownGroupItem.setLabel("Group 2");
 			}
 		).build();
 

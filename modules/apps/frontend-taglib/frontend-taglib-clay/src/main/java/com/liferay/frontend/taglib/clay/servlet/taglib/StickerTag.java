@@ -58,10 +58,6 @@ public class StickerTag extends BaseContainerTag {
 		return _inline;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	public String getLabel() {
 		return _label;
 	}
@@ -119,10 +115,6 @@ public class StickerTag extends BaseContainerTag {
 		_inline = inline;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -242,6 +234,11 @@ public class StickerTag extends BaseContainerTag {
 			jspWriter.write("\" class=\"sticker-img\" src=\"");
 			jspWriter.write(_imageSrc);
 			jspWriter.write("\" />");
+
+			return SKIP_BODY;
+		}
+		else if (Validator.isNotNull(_label)) {
+			jspWriter.write(_label);
 
 			return SKIP_BODY;
 		}

@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
+export default function getDataAttributes(data) {
+	return data
+		? Object.entries(data).reduce((acc, [key, value]) => {
+				acc[`data-${key}`] = value;
 
-/**
- * @author Eudaldo Alonso
- */
-public interface FileCard extends VerticalCard {
+				return acc;
+		  }, {})
+		: {};
 }

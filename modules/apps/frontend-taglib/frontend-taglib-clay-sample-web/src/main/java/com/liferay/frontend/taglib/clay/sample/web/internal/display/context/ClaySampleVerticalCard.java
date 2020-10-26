@@ -14,36 +14,66 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * @author Carlos Lancha
+ * @author Julien Castelain
  */
-public class ClaySampleUserCard implements UserCard {
+public class ClaySampleVerticalCard implements VerticalCard {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
 			return _actionDropdownItems;
 		}
 
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref("#1");
-				dropdownItem.setLabel("Edit");
+		_actionDropdownItems = DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref("#1");
+							dropdownItem.setLabel("Option 1");
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setHref("#2");
+							dropdownItem.setLabel("Option 2");
+						}
+					).add(
+						dropdownItem -> dropdownItem.setType("divider")
+					).build());
+
+				dropdownGroupItem.setLabel("Group 1");
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref("#2");
-				dropdownItem.setLabel("Save");
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.setHref("#3");
+							dropdownItem.setLabel("Option 1");
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.setHref("#4");
+							dropdownItem.setLabel("Option 2");
+						}
+					).build());
+
+				dropdownGroupItem.setLabel("Group 2");
 			}
 		).build();
+
+		return _actionDropdownItems;
 	}
 
 	public String getCssClass() {
@@ -51,7 +81,7 @@ public class ClaySampleUserCard implements UserCard {
 			return _cssClass;
 		}
 
-		return "custom-css-class";
+		return "custom-vertical-card-css-class";
 	}
 
 	public String getHref() {
@@ -59,11 +89,15 @@ public class ClaySampleUserCard implements UserCard {
 			return _href;
 		}
 
-		return "#user-card-href";
+		return "#vertical-card-href";
 	}
 
 	public String getIcon() {
-		return _icon;
+		if (_icon != null) {
+			return _icon;
+		}
+
+		return "list";
 	}
 
 	public String getId() {
@@ -73,15 +107,11 @@ public class ClaySampleUserCard implements UserCard {
 
 		_currentIdNumber = _currentIdNumber + 1;
 
-		return "userCardId" + _currentIdNumber;
+		return "verticalCardId" + _currentIdNumber;
 	}
 
 	public String getImageAlt() {
-		if (_imageAlt != null) {
-			return _imageAlt;
-		}
-
-		return "User Card Image Alt Text";
+		return _imageAlt;
 	}
 
 	public String getImageSrc() {
@@ -93,7 +123,7 @@ public class ClaySampleUserCard implements UserCard {
 			return _inputName;
 		}
 
-		return "user-card-input-name";
+		return "vertical-card-input-name";
 	}
 
 	public String getInputValue() {
@@ -101,7 +131,7 @@ public class ClaySampleUserCard implements UserCard {
 			return _inputValue;
 		}
 
-		return "user-card-input-value";
+		return "vertical-card-input-value";
 	}
 
 	public List<LabelItem> getLabels() {
@@ -121,18 +151,61 @@ public class ClaySampleUserCard implements UserCard {
 		).add(
 			() -> numItems > 2,
 			labelItem -> {
-				labelItem.setLabel("Canceled");
-				labelItem.setStyle("danger");
+				labelItem.setLabel("Rejected");
+				labelItem.setStyle("warning");
 			}
 		).build();
 	}
 
-	public String getName() {
-		if (_name != null) {
-			return _name;
+	public Map<String, String> getLabelStylesMap() {
+		if (_labelStylesMap != null) {
+			return _labelStylesMap;
 		}
 
-		return "User Name";
+		_labelStylesMap = HashMapBuilder.put(
+			"Pending", "info"
+		).build();
+
+		return _labelStylesMap;
+	}
+
+	public String getStickerCssClass() {
+		return _stickerCssClass;
+	}
+
+	public String getStickerIcon() {
+		return _stickerIcon;
+	}
+
+	public String getStickerImageAlt() {
+		return _stickerImageAlt;
+	}
+
+	public String getStickerImageSrc() {
+		return _stickerImageSrc;
+	}
+
+	public String getStickerLabel() {
+		if (_stickerLabel != null) {
+			return _stickerLabel;
+		}
+
+		return "JPG";
+	}
+
+	public String getStickerShape() {
+		if (_stickerShape != null) {
+			return _stickerShape;
+		}
+
+		return "circle";
+	}
+
+	public String getStickerStyle() {
+		if (_stickerStyle != null) {
+		}
+
+		return "warning";
 	}
 
 	public String getSubtitle() {
@@ -140,15 +213,15 @@ public class ClaySampleUserCard implements UserCard {
 			return _subtitle;
 		}
 
-		return "Latest Action";
+		return "Card Action";
 	}
 
-	public String getUserColorClass() {
-		if (_userColorClass != null) {
-			return _userColorClass;
+	public String getTitle() {
+		if (_title != null) {
+			return _title;
 		}
 
-		return "info";
+		return "Vertical Card";
 	}
 
 	public boolean isDisabled() {
@@ -207,8 +280,8 @@ public class ClaySampleUserCard implements UserCard {
 		_labels = labels;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setLabelStylesMap(Map<String, String> labelStylesMap) {
+		_labelStylesMap = labelStylesMap;
 	}
 
 	public void setSelectable(boolean selectable) {
@@ -219,12 +292,40 @@ public class ClaySampleUserCard implements UserCard {
 		_selected = selected;
 	}
 
+	public void setStickerCssClass(String stickerCssClass) {
+		_stickerCssClass = stickerCssClass;
+	}
+
+	public void setStickerIcon(String stickerIcon) {
+		_stickerIcon = stickerIcon;
+	}
+
+	public void setStickerImageAlt(String stickerImageAlt) {
+		_stickerImageAlt = stickerImageAlt;
+	}
+
+	public void setStickerImageSrc(String stickerImageSrc) {
+		_stickerImageSrc = stickerImageSrc;
+	}
+
+	public void setStickerLabel(String stickerLabel) {
+		_stickerLabel = stickerLabel;
+	}
+
+	public void setStickerShape(String stickerShape) {
+		_stickerShape = stickerShape;
+	}
+
+	public void setStickerStyle(String stickerStyle) {
+		_stickerStyle = stickerStyle;
+	}
+
 	public void setSubtitle(String subtitle) {
 		_subtitle = subtitle;
 	}
 
-	public void setUserColorClass(String userColorClass) {
-		_userColorClass = userColorClass;
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	private List<DropdownItem> _actionDropdownItems;
@@ -239,10 +340,17 @@ public class ClaySampleUserCard implements UserCard {
 	private String _inputName;
 	private String _inputValue;
 	private List<LabelItem> _labels;
-	private String _name;
+	private Map<String, String> _labelStylesMap;
 	private boolean _selectable = true;
 	private boolean _selected;
+	private String _stickerCssClass;
+	private String _stickerIcon;
+	private String _stickerImageAlt;
+	private String _stickerImageSrc;
+	private String _stickerLabel;
+	private String _stickerShape;
+	private String _stickerStyle;
 	private String _subtitle;
-	private String _userColorClass;
+	private String _title;
 
 }

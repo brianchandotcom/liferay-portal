@@ -698,6 +698,87 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-61632. Add web content with repeatable HTML field."
+	@priority = "4"
+	test AddWebContentWithRepeatableHTMLField {
+		task ("Add a web content structure with a repeatable HTML field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "HTML",
+				fieldFieldLabel = "HTML",
+				fieldName = "HTML");
+
+			DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "HTML");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Repeat HTML field") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			DDLRecord.addRepeatableField(fieldName = "HTML");
+		}
+
+		task ("Type content to the first HTML field") {
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "This is the first HTML field");
+		}
+
+		task ("Type content to the second HTML field") {
+			Type.typeCKEditorWaitForCKEditor(
+				index = "2",
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#ANY_BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "This is the second HTML field");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Web Content Display to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Select the web content article") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the content shown in Web Content Display") {
+			WebContent.viewPGViaWCD(webContentContent = "This is the first HTML field");
+
+			WebContent.viewPGViaWCD(webContentContent = "This is the second HTML field");
+		}
+	}
+
 	@description = "This is a use case for LRQA-61632. Add web content with required HTML field."
 	@priority = "4"
 	test AddWebContentWithRequiredHTMLField {

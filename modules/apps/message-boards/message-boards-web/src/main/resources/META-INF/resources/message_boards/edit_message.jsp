@@ -497,7 +497,6 @@ Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
 </c:if>
 
 <liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "MBPorlet" %>'
 	context="<%= taglibContext %>"
 	module="message_boards/js/MBPortlet.es"
 	servletContext="<%= application %>"

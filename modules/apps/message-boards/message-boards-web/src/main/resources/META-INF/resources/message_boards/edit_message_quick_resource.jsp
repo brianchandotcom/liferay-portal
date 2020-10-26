@@ -223,7 +223,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 </div>
 
 <liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "MBPorlet" %>'
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"constants",

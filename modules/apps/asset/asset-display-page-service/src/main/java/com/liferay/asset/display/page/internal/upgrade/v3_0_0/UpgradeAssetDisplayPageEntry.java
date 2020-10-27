@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.display.page.upgrade;
+package com.liferay.asset.display.page.internal.upgrade.v3_0_0;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.upgrade.BaseUpgradeAssetDisplayPageEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -28,25 +30,36 @@ import java.sql.Timestamp;
 /**
  * @author Jürgen Kappler
  */
-public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
+public class UpgradeAssetDisplayPageEntry
+	extends BaseUpgradeAssetDisplayPageEntry {
 
-	protected void upgradeAssetDisplayPageTypes(
-			String tableName, String pkColumnName, String modelClassName)
-		throws Exception {
+	@Override
+	protected void doUpgrade() throws Exception {
+		upgradeAssetDisplayPageTypes(
+			"BlogsEntry", "entryId", "com.liferay.blogs.model.BlogsEntry");
 
-		long modelClassNameId = PortalUtil.getClassNameId(modelClassName);
+		upgradeAssetDisplayPageTypes(
+			"JournalArticle", "resourcePrimKey",
+			"com.liferay.journal.model.JournalArticle");
 
-		StringBundler sb1 = new StringBundler(10);
+		_upgradeDLAssetDisplayPageTypes();
+	}
 
-		sb1.append("select groupId, companyId, ");
-		sb1.append(pkColumnName);
-		sb1.append(" from ");
-		sb1.append(tableName);
-		sb1.append(" where ");
-		sb1.append(pkColumnName);
-		sb1.append(" not in (select classPK from AssetDisplayPageEntry where ");
-		sb1.append("classNameId in (");
-		sb1.append(modelClassNameId);
+	private void _upgradeDLAssetDisplayPageTypes() throws Exception {
+		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+			DLFileEntryConstants.getClassName());
+
+		long fileEntryClassNameId = PortalUtil.getClassNameId(
+			FileEntry.class.getName());
+
+		StringBundler sb1 = new StringBundler(7);
+
+		sb1.append("select groupId, companyId, userId, userName, fileEntryId ");
+		sb1.append("from DLFileEntry where fileEntryId not in (select ");
+		sb1.append("classPK from AssetDisplayPageEntry where classNameId in (");
+		sb1.append(dlFileEntryClassNameId);
+		sb1.append(", ");
+		sb1.append(fileEntryClassNameId);
 		sb1.append("))");
 
 		StringBundler sb2 = new StringBundler(5);
@@ -71,12 +84,12 @@ public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
 					ps2.setLong(2, increment());
 					ps2.setLong(3, rs.getLong("groupId"));
 					ps2.setLong(4, rs.getLong("companyId"));
-					ps2.setLong(5, 0);
-					ps2.setString(6, null);
+					ps2.setLong(5, rs.getLong("userId"));
+					ps2.setString(6, rs.getString("userName"));
 					ps2.setTimestamp(7, now);
 					ps2.setTimestamp(8, now);
-					ps2.setLong(9, modelClassNameId);
-					ps2.setLong(10, rs.getLong(pkColumnName));
+					ps2.setLong(9, fileEntryClassNameId);
+					ps2.setLong(10, rs.getLong("fileEntryId"));
 					ps2.setLong(11, 0);
 					ps2.setLong(12, AssetDisplayPageConstants.TYPE_NONE);
 					ps2.setLong(13, 0);
@@ -89,11 +102,12 @@ public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"delete from AssetDisplayPageEntry where classNameId = ? and " +
-					"type_ = ?")) {
+				"delete from AssetDisplayPageEntry where (classNameId = ? or " +
+					"classNameId = ?) and type_ = ?")) {
 
-			ps.setLong(1, modelClassNameId);
-			ps.setLong(2, AssetDisplayPageConstants.TYPE_DEFAULT);
+			ps.setLong(1, dlFileEntryClassNameId);
+			ps.setLong(2, fileEntryClassNameId);
+			ps.setLong(3, AssetDisplayPageConstants.TYPE_DEFAULT);
 
 			ps.executeUpdate();
 		}

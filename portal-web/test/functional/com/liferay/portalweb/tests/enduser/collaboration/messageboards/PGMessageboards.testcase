@@ -784,7 +784,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.editEmailViaMyAccount(userEmailAddress = "testadmin@liferay.com");
+		Navigator.gotoAccountSettings();
+
+		User.editUserInformation(userEmailAddressEdit = "testadmin@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

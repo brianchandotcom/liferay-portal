@@ -273,7 +273,7 @@ definition {
 
 		Navigator.gotoAccountSettings();
 
-		User.editDetailsViaMyAccount(userFirstNameEdit = "Testedit");
+		User.editUserInformation(userFirstNameEdit = "Testedit");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 

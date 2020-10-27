@@ -570,7 +570,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
 
-		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.4"));
+		Navigator.gotoAccountSettings();
+
+		User.editUserInformation(userEmailAddressEdit = PropsUtil.get("email.address.4"));
 
 		Gmail.logoutAndLogin(
 			userEmailAddress = PropsUtil.get("email.address.4"),

@@ -211,9 +211,11 @@ definition {
 	test UpdateUserInformation {
 		UserBar.viewUserDefaultIcon();
 
-		User.editEmailViaMyAccount(userEmailAddress = "testadmin@liferay.com");
+		Navigator.gotoAccountSettings();
 
-		User.editDetailsViaMyAccount(userScreenNameEdit = "testscreen");
+		User.editUserInformation(
+			userEmailAddressEdit = "testadmin@liferay.com",
+			userScreenNameEdit = "testscreen");
 
 		User.viewUserInfomation(
 			userEmailAddress = "testadmin@liferay.com",

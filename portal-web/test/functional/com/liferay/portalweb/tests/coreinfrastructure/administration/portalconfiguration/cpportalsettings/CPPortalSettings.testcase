@@ -99,7 +99,9 @@ definition {
 
 		SignIn.signIn();
 
-		User.editEmailViaMyAccount(userEmailAddress = "edit@liferay.com");
+		Navigator.gotoAccountSettings();
+
+		User.editUserInformation(userEmailAddressEdit = "edit@liferay.com");
 
 		MockMock.openBodyLink(
 			asset = "${portalURL}: Email Address Verification",

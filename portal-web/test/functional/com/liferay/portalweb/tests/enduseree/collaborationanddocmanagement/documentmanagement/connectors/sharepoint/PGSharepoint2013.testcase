@@ -26,7 +26,7 @@ definition {
 
 		Navigator.gotoAccountSettings();
 
-		User.editDetailsViaMyAccount(userScreenNameEdit = "administrator");
+		User.editUserInformation(userScreenNameEdit = "administrator");
 
 		Navigator.openURL();
 
@@ -95,7 +95,7 @@ definition {
 
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-			User.editDetailsViaMyAccount(userScreenNameEdit = "test");
+			User.editUserInformation(userScreenNameEdit = "test");
 
 			Navigator.openURL();
 

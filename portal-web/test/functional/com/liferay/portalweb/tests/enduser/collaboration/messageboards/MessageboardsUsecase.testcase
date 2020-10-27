@@ -405,7 +405,11 @@ definition {
 			siteName = "${siteName}",
 			userScreenName = "usersn");
 
-		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.4"));
+		Navigator.openURL();
+
+		Navigator.gotoAccountSettings();
+
+		User.editUserInformation(userEmailAddressEdit = PropsUtil.get("email.address.4"));
 
 		MessageboardsPortlet.configureMessageEmailFromCP(emailFromAddress = PropsUtil.get("email.address.2"));
 

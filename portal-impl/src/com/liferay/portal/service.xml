@@ -1822,7 +1822,6 @@
 		<column name="ownerType" type="int" />
 		<column name="plid" type="long" />
 		<column name="portletId" type="String" />
-		<column name="preferences" type="String" />
 
 		<!-- Finder methods -->
 

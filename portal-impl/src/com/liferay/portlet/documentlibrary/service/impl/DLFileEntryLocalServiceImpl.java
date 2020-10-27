@@ -1491,7 +1491,7 @@ public class DLFileEntryLocalServiceImpl
 				"Unable to revert from the latest file version");
 		}
 
-		String sourceFileName = dlFileVersion.getTitle();
+		String sourceFileName = dlFileVersion.getFileName();
 		String extension = dlFileVersion.getExtension();
 		String mimeType = dlFileVersion.getMimeType();
 		String title = dlFileVersion.getTitle();

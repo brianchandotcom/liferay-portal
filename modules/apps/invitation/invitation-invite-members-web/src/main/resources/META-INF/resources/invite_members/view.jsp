@@ -55,13 +55,11 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:script require="metal-dom/src/dom">
-			var dom = metalDomSrcDom.default;
-
+		<aui:script>
 			var portlet = document.getElementById('p_p_id<portlet:namespace />');
 
 			if (portlet) {
-				dom.addClasses(portlet, 'hide');
+				portlet.classList.add('hide');
 			}
 		</aui:script>
 	</c:otherwise>

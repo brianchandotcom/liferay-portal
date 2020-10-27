@@ -279,6 +279,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_CELL_EDITOR_WEB_CONTENT_ARTICLE_CONTENT</td>
+	<td>//form[contains(@class,'journal-article-cell-editor-content')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

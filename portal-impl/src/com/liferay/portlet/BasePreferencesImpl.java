@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xml.simple.Element;
 
@@ -329,6 +330,10 @@ public abstract class BasePreferencesImpl implements Serializable {
 		}
 
 		Map<String, Preference> preferences = getPreferences();
+
+		if ((preferences == null) || preferences.isEmpty()) {
+			return PortletConstants.DEFAULT_PREFERENCES;
+		}
 
 		Element portletPreferencesElement = new Element(
 			"portlet-preferences", false);

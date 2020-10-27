@@ -524,6 +524,14 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		inOrder.verify(
 			ddmFormInstanceRecordVersion, Mockito.times(1)
+		).getUserName();
+
+		inOrder.verify(
+			ddmFormInstanceRecordVersion, Mockito.times(1)
+		).getStatusDate();
+
+		inOrder.verify(
+			ddmFormInstanceRecordVersion, Mockito.times(1)
 		).getStatus();
 
 		inOrder.verify(
@@ -531,10 +539,6 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		).getStatusMessage(
 			Matchers.anyInt(), Matchers.any(Locale.class)
 		);
-
-		inOrder.verify(
-			ddmFormInstanceRecordVersion, Mockito.times(1)
-		).getStatusDate();
 	}
 
 	@Test

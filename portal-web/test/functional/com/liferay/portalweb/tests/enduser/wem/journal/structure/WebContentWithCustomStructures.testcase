@@ -1379,6 +1379,284 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a use case for LRQA-61632. View structure field with predefined value."
+	@priority = "4"
+	test ViewFieldWithPredefinedValue {
+		task ("Add a web content article based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a Boolean field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Boolean",
+				fieldFieldLabel = "Boolean",
+				fieldName = "Boolean");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Boolean",
+				fieldFieldLabel = "Boolean",
+				fieldName = "Boolean",
+				fieldPredefinedValue = "Yes");
+		}
+
+		task ("Add a Color field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Color",
+				fieldFieldLabel = "Color",
+				fieldName = "Color");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Color",
+				fieldFieldLabel = "Color",
+				fieldName = "Color",
+				fieldPredefinedValue = "#FF0000");
+		}
+
+		task ("Add a Date field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Date",
+				fieldFieldLabel = "Date",
+				fieldName = "Date");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Date",
+				fieldFieldLabel = "Date",
+				fieldName = "Date",
+				fieldPredefinedValue = "10/10/2020",
+				fieldPredefinedValueDay = "10",
+				fieldPredefinedValueMonth = "October",
+				fieldPredefinedValueYear = "2020");
+		}
+
+		task ("Add a Decimal field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Decimal",
+				fieldFieldLabel = "Decimal",
+				fieldName = "Decimal");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Decimal",
+				fieldFieldLabel = "Decimal",
+				fieldName = "Decimal",
+				fieldPredefinedValue = "0.5");
+		}
+
+		task ("Add a Documents and Media field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Documents and Media",
+				fieldFieldLabel = "Documents and Media",
+				fieldName = "DocumentsAndMedia");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Documents and Media",
+				fieldFieldLabel = "Documents and Media",
+				fieldName = "DocumentsAndMedia",
+				fieldPredefinedValue = "Document_1.jpg",
+				uploadFileName = "Document_1.jpg");
+		}
+
+		task ("Add a HTML field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "HTML",
+				fieldFieldLabel = "HTML",
+				fieldName = "HTML");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "HTML",
+				fieldFieldLabel = "HTML",
+				fieldName = "HTML",
+				fieldPredefinedValue = "This is a HTML field");
+		}
+
+		task ("Add an Integer field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Integer",
+				fieldFieldLabel = "Integer",
+				fieldName = "Integer");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Integer",
+				fieldFieldLabel = "Integer",
+				fieldName = "Integer",
+				fieldPredefinedValue = "9");
+		}
+
+		task ("Add a Number field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Number",
+				fieldFieldLabel = "Number",
+				fieldName = "Number");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Number",
+				fieldFieldLabel = "Number",
+				fieldName = "Number",
+				fieldPredefinedValue = "-1");
+		}
+
+		task ("Add a Radio field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Radio",
+				fieldFieldLabel = "Radio",
+				fieldName = "Radio");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Radio",
+				fieldFieldLabel = "Radio",
+				fieldName = "Radio",
+				fieldPredefinedValue = "option 1");
+		}
+
+		task ("Add a Select field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Select",
+				fieldFieldLabel = "Select",
+				fieldName = "Select");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Select",
+				fieldFieldLabel = "Select",
+				fieldName = "Select",
+				fieldPredefinedValue = "option 2");
+		}
+
+		task ("Add a Text field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text",
+				fieldPredefinedValue = "This is a Text field");
+		}
+
+		task ("Add a Text Box field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Text Box",
+				fieldFieldLabel = "Text Box",
+				fieldName = "TextBox");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Text Box",
+				fieldFieldLabel = "Text Box",
+				fieldName = "TextBox",
+				fieldPredefinedValue = "This is a Text Box field");
+		}
+
+		task ("Add a Web Content field with predefined value") {
+			DynamicDataMapping.addField(
+				field = "Web Content",
+				fieldFieldLabel = "Web Content",
+				fieldName = "WebContent");
+
+			DynamicDataMapping.editFieldPredefinedValue(
+				field = "Web Content",
+				fieldFieldLabel = "Web Content",
+				fieldName = "WebContent",
+				fieldPredefinedValue = "Web Content Title");
+		}
+
+		task ("Save the new structure") {
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content article based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Assert the predefined value are shown in each field") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			PortletEntry.inputTitle(title = "Web Content With Predefined Value");
+
+			AssertChecked(
+				checkboxName = "Boolean",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				key_fieldName = "Color",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "background-color: rgb(255, 0, 0);");
+
+			AssertTextEquals(
+				key_fieldLabel = "Date",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "10/10/2020");
+
+			AssertTextEquals(
+				key_fieldLabel = "Decimal",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "0.5");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "DocumentsAndMedia",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "Document_1.jpg");
+
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			AssertTextEquals(
+				locator1 = "CKEditor#BODY",
+				value1 = "This is a HTML field");
+
+			SelectFrameTop();
+
+			AssertTextEquals(
+				key_fieldLabel = "Integer",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "9");
+
+			AssertTextEquals(
+				key_fieldLabel = "Number",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "-1");
+
+			FormFields.viewRadioValue(
+				fieldName = "Radio",
+				fieldValue = "option 1");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Select",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "option 2");
+
+			AssertTextEquals(
+				key_fieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "This is a Text field");
+
+			FormFields.viewTextMultilineValue(
+				fieldName = "TextBox",
+				fieldValue = "This is a Text Box field");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "WebContent",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "Web Content Title");
+		}
+	}
+
 	@priority = "3"
 	test ViewGlobalStructureViaAddMenuInLiferaySite {
 		property testray.component.names = "Web Content Administration";

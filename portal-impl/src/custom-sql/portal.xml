@@ -686,39 +686,6 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder.countByO_O_P">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				PortletPreferences
-			WHERE
-				(PortletPreferences.ownerId = ?) AND
-				(PortletPreferences.ownerType = ?) AND
-				(
-					(PortletPreferences.portletId = ?) OR
-					(PortletPreferences.portletId LIKE ?)
-				) AND
-				(CAST_CLOB_TEXT(PortletPreferences.preferences) != '[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder.countByO_O_P_P_P">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				PortletPreferences
-			WHERE
-				(PortletPreferences.ownerId = ?) AND
-				(PortletPreferences.ownerType = ?) AND
-				(
-					(PortletPreferences.portletId = ?) OR
-					(PortletPreferences.portletId LIKE ?)
-				) AND
-				(PortletPreferences.plid = ?) AND
-				(CAST_CLOB_TEXT(PortletPreferences.preferences) != '[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder.findByPortletId">
 		<![CDATA[
 			SELECT

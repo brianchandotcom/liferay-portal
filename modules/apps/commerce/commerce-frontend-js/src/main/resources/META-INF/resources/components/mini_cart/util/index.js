@@ -14,10 +14,10 @@
 
 import getJsModule from '../../../utilities/modules';
 import {
-	DISCOUNT_LEVEL_PREFIX,
 	DEFAULT_ORDER_DETAILS_PORTLET_ID,
+	DISCOUNT_LEVEL_PREFIX,
 	ORDER_DETAILS_ENDPOINT,
-	ORDER_UUID_PARAMETER
+	ORDER_UUID_PARAMETER,
 } from './constants';
 
 export function isNonnull(...values) {
@@ -51,26 +51,32 @@ export function parseOptions(stringifiedJSON) {
 
 function generatedOrderDetailURL() {
 	const baseURL = new URL(
-		`${Liferay.ThemeDisplay.getCanonicalURL()}${ORDER_DETAILS_ENDPOINT}`);
+		`${Liferay.ThemeDisplay.getCanonicalURL()}${ORDER_DETAILS_ENDPOINT}`
+	);
 
 	baseURL.searchParams.append('p_p_id', DEFAULT_ORDER_DETAILS_PORTLET_ID);
 	baseURL.searchParams.append('p_p_lifecycle', '0');
 	baseURL.searchParams.append(
 		`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_mvcRenderCommandName`,
-		'editCommerceOrder');
+		'editCommerceOrder'
+	);
 	baseURL.searchParams.append(
-		`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_commerceOrderUuid`, '0');
+		`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_commerceOrderUuid`,
+		'0'
+	);
 
 	return baseURL;
 }
 
 export function regenerateOrderDetailURL(orderDetailURL, orderUUID) {
-	const originalURL = (orderDetailURL) ? new URL(orderDetailURL) :
-		generatedOrderDetailURL();
+	const originalURL = orderDetailURL
+		? new URL(orderDetailURL)
+		: generatedOrderDetailURL();
 
 	originalURL.searchParams.set(
 		`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_${ORDER_UUID_PARAMETER}`,
-		orderUUID);
+		orderUUID
+	);
 
 	return originalURL.toString();
 }

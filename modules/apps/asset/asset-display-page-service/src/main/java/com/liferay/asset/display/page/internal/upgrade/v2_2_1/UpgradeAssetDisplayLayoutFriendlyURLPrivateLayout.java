@@ -110,9 +110,9 @@ public class UpgradeAssetDisplayLayoutFriendlyURLPrivateLayout
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								StringBundler.concat(
-									"FriendlyURL for PLID ", plid,
-									" in group ", groupId, " changed from ",
-									friendlyURL, " to ", newFriendlyURL));
+									"FriendlyURL for PLID ", plid, " in group ",
+									groupId, " changed from ", friendlyURL,
+									" to ", newFriendlyURL));
 						}
 					}
 

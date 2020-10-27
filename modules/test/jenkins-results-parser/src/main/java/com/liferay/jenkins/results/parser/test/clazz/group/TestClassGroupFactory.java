@@ -14,8 +14,12 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Michael Hashimoto
@@ -37,75 +41,82 @@ public class TestClassGroupFactory {
 		String batchName, BatchTestClassGroup.BuildProfile buildProfile,
 		Job job) {
 
+		String key = JenkinsResultsParserUtil.combine(
+			batchName, "_", buildProfile.toString(), "_", job.getJobName());
+
+		if (_batchTestClassGroups.containsKey(key)) {
+			return _batchTestClassGroups.get(key);
+		}
+
+		BatchTestClassGroup batchTestClassGroup = null;
+
 		if (job instanceof PortalTestClassJob) {
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
 			if (batchName.contains("functional-") ||
 				batchName.contains("subrepository-functional-")) {
 
-				return new FunctionalBatchTestClassGroup(
+				batchTestClassGroup = new FunctionalBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
+			else if (batchName.startsWith("integration-") ||
+					 batchName.startsWith("junit-test-") ||
+					 batchName.startsWith("subrepository-integration-") ||
+					 batchName.startsWith("subrepository-unit-") ||
+					 batchName.startsWith("unit-")) {
 
-			if (batchName.startsWith("integration-") ||
-				batchName.startsWith("junit-test-") ||
-				batchName.startsWith("subrepository-integration-") ||
-				batchName.startsWith("subrepository-unit-") ||
-				batchName.startsWith("unit-")) {
-
-				return new JUnitBatchTestClassGroup(
+				batchTestClassGroup = new JUnitBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			if (batchName.startsWith("modules-compile-")) {
-				return new ModulesCompileBatchTestClassGroup(
+			else if (batchName.startsWith("modules-compile-")) {
+				batchTestClassGroup = new ModulesCompileBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
+			else if (batchName.startsWith("modules-integration-") ||
+					 batchName.startsWith("modules-unit-")) {
 
-			if (batchName.startsWith("modules-integration-") ||
-				batchName.startsWith("modules-unit-")) {
-
-				return new ModulesJUnitBatchTestClassGroup(
+				batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			if (batchName.startsWith("modules-semantic-versioning-")) {
-				return new ModulesSemVerBatchTestClassGroup(
+			else if (batchName.startsWith("modules-semantic-versioning-")) {
+				batchTestClassGroup = new ModulesSemVerBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			if (batchName.startsWith("plugins-compile-")) {
-				return new PluginsBatchTestClassGroup(
+			else if (batchName.startsWith("plugins-compile-")) {
+				batchTestClassGroup = new PluginsBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
+			else if (batchName.startsWith("js-test-") ||
+					 batchName.startsWith("portal-frontend-js-")) {
 
-			if (batchName.startsWith("js-test-") ||
-				batchName.startsWith("portal-frontend-js-")) {
-
-				return new NPMTestBatchTestClassGroup(
+				batchTestClassGroup = new NPMTestBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			if (batchName.startsWith("rest-builder-")) {
-				return new RESTBuilderBatchTestClassGroup(
+			else if (batchName.startsWith("rest-builder-")) {
+				batchTestClassGroup = new RESTBuilderBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			if (batchName.startsWith("service-builder-")) {
-				return new ServiceBuilderBatchTestClassGroup(
+			else if (batchName.startsWith("service-builder-")) {
+				batchTestClassGroup = new ServiceBuilderBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			if (batchName.startsWith("tck-")) {
-				return new TCKJunitBatchTestClassGroup(
+			else if (batchName.startsWith("tck-")) {
+				batchTestClassGroup = new TCKJunitBatchTestClassGroup(
 					batchName, buildProfile, portalTestClassJob);
 			}
-
-			return new DefaultBatchTestClassGroup(
-				batchName, buildProfile, portalTestClassJob);
+			else {
+				batchTestClassGroup = new DefaultBatchTestClassGroup(
+					batchName, buildProfile, portalTestClassJob);
+			}
 		}
 
-		throw new IllegalArgumentException("Unknown test class group");
+		if (batchTestClassGroup == null) {
+			throw new IllegalArgumentException("Unknown test class group");
+		}
+
+		_batchTestClassGroups.put(key, batchTestClassGroup);
+
+		return batchTestClassGroup;
 	}
 
 	public static SegmentTestClassGroup newSegmentTestClassGroup(
@@ -118,5 +129,8 @@ public class TestClassGroupFactory {
 
 		return new SegmentTestClassGroup(batchTestClassGroup);
 	}
+
+	private static final Map<String, BatchTestClassGroup>
+		_batchTestClassGroups = new HashMap<>();
 
 }

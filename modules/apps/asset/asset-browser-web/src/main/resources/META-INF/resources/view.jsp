@@ -39,7 +39,8 @@
 			escapedModel="<%= true %>"
 			modelVar="assetEntry"
 		>
-			<c:if test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
+			<c:choose>
+				<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 
 				<%
 				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
@@ -202,7 +203,10 @@
 						</c:if>
 					</c:when>
 				</c:choose>
-			</c:if>
+			</c:when>
+			<c:otherwise>
+				<%= row.setSkip(true) %>
+			</c:otherwise>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

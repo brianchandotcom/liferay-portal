@@ -16,7 +16,7 @@ package com.liferay.commerce.price.list.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.internal.upgrade.base.BaseCommercePriceListUpgradeProcess;
-import com.liferay.commerce.price.list.model.impl.CommercePriceListModelImpl;
+import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePriceListTable;
 
 /**
  * @author Alessio Antonio Rendina
@@ -27,13 +27,12 @@ public class CommercePriceListUpgradeProcess
 	@Override
 	public void doUpgrade() throws Exception {
 		addColumn(
-			CommercePriceListModelImpl.class,
-			CommercePriceListModelImpl.TABLE_NAME, "type_", "VARCHAR(75)");
+			CommercePriceListTable.class, CommercePriceListTable.TABLE_NAME,
+			"type_", "VARCHAR(75)");
 
 		addColumn(
-			CommercePriceListModelImpl.class,
-			CommercePriceListModelImpl.TABLE_NAME, "catalogBasePriceList",
-			"BOOLEAN");
+			CommercePriceListTable.class, CommercePriceListTable.TABLE_NAME,
+			"catalogBasePriceList", "BOOLEAN");
 
 		runSQL(
 			"UPDATE CommercePriceList SET type_ = '" +

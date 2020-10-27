@@ -15,7 +15,7 @@
 package com.liferay.commerce.price.list.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.price.list.internal.upgrade.base.BaseCommercePriceListUpgradeProcess;
-import com.liferay.commerce.price.list.model.impl.CommerceTierPriceEntryModelImpl;
+import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommerceTierPriceEntryTable;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -27,56 +27,54 @@ public class CommerceTierPriceEntryUpgradeProcess
 	@Override
 	public void doUpgrade() throws Exception {
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "discountDiscovery",
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "discountDiscovery",
 			"BOOLEAN");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "discountLevel1",
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "discountLevel1",
 			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "discountLevel2",
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "discountLevel2",
 			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "discountLevel3",
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "discountLevel3",
 			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "discountLevel4",
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "discountLevel4",
 			"DECIMAL(30,16)");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "displayDate", "DATE");
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "displayDate", "DATE");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "expirationDate",
-			"DATE");
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "expirationDate", "DATE");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "status", "INTEGER");
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "status", "INTEGER");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "statusByUserId",
-			"LONG");
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "statusByUserId", "LONG");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "statusByUserName",
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "statusByUserName",
 			"VARCHAR(75)");
 
 		addColumn(
-			CommerceTierPriceEntryModelImpl.class,
-			CommerceTierPriceEntryModelImpl.TABLE_NAME, "statusDate", "DATE");
+			CommerceTierPriceEntryTable.class,
+			CommerceTierPriceEntryTable.TABLE_NAME, "statusDate", "DATE");
 
 		runSQL(
 			"UPDATE CommerceTierPriceEntry SET displayDate = lastPublishDate");

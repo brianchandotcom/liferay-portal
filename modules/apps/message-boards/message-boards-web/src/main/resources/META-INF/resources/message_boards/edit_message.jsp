@@ -460,43 +460,10 @@ if (portletTitleBasedNavigation) {
 </clay:container-fluid>
 
 <%
-Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
-	"constants",
-	HashMapBuilder.<String, Object>put(
-		"ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
-	).put(
-		"ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
-	).put(
-		"CMD", Constants.CMD
-	).build()
-).put(
-	"currentAction", (message == null) ? Constants.ADD : Constants.UPDATE
-).put(
-	"messageId", (message != null) ? messageId : null
-).put(
-	"rootNodeId", liferayPortletResponse.getNamespace() + "mbEditPageContainer"
-).build();
+EditMBDisplayContext editMBDisplayContext = new EditMBDisplayContext(liferayPortletRequest, liferayPortletResponse, message);
 %>
 
-<c:if test="<%= message != null %>">
-	<portlet:resourceURL id="/message_boards/get_attachments" var="getAttachmentsURL">
-		<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-	</portlet:resourceURL>
-
-	<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-	</portlet:renderURL>
-
-	<%
-	taglibContext.put("getAttachmentsURL", getAttachmentsURL);
-	taglibContext.put("viewTrashAttachmentsURL", viewTrashAttachmentsURL);
-	%>
-
-</c:if>
-
 <liferay-frontend:component
-	context="<%= taglibContext %>"
+	context="<%= editMBDisplayContext.getComponentContext() %>"
 	module="message_boards/js/MBPortlet.es"
 />

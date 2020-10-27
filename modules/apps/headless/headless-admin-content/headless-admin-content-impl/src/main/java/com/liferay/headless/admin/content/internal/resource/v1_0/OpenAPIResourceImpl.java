@@ -82,6 +82,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(PageDefinitionResourceImpl.class);
 
+			add(StructuredContentResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

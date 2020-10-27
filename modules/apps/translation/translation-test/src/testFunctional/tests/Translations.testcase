@@ -680,6 +680,13 @@ definition {
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 			roleTitle = "Regrole Name");
 
+		for (var resourceActionIndex : list "ACCESS_IN_SITE_AND_ASSET_LIBRARY_ADMINISTRATION,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_translation_web_internal_portlet_TranslationPortlet",
+				roleTitle = "Regrole Name");
+		}
+
 		for (var resourceNameIndex : list "com.liferay.translation.es_ES,com.liferay.translation.zh_CN") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "TRANSLATE",

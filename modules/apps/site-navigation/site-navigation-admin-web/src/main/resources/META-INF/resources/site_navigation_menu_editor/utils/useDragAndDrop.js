@@ -12,13 +12,27 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
 import {useItems} from '../contexts/ItemsContext';
 import getItemPath from './getItemPath';
+
+const DragDropContext = React.createContext({});
+
+export const DragDropProvider = ({children}) => {
+	const [parentId, setParentId] = useState(null);
+
+	const dragDropValues = {parentId, setParentId};
+
+	return (
+		<DragDropContext.Provider value={dragDropValues}>
+			{children}
+		</DragDropContext.Provider>
+	);
+};
 
 export function useDragItem(item) {
 	const {siteNavigationMenuItemId} = item;

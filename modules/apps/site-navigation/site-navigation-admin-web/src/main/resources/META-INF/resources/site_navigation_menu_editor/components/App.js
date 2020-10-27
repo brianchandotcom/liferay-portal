@@ -21,6 +21,7 @@ import {ConstantsProvider} from '../contexts/ConstantsContext';
 import {ItemsProvider, useItems} from '../contexts/ItemsContext';
 import {SelectedMenuItemIdProvider} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelIdProvider} from '../contexts/SidebarPanelIdContext';
+import {DragDropProvider} from '../utils/useDragAndDrop';
 import {AppLayout} from './AppLayout';
 import DragPreview from './DragPreview';
 import {EmptyState} from './EmptyState';
@@ -48,11 +49,13 @@ export function App(props) {
 			<ConstantsProvider constants={props}>
 				<ItemsProvider initialItems={siteNavigationMenuItems}>
 					<DragPreview />
-					<SelectedMenuItemIdProvider>
-						<SidebarPanelIdProvider>
-							<AppLayoutWrapper />
-						</SidebarPanelIdProvider>
-					</SelectedMenuItemIdProvider>
+					<DragDropProvider>
+						<SelectedMenuItemIdProvider>
+							<SidebarPanelIdProvider>
+								<AppLayoutWrapper />
+							</SidebarPanelIdProvider>
+						</SelectedMenuItemIdProvider>
+					</DragDropProvider>
 				</ItemsProvider>
 			</ConstantsProvider>
 		</DndProvider>

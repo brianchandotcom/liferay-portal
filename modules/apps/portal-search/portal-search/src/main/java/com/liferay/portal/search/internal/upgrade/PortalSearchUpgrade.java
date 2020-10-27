@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal.upgrade;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -29,8 +30,10 @@ public class PortalSearchUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.search.internal.index." +
 					"IndexStatusManagerInternalConfiguration",

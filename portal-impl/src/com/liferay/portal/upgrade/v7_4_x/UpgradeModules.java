@@ -14,25 +14,26 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-
-import java.util.TreeMap;
-
 /**
- * @author Pei-Jung Lan
+ * @author Alberto Chaparro
  */
-public class PortalUpgradeProcessRegistryImpl
-	implements PortalUpgradeProcessRegistry {
+public class UpgradeModules
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
 
 	@Override
-	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
-
-		upgradeProcesses.put(new Version(9, 0, 0), new UpgradeAddress());
-
-		upgradeProcesses.put(new Version(9, 0, 1), new UpgradeModules());
+	public String[] getBundleSymbolicNames() {
+		return _BUNDLE_SYMBOLIC_NAMES;
 	}
+
+	@Override
+	public String[][] getConvertedLegacyModules() {
+		return _CONVERTED_LEGACY_MODULES;
+	}
+
+	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.portal.search"
+	};
+
+	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
 
 }

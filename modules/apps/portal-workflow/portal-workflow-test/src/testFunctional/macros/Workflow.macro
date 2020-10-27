@@ -389,8 +389,6 @@ definition {
 
 		Click(locator1 = "Button#DONE");
 
-		Alert.viewSuccessMessage();
-
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 

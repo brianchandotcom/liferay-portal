@@ -20,132 +20,20 @@
 ViewConflictsDisplayContext viewConflictsDisplayContext = (ViewConflictsDisplayContext)request.getAttribute(CTWebKeys.VIEW_CONFLICTS_DISPLAY_CONTEXT);
 
 CTCollection ctCollection = viewConflictsDisplayContext.getCtCollection();
-boolean resolved = !viewConflictsDisplayContext.hasUnresolvedConflicts();
 
 boolean schedule = ParamUtil.getBoolean(request, "schedule");
 
 renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, schedule ? "schedule-to-publish-later" : "publish"), ": ", ctCollection.getName()));
 
-String redirect = viewConflictsDisplayContext.getRedirect();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(viewConflictsDisplayContext.getRedirect());
 %>
 
 <clay:container-fluid
-	cssClass="container-form-lg"
+	cssClass="container-form-lg publications-conflicts-container"
 >
-	<div class="sheet-lg table-responsive">
-		<table class="publications-conflicts-table table table-autofit table-list">
-			<tr>
-				<td class="text-muted" id="publicationsHeader">
-					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
-							<span>
-								<h5>
-									<liferay-ui:message key="resolve-any-conflicts" />
-								</h5>
-							</span>
-						</div>
-
-						<div class="autofit-col">
-							<span>
-								<h5><liferay-ui:message arguments="<%= new Object[] {1, schedule ? 2 : 1} %>" key="step-x-of-x" translateArguments="<%= false %>" /></h5>
-							</span>
-						</div>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<clay:sheet-header>
-						<h2 class="sheet-title"><liferay-ui:message key="conflicting-changes" /></h2>
-
-						<c:choose>
-							<c:when test="<%= resolved %>">
-								<clay:alert
-									displayType="success"
-									message="no-unresolved-conflicts-ready-to-publish"
-								/>
-							</c:when>
-							<c:otherwise>
-								<clay:alert
-									displayType="warning"
-									message="this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing"
-								/>
-							</c:otherwise>
-						</c:choose>
-					</clay:sheet-header>
-
-					<c:if test="<%= viewConflictsDisplayContext.hasUnresolvedConflicts() %>">
-						<clay:sheet-section>
-							<liferay-frontend:fieldset
-								collapsible="<%= true %>"
-								label="<%= viewConflictsDisplayContext.getUnresolvedConflictsTitle() %>"
-								localizeLabel="<%= false %>"
-							>
-								<div>
-									<react:component
-										module="publications/js/ChangeTrackingConflictsView"
-										props="<%= viewConflictsDisplayContext.getUnresolvedConflictsReactData() %>"
-									/>
-								</div>
-							</liferay-frontend:fieldset>
-						</clay:sheet-section>
-					</c:if>
-
-					<c:if test="<%= viewConflictsDisplayContext.hasResolvedConflicts() %>">
-						<clay:sheet-section>
-							<liferay-frontend:fieldset
-								collapsed="<%= true %>"
-								collapsible="<%= true %>"
-								label="<%= viewConflictsDisplayContext.getResolvedConflictsTitle() %>"
-								localizeLabel="<%= false %>"
-							>
-								<div>
-									<react:component
-										module="publications/js/ChangeTrackingConflictsView"
-										props="<%= viewConflictsDisplayContext.getResolvedConflictsReactData() %>"
-									/>
-								</div>
-							</liferay-frontend:fieldset>
-						</clay:sheet-section>
-					</c:if>
-				</td>
-			</tr>
-			<tr><td id="publicationsFooter">
-				<div class="autofit-row">
-					<div class="autofit-col autofit-col-expand">
-						<span>
-							<aui:button href="<%= redirect %>" type="cancel" />
-						</span>
-					</div>
-
-					<div class="autofit-col">
-						<span>
-							<c:choose>
-								<c:when test="<%= schedule %>">
-									<liferay-portlet:renderURL var="scheduleURL">
-										<portlet:param name="mvcRenderCommandName" value="/change_tracking/schedule_publication" />
-										<portlet:param name="redirect" value="<%= redirect %>" />
-										<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-									</liferay-portlet:renderURL>
-
-									<aui:button disabled="<%= !resolved %>" href="<%= scheduleURL %>" primary="true" value="next" />
-								</c:when>
-								<c:otherwise>
-									<liferay-portlet:actionURL name="/change_tracking/publish_ct_collection" var="publishURL">
-										<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-										<portlet:param name="name" value="<%= ctCollection.getName() %>" />
-									</liferay-portlet:actionURL>
-
-									<aui:button disabled="<%= !resolved %>" href="<%= publishURL %>" primary="true" value="publish" />
-								</c:otherwise>
-							</c:choose>
-						</span>
-					</div>
-				</div>
-			</td></tr>
-		</table>
-	</div>
+	<react:component
+		module="publications/js/ChangeTrackingConflictsView"
+		props="<%= viewConflictsDisplayContext.getReactData() %>"
+	/>
 </clay:container-fluid>

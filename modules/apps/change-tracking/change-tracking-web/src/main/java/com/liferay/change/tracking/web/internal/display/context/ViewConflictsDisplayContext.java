@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -57,14 +56,16 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewConflictsDisplayContext {
 
 	public ViewConflictsDisplayContext(
-		long activeCtCollectionId, CTCollection ctCollection,
+		long activeCtCollectionId,
 		Map<Long, List<ConflictInfo>> conflictInfoMap,
+		CTCollection ctCollection,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService, Language language,
 		Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
 		_activeCtCollectionId = activeCtCollectionId;
+		_conflictInfoMap = conflictInfoMap;
 		_ctCollection = ctCollection;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
@@ -76,15 +77,20 @@ public class ViewConflictsDisplayContext {
 		_httpServletRequest = _portal.getHttpServletRequest(_renderRequest);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
 
+	public CTCollection getCtCollection() {
+		return _ctCollection;
+	}
+
+	public Map<String, Object> getReactData() {
 		JSONArray resolvedConflictsJSONArray =
 			JSONFactoryUtil.createJSONArray();
-
 		JSONArray unresolvedConflictsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<Long, List<ConflictInfo>> entry :
-				conflictInfoMap.entrySet()) {
+				_conflictInfoMap.entrySet()) {
 
 			for (ConflictInfo conflictInfo : entry.getValue()) {
 				JSONObject jsonObject = _getConflictJSONObject(
@@ -99,25 +105,28 @@ public class ViewConflictsDisplayContext {
 			}
 		}
 
-		_resolvedConflictsReactData = HashMapBuilder.<String, Object>put(
-			"conflicts", resolvedConflictsJSONArray
+		return HashMapBuilder.<String, Object>put(
+			"publishURL",
+			() -> {
+				PortletURL publishURL = _renderResponse.createActionURL();
+
+				publishURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/publications/publish_ct_collection");
+				publishURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+				publishURL.setParameter("name", _ctCollection.getName());
+
+				return publishURL.toString();
+			}
+		).put(
+			"resolvedConflicts", resolvedConflictsJSONArray
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
-		).build();
-
-		_resolvedConflicts = resolvedConflictsJSONArray.length();
-
-		_unresolvedConflictsReactData = HashMapBuilder.<String, Object>put(
-			"conflicts", unresolvedConflictsJSONArray
 		).put(
-			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			"unresolvedConflicts", unresolvedConflictsJSONArray
 		).build();
-
-		_unresolvedConflicts = unresolvedConflictsJSONArray.length();
-	}
-
-	public CTCollection getCtCollection() {
-		return _ctCollection;
 	}
 
 	public String getRedirect() {
@@ -136,42 +145,6 @@ public class ViewConflictsDisplayContext {
 			String.valueOf(_ctCollection.getCtCollectionId()));
 
 		return portletURL.toString();
-	}
-
-	public Map<String, Object> getResolvedConflictsReactData() {
-		return _resolvedConflictsReactData;
-	}
-
-	public String getResolvedConflictsTitle() {
-		return StringBundler.concat(
-			_language.get(_httpServletRequest, "automatically-resolved"), " (",
-			_resolvedConflicts, ")");
-	}
-
-	public Map<String, Object> getUnresolvedConflictsReactData() {
-		return _unresolvedConflictsReactData;
-	}
-
-	public String getUnresolvedConflictsTitle() {
-		return StringBundler.concat(
-			_language.get(_httpServletRequest, "needs-manual-resolution"), " (",
-			_unresolvedConflicts, ")");
-	}
-
-	public boolean hasResolvedConflicts() {
-		if (_resolvedConflicts > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasUnresolvedConflicts() {
-		if (_unresolvedConflicts > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private <T extends BaseModel<T>> JSONObject _getConflictJSONObject(
@@ -362,6 +335,7 @@ public class ViewConflictsDisplayContext {
 	}
 
 	private final long _activeCtCollectionId;
+	private final Map<Long, List<ConflictInfo>> _conflictInfoMap;
 	private final CTCollection _ctCollection;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
@@ -370,10 +344,6 @@ public class ViewConflictsDisplayContext {
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final int _resolvedConflicts;
-	private final Map<String, Object> _resolvedConflictsReactData;
 	private final ThemeDisplay _themeDisplay;
-	private final int _unresolvedConflicts;
-	private final Map<String, Object> _unresolvedConflictsReactData;
 
 }

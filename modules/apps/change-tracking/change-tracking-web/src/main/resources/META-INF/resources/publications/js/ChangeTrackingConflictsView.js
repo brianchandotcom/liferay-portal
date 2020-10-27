@@ -19,9 +19,107 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClayPanel from '@clayui/panel';
 import React, {useState} from 'react';
 
-const ChangeTrackingConflictsView = ({conflicts, spritemap}) => {
+const ChangeTrackingConflictsView = ({
+	publishURL,
+	resolvedConflicts,
+	spritemap,
+	unresolvedConflicts,
+}) => {
+	return (
+		<div className="sheet sheet-lg">
+			<div className="sheet-header">
+				<h2 className="sheet-title">
+					{Liferay.Language.get('conflicting-changes')}
+				</h2>
+
+				{unresolvedConflicts.length > 0 && (
+					<ClayAlert
+						displayType="warning"
+						spritemap={spritemap}
+						title={Liferay.Language.get(
+							'this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
+						)}
+					/>
+				)}
+
+				{unresolvedConflicts.length == 0 && (
+					<ClayAlert
+						displayType="success"
+						spritemap={spritemap}
+						title={Liferay.Language.get(
+							'no-unresolved-conflicts-ready-to-publish'
+						)}
+					/>
+				)}
+			</div>
+
+			<div className="sheet-section">
+				{unresolvedConflicts.length > 0 && (
+					<ClayPanel
+						collapsable
+						defaultExpanded
+						displayTitle={
+							Liferay.Language.get('needs-manual-resolution') +
+							' (' +
+							unresolvedConflicts.length +
+							')'
+						}
+						showCollapseIcon={true}
+						spritemap={spritemap}
+					>
+						<ClayPanel.Body>
+							<ConflictsTable
+								conflicts={unresolvedConflicts}
+								spritemap={spritemap}
+							/>
+						</ClayPanel.Body>
+					</ClayPanel>
+				)}
+			</div>
+			<div className="sheet-section">
+				{resolvedConflicts.length > 0 && (
+					<ClayPanel
+						collapsable
+						displayTitle={
+							Liferay.Language.get('automatically-resolved') +
+							' (' +
+							resolvedConflicts.length +
+							')'
+						}
+						showCollapseIcon={true}
+						spritemap={spritemap}
+					>
+						<ClayPanel.Body>
+							<ConflictsTable
+								conflicts={resolvedConflicts}
+								spritemap={spritemap}
+							/>
+						</ClayPanel.Body>
+					</ClayPanel>
+				)}
+			</div>
+			<div className="sheet-footer sheet-footer-btn-block-sm-down">
+				<div className="btn-group">
+					<div className="btn-group-item">
+						<button className={unresolvedConflicts.length > 0 ? "btn btn-primary disabled"  : "btn btn-primary" } onClick={() => submitForm(document.hrefFm, publishURL)} type="button">
+							{Liferay.Language.get('publish')}
+						</button>
+					</div>
+					<div className="btn-group-item">
+						<button className="btn btn-secondary" type="button">
+							{Liferay.Language.get('cancel')}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const ConflictsTable = ({conflicts, spritemap}) => {
 	const [delta, setDelta] = useState(20);
 	const [page, setPage] = useState(1);
 	const [viewConflict, setViewConflict] = useState(null);

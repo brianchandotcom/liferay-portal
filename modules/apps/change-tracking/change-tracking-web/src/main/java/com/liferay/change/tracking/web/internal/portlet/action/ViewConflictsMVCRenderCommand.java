@@ -87,7 +87,7 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_CONFLICTS_DISPLAY_CONTEXT,
 				new ViewConflictsDisplayContext(
-					activeCtCollectionId, ctCollection, conflictInfoMap,
+					activeCtCollectionId, conflictInfoMap, ctCollection,
 					_ctDisplayRendererRegistry, _ctEntryLocalService, _language,
 					_portal, renderRequest, renderResponse));
 

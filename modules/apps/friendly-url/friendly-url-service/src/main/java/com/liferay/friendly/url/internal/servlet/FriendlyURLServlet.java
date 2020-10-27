@@ -120,26 +120,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Locale locale = portal.getLocale(httpServletRequest, null, false);
 
-		SiteFriendlyURL siteFriendlyURL =
-			siteFriendlyURLLocalService.fetchSiteFriendlyURL(
-				companyId, group.getGroupId(), LocaleUtil.toLanguageId(locale));
-
-		if (siteFriendlyURL == null) {
-			siteFriendlyURL =
-				siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(
-					companyId, friendlyURL);
-		}
-
-		SiteFriendlyURL alternativeSiteFriendlyURL = null;
-
-		if ((siteFriendlyURL != null) &&
-			!StringUtil.equalsIgnoreCase(
-				siteFriendlyURL.getFriendlyURL(), friendlyURL)) {
-
-			alternativeSiteFriendlyURL =
-				siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(
-					siteFriendlyURL.getCompanyId(), friendlyURL);
-		}
+		SiteFriendlyURL alternativeSiteFriendlyURL =
+			_getAlternativeSiteFriendlyURL(
+				friendlyURL, companyId, group, locale);
 
 		// Layout friendly URL
 
@@ -676,6 +659,33 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return false;
+	}
+
+	private SiteFriendlyURL _getAlternativeSiteFriendlyURL(
+		String friendlyURL, long companyId, Group group, Locale locale) {
+
+		SiteFriendlyURL siteFriendlyURL =
+			siteFriendlyURLLocalService.fetchSiteFriendlyURL(
+				companyId, group.getGroupId(), LocaleUtil.toLanguageId(locale));
+
+		if (siteFriendlyURL == null) {
+			siteFriendlyURL =
+				siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(
+					companyId, friendlyURL);
+		}
+
+		SiteFriendlyURL alternativeSiteFriendlyURL = null;
+
+		if ((siteFriendlyURL != null) &&
+			!StringUtil.equalsIgnoreCase(
+				siteFriendlyURL.getFriendlyURL(), friendlyURL)) {
+
+			alternativeSiteFriendlyURL =
+				siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(
+					siteFriendlyURL.getCompanyId(), friendlyURL);
+		}
+
+		return alternativeSiteFriendlyURL;
 	}
 
 	private Group _getGroup(String path, String friendlyURL, long companyId)

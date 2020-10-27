@@ -17,6 +17,7 @@ import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
 import {normalizeFriendlyURL} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useCallback, useRef, useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
@@ -277,6 +278,23 @@ const EditAdaptiveMedia = ({
 			</div>
 		</ClayForm>
 	);
+};
+
+EditAdaptiveMedia.propTypes = {
+	actionUrl: PropTypes.string.isRequired,
+	amImageConfigurationEntry: PropTypes.shape({
+		description: PropTypes.string,
+		name: PropTypes.string,
+		properties: PropTypes.shape({
+			['max-height']: PropTypes.string,
+			['max-width']: PropTypes.string,
+		}),
+	}),
+	automaticUuid: PropTypes.bool,
+	configurationEntryEditable: PropTypes.bool.isRequired,
+	configurationEntryUuid: PropTypes.string,
+	namespace: PropTypes.string.isRequired,
+	redirect: PropTypes.string.isRequired,
 };
 
 export default EditAdaptiveMedia;

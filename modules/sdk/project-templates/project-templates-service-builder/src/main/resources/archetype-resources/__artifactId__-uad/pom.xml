@@ -35,11 +35,11 @@
 		</dependency>
 #end
 #if (${addOnOptions.equals("true")} && (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")}))
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.user.associated.data.api</artifactId>
-      <scope>provided</scope>
-    </dependency>
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.user.associated.data.api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 #end
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 		<dependency>

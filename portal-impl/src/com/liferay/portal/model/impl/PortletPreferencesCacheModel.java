@@ -76,7 +76,7 @@ public class PortletPreferencesCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -94,8 +94,6 @@ public class PortletPreferencesCacheModel
 		sb.append(plid);
 		sb.append(", portletId=");
 		sb.append(portletId);
-		sb.append(", preferences=");
-		sb.append(preferences);
 		sb.append("}");
 
 		return sb.toString();
@@ -121,22 +119,13 @@ public class PortletPreferencesCacheModel
 			portletPreferencesImpl.setPortletId(portletId);
 		}
 
-		if (preferences == null) {
-			portletPreferencesImpl.setPreferences("");
-		}
-		else {
-			portletPreferencesImpl.setPreferences(preferences);
-		}
-
 		portletPreferencesImpl.resetOriginalValues();
 
 		return portletPreferencesImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -151,7 +140,6 @@ public class PortletPreferencesCacheModel
 
 		plid = objectInput.readLong();
 		portletId = objectInput.readUTF();
-		preferences = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -176,13 +164,6 @@ public class PortletPreferencesCacheModel
 		else {
 			objectOutput.writeUTF(portletId);
 		}
-
-		if (preferences == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(preferences);
-		}
 	}
 
 	public long mvccVersion;
@@ -193,6 +174,5 @@ public class PortletPreferencesCacheModel
 	public int ownerType;
 	public long plid;
 	public String portletId;
-	public String preferences;
 
 }

@@ -6449,7 +6449,6 @@ public class PortletPreferencesPersistenceImpl
 		ctStrictColumnNames.add("ownerType");
 		ctStrictColumnNames.add("plid");
 		ctStrictColumnNames.add("portletId");
-		ctStrictColumnNames.add("preferences");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

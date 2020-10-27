@@ -460,10 +460,10 @@ if (portletTitleBasedNavigation) {
 </clay:container-fluid>
 
 <%
-EditMBDisplayContext editMBDisplayContext = new EditMBDisplayContext(liferayPortletRequest, liferayPortletResponse, message);
+MBEditMessageDisplayContext mbEditMessageDisplayContext = new MBEditMessageDisplayContext(liferayPortletRequest, liferayPortletResponse, message);
 %>
 
 <liferay-frontend:component
-	context="<%= editMBDisplayContext.getComponentContext() %>"
+	context="<%= mbEditMessageDisplayContext.getMBPortletComponentContext() %>"
 	module="message_boards/js/MBPortlet.es"
 />

@@ -32,9 +32,9 @@ import javax.portlet.ResourceURL;
 /**
  * @author Ambrín Chaudhary
  */
-public class EditMBDisplayContext {
+public class MBEditMessageDisplayContext {
 
-	public EditMBDisplayContext(
+	public MBEditMessageDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, MBMessage message) {
 
@@ -43,7 +43,7 @@ public class EditMBDisplayContext {
 		_message = message;
 	}
 
-	public Map<String, Object> getComponentContext() throws Exception {
+	public Map<String, Object> getMBPortletComponentContext() throws Exception {
 		long messageId = BeanParamUtil.getLong(
 			_message, _liferayPortletRequest, "messageId");
 

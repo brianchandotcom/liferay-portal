@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v4_9_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
+import com.liferay.commerce.internal.upgrade.v4_9_0.util.CommerceOrderItemTable;
 
 /**
  * @author Igor Beslic
@@ -27,54 +27,44 @@ public class CommerceOrderItemUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "parentCommerceOrderItemId",
-			"LONG");
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
+			"parentCommerceOrderItemId", "LONG");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "unitPriceWithTaxAmount",
-			"DECIMAL(30,16)");
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
+			"unitPriceWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "promoPriceWithTaxAmount",
-			"DECIMAL(30,16)");
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
+			"promoPriceWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "discountWithTaxAmount",
-			"DECIMAL(30,16)");
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
+			"discountWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "finalPriceWithTaxAmount",
-			"DECIMAL(30,16)");
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
+			"finalPriceWithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME,
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"discountPctLevel1WithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME,
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"discountPctLevel2WithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME,
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"discountPctLevel3WithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME,
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"discountPctLevel4WithTaxAmount", "DECIMAL(30,16)");
 
 		addColumn(
-			CommerceOrderItemModelImpl.class,
-			CommerceOrderItemModelImpl.TABLE_NAME, "commercePriceListId",
-			"LONG");
+			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
+			"commercePriceListId", "LONG");
 	}
 
 }

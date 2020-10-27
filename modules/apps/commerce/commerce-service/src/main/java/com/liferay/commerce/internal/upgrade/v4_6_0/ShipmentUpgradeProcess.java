@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v4_6_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceShipmentImpl;
+import com.liferay.commerce.internal.upgrade.v4_6_0.util.CommerceShipmentTable;
 
 /**
  * @author Luca Pellizzon
@@ -25,7 +25,7 @@ public class ShipmentUpgradeProcess extends BaseCommerceServiceUpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		changeColumnType(
-			CommerceShipmentImpl.class, CommerceShipmentImpl.TABLE_NAME,
+			CommerceShipmentTable.class, CommerceShipmentTable.TABLE_NAME,
 			"shippingOptionName", "TEXT");
 	}
 

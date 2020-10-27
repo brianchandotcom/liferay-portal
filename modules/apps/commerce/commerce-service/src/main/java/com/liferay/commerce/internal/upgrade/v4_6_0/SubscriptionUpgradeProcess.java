@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v4_6_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceSubscriptionEntryImpl;
+import com.liferay.commerce.internal.upgrade.v4_6_0.util.CommerceSubscriptionEntryTable;
 
 /**
  * @author Luca Pellizzon
@@ -26,92 +26,92 @@ public class SubscriptionUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubscriptionLength")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubscriptionLength", "INTEGER");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubscriptionType")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubscriptionType", "VARCHAR(75)");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubTypeSettings")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubTypeSettings", "TEXT");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryCurrentCycle")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryCurrentCycle", "LONG");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryMaxSubscriptionCycles")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryMaxSubscriptionCycles", "LONG");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubscriptionStatus")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliverySubscriptionStatus", "INTEGER");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryLastIterationDate")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryLastIterationDate", "DATE");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryNextIterationDate")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryNextIterationDate", "DATE");
 		}
 
 		if (!hasColumn(
-				CommerceSubscriptionEntryImpl.TABLE_NAME,
+				CommerceSubscriptionEntryTable.TABLE_NAME,
 				"deliveryStartDate")) {
 
 			addColumn(
-				CommerceSubscriptionEntryImpl.class,
-				CommerceSubscriptionEntryImpl.TABLE_NAME, "deliveryStartDate",
+				CommerceSubscriptionEntryTable.class,
+				CommerceSubscriptionEntryTable.TABLE_NAME, "deliveryStartDate",
 				"DATE");
 		}
 	}

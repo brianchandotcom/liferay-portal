@@ -274,11 +274,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IMAGE_INPUT</td>
-	<td>//input[contains(@id,'image')][contains(@readonly,'readonly')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INITIAL_URL</td>
 	<td>//input[contains(@id,'_initUrl')]</td>
 	<td></td>
@@ -496,6 +491,11 @@
 <tr>
 	<td>SAML_NAME_FIELD</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTOR_INPUT</td>
+	<td>//input[contains(@id,'${key_fieldName}')][contains(@readonly,'readonly')]</td>
 	<td></td>
 </tr>
 <tr>

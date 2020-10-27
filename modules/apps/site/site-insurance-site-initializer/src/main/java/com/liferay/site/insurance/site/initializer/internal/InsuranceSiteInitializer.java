@@ -973,7 +973,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	}
 
 	private Layout _updateLayoutTypeSettings(
-		Layout layout, JSONObject settingsJSONObject) {
+			Layout layout, JSONObject settingsJSONObject)
+		throws Exception {
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -996,27 +997,29 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					key, themeSettingsJSONObject.getString(key));
 			}
 
+			layout = _layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), unicodeProperties.toString());
+
 			layout.setTypeSettingsProperties(unicodeProperties);
 		}
+
+		String themeId = layout.getThemeId();
 
 		String themeName = settingsJSONObject.getString("themeName");
 
 		if (Validator.isNotNull(themeName)) {
-			layout.setThemeId(_getThemeId(layout.getCompanyId(), themeName));
+			themeId = _getThemeId(layout.getCompanyId(), themeName);
 		}
 
 		String colorSchemeName = settingsJSONObject.getString(
-			"colorSchemeName");
+			"colorSchemeName", layout.getColorSchemeId());
 
-		if (Validator.isNotNull(colorSchemeName)) {
-			layout.setColorSchemeId(colorSchemeName);
-		}
+		String css = settingsJSONObject.getString("css", layout.getCss());
 
-		String css = settingsJSONObject.getString("css");
-
-		if (Validator.isNotNull(css)) {
-			layout.setCss(css);
-		}
+		layout = _layoutLocalService.updateLookAndFeel(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			themeId, colorSchemeName, css);
 
 		JSONObject masterPageJSONObject = settingsJSONObject.getJSONObject(
 			"masterPage");
@@ -1029,12 +1032,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 						masterPageJSONObject.getString("key"));
 
 			if (masterLayoutPageTemplateEntry != null) {
-				layout.setMasterLayoutPlid(
+				layout = _layoutLocalService.updateMasterLayoutPlid(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId(),
 					masterLayoutPageTemplateEntry.getPlid());
 			}
 		}
 
-		return _layoutLocalService.updateLayout(layout);
+		return layout;
 	}
 
 	private static final String _PATH =

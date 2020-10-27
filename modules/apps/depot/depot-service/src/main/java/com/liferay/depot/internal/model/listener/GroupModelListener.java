@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,13 +42,18 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		super.onAfterRemove(group);
 
 		if (group.isDepot()) {
-			DepotEntry depotEntry =
-				_depotEntryLocalService.fetchGroupDepotEntry(
-					group.getGroupId());
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					DepotEntry depotEntry =
+						_depotEntryLocalService.fetchGroupDepotEntry(
+							group.getGroupId());
 
-			if (depotEntry != null) {
-				_depotEntryLocalService.deleteDepotEntry(depotEntry);
-			}
+					if (depotEntry != null) {
+						_depotEntryLocalService.deleteDepotEntry(depotEntry);
+					}
+
+					return null;
+				});
 		}
 	}
 

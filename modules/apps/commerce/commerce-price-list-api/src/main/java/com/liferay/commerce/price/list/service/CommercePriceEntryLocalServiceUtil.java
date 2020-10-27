@@ -102,6 +102,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceEntry(String, long, String, long,
+	 BigDecimal, BigDecimal, boolean, BigDecimal, BigDecimal,
+	 BigDecimal, BigDecimal, int, int, int, int, int, int, int,
+	 int, int, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			addCommercePriceEntry(
 				long cProductId, String cpInstanceUuid,
@@ -129,6 +137,12 @@ public class CommercePriceEntryLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceEntry(String, long, String, long,
+	 BigDecimal, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			addCommercePriceEntry(
 				long cProductId, String cpInstanceUuid,
@@ -142,6 +156,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			externalReferenceCode, price, promoPrice, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceEntry(String, long, String, long,
+	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
+	 BigDecimal, int, int, int, int, int, int, int, int, int,
+	 int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			addCommercePriceEntry(
 				long cProductId, String cpInstanceUuid,
@@ -162,6 +184,73 @@ public class CommercePriceEntryLocalServiceUtil {
 		return getService().addCommercePriceEntry(
 			cProductId, cpInstanceUuid, commercePriceListId,
 			externalReferenceCode, price, discountDiscovery, discountLevel1,
+			discountLevel2, discountLevel3, discountLevel4, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			addCommercePriceEntry(
+				String externalReferenceCode, long cProductId,
+				String cpInstanceUuid, long commercePriceListId,
+				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+				boolean discountDiscovery, java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommercePriceEntry(
+			externalReferenceCode, cProductId, cpInstanceUuid,
+			commercePriceListId, price, promoPrice, discountDiscovery,
+			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			addCommercePriceEntry(
+				String externalReferenceCode, long cProductId,
+				String cpInstanceUuid, long commercePriceListId,
+				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommercePriceEntry(
+			externalReferenceCode, cProductId, cpInstanceUuid,
+			commercePriceListId, price, promoPrice, serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			addCommercePriceEntry(
+				String externalReferenceCode, long cProductId,
+				String cpInstanceUuid, long commercePriceListId,
+				java.math.BigDecimal price, boolean discountDiscovery,
+				java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommercePriceEntry(
+			externalReferenceCode, cProductId, cpInstanceUuid,
+			commercePriceListId, price, discountDiscovery, discountLevel1,
 			discountLevel2, discountLevel3, discountLevel4, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -354,12 +443,25 @@ public class CommercePriceEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 		fetchByExternalReferenceCode(
 			long companyId, String externalReferenceCode) {
 
 		return getService().fetchByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+		fetchByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().fetchByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
@@ -799,6 +901,11 @@ public class CommercePriceEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateExternalReferenceCode(String, CommercePriceEntry)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			updateExternalReferenceCode(
 				com.liferay.commerce.price.list.model.CommercePriceEntry
@@ -808,6 +915,17 @@ public class CommercePriceEntryLocalServiceUtil {
 
 		return getService().updateExternalReferenceCode(
 			commercePriceEntry, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			updateExternalReferenceCode(
+				String externalReferenceCode,
+				com.liferay.commerce.price.list.model.CommercePriceEntry
+					commercePriceEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateExternalReferenceCode(
+			externalReferenceCode, commercePriceEntry);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
@@ -841,6 +959,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 BigDecimal, BigDecimal, boolean, BigDecimal, BigDecimal,
+	 BigDecimal, BigDecimal, int, int, int, int, int, int, int,
+	 int, int, int, boolean, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			upsertCommercePriceEntry(
 				long commercePriceEntryId, long cProductId,
@@ -871,30 +997,11 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	/**
-	 * This method is used to insert a new CommercePriceEntry or update an
-	 * existing one
-	 *
-	 * @param commercePriceEntryId - <b>Only</b> used when updating an entity
-	 the matching one will be updated
-	 * @param cProductId - <b>Only</b> used when adding a new entity
-	 * @param commercePriceListId - <b>Only</b> used when adding a new entity
-	 to a price list
-	 * @param externalReferenceCode - The external identifier code from a 3rd
-	 party system to be able to locate the same entity in the portal
-	 <b>Only</b> used when updating an entity; the first entity with a
-	 matching reference code one will be updated
-	 * @param price
-	 * @param promoPrice
-	 * @param skuExternalReferenceCode - <b>Only</b> used when adding a new
-	 entity, similar as <code>cpInstanceId</code> but the external
-	 identifier code from a 3rd party system. If cpInstanceId is used,
-	 it doesn't have any effect, otherwise it tries to fetch the
-	 CPInstance against the external code reference
-	 * @param serviceContext
-	 * @return CommercePriceEntry
-	 * @throws PortalException
-	 * @review
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 BigDecimal, BigDecimal, String, ServiceContext)}
 	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			upsertCommercePriceEntry(
 				long commercePriceEntryId, long cProductId,
@@ -911,6 +1018,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			skuExternalReferenceCode, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 BigDecimal, BigDecimal, BigDecimal, BigDecimal, int, int,
+	 int, int, int, int, int, int, int, int, boolean, String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			upsertCommercePriceEntry(
 				long commercePriceEntryId, long cProductId,
@@ -937,6 +1052,103 @@ public class CommercePriceEntryLocalServiceUtil {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, skuExternalReferenceCode,
 			serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			upsertCommercePriceEntry(
+				String externalReferenceCode, long commercePriceEntryId,
+				long cProductId, String cpInstanceUuid,
+				long commercePriceListId, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice, boolean discountDiscovery,
+				java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire, String skuExternalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommercePriceEntry(
+			externalReferenceCode, commercePriceEntryId, cProductId,
+			cpInstanceUuid, commercePriceListId, price, promoPrice,
+			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
+			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, skuExternalReferenceCode,
+			serviceContext);
+	}
+
+	/**
+	 * This method is used to insert a new CommercePriceEntry or update an
+	 * existing one
+	 *
+	 * @param externalReferenceCode - The external identifier code from a 3rd
+	 party system to be able to locate the same entity in the portal
+	 <b>Only</b> used when updating an entity; the first entity with a
+	 matching reference code one will be updated
+	 * @param commercePriceEntryId - <b>Only</b> used when updating an entity
+	 the matching one will be updated
+	 * @param cProductId - <b>Only</b> used when adding a new entity
+	 * @param commercePriceListId - <b>Only</b> used when adding a new entity
+	 to a price list
+	 * @param price
+	 * @param promoPrice
+	 * @param skuExternalReferenceCode - <b>Only</b> used when adding a new
+	 entity, similar as <code>cpInstanceId</code> but the external
+	 identifier code from a 3rd party system. If cpInstanceId is used,
+	 it doesn't have any effect, otherwise it tries to fetch the
+	 CPInstance against the external code reference
+	 * @param serviceContext
+	 * @return CommercePriceEntry
+	 * @throws PortalException
+	 * @review
+	 */
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			upsertCommercePriceEntry(
+				String externalReferenceCode, long commercePriceEntryId,
+				long cProductId, String cpInstanceUuid,
+				long commercePriceListId, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice,
+				String skuExternalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommercePriceEntry(
+			externalReferenceCode, commercePriceEntryId, cProductId,
+			cpInstanceUuid, commercePriceListId, price, promoPrice,
+			skuExternalReferenceCode, serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			upsertCommercePriceEntry(
+				String externalReferenceCode, long commercePriceEntryId,
+				long cProductId, String cpInstanceUuid,
+				long commercePriceListId, java.math.BigDecimal price,
+				boolean discountDiscovery, java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire, String skuExternalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().upsertCommercePriceEntry(
+			externalReferenceCode, commercePriceEntryId, cProductId,
+			cpInstanceUuid, commercePriceListId, price, discountDiscovery,
+			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, skuExternalReferenceCode, serviceContext);
 	}
 
 	public static CommercePriceEntryLocalService getService() {

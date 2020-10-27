@@ -76,6 +76,14 @@ public interface CommercePriceEntryService extends BaseService {
 			BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCommercePriceEntry(String, long, String, long,
+	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
+	 int, int, int, int, int, int, int, int, int, int, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceEntry addCommercePriceEntry(
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			String externalReferenceCode, BigDecimal price,
@@ -89,12 +97,35 @@ public interface CommercePriceEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePriceEntry addCommercePriceEntry(
+			String externalReferenceCode, long cProductId,
+			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
+			boolean discountDiscovery, BigDecimal discountLevel1,
+			BigDecimal discountLevel2, BigDecimal discountLevel3,
+			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCommercePriceEntry(long commercePriceEntryId)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #fetchByExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceEntry fetchByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -207,8 +238,17 @@ public interface CommercePriceEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateExternalReferenceCode(String, long)}
+	 */
+	@Deprecated
 	public CommercePriceEntry updateExternalReferenceCode(
 			CommercePriceEntry commercePriceEntry, String externalReferenceCode)
+		throws PortalException;
+
+	public CommercePriceEntry updateExternalReferenceCode(
+			String externalReferenceCode, CommercePriceEntry commercePriceEntry)
 		throws PortalException;
 
 	/**
@@ -222,6 +262,12 @@ public interface CommercePriceEntryService extends BaseService {
 			String skuExternalReferenceCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 BigDecimal, BigDecimal, String, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceEntry upsertCommercePriceEntry(
 			long commercePriceEntryId, long cProductId, String cpInstanceUuid,
 			long commercePriceListId, String externalReferenceCode,
@@ -229,9 +275,38 @@ public interface CommercePriceEntryService extends BaseService {
 			String skuExternalReferenceCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
+	 BigDecimal, int, int, int, int, int, int, int, int, int,
+	 int, boolean, String, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePriceEntry upsertCommercePriceEntry(
 			long commercePriceEntryId, long cProductId, String cpInstanceUuid,
 			long commercePriceListId, String externalReferenceCode,
+			BigDecimal price, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String skuExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePriceEntry upsertCommercePriceEntry(
+			String externalReferenceCode, long commercePriceEntryId,
+			long cProductId, String cpInstanceUuid, long commercePriceListId,
+			BigDecimal price, BigDecimal promoPrice,
+			String skuExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePriceEntry upsertCommercePriceEntry(
+			String externalReferenceCode, long commercePriceEntryId,
+			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			BigDecimal price, boolean discountDiscovery,
 			BigDecimal discountLevel1, BigDecimal discountLevel2,
 			BigDecimal discountLevel3, BigDecimal discountLevel4,

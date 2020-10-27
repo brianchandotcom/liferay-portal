@@ -29,6 +29,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLFileEnt
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryTypeDetailsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewEntriesDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.FolderActionDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.search.DDMStructureRowChecker" %><%@
 page import="com.liferay.document.library.web.internal.util.DLAssetHelperUtil" %><%@

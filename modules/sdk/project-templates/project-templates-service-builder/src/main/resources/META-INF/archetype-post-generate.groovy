@@ -37,9 +37,9 @@ String addOnOptions = properties.get("addOnOptions")
 
 String liferayVersion = properties.get("liferayVersion")
 
-if (addOnOptions.equals("true") && liferayVersion.startsWith("7.0")) {
+if (addOnOptions.equals("true") && (liferayVersion.startsWith("7.0") || (liferayVersion.startsWith("7.1"))) {
 	throw new IllegalArgumentException(
-		"Add On Options is not supported in 7.0")
+		"Add On Options is not supported in 7.0 or 7.1")
 }
 
 Path uadPath = projectPath.resolve(request.artifactId + "-uad")

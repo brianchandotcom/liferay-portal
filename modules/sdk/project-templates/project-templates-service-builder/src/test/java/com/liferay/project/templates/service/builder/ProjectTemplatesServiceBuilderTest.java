@@ -188,6 +188,44 @@ public class ProjectTemplatesServiceBuilderTest
 		}
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateServiceBuilderWorkspaceUADUnsupported() throws Exception {
+		String liferayVersion = "7.0.6";
+		String name = "sample";
+
+		File gradleWorkspaceDir = buildWorkspace(
+			temporaryFolder, "gradle", "gradleWS", liferayVersion,
+			mavenExecutor);
+
+		File gradleProjectDir = buildTemplateWithGradle(
+			gradleWorkspaceDir, "service-builder", name, "--liferay-version",
+			liferayVersion, "--add-ons", "true");
+
+		File uadModuleDir = new File(gradleProjectDir, name + "-uad");
+
+		testExists(uadModuleDir, "bnd.bnd");
+		testExists(uadModuleDir, "build.gradle");
+	}
+
+	@Test
+	public void testBuildTemplateServiceBuilderWorkspaceUAD() throws Exception {
+		String liferayVersion = getDefaultLiferayVersion();
+		String name = "sample";
+
+		File gradleWorkspaceDir = buildWorkspace(
+			temporaryFolder, "gradle", "gradleWS", liferayVersion,
+			mavenExecutor);
+
+		File gradleProjectDir = buildTemplateWithGradle(
+			gradleWorkspaceDir, "service-builder", name, "--liferay-version",
+			liferayVersion, "--add-ons", "true");
+
+		File uadModuleDir = new File(gradleProjectDir, name + "-uad");
+
+		testExists(uadModuleDir, "bnd.bnd");
+		testExists(uadModuleDir, "build.gradle");
+	}
+
 	@Test
 	public void testBuildTemplateServiceBuilderWorkspaceRelativePath()
 		throws Exception {

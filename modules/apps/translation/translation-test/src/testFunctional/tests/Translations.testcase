@@ -625,6 +625,11 @@ definition {
 				roleTitle = "Regrole Name");
 		}
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_SITE_AND_ASSET_LIBRARY_ADMINISTRATION",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regrole Name");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
@@ -669,6 +674,11 @@ definition {
 				resourceName = "${resourceNameIndex}",
 				roleTitle = "Regrole Name");
 		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_SITE_AND_ASSET_LIBRARY_ADMINISTRATION",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regrole Name");
 
 		for (var resourceNameIndex : list "com.liferay.translation.es_ES,com.liferay.translation.zh_CN") {
 			Permissions.definePermissionViaJSONAPI(

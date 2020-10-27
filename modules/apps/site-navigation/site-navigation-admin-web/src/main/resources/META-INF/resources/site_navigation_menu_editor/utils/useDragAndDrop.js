@@ -17,15 +17,29 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
-import {useItems} from '../contexts/ItemsContext';
+import {NESTING_MARGIN} from '../constants/nestingMargin';
+import {useConstants} from '../contexts/ConstantsContext';
+import {useItems, useSetItems} from '../contexts/ItemsContext';
+import updateItemParent from '../utils/updateItemParent';
 import getItemPath from './getItemPath';
+
+const DIRECTIONS = {
+	inside: 'inside',
+	outside: 'outside',
+};
 
 const DragDropContext = React.createContext({});
 
 export const DragDropProvider = ({children}) => {
 	const [parentId, setParentId] = useState(null);
+	const [horizontalOffset, setHorizontalOffset] = useState(0);
 
-	const dragDropValues = {parentId, setParentId};
+	const dragDropValues = {
+		horizontalOffset,
+		parentId,
+		setHorizontalOffset,
+		setParentId,
+	};
 
 	return (
 		<DragDropContext.Provider value={dragDropValues}>
@@ -40,7 +54,7 @@ export function useDragItem(item) {
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
-	const {setParentId} = useContext(DragDropContext);
+	const {setHorizontalOffset, setParentId} = useContext(DragDropContext);
 
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
 		begin() {
@@ -50,6 +64,7 @@ export function useDragItem(item) {
 			isDragging: !!monitor.isDragging(),
 		}),
 		end() {
+			setHorizontalOffset(0);
 			setParentId(null);
 		},
 		isDragging(monitor) {
@@ -76,15 +91,19 @@ export function useDropTarget(item) {
 
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
+	const setItems = useSetItems();
+
+	const {languageDirection, languageId} = useConstants();
+	const rtl = languageDirection[languageId] === 'rtl';
+
+	const {horizontalOffset, setHorizontalOffset, setParentId} = useContext(
+		DragDropContext
+	);
 
 	const [, targetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,
 		canDrop(source, monitor) {
-			return (
-				monitor.isOver() &&
-				(!itemPath.includes(source.id) ||
-					source.id === siteNavigationMenuItemId)
-			);
+			return monitor.isOver();
 		},
 		drop(source, monitor) {
 			if (monitor.canDrop()) {
@@ -93,9 +112,110 @@ export function useDropTarget(item) {
 
 			}
 		},
+		hover(source, monitor) {
+			if (monitor.canDrop(source, monitor)) {
+				if (itemPath.includes(source.id)) {
+					const data = computeHoverItself({
+						initialOffset: horizontalOffset,
+						items,
+						monitor,
+						rtl,
+						source,
+					});
+
+					if (data) {
+						const {currentOffset, newParentId} = data;
+
+						setParentId(newParentId);
+						setHorizontalOffset(currentOffset);
+
+						const newItems = updateItemParent(
+							items,
+							source.id,
+							newParentId
+						);
+
+						setItems(newItems);
+					}
+				}
+			}
+		},
 	});
 
 	return {
 		targetRef,
 	};
+}
+
+function getHorizontalMovementDirection(initialOffset, currentOffset, rtl) {
+	if (rtl) {
+		return initialOffset < currentOffset
+			? DIRECTIONS.outside
+			: DIRECTIONS.inside;
+	}
+	else {
+		return initialOffset > currentOffset
+			? DIRECTIONS.outside
+			: DIRECTIONS.inside;
+	}
+}
+
+function computeHoverItself({initialOffset, items, monitor, rtl, source}) {
+	const currentOffset = monitor.getDifferenceFromInitialOffset().x;
+
+	if (Math.abs(initialOffset - currentOffset) < NESTING_MARGIN) {
+		return;
+	}
+
+	const direction = getHorizontalMovementDirection(
+		initialOffset,
+		currentOffset,
+		rtl
+	);
+
+	const sourceItem = items.find(
+		(item) => item.siteNavigationMenuItemId === source.id
+	);
+	const sourceItemIndex = items.indexOf(sourceItem);
+
+	let newParentId;
+
+	if (direction === DIRECTIONS.inside) {
+		const previousSibling = items
+			.filter(
+				(item, index) =>
+					item.parentSiteNavigationMenuItemId ===
+						sourceItem.parentSiteNavigationMenuItemId &&
+					item.siteNavigationMenuItemId !== source.id &&
+					index < sourceItemIndex
+			)
+			.pop();
+
+		newParentId = previousSibling?.siteNavigationMenuItemId;
+	}
+	else {
+		const nextSiblings = items.filter(
+			(item, index) =>
+				item.parentSiteNavigationMenuItemId ===
+					sourceItem.parentSiteNavigationMenuItemId &&
+				item.siteNavigationMenuItemId !== source.id &&
+				index > sourceItemIndex
+		);
+
+		if (!nextSiblings.length) {
+			const parent = items.find(
+				(item) =>
+					item.siteNavigationMenuItemId ===
+					sourceItem.parentSiteNavigationMenuItemId
+			);
+
+			newParentId = parent?.parentSiteNavigationMenuItemId;
+		}
+	}
+
+	if (!newParentId || newParentId === sourceItem.siteNavigationMenuItemId) {
+		return;
+	}
+
+	return {currentOffset, newParentId};
 }

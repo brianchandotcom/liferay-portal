@@ -216,6 +216,10 @@ public interface LiferaySelenium {
 
 	public String getNumberIncrement(String value);
 
+	public String getOcularResultImageDirName();
+
+	public String getOcularSnapImageDirName();
+
 	public String getOutputDirName();
 
 	public String getPrimaryTestSuiteName();
@@ -350,6 +354,8 @@ public interface LiferaySelenium {
 	public void mouseUp(String locator);
 
 	public void mouseUpAt(String locator, String coordString);
+
+	public boolean ocularImageValidation(String locator) throws Exception;
 
 	public void open(String url) throws Exception;
 

@@ -36,6 +36,10 @@ public interface BaseClayCard {
 		return null;
 	}
 
+	public default String getCssClass() {
+		return null;
+	}
+
 	public default Map<String, String> getData() {
 		return null;
 	}

@@ -20,7 +20,10 @@ import java.util.Map;
 
 /**
  * @author Julien Castelain
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.UserCardTag}
  */
+@Deprecated
 public class UserCardTag extends BaseClayCardTag {
 
 	@Override

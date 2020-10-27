@@ -46,6 +46,14 @@ public class StickerTag extends BaseContainerTag {
 		return _icon;
 	}
 
+	public String getImageAlt() {
+		return _imageAlt;
+	}
+
+	public String getImageSrc() {
+		return _imageSrc;
+	}
+
 	public boolean getInline() {
 		return _inline;
 	}
@@ -99,6 +107,14 @@ public class StickerTag extends BaseContainerTag {
 		_icon = icon;
 	}
 
+	public void setImageAlt(String imageAlt) {
+		_imageAlt = imageAlt;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		_imageSrc = imageSrc;
+	}
+
 	public void setInline(boolean inline) {
 		_inline = inline;
 	}
@@ -150,6 +166,8 @@ public class StickerTag extends BaseContainerTag {
 
 		_displayType = null;
 		_icon = null;
+		_imageAlt = null;
+		_imageSrc = null;
 		_inline = false;
 		_label = null;
 		_outside = false;
@@ -218,6 +236,15 @@ public class StickerTag extends BaseContainerTag {
 
 			return SKIP_BODY;
 		}
+		else if (Validator.isNotNull(_imageSrc)) {
+			jspWriter.write("<img alt=\"");
+			jspWriter.write(_imageAlt);
+			jspWriter.write("\" class=\"sticker-img\" src=\"");
+			jspWriter.write(_imageSrc);
+			jspWriter.write("\" />");
+
+			return SKIP_BODY;
+		}
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -226,6 +253,8 @@ public class StickerTag extends BaseContainerTag {
 
 	private String _displayType;
 	private String _icon;
+	private String _imageAlt;
+	private String _imageSrc;
 	private boolean _inline;
 	private String _label;
 	private boolean _outside;

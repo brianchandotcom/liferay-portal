@@ -261,13 +261,15 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
-		props.put("cssClass", _cssClass);
+		props.put("cssClass", getCssClass());
 
-		if (Validator.isNotNull(_defaultEventHandler)) {
-			props.put("defaultEventHandler", _defaultEventHandler);
+		String defaultEventHandler = getDefaultEventHandler();
+
+		if (Validator.isNotNull(defaultEventHandler)) {
+			props.put("defaultEventHandler", defaultEventHandler);
 		}
 
-		props.put("id", _id);
+		props.put("id", getId());
 
 		if (_additionalProps != null) {
 			props.putAll(_additionalProps);
@@ -279,8 +281,10 @@ public class BaseContainerTag extends AttributesTagSupport {
 	}
 
 	protected String processCssClasses(Set<String> cssClasses) {
-		if (Validator.isNotNull(_cssClass)) {
-			cssClasses.addAll(StringUtil.split(_cssClass, CharPool.SPACE));
+		String cssClass = getCssClass();
+
+		if (Validator.isNotNull(cssClass)) {
+			cssClasses.addAll(StringUtil.split(cssClass, CharPool.SPACE));
 		}
 
 		return StringUtil.merge(cssClasses, StringPool.SPACE);
@@ -318,14 +322,14 @@ public class BaseContainerTag extends AttributesTagSupport {
 				propsTransformer =
 					npmResolvedPackageName + "/" + _propsTransformer;
 			}
-			else if (Validator.isNotNull(_defaultEventHandler)) {
+			else if (Validator.isNotNull(getDefaultEventHandler())) {
 				propsTransformer = npmResolver.resolveModuleName(
 					"frontend-taglib-clay" +
 						"/DefaultEventHandlersPropsTransformer");
 			}
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-				moduleName, _id, new LinkedHashSet<>(), false,
+				moduleName, getId(), new LinkedHashSet<>(), false,
 				propsTransformer);
 
 			ReactRenderer reactRenderer =
@@ -362,9 +366,9 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write(processCssClasses(new LinkedHashSet<>()));
 		jspWriter.write("\"");
 
-		if (Validator.isNotNull(_id)) {
+		if (Validator.isNotNull(getId())) {
 			jspWriter.write(" id=\"");
-			jspWriter.write(_id);
+			jspWriter.write(getId());
 			jspWriter.write("\"");
 		}
 

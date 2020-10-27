@@ -35,6 +35,13 @@ Properties properties = request.properties
 
 String addOnOptions = properties.get("addOnOptions")
 
+String liferayVersion = properties.get("liferayVersion")
+
+if (addOnOptions.equals("true") && liferayVersion.startsWith("7.0")) {
+	throw new IllegalArgumentException(
+		"Add On Options is not supported in 7.0")
+}
+
 Path uadPath = projectPath.resolve(request.artifactId + "-uad")
 Path uadBuildGradlePath = uadPath.resolve("build.gradle")
 Path uadBndPath = uadPath.resolve("bnd.bnd")

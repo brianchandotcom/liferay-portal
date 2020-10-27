@@ -111,6 +111,13 @@ public class ServiceBuilderProjectTemplateCustomizer
 			(ServiceBuilderProjectTemplatesArgs)
 				projectTemplatesArgs.getProjectTemplatesArgsExt();
 
+		String addOnOptions = serviceBuilderProjectTemplatesArgs.getAddOnOptions();
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
+		if (addOnOptions.equals("true") && liferayVersion.startsWith("7.0")) {
+			throw new IllegalArgumentException("Add On Options is not supported in 7.0");
+		}
+
 		setProperty(
 			properties, "addOnOptions",
 			serviceBuilderProjectTemplatesArgs.getAddOnOptions());

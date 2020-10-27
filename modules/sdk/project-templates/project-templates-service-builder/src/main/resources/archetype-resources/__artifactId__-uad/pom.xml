@@ -14,7 +14,7 @@
 		<version>${version}</version>
 	</parent>
 	<dependencies>
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
+#if (${liferayVersion.startsWith("7.1")})
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>biz.aQute.bnd.annotation</artifactId>
@@ -34,14 +34,12 @@
 			<scope>provided</scope>
 		</dependency>
 #end
-#if (${addOnOptions.equals("true")} && (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")}))
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.user.associated.data.api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-#end
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
@@ -55,7 +53,7 @@
 			<scope>provided</scope>
 		</dependency>
 #end
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>

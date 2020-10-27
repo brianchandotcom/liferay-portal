@@ -140,6 +140,41 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testChangeOriginalExtensionAfterChangingTheFileName()
+		throws Exception {
+
+		String content = StringUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
+			StringPool.BLANK, -1, new HashMap<>(), null,
+			new ByteArrayInputStream(content.getBytes()), 0, serviceContext);
+
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.txt",
+			StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
+			serviceContext);
+
+		Assert.assertEquals(
+			content, StringUtil.read(fileEntry.getContentStream()));
+
+		Assert.assertEquals("pdf", fileEntry.getExtension());
+
+		Assert.assertEquals("file.txt", fileEntry.getTitle());
+
+		Assert.assertEquals("file.pdf", fileEntry.getFileName());
+
+		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
+	}
+
+	@Test
 	public void testCopyFileEntry() throws Exception {
 		ExpandoTable expandoTable =
 			ExpandoTableLocalServiceUtil.addDefaultTable(
@@ -374,11 +409,11 @@ public class DLFileEntryLocalServiceTest {
 			RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
 			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 
-		Assert.assertEquals("FE1.exe.txt", fileEntry.getFileName());
+		Assert.assertEquals("FE2.txt", fileEntry.getFileName());
 
 		fileVersion = fileEntry.getFileVersion();
 
-		Assert.assertEquals("FE1.exe.txt", fileVersion.getFileName());
+		Assert.assertEquals("FE2.txt", fileVersion.getFileName());
 	}
 
 	@Test
@@ -440,7 +475,7 @@ public class DLFileEntryLocalServiceTest {
 			new ByteArrayInputStream(content.getBytes()), 0, serviceContext);
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
-			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.pdf",
+			dlFileEntry.getFileEntryId(), "file.txt", null, "file.pdf",
 			StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
 			serviceContext);
@@ -449,8 +484,6 @@ public class DLFileEntryLocalServiceTest {
 			content, StringUtil.read(fileEntry.getContentStream()));
 
 		Assert.assertEquals("txt", fileEntry.getExtension());
-
-		Assert.assertEquals("file.pdf.txt", fileEntry.getFileName());
 
 		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
 	}

@@ -72,8 +72,7 @@ public class PortletPreferencesModelImpl
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"portletPreferencesId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"ownerId", Types.BIGINT}, {"ownerType", Types.INTEGER},
-		{"plid", Types.BIGINT}, {"portletId", Types.VARCHAR},
-		{"preferences", Types.CLOB}
+		{"plid", Types.BIGINT}, {"portletId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,11 +87,10 @@ public class PortletPreferencesModelImpl
 		TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortletPreferences (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferencesId LONG not null,companyId LONG,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null,primary key (portletPreferencesId, ctCollectionId))";
+		"create table PortletPreferences (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferencesId LONG not null,companyId LONG,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,primary key (portletPreferencesId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PortletPreferences";
 
@@ -186,7 +184,6 @@ public class PortletPreferencesModelImpl
 		model.setOwnerType(soapModel.getOwnerType());
 		model.setPlid(soapModel.getPlid());
 		model.setPortletId(soapModel.getPortletId());
-		model.setPreferences(soapModel.getPreferences());
 
 		return model;
 	}
@@ -393,12 +390,6 @@ public class PortletPreferencesModelImpl
 			"portletId",
 			(BiConsumer<PortletPreferences, String>)
 				PortletPreferences::setPortletId);
-		attributeGetterFunctions.put(
-			"preferences", PortletPreferences::getPreferences);
-		attributeSetterBiConsumers.put(
-			"preferences",
-			(BiConsumer<PortletPreferences, String>)
-				PortletPreferences::setPreferences);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -578,26 +569,6 @@ public class PortletPreferencesModelImpl
 		return getColumnOriginalValue("portletId");
 	}
 
-	@JSON
-	@Override
-	public String getPreferences() {
-		if (_preferences == null) {
-			return "";
-		}
-		else {
-			return _preferences;
-		}
-	}
-
-	@Override
-	public void setPreferences(String preferences) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_preferences = preferences;
-	}
-
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -663,7 +634,6 @@ public class PortletPreferencesModelImpl
 		portletPreferencesImpl.setOwnerType(getOwnerType());
 		portletPreferencesImpl.setPlid(getPlid());
 		portletPreferencesImpl.setPortletId(getPortletId());
-		portletPreferencesImpl.setPreferences(getPreferences());
 
 		portletPreferencesImpl.resetOriginalValues();
 
@@ -765,14 +735,6 @@ public class PortletPreferencesModelImpl
 			portletPreferencesCacheModel.portletId = null;
 		}
 
-		portletPreferencesCacheModel.preferences = getPreferences();
-
-		String preferences = portletPreferencesCacheModel.preferences;
-
-		if ((preferences != null) && (preferences.length() == 0)) {
-			portletPreferencesCacheModel.preferences = null;
-		}
-
 		return portletPreferencesCacheModel;
 	}
 
@@ -854,7 +816,6 @@ public class PortletPreferencesModelImpl
 	private int _ownerType;
 	private long _plid;
 	private String _portletId;
-	private String _preferences;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PortletPreferences, Object> function =
@@ -892,7 +853,6 @@ public class PortletPreferencesModelImpl
 		_columnOriginalValues.put("ownerType", _ownerType);
 		_columnOriginalValues.put("plid", _plid);
 		_columnOriginalValues.put("portletId", _portletId);
-		_columnOriginalValues.put("preferences", _preferences);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -921,8 +881,6 @@ public class PortletPreferencesModelImpl
 		columnBitmasks.put("plid", 64L);
 
 		columnBitmasks.put("portletId", 128L);
-
-		columnBitmasks.put("preferences", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

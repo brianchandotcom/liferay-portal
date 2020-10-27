@@ -176,19 +176,4 @@ public interface PortletPreferencesModel
 	 */
 	public void setPortletId(String portletId);
 
-	/**
-	 * Returns the preferences of this portlet preferences.
-	 *
-	 * @return the preferences of this portlet preferences
-	 */
-	@AutoEscape
-	public String getPreferences();
-
-	/**
-	 * Sets the preferences of this portlet preferences.
-	 *
-	 * @param preferences the preferences of this portlet preferences
-	 */
-	public void setPreferences(String preferences);
-
 }

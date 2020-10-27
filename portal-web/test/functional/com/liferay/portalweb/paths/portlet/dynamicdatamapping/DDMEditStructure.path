@@ -239,6 +239,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_CELL_EDITOR_SELECT_FIELD</td>
+	<td>//div[contains(@class,'celleditor-focused')]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_1</td>
 	<td>//div[contains(@class,'celleditor-edit-option-row')][1]//input[contains(@class,'celleditor-edit-input-name')]</td>
 	<td></td>

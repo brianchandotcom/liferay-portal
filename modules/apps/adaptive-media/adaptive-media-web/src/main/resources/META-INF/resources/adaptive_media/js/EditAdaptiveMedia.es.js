@@ -16,8 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import {fetch, normalizeFriendlyURL, objectToFormData} from 'frontend-js-web';
-import React, {useCallback, useState} from 'react';
+import {normalizeFriendlyURL} from 'frontend-js-web';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
 import {alphanumeric, required, validate} from './utils/formValidations.es';
@@ -36,6 +36,7 @@ const EditAdaptiveMedia = ({
 }) => {
 	const [automaticId, setAutomaticId] = useState(automaticUuid);
 	const [addHighResolution, setAddHighResolution] = useState(false);
+	const formRef = useRef(null);
 
 	const nameId = `${namespace}name`;
 	const descriptionId = `${namespace}description`;
@@ -74,21 +75,11 @@ const EditAdaptiveMedia = ({
 				? amImageConfigurationEntry.name
 				: '',
 			[newUuidId]: configurationEntryUuid,
-			[`${namespace}uuid`]: configurationEntryUuid,
 		},
 		onSubmit: () => {
-			fetch(actionUrl, {
-				body: objectToFormData(values),
-				method: 'POST',
-			})
-				.then(() => {
-					Liferay.Util.navigate(redirect);
-				})
-				.catch(() => {
-					Liferay.Util.navigate(redirect);
-				});
+			submitForm(formRef.current);
 		},
-		validate: () => {
+		validate: (values) => {
 			const err = validate(
 				{
 					[nameId]: [required],
@@ -128,7 +119,12 @@ const EditAdaptiveMedia = ({
 	};
 
 	return (
-		<ClayForm onSubmit={formik.handleSubmit}>
+		<ClayForm
+			action={actionUrl}
+			method="post"
+			onSubmit={formik.handleSubmit}
+			ref={formRef}
+		>
 			<div className="sheet sheet-lg">
 				{!configurationEntryEditable && (
 					<div className="alert alert-info">
@@ -137,6 +133,18 @@ const EditAdaptiveMedia = ({
 						)}
 					</div>
 				)}
+
+				<input
+					name={`${namespace}redirect`}
+					type="hidden"
+					value={redirect}
+				/>
+
+				<input
+					name={`${namespace}uuid`}
+					type="hidden"
+					value={configurationEntryUuid}
+				/>
 
 				<Input
 					error={errors[nameId]}

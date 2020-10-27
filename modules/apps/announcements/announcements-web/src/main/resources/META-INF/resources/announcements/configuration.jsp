@@ -305,7 +305,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 					);
 
 					if (announcementsDisplayed) {
-						dom.toggleClasses(announcementsDisplayed, 'hide');
+						announcementsDisplayed.classList.toggle('hide');
 					}
 				}
 			);

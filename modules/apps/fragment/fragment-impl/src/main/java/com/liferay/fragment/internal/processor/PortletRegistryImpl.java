@@ -244,7 +244,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 			(List<Portlet>)httpServletRequest.getAttribute(
 				PortletFragmentEntryProcessorWebKeys.ALL_PORTLETS);
 
-		if ((allPortlets != null) && !allPortlets.isEmpty()) {
+		if (ListUtil.isNotEmpty(allPortlets)) {
 			return allPortlets;
 		}
 

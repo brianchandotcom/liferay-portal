@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.upgrade.v2_6_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
+import com.liferay.commerce.product.internal.upgrade.v2_6_0.util.CPInstanceTable;
 
 /**
  * @author Jaclyn Ong
@@ -26,7 +26,7 @@ public class CPInstanceUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn(
-			CPInstanceModelImpl.class, CPInstanceModelImpl.TABLE_NAME, "unspsc",
+			CPInstanceTable.class, CPInstanceTable.TABLE_NAME, "unspsc",
 			"VARCHAR(75)");
 	}
 

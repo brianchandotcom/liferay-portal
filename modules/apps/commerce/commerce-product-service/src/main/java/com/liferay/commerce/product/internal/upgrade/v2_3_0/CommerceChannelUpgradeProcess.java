@@ -16,7 +16,7 @@ package com.liferay.commerce.product.internal.upgrade.v2_3_0;
 
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CommerceChannelModelImpl;
+import com.liferay.commerce.product.internal.upgrade.v2_3_0.util.CommerceChannelTable;
 
 /**
  * @author Riccardo Alberti
@@ -27,11 +27,11 @@ public class CommerceChannelUpgradeProcess
 	@Override
 	public void doUpgrade() throws Exception {
 		addColumn(
-			CommerceChannelModelImpl.class, CommerceChannelModelImpl.TABLE_NAME,
+			CommerceChannelTable.class, CommerceChannelTable.TABLE_NAME,
 			"priceDisplayType", "VARCHAR(75)");
 
 		addColumn(
-			CommerceChannelModelImpl.class, CommerceChannelModelImpl.TABLE_NAME,
+			CommerceChannelTable.class, CommerceChannelTable.TABLE_NAME,
 			"discountsTargetNetPrice", "BOOLEAN");
 
 		runSQL(

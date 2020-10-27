@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.upgrade.v3_1_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
+import com.liferay.commerce.product.internal.upgrade.v3_1_0.util.CPTaxCategoryTable;
 
 /**
  * @author Danny Situ
@@ -26,7 +26,7 @@ public class CPTaxCategoryUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn(
-			CPTaxCategoryModelImpl.class, CPTaxCategoryModelImpl.TABLE_NAME,
+			CPTaxCategoryTable.class, CPTaxCategoryTable.TABLE_NAME,
 			"externalReferenceCode", "VARCHAR(75)");
 	}
 

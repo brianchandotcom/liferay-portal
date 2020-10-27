@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CommerceCatalogImpl;
+import com.liferay.commerce.product.internal.upgrade.v2_1_0.util.CommerceCatalogTable;
 
 /**
  * @author Ethan Bustad
@@ -26,8 +26,8 @@ public class CommerceCatalogSystemUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		renameColumn(
-			CommerceCatalogImpl.class, CommerceCatalogImpl.TABLE_NAME, "system",
-			"system_ BOOLEAN");
+			CommerceCatalogTable.class, CommerceCatalogTable.TABLE_NAME,
+			"system", "system_ BOOLEAN");
 	}
 
 }

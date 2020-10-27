@@ -16,8 +16,8 @@ package com.liferay.commerce.product.internal.upgrade.v2_2_0;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CPDefinitionOptionRelImpl;
-import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl;
+import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionRelTable;
+import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionValueRelTable;
 
 /**
  * @author Marco Leo
@@ -28,37 +28,37 @@ public class CPDefinitionOptionValueRelUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn(
-			CPDefinitionOptionValueRelImpl.class,
-			CPDefinitionOptionValueRelImpl.TABLE_NAME, "CPInstanceUuid",
+			CPDefinitionOptionValueRelTable.class,
+			CPDefinitionOptionValueRelTable.TABLE_NAME, "CPInstanceUuid",
 			"VARCHAR(75)");
 
 		addColumn(
-			CPDefinitionOptionValueRelImpl.class,
-			CPDefinitionOptionValueRelImpl.TABLE_NAME, "CProductId", "LONG");
+			CPDefinitionOptionValueRelTable.class,
+			CPDefinitionOptionValueRelTable.TABLE_NAME, "CProductId", "LONG");
 
 		addColumn(
-			CPDefinitionOptionValueRelImpl.class,
-			CPDefinitionOptionValueRelImpl.TABLE_NAME, "quantity", "INTEGER");
+			CPDefinitionOptionValueRelTable.class,
+			CPDefinitionOptionValueRelTable.TABLE_NAME, "quantity", "INTEGER");
 
 		addColumn(
-			CPDefinitionOptionValueRelImpl.class,
-			CPDefinitionOptionValueRelImpl.TABLE_NAME, "price",
+			CPDefinitionOptionValueRelTable.class,
+			CPDefinitionOptionValueRelTable.TABLE_NAME, "price",
 			"DECIMAL(30, 16)");
 
 		addColumn(
-			CPDefinitionOptionRelImpl.class,
-			CPDefinitionOptionRelImpl.TABLE_NAME, "priceType", "VARCHAR(75)");
+			CPDefinitionOptionRelTable.class,
+			CPDefinitionOptionRelTable.TABLE_NAME, "priceType", "VARCHAR(75)");
 
 		runSQL(
 			String.format(
 				"update %s set priceType = '%s'",
-				CPDefinitionOptionRelImpl.TABLE_NAME,
+				CPDefinitionOptionRelTable.TABLE_NAME,
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC));
 
 		runSQL(
 			String.format(
 				"update %s set price = 0",
-				CPDefinitionOptionValueRelImpl.TABLE_NAME));
+				CPDefinitionOptionValueRelTable.TABLE_NAME));
 	}
 
 }

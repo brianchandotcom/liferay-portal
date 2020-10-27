@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -35,15 +35,23 @@ export const DragDropProvider = ({children}) => {
 };
 
 export function useDragItem(item) {
-	const {siteNavigationMenuItemId} = item;
+	const {parentSiteNavigationMenuItemId, siteNavigationMenuItemId} = item;
 
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
+	const {setParentId} = useContext(DragDropContext);
+
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
+		begin() {
+			setParentId(parentSiteNavigationMenuItemId);
+		},
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
+		end() {
+			setParentId(null);
+		},
 		isDragging(monitor) {
 			return itemPath.includes(monitor.getItem().id);
 		},

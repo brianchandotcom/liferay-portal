@@ -640,7 +640,7 @@ definition {
 	macro moveNestedField {
 		var key_nestedFieldLabel = "${nestedFieldLabel}";
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
-		
+
 		DoubleClick(locator1 = "DDMEditStructure#FORM_FIELD_NESTED_ANY");
 
 		DragAndDrop.dragAndDropReorganizeObjects(

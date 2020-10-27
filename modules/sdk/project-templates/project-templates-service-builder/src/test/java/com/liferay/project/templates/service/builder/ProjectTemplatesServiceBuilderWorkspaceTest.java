@@ -223,9 +223,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"biz.aQute.bnd");
 		}
 
-		File uadModuleDir = new File(gradleProjectDir, _name + "-uad");
+		File gradleUADModuleDir = new File(gradleProjectDir, _name + "-uad");
 
-		testNotExists(uadModuleDir, "bnd.bnd");
+		testNotExists(gradleUADModuleDir, "bnd.bnd");
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
@@ -245,6 +245,10 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 			mavenExecutor, "-Dpackage=" + _packageName,
 			"-DdependencyInjector=" + _dependencyInjector,
 			"-DliferayVersion=" + _liferayVersion);
+
+		File mavenUADModuleDir = new File(mavenProjectDir, _name + "-uad");
+
+		testNotExists(mavenUADModuleDir, "bnd.bnd");
 
 		if (isBuildProjects()) {
 			String projectPath;

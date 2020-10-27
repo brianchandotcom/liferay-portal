@@ -55,5 +55,4 @@ if (addOnOptions.equals("false")) {
 }
 else {
 	Files.deleteIfExists uadBuildGradlePath
-	Files.deleteIfExists uadBndPath
 }

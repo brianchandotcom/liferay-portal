@@ -220,8 +220,8 @@ public class ProjectTemplatesServiceBuilderTest
 	public void testBuildTemplateServiceBuilderWorkspaceUAD() throws Exception {
 		String dependencyInjector = "ds";
 		String liferayVersion = getDefaultLiferayVersion();
-		String name = "sample";
-		String packageName = "com.test.sample";
+		String name = "guestbook";
+		String packageName = "com.test.guestbook";
 		String template = "service-builder";
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -231,15 +231,17 @@ public class ProjectTemplatesServiceBuilderTest
 		writeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
 
+		File modulesDir = new File(gradleWorkspaceDir, "modules");
+
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceDir, template, name, "--liferay-version",
-			liferayVersion, "--package-name", packageName,
-			"--dependency-injector", dependencyInjector, "--add-ons", "true");
+			modulesDir, template, name, "--liferay-version", liferayVersion,
+			"--package-name", packageName, "--dependency-injector",
+			dependencyInjector, "--add-ons", "true");
 
-		File uadModuleDir = new File(gradleProjectDir, name + "-uad");
+		File gradleUADModuleDir = new File(gradleProjectDir, name + "-uad");
 
-		testExists(uadModuleDir, "bnd.bnd");
-		testExists(uadModuleDir, "build.gradle");
+		testExists(gradleUADModuleDir, "bnd.bnd");
+		testExists(gradleUADModuleDir, "build.gradle");
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
@@ -250,7 +252,12 @@ public class ProjectTemplatesServiceBuilderTest
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-Dpackage=" + packageName,
 			"-DdependencyInjector=" + dependencyInjector,
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-DaddOnOptions=true");
+
+		File mavenUADModuleDir = new File(mavenProjectDir, name + "-uad");
+
+		testExists(mavenUADModuleDir, "bnd.bnd");
+		testExists(mavenUADModuleDir, "pom.xml");
 
 		if (isBuildProjects()) {
 			String content = FileTestUtil.read(
@@ -279,6 +286,18 @@ public class ProjectTemplatesServiceBuilderTest
 			testBuildTemplateServiceBuilder(
 				gradleProjectDir, mavenProjectDir, gradleWorkspaceDir, name,
 				packageName, projectPath, _gradleDistribution, mavenExecutor);
+
+			executeGradle(
+				gradleWorkspaceDir, _gradleDistribution,
+				projectPath + ":" + name + "-uad" + GRADLE_TASK_PATH_BUILD);
+
+			File gradleUADBundleFile = testExists(
+				gradleUADModuleDir,
+				"/build/libs/com.test.guestbook.uad-1.0.0.jar");
+			File mavenUADBundleFile = testExists(
+				mavenUADModuleDir, "/target/guestbook-uad-1.0.0.jar");
+
+			testBundlesDiff(gradleUADBundleFile, mavenUADBundleFile);
 		}
 	}
 

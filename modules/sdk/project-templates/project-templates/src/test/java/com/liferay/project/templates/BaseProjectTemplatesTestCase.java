@@ -1165,131 +1165,6 @@ public interface BaseProjectTemplatesTestCase {
 		}
 	}
 
-	public default void testBuildTemplateServiceBuilder(
-			File gradleProjectDir, File mavenProjectDir, final File rootProject,
-			String name, String packageName, final String projectPath, URI gradleDistribution, MavenExecutor mavenExecutor)
-		throws Exception {
-
-		String apiProjectName = name + "-api";
-		final String serviceProjectName = name + "-service";
-
-		testContains(
-			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
-			packageName + ".exception,\\", packageName + ".model,\\",
-			packageName + ".service,\\", packageName + ".service.persistence");
-
-		testContains(
-			gradleProjectDir, serviceProjectName + "/bnd.bnd",
-			"Liferay-Service: true");
-
-		if (!isBuildProjects()) {
-			return;
-		}
-
-		testChangePortletModelHintsXml(
-			gradleProjectDir, serviceProjectName,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					executeGradle(
-						rootProject, gradleDistribution,
-						projectPath + ":" + serviceProjectName +
-							GRADLE_TASK_PATH_BUILD_SERVICE);
-
-					return null;
-				}
-
-			});
-
-		executeGradle(
-			rootProject, gradleDistribution,
-			projectPath + ":" + serviceProjectName + GRADLE_TASK_PATH_BUILD);
-
-		File gradleApiBundleFile = testExists(
-			gradleProjectDir,
-			apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
-
-		File gradleServiceBundleFile = testExists(
-			gradleProjectDir,
-			serviceProjectName + "/build/libs/" + packageName +
-				".service-1.0.0.jar");
-
-		if (!name.contains("sample")) {
-			testChangePortletModelHintsXml(
-				mavenProjectDir, serviceProjectName,
-				new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						executeMaven(
-							new File(mavenProjectDir, serviceProjectName),
-							mavenExecutor, MAVEN_GOAL_BUILD_SERVICE);
-
-						return null;
-					}
-
-				});
-
-			File gradleServicePropertiesFile = new File(
-				gradleProjectDir,
-				serviceProjectName + "/src/main/resources/service.properties");
-
-			File mavenServicePropertiesFile = new File(
-				mavenProjectDir,
-				serviceProjectName + "/src/main/resources/service.properties");
-
-			Files.copy(
-				gradleServicePropertiesFile.toPath(),
-				mavenServicePropertiesFile.toPath(),
-				StandardCopyOption.REPLACE_EXISTING);
-
-			executeMaven(mavenProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
-
-			File mavenApiBundleFile = testExists(
-				mavenProjectDir,
-				apiProjectName + "/target/" + name + "-api-1.0.0.jar");
-			File mavenServiceBundleFile = testExists(
-				mavenProjectDir,
-				serviceProjectName + "/target/" + name + "-service-1.0.0.jar");
-
-			testBundlesDiff(gradleApiBundleFile, mavenApiBundleFile);
-			testBundlesDiff(gradleServiceBundleFile, mavenServiceBundleFile);
-		}
-	}
-
-	public default void testChangePortletModelHintsXml(
-			File projectDir, String serviceProjectName,
-			Callable<Void> buildServiceCallable)
-		throws Exception {
-
-		buildServiceCallable.call();
-
-		File file = testExists(
-			projectDir,
-			serviceProjectName +
-				"/src/main/resources/META-INF/portlet-model-hints.xml");
-
-		Path path = file.toPath();
-
-		String content = FileUtil.read(path);
-
-		String newContent = content.replace(
-			"<field name=\"field5\" type=\"String\" />",
-			"<field name=\"field5\" type=\"String\">\n\t\t\t<hint-collection " +
-				"name=\"CLOB\" />\n\t\t</field>");
-
-		Assert.assertNotEquals("Unexpected " + file, content, newContent);
-
-		Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
-
-		buildServiceCallable.call();
-
-		Assert.assertEquals(
-			"Changes in " + file + " incorrectly overridden", newContent,
-			FileUtil.read(path));
-	}
-
 	public default File testBuildTemplatePortlet(
 			TemporaryFolder temporaryFolder, String template, String name,
 			String packageName, String liferayVersion,
@@ -1469,6 +1344,100 @@ public interface BaseProjectTemplatesTestCase {
 		return gradleProjectDir;
 	}
 
+	public default void testBuildTemplateServiceBuilder(
+			File gradleProjectDir, File mavenProjectDir, final File rootProject,
+			String name, String packageName, final String projectPath,
+			URI gradleDistribution, MavenExecutor mavenExecutor)
+		throws Exception {
+
+		String apiProjectName = name + "-api";
+		final String serviceProjectName = name + "-service";
+
+		testContains(
+			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
+			packageName + ".exception,\\", packageName + ".model,\\",
+			packageName + ".service,\\", packageName + ".service.persistence");
+
+		testContains(
+			gradleProjectDir, serviceProjectName + "/bnd.bnd",
+			"Liferay-Service: true");
+
+		if (!isBuildProjects()) {
+			return;
+		}
+
+		testChangePortletModelHintsXml(
+			gradleProjectDir, serviceProjectName,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					executeGradle(
+						rootProject, gradleDistribution,
+						projectPath + ":" + serviceProjectName +
+							GRADLE_TASK_PATH_BUILD_SERVICE);
+
+					return null;
+				}
+
+			});
+
+		executeGradle(
+			rootProject, gradleDistribution,
+			projectPath + ":" + serviceProjectName + GRADLE_TASK_PATH_BUILD);
+
+		File gradleApiBundleFile = testExists(
+			gradleProjectDir,
+			apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
+
+		File gradleServiceBundleFile = testExists(
+			gradleProjectDir,
+			serviceProjectName + "/build/libs/" + packageName +
+				".service-1.0.0.jar");
+
+		if (!name.contains("sample")) {
+			testChangePortletModelHintsXml(
+				mavenProjectDir, serviceProjectName,
+				new Callable<Void>() {
+
+					@Override
+					public Void call() throws Exception {
+						executeMaven(
+							new File(mavenProjectDir, serviceProjectName),
+							mavenExecutor, MAVEN_GOAL_BUILD_SERVICE);
+
+						return null;
+					}
+
+				});
+
+			File gradleServicePropertiesFile = new File(
+				gradleProjectDir,
+				serviceProjectName + "/src/main/resources/service.properties");
+
+			File mavenServicePropertiesFile = new File(
+				mavenProjectDir,
+				serviceProjectName + "/src/main/resources/service.properties");
+
+			Files.copy(
+				gradleServicePropertiesFile.toPath(),
+				mavenServicePropertiesFile.toPath(),
+				StandardCopyOption.REPLACE_EXISTING);
+
+			executeMaven(mavenProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
+
+			File mavenApiBundleFile = testExists(
+				mavenProjectDir,
+				apiProjectName + "/target/" + name + "-api-1.0.0.jar");
+			File mavenServiceBundleFile = testExists(
+				mavenProjectDir,
+				serviceProjectName + "/target/" + name + "-service-1.0.0.jar");
+
+			testBundlesDiff(gradleApiBundleFile, mavenApiBundleFile);
+			testBundlesDiff(gradleServiceBundleFile, mavenServiceBundleFile);
+		}
+	}
+
 	public default File testBuildTemplateWithWorkspace(
 			TemporaryFolder temporaryFolder, URI gradleDistribution,
 			String template, String name, String jarFilePath, String... args)
@@ -1563,6 +1532,38 @@ public interface BaseProjectTemplatesTestCase {
 		Assert.assertEquals(
 			"Bundle " + bundleFile1 + " and " + bundleFile2 + " do not match",
 			"", output);
+	}
+
+	public default void testChangePortletModelHintsXml(
+			File projectDir, String serviceProjectName,
+			Callable<Void> buildServiceCallable)
+		throws Exception {
+
+		buildServiceCallable.call();
+
+		File file = testExists(
+			projectDir,
+			serviceProjectName +
+				"/src/main/resources/META-INF/portlet-model-hints.xml");
+
+		Path path = file.toPath();
+
+		String content = FileUtil.read(path);
+
+		String newContent = content.replace(
+			"<field name=\"field5\" type=\"String\" />",
+			"<field name=\"field5\" type=\"String\">\n\t\t\t<hint-collection " +
+				"name=\"CLOB\" />\n\t\t</field>");
+
+		Assert.assertNotEquals("Unexpected " + file, content, newContent);
+
+		Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
+
+		buildServiceCallable.call();
+
+		Assert.assertEquals(
+			"Changes in " + file + " incorrectly overridden", newContent,
+			FileUtil.read(path));
 	}
 
 	public default File testContains(

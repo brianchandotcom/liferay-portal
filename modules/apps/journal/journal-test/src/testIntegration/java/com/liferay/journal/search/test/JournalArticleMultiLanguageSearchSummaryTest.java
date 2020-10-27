@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -101,6 +102,8 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 		_summaryFixture = new SummaryFixture<>(
 			JournalArticle.class, _group, LocaleUtil.US, _user);
 
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 	}
@@ -108,6 +111,8 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 	@After
 	public void tearDown() {
 		_journalArticleSearchFixture.tearDown();
+
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 
 		_userSearchFixture.tearDown();
 	}
@@ -452,6 +457,7 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+	private PermissionChecker _permissionChecker;
 	private SummaryFixture<JournalArticle> _summaryFixture;
 	private User _user;
 

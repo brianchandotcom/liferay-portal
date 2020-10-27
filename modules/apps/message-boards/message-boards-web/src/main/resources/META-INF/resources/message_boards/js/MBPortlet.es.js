@@ -55,7 +55,21 @@ class MBPortlet {
 			`${this._namespace}workflowAction`
 		);
 
+		this._events = [];
 		this._attachEvents();
+	}
+
+	dispose() {
+		this._events.forEach(({target, event, listener}) =>
+			target.removeEventListener(event, listener)
+		);
+
+		this._events = [];
+	}
+
+	_addEventListener(target, event, fn) {
+		target.addEventListener(event, fn);
+		this._events.push({target, event, fn});
 	}
 
 	_attachEvents() {
@@ -64,7 +78,7 @@ class MBPortlet {
 		);
 
 		if (publishButton) {
-			publishButton.addEventListener('click', () => {
+			this._addEventListener(publishButton, 'click', () => {
 				this.workflowActionInputNode.value = this._constants.ACTION_PUBLISH;
 				this._saveFn();
 			});
@@ -73,16 +87,16 @@ class MBPortlet {
 		const saveDrafButton = document.getElementById(`${this._namespace}saveButton`);
 
 		if (saveDrafButton) {
-			saveDrafButton.addEventListener('click', () => {
+			this._addEventListener(saveDrafButton, 'click', () => {
 				this.workflowActionInputNode.value = this._constants.ACTION_SAVE_DRAFT;
 				this._saveFn();
-			});
+			})
 		}
 
 		const advancedReplyLink = this.rootNode.querySelector('.advanced-reply');
 
 		if (advancedReplyLink) {
-			advancedReplyLink.addEventListener('click', () => {
+			this._addEventListener(advancedReplyLink, 'click', () => {
 				this._openAdvancedReply();
 			});
 		}
@@ -106,7 +120,7 @@ class MBPortlet {
 		);
 
 		if (viewRemovedAttachmentsLink) {
-			viewRemovedAttachmentsLink.addEventListener('click', () => {
+			this._addEventListener(viewRemovedAttachmentsLink, 'click', () => {
 				Liferay.Util.openModal({
 					id: this._namespace + 'openRemovedPageAttachments',
 					onClose: this._updateRemovedAttachments.bind(this),

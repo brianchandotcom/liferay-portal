@@ -113,25 +113,6 @@ describe('delegate', () => {
 		expect(listener).toHaveBeenCalledTimes(2);
 	});
 
-	it('removes listener through returned handle', () => {
-		document.body.innerHTML = `<div class="nomatch" data-testid="nomatch"></div>
-			<div class="match" data-testid="match"></div>`;
-
-		const listener = jest.fn();
-
-		const removeDelegate = delegate(document, 'click', '.match', listener);
-
-		userEvent.click(getByTestId(document, 'match'));
-
-		expect(listener).toHaveBeenCalledTimes(1);
-
-		removeDelegate();
-
-		userEvent.click(getByTestId(document, 'match'));
-
-		expect(listener).toHaveBeenCalledTimes(1);
-	});
-
 	it('removes listener through via `.dispose`', () => {
 		document.body.innerHTML = `<div class="nomatch" data-testid="nomatch"></div>
 			<div class="match" data-testid="match"></div>`;

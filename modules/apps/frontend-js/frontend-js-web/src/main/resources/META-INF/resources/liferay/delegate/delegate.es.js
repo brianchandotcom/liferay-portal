@@ -39,21 +39,18 @@ function delegate(element, eventName, selector, callback) {
 			return;
 		}
 
-		if (event.target.matches(selector)) {
+		if (!event.defaultPrevented && event.target.matches(selector)) {
 			callback(event);
 		}
 	};
 
 	element.addEventListener(eventName, eventHandler);
 
-	const removeEvent = () => {
-		element.removeEventListener(eventName, eventHandler);
+	return {
+		dispose() {
+			element.removeEventListener(eventName, eventHandler);
+		},
 	};
-
-	removeEvent.dispose = removeEvent;
-
-	return removeEvent;
 }
 
 export default delegate;
-export {delegate};

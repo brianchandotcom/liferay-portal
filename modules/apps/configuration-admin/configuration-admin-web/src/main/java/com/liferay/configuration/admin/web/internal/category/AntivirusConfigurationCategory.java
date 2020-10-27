@@ -25,6 +25,11 @@ import org.osgi.service.component.annotations.Component;
 public class AntivirusConfigurationCategory implements ConfigurationCategory {
 
 	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return _CATEGORY_KEY;
 	}
@@ -33,6 +38,8 @@ public class AntivirusConfigurationCategory implements ConfigurationCategory {
 	public String getCategorySection() {
 		return _CATEGORY_SECTION;
 	}
+
+	private static final String _CATEGORY_ICON = "shield-check";
 
 	private static final String _CATEGORY_KEY = "antivirus";
 

@@ -71,5 +71,10 @@
 			<scope>provided</scope>
 		</dependency>
 #end
+		<dependency>
+			<groupId>${groupId}</groupId>
+			<artifactId>${artifactId}-api</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 </project>

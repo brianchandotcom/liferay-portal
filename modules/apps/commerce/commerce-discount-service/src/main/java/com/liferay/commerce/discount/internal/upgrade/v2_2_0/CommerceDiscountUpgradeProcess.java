@@ -15,7 +15,7 @@
 package com.liferay.commerce.discount.internal.upgrade.v2_2_0;
 
 import com.liferay.commerce.discount.internal.upgrade.base.BaseCommerceDiscountUpgradeProcess;
-import com.liferay.commerce.discount.model.impl.CommerceDiscountImpl;
+import com.liferay.commerce.discount.internal.upgrade.v2_2_0.util.CommerceDiscountTable;
 
 /**
  * @author Riccardo Alberti
@@ -26,10 +26,10 @@ public class CommerceDiscountUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		addColumn(
-			CommerceDiscountImpl.class, CommerceDiscountImpl.TABLE_NAME,
+			CommerceDiscountTable.class, CommerceDiscountTable.TABLE_NAME,
 			"level", "VARCHAR(75)");
 		addColumn(
-			CommerceDiscountImpl.class, CommerceDiscountImpl.TABLE_NAME,
+			CommerceDiscountTable.class, CommerceDiscountTable.TABLE_NAME,
 			"rulesConjunction", "BOOLEAN");
 
 		runSQL("update CommerceDiscount set rulesConjunction = [$TRUE$]");

@@ -60,7 +60,7 @@ class MBPortlet {
 	}
 
 	dispose() {
-		this._events.forEach(({target, event, listener}) =>
+		this._events.forEach(({event, listener, target}) =>
 			target.removeEventListener(event, listener)
 		);
 
@@ -69,7 +69,7 @@ class MBPortlet {
 
 	_addEventListener(target, event, fn) {
 		target.addEventListener(event, fn);
-		this._events.push({target, event, fn});
+		this._events.push({event, fn, target});
 	}
 
 	_attachEvents() {
@@ -84,16 +84,20 @@ class MBPortlet {
 			});
 		}
 
-		const saveDrafButton = document.getElementById(`${this._namespace}saveButton`);
+		const saveDrafButton = document.getElementById(
+			`${this._namespace}saveButton`
+		);
 
 		if (saveDrafButton) {
 			this._addEventListener(saveDrafButton, 'click', () => {
 				this.workflowActionInputNode.value = this._constants.ACTION_SAVE_DRAFT;
 				this._saveFn();
-			})
+			});
 		}
 
-		const advancedReplyLink = this.rootNode.querySelector('.advanced-reply');
+		const advancedReplyLink = this.rootNode.querySelector(
+			'.advanced-reply'
+		);
 
 		if (advancedReplyLink) {
 			this._addEventListener(advancedReplyLink, 'click', () => {
@@ -190,7 +194,9 @@ class MBPortlet {
 	 *
 	 */
 	_saveFn() {
-		const tempImages = this.rootNode.querySelectorAll('img[data-random-id]');
+		const tempImages = this.rootNode.querySelectorAll(
+			'img[data-random-id]'
+		);
 
 		if (tempImages.length > 0) {
 			if (confirm(this._strings.confirmDiscardImages)) {
@@ -254,7 +260,9 @@ class MBPortlet {
 			const inputName = `${namespace}selectUploadedFile`;
 
 			const input = [].slice.call(
-				this.rootNode.querySelectorAll(`input[name=${inputName}]:checked`)
+				this.rootNode.querySelectorAll(
+					`input[name=${inputName}]:checked`
+				)
 			);
 
 			const data = input
@@ -284,7 +292,9 @@ class MBPortlet {
 							const searchContainerData = searchContainer.getData();
 
 							document
-								.getElementById(this._namespace + 'fileAttachments')
+								.getElementById(
+									this._namespace + 'fileAttachments'
+								)
 								.classList.remove('hide');
 
 							attachments.active.forEach((attachment) => {

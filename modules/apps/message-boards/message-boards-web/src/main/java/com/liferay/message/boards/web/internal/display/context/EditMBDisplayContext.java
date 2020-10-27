@@ -74,6 +74,9 @@ public class EditMBDisplayContext {
 				"messageId", String.valueOf(_message.getMessageId()));
 			getAttachmentsURL.setResourceID("/message_boards/get_attachments");
 
+			PortletURL currentURLObj = PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse);
+
 			PortletURL viewTrashAttachmentsURL =
 				_liferayPortletResponse.createRenderURL();
 
@@ -81,10 +84,7 @@ public class EditMBDisplayContext {
 				"mvcRenderCommandName",
 				"/message_boards/view_deleted_message_attachments");
 			viewTrashAttachmentsURL.setParameter(
-				"redirect",
-				PortletURLUtil.getCurrent(
-					_liferayPortletRequest, _liferayPortletResponse
-				).toString());
+				"redirect", currentURLObj.toString());
 			viewTrashAttachmentsURL.setParameter(
 				"messageId", String.valueOf(_message.getMessageId()));
 			viewTrashAttachmentsURL.setWindowState(LiferayWindowState.POP_UP);

@@ -220,3 +220,33 @@ The breaking changes regarding the service replacement were notified on
 2019-Sep-11, this would be the final step to removing the table.
 
 ---------------------------------------
+
+### The way we register display pages for entities has changed
+- **Date:** 2020-Oct-27
+- **JIRA Ticket:** [LPS-122275](https://issues.liferay.com/browse/LPS-122275)
+
+#### What changed?
+
+The way default display pages are handled has changed. From Liferay Portal 7.1
+through Liferay Portal 7.3 the entities that had a default display page were
+persisted in the database while those that don't have display pages associated
+to them were ommited. This behaviour has been switched, so that the default
+display pages are not persisted and those entities that don't have a display
+page associated to them are tracked.
+
+#### Who is affected?
+
+Everyone with custom entities for which display pages can be created
+
+#### How should I update my code?
+
+If you have custom entities with display pages, we have created a base upgrade
+process (`BaseUpgradeAssetDisplayPageEntries`) that receives a table, primary
+key column name and a className, that will handle the swap logic.
+
+#### Why was this change made?
+
+This change was made to make the logic for display pages more consistent with
+the overall concept of display pages.
+
+---------------------------------------

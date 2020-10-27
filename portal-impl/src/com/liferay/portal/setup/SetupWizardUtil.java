@@ -368,9 +368,13 @@ public class SetupWizardUtil {
 
 		int index = emailAddress.indexOf(CharPool.AT);
 
+		String companyDefaultWebId = emailAddress.substring(index + 1);
+
+		PropsValues.COMPANY_DEFAULT_WEB_ID = companyDefaultWebId;
+
 		unicodeProperties.put(
-			PropsKeys.COMPANY_DEFAULT_WEB_ID,
-			emailAddress.substring(index + 1));
+			PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
+
 		unicodeProperties.put(
 			PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX,
 			emailAddress.substring(0, index));
@@ -398,6 +402,8 @@ public class SetupWizardUtil {
 
 		String languageId = ParamUtil.getString(
 			httpServletRequest, "companyLocale", getDefaultLanguageId());
+
+		PropsValues.COMPANY_DEFAULT_LOCALE = languageId;
 
 		unicodeProperties.put(PropsKeys.COMPANY_DEFAULT_LOCALE, languageId);
 

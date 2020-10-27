@@ -81,6 +81,9 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 			"2.2.2", "2.3.0", new UpgradeCTModel("AssetDisplayPageEntry"));
 
 		registry.register("2.3.0", "2.3.1", new DummyUpgradeProcess());
+
+		registry.register(
+			"2.3.1", "3.0.0", new UpgradeAssetDisplayPageEntries());
 	}
 
 	@Reference

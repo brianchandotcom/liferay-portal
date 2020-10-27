@@ -26,13 +26,15 @@ const validate = (fields, values) => {
 	const errors = {};
 
 	Object.entries(fields).forEach(([inputName, validations]) => {
-		for (const validation of validations) {
+		validations.some((validation) => {
 			const error = validation(values[inputName]);
+
 			if (error) {
 				errors[inputName] = error;
-				break;
 			}
-		}
+
+			return !!error;
+		});
 	});
 
 	return errors;

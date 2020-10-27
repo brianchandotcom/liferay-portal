@@ -130,7 +130,7 @@ xpack.ml.enabled: false</echo>
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-remote.config">${line.separator}active="true"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-remote.config">active="true"
 authenticationEnabled="true"
 connectionId="xpack"
 httpSSLEnabled="true"

@@ -28,77 +28,93 @@ const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
  * message board.
  */
 
-export default function MBPortlet({
-	constants,
-	currentAction,
-	getAttachmentsURL,
-	namespace,
-	replyToMessageId,
-	rootNodeId,
-	strings = {
-		confirmDiscardImages: CONFIRM_DISCARD_IMAGES,
-	},
-	viewTrashAttachmentsURL,
-}) {
-	const rootNode = document.getElementById(rootNodeId);
+class MBPortlet {
+	constructor({
+		constants,
+		currentAction,
+		getAttachmentsURL,
+		namespace,
+		replyToMessageId,
+		rootNodeId,
+		strings = {
+			confirmDiscardImages: CONFIRM_DISCARD_IMAGES,
+		},
+		viewTrashAttachmentsURL,
+	}) {
+		this._namespace = namespace;
+		this._constants = constants;
+		this._currentAction = currentAction;
+		this._getAttachmentsURL = getAttachmentsURL;
+		this._replyToMessageId = replyToMessageId;
+		this._strings = strings;
+		this._viewTrashAttachmentsURL = viewTrashAttachmentsURL;
 
-	const workflowActionInputNode = document.getElementById(
-		`${namespace}workflowAction`
-	);
+		this.rootNode = document.getElementById(rootNodeId);
 
-	const publishButton = rootNode.querySelector(
-		'.button-holder button[type="submit"]'
-	);
+		this.workflowActionInputNode = document.getElementById(
+			`${this._namespace}workflowAction`
+		);
 
-	if (publishButton) {
-		publishButton.addEventListener('click', () => {
-			workflowActionInputNode.value = constants.ACTION_PUBLISH;
-			saveFn();
-		});
+		this._attachEvents();
 	}
 
-	const saveDrafButton = document.getElementById(`${namespace}saveButton`);
+	_attachEvents() {
+		const publishButton = this.rootNode.querySelector(
+			'.button-holder button[type="submit"]'
+		);
 
-	if (saveDrafButton) {
-		saveDrafButton.addEventListener('click', () => {
-			workflowActionInputNode.value = constants.ACTION_SAVE_DRAFT;
-			saveFn();
-		});
-	}
-
-	const advancedReplyLink = rootNode.querySelector('.advanced-reply');
-
-	if (advancedReplyLink) {
-		advancedReplyLink.addEventListener('click', () => {
-			openAdvancedReply();
-		});
-	}
-
-	const searchContainerId = `${namespace}messageAttachments`;
-
-	Liferay.componentReady(searchContainerId).then((searchContainer) => {
-		searchContainer
-			.get('contentBox')
-			.delegate(
-				'click',
-				removeAttachment.bind(this),
-				'.delete-attachment'
-			);
-	});
-
-	const viewRemovedAttachmentsLink = document.getElementById(
-		'view-removed-attachments-link'
-	);
-
-	if (viewRemovedAttachmentsLink) {
-		viewRemovedAttachmentsLink.addEventListener('click', () => {
-			Liferay.Util.openModal({
-				id: namespace + 'openRemovedPageAttachments',
-				onClose: updateRemovedAttachments,
-				title: Liferay.Language.get('removed-attachments'),
-				url: viewTrashAttachmentsURL,
+		if (publishButton) {
+			publishButton.addEventListener('click', () => {
+				this.workflowActionInputNode.value = this._constants.ACTION_PUBLISH;
+				this._saveFn();
 			});
+		}
+
+		const saveDrafButton = document.getElementById(`${this._namespace}saveButton`);
+
+		if (saveDrafButton) {
+			saveDrafButton.addEventListener('click', () => {
+				this.workflowActionInputNode.value = this._constants.ACTION_SAVE_DRAFT;
+				this._saveFn();
+			});
+		}
+
+		const advancedReplyLink = this.rootNode.querySelector('.advanced-reply');
+
+		if (advancedReplyLink) {
+			advancedReplyLink.addEventListener('click', () => {
+				this._openAdvancedReply();
+			});
+		}
+
+		const searchContainerId = `${this._namespace}messageAttachments`;
+
+		Liferay.componentReady(searchContainerId).then((searchContainer) => {
+			searchContainer
+				.get('contentBox')
+				.delegate(
+					'click',
+					this._removeAttachment.bind(this),
+					'.delete-attachment'
+				);
 		});
+
+		this.searchContainerId = searchContainerId;
+
+		const viewRemovedAttachmentsLink = document.getElementById(
+			'view-removed-attachments-link'
+		);
+
+		if (viewRemovedAttachmentsLink) {
+			viewRemovedAttachmentsLink.addEventListener('click', () => {
+				Liferay.Util.openModal({
+					id: this._namespace + 'openRemovedPageAttachments',
+					onClose: this._updateRemovedAttachments.bind(this),
+					title: Liferay.Language.get('removed-attachments'),
+					url: this._viewTrashAttachmentsURL,
+				});
+			});
+		}
 	}
 
 	/**
@@ -106,13 +122,16 @@ export default function MBPortlet({
 	 * keeping the current message.
 	 *
 	 */
-	const openAdvancedReply = () => {
+	_openAdvancedReply() {
+		const namespace = this._namespace;
+		const replyToMessageId = this._replyToMessageId;
+
 		const bodyInput = document.getElementById(`${namespace}body`);
 		bodyInput.value = window[
 			`${namespace}replyMessageBody${replyToMessageId}`
 		].getHTML();
 
-		const form = rootNode.querySelector(
+		const form = this.rootNode.querySelector(
 			`[name="${namespace}advancedReplyFm${replyToMessageId}"]`
 		);
 
@@ -123,20 +142,20 @@ export default function MBPortlet({
 		advancedReplyInputNode.value = bodyInput.value;
 
 		submitForm(form);
-	};
+	}
 
 	/**
 	 * Sends a request to remove the selected attachment.
 	 *
 	 * @param {Event} event The click event that triggered the remove action
 	 */
-	const removeAttachment = (event) => {
+	_removeAttachment(event) {
 		const link = event.currentTarget;
 
 		const deleteURL = link.getAttribute('data-url');
 
 		fetch(deleteURL).then(() => {
-			Liferay.componentReady(searchContainerId).then(
+			Liferay.componentReady(this.searchContainerId).then(
 				(searchContainer) => {
 					searchContainer.deleteRow(
 						link.ancestor('tr'),
@@ -146,9 +165,9 @@ export default function MBPortlet({
 				}
 			);
 
-			updateRemovedAttachments();
+			this._updateRemovedAttachments();
 		});
-	};
+	}
 
 	/**
 	 * Save the message. Before doing that, checks if there are
@@ -156,33 +175,36 @@ export default function MBPortlet({
 	 * it removes them after asking confirmation to the user.
 	 *
 	 */
-	const saveFn = () => {
-		const tempImages = rootNode.querySelectorAll('img[data-random-id]');
+	_saveFn() {
+		const tempImages = this.rootNode.querySelectorAll('img[data-random-id]');
 
 		if (tempImages.length > 0) {
-			if (confirm(strings.confirmDiscardImages)) {
+			if (confirm(this._strings.confirmDiscardImages)) {
 				tempImages.forEach((node) => {
 					node.parentElement.remove();
 				});
 
-				submitMBForm();
+				this._submitMBForm();
 			}
 		}
 		else {
-			submitMBForm();
+			this._submitMBForm();
 		}
-	};
+	}
 
 	/**
 	 * Submits the message.
 	 *
 	 */
-	const submitMBForm = () => {
-		document.getElementById(
-			`${namespace}${constants.CMD}`
-		).value = currentAction;
+	_submitMBForm() {
+		const namespace = this._namespace;
+		const replyToMessageId = this._replyToMessageId;
 
-		updateMultipleMBMessageAttachments();
+		document.getElementById(
+			`${namespace}${this._constants.CMD}`
+		).value = this._currentAction;
+
+		this._updateMultipleMBMessageAttachments();
 
 		const bodyInput = document.getElementById(`${namespace}body`);
 
@@ -200,14 +222,16 @@ export default function MBPortlet({
 
 			submitForm(document[`${namespace}fm`]);
 		}
-	};
+	}
 
 	/**
 	 * Updates the attachments to include the checked attachments.
 	 *
 	 */
 
-	const updateMultipleMBMessageAttachments = () => {
+	_updateMultipleMBMessageAttachments() {
+		const namespace = this._namespace;
+
 		const selectedFileNameContainer = document.getElementById(
 			`${namespace}selectedFileNameContainer`
 		);
@@ -216,7 +240,7 @@ export default function MBPortlet({
 			const inputName = `${namespace}selectUploadedFile`;
 
 			const input = [].slice.call(
-				rootNode.querySelectorAll(`input[name=${inputName}]:checked`)
+				this.rootNode.querySelectorAll(`input[name=${inputName}]:checked`)
 			);
 
 			const data = input
@@ -230,23 +254,23 @@ export default function MBPortlet({
 
 			selectedFileNameContainer.innerHTML = data;
 		}
-	};
+	}
 
 	/**
 	 * Sends a request to retrieve the deleted attachments
 	 *
 	 */
-	const updateRemovedAttachments = () => {
-		fetch(getAttachmentsURL)
+	_updateRemovedAttachments() {
+		fetch(this._getAttachmentsURL)
 			.then((res) => res.json())
 			.then((attachments) => {
 				if (attachments.active.length > 0) {
-					Liferay.componentReady(searchContainerId).then(
+					Liferay.componentReady(this.searchContainerId).then(
 						(searchContainer) => {
 							const searchContainerData = searchContainer.getData();
 
 							document
-								.getElementById(namespace + 'fileAttachments')
+								.getElementById(this._namespace + 'fileAttachments')
 								.classList.remove('hide');
 
 							attachments.active.forEach((attachment) => {
@@ -295,5 +319,7 @@ export default function MBPortlet({
 					deletedAttachmentsElement.style.display = 'none';
 				}
 			});
-	};
+	}
 }
+
+export default MBPortlet;

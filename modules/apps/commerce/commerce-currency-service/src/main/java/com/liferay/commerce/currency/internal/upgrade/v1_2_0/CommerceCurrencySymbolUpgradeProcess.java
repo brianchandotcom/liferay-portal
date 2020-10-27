@@ -15,7 +15,7 @@
 package com.liferay.commerce.currency.internal.upgrade.v1_2_0;
 
 import com.liferay.commerce.currency.internal.upgrade.base.BaseCommerceCurrencyUpgradeProcess;
-import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
+import com.liferay.commerce.currency.internal.upgrade.v1_2_0.util.CommerceCurrencyTable;
 
 /**
  * @author Alec Sloan
@@ -26,8 +26,8 @@ public class CommerceCurrencySymbolUpgradeProcess
 	@Override
 	public void doUpgrade() throws Exception {
 		addColumn(
-			CommerceCurrencyModelImpl.class,
-			CommerceCurrencyModelImpl.TABLE_NAME, "symbol", "VARCHAR(75)");
+			CommerceCurrencyTable.class, CommerceCurrencyTable.TABLE_NAME,
+			"symbol", "VARCHAR(75)");
 	}
 
 }

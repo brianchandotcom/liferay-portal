@@ -33,15 +33,17 @@ export const EditEntry = ({
 	redirect,
 	userLanguageId,
 }) => {
-	const {basePortletURL, portletId} = useContext(AppContext);
+	const {basePortletURL, portletId, showFormView, showTableView} = useContext(
+		AppContext
+	);
 	const {availableLanguageIds, defaultLanguageId} = useDataDefinition(
 		dataDefinitionId
 	);
 	const [submitting, setSubmitting] = useState(false);
 
+	const isFormViewOnly = showFormView && !showTableView;
 	const urlParams = new URLSearchParams(window.location.href);
-	const backURL =
-		urlParams.get(`_${portletId}_backURL`) || `${basePortletURL}/#/`;
+	const backURL = urlParams.get(`_${portletId}_backURL`) || basePortletURL;
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
@@ -65,6 +67,7 @@ export const EditEntry = ({
 
 	const onSubmit = useCallback(
 		(event) => {
+			event.preventDefault();
 			setSubmitting(true);
 
 			validateForm(event)
@@ -118,7 +121,7 @@ export const EditEntry = ({
 	return (
 		<>
 			<ControlMenuBase
-				backURL={redirect || backURL}
+				backURL={isFormViewOnly ? null : redirect || backURL}
 				title={
 					dataRecordId !== '0'
 						? Liferay.Language.get('edit-entry')
@@ -132,9 +135,11 @@ export const EditEntry = ({
 					{Liferay.Language.get('save')}
 				</Button>
 
-				<Button displayType="secondary" onClick={onCancel}>
-					{Liferay.Language.get('cancel')}
-				</Button>
+				{!isFormViewOnly && (
+					<Button displayType="secondary" onClick={onCancel}>
+						{Liferay.Language.get('cancel')}
+					</Button>
+				)}
 			</ClayButton.Group>
 		</>
 	);

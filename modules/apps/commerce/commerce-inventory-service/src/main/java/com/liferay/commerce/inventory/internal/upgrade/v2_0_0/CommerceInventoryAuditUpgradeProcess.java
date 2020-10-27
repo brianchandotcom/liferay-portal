@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.inventory.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl;
+import com.liferay.commerce.inventory.internal.upgrade.v2_0_0.util.CommerceInventoryAuditTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,17 +28,13 @@ public class CommerceInventoryAuditUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_addColumn(
-			CommerceInventoryAuditModelImpl.class,
-			CommerceInventoryAuditModelImpl.TABLE_NAME, "logType",
-			"VARCHAR(75)");
+			CommerceInventoryAuditTable.class,
+			CommerceInventoryAuditTable.TABLE_NAME, "logType", "VARCHAR(75)");
 		_addColumn(
-			CommerceInventoryAuditModelImpl.class,
-			CommerceInventoryAuditModelImpl.TABLE_NAME, "logTypeSettings",
-			"TEXT");
+			CommerceInventoryAuditTable.class,
+			CommerceInventoryAuditTable.TABLE_NAME, "logTypeSettings", "TEXT");
 
-		if (hasColumn(
-				CommerceInventoryAuditModelImpl.TABLE_NAME, "description")) {
-
+		if (hasColumn(CommerceInventoryAuditTable.TABLE_NAME, "description")) {
 			runSQL("delete from CIAudit");
 
 			runSQL("alter table CIAudit drop column description");

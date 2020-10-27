@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.inventory.internal.upgrade.v2_1_0;
 
-import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityImpl;
-import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemImpl;
-import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseImpl;
-import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemImpl;
+import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryBookedQuantityTable;
+import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryReplenishmentItemTable;
+import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryWarehouseItemTable;
+import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryWarehouseTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,31 +30,31 @@ public class MVCCUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable(CommerceInventoryBookedQuantityImpl.TABLE_NAME)) {
+		if (hasTable(CommerceInventoryBookedQuantityTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryBookedQuantityImpl.class,
-				CommerceInventoryBookedQuantityImpl.TABLE_NAME, "mvccVersion",
+				CommerceInventoryBookedQuantityTable.class,
+				CommerceInventoryBookedQuantityTable.TABLE_NAME, "mvccVersion",
 				"LONG default 0 not null");
 		}
 
-		if (hasTable(CommerceInventoryReplenishmentItemImpl.TABLE_NAME)) {
+		if (hasTable(CommerceInventoryReplenishmentItemTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryReplenishmentItemImpl.class,
-				CommerceInventoryReplenishmentItemImpl.TABLE_NAME,
+				CommerceInventoryReplenishmentItemTable.class,
+				CommerceInventoryReplenishmentItemTable.TABLE_NAME,
 				"mvccVersion", "LONG default 0 not null");
 		}
 
-		if (hasTable(CommerceInventoryWarehouseImpl.TABLE_NAME)) {
+		if (hasTable(CommerceInventoryWarehouseTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryWarehouseImpl.class,
-				CommerceInventoryWarehouseImpl.TABLE_NAME, "mvccVersion",
+				CommerceInventoryWarehouseTable.class,
+				CommerceInventoryWarehouseTable.TABLE_NAME, "mvccVersion",
 				"LONG default 0 not null");
 		}
 
-		if (hasTable(CommerceInventoryWarehouseItemImpl.TABLE_NAME)) {
+		if (hasTable(CommerceInventoryWarehouseItemTable.TABLE_NAME)) {
 			_addColumn(
-				CommerceInventoryWarehouseItemImpl.class,
-				CommerceInventoryWarehouseItemImpl.TABLE_NAME, "mvccVersion",
+				CommerceInventoryWarehouseItemTable.class,
+				CommerceInventoryWarehouseItemTable.TABLE_NAME, "mvccVersion",
 				"LONG default 0 not null");
 		}
 	}

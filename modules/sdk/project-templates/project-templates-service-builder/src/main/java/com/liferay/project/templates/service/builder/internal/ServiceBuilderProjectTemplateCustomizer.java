@@ -49,10 +49,9 @@ public class ServiceBuilderProjectTemplateCustomizer
 			(ServiceBuilderProjectTemplatesArgs)
 				projectTemplatesArgs.getProjectTemplatesArgsExt();
 
-		String addOnOptions =
-			serviceBuilderProjectTemplatesArgs.getAddOnOptions();
+		String addOns = serviceBuilderProjectTemplatesArgs.getAddOns();
 
-		if (addOnOptions.equals("false")) {
+		if (addOns.equals("false")) {
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectPath = destinationDirPath.resolve(
@@ -111,22 +110,21 @@ public class ServiceBuilderProjectTemplateCustomizer
 			(ServiceBuilderProjectTemplatesArgs)
 				projectTemplatesArgs.getProjectTemplatesArgsExt();
 
-		String addOnOptions =
-			serviceBuilderProjectTemplatesArgs.getAddOnOptions();
+		String addOns = serviceBuilderProjectTemplatesArgs.getAddOns();
 
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
-		if (addOnOptions.equals("true") &&
+		if (addOns.equals("true") &&
 			(liferayVersion.startsWith("7.0") ||
 			 liferayVersion.startsWith("7.1"))) {
 
 			throw new IllegalArgumentException(
-				"Add On Options is not supported in 7.0 or 7.1");
+				"Add Ons are not supported in 7.0 or 7.1");
 		}
 
 		setProperty(
-			properties, "addOnOptions",
-			serviceBuilderProjectTemplatesArgs.getAddOnOptions());
+			properties, "addOns",
+			serviceBuilderProjectTemplatesArgs.getAddOns());
 
 		setProperty(
 			properties, "dependencyInjector",

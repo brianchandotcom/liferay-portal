@@ -30,7 +30,7 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
-		<requiredProperty key="addOnOptions">
+		<requiredProperty key="addOns">
 			<defaultValue>false</defaultValue>
 			<validationRegex>(true|false)</validationRegex>
 		</requiredProperty>

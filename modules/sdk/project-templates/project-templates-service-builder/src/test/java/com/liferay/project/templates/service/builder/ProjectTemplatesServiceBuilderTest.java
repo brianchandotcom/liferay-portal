@@ -252,7 +252,7 @@ public class ProjectTemplatesServiceBuilderTest
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-Dpackage=" + packageName,
 			"-DdependencyInjector=" + dependencyInjector,
-			"-DliferayVersion=" + liferayVersion, "-DaddOnOptions=true");
+			"-DliferayVersion=" + liferayVersion, "-DaddOns=true");
 
 		File mavenUADModuleDir = new File(mavenProjectDir, name + "-uad");
 

@@ -1,1 +1,1 @@
-include "${artifactId}-api", "${artifactId}-service"#if (${addOnOptions.equals("true")}), "${artifactId}-uad"#end
+include "${artifactId}-api", "${artifactId}-service"#if (${addOns.equals("true")}), "${artifactId}-uad"#end

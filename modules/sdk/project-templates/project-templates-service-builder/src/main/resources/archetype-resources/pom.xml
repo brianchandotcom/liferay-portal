@@ -116,7 +116,7 @@
 	<modules>
 		<module>${artifactId}-api</module>
 		<module>${artifactId}-service</module>
-#if (${addOnOptions.equals("true")})
+#if (${addOns.equals("true")})
 		<module>${artifactId}-uad</module>
 #end
 	</modules>

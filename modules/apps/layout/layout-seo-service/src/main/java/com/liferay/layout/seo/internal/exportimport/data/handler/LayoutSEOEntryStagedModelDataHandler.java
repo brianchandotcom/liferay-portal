@@ -14,6 +14,7 @@
 
 package com.liferay.layout.seo.internal.exportimport.data.handler;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -28,11 +29,15 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Collections;
@@ -84,6 +89,15 @@ public class LayoutSEOEntryStagedModelDataHandler
 			LayoutSEOEntry layoutSEOEntry)
 		throws Exception {
 
+		FileEntry openGraphImageFileEntry = _fetchFileEntry(
+			layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+		if (openGraphImageFileEntry != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutSEOEntry, openGraphImageFileEntry,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
+		}
+
 		DDMStructure ddmStructure = _getDDMStructure(
 			portletDataContext.getCompanyId());
 
@@ -133,6 +147,13 @@ public class LayoutSEOEntryStagedModelDataHandler
 			fetchStagedModelByUuidAndGroupId(
 				layoutSEOEntry.getUuid(), layoutSEOEntry.getGroupId());
 
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		long openGraphImageFileEntryId = MapUtil.getLong(
+			fileEntryIds, layoutSEOEntry.getOpenGraphImageFileEntryId(), 0);
+
 		if (existingLayoutSEOEntry == null) {
 			Map<Long, Layout> newPrimaryKeysMap =
 				(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
@@ -148,7 +169,7 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.isOpenGraphDescriptionEnabled(),
 				layoutSEOEntry.getOpenGraphDescriptionMap(),
 				layoutSEOEntry.getOpenGraphImageAltMap(),
-				layoutSEOEntry.getOpenGraphImageFileEntryId(),
+				openGraphImageFileEntryId,
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
 				layoutSEOEntry.getOpenGraphTitleMap(),
 				_createServiceContext(layoutSEOEntry, portletDataContext));
@@ -164,7 +185,7 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layoutSEOEntry.isOpenGraphDescriptionEnabled(),
 				layoutSEOEntry.getOpenGraphDescriptionMap(),
 				layoutSEOEntry.getOpenGraphImageAltMap(),
-				layoutSEOEntry.getOpenGraphImageFileEntryId(),
+				openGraphImageFileEntryId,
 				layoutSEOEntry.isOpenGraphTitleEnabled(),
 				layoutSEOEntry.getOpenGraphTitleMap(),
 				_createServiceContext(layoutSEOEntry, portletDataContext));
@@ -198,6 +219,24 @@ public class LayoutSEOEntryStagedModelDataHandler
 		return serviceContext;
 	}
 
+	private FileEntry _fetchFileEntry(long fileEntryId) {
+		if (fileEntryId <= 0) {
+			return null;
+		}
+
+		try {
+			return _dlAppLocalService.getFileEntry(fileEntryId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get file entry " + fileEntryId, portalException);
+			}
+
+			return null;
+		}
+	}
+
 	private DDMStructure _getDDMStructure(long companyId) throws Exception {
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
@@ -208,11 +247,17 @@ public class LayoutSEOEntryStagedModelDataHandler
 			"custom-meta-tags");
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSEOEntryStagedModelDataHandler.class);
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

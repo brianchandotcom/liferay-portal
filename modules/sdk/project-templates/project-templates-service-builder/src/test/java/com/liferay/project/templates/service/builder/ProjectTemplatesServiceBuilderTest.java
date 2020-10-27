@@ -24,7 +24,9 @@ import java.io.File;
 import java.net.URI;
 
 import java.nio.file.Files;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Consumer;
@@ -197,33 +199,70 @@ public class ProjectTemplatesServiceBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		File gradleProjectDir = buildTemplateWithGradle(
+		buildTemplateWithGradle(
 			gradleWorkspaceDir, "service-builder", name, "--liferay-version",
 			liferayVersion, "--add-ons", "true");
-
-		File uadModuleDir = new File(gradleProjectDir, name + "-uad");
-
-		testExists(uadModuleDir, "bnd.bnd");
-		testExists(uadModuleDir, "build.gradle");
 	}
 
 	@Test
 	public void testBuildTemplateServiceBuilderWorkspaceUAD() throws Exception {
+		String dependencyInjector = "ds";
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "sample";
+		String packageName = "com.test.sample";
+		String template = "service-builder";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
+		writeGradlePropertiesInWorkspace(
+			gradleWorkspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceDir, "service-builder", name, "--liferay-version",
-			liferayVersion, "--add-ons", "true");
+			gradleWorkspaceDir, template, name, "--liferay-version",
+			liferayVersion, "--package-name", packageName, "--dependency-injector", dependencyInjector, "--add-ons", "true");
 
 		File uadModuleDir = new File(gradleProjectDir, name + "-uad");
 
 		testExists(uadModuleDir, "bnd.bnd");
 		testExists(uadModuleDir, "build.gradle");
+
+		File mavenWorkspaceDir = buildWorkspace(
+			temporaryFolder, "maven", "mavenWS", liferayVersion,
+			mavenExecutor);
+
+		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
+
+		File mavenProjectDir = buildTemplateWithMaven(
+				mavenModulesDir, mavenModulesDir, template, name, "com.test",
+				mavenExecutor, "-Dpackage=" + packageName,
+				"-DdependencyInjector=" + dependencyInjector,
+				"-DliferayVersion=" + liferayVersion);
+
+		if (isBuildProjects()) {
+			String content = FileTestUtil.read(
+				BaseProjectTemplatesTestCase.class.getClassLoader(),
+				"com/liferay/project/templates/service/builder/dependencies/service.xml");
+
+			Path tempPath = Files.createTempFile("service", "xml");
+
+			Files.write(tempPath, content.getBytes());
+
+			Path gradleServiceXmlPath = Paths.get(gradleProjectDir.getPath(), name + "-service/service.xml");
+			Path mavenServiceXmlPath = Paths.get(mavenProjectDir.getPath(), name + "-service/service.xml");
+
+			Files.copy(tempPath, gradleServiceXmlPath, StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(tempPath, mavenServiceXmlPath, StandardCopyOption.REPLACE_EXISTING);
+
+			String projectPath = ":modules:" + name;
+
+			testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleWorkspaceDir, name,
+				packageName, projectPath, _gradleDistribution, mavenExecutor);
+
+		}
+
 	}
 
 	@Test

@@ -138,8 +138,6 @@ public class PortletPreferencesPersistenceTest {
 
 		newPortletPreferences.setPortletId(RandomTestUtil.randomString());
 
-		newPortletPreferences.setPreferences(RandomTestUtil.randomString());
-
 		_portletPreferenceses.add(_persistence.update(newPortletPreferences));
 
 		PortletPreferences existingPortletPreferences =
@@ -170,9 +168,6 @@ public class PortletPreferencesPersistenceTest {
 		Assert.assertEquals(
 			existingPortletPreferences.getPortletId(),
 			newPortletPreferences.getPortletId());
-		Assert.assertEquals(
-			existingPortletPreferences.getPreferences(),
-			newPortletPreferences.getPreferences());
 	}
 
 	@Test
@@ -614,8 +609,6 @@ public class PortletPreferencesPersistenceTest {
 		portletPreferences.setPlid(RandomTestUtil.nextLong());
 
 		portletPreferences.setPortletId(RandomTestUtil.randomString());
-
-		portletPreferences.setPreferences(RandomTestUtil.randomString());
 
 		_portletPreferenceses.add(_persistence.update(portletPreferences));
 

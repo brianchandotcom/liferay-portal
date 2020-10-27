@@ -317,32 +317,197 @@
 
 <h4>User Cards</h4>
 
+<%
+ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
+%>
+
 <clay:row>
 	<clay:col
 		id="image-card-block"
-		md="6"
+		md="4"
 	>
-		<clay:user-card-v2
-			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			name="User Name"
-			subtitle="Latest Action"
+		<clay:user-card
+			name="<%= claySampleUserCard.getName() %>"
+			selectable="<%= false %>"
+			subtitle="<%= claySampleUserCard.getSubtitle() %>"
+			userColorClass="<%= claySampleUserCard.getUserColorClass() %>"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+		<clay:user-card
+			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
+			icon="picture"
+			labels="<%= claySampleUserCard.getLabels() %>"
+			name="<%= claySampleUserCard.getName() %>"
+			selectable="<%= false %>"
+			subtitle="<%= claySampleUserCard.getSubtitle() %>"
 			userColorClass="danger"
 		/>
 	</clay:col>
 
 	<clay:col
 		id="image-card-icon-block"
-		md="6"
+		md="4"
 	>
-		<clay:user-card-v2
-			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
+		<clay:user-card
+			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
 			disabled="<%= true %>"
-			imageAlt="thumbnail"
+			imageAlt="<%= claySampleUserCard.getImageAlt() %>"
 			imageSrc="https://images.unsplash.com/photo-1502290822284-9538ef1f1291"
-			name="User name"
-			selectable="<%= true %>"
+			labels="<%= claySampleUserCard.getLabels() %>"
+			name="<%= claySampleUserCard.getName() %>"
+			selectable="<%= false %>"
+			subtitle="<%= claySampleUserCard.getSubtitle() %>"
+		/>
+	</clay:col>
+</clay:row>
+
+<h4>Selectable User Cards</h4>
+
+<clay:row>
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+		<clay:user-card
+			disabled="<%= true %>"
+			name="<%= claySampleUserCard.getName() %>"
+			subtitle="<%= claySampleUserCard.getSubtitle() %>"
+			userColorClass="<%= claySampleUserCard.getUserColorClass() %>"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+		<clay:user-card
+			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
+			icon="picture"
+			labels="<%= claySampleUserCard.getLabels() %>"
+			name="<%= claySampleUserCard.getName() %>"
 			selected="<%= true %>"
-			subtitle="Latest Action"
+			subtitle="<%= claySampleUserCard.getSubtitle() %>"
+			userColorClass="danger"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
+		<clay:user-card
+			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
+			imageAlt="<%= claySampleUserCard.getImageAlt() %>"
+			imageSrc="https://images.unsplash.com/photo-1502290822284-9538ef1f1291"
+			labels="<%= claySampleUserCard.getLabels() %>"
+			name="<%= claySampleUserCard.getName() %>"
+			subtitle="<%= claySampleUserCard.getSubtitle() %>"
+		/>
+	</clay:col>
+</clay:row>
+
+<h4>User Cards using Model</h4>
+
+<clay:row>
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+
+		<%
+		claySampleUserCard.setDisabled(true);
+		claySampleUserCard.setSelectable(false);
+		%>
+
+		<clay:user-card
+			userCard="<%= claySampleUserCard %>"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+
+		<%
+		claySampleUserCard.setDisabled(false);
+		claySampleUserCard.setIcon("picture");
+		claySampleUserCard.setUserColorClass("danger");
+		%>
+
+		<clay:user-card
+			userCard="<%= claySampleUserCard %>"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
+
+		<%
+		claySampleUserCard.setImageSrc("https://images.unsplash.com/photo-1502290822284-9538ef1f1291");
+		%>
+
+		<clay:user-card
+			userCard="<%= claySampleUserCard %>"
+		/>
+	</clay:col>
+</clay:row>
+
+<h4>Selectable User Cards using Display Context</h4>
+
+<clay:row>
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+
+		<%
+		claySampleUserCard.setDisabled(true);
+		claySampleUserCard.setIcon("user");
+		claySampleUserCard.setImageSrc(null);
+		claySampleUserCard.setSelectable(true);
+		claySampleUserCard.setUserColorClass("info");
+		%>
+
+		<clay:user-card
+			userCard="<%= claySampleUserCard %>"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
+
+		<%
+		claySampleUserCard.setDisabled(false);
+		claySampleUserCard.setIcon("picture");
+		claySampleUserCard.setUserColorClass("danger");
+		%>
+
+		<clay:user-card
+			userCard="<%= claySampleUserCard %>"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
+
+		<%
+		claySampleUserCard.setImageSrc("https://images.unsplash.com/photo-1502290822284-9538ef1f1291");
+		%>
+
+		<clay:user-card
+			userCard="<%= claySampleUserCard %>"
 		/>
 	</clay:col>
 </clay:row>

@@ -102,6 +102,7 @@ public class ServiceBuilderProjectTemplateCustomizer
 			}
 		}
 
+
 		Properties properties = archetypeGenerationRequest.getProperties();
 
 		setProperty(properties, "apiPath", apiPath);
@@ -110,6 +111,9 @@ public class ServiceBuilderProjectTemplateCustomizer
 			(ServiceBuilderProjectTemplatesArgs)
 				projectTemplatesArgs.getProjectTemplatesArgsExt();
 
+		String addOnOptions = serviceBuilderProjectTemplatesArgs.getAddOnOptions();
+
+		setProperty(properties, "addOnOptions", addOnOptions);
 		setProperty(
 			properties, "dependencyInjector",
 			serviceBuilderProjectTemplatesArgs.getDependencyInjector());

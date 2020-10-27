@@ -212,8 +212,9 @@
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<%= row.setSkip(true) %>
+				<% row.setSkip(true); %>
 			</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

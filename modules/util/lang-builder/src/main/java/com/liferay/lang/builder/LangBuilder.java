@@ -434,7 +434,9 @@ public class LangBuilder {
 					sb.append(StringPool.EQUAL);
 					sb.append(translatedText);
 
-					if (translatedText.equals(array[1])) {
+					if (!LanguageValidator.isSpecialPropertyKey(key) &&
+						translatedText.equals(array[1])) {
+
 						sb.append(LanguageBuilderUtil.AUTOMATIC_COPY);
 					}
 

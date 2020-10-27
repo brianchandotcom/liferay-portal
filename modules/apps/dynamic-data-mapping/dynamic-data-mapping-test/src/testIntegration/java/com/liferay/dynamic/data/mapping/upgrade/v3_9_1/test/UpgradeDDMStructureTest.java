@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -125,6 +126,65 @@ public class UpgradeDDMStructureTest {
 		ddmFormFields.forEach(
 			ddmFormField -> Assert.assertEquals(
 				ddmFormField.getName(), ddmFormField.getFieldReference()));
+	}
+
+	@Test
+	public void testUpgradeFieldSetDDMFormFieldReference() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField fieldSetDDMFormField = DDMFormTestUtil.createDDMFormField(
+			"fieldset", "fieldset", "fieldset", "", false, false, false);
+
+		fieldSetDDMFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"field1", false, false, false));
+
+		fieldSetDDMFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"field2", false, false, false));
+
+		fieldSetDDMFormField.setProperty(
+			"rows",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"columns",
+					JSONUtil.put(
+						JSONUtil.put(
+							"fields", JSONUtil.put("field1")
+						).put(
+							"size", 12
+						))),
+				JSONUtil.put(
+					"columns",
+					JSONUtil.put(
+						JSONUtil.put(
+							"fields", JSONUtil.put("field2")
+						).put(
+							"size", 12
+						)))));
+
+		ddmForm.addDDMFormField(fieldSetDDMFormField);
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				ddmForm, _group, _userId);
+
+		_upgradeDDMStructure.upgrade();
+
+		ddmForm = _getUpgradedDDMForm(ddmFormInstance);
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		ddmFormFields.forEach(
+			ddmFormField -> {
+				List<DDMFormField> nestedDDMFormFields =
+					ddmFormField.getNestedDDMFormFields();
+
+				nestedDDMFormFields.forEach(
+					nestedDDMFormField -> Assert.assertEquals(
+						nestedDDMFormField.getName(),
+						nestedDDMFormField.getFieldReference()));
+			});
 	}
 
 	@Test

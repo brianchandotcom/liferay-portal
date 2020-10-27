@@ -23,7 +23,7 @@ definition {
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "image");
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -75,7 +75,7 @@ definition {
 			uploadFileName = "Document_3.png");
 
 		FormFields.editTextAlt(
-			fieldName = "image",
+			fieldName = "Image",
 			fieldValue = "English (United States) Image Description");
 
 		PortletEntry.changeLocale(locale = "es-ES");
@@ -85,7 +85,7 @@ definition {
 			fieldValue = "Spanish (Spain) Title");
 
 		FormFields.editTextAlt(
-			fieldName = "image",
+			fieldName = "Image",
 			fieldValue = "Spanish (Spain) Image Description");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -95,7 +95,7 @@ definition {
 			fieldValue = "Portuguese (Brazil) Title");
 
 		FormFields.editTextAlt(
-			fieldName = "image",
+			fieldName = "Image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 
 		PortletEntry.publish();
@@ -108,11 +108,12 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			locator1 = "TextInput#IMAGE_INPUT",
+			key_field = "Image",
+			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
-			fieldName = "image",
+			fieldName = "Image",
 			fieldValue = "English (United States) Image Description");
 
 		PortletEntry.changeLocale(locale = "es-ES");
@@ -123,11 +124,12 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			locator1 = "TextInput#IMAGE_INPUT",
+			key_field = "Image",
+			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
-			fieldName = "image",
+			fieldName = "Image",
 			fieldValue = "Spanish (Spain) Image Description");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -138,11 +140,12 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			locator1 = "TextInput#IMAGE_INPUT",
+			key_field = "Image",
+			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
-			fieldName = "image",
+			fieldName = "Image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 	}
 

@@ -41,7 +41,6 @@ Path uadBndPath = uadPath.resolve("bnd.bnd")
 Path uadPomPath = uadPath.resolve("pom.xml")
 
 if (addOnOptions.equals("false")) {
-
 	Files.deleteIfExists uadBuildGradlePath
 	Files.deleteIfExists uadBndPath
 	Files.deleteIfExists uadPomPath

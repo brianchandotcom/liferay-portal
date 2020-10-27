@@ -46,8 +46,7 @@ public class ServiceBuilderProjectTemplatesArgs
 	}
 
 	@Parameter(
-		description = "Set to true for add on options.",
-		names = "--add-ons"
+		description = "Set to true for add on options.", names = "--add-ons"
 	)
 	private String _addOnOptions = "false";
 

@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -36,9 +37,13 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.time.Instant;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
@@ -112,7 +117,7 @@ public class ViewConflictsDisplayContext {
 
 				publishURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/publications/publish_ct_collection");
+					"/change_tracking/publish_ct_collection");
 				publishURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(_ctCollection.getCtCollectionId()));
@@ -121,9 +126,42 @@ public class ViewConflictsDisplayContext {
 				return publishURL.toString();
 			}
 		).put(
+			"redirect", getRedirect()
+		).put(
 			"resolvedConflicts", resolvedConflictsJSONArray
 		).put(
+			"schedule", ParamUtil.getBoolean(_renderRequest, "schedule")
+		).put(
+			"scheduleURL",
+			() -> {
+				PortletURL scheduleURL = _renderResponse.createActionURL();
+
+				scheduleURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/change_tracking/schedule_publication");
+				scheduleURL.setParameter("redirect", getRedirect());
+				scheduleURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+
+				return scheduleURL.toString();
+			}
+		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+		).put(
+			"timeZone",
+			() -> {
+				TimeZone timeZone = _themeDisplay.getTimeZone();
+
+				if (Objects.equals(timeZone.getID(), StringPool.UTC)) {
+					return "GMT";
+				}
+
+				Instant instant = Instant.now();
+
+				return "GMT" +
+					String.format("%tz", instant.atZone(timeZone.toZoneId()));
+			}
 		).put(
 			"unresolvedConflicts", unresolvedConflictsJSONArray
 		).build();
@@ -139,7 +177,7 @@ public class ViewConflictsDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/publications/view_conflicts");
+			"mvcRenderCommandName", "/change_tracking/view_changes");
 		portletURL.setParameter(
 			"ctCollectionId",
 			String.valueOf(_ctCollection.getCtCollectionId()));

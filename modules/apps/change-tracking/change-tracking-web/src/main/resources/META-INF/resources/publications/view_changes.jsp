@@ -119,12 +119,18 @@ portletDisplay.setShowBackIcon(true);
 
 					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) && PropsValues.SCHEDULER_ENABLED %>">
 						<li class="tbar-item">
-							<liferay-portlet:actionURL name="/publications/unschedule_publication" var="unscheduleURL">
+							<liferay-portlet:actionURL name="/change_tracking/unschedule_publication" var="unscheduleURL">
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 							</liferay-portlet:actionURL>
 
 							<a class="btn btn-secondary btn-sm" href="<%= unscheduleURL %>" type="button">
+								<span class="inline-item inline-item-before">
+									<clay:icon
+										symbol="times-circle"
+									/>
+								</span>
+
 								<liferay-ui:message key="unschedule" />
 							</a>
 						</li>
@@ -136,6 +142,12 @@ portletDisplay.setShowBackIcon(true);
 							</liferay-portlet:renderURL>
 
 							<a class="btn btn-primary btn-sm" href="<%= rescheduleURL %>" type="button">
+								<span class="inline-item inline-item-before">
+									<clay:icon
+										symbol="calendar"
+									/>
+								</span>
+
 								<liferay-ui:message key="reschedule" />
 							</a>
 						</li>

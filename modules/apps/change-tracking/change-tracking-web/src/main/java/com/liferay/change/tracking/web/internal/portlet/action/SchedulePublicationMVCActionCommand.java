@@ -16,18 +16,19 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
@@ -44,9 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/schedule_publication",
-		"mvc.command.name=/publications/reschedule_publication",
-		"mvc.command.name=/publications/unschedule_publication"
+		"mvc.command.name=/change_tracking/reschedule_publication",
+		"mvc.command.name=/change_tracking/schedule_publication"
 	},
 	service = MVCActionCommand.class
 )
@@ -60,76 +60,72 @@ public class SchedulePublicationMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Date publishDate = null;
+		long publishTime = ParamUtil.getLong(actionRequest, "publishTime");
 
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
-
-		if (!actionName.equals("/publications/unschedule_publication")) {
-			int month = ParamUtil.getInteger(actionRequest, "publishTimeMonth");
-			int day = ParamUtil.getInteger(actionRequest, "publishTimeDay");
-			int year = ParamUtil.getInteger(actionRequest, "publishTimeYear");
-
-			int hour = ParamUtil.getInteger(actionRequest, "publishTimeHour");
-
-			if (ParamUtil.getInteger(actionRequest, "publishTimeAmPm") ==
-					Calendar.PM) {
-
-				hour += 12;
-			}
-
-			int minute = ParamUtil.getInteger(
-				actionRequest, "publishTimeMinute");
-
-			publishDate = _portal.getDate(
-				month, day, year, hour, minute, themeDisplay.getTimeZone(),
-				PortalException.class);
+		try {
+			Date publishDate = new Date(publishTime);
 
 			Date currentDate = new Date(System.currentTimeMillis());
 
 			if (!publishDate.after(currentDate)) {
-				SessionErrors.add(actionRequest, "publishTime");
-
-				_portal.copyRequestParameters(actionRequest, actionResponse);
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/publications/schedule_publication.jsp");
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"validationError",
+						_language.get(
+							_portal.getHttpServletRequest(actionRequest),
+							"the-publish-time-must-be-in-the-future")));
 
 				return;
 			}
-		}
 
-		long ctCollectionId = ParamUtil.getLong(
-			actionRequest, "ctCollectionId");
+			long ctCollectionId = ParamUtil.getLong(
+				actionRequest, "ctCollectionId");
 
-		if (!actionName.equals("/change_tracking/schedule_publication")) {
-			_publishScheduler.unschedulePublish(ctCollectionId);
-		}
+			String actionName = ParamUtil.getString(
+				actionRequest, ActionRequest.ACTION_NAME);
 
-		if (publishDate != null) {
+			if (actionName.equals("/change_tracking/reschedule_publication")) {
+				_publishScheduler.unschedulePublish(ctCollectionId);
+			}
+
 			_publishScheduler.schedulePublish(
 				ctCollectionId, themeDisplay.getUserId(), publishDate);
 		}
-
-		if (actionName.equals("/publications/unschedule_publication")) {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
 			}
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"error",
+					_language.get(
+						_portal.getHttpServletRequest(actionRequest),
+						"an-unexpected-error-occurred")));
+
+			return;
 		}
-		else {
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(actionResponse);
 
-			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
 
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_scheduled");
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
-		}
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/change_tracking/view_scheduled");
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			JSONUtil.put("redirect", redirectURL.toString()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SchedulePublicationMVCActionCommand.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -63,7 +63,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, scheduled
 <clay:container-fluid
 	cssClass="container-form-lg"
 >
-	<liferay-portlet:actionURL name='<%= scheduled ? "/publications/reschedule_publication" : "/change_tracking/schedule_publication" %>' var="submitURL">
+	<liferay-portlet:actionURL name='<%= scheduled ? "/change_tracking/reschedule_publication" : "/change_tracking/schedule_publication" %>' var="submitURL">
 		<portlet:param name="redirect" value="<%= redirect %>" />
 	</liferay-portlet:actionURL>
 
@@ -162,7 +162,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, scheduled
 							<c:when test="<%= scheduled %>">
 								<div class="autofit-col">
 									<span>
-										<liferay-portlet:actionURL name="/publications/unschedule_publication" var="unscheduleURL">
+										<liferay-portlet:actionURL name="/change_tracking/unschedule_publication" var="unscheduleURL">
 											<portlet:param name="redirect" value="<%= redirect %>" />
 											<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 										</liferay-portlet:actionURL>

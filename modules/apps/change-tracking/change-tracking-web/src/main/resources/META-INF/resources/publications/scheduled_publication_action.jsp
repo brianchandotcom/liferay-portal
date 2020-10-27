@@ -41,7 +41,7 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 			url="<%= rescheduleURL %>"
 		/>
 
-		<liferay-portlet:actionURL name="/publications/unschedule_publication" var="unscheduleURL">
+		<liferay-portlet:actionURL name="/change_tracking/unschedule_publication" var="unscheduleURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 		</liferay-portlet:actionURL>

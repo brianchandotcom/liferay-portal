@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,12 +72,14 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	private void _updateDDMFormFieldReference(DDMFormField ddmFormField) {
 		ddmFormField.setFieldReference(ddmFormField.getName());
 
-		_updateDDMFormFieldOptionsReferences(
-			ddmFormField.getDDMFormFieldOptions());
-		_updateDDMFormFieldOptionsReferences(
-			(DDMFormFieldOptions)ddmFormField.getProperty("columns"));
-		_updateDDMFormFieldOptionsReferences(
-			(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
+		if (!StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+			_updateDDMFormFieldOptionsReferences(
+				ddmFormField.getDDMFormFieldOptions());
+			_updateDDMFormFieldOptionsReferences(
+				(DDMFormFieldOptions)ddmFormField.getProperty("columns"));
+			_updateDDMFormFieldOptionsReferences(
+				(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
+		}
 
 		List<DDMFormField> nestedDDMFormFields =
 			ddmFormField.getNestedDDMFormFields();

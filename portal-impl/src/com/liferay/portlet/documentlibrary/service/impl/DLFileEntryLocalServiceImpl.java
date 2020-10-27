@@ -1647,7 +1647,10 @@ public class DLFileEntryLocalServiceImpl
 		String extension = DLAppUtil.getExtension(title, sourceFileName);
 
 		if ((file == null) && (inputStream == null)) {
-			extension = dlFileEntry.getExtension();
+			if (Validator.isNull(extension)) {
+				extension = dlFileEntry.getExtension();
+			}
+
 			mimeType = dlFileEntry.getMimeType();
 		}
 

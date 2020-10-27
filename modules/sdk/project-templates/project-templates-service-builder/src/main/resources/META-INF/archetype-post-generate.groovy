@@ -31,14 +31,23 @@ Files.deleteIfExists buildGradlePath
 Files.deleteIfExists serviceBuildGradlePath
 Files.deleteIfExists serviceBuildSettingsPath
 
-ServiceBuilderProjectTemplatesArgs serviceBuilderProjectTemplatesArgs =
-	(ServiceBuilderProjectTemplatesArgs)
-		projectTemplatesArgs.getProjectTemplatesArgsExt();
+Properties properties = request.properties
 
-String addOnOptions = serviceBuilderProjectTemplatesArgs.getAddOnOptions();
+String addOnOptions = properties.get("addOnOptions")
 
-if (addOnOptions.equals("true") {
-	Path uadPath = projectPath.resolve(request.artifactId + "-uad")
+Path uadPath = projectPath.resolve(request.artifactId + "-uad")
+Path uadBuildGradlePath = uadPath.resolve("build.gradle")
+Path uadBndPath = uadPath.resolve("bnd.bnd")
+Path uadPomPath = uadPath.resolve("pom.xml")
 
+if (addOnOptions.equals("false")) {
+
+	Files.deleteIfExists uadBuildGradlePath
+	Files.deleteIfExists uadBndPath
+	Files.deleteIfExists uadPomPath
 	Files.deleteIfExists uadPath
+}
+else {
+	Files.deleteIfExists uadBuildGradlePath
+	Files.deleteIfExists uadBndPath
 }

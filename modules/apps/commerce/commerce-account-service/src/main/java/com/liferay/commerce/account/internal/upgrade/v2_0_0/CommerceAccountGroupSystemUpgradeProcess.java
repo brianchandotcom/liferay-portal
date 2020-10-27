@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.account.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.account.model.impl.CommerceAccountGroupImpl;
+import com.liferay.commerce.account.internal.upgrade.v2_0_0.util.CommerceAccountGroupTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,8 +29,8 @@ public class CommerceAccountGroupSystemUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		renameColumn(
-			CommerceAccountGroupImpl.class, CommerceAccountGroupImpl.TABLE_NAME,
-			"system", "system_ BOOLEAN");
+			CommerceAccountGroupTable.class,
+			CommerceAccountGroupTable.TABLE_NAME, "system", "system_ BOOLEAN");
 	}
 
 	protected void renameColumn(

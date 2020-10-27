@@ -37,14 +37,12 @@ import com.liferay.portal.kernel.util.PrefsProps;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -285,32 +283,49 @@ public class PanelAppRegistry {
 				ServiceReferenceServiceTuple<PanelApp, PanelApp>
 					serviceReferenceServiceTuple) {
 
+				int index = Collections.binarySearch(
+					_serviceReferenceServiceTuples,
+					serviceReferenceServiceTuple, _comparator);
+
+				if (index < 0) {
+					index = -index - 1;
+				}
+
 				_serviceReferenceServiceTuples.add(
-					serviceReferenceServiceTuple);
+					index, serviceReferenceServiceTuple);
 
 				_rebuild();
 			}
 
-			private Predicate<PanelApp> _getDistinctByKeyPredicate() {
-				Map<String, Boolean> seen = new ConcurrentHashMap<>();
-
-				return panelApp ->
-					seen.putIfAbsent(panelApp.getKey(), true) == null;
-			}
-
 			private void _rebuild() {
-				Stream<ServiceReferenceServiceTuple<PanelApp, PanelApp>>
-					stream = _serviceReferenceServiceTuples.stream();
+				if (_serviceReferenceServiceTuples.isEmpty()) {
+					_services = Collections.emptyList();
 
-				_services = stream.sorted(
-					_comparator
-				).map(
-					ServiceReferenceServiceTuple::getService
-				).filter(
-					_getDistinctByKeyPredicate()
-				).collect(
-					Collectors.toList()
-				);
+					return;
+				}
+
+				if (_serviceReferenceServiceTuples.size() == 1) {
+					ServiceReferenceServiceTuple<PanelApp, PanelApp>
+						serviceReferenceServiceTuple =
+							_serviceReferenceServiceTuples.get(0);
+
+					_services = Arrays.asList(
+						serviceReferenceServiceTuple.getService());
+
+					return;
+				}
+
+				Map<String, PanelApp> panelApps = new LinkedHashMap<>();
+
+				_serviceReferenceServiceTuples.forEach(
+					erviceReferenceServiceTuple -> {
+						PanelApp panelApp =
+							erviceReferenceServiceTuple.getService();
+
+						panelApps.putIfAbsent(panelApp.getKey(), panelApp);
+					});
+
+				_services = new ArrayList<>(panelApps.values());
 			}
 
 			private final Comparator

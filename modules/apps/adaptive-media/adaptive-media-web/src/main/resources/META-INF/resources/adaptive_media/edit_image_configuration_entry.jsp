@@ -38,10 +38,10 @@ if (amImageConfigurationEntry != null) {
 boolean automaticUuid;
 
 if (amImageConfigurationEntry == null) {
-    automaticUuid = Validator.isNull(configurationEntryUuid);
+	automaticUuid = Validator.isNull(configurationEntryUuid);
 }
 else {
-    automaticUuid = configurationEntryUuid.equals(FriendlyURLNormalizerUtil.normalize(amImageConfigurationEntry.getName()));
+	automaticUuid = configurationEntryUuid.equals(FriendlyURLNormalizerUtil.normalize(amImageConfigurationEntry.getName()));
 }
 
 automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
@@ -57,6 +57,7 @@ automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
 		<liferay-ui:error exception="<%= AMImageConfigurationException.InvalidWidthException.class %>" message="please-enter-a-max-width-value-larger-than-0" />
 		<liferay-ui:error exception="<%= AMImageConfigurationException.RequiredWidthOrHeightException.class %>" message="please-enter-a-max-width-or-max-height-value-larger-than-0" />
 	</div>
+
 	<div>
 		<portlet:actionURL name="/adaptive_media/edit_image_configuration_entry" var="editImageConfigurationEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />

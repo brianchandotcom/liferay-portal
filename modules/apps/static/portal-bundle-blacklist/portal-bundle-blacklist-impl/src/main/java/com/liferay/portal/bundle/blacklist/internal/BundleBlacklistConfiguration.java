@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.bundle.blacklist.internal.configuration;
+package com.liferay.portal.bundle.blacklist.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "module-container")
 @Meta.OCD(
-	id = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration",
+	id = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration",
 	localization = "content/Language",
 	name = "portal-bundle-blacklist-service-configuration-name"
 )

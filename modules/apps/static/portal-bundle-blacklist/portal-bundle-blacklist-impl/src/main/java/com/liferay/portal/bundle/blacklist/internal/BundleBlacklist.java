@@ -15,7 +15,6 @@
 package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.osgi.util.BundleUtil;
-import com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Tambara
  */
 @Component(
-	configurationPid = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration",
+	configurationPid = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration",
 	immediate = true, service = BundleBlacklist.class
 )
 public class BundleBlacklist {

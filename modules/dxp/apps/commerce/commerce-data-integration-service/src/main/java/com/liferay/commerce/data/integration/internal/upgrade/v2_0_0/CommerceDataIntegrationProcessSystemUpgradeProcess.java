@@ -15,7 +15,7 @@
 package com.liferay.commerce.data.integration.internal.upgrade.v2_0_0;
 
 import com.liferay.commerce.data.integration.internal.upgrade.base.BaseCommerceDataIntegrationServiceUpgradeProcess;
-import com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessImpl;
+import com.liferay.commerce.data.integration.internal.upgrade.v2_0_0.util.CommerceDataIntegrationProcessTable;
 
 /**
  * @author Ethan Bustad
@@ -27,8 +27,8 @@ public class CommerceDataIntegrationProcessSystemUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		renameColumn(
-			CommerceDataIntegrationProcessImpl.class,
-			CommerceDataIntegrationProcessImpl.TABLE_NAME, "system",
+			CommerceDataIntegrationProcessTable.class,
+			CommerceDataIntegrationProcessTable.TABLE_NAME, "system",
 			"system_ BOOLEAN");
 	}
 

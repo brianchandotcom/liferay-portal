@@ -75,7 +75,7 @@ const Collaborators = ({
 	return (
 		<>
 			<ClayLayout.ContentRow className="sidebar-panel">
-				<ClayLayout.ContentCol clasName="collaborators-owner">
+				<ClayLayout.ContentCol className="collaborators-owner">
 					<div
 						className="lfr-portal-tooltip"
 						data-title={Liferay.Util.sub(

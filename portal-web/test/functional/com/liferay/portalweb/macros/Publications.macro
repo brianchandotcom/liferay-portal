@@ -207,7 +207,7 @@ definition {
 			key_entryTitle = "${entryTitle}",
 			locator1 = "Publications#CONFICTING_PUBLICATIONS_CONTENT_LINK");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		Pause(locator1 = "1000");
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -215,7 +215,7 @@ definition {
 			key_iframeTitle = "${entryTitle}",
 			locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME_TITLE");
 
-		SelectFrame(locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME");
 	}
 
 	macro publishPublication {

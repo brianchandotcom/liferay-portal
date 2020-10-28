@@ -38,6 +38,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author     Raymond Augé
@@ -131,32 +134,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	}
 
 	private void _verifyResourcedModel(
-			long companyId, String modelName, long primKey, Role role,
-			long ownerId, int cur, int total)
-		throws Exception {
-
-		if (_log.isInfoEnabled() && ((cur % 100) == 0)) {
-			_log.info(
-				StringBundler.concat(
-					"Processed ", cur, " of ", total,
-					" resource permissions for company = ", companyId,
-					" and model ", modelName));
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"No resource found for {", companyId, ", ", modelName, ", ",
-					ResourceConstants.SCOPE_INDIVIDUAL, ", ", primKey, ", ",
-					role.getRoleId(), "}"));
-		}
-
-		ResourceLocalServiceUtil.addResources(
-			companyId, 0, ownerId, modelName, String.valueOf(primKey), false,
-			false, false);
-	}
-
-	private void _verifyResourcedModel(
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
@@ -187,22 +164,96 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					false, verifiableResourcedModel, role));
 			ResultSet rs = ps.executeQuery()) {
 
-			for (int i = 1; rs.next(); i++) {
-				long primKey = rs.getLong(
-					verifiableResourcedModel.getPrimaryKeyColumnName());
-				long userId = rs.getLong(
-					verifiableResourcedModel.getUserIdColumnName());
+			List<Future<Void>> futures = new ArrayList<>(total);
 
-				_verifyResourcedModel(
-					role.getCompanyId(),
-					verifiableResourcedModel.getModelName(), primKey, role,
-					userId, i, total);
+			ExecutorService executorService = Executors.newWorkStealingPool();
+
+			try {
+				for (int i = 1; rs.next(); i++) {
+					long primKey = rs.getLong(
+						verifiableResourcedModel.getPrimaryKeyColumnName());
+					long userId = rs.getLong(
+						verifiableResourcedModel.getUserIdColumnName());
+
+					futures.add(
+						executorService.submit(
+							new AddResourcesCallable(
+								role.getCompanyId(),
+								verifiableResourcedModel.getModelName(),
+								primKey, role.getRoleId(), userId, i, total)));
+				}
+
+				for (Future<Void> future : futures) {
+					future.get();
+				}
+			}
+			finally {
+				executorService.shutdown();
 			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
+
+	private class AddResourcesCallable implements Callable<Void> {
+
+		@Override
+		public Void call() throws Exception {
+			if (_log.isInfoEnabled() && ((_cur % 100) == 0)) {
+				_log.info(
+					StringBundler.concat(
+						"Processed ", _cur, " of ", _total,
+						" resource permissions for company = ", _companyId,
+						" and model ", _modelName));
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"No resource found for {", _companyId, ", ", _modelName,
+						", ", ResourceConstants.SCOPE_INDIVIDUAL, ", ",
+						_primKey, ", ", _roleId, "}"));
+			}
+
+			try {
+				ResourceLocalServiceUtil.addResources(
+					_companyId, 0, _ownerId, _modelName,
+					String.valueOf(_primKey), false, false, false);
+			}
+			catch (Exception exception) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to add resource for {", _companyId, ", ",
+						_modelName, ", ", ResourceConstants.SCOPE_INDIVIDUAL,
+						", ", _primKey, ", ", _roleId, "}"));
+			}
+
+			return null;
+		}
+
+		private AddResourcesCallable(
+			long companyId, String modelName, long primKey, long roleId,
+			long ownerId, int cur, int total) {
+
+			_companyId = companyId;
+			_modelName = modelName;
+			_primKey = primKey;
+			_roleId = roleId;
+			_ownerId = ownerId;
+			_cur = cur;
+			_total = total;
+		}
+
+		private final long _companyId;
+		private final long _cur;
+		private final String _modelName;
+		private final long _ownerId;
+		private final long _primKey;
+		private final long _roleId;
+		private final long _total;
+
+	}
 
 	private class VerifyResourcedModelCallable implements Callable<Void> {
 

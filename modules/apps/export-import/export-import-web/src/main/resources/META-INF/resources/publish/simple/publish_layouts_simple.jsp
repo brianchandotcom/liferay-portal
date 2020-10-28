@@ -182,56 +182,58 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 						</li>
 					</aui:fieldset>
 
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages-to-publish" markupView="lexicon">
-						<li class="options portlet-list-simple">
-							<ul class="portlet-list">
+					<c:if test="<%= GroupCapabilityUtil.isSupportsPages(groupDisplayContextHelper.getGroup()) %>">
+						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages-to-publish" markupView="lexicon">
+							<li class="options portlet-list-simple">
+								<ul class="portlet-list">
 
-								<%
-								int layoutsCount = 0;
+									<%
+									int layoutsCount = 0;
 
-								long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+									long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
-								if (layoutSetBranchId > 0) {
-									List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_APPROVED);
-									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_PENDING);
+									if (layoutSetBranchId > 0) {
+										List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_APPROVED);
+										List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_PENDING);
 
-									layoutsCount = approvedLayoutRevisions.size() + pendingLayoutRevisions.size();
-								}
-								else {
-									LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
+										layoutsCount = approvedLayoutRevisions.size() + pendingLayoutRevisions.size();
+									}
+									else {
+										LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
 
-									layoutsCount = selLayoutSet.getPageCount();
-								}
+										layoutsCount = selLayoutSet.getPageCount();
+									}
 
-								DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
+									DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
 
-								PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, dateRange.getStartDate(), dateRange.getEndDate());
+									PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, dateRange.getStartDate(), dateRange.getEndDate());
 
-								long layoutModelDeletionCount = ExportImportHelperUtil.getLayoutModelDeletionCount(portletDataContext, privateLayout);
-								%>
+									long layoutModelDeletionCount = ExportImportHelperUtil.getLayoutModelDeletionCount(portletDataContext, privateLayout);
+									%>
 
-								<liferay-util:buffer
-									var="badgeHTML"
-								>
-									<span class="badge badge-info">
-										<c:choose>
-											<c:when test="<%= layoutsCount == 0 %>">
-												<liferay-ui:message key="none" />
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message key='<%= "<strong>" + String.valueOf(layoutsCount) + "</strong>" %>' />
-											</c:otherwise>
-										</c:choose>
-									</span>
-									<span class="badge badge-warning deletions"><%= (layoutModelDeletionCount > 0) ? (layoutModelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
-								</liferay-util:buffer>
+									<liferay-util:buffer
+										var="badgeHTML"
+									>
+										<span class="badge badge-info">
+											<c:choose>
+												<c:when test="<%= layoutsCount == 0 %>">
+													<liferay-ui:message key="none" />
+												</c:when>
+												<c:otherwise>
+													<liferay-ui:message key='<%= "<strong>" + String.valueOf(layoutsCount) + "</strong>" %>' />
+												</c:otherwise>
+											</c:choose>
+										</span>
+										<span class="badge badge-warning deletions"><%= (layoutModelDeletionCount > 0) ? (layoutModelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
+									</liferay-util:buffer>
 
-								<li class="tree-item">
-									<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
-								</li>
-							</ul>
-						</li>
-					</aui:fieldset>
+									<li class="tree-item">
+										<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
+									</li>
+								</ul>
+							</li>
+						</aui:fieldset>
+					</c:if>
 				</aui:fieldset-group>
 
 				<span class="publish-simple-help-text">

@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.exportimport.changeset.constants.ChangesetPortletKeys" %><%@
 page import="com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants" %><%@
 page import="com.liferay.exportimport.web.internal.display.context.ProcessSummaryDisplayContext" %><%@
-page import="com.liferay.portal.kernel.group.capability.GroupCapabilityUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutSetBranch" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %><%@

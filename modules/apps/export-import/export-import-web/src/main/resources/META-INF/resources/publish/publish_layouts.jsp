@@ -252,7 +252,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							exportImportConfigurationId="<%= exportImportConfigurationId %>"
 						/>
 
-						<c:if test="<%= !group.isCompany() %>">
+						<c:if test="<%= GroupCapabilityUtil.isSupportsPages(group) && !group.isCompany() %>">
 							<liferay-staging:select-pages
 								action="<%= Constants.PUBLISH %>"
 								disableInputs="<%= configuredPublish %>"

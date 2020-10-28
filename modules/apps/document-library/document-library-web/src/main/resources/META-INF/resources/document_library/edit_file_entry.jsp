@@ -674,7 +674,7 @@ renderResponse.setTitle(headerTitle);
 </script>
 
 <c:if test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
-	<aui:script require="metal-dom/src/dom as dom">
+	<aui:script>
 		var updateVersionDetailsElement = document.getElementById(
 			'<portlet:namespace />updateVersionDetails'
 		);
@@ -684,7 +684,7 @@ renderResponse.setTitle(headerTitle);
 
 		if (updateVersionDetailsElement && versionDetailsElement) {
 			updateVersionDetailsElement.addEventListener('click', function (event) {
-				dom.toggleClasses(versionDetailsElement, 'hide');
+				versionDetailsElement.classList.toggle('hide');
 			});
 		}
 	</aui:script>

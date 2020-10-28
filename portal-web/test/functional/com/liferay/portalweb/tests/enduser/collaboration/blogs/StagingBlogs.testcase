@@ -118,7 +118,7 @@ definition {
 			publicationType = "Local");
 	}
 
-	@description = "This is a use case for LPS-78833."
+	@description = "This is a use case for LPS-78833 and LPS-122140."
 	@priority = "5"
 	test PublishEntryWithDeletedSmallImage {
 		Navigator.gotoStagedSitePage(

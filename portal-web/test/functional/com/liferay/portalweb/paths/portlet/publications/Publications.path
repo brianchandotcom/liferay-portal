@@ -34,32 +34,32 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFICTING_CHANGES_DISCARD_ELLIPSIS</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFICTING_PUBLICATIONS_CONTENT_LINK</td>
+	<td>CONFLICTING_CHANGES_CONTENT_LINK</td>
 	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONFICTING_PUBLICATIONS_IFRAME</td>
+	<td>CONFLICTING_CHANGES_DIFF_IFRAME</td>
 	<td>//iframe[contains(@title,'view_diff')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONFICTING_PUBLICATIONS_IFRAME_TITLE</td>
+	<td>CONFLICTING_CHANGES_DIFF_IFRAME_TITLE</td>
 	<td>//div[contains(@class,'modal-header')]/div[@class='modal-title' and contains(.,'${key_iframeTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONFICTING_PUBLICATIONS_SUCCESS_CONTENT</td>
+	<td>CONFLICTING_CHANGES_DISCARD_ELLIPSIS</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFLICTING_CHANGES_SUCCESS_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_successMessage}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONFICTING_PUBLICATIONS_WARNING_CONTENT</td>
+	<td>CONFLICTING_CHANGES_WARNING_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_warningMessage}')]</td>
 	<td></td>
 </tr>

@@ -116,7 +116,7 @@ definition {
 		if ("${conflictingPublications}" == "true") {
 			Click(
 				key_entryTitle = "${entryTitle}",
-				locator1 = "Publications#CONFICTING_CHANGES_DISCARD_ELLIPSIS");
+				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Discard Change");
 		}
@@ -206,7 +206,7 @@ definition {
 	macro gotoViewDiffInConflictingPublications {
 		Click(
 			key_entryTitle = "${entryTitle}",
-			locator1 = "Publications#CONFICTING_PUBLICATIONS_CONTENT_LINK");
+			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
 
 		Pause(locator1 = "1000");
 
@@ -214,9 +214,9 @@ definition {
 
 		AssertElementPresent(
 			key_iframeTitle = "${entryTitle}",
-			locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME_TITLE");
+			locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME_TITLE");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME");
 	}
 
 	macro publishPublication {
@@ -391,7 +391,7 @@ definition {
 		AssertElementPresent(
 			key_entryTitle = "${entryTitle}",
 			key_successMessage = "${successMessage}",
-			locator1 = "Publications#CONFICTING_PUBLICATIONS_SUCCESS_CONTENT");
+			locator1 = "Publications#CONFLICTING_CHANGES_SUCCESS_CONTENT");
 	}
 
 	macro viewNeedsManualResolution {
@@ -400,7 +400,7 @@ definition {
 		AssertElementPresent(
 			key_entryTitle = "${entryTitle}",
 			key_warningMessage = "${warningMessage}",
-			locator1 = "Publications#CONFICTING_PUBLICATIONS_WARNING_CONTENT");
+			locator1 = "Publications#CONFLICTING_CHANGES_WARNING_CONTENT");
 
 		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}

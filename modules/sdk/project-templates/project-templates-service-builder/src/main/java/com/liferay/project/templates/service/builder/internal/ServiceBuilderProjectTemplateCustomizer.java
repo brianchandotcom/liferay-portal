@@ -125,7 +125,6 @@ public class ServiceBuilderProjectTemplateCustomizer
 		setProperty(
 			properties, "addOns",
 			serviceBuilderProjectTemplatesArgs.getAddOns());
-
 		setProperty(
 			properties, "dependencyInjector",
 			serviceBuilderProjectTemplatesArgs.getDependencyInjector());

@@ -1357,7 +1357,6 @@ public interface BaseProjectTemplatesTestCase {
 			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
 			packageName + ".exception,\\", packageName + ".model,\\",
 			packageName + ".service,\\", packageName + ".service.persistence");
-
 		testContains(
 			gradleProjectDir, serviceProjectName + "/bnd.bnd",
 			"Liferay-Service: true");
@@ -1389,7 +1388,6 @@ public interface BaseProjectTemplatesTestCase {
 		File gradleApiBundleFile = testExists(
 			gradleProjectDir,
 			apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
-
 		File gradleServiceBundleFile = testExists(
 			gradleProjectDir,
 			serviceProjectName + "/build/libs/" + packageName +
@@ -1414,7 +1412,6 @@ public interface BaseProjectTemplatesTestCase {
 			File gradleServicePropertiesFile = new File(
 				gradleProjectDir,
 				serviceProjectName + "/src/main/resources/service.properties");
-
 			File mavenServicePropertiesFile = new File(
 				mavenProjectDir,
 				serviceProjectName + "/src/main/resources/service.properties");

@@ -43,6 +43,7 @@ if (addOns.equals("true") && (liferayVersion.startsWith("7.0") || (liferayVersio
 }
 
 Path uadPath = projectPath.resolve(request.artifactId + "-uad")
+
 Path uadBuildGradlePath = uadPath.resolve("build.gradle")
 Path uadBndPath = uadPath.resolve("bnd.bnd")
 Path uadPomPath = uadPath.resolve("pom.xml")

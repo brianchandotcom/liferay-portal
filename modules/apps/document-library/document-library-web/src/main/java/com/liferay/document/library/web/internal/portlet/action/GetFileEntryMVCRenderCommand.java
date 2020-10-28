@@ -65,6 +65,8 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 					ActionUtil.getFileVersion(renderRequest, fileEntry));
 			}
 
+			setAttributes(renderRequest, renderResponse);
+
 			return getPath();
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
@@ -85,5 +87,10 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected abstract String getPath();
+
+	protected void setAttributes(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+	}
 
 }

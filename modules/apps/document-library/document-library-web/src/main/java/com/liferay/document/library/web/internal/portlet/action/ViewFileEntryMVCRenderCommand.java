@@ -26,7 +26,6 @@ import com.liferay.document.library.repository.authorization.capability.Authoriz
 import com.liferay.document.library.util.DLAssetHelper;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
-import com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -120,29 +119,6 @@ public class ViewFileEntryMVCRenderCommand
 				}
 			}
 
-			DLAdminDisplayContext dlAdminDisplayContext =
-				_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_portal.getHttpServletResponse(renderResponse));
-
-			DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext =
-				new DLViewFileEntryDisplayContext(
-					dlAdminDisplayContext, _dlDisplayContextProvider,
-					renderRequest, renderResponse);
-
-			renderRequest.setAttribute(
-				DLViewFileEntryDisplayContext.class.getName(),
-				dlViewFileEntryDisplayContext);
-
-			AssetEntry layoutAssetEntry = _assetEntryLocalService.fetchEntry(
-				DLFileEntryConstants.getClassName(),
-				_dlAssetHelper.getAssetClassPK(
-					dlViewFileEntryDisplayContext.getFileEntry(),
-					dlViewFileEntryDisplayContext.getFileVersion()));
-
-			renderRequest.setAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-
 			return super.render(renderRequest, renderResponse);
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
@@ -160,6 +136,37 @@ public class ViewFileEntryMVCRenderCommand
 	@Override
 	protected String getPath() {
 		return "/document_library/view_file_entry.jsp";
+	}
+
+	@Override
+	protected void setAttributes(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		super.setAttributes(renderRequest, renderResponse);
+
+		DLAdminDisplayContext dlAdminDisplayContext =
+			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_portal.getHttpServletResponse(renderResponse));
+
+		DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext =
+			new DLViewFileEntryDisplayContext(
+				dlAdminDisplayContext, _dlDisplayContextProvider, renderRequest,
+				renderResponse);
+
+		renderRequest.setAttribute(
+			DLViewFileEntryDisplayContext.class.getName(),
+			dlViewFileEntryDisplayContext);
+
+		AssetEntry layoutAssetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntryConstants.getClassName(),
+			_dlAssetHelper.getAssetClassPK(
+				dlViewFileEntryDisplayContext.getFileEntry(),
+				dlViewFileEntryDisplayContext.getFileVersion()));
+
+		renderRequest.setAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 	}
 
 	@Reference

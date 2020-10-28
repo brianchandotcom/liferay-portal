@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -57,6 +60,11 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public BuildProfile getBuildProfile() {
+		return BuildProfile.PORTAL;
+	}
+
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}
@@ -89,6 +97,54 @@ public abstract class BaseJob implements Job {
 
 	protected BaseJob(String jobName) {
 		_jobName = jobName;
+	}
+
+	protected List<BatchTestClassGroup> getBatchTestClassGroups(
+		Set<String> batchNames) {
+
+		if ((batchNames == null) || batchNames.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		BuildProfile jobBuildProfile = getBuildProfile();
+
+		if (jobBuildProfile == null) {
+			jobBuildProfile = BuildProfile.PORTAL;
+		}
+
+		String buildProfile = jobBuildProfile.toString();
+
+		BatchTestClassGroup.BuildProfile batchBuildProfile =
+			BatchTestClassGroup.BuildProfile.valueOf(
+				buildProfile.toUpperCase());
+
+		List<BatchTestClassGroup> batchTestClassGroups = new ArrayList<>();
+
+		for (String batchName : batchNames) {
+			BatchTestClassGroup batchTestClassGroup =
+				TestClassGroupFactory.newBatchTestClassGroup(
+					batchName, batchBuildProfile, this);
+
+			if (batchTestClassGroup.getAxisCount() <= 0) {
+				continue;
+			}
+
+			batchTestClassGroups.add(batchTestClassGroup);
+		}
+
+		return batchTestClassGroups;
+	}
+
+	protected Set<String> getFilteredBatchNames(Set<String> batchNames) {
+		Set<String> filteredBatchNames = new TreeSet<>();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups(batchNames)) {
+
+			filteredBatchNames.add(batchTestClassGroup.getBatchName());
+		}
+
+		return filteredBatchNames;
 	}
 
 	protected JSONObject getJobJSONObject(

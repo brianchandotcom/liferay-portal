@@ -27,6 +27,8 @@ public interface Job {
 
 	public List<Build> getBuildHistory(JenkinsMaster jenkinsMaster);
 
+	public BuildProfile getBuildProfile();
+
 	public Set<String> getDistTypes();
 
 	public String getJobName();

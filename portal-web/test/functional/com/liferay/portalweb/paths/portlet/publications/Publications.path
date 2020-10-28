@@ -34,8 +34,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFICTING_CHANGES_DISCARD_BUTTON</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//a[contains(.,'Discard')]</td>
+	<td>CONFICTING_CHANGES_DISCARD_ELLIPSIS</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]//following-sibling::div//button</td>
 	<td></td>
 </tr>
 <tr>

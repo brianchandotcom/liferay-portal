@@ -78,7 +78,7 @@
 		'focusin',
 		'.portlet',
 		function(event) {
-			dom.addClasses(dom.closest(event.delegateTarget, '.portlet'), 'open');
+			dom.closest(event.delegateTarget, '.portlet').classList.add('open');
 		}
 	);
 
@@ -87,7 +87,7 @@
 		'focusout',
 		'.portlet',
 		function(event) {
-			dom.removeClasses(dom.closest(event.delegateTarget, '.portlet'), 'open');
+			dom.closest(event.delegateTarget, '.portlet').classList.remove('open');
 		}
 	);
 </aui:script>

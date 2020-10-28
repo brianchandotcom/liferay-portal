@@ -235,9 +235,11 @@ definition {
 
 		IFrame.closeFrame();
 
+		Pause(locator1 = "3000");
+
 		Publications.discardPublications(
 			conflictingPublications = "true",
-			entryTitle = "Test Test modified a Asset",
+			entryTitle = "WC WebContent Title 2 Edit",
 			publicationsCategory = "Asset",
 			publicationsTitle = "WC WebContent Title 2 Edit");
 

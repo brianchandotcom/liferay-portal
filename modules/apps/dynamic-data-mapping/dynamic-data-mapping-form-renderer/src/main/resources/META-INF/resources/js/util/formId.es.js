@@ -12,8 +12,6 @@
  * details.
  */
 
-import dom from 'metal-dom';
-
-export const getFormNode = (element) => dom.closest(element, 'form');
+export const getFormNode = (element) => element.closest('form');
 
 export const getFormId = (form) => form?.dataset.ddmforminstanceid;

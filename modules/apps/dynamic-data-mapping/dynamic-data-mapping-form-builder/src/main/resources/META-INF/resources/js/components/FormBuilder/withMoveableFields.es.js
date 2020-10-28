@@ -13,7 +13,6 @@
  */
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
-import dom from 'metal-dom';
 import {DragDrop} from 'metal-drag-drop';
 import Component from 'metal-jsx';
 
@@ -80,7 +79,7 @@ const withMoveableFields = (ChildComponent) => {
 		}
 
 		_getClosestParent(node) {
-			return dom.closest(node.parentElement, `.ddm-field-container`);
+			return node.parentElement.closest('.ddm-field-container');
 		}
 
 		_handleDragAndDropEnd({source, target}) {
@@ -98,13 +97,10 @@ const withMoveableFields = (ChildComponent) => {
 			}
 
 			if (target) {
-				const sourceFieldNode = dom.closest(
-					source,
-					'.ddm-field-container'
-				);
+				const sourceFieldNode = source.closest('.ddm-field-container');
 
 				const sourceFieldPage = parseInt(
-					dom.closest(source, '[data-ddm-page]').dataset.ddmPage,
+					source.closest('[data-ddm-page]').dataset.ddmPage,
 					10
 				);
 

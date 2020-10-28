@@ -575,7 +575,7 @@ class Sidebar extends Component {
 
 		const {fieldTypes} = this.props;
 		const {fieldSetId} = data.source.dataset;
-		const columnNode = dom.closest(data.target, '.col-ddm');
+		const columnNode = data.target.closest('.col-ddm');
 		const indexes = FormSupport.getIndexes(columnNode);
 
 		if (fieldSetId) {
@@ -593,8 +593,7 @@ class Sidebar extends Component {
 				return name === data.source.dataset.fieldTypeName;
 			});
 			let parentFieldName;
-			const parentFieldNode = dom.closest(
-				data.target.parentElement,
+			const parentFieldNode = data.target.parentElement.closest(
 				'.ddm-field'
 			);
 
@@ -615,11 +614,8 @@ class Sidebar extends Component {
 				indexes,
 			};
 
-			if (dom.closest(data.target, '.col-empty')) {
-				const addedToPlaceholder = dom.closest(
-					data.target,
-					'.placeholder'
-				);
+			if (data.target.closest(data.target, '.col-empty')) {
+				const addedToPlaceholder = data.target.closest('.placeholder');
 
 				dispatch('fieldAdded', {
 					...payload,
@@ -639,9 +635,8 @@ class Sidebar extends Component {
 	}
 
 	_handleDragTargetEnter({target}) {
-		const parentFieldNode = dom.closest(
-			target.parentElement,
-			`.ddm-field-container`
+		const parentFieldNode = target.parentElement.closest(
+			'.ddm-field-container'
 		);
 
 		if (parentFieldNode) {
@@ -650,9 +645,8 @@ class Sidebar extends Component {
 	}
 
 	_handleDragTargetLeave({target}) {
-		const parentFieldNode = dom.closest(
-			target.parentElement,
-			`.ddm-field-container`
+		const parentFieldNode = target.parentElement.closest(
+			'.ddm-field-container'
 		);
 
 		if (parentFieldNode) {
@@ -763,7 +757,7 @@ class Sidebar extends Component {
 		const {target} = event;
 		const {
 			dataset: {index},
-		} = dom.closest(target, '.nav-item');
+		} = target.closest('.nav-item');
 
 		event.preventDefault();
 
@@ -779,7 +773,7 @@ class Sidebar extends Component {
 	}
 
 	_isControlProductMenuItem(node) {
-		return !!dom.closest(node, '.sidenav-toggler');
+		return !!node.closest('.sidenav-toggler');
 	}
 
 	_isEditMode() {
@@ -789,15 +783,15 @@ class Sidebar extends Component {
 	}
 
 	_isModalElement(node) {
-		return dom.closest(node, '.modal');
+		return node.closest('.modal');
 	}
 
 	_isProductMenuSidebarItem(node) {
-		return !!dom.closest(node, '.sidenav-menu');
+		return !!node.closest('.sidenav-menu');
 	}
 
 	_isOutsideModal(node) {
-		return !dom.closest(node, '.close-modal');
+		return !node.closest('.close-modal');
 	}
 
 	_isSettingsElement(target) {
@@ -816,9 +810,9 @@ class Sidebar extends Component {
 
 	_isSidebarElement(node) {
 		const {element} = this;
-		const alloyEditorToolbarNode = dom.closest(node, '.ae-ui');
-		const fieldColumnNode = dom.closest(node, '.col-ddm');
-		const fieldTypesDropdownNode = dom.closest(node, '.dropdown-menu');
+		const alloyEditorToolbarNode = node.closest('.ae-ui');
+		const fieldColumnNode = node.closest('.col-ddm');
+		const fieldTypesDropdownNode = node.closest('.dropdown-menu');
 
 		return (
 			alloyEditorToolbarNode ||
@@ -830,7 +824,7 @@ class Sidebar extends Component {
 	}
 
 	_isTranslationItem(node) {
-		return !!dom.closest(node, '.lfr-translationmanager');
+		return !!node.closest('.lfr-translationmanager');
 	}
 
 	_mergeFieldTypeSettings(oldSettingsContext, newSettingsContext) {

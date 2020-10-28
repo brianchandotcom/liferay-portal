@@ -119,7 +119,7 @@ Hits hits = searchDisplayContext.getHits();
 			if (!target.classList.contains('active')) {
 				target.classList.add('active');
 
-				var searchFacet = dom.closest(target, '.search-facet');
+				var searchFacet = target.closest('.search-facet');
 
 				var facetValueSiblings = Array.prototype.filter.call(
 					target.parentNode.children,

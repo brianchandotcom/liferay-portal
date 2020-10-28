@@ -83,7 +83,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 		'click',
 		'li',
 		function (event) {
-			var navItem = dom.closest(event.delegateTarget, '.nav-item');
+			var navItem = event.delegateTarget.closest('.nav-item');
 			var navItemIndex = Number(navItem.dataset.navItemIndex);
 			var navLink = navItem.querySelector('.nav-link');
 

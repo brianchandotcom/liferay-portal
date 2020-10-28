@@ -167,7 +167,7 @@ const withActionableFields = (ChildComponent) => {
 		}
 
 		_getClosestParent(node) {
-			return dom.closest(node.parentElement, `.ddm-field-container`);
+			return node.parentElement.closest('.ddm-field-container');
 		}
 
 		_getHoveredNode() {
@@ -183,8 +183,7 @@ const withActionableFields = (ChildComponent) => {
 			const {fieldName} = delegateTarget.dataset;
 			const {hoveredFieldActions, selectedFieldActions} = this.refs;
 			const activePage = parseInt(
-				dom.closest(event.delegateTarget, '[data-ddm-page]').dataset
-					.ddmPage,
+				event.delegateTarget.closest('[data-ddm-page]').dataset.ddmPage,
 				10
 			);
 			this.setState({activePage});
@@ -298,8 +297,7 @@ const withActionableFields = (ChildComponent) => {
 		}
 
 		_hasLeftField(relatedTarget) {
-			return !dom.closest(
-				relatedTarget,
+			return !relatedTarget.closest(
 				'.dropdown-menu,.ddm-field-actions-container'
 			);
 		}

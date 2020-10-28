@@ -12,7 +12,6 @@
  * details.
  */
 
-import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 
@@ -51,7 +50,7 @@ const withClickableFields = (ChildComponent) => {
 				!event.delegateTarget.children[1].hasAttribute('aria-grabbed')
 			) {
 				activePage = parseInt(
-					dom.closest(event.delegateTarget, '[data-ddm-page]').dataset
+					event.delegateTarget.closest('[data-ddm-page]').dataset
 						.ddmPage,
 					10
 				);

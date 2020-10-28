@@ -286,7 +286,7 @@ class RuleList extends Component {
 	}
 
 	_handleDocumentMouseUp({target}) {
-		const dropdownSettings = dom.closest(target, '.ddm-rule-list-settings');
+		const dropdownSettings = target.closest('.ddm-rule-list-settings');
 
 		if (dropdownSettings) {
 			return;
@@ -301,7 +301,7 @@ class RuleList extends Component {
 		event.preventDefault();
 
 		const {dropdownExpandedIndex} = this;
-		const ruleNode = dom.closest(event.delegateTarget, '.component-action');
+		const ruleNode = event.delegateTarget.closest('.component-action');
 
 		let ruleIndex = parseInt(ruleNode.dataset.ruleIndex, 10);
 
@@ -315,7 +315,7 @@ class RuleList extends Component {
 	}
 
 	_handleRuleCardClicked({data, target}) {
-		const cardElement = dom.closest(target.element, '[data-card-id]');
+		const cardElement = target.element.closest('[data-card-id]');
 		const cardId = parseInt(cardElement.getAttribute('data-card-id'), 10);
 
 		if (data.item.settingsItem == 'edit') {

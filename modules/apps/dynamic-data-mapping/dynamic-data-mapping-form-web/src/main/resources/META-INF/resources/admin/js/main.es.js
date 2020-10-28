@@ -726,7 +726,7 @@ class Form extends Component {
 
 	_handleFormNavClicked(event) {
 		const {delegateTarget} = event;
-		const navItem = dom.closest(delegateTarget, '.nav-item');
+		const navItem = delegateTarget.closest('.nav-item');
 		const navItemIndex = Number(navItem.dataset.navItemIndex);
 		const navLink = navItem.querySelector('.nav-link');
 

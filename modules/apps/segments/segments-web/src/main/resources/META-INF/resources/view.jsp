@@ -177,7 +177,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 	);
 
 	dom.delegate(document, 'click', '.assign-site-roles-link', function (event) {
-		var link = dom.closest(event.target, '.assign-site-roles-link');
+		var link = event.target.closest('.assign-site-roles-link');
 
 		var itemSelectorURL = link.dataset.itemselectorurl;
 		var segmentsEntryId = link.dataset.segmentsentryid;

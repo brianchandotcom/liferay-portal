@@ -25,7 +25,7 @@ export default () => {
 			(event) => {
 				event.preventDefault();
 
-				const container = dom.closest(event.delegateTarget, '.alert');
+				const container = event.delegateTarget.closest('.alert');
 
 				if (container) {
 					container.parentNode.removeChild(container);

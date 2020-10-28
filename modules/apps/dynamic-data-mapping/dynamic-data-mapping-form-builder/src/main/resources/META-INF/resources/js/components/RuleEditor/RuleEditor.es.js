@@ -24,7 +24,6 @@ import 'dynamic-data-mapping-form-renderer/js/components/Field/ReactFieldAdapter
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import Component from 'metal-component';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -660,7 +659,7 @@ class RuleEditor extends Component {
 	}
 
 	_getIndex(fieldInstance, fieldClass) {
-		const firstOperand = dom.closest(fieldInstance.element, fieldClass);
+		const firstOperand = fieldInstance.element.closest(fieldClass);
 
 		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
 	}
@@ -1044,7 +1043,7 @@ class RuleEditor extends Component {
 
 		let index;
 
-		if (dom.closest(fieldInstance.element, '.condition-type-value')) {
+		if (fieldInstance.element.closest('.condition-type-value')) {
 			index = this._getIndex(fieldInstance, '.condition-type-value');
 		}
 

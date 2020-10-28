@@ -12,17 +12,15 @@
  * details.
  */
 
-import {closest} from 'metal-dom';
-
 export function getEditableElement(target) {
-	let editableElement = closest(target, 'lfr-editable');
+	let editableElement = target.closest('lfr-editable');
 
 	if (!editableElement) {
-		editableElement = closest(target, '[data-lfr-editable-id]');
+		editableElement = target.closest('[data-lfr-editable-id]');
 	}
 
 	if (!editableElement) {
-		editableElement = closest(target, '[data-lfr-background-image-id]');
+		editableElement = target.closest('[data-lfr-background-image-id]');
 	}
 
 	return editableElement;

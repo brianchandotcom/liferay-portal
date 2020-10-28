@@ -12,8 +12,6 @@
  * details.
  */
 
-import dom from 'metal-dom';
-
 import {getField, isFieldSet, isFieldSetChild} from './fieldSupport.es';
 
 export const disableFieldDropTargets = (element) => {
@@ -22,7 +20,7 @@ export const disableFieldDropTargets = (element) => {
 	for (let i = 0; i < dropTargets.length; i++) {
 		const target = dropTargets[i];
 
-		const parentFieldNode = dom.closest(target, '.ddm-field-container');
+		const parentFieldNode = target.closest('.ddm-field-container');
 
 		if (parentFieldNode) {
 			target.setAttribute('data-drop-disabled', true);
@@ -50,7 +48,7 @@ export const disableFieldSetDropTargets = (element, pages) => {
 	for (let i = 0; i < dropTargets.length; i++) {
 		const target = dropTargets[i];
 
-		const parentFieldNode = dom.closest(target, '.ddm-field-container');
+		const parentFieldNode = target.closest('.ddm-field-container');
 
 		if (parentFieldNode) {
 			const {fieldName} = parentFieldNode.dataset;

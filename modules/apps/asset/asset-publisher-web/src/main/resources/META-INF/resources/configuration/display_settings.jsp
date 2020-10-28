@@ -73,7 +73,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 	<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 </c:if>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script>
 	var displayStyleSelect = document.getElementById(
 		'<portlet:namespace />displayStyle'
 	);
@@ -84,7 +84,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 		var hiddenFields = document.querySelectorAll('.hidden-field');
 
 		Array.prototype.forEach.call(hiddenFields, function (field) {
-			var fieldContainer = dom.closest(field, '.form-group');
+			var fieldContainer = field.closest('.form-group');
 
 			if (fieldContainer) {
 				var fieldClassList = field.classList;

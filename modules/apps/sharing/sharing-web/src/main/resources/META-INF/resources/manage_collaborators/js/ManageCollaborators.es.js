@@ -22,7 +22,6 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {useTimeout} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -119,8 +118,7 @@ const ManageCollaborators = ({
 		if (
 			invalidElements.indexOf(eventTarget.nodeName.toLowerCase()) === -1
 		) {
-			const collaboratorContainer = dom.closest(
-				eventTarget,
+			const collaboratorContainer = eventTarget.closest(
 				'.list-group-item'
 			);
 

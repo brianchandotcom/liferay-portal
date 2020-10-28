@@ -12,7 +12,6 @@
  * details.
  */
 
-import dom from 'metal-dom';
 import {Drag} from 'metal-drag-drop';
 import Component from 'metal-jsx';
 
@@ -85,7 +84,7 @@ const withResizeableColumns = (ChildComponent) => {
 			const {store} = this.context;
 
 			if (!this._currentRow) {
-				this._currentRow = dom.closest(source, '.row');
+				this._currentRow = source.closest('.row');
 			}
 
 			const container = this._currentRow.querySelector(

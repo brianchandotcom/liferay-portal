@@ -15,7 +15,6 @@
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
@@ -75,7 +74,7 @@ export default function Layout({mainItemId}) {
 		const layout = layoutRef.current;
 
 		const preventLinkClick = (event) => {
-			const closestElement = closest(event.target, '[href]');
+			const closestElement = event.target.closest('[href]');
 
 			if (
 				closestElement &&

@@ -14,7 +14,6 @@
 
 import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
-import dom from 'metal-dom';
 import React, {useContext, useLayoutEffect, useState} from 'react';
 
 import Button from '../../components/button/Button.es';
@@ -144,10 +143,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 		'mouseleave',
 		({relatedTarget}) => {
 			const columnIndex = getColumnIndex(relatedTarget);
-			const outsideOverlay = !dom.closest(
-				relatedTarget,
-				'.column-overlay'
-			);
+			const outsideOverlay = !relatedTarget.closest('.column-overlay');
 
 			if (columnIndex === -1 && outsideOverlay) {
 				setHoveredFieldName(null);

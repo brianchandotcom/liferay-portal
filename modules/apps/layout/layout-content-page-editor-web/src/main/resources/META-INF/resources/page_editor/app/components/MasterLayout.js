@@ -12,7 +12,6 @@
  * details.
  */
 
-import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef} from 'react';
 
@@ -119,11 +118,11 @@ function Fragment({item}) {
 		const handler = (event) => {
 			const element = event.target;
 
-			if (closest(element, '[href]')) {
+			if (element.closest('[href]')) {
 				event.preventDefault();
 			}
 
-			if (!closest(event.target, '.page-editor')) {
+			if (!event.target.closest('.page-editor')) {
 				selectItem(null);
 			}
 		};

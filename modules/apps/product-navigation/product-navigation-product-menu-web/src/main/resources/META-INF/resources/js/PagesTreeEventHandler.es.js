@@ -13,7 +13,6 @@
  */
 
 import Component from 'metal-component';
-import dom from 'metal-dom';
 
 class PagesTreeEventHandler extends Component {
 	attached() {
@@ -25,9 +24,9 @@ class PagesTreeEventHandler extends Component {
 	}
 
 	_handleDropdownOpened({menu, trigger}) {
-		if (dom.closest(menu, '.pages-tree-dropdown')) {
+		if (menu.closest('.pages-tree-dropdown')) {
 			const handler = (event) => {
-				if (!dom.closest(event.target, '.pages-tree-dropdown')) {
+				if (!event.target.closest('.pages-tree-dropdown')) {
 					Liferay.DropdownProvider.hide({menu, trigger});
 
 					window.removeEventListener('click', handler);

@@ -76,6 +76,15 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Set<String> getDistTypesExcludingTomcat() {
+		Set<String> distTypesExcludingTomcat = new TreeSet<>(getDistTypes());
+
+		distTypesExcludingTomcat.remove("tomcat");
+
+		return distTypesExcludingTomcat;
+	}
+
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}

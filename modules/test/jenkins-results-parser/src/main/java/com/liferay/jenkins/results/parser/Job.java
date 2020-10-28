@@ -36,6 +36,8 @@ public interface Job {
 
 	public Set<String> getDistTypes();
 
+	public Set<String> getDistTypesExcludingTomcat();
+
 	public String getJobName();
 
 	public Properties getJobProperties();

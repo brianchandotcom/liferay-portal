@@ -37,11 +37,11 @@ GradleProvidedDependenciesCheck | .gradle | Validates the scope of dependencies 
 GradleTestDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |
 [IncorrectFileLocationCheck](checks/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | | Checks that `/src/*/java/` only contains `.java` files. |
 [JSLodashDependencyCheck](checks/js_lodash_dependency_check.markdown#jslodashdependencycheck) | .js or .jsx | Finds incorrect use of `AUI._`. |
-[JSONDeprecatedPackagesCheck](checks/json_deprecated_packages_check.markdown#jsondeprecatedpackagescheck) | .json or .npmbridgerc | Finds incorrect use of deprecated packages in `package.json` files. |
-JSONPackageJSONBNDVersionCheck | .json or .npmbridgerc | Checks the version for dependencies in `package.json` files. |
-JSONPackageJSONCheck | .json or .npmbridgerc | Checks content of `package.json` files. |
-JSONPackageJSONDependencyVersionCheck | .json or .npmbridgerc | Checks the version for dependencies in `package.json` files. |
-[JSONValidationCheck](checks/json_validation_check.markdown#jsonvalidationcheck) | .json or .npmbridgerc | Validates content of `.json` files. |
+[JSONDeprecatedPackagesCheck](checks/json_deprecated_packages_check.markdown#jsondeprecatedpackagescheck) | .ipynb, .json or .npmbridgerc | Finds incorrect use of deprecated packages in `package.json` files. |
+JSONPackageJSONBNDVersionCheck | .ipynb, .json or .npmbridgerc | Checks the version for dependencies in `package.json` files. |
+JSONPackageJSONCheck | .ipynb, .json or .npmbridgerc | Checks content of `package.json` files. |
+JSONPackageJSONDependencyVersionCheck | .ipynb, .json or .npmbridgerc | Checks the version for dependencies in `package.json` files. |
+[JSONValidationCheck](checks/json_validation_check.markdown#jsonvalidationcheck) | .ipynb, .json or .npmbridgerc | Validates content of `.json` files. |
 [JSPArrowFunctionCheck](checks/jsp_arrow_function_check.markdown#jsparrowfunctioncheck) | .jsp, .jspf, .tag, .tpl or .vm | Checks that there are no array functions. |
 [JSPIllegalSyntaxCheck](checks/jsp_illegal_syntax_check.markdown#jspillegalsyntaxcheck) | .jsp, .jspf, .tag, .tpl or .vm | Finds incorrect use of `System.out.print`, `console.log` or `debugger.*` in `.jsp` files. |
 [JSPIncludeCheck](checks/jsp_include_check.markdown#jspincludecheck) | .jsp, .jspf, .tag, .tpl or .vm | Validates values of `include` in `.jsp` files. |

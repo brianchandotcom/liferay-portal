@@ -49,7 +49,7 @@ GradleStylingCheck | .gradle | Applies rules to enforce consisteny in code style
 HTMLEmptyLinesCheck | .html | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html | Finds missing and unnecessary whitespace in `.html` files. |
 InstanceofOrderCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
-JSONStylingCheck | .json or .npmbridgerc | Applies rules to enforce consisteny in code style. |
+JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consisteny in code style. |
 [JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |
 JSPEmptyLinesCheck | .jsp, .jspf, .tag, .tpl or .vm | Finds missing and unnecessary empty lines. |
 JSPExceptionOrderCheck | .jsp, .jspf, .tag, .tpl or .vm | Checks the order of exceptions in `.jsp` files. |

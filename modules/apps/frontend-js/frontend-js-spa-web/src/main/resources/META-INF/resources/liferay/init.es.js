@@ -15,7 +15,6 @@
 'use strict';
 
 import {async} from 'metal';
-import {match} from 'metal-dom';
 
 import globals from '../senna/globals/globals';
 import {utils, version} from '../senna/senna';
@@ -94,7 +93,7 @@ const initSPA = function () {
 			const url = formElement.action;
 
 			if (
-				match(formElement, formSelector) &&
+				formElement.matches(formSelector) &&
 				app.canNavigate(url) &&
 				formElement.method !== 'get' &&
 				!app.isInPortletBlacklist(formElement)
@@ -106,19 +105,17 @@ const initSPA = function () {
 				const buttonSelector =
 					'button:not([type]),button[type=submit],input[type=submit]';
 
-				if (match(globals.document.activeElement, buttonSelector)) {
+				if (globals.document.activeElement.matches(buttonSelector)) {
 					globals.capturedFormButtonElement =
 						globals.document.activeElement;
-				}
-				else {
+				} else {
 					globals.capturedFormButtonElement = formElement.querySelector(
 						buttonSelector
 					);
 				}
 
 				app.navigate(utils.getUrlPath(url));
-			}
-			else {
+			} else {
 				formElement.submit();
 			}
 		});
@@ -140,8 +137,7 @@ export default {
 			globals.document.addEventListener('DOMContentLoaded', () => {
 				callback.call(this, initSPA());
 			});
-		}
-		else {
+		} else {
 			callback.call(this, initSPA());
 		}
 	},

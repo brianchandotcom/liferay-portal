@@ -15,7 +15,7 @@
 package com.liferay.commerce.pricing.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.pricing.internal.upgrade.base.BaseCommercePricingUpgradeProcess;
-import com.liferay.commerce.pricing.model.impl.CommercePricingClassImpl;
+import com.liferay.commerce.pricing.internal.upgrade.v1_1_0.util.CommercePricingClassTable;
 
 /**
  * @author Riccardo Alberti
@@ -26,12 +26,12 @@ public class CommercePricingClassUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		changeColumnType(
-			CommercePricingClassImpl.class, CommercePricingClassImpl.TABLE_NAME,
-			"title", "TEXT");
+			CommercePricingClassTable.class,
+			CommercePricingClassTable.TABLE_NAME, "title", "TEXT");
 
 		changeColumnType(
-			CommercePricingClassImpl.class, CommercePricingClassImpl.TABLE_NAME,
-			"description", "TEXT");
+			CommercePricingClassTable.class,
+			CommercePricingClassTable.TABLE_NAME, "description", "TEXT");
 	}
 
 }

@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -786,15 +787,25 @@ public class BundleComponentActivator implements ComponentActivator
             ServiceTracker<LogService, LogService> logService = m_logService;
             if ( logService != null )
             {
-                LogService logger = logService.getService();
-                if ( logger == null )
-                {
-                    m_logger.log( level, message, ex );
-                }
-                else
-                {
-                    logger.log( level, message, ex );
-                }
+                Object logger = logService.getService();
+                if ( logger != null )
+				{
+					Class<?> clazz = logger.getClass();
+
+					try {
+						Method method = clazz.getDeclaredMethod(
+							"log", Integer.class, String.class, Throwable.class);
+
+						method.invoke(logger, level, message, ex);
+
+						return;
+					}
+					catch (Exception exception) {
+					}
+				}
+
+				m_logger.log( level, message, ex );
+
             }
             else
             {
@@ -841,3 +852,4 @@ public class BundleComponentActivator implements ComponentActivator
         // TODO anything needed?
     }
 }
+/* @generated */

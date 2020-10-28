@@ -82,8 +82,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<liferay-ui:search-container-column-text
 							name="status"
 						>
-							<h6 class="background-task-status-row background-task-status-<%= BackgroundTaskConstants.getStatusLabel(dispatchLog.getStatus()) %> <%= BackgroundTaskConstants.getStatusCssClass(dispatchLog.getStatus()) %>">
-								<liferay-ui:message key="<%= BackgroundTaskConstants.getStatusLabel(dispatchLog.getStatus()) %>" />
+
+							<%
+							DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
+							%>
+
+							<h6 class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> <%= dispatchTaskStatus.getCssClass() %>">
+								<liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" />
 							</h6>
 						</liferay-ui:search-container-column-text>
 

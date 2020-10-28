@@ -265,7 +265,7 @@ export function ImagePropertiesPanel({item}) {
 			)}
 
 			{config.adaptiveMediaEnabled && imageConfigurations?.length > 0 && (
-				<ClayForm.Group>
+				<ClayForm.Group className="mb-2">
 					<label htmlFor={imageConfigurationId}>
 						{Liferay.Language.get('resolution')}
 					</label>
@@ -296,16 +296,16 @@ export function ImagePropertiesPanel({item}) {
 			)}
 
 			{config.adaptiveMediaEnabled && imageTitle && imageSize && (
-				<div className="mb-2 small">
+				<div className="page-editor__image-properties-panel__resolution-label">
 					<b>{Liferay.Language.get('width')}:</b>
-					<span className="ml-2">{imageSize.width}px</span>
+					<span className="ml-1">{imageSize.width}px</span>
 				</div>
 			)}
 
 			{config.adaptiveMediaEnabled && imageTitle && imageFileSize && (
-				<div className="mb-2 small">
+				<div className="mb-3 page-editor__image-properties-panel__resolution-label">
 					<b>{Liferay.Language.get('file-size')}:</b>
-					<span className="ml-2">
+					<span className="ml-1">
 						{Number(imageFileSize).toFixed(2)}kB
 					</span>
 				</div>

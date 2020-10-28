@@ -40,7 +40,14 @@
 	</c:if>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.INVALID_GROUP %>">
-		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-global-site-can-only-be-staged-to-another-global-site" translateArguments="<%= false %>" />
+		<c:choose>
+			<c:when test="<%= liveGroup.isDepot() %>">
+				<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-an-asset-library-can-can-only-be-staged-to-another-asset-library" translateArguments="<%= false %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-global-site-can-only-be-staged-to-another-global-site" translateArguments="<%= false %>" />
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">

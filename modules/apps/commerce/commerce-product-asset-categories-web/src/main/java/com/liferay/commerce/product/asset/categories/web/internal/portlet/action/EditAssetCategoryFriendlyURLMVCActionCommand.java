@@ -87,7 +87,7 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 		}
 		catch (Exception exception) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
-				_portal.getDefaultCompanyId());
+				assetCategory.getCompanyId());
 
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				companyGroup.getGroupId(),
@@ -104,7 +104,7 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 		Map<String, String> newUrlTitleMap = new HashMap<>();
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getDefaultCompanyId());
+			assetCategory.getCompanyId());
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 

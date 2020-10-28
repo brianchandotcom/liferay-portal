@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -79,8 +78,7 @@ public class FriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				long classPK = rs.getLong("classPK");
 				long companyId = rs.getLong("companyId");
 				Date date = new Date(System.currentTimeMillis());
-				Group group = _groupLocalService.getCompanyGroup(
-					PortalUtil.getDefaultCompanyId());
+				Group group = _groupLocalService.getCompanyGroup(companyId);
 				String languageId = rs.getString("languageId");
 				boolean main = rs.getBoolean("main");
 				String uuid = rs.getString("uuid_");

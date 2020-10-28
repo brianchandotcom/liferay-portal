@@ -50,7 +50,7 @@ public class AssetCategoryModelListener
 
 		try {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
-				_portal.getDefaultCompanyId());
+				assetCategory.getCompanyId());
 
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				companyGroup.getGroupId(),
@@ -74,8 +74,11 @@ public class AssetCategoryModelListener
 			_cpDisplayLayoutLocalService.deleteCPDisplayLayout(
 				AssetCategory.class, assetCategory.getCategoryId());
 
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				assetCategory.getCompanyId());
+
 			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				assetCategory.getGroupId(), AssetCategory.class,
+				companyGroup.getGroupId(), AssetCategory.class,
 				assetCategory.getCategoryId());
 		}
 		catch (PortalException portalException) {
@@ -94,7 +97,7 @@ public class AssetCategoryModelListener
 
 		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
-				_portal.getDefaultCompanyId());
+				assetCategory.getCompanyId());
 
 			String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 				companyGroup.getGroupId(),

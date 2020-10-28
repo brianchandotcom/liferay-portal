@@ -271,7 +271,7 @@ public class CPDefinitionLocalServiceImpl
 		// Friendly URL
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
-			PortalUtil.getDefaultCompanyId());
+			cpDefinition.getCompanyId());
 
 		Map<String, String> newURLTitleMap = new HashMap<>();
 
@@ -723,7 +723,7 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product friendly URL entries
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
-			PortalUtil.getDefaultCompanyId());
+			cpDefinition.getCompanyId());
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 			companyGroup.getGroupId(), CProduct.class,
@@ -1522,7 +1522,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 		catch (Exception exception) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
-				PortalUtil.getDefaultCompanyId());
+				cpDefinition.getCompanyId());
 
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				companyGroup.getGroupId(), classNameId, classPK, newUrlTitleMap,
@@ -2411,7 +2411,7 @@ public class CPDefinitionLocalServiceImpl
 		Map<String, String> newURLTitleMap = new HashMap<>();
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
-			PortalUtil.getDefaultCompanyId());
+			cpDefinition.getCompanyId());
 
 		long classNameId = classNameLocalService.getClassNameId(CProduct.class);
 

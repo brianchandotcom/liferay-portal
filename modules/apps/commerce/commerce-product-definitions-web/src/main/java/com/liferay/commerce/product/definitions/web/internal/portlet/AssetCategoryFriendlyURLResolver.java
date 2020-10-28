@@ -62,8 +62,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getDefaultCompanyId());
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
@@ -146,8 +145,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getDefaultCompanyId());
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");

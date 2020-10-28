@@ -221,7 +221,7 @@ public class AssetCategoriesImporter {
 		// Commerce product friendly URL entry
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getDefaultCompanyId());
+			assetCategory.getCompanyId());
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
@@ -303,7 +303,7 @@ public class AssetCategoriesImporter {
 
 		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
 			Group companyGroup = _groupLocalService.getCompanyGroup(
-				_portal.getDefaultCompanyId());
+				assetCategory.getCompanyId());
 
 			long classNameId = _portal.getClassNameId(AssetCategory.class);
 

@@ -83,8 +83,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getDefaultCompanyId());
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
@@ -184,8 +183,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		String languageId = LanguageUtil.getLanguageId(
 			_portal.getLocale(httpServletRequest));
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_portal.getDefaultCompanyId());
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
 		String urlTitle = friendlyURL.substring(
 			CPConstants.SEPARATOR_PRODUCT_URL.length());

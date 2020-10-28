@@ -103,9 +103,7 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 		_bundleContext = bundleContext;
 	}
 
-	private static final String[] _JS_FILE_NAMES = {
-		"/svg4everybody/svg4everybody.js"
-	};
+	private static final String[] _JS_FILE_NAMES = {"/index.js"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SVG4EverybodyTopHeadDynamicInclude.class);

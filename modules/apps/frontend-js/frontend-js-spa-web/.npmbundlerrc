@@ -39,7 +39,6 @@
 				"lodash.isequal": ">=4.5.0",
 				"lodash.memoize": ">=4.1.2",
 				"lodash.unescape": ">=4.0.1",
-				"svg4everybody": ">=2.1.9",
 				"uuid": ">=3.3.2"
 			},
 			"frontend-taglib-clay": {

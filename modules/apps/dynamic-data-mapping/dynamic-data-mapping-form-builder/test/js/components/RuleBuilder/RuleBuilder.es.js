@@ -213,7 +213,7 @@ describe('RuleBuilder', () => {
 			component.dispose();
 		}
 
-		dom.exitDocument(addbutton);
+		addbutton.remove();
 	});
 
 	it('renders the list of rules when mode is set to view', () => {

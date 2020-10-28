@@ -73,7 +73,7 @@ describe('AutoSave', () => {
 			component.dispose();
 		}
 		if (form) {
-			dom.exitDocument(form);
+			form.remove();
 		}
 	});
 
@@ -184,8 +184,8 @@ describe('AutoSave', () => {
 			expect(ddmStructureIdInput.value).toBe('456');
 			expect(formInstanceIdInput.value).toBe('123');
 
-			dom.exitDocument(formInstanceIdInput);
-			dom.exitDocument(ddmStructureIdInput);
+			formInstanceIdInput.remove();
+			ddmStructureIdInput.remove();
 		});
 	});
 });

@@ -143,9 +143,9 @@ describe('Builder', () => {
 	});
 
 	afterEach(() => {
-		dom.exitDocument(addButton);
-		dom.exitDocument(basicInfo);
-		dom.exitDocument(translationManager);
+		addButton.remove();
+		basicInfo.remove();
+		translationManager.remove();
 
 		if (component) {
 			component.dispose();

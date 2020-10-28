@@ -197,8 +197,6 @@ definition {
 
 		Depot.connectSite(siteList = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewConnectedSiteNumber(

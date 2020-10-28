@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.messaging.proxy.BaseMultiDestinationProxyBean;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
 import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -42,6 +43,10 @@ public class MultiDestinationMessagingProxyInvocationHandler
 	public Object invoke(Object proxy, Method method, Object[] args)
 		throws Throwable {
 
+		if (ArrayUtil.contains(_objectMethods, method)) {
+			return method.invoke(_baseMultiDestinationProxyBean, args);
+		}
+
 		ProxyRequest proxyRequest = new ProxyRequest(method, args);
 
 		if (proxyRequest.isSynchronous() ||
@@ -65,6 +70,9 @@ public class MultiDestinationMessagingProxyInvocationHandler
 			}
 
 		};
+
+	private static final Method[] _objectMethods =
+		Object.class.getDeclaredMethods();
 
 	private final BaseMultiDestinationProxyBean _baseMultiDestinationProxyBean;
 

@@ -63,6 +63,11 @@ public abstract class BasePortalReleaseJob
 	}
 
 	@Override
+	public BuildProfile getBuildProfile() {
+		return buildProfile;
+	}
+
+	@Override
 	public Set<String> getDependentBatchNames() {
 		return getFilteredBatchNames(getRawDependentBatchNames());
 	}

@@ -23,7 +23,7 @@ AssetRendererFactory<?> assetRendererFactory = assetRenderer.getAssetRendererFac
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 
-SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
+ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAssetsDisplayContext)renderRequest.getAttribute(ViewSharedAssetsDisplayContext.class.getName());
 
 SharingEntry sharingEntry = (SharingEntry)renderRequest.getAttribute(SharingEntry.class.getName());
 
@@ -74,7 +74,7 @@ else {
 			</li>
 			<li class="tbar-item">
 				<liferay-ui:menu
-					menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+					menu="<%= viewSharedAssetsDisplayContext.getSharingEntryMenu(sharingEntry) %>"
 				/>
 			</li>
 		</ul>

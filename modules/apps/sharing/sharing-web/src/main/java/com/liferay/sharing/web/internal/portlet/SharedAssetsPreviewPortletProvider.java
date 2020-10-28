@@ -50,7 +50,7 @@ public class SharedAssetsPreviewPortletProvider
 		PortletURL portletURL = super.getPortletURL(httpServletRequest, group);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/shared_assets/view_sharing_entry");
+			"mvcRenderCommandName", "/sharing/view_sharing_entry");
 
 		return portletURL;
 	}

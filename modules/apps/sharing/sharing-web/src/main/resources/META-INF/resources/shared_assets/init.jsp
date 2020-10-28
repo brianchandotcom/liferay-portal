@@ -42,7 +42,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.sharing.exception.NoSuchEntryException" %><%@
 page import="com.liferay.sharing.model.SharingEntry" %><%@
-page import="com.liferay.sharing.web.internal.display.context.SharedAssetsViewDisplayContext" %>
+page import="com.liferay.sharing.web.internal.display.context.ViewSharedAssetsDisplayContext" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

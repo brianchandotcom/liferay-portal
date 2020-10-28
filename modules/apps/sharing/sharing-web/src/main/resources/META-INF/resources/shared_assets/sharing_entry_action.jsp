@@ -21,9 +21,9 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 SharingEntry sharingEntry = (SharingEntry)row.getObject();
 
-SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
+ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAssetsDisplayContext)renderRequest.getAttribute(ViewSharedAssetsDisplayContext.class.getName());
 %>
 
 <liferay-ui:menu
-	menu="<%= sharedAssetsViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+	menu="<%= viewSharedAssetsDisplayContext.getSharingEntryMenu(sharingEntry) %>"
 />

@@ -67,9 +67,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class SharedAssetsViewDisplayContext {
+public class ViewSharedAssetsDisplayContext {
 
-	public SharedAssetsViewDisplayContext(
+	public ViewSharedAssetsDisplayContext(
 		GroupLocalService groupLocalService, ItemSelector itemSelector,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -388,8 +388,6 @@ public class SharedAssetsViewDisplayContext {
 				PortletURL viewAllClassNamesURL = PortletURLUtil.clone(
 					_currentURLObj, _liferayPortletResponse);
 
-				viewAllClassNamesURL.setParameter(
-					"mvcRenderCommandName", "/shared_assets/view");
 				viewAllClassNamesURL.setParameter("className", (String)null);
 
 				dropdownItem.setHref(viewAllClassNamesURL);

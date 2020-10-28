@@ -116,6 +116,11 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public boolean getTestRunValidation() {
+		return false;
+	}
+
+	@Override
 	public void readJobProperties() {
 		_jobProperties.clear();
 

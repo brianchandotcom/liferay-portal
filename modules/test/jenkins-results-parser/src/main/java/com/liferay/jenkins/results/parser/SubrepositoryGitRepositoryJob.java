@@ -77,6 +77,7 @@ public class SubrepositoryGitRepositoryJob
 		return (SubrepositoryGitWorkingDirectory)gitWorkingDirectory;
 	}
 
+	@Override
 	public boolean getTestRunValidation() {
 		return testRunValidation;
 	}

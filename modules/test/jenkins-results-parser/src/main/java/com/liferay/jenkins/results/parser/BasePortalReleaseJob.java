@@ -59,26 +59,6 @@ public abstract class BasePortalReleaseJob
 	}
 
 	@Override
-	public Set<String> getBatchNames() {
-		Set<String> batchNames = new TreeSet<>();
-
-		Properties jobProperties = getJobProperties();
-
-		batchNames.addAll(
-			getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names", false, _portalBranchName,
-					getTestSuiteName())));
-		batchNames.addAll(
-			getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names", false, _portalBranchName,
-					buildProfile.toString(), getTestSuiteName())));
-
-		return batchNames;
-	}
-
-	@Override
 	public Set<String> getDependentBatchNames() {
 		Set<String> batchNames = new TreeSet<>();
 
@@ -116,6 +96,26 @@ public abstract class BasePortalReleaseJob
 
 	protected GitWorkingDirectory getJenkinsGitWorkingDirectory() {
 		return _jenkinsGitWorkingDirectory;
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		Set<String> batchNames = new TreeSet<>();
+
+		Properties jobProperties = getJobProperties();
+
+		batchNames.addAll(
+			getSetFromString(
+				JenkinsResultsParserUtil.getProperty(
+					jobProperties, "test.batch.names", false, _portalBranchName,
+					getTestSuiteName())));
+		batchNames.addAll(
+			getSetFromString(
+				JenkinsResultsParserUtil.getProperty(
+					jobProperties, "test.batch.names", false, _portalBranchName,
+					buildProfile.toString(), getTestSuiteName())));
+
+		return batchNames;
 	}
 
 	protected BuildProfile buildProfile;

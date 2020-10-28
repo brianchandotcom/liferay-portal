@@ -29,21 +29,6 @@ public class SubrepositoryGitRepositoryJob
 	extends GitRepositoryJob implements SubrepositoryTestClassJob {
 
 	@Override
-	public Set<String> getBatchNames() {
-		Properties jobProperties = getJobProperties();
-
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[" + getBranchName() + "]");
-
-		if (testBatchNames == null) {
-			testBatchNames = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.names");
-		}
-
-		return getSetFromString(testBatchNames);
-	}
-
-	@Override
 	public Set<String> getDistTypes() {
 		String distTypes = JenkinsResultsParserUtil.getProperty(
 			getJobProperties(), "subrepo.dist.app.servers");
@@ -142,6 +127,21 @@ public class SubrepositoryGitRepositoryJob
 					"/test-subrepository-batch.properties")));
 
 		readJobProperties();
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		Properties jobProperties = getJobProperties();
+
+		String batchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names[" + getBranchName() + "]");
+
+		if (batchNames == null) {
+			batchNames = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.batch.names");
+		}
+
+		return getSetFromString(batchNames);
 	}
 
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;

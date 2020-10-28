@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
+
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -24,6 +27,8 @@ import java.util.Set;
 public interface Job {
 
 	public Set<String> getBatchNames();
+
+	public List<BatchTestClassGroup> getBatchTestClassGroups();
 
 	public List<Build> getBuildHistory(JenkinsMaster jenkinsMaster);
 
@@ -38,6 +43,10 @@ public interface Job {
 	public String getJobProperty(String key);
 
 	public String getJobURL(JenkinsMaster jenkinsMaster);
+
+	public Set<String> getSegmentNames();
+
+	public List<SegmentTestClassGroup> getSegmentTestClassGroups();
 
 	public void readJobProperties();
 

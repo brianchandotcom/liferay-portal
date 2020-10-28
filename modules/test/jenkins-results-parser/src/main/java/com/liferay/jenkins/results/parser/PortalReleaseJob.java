@@ -31,17 +31,17 @@ public class PortalReleaseJob extends BasePortalReleaseJob {
 		super(jobName, portalBranchName, buildProfile, testSuiteName);
 	}
 
-	@Override
-	public Set<String> getBatchNames() {
-		Set<String> testBatchNames = super.getBatchNames();
-
-		testBatchNames.addAll(_getOptionalBatchNames());
-
-		return testBatchNames;
-	}
-
 	public void setPortalReleaseRef(String portalReleaseRef) {
 		_portalReleaseRef = portalReleaseRef;
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		Set<String> batchNames = super.getRawBatchNames();
+
+		batchNames.addAll(_getOptionalBatchNames());
+
+		return batchNames;
 	}
 
 	private Set<String> _getOptionalBatchNames() {

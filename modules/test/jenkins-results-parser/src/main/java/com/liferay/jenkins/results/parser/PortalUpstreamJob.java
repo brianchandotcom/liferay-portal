@@ -39,21 +39,20 @@ public class PortalUpstreamJob
 	}
 
 	@Override
-	public Set<String> getBatchNames() {
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(),
-			"test.batch.names[portal-upstream(" + getBranchName() + ")]");
-
-		return getSetFromString(testBatchNames);
-	}
-
-	@Override
 	public Set<String> getDependentBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			getJobProperties(),
 			"test.batch.names.smoke[" + getBranchName() + "]");
 
 		return getSetFromString(testBatchNames);
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		return getSetFromString(
+			JenkinsResultsParserUtil.getProperty(
+				getJobProperties(),
+				"test.batch.names[portal-upstream(" + getBranchName() + ")]"));
 	}
 
 }

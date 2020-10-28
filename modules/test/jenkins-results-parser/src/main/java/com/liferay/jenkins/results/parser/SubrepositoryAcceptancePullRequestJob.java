@@ -34,18 +34,6 @@ public class SubrepositoryAcceptancePullRequestJob
 	}
 
 	@Override
-	public Set<String> getBatchNames() {
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names[" + _testSuiteName + "]");
-
-		if (testBatchNames == null) {
-			return super.getBatchNames();
-		}
-
-		return getSetFromString(testBatchNames);
-	}
-
-	@Override
 	public Set<String> getDistTypes() {
 		Properties jobProperties = getJobProperties();
 
@@ -63,6 +51,18 @@ public class SubrepositoryAcceptancePullRequestJob
 	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		String batchNames = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names[" + _testSuiteName + "]");
+
+		if (batchNames == null) {
+			return super.getRawBatchNames();
+		}
+
+		return getSetFromString(batchNames);
 	}
 
 	private void _setTestRunValidation() {

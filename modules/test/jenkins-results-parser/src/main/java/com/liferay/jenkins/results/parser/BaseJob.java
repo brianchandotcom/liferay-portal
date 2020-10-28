@@ -38,6 +38,16 @@ import org.json.JSONObject;
 public abstract class BaseJob implements Job {
 
 	@Override
+	public Set<String> getBatchNames() {
+		return getFilteredBatchNames(getRawBatchNames());
+	}
+
+	@Override
+	public List<BatchTestClassGroup> getBatchTestClassGroups() {
+		return getBatchTestClassGroups(getRawBatchNames());
+	}
+
+	@Override
 	public List<Build> getBuildHistory(JenkinsMaster jenkinsMaster) {
 		JSONObject jobJSONObject = getJobJSONObject(
 			jenkinsMaster, "builds[number]");
@@ -87,6 +97,16 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Set<String> getSegmentNames() {
+		return getFilteredSegmentNames(getRawBatchNames());
+	}
+
+	@Override
+	public List<SegmentTestClassGroup> getSegmentTestClassGroups() {
+		return getSegmentTestClassGroups(getRawBatchNames());
+	}
+
+	@Override
 	public void readJobProperties() {
 		_jobProperties.clear();
 
@@ -101,30 +121,18 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected List<BatchTestClassGroup> getBatchTestClassGroups(
-		Set<String> batchNames) {
+		Set<String> rawBatchNames) {
 
-		if ((batchNames == null) || batchNames.isEmpty()) {
+		if ((rawBatchNames == null) || rawBatchNames.isEmpty()) {
 			return new ArrayList<>();
 		}
 
-		BuildProfile jobBuildProfile = getBuildProfile();
-
-		if (jobBuildProfile == null) {
-			jobBuildProfile = BuildProfile.PORTAL;
-		}
-
-		String buildProfile = jobBuildProfile.toString();
-
-		BatchTestClassGroup.BuildProfile batchBuildProfile =
-			BatchTestClassGroup.BuildProfile.valueOf(
-				buildProfile.toUpperCase());
-
 		List<BatchTestClassGroup> batchTestClassGroups = new ArrayList<>();
 
-		for (String batchName : batchNames) {
+		for (String batchName : rawBatchNames) {
 			BatchTestClassGroup batchTestClassGroup =
 				TestClassGroupFactory.newBatchTestClassGroup(
-					batchName, batchBuildProfile, this);
+					batchName, _getBatchBuildProfile(), this);
 
 			if (batchTestClassGroup.getAxisCount() <= 0) {
 				continue;
@@ -136,23 +144,23 @@ public abstract class BaseJob implements Job {
 		return batchTestClassGroups;
 	}
 
-	protected Set<String> getFilteredBatchNames(Set<String> batchNames) {
-		Set<String> filteredBatchNames = new TreeSet<>();
+	protected Set<String> getFilteredBatchNames(Set<String> rawBatchNames) {
+		Set<String> batchNames = new TreeSet<>();
 
 		for (BatchTestClassGroup batchTestClassGroup :
-				getBatchTestClassGroups(batchNames)) {
+				getBatchTestClassGroups(rawBatchNames)) {
 
-			filteredBatchNames.add(batchTestClassGroup.getBatchName());
+			batchNames.add(batchTestClassGroup.getBatchName());
 		}
 
-		return filteredBatchNames;
+		return batchNames;
 	}
 
-	protected Set<String> getFilteredSegmentNames(Set<String> batchNames) {
+	protected Set<String> getFilteredSegmentNames(Set<String> rawBatchNames) {
 		Set<String> segmentNames = new TreeSet<>();
 
 		for (BatchTestClassGroup batchTestClassGroup :
-				getBatchTestClassGroups(batchNames)) {
+				getBatchTestClassGroups(rawBatchNames)) {
 
 			for (int i = 0; i < batchTestClassGroup.getSegmentCount(); i++) {
 				SegmentTestClassGroup segmentTestClassGroup =
@@ -195,17 +203,15 @@ public abstract class BaseJob implements Job {
 		}
 	}
 
-	protected List<SegmentTestClassGroup> getSegmentTestClassGroups(
-		Set<String> batchNames) {
+	protected abstract Set<String> getRawBatchNames();
 
-		if ((batchNames == null) || batchNames.isEmpty()) {
-			return new ArrayList<>();
-		}
+	protected List<SegmentTestClassGroup> getSegmentTestClassGroups(
+		Set<String> rawBatchNames) {
 
 		List<SegmentTestClassGroup> segmentTestClassGroups = new ArrayList<>();
 
 		for (BatchTestClassGroup batchTestClassGroup :
-				getBatchTestClassGroups(batchNames)) {
+				getBatchTestClassGroups(rawBatchNames)) {
 
 			for (int i = 0; i < batchTestClassGroup.getSegmentCount(); i++) {
 				SegmentTestClassGroup segmentTestClassGroup =
@@ -241,6 +247,19 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
+
+	private BatchTestClassGroup.BuildProfile _getBatchBuildProfile() {
+		BuildProfile buildProfile = getBuildProfile();
+
+		if (buildProfile == null) {
+			buildProfile = BuildProfile.PORTAL;
+		}
+
+		String buildProfileString = buildProfile.toString();
+
+		return BatchTestClassGroup.BuildProfile.valueOf(
+			buildProfileString.toUpperCase());
+	}
 
 	private final String _jobName;
 	private final Properties _jobProperties = new Properties();

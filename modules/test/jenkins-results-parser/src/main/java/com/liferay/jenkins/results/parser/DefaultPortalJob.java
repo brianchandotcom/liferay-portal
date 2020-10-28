@@ -26,14 +26,6 @@ public class DefaultPortalJob
 	extends BaseJob implements PortalTestClassJob, TestSuiteJob {
 
 	@Override
-	public Set<String> getBatchNames() {
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names");
-
-		return getSetFromString(testBatchNames);
-	}
-
-	@Override
 	public Set<String> getDistTypes() {
 		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
 			getJobProperties(), "test.batch.dist.app.servers");
@@ -101,6 +93,13 @@ public class DefaultPortalJob
 			new File(portalWorkingDirectory, "test.properties"));
 
 		readJobProperties();
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		return getSetFromString(
+			JenkinsResultsParserUtil.getProperty(
+				getJobProperties(), "test.batch.names"));
 	}
 
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;

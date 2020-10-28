@@ -35,34 +35,6 @@ public abstract class PortalAcceptanceTestSuiteJob
 	}
 
 	@Override
-	public Set<String> getBatchNames() {
-		Properties jobProperties = getJobProperties();
-
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[" + _testSuiteName + "]");
-
-		if (testBatchNames == null) {
-			testBatchNames = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.names");
-		}
-
-		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
-
-		if (!_testSuiteName.equals("relevant")) {
-			return testBatchNamesSet;
-		}
-
-		String stableTestBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[stable]");
-
-		if (stableTestBatchNames != null) {
-			testBatchNamesSet.addAll(getSetFromString(stableTestBatchNames));
-		}
-
-		return testBatchNamesSet;
-	}
-
-	@Override
 	public Set<String> getDependentBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			getJobProperties(), "test.batch.names.smoke", getBranchName(),
@@ -110,6 +82,34 @@ public abstract class PortalAcceptanceTestSuiteJob
 	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		Properties jobProperties = getJobProperties();
+
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names[" + _testSuiteName + "]");
+
+		if (testBatchNames == null) {
+			testBatchNames = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.batch.names");
+		}
+
+		Set<String> batchNames = getSetFromString(testBatchNames);
+
+		if (!_testSuiteName.equals("relevant")) {
+			return batchNames;
+		}
+
+		String stableTestBatchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names[stable]");
+
+		if (stableTestBatchNames != null) {
+			batchNames.addAll(getSetFromString(stableTestBatchNames));
+		}
+
+		return batchNames;
 	}
 
 	private final String _testSuiteName;

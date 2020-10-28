@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -23,17 +23,17 @@ import java.util.Set;
 public class SimpleJob extends BaseJob {
 
 	@Override
-	public Set<String> getBatchNames() {
-		return new HashSet<>();
-	}
-
-	@Override
 	public Set<String> getDistTypes() {
-		return new HashSet<>();
+		return Collections.emptySet();
 	}
 
 	protected SimpleJob(String jobName) {
 		super(jobName);
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		return Collections.emptySet();
 	}
 
 }

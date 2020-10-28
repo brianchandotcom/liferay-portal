@@ -303,10 +303,10 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, content.getBytes(),
-			serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			content.getBytes(), serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

@@ -216,7 +216,11 @@ class UserNameFields extends PortletBase {
 	 * @protected
 	 */
 	_removeLoadingIndicator() {
-		dom.exitDocument(this.one('#loadingUserNameFields'));
+		const loadingUserNameFields = this.one('#loadingUserNameFields');
+
+		if (loadingUserNameFields) {
+			loadingUserNameFields.remove();
+		}
 
 		dom.removeClasses(this.userNameFieldsNode, 'hide');
 	}

@@ -581,7 +581,7 @@ AUI.add(
 					};
 
 					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
-						themeDisplay.getURLControlPanel(),
+						themeDisplay.getLayoutRelativeControlPanelURL(),
 						webContentSelectorParameters
 					);
 

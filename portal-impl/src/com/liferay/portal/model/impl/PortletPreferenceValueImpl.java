@@ -19,7 +19,7 @@ package com.liferay.portal.model.impl;
  */
 public class PortletPreferenceValueImpl extends PortletPreferenceValueBaseImpl {
 
-	public static final int SMALL_VALUE_MAX_LENGTH = 75;
+	public static final int SMALL_VALUE_MAX_LENGTH = 255;
 
 	@Override
 	public String getValue() {

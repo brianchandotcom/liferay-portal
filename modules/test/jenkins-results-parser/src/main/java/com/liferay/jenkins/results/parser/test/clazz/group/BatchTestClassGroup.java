@@ -70,6 +70,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return axisTestClassGroups.get(axisId);
 	}
 
+	public List<AxisTestClassGroup> getAxisTestClassGroups() {
+		return axisTestClassGroups;
+	}
+
 	public String getBatchName() {
 		return batchName;
 	}
@@ -106,6 +110,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public SegmentTestClassGroup getSegmentTestClassGroup(int segmentId) {
 		return _segmentTestClassGroups.get(segmentId);
+	}
+
+	public List<SegmentTestClassGroup> getSegmentTestClassGroups() {
+		return _segmentTestClassGroups;
 	}
 
 	public static class BatchTestClass extends BaseTestClass {

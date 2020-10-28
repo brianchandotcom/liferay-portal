@@ -39,21 +39,11 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<liferay-util:buffer
-	var="documentTitle"
->
-	<%= fileVersion.getTitle() %>
-
-	<c:if test="<%= dlViewFileEntryDisplayContext.isVersionSpecific() %>">
-		(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
-	</c:if>
-</liferay-util:buffer>
-
 <div class="<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>" id="<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>">
 	<c:if test="<%= portletTitleBasedNavigation %>">
 
 		<%
-		request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", documentTitle);
+		request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", dlViewFileEntryDisplayContext.getDocumentTitle());
 		request.setAttribute("file_entry_upper_tbar.jsp-fileEntry", dlViewFileEntryDisplayContext.getFileEntry());
 		request.setAttribute("file_entry_upper_tbar.jsp-fileVersion", dlViewFileEntryDisplayContext.getFileVersion());
 		request.setAttribute("file_entry_upper_tbar.jsp-versionSpecific", dlViewFileEntryDisplayContext.isVersionSpecific());
@@ -78,7 +68,7 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:header
 			backURL="<%= dlViewFileEntryDisplayContext.getRedirect() %>"
 			localizeTitle="<%= false %>"
-			title="<%= documentTitle %>"
+			title="<%= dlViewFileEntryDisplayContext.getDocumentTitle() %>"
 		/>
 	</c:if>
 

@@ -23,6 +23,7 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.PortalIncludeUtil;
@@ -105,6 +107,26 @@ public class DLViewFileEntryDisplayContext {
 
 		return PortalUtil.getValidUserId(
 			fileEntry.getCompanyId(), fileEntry.getUserId());
+	}
+
+	public String getDocumentTitle() throws PortalException {
+		if (_documentTitle != null) {
+			return _documentTitle;
+		}
+
+		FileVersion fileVersion = getFileVersion();
+
+		if (!isVersionSpecific()) {
+			_documentTitle = fileVersion.getTitle();
+		}
+		else {
+			_documentTitle = StringBundler.concat(
+				fileVersion.getTitle(), StringPool.OPEN_PARENTHESIS,
+				LanguageUtil.get(_httpServletRequest, "version"),
+				fileVersion.getVersion(), StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return _documentTitle;
 	}
 
 	public FileEntry getFileEntry() {
@@ -371,6 +393,7 @@ public class DLViewFileEntryDisplayContext {
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private DLViewFileVersionDisplayContext _dlViewFileVersionDisplayContext;
+	private String _documentTitle;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;

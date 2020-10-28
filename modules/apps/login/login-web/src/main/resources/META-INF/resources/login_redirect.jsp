@@ -56,14 +56,13 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			);
 
 			if (messageContainer) {
-				dom.removeClasses(messageContainer, 'alert-danger');
-				dom.removeClasses(messageContainer, 'alert-success');
+				messageContainer.classList.remove('alert-danger', 'alert-success');
 
-				dom.addClasses(messageContainer, 'alert alert-' + type);
+				messageContainer.classList.add(`alert alert-${type}`);
 
 				messageContainer.innerHTML = message;
 
-				dom.removeClasses(messageContainer, 'hide');
+				messageContainer.classList.remove('hide');
 			}
 		});
 
@@ -81,9 +80,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 					var anonymousAccount = form.querySelector('.anonymous-account');
 
 					if (anonymousAccount) {
-						dom.addClasses(anonymousAccount, 'hide');
-
-						dom.removeClasses(anonymousAccount, 'show');
+						anonymousAccount.classList.replace('show', 'hide');
 					}
 				}
 
@@ -119,9 +116,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 						);
 
 						if (anonymousAccount) {
-							dom.addClasses(anonymousAccount, 'hide');
-
-							dom.removeClasses(anonymousAccount, 'show');
+							anonymousAccount.classList.replace('show', 'hide');
 						}
 					})
 					.catch(onError);

@@ -37,7 +37,11 @@
 
 	${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 
-	${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel))}
+	<#local journalContentPortletPreferencesModel = dataFactory.newJournalContentPortletPreferencesModel(fragmentEntryLinkModel)>
+
+	${dataFactory.toInsertSQL(journalContentPortletPreferencesModel)}
+
+	${dataFactory.toInsertSQL(dataFactory.newJournalContentPortletPreferenceValueModel(journalContentPortletPreferencesModel))}
 
 	<#local layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(_layoutModel)>
 

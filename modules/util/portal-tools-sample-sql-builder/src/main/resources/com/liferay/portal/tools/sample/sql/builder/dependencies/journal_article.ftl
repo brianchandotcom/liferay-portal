@@ -66,7 +66,15 @@
 			_mbThreadId=dataFactory.getCounterNext()
 		/>
 
-		${dataFactory.toInsertSQL(dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
+		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
+
+		${dataFactory.toInsertSQL(journalArticleResourcePortletPreferencesModel)}
+
+		<#assign journalArticleResourcePortletPreferenceValueModels = dataFactory.newJournalArticleResourcePortletPreferenceValueModels(journalArticleResourcePortletPreferencesModel, journalArticleResourceModel) />
+
+		<#list journalArticleResourcePortletPreferenceValueModels as journalArticleResourcePortletPreferenceValueModel>
+			${dataFactory.toInsertSQL(journalArticleResourcePortletPreferenceValueModel)}
+		</#list>
 
 		${dataFactory.toInsertSQL(dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.layoutId))}
 	</#list>

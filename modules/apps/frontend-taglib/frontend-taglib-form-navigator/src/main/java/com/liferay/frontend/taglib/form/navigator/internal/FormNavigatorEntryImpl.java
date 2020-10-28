@@ -16,13 +16,18 @@ package com.liferay.frontend.taglib.form.navigator.internal;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryConfigurationHelper;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryUtil;
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
+import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
+import com.liferay.frontend.taglib.form.navigator.internal.configuration.FormNavigatorEntryConfigurationRetriever;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,6 +39,7 @@ import java.util.Optional;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -41,6 +47,20 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = FormNavigatorEntryUtil.class)
 public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
+
+	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
+		String formNavigatorId, String categoryKey, T formModelBean) {
+
+		String context = _getContext(formNavigatorId, formModelBean);
+
+		Optional<List<String>> optionalFormNavigatorEntryKeys =
+			_formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
+				formNavigatorId, categoryKey, context);
+
+		return optionalFormNavigatorEntryKeys.map(
+			formNavigatorEntryKeys -> _getFormNavigatorEntries(
+				formNavigatorId, formNavigatorEntryKeys));
+	}
 
 	@Override
 	public <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
@@ -151,14 +171,59 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 						formNavigatorEntry.getCategoryKey()))),
 			new PropertyServiceReferenceComparator<>(
 				"form.navigator.entry.order"));
+
+		_formNavigatorContextProviderMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<FormNavigatorContextProvider<?>>)
+					(Class<?>)FormNavigatorContextProvider.class,
+				FormNavigatorContextConstants.FORM_NAVIGATOR_ID);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_formNavigatorContextProviderMap.close();
 	}
 
 	private <T> Optional<List<FormNavigatorEntry<T>>>
 		_getConfigurationFormNavigatorEntries(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
-		return _formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
+		return getFormNavigatorEntries(
 			formNavigatorId, categoryKey, formModelBean);
+	}
+
+	private <T> String _getContext(String formNavigatorId, T formModelBean) {
+		FormNavigatorContextProvider<T> formNavigatorContextProvider =
+			(FormNavigatorContextProvider<T>)
+				_formNavigatorContextProviderMap.getService(formNavigatorId);
+
+		if (formNavigatorContextProvider != null) {
+			return formNavigatorContextProvider.getContext(formModelBean);
+		}
+
+		if (formModelBean == null) {
+			return FormNavigatorContextConstants.CONTEXT_ADD;
+		}
+
+		return FormNavigatorContextConstants.CONTEXT_UPDATE;
+	}
+
+	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+		String formNavigatorId, List<String> formNavigatorEntryKeys) {
+
+		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
+
+		for (String key : formNavigatorEntryKeys) {
+			FormNavigatorEntry<T> formNavigatorEntry = _getFormNavigatorEntry(
+				key, formNavigatorId);
+
+			if (formNavigatorEntry != null) {
+				formNavigatorEntries.add(formNavigatorEntry);
+			}
+		}
+
+		return formNavigatorEntries;
 	}
 
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
@@ -176,18 +241,40 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 			_getKey(formNavigatorId, categoryKey));
 	}
 
+	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(
+		String key, String formNavigatorId) {
+
+		FormNavigatorEntry<T> formNavigatorEntry =
+			(FormNavigatorEntry<T>)_formNavigatorEntries.getService(
+				_getKey(key, formNavigatorId));
+
+		if ((formNavigatorEntry == null) && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"There is no form navigator entry for the form ",
+					formNavigatorId, " with key", key));
+		}
+
+		return formNavigatorEntry;
+	}
+
 	private String _getKey(String formNavigatorId, String categoryKey) {
 		return formNavigatorId + StringPool.PERIOD + categoryKey;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FormNavigatorEntryImpl.class);
+
 	@Reference
 	private FormNavigatorCategoryUtil _formNavigatorCategoryUtil;
 
+	private ServiceTrackerMap<String, FormNavigatorContextProvider<?>>
+		_formNavigatorContextProviderMap;
 	private ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntries;
 
 	@Reference
-	private FormNavigatorEntryConfigurationHelper
-		_formNavigatorEntryConfigurationHelper;
+	private FormNavigatorEntryConfigurationRetriever
+		_formNavigatorEntryConfigurationRetriever;
 
 }

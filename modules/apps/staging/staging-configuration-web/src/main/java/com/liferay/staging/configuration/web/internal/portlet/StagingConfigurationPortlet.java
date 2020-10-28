@@ -157,6 +157,8 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			catch (Exception exception) {
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
+
+				return;
 			}
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
@@ -198,6 +200,8 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception, exception);
 				}
+
+				return;
 			}
 		}
 		else if (stagingType == StagingConstants.TYPE_NOT_STAGED) {

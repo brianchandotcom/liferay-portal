@@ -102,7 +102,14 @@ const EditAdaptiveMedia = ({
 		},
 	});
 
-	const {errors, handleChange, setFieldValue, values} = formik;
+	const {
+		errors,
+		handleBlur,
+		handleChange,
+		setFieldValue,
+		touched,
+		values,
+	} = formik;
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
@@ -149,9 +156,10 @@ const EditAdaptiveMedia = ({
 				/>
 
 				<Input
-					error={errors[nameId]}
+					error={touched[nameId] && errors[nameId]}
 					label={Liferay.Language.get('name')}
 					name={nameId}
+					onBlur={handleBlur}
 					onChange={updateUuid}
 					required
 					value={values[nameId]}
@@ -160,6 +168,7 @@ const EditAdaptiveMedia = ({
 				<Input
 					label={Liferay.Language.get('description')}
 					name={descriptionId}
+					onBlur={handleBlur}
 					onChange={handleChange}
 					type="textarea"
 					value={values[descriptionId]}
@@ -187,9 +196,14 @@ const EditAdaptiveMedia = ({
 						<ClayLayout.Col md="3">
 							<Input
 								disabled={!configurationEntryEditable}
-								error={errors[maxWidthId]}
+								error={
+									touched[maxWidthId] &&
+									touched[maxHeightId] &&
+									errors[maxWidthId]
+								}
 								label={Liferay.Language.get('max-width-px')}
 								name={maxWidthId}
+								onBlur={handleBlur}
 								onChange={handleChange}
 								type="number"
 								value={values[maxWidthId]}
@@ -198,9 +212,14 @@ const EditAdaptiveMedia = ({
 						<ClayLayout.Col md="3">
 							<Input
 								disabled={!configurationEntryEditable}
-								error={errors[maxHeightId]}
+								error={
+									touched[maxWidthId] &&
+									touched[maxHeightId] &&
+									errors[maxHeightId]
+								}
 								label={Liferay.Language.get('max-height-px')}
 								name={maxHeightId}
+								onBlur={handleBlur}
 								onChange={handleChange}
 								type="number"
 								value={values[maxHeightId]}
@@ -253,9 +272,14 @@ const EditAdaptiveMedia = ({
 
 					<Input
 						disabled={automaticId || !configurationEntryEditable}
-						error={!automaticId && errors[newUuidId]}
+						error={
+							!automaticId &&
+							touched[newUuidId] &&
+							errors[newUuidId]
+						}
 						label={Liferay.Language.get('id')}
 						name={newUuidId}
+						onBlur={handleBlur}
 						onChange={handleChange}
 						value={values[newUuidId]}
 					/>

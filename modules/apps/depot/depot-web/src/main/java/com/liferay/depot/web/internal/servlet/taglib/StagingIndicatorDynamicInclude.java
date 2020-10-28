@@ -275,7 +275,9 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 									"problem")
 					),
 					JSONUtil.put(
-						"href",
+						"action", "publishToLive"
+					).put(
+						"publishURL",
 						_getPublishToLiveURL(scopeGroup, httpServletRequest)
 					).put(
 						"label",

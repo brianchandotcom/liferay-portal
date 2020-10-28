@@ -18,10 +18,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Component = ({iconClass, iconName, items, title}) => {
+	let tranformedItems = items.map((item) => {
+		if (item.action && item.action === 'publishToLive') {
+			return {
+				...item,
+				onClick() {
+					Liferay.Util.openModal({
+						title: item.label,
+						url: item.publishURL,
+					});
+				},
+			};
+		}
+		else return item;
+	});
+
 	return (
 		<ClayDropDownWithItems
 			alignmentPosition={Align.BottomCenter}
-			items={items}
+			items={tranformedItems}
 			trigger={
 				<button className="staging-indicator-button">
 					<ClayIcon className={iconClass} symbol={iconName} />

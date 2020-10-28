@@ -125,6 +125,8 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
+		Portlet.addPG(portletName = "Blogs");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Blogs");
@@ -152,6 +154,14 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_imageFileName = "Document_3.jpg",
+			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
 
 		ProductMenu.gotoLiveSite(site = "Site Name");
 

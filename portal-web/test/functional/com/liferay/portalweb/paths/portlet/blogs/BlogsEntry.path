@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_SMALL_IMAGE</td>
+	<td>//div[contains(@class,'asset-small-image')]//img[contains(@src,'${key_imageFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_VIDEO</td>
 	<td>//div[contains(@class,'embed')]//iframe[contains(@src,'${key_service}')]</td>
 	<td></td>

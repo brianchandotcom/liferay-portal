@@ -25,13 +25,10 @@ FileEntry fileEntry = dlViewFileEntryDisplayContext.getFileEntry();
 
 FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 
-com.liferay.portal.kernel.lock.Lock lock = fileEntry.getLock();
-
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), DLAssetHelperUtil.getAssetClassPK(dlViewFileEntryDisplayContext.getFileEntry(), dlViewFileEntryDisplayContext.getFileVersion()));
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
-DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 final DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 
@@ -81,11 +78,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="rowIdsFolder" type="hidden" />
 	</aui:form>
 
-	<%
-	boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-	%>
-
-	<c:if test="<%= !portletTitleBasedNavigation && showHeader && (fileEntry.getFolder() != null) %>">
+	<c:if test="<%= !portletTitleBasedNavigation && dlViewFileEntryDisplayContext.isShowHeader() %>">
 		<liferay-ui:header
 			backURL="<%= dlViewFileEntryDisplayContext.getRedirect() %>"
 			localizeTitle="<%= false %>"
@@ -147,26 +140,10 @@ if (portletTitleBasedNavigation) {
 				</div>
 			</c:if>
 
-			<c:if test="<%= (lock != null) && DLFileEntryPermission.contains(permissionChecker, dlViewFileEntryDisplayContext.getFileEntry(), ActionKeys.UPDATE) %>">
-				<c:choose>
-					<c:when test="<%= fileEntry.hasLock() %>">
-						<div class="alert alert-info">
-							<c:choose>
-								<c:when test="<%= lock.isNeverExpires() %>">
-									<liferay-ui:message key="you-now-have-an-indefinite-lock-on-this-document" />
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message arguments="<%= StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, DLFileEntryConstants.LOCK_EXPIRATION_TIME)) %>" key="you-now-have-a-lock-on-this-document" translateArguments="<%= false %>" />
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="alert alert-danger">
-							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())} %>" key="you-cannot-modify-this-document-because-it-was-locked-by-x-on-x" translateArguments="<%= false %>" />
-						</div>
-					</c:otherwise>
-				</c:choose>
+			<c:if test="<%= dlViewFileEntryDisplayContext.isShowLockInfo() %>">
+				<div class="alert <%= dlViewFileEntryDisplayContext.getLockInfoCssClass() %>">
+					<%= dlViewFileEntryDisplayContext.getLockInfoMessage(locale) %>
+				</div>
 			</c:if>
 
 			<div class="body-row">
@@ -187,11 +164,7 @@ if (portletTitleBasedNavigation) {
 
 				</c:if>
 
-				<%
-				boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
-				%>
-
-				<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
+				<c:if test="<%= dlViewFileEntryDisplayContext.isShowComments() %>">
 
 					<%
 					DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
@@ -211,7 +184,7 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
+<c:if test="<%= dlViewFileEntryDisplayContext.isShowVersionDetails() %>">
 
 	<%
 	request.setAttribute("edit_file_entry.jsp-checkedOut", fileEntry.isCheckedOut());

@@ -170,7 +170,6 @@ page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.repository.AuthenticationRepositoryException" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryConfiguration" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
-page import="com.liferay.portal.kernel.repository.capabilities.CommentCapability" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileShortcut" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@

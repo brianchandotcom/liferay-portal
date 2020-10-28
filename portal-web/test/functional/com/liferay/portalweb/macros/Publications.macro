@@ -213,9 +213,9 @@ definition {
 
 		AssertElementPresent(
 			key_iframeTitle = "${entryTitle}",
-			locator1 = "IFrame#IFRAME_TITLE");
+			locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME_TITLE");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "Publications#CONFICTING_PUBLICATIONS_IFRAME");
 	}
 
 	macro publishPublication {

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class SharingVerifyEmailAddressMVCResourceCommand
+public class VerifyEmailAddressMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override

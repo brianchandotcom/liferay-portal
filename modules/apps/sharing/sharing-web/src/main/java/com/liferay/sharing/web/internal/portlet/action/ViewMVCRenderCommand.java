@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SharingPortletKeys.SHARING,
-		"mvc.command.name=/", "mvc.command.name=/sharing/share"
+		"javax.portlet.name=" + SharingPortletKeys.SHARING, "mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
 )
@@ -90,7 +89,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	private String _getAutocompleteUserURL(RenderResponse renderResponse) {
 		ResourceURL autocompleteUserURL = renderResponse.createResourceURL();
 
-		autocompleteUserURL.setResourceID("/sharing/users");
+		autocompleteUserURL.setResourceID("/sharing/autocomplete_users");
 
 		return autocompleteUserURL.toString();
 	}
@@ -99,7 +98,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		PortletURL shareActionURL = renderResponse.createActionURL();
 
 		shareActionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/sharing/share");
+			ActionRequest.ACTION_NAME, "/sharing/share_entry");
 
 		return shareActionURL.toString();
 	}

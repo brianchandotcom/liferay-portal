@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARING,
-		"mvc.command.name=/sharing/users"
+		"mvc.command.name=/sharing/autocomplete_users"
 	},
 	service = MVCResourceCommand.class
 )

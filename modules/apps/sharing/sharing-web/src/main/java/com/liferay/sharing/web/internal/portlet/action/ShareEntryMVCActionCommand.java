@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARING,
-		"mvc.command.name=/sharing/share"
+		"mvc.command.name=/sharing/share_entry"
 	},
 	service = MVCActionCommand.class
 )

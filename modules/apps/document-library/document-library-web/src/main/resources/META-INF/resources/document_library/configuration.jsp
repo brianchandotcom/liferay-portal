@@ -190,7 +190,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								);
 
 								Array.prototype.forEach.call(options, function (option) {
-									dom.exitDocument(option);
+									option.remove();
 								});
 							}
 						}

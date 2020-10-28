@@ -20,6 +20,9 @@ import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -68,15 +71,32 @@ public abstract class BaseDispatchTaskExecutor implements DispatchTaskExecutor {
 				DispatchTaskStatus.SUCCESSFUL);
 		}
 		catch (Throwable throwable) {
+			String error = dispatchTaskExecutorOutput.getError();
+
+			if (Validator.isNull(error)) {
+				error = throwable.getMessage();
+
+				if (Validator.isNull(error)) {
+					Class<? extends Throwable> throwableClass =
+						throwable.getClass();
+
+					error = "Unable to execute due " + throwableClass.getName();
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to execute task", throwable);
+					}
+				}
+			}
+
 			dispatchLogLocalService.updateDispatchLog(
-				dispatchLog.getDispatchLogId(), new Date(),
-				dispatchTaskExecutorOutput.getError(),
+				dispatchLog.getDispatchLogId(), new Date(), error,
 				dispatchTaskExecutorOutput.getOutput(),
 				DispatchTaskStatus.FAILED);
-
-			throw throwable;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDispatchTaskExecutor.class);
 
 	private static final ServiceTracker<?, DispatchLogLocalService>
 		_dispatchLogLocalServiceTracker = ServiceTrackerFactory.open(

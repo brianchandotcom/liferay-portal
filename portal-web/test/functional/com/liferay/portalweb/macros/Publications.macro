@@ -116,8 +116,9 @@ definition {
 		if ("${conflictingPublications}" == "true") {
 			Click(
 				key_entryTitle = "${entryTitle}",
-				locator1 = "Publications#CONFICTING_CHANGES_DISCARD_BUTTON",
-				value1 = "Discard");
+				locator1 = "Publications#CONFICTING_CHANGES_DISCARD_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Discard Change");
 		}
 		else {
 			var key_publicationsCategory = "${publicationsCategory}";

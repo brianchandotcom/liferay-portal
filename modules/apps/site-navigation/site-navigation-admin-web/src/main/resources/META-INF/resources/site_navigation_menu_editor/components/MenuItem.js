@@ -32,18 +32,7 @@ import {
 	useSetSelectedMenuItemId,
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
-
-const deleteItem = (items, itemId) =>
-	items.reduce(
-		(acc, item) =>
-			item.siteNavigationMenuItemId === itemId
-				? [...acc, ...item.children]
-				: [
-						...acc,
-						{...item, children: deleteItem(item.children, itemId)},
-				  ],
-		[]
-	);
+import deleteItem from '../utils/deleteItem';
 
 export const MenuItem = ({item}) => {
 	const {deleteSiteNavigationMenuItemURL, portletNamespace} = useConstants();

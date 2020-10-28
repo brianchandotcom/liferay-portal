@@ -7,61 +7,73 @@
 			"defaultLanguageId": "en_US",
 			"fieldValues": [
 				{
+					"fieldReference": "requireAuthentication",
 					"instanceId": "",
 					"name": "requireAuthentication",
 					"value": "false"
 				},
 				{
+					"fieldReference": "requireCaptcha",
 					"instanceId": "",
 					"name": "requireCaptcha",
 					"value": "false"
 				},
 				{
+					"fieldReference": "autosaveEnabled",
 					"instanceId": "",
 					"name": "autosaveEnabled",
 					"value": "true"
 				},
 				{
+					"fieldReference": "redirectURL",
 					"instanceId": "",
 					"name": "redirectURL",
 					"value": ""
 				},
 				{
+					"fieldReference": "storageType",
 					"instanceId": "",
 					"name": "storageType",
 					"value": "[\"json\"]"
 				},
 				{
+					"fieldReference": "workflowDefinition",
 					"instanceId": "",
 					"name": "workflowDefinition",
 					"value": "[\"no-workflow\"]"
 				},
 				{
+					"fieldReference": "sendEmailNotification",
 					"instanceId": "",
 					"name": "sendEmailNotification",
 					"value": "false"
 				},
 				{
+					"fieldReference": "emailFromName",
 					"instanceId": "",
 					"name": "emailFromName",
 					"value": ""
 				},
 				{
+					"fieldReference": "emailFromAddress",
 					"instanceId": "",
 					"name": "emailFromAddress",
 					"value": ""
 				},
 				{
+					"fieldReference": "emailToAddress",
 					"instanceId": "",
 					"name": "emailToAddress",
 					"value": ""
 				},
 				{
+					"fieldReference": "emailSubject",
 					"instanceId": "",
 					"name": "emailSubject",
 					"value": ""
 				},
 				{
+					"fieldReference": "published",
 					"instanceId": "",
 					"name": "published",
 					"value": "true"

@@ -15,16 +15,19 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
+import com.liferay.document.library.util.DLAssetHelper;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext;
-import com.liferay.document.library.web.internal.util.DLWebComponentProvider;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -142,6 +145,15 @@ public class ViewFileEntryMVCRenderCommand
 				DLViewFileEntryDisplayContext.class.getName(),
 				dlViewFileEntryDisplayContext);
 
+			AssetEntry layoutAssetEntry = _assetEntryLocalService.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				_dlAssetHelper.getAssetClassPK(
+					dlViewFileEntryDisplayContext.getFileEntry(),
+					dlViewFileEntryDisplayContext.getFileVersion()));
+
+			renderRequest.setAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+
 			return super.render(renderRequest, renderResponse);
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
@@ -166,12 +178,18 @@ public class ViewFileEntryMVCRenderCommand
 		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
 
 	@Reference
-	private Portal _portal;
+	private DLAssetHelper _dlAssetHelper;
 
 	@Reference
 	private DLDisplayContextProvider _dlDisplayContextProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

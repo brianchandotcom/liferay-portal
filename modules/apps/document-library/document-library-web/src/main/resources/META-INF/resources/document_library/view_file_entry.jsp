@@ -25,10 +25,6 @@ FileEntry fileEntry = dlViewFileEntryDisplayContext.getFileEntry();
 
 FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 
-AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), DLAssetHelperUtil.getAssetClassPK(dlViewFileEntryDisplayContext.getFileEntry(), dlViewFileEntryDisplayContext.getFileVersion()));
-
-request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-
 boolean addPortletBreadcrumbEntries = ParamUtil.getBoolean(request, "addPortletBreadcrumbEntries", true);
 
 if (addPortletBreadcrumbEntries) {

@@ -150,7 +150,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		'#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode',
 		function (event) {
 			Array.prototype.forEach.call(alternatingElements, function (element) {
-				dom.toggleClasses(element, 'hide');
+				element.classList.toggle('hide');
 			});
 		}
 	);

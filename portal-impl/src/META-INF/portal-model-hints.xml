@@ -1207,9 +1207,13 @@
 		<field name="portletPreferenceValueId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="portletPreferencesId" type="long" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="index" type="int" />
-		<field name="smallValue" type="String" />
+		<field name="smallValue" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="largeValue" type="String">
 			<hint-collection name="CLOB" />
 		</field>

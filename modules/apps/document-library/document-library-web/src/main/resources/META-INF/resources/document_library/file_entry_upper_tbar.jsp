@@ -17,10 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (DLViewFileVersionDisplayContext)request.getAttribute("file_entry_upper_tbar.jsp-dlViewFileVersionDisplayContext");
 String documentTitle = GetterUtil.getString(request.getAttribute("file_entry_upper_tbar.jsp-documentTitle"));
 FileEntry fileEntry = (FileEntry)request.getAttribute("file_entry_upper_tbar.jsp-fileEntry");
 FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tbar.jsp-fileVersion");
+
+final DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
 <div class="upper-tbar-container-fixed">

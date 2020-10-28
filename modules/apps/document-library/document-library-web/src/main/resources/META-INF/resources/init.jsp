@@ -220,10 +220,7 @@ page import="com.liferay.portlet.documentlibrary.DLGroupServiceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.constants.DLConstants" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
-page import="com.liferay.taglib.util.PortalIncludeUtil" %><%@
 page import="com.liferay.trash.model.TrashEntry" %>
-
-<%@ page import="java.io.IOException" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %>

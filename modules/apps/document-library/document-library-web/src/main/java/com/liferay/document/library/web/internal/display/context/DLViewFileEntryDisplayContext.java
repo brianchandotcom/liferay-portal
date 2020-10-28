@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
+import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -36,9 +39,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.text.Format;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -46,6 +51,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Adolfo Pérez
@@ -53,14 +60,32 @@ import javax.servlet.http.HttpServletRequest;
 public class DLViewFileEntryDisplayContext {
 
 	public DLViewFileEntryDisplayContext(
+		DLDisplayContextProvider dlDisplayContextProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_dlDisplayContextProvider = dlDisplayContextProvider;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletResponse = PortalUtil.getHttpServletResponse(
+			renderResponse);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getDiscussionClassName() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.getDiscussionClassName();
+	}
+
+	public long getDiscussionClassPK() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.getDiscussionClassPK();
 	}
 
 	public FileEntry getFileEntry() {
@@ -184,6 +209,13 @@ public class DLViewFileEntryDisplayContext {
 		return _redirect;
 	}
 
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.getToolbarItems();
+	}
+
 	public boolean isShowComments() {
 		boolean showComments = ParamUtil.getBoolean(
 			_renderRequest, "showComments", true);
@@ -264,6 +296,29 @@ public class DLViewFileEntryDisplayContext {
 		return _versionSpecific;
 	}
 
+	public void renderPreview(PageContext pageContext) throws Exception {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		PortalIncludeUtil.include(
+			pageContext, dlViewFileVersionDisplayContext::renderPreview);
+	}
+
+	private DLViewFileVersionDisplayContext
+			_getDLViewFileVersionDisplayContext()
+		throws PortalException {
+
+		if (_dlViewFileVersionDisplayContext != null) {
+			return _dlViewFileVersionDisplayContext;
+		}
+
+		_dlViewFileVersionDisplayContext =
+			_dlDisplayContextProvider.getDLViewFileVersionDisplayContext(
+				_httpServletRequest, _httpServletResponse, getFileVersion());
+
+		return _dlViewFileVersionDisplayContext;
+	}
+
 	private Lock _getLock() {
 		if (_lock != null) {
 			return _lock;
@@ -289,9 +344,12 @@ public class DLViewFileEntryDisplayContext {
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
+	private final DLDisplayContextProvider _dlDisplayContextProvider;
+	private DLViewFileVersionDisplayContext _dlViewFileVersionDisplayContext;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 	private Lock _lock;
 	private String _redirect;
 	private final RenderRequest _renderRequest;

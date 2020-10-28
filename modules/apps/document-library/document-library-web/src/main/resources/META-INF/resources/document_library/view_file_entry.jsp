@@ -19,7 +19,7 @@
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#pre" />
 
 <%
-DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext = new DLViewFileEntryDisplayContext(renderRequest, renderResponse);
+DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext = new DLViewFileEntryDisplayContext(dlDisplayContextProvider, renderRequest, renderResponse);
 
 FileEntry fileEntry = dlViewFileEntryDisplayContext.getFileEntry();
 
@@ -30,7 +30,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-final DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -56,7 +55,6 @@ if (portletTitleBasedNavigation) {
 	<c:if test="<%= portletTitleBasedNavigation %>">
 
 		<%
-		request.setAttribute("file_entry_upper_tbar.jsp-dlViewFileVersionDisplayContext", dlViewFileVersionDisplayContext);
 		request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", documentTitle);
 		request.setAttribute("file_entry_upper_tbar.jsp-fileEntry", dlViewFileEntryDisplayContext.getFileEntry());
 		request.setAttribute("file_entry_upper_tbar.jsp-fileVersion", dlViewFileEntryDisplayContext.getFileVersion());
@@ -125,7 +123,7 @@ if (portletTitleBasedNavigation) {
 					<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 
 						<%
-						for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+						for (ToolbarItem toolbarItem : dlViewFileEntryDisplayContext.getToolbarItems()) {
 						%>
 
 							<liferay-ui:toolbar-item
@@ -150,16 +148,7 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
 
 					<%
-					PortalIncludeUtil.include(
-						pageContext,
-						new PortalIncludeUtil.HTMLRenderer() {
-
-							@Override
-							public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-								dlViewFileVersionDisplayContext.renderPreview(request, response);
-							}
-
-						});
+					dlViewFileEntryDisplayContext.renderPreview(pageContext);
 					%>
 
 				</c:if>
@@ -171,8 +160,8 @@ if (portletTitleBasedNavigation) {
 					%>
 
 					<liferay-comment:discussion
-						className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
-						classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"
+						className="<%= dlViewFileEntryDisplayContext.getDiscussionClassName() %>"
+						classPK="<%= dlViewFileEntryDisplayContext.getDiscussionClassPK() %>"
 						formName="fm2"
 						ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
 						redirect="<%= currentURL %>"

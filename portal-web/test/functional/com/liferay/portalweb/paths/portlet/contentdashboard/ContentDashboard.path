@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLIP_AXES_BUTTON</td>
+	<td>//button[contains(@class, 'btn-outline-borderless') and contains(@type,'submit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GLOBAL_SITE_CARD</td>
 	<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, 'Global')]</td>
 	<td></td>

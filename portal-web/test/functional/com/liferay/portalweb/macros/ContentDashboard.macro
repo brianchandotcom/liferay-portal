@@ -260,6 +260,10 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro flipAxesButtonClick {
+		Click(locator1 = "ContentDashboard#FLIP_AXES_BUTTON");
+	}
+
 	macro openInfoPanelByDropdownMenu {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 

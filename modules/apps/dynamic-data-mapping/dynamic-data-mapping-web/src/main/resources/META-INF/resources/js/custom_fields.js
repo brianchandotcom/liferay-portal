@@ -573,7 +573,7 @@ AUI.add(
 						criteria:
 							'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion',
 						itemSelectedEventName:
-							portletNamespace + 'selectContent',
+							portletNamespace + 'selectDocumentLibrary',
 						p_auth: Liferay.authToken,
 						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 						p_p_mode: 'view',

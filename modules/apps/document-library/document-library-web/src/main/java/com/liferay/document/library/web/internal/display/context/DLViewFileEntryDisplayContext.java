@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -64,16 +65,14 @@ import javax.servlet.jsp.PageContext;
 public class DLViewFileEntryDisplayContext {
 
 	public DLViewFileEntryDisplayContext(
+		DLAdminDisplayContext dlAdminDisplayContext,
 		DLDisplayContextProvider dlDisplayContextProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_dlAdminDisplayContext = dlAdminDisplayContext;
 		_dlDisplayContextProvider = dlDisplayContextProvider;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_dlAdminDisplayContext =
-			(DLAdminDisplayContext)renderRequest.getAttribute(
-				DLAdminDisplayContext.class.getName());
 
 		_dlRequestHelper = (DLRequestHelper)renderRequest.getAttribute(
 			DLRequestHelper.class.getName());
@@ -221,6 +220,13 @@ public class DLViewFileEntryDisplayContext {
 				DLFileEntryConstants.LOCK_EXPIRATION_TIME));
 	}
 
+	public Menu getMenu() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.getMenu();
+	}
+
 	public String getRedirect() throws PortalException {
 		if (_redirect != null) {
 			return _redirect;
@@ -261,11 +267,32 @@ public class DLViewFileEntryDisplayContext {
 		return dlViewFileVersionDisplayContext.getToolbarItems();
 	}
 
+	public boolean isDownloadLinkVisible() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.isDownloadLinkVisible();
+	}
+
 	public boolean isEnableDiscussionRatings() {
 		DLPortletInstanceSettings dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
 
 		return dlPortletInstanceSettings.isEnableCommentRatings();
+	}
+
+	public boolean isShared() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.isShared();
+	}
+
+	public boolean isSharingLinkVisible() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.isSharingLinkVisible();
 	}
 
 	public boolean isShowComments() {

@@ -16,12 +16,15 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext;
+import com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext;
+import com.liferay.document.library.web.internal.util.DLWebComponentProvider;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -130,6 +133,15 @@ public class ViewFileEntryMVCRenderCommand
 						_portal.getHttpServletResponse(renderResponse),
 						dlAdminDisplayContext));
 
+			DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext =
+				new DLViewFileEntryDisplayContext(
+					dlAdminDisplayContext, _dlDisplayContextProvider,
+					renderRequest, renderResponse);
+
+			renderRequest.setAttribute(
+				DLViewFileEntryDisplayContext.class.getName(),
+				dlViewFileEntryDisplayContext);
+
 			return super.render(renderRequest, renderResponse);
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
@@ -158,5 +170,8 @@ public class ViewFileEntryMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private DLDisplayContextProvider _dlDisplayContextProvider;
 
 }

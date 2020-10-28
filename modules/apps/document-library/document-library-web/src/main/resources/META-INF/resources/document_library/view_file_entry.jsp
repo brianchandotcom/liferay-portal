@@ -19,7 +19,7 @@
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#pre" />
 
 <%
-DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext = new DLViewFileEntryDisplayContext(dlDisplayContextProvider, renderRequest, renderResponse);
+DLViewFileEntryDisplayContext dlViewFileEntryDisplayContext = (DLViewFileEntryDisplayContext)request.getAttribute(DLViewFileEntryDisplayContext.class.getName());
 
 FileEntry fileEntry = dlViewFileEntryDisplayContext.getFileEntry();
 
@@ -47,14 +47,6 @@ if (portletTitleBasedNavigation) {
 
 <div class="<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>" id="<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>">
 	<c:if test="<%= portletTitleBasedNavigation %>">
-
-		<%
-		request.setAttribute("file_entry_upper_tbar.jsp-documentTitle", dlViewFileEntryDisplayContext.getDocumentTitle());
-		request.setAttribute("file_entry_upper_tbar.jsp-fileEntry", dlViewFileEntryDisplayContext.getFileEntry());
-		request.setAttribute("file_entry_upper_tbar.jsp-fileVersion", dlViewFileEntryDisplayContext.getFileVersion());
-		request.setAttribute("file_entry_upper_tbar.jsp-versionSpecific", dlViewFileEntryDisplayContext.isVersionSpecific());
-		%>
-
 		<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
 	</c:if>
 

@@ -24,7 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
 	public LinkedHashMap<String, Object> getOrganizationParams() {

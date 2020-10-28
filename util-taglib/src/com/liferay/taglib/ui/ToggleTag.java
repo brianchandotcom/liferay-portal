@@ -32,7 +32,9 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class ToggleTag extends IncludeTag {
 
 	public static void doTag(

@@ -12,6 +12,7 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
+		<description>Deprecated as of 7.3.0, replaced by the <![CDATA[<code>clay:alert</code>]]> tag.</description>
 		<name>alert</name>
 		<tag-class>com.liferay.taglib.ui.AlertTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2178,6 +2179,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>organization-search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.OrganizationSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2474,6 +2476,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, replaced by the <![CDATA[<code>liferay-ratings:ratings</code>]]> tag.</description>
 		<name>ratings</name>
 		<tag-class>com.liferay.taglib.ui.RatingsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3411,6 +3414,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>search-speed</name>
 		<tag-class>com.liferay.taglib.ui.SearchSpeedTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3514,6 +3518,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>table-iterator</name>
 		<tag-class>com.liferay.taglib.ui.TableIteratorTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.TableIteratorTei</tei-class>
@@ -3653,7 +3658,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that toggles the visibility of the content of the component matching the given <![CDATA[<code>id</code>]]>. Default icons are used as the component's default mechanism for showing and hiding the content.</description>
+		<description>Creates a component that toggles the visibility of the content of the component matching the given <![CDATA[<code>id</code>]]>. Default icons are used as the component's default mechanism for showing and hiding the content. Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>toggle</name>
 		<tag-class>com.liferay.taglib.ui.ToggleTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3702,7 +3707,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that toggles the visibility of a <![CDATA[<code>div</code>]]> and its contents.</description>
+		<description>Creates a component that toggles the visibility of a <![CDATA[<code>div</code>]]> and its contents. Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>toggle-area</name>
 		<tag-class>com.liferay.taglib.ui.ToggleAreaTag</tag-class>
 		<body-content>JSP</body-content>

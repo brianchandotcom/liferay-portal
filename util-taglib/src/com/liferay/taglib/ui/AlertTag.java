@@ -30,7 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag}
  */
+@Deprecated
 public class AlertTag extends IncludeTag {
 
 	@Override

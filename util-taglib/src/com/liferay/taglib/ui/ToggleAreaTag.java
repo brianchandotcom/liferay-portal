@@ -24,7 +24,9 @@ import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class ToggleAreaTag extends IncludeTag {
 
 	@Override

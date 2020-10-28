@@ -5081,8 +5081,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Group remoteGroup = GroupServiceHttp.getGroup(
 				httpPrincipal, remoteGroupId);
 
-			if (group.isCompany() ^
-				isCompanyGroup(httpPrincipal, remoteGroup)) {
+			if ((group.isCompany() ^
+				 isCompanyGroup(httpPrincipal, remoteGroup)) ||
+				(group.isDepot() ^ remoteGroup.isDepot())) {
 
 				RemoteExportException remoteExportException =
 					new RemoteExportException(

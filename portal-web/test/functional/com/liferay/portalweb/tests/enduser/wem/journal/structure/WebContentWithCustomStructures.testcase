@@ -1079,6 +1079,8 @@ definition {
 	@description = "This is a use case for LRQA-61632. Add web content with repeatable HTML field."
 	@priority = "4"
 	test AddWebContentWithRepeatableHTMLField {
+		property environment.acceptance = "true";
+
 		task ("Add a web content structure with a repeatable HTML field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

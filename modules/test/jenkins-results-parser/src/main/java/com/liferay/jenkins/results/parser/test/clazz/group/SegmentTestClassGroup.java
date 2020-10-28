@@ -36,8 +36,16 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _axisTestClassGroups.get(segmentIndex);
 	}
 
+	public String getBatchName() {
+		return _parentBatchTestClassGroup.getBatchName();
+	}
+
 	public List<AxisTestClassGroup> getChildAxisTestClassGroups() {
 		return new ArrayList<>(_axisTestClassGroups);
+	}
+
+	public Integer getMaximumSlavesPerHost() {
+		return _parentBatchTestClassGroup.getMaximumSlavesPerHost();
 	}
 
 	public Integer getMinimumSlaveRAM() {

@@ -117,11 +117,11 @@ const EditAdaptiveMedia = ({
 		}
 	}, [redirect]);
 
-	const updateUuid = (event) => {
+	const handleChangeUuid = (event) => {
 		const nameValue = event.target.value;
 
-		if (automaticId && !amImageConfigurationEntry) {
-			values[newUuidId] = normalizeFriendlyURL(nameValue);
+		if (automaticId) {
+			setFieldValue(newUuidId, normalizeFriendlyURL(nameValue), false);
 		}
 
 		setFieldValue(nameId, nameValue);
@@ -160,7 +160,7 @@ const EditAdaptiveMedia = ({
 					label={Liferay.Language.get('name')}
 					name={nameId}
 					onBlur={handleBlur}
-					onChange={updateUuid}
+					onChange={handleChangeUuid}
 					required
 					value={values[nameId]}
 				/>

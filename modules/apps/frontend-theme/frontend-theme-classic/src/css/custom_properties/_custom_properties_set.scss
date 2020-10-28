@@ -16,6 +16,10 @@
 	padding-bottom: var(--aspect-ratio-16-to-9);
 }
 
+.card-type-asset .aspect-ratio {
+	padding-bottom: var(--aspect-ratio-16-to-9);
+}
+
 // Background and text color variants
 
 @each $color, $value in $custom-properties-theme-colors {

@@ -18,27 +18,17 @@ import React, {useContext} from 'react';
 import {liferayNavigate} from '../../utilities/index';
 import MiniCartContext from './MiniCartContext';
 import {WORKFLOW_STATUS_APPROVED} from './util/constants';
+import {hasErrors} from './util/index';
 
-function OrderButton(props) {
+function OrderButton() {
 	const {actionURLs, cartState} = useContext(MiniCartContext),
-		{cartItems} = cartState,
-		{length: numberOfItems = 0} = cartItems || {},
+		{cartItems = []} = cartState,
+		{length: numberOfItems = 0} = cartItems,
 		{workflowStatusInfo} = cartState,
-		{code: workflowStatus = WORKFLOW_STATUS_APPROVED} =
-			workflowStatusInfo || {},
-		{checkoutURL} = actionURLs;
+		{code: workflowStatus} = workflowStatusInfo || {},
+		{checkoutURL, orderDetailURL} = actionURLs;
 
-	var label;
-
-	if (props && props.label) {
-		label = Liferay.Language.get(props.label);
-	}
-	else if (workflowStatus === WORKFLOW_STATUS_APPROVED) {
-		label = Liferay.Language.get('submit');
-	}
-	else {
-		label = Liferay.Language.get('review-order');
-	}
+	const errors = hasErrors(cartItems);
 
 	return (
 		<div className={'mini-cart-submit'}>
@@ -46,10 +36,12 @@ function OrderButton(props) {
 				block
 				disabled={!numberOfItems}
 				onClick={() => {
-					liferayNavigate(checkoutURL);
+					liferayNavigate(errors ? orderDetailURL : checkoutURL);
 				}}
 			>
-				{label}
+				{workflowStatus === WORKFLOW_STATUS_APPROVED && !errors
+					? Liferay.Language.get('submit')
+					: Liferay.Language.get('review-order')}
 			</ClayButton>
 		</div>
 	);

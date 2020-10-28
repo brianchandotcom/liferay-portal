@@ -40,6 +40,7 @@ const REMOVAL_TIMEOUT = 2000,
 function CartItem({item: cartItem}) {
 	const {
 		cartItems: childItems,
+		errorMessages,
 		id: cartItemId,
 		name,
 		options: rawOptions,
@@ -225,6 +226,17 @@ function CartItem({item: cartItem}) {
 					<ClayIcon spritemap={spritemap} symbol={'times'} />
 				</button>
 			</div>
+
+			{errorMessages && (
+				<div className={'mini-cart-item-errors'}>
+					<ClayIcon
+						spritemap={spritemap}
+						symbol={'exclamation-circle'}
+					/>
+
+					<span>{errorMessages}</span>
+				</div>
+			)}
 
 			{isShowingErrors && (
 				<div className={'mini-cart-item-errors'}>

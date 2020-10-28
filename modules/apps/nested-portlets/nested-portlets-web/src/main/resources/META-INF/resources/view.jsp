@@ -31,9 +31,7 @@
 		<liferay-ui:message key="drag-applications-below-to-nest-them" />
 	</div>
 
-	<aui:script require="metal-dom/src/dom">
-		var dom = metalDomSrcDom.default;
-
+	<aui:script>
 		var portletWrapper = document.getElementById(
 			'p_p_id_<%= portletDisplay.getId() %>_'
 		);
@@ -49,9 +47,7 @@
 			);
 
 			if (nestedPortletsMsg) {
-				dom.addClasses(nestedPortletsMsg, 'show');
-
-				dom.removeClasses(nestedPortletsMsg, 'hide');
+				nestedPortletsMsg.classList.replace('hide', 'show');
 			}
 		}
 	</aui:script>

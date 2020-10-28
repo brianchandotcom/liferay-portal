@@ -37,7 +37,7 @@ public class DDMStructureField {
 	}
 
 	public String getDDMStructureId() {
-		return _ddmSructureId;
+		return _ddmStructureId;
 	}
 
 	public String getIndexType() {
@@ -60,14 +60,14 @@ public class DDMStructureField {
 		String ddmStructureId, String indexType, String locale, String name,
 		String type) {
 
-		_ddmSructureId = ddmStructureId;
+		_ddmStructureId = ddmStructureId;
 		_indexType = indexType;
 		_locale = locale;
 		_name = name;
 		_type = type;
 	}
 
-	private final String _ddmSructureId;
+	private final String _ddmStructureId;
 	private final String _indexType;
 	private final String _locale;
 	private final String _name;

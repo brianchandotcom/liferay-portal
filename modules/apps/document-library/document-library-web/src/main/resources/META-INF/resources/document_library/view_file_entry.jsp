@@ -29,8 +29,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
@@ -120,21 +118,18 @@ if (portletTitleBasedNavigation) {
 						label="info"
 					/>
 
-					<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+					<%
+					for (ToolbarItem toolbarItem : dlViewFileEntryDisplayContext.getToolbarItems()) {
+					%>
 
-						<%
-						for (ToolbarItem toolbarItem : dlViewFileEntryDisplayContext.getToolbarItems()) {
-						%>
+						<liferay-ui:toolbar-item
+							toolbarItem="<%= toolbarItem %>"
+						/>
 
-							<liferay-ui:toolbar-item
-								toolbarItem="<%= toolbarItem %>"
-							/>
+					<%
+					}
+					%>
 
-						<%
-						}
-						%>
-
-					</c:if>
 				</div>
 			</c:if>
 
@@ -154,18 +149,13 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= dlViewFileEntryDisplayContext.isShowComments() %>">
-
-					<%
-					DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
-					%>
-
 					<liferay-comment:discussion
 						className="<%= dlViewFileEntryDisplayContext.getDiscussionClassName() %>"
 						classPK="<%= dlViewFileEntryDisplayContext.getDiscussionClassPK() %>"
 						formName="fm2"
-						ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
+						ratingsEnabled="<%= dlViewFileEntryDisplayContext.isEnableDiscussionRatings() %>"
 						redirect="<%= currentURL %>"
-						userId="<%= PortalUtil.getValidUserId(fileEntry.getCompanyId(), fileEntry.getUserId()) %>"
+						userId="<%= dlViewFileEntryDisplayContext.getDiscussionUserId() %>"
 					/>
 				</c:if>
 			</div>

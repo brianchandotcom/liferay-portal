@@ -22,6 +22,7 @@ import com.liferay.document.library.web.internal.display.context.logic.DLPortlet
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
@@ -43,6 +44,7 @@ import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.text.Format;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,6 +69,16 @@ public class DLViewFileEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_dlAdminDisplayContext =
+			(DLAdminDisplayContext)renderRequest.getAttribute(
+				DLAdminDisplayContext.class.getName());
+
+		_dlRequestHelper = (DLRequestHelper)renderRequest.getAttribute(
+			DLRequestHelper.class.getName());
+
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			_dlRequestHelper);
+
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_httpServletResponse = PortalUtil.getHttpServletResponse(
 			renderResponse);
@@ -86,6 +98,13 @@ public class DLViewFileEntryDisplayContext {
 			_getDLViewFileVersionDisplayContext();
 
 		return dlViewFileVersionDisplayContext.getDiscussionClassPK();
+	}
+
+	public long getDiscussionUserId() throws PortalException {
+		FileEntry fileEntry = getFileEntry();
+
+		return PortalUtil.getValidUserId(
+			fileEntry.getCompanyId(), fileEntry.getUserId());
 	}
 
 	public FileEntry getFileEntry() {
@@ -210,10 +229,21 @@ public class DLViewFileEntryDisplayContext {
 	}
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
+			return Collections.emptyList();
+		}
+
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			_getDLViewFileVersionDisplayContext();
 
 		return dlViewFileVersionDisplayContext.getToolbarItems();
+	}
+
+	public boolean isEnableDiscussionRatings() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.isEnableCommentRatings();
 	}
 
 	public boolean isShowComments() {
@@ -260,17 +290,8 @@ public class DLViewFileEntryDisplayContext {
 	}
 
 	public boolean isShowVersionDetails() {
-		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
-			new DLPortletInstanceSettingsHelper(
-				(DLRequestHelper)_renderRequest.getAttribute(
-					DLRequestHelper.class.getName()));
-
-		DLAdminDisplayContext dlAdminDisplayContext =
-			(DLAdminDisplayContext)_renderRequest.getAttribute(
-				DLAdminDisplayContext.class.getName());
-
-		if (dlPortletInstanceSettingsHelper.isShowActions() &&
-			dlAdminDisplayContext.isVersioningStrategyOverridable()) {
+		if (_dlPortletInstanceSettingsHelper.isShowActions() &&
+			_dlAdminDisplayContext.isVersioningStrategyOverridable()) {
 
 			return true;
 		}
@@ -344,7 +365,11 @@ public class DLViewFileEntryDisplayContext {
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
+	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final DLDisplayContextProvider _dlDisplayContextProvider;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
+	private final DLRequestHelper _dlRequestHelper;
 	private DLViewFileVersionDisplayContext _dlViewFileVersionDisplayContext;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;

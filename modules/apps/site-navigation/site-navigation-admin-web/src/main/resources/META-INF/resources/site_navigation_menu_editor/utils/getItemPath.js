@@ -12,13 +12,10 @@
  * details.
  */
 
-export default function getItemPath(itemId, itemsMap, path = []) {
-	path.unshift(itemId);
+export default function getItemPath(itemId, items) {
+	const item = items.find((item) => item.siteNavigationMenuItemId === itemId);
 
-	const item = itemsMap.get(itemId);
-	const parent = itemsMap.get(item.parentSiteNavigationMenuItemId);
-
-	return parent
-		? getItemPath(parent.siteNavigationMenuItemId, itemsMap, path)
-		: path;
+	return item.parentSiteNavigationMenuItemId !== '0'
+		? [...getItemPath(item.parentSiteNavigationMenuItemId, items), itemId]
+		: [itemId];
 }

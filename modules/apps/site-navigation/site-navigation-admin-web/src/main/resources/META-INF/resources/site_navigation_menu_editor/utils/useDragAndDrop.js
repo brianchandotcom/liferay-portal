@@ -15,14 +15,14 @@
 import {useDrag, useDrop} from 'react-dnd';
 
 import {ACCEPTING_ITEM_TYPE} from '../constants/acceptingItemType';
-import {useItemsMap} from '../contexts/ItemsContext';
+import {useItems} from '../contexts/ItemsContext';
 import getItemPath from './getItemPath';
 
 export function useDragItem(item) {
 	const {siteNavigationMenuItemId} = item;
 
-	const itemsMap = useItemsMap();
-	const itemPath = getItemPath(siteNavigationMenuItemId, itemsMap);
+	const items = useItems();
+	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
 	const [{isDragging}, handlerRef] = useDrag({
 		collect: (monitor) => ({
@@ -46,8 +46,8 @@ export function useDragItem(item) {
 export function useDropTarget(item) {
 	const {siteNavigationMenuItemId} = item;
 
-	const itemsMap = useItemsMap();
-	const itemPath = getItemPath(siteNavigationMenuItemId, itemsMap);
+	const items = useItems();
+	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
 	const [, targetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,

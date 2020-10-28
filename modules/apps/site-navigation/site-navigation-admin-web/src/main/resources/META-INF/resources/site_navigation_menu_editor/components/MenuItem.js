@@ -22,6 +22,7 @@ import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {NESTING_MARGIN} from '../constants/nestingMargin';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {useConstants} from '../contexts/ConstantsContext';
 import {useItems, useSetItems} from '../contexts/ItemsContext';
@@ -31,20 +32,32 @@ import {
 } from '../contexts/SelectedMenuItemIdContext';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import deleteItem from '../utils/deleteItem';
+import getItemPath from '../utils/getItemPath';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
 
 export const MenuItem = ({item}) => {
-	const {deleteSiteNavigationMenuItemURL, portletNamespace} = useConstants();
-	const {siteNavigationMenuItemId, title, type} = item;
-	const items = useItems();
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
+	const {
+		deleteSiteNavigationMenuItemURL,
+		languageDirection,
+		languageId,
+		portletNamespace,
+	} = useConstants();
 
+	const items = useItems();
+	const {siteNavigationMenuItemId, title, type} = item;
+	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const selected = useSelectedMenuItemId() === siteNavigationMenuItemId;
 
 	const {handlerRef, isDragging} = useDragItem(item);
 	const {targetRef} = useDropTarget(item);
+
+	const rtl = languageDirection[languageId] === 'rtl';
+	const itemStyle = rtl
+		? {marginRight: (itemPath.length - 1) * NESTING_MARGIN}
+		: {marginLeft: (itemPath.length - 1) * NESTING_MARGIN};
 
 	const deleteMenuItem = () => {
 		fetch(deleteSiteNavigationMenuItemURL, {
@@ -77,6 +90,7 @@ export const MenuItem = ({item}) => {
 				})}
 				horizontal
 				selectable
+				style={itemStyle}
 			>
 				<ClayCheckbox
 					checked={selected}

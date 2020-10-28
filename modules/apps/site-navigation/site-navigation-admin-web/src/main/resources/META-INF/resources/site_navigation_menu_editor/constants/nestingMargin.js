@@ -12,26 +12,4 @@
  * details.
  */
 
-export default function deleteItem(items, itemId) {
-	const deletedItem = items.find(
-		(item) => item.siteNavigationMenuItemId === itemId
-	);
-
-	return items
-		.filter((item) => item !== deletedItem)
-		.map((item) => {
-			if (
-				item.parentSiteNavigationMenuItemId ===
-				deletedItem.siteNavigationMenuItemId
-			) {
-				return {
-					...item,
-					parentSiteNavigationMenuItemId:
-						deletedItem.parentSiteNavigationMenuItemId,
-				};
-			}
-			else {
-				return item;
-			}
-		});
-}
+export const NESTING_MARGIN = 48;

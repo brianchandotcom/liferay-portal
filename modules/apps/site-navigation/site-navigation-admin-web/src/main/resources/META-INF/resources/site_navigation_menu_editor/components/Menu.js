@@ -12,7 +12,6 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import {useItems} from '../contexts/ItemsContext';
@@ -23,30 +22,9 @@ export const Menu = () => {
 
 	return (
 		<div className="container p-3">
-			<MenuContent items={items} />
+			{items.map((item) => (
+				<MenuItem item={item} key={item.siteNavigationMenuItemId} />
+			))}
 		</div>
 	);
-};
-
-const MenuContent = ({items}) => {
-	return items.map((item) => (
-		<div key={item.siteNavigationMenuItemId}>
-			<MenuItem item={item} />
-
-			<div className="pl-5">
-				{!!item.children.length && (
-					<MenuContent items={item.children} />
-				)}
-			</div>
-		</div>
-	));
-};
-
-MenuContent.propTypes = {
-	items: PropTypes.arrayOf(
-		PropTypes.shape({
-			children: PropTypes.array.isRequired,
-			siteNavigationMenuItemId: PropTypes.string.isRequired,
-		})
-	),
 };

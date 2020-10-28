@@ -12,26 +12,10 @@
  * details.
  */
 
-export default function deleteItem(items, itemId) {
-	const deletedItem = items.find(
-		(item) => item.siteNavigationMenuItemId === itemId
+export default function updateItemParent(items, itemId, newParentId) {
+	return items.map((item) =>
+		item.siteNavigationMenuItemId === itemId
+			? {...item, parentSiteNavigationMenuItemId: newParentId}
+			: item
 	);
-
-	return items
-		.filter((item) => item !== deletedItem)
-		.map((item) => {
-			if (
-				item.parentSiteNavigationMenuItemId ===
-				deletedItem.siteNavigationMenuItemId
-			) {
-				return {
-					...item,
-					parentSiteNavigationMenuItemId:
-						deletedItem.parentSiteNavigationMenuItemId,
-				};
-			}
-			else {
-				return item;
-			}
-		});
 }

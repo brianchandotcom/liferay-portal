@@ -143,6 +143,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
@@ -494,6 +496,9 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL("/content_layout/get_fragment_entry_link")
 			).put(
 				"sidebarPanels", getSidebarPanels()
+			).put(
+				"siteNavigationMenuItemSelectorURL",
+				_getSiteNavigationMenuItemSelectorURL()
 			).put(
 				"styleBookEntryId",
 				() -> {
@@ -1975,6 +1980,21 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return _redirect;
+	}
+
+	private String _getSiteNavigationMenuItemSelectorURL() {
+		ItemSelectorCriterion itemSelectorCriterion =
+			new SiteNavigationMenuItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new SiteNavigationMenuItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			_renderResponse.getNamespace() + "selectSiteNavigationMenu",
+			itemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	private List<Map<String, Object>> _getStyleBooks() {

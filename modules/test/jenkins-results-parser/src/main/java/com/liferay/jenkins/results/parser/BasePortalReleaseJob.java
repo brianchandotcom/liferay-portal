@@ -14,9 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
+
 import java.io.File;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,23 +64,22 @@ public abstract class BasePortalReleaseJob
 
 	@Override
 	public Set<String> getDependentBatchNames() {
-		Set<String> batchNames = new TreeSet<>();
+		return getFilteredBatchNames(getRawDependentBatchNames());
+	}
 
-		Properties jobProperties = getJobProperties();
+	@Override
+	public List<BatchTestClassGroup> getDependentBatchTestClassGroups() {
+		return getBatchTestClassGroups(getRawDependentBatchNames());
+	}
 
-		batchNames.addAll(
-			getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names.smoke", false,
-					_portalBranchName, getTestSuiteName())));
-		batchNames.addAll(
-			getSetFromString(
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, "test.batch.names.smoke", false,
-					_portalBranchName, buildProfile.toString(),
-					getTestSuiteName())));
+	@Override
+	public Set<String> getDependentSegmentNames() {
+		return getFilteredSegmentNames(getRawDependentBatchNames());
+	}
 
-		return batchNames;
+	@Override
+	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups() {
+		return getSegmentTestClassGroups(getRawDependentBatchNames());
 	}
 
 	@Override
@@ -116,6 +119,24 @@ public abstract class BasePortalReleaseJob
 					buildProfile.toString(), getTestSuiteName())));
 
 		return batchNames;
+	}
+
+	protected Set<String> getRawDependentBatchNames() {
+		Set<String> dependentBatchNames = new TreeSet<>();
+
+		dependentBatchNames.addAll(
+			getSetFromString(
+				JenkinsResultsParserUtil.getProperty(
+					getJobProperties(), "test.batch.names.smoke", false,
+					_portalBranchName, getTestSuiteName())));
+		dependentBatchNames.addAll(
+			getSetFromString(
+				JenkinsResultsParserUtil.getProperty(
+					getJobProperties(), "test.batch.names.smoke", false,
+					_portalBranchName, buildProfile.toString(),
+					getTestSuiteName())));
+
+		return dependentBatchNames;
 	}
 
 	protected BuildProfile buildProfile;

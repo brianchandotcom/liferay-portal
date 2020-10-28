@@ -14,7 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -36,15 +40,22 @@ public abstract class PortalAcceptanceTestSuiteJob
 
 	@Override
 	public Set<String> getDependentBatchNames() {
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names.smoke", getBranchName(),
-			getTestSuiteName());
+		return getFilteredBatchNames(getRawDependentBatchNames());
+	}
 
-		if (testBatchNames == null) {
-			return new HashSet<>();
-		}
+	@Override
+	public List<BatchTestClassGroup> getDependentBatchTestClassGroups() {
+		return getBatchTestClassGroups(getRawDependentBatchNames());
+	}
 
-		return getSetFromString(testBatchNames);
+	@Override
+	public Set<String> getDependentSegmentNames() {
+		return getFilteredSegmentNames(getRawDependentBatchNames());
+	}
+
+	@Override
+	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups() {
+		return getSegmentTestClassGroups(getRawDependentBatchNames());
 	}
 
 	@Override
@@ -110,6 +121,18 @@ public abstract class PortalAcceptanceTestSuiteJob
 		}
 
 		return batchNames;
+	}
+
+	protected Set<String> getRawDependentBatchNames() {
+		String dependentBatchNames = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names.smoke", getBranchName(),
+			getTestSuiteName());
+
+		if ((dependentBatchNames == null) || dependentBatchNames.isEmpty()) {
+			return new HashSet<>();
+		}
+
+		return getSetFromString(dependentBatchNames);
 	}
 
 	private final String _testSuiteName;

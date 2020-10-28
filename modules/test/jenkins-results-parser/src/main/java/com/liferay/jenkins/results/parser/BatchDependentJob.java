@@ -14,13 +14,23 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
+
+import java.util.List;
 import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
-public interface BatchDependentJob {
+public interface BatchDependentJob extends Job {
 
 	public Set<String> getDependentBatchNames();
+
+	public List<BatchTestClassGroup> getDependentBatchTestClassGroups();
+
+	public Set<String> getDependentSegmentNames();
+
+	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups();
 
 }

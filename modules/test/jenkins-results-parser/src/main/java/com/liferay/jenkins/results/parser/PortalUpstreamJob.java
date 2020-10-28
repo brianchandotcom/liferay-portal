@@ -14,8 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
+
 import java.io.File;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,11 +44,22 @@ public class PortalUpstreamJob
 
 	@Override
 	public Set<String> getDependentBatchNames() {
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(),
-			"test.batch.names.smoke[" + getBranchName() + "]");
+		return getFilteredBatchNames(getRawDependentBatchNames());
+	}
 
-		return getSetFromString(testBatchNames);
+	@Override
+	public List<BatchTestClassGroup> getDependentBatchTestClassGroups() {
+		return getBatchTestClassGroups(getRawDependentBatchNames());
+	}
+
+	@Override
+	public Set<String> getDependentSegmentNames() {
+		return getFilteredSegmentNames(getRawDependentBatchNames());
+	}
+
+	@Override
+	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups() {
+		return getSegmentTestClassGroups(getRawDependentBatchNames());
 	}
 
 	@Override
@@ -53,6 +68,13 @@ public class PortalUpstreamJob
 			JenkinsResultsParserUtil.getProperty(
 				getJobProperties(),
 				"test.batch.names[portal-upstream(" + getBranchName() + ")]"));
+	}
+
+	protected Set<String> getRawDependentBatchNames() {
+		return getSetFromString(
+			JenkinsResultsParserUtil.getProperty(
+				getJobProperties(),
+				"test.batch.names.smoke[" + getBranchName() + "]"));
 	}
 
 }

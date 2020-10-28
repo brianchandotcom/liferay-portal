@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Component = ({iconClass, iconName, items, title}) => {
-	let tranformedItems = items.map((item) => {
+	const tranformedItems = items.map((item) => {
 		if (item.action && item.action === 'publishToLive') {
 			return {
 				...item,
@@ -30,7 +30,9 @@ const Component = ({iconClass, iconName, items, title}) => {
 				},
 			};
 		}
-		else return item;
+		else {
+			return item;
+		}
 	});
 
 	return (

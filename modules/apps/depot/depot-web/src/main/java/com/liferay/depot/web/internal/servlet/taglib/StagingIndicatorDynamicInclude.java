@@ -277,11 +277,11 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 					JSONUtil.put(
 						"action", "publishToLive"
 					).put(
-						"publishURL",
-						_getPublishToLiveURL(scopeGroup, httpServletRequest)
-					).put(
 						"label",
 						_language.get(httpServletRequest, "publish-to-live")
+					).put(
+						"publishURL",
+						_getPublishToLiveURL(scopeGroup, httpServletRequest)
 					).put(
 						"symbolLeft", "cards2"
 					))

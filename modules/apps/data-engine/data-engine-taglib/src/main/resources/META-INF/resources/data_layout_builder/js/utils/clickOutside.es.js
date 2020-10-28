@@ -12,14 +12,12 @@
  * details.
  */
 
-import dom from 'metal-dom';
-
 export default (target, ...elements) => {
 	return !elements.some((element) => {
 		if (typeof element === 'string') {
 			return !!target.closest(element);
 		}
 
-		return element && dom.contains(element, target);
+		return element && element.contains(target);
 	});
 };

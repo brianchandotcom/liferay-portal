@@ -154,7 +154,7 @@ class LiferayApp extends App {
 
 			return Array.prototype.slice
 				.call(portlets)
-				.some((portlet) => dom.contains(portlet, element));
+				.some((portlet) => portlet.contains(element));
 		});
 	}
 

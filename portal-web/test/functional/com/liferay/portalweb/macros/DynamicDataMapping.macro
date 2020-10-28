@@ -523,6 +523,14 @@ definition {
 			}
 
 			SelectFrame(value1 = "relative=top");
+
+			var articleId = JSONWebcontentSetter.setArticleId(
+				groupName = "${groupName}",
+				title = "${fieldPredefinedValue}");
+
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_WEB_CONTENT_ARTICLE_CONTENT",
+				value1 = "Web Content: ${articleId}");
 		}
 
 		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
@@ -533,7 +541,17 @@ definition {
 			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
 		}
 
-		if (("${field}" != "Documents and Media") && ("${field}" != "Web Content")) {
+		if ("${field}" == "Documents and Media") {
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#SETTINGS_PREDEFINED_VALUE",
+				value1 = "(File)");
+		}
+		else if ("${field}" == "Web Content") {
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#SETTINGS_PREDEFINED_VALUE",
+				value1 = "(Web Content)");
+		}
+		else {
 			AssertTextEquals(
 				locator1 = "DDMEditStructure#SETTINGS_PREDEFINED_VALUE",
 				value1 = "${fieldPredefinedValue}");
@@ -543,11 +561,11 @@ definition {
 				fieldFieldLabel = "${fieldFieldLabel}",
 				fieldName = "${fieldName}",
 				fieldPredefinedValue = "${fieldPredefinedValue}");
-
-			AssertClick.pauseAssertTextClickAt(
-				locator1 = "DDMEditStructure#FIELDS_LINK",
-				value1 = "Fields");
 		}
+
+		AssertClick.pauseAssertTextClickAt(
+			locator1 = "DDMEditStructure#FIELDS_LINK",
+			value1 = "Fields");
 
 		SelectFrame(value1 = "relative=top");
 	}

@@ -25,7 +25,7 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
@@ -37,9 +37,9 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,11 +66,15 @@ public class DLViewFileEntryDisplayContext {
 
 	public DLViewFileEntryDisplayContext(
 		DLAdminDisplayContext dlAdminDisplayContext,
-		DLDisplayContextProvider dlDisplayContextProvider,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		DLDisplayContextProvider dlDisplayContextProvider, Html html,
+		Language language, Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_dlAdminDisplayContext = dlAdminDisplayContext;
 		_dlDisplayContextProvider = dlDisplayContextProvider;
+		_html = html;
+		_language = language;
+		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -80,9 +84,8 @@ public class DLViewFileEntryDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_httpServletResponse = PortalUtil.getHttpServletResponse(
-			renderResponse);
+		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
+		_httpServletResponse = _portal.getHttpServletResponse(renderResponse);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -104,7 +107,7 @@ public class DLViewFileEntryDisplayContext {
 	public long getDiscussionUserId() throws PortalException {
 		FileEntry fileEntry = getFileEntry();
 
-		return PortalUtil.getValidUserId(
+		return _portal.getValidUserId(
 			fileEntry.getCompanyId(), fileEntry.getUserId());
 	}
 
@@ -121,7 +124,7 @@ public class DLViewFileEntryDisplayContext {
 		else {
 			_documentTitle = StringBundler.concat(
 				fileVersion.getTitle(), StringPool.OPEN_PARENTHESIS,
-				LanguageUtil.get(_httpServletRequest, "version"),
+				_language.get(_httpServletRequest, "version"),
 				fileVersion.getVersion(), StringPool.CLOSE_PARENTHESIS);
 		}
 
@@ -192,13 +195,13 @@ public class DLViewFileEntryDisplayContext {
 			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 				locale, _themeDisplay.getTimeZone());
 
-			return LanguageUtil.format(
-				locale,
+			return _language.format(
+				_httpServletRequest,
 				"you-cannot-modify-this-document-because-it-was-locked-by-x-" +
 					"on-x",
 				new Object[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
+					_html.escape(
+						_portal.getUserName(
 							lock.getUserId(),
 							String.valueOf(lock.getUserId()))),
 					dateFormatDateTime.format(lock.getCreateDate())
@@ -209,13 +212,14 @@ public class DLViewFileEntryDisplayContext {
 		Lock lock = _getLock();
 
 		if (lock.isNeverExpires()) {
-			return LanguageUtil.get(
-				locale, "you-now-have-an-indefinite-lock-on-this-document");
+			return _language.get(
+				_httpServletRequest,
+				"you-now-have-an-indefinite-lock-on-this-document");
 		}
 
-		return LanguageUtil.format(
-			locale, "you-now-have-a-lock-on-this-document",
-			LanguageUtil.getTimeDescription(
+		return _language.format(
+			_httpServletRequest, "you-now-have-a-lock-on-this-document",
+			_language.getTimeDescription(
 				_httpServletRequest,
 				DLFileEntryConstants.LOCK_EXPIRATION_TIME));
 	}
@@ -423,9 +427,12 @@ public class DLViewFileEntryDisplayContext {
 	private String _documentTitle;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
+	private final Html _html;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final Language _language;
 	private Lock _lock;
+	private final Portal _portal;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

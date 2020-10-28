@@ -809,17 +809,9 @@ public class FragmentEntryLocalServiceTest {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			FragmentCollection fragmentCollection =
-				FragmentTestUtil.addFragmentCollection(group.getGroupId());
-
 			FragmentEntry fragmentEntry1 =
 				FragmentEntryTestUtil.addFragmentEntry(
 					_fragmentCollection.getFragmentCollectionId(),
-					RandomTestUtil.randomString());
-
-			FragmentEntry fragmentEntry2 =
-				FragmentEntryTestUtil.addFragmentEntry(
-					fragmentCollection.getFragmentCollectionId(),
 					RandomTestUtil.randomString());
 
 			List<FragmentEntry> fragmentEntries1 =
@@ -830,6 +822,14 @@ public class FragmentEntryLocalServiceTest {
 				fragmentEntries1.toString(), 1, fragmentEntries1.size());
 
 			Assert.assertEquals(fragmentEntry1, fragmentEntries1.get(0));
+
+			FragmentCollection fragmentCollection =
+				FragmentTestUtil.addFragmentCollection(group.getGroupId());
+
+			FragmentEntry fragmentEntry2 =
+				FragmentEntryTestUtil.addFragmentEntry(
+					fragmentCollection.getFragmentCollectionId(),
+					RandomTestUtil.randomString());
 
 			List<FragmentEntry> fragmentEntries2 =
 				_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(

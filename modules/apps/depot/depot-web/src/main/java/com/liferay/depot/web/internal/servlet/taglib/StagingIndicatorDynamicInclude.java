@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,6 +56,7 @@ import java.io.Writer;
 
 import java.util.Map;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -97,9 +100,9 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		catch (JspException jspException) {
 			ReflectionUtil.throwException(jspException);
 		}
-		catch (PortalException portalException) {
+		catch (PortalException | PortletException exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -174,14 +177,16 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private String _getPublishToLiveURL(
-		Group group, HttpServletRequest httpServletRequest) {
+			Group group, HttpServletRequest httpServletRequest)
+		throws PortletException {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
+			httpServletRequest, PortletKeys.EXPORT_IMPORT,
 			PortletRequest.RENDER_PHASE);
 
+		liferayPortletURL.setWindowState(LiferayWindowState.POP_UP);
 		liferayPortletURL.setParameter(
-			"mvcRenderCommandName", "publishLayouts");
+			"mvcRenderCommandName", "publishLayoutsSimple");
 
 		String cmd = Constants.PUBLISH_TO_LIVE;
 
@@ -190,16 +195,40 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 
 		liferayPortletURL.setParameter(Constants.CMD, cmd);
-
 		liferayPortletURL.setParameter(
 			"groupId", String.valueOf(group.getGroupId()));
+		liferayPortletURL.setParameter(
+			"localPublishing", String.valueOf(!group.isStagedRemotely()));
+		liferayPortletURL.setParameter("quickPublish", Boolean.TRUE.toString());
+		liferayPortletURL.setParameter(
+			"remoteAddress", group.getTypeSettingsProperty("remoteAddress"));
+		liferayPortletURL.setParameter(
+			"remotePort", group.getTypeSettingsProperty("remotePort"));
+		liferayPortletURL.setParameter(
+			"remotePathContext",
+			group.getTypeSettingsProperty("remotePathContext"));
+		liferayPortletURL.setParameter(
+			"remoteGroupId", group.getTypeSettingsProperty("remoteGroupId"));
+		liferayPortletURL.setParameter(
+			"secureConnection",
+			group.getTypeSettingsProperty("secureConnection"));
+		liferayPortletURL.setParameter(
+			"secureConnection",
+			group.getTypeSettingsProperty("secureConnection"));
+		liferayPortletURL.setParameter(
+			"sourceGroupId", String.valueOf(group.getGroupId()));
+
+		Group liveGroup = _staging.getLiveGroup(group.getGroupId());
+
+		liferayPortletURL.setParameter(
+			"targetGroupId", String.valueOf(liveGroup.getGroupId()));
 
 		return liferayPortletURL.toString();
 	}
 
 	private Map<String, Object> _getReactData(
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
-		throws PortalException {
+		throws PortalException, PortletException {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -291,7 +320,7 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 	private void _includeStagingIndicator(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, ThemeDisplay themeDisplay)
-		throws IOException, JspException, PortalException {
+		throws IOException, JspException, PortalException, PortletException {
 
 		Writer writer = httpServletResponse.getWriter();
 

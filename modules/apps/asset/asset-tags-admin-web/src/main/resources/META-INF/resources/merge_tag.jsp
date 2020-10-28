@@ -111,7 +111,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 					'option[value="' + value + '"]'
 				);
 
-				dom.exitDocument(targetTagNameOption);
+				if (targetTagNameOption) {
+					targetTagNameOption.remove();
+				}
 			}
 		};
 	}

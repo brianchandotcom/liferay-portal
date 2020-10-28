@@ -277,7 +277,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 				Array.prototype.forEach.call(
 					orderingPanel.querySelectorAll('.order-by-subtype'),
 					function (option) {
-						dom.exitDocument(option);
+						option.remove();
 					}
 				);
 			}
@@ -383,7 +383,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 						Array.prototype.forEach.call(
 							orderingPanel.querySelectorAll('.order-by-subtype'),
 							function (option) {
-								dom.exitDocument(option);
+								option.remove();
 							}
 						);
 

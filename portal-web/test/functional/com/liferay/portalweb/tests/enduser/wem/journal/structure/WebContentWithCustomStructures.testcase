@@ -1945,7 +1945,8 @@ definition {
 				field = "Web Content",
 				fieldFieldLabel = "Web Content",
 				fieldName = "WebContent",
-				fieldPredefinedValue = "Web Content Title");
+				fieldPredefinedValue = "Web Content Title",
+				groupName = "Test Site Name");
 		}
 
 		task ("Save the new structure") {

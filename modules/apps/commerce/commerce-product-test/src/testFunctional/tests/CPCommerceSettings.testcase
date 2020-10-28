@@ -2,7 +2,6 @@
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -26,6 +25,7 @@ definition {
 
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
 
 		CommerceNavigator.gotoPortlet(
@@ -43,6 +43,7 @@ definition {
 
 	test CreateNewCountry {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
 
 		CommerceNavigator.gotoPortlet(
@@ -76,6 +77,7 @@ definition {
 
 	test CreateNewMeasurementUnits {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
 
 		CommerceNavigator.gotoPortlet(
@@ -99,6 +101,17 @@ definition {
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	test ViewInstanceCurrenciesAvailable {
+		property environment.acceptance = "true";
+		property test.name.skip.portal.instance = "CommerceSmoke#ViewAvailableCurrencies";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Currencies");
+
+		CommerceEntry.viewCurrenciesEntry(currenciesList = "US Dollar,Australian Dollar,British Pound,Canadian Dollar,Chinese Yuan Renminbi,Euro,Hong Kong Dollar,Japanese Yen,Indian Rupee,Brazilian real");
 	}
 
 }

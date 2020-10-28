@@ -61,7 +61,9 @@ class Modal extends Component {
 	 */
 
 	disposeInternal() {
-		dom.exitDocument(this.overlayElement);
+		if (this.overlayElement) {
+			this.overlayElement.remove();
+		}
 
 		this._unrestrictFocus();
 
@@ -108,9 +110,13 @@ class Modal extends Component {
 	syncOverlay(overlay) {
 		const willShowOverlay = overlay && this.visible;
 
-		dom[willShowOverlay ? 'enterDocument' : 'exitDocument'](
-			this.overlayElement
-		);
+		if (willShowOverlay) {
+			dom.enterDocument(this.overlayElement);
+
+			return;
+		}
+
+		this.overlayElement.remove();
 	}
 
 	/**

@@ -50,6 +50,8 @@ public interface Job {
 
 	public List<SegmentTestClassGroup> getSegmentTestClassGroups();
 
+	public String getTestPropertiesContent();
+
 	public boolean getTestRunValidation();
 
 	public void readJobProperties();

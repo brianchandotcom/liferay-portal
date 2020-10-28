@@ -46,21 +46,15 @@ const EditAppBody = ({
 		isLoading,
 	} = useRequest(endpoint);
 
-	const filteredItems = items.filter((item) =>
-		new RegExp(searchText, 'ig').test(
-			getLocalizedValue(defaultLanguageId, item.name)
-		)
-	);
-
 	const stepItems = {
 		DATA_LAYOUT: {
 			id: dataLayoutId,
-			items: filteredItems,
+			items,
 			type: UPDATE_DATA_LAYOUT_ID,
 		},
 		DATA_LIST_VIEW: {
 			id: dataListViewId,
-			items: filteredItems,
+			items,
 			type: UPDATE_DATA_LIST_VIEW_ID,
 		},
 		WORKFLOW_PROCESS: {
@@ -76,7 +70,7 @@ const EditAppBody = ({
 						),
 					},
 				},
-				...filteredItems.map(({name, title, ...restProps}) => ({
+				...items.map(({name, title, ...restProps}) => ({
 					...restProps,
 					id: name,
 					name: {[defaultLanguageId]: title},
@@ -85,6 +79,12 @@ const EditAppBody = ({
 			type: UPDATE_WORKFLOW_PROCESS_ID,
 		},
 	};
+
+	const filteredItems = stepItems[itemType].items.filter((item) =>
+		new RegExp(searchText, 'ig').test(
+			getLocalizedValue(defaultLanguageId, item.name)
+		)
+	);
 
 	return (
 		<>
@@ -104,7 +104,7 @@ const EditAppBody = ({
 				<ClayLayout.ContentCol expand>
 					<ListItems
 						defaultLanguageId={defaultLanguageId}
-						isEmpty={stepItems[itemType].items.length === 0}
+						isEmpty={filteredItems.length === 0}
 						isLoading={isLoading}
 						itemId={stepItems[itemType].id}
 						items={stepItems[itemType].items}

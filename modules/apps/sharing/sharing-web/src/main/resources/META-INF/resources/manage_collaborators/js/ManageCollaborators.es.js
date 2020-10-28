@@ -538,7 +538,7 @@ const ManageCollaborators = ({
 						className="empty-collaborators"
 						verticalAlign="center"
 					>
-						<ClayLayout.ContentCol>
+						<ClayLayout.ContentCol expand>
 							<div className="message-content">
 								<h3>
 									{Liferay.Language.get('no-collaborators')}

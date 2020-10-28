@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7400" export-date="Mon, 26 Oct 2020 07:35:18 +0000" type="portlet" company-id="20097" company-group-id="20123" group-id="37266" user-personal-site-group-id="20122" private-layout="true" root-portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" schema-version="4.0.0"/>
-	<missing-references/>
-	<portlet portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" layout-id="1" path="/group/37266/portlet/com_liferay_wiki_web_portlet_WikiAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7400" export-date="Wed, 28 Oct 2020 07:35:44 +0000" type="portlet" company-id="20097" company-group-id="20123" group-id="20121" user-personal-site-group-id="20122" private-layout="true" root-portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" schema-version="4.0.0"/>
+	<missing-references>
+		<missing-reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="13" attached-class-name="" display-name="Research Projects" group-id="20121" group-key="Guest" live-group-id="20121" type="dependency" referrer-class-name="com.liferay.wiki.model.WikiPage" referrer-display-name="7df45687-10a4-6c09-fc01-a999bcf6c5d5" uuid="ce4d03a5-3611-48df-a85d-2fc975334b70" company-id="20097" layout-id="1" private-layout="true"/>
+	</missing-references>
+	<portlet portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" layout-id="1" path="/group/20121/portlet/com_liferay_wiki_web_portlet_WikiAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
 	<manifest-summary>
-		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiPage" addition-count="9"/>
-		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiNode" addition-count="2"/>
+		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiPage" addition-count="6"/>
+		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiNode" addition-count="3"/>
 	</manifest-summary>
 </root>

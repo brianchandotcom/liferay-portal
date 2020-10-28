@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7400" export-date="Mon, 26 Oct 2020 07:32:03 +0000" type="portlet" company-id="20097" company-group-id="20123" group-id="20121" user-personal-site-group-id="20122" private-layout="true" root-portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" schema-version="4.0.0"/>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7400" export-date="Wed, 28 Oct 2020 07:37:09 +0000" type="portlet" company-id="20097" company-group-id="20123" group-id="20121" user-personal-site-group-id="20122" private-layout="true" root-portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" schema-version="4.0.0"/>
 	<missing-references/>
 	<portlet portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" layout-id="1" path="/group/20121/portlet/com_liferay_wiki_web_portlet_WikiAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
 	<manifest-summary>
 		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiPage" addition-count="8"/>
-		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiNode" addition-count="5"/>
+		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiNode" addition-count="1"/>
 	</manifest-summary>
 </root>

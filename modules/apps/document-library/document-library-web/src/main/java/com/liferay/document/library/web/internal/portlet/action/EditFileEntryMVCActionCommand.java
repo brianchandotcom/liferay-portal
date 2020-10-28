@@ -43,6 +43,7 @@ import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
+import com.liferay.document.library.web.internal.exception.FileNameExtensionException;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -89,6 +90,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -1045,6 +1047,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				(size == 0)) {
 
 				contentType = MimeTypesUtil.getContentType(sourceFileName);
+
+				if (Validator.isNotNull(contentType)) {
+					contentType = MimeTypesUtil.getContentType(title);
+				}
 			}
 
 			if (cmd.equals(Constants.ADD) ||
@@ -1080,6 +1086,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Add file entry
 
+				_validateFileName(
+					sourceFileName,
+					Validator.isNotNull(
+						uploadPortletRequest.getFileName("file")));
+
 				fileEntry = _dlAppService.addFileEntry(
 					repositoryId, folderId, sourceFileName, contentType, title,
 					description, changeLog, inputStream, size, serviceContext);
@@ -1102,23 +1113,31 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);
 			}
-			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
-
-				// Update file entry and checkin
-
-				fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, dlVersionNumberIncrease,
-					inputStream, size, serviceContext);
-			}
 			else {
+				fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-				// Update file entry
+				_validateFileName(
+					sourceFileName,
+					Validator.isNotNull(fileEntry.getExtension()));
 
-				fileEntry = _dlAppService.updateFileEntry(
-					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, dlVersionNumberIncrease,
-					inputStream, size, serviceContext);
+				if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+
+					// Update file entry and checkin
+
+					fileEntry = _dlAppService.updateFileEntryAndCheckIn(
+						fileEntryId, sourceFileName, contentType, title,
+						description, changeLog, dlVersionNumberIncrease,
+						inputStream, size, serviceContext);
+				}
+				else {
+
+					// Update file entry
+
+					fileEntry = _dlAppService.updateFileEntry(
+						fileEntryId, sourceFileName, contentType, title,
+						description, changeLog, dlVersionNumberIncrease,
+						inputStream, size, serviceContext);
+				}
 			}
 
 			_assetDisplayPageEntryFormProcessor.process(
@@ -1134,6 +1153,24 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			return fileEntry;
+		}
+	}
+
+	private void _validateFileName(String sourceFileName, boolean file)
+		throws FileNameExtensionException {
+
+		if (file) {
+			if (Validator.isNull(sourceFileName)) {
+				throw new FileNameExtensionException(
+					"A file entry already exists with file name " +
+						sourceFileName);
+			}
+
+			if (Validator.isNull(FileUtil.getExtension(sourceFileName))) {
+				throw new FileNameExtensionException(
+					"A file entry already exists with file name " +
+						sourceFileName);
+			}
 		}
 	}
 

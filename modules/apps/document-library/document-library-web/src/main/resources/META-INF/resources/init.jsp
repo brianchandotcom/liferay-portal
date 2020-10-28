@@ -118,6 +118,7 @@ page import="com.liferay.document.library.web.internal.display.context.logic.DLP
 page import="com.liferay.document.library.web.internal.display.context.logic.DLVisualizationHelper" %><%@
 page import="com.liferay.document.library.web.internal.display.context.util.DLRequestHelper" %><%@
 page import="com.liferay.document.library.web.internal.display.context.util.IGRequestHelper" %><%@
+page import="com.liferay.document.library.web.internal.exception.FileNameExtensionException" %><%@
 page import="com.liferay.document.library.web.internal.helper.DLTrashHelper" %><%@
 page import="com.liferay.document.library.web.internal.portlet.action.EditFileEntryMVCActionCommand" %><%@
 page import="com.liferay.document.library.web.internal.search.EntriesChecker" %><%@

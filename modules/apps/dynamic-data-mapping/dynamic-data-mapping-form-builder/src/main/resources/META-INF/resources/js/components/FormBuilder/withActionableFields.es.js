@@ -66,7 +66,7 @@ const withActionableFields = (ChildComponent) => {
 			this._eventHandler.removeAllListeners();
 
 			if (this._actionableFieldsContainer) {
-				dom.exitDocument(this._actionableFieldsContainer);
+				this._actionableFieldsContainer.remove();
 			}
 		}
 

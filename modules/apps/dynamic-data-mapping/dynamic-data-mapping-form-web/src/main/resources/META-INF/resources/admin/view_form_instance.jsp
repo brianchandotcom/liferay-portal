@@ -162,7 +162,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script require='<%= "metal-dom/src/all/dom as dom, " + mainRequire + "/admin/js/components/ShareFormModal/ShareFormModal.es as ShareFormModal" %>'>
+<aui:script require='<%= mainRequire + "/admin/js/components/ShareFormModal/ShareFormModal.es as ShareFormModal" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
 	var afterOpenShareFormModal = function (data) {
@@ -180,7 +180,10 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 					event.stopPropagation();
 
 					var overlayElement = document.querySelector('.modal-backdrop');
-					dom.exitDocument(overlayElement);
+
+					if (overlayElement) {
+						overlayElement.remove();
+					}
 
 					shareFormModal.dispose();
 				},

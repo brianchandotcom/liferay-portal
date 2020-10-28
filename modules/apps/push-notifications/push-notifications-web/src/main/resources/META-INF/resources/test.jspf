@@ -40,27 +40,21 @@
 	</aui:button-row>
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script>
 	var onSendPushNotification = function (result) {
 		var success = document.getElementById('<portlet:namespace />success');
 
 		if (success) {
-			dom.addClasses(success, 'hide');
-
-			dom.removeClasses(success, 'show');
+			success.classList.replace('show', 'hide');
 
 			var error = document.getElementById('<portlet:namespace />error');
 
 			if (error) {
-				dom.addClasses(success, 'hide');
-
-				dom.removeClasses(success, 'show');
+				success.classList.replace('show', 'hide');
 			}
 
 			if (AUI().Object.isEmpty(result)) {
-				dom.addClasses(success, 'show');
-
-				dom.removeClasses(success, 'hide');
+				success.classList.replace('hide', 'show');
 			}
 			else {
 				var paragraph = error.querySelector('p');
@@ -69,9 +63,7 @@
 					paragraph.textContent = result;
 				}
 
-				dom.addClasses(error, 'show');
-
-				dom.removeClasses(error, 'hide');
+				success.classList.replace('hide', 'show');
 			}
 		}
 	};

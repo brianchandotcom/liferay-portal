@@ -18,6 +18,7 @@ import {ColorPaletteField} from './ColorPaletteField';
 import {ColorPickerField} from './ColorPickerField';
 import {ImageSelectorField} from './ImageSelectorField';
 import {ItemSelectorField} from './ItemSelectorField';
+import {NavigationMenuSelectorField} from './NavigationMenuSelectorField';
 import {SelectField} from './SelectField';
 import {TextField} from './TextField';
 
@@ -28,6 +29,7 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	colorPicker: ColorPickerField,
 	imageSelector: ImageSelectorField,
 	itemSelector: ItemSelectorField,
+	navigationMenuSelector: NavigationMenuSelectorField,
 	select: SelectField,
 	text: TextField,
 };

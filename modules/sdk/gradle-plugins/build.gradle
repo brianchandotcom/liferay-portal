@@ -53,7 +53,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "3.0.21"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.1.12"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "4.0.39"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "4.0.47"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "4.0.48"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "3.1.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "3.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.10"

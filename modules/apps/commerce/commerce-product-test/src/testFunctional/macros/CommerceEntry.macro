@@ -777,6 +777,14 @@ definition {
 		}
 	}
 
+	macro viewCurrenciesEntry {
+		for (var currencyName : list "${currenciesList}") {
+			AssertElementPresent(
+				key_entryName = "${currencyName}",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+	}
+
 	macro viewDiscountsEntry {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",

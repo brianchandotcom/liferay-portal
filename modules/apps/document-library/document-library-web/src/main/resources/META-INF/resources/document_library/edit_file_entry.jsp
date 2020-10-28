@@ -651,13 +651,17 @@ renderResponse.setTitle(headerTitle);
 		var fileNameElement = document.getElementById(
 			'<portlet:namespace />fileName'
 		);
+		var fileElement = document.getElementById('<portlet:namespace />file');
 
-		if (titleElement && !titleElement.value) {
-			var fileElement = document.getElementById('<portlet:namespace />file');
+		if (fileElement && fileElement.value) {
+			var fileFileName = fileElement.value.replace(/^.*[\\\/]/, '');
 
-			if (fileElement && fileElement.value) {
-				titleElement.value = fileElement.value.replace(/^.*[\\\/]/, '');
-				fileNameElement.value = fileElement.value.replace(/^.*[\\\/]/, '');
+			if (titleElement && !titleElement.value) {
+				titleElement.value = fileFileName.replace(/\.[^.]*$/, '');
+			}
+
+			if (fileNameElement && !fileNameElement.value) {
+				fileNameElement.value = fileFileName;
 			}
 		}
 

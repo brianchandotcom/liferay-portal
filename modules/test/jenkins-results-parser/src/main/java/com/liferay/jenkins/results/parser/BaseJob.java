@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
 import java.io.File;
@@ -147,6 +148,27 @@ public abstract class BaseJob implements Job {
 		return filteredBatchNames;
 	}
 
+	protected Set<String> getFilteredSegmentNames(Set<String> batchNames) {
+		Set<String> segmentNames = new TreeSet<>();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups(batchNames)) {
+
+			for (int i = 0; i < batchTestClassGroup.getSegmentCount(); i++) {
+				SegmentTestClassGroup segmentTestClassGroup =
+					batchTestClassGroup.getSegmentTestClassGroup(i);
+
+				if (segmentTestClassGroup.getAxisCount() <= 0) {
+					continue;
+				}
+
+				segmentNames.add(batchTestClassGroup.getBatchName() + "/" + i);
+			}
+		}
+
+		return segmentNames;
+	}
+
 	protected JSONObject getJobJSONObject(
 		JenkinsMaster jenkinsMaster, String tree) {
 
@@ -171,6 +193,33 @@ public abstract class BaseJob implements Job {
 		catch (IOException ioException) {
 			throw new RuntimeException("Unable to get job JSON", ioException);
 		}
+	}
+
+	protected List<SegmentTestClassGroup> getSegmentTestClassGroups(
+		Set<String> batchNames) {
+
+		if ((batchNames == null) || batchNames.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		List<SegmentTestClassGroup> segmentTestClassGroups = new ArrayList<>();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups(batchNames)) {
+
+			for (int i = 0; i < batchTestClassGroup.getSegmentCount(); i++) {
+				SegmentTestClassGroup segmentTestClassGroup =
+					batchTestClassGroup.getSegmentTestClassGroup(i);
+
+				if (segmentTestClassGroup.getAxisCount() <= 0) {
+					continue;
+				}
+
+				segmentTestClassGroups.add(segmentTestClassGroup);
+			}
+		}
+
+		return segmentTestClassGroups;
 	}
 
 	protected Set<String> getSetFromString(String string) {

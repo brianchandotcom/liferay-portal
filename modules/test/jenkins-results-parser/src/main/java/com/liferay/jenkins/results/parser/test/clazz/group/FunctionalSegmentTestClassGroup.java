@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -22,6 +24,15 @@ import java.util.Properties;
  * @author Michael Hashimoto
  */
 public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
+
+	public FunctionalAxisTestClassGroup getFunctionalAxisTestClassGroup(
+		int segmentIndex) {
+
+		List<FunctionalAxisTestClassGroup> functionalAxisTestClassGroups =
+			getFunctionalAxisTestClassGroups();
+
+		return functionalAxisTestClassGroups.get(segmentIndex);
+	}
 
 	public List<FunctionalAxisTestClassGroup>
 		getFunctionalAxisTestClassGroups() {
@@ -67,6 +78,43 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 			functionalAxisTestClassGroups.get(0);
 
 		return functionalAxisTestClassGroup.getPoshiProperties();
+	}
+
+	@Override
+	public String getTestCasePropertiesContent() {
+		StringBuilder sb = new StringBuilder();
+
+		int batchIndex = getBatchIndex();
+
+		List<String> axisGroupNames = new ArrayList<>();
+
+		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
+			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+			sb.append(batchIndex);
+			sb.append("_");
+			sb.append(axisIndex);
+			sb.append("=");
+
+			FunctionalAxisTestClassGroup functionalAxisTestClassGroup =
+				getFunctionalAxisTestClassGroup(axisIndex);
+
+			sb.append(
+				JenkinsResultsParserUtil.join(
+					",",
+					functionalAxisTestClassGroup.getTestClassMethodNames()));
+
+			sb.append("${line.separator}");
+
+			axisGroupNames.add(batchIndex + "_" + axisIndex);
+		}
+
+		sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+		sb.append(batchIndex);
+		sb.append("=");
+		sb.append(JenkinsResultsParserUtil.join(",", axisGroupNames));
+		sb.append("${line.separator}");
+
+		return sb.toString();
 	}
 
 	protected FunctionalSegmentTestClassGroup(

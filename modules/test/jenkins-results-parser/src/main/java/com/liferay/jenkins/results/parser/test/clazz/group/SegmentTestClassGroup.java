@@ -70,6 +70,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 			getBatchName(), "/", String.valueOf(getBatchIndex()));
 	}
 
+	public String getTestCasePropertiesContent() {
+		return null;
+	}
+
 	protected SegmentTestClassGroup(
 		BatchTestClassGroup parentBatchTestClassGroup) {
 

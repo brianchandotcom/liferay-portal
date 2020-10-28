@@ -62,6 +62,19 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		return functionalTestClass.getPoshiProperties();
 	}
 
+	public List<String> getTestClassMethodNames() {
+		List<String> testClassMethodNames = new ArrayList<>();
+
+		for (FunctionalTestClass functionalTestClass :
+				getFunctionalTestClasses()) {
+
+			testClassMethodNames.add(
+				functionalTestClass.getTestClassMethodName());
+		}
+
+		return testClassMethodNames;
+	}
+
 	protected FunctionalAxisTestClassGroup(
 		FunctionalBatchTestClassGroup functionalBatchTestClassGroup) {
 

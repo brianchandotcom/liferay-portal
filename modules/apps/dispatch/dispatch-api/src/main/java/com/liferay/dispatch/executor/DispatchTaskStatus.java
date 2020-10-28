@@ -19,8 +19,9 @@ package com.liferay.dispatch.executor;
  */
 public enum DispatchTaskStatus {
 
-	CANCELED(3, "cancelled"), FAILED(4, "failed"),
-	IN_PROGRESS(1, "in-progress"), SUCCESSFUL(2, "successful");
+	CANCELED(3, "text-info", "cancelled"), FAILED(4, "text-danger", "failed"),
+	IN_PROGRESS(1, "text-warning", "in-progress"),
+	SUCCESSFUL(2, "text-success", "successful");
 
 	public static DispatchTaskStatus valueOf(int status) {
 		for (DispatchTaskStatus dispatchTaskStatus : values()) {
@@ -33,6 +34,10 @@ public enum DispatchTaskStatus {
 			"Illegal task status value " + status);
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -41,11 +46,13 @@ public enum DispatchTaskStatus {
 		return _status;
 	}
 
-	private DispatchTaskStatus(int status, String label) {
+	private DispatchTaskStatus(int status, String cssClass, String label) {
 		_status = status;
+		_cssClass = cssClass;
 		_label = label;
 	}
 
+	private final String _cssClass;
 	private final String _label;
 	private final int _status;
 

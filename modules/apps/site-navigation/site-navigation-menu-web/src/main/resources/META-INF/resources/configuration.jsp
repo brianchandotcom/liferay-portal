@@ -404,7 +404,7 @@ else {
 						rootMenuItemNameSpan.innerText = selectedItem.name;
 						siteNavigationMenuIdInput.value = selectedItem.id;
 
-						dom.toggleClasses(removeSiteNavigationMenu, 'hide');
+						removeSiteNavigationMenu.classList.toggle('hide');
 
 						<portlet:namespace />resetPreview();
 					}
@@ -436,7 +436,7 @@ else {
 			rootMenuItemNameSpan.innerText = '';
 			siteNavigationMenuIdInput.value = '0';
 
-			dom.toggleClasses(removeSiteNavigationMenu, 'hide');
+			removeSiteNavigationMenu.classList.toggle('hide');
 
 			<portlet:namespace />resetPreview();
 		});

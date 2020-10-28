@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFICTING_PUBLICATIONS_CONTENT_LINK</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFICTING_PUBLICATIONS_SUCCESS_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_successMessage}')]</td>
 	<td></td>

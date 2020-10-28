@@ -205,8 +205,7 @@ definition {
 	macro gotoViewDiffInConflictingPublications {
 		Click(
 			key_entryTitle = "${entryTitle}",
-			locator1 = "Publications#CONFICTING_PUBLICATIONS_VIEW_BUTTON",
-			value1 = "View");
+			locator1 = "Publications#CONFICTING_PUBLICATIONS_CONTENT_LINK");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

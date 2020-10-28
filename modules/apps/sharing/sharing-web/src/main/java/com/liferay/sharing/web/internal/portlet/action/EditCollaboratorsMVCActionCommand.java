@@ -69,11 +69,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.MANAGE_COLLABORATORS,
-		"mvc.command.name=/sharing/manage_collaborators"
+		"mvc.command.name=/sharing/edit_collaborators"
 	},
 	service = MVCActionCommand.class
 )
-public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
+public class EditCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

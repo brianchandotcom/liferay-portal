@@ -60,11 +60,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.MANAGE_COLLABORATORS,
-		"mvc.command.name=/", "mvc.command.name=/sharing/manage_collaborators"
+		"mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageCollaboratorsViewMVCRenderCommand
+public class ViewManageCollaboratorsMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -75,7 +75,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		renderRequest.setAttribute(
 			SharingWebKeys.SHARING_REACT_DATA,
 			HashMapBuilder.<String, Object>put(
-				"actionUrl", _getManageCollaboratorsActionURL(renderResponse)
+				"actionUrl", _getActionURL(renderResponse)
 			).put(
 				"classNameId", ParamUtil.getLong(renderRequest, "classNameId")
 			).put(
@@ -95,6 +95,15 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			).build());
 
 		return "/manage_collaborators/view.jsp";
+	}
+
+	private String _getActionURL(RenderResponse renderResponse) {
+		PortletURL editCollaboratorsURL = renderResponse.createActionURL();
+
+		editCollaboratorsURL.setParameter(
+			ActionRequest.ACTION_NAME, "/sharing/edit_collaborators");
+
+		return editCollaboratorsURL.toString();
 	}
 
 	private JSONArray _getCollaboratorsJSONArray(
@@ -195,17 +204,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
-	}
-
-	private String _getManageCollaboratorsActionURL(
-		RenderResponse renderResponse) {
-
-		PortletURL manageCollaboratorURL = renderResponse.createActionURL();
-
-		manageCollaboratorURL.setParameter(
-			ActionRequest.ACTION_NAME, "/sharing/manage_collaborators");
-
-		return manageCollaboratorURL.toString();
 	}
 
 	private JSONArray _getSharingEntryPermissionDisplaySelectOptionsJSONArray(

@@ -216,21 +216,21 @@ definition {
 		Publications.gotoPublish(publicationsName = "Publication 2 Name");
 
 		Publications.viewNeedsManualResolution(
-			entryTitle = "Test Test modified a Asset",
+			entryTitle = "WC WebContent Title 2 Edit",
 			warningMessage = "Modification conflicts with a deletion.");
 
-		Publications.gotoViewDiffInConflictingPublications(entryTitle = "Test Test modified a Asset");
+		Publications.gotoViewDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
 
 		Publications.viewPublicationsDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
-			entryTitle = "Test Test modified a Asset",
+			entryTitle = "WC WebContent Title 2 Edit",
 			publicationsName = "Publication 2 Name");
 
 		Publications.viewPublicationsDiff(
 			columnName = "ct-collection-id",
 			columnValueInPublication = "2",
-			entryTitle = "Test Test modified a Asset",
+			entryTitle = "WC WebContent Title 2 Edit",
 			publicationsName = "Publication 2 Name");
 
 		IFrame.closeFrame();

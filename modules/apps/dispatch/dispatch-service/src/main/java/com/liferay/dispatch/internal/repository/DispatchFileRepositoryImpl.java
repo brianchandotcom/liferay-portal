@@ -14,14 +14,14 @@
 
 package com.liferay.dispatch.internal.repository;
 
+import com.liferay.dispatch.configuration.DispatchConfiguration;
+import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.talend.web.internal.configuration.DispatchTalendConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = DispatchFileRepository.class
 )
-public class TalendDispatchTaskExecutorHelper
-	implements DispatchFileRepository {
+public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 	@Override
 	public FileEntry addFileEntry(
@@ -113,8 +112,8 @@ public class TalendDispatchTaskExecutorHelper
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_dispatchTalendConfiguration = ConfigurableUtil.createConfigurable(
-			DispatchTalendConfiguration.class, properties);
+		_dispatchConfiguration = ConfigurableUtil.createConfigurable(
+			DispatchConfiguration.class, properties);
 	}
 
 	private FileEntry _addFileEntry(
@@ -151,25 +150,22 @@ public class TalendDispatchTaskExecutorHelper
 
 		return PortletFileRepositoryUtil.addPortletFolder(
 			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			TalendDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TALEND,
-			serviceContext);
+			DispatchConstants.REPOSITORY_DEFAULT_PARENT_FOLDER_ID,
+			DispatchConstants.REPOSITORY_FOLDER_NAME, serviceContext);
 	}
 
 	private void _validateFile(String fileName, long size)
 		throws FileExtensionException, FileSizeException {
 
-		if ((_dispatchTalendConfiguration.fileMaxSize() > 0) &&
-			(size > _dispatchTalendConfiguration.fileMaxSize())) {
+		if ((_dispatchConfiguration.fileMaxSize() > 0) &&
+			(size > _dispatchConfiguration.fileMaxSize())) {
 
 			throw new FileSizeException("File size exceeds configured limit");
 		}
 
 		String extension = StringPool.PERIOD + FileUtil.getExtension(fileName);
 
-		for (String imageExtension :
-				_dispatchTalendConfiguration.fileExtensions()) {
-
+		for (String imageExtension : _dispatchConfiguration.fileExtensions()) {
 			if (Objects.equals(StringPool.STAR, imageExtension) ||
 				Objects.equals(imageExtension, extension)) {
 
@@ -182,12 +178,12 @@ public class TalendDispatchTaskExecutorHelper
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TalendDispatchTaskExecutorHelper.class);
+		DispatchFileRepositoryImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private volatile DispatchTalendConfiguration _dispatchTalendConfiguration;
+	private volatile DispatchConfiguration _dispatchConfiguration;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

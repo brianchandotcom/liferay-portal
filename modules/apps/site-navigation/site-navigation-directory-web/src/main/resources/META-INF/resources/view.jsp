@@ -87,14 +87,14 @@
 												</h6>
 
 												<h6 class="text-default">
-													<liferay-ui:asset-tags-summary
+													<liferay-asset:asset-tags-summary
 														className="<%= Group.class.getName() %>"
 														classPK="<%= childGroup.getGroupId() %>"
 													/>
 												</h6>
 
 												<h6 class="text-default">
-													<liferay-ui:asset-categories-summary
+													<liferay-asset:asset-categories-summary
 														className="<%= Group.class.getName() %>"
 														classPK="<%= childGroup.getGroupId() %>"
 													/>

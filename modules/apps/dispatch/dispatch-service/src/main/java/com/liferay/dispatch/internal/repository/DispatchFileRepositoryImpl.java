@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -86,7 +86,7 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 			Folder folder = _getFolder(
 				company.getGroupId(), dispatchTrigger.getUserId());
 
-			return PortletFileRepositoryUtil.fetchPortletFileEntry(
+			return _portletFileRepository.fetchPortletFileEntry(
 				company.getGroupId(), folder.getFolderId(),
 				String.valueOf(dispatchTriggerId));
 		}
@@ -123,15 +123,15 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 		Folder folder = _getFolder(groupId, userId);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
 			groupId, folder.getFolderId(), String.valueOf(dispatchTriggerId));
 
 		if (fileEntry != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+			_portletFileRepository.deletePortletFileEntry(
 				fileEntry.getFileEntryId());
 		}
 
-		return PortletFileRepositoryUtil.addPortletFileEntry(
+		return _portletFileRepository.addPortletFileEntry(
 			groupId, userId, DispatchTrigger.class.getName(), dispatchTriggerId,
 			DispatchPortletKeys.DISPATCH, folder.getFolderId(), inputStream,
 			String.valueOf(dispatchTriggerId), contentType, false);
@@ -145,10 +145,10 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+		Repository repository = _portletFileRepository.addPortletRepository(
 			groupId, DispatchPortletKeys.DISPATCH, serviceContext);
 
-		return PortletFileRepositoryUtil.addPortletFolder(
+		return _portletFileRepository.addPortletFolder(
 			userId, repository.getRepositoryId(),
 			DispatchConstants.REPOSITORY_DEFAULT_PARENT_FOLDER_ID,
 			DispatchConstants.REPOSITORY_FOLDER_NAME, serviceContext);
@@ -187,5 +187,8 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

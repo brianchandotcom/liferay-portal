@@ -462,4 +462,91 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
+	test AssertPriceListIsAppliedToAllAssociatedAccounts {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListIsAppliedToAllAssociatedAccounts";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account 1",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(locator1 = "Link#BACK");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account 2",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(locator1 = "Link#BACK");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account 3",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Minium",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(accountsEligibility = "Commerce Account 1,Commerce Account 2");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "MIN93015",
+			title = "Add SKUs");
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+		CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "45.00");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+
+		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Commerce Account 1");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_VALUE",
+			value1 = "45.00");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_VALUE",
+			value1 = "45.00");
+
+		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 3");
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_VALUE",
+			value1 = "50.00");
+	}
 }

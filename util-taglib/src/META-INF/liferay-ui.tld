@@ -61,134 +61,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
-		<name>app-view-search-entry</name>
-		<tag-class>com.liferay.taglib.ui.AppViewSearchEntryTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<description>The file path for an action JSP page.</description>
-			<name>actionJsp</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The service context of the <![CDATA[<code>actionJsp</code>]]>.</description>
-			<name>actionJspServletContext</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>commentRelatedSearchResults</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The name of the container that the entry is in, such as the name of a folder.</description>
-			<name>containerName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The type of container the entry is in, such as <![CDATA[<code>Folder</code>]]>.</description>
-			<name>containerType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A CSS class for styling the component.</description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A description of the entry.</description>
-			<name>description</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Whether to escape the <![CDATA[<code>title</code>]]> and <![CDATA[<code>description</code>]]>. The default value is <![CDATA[<code>true</code>]]>.</description>
-			<name>escape</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<name>fileEntryRelatedSearchResults</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Whether the entry is able to be highlighted where it matches the query terms. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>highlightEnabled</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>Whether the entry is locked. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>locked</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>Query terms of the search.</description>
-			<name>queryTerms</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A checkbox input ID to be used for the entry row checker. This is a Java <![CDATA[<code>long</code>]]>.</description>
-			<name>rowCheckerId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A name to be used for the entry row checker.</description>
-			<name>rowCheckerName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Whether the entry is selectable via a checkbox. The default value is <![CDATA[<code>true</code>]]>.</description>
-			<name>showCheckbox</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>The current status of the entry as represented by an integer. Options are <![CDATA[<code>-1: STATUS_ANY</code>]]>, <![CDATA[<code>0: STATUS_APPROVED</code>]]>, <![CDATA[<code>1: ACTION_PUBLISH</code>]]>, <![CDATA[<code>2: STATUS_DRAFT</code>]]>, and <![CDATA[<code>4: STATUS_DENIED</code>]]>.</description>
-			<name>status</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The URL for an entry thumbnail image.</description>
-			<name>thumbnailSrc</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A title for the entry.</description>
-			<name>title</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A URL used to view the full entry.</description>
-			<name>url</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The current and past versions of the entry.</description>
-			<name>versions</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Deprecated as of 7.3.0, replaced by the <![CDATA[<code>liferay-asset:asset-categories-selector</code>]]> tag.</description>
 		<name>asset-categories-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesSelectorTag</tag-class>
@@ -230,37 +102,6 @@
 		</attribute>
 		<attribute>
 			<name>showRequiredLabel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Deprecated as of 7.3.0, replaced by the <![CDATA[<code>liferay-asset:asset-categories-summary</code>]]> tag.</description>
-		<name>asset-categories-summary</name>
-		<tag-class>com.liferay.taglib.ui.AssetCategoriesSummaryTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>className</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>classPK</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>message</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>paramName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -337,49 +178,6 @@
 		<attribute>
 			<description>A function to be called when a tag is removed.</description>
 			<name>removeCallback</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Creates a component to display all the tags associated with an asset, such as a blog entry, wiki page, or message boards message.</description>
-		<description>Deprecated as of 7.3.0, replaced by the <![CDATA[<code>liferay-asset:asset-tags-summary</code>]]> tag.</description>
-		<name>asset-tags-summary</name>
-		<tag-class>com.liferay.taglib.ui.AssetTagsSummaryTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>An array of the asset tag names.</description>
-			<name>assetTagNames</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The Java class of the asset.</description>
-			<name>className</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The Java class primary key of an asset. This is a Java <![CDATA[<code>long</code>]]>.</description>
-			<name>classPK</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A message to display before the tag labels. A standard example is <![CDATA[<code>tags</code>]]>, which renders as <![CDATA[<code>Tags:</code>]]>.</description>
-			<name>message</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A parameter name for the tags. The default value is <![CDATA[<code>tag</code>]]>.</description>
-			<name>paramName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The URL of a portlet to display the tags.</description>
-			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2202,12 +2000,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.2.0, with no direct replacement.</description>
-		<name>organization-search-form</name>
-		<tag-class>com.liferay.taglib.ui.OrganizationSearchFormTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
 		<description>Creates a page iterator for paginating through lists of items.</description>
 		<name>page-iterator</name>
 		<tag-class>com.liferay.taglib.ui.PageIteratorTag</tag-class>
@@ -3880,22 +3672,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
-		<name>user-group-search-container-results</name>
-		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>searchTerms</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>userGroupParams</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>user-name-fields</name>
 		<tag-class>com.liferay.taglib.ui.UserNameFieldsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3949,22 +3725,5 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	</tag>
-	<tag>
-		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
-		<name>user-search-container-results</name>
-		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>userParams</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Deprecated as of 7.2.0, with no direct replacement.</description>
-		<name>user-search-form</name>
-		<tag-class>com.liferay.taglib.ui.UserSearchFormTag</tag-class>
-		<body-content>JSP</body-content>
 	</tag>
 </taglib>

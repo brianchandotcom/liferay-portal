@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String keywords = ParamUtil.getString(request, "keywords");
+
 String tabs1 = (String)request.getAttribute("edit_roles.jsp-tabs1");
 
 Group group = (Group)request.getAttribute("edit_roles.jsp-group");
@@ -24,6 +26,20 @@ Role role = (Role)request.getAttribute("edit_roles.jsp-role");
 long roleId = (Long)request.getAttribute("edit_roles.jsp-roleId");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
+
+LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+
+if (group.isSite()) {
+	userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(group.getGroupId()));
+}
+
+if (tabs1.equals("current")) {
+	userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUP_GROUP_ROLE, new Long[] {Long.valueOf(roleId), Long.valueOf(group.getGroupId())});
+}
+
+if (Validator.isNotNull(keywords)) {
+	userGroupParams.put("expandoAttributes", keywords);
+}
 %>
 
 <aui:input name="addUserGroupIds" type="hidden" />
@@ -32,25 +48,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 <liferay-ui:search-container
 	rowChecker="<%= new UserGroupGroupRoleUserGroupChecker(renderResponse, group, role) %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+	total="<%= UserGroupServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams) %>"
 >
-
-	<%
-	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-	if (group.isSite()) {
-		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(group.getGroupId()));
-	}
-
-	if (tabs1.equals("current")) {
-		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUP_GROUP_ROLE, new Long[] {Long.valueOf(roleId), Long.valueOf(group.getGroupId())});
-	}
-	%>
-
-	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchTerms %>"
-		userGroupParams="<%= userGroupParams %>"
+	<liferay-ui:search-container-results
+		results="<%= UserGroupServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 	/>
 
 	<liferay-ui:search-container-row

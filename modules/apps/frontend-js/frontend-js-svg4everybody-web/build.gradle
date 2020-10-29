@@ -1,3 +1,14 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+ext {
+	svg4EverybodyVersion = "8bd711049ba3faefb8285ca70c63a67efc35636c"
+
+	svg4EverybodyURL = "https://raw.githubusercontent.com/jonathantneal/svg4everybody/${svg4EverybodyVersion}/lib/svg4everybody.js"
+}
+
+task downloadSvg4Everybody(type: Copy)
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -5,4 +16,32 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
+}
+
+downloadSvg4Everybody {
+	File svg4EverybodyURLFile = file("src/main/resources/META-INF/resources/svg4everybody.js")
+
+	ext {
+		autoClean = false
+	}
+
+	filter {
+		String line ->
+
+		line.replace "function svg4everybody", "module.exports = function svg4everybody"
+	}
+
+	from {
+		FileUtil.get(project, project.svg4EverybodyURL)
+	}
+
+	into svg4EverybodyURLFile.parentFile
+
+	onlyIf {
+		!svg4EverybodyURLFile.exists()
+	}
+}
+
+processResources {
+	dependsOn downloadSvg4Everybody
 }

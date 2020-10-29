@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -582,7 +583,9 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void read(ClassLoader classLoader, String source)
 		throws ResourceActionsException {
 
-		_read(classLoader, source, null);
+		_read(
+			classLoader, source,
+			rootElement -> _read(rootElement, null));
 	}
 
 	@Override
@@ -658,7 +661,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		Set<String> portletNames = new HashSet<>();
 
 		for (String source : sources) {
-			_read(classLoader, source, portletNames);
+			_read(classLoader, source, rootElement -> _read(rootElement, null));
 		}
 
 		for (String portletName : portletNames) {
@@ -997,7 +1000,9 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	private void _read(
-			ClassLoader classLoader, String source, Set<String> portletNames)
+			ClassLoader classLoader, String source,
+			UnsafeConsumer<Element, ResourceActionsException>
+				readResourceConsumer)
 		throws ResourceActionsException {
 
 		InputStream inputStream = classLoader.getResourceAsStream(source);
@@ -1038,21 +1043,21 @@ public class ResourceActionsImpl implements ResourceActions {
 				String file = StringUtil.trim(
 					resourceElement.attributeValue("file"));
 
-				_read(classLoader, file, portletNames);
+				_read(classLoader, file, readResourceConsumer);
 
 				String extFileName = StringUtil.replace(
 					file, ".xml", "-ext.xml");
 
-				_read(classLoader, extFileName, portletNames);
+				_read(classLoader, extFileName, readResourceConsumer);
 			}
 
-			_read(rootElement, portletNames);
+			readResourceConsumer.accept(rootElement);
 
 			if (source.endsWith(".xml") && !source.endsWith("-ext.xml")) {
 				String extFileName = StringUtil.replace(
 					source, ".xml", "-ext.xml");
 
-				_read(classLoader, extFileName, portletNames);
+				_read(classLoader, extFileName, readResourceConsumer);
 			}
 		}
 		catch (DocumentException documentException) {

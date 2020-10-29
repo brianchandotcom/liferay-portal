@@ -305,19 +305,23 @@ AUI.add(
 
 			RESOURCE_PHASE: '2',
 
-			createActionURL() {
+			// Note: these are constructor functions so
+			// must not use concise method syntax. See:
+			// https://issues.liferay.com/browse/COMMERCE-5035
+
+			createActionURL: function createActionURL() {
 				return new PortletURL(PortletURL.ACTION_PHASE);
 			},
 
-			createRenderURL() {
+			createRenderURL: function createRenderURL() {
 				return new PortletURL(PortletURL.RENDER_PHASE);
 			},
 
-			createResourceURL() {
+			createResourceURL: function createResourceURL() {
 				return new PortletURL(PortletURL.RESOURCE_PHASE);
 			},
 
-			createURL(basePortletURL, params) {
+			createURL: function createURL(basePortletURL, params) {
 				return new PortletURL(null, params, basePortletURL);
 			},
 		});

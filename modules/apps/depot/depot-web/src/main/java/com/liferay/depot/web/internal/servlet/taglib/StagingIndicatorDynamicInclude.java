@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -147,6 +148,37 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 		return portletURL.toString();
 	}
 
+	private JSONObject _getLiveGroupItemJSONObject(
+		HttpServletRequest httpServletRequest, Group scopeGroup,
+		String liveGroupURL) {
+
+		JSONObject publishToLiveItemJSONObject = JSONUtil.put(
+			"href", liveGroupURL
+		).put(
+			"label", _language.get(httpServletRequest, _getLiveKey(scopeGroup))
+		).put(
+			"symbolLeft", "radio-button"
+		).put(
+			"symbolRight", _getSymbolRight(liveGroupURL)
+		);
+
+		if (Validator.isNull(liveGroupURL)) {
+			publishToLiveItemJSONObject.put(
+				"className", "lfr-portal-tooltip"
+			).put(
+				"title",
+				_language.get(
+					ResourceBundleUtil.getBundle(
+						"content.Language",
+						_portal.getLocale(httpServletRequest), getClass()),
+					"the-connection-to-the-remote-live-asset-library-cannot-" +
+						"be-established-due-to-a-network-problem")
+			);
+		}
+
+		return publishToLiveItemJSONObject;
+	}
+
 	private String _getLiveGroupURL(
 			Group group, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -251,29 +283,8 @@ public class StagingIndicatorDynamicInclude extends BaseDynamicInclude {
 			).put(
 				"items",
 				_createJSONArray(
-					JSONUtil.put(
-						"className", "lfr-portal-tooltip"
-					).put(
-						"href", liveGroupURL
-					).put(
-						"label",
-						_language.get(
-							httpServletRequest, _getLiveKey(scopeGroup))
-					).put(
-						"symbolLeft", "radio-button"
-					).put(
-						"symbolRight", _getSymbolRight(liveGroupURL)
-					).put(
-						"title",
-						_language.get(
-							ResourceBundleUtil.getBundle(
-								"content.Language",
-								_portal.getLocale(httpServletRequest),
-								getClass()),
-							"the-connection-to-the-remote-live-asset-library-" +
-								"cannot-be-established-due-to-a-network-" +
-									"problem")
-					),
+					_getLiveGroupItemJSONObject(
+						httpServletRequest, scopeGroup, liveGroupURL),
 					JSONUtil.put(
 						"action", "publishToLive"
 					).put(

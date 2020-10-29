@@ -34,9 +34,9 @@ public interface DispatchTalendConfiguration {
 		deflt = ".zip,.rar,.jar,.properties", name = "file-extensions",
 		required = false
 	)
-	public String[] imageExtensions();
+	public String[] fileExtensions();
 
 	@Meta.AD(deflt = "50242880", name = "file-max-size", required = false)
-	public long imageMaxSize();
+	public long fileMaxSize();
 
 }

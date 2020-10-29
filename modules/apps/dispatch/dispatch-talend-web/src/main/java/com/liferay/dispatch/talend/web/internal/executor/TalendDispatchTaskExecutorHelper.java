@@ -133,8 +133,8 @@ public class TalendDispatchTaskExecutorHelper {
 	private void _validateFile(String fileName, long size)
 		throws FileExtensionException, FileSizeException {
 
-		if ((_dispatchTalendConfiguration.imageMaxSize() > 0) &&
-			(size > _dispatchTalendConfiguration.imageMaxSize())) {
+		if ((_dispatchTalendConfiguration.fileMaxSize() > 0) &&
+			(size > _dispatchTalendConfiguration.fileMaxSize())) {
 
 			throw new FileSizeException("File size exceeds configured limit");
 		}
@@ -142,7 +142,7 @@ public class TalendDispatchTaskExecutorHelper {
 		String extension = StringPool.PERIOD + FileUtil.getExtension(fileName);
 
 		for (String imageExtension :
-				_dispatchTalendConfiguration.imageExtensions()) {
+				_dispatchTalendConfiguration.fileExtensions()) {
 
 			if (Objects.equals(StringPool.STAR, imageExtension) ||
 				Objects.equals(imageExtension, extension)) {

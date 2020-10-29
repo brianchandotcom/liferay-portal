@@ -3206,6 +3206,36 @@ definition {
 		SignIn.signIn();
 	}
 
+	macro viewWebContentWithAllFields {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentAdmin.viewEntryWorkflowStatus(
+			entry = "Web Content Title",
+			workflowStatus = "Approved");
+
+		WebContent.viewWithStructureCP(
+			webContentBoolean = "true",
+			webContentDate = "10/10/2020",
+			webContentDecimal = "0.5",
+			webContentDocumentsAndMedia = "Document Title",
+			webContentDocumentsAndMediaFieldName = "Documents_and_Media",
+			webContentHTML = "This is a HTML field",
+			webContentImage = "Document_1.jpg",
+			webContentInteger = "9",
+			webContentLinkToPage = "Welcome",
+			webContentLinkToPageFieldName = "Link_to_Page",
+			webContentNumber = "-1",
+			webContentRadio = "option 1",
+			webContentSelect = "option 2",
+			webContentSeparator = "true",
+			webContentText = "This is a Text field",
+			webContentTextBox = "This is a Text Box field",
+			webContentTextBoxFieldName = "Text_Box",
+			webContentTitle = "Web Content Title");
+	}
+
 	macro viewWebContextsCORS {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

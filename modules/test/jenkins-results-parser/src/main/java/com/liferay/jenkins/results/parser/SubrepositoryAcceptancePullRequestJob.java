@@ -30,7 +30,7 @@ public class SubrepositoryAcceptancePullRequestJob
 
 		_testSuiteName = testSuiteName;
 
-		_setTestRunValidation();
+		_setValidationRequired();
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class SubrepositoryAcceptancePullRequestJob
 		return getSetFromString(batchNames);
 	}
 
-	private void _setTestRunValidation() {
+	private void _setValidationRequired() {
 		Properties jobProperties = getJobProperties();
 
 		String testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
@@ -76,7 +76,7 @@ public class SubrepositoryAcceptancePullRequestJob
 				jobProperties, "test.run.validation");
 		}
 
-		testRunValidation = Boolean.parseBoolean(testRunValidationProperty);
+		validationRequired = Boolean.parseBoolean(testRunValidationProperty);
 	}
 
 	private final String _testSuiteName;

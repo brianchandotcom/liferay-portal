@@ -78,8 +78,8 @@ public class SubrepositoryGitRepositoryJob
 	}
 
 	@Override
-	public boolean getTestRunValidation() {
-		return testRunValidation;
+	public boolean isValidationRequired() {
+		return validationRequired;
 	}
 
 	@Override
@@ -146,6 +146,6 @@ public class SubrepositoryGitRepositoryJob
 	}
 
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
-	protected boolean testRunValidation;
+	protected boolean validationRequired;
 
 }

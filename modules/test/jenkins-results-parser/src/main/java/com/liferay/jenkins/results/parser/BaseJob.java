@@ -230,7 +230,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
-	public boolean getTestRunValidation() {
+	public boolean isValidationRequired() {
 		return false;
 	}
 

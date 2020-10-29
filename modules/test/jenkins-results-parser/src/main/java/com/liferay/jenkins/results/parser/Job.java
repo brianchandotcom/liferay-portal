@@ -52,7 +52,7 @@ public interface Job {
 
 	public String getTestPropertiesContent();
 
-	public boolean getTestRunValidation();
+	public boolean isValidationRequired();
 
 	public void readJobProperties();
 

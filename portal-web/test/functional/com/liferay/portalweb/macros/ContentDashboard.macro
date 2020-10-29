@@ -306,6 +306,26 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro tearDown {
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
+		Navigator.gotoNavNested(navNested = "Audience");
+
+		var key_categoryName = "Audience 1";
+        
+		if (IsElementPresent(locator1 = "Categories#VOCABULARY_CATEGORY")){
+			Category.deleteCategoriesCP(vocabularyName = "Audience");
+		}
+
+		Navigator.gotoNavNested(navNested = "Stage");
+
+		var key_categoryName = "Stage 1";
+        
+		if (IsElementPresent(locator1 = "Categories#VOCABULARY_CATEGORY")){
+			Category.deleteCategoriesCP(vocabularyName = "Stage");
+		}
+	}
+
 	macro uncheckCheckbox {
 		ClickNoError(locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX");
 	}

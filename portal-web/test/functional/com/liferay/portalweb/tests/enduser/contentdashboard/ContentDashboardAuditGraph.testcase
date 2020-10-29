@@ -13,30 +13,41 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		Navigator.openURL();
+
+        var categoryId1 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Audience 1",
+			vocabularyName = "Audience");
+
+		var categoryId2 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Stage 1",
+			vocabularyName = "Stage");
 	}
 
 	tearDown {
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title");
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+        else{
+            ContentDashboard.tearDown();
+        }
 	}
 
 	@description = "When the user clicks on the Flip axes button, the vocabularies will be exchanged, the vocabulary represented in the X (the first in the list in the "In use" box) is sent to the Y, and the other way around"
 	@priority = "5"
 	test AuditGraphFlipAxes {
 		property portal.acceptance = "true";
-
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 1",
-			vocabularyName = "Audience");
-
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 1",
-			vocabularyName = "Stage");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -77,22 +88,6 @@ definition {
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 			value1 = "WC Title",
 			xAxisCtegoryName = "Audience 1");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
-
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Category.deleteCategoriesCP(vocabularyName = "Audience");
-
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Category.deleteCategoriesCP(vocabularyName = "Stage");
 	}
 
 	@description = "When there are not contents with Audience's categories, the X axis will show just one bar per each one of Stage's categories representing the total number of contents labeled with those categories"
@@ -100,13 +95,12 @@ definition {
 	test AuditGraphNoContentsForAudience {
 		property portal.acceptance = "true";
 
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 1",
-			vocabularyName = "Stage");
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
+		Category.deleteCategoriesCP(vocabularyName = "Audience");
 
 		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = "${categoryId2}",
 			content = "WC content",
 			groupName = "Test Site Name",
 			title = "WC Title");
@@ -120,18 +114,6 @@ definition {
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 			value1 = "WC Title",
 			xAxisCtegoryName = "Stage 1");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
-
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Category.deleteCategoriesCP(vocabularyName = "Stage");
 	}
 
 	@description = "When there are not contents with Stage's categories, the X axis will show just one bar per each one of Audience's categories representing the total number of contents labeled with those categories"
@@ -139,13 +121,12 @@ definition {
 	test AuditGraphNoContentsForStage {
 		property portal.acceptance = "true";
 
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 1",
-			vocabularyName = "Audience");
+		Category.openCategoriesAdmin(siteURLKey = "global");
+
+		Category.deleteCategoriesCP(vocabularyName = "Stage");
 
 		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = "${categoryId1}",
 			content = "WC content",
 			groupName = "Test Site Name",
 			title = "WC Title");
@@ -159,18 +140,6 @@ definition {
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 			value1 = "WC Title",
 			xAxisCtegoryName = "Audience 1");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
-
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Category.deleteCategoriesCP(vocabularyName = "Audience");
 	}
 
 	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."
@@ -178,17 +147,7 @@ definition {
 	test AuditGraphUncheckCheckbox {
 		property portal.acceptance = "true";
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Audience 1",
-			vocabularyName = "Audience");
-
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Stage 1",
-			vocabularyName = "Stage");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -221,22 +180,6 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
 			value1 = "There are no categories selected");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
-
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Category.deleteCategoriesCP(vocabularyName = "Audience");
-
-		Category.openCategoriesAdmin(siteURLKey = "global");
-
-		Category.deleteCategoriesCP(vocabularyName = "Stage");
 	}
 
 }

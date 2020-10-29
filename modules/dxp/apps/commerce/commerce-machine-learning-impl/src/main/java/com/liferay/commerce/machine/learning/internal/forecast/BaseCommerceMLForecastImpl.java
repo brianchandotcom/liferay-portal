@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.forecast.model;
+package com.liferay.commerce.machine.learning.internal.forecast;
 
-import com.liferay.commerce.machine.learning.forecast.model.CommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceMLForecast;
 
 import java.util.Date;
 

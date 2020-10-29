@@ -15,10 +15,9 @@
 package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
-import com.liferay.commerce.machine.learning.internal.recommendation.model.UserCommerceMLRecommendationImpl;
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.commerce.machine.learning.recommendation.model.UserCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.service.UserCommerceMLRecommendationService;
+import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendationManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -45,12 +44,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = UserCommerceMLRecommendationService.class
+	service = UserCommerceMLRecommendationManager.class
 )
-public class UserCommerceMLRecommendationServiceImpl
+public class UserCommerceMLRecommendationManagerImpl
 	extends BaseCommerceMLRecommendationServiceImpl
 		<UserCommerceMLRecommendation>
-	implements UserCommerceMLRecommendationService {
+	implements UserCommerceMLRecommendationManager {
 
 	@Override
 	public UserCommerceMLRecommendation addUserCommerceMLRecommendation(

@@ -12,21 +12,16 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.recommendation.model;
+package com.liferay.commerce.machine.learning.internal.recommendation;
 
-import com.liferay.commerce.machine.learning.recommendation.model.UserCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendation;
 
 /**
  * @author Riccardo Ferrari
  */
-public class UserCommerceMLRecommendationImpl
+public class ProductContentCommerceMLRecommendationImpl
 	extends BaseCommerceMLRecommendationImpl
-	implements UserCommerceMLRecommendation {
-
-	@Override
-	public long[] getAssetCategoryIds() {
-		return _assetCategoryIds;
-	}
+	implements ProductContentCommerceMLRecommendation {
 
 	@Override
 	public long getEntryClassPK() {
@@ -34,8 +29,8 @@ public class UserCommerceMLRecommendationImpl
 	}
 
 	@Override
-	public void setAssetCategoryIds(long[] assetCategoryIds) {
-		_assetCategoryIds = assetCategoryIds;
+	public int getRank() {
+		return _rank;
 	}
 
 	@Override
@@ -43,7 +38,12 @@ public class UserCommerceMLRecommendationImpl
 		_entryClassPK = entryClassPK;
 	}
 
-	private long[] _assetCategoryIds;
+	@Override
+	public void setRank(int rank) {
+		_rank = rank;
+	}
+
 	private long _entryClassPK;
+	private int _rank;
 
 }

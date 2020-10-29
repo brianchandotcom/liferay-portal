@@ -15,10 +15,9 @@
 package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
-import com.liferay.commerce.machine.learning.internal.recommendation.model.ProductInteractionCommerceMLRecommendationImpl;
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.commerce.machine.learning.recommendation.model.ProductInteractionCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.service.ProductInteractionCommerceMLRecommendationService;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendationManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -37,35 +36,35 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = ProductInteractionCommerceMLRecommendationService.class
+	service = ProductContentCommerceMLRecommendationManager.class
 )
-public class ProductInteractionCommerceMLRecommendationServiceImpl
+public class ProductContentCommerceMLRecommendationManagerImpl
 	extends BaseCommerceMLRecommendationServiceImpl
-		<ProductInteractionCommerceMLRecommendation>
-	implements ProductInteractionCommerceMLRecommendationService {
+		<ProductContentCommerceMLRecommendation>
+	implements ProductContentCommerceMLRecommendationManager {
 
 	@Override
-	public ProductInteractionCommerceMLRecommendation
-			addProductInteractionCommerceMLRecommendation(
-				ProductInteractionCommerceMLRecommendation
-					productInteractionCommerceMLRecommendation)
+	public ProductContentCommerceMLRecommendation
+			addProductContentCommerceMLRecommendation(
+				ProductContentCommerceMLRecommendation
+					productContentCommerceMLRecommendation)
 		throws PortalException {
 
 		return addCommerceMLRecommendation(
-			productInteractionCommerceMLRecommendation,
+			productContentCommerceMLRecommendation,
 			_commerceMLIndexer.getIndexName(
-				productInteractionCommerceMLRecommendation.getCompanyId()),
+				productContentCommerceMLRecommendation.getCompanyId()),
 			_commerceMLIndexer.getDocumentType());
 	}
 
 	@Override
-	public ProductInteractionCommerceMLRecommendation create() {
-		return new ProductInteractionCommerceMLRecommendationImpl();
+	public ProductContentCommerceMLRecommendation create() {
+		return new ProductContentCommerceMLRecommendationImpl();
 	}
 
 	@Override
-	public List<ProductInteractionCommerceMLRecommendation>
-			getProductInteractionCommerceMLRecommendations(
+	public List<ProductContentCommerceMLRecommendation>
+			getProductContentCommerceMLRecommendations(
 				long companyId, long cpDefinition)
 		throws PortalException {
 
@@ -83,7 +82,7 @@ public class ProductInteractionCommerceMLRecommendationServiceImpl
 
 	@Override
 	protected Document toDocument(
-		ProductInteractionCommerceMLRecommendation model) {
+		ProductContentCommerceMLRecommendation model) {
 
 		Document document = getBaseDocument(model);
 
@@ -100,26 +99,25 @@ public class ProductInteractionCommerceMLRecommendationServiceImpl
 	}
 
 	@Override
-	protected ProductInteractionCommerceMLRecommendation toModel(
+	protected ProductContentCommerceMLRecommendation toModel(
 		Document document) {
 
-		ProductInteractionCommerceMLRecommendation
-			productInteractionCommerceMLRecommendationModel =
+		ProductContentCommerceMLRecommendation
+			productContentCommerceMLRecommendation =
 				getBaseCommerceMLRecommendationModel(
-					new ProductInteractionCommerceMLRecommendationImpl(),
-					document);
+					new ProductContentCommerceMLRecommendationImpl(), document);
 
-		productInteractionCommerceMLRecommendationModel.setEntryClassPK(
+		productContentCommerceMLRecommendation.setEntryClassPK(
 			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-		productInteractionCommerceMLRecommendationModel.setRank(
+		productContentCommerceMLRecommendation.setRank(
 			GetterUtil.getInteger(
 				document.get(CommerceMLRecommendationField.RANK)));
 
-		return productInteractionCommerceMLRecommendationModel;
+		return productContentCommerceMLRecommendation;
 	}
 
 	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.ProductInteractionCommerceMLRecommendationIndexer)"
+		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.ProductContentCommerceMLRecommendationIndexer)"
 	)
 	private CommerceMLIndexer _commerceMLIndexer;
 

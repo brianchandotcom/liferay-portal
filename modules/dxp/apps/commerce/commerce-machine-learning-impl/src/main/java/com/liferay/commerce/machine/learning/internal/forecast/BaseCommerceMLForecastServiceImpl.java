@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.machine.learning.internal.forecast;
 
-import com.liferay.commerce.machine.learning.forecast.model.CommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceMLForecast;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastField;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastPeriod;
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;

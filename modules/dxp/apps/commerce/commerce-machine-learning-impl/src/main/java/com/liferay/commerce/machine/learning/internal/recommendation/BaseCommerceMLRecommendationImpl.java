@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.recommendation.model;
+package com.liferay.commerce.machine.learning.internal.recommendation;
 
-import com.liferay.commerce.machine.learning.recommendation.model.CommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.CommerceMLRecommendation;
 
 import java.util.Date;
 

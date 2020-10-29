@@ -14,13 +14,12 @@
 
 package com.liferay.commerce.machine.learning.internal.forecast;
 
-import com.liferay.commerce.machine.learning.forecast.model.CommerceAccountCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.CommerceAccountCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecastManager;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastField;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastPeriod;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastScope;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastTarget;
-import com.liferay.commerce.machine.learning.internal.forecast.model.CommerceAccountCommerceMLForecastImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -44,11 +43,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = CommerceAccountCommerceMLForecastService.class
+	service = CommerceAccountCommerceMLForecastManager.class
 )
-public class CommerceAccountCommerceMLForecastServiceImpl
+public class CommerceAccountCommerceMLForecastManagerImpl
 	extends BaseCommerceMLForecastServiceImpl<CommerceAccountCommerceMLForecast>
-	implements CommerceAccountCommerceMLForecastService {
+	implements CommerceAccountCommerceMLForecastManager {
 
 	@Override
 	public CommerceAccountCommerceMLForecast

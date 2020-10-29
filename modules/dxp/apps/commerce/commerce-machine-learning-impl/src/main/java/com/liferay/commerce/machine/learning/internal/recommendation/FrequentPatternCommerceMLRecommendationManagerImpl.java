@@ -15,10 +15,9 @@
 package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
-import com.liferay.commerce.machine.learning.internal.recommendation.model.FrequentPatternCommerceMLRecommendationImpl;
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.commerce.machine.learning.recommendation.model.FrequentPatternCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.service.FrequentPatternCommerceMLRecommendationService;
+import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendationManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,12 +52,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = FrequentPatternCommerceMLRecommendationService.class
+	service = FrequentPatternCommerceMLRecommendationManager.class
 )
-public class FrequentPatternCommerceMLRecommendationServiceImpl
+public class FrequentPatternCommerceMLRecommendationManagerImpl
 	extends BaseCommerceMLRecommendationServiceImpl
 		<FrequentPatternCommerceMLRecommendation>
-	implements FrequentPatternCommerceMLRecommendationService {
+	implements FrequentPatternCommerceMLRecommendationManager {
 
 	@Override
 	public FrequentPatternCommerceMLRecommendation
@@ -256,7 +255,7 @@ public class FrequentPatternCommerceMLRecommendationServiceImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FrequentPatternCommerceMLRecommendationServiceImpl.class);
+		FrequentPatternCommerceMLRecommendationManagerImpl.class);
 
 	@Reference(
 		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.FrequentPatternCommerceMLRecommendationIndexer)"

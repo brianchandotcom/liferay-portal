@@ -12,16 +12,16 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.recommendation.model;
+package com.liferay.commerce.machine.learning.internal.recommendation;
 
-import com.liferay.commerce.machine.learning.recommendation.model.ProductContentCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.ProductInteractionCommerceMLRecommendation;
 
 /**
  * @author Riccardo Ferrari
  */
-public class ProductContentCommerceMLRecommendationImpl
+public class ProductInteractionCommerceMLRecommendationImpl
 	extends BaseCommerceMLRecommendationImpl
-	implements ProductContentCommerceMLRecommendation {
+	implements ProductInteractionCommerceMLRecommendation {
 
 	@Override
 	public long getEntryClassPK() {

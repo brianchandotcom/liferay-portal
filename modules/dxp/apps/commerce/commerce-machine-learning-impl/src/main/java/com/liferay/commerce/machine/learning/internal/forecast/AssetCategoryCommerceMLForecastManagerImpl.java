@@ -14,13 +14,12 @@
 
 package com.liferay.commerce.machine.learning.internal.forecast;
 
-import com.liferay.commerce.machine.learning.forecast.model.AssetCategoryCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.AssetCategoryCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecastManager;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastField;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastPeriod;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastScope;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastTarget;
-import com.liferay.commerce.machine.learning.internal.forecast.model.AssetCategoryCommerceMLForecastImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -45,11 +44,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = AssetCategoryCommerceMLForecastService.class
+	service = AssetCategoryCommerceMLForecastManager.class
 )
-public class AssetCategoryCommerceMLForecastServiceImpl
+public class AssetCategoryCommerceMLForecastManagerImpl
 	extends BaseCommerceMLForecastServiceImpl<AssetCategoryCommerceMLForecast>
-	implements AssetCategoryCommerceMLForecastService {
+	implements AssetCategoryCommerceMLForecastManager {
 
 	@Override
 	public AssetCategoryCommerceMLForecast addAssetCategoryCommerceMLForecast(

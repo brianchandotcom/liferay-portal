@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.recommendation.model;
+package com.liferay.commerce.machine.learning.internal.recommendation;
 
-import com.liferay.commerce.machine.learning.recommendation.model.FrequentPatternCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendation;
 
 /**
  * @author Riccardo Ferrari

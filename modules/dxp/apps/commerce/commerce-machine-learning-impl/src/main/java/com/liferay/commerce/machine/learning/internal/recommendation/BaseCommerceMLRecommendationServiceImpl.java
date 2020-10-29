@@ -15,7 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
-import com.liferay.commerce.machine.learning.recommendation.model.CommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.CommerceMLRecommendation;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;

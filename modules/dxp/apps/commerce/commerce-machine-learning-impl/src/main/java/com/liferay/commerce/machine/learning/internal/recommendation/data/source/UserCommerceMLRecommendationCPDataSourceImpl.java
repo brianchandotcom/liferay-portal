@@ -17,8 +17,8 @@ package com.liferay.commerce.machine.learning.internal.recommendation.data.sourc
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.machine.learning.recommendation.model.UserCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.service.UserCommerceMLRecommendationService;
+import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendationManager;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
@@ -92,7 +92,7 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 		}
 
 		List<UserCommerceMLRecommendation> userCommerceMLRecommendations =
-			_userCommerceMLRecommendationService.
+			_userCommerceMLRecommendationManager.
 				getUserCommerceMLRecommendations(
 					portal.getCompanyId(httpServletRequest),
 					commerceAccount.getCommerceAccountId(), categoryIds);
@@ -152,7 +152,7 @@ public class UserCommerceMLRecommendationCPDataSourceImpl
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private UserCommerceMLRecommendationService
-		_userCommerceMLRecommendationService;
+	private UserCommerceMLRecommendationManager
+		_userCommerceMLRecommendationManager;
 
 }

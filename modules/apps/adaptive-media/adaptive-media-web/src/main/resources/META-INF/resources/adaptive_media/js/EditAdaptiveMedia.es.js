@@ -127,6 +127,24 @@ const EditAdaptiveMedia = ({
 		setFieldValue(nameId, nameValue);
 	};
 
+	const setFieldDimention = (fieldKey, value) => {
+		if (/^\d*$/.test(value)) {
+			setFieldValue(fieldKey, value, false);
+		}
+	};
+
+	const handleChangeMaxWidth = (event) => {
+		const value = event.target.value;
+
+		setFieldDimention(maxWidthId, value);
+	};
+
+	const handleChangeHeight = (event) => {
+		const value = event.target.value;
+
+		setFieldDimention(maxHeightId, value);
+	};
+
 	return (
 		<ClayForm
 			action={actionUrl}
@@ -204,7 +222,7 @@ const EditAdaptiveMedia = ({
 								label={Liferay.Language.get('max-width-px')}
 								name={maxWidthId}
 								onBlur={handleBlur}
-								onChange={handleChange}
+								onChange={handleChangeMaxWidth}
 								type="number"
 								value={values[maxWidthId]}
 							/>
@@ -220,7 +238,7 @@ const EditAdaptiveMedia = ({
 								label={Liferay.Language.get('max-height-px')}
 								name={maxHeightId}
 								onBlur={handleBlur}
-								onChange={handleChange}
+								onChange={handleChangeHeight}
 								type="number"
 								value={values[maxHeightId]}
 							/>

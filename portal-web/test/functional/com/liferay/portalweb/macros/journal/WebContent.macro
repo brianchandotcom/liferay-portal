@@ -1767,7 +1767,7 @@ definition {
 		if ("${field}" == "Web Content") {
 			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-			AssertTextEquals。assertPartialText(
+			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#DE_DDM",
 				value1 = "${fieldData}");
 		}

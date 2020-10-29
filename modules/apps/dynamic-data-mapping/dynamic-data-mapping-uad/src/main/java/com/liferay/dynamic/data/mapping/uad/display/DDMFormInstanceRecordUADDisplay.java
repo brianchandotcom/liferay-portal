@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.uad.util.DDMUADUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -80,10 +82,17 @@ public class DDMFormInstanceRecordUADDisplay
 
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+		
+		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
 		return _portal.getSiteAdminURL(
 			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
 			HashMapBuilder.put(
+					portletNamespace.concat("defaultLanguageId"),
+					new String[] {
+						LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale())
+					}
+				).put(
 				portletNamespace.concat("formInstanceId"),
 				new String[] {
 					String.valueOf(ddmFormInstanceRecord.getFormInstanceId())

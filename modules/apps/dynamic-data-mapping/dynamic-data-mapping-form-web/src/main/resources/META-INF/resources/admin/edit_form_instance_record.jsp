@@ -47,6 +47,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 		<aui:input name="formInstanceRecordId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceRecordId() %>" />
 		<aui:input name="formInstanceId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceId() %>" />
 
+		<%
+		DDMFormValues ddmFormValues = ddmFormInstanceRecordVersion.getDDMFormValues();
+		%>
+
+		<aui:input name="defaultLanguageId" type="hidden" value="<%= LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale()) %>" />
+
 		<div class="ddm-form-basic-info">
 			<h1 class="ddm-form-name"><%= ddmFormAdminDisplayContext.getFormName() %></h1>
 

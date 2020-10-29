@@ -150,6 +150,18 @@ definition {
 			value1 = "$ ${productPrice}");
 	}
 
+	macro selectAccountFromAccountSelector {
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SWITCHER_BACK_BUTTON");
+
+		Click(
+			key_accountName = "${accountName}",
+			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+	}
+
 	macro viewAllAccountsFromAccountSelector {
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 

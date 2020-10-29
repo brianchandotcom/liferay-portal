@@ -18,7 +18,7 @@
 
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
-TalendDispatchTaskExecutorHelper talendDispatchTaskExecutorHelper = (TalendDispatchTaskExecutorHelper)request.getAttribute(TalendDispatchTaskExecutorHelper.class.getName());
+String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_NAME);
 %>
 
 <liferay-portlet:actionURL name="editDispatchTalendJobArchive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
@@ -31,11 +31,7 @@ TalendDispatchTaskExecutorHelper talendDispatchTaskExecutorHelper = (TalendDispa
 
 			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
-			<%
-			FileEntry fileEntry = talendDispatchTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
-			%>
-
-			<p class="<%= (fileEntry != null) ? "text-default" : "hide text-default" %>" id="<portlet:namespace />fileEntryName">
+			<p class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? "hide" : StringPool.BLANK %> text-default" id="<portlet:namespace />fileEntryName">
 				<span id="<portlet:namespace />fileEntryRemove">
 					<liferay-ui:icon
 						icon="times"
@@ -44,12 +40,12 @@ TalendDispatchTaskExecutorHelper talendDispatchTaskExecutorHelper = (TalendDispa
 					/>
 				</span>
 				<span>
-					<%= (fileEntry != null) ? fileEntry.getFileName() : StringPool.BLANK %>
+					<%= fileEntryName %>
 				</span>
 			</p>
 
 			<c:if test="<%= (dispatchTrigger == null) || !dispatchTrigger.isSystem() %>">
-				<div class="<%= (fileEntry != null) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />fileEntry">
+				<div class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntry">
 					<aui:input name="jobArchive" required="<%= true %>" type="file" />
 				</div>
 			</c:if>

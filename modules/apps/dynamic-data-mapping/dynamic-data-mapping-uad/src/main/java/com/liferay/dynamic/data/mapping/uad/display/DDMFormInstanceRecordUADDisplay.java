@@ -82,17 +82,17 @@ public class DDMFormInstanceRecordUADDisplay
 
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
-		
+
 		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
 		return _portal.getSiteAdminURL(
 			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
 			HashMapBuilder.put(
-					portletNamespace.concat("defaultLanguageId"),
-					new String[] {
-						LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale())
-					}
-				).put(
+				portletNamespace.concat("defaultLanguageId"),
+				new String[] {
+					LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale())
+				}
+			).put(
 				portletNamespace.concat("formInstanceId"),
 				new String[] {
 					String.valueOf(ddmFormInstanceRecord.getFormInstanceId())

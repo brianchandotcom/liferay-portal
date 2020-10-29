@@ -766,6 +766,13 @@ public class DDMFormDisplayContext {
 	protected Locale getLocale(
 		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
 
+		String defaultLanguageId = ParamUtil.getString(
+			httpServletRequest, "defaultLanguageId");
+
+		if (Validator.isNotNull(defaultLanguageId)) {
+			return LocaleUtil.fromLanguageId(defaultLanguageId);
+		}
+
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		Locale locale = LocaleUtil.fromLanguageId(

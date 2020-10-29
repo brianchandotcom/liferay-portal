@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.recommendation.model;
+package com.liferay.commerce.machine.learning.recommendation;
 
 /**
  * @author Riccardo Ferrari
  */
-public interface ProductContentCommerceMLRecommendation
+public interface ProductInteractionCommerceMLRecommendation
 	extends CommerceMLRecommendation {
 
 	public long getEntryClassPK();

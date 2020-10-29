@@ -12,18 +12,20 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.forecast.model;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.commerce.machine.learning.recommendation;
 
 /**
  * @author Riccardo Ferrari
  */
-@ProviderType
-public interface CommerceAccountCommerceMLForecast extends CommerceMLForecast {
+public interface ProductContentCommerceMLRecommendation
+	extends CommerceMLRecommendation {
 
-	public long getCommerceAccountId();
+	public long getEntryClassPK();
 
-	public void setCommerceAccountId(long commerceAccountId);
+	public int getRank();
+
+	public void setEntryClassPK(long entryClassPK);
+
+	public void setRank(int rank);
 
 }

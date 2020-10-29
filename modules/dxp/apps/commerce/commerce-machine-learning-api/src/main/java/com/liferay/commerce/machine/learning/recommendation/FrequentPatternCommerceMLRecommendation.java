@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.recommendation.model;
+package com.liferay.commerce.machine.learning.recommendation;
 
 /**
  * @author Riccardo Ferrari

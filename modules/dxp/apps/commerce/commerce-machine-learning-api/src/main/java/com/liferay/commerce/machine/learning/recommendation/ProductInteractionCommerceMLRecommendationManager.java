@@ -12,9 +12,8 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.recommendation.service;
+package com.liferay.commerce.machine.learning.recommendation;
 
-import com.liferay.commerce.machine.learning.recommendation.model.FrequentPatternCommerceMLRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -22,19 +21,19 @@ import java.util.List;
 /**
  * @author Riccardo Ferrari
  */
-public interface FrequentPatternCommerceMLRecommendationService {
+public interface ProductInteractionCommerceMLRecommendationManager {
 
-	public FrequentPatternCommerceMLRecommendation
-			addFrequentPatternCommerceMLRecommendation(
-				FrequentPatternCommerceMLRecommendation
-					frequentPatternCommerceMLRecommendation)
+	public ProductInteractionCommerceMLRecommendation
+			addProductInteractionCommerceMLRecommendation(
+				ProductInteractionCommerceMLRecommendation
+					productInteractionCommerceMLRecommendation)
 		throws PortalException;
 
-	public FrequentPatternCommerceMLRecommendation create();
+	public ProductInteractionCommerceMLRecommendation create();
 
-	public List<FrequentPatternCommerceMLRecommendation>
-			getFrequentPatternCommerceMLRecommendations(
-				long companyId, long[] antecedentIds)
+	public List<ProductInteractionCommerceMLRecommendation>
+			getProductInteractionCommerceMLRecommendations(
+				long companyId, long cpDefinition)
 		throws PortalException;
 
 }

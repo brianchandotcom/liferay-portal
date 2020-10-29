@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.forecast.model;
+package com.liferay.commerce.machine.learning.forecast;
 
 import aQute.bnd.annotation.ProviderType;
 

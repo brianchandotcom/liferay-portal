@@ -12,11 +12,10 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.forecast.service;
+package com.liferay.commerce.machine.learning.forecast;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.machine.learning.forecast.model.CommerceAccountCommerceMLForecast;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Date;
@@ -26,7 +25,7 @@ import java.util.List;
  * @author Riccardo Ferrari
  */
 @ProviderType
-public interface CommerceAccountCommerceMLForecastService {
+public interface CommerceAccountCommerceMLForecastManager {
 
 	public CommerceAccountCommerceMLForecast
 			addCommerceAccountCommerceMLForecast(

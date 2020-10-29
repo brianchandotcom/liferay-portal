@@ -12,19 +12,33 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.recommendation.model;
+package com.liferay.commerce.machine.learning.recommendation;
+
+import java.util.Date;
 
 /**
  * @author Riccardo Ferrari
  */
-public interface UserCommerceMLRecommendation extends CommerceMLRecommendation {
+public interface CommerceMLRecommendation {
 
-	public long[] getAssetCategoryIds();
+	public long getCompanyId();
 
-	public long getEntryClassPK();
+	public Date getCreateDate();
 
-	public void setAssetCategoryIds(long[] assetCategoryIds);
+	public String getJobId();
 
-	public void setEntryClassPK(long entryClassPK);
+	public long getRecommendedEntryClassPK();
+
+	public float getScore();
+
+	public void setCompanyId(long companyId);
+
+	public void setCreateDate(Date createDate);
+
+	public void setJobId(String jobId);
+
+	public void setRecommendedEntryClassPK(long recommendedEntryClassPK);
+
+	public void setScore(float score);
 
 }

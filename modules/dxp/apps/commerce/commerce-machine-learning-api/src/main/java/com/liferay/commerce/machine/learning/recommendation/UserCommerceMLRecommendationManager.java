@@ -12,29 +12,25 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.recommendation.service;
+package com.liferay.commerce.machine.learning.recommendation;
 
-import com.liferay.commerce.machine.learning.recommendation.model.ProductContentCommerceMLRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 /**
- * @author Riccardo Ferrai
+ * @author Riccardo Ferrari
  */
-public interface ProductContentCommerceMLRecommendationService {
+public interface UserCommerceMLRecommendationManager {
 
-	public ProductContentCommerceMLRecommendation
-			addProductContentCommerceMLRecommendation(
-				ProductContentCommerceMLRecommendation
-					productContentCommerceMLRecommendation)
+	public UserCommerceMLRecommendation addUserCommerceMLRecommendation(
+			UserCommerceMLRecommendation userCommerceMLRecommendation)
 		throws PortalException;
 
-	public ProductContentCommerceMLRecommendation create();
+	public UserCommerceMLRecommendation create();
 
-	public List<ProductContentCommerceMLRecommendation>
-			getProductContentCommerceMLRecommendations(
-				long companyId, long cpDefinition)
+	public List<UserCommerceMLRecommendation> getUserCommerceMLRecommendations(
+			long companyId, long commerceAccountId, long[] assetCategoryIds)
 		throws PortalException;
 
 }

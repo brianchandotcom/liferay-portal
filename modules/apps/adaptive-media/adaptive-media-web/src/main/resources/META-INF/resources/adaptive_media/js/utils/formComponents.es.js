@@ -12,9 +12,11 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
+
+const Checkbox = ({...restProps}) => <ClayCheckbox value="on" {...restProps} />;
 
 const ErrorFeedback = ({error}) => {
 	return (
@@ -37,6 +39,41 @@ const HelpMessage = ({message}) => {
 	);
 };
 
+const Input = ({
+	disabled,
+	error,
+	id,
+	label,
+	name,
+	required,
+	type = 'text',
+	...restProps
+}) => {
+	const inputId = id || name;
+
+	return (
+		<ClayForm.Group className={error ? 'has-error' : ''}>
+			<label className={disabled ? 'disabled' : ''} htmlFor={inputId}>
+				{label}
+
+				{required && <RequiredMark />}
+			</label>
+
+			<ClayInput
+				{...restProps}
+				className="form-control"
+				component={type === 'textarea' ? 'textarea' : 'input'}
+				disabled={disabled}
+				id={inputId}
+				name={name}
+				type={type}
+			/>
+
+			{error && <ErrorFeedback error={error} />}
+		</ClayForm.Group>
+	);
+};
+
 const RequiredMark = () => {
 	return (
 		<>
@@ -50,4 +87,4 @@ const RequiredMark = () => {
 	);
 };
 
-export {ErrorFeedback, HelpMessage, RequiredMark};
+export {Checkbox, ErrorFeedback, Input, HelpMessage, RequiredMark};

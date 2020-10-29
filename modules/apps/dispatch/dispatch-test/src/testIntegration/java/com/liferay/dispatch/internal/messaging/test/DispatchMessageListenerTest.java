@@ -65,9 +65,9 @@ public class DispatchMessageListenerTest {
 	}
 
 	@Test
-	public void testDispatchTaskExecutionWithOverlapAllowed() throws Exception {
-		DispatchTrigger dispatchTrigger = _executeOverlappingDispatchTasks(
-			1000, 4, true);
+	public void testDoReceiveOverlapAllowed() throws Exception {
+		DispatchTrigger dispatchTrigger = _executeDispatchTriggerTask(
+			4, 1000, true);
 
 		Assert.assertEquals(4, TestDispatchTaskExecutor.executionCounter.get());
 
@@ -87,11 +87,9 @@ public class DispatchMessageListenerTest {
 	}
 
 	@Test
-	public void testDispatchTaskExecutionWithOverlapNotAllowed()
-		throws Exception {
-
-		DispatchTrigger dispatchTrigger = _executeOverlappingDispatchTasks(
-			1000, 4, false);
+	public void testDoReceiveOverlapNotAllowed() throws Exception {
+		DispatchTrigger dispatchTrigger = _executeDispatchTriggerTask(
+			4, 1000, false);
 
 		Assert.assertEquals(2, TestDispatchTaskExecutor.executionCounter.get());
 
@@ -117,7 +115,7 @@ public class DispatchMessageListenerTest {
 			statusSuccessfulDispatchLogs.size());
 	}
 
-	private void _executeDispatchTasksAndWaitToFinish(
+	private void _executeAndWaitFor(
 			long dispatchTaskDuration, long dispatchTriggerId,
 			long intervalMillis, int numberOfExecutions)
 		throws Exception {
@@ -135,8 +133,8 @@ public class DispatchMessageListenerTest {
 		Thread.sleep(dispatchTaskDuration);
 	}
 
-	private DispatchTrigger _executeOverlappingDispatchTasks(
-			long intervalMillis, int numberOfExecutions, boolean overlapAllowed)
+	private DispatchTrigger _executeDispatchTriggerTask(
+			int executeCount, long intervalMillis, boolean overlapAllowed)
 		throws Exception {
 
 		Company company = CompanyTestUtil.addCompany();
@@ -160,10 +158,10 @@ public class DispatchMessageListenerTest {
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
 
-		_executeDispatchTasksAndWaitToFinish(
+		_executeAndWaitFor(
 			TestDispatchTaskExecutor.SLEEP_MILLIS + 1000,
 			dispatchTrigger.getDispatchTriggerId(), intervalMillis,
-			numberOfExecutions);
+			executeCount);
 
 		return dispatchTrigger;
 	}

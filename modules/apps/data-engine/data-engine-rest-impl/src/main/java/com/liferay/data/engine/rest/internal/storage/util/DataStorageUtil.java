@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,8 +124,7 @@ public class DataStorageUtil {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (!ddmFormFieldValues.containsKey(ddmFormField.getName()) &&
-				!GetterUtil.getBoolean(
-					ddmFormField.getProperty("upgradedStructure"))) {
+				!_isFieldSet(ddmFormField)) {
 
 				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
 					{
@@ -278,6 +278,17 @@ public class DataStorageUtil {
 		else {
 			_addValue(ddmFormField, ddmFormFieldValue, values);
 		}
+	}
+
+	private static boolean _isFieldSet(DDMFormField ddmFormField) {
+		if (GetterUtil.getBoolean(
+				ddmFormField.getProperty("upgradedStructure")) ||
+			Validator.isNotNull(ddmFormField.getProperty("ddmStructureId"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static Map<String, Object> _toLocalizedMap(

@@ -1966,75 +1966,23 @@ definition {
 
 			PortletEntry.inputTitle(title = "Web Content With Predefined Value");
 
-			AssertChecked(
-				checkboxName = "Boolean",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			AssertAttributeValue(
-				attribute1 = "style",
-				key_fieldName = "Color",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "background-color: rgb(255, 0, 0);");
-
-			AssertTextEquals(
-				key_fieldLabel = "Date",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "10/10/2020");
-
-			AssertTextEquals(
-				key_fieldLabel = "Decimal",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "0.5");
-
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldName = "DocumentsAndMedia",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "Document_1.jpg");
-
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "HTML",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			AssertTextEquals(
-				locator1 = "CKEditor#BODY",
-				value1 = "This is a HTML field");
-
-			SelectFrameTop();
-
-			AssertTextEquals(
-				key_fieldLabel = "Integer",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "9");
-
-			AssertTextEquals(
-				key_fieldLabel = "Number",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "-1");
-
-			FormFields.viewRadioValue(
-				fieldName = "Radio",
-				fieldValue = "option 1");
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Select",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "option 2");
-
-			AssertTextEquals(
-				key_fieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "This is a Text field");
-
-			FormFields.viewTextMultilineValue(
-				fieldName = "TextBox",
-				fieldValue = "This is a Text Box field");
-
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldName = "WebContent",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "Web Content Title");
+			WebContent.viewWithStructureCP(
+				predefinedValue = "true",
+				webContentBoolean = "true",
+				webContentColor = "background-color: rgb(255, 0, 0);",
+				webContentDate = "10/10/2020",
+				webContentDecimal = "0.5",
+				webContentDocumentsAndMedia = "Document_1.jpg",
+				webContentDocumentsAndMediaFieldName = "DocumentsAndMedia",
+				webContentHTML = "This is a HTML field",
+				webContentInteger = "9",
+				webContentNumber = "-1",
+				webContentRadio = "option 1",
+				webContentSelect = "option 2",
+				webContentText = "This is a Text field",
+				webContentTextBox = "This is a Text Box field",
+				webContentWebContent = "Web Content Title",
+				webContentWebContentFieldName = "WebContent");
 		}
 	}
 

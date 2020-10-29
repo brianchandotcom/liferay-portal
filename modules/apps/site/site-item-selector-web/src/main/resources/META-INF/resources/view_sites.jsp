@@ -104,11 +104,20 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-								<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-							</aui:a>
+							<c:choose>
+								<c:when test="<%= group.isActive() %>">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<span class="disabled selector-button text-muted">
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>" key="x-inactive" />
+									</span>
+								</c:otherwise>
+							</c:choose>
 
-							<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() %>">
+							<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() && group.isActive() %>">
 								<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
 							</c:if>
 						</h5>
@@ -167,18 +176,27 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 										expand="<%= true %>"
 										gutters="<%= true %>"
 									>
-										<aui:a cssClass="card-title selector-button text-truncate" data="<%= data %>" href="javascript:;" title="<%= siteVerticalCard.getSubtitle() %>">
-											<%= siteVerticalCard.getTitle() %>
-										</aui:a>
+										<c:choose>
+											<c:when test="<%= group.isActive() %>">
+												<aui:a cssClass="card-title selector-button text-truncate" data="<%= data %>" href="javascript:;" title="<%= siteVerticalCard.getSubtitle() %>">
+													<%= siteVerticalCard.getTitle() %>
+												</aui:a>
+											</c:when>
+											<c:otherwise>
+												<span class="card-title disabled selector-button text-muted text-truncate">
+													<liferay-ui:message arguments="<%= siteVerticalCard.getTitle() %>" key="x-inactive" />
+												</span>
+											</c:otherwise>
+										</c:choose>
 
 										<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
-											<aui:a cssClass='<%= "card-subtitle text-truncate " + (!childGroups.isEmpty() ? "text-default" : "text-muted") %>' data="<%= linkData %>" href="<%= childGroupsHREF %>" title="<%= siteVerticalCard.getSubtitle() %>">
+											<aui:a cssClass='<%= "card-subtitle text-truncate selector-button " + (!childGroups.isEmpty() ? "text-default" : "text-muted") %>' data="<%= linkData %>" href="<%= childGroupsHREF %>" title="<%= siteVerticalCard.getSubtitle() %>">
 												<%= siteVerticalCard.getSubtitle() %>
 											</aui:a>
 										</c:if>
 									</clay:content-col>
 
-									<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() %>">
+									<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() && group.isActive() %>">
 										<clay:content-col>
 											<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
 										</clay:content-col>
@@ -193,11 +211,20 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 						name="name"
 						truncate="<%= true %>"
 					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-						</aui:a>
+						<c:choose>
+							<c:when test="<%= group.isActive() %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<span class="disabled selector-button text-muted">
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>" key="x-inactive" />
+								</span>
+							</c:otherwise>
+						</c:choose>
 
-						<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() %>">
+						<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() && group.isActive() %>">
 							<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
 						</c:if>
 					</liferay-ui:search-container-column-text>

@@ -94,7 +94,7 @@ public class SelectSiteNavigationMenuItemSelectorView
 			selectSiteNavigationMenuDisplayContext =
 				new SelectSiteNavigationMenuDisplayContext(
 					(HttpServletRequest)servletRequest, itemSelectedEventName,
-					_siteNavigationMenuItemTypeRegistry, portletURL);
+					portletURL, _siteNavigationMenuItemTypeRegistry);
 
 		servletRequest.setAttribute(
 			SiteNavigationItemSelectorWebKeys.

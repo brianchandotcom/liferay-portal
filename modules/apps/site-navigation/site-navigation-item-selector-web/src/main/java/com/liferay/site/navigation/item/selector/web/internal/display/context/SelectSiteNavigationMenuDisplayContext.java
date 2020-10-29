@@ -58,14 +58,14 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 	public SelectSiteNavigationMenuDisplayContext(
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
-		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
-		PortletURL portletURL) {
+		PortletURL portletURL,
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry) {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
+		_portletURL = portletURL;
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
-		_portletURL = portletURL;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

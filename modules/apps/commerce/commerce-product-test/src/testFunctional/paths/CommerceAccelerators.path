@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM</td>
+	<td>//span[contains(@class,'commerce-account-list__item')]//span[text()='${key_accountName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SELECTOR_DROPDOWN</td>
 	<td>//button[@data-onclick='toggleAccountSelector']</td>
 	<td></td>

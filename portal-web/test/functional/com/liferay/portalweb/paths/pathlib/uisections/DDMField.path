@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEPARATOR</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'separator')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_BOX</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//textarea</td>
 	<td></td>

@@ -12,27 +12,22 @@
  * details.
  */
 
-import React from 'react';
+import {
+	ADD_PRODUCT,
+	ORDER_IS_EMPTY,
+	REMOVE_ALL_ITEMS,
+	REVIEW_ORDER,
+	SUBMIT_ORDER,
+	VIEW_DETAILS,
+	YOUR_ORDER,
+} from './constants';
 
-import {DEFAULT_LABELS} from './util/labels';
-
-const MiniCartContext = React.createContext({
-	CartResource: {},
-	CartViews: {},
-	actionURLs: {},
-	cartState: {},
-	closeCart: () => {},
-	displayDiscountLevels: false,
-	displayTotalItemsQuantity: false,
-	isOpen: false,
-	isUpdating: false,
-	labels: DEFAULT_LABELS,
-	setIsUpdating: () => {},
-	spritemap: '',
-	summaryDataMapper: () => {},
-	toggleable: true,
-	updateCartModel: () => {},
-	updateCartState: () => {},
-});
-
-export default MiniCartContext;
+export const DEFAULT_LABELS = {
+	[ADD_PRODUCT]: Liferay.Language.get('add-a-product-to-the-cart'),
+	[ORDER_IS_EMPTY]: Liferay.Language.get('your-order-is-empty'),
+	[REMOVE_ALL_ITEMS]: Liferay.Language.get('remove-all-items'),
+	[REVIEW_ORDER]: Liferay.Language.get('review-order'),
+	[SUBMIT_ORDER]: Liferay.Language.get('submit'),
+	[VIEW_DETAILS]: Liferay.Language.get('view-details'),
+	[YOUR_ORDER]: Liferay.Language.get('your-order'),
+};

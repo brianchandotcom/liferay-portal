@@ -23,31 +23,51 @@ import {
 	CHANGE_ORDER,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
-import CartItemsList from './CartItemsList';
 import MiniCartContext from './MiniCartContext';
-import Opener from './Opener';
-import Wrapper from './Wrapper';
-import {regenerateOrderDetailURL, resolveView} from './util/index';
-
-const DEFAULT_CART_VIEW = {component: Wrapper},
-	DEFAULT_CART_ITEMS_LIST_VIEW = {component: CartItemsList};
+import {
+	ADD_PRODUCT,
+	CART,
+	HEADER,
+	ITEM,
+	ITEMS_LIST,
+	ITEMS_LIST_ACTIONS,
+	OPENER,
+	ORDER_BUTTON,
+	ORDER_IS_EMPTY,
+	REMOVE_ALL_ITEMS,
+	REVIEW_ORDER,
+	SUBMIT_ORDER,
+	VIEW_DETAILS,
+	YOUR_ORDER,
+} from './util/constants';
+import {
+	normalizePartialObject,
+	regenerateOrderDetailURL,
+	summaryDataMapper,
+} from './util/index';
+import {DEFAULT_LABELS} from './util/labels';
+import {DEFAULT_VIEWS, resolveCartViews} from './util/views';
 
 function MiniCart({
 	cartActionURLs,
-	cartItemsListView,
-	cartView,
+	cartViews,
 	displayDiscountLevels,
+	displayTotalItemsQuantity,
+	itemsQuantity,
+	labels,
+	onAddToCart,
 	orderId,
 	spritemap,
+	summaryDataMapper,
 	toggleable,
 }) {
 	const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
-	const [isOpen, setIsOpen] = useState(false),
+	const [isOpen, setIsOpen] = useState(!toggleable || false),
 		[isUpdating, setIsUpdating] = useState(false),
-		[cartState, updateCartState] = useState({}),
+		[cartState, updateCartState] = useState({itemsQuantity}),
 		[actionURLs, setActionURLs] = useState(cartActionURLs),
-		[CartView, setCartView] = useState(null);
+		[CartViews, setCartViews] = useState({});
 
 	const closeCart = () => setIsOpen(false),
 		openCart = () => setIsOpen(true),
@@ -59,7 +79,7 @@ function MiniCart({
 	const updateCartModel = ({orderId: cartId}) =>
 		CartResource.getCartByIdWithItems(cartId)
 			.then((model) => {
-				if (model.id !== cartId) {
+				if (orderId !== cartId) {
 					const {orderUUID} = model,
 						{checkoutURL, orderDetailURL} = actionURLs;
 
@@ -73,14 +93,15 @@ function MiniCart({
 				}
 
 				updateCartState({...cartState, ...model});
+				onAddToCart(actionURLs, cartState);
 			})
 			.catch(showErrorNotification);
 
 	useEffect(() => {
-		resolveView(cartView)
-			.catch(() => resolveView(DEFAULT_CART_VIEW))
-			.then((view) => setCartView(() => view));
-	}, [cartView, cartItemsListView]);
+		resolveCartViews(
+			normalizePartialObject(DEFAULT_VIEWS, cartViews)
+		).then((views) => setCartViews(views));
+	}, [cartViews]);
 
 	useEffect(() => {
 		Liferay.on(ADD_TO_ORDER, updateCartModel);
@@ -93,11 +114,11 @@ function MiniCart({
 	}, [updateCartModel]);
 
 	useEffect(() => {
-		if (orderId && orderId !== 0) {
+		if (orderId && orderId !== 0 && isOpen) {
 			updateCartModel({orderId});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [orderId]);
+	}, [isOpen, orderId]);
 
 	useEffect(() => {
 		Liferay.on(CHANGE_ACCOUNT, resetCartState);
@@ -111,20 +132,24 @@ function MiniCart({
 		<MiniCartContext.Provider
 			value={{
 				CartResource,
+				CartViews,
 				actionURLs,
 				cartState,
 				closeCart,
 				displayDiscountLevels,
+				displayTotalItemsQuantity,
 				isOpen,
 				isUpdating,
+				labels: normalizePartialObject(DEFAULT_LABELS, labels),
 				setIsUpdating,
 				spritemap,
+				summaryDataMapper,
 				toggleable,
 				updateCartModel,
 				updateCartState,
 			}}
 		>
-			{!!CartView && (
+			{!!CartViews[CART] && (
 				<div
 					className={classnames(
 						'mini-cart',
@@ -138,11 +163,11 @@ function MiniCart({
 								onClick={() => setIsOpen(false)}
 							/>
 
-							<Opener openCart={openCart} />
+							<CartViews.Opener openCart={openCart} />
 						</>
 					)}
 
-					<CartView cartItemsListView={cartItemsListView} />
+					<CartViews.Cart />
 				</div>
 			)}
 		</MiniCartContext.Provider>
@@ -150,9 +175,13 @@ function MiniCart({
 }
 
 MiniCart.defaultProps = {
-	cartItemsListView: DEFAULT_CART_ITEMS_LIST_VIEW,
-	cartView: DEFAULT_CART_VIEW,
+	cartViews: DEFAULT_VIEWS,
 	displayDiscountLevels: false,
+	displayTotalItemsQuantity: false,
+	itemsQuantity: 0,
+	labels: DEFAULT_LABELS,
+	onAddToCart: () => {},
+	summaryDataMapper,
 	toggleable: true,
 };
 
@@ -161,25 +190,80 @@ MiniCart.propTypes = {
 		checkoutURL: PropTypes.string,
 		orderDetailURL: PropTypes.string,
 	}).isRequired,
-	cartItemsListView: PropTypes.oneOfType([
-		PropTypes.shape({
-			component: PropTypes.func,
-		}),
-		PropTypes.shape({
-			contentRendererModuleUrl: PropTypes.string,
-		}),
-	]),
-	cartView: PropTypes.oneOfType([
-		PropTypes.shape({
-			component: PropTypes.func,
-		}),
-		PropTypes.shape({
-			contentRendererModuleUrl: PropTypes.string,
-		}),
-	]),
+	cartViews: PropTypes.shape({
+		[CART]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[HEADER]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[ITEM]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[ITEMS_LIST]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[ITEMS_LIST_ACTIONS]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[OPENER]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[ORDER_BUTTON]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+	}),
 	displayDiscountLevels: PropTypes.bool,
+	displayTotalItemsQuantity: PropTypes.bool,
+	itemsQuantity: PropTypes.number,
+	labels: PropTypes.shape({
+		[ADD_PRODUCT]: PropTypes.string,
+		[ORDER_IS_EMPTY]: PropTypes.string,
+		[REMOVE_ALL_ITEMS]: PropTypes.string,
+		[REVIEW_ORDER]: PropTypes.string,
+		[SUBMIT_ORDER]: PropTypes.string,
+		[VIEW_DETAILS]: PropTypes.string,
+		[YOUR_ORDER]: PropTypes.string,
+	}),
+	onAddToCart: PropTypes.func,
 	orderId: PropTypes.number,
 	spritemap: PropTypes.string,
+	summaryDataMapper: PropTypes.func,
 	toggleable: PropTypes.bool,
 };
 

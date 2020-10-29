@@ -65,14 +65,6 @@ function CartItem({item: cartItem}) {
 		[itemQuantity, setItemQuantity] = useState(quantity),
 		[itemPrice, updateItemPrice] = useState(price);
 
-	const {
-		isGettingRemoved,
-		isRemovalCanceled,
-		isRemoved,
-		isShowingErrors,
-		removalTimeoutRef,
-	} = itemState;
-
 	const options = parseOptions(rawOptions);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +83,7 @@ function CartItem({item: cartItem}) {
 	};
 
 	const cancelRemoveItem = () => {
-			clearTimeout(removalTimeoutRef);
+			clearTimeout(itemState.removalTimeoutRef);
 
 			setItemState({
 				...INITIAL_ITEM_STATE,
@@ -173,6 +165,13 @@ function CartItem({item: cartItem}) {
 		}, // eslint-disable-next-line react-hooks/exhaustive-deps
 		[CartResource, cartItem, cartItemId, orderId]
 	);
+
+	const {
+		isGettingRemoved,
+		isRemovalCanceled,
+		isRemoved,
+		isShowingErrors,
+	} = itemState;
 
 	return (
 		<div

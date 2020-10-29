@@ -12,7 +12,6 @@
  * details.
  */
 
-import getJsModule from '../../../utilities/modules';
 import {
 	DEFAULT_ORDER_DETAILS_PORTLET_ID,
 	DISCOUNT_LEVEL_PREFIX,
@@ -32,6 +31,10 @@ export function collectDiscountLevels(price) {
 
 		return levels;
 	}, []);
+}
+
+export function normalizePartialObject(defaultObject, customObject) {
+	return {...defaultObject, ...customObject};
 }
 
 export function parseOptions(stringifiedJSON) {
@@ -79,14 +82,6 @@ export function regenerateOrderDetailURL(orderDetailURL, orderUUID) {
 	);
 
 	return originalURL.toString();
-}
-
-export function resolveView({component, contentRendererModuleUrl}) {
-	if (component) {
-		return Promise.resolve((props) => component(props));
-	}
-
-	return getJsModule(contentRendererModuleUrl);
 }
 
 export function summaryDataMapper(summary) {

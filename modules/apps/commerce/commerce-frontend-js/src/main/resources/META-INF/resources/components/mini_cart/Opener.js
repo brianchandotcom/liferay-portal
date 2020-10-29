@@ -15,14 +15,36 @@
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import MiniCartContext from './MiniCartContext';
 
 function Opener({openCart}) {
-	const {cartState, spritemap} = useContext(MiniCartContext),
-		{cartItems = []} = cartState,
-		numberOfItems = cartItems.length > 0 ? cartItems.length : 0;
+	const {cartState, displayTotalItemsQuantity, spritemap} = useContext(
+		MiniCartContext
+	);
+
+	const {cartItems, itemsQuantity: initialItemsQuantity, summary} = cartState,
+		[numberOfItems, setNumberOfItems] = useState(0);
+
+	useEffect(() => {
+		setNumberOfItems(initialItemsQuantity);
+
+		return () => {};
+	}, [initialItemsQuantity, setNumberOfItems]);
+
+	useEffect(() => {
+		const itemsQuantityCountSource = displayTotalItemsQuantity
+			? summary
+			: cartItems;
+
+		if (itemsQuantityCountSource) {
+			setNumberOfItems(
+				itemsQuantityCountSource.itemsQuantity ||
+					itemsQuantityCountSource.length
+			);
+		}
+	}, [cartItems, displayTotalItemsQuantity, summary, setNumberOfItems]);
 
 	return (
 		<button

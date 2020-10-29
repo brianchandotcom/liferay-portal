@@ -17,26 +17,31 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import Summary from '../summary/Summary';
-import CartItem from './CartItem';
-import CartItemsListActions from './CartItemsListActions';
 import MiniCartContext from './MiniCartContext';
-import {summaryDataMapper} from './util/index';
+import {ADD_PRODUCT} from './util/constants';
 
 function CartItemsList({items}) {
-	const {cartState, isUpdating, spritemap} = useContext(MiniCartContext),
+	const {
+			CartViews,
+			cartState,
+			isUpdating,
+			labels,
+			spritemap,
+			summaryDataMapper,
+		} = useContext(MiniCartContext),
 		{summary = {}} = cartState,
 		{itemsQuantity = 0} = summary,
-		numberOfItems = (items || []).length;
+		{length: numberOfItems = 0} = items || [];
 
 	return (
 		<div className={'mini-cart-items-list'}>
-			<CartItemsListActions numberOfItems={numberOfItems} />
+			<CartViews.ItemsListActions numberOfItems={numberOfItems} />
 
 			{numberOfItems > 0 ? (
 				<>
 					<div className={'mini-cart-cart-items'}>
 						{items.map((item) => (
-							<CartItem item={item} key={item.id} />
+							<CartViews.Item item={item} key={item.id} />
 						))}
 					</div>
 
@@ -59,9 +64,7 @@ function CartItemsList({items}) {
 						/>
 					</div>
 
-					<p className="empty-cart-label">
-						{Liferay.Language.get('add-a-product-to-the-cart')}
-					</p>
+					<p className="empty-cart-label">{labels[ADD_PRODUCT]}</p>
 				</div>
 			)}
 		</div>

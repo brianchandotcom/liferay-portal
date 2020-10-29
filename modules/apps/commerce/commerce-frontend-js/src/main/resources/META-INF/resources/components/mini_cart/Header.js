@@ -16,9 +16,12 @@ import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
 import MiniCartContext from './MiniCartContext';
+import {ORDER_IS_EMPTY, YOUR_ORDER} from './util/constants';
 
 function Header() {
-	const {cartState, closeCart, spritemap} = useContext(MiniCartContext),
+	const {cartState, closeCart, labels, spritemap, toggleable} = useContext(
+			MiniCartContext
+		),
 		{cartItems = []} = cartState,
 		numberOfItems = cartItems.length > 0 ? cartItems.length : 0;
 
@@ -28,13 +31,15 @@ function Header() {
 				<div className={'mini-cart-header-title'}>
 					<h3>
 						{!numberOfItems
-							? Liferay.Language.get('your-order-is-empty')
-							: Liferay.Language.get('your-order')}
+							? labels[ORDER_IS_EMPTY]
+							: labels[YOUR_ORDER]}
 					</h3>
 				</div>
-				<button className={'mini-cart-close'} onClick={closeCart}>
-					<ClayIcon spritemap={spritemap} symbol={'times'} />
-				</button>
+				{toggleable && (
+					<button className={'mini-cart-close'} onClick={closeCart}>
+						<ClayIcon spritemap={spritemap} symbol={'times'} />
+					</button>
+				)}
 			</div>
 		</div>
 	);

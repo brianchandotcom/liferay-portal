@@ -17,13 +17,17 @@ import React, {useContext} from 'react';
 
 import {liferayNavigate} from '../../utilities/index';
 import MiniCartContext from './MiniCartContext';
-import {WORKFLOW_STATUS_APPROVED} from './util/constants';
+import {
+	REVIEW_ORDER,
+	SUBMIT_ORDER,
+	WORKFLOW_STATUS_APPROVED,
+} from './util/constants';
 import {hasErrors} from './util/index';
 
 function OrderButton() {
-	const {actionURLs, cartState} = useContext(MiniCartContext),
-		{cartItems = []} = cartState,
-		{length: numberOfItems = 0} = cartItems,
+	const {actionURLs, cartState, labels} = useContext(MiniCartContext),
+		{cartItems} = cartState,
+		{length: numberOfItems = 0} = cartItems || {},
 		{workflowStatusInfo} = cartState,
 		{code: workflowStatus} = workflowStatusInfo || {},
 		{checkoutURL, orderDetailURL} = actionURLs;
@@ -40,8 +44,8 @@ function OrderButton() {
 				}}
 			>
 				{workflowStatus === WORKFLOW_STATUS_APPROVED && !errors
-					? Liferay.Language.get('submit')
-					: Liferay.Language.get('review-order')}
+					? labels[SUBMIT_ORDER]
+					: labels[REVIEW_ORDER]}
 			</ClayButton>
 		</div>
 	);

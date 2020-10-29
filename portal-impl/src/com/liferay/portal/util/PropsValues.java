@@ -599,6 +599,10 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.CONTROL_PANEL_NAVIGATION_MAX_SITES));
 
+	public static final boolean CORS_DEVELOPMENT_AUTHORIZATION_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.CORS_DEVELOPMENT_AUTHORIZATION_ENABLED));
+
 	public static final int COUNTER_DATA_CENTER_COUNT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COUNTER_DATA_CENTER_COUNT), 1);
 

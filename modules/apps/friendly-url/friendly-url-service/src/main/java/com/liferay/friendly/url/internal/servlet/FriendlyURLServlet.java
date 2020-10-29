@@ -611,11 +611,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			httpServletRequest, PortalMessages.KEY_JSP_PATH,
 			"/html/common/themes/layout_friendly_url_redirect.jsp");
 
-		if (!locale.equals(groupLocale)) {
-			locale = groupLocale;
-		}
-
-		return locale;
+		return groupLocale;
 	}
 
 	@Reference

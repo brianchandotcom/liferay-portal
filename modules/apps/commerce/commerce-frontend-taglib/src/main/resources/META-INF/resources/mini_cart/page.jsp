@@ -25,25 +25,43 @@
 			orderDetailURL: '<%= orderDetailURL %>',
 		},
 		displayDiscountLevels: <%= displayDiscountLevels %>,
+		displayTotalItemsQuantity: <%= displayTotalItemsQuantity %>,
+		itemsQuantity: <%= itemsQuantity %>,
 		orderId: <%= orderId %>,
 		spritemap: '<%= spritemap %>',
 		toggleable: <%= toggleable %>,
 	};
 
-	var cartViewRendererURL = '<%= cartViewRendererURL %>',
-		cartItemsListViewRendererURL = '<%= cartItemsListViewRendererURL %>';
+	<%
+	if (!cartViews.isEmpty()) {
+	%>
 
-	if (cartViewRendererURL) {
-		initialProps.cartView = {
-			contentRendererModuleURL: cartViewRendererURL,
-		};
-	}
+		initialProps.cartViews = {};
 
-	if (cartItemsListViewRendererURL) {
-		initialProps.cartItemsListView = {
-			contentRendererModuleURL: cartItemsListViewRendererURL,
-		};
+		<%
+		for (Map.Entry<String, String> cartView : cartViews.entrySet()) {
+		%>
+
+			initialProps.cartViews['<%= cartView.getKey() %>'] = {
+				contentRendererModuleUrl: '<%= cartView.getValue() %>',
+			};
+
+	<%
+		}
 	}
+	%>
+
+	<%
+	if (!labels.isEmpty()) {
+		for (Map.Entry<String, String> label : labels.entrySet()) {
+	%>
+
+			initialProps.labels['<%= label.getKey() %>'] = '<%= label.getValue() %>';
+
+	<%
+		}
+	}
+	%>
 
 	Cart.default('<%= miniCartId %>', '<%= miniCartId %>', initialProps);
 </aui:script>

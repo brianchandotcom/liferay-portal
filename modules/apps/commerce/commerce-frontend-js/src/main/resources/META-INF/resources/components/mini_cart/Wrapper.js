@@ -15,17 +15,18 @@
 import React, {useContext} from 'react';
 
 import DatasetDisplay from '../dataset_display/DatasetDisplay';
-import Header from './Header';
 import MiniCartContext from './MiniCartContext';
-import OrderButton from './OrderButton';
+import {ITEMS_LIST} from './util/constants';
 
-function Wrapper({cartItemsListView}) {
-	const {cartState, isOpen, spritemap} = useContext(MiniCartContext),
+function Wrapper() {
+	const {CartViews, cartState, isOpen, spritemap} = useContext(
+			MiniCartContext
+		),
 		{cartItems = []} = cartState;
 
 	return (
 		<div className={'mini-cart-wrapper'}>
-			<Header />
+			<CartViews.Header />
 
 			<div className={'mini-cart-wrapper-items'}>
 				{isOpen && (
@@ -37,12 +38,12 @@ function Wrapper({cartItemsListView}) {
 						showPagination={false}
 						sidePanelId={'sidePanelDisabled'}
 						spritemap={spritemap}
-						views={[cartItemsListView]}
+						views={[{component: CartViews[ITEMS_LIST]}]}
 					/>
 				)}
 			</div>
 
-			<OrderButton />
+			<CartViews.OrderButton />
 		</div>
 	);
 }

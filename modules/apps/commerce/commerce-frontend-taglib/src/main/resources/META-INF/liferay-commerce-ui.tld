@@ -237,12 +237,12 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.MiniCartTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>cartItemsListViewRendererURL</name>
+			<name>displayTotalItemsQuantity</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>cartViewRendererURL</name>
+			<name>labels</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -253,6 +253,11 @@
 		</attribute>
 		<attribute>
 			<name>toggleable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>views</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

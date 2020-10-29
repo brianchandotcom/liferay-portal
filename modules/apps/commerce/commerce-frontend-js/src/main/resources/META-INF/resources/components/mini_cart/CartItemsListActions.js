@@ -20,16 +20,14 @@ import React, {useContext, useState} from 'react';
 import {PRODUCT_REMOVED} from '../../utilities/eventsDefinitions';
 import {liferayNavigate} from '../../utilities/index';
 import MiniCartContext from './MiniCartContext';
-
-function getCN(isAsking, className) {
-	return classnames(className, !isAsking && 'hide');
-}
+import {REMOVE_ALL_ITEMS, VIEW_DETAILS} from './util/constants';
 
 function CartItemsListActions({numberOfItems}) {
 	const {
 			CartResource,
 			actionURLs,
 			cartState,
+			labels,
 			setIsUpdating,
 			updateCartModel,
 		} = useContext(MiniCartContext),
@@ -74,7 +72,7 @@ function CartItemsListActions({numberOfItems}) {
 				</div>
 
 				<div className={'mini-cart-header-actions'}>
-					<span className={getCN(!isAsking, 'actions')}>
+					<span className={classnames('actions', isAsking && 'hide')}>
 						<ClayButton
 							className={'action'}
 							disabled={!numberOfItems}
@@ -84,7 +82,7 @@ function CartItemsListActions({numberOfItems}) {
 							}}
 							small
 						>
-							{Liferay.Language.get('view-details')}
+							{labels[VIEW_DETAILS]}
 						</ClayButton>
 
 						<ClayButton
@@ -94,11 +92,16 @@ function CartItemsListActions({numberOfItems}) {
 							onClick={askConfirmation}
 							small
 						>
-							{Liferay.Language.get('remove-all-items')}
+							{labels[REMOVE_ALL_ITEMS]}
 						</ClayButton>
 					</span>
 
-					<div className={getCN(isAsking, 'confirmation-prompt')}>
+					<div
+						className={classnames(
+							'confirmation-prompt',
+							!isAsking && 'hide'
+						)}
+					>
 						<span>{Liferay.Language.get('are-you-sure')}</span>
 
 						<span>

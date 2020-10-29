@@ -83,6 +83,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro gotoMiniumProductDetailsPage {
+		Click(
+			key_productName = "${productName}",
+			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME");
+	}
+
 	macro inviteNewMemberWithRoleToAccount {
 		Click(
 			key_text = "Invite user",

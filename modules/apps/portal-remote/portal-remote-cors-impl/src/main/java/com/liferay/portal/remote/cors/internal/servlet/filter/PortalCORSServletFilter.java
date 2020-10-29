@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
 import com.liferay.portal.remote.cors.internal.configuration.persistence.listener.PortalCORSConfigurationModelListener;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -217,12 +218,14 @@ public class PortalCORSServletFilter
 				return;
 			}
 
-			if (corsSupport.isValidCORSRequest(
+			if ((corsSupport.isValidCORSRequest(
 					httpServletRequest.getMethod(),
 					httpServletRequest::getHeader) &&
-				(OAuth2ProviderScopeLiferayAccessControlContext.
-					isOAuth2AuthVerified() ||
-				 _isGuest())) {
+				 OAuth2ProviderScopeLiferayAccessControlContext.
+					 isOAuth2AuthVerified()) ||
+				_isGuest() ||
+				(!_isGuest() &&
+				 PropsValues.CORS_DEVELOPMENT_AUTHORIZATION_ENABLED)) {
 
 				corsSupport.writeResponseHeaders(
 					httpServletRequest::getHeader,

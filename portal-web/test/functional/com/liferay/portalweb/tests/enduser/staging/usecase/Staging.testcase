@@ -431,6 +431,19 @@ definition {
 		Staging.activateStagingCP(siteName = "Site B Name");
 	}
 
+	@priority = "5"
+	test ImportLARfrom70toCurrent {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		LAR.importPortlet(
+			importSchemaVersionMismatching = "true",
+			larFileName = "7.0.10.14_webcontent.lar",
+			portletName = "Web Content",
+			uploadFrom = "dependencies");
+	}
+
 	@priority = "3"
 	test ModifyInitalPageVariationSetup {
 		Staging.openStagingAdmin(siteURLKey = "site-name");

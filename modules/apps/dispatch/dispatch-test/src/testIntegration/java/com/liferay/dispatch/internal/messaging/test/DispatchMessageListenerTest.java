@@ -66,23 +66,27 @@ public class DispatchMessageListenerTest {
 
 	@Test
 	public void testDoReceiveOverlapAllowed() throws Exception {
-		DispatchTrigger dispatchTrigger = _executeDispatchTriggerTask(
-			4, 1000, true);
+		int executeCount = RandomTestUtil.randomInt(4, 10);
 
-		Assert.assertEquals(4, TestDispatchTaskExecutor.executionCounter.get());
+		DispatchTrigger dispatchTrigger = _executeDispatchTriggerTask(
+			executeCount, 1000, true);
+
+		Assert.assertEquals(
+			executeCount, TestDispatchTaskExecutor.executionCounter.get());
 
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(dispatchLogs.toString(), 4, dispatchLogs.size());
+		Assert.assertEquals(
+			dispatchLogs.toString(), executeCount, dispatchLogs.size());
 
 		List<DispatchLog> statusSuccessfulDispatchLogs = _filter(
 			dispatchLogs, DispatchTaskStatus.SUCCESSFUL);
 
 		Assert.assertEquals(
-			statusSuccessfulDispatchLogs.toString(), 4,
+			statusSuccessfulDispatchLogs.toString(), executeCount,
 			statusSuccessfulDispatchLogs.size());
 	}
 
@@ -116,13 +120,13 @@ public class DispatchMessageListenerTest {
 	}
 
 	private void _executeAndWaitFor(
-			long dispatchTaskDuration, long dispatchTriggerId,
-			long intervalMillis, int numberOfExecutions)
+			long dispatchTaskDuration, long dispatchTriggerId, int executeCount,
+			long intervalMillis)
 		throws Exception {
 
 		Message message = _getMessage(dispatchTriggerId);
 
-		for (int i = 0; i < (numberOfExecutions - 1); i++) {
+		for (int i = 0; i < (executeCount - 1); i++) {
 			_destination.send(message);
 
 			Thread.sleep(intervalMillis);
@@ -160,8 +164,8 @@ public class DispatchMessageListenerTest {
 
 		_executeAndWaitFor(
 			TestDispatchTaskExecutor.SLEEP_MILLIS + 1000,
-			dispatchTrigger.getDispatchTriggerId(), intervalMillis,
-			executeCount);
+			dispatchTrigger.getDispatchTriggerId(), executeCount,
+			intervalMillis);
 
 		return dispatchTrigger;
 	}

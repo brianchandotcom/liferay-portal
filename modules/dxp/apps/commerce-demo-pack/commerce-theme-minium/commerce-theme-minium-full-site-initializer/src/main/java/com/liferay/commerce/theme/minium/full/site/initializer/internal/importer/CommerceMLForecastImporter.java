@@ -21,11 +21,11 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.machine.learning.forecast.model.AssetCategoryCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.model.CommerceAccountCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.model.CommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.AssetCategoryCommerceMLForecastService;
-import com.liferay.commerce.machine.learning.forecast.service.CommerceAccountCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecastManager;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecastManager;
+import com.liferay.commerce.machine.learning.forecast.CommerceMLForecast;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -129,7 +129,7 @@ public class CommerceMLForecastImporter {
 		AssetCategoryCommerceMLForecast assetCategoryCommerceMLForecast =
 			_setFields(
 				serviceContext.getCompanyId(), currentDate,
-				_assetCategoryCommerceMLForecastService.create(), jsonObject);
+				_assetCategoryCommerceMLForecastManager.create(), jsonObject);
 
 		Company company = _companyLocalService.getCompany(
 			serviceContext.getCompanyId());
@@ -186,7 +186,7 @@ public class CommerceMLForecastImporter {
 		assetCategoryCommerceMLForecast.setCommerceAccountId(
 			commerceAccount.getCommerceAccountId());
 
-		_assetCategoryCommerceMLForecastService.
+		_assetCategoryCommerceMLForecastManager.
 			addAssetCategoryCommerceMLForecast(assetCategoryCommerceMLForecast);
 	}
 
@@ -199,7 +199,7 @@ public class CommerceMLForecastImporter {
 		CommerceAccountCommerceMLForecast commerceAccountCommerceMLForecast =
 			_setFields(
 				serviceContext.getCompanyId(), currentDate,
-				_commerceAccountCommerceMLForecastService.create(), jsonObject);
+				_commerceAccountCommerceMLForecastManager.create(), jsonObject);
 
 		String accountName = jsonObject.getString("account");
 
@@ -219,7 +219,7 @@ public class CommerceMLForecastImporter {
 		commerceAccountCommerceMLForecast.setCommerceAccountId(
 			commerceAccount.getCommerceAccountId());
 
-		_commerceAccountCommerceMLForecastService.
+		_commerceAccountCommerceMLForecastManager.
 			addCommerceAccountCommerceMLForecast(
 				commerceAccountCommerceMLForecast);
 	}
@@ -257,8 +257,8 @@ public class CommerceMLForecastImporter {
 		CommerceMLForecastImporter.class);
 
 	@Reference
-	private AssetCategoryCommerceMLForecastService
-		_assetCategoryCommerceMLForecastService;
+	private AssetCategoryCommerceMLForecastManager
+		_assetCategoryCommerceMLForecastManager;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -267,8 +267,8 @@ public class CommerceMLForecastImporter {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
-	private CommerceAccountCommerceMLForecastService
-		_commerceAccountCommerceMLForecastService;
+	private CommerceAccountCommerceMLForecastManager
+		_commerceAccountCommerceMLForecastManager;
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;

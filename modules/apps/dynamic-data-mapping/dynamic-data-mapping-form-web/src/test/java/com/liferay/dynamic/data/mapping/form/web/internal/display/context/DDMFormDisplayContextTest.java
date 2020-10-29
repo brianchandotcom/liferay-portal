@@ -48,12 +48,15 @@ import com.liferay.portal.util.PropsImpl;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,6 +66,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -227,6 +231,32 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		Assert.assertEquals(
 			LocaleUtil.SPAIN, ddmFormRenderingContext.getLocale());
+	}
+
+	@Test
+	public void testGetLocale() throws PortalException {
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext();
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		when(
+			httpServletRequest.getParameter(Mockito.eq("defaultLanguageId"))
+		).thenReturn(
+			"pt_BR"
+		);
+
+		Locale defaultLocale = LocaleUtil.US;
+		Locale expectedLocale = LocaleUtil.BRAZIL;
+
+		DDMForm ddmForm = createDDMForm(
+			new HashSet<>(Arrays.asList(defaultLocale, expectedLocale)),
+			defaultLocale);
+
+		Assert.assertEquals(
+			expectedLocale,
+			ddmFormDisplayContext.getLocale(httpServletRequest, ddmForm));
 	}
 
 	@Test

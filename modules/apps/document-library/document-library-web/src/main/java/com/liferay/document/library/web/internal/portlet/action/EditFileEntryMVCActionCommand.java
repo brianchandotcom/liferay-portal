@@ -1088,7 +1088,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				_validateFileName(
 					sourceFileName,
-					Validator.isNotNull(
+					FileUtil.getExtension(
 						uploadPortletRequest.getFileName("file")));
 
 				fileEntry = _dlAppService.addFileEntry(
@@ -1116,9 +1116,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-				_validateFileName(
-					sourceFileName,
-					Validator.isNotNull(fileEntry.getExtension()));
+				_validateFileName(sourceFileName, fileEntry.getExtension());
 
 				if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
@@ -1156,10 +1154,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _validateFileName(String sourceFileName, boolean file)
+	private void _validateFileName(String sourceFileName, String extension)
 		throws FileNameExtensionException {
 
-		if (file) {
+		if (Validator.isNotNull(extension)) {
 			if (Validator.isNull(sourceFileName)) {
 				throw new FileNameExtensionException(
 					"A file entry already exists with file name " +

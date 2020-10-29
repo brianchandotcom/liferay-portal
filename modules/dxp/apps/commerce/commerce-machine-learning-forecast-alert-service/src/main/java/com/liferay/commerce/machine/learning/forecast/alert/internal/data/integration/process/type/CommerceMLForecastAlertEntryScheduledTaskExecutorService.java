@@ -21,10 +21,10 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService;
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogLocalService;
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecastManager;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalService;
-import com.liferay.commerce.machine.learning.forecast.model.CommerceAccountCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.CommerceAccountCommerceMLForecastService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -140,7 +140,7 @@ public class CommerceMLForecastAlertEntryScheduledTaskExecutorService
 
 		List<CommerceAccountCommerceMLForecast>
 			commerceAccountCommerceMLForecasts =
-				_commerceAccountCommerceMLForecastService.
+				_commerceAccountCommerceMLForecastManager.
 					getMonthlyRevenueCommerceAccountCommerceMLForecasts(
 						commerceDataIntegrationProcess.getCompanyId(),
 						commerceAccountIds,
@@ -202,8 +202,8 @@ public class CommerceMLForecastAlertEntryScheduledTaskExecutorService
 		CommerceMLForecastAlertEntryScheduledTaskExecutorService.class);
 
 	@Reference
-	private CommerceAccountCommerceMLForecastService
-		_commerceAccountCommerceMLForecastService;
+	private CommerceAccountCommerceMLForecastManager
+		_commerceAccountCommerceMLForecastManager;
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;

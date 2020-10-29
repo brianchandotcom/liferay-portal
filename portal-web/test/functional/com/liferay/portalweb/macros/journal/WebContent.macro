@@ -678,6 +678,12 @@ definition {
 			}
 		}
 
+		if (isSet(webContentSeparator)) {
+			AssertVisible(
+				key_fieldName = "Separator",
+				locator1 = "DDMField#SEPARATOR");
+		}
+
 		if (isSet(webContentText)) {
 			Type(
 				key_fieldName = "Text",
@@ -2272,34 +2278,123 @@ definition {
 	}
 
 	macro viewWithStructureCP {
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		if (!(isSet(predefinedValue))) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		WebContentNavigator.gotoEditCP(
-			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+			WebContentNavigator.gotoEditCP(
+				webContentTitle = "${webContentTitle}",
+				webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${webContentTitle}");
 
-		if (isSet(description)) {
+			if (isSet(description)) {
+				SelectFrame.selectFrameNoLoading(
+					key_fieldLabel = "Summary",
+					locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+				AssertTextEquals(
+					locator1 = "CKEditor#BODY",
+					value1 = "${description}");
+
+				SelectFrameTop(value1 = "relative=top");
+			}
+		}
+
+		if (isSet(webContentBoolean)) {
+			if ("${webContentBoolean}" == "true") {
+				FormFields.viewCheckboxChecked(fieldName = "Boolean");
+			}
+			else if ("${webContentBoolean}" == "false") {
+				FormFields.viewCheckboxNotChecked(fieldName = "Boolean");
+			}
+		}
+
+		if (isSet(webContentColor)) {
+			AssertAttributeValue(
+				attribute1 = "style",
+				key_fieldName = "Color",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentColor}");
+		}
+
+		if (isSet(webContentDate)) {
+			AssertTextEquals(
+				key_fieldLabel = "Date",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentDate}");
+		}
+
+		if (isSet(webContentDecimal)) {
+			AssertTextEquals(
+				key_fieldLabel = "Decimal",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentDecimal}");
+		}
+
+		if (isSet(webContentDocumentsAndMedia)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "${webContentDocumentsAndMediaFieldName}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentDocumentsAndMedia}");
+		}
+
+		if (isSet(webContentHTML)) {
 			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "Summary",
+				key_fieldLabel = "HTML",
 				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",
-				value1 = "${description}");
+				value1 = "${webContentHTML}");
 
-			SelectFrameTop(value1 = "relative=top");
+			SelectFrameTop();
 		}
 
 		if (isSet(webContentImage)) {
-			Click(locator1 = "Button#PREVIEW");
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "Image",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentImage}");
 
-			SelectFrameTop(value1 = "relative=top");
+			AssertVisible(locator1 = "Button#PREVIEW");
+		}
 
-			SikuliAssertElementPresent(locator1 = "DDMField#IMAGE_PREVIEW_PNG");
+		if (isSet(webContentInteger)) {
+			AssertTextEquals(
+				key_fieldLabel = "Integer",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentInteger}");
+		}
+
+		if (isSet(webContentLinkToPage)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "${webContentLinkToPageFieldName}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentLinkToPage}");
+		}
+		if (isSet(webContentNumber)) {
+			AssertTextEquals(
+				key_fieldLabel = "Number",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentNumber}");
+		}
+
+		if (isSet(webContentRadio)) {
+			FormFields.viewRadioValue(
+				fieldName = "Radio",
+				fieldValue = "${webContentRadio}");
+		}
+
+		if (isSet(webContentSelect)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Select",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${webContentSelect}");
 		}
 
 		if (isSet(webContentText)) {
@@ -2313,6 +2408,12 @@ definition {
 			if (isSet(fieldName)) {
 				AssertTextEquals(
 					key_fieldName = "${fieldName}",
+					locator1 = "DDMField#TEXT_BOX",
+					value1 = "${webContentTextBox}");
+			}
+			else if (isSet(webContentTextBoxFieldName)) {
+				AssertTextEquals(
+					key_fieldName = "${webContentTextBoxFieldName}",
 					locator1 = "DDMField#TEXT_BOX",
 					value1 = "${webContentTextBox}");
 			}
@@ -2343,6 +2444,14 @@ definition {
 
 				var count = ${count} + 1;
 			}
+		}
+
+		if (isSet(webContentWebContent)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "${webContentWebContentFieldName}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentWebContent}");
 		}
 	}
 

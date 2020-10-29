@@ -86,7 +86,7 @@ public class CommerceMLRecommendationImporter {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						String.format(
-							"Failed import recommendation type: %s", type),
+							"Unable to import recommendation type: %s", type),
 						exception);
 				}
 			}
@@ -112,8 +112,8 @@ public class CommerceMLRecommendationImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
-						"Unable to fetch CPDefinition with external " +
-							"reference code: %s",
+						"Unable to fetch commerce product definition with " +
+							"external reference code: %s",
 						productExternalReferenceCode));
 			}
 
@@ -134,8 +134,8 @@ public class CommerceMLRecommendationImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
-						"Unable to fetch CPDefinition with external " +
-							"reference code: %s",
+						"Unable to fetch commerce product definition with " +
+							"external reference code: %s",
 						recommendedProductExternalReferenceCode));
 			}
 
@@ -206,8 +206,8 @@ public class CommerceMLRecommendationImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
-						"Unable to fetch CPDefinition with external " +
-							"reference code: %s",
+						"Unable to fetch commerce product definition with " +
+							"external reference code: %s",
 						recommendedProductExternalReferenceCode));
 			}
 
@@ -275,8 +275,8 @@ public class CommerceMLRecommendationImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
-						"Unable to fetch CPDefinition with external " +
-							"reference code: %s",
+						"Unable to fetch commerce product definition with " +
+							"external reference code: %s",
 						recommendedProductExternalReferenceCode));
 			}
 

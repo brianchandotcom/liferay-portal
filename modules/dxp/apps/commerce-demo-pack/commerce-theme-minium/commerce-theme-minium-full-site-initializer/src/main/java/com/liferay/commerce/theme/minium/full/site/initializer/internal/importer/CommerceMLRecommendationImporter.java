@@ -67,17 +67,17 @@ public class CommerceMLRecommendationImporter {
 
 			try {
 				if (type.equals("product-content-recommendation")) {
-					_importProductContentRecommendation(
+					_importProductContentCommerceMLRecommendation(
 						jsonObject, externalReferenceCodePrefix,
 						serviceContext);
 				}
 				else if (type.equals("product-interaction-recommendation")) {
-					_importProductInteractionRecommendation(
+					_importProductInteractionCommerceMLRecommendation(
 						jsonObject, externalReferenceCodePrefix,
 						serviceContext);
 				}
 				else {
-					_importUserRecommendation(
+					_importUserCommerceMLRecommendation(
 						jsonObject, externalReferenceCodePrefix,
 						serviceContext);
 				}
@@ -93,7 +93,7 @@ public class CommerceMLRecommendationImporter {
 		}
 	}
 
-	private void _importProductContentRecommendation(
+	private void _importProductContentCommerceMLRecommendation(
 			JSONObject jsonObject, String externalReferenceCodePrefix,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -124,13 +124,13 @@ public class CommerceMLRecommendationImporter {
 			externalReferenceCodePrefix +
 				jsonObject.getString("recommendedProductExternalReferenceCode");
 
-		CPDefinition recommendedCpDefinition =
+		CPDefinition recommendedCPDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					serviceContext.getCompanyId(),
 					recommendedProductExternalReferenceCode);
 
-		if (recommendedCpDefinition == null) {
+		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
@@ -156,7 +156,7 @@ public class CommerceMLRecommendationImporter {
 		productContentCommerceMLRecommendation.setRank(
 			jsonObject.getInt("rank"));
 		productContentCommerceMLRecommendation.setRecommendedEntryClassPK(
-			recommendedCpDefinition.getCPDefinitionId());
+			recommendedCPDefinition.getCPDefinitionId());
 		productContentCommerceMLRecommendation.setScore(
 			(float)jsonObject.getDouble("score"));
 
@@ -165,7 +165,7 @@ public class CommerceMLRecommendationImporter {
 				productContentCommerceMLRecommendation);
 	}
 
-	private void _importProductInteractionRecommendation(
+	private void _importProductInteractionCommerceMLRecommendation(
 			JSONObject jsonObject, String externalReferenceCodePrefix,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -196,13 +196,13 @@ public class CommerceMLRecommendationImporter {
 			externalReferenceCodePrefix +
 				jsonObject.getString("recommendedProductExternalReferenceCode");
 
-		CPDefinition recommendedCpDefinition =
+		CPDefinition recommendedCPDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					serviceContext.getCompanyId(),
 					recommendedProductExternalReferenceCode);
 
-		if (recommendedCpDefinition == null) {
+		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
@@ -228,7 +228,7 @@ public class CommerceMLRecommendationImporter {
 		productInteractionCommerceMLRecommendation.setRank(
 			jsonObject.getInt("rank"));
 		productInteractionCommerceMLRecommendation.setRecommendedEntryClassPK(
-			recommendedCpDefinition.getCPDefinitionId());
+			recommendedCPDefinition.getCPDefinitionId());
 		productInteractionCommerceMLRecommendation.setScore(
 			(float)jsonObject.getDouble("score"));
 
@@ -237,7 +237,7 @@ public class CommerceMLRecommendationImporter {
 				productInteractionCommerceMLRecommendation);
 	}
 
-	private void _importUserRecommendation(
+	private void _importUserCommerceMLRecommendation(
 			JSONObject jsonObject, String externalReferenceCodePrefix,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -265,13 +265,13 @@ public class CommerceMLRecommendationImporter {
 			externalReferenceCodePrefix +
 				jsonObject.getString("recommendedProductExternalReferenceCode");
 
-		CPDefinition recommendedCpDefinition =
+		CPDefinition recommendedCPDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					serviceContext.getCompanyId(),
 					recommendedProductExternalReferenceCode);
 
-		if (recommendedCpDefinition == null) {
+		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
@@ -285,7 +285,7 @@ public class CommerceMLRecommendationImporter {
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			CPDefinition.class.getName(),
-			recommendedCpDefinition.getCPDefinitionId());
+			recommendedCPDefinition.getCPDefinitionId());
 
 		long[] categoryIds = assetEntry.getCategoryIds();
 
@@ -301,7 +301,7 @@ public class CommerceMLRecommendationImporter {
 		userCommerceMLRecommendation.setJobId(
 			"commerce-ml-recommendation-importer");
 		userCommerceMLRecommendation.setRecommendedEntryClassPK(
-			recommendedCpDefinition.getCPDefinitionId());
+			recommendedCPDefinition.getCPDefinitionId());
 		userCommerceMLRecommendation.setScore(
 			(float)jsonObject.getDouble("score"));
 

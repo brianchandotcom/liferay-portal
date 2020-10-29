@@ -14,16 +14,14 @@
 
 package com.liferay.dispatch.internal.repository;
 
-import com.liferay.dispatch.configuration.DispatchConfiguration;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.repository.DispatchFileValidator;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.document.library.kernel.exception.FileExtensionException;
-import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,16 +32,14 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.InputStream;
 
-import java.util.Map;
-import java.util.Objects;
-
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -51,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(
-	configurationPid = "com.liferay.dispatch.talend.web.internal.configuration.DispatchTalendConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = DispatchFileRepository.class
 )
@@ -59,14 +54,21 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 	@Override
 	public FileEntry addFileEntry(
-			long companyId, long userId, long dispatchTriggerId,
-			String fileName, long size, String contentType,
-			InputStream inputStream)
+			long userId, long dispatchTriggerId, String fileName, long size,
+			String contentType, InputStream inputStream)
 		throws PortalException {
 
-		_validateFile(fileName, size);
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
 
-		Company company = _companyLocalService.getCompany(companyId);
+		DispatchFileValidator dispatchFileValidator = _getFileValidator(
+			dispatchTrigger.getTaskExecutorType());
+
+		dispatchFileValidator.validateExtension(fileName);
+		dispatchFileValidator.validateSize(size);
+
+		Company company = _companyLocalService.getCompany(
+			dispatchTrigger.getCompanyId());
 
 		return _addFileEntry(
 			company.getGroupId(), userId, dispatchTriggerId, contentType,
@@ -111,9 +113,16 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_dispatchConfiguration = ConfigurableUtil.createConfigurable(
-			DispatchConfiguration.class, properties);
+	protected void activate(BundleContext bundleContext) {
+		_dispatchFileValidatorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DispatchFileValidator.class,
+				"dispatch.file.validator.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dispatchFileValidatorServiceTrackerMap.close();
 	}
 
 	private FileEntry _addFileEntry(
@@ -137,6 +146,17 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 			String.valueOf(dispatchTriggerId), contentType, false);
 	}
 
+	private DispatchFileValidator _getFileValidator(String taskExecutorType) {
+		if (_dispatchFileValidatorServiceTrackerMap.containsKey(
+				taskExecutorType)) {
+
+			return _dispatchFileValidatorServiceTrackerMap.getService(
+				taskExecutorType);
+		}
+
+		return _dispatchFileValidatorServiceTrackerMap.getService("default");
+	}
+
 	private Folder _getFolder(long groupId, long userId)
 		throws PortalException {
 
@@ -154,36 +174,14 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 			DispatchConstants.REPOSITORY_FOLDER_NAME, serviceContext);
 	}
 
-	private void _validateFile(String fileName, long size)
-		throws FileExtensionException, FileSizeException {
-
-		if ((_dispatchConfiguration.fileMaxSize() > 0) &&
-			(size > _dispatchConfiguration.fileMaxSize())) {
-
-			throw new FileSizeException("File size exceeds configured limit");
-		}
-
-		String extension = StringPool.PERIOD + FileUtil.getExtension(fileName);
-
-		for (String imageExtension : _dispatchConfiguration.fileExtensions()) {
-			if (Objects.equals(StringPool.STAR, imageExtension) ||
-				Objects.equals(imageExtension, extension)) {
-
-				return;
-			}
-		}
-
-		throw new FileExtensionException(
-			"Invalid file extension for " + fileName);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DispatchFileRepositoryImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private volatile DispatchConfiguration _dispatchConfiguration;
+	private ServiceTrackerMap<String, DispatchFileValidator>
+		_dispatchFileValidatorServiceTrackerMap;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

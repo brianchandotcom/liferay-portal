@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.resource.v1_0;
 
-import com.liferay.commerce.machine.learning.forecast.model.AssetCategoryCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.AssetCategoryCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecastManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast;
 import com.liferay.headless.commerce.machine.learning.internal.constants.CommerceMLForecastConstants;
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.AccountCategoryForecastDTOConverter;
@@ -83,7 +83,7 @@ public class AccountCategoryForecastResourceImpl
 		long[] assetCategoryIds = ArrayUtil.toArray(categoryIds);
 
 		List<AssetCategoryCommerceMLForecast> assetCategoryCommerceMLForecasts =
-			_assetCategoryCommerceMLForecastService.
+			_assetCategoryCommerceMLForecastManager.
 				getMonthlyRevenueAssetCategoryCommerceMLForecasts(
 					contextCompany.getCompanyId(), assetCategoryIds,
 					ArrayUtil.toLongArray(commerceAccountIds), startDate,
@@ -91,7 +91,7 @@ public class AccountCategoryForecastResourceImpl
 					pagination.getStartPosition(), pagination.getEndPosition());
 
 		long totalItems =
-			_assetCategoryCommerceMLForecastService.
+			_assetCategoryCommerceMLForecastManager.
 				getMonthlyRevenueAssetCategoryCommerceMLForecastsCount(
 					contextCompany.getCompanyId(), assetCategoryIds,
 					ArrayUtil.toLongArray(commerceAccountIds), startDate,
@@ -133,8 +133,8 @@ public class AccountCategoryForecastResourceImpl
 		_accountCategoryForecastDTOConverter;
 
 	@Reference
-	private AssetCategoryCommerceMLForecastService
-		_assetCategoryCommerceMLForecastService;
+	private AssetCategoryCommerceMLForecastManager
+		_assetCategoryCommerceMLForecastManager;
 
 	@Reference
 	private CommerceAccountPermissionHelper _commerceAccountPermissionHelper;

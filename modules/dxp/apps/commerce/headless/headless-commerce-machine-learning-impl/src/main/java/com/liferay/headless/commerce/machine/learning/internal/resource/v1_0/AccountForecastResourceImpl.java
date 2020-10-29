@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.resource.v1_0;
 
-import com.liferay.commerce.machine.learning.forecast.model.CommerceAccountCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.CommerceAccountCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecastManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountForecast;
 import com.liferay.headless.commerce.machine.learning.internal.constants.CommerceMLForecastConstants;
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.AccountForecastDTOConverter;
@@ -79,7 +79,7 @@ public class AccountForecastResourceImpl
 
 		List<CommerceAccountCommerceMLForecast>
 			commerceAccountCommerceMLForecasts =
-				_commerceAccountCommerceMLForecastService.
+				_commerceAccountCommerceMLForecastManager.
 					getMonthlyRevenueCommerceAccountCommerceMLForecasts(
 						contextCompany.getCompanyId(),
 						ArrayUtil.toLongArray(commerceAccountIds), startDate,
@@ -88,7 +88,7 @@ public class AccountForecastResourceImpl
 						pagination.getEndPosition());
 
 		long totalItems =
-			_commerceAccountCommerceMLForecastService.
+			_commerceAccountCommerceMLForecastManager.
 				getMonthlyRevenueCommerceAccountCommerceMLForecastsCount(
 					contextCompany.getCompanyId(),
 					ArrayUtil.toLongArray(commerceAccountIds), startDate,
@@ -130,8 +130,8 @@ public class AccountForecastResourceImpl
 	private AccountForecastDTOConverter _accountForecastDTOConverter;
 
 	@Reference
-	private CommerceAccountCommerceMLForecastService
-		_commerceAccountCommerceMLForecastService;
+	private CommerceAccountCommerceMLForecastManager
+		_commerceAccountCommerceMLForecastManager;
 
 	@Reference
 	private CommerceAccountPermissionHelper _commerceAccountPermissionHelper;

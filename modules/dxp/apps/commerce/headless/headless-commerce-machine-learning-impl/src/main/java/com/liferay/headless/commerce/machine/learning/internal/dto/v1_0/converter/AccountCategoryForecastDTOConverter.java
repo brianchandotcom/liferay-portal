@@ -16,8 +16,8 @@ package com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.convert
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.machine.learning.forecast.model.AssetCategoryCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.AssetCategoryCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecastManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -53,7 +53,7 @@ public class AccountCategoryForecastDTOConverter
 				dtoConverterContext.getId();
 
 		AssetCategoryCommerceMLForecast assetCategoryCommerceMLForecast =
-			_assetCategoryCommerceMLForecastService.
+			_assetCategoryCommerceMLForecastManager.
 				getAssetCategoryCommerceMLForecast(
 					compositeResourcePrimKey.getCompanyId(),
 					compositeResourcePrimKey.getForecastId());
@@ -87,8 +87,8 @@ public class AccountCategoryForecastDTOConverter
 	}
 
 	@Reference
-	private AssetCategoryCommerceMLForecastService
-		_assetCategoryCommerceMLForecastService;
+	private AssetCategoryCommerceMLForecastManager
+		_assetCategoryCommerceMLForecastManager;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

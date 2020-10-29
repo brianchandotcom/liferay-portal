@@ -18,8 +18,8 @@ import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.commerce.machine.learning.recommendation.model.ProductContentCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.service.ProductContentCommerceMLRecommendationService;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendationManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductContentRecommendation;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -49,7 +49,7 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 
 		ProductContentCommerceMLRecommendation
 			productContentCommerceMLRecommendation =
-				_productContentCommerceMLRecommendationService.create();
+				_productContentCommerceMLRecommendationManager.create();
 
 		productContentCommerceMLRecommendation.setCompanyId(
 			contextCompany.getCompanyId());
@@ -63,7 +63,7 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 			item.getRecommendedProductId());
 		productContentCommerceMLRecommendation.setScore(item.getScore());
 
-		_productContentCommerceMLRecommendationService.
+		_productContentCommerceMLRecommendationManager.
 			addProductContentCommerceMLRecommendation(
 				productContentCommerceMLRecommendation);
 	}
@@ -78,7 +78,7 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 	}
 
 	@Reference
-	private ProductContentCommerceMLRecommendationService
-		_productContentCommerceMLRecommendationService;
+	private ProductContentCommerceMLRecommendationManager
+		_productContentCommerceMLRecommendationManager;
 
 }

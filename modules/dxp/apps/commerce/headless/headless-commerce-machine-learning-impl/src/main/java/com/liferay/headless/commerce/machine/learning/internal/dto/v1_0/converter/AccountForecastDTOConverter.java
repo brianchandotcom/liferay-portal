@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.machine.learning.forecast.model.CommerceAccountCommerceMLForecast;
-import com.liferay.commerce.machine.learning.forecast.service.CommerceAccountCommerceMLForecastService;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecast;
+import com.liferay.commerce.machine.learning.forecast.CommerceAccountCommerceMLForecastManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountForecast;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -49,7 +49,7 @@ public class AccountForecastDTOConverter
 				dtoConverterContext.getId();
 
 		CommerceAccountCommerceMLForecast commerceAccountCommerceMLForecast =
-			_commerceAccountCommerceMLForecastService.
+			_commerceAccountCommerceMLForecastManager.
 				getCommerceAccountCommerceMLForecast(
 					compositeResourcePrimKey.getCompanyId(),
 					compositeResourcePrimKey.getForecastId());
@@ -71,7 +71,7 @@ public class AccountForecastDTOConverter
 	}
 
 	@Reference
-	private CommerceAccountCommerceMLForecastService
-		_commerceAccountCommerceMLForecastService;
+	private CommerceAccountCommerceMLForecastManager
+		_commerceAccountCommerceMLForecastManager;
 
 }

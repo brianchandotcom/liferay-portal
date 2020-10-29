@@ -137,6 +137,16 @@ definition {
 		Upgrade.publishWCDraft();
 	}
 
+	@description = "This is a use case for LRQA-62720. View web content with all fields and value after upgrade from 6.2."
+	@priority = "4"
+	test ViewWebContentWithAllFieldsArchive621021 {
+		property data.archive.type = "data-archive-web-content-with-all-fields";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+		Upgrade.viewWebContentWithAllFields();
+	}
+
 	@description = "This is a use case for LPS-98619."
 	@priority = "3"
 	test ViewWebContentWithImageArchive704 {

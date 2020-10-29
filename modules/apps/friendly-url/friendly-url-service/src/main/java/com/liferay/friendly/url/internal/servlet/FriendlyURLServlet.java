@@ -229,6 +229,15 @@ public class FriendlyURLServlet extends HttpServlet {
 					String redirect = portal.getLocalizedFriendlyURL(
 						httpServletRequest, layout, locale, originalLocale);
 
+					HttpServletRequest originalHttpServletRequest =
+						portal.getOriginalServletRequest(httpServletRequest);
+
+					if (redirect.equals(
+							originalHttpServletRequest.getRequestURI())) {
+
+						throw new NoSuchLayoutException();
+					}
+
 					boolean forcePermanentRedirect = true;
 
 					if (Validator.isNull(i18nLanguageId)) {
@@ -577,6 +586,12 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			layoutFriendlyURL.getLanguageId());
+
+		if (!LanguageUtil.isAvailableLocale(layout.getGroupId(), locale)) {
+			return LocaleUtil.fromLanguageId(
+				(String)httpServletRequest.getAttribute(
+					WebKeys.I18N_LANGUAGE_ID));
+		}
 
 		Locale groupLocale = locale;
 

@@ -1678,7 +1678,7 @@ war.path=${app.server.portal.dir}/</echo>
 		<sequential>
 			<var name="blacklistBundleSymbolicNames" value="[&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees&quot;]" />
 
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=${blacklistBundleSymbolicNames}</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=${blacklistBundleSymbolicNames}</echo>
 		</sequential>
 	</macrodef>
 
@@ -8558,7 +8558,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<if>
 			<not>
-				<available file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config" />
+				<available file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" />
 			</not>
 			<then>
 				<prepare-blacklist-configuration />

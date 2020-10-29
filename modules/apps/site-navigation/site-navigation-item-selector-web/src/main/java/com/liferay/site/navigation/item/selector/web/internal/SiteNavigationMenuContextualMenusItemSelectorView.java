@@ -87,7 +87,8 @@ public class SiteNavigationMenuContextualMenusItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/view_contextual_menus.jsp");
+			servletContext.getRequestDispatcher(
+				"/view_site_navigation_menu_contextual_menus.jsp");
 
 		SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext
 			siteNavigationMenuContextualMenusItemSelectorViewDisplayContext =

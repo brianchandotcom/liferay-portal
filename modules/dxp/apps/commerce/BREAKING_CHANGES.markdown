@@ -135,3 +135,84 @@ CommerceOrganizationScreenNavigationConstants;`
 This was moved to follow Liferay coding pattern.
 
 ---------------------------------------
+### Commerce Machine Learning Naming Refactor
+- **Date:** 2020-Oct-29
+- **JIRA Ticket:** [COMMERCE-5046](https://issues.liferay.com/browse/COMMERCE-5046)
+
+#### What changed?
+
+Files have been moved and renamed:
+
+- `com.liferay.commerce.machine.learning.forecast.model.
+AssetCategoryCommerceMLForecast`
+- `com.liferay.commerce.machine.learning.forecast.model.
+CommerceAccountCommerceMLForecast`
+- `com.liferay.commerce.machine.learning.forecast.model.
+CommerceMLForecast`
+- `com.liferay.commerce.machine.learning.forecast.service.
+AssetCategoryCommerceMLForecastService`
+- `com.liferay.commerce.machine.learning.forecast.service.
+CommerceAccountCommerceMLForecastService`
+- `com.liferay.commerce.machine.learning.recommendation.model.
+CommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.model.
+FrequentPatternCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.model.
+ProductContentCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.model.
+ProductInteractionCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.model.
+UserCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.service.
+FrequentPatternCommerceMLRecommendationService`
+- `com.liferay.commerce.machine.learning.recommendation.service.
+ProductContentCommerceMLRecommendationService`
+- `com.liferay.commerce.machine.learning.recommendation.service.
+ProductInteractionCommerceMLRecommendationService`
+- `com.liferay.commerce.machine.learning.recommendation.service.
+UserCommerceMLRecommendationService`
+
+#### Who is affected?
+
+Anyone who references or uses these files.
+
+#### How should I update my code?
+
+Replace old references with the new package path.
+
+New package paths:
+
+- `com.liferay.commerce.machine.learning.forecast.
+AssetCategoryCommerceMLForecast`
+- `com.liferay.commerce.machine.learning.forecast.
+AssetCategoryCommerceMLForecastManager`
+- `com.liferay.commerce.machine.learning.forecast.
+CommerceAccountCommerceMLForecast`
+- `com.liferay.commerce.machine.learning.forecast.
+CommerceAccountCommerceMLForecastManager`
+- `com.liferay.commerce.machine.learning.forecast.
+CommerceMLForecast`
+- `com.liferay.commerce.machine.learning.recommendation.
+CommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.
+FrequentPatternCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.
+FrequentPatternCommerceMLRecommendationManager`
+- `com.liferay.commerce.machine.learning.recommendation.
+ProductContentCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.
+ProductContentCommerceMLRecommendationManager`
+- `com.liferay.commerce.machine.learning.recommendation.
+ProductInteractionCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.
+ProductInteractionCommerceMLRecommendationManager`
+- `com.liferay.commerce.machine.learning.recommendation.
+UserCommerceMLRecommendation`
+- `com.liferay.commerce.machine.learning.recommendation.
+UserCommerceMLRecommendationManager`
+
+#### Why was this change made?
+
+This was moved to follow Liferay coding pattern.
+
+---------------------------------------

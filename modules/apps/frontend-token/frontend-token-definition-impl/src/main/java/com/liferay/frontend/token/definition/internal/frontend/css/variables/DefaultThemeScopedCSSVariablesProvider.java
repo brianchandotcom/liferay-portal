@@ -49,8 +49,6 @@ public class DefaultThemeScopedCSSVariablesProvider
 	public Collection<ScopedCSSVariables> getScopedCSSVariablesCollection(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, String> cssVariables = new HashMap<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -61,6 +59,12 @@ public class DefaultThemeScopedCSSVariablesProvider
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
+
+		if (frontendTokenDefinition == null) {
+			return Collections.emptyList();
+		}
+
+		Map<String, String> cssVariables = new HashMap<>();
 
 		Collection<FrontendToken> frontendTokens =
 			frontendTokenDefinition.getFrontendTokens();

@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_PRICE_VALUE</td>
+	<td>//h2[contains(@class,'commerce-price')]//span[contains(@class,'price-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLES_BUTTON</td>
 	<td>//button[contains(.,'Roles')]</td>
 	<td></td>

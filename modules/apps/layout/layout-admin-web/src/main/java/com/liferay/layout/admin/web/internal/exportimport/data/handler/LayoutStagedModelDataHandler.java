@@ -1491,15 +1491,8 @@ public class LayoutStagedModelDataHandler
 		for (Element layoutClassedModelUsageElement :
 				layoutClassedModelUsageElements) {
 
-			String layoutClassedModelUsagePath =
-				layoutClassedModelUsageElement.attributeValue("path");
-
-			LayoutClassedModelUsage layoutClassedModelUsage =
-				(LayoutClassedModelUsage)portletDataContext.getZipEntryAsObject(
-					layoutClassedModelUsagePath);
-
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutClassedModelUsage);
+				portletDataContext, layoutClassedModelUsageElement);
 		}
 	}
 

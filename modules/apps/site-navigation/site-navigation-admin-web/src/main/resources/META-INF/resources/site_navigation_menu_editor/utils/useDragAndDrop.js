@@ -21,11 +21,15 @@ import {NESTING_MARGIN} from '../constants/nestingMargin';
 import {useConstants} from '../contexts/ConstantsContext';
 import {useItems, useSetItems} from '../contexts/ItemsContext';
 import updateItemParent from '../utils/updateItemParent';
+import getDescendantsCount from './getDescendantsCount';
 import getItemPath from './getItemPath';
+import moveItem from './moveItem';
 
 const DIRECTIONS = {
+	down: 'down',
 	inside: 'inside',
 	outside: 'outside',
+	up: 'up',
 };
 
 const DragDropContext = React.createContext({});
@@ -33,12 +37,15 @@ const DragDropContext = React.createContext({});
 export const DragDropProvider = ({children}) => {
 	const [parentId, setParentId] = useState(null);
 	const [horizontalOffset, setHorizontalOffset] = useState(0);
+	const [verticalOffset, setVerticalOffset] = useState(0);
 
 	const dragDropValues = {
 		horizontalOffset,
 		parentId,
 		setHorizontalOffset,
 		setParentId,
+		setVerticalOffset,
+		verticalOffset,
 	};
 
 	return (
@@ -54,7 +61,9 @@ export function useDragItem(item) {
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
-	const {setHorizontalOffset, setParentId} = useContext(DragDropContext);
+	const {setHorizontalOffset, setParentId, setVerticalOffset} = useContext(
+		DragDropContext
+	);
 
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
 		begin() {
@@ -66,6 +75,7 @@ export function useDragItem(item) {
 		end() {
 			setHorizontalOffset(0);
 			setParentId(null);
+			setVerticalOffset(null);
 		},
 		isDragging(monitor) {
 			return itemPath.includes(monitor.getItem().id);
@@ -96,9 +106,13 @@ export function useDropTarget(item) {
 	const {languageDirection, languageId} = useConstants();
 	const rtl = languageDirection[languageId] === 'rtl';
 
-	const {horizontalOffset, setHorizontalOffset, setParentId} = useContext(
-		DragDropContext
-	);
+	const {
+		horizontalOffset,
+		setHorizontalOffset,
+		setParentId,
+		setVerticalOffset,
+		verticalOffset,
+	} = useContext(DragDropContext);
 
 	const [, targetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,
@@ -133,6 +147,36 @@ export function useDropTarget(item) {
 							items,
 							source.id,
 							newParentId
+						);
+
+						setItems(newItems);
+					}
+				}
+				else {
+					const {
+						currentOffset,
+						direction,
+						newIndex,
+						newParentId,
+					} = computeHoverAnotherItem({
+						initialOffset: verticalOffset,
+						items,
+						monitor,
+						source,
+						targetId: siteNavigationMenuItemId,
+					});
+
+					if (newParentId) {
+						setParentId(newParentId);
+						setHorizontalOffset(0);
+						setVerticalOffset(currentOffset);
+
+						const newItems = moveItem(
+							items,
+							source.id,
+							newParentId,
+							newIndex,
+							direction
 						);
 
 						setItems(newItems);
@@ -218,4 +262,55 @@ function computeHoverItself({initialOffset, items, monitor, rtl, source}) {
 	}
 
 	return {currentOffset, newParentId};
+}
+
+function computeHoverAnotherItem({
+	initialOffset,
+	items,
+	monitor,
+	source,
+	targetId,
+}) {
+	const sourceItem = items.find(
+		(item) => item.siteNavigationMenuItemId === source.id
+	);
+	const targetItem = items.find(
+		(item) => item.siteNavigationMenuItemId === targetId
+	);
+
+	const currentOffset = monitor.getDifferenceFromInitialOffset().y;
+
+	if (initialOffset === currentOffset) {
+		return;
+	}
+
+	const direction =
+		initialOffset > currentOffset ? DIRECTIONS.up : DIRECTIONS.down;
+
+	const newIndex = items.indexOf(targetItem);
+
+	if (newIndex === items.indexOf(sourceItem)) {
+		return;
+	}
+
+	let newParentId;
+
+	if (direction === DIRECTIONS.up) {
+		newParentId = targetItem.parentSiteNavigationMenuItemId;
+	}
+
+	if (direction === DIRECTIONS.down) {
+		const targetItemDescendantsCount = getDescendantsCount(items, targetId);
+
+		newParentId = targetItemDescendantsCount
+			? targetItem.siteNavigationMenuItemId
+			: targetItem.parentSiteNavigationMenuItemId;
+	}
+
+	return {
+		currentOffset,
+		direction,
+		newIndex,
+		newParentId,
+	};
 }

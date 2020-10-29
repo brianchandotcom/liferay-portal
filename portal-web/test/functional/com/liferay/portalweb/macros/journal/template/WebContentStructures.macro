@@ -136,7 +136,7 @@ definition {
 
 		for (var structureFieldName : list "${editStructureFieldNames}") {
 			var key_fieldDefaultValue = "${editStructureFieldNames}";
-var key_fieldName = "${structureFieldName}";
+			var key_fieldName = "${structureFieldName}";
 			Type(
 				locator1 = "TextInput#DE_DDM",
 				value1 = "${fieldPredefinedValue}");

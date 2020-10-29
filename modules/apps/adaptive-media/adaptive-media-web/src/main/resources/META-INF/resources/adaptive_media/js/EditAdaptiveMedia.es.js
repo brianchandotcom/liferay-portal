@@ -220,6 +220,7 @@ const EditAdaptiveMedia = ({
 									errors[maxWidthId]
 								}
 								label={Liferay.Language.get('max-width-px')}
+								min="1"
 								name={maxWidthId}
 								onBlur={handleBlur}
 								onChange={handleChangeMaxWidth}
@@ -236,6 +237,7 @@ const EditAdaptiveMedia = ({
 									errors[maxHeightId]
 								}
 								label={Liferay.Language.get('max-height-px')}
+								min="1"
 								name={maxHeightId}
 								onBlur={handleBlur}
 								onChange={handleChangeHeight}

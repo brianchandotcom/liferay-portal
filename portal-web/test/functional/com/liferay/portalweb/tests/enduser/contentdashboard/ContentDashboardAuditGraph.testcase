@@ -14,7 +14,7 @@ definition {
 
 		Navigator.openURL();
 
-        var categoryId1 = JSONCategory.addCategory(
+		var categoryId1 = JSONCategory.addCategory(
 			groupName = "Global",
 			title = "Audience 1",
 			vocabularyName = "Audience");
@@ -26,7 +26,7 @@ definition {
 	}
 
 	tearDown {
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC Title");
 
@@ -39,9 +39,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-        else{
-            ContentDashboard.tearDown();
-        }
+		else {
+			ContentDashboard.tearDown();
+		}
 	}
 
 	@description = "When the user clicks on the Flip axes button, the vocabularies will be exchanged, the vocabulary represented in the X (the first in the list in the "In use" box) is sent to the Y, and the other way around"
@@ -147,7 +147,7 @@ definition {
 	test AuditGraphUncheckCheckbox {
 		property portal.acceptance = "true";
 
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 

@@ -106,7 +106,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 		Assert.assertEquals(LocaleUtil.US, defaultLocale);
 	}
 
-	private DDMFormInstance _mockDDMFormInstance() throws PortalException {
+	private DDMForm _mockDDMForm() {
 		DDMForm ddmForm = mock(DDMForm.class);
 
 		when(
@@ -115,9 +115,13 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 			new HashSet<Locale>(Arrays.asList(LocaleUtil.US, LocaleUtil.BRAZIL))
 		);
 
+		return ddmForm;
+	}
+
+	private DDMFormInstance _mockDDMFormInstance() throws PortalException {
 		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
 
-		DDMStructure ddmStructure = mock(DDMStructure.class);
+		DDMStructure ddmStructure = _mockDDMStructure();
 
 		when(
 			ddmFormInstance.getStructure()
@@ -125,11 +129,21 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 			ddmStructure
 		);
 
+		DDMForm ddmForm = _mockDDMForm();
+
 		when(
 			ddmFormInstance.getDDMForm()
 		).thenReturn(
 			ddmForm
 		);
+
+		return ddmFormInstance;
+	}
+
+	private DDMStructure _mockDDMStructure() {
+		DDMStructure ddmStructure = mock(DDMStructure.class);
+
+		DDMForm ddmForm = _mockDDMForm();
 
 		when(
 			ddmStructure.getDDMForm()
@@ -137,7 +151,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 			ddmForm
 		);
 
-		return ddmFormInstance;
+		return ddmStructure;
 	}
 
 	private ThemeDisplay _mockThemeDisplay() {

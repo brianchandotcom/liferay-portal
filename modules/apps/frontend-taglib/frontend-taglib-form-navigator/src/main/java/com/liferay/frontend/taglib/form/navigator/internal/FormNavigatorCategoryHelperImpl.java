@@ -15,7 +15,7 @@
 package com.liferay.frontend.taglib.form.navigator.internal;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryHelper;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -35,8 +35,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = FormNavigatorCategoryUtil.class)
-public class FormNavigatorCategoryImpl implements FormNavigatorCategoryUtil {
+@Component(immediate = true, service = FormNavigatorCategoryHelper.class)
+public class FormNavigatorCategoryHelperImpl
+	implements FormNavigatorCategoryHelper {
 
 	@Override
 	public List<FormNavigatorCategory> getFormNavigatorCategories(

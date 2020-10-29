@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryUtil;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryHelper;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryUtil;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryHelper;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
 import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.frontend.taglib.form.navigator.internal.configuration.FormNavigatorEntryConfigurationRetriever;
@@ -45,8 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = FormNavigatorEntryUtil.class)
-public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
+@Component(immediate = true, service = FormNavigatorEntryHelper.class)
+public class FormNavigatorEntryHelperImpl implements FormNavigatorEntryHelper {
 
 	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
@@ -81,7 +81,7 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
 
-		String[] categoryKeys = _formNavigatorCategoryUtil.getKeys(
+		String[] categoryKeys = _formNavigatorCategoryHelper.getKeys(
 			formNavigatorId);
 
 		for (String categoryKey : categoryKeys) {
@@ -263,10 +263,10 @@ public class FormNavigatorEntryImpl implements FormNavigatorEntryUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FormNavigatorEntryImpl.class);
+		FormNavigatorEntryHelperImpl.class);
 
 	@Reference
-	private FormNavigatorCategoryUtil _formNavigatorCategoryUtil;
+	private FormNavigatorCategoryHelper _formNavigatorCategoryHelper;
 
 	private ServiceTrackerMap<String, FormNavigatorContextProvider<?>>
 		_formNavigatorContextProviderMap;

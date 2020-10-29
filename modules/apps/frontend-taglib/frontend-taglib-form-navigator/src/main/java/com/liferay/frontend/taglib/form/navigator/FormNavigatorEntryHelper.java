@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-public interface FormNavigatorEntryUtil {
+public interface FormNavigatorEntryHelper {
 
 	public <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, User user, T formModelBean);

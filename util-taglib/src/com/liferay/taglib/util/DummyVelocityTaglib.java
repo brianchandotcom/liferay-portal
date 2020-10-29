@@ -17,14 +17,10 @@ package com.liferay.taglib.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
-import com.liferay.taglib.ui.AssetTagsSummaryTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconTag;
-import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.RatingsTag;
 
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -73,17 +69,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void assetCategoriesSummary(
-		String className, long classPK, String message, PortletURL portletURL) {
-	}
-
-	@Override
-	public void assetTagsSummary(
-		String className, long classPK, String message, String assetTagNames,
-		PortletURL portletURL) {
-	}
-
-	@Override
 	public void breadcrumb() {
 	}
 
@@ -99,27 +84,12 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public AssetCategoriesSummaryTag<?> getAssetCategoriesSummaryTag() {
-		return null;
-	}
-
-	@Override
-	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() {
-		return null;
-	}
-
-	@Override
 	public BreadcrumbTag getBreadcrumbTag() {
 		return null;
 	}
 
 	@Override
 	public IconTag getIconTag() {
-		return null;
-	}
-
-	@Override
-	public JournalArticleTag getJournalArticleTag() {
 		return null;
 	}
 
@@ -157,11 +127,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void include(String page) {
-	}
-
-	@Override
-	public void journalArticle(
-		String articleId, long groupId, String ddmTemplateKey) {
 	}
 
 	@Override
@@ -287,14 +252,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	public void runtime(
 		String portletName, String instanceId, String queryString,
 		String defaultPreferences) {
-	}
-
-	@Override
-	public void sitesDirectory() {
-	}
-
-	@Override
-	public void sitesDirectory(String displayStyle, String sites) {
 	}
 
 	@Override

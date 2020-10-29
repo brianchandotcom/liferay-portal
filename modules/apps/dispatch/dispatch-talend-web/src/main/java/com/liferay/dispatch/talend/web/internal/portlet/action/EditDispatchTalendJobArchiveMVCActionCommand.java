@@ -15,7 +15,7 @@
 package com.liferay.dispatch.talend.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutorHelper;
+import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,8 +57,7 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 			long dispatchTriggerId = ParamUtil.getLong(
 				uploadPortletRequest, "dispatchTriggerId");
 
-			_talendDispatchTaskExecutorHelper.addFileEntry(
-				_portal.getCompanyId(actionRequest),
+			_dispatchFileRepository.addFileEntry(
 				_portal.getUserId(actionRequest), dispatchTriggerId,
 				uploadPortletRequest.getFileName("jobArchive"),
 				uploadPortletRequest.getSize("jobArchive"),
@@ -76,9 +75,9 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		EditDispatchTalendJobArchiveMVCActionCommand.class);
 
 	@Reference
-	private Portal _portal;
+	private DispatchFileRepository _dispatchFileRepository;
 
 	@Reference
-	private TalendDispatchTaskExecutorHelper _talendDispatchTaskExecutorHelper;
+	private Portal _portal;
 
 }

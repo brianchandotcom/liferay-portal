@@ -15,15 +15,18 @@
 package com.liferay.dispatch.talend.web.internal.frontend.taglib.servlet.taglib.ui;
 
 import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutor;
-import com.liferay.dispatch.talend.web.internal.executor.TalendDispatchTaskExecutorHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -99,14 +102,31 @@ public class DispatchTalendScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		String talendFileEntryName = StringPool.BLANK;
+
+		DispatchTrigger dispatchTrigger =
+			(DispatchTrigger)httpServletRequest.getAttribute(
+				DispatchWebKeys.DISPATCH_TRIGGER);
+
+		if (dispatchTrigger != null) {
+			String fileEntryName = _dispatchFileRepository.fetchFileEntryName(
+				dispatchTrigger.getDispatchTriggerId());
+
+			if (Validator.isNotNull(fileEntryName)) {
+				talendFileEntryName = fileEntryName;
+			}
+		}
+
 		httpServletRequest.setAttribute(
-			TalendDispatchTaskExecutorHelper.class.getName(),
-			_talendDispatchTaskExecutorHelper);
+			DispatchWebKeys.FILE_NAME, talendFileEntryName);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/view.jsp");
 	}
+
+	@Reference
+	private DispatchFileRepository _dispatchFileRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -115,8 +135,5 @@ public class DispatchTalendScreenNavigationCategory
 		target = "(osgi.web.symbolicname=com.liferay.dispatch.talend.web)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference
-	private TalendDispatchTaskExecutorHelper _talendDispatchTaskExecutorHelper;
 
 }

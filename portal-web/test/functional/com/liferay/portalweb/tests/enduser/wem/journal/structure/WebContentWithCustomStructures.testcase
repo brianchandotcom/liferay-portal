@@ -486,7 +486,7 @@ definition {
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			Search.searchCP(searchTerm = "page");
+			Search.searchCP(searchTerm = "text1");
 
 			Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Complex Title 1");
 		}
@@ -498,14 +498,24 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			for (var fieldValue : list "page,Link Pagina Origem,page2,Link Pagina Atual,title,text,logo 2,title 2,title,description 2,text 2,list,benificial,observe,important,text3,company,benificia,obeserve,identy,identificial,description,title 3,text 3,operator,paragraph,operation,direction") {
+			var i = "1";
+
+			while (!("${i}" == "31")) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
+					value1 = "text${i}");
+
+				var i = ${i} + 1;
+			}
+
+			for (var fieldValue : list "Link Pagina Origem,Link Pagina Atual") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
 					value1 = "${fieldValue}");
 			}
 
-			for (var imageName : list "Document_1.jpeg,Document_2.jpeg,Document_3.png") {
-				AssertElementPresent(locator1 = "//img[contains(@src,'${imageName}')]");
+			for (var i : list "1,2,3,4") {
+				AssertElementPresent(locator1 = "xpath=(//img[contains(@src,'Document_1.jpeg')])[${i}]");
 			}
 
 			takeScreenshot();
@@ -520,8 +530,12 @@ definition {
 
 			IFrame.closeFrame();
 
-			for (var fieldValue : list "page,page2,title,text,logo 2,title 2,title,description 2,text 2,list,benificial,observe,important,text3,company,benificia,obeserve,identy,identificial,description,title 3,text 3,operator,paragraph,operation,direction") {
-				WebContent.viewPGViaWCD(webContentContent = "${fieldValue}");
+			var i = "1";
+
+			while (!("${i}" == "31")) {
+				WebContent.viewPGViaWCD(webContentContent = "text${i}");
+
+				var i = ${i} + 1;
 			}
 
 			for (var contentText : list "Link Pagina Origem,Link Pagina Atual") {
@@ -530,8 +544,8 @@ definition {
 					locator1 = "WCD#WEB_CONTENT_TEXT_LINK_URL");
 			}
 
-			for (var imageName : list "Document_1.jpeg,Document_2.jpeg,Document_3.png") {
-				AssertElementPresent(locator1 = "//img[contains(@src,'${imageName}')]");
+			for (var i : list "1,2,3,4") {
+				AssertElementPresent(locator1 = "xpath=(//img[contains(@src,'Document_1.jpeg')])[${i}]");
 			}
 
 			takeScreenshot();
@@ -721,27 +735,27 @@ definition {
 			AssertTextEquals(
 				key_fieldName = "PaginaOrigem",
 				locator1 = "TextInput#DDM",
-				value1 = "page");
+				value1 = "text1");
 
 			AssertTextEquals(
 				key_fieldName = "PaginaAtual",
 				locator1 = "TextInput#DDM",
-				value1 = "page2");
+				value1 = "text2");
 
 			AssertTextEquals(
 				key_fieldName = "LinkPaginaOrigem",
 				locator1 = "TextInput#DDM",
-				value1 = "Page Name 1");
+				value1 = "widgetpage1");
 
 			AssertTextEquals(
 				key_fieldName = "LinkPaginaAtual",
 				locator1 = "TextInput#DDM",
-				value1 = "Page Name 1");
+				value1 = "widgetpage2");
 
 			AssertTextEquals(
 				key_fieldName = "Logo",
 				locator1 = "TextInput#DDM",
-				value1 = "Document_2.jpeg");
+				value1 = "Document_1.jpeg");
 
 			AssertTextEquals(
 				key_fieldName = "ImagemAba01",

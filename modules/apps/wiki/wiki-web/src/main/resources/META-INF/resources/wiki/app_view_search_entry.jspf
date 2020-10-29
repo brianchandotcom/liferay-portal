@@ -1,0 +1,142 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String description = StringUtil.shorten(HtmlUtil.stripHtml(formattedContent), 200);
+
+String linkTitle = wikiPage.getTitle();
+
+if (Validator.isNotNull(description)) {
+	linkTitle += " - " + description;
+}
+
+Summary summary = new Summary(wikiPage.getTitle(), description);
+
+summary.setEscape(true);
+summary.setHighlight(queryConfig.isHighlightEnabled());
+summary.setQueryTerms(hits.getQueryTerms());
+%>
+
+<div class="app-view-entry app-view-search-entry-taglib entry-display-style <%= MathUtil.isEven(index) ? "search" : "search alt" %>" data-title="<%= HtmlUtil.escapeAttribute(StringUtil.shorten(wikiPage.getTitle(), 60)) %>">
+	<a class="entry-link" href="<%= HtmlUtil.escapeAttribute(rowURL) %>" title="<%= HtmlUtil.escapeAttribute(linkTitle) %>">
+		<div class="entry-metadata">
+			<span class="entry-title">
+				<%= summary.getHighlightedTitle() %>
+			</span>
+			<span class="entry-description">
+				<%= summary.getHighlightedContent() %>
+			</span>
+		</div>
+	</a>
+
+	<%
+	List<RelatedSearchResult<FileEntry>> fileEntryRelatedSearchResults = searchResult.getFileEntryRelatedSearchResults();
+	%>
+
+	<c:if test="<%= fileEntryRelatedSearchResults != null %>">
+
+		<%
+		for (RelatedSearchResult<FileEntry> fileEntryRelatedSearchResult : fileEntryRelatedSearchResults) {
+			FileEntry fileEntry = fileEntryRelatedSearchResult.getModel();
+
+			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+
+			summary = fileEntryRelatedSearchResult.getSummary();
+
+			summary.setHighlight(queryConfig.isHighlightEnabled());
+			summary.setQueryTerms(hits.getQueryTerms());
+		%>
+
+			<div class="entry-attachment">
+				<aui:a class="lfr-discussion-details" href="<%= rowURL %>">
+					<div class="image">
+
+						<%
+						String fileEntryThumbnailSrc = assetRenderer.getThumbnailPath(renderRequest);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(fileEntryThumbnailSrc) %>">
+							<img alt="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>" class="attachment" src="<%= fileEntryThumbnailSrc %>" />
+						</c:if>
+					</div>
+
+					<span class="title">
+						<liferay-ui:icon
+							icon="<%= assetRenderer.getIconCssClass() %>"
+							label="<%= true %>"
+							markupView="lexicon"
+							message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName()), false) %>'
+						/>
+					</span>
+					<span class="body">
+						<%= summary.getHighlightedContent() %>
+					</span>
+				</aui:a>
+			</div>
+
+		<%
+		}
+		%>
+
+	</c:if>
+
+	<%
+	List<RelatedSearchResult<Comment>> commentRelatedSearchResults = searchResult.getCommentRelatedSearchResults();
+	%>
+
+	<c:if test="<%= commentRelatedSearchResults != null %>">
+
+		<%
+		for (RelatedSearchResult<Comment> commentRelatedSearchResult : commentRelatedSearchResults) {
+			Comment comment = commentRelatedSearchResult.getModel();
+
+			User userDisplay = comment.getUser();
+
+			summary = commentRelatedSearchResult.getSummary();
+
+			summary.setHighlight(queryConfig.isHighlightEnabled());
+			summary.setQueryTerms(hits.getQueryTerms());
+		%>
+
+			<div class="entry-discussion">
+				<aui:a class="lfr-discussion-details" href="<%= rowURL %>">
+					<div class="image">
+						<liferay-ui:user-portrait
+							userId="<%= userDisplay.getUserId() %>"
+						/>
+					</div>
+
+					<span class="title">
+						<liferay-ui:icon
+							iconCssClass="icon-comment"
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(locale, "comment-by-x", HtmlUtil.escape(userDisplay.getFullName()), false) %>'
+						/>
+					</span>
+					<span class="body">
+						<%= summary.getHighlightedContent() %>
+					</span>
+				</aui:a>
+			</div>
+
+		<%
+		}
+		%>
+
+	</c:if>
+</div>

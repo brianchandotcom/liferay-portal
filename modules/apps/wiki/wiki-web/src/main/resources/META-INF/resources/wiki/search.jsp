@@ -145,17 +145,7 @@ portletURL.setParameter("keywords", keywords);
 				<portlet:param name="title" value="<%= title %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:app-view-search-entry
-				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
-				containerName="<%= curNode.getName() %>"
-				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= StringUtil.shorten(HtmlUtil.stripHtml(formattedContent), 200) %>"
-				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
-				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
-				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= wikiPage.getTitle() %>"
-				url="<%= rowURL %>"
-			/>
+			<%@ include file="/wiki/app_view_search_entry.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-paginator

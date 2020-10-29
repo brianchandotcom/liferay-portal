@@ -230,6 +230,27 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public boolean isSegmentEnabled() {
+		String testSuiteName = "default";
+
+		if (this instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+
+		String segmentEnabled = JenkinsResultsParserUtil.getProperty(
+			_jobProperties, "test.batch.segment.enabled", getJobName(),
+			testSuiteName);
+
+		if ((segmentEnabled != null) && segmentEnabled.equals("true")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isValidationRequired() {
 		return false;
 	}

@@ -52,6 +52,8 @@ public interface Job {
 
 	public String getTestPropertiesContent();
 
+	public boolean isSegmentEnabled();
+
 	public boolean isValidationRequired();
 
 	public void readJobProperties();

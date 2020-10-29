@@ -476,10 +476,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected void setSegmentTestClassGroups() {
-		if (!_isSegmentEnabled()) {
-			return;
-		}
-
 		if (!_segmentTestClassGroups.isEmpty()) {
 			return;
 		}
@@ -644,17 +640,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return Lists.newArrayList(requiredModuleDirs);
-	}
-
-	private boolean _isSegmentEnabled() {
-		String segmentEnabled = getFirstPropertyValue(
-			"test.batch.segment.enabled");
-
-		if ((segmentEnabled != null) && segmentEnabled.equals("true")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _setIncludeStableTestSuite() {

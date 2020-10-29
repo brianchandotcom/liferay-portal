@@ -74,20 +74,14 @@ public class DispatchMessageListenerTest {
 		Assert.assertEquals(
 			executeCount, TestDispatchTaskExecutor.executionCounter.get());
 
-		List<DispatchLog> dispatchLogs =
+		List<DispatchLog> dispatchLogs = _filter(
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS),
+			DispatchTaskStatus.SUCCESSFUL);
 
 		Assert.assertEquals(
 			dispatchLogs.toString(), executeCount, dispatchLogs.size());
-
-		List<DispatchLog> statusSuccessfulDispatchLogs = _filter(
-			dispatchLogs, DispatchTaskStatus.SUCCESSFUL);
-
-		Assert.assertEquals(
-			statusSuccessfulDispatchLogs.toString(), executeCount,
-			statusSuccessfulDispatchLogs.size());
 	}
 
 	@Test

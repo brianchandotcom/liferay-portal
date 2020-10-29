@@ -180,6 +180,12 @@ public class CommerceProductUpgradeStepRegistrator
 
 		registry.register("3.0.0", "3.1.0", new CPTaxCategoryUpgradeProcess());
 
+		registry.register(
+			"3.1.0", "3.2.0",
+			new com.liferay.commerce.product.internal.upgrade.v3_2_0.
+				FriendlyURLEntryUpgradeProcess(
+					_classNameLocalService, _groupLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

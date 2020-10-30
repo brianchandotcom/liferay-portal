@@ -113,7 +113,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		_siteNavigationMenuId = ParamUtil.getLong(
-			_httpServletRequest, "siteNavigationMenuId");
+			_httpServletRequest, "siteNavigationMenuId", -1);
 
 		return _siteNavigationMenuId;
 	}

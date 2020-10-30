@@ -21,7 +21,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 %>
 
 <c:choose>
-	<c:when test="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
+	<c:when test="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuId() >= 0 %>">
 		<liferay-util:include page="/select_site_navigation_menu_level.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

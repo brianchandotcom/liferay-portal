@@ -39,16 +39,6 @@ public class CrossClusterReplicationConfigurationWrapperImpl
 			ccrLocalClusterConnectionConfigurations();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getCCRLocalClusterConnectionConfigurations()}
-	 */
-	@Deprecated
-	@Override
-	public String getCCRLocalClusterConnectionId() {
-		return null;
-	}
-
 	@Override
 	public String getRemoteClusterAlias() {
 		return crossClusterReplicationConfiguration.remoteClusterAlias();

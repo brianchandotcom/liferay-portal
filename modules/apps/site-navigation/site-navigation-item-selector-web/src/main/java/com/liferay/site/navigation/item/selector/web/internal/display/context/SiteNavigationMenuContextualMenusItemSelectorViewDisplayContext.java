@@ -17,11 +17,15 @@ package com.liferay.site.navigation.item.selector.web.internal.display.context;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +40,22 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
+	}
+
+	public Map<String, Object> getContext(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return HashMapBuilder.<String, Object>put(
+			"buttonClass", ".contextual-menu-selector"
+		).put(
+			"containerId",
+			liferayPortletResponse.getNamespace() + "contextualMenuSelector"
+		).put(
+			"eventName", getItemSelectedEventName()
+		).put(
+			"returnType",
+			SiteNavigationMenuItemSelectorReturnType.class.toString()
+		).build();
 	}
 
 	public String getItemSelectedEventName() {

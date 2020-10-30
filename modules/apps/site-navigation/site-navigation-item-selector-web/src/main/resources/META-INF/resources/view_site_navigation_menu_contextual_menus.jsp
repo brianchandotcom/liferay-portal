@@ -44,8 +44,9 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 				md="4"
 			>
 				<clay:button
-					cssClass="align-items-center contextual-menu-option d-flex justify-content-center selector-button"
+					cssClass="align-items-center contextual-menu-option contextual-menu-selector d-flex justify-content-center"
 					data-contextualMenu='<%= jsonObject.getString("value") %>'
+					data-title='<%= jsonObject.getString("title") %>'
 					displayType="unstyled"
 				>
 					<img alt="<%= jsonObject.getString("title") %>" class="contextual-menu-image p-5" src="<%= jsonObject.getString("imageURL") %>" />
@@ -67,9 +68,8 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 	</clay:row>
 </clay:container-fluid>
 
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />contextualMenuSelector',
-		'<%= HtmlUtil.escapeJS(siteNavigationMenuContextualMenusItemSelectorViewDisplayContext.getItemSelectedEventName()) %>'
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="SelectEntityHandler"
+	context="<%= siteNavigationMenuContextualMenusItemSelectorViewDisplayContext.getContext(liferayPortletResponse) %>"
+	module="js/SelectEntityHandler"
+/>

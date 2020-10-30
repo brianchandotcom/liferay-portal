@@ -19,17 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
@@ -42,6 +45,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
@@ -84,6 +88,23 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		return breadcrumbEntries;
+	}
+
+	public Map<String, Object> getContext(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return HashMapBuilder.<String, Object>put(
+			"buttonClass", ".site-navigation-menu-selector"
+		).put(
+			"containerId",
+			liferayPortletResponse.getNamespace() +
+				"siteNavigationMenuLevelSelector"
+		).put(
+			"eventName", getItemSelectedEventName()
+		).put(
+			"returnType",
+			SiteNavigationMenuItemSelectorReturnType.class.toString()
+		).build();
 	}
 
 	public String getItemSelectedEventName() {

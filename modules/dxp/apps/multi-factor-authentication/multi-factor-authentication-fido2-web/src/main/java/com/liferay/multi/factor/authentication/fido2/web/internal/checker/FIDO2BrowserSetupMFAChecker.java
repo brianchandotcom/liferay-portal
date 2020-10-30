@@ -131,37 +131,29 @@ public class FIDO2BrowserSetupMFAChecker
 			_mfaFIDO2CredentialEntryLocalService.
 				getMFAFIDO2CredentialEntriesByUserId(userId);
 
-		if (mfaFIDO2CredentialEntries.size() >=
+		if (mfaFIDO2CredentialEntries.size() <
 				_mfaFIDO2Configuration.allowedCredentialsPerUser()) {
 
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/mfa_fido2_checker/setup_completed.jsp");
+			String mfaFIDO2PKCCOptions = _objectMapper.writeValueAsString(
+				_getPublicKeyCredentialCreationOptions(userId));
 
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+			httpServletRequest.setAttribute(
+				MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS, mfaFIDO2PKCCOptions);
 
-			return;
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			httpSession.setAttribute(
+				MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS, mfaFIDO2PKCCOptions);
 		}
-
-		String mfaFIDO2PKCCOptions = _objectMapper.writeValueAsString(
-			_getPublicKeyCredentialCreationOptions(userId));
-
-		httpServletRequest.setAttribute(
-			MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS, mfaFIDO2PKCCOptions);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/mfa_fido2_checker/setup.jsp");
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
-
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
-		HttpSession httpSession = originalHttpServletRequest.getSession();
-
-		httpSession.setAttribute(
-			MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS, mfaFIDO2PKCCOptions);
 	}
 
 	@Override

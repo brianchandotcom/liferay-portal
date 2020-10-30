@@ -22,17 +22,30 @@ List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntry
 
 <div id="<portlet:namespace />messageContainer"></div>
 
-<aui:button-row>
-	<clay:button
-		additionalProps='<%=
-			HashMapBuilder.put(
-				"pkccOptions", request.getAttribute(MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS)
-			).build()
-		%>'
-		label="button-register-a-fido2-authenticator"
-		propsTransformer="js/RegistrationTransformer"
-	/>
-</aui:button-row>
+<c:choose>
+	<c:when test="<%= mfaIDO2CredentialEntries.size() < mfaFIDO2Configuration.allowedCredentialsPerUser() %>">
+		<aui:button-row>
+			<clay:button
+				additionalProps='<%=
+					HashMapBuilder.put(
+						"pkccOptions", request.getAttribute(MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS)
+					).build()
+				%>'
+				label="button-register-a-fido2-authenticator"
+				propsTransformer="js/RegistrationTransformer"
+			/>
+		</aui:button-row>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:message key="you-have-registered-the-maximum-number-of-allowed-authenticators" />
+
+		<aui:input name="mfaRemoveExistingSetup" type="hidden" value="<%= true %>" />
+
+		<button class="btn btn-danger" type="submit">
+			<liferay-ui:message key="button-remove-all-registered-fido2-authenticators" />
+		</button>
+	</c:otherwise>
+</c:choose>
 
 <aui:input name="responseJSON" showRequiredLabel="yes" type="hidden" />
 

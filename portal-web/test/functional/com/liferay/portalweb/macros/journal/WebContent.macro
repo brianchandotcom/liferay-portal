@@ -678,12 +678,6 @@ definition {
 			}
 		}
 
-		if (isSet(webContentSeparator)) {
-			AssertVisible(
-				key_fieldName = "Separator",
-				locator1 = "DDMField#SEPARATOR");
-		}
-
 		if (isSet(webContentText)) {
 			Type(
 				key_fieldName = "Text",
@@ -2388,6 +2382,12 @@ definition {
 			FormFields.viewRadioValue(
 				fieldName = "Radio",
 				fieldValue = "${webContentRadio}");
+		}
+
+		if (isSet(webContentSeparator)) {
+			AssertVisible(
+				key_fieldName = "Separator",
+				locator1 = "DDMField#SEPARATOR");
 		}
 
 		if (isSet(webContentSelect)) {

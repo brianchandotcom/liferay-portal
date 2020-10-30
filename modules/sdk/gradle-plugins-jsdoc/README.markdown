@@ -3,7 +3,7 @@
 The JSDoc Gradle plugin lets you run the [JSDoc](http://usejsdoc.org/) tool in
 order to generate documentation for your project's JavaScript files.
 
-The plugin has been successfully tested with Gradle 6.6.1.
+The plugin has been successfully tested with Gradle 5.6.4 and 6.6.1.
 
 ## Usage
 

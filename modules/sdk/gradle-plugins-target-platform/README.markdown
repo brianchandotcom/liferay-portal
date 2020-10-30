@@ -4,7 +4,7 @@ The Target Platform Gradle plugin helps with building multiple projects
 against a declared API target platform. Java dependencies can be managed with
 Maven BOMs and OSGi modules can be resolved against an OSGi distribution.
 
-The plugin has been successfully tested with Gradle 6.6.1.
+The plugin has been successfully tested with Gradle 5.6.4 and 6.6.1.
 
 ## Usage
 

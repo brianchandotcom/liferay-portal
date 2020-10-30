@@ -3,7 +3,7 @@
 The Gulp Gradle plugin lets you run [Gulp](http://gulpjs.com/) tasks as part of
 your build.
 
-The plugin has been successfully tested with Gradle 6.6.1.
+The plugin has been successfully tested with Gradle 5.6.4 and 6.6.1.
 
 ## Usage
 

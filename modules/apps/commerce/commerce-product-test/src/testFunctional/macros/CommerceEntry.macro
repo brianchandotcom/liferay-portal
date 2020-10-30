@@ -455,7 +455,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "${specificationDescription}");
 
-		ClickNoError(locator1 = "CommerceEntry#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro createNewSpecificationLabels {

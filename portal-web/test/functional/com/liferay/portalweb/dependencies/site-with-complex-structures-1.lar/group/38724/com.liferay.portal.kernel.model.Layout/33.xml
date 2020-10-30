@@ -1,0 +1,46 @@
+<Layout>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>33572bc6-4ae8-4464-9ea3-dde5c4b97b4f</__uuid>
+  <__plid>33</__plid>
+  <__groupId>38724</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName></__userName>
+  <__createDate>2020-10-29 06:25:39.217 UTC</__createDate>
+  <__modifiedDate>2020-10-29 06:49:14.617 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__parentPlid>0</__parentPlid>
+  <__privateLayout>false</__privateLayout>
+  <__layoutId>2</__layoutId>
+  <__parentLayoutId>0</__parentLayoutId>
+  <__classNameId>0</__classNameId>
+  <__classPK>0</__classPK>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;pt_BR&quot; default-locale=&quot;pt_BR&quot;&gt;&lt;Name language-id=&quot;pt_BR&quot;&gt;widgetpage1&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__title></__title>
+  <__description></__description>
+  <__keywords></__keywords>
+  <__robots></__robots>
+  <__type>portlet</__type>
+  <__typeSettings>layout-template-id=2_columns_ii
+</__typeSettings>
+  <__hidden>false</__hidden>
+  <__system>false</__system>
+  <__friendlyURL>/3</__friendlyURL>
+  <__iconImageId>0</__iconImageId>
+  <__themeId></__themeId>
+  <__colorSchemeId></__colorSchemeId>
+  <__styleBookEntryId>0</__styleBookEntryId>
+  <__css></__css>
+  <__priority>0</__priority>
+  <__masterLayoutPlid>0</__masterLayoutPlid>
+  <__layoutPrototypeUuid></__layoutPrototypeUuid>
+  <__layoutPrototypeLinkEnabled>false</__layoutPrototypeLinkEnabled>
+  <__sourcePrototypeLayoutUuid></__sourcePrototypeLayoutUuid>
+  <__status>0</__status>
+  <__statusByUserId>0</__statusByUserId>
+  <__statusByUserName></__statusByUserName>
+  <__columnBitmask>0</__columnBitmask>
+</Layout>

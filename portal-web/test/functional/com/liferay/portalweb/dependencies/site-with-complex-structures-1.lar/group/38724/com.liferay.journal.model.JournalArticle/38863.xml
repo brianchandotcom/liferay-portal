@@ -1,0 +1,162 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>bab3b3b5-2941-a465-95b0-8954588c0632</__uuid>
+  <__id>38863</__id>
+  <__resourcePrimKey>38864</__resourcePrimKey>
+  <__groupId>38724</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-10-29 08:28:00.772</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-10-29 08:28:00.827</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__classNameId>0</__classNameId>
+  <__classPK>0</__classPK>
+  <__treePath>/</__treePath>
+  <__articleId>38862</__articleId>
+  <__version>1.0</__version>
+  <__urlTitle>web-content-complex-title-1-1</__urlTitle>
+  <__content>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;root available-locales=&quot;pt_BR&quot; default-locale=&quot;pt_BR&quot;&gt;
+	&lt;dynamic-element name=&quot;Breadcrumb&quot; type=&quot;selection_break&quot; index-type=&quot;keyword&quot; instance-id=&quot;dbrxkqrg&quot;/&gt;
+	&lt;dynamic-element name=&quot;PaginaOrigem&quot; type=&quot;text&quot; index-type=&quot;&quot; instance-id=&quot;qwayuznh&quot;&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text1]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;LinkPaginaOrigem&quot; type=&quot;link_to_layout&quot; index-type=&quot;keyword&quot; instance-id=&quot;ochqouqu&quot;&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[2@public@33@38724]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;PaginaAtual&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;wiucxqjf&quot;&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text2]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;LinkPaginaAtual&quot; type=&quot;link_to_layout&quot; index-type=&quot;keyword&quot; instance-id=&quot;xafagluw&quot;&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[3@public@34@38724]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;TituloAba01&quot; type=&quot;text&quot; index-type=&quot;&quot; instance-id=&quot;yautfxtr&quot;&gt;
+		&lt;dynamic-element name=&quot;ImagemAba01&quot; instance-id=&quot;ghbcmtac&quot; type=&quot;image&quot; index-type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[{&quot;classPK&quot;:38760,&quot;groupId&quot;:&quot;38724&quot;,&quot;name&quot;:&quot;Document_1.jpeg&quot;,&quot;alt&quot;:&quot;image1&quot;,&quot;title&quot;:&quot;Document_1.jpeg&quot;,&quot;type&quot;:&quot;document&quot;,&quot;uuid&quot;:&quot;d913f60f-a59d-7310-48a0-0c0bb13910a0&quot;,&quot;fileEntryId&quot;:&quot;38760&quot;,&quot;resourcePrimKey&quot;:&quot;38864&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;DescricaoAba01&quot; instance-id=&quot;qmdguxdp&quot; type=&quot;text_area&quot; index-type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[&lt;p&gt;text4&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;Logo&quot; instance-id=&quot;rvpunync&quot; type=&quot;image&quot; index-type=&quot;text&quot;&gt;
+			&lt;dynamic-element name=&quot;LinkLogo&quot; instance-id=&quot;mvdzzowl&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text5]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[{&quot;classPK&quot;:38760,&quot;groupId&quot;:&quot;38724&quot;,&quot;name&quot;:&quot;Document_1.jpeg&quot;,&quot;alt&quot;:&quot;image2&quot;,&quot;title&quot;:&quot;Document_1.jpeg&quot;,&quot;type&quot;:&quot;document&quot;,&quot;uuid&quot;:&quot;d913f60f-a59d-7310-48a0-0c0bb13910a0&quot;,&quot;fileEntryId&quot;:&quot;38760&quot;,&quot;resourcePrimKey&quot;:&quot;38864&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text3]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;TituloAba02&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;eryevmmj&quot;&gt;
+		&lt;dynamic-element name=&quot;TituloDescricaoAba02&quot; instance-id=&quot;masvgtei&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text7]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;DescricaoAba02&quot; instance-id=&quot;vsgizlxo&quot; type=&quot;text_area&quot; index-type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[&lt;p&gt;text8&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ListaBeneficiosAba02&quot; instance-id=&quot;agljlolx&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;Beneficio&quot; instance-id=&quot;fyhcqyer&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text10]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-element name=&quot;Observ&quot; instance-id=&quot;ianatdld&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text11]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text9]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;TituloTextoImportante&quot; instance-id=&quot;rvsvvchs&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text12]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;TextoImportante&quot; instance-id=&quot;hhvrreqw&quot; type=&quot;text_area&quot; index-type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[&lt;p&gt;text13&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ListaCompanhias&quot; instance-id=&quot;obtoikjr&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;Companhia&quot; instance-id=&quot;gucnbxca&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text15]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text14]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text6]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;TituloAba03&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;rbsxsumu&quot;&gt;
+		&lt;dynamic-element name=&quot;TituloDescricaoAba03&quot; instance-id=&quot;mpcnwwtf&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text17]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;DescricaoAba03&quot; instance-id=&quot;jqurvejo&quot; type=&quot;text_area&quot; index-type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[&lt;p&gt;text18&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ListaBeneficiosAba03&quot; instance-id=&quot;oizdewjg&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;Beneficio1&quot; instance-id=&quot;oaxthgyk&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text20]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-element name=&quot;Observacao&quot; instance-id=&quot;yghpbqjb&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text21]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text19]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;IdentificarCodeShare&quot; instance-id=&quot;ynqqplji&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;JeitoIdentificar&quot; instance-id=&quot;uppxegoa&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-element name=&quot;DescricaoJeito&quot; instance-id=&quot;paqgnlil&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+					&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text24]]&gt;&lt;/dynamic-content&gt;
+				&lt;/dynamic-element&gt;
+				&lt;dynamic-element name=&quot;ImagemJeito&quot; instance-id=&quot;gwlzduwk&quot; type=&quot;image&quot; index-type=&quot;text&quot;&gt;
+					&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[{&quot;classPK&quot;:38760,&quot;groupId&quot;:&quot;38724&quot;,&quot;name&quot;:&quot;Document_1.jpeg&quot;,&quot;alt&quot;:&quot;image3&quot;,&quot;title&quot;:&quot;Document_1.jpeg&quot;,&quot;type&quot;:&quot;document&quot;,&quot;uuid&quot;:&quot;d913f60f-a59d-7310-48a0-0c0bb13910a0&quot;,&quot;fileEntryId&quot;:&quot;38760&quot;,&quot;resourcePrimKey&quot;:&quot;38864&quot;}]]&gt;&lt;/dynamic-content&gt;
+				&lt;/dynamic-element&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text23]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text22]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;TituloTextoImportanteAba03&quot; instance-id=&quot;wxiezhlh&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text25]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;TextImportanteAba03&quot; instance-id=&quot;qkzqkghz&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text26]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;CompanhiaOperadora&quot; instance-id=&quot;zwqbotwf&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;LogoOperadora&quot; instance-id=&quot;eympfkcq&quot; type=&quot;image&quot; index-type=&quot;text&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[{&quot;classPK&quot;:38760,&quot;groupId&quot;:&quot;38724&quot;,&quot;name&quot;:&quot;Document_1.jpeg&quot;,&quot;alt&quot;:&quot;image4&quot;,&quot;title&quot;:&quot;Document_1.jpeg&quot;,&quot;type&quot;:&quot;document&quot;,&quot;uuid&quot;:&quot;d913f60f-a59d-7310-48a0-0c0bb13910a0&quot;,&quot;fileEntryId&quot;:&quot;38760&quot;,&quot;resourcePrimKey&quot;:&quot;38864&quot;}]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-element name=&quot;DescricaoOpPar&quot; instance-id=&quot;rrlvxcmn&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text28]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-element name=&quot;DestinosOperados&quot; instance-id=&quot;odugpjmk&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-element name=&quot;Destino&quot; instance-id=&quot;xvrekfxw&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+					&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text30]]&gt;&lt;/dynamic-content&gt;
+				&lt;/dynamic-element&gt;
+				&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text29]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text27]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;pt_BR&quot;&gt;&lt;![CDATA[text16]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>38319</__DDMStructureKey>
+  <__DDMTemplateKey>38324</__DDMTemplateKey>
+  <__defaultLanguageId>pt_BR</__defaultLanguageId>
+  <__layoutUuid></__layoutUuid>
+  <__displayDate class="sql-timestamp">2020-10-29 08:25:00</__displayDate>
+  <__indexable>true</__indexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>38865</__smallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__statusByUserId>20125</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2020-10-29 08:28:00.827</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__descriptionMap>
+    <entry>
+      <locale>pt_BR</locale>
+      <string></string>
+    </entry>
+  </__descriptionMap>
+  <__imagesFolderId>0</__imagesFolderId>
+  <__titleMap>
+    <entry>
+      <locale reference="../../../__descriptionMap/entry/locale"/>
+      <string>Web Content Complex Title 1</string>
+    </entry>
+  </__titleMap>
+</JournalArticle>

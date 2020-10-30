@@ -151,9 +151,9 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Check resource actions");
 		}
 
-		if (StartupHelperUtil.isDBNew()) {
-			StartupHelperUtil.initResourceActions();
+		StartupHelperUtil.initResourceActions();
 
+		if (StartupHelperUtil.isDBNew()) {
 			ResourceActionLocalServiceUtil.checkResourceActions();
 
 			DBUpgrader.verify();

@@ -608,6 +608,13 @@ definition {
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com");
 
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_translation_web_internal_portlet_TranslationPortlet",
+				roleTitle = "Regrole Name");
+		}
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
@@ -624,11 +631,6 @@ definition {
 				resourceName = "${resourceNameIndex}",
 				roleTitle = "Regrole Name");
 		}
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_SITE_AND_ASSET_LIBRARY_ADMINISTRATION",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -675,12 +677,7 @@ definition {
 				roleTitle = "Regrole Name");
 		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_SITE_AND_ASSET_LIBRARY_ADMINISTRATION",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regrole Name");
-
-		for (var resourceActionIndex : list "ACCESS_IN_SITE_AND_ASSET_LIBRARY_ADMINISTRATION,VIEW") {
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "${resourceActionIndex}",
 				resourceName = "com_liferay_translation_web_internal_portlet_TranslationPortlet",

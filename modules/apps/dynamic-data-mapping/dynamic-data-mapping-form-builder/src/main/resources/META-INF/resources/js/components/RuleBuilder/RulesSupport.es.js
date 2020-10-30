@@ -67,6 +67,19 @@ const fieldWithOptions = (fieldType) => {
 	);
 };
 
+const getFieldOptions = (fieldName, pages) => {
+	let options = [];
+	const visitor = new PagesVisitor(pages);
+
+	const field = visitor.findField((field) => {
+		return field.fieldName === fieldName;
+	});
+
+	options = field ? field.options : [];
+
+	return options;
+};
+
 const getFieldType = (fieldName, pages) => {
 	return getFieldProperty(pages, fieldName, 'type');
 };
@@ -100,19 +113,6 @@ const targetFieldExists = (target, pages) => {
 	);
 
 	return targetFieldExists;
-};
-
-const getFieldOptions = (fieldName, pages) => {
-	let options = [];
-	const visitor = new PagesVisitor(pages);
-
-	const field = visitor.findField((field) => {
-		return field.fieldName === fieldName;
-	});
-
-	options = field ? field.options : [];
-
-	return options;
 };
 
 const syncActions = (pages, actions) => {

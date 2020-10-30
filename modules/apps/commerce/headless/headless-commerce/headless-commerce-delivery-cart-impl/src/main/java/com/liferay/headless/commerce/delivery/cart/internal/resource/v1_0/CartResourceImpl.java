@@ -151,22 +151,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			}
 			catch (Exception exception) {
 				if (exception.getCause() instanceof
-						CommerceOrderShippingMethodException) {
-
-					cart.setValid(false);
-					cart.setErrorMessages(
-						new String[] {"Invalid shipping method"});
-				}
-
-				if (exception.getCause() instanceof
-						CommerceOrderShippingAddressException) {
-
-					cart.setValid(false);
-					cart.setErrorMessages(
-						new String[] {"Invalid shipping address"});
-				}
-
-				if (exception.getCause() instanceof
 						CommerceOrderBillingAddressException) {
 
 					cart.setValid(false);
@@ -180,6 +164,22 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 					cart.setValid(false);
 					cart.setErrorMessages(
 						new String[] {"Invalid guest checkout"});
+				}
+
+				if (exception.getCause() instanceof
+						CommerceOrderShippingAddressException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(
+						new String[] {"Invalid shipping address"});
+				}
+
+				if (exception.getCause() instanceof
+						CommerceOrderShippingMethodException) {
+
+					cart.setValid(false);
+					cart.setErrorMessages(
+						new String[] {"Invalid shipping method"});
 				}
 
 				if (exception.getCause() instanceof
@@ -618,7 +618,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		Cart cart = _toCart(commerceOrder);
 
-		cart.setValid(Boolean.TRUE);
+		cart.setValid(true);
 
 		if (!errorMessages.isEmpty()) {
 			cart.setValid(false);

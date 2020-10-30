@@ -179,7 +179,7 @@ export default ({
 												),
 											},
 										}}
-										endpoint={`/o/headless-admin-workflow/v1.0/workflow-definitions?page=-1&pageSize=-1`}
+										endpoint={`/o/headless-admin-workflow/v1.0/workflow-definitions?active=true&page=-1&pageSize=-1`}
 										itemType="WORKFLOW_PROCESS"
 										title={
 											<>

@@ -12,11 +12,13 @@
  * details.
  */
 
+import ClayLabel from '@clayui/label';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
 import {toQueryString} from '../../hooks/useQuery.es';
 import {FieldValuePreview} from './FieldPreview.es';
+import {ENTRY_STATUS_LABEL} from './constants.es';
 
 export function buildEntries({
 	dataDefinition,
@@ -61,6 +63,20 @@ export function buildEntries({
 			viewURL,
 		};
 	};
+}
+
+export function getStatusLabel(status) {
+	const statusLabel = ENTRY_STATUS_LABEL[status];
+
+	return (
+		<>
+			{statusLabel && (
+				<ClayLabel displayType={statusLabel?.displayType}>
+					{statusLabel?.label}
+				</ClayLabel>
+			)}
+		</>
+	);
 }
 
 export function navigateToEditPage(basePortletURL, params = {}) {

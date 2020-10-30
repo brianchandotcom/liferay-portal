@@ -432,7 +432,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ImportLARfrom70toCurrent {
+	test ImportLarFrom70ToCurrent {
 		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

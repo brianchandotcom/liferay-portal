@@ -33,7 +33,6 @@ page import="com.liferay.change.tracking.exception.CTCollectionDescriptionExcept
 page import="com.liferay.change.tracking.exception.CTCollectionNameException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
 page import="com.liferay.change.tracking.model.CTProcess" %><%@
-page import="com.liferay.change.tracking.service.CTCollectionLocalServiceUtil" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTPortletKeys" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTWebKeys" %><%@
 page import="com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry" %><%@
@@ -41,7 +40,7 @@ page import="com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay
 page import="com.liferay.change.tracking.web.internal.display.context.PublicationsConfigurationDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.PublicationsManagementToolbarDisplayContext" %><%@
-page import="com.liferay.change.tracking.web.internal.display.context.SchedulePublicationDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.ReschedulePublicationDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.SelectPublicationManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewConflictsDisplayContext" %><%@
@@ -57,17 +56,14 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
-page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
@@ -75,12 +71,8 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.text.Format" %>
 
-<%@ page import="java.time.Instant" %>
-
-<%@ page import="java.util.Calendar" %><%@
-page import="java.util.Date" %><%@
-page import="java.util.Objects" %><%@
-page import="java.util.TimeZone" %>
+<%@ page import="java.util.Date" %><%@
+page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

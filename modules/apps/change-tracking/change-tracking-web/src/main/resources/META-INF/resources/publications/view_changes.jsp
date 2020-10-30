@@ -136,7 +136,7 @@ portletDisplay.setShowBackIcon(true);
 						</li>
 						<li class="tbar-item">
 							<liferay-portlet:renderURL var="rescheduleURL">
-								<portlet:param name="mvcRenderCommandName" value="/change_tracking/schedule_publication" />
+								<portlet:param name="mvcRenderCommandName" value="/change_tracking/reschedule_publication" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 							</liferay-portlet:renderURL>

@@ -4,29 +4,6 @@
 	}
 }
 
-#publicationsFooter {
-	padding-right: 18px;
-}
-
-#publicationsHeader {
-	padding-bottom: 6px;
-	padding-right: 18px;
-	padding-top: 6px;
-
-	h5 {
-		margin-bottom: 0;
-	}
-}
-
-#publicationsInputDate {
-	padding-right: 0;
-}
-
-#publicationInputTime {
-	padding-left: 0;
-	padding-right: 0;
-}
-
 .publications-conflicts-container {
 	button.panel-header {
 		border-bottom-color: #a7a9bc;
@@ -132,6 +109,7 @@
 .publications-hidden {
 	visibility: hidden;
 }
+
 .publications-modal {
 	.modal-description {
 		color: #6b6c7e;
@@ -150,12 +128,6 @@
 				margin-right: 16px;
 			}
 		}
-	}
-}
-
-.publications-render-table {
-	.publications-key-td {
-		font-weight: 600;
 	}
 }
 
@@ -197,15 +169,6 @@
 			margin-left: 0.5rem;
 			vertical-align: middle;
 		}
-	}
-}
-
-.publications-time-zone {
-	display: inline-block;
-	vertical-align: middle;
-
-	h5 {
-		margin-bottom: 0;
 	}
 }
 

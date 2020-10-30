@@ -18,9 +18,10 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
-import com.liferay.change.tracking.web.internal.display.context.SchedulePublicationDisplayContext;
+import com.liferay.change.tracking.web.internal.display.context.ReschedulePublicationDisplayContext;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -43,11 +44,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/schedule_publication"
+		"mvc.command.name=/change_tracking/reschedule_publication"
 	},
 	service = MVCRenderCommand.class
 )
-public class SchedulePublicationMVCRenderCommand implements MVCRenderCommand {
+public class ReschedulePublicationMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -68,19 +69,19 @@ public class SchedulePublicationMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getPermissionChecker(), ctCollection,
 				ActionKeys.VIEW);
 
-			SchedulePublicationDisplayContext
-				schedulePublicationDisplayContext =
-					new SchedulePublicationDisplayContext(
-						ctCollection,
-						_portal.getHttpServletRequest(renderRequest),
+			ReschedulePublicationDisplayContext
+				reschedulePublicationDisplayContext =
+					new ReschedulePublicationDisplayContext(
+						ctCollection, _language, _portal, renderRequest,
+						renderResponse,
 						_publishScheduler.getScheduledPublishInfo(
 							ctCollection));
 
 			renderRequest.setAttribute(
-				CTWebKeys.SCHEDULE_PUBLICATION_DISPLAY_CONTEXT,
-				schedulePublicationDisplayContext);
+				CTWebKeys.RESCHEDULE_PUBLICATION_DISPLAY_CONTEXT,
+				reschedulePublicationDisplayContext);
 
-			return "/publications/schedule_publication.jsp";
+			return "/publications/reschedule_publication.jsp";
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
@@ -95,6 +96,9 @@ public class SchedulePublicationMVCRenderCommand implements MVCRenderCommand {
 	)
 	private ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -33,10 +33,15 @@ import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -45,7 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = RoleContributor.class)
+@Component(service = RoleContributor.class)
 public class SegmentsEntryRoleContributor implements RoleContributor {
 
 	@Override

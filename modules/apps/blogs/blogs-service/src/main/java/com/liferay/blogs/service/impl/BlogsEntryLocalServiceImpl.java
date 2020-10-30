@@ -1281,6 +1281,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			entry.setSmallImage(true);
 		}
+		else {
+			entry.setSmallImage(false);
+		}
 
 		entry.setSmallImageFileEntryId(smallImageFileEntryId);
 		entry.setSmallImageURL(smallImageURL);

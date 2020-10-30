@@ -302,25 +302,30 @@ public class BlogsEntryStagedModelDataHandler
 
 			// Small image
 
+			long smallImageFileEntryId = 0;
+
 			if (entry.isSmallImage()) {
-				long smallImageFileEntryId = MapUtil.getLong(
+				smallImageFileEntryId = MapUtil.getLong(
 					fileEntryIds, entry.getSmallImageFileEntryId(), 0);
+			}
 
-				if (smallImageFileEntryId != 0) {
-					importedEntry.setSmallImage(entry.isSmallImage());
-					importedEntry.setSmallImageFileEntryId(
-						smallImageFileEntryId);
-				}
+			importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
 
-				importedEntry = _blogsEntryLocalService.updateBlogsEntry(
-					importedEntry);
+			if (smallImageFileEntryId == 0) {
+				importedEntry.setSmallImage(false);
+			}
+			else {
+				importedEntry.setSmallImage(true);
+			}
 
-				if ((existingSmallImageFileEntryId != 0) &&
-					(entry.getSmallImageFileEntryId() == 0)) {
+			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
+				importedEntry);
 
-					_portletFileRepository.deletePortletFileEntry(
-						existingSmallImageFileEntryId);
-				}
+			if ((existingSmallImageFileEntryId != 0) &&
+				(entry.getSmallImageFileEntryId() == 0)) {
+
+				_portletFileRepository.deletePortletFileEntry(
+					existingSmallImageFileEntryId);
 			}
 
 			Map<Long, Long> newPrimaryKeysMap =

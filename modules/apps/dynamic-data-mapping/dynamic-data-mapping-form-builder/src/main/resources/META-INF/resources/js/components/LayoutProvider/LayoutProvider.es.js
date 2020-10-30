@@ -396,7 +396,7 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldBlurred(event) {
-		this.setState(handleFieldBlurred(this.state, event));
+		this.setState(handleFieldBlurred(this.props, this.state, event));
 	}
 
 	_handleFieldChangesCanceled() {

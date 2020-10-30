@@ -5,9 +5,8 @@ $c: '.ddm-field-types-fieldset';
 		margin-left: -12px;
 		margin-right: -12px;
 
-		&__nested-separator,
-		.text-uppercase {
-			padding: 0 12px;
+		.fields-group {
+			margin-left: 12px;
 		}
 	}
 }

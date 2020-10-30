@@ -26,20 +26,20 @@ definition {
 	}
 
 	tearDown {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
-
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "WC Title");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC Title");
+
 			ContentDashboard.tearDown();
 		}
 	}

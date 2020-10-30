@@ -24,8 +24,14 @@ export function openInfoItemSelector({
 	openSelectionModal({
 		onClose: destroyedCallback,
 		onSelect: (selectedItem) => {
+			let value = selectedItem.value;
+
+			if (typeof value === 'string') {
+				value = JSON.parse(selectedItem.value);
+			}
+
 			const infoItem = {
-				...JSON.parse(selectedItem.value),
+				...value,
 				type: selectedItem.returnType,
 			};
 

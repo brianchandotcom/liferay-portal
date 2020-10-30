@@ -16,17 +16,25 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.CountryLocalization;
 import com.liferay.portal.kernel.model.CountryModel;
 import com.liferay.portal.kernel.model.CountrySoap;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -38,6 +46,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -68,10 +77,18 @@ public class CountryModelImpl
 	public static final String TABLE_NAME = "Country";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"countryId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"a2", Types.VARCHAR}, {"a3", Types.VARCHAR},
-		{"number_", Types.VARCHAR}, {"idd_", Types.VARCHAR},
-		{"zipRequired", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"defaultLanguageId", Types.VARCHAR}, {"countryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
+		{"a2", Types.VARCHAR}, {"a3", Types.VARCHAR},
+		{"billingAllowed", Types.BOOLEAN},
+		{"groupFilterEnabled", Types.BOOLEAN}, {"idd_", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"number_", Types.VARCHAR},
+		{"position", Types.DOUBLE}, {"shippingAllowed", Types.BOOLEAN},
+		{"subjectToVAT", Types.BOOLEAN}, {"zipRequired", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,18 +96,31 @@ public class CountryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("a2", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("a3", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("number_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("billingAllowed", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("groupFilterEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("idd_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("number_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("position", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("shippingAllowed", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("subjectToVAT", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("zipRequired", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Country (mvccVersion LONG default 0 not null,countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
+		"create table Country (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,a2 VARCHAR(75) null,a3 VARCHAR(75) null,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Country";
 
@@ -144,7 +174,19 @@ public class CountryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long NAME_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -162,14 +204,27 @@ public class CountryModelImpl
 		Country model = new CountryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
 		model.setCountryId(soapModel.getCountryId());
-		model.setName(soapModel.getName());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setActive(soapModel.isActive());
 		model.setA2(soapModel.getA2());
 		model.setA3(soapModel.getA3());
-		model.setNumber(soapModel.getNumber());
+		model.setBillingAllowed(soapModel.isBillingAllowed());
+		model.setGroupFilterEnabled(soapModel.isGroupFilterEnabled());
 		model.setIdd(soapModel.getIdd());
+		model.setName(soapModel.getName());
+		model.setNumber(soapModel.getNumber());
+		model.setPosition(soapModel.getPosition());
+		model.setShippingAllowed(soapModel.isShippingAllowed());
+		model.setSubjectToVAT(soapModel.isSubjectToVAT());
 		model.setZipRequired(soapModel.isZipRequired());
-		model.setActive(soapModel.isActive());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -325,36 +380,167 @@ public class CountryModelImpl
 		attributeGetterFunctions.put("mvccVersion", Country::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion", (BiConsumer<Country, Long>)Country::setMvccVersion);
+		attributeGetterFunctions.put("uuid", Country::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Country, String>)Country::setUuid);
+		attributeGetterFunctions.put(
+			"defaultLanguageId", Country::getDefaultLanguageId);
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			(BiConsumer<Country, String>)Country::setDefaultLanguageId);
 		attributeGetterFunctions.put("countryId", Country::getCountryId);
 		attributeSetterBiConsumers.put(
 			"countryId", (BiConsumer<Country, Long>)Country::setCountryId);
-		attributeGetterFunctions.put("name", Country::getName);
+		attributeGetterFunctions.put("companyId", Country::getCompanyId);
 		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<Country, String>)Country::setName);
+			"companyId", (BiConsumer<Country, Long>)Country::setCompanyId);
+		attributeGetterFunctions.put("userId", Country::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Country, Long>)Country::setUserId);
+		attributeGetterFunctions.put("userName", Country::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Country, String>)Country::setUserName);
+		attributeGetterFunctions.put("createDate", Country::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Country, Date>)Country::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Country::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Country, Date>)Country::setModifiedDate);
+		attributeGetterFunctions.put("active", Country::getActive);
+		attributeSetterBiConsumers.put(
+			"active", (BiConsumer<Country, Boolean>)Country::setActive);
 		attributeGetterFunctions.put("a2", Country::getA2);
 		attributeSetterBiConsumers.put(
 			"a2", (BiConsumer<Country, String>)Country::setA2);
 		attributeGetterFunctions.put("a3", Country::getA3);
 		attributeSetterBiConsumers.put(
 			"a3", (BiConsumer<Country, String>)Country::setA3);
-		attributeGetterFunctions.put("number", Country::getNumber);
+		attributeGetterFunctions.put(
+			"billingAllowed", Country::getBillingAllowed);
 		attributeSetterBiConsumers.put(
-			"number", (BiConsumer<Country, String>)Country::setNumber);
+			"billingAllowed",
+			(BiConsumer<Country, Boolean>)Country::setBillingAllowed);
+		attributeGetterFunctions.put(
+			"groupFilterEnabled", Country::getGroupFilterEnabled);
+		attributeSetterBiConsumers.put(
+			"groupFilterEnabled",
+			(BiConsumer<Country, Boolean>)Country::setGroupFilterEnabled);
 		attributeGetterFunctions.put("idd", Country::getIdd);
 		attributeSetterBiConsumers.put(
 			"idd", (BiConsumer<Country, String>)Country::setIdd);
+		attributeGetterFunctions.put("name", Country::getName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Country, String>)Country::setName);
+		attributeGetterFunctions.put("number", Country::getNumber);
+		attributeSetterBiConsumers.put(
+			"number", (BiConsumer<Country, String>)Country::setNumber);
+		attributeGetterFunctions.put("position", Country::getPosition);
+		attributeSetterBiConsumers.put(
+			"position", (BiConsumer<Country, Double>)Country::setPosition);
+		attributeGetterFunctions.put(
+			"shippingAllowed", Country::getShippingAllowed);
+		attributeSetterBiConsumers.put(
+			"shippingAllowed",
+			(BiConsumer<Country, Boolean>)Country::setShippingAllowed);
+		attributeGetterFunctions.put("subjectToVAT", Country::getSubjectToVAT);
+		attributeSetterBiConsumers.put(
+			"subjectToVAT",
+			(BiConsumer<Country, Boolean>)Country::setSubjectToVAT);
 		attributeGetterFunctions.put("zipRequired", Country::getZipRequired);
 		attributeSetterBiConsumers.put(
 			"zipRequired",
 			(BiConsumer<Country, Boolean>)Country::setZipRequired);
-		attributeGetterFunctions.put("active", Country::getActive);
+		attributeGetterFunctions.put(
+			"lastPublishDate", Country::getLastPublishDate);
 		attributeSetterBiConsumers.put(
-			"active", (BiConsumer<Country, Boolean>)Country::setActive);
+			"lastPublishDate",
+			(BiConsumer<Country, Date>)Country::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		List<CountryLocalization> countryLocalizations =
+			CountryLocalServiceUtil.getCountryLocalizations(getPrimaryKey());
+
+		String[] availableLanguageIds = new String[countryLocalizations.size()];
+
+		for (int i = 0; i < availableLanguageIds.length; i++) {
+			CountryLocalization countryLocalization = countryLocalizations.get(
+				i);
+
+			availableLanguageIds[i] = countryLocalization.getLanguageId();
+		}
+
+		return availableLanguageIds;
+	}
+
+	@Override
+	public String getTitle() {
+		return getTitle(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getTitle(String languageId) {
+		return getTitle(languageId, true);
+	}
+
+	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(
+				new Function<String, String>() {
+
+					@Override
+					public String apply(String languageId) {
+						return _getTitle(languageId);
+					}
+
+				},
+				languageId, getDefaultLanguageId());
+		}
+
+		return _getTitle(languageId);
+	}
+
+	@Override
+	public String getTitleMapAsXML() {
+		return LocalizationUtil.getXml(
+			getLanguageIdToTitleMap(), getDefaultLanguageId(), "Title");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToTitleMap() {
+		Map<String, String> languageIdToTitleMap =
+			new HashMap<String, String>();
+
+		List<CountryLocalization> countryLocalizations =
+			CountryLocalServiceUtil.getCountryLocalizations(getPrimaryKey());
+
+		for (CountryLocalization countryLocalization : countryLocalizations) {
+			languageIdToTitleMap.put(
+				countryLocalization.getLanguageId(),
+				countryLocalization.getTitle());
+		}
+
+		return languageIdToTitleMap;
+	}
+
+	private String _getTitle(String languageId) {
+		CountryLocalization countryLocalization =
+			CountryLocalServiceUtil.fetchCountryLocalization(
+				getPrimaryKey(), languageId);
+
+		if (countryLocalization == null) {
+			return "";
+		}
+
+		return countryLocalization.getTitle();
 	}
 
 	@JSON
@@ -374,6 +560,55 @@ public class CountryModelImpl
 
 	@JSON
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageId == null) {
+			return "";
+		}
+		else {
+			return _defaultLanguageId;
+		}
+	}
+
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_defaultLanguageId = defaultLanguageId;
+	}
+
+	@JSON
+	@Override
 	public long getCountryId() {
 		return _countryId;
 	}
@@ -389,22 +624,17 @@ public class CountryModelImpl
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setCompanyId(long companyId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_name = name;
+		_companyId = companyId;
 	}
 
 	/**
@@ -412,8 +642,127 @@ public class CountryModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalName() {
-		return getColumnOriginalValue("name");
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
+	}
+
+	@JSON
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userName = userName;
+	}
+
+	@JSON
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createDate = createDate;
+	}
+
+	@JSON
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@JSON
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_active = active;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalActive() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON
@@ -476,22 +825,44 @@ public class CountryModelImpl
 
 	@JSON
 	@Override
-	public String getNumber() {
-		if (_number == null) {
-			return "";
-		}
-		else {
-			return _number;
-		}
+	public boolean getBillingAllowed() {
+		return _billingAllowed;
+	}
+
+	@JSON
+	@Override
+	public boolean isBillingAllowed() {
+		return _billingAllowed;
 	}
 
 	@Override
-	public void setNumber(String number) {
+	public void setBillingAllowed(boolean billingAllowed) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_number = number;
+		_billingAllowed = billingAllowed;
+	}
+
+	@JSON
+	@Override
+	public boolean getGroupFilterEnabled() {
+		return _groupFilterEnabled;
+	}
+
+	@JSON
+	@Override
+	public boolean isGroupFilterEnabled() {
+		return _groupFilterEnabled;
+	}
+
+	@Override
+	public void setGroupFilterEnabled(boolean groupFilterEnabled) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupFilterEnabled = groupFilterEnabled;
 	}
 
 	@JSON
@@ -512,6 +883,112 @@ public class CountryModelImpl
 		}
 
 		_idd = idd;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalName() {
+		return getColumnOriginalValue("name");
+	}
+
+	@JSON
+	@Override
+	public String getNumber() {
+		if (_number == null) {
+			return "";
+		}
+		else {
+			return _number;
+		}
+	}
+
+	@Override
+	public void setNumber(String number) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_number = number;
+	}
+
+	@JSON
+	@Override
+	public double getPosition() {
+		return _position;
+	}
+
+	@Override
+	public void setPosition(double position) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_position = position;
+	}
+
+	@JSON
+	@Override
+	public boolean getShippingAllowed() {
+		return _shippingAllowed;
+	}
+
+	@JSON
+	@Override
+	public boolean isShippingAllowed() {
+		return _shippingAllowed;
+	}
+
+	@Override
+	public void setShippingAllowed(boolean shippingAllowed) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shippingAllowed = shippingAllowed;
+	}
+
+	@JSON
+	@Override
+	public boolean getSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	@JSON
+	@Override
+	public boolean isSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	@Override
+	public void setSubjectToVAT(boolean subjectToVAT) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subjectToVAT = subjectToVAT;
 	}
 
 	@JSON
@@ -537,33 +1014,23 @@ public class CountryModelImpl
 
 	@JSON
 	@Override
-	public boolean getActive() {
-		return _active;
-	}
-
-	@JSON
-	@Override
-	public boolean isActive() {
-		return _active;
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
 	}
 
 	@Override
-	public void setActive(boolean active) {
+	public void setLastPublishDate(Date lastPublishDate) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_active = active;
+		_lastPublishDate = lastPublishDate;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("active_"));
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Country.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -591,7 +1058,7 @@ public class CountryModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, Country.class.getName(), getPrimaryKey());
+			getCompanyId(), Country.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -621,14 +1088,27 @@ public class CountryModelImpl
 		CountryImpl countryImpl = new CountryImpl();
 
 		countryImpl.setMvccVersion(getMvccVersion());
+		countryImpl.setUuid(getUuid());
+		countryImpl.setDefaultLanguageId(getDefaultLanguageId());
 		countryImpl.setCountryId(getCountryId());
-		countryImpl.setName(getName());
+		countryImpl.setCompanyId(getCompanyId());
+		countryImpl.setUserId(getUserId());
+		countryImpl.setUserName(getUserName());
+		countryImpl.setCreateDate(getCreateDate());
+		countryImpl.setModifiedDate(getModifiedDate());
+		countryImpl.setActive(isActive());
 		countryImpl.setA2(getA2());
 		countryImpl.setA3(getA3());
-		countryImpl.setNumber(getNumber());
+		countryImpl.setBillingAllowed(isBillingAllowed());
+		countryImpl.setGroupFilterEnabled(isGroupFilterEnabled());
 		countryImpl.setIdd(getIdd());
+		countryImpl.setName(getName());
+		countryImpl.setNumber(getNumber());
+		countryImpl.setPosition(getPosition());
+		countryImpl.setShippingAllowed(isShippingAllowed());
+		countryImpl.setSubjectToVAT(isSubjectToVAT());
 		countryImpl.setZipRequired(isZipRequired());
-		countryImpl.setActive(isActive());
+		countryImpl.setLastPublishDate(getLastPublishDate());
 
 		countryImpl.resetOriginalValues();
 
@@ -697,6 +1177,8 @@ public class CountryModelImpl
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
+		_setModifiedDate = false;
+
 		_columnBitmask = 0;
 	}
 
@@ -706,15 +1188,55 @@ public class CountryModelImpl
 
 		countryCacheModel.mvccVersion = getMvccVersion();
 
+		countryCacheModel.uuid = getUuid();
+
+		String uuid = countryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			countryCacheModel.uuid = null;
+		}
+
+		countryCacheModel.defaultLanguageId = getDefaultLanguageId();
+
+		String defaultLanguageId = countryCacheModel.defaultLanguageId;
+
+		if ((defaultLanguageId != null) && (defaultLanguageId.length() == 0)) {
+			countryCacheModel.defaultLanguageId = null;
+		}
+
 		countryCacheModel.countryId = getCountryId();
 
-		countryCacheModel.name = getName();
+		countryCacheModel.companyId = getCompanyId();
 
-		String name = countryCacheModel.name;
+		countryCacheModel.userId = getUserId();
 
-		if ((name != null) && (name.length() == 0)) {
-			countryCacheModel.name = null;
+		countryCacheModel.userName = getUserName();
+
+		String userName = countryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			countryCacheModel.userName = null;
 		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			countryCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			countryCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			countryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			countryCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		countryCacheModel.active = isActive();
 
 		countryCacheModel.a2 = getA2();
 
@@ -732,13 +1254,9 @@ public class CountryModelImpl
 			countryCacheModel.a3 = null;
 		}
 
-		countryCacheModel.number = getNumber();
+		countryCacheModel.billingAllowed = isBillingAllowed();
 
-		String number = countryCacheModel.number;
-
-		if ((number != null) && (number.length() == 0)) {
-			countryCacheModel.number = null;
-		}
+		countryCacheModel.groupFilterEnabled = isGroupFilterEnabled();
 
 		countryCacheModel.idd = getIdd();
 
@@ -748,9 +1266,38 @@ public class CountryModelImpl
 			countryCacheModel.idd = null;
 		}
 
+		countryCacheModel.name = getName();
+
+		String name = countryCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			countryCacheModel.name = null;
+		}
+
+		countryCacheModel.number = getNumber();
+
+		String number = countryCacheModel.number;
+
+		if ((number != null) && (number.length() == 0)) {
+			countryCacheModel.number = null;
+		}
+
+		countryCacheModel.position = getPosition();
+
+		countryCacheModel.shippingAllowed = isShippingAllowed();
+
+		countryCacheModel.subjectToVAT = isSubjectToVAT();
+
 		countryCacheModel.zipRequired = isZipRequired();
 
-		countryCacheModel.active = isActive();
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			countryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			countryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
 
 		return countryCacheModel;
 	}
@@ -826,14 +1373,28 @@ public class CountryModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
+	private String _defaultLanguageId;
 	private long _countryId;
-	private String _name;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
+	private boolean _active;
 	private String _a2;
 	private String _a3;
-	private String _number;
+	private boolean _billingAllowed;
+	private boolean _groupFilterEnabled;
 	private String _idd;
+	private String _name;
+	private String _number;
+	private double _position;
+	private boolean _shippingAllowed;
+	private boolean _subjectToVAT;
 	private boolean _zipRequired;
-	private boolean _active;
+	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -865,14 +1426,27 @@ public class CountryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("countryId", _countryId);
-		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("a2", _a2);
 		_columnOriginalValues.put("a3", _a3);
-		_columnOriginalValues.put("number_", _number);
+		_columnOriginalValues.put("billingAllowed", _billingAllowed);
+		_columnOriginalValues.put("groupFilterEnabled", _groupFilterEnabled);
 		_columnOriginalValues.put("idd_", _idd);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("number_", _number);
+		_columnOriginalValues.put("position", _position);
+		_columnOriginalValues.put("shippingAllowed", _shippingAllowed);
+		_columnOriginalValues.put("subjectToVAT", _subjectToVAT);
 		_columnOriginalValues.put("zipRequired", _zipRequired);
-		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -880,9 +1454,10 @@ public class CountryModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
-		attributeNames.put("number_", "number");
-		attributeNames.put("idd_", "idd");
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("active_", "active");
+		attributeNames.put("idd_", "idd");
+		attributeNames.put("number_", "number");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -900,21 +1475,47 @@ public class CountryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("countryId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("name", 4L);
+		columnBitmasks.put("defaultLanguageId", 4L);
 
-		columnBitmasks.put("a2", 8L);
+		columnBitmasks.put("countryId", 8L);
 
-		columnBitmasks.put("a3", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("number_", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("idd_", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("zipRequired", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("active_", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
+
+		columnBitmasks.put("active_", 512L);
+
+		columnBitmasks.put("a2", 1024L);
+
+		columnBitmasks.put("a3", 2048L);
+
+		columnBitmasks.put("billingAllowed", 4096L);
+
+		columnBitmasks.put("groupFilterEnabled", 8192L);
+
+		columnBitmasks.put("idd_", 16384L);
+
+		columnBitmasks.put("name", 32768L);
+
+		columnBitmasks.put("number_", 65536L);
+
+		columnBitmasks.put("position", 131072L);
+
+		columnBitmasks.put("shippingAllowed", 262144L);
+
+		columnBitmasks.put("subjectToVAT", 524288L);
+
+		columnBitmasks.put("zipRequired", 1048576L);
+
+		columnBitmasks.put("lastPublishDate", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

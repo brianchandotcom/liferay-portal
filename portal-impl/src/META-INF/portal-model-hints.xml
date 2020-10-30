@@ -621,14 +621,35 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Country">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="countryId" type="long" />
-		<field name="name" type="String" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
 		<field name="a2" type="String" />
 		<field name="a3" type="String" />
-		<field name="number" type="String" />
+		<field name="billingAllowed" type="boolean" />
+		<field name="groupFilterEnabled" type="boolean" />
 		<field name="idd" type="String" />
+		<field name="name" type="String" />
+		<field name="number" type="String" />
+		<field name="position" type="double" />
+		<field name="shippingAllowed" type="boolean" />
+		<field name="subjectToVAT" type="boolean" />
 		<field name="zipRequired" type="boolean" />
-		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.kernel.model.CountryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="countryLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.EmailAddress">
 		<field name="mvccVersion" type="long" />

@@ -30,14 +30,14 @@ const addField = (props, state) => {
 			rowIndex: 0,
 		},
 	});
-}
+};
 
 const editField = (props, state, value) => {
 	return handleFieldEdited(props, state, {
 		propertyName: 'fieldReference',
 		propertyValue: value,
 	});
-}
+};
 
 const getFieldReferenceSettingsProperty = (propertyName, state) => {
 	return settingsContextUtil.getSettingsContextProperty(
@@ -45,10 +45,10 @@ const getFieldReferenceSettingsProperty = (propertyName, state) => {
 		'fieldReference',
 		propertyName
 	);
-}
+};
 
 const getInitialFormContext = () => {
-	let state = {
+	const state = {
 		focusedField: {},
 		pages: [{rows: [{columns: [{fields: []}]}]}],
 		rules: [],
@@ -65,10 +65,10 @@ const getInitialFormContext = () => {
 	};
 
 	return {
-			props,
-			state
-		};
-}
+		props,
+		state,
+	};
+};
 
 describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 	describe('handleFieldEdited(props, state, event)', () => {
@@ -231,7 +231,11 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 		});
 
 		it('updates the field reference', () => {
-			let { props, state } = getInitialFormContext();
+			const formContext = getInitialFormContext();
+
+			const {props} = formContext;
+
+			let {state} = formContext;
 
 			state = addField(props, state);
 
@@ -239,13 +243,17 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 
 			expect(state.focusedField.fieldReference).toEqual('NewReference');
 
-			expect(
-				getFieldReferenceSettingsProperty('value', state)
-			).toEqual('NewReference');
+			expect(getFieldReferenceSettingsProperty('value', state)).toEqual(
+				'NewReference'
+			);
 		});
 
 		it('shows an error message if field reference already exists', () => {
-			let { props, state } = getInitialFormContext();
+			const formContext = getInitialFormContext();
+
+			const {props} = formContext;
+
+			let {state} = formContext;
 
 			state = addField(props, state);
 
@@ -253,8 +261,10 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 
 			let valid = getFieldReferenceSettingsProperty('valid', state);
 
-			let displayErrors =
-				getFieldReferenceSettingsProperty('displayErrors', state);
+			let displayErrors = getFieldReferenceSettingsProperty(
+				'displayErrors',
+				state
+			);
 
 			expect(valid).toEqual(true);
 
@@ -266,8 +276,10 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 
 			valid = getFieldReferenceSettingsProperty('valid', state);
 
-			displayErrors =
-				getFieldReferenceSettingsProperty('displayErrors', state);
+			displayErrors = getFieldReferenceSettingsProperty(
+				'displayErrors',
+				state
+			);
 
 			expect(valid).toEqual(false);
 

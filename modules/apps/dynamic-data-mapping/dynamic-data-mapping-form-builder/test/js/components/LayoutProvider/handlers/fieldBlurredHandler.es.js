@@ -28,24 +28,24 @@ const addField = (props, state) => {
 			rowIndex: 0,
 		},
 	});
-}
+};
 
 const blurField = (props, state, value) => {
 	return handleFieldBlurred(props, state, {
 		propertyName: 'fieldReference',
 		propertyValue: value,
 	});
-}
+};
 
 const editField = (props, state, value) => {
 	return handleFieldEdited(props, state, {
 		propertyName: 'fieldReference',
 		propertyValue: value,
 	});
-}
+};
 
 const getInitialFormContext = () => {
-	let state = {
+	const state = {
 		focusedField: {},
 		pages: [{rows: [{columns: [{fields: []}]}]}],
 		rules: [],
@@ -62,15 +62,19 @@ const getInitialFormContext = () => {
 	};
 
 	return {
-			props,
-			state
-		};
-}
+		props,
+		state,
+	};
+};
 
 describe('LayoutProvider/handlers/fieldBlurredHandler', () => {
 	describe('handleFieldBlured(props, state, event)', () => {
 		it('updates the field reference with original fieldReference when field reference is empty', () => {
-			let { props, state } = getInitialFormContext();
+			const formContext = getInitialFormContext();
+
+			const {props} = formContext;
+
+			let {state} = formContext;
 
 			state = addField(props, state);
 
@@ -86,7 +90,11 @@ describe('LayoutProvider/handlers/fieldBlurredHandler', () => {
 		});
 
 		it('updates the field reference with original fieldReference when field reference already exists', () => {
-			let { props, state } = getInitialFormContext();
+			const formContext = getInitialFormContext();
+
+			const {props} = formContext;
+
+			let {state} = formContext;
 
 			state = addField(props, state);
 

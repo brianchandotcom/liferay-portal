@@ -570,6 +570,7 @@ public class DataRecordResourceImpl
 				dataRecordValues = dataStorage.get(
 					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
 				id = ddlRecord.getRecordId();
+				status = ddlRecord.getStatus();
 			}
 		};
 	}

@@ -3207,9 +3207,12 @@ definition {
 	}
 
 	macro viewWebContentWithAllFields {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			portlet = "Web Content");
+			portlet = "Web Content",
+			site = "${siteName}");
 
 		WebContentAdmin.viewEntryWorkflowStatus(
 			entry = "Web Content Title",

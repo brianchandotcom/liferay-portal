@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayLabel from '@clayui/label';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
@@ -25,7 +24,7 @@ import usePermissions from '../../hooks/usePermissions.es';
 import useQuery from '../../hooks/useQuery.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
 import NoPermissionEntry from './NoPermissionEntry.es';
-import {buildEntries, navigateToEditPage} from './utils.es';
+import {buildEntries, getStatusLabel, navigateToEditPage} from './utils.es';
 
 export default function ListEntries({history}) {
 	const actions = useEntriesActions();
@@ -119,36 +118,15 @@ export default function ListEntries({history}) {
 				queryParams={{dataListViewId}}
 				scope={appId}
 			>
-				{(entry, index) => {
-					const statuses = {
-						approved: {
-							displayType: 'success',
-							label: Liferay.Language.get('approved'),
-						},
-						pending: {
-							displayType: 'info',
-							label: Liferay.Language.get('pending'),
-						},
-					};
-
-					const {displayType, label} = statuses[
-						entry.status ?? 'approved'
-					];
-
-					return {
-						...buildEntries({
-							dataDefinition,
-							fieldNames,
-							permissions,
-							query,
-						})(entry, index),
-						status: (
-							<ClayLabel displayType={displayType}>
-								{label}
-							</ClayLabel>
-						),
-					};
-				}}
+				{(entry, index) => ({
+					...buildEntries({
+						dataDefinition,
+						fieldNames,
+						permissions,
+						query,
+					})(entry, index),
+					status: getStatusLabel(entry.status),
+				})}
 			</ListView>
 		</Loading>
 	);

@@ -46,6 +46,21 @@
 		}
 	}
 
+	.info-bar {
+		display: flex;
+		justify-content: center;
+
+		.info-item {
+			align-items: center;
+			background: #f7f8f9;
+			border-radius: 12px;
+			display: flex;
+			font-size: 12px;
+			margin: 0 1rem;
+			padding: 0.25rem 0.5rem;
+		}
+	}
+
 	.loading-wrapper {
 		height: 100vh;
 		left: 0;

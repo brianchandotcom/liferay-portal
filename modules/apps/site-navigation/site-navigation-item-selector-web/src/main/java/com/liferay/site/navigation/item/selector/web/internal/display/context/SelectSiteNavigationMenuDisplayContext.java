@@ -107,6 +107,42 @@ public class SelectSiteNavigationMenuDisplayContext {
 		).build();
 	}
 
+	public String getCurrentLevelTitle() {
+		long siteNavigationMenuId = getSiteNavigationMenuId();
+		long parentSiteNavigationMenuItemId =
+			getParentSiteNavigationMenuItemId();
+
+		if (siteNavigationMenuId == 0) {
+			if (parentSiteNavigationMenuItemId == 0) {
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					_themeDisplay.getLocale(), getClass());
+
+				return LanguageUtil.get(
+					resourceBundle, "public-pages-hierarchy");
+			}
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				_themeDisplay.getScopeGroupId(), false,
+				getParentSiteNavigationMenuItemId());
+
+			return layout.getName(_themeDisplay.getLocale());
+		}
+
+		if (parentSiteNavigationMenuItemId == 0) {
+			SiteNavigationMenu siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+					siteNavigationMenuId);
+
+			return siteNavigationMenu.getName();
+		}
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				getParentSiteNavigationMenuItemId());
+
+		return _getSiteNavigationMenuItemName(siteNavigationMenuItem);
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}

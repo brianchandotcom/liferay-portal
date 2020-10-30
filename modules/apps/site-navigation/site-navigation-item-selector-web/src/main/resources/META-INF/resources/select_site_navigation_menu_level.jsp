@@ -30,6 +30,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 			cssClass="site-navigation-menu-selector"
 			data-parent-site-navigation-menu-item-id="<%= selectSiteNavigationMenuDisplayContext.getParentSiteNavigationMenuItemId() %>"
 			data-site-navigation-menu-id="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
+			data-title="<%= selectSiteNavigationMenuDisplayContext.getCurrentLevelTitle() %>"
 			displayType="primary"
 			label='<%= LanguageUtil.get(resourceBundle, "select-level") %>'
 		/>

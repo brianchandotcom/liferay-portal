@@ -3,7 +3,7 @@
 The REST Builder Gradle plugin lets you generate a REST layer defined in the
 REST Builder `rest-config.yaml` and `rest-openapi.yaml` files.
 
-The plugin has been successfully tested with Gradle 6.6.1.
+The plugin has been successfully tested with Gradle 5.6.4 and 6.6.1.
 
 ## Usage
 

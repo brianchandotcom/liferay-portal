@@ -593,7 +593,7 @@ describe('Options', () => {
 		unmockLiferayLanguage();
 	});
 
-	it('adds the default option value to the reference property when it is empty', () => {
+	it('adds the default option value to the reference property when it is empty and leaves the field', () => {
 		mockLiferayLanguage();
 
 		const {container} = render(
@@ -621,9 +621,7 @@ describe('Options', () => {
 
 		fireEvent.input(referenceInput, {target: {value: ''}});
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		fireEvent.blur(referenceInput);
 
 		expect(referenceInput.value).toEqual(
 			expect.stringMatching(DEFAULT_OPTION_NAME_REGEX)

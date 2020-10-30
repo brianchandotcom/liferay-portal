@@ -16,12 +16,61 @@ import {PortletBase, fetch} from 'frontend-js-web';
 import core from 'metal';
 import {EventHandler} from 'metal-events';
 
+const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
+	'uploads-are-in-progress-confirmation'
+);
+
+const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
+		'you-may-lose-formatting-when-switching-from-x-to-x'
+	);
 /**
  * WikiPortlet
  *
- * @abstract
- * @extends {Component}
  */
+
+ class WikiPortlet {
+	constructor({
+		constants,
+		currentAction,
+		namespace,
+		renderUrl,
+		rootNodeId,
+		strings = {
+			confirmDiscardImages: CONFIRM_DISCARD_IMAGES,
+			confirmLoseFormatting: CONFIRM_LOSE_FORMATTING,
+		},
+	}) {
+		this._constants = constants;
+		this._currentAction = currentAction;
+		this._namespace = namespace;
+		this._renderUrl = renderUrl;
+		this._strings = strings;
+
+		this.rootNode = document.getElementById(rootNodeId);
+
+		this._events = [];
+		this._attachEvents();
+	};
+
+
+	dispose() {
+		this._events.forEach(({event, listener, target}) =>
+			target.removeEventListener(event, listener)
+		);
+
+		this._events = [];
+	}
+
+	_addEventListener(target, event, fn) {
+		target.addEventListener(event, fn);
+		this._events.push({event, fn, target});
+	}
+
+	_attachEvents() {
+	}
+
+
+ }
 class WikiPortlet extends PortletBase {
 
 	/**

@@ -138,7 +138,7 @@ const Options = ({
 		getInitialOption(generateOptionValueUsingOptionLabel)
 	);
 
-	const [normalizedValue, setNormalizedValue] = useState(() => {
+	const [normalizedValue] = useState(() => {
 		const formattedValue = {...value};
 
 		Object.keys(value).forEach((languageId) => {
@@ -179,6 +179,8 @@ const Options = ({
 
 		return formattedValue;
 	});
+
+	const [fieldError, setFieldError] = useState(null);
 
 	const [fields, setFields] = useState(() => {
 		const options =
@@ -276,6 +278,16 @@ const Options = ({
 		return [[...fields], ...args];
 	};
 
+	const clearError = () => {
+		setFieldError(null);
+	};
+
+	const checkValidReference = (fields, value, fieldName) => {
+		const field = fields.find((field) => field['reference'] === value);
+
+		return field ? fieldName : null;
+	};
+
 	const dedup = (fields, index, property, value) => {
 		const {generateKeyword, id} = fields[index];
 
@@ -287,6 +299,11 @@ const Options = ({
 				generateOptionValueUsingOptionLabel
 			);
 		}
+		else if (property == 'reference') {
+			setFieldError(
+				checkValidReference(fields, value, fields[index].value)
+			);
+		}
 
 		return [fields, index, property, value];
 	};
@@ -296,7 +313,6 @@ const Options = ({
 
 		const synchronizedNormalizedValue = getSynchronizedValue(fields);
 
-		setNormalizedValue(synchronizedNormalizedValue);
 		onChange(synchronizedNormalizedValue);
 	};
 
@@ -355,6 +371,8 @@ const Options = ({
 	};
 
 	const normalize = (fields) => {
+		clearError();
+
 		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
 	};
 
@@ -416,6 +434,7 @@ const Options = ({
 					>
 						{children({
 							defaultOptionRef,
+							fieldError,
 							handleBlur: composedBlur,
 							handleField: !(fields.length - 1 === index)
 								? composedChange.bind(this, index)
@@ -456,9 +475,22 @@ const Main = ({
 				onChange={(value) => onChange({}, value)}
 				value={value}
 			>
-				{({defaultOptionRef, handleBlur, handleField, index, option}) =>
+				{({
+					defaultOptionRef,
+					fieldError,
+					handleBlur,
+					handleField,
+					index,
+					option,
+				}) =>
 					option && (
 						<KeyValue
+							displayErrors={
+								fieldError && fieldError == option.value
+							}
+							errorMessage={Liferay.Language.get(
+								'this-reference-is-already-being-used'
+							)}
 							generateKeyword={option.generateKeyword}
 							keyword={option.value}
 							keywordReadOnly={keywordReadOnly}
@@ -478,6 +510,7 @@ const Main = ({
 								handleField('generateKeyword', generate);
 								handleField('value', value);
 							}}
+							onReferenceBlur={handleBlur}
 							onReferenceChange={(event) => {
 								handleField('reference', event.target.value);
 							}}

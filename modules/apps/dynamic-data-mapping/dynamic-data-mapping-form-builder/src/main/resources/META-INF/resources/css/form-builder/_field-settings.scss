@@ -15,7 +15,20 @@ $c: '.ddm-field-settings';
 		width: 100%;
 	}
 
-	.ddm-field-options-container .ddm-field-text {
-		padding-right: 30px;
+	.ddm-field-options-container {
+		.ddm-field-text {
+			padding-right: 30px;
+		}
+
+		.has-error {
+			.ddm-field-text {
+				background-color: #f1f2f5;
+				border-color: #e7e7ed;
+			}
+
+			.key-value-editor .key-value-reference-input {
+				color: #da1414;
+			}
+		}
 	}
 }

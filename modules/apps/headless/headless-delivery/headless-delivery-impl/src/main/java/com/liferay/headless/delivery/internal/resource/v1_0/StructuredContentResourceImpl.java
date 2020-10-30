@@ -1107,7 +1107,8 @@ public class StructuredContentResourceImpl
 				_dtoConverterRegistry, contextHttpServletRequest,
 				journalArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+				contextUser),
+			journalArticle);
 	}
 
 	private void _validateContentFields(

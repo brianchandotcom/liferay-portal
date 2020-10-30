@@ -104,6 +104,15 @@ public class StructuredContentDTOConverter
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			(Long)dtoConverterContext.getId());
 
+		return toDTO(dtoConverterContext, journalArticle);
+	}
+
+	@Override
+	public StructuredContent toDTO(
+			DTOConverterContext dtoConverterContext,
+			JournalArticle journalArticle)
+		throws Exception {
+
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
 		Group group = _groupLocalService.fetchGroup(

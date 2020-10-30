@@ -89,7 +89,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	private String _getAutocompleteUserURL(RenderResponse renderResponse) {
 		ResourceURL autocompleteUserURL = renderResponse.createResourceURL();
 
-		autocompleteUserURL.setResourceID("/sharing/autocomplete_users");
+		autocompleteUserURL.setResourceID("/sharing/autocomplete_user");
 
 		return autocompleteUserURL.toString();
 	}

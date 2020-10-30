@@ -236,6 +236,11 @@ components:
                     description:
                         The object/asset that the instance's workflow is managing.
                     readOnly: true
+                state:
+                    description:
+                        The instance's current state.
+                    readOnly: true
+                    type: string
                 workflowDefinitionName:
                     description:
                         The name of the instance's workflow definition.

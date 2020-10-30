@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>MENU_TAB</td>
-	<td>xpath=(//li)[contains(@class,'nav-item')]//a/span[normalize-space(text())='${key_menuTab}']</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link') and (contains(.,'${key_menuTab}'))]</td>
 	<td></td>
 </tr>
 <tr>

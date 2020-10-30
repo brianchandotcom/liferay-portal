@@ -47,4 +47,6 @@ public class AppBuilderWebKeys {
 	public static final String SHOW_TRANSLATION_MANAGER =
 		"SHOW_TRANSLATION_MANAGER";
 
+	public static final String WORKFLOW_CLASS_NAME = "WORKFLOW_CLASS_NAME";
+
 }

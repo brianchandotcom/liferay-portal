@@ -19,6 +19,7 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.web.internal.deploy.AppDeployUtil;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -135,6 +137,11 @@ public class AppPortlet extends MVCPortlet {
 			appBuilderAppPortletTab.getAppBuilderAppPortletTabContext(
 				_appBuilderApp,
 				ParamUtil.getLong(renderRequest, "dataRecordId")));
+
+		renderRequest.setAttribute(
+			AppBuilderWebKeys.WORKFLOW_CLASS_NAME,
+			ResourceActionsUtil.getCompositeModelName(
+				AppBuilderApp.class.getName(), DDLRecord.class.getName()));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

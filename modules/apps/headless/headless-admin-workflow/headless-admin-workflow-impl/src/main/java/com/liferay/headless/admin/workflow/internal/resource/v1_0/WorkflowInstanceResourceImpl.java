@@ -66,21 +66,24 @@ public class WorkflowInstanceResourceImpl
 
 	@Override
 	public Page<WorkflowInstance> getWorkflowInstancesPage(
-			String[] assetClassNames, Long[] assetPrimaryKeys,
-			Boolean completed, Pagination pagination)
+			String assetClassName, Long assetPrimaryKey, Boolean completed,
+			Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_workflowInstanceManager.getWorkflowInstances(
 					contextCompany.getCompanyId(), contextUser.getUserId(),
-					assetClassNames, completed, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+					assetClassName, assetPrimaryKey,
+					GetterUtil.getBoolean(completed),
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
 				this::_toWorkflowInstance),
 			pagination,
 			_workflowInstanceManager.getWorkflowInstanceCount(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				assetClassNames, completed));
+				assetClassName, assetPrimaryKey,
+				GetterUtil.getBoolean(completed)));
 	}
 
 	@Override

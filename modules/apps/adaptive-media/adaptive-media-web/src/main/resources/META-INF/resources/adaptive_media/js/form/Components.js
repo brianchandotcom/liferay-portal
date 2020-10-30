@@ -14,6 +14,7 @@
 
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const Checkbox = ({...restProps}) => <ClayCheckbox value="on" {...restProps} />;
@@ -28,6 +29,10 @@ const ErrorFeedback = ({error}) => {
 	);
 };
 
+ErrorFeedback.propTypes = {
+	error: PropTypes.string.isRequired,
+};
+
 const HelpMessage = ({message}) => {
 	return (
 		<span
@@ -37,6 +42,10 @@ const HelpMessage = ({message}) => {
 			<ClayIcon symbol="question-circle-full" />
 		</span>
 	);
+};
+
+HelpMessage.propTypes = {
+	message: PropTypes.string.isRequired,
 };
 
 const Input = ({
@@ -72,6 +81,16 @@ const Input = ({
 			{error && <ErrorFeedback error={error} />}
 		</ClayForm.Group>
 	);
+};
+
+Input.propTypes = {
+	disabled: PropTypes.bool,
+	error: PropTypes.string,
+	id: PropTypes.string,
+	label: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	required: PropTypes.bool,
+	type: PropTypes.string,
 };
 
 const RequiredMark = () => {

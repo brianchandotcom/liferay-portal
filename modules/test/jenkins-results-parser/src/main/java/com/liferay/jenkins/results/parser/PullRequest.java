@@ -308,7 +308,7 @@ public class PullRequest {
 		return statusJSONObject;
 	}
 
-	public JSONArray getSenderSHAStatuses() {
+	public JSONArray getSenderSHAStatusesJSONArray() {
 		JSONArray statusesJSONArray = null;
 
 		try {

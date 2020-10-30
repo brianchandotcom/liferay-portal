@@ -21,7 +21,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -33,8 +33,8 @@
 		<column name="treePath" type="String" />
 		<column accessor="true" name="articleId" type="String" />
 		<column name="version" type="double" />
-		<column name="urlTitle" type="String" />
-		<column name="content" type="String" />
+		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="DDMTemplateKey" type="String" />
 		<column name="defaultLanguageId" type="String" />
@@ -49,7 +49,7 @@
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
@@ -377,15 +377,15 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="feedId" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="DDMTemplateKey" type="String" />
 		<column name="DDMRendererTemplateKey" type="String" />
@@ -436,7 +436,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -444,13 +444,13 @@
 
 		<column name="parentFolderId" parent-container-model="true" type="long" />
 		<column name="treePath" type="String" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="name" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="restrictionType" type="int" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->

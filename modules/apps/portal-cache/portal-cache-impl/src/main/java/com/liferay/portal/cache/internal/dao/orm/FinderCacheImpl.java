@@ -218,6 +218,11 @@ public class FinderCacheImpl
 		return basePersistence.fetchByPrimaryKey(cacheValue);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#getResult(FinderPath, Object[])}
+	 */
+	@Deprecated
 	@Override
 	public Object getResult(
 		FinderPath finderPath, Object[] args,

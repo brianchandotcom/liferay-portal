@@ -40,6 +40,11 @@ public interface FinderCache {
 
 	public Object getResult(FinderPath finderPath, Object[] args);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#getResult(FinderPath, Object[])}
+	 */
+	@Deprecated
 	public Object getResult(
 		FinderPath finderPath, Object[] args,
 		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl);

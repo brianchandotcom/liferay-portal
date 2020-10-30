@@ -53,7 +53,10 @@ public interface DDMFormFieldTypeSettings {
 	)
 	public String dataType();
 
-	@DDMFormField(label = "%field-reference", required = true)
+	@DDMFormField(
+		label = "%field-reference",
+		properties = "tooltip=%field-reference-serves-as-a-frienldy-identifier"
+	)
 	public default String fieldReference() {
 		return StringPool.BLANK;
 	}

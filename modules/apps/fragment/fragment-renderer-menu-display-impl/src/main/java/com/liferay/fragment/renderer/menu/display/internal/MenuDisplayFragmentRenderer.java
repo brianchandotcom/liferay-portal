@@ -67,6 +67,13 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					"fields",
 					JSONUtil.putAll(
 						JSONUtil.put(
+							"label", "source"
+						).put(
+							"name", "source"
+						).put(
+							"type", "navigationMenuSelector"
+						),
+						JSONUtil.put(
 							"defaultValue", "horizontal"
 						).put(
 							"label", "display-style"

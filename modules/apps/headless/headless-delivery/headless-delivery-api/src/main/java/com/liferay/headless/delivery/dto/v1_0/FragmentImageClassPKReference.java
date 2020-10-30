@@ -44,31 +44,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentImage")
+@GraphQLName("FragmentImageClassPKReference")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentImage")
-public class FragmentImage implements Serializable {
+@XmlRootElement(name = "FragmentImageClassPKReference")
+public class FragmentImageClassPKReference implements Serializable {
 
-	public static FragmentImage toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentImage.class, json);
+	public static FragmentImageClassPKReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			FragmentImageClassPKReference.class, json);
 	}
 
 	@Schema
 	@Valid
-	public Object getDescription() {
-		return description;
+	public FragmentImageConfiguration getImageConfiguration() {
+		return imageConfiguration;
 	}
 
-	public void setDescription(Object description) {
-		this.description = description;
+	public void setImageConfiguration(
+		FragmentImageConfiguration imageConfiguration) {
+
+		this.imageConfiguration = imageConfiguration;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<Object, Exception> descriptionUnsafeSupplier) {
+	public void setImageConfiguration(
+		UnsafeSupplier<FragmentImageConfiguration, Exception>
+			imageConfigurationUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			imageConfiguration = imageConfigurationUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,27 +84,27 @@ public class FragmentImage implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object description;
+	protected FragmentImageConfiguration imageConfiguration;
 
 	@Schema
 	@Valid
-	public FragmentImageClassPKReference getFragmentImageReference() {
-		return fragmentImageReference;
+	public Map<String, ClassPKReference> getImageReference() {
+		return imageReference;
 	}
 
-	public void setFragmentImageReference(
-		FragmentImageClassPKReference fragmentImageReference) {
+	public void setImageReference(
+		Map<String, ClassPKReference> imageReference) {
 
-		this.fragmentImageReference = fragmentImageReference;
+		this.imageReference = imageReference;
 	}
 
 	@JsonIgnore
-	public void setFragmentImageReference(
-		UnsafeSupplier<FragmentImageClassPKReference, Exception>
-			fragmentImageReferenceUnsafeSupplier) {
+	public void setImageReference(
+		UnsafeSupplier<Map<String, ClassPKReference>, Exception>
+			imageReferenceUnsafeSupplier) {
 
 		try {
-			fragmentImageReference = fragmentImageReferenceUnsafeSupplier.get();
+			imageReference = imageReferenceUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -112,63 +116,7 @@ public class FragmentImage implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImageClassPKReference fragmentImageReference;
-
-	@Schema
-	@Valid
-	public Object getTitle() {
-		return title;
-	}
-
-	public void setTitle(Object title) {
-		this.title = title;
-	}
-
-	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<Object, Exception> titleUnsafeSupplier) {
-
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object title;
-
-	@Schema
-	@Valid
-	public Object getUrl() {
-		return url;
-	}
-
-	public void setUrl(Object url) {
-		this.url = url;
-	}
-
-	@JsonIgnore
-	public void setUrl(UnsafeSupplier<Object, Exception> urlUnsafeSupplier) {
-		try {
-			url = urlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object url;
+	protected Map<String, ClassPKReference> imageReference;
 
 	@Override
 	public boolean equals(Object object) {
@@ -176,13 +124,15 @@ public class FragmentImage implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentImage)) {
+		if (!(object instanceof FragmentImageClassPKReference)) {
 			return false;
 		}
 
-		FragmentImage fragmentImage = (FragmentImage)object;
+		FragmentImageClassPKReference fragmentImageClassPKReference =
+			(FragmentImageClassPKReference)object;
 
-		return Objects.equals(toString(), fragmentImage.toString());
+		return Objects.equals(
+			toString(), fragmentImageClassPKReference.toString());
 	}
 
 	@Override
@@ -197,44 +147,24 @@ public class FragmentImage implements Serializable {
 
 		sb.append("{");
 
-		if (description != null) {
+		if (imageConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"imageConfiguration\": ");
 
-			sb.append(String.valueOf(description));
+			sb.append(String.valueOf(imageConfiguration));
 		}
 
-		if (fragmentImageReference != null) {
+		if (imageReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentImageReference\": ");
+			sb.append("\"imageReference\": ");
 
-			sb.append(String.valueOf(fragmentImageReference));
-		}
-
-		if (title != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
-
-			sb.append(String.valueOf(title));
-		}
-
-		if (url != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"url\": ");
-
-			sb.append(String.valueOf(url));
+			sb.append(_toJSON(imageReference));
 		}
 
 		sb.append("}");
@@ -243,7 +173,7 @@ public class FragmentImage implements Serializable {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentImage",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentImageClassPKReference",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -55,6 +55,30 @@ public class FragmentImage implements Cloneable, Serializable {
 
 	protected Object description;
 
+	public FragmentImageClassPKReference getFragmentImageReference() {
+		return fragmentImageReference;
+	}
+
+	public void setFragmentImageReference(
+		FragmentImageClassPKReference fragmentImageReference) {
+
+		this.fragmentImageReference = fragmentImageReference;
+	}
+
+	public void setFragmentImageReference(
+		UnsafeSupplier<FragmentImageClassPKReference, Exception>
+			fragmentImageReferenceUnsafeSupplier) {
+
+		try {
+			fragmentImageReference = fragmentImageReferenceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentImageClassPKReference fragmentImageReference;
+
 	public Object getTitle() {
 		return title;
 	}

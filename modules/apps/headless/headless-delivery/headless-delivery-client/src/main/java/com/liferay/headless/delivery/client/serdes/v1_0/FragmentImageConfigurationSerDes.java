@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FragmentImage;
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentImageConfiguration;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentImageSerDes {
+public class FragmentImageConfigurationSerDes {
 
-	public static FragmentImage toDTO(String json) {
-		FragmentImageJSONParser fragmentImageJSONParser =
-			new FragmentImageJSONParser();
+	public static FragmentImageConfiguration toDTO(String json) {
+		FragmentImageConfigurationJSONParser
+			fragmentImageConfigurationJSONParser =
+				new FragmentImageConfigurationJSONParser();
 
-		return fragmentImageJSONParser.parseToDTO(json);
+		return fragmentImageConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentImage[] toDTOs(String json) {
-		FragmentImageJSONParser fragmentImageJSONParser =
-			new FragmentImageJSONParser();
+	public static FragmentImageConfiguration[] toDTOs(String json) {
+		FragmentImageConfigurationJSONParser
+			fragmentImageConfigurationJSONParser =
+				new FragmentImageConfigurationJSONParser();
 
-		return fragmentImageJSONParser.parseToDTOs(json);
+		return fragmentImageConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentImage fragmentImage) {
-		if (fragmentImage == null) {
+	public static String toJSON(
+		FragmentImageConfiguration fragmentImageConfiguration) {
+
+		if (fragmentImageConfiguration == null) {
 			return "null";
 		}
 
@@ -55,55 +59,44 @@ public class FragmentImageSerDes {
 
 		sb.append("{");
 
-		if (fragmentImage.getDescription() != null) {
+		if (fragmentImageConfiguration.getLandscapeMobile() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"landscapeMobile\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fragmentImage.getDescription()));
+			sb.append(_escape(fragmentImageConfiguration.getLandscapeMobile()));
 
 			sb.append("\"");
 		}
 
-		if (fragmentImage.getFragmentImageReference() != null) {
+		if (fragmentImageConfiguration.getPortraitMobile() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentImageReference\": ");
-
-			sb.append(
-				String.valueOf(fragmentImage.getFragmentImageReference()));
-		}
-
-		if (fragmentImage.getTitle() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
+			sb.append("\"portraitMobile\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fragmentImage.getTitle()));
+			sb.append(_escape(fragmentImageConfiguration.getPortraitMobile()));
 
 			sb.append("\"");
 		}
 
-		if (fragmentImage.getUrl() != null) {
+		if (fragmentImageConfiguration.getTablet() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"url\": ");
+			sb.append("\"tablet\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fragmentImage.getUrl()));
+			sb.append(_escape(fragmentImageConfiguration.getTablet()));
 
 			sb.append("\"");
 		}
@@ -114,93 +107,87 @@ public class FragmentImageSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentImageJSONParser fragmentImageJSONParser =
-			new FragmentImageJSONParser();
+		FragmentImageConfigurationJSONParser
+			fragmentImageConfigurationJSONParser =
+				new FragmentImageConfigurationJSONParser();
 
-		return fragmentImageJSONParser.parseToMap(json);
+		return fragmentImageConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FragmentImage fragmentImage) {
-		if (fragmentImage == null) {
+	public static Map<String, String> toMap(
+		FragmentImageConfiguration fragmentImageConfiguration) {
+
+		if (fragmentImageConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentImage.getDescription() == null) {
-			map.put("description", null);
+		if (fragmentImageConfiguration.getLandscapeMobile() == null) {
+			map.put("landscapeMobile", null);
 		}
 		else {
 			map.put(
-				"description", String.valueOf(fragmentImage.getDescription()));
+				"landscapeMobile",
+				String.valueOf(
+					fragmentImageConfiguration.getLandscapeMobile()));
 		}
 
-		if (fragmentImage.getFragmentImageReference() == null) {
-			map.put("fragmentImageReference", null);
+		if (fragmentImageConfiguration.getPortraitMobile() == null) {
+			map.put("portraitMobile", null);
 		}
 		else {
 			map.put(
-				"fragmentImageReference",
-				String.valueOf(fragmentImage.getFragmentImageReference()));
+				"portraitMobile",
+				String.valueOf(fragmentImageConfiguration.getPortraitMobile()));
 		}
 
-		if (fragmentImage.getTitle() == null) {
-			map.put("title", null);
+		if (fragmentImageConfiguration.getTablet() == null) {
+			map.put("tablet", null);
 		}
 		else {
-			map.put("title", String.valueOf(fragmentImage.getTitle()));
-		}
-
-		if (fragmentImage.getUrl() == null) {
-			map.put("url", null);
-		}
-		else {
-			map.put("url", String.valueOf(fragmentImage.getUrl()));
+			map.put(
+				"tablet",
+				String.valueOf(fragmentImageConfiguration.getTablet()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentImageJSONParser
-		extends BaseJSONParser<FragmentImage> {
+	public static class FragmentImageConfigurationJSONParser
+		extends BaseJSONParser<FragmentImageConfiguration> {
 
 		@Override
-		protected FragmentImage createDTO() {
-			return new FragmentImage();
+		protected FragmentImageConfiguration createDTO() {
+			return new FragmentImageConfiguration();
 		}
 
 		@Override
-		protected FragmentImage[] createDTOArray(int size) {
-			return new FragmentImage[size];
+		protected FragmentImageConfiguration[] createDTOArray(int size) {
+			return new FragmentImageConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			FragmentImage fragmentImage, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentImageConfiguration fragmentImageConfiguration,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "landscapeMobile")) {
 				if (jsonParserFieldValue != null) {
-					fragmentImage.setDescription((Object)jsonParserFieldValue);
+					fragmentImageConfiguration.setLandscapeMobile(
+						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "fragmentImageReference")) {
-
+			else if (Objects.equals(jsonParserFieldName, "portraitMobile")) {
 				if (jsonParserFieldValue != null) {
-					fragmentImage.setFragmentImageReference(
-						FragmentImageClassPKReferenceSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					fragmentImageConfiguration.setPortraitMobile(
+						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
+			else if (Objects.equals(jsonParserFieldName, "tablet")) {
 				if (jsonParserFieldValue != null) {
-					fragmentImage.setTitle((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
-				if (jsonParserFieldValue != null) {
-					fragmentImage.setUrl((Object)jsonParserFieldValue);
+					fragmentImageConfiguration.setTablet(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (jsonParserFieldName.equals("status")) {

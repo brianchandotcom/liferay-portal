@@ -43,11 +43,7 @@ public class CORSServletFilter extends BaseFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (corsSupport.isCORSRequest(httpServletRequest::getHeader)) {
-			return true;
-		}
-
-		return false;
+		return CORSSupport.isCORSRequest(httpServletRequest::getHeader);
 	}
 
 	public void processCORSRequest(
@@ -69,14 +65,12 @@ public class CORSServletFilter extends BaseFilter {
 			return;
 		}
 
-		if ((corsSupport.isValidCORSRequest(
+		if (corsSupport.isValidCORSRequest(
 				httpServletRequest.getMethod(),
 				httpServletRequest::getHeader) &&
+			(PropsValues.CORS_DEVELOPMENT_AUTHORIZATION_ENABLED || _isGuest() ||
 			 OAuth2ProviderScopeLiferayAccessControlContext.
-				 isOAuth2AuthVerified()) ||
-			_isGuest() ||
-			(!_isGuest() &&
-			 PropsValues.CORS_DEVELOPMENT_AUTHORIZATION_ENABLED)) {
+				 isOAuth2AuthVerified())) {
 
 			corsSupport.writeResponseHeaders(
 				httpServletRequest::getHeader, httpServletResponse::setHeader);

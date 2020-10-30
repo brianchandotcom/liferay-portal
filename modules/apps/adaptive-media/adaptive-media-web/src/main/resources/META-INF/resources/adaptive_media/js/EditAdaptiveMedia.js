@@ -125,22 +125,34 @@ const EditAdaptiveMedia = ({
 		setFieldValue(nameId, nameValue);
 	};
 
-	const setFieldDimention = (fieldKey, value) => {
-		if (/^\d*$/.test(value)) {
-			setFieldValue(fieldKey, value, false);
+	const handleKeydownNumbersOnly = (event) => {
+		const VALID_INPUT_KEYS = new Set([
+			'0',
+			'1',
+			'2',
+			'3',
+			'4',
+			'5',
+			'6',
+			'7',
+			'8',
+			'9',
+			'ArrowUp',
+			'ArrowRight',
+			'ArrowDown',
+			'ArrowLeft',
+			'Backspace',
+			'Up',
+			'Right',
+			'Down',
+			'Left',
+			'Enter',
+			'Tab',
+		]);
+
+		if (!VALID_INPUT_KEYS.has(event.key)) {
+			event.preventDefault();
 		}
-	};
-
-	const handleChangeMaxWidth = (event) => {
-		const value = event.target.value;
-
-		setFieldDimention(maxWidthId, value);
-	};
-
-	const handleChangeHeight = (event) => {
-		const value = event.target.value;
-
-		setFieldDimention(maxHeightId, value);
 	};
 
 	return (
@@ -221,7 +233,8 @@ const EditAdaptiveMedia = ({
 								min="1"
 								name={maxWidthId}
 								onBlur={handleBlur}
-								onChange={handleChangeMaxWidth}
+								onChange={handleChange}
+								onKeyDown={handleKeydownNumbersOnly}
 								type="number"
 								value={values[maxWidthId]}
 							/>
@@ -238,7 +251,8 @@ const EditAdaptiveMedia = ({
 								min="1"
 								name={maxHeightId}
 								onBlur={handleBlur}
-								onChange={handleChangeHeight}
+								onChange={handleChange}
+								onKeyDown={handleKeydownNumbersOnly}
 								type="number"
 								value={values[maxHeightId]}
 							/>

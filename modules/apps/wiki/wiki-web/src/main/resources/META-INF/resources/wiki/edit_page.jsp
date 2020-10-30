@@ -412,6 +412,28 @@ if (portletTitleBasedNavigation) {
 	});
 </aui:script>
 
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"constants",
+			HashMapBuilder.<String, Object>put(
+				"ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
+			).put(
+				"ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
+			).put(
+				"CMD", Constants.CMD
+			).build()
+		).put(
+			"currentAction", (wikiPage == null) || wikiPage.isNew() ? Constants.ADD : Constants.UPDATE
+		).put(
+			"renderUrl", editPageRenderURL
+		).put(
+			"rootNodeId", liferayPortletResponse.getNamespace() + "wikiEditPageContainer"
+		).build()
+	%>'
+	module="wiki/js/WikiPortlet.es"
+/>
+
 <%
 if ((wikiPage != null) && !wikiPage.isNew()) {
 	PortletURL viewPageURL = wikiURLHelper.getViewPageURL(node, title);

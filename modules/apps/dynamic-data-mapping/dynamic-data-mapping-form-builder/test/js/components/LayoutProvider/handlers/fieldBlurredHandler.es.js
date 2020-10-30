@@ -69,74 +69,74 @@ describe('LayoutProvider/handlers/fieldBlurredHandler', () => {
 				defaultFieldReference
 			);
 		});
-	});
 
-	it('updates the field reference with original fieldReference when field reference already exists', () => {
-		let state = {
-			focusedField: {},
-			pages: [{rows: [{columns: [{fields: []}]}]}],
-			rules: [],
-		};
+		it('updates the field reference with original fieldReference when field reference already exists', () => {
+			let state = {
+				focusedField: {},
+				pages: [{rows: [{columns: [{fields: []}]}]}],
+				rules: [],
+			};
 
-		const props = {
-			defaultLanguageId: 'en_US',
-			editingLanguageId: 'en_US',
-			fieldNameGenerator: (desiredName, currentName) => {
-				const {pages} = state;
+			const props = {
+				defaultLanguageId: 'en_US',
+				editingLanguageId: 'en_US',
+				fieldNameGenerator: (desiredName, currentName) => {
+					const {pages} = state;
 
-				return generateFieldName(pages, desiredName, currentName);
-			},
-		};
+					return generateFieldName(pages, desiredName, currentName);
+				},
+			};
 
-		// Adds a field
+			// Adds a field
 
-		state = handleFieldAdded(props, state, {
-			data: {},
-			fieldType: mockFieldTypes[0],
-			indexes: {
-				columnIndex: 0,
-				pageIndex: 0,
-				rowIndex: 0,
-			},
+			state = handleFieldAdded(props, state, {
+				data: {},
+				fieldType: mockFieldTypes[0],
+				indexes: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
+				},
+			});
+
+			// Edits the field reference
+
+			state = handleFieldEdited(props, state, {
+				propertyName: 'fieldReference',
+				propertyValue: 'NewReference',
+			});
+
+			// Adds a field
+
+			state = handleFieldAdded(props, state, {
+				data: {},
+				fieldType: mockFieldTypes[0],
+				indexes: {
+					columnIndex: 0,
+					pageIndex: 0,
+					rowIndex: 0,
+				},
+			});
+
+			const defaultFieldReference = state.focusedField.fieldName;
+
+			// Edits the field reference
+
+			state = handleFieldEdited(props, state, {
+				propertyName: 'fieldReference',
+				propertyValue: 'NewReference',
+			});
+
+			// Leaves the field
+
+			state = handleFieldBlurred(props, state, {
+				propertyName: 'fieldReference',
+				propertyValue: 'NewReference',
+			});
+
+			expect(state.focusedField.fieldReference).toEqual(
+				defaultFieldReference
+			);
 		});
-
-		// Edits the field reference
-
-		state = handleFieldEdited(props, state, {
-			propertyName: 'fieldReference',
-			propertyValue: 'NewReference',
-		});
-
-		// Adds a field
-
-		state = handleFieldAdded(props, state, {
-			data: {},
-			fieldType: mockFieldTypes[0],
-			indexes: {
-				columnIndex: 0,
-				pageIndex: 0,
-				rowIndex: 0,
-			},
-		});
-
-		const defaultFieldReference = state.focusedField.fieldName;
-
-		// Edits the field reference
-
-		state = handleFieldEdited(props, state, {
-			propertyName: 'fieldReference',
-			propertyValue: 'NewReference',
-		});
-
-		// Leaves the field
-
-		state = handleFieldBlurred(props, state, {
-			propertyName: 'fieldReference',
-			propertyValue: 'NewReference',
-		});
-
-		expect(state.focusedField.fieldReference).toEqual(
-			defaultFieldReference
-		);
 	});
 });

@@ -21,11 +21,8 @@ export const handleFieldBlurred = (props, state, event) => {
 		pages: state.pages,
 	};
 
-	const {focusedField} = state;
-
 	if (event) {
-		const {propertyName} = event;
-		let {propertyValue} = event;
+		const {propertyName, propertyValue} = event;
 
 		if (propertyName === 'name' && propertyValue === '') {
 			newState = updateField(state, propertyName, propertyValue);
@@ -40,14 +37,19 @@ export const handleFieldBlurred = (props, state, event) => {
 					propertyValue
 				))
 		) {
-			propertyValue = focusedField.fieldName;
-			newState = state = {
-				...state,
-				focusedField: updateFieldReference(state.focusedField, false),
-			};
+			newState = updateState(
+				props,
+				{
+					...state,
+					focusedField: updateFieldReference(
+						state.focusedField,
+						false
+					),
+				},
+				propertyName,
+				state.focusedField.fieldName
+			);
 		}
-
-		newState = updateState(props, state, propertyName, propertyValue);
 	}
 
 	return newState;

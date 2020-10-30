@@ -122,8 +122,9 @@ export const updateState = (props, state, propertyName, propertyValue) => {
 };
 
 export const findInvalidFieldReference = (pages, focusedField, value) => {
+	let foundInvalidFieldReference = false;
+
 	const visitor = new PagesVisitor(pages);
-	const equalFields = [];
 
 	visitor.mapFields((field) => {
 		const fieldReference = getSettingsContextProperty(
@@ -131,13 +132,15 @@ export const findInvalidFieldReference = (pages, focusedField, value) => {
 			'fieldReference'
 		);
 
-		equalFields.push(
+		if (
 			focusedField.fieldName !== field.fieldName &&
-				fieldReference === value
-		);
+			fieldReference === value
+		) {
+			foundInvalidFieldReference = true;
+		}
 	});
 
-	return equalFields.find((field) => field);
+	return foundInvalidFieldReference;
 };
 
 export const handleFieldEdited = (props, state, event) => {
@@ -150,23 +153,22 @@ export const handleFieldEdited = (props, state, event) => {
 			...(fieldName && {focusedField: getField(state.pages, fieldName)}),
 		};
 
-		if (propertyName === 'fieldReference') {
-			if (
-				propertyValue !== '' &&
-				propertyValue !== state.focusedField.fieldName
-			) {
-				state = {
-					...state,
-					focusedField: updateFieldReference(
+		if (
+			propertyName === 'fieldReference' &&
+			propertyValue !== '' &&
+			propertyValue !== state.focusedField.fieldName
+		) {
+			state = {
+				...state,
+				focusedField: updateFieldReference(
+					state.focusedField,
+					findInvalidFieldReference(
+						state.pages,
 						state.focusedField,
-						findInvalidFieldReference(
-							state.pages,
-							state.focusedField,
-							propertyValue
-						)
-					),
-				};
-			}
+						propertyValue
+					)
+				),
+			};
 		}
 
 		newState = updateState(props, state, propertyName, propertyValue);

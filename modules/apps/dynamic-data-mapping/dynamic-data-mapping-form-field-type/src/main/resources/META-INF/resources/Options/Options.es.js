@@ -486,7 +486,7 @@ const Main = ({
 					option && (
 						<KeyValue
 							displayErrors={
-								fieldError && fieldError == option.value
+								fieldError && fieldError === option.value
 							}
 							errorMessage={Liferay.Language.get(
 								'this-reference-is-already-being-used'

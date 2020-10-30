@@ -53,6 +53,7 @@ const Main = ({
 	onFocus,
 	onKeywordBlur,
 	onKeywordChange,
+	onReferenceBlur,
 	onReferenceChange,
 	placeholder,
 	readOnly,
@@ -120,7 +121,7 @@ const Main = ({
 			)}
 			<KeyValue
 				className="key-value-reference-input"
-				onBlur={onKeywordBlur}
+				onBlur={onReferenceBlur}
 				onChange={(event) => {
 					onReferenceChange(event);
 					setReference(event.target.value);

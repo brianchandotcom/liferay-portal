@@ -162,17 +162,11 @@ export const updateFieldReference = (focusedField, invalid = false) => {
 
 	focusedField = {
 		...focusedField,
-		settingsContext: invalid
-			? setFieldReferenceErrorMessage(
-					settingsContext,
-					'fieldReference',
-					true
-			  )
-			: setFieldReferenceErrorMessage(
-					settingsContext,
-					'fieldReference',
-					false
-			  ),
+		settingsContext: setFieldReferenceErrorMessage(
+			settingsContext,
+			'fieldReference',
+			invalid
+		),
 	};
 
 	return focusedField;

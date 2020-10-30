@@ -40,9 +40,9 @@ const Text = ({
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 
-	const prevEditingLanguageId = usePrevious(editingLanguageId);
-
 	const inputRef = useRef(null);
+
+	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
 	useEffect(() => {
 		if (prevEditingLanguageId !== editingLanguageId && localizable) {
@@ -63,9 +63,9 @@ const Text = ({
 
 	useEffect(() => {
 		if (
-			fieldName == 'fieldReference' &&
+			fieldName === 'fieldReference' &&
 			inputRef.current &&
-			initialValue !== inputRef.current.value
+			inputRef.current.value !== initialValue
 		) {
 			setValue(initialValue);
 			onChange({target: {value: initialValue}});
@@ -87,7 +87,7 @@ const Text = ({
 				}
 			}}
 			onChange={(event) => {
-				if (fieldName === 'name' || fieldName == 'fieldReference') {
+				if (fieldName === 'fieldReference' || fieldName === 'name') {
 					event.target.value = normalizeFieldName(event.target.value);
 				}
 

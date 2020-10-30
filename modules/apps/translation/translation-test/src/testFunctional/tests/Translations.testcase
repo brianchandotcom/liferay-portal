@@ -640,7 +640,7 @@ definition {
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
-		Alert.viewInfoMessageSpecific(infoMessage = "You do not have the roles required to access this portlet.");
+		Alert.viewInfoMessageSpecific(infoMessage = "You do not have permissions to translate to any of the available languages.");
 	}
 
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."

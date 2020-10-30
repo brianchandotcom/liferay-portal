@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -165,7 +164,9 @@ public class AppServer {
 	public void setStartExecutableArgs(Iterable<?> startExecutableArgs) {
 		_startExecutableArgs.clear();
 
-		GUtil.addToCollection(_startExecutableArgs, startExecutableArgs);
+		for (Object startExecutableArg : startExecutableArgs) {
+			_startExecutableArgs.add(startExecutableArg);
+		}
 	}
 
 	public void setStopExecutable(Object stopExecutable) {
@@ -176,7 +177,9 @@ public class AppServer {
 	public void setStopExecutableArgs(Iterable<?> stopExecutableArgs) {
 		_stopExecutableArgs.clear();
 
-		GUtil.addToCollection(_stopExecutableArgs, stopExecutableArgs);
+		for (Object stopExecutableArg : stopExecutableArgs) {
+			_stopExecutableArgs.add(stopExecutableArg);
+		}
 	}
 
 	public void setVersion(Object version) {

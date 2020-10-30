@@ -36,7 +36,6 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -49,7 +48,9 @@ public class BuildTaglibsTask extends JavaExec {
 	}
 
 	public BuildTaglibsTask componentsXmlFiles(Iterable<?> componentsXmlFiles) {
-		GUtil.addToCollection(_componentsXmlFiles, componentsXmlFiles);
+		for (Object componentsXmlFile : componentsXmlFiles) {
+			_componentsXmlFiles.add(componentsXmlFile);
+		}
 
 		return this;
 	}

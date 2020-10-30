@@ -59,7 +59,9 @@ public abstract class BaseAppServerTask extends DefaultTask {
 	}
 
 	public void executableArgs(Iterable<?> executableArgs) {
-		GUtil.addToCollection(_executableArgs, executableArgs);
+		for (Object executableArg : executableArgs) {
+			_executableArgs.add(executableArg);
+		}
 	}
 
 	public void executableArgs(Object... executableArgs) {

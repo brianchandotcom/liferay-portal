@@ -42,7 +42,6 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -97,9 +96,10 @@ public class ReplaceRegexTask extends DefaultTask {
 		return pre(Arrays.asList(preClosures));
 	}
 
-	@SuppressWarnings("unchecked")
 	public ReplaceRegexTask pre(Iterable<Closure<String>> preClosures) {
-		GUtil.addToCollection(_preClosures, preClosures);
+		for (Closure<String> preClosure : preClosures) {
+			_preClosures.add(preClosure);
+		}
 
 		return this;
 	}
@@ -111,11 +111,12 @@ public class ReplaceRegexTask extends DefaultTask {
 		return replaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
 	}
 
-	@SuppressWarnings("unchecked")
 	public ReplaceRegexTask replaceOnlyIf(
 		Iterable<Closure<Boolean>> replaceOnlyIfClosures) {
 
-		GUtil.addToCollection(_replaceOnlyIfClosures, replaceOnlyIfClosures);
+		for (Closure<Boolean> replaceOnlyIfClosure : replaceOnlyIfClosures) {
+			_replaceOnlyIfClosures.add(replaceOnlyIfClosure);
+		}
 
 		return this;
 	}

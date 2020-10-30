@@ -37,7 +37,6 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -52,7 +51,9 @@ public class BuildDeploymentHelperTask extends JavaExec {
 	public BuildDeploymentHelperTask deploymentFiles(
 		Iterable<?> deploymentFiles) {
 
-		GUtil.addToCollection(_deploymentFiles, deploymentFiles);
+		for (Object deploymentFile : deploymentFiles) {
+			_deploymentFiles.add(deploymentFile);
+		}
 
 		return this;
 	}
@@ -131,7 +132,9 @@ public class BuildDeploymentHelperTask extends JavaExec {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = new ArrayList<>();
 
-		GUtil.addToCollection(completeArgs, getArgs());
+		for (String arg : getArgs()) {
+			completeArgs.add(arg);
+		}
 
 		completeArgs.add("--fileNames=" + getDeploymentFileNames());
 		completeArgs.add(

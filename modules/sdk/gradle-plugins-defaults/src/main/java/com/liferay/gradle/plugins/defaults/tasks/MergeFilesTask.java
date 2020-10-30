@@ -40,7 +40,6 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -78,9 +77,10 @@ public class MergeFilesTask extends DefaultTask {
 		return GradleUtil.toString(_separator);
 	}
 
-	@SuppressWarnings("unchecked")
 	public MergeFilesTask inputFiles(Iterable<?> inputFiles) {
-		GUtil.addToCollection(_inputFiles, inputFiles);
+		for (Object inputFile : inputFiles) {
+			_inputFiles.add(inputFile);
+		}
 
 		return this;
 	}

@@ -37,7 +37,6 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.GUtil;
 
 /**
  * @author     Andrea Di Giorgi
@@ -221,7 +220,9 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 	}
 
 	public TranspileJSTask soyDependency(Iterable<?> soyDependencies) {
-		GUtil.addToCollection(_soyDependencies, soyDependencies);
+		for (Object soyDependency : soyDependencies) {
+			_soyDependencies.add(soyDependency);
+		}
 
 		return this;
 	}
@@ -231,7 +232,9 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 	}
 
 	public TranspileJSTask soySrcInclude(Iterable<?> soySrcIncludes) {
-		GUtil.addToCollection(_soySrcIncludes, soySrcIncludes);
+		for (Object soySrcInclude : soySrcIncludes) {
+			_soySrcIncludes.add(soySrcInclude);
+		}
 
 		return this;
 	}
@@ -241,7 +244,9 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 	}
 
 	public TranspileJSTask srcInclude(Iterable<?> srcIncludes) {
-		GUtil.addToCollection(_srcIncludes, srcIncludes);
+		for (Object srcInclude : srcIncludes) {
+			_srcIncludes.add(srcInclude);
+		}
 
 		return this;
 	}

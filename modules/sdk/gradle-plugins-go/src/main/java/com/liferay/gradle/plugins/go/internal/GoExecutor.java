@@ -48,9 +48,10 @@ public class GoExecutor {
 		_project = project;
 	}
 
-	@SuppressWarnings("unchecked")
 	public GoExecutor args(Iterable<?> args) {
-		GUtil.addToCollection(_args, args);
+		for (Object arg : args) {
+			_args.add(arg);
+		}
 
 		return this;
 	}

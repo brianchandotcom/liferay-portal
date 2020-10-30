@@ -35,7 +35,6 @@ import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -230,8 +229,9 @@ public class TaskCache implements PatternFilterable {
 	public TaskCache skipTaskDependency(
 		Iterable<Object> skippedTaskDependencies) {
 
-		GUtil.addToCollection(
-			_skippedTaskDependencies, skippedTaskDependencies);
+		for (Object skippedTaskDependency : skippedTaskDependencies) {
+			_skippedTaskDependencies.add(skippedTaskDependency);
+		}
 
 		return this;
 	}
@@ -241,7 +241,9 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	public TaskCache testFile(Iterable<Object> testFiles) {
-		GUtil.addToCollection(_testFiles, testFiles);
+		for (Object testFile : testFiles) {
+			_testFiles.add(testFile);
+		}
 
 		return this;
 	}

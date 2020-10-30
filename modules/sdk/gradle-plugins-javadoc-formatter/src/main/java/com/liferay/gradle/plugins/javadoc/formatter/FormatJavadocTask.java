@@ -27,7 +27,6 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -77,7 +76,9 @@ public class FormatJavadocTask extends JavaExec {
 	}
 
 	public FormatJavadocTask limits(Iterable<Object> limits) {
-		GUtil.addToCollection(_limits, limits);
+		for (Object limit : limits) {
+			_limits.add(limit);
+		}
 
 		return this;
 	}

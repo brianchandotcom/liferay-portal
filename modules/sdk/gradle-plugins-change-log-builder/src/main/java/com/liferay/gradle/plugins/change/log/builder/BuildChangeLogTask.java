@@ -49,7 +49,6 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -146,7 +145,9 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	public BuildChangeLogTask dirs(Iterable<?> dirs) {
-		GUtil.addToCollection(_dirs, dirs);
+		for (Object dir : dirs) {
+			_dirs.add(dir);
+		}
 
 		return this;
 	}
@@ -239,7 +240,9 @@ public class BuildChangeLogTask extends DefaultTask {
 	public BuildChangeLogTask ticketIdPrefixes(
 		Iterable<String> ticketIdPrefixes) {
 
-		GUtil.addToCollection(_ticketIdPrefixes, ticketIdPrefixes);
+		for (String ticketIdPrefix : ticketIdPrefixes) {
+			_ticketIdPrefixes.add(ticketIdPrefix);
+		}
 
 		return this;
 	}

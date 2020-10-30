@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -247,7 +246,9 @@ public class NodeExtension {
 	}
 
 	public NodeExtension npmArgs(Iterable<?> npmArgs) {
-		GUtil.addToCollection(_npmArgs, npmArgs);
+		for (Object npmArg : npmArgs) {
+			_npmArgs.add(npmArg);
+		}
 
 		return this;
 	}

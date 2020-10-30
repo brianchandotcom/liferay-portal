@@ -19,7 +19,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -48,7 +47,9 @@ public class AppJSDocConfigurationExtension {
 	public AppJSDocConfigurationExtension subprojects(
 		Iterable<Project> subprojects) {
 
-		GUtil.addToCollection(_subprojects, subprojects);
+		for (Project subproject : subprojects) {
+			_subprojects.add(subproject);
+		}
 
 		return this;
 	}

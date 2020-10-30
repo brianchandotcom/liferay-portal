@@ -49,7 +49,6 @@ import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -186,8 +185,9 @@ public class PublishNodeModuleTask extends ExecutePackageManagerTask {
 	public PublishNodeModuleTask overriddenPackageJsonKeys(
 		Iterable<String> overriddenPackageJsonKeys) {
 
-		GUtil.addToCollection(
-			_overriddenPackageJsonKeys, overriddenPackageJsonKeys);
+		for (String overriddenPackageJsonKey : overriddenPackageJsonKeys) {
+			_overriddenPackageJsonKeys.add(overriddenPackageJsonKey);
+		}
 
 		return this;
 	}

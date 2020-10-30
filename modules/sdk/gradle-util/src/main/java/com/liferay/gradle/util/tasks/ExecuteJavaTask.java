@@ -36,7 +36,6 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.jvm.Jvm;
 import org.gradle.process.JavaForkOptions;
-import org.gradle.util.GUtil;
 import org.gradle.workers.ClassLoaderWorkerSpec;
 import org.gradle.workers.ProcessWorkerSpec;
 import org.gradle.workers.WorkQueue;
@@ -73,9 +72,10 @@ public abstract class ExecuteJavaTask extends DefaultTask {
 		return _fork;
 	}
 
-	@SuppressWarnings("unchecked")
 	public ExecuteJavaTask jvmArgs(Iterable<Object> jvmArgs) {
-		GUtil.addToCollection(_jvmArgs, jvmArgs);
+		for (Object jvmArg : jvmArgs) {
+			_jvmArgs.add(jvmArg);
+		}
 
 		return this;
 	}

@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.Task;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -38,7 +37,9 @@ public class WhipTaskExtension {
 	}
 
 	public WhipTaskExtension excludes(Iterable<Object> excludes) {
-		GUtil.addToCollection(_excludes, excludes);
+		for (Object exclude : excludes) {
+			_excludes.add(exclude);
+		}
 
 		return this;
 	}
@@ -64,7 +65,9 @@ public class WhipTaskExtension {
 	}
 
 	public WhipTaskExtension includes(Iterable<Object> includes) {
-		GUtil.addToCollection(_includes, includes);
+		for (Object include : includes) {
+			_includes.add(include);
+		}
 
 		return this;
 	}

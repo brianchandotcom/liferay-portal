@@ -39,7 +39,6 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author David Truong
@@ -47,7 +46,9 @@ import org.gradle.util.GUtil;
 public class SetUpYarnTask extends DefaultTask {
 
 	public SetUpYarnTask excludes(Iterable<Object> excludes) {
-		GUtil.addToCollection(_excludes, excludes);
+		for (Object exclude : excludes) {
+			_excludes.add(exclude);
+		}
 
 		return this;
 	}

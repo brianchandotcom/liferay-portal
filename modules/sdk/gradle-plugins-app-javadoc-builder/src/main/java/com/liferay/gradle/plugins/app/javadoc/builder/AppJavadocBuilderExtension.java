@@ -26,7 +26,6 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -133,7 +132,9 @@ public class AppJavadocBuilderExtension {
 	public AppJavadocBuilderExtension subprojects(
 		Iterable<Project> subprojects) {
 
-		GUtil.addToCollection(_subprojects, subprojects);
+		for (Project subproject : subprojects) {
+			_subprojects.add(subproject);
+		}
 
 		return this;
 	}

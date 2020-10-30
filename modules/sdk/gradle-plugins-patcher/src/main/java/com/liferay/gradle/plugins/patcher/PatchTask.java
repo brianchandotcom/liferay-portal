@@ -66,7 +66,6 @@ import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecResult;
 import org.gradle.process.ExecSpec;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -120,7 +119,9 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public PatchTask args(Iterable<Object> args) {
-		GUtil.addToCollection(_args, args);
+		for (Object arg : args) {
+			_args.add(arg);
+		}
 
 		return this;
 	}
@@ -130,7 +131,9 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public PatchTask fileNames(Iterable<Object> fileNames) {
-		GUtil.addToCollection(_fileNames, fileNames);
+		for (Object fileName : fileNames) {
+			_fileNames.add(fileName);
+		}
 
 		return this;
 	}
@@ -324,7 +327,9 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public PatchTask patchFiles(Iterable<Object> patchFiles) {
-		GUtil.addToCollection(_patchFiles, patchFiles);
+		for (Object patchFile : patchFiles) {
+			_patchFiles.add(patchFile);
+		}
 
 		return this;
 	}
@@ -575,7 +580,9 @@ public class PatchTask extends DefaultTask {
 
 		FileTree fileTree = project.fileTree(dir);
 
-		GUtil.addToCollection(sortedFiles, fileTree);
+		for (File file : fileTree) {
+			sortedFiles.add(file);
+		}
 
 		Collections.sort(sortedFiles);
 

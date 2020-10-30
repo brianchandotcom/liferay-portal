@@ -33,7 +33,6 @@ import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -49,9 +48,10 @@ public class BuildDBTask extends JavaExec {
 			"com/liferay/portal/tools/dependencies/portal-tools.properties");
 	}
 
-	@SuppressWarnings("unchecked")
 	public BuildDBTask databaseTypes(Iterable<Object> databaseTypes) {
-		GUtil.addToCollection(_databaseTypes, databaseTypes);
+		for (Object databaseType : databaseTypes) {
+			_databaseTypes.add(databaseType);
+		}
 
 		return this;
 	}

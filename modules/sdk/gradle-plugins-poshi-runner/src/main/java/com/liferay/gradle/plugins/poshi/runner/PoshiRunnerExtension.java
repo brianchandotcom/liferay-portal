@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -102,7 +101,9 @@ public class PoshiRunnerExtension {
 	}
 
 	public void testNames(Iterable<Object> testNames) {
-		GUtil.addToCollection(_testNames, testNames);
+		for (Object testName : testNames) {
+			_testNames.add(testName);
+		}
 	}
 
 	public void testNames(Object... testNames) {

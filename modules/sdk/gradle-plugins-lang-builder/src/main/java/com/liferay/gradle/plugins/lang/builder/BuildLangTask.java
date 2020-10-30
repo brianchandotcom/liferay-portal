@@ -36,7 +36,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -50,7 +49,9 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	public BuildLangTask excludedLanguageIds(Iterable<?> excludedLanguageIds) {
-		GUtil.addToCollection(_excludedLanguageIds, excludedLanguageIds);
+		for (Object excludedLanguageId : excludedLanguageIds) {
+			_excludedLanguageIds.add(excludedLanguageId);
+		}
 
 		return this;
 	}

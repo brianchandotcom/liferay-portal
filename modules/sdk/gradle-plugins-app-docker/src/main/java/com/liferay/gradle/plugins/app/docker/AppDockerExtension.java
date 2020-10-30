@@ -32,7 +32,6 @@ import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -115,7 +114,9 @@ public class AppDockerExtension {
 	}
 
 	public AppDockerExtension imageTags(Iterable<?> imageTags) {
-		GUtil.addToCollection(_imageTags, imageTags);
+		for (Object imageTag : imageTags) {
+			_imageTags.add(imageTag);
+		}
 
 		return this;
 	}
@@ -179,7 +180,9 @@ public class AppDockerExtension {
 	}
 
 	public AppDockerExtension subprojects(Iterable<Project> subprojects) {
-		GUtil.addToCollection(_subprojects, subprojects);
+		for (Project subproject : subprojects) {
+			_subprojects.add(subproject);
+		}
 
 		return this;
 	}

@@ -30,7 +30,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -96,7 +95,9 @@ public abstract class BaseDBSupportTask extends JavaExec {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = new ArrayList<>();
 
-		GUtil.addToCollection(completeArgs, getArgs());
+		for (String arg : getArgs()) {
+			completeArgs.add(arg);
+		}
 
 		String password = getPassword();
 

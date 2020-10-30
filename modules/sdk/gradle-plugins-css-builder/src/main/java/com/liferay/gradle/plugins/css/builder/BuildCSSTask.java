@@ -42,7 +42,6 @@ import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,7 +57,9 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	public BuildCSSTask dirNames(Iterable<Object> dirNames) {
-		GUtil.addToCollection(_dirNames, dirNames);
+		for (Object dirName : dirNames) {
+			_dirNames.add(dirName);
+		}
 
 		return this;
 	}
@@ -68,7 +69,9 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	public BuildCSSTask excludes(Iterable<Object> excludes) {
-		GUtil.addToCollection(_excludes, excludes);
+		for (Object exclude : excludes) {
+			_excludes.add(exclude);
+		}
 
 		return this;
 	}
@@ -206,7 +209,9 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	public BuildCSSTask imports(Iterable<Object> imports) {
-		GUtil.addToCollection(_imports, imports);
+		for (Object importObject : imports) {
+			_imports.add(importObject);
+		}
 
 		return this;
 	}
@@ -228,7 +233,9 @@ public class BuildCSSTask extends JavaExec {
 	public BuildCSSTask rtlExcludedPathRegexps(
 		Iterable<Object> rtlExcludedPathRegexps) {
 
-		GUtil.addToCollection(_rtlExcludedPathRegexps, rtlExcludedPathRegexps);
+		for (Object rtlExcludedPathRegexp : rtlExcludedPathRegexps) {
+			_rtlExcludedPathRegexps.add(rtlExcludedPathRegexp);
+		}
 
 		return this;
 	}

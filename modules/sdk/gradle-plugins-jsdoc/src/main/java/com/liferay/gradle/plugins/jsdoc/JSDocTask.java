@@ -42,7 +42,6 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -147,7 +146,9 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 	}
 
 	public JSDocTask sourceDirs(Iterable<Object> sourceDirs) {
-		GUtil.addToCollection(_sourceDirs, sourceDirs);
+		for (Object sourceDir : sourceDirs) {
+			_sourceDirs.add(sourceDir);
+		}
 
 		return this;
 	}

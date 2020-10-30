@@ -39,7 +39,6 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -208,7 +207,9 @@ public class BuildServiceTask extends JavaExec {
 	public BuildServiceTask incubationFeatures(
 		Iterable<String> incubationFeatures) {
 
-		GUtil.addToCollection(_incubationFeatures, incubationFeatures);
+		for (String incubationFeature : incubationFeatures) {
+			_incubationFeatures.add(incubationFeature);
+		}
 
 		return this;
 	}
@@ -240,7 +241,9 @@ public class BuildServiceTask extends JavaExec {
 	public BuildServiceTask modelHintsConfigs(
 		Iterable<Object> modelHintsConfigs) {
 
-		GUtil.addToCollection(_modelHintsConfigs, modelHintsConfigs);
+		for (Object modelHintsConfig : modelHintsConfigs) {
+			_modelHintsConfigs.add(modelHintsConfig);
+		}
 
 		return this;
 	}
@@ -252,7 +255,9 @@ public class BuildServiceTask extends JavaExec {
 	public BuildServiceTask readOnlyPrefixes(
 		Iterable<Object> readOnlyPrefixes) {
 
-		GUtil.addToCollection(_readOnlyPrefixes, readOnlyPrefixes);
+		for (Object readOnlyPrefix : readOnlyPrefixes) {
+			_readOnlyPrefixes.add(readOnlyPrefix);
+		}
 
 		return this;
 	}
@@ -264,7 +269,9 @@ public class BuildServiceTask extends JavaExec {
 	public BuildServiceTask resourceActionsConfigs(
 		Iterable<Object> resourceActionsConfigs) {
 
-		GUtil.addToCollection(_resourceActionsConfigs, resourceActionsConfigs);
+		for (Object resourceActionsConfig : resourceActionsConfigs) {
+			_resourceActionsConfigs.add(resourceActionsConfig);
+		}
 
 		return this;
 	}
@@ -428,7 +435,9 @@ public class BuildServiceTask extends JavaExec {
 	public BuildServiceTask springNamespaces(
 		Iterable<Object> springNamespaces) {
 
-		GUtil.addToCollection(_springNamespaces, springNamespaces);
+		for (Object springNamespace : springNamespaces) {
+			_springNamespaces.add(springNamespace);
+		}
 
 		return this;
 	}

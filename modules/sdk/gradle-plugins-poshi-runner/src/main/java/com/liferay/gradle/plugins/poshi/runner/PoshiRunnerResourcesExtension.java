@@ -27,7 +27,6 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.invocation.Gradle;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -66,7 +65,9 @@ public class PoshiRunnerResourcesExtension {
 	}
 
 	public PoshiRunnerResourcesExtension dirs(Iterable<?> dirs) {
-		GUtil.addToCollection(_dirs, dirs);
+		for (Object dir : dirs) {
+			_dirs.add(dir);
+		}
 
 		return this;
 	}

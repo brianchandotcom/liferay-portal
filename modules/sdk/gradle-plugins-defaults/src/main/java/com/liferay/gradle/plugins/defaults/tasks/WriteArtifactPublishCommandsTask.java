@@ -52,7 +52,6 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.util.GUtil;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -170,11 +169,12 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
 	public WriteArtifactPublishCommandsTask prepNextFiles(
 		Iterable<?> prepNextFiles) {
 
-		GUtil.addToCollection(_prepNextFiles, prepNextFiles);
+		for (Object prepNextFile : prepNextFiles) {
+			_prepNextFiles.add(prepNextFile);
+		}
 
 		return this;
 	}

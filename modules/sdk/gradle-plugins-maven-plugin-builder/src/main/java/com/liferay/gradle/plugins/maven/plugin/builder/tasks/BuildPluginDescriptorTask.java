@@ -80,7 +80,6 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
-import org.gradle.util.GUtil;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -146,7 +145,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	public BuildPluginDescriptorTask forcedExclusions(
 		Iterable<String> forcedExclusions) {
 
-		GUtil.addToCollection(_forcedExclusions, forcedExclusions);
+		for (String forcedExclusion : forcedExclusions) {
+			_forcedExclusions.add(forcedExclusion);
+		}
 
 		return this;
 	}

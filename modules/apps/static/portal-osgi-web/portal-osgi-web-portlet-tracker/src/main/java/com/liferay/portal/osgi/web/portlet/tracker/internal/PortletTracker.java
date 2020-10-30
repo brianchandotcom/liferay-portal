@@ -255,6 +255,9 @@ public class PortletTracker
 
 		FutureTask<Void> futureTask = new FutureTask<>(
 			() -> {
+				_portalPortletModel = _portletLocalService.getPortletById(
+					CompanyConstants.SYSTEM, PortletKeys.PORTAL);
+
 				ServiceRegistration<IndividualPortletResourcePermissionProvider>
 					serviceRegistration = bundleContext.registerService(
 						IndividualPortletResourcePermissionProvider.class,
@@ -406,17 +409,13 @@ public class PortletTracker
 		com.liferay.portal.kernel.model.Portlet portletModel =
 			_portletLocalService.createPortlet(0);
 
-		com.liferay.portal.kernel.model.Portlet portalPortletModel =
-			_portletLocalService.getPortletById(
-				CompanyConstants.SYSTEM, PortletKeys.PORTAL);
-
 		portletModel.setPortletId(portletId);
 
 		portletModel.setCompanyId(CompanyConstants.SYSTEM);
 		portletModel.setPluginPackage(
 			new BundlePluginPackage(bundle, portletApp));
 		portletModel.setPortletApp(portletApp);
-		portletModel.setRoleMappers(portalPortletModel.getRoleMappers());
+		portletModel.setRoleMappers(_portalPortletModel.getRoleMappers());
 		portletModel.setStrutsPath(portletId);
 
 		return portletModel;
@@ -1218,10 +1217,6 @@ public class PortletTracker
 			return portletApp;
 		}
 
-		com.liferay.portal.kernel.model.Portlet portalPortletModel =
-			_portletLocalService.getPortletById(
-				CompanyConstants.SYSTEM, PortletKeys.PORTAL);
-
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_servletContextHelperRegistrationServiceReference =
@@ -1234,10 +1229,10 @@ public class PortletTracker
 
 		BundlePortletAppDelegate bundlePortletAppDelegate =
 			new BundlePortletAppDelegate(
-				portalPortletModel,
+				_portalPortletModel,
 				servletContextHelperRegistration.getServletContext());
 
-		PortletApp portletAppDefault = portalPortletModel.getPortletApp();
+		PortletApp portletAppDefault = _portalPortletModel.getPortletApp();
 
 		portletApp = ASMWrapperUtil.createASMWrapper(
 			PortletTracker.class.getClassLoader(), PortletApp.class,
@@ -1413,6 +1408,8 @@ public class PortletTracker
 
 	@Reference
 	private Portal _portal;
+
+	private com.liferay.portal.kernel.model.Portlet _portalPortletModel;
 
 	@Reference
 	private PortletDependencyFactory _portletDependencyFactory;

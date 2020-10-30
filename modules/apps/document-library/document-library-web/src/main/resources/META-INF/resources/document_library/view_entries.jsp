@@ -170,7 +170,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 									<c:when test='<%= curEntryColumn.equals("name") %>'>
 										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand table-cell-minw-200 table-title"
-											name="name"
+											name="title"
 										>
 											<liferay-document-library:mime-type-sticker
 												cssClass="sticker-secondary"

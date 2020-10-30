@@ -517,6 +517,7 @@ definition {
 	@priority = "3"
 	test TestDatabaseConnection {
 		property portal.acceptance = "true";
+		property database.types = "mysql";
 
 		var databasePassword = PropsUtil.get("database.mysql.password");
 		var databaseURL = PropsUtil.get("database.mysql.url");

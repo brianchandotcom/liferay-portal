@@ -103,7 +103,7 @@ export function ImagePropertiesPanel({item}) {
 
 			const setSize = () => {
 				if (
-					(imageConfigurations.length ||
+					(!imageConfigurations.length ||
 						selectedViewportSize === VIEWPORT_SIZES.desktop) &&
 					editableElement.naturalWidth
 				) {
@@ -128,8 +128,10 @@ export function ImagePropertiesPanel({item}) {
 					const viewportImageConfiguration = imageConfigurations.find(
 						(imageConfiguration) =>
 							imageConfiguration.width &&
-							imageConfiguration.width <= maxWidth &&
-							imageConfiguration.width > minWidth
+							((imageConfiguration.width <= maxWidth &&
+								imageConfiguration.width > minWidth) ||
+								imageConfiguration.width ===
+									editableElement.naturalWidth)
 					) || {width: editableElement.naturalWidth};
 
 					setImageSize({

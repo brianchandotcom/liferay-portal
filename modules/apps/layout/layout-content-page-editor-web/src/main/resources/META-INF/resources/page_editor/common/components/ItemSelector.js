@@ -30,6 +30,7 @@ export default function ItemSelector({
 	label,
 	onItemSelect,
 	quickMappedInfoItems = [],
+	modalProps,
 	selectedItemTitle,
 	showAddButton = true,
 	showMappedItems = true,
@@ -45,6 +46,14 @@ export default function ItemSelector({
 
 	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
 
+	const openModal = () =>
+		openInfoItemSelector({
+			callback: onItemSelect,
+			eventName: eventName || defaultEventName,
+			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
+			modalProps,
+		});
+
 	return (
 		<>
 			{label && <label htmlFor={itemSelectorInputId}>{label}</label>}
@@ -57,11 +66,7 @@ export default function ItemSelector({
 					id={itemSelectorInputId}
 					onClick={() => {
 						if (showAddButton) {
-							openInfoItemSelector(
-								onItemSelect,
-								eventName || defaultEventName,
-								itemSelectorURL || config.infoItemSelectorURL
-							);
+							openModal();
 						}
 					}}
 					readOnly
@@ -105,12 +110,7 @@ export default function ItemSelector({
 								<ClayDropDown.Divider />
 								<ClayDropDown.Item
 									onClick={() => {
-										openInfoItemSelector(
-											onItemSelect,
-											eventName || defaultEventName,
-											itemSelectorURL ||
-												config.infoItemSelectorURL
-										);
+										openModal();
 
 										setActive(false);
 									}}
@@ -128,14 +128,7 @@ export default function ItemSelector({
 								'page-editor__item-selector__content-button'
 							}
 							displayType="secondary"
-							onClick={() =>
-								openInfoItemSelector(
-									onItemSelect,
-									eventName || defaultEventName,
-									itemSelectorURL ||
-										config.infoItemSelectorURL
-								)
-							}
+							onClick={openModal}
 							small
 							symbol="plus"
 						/>

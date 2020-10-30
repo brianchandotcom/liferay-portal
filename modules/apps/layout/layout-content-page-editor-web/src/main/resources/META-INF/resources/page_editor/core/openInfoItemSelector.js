@@ -14,12 +14,13 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-export function openInfoItemSelector(
+export function openInfoItemSelector({
 	callback,
 	eventName,
 	itemSelectorURL,
-	destroyedCallback = null
-) {
+	destroyedCallback = null,
+	modalProps = {},
+}) {
 	openSelectionModal({
 		onClose: destroyedCallback,
 		onSelect: (selectedItem) => {
@@ -33,5 +34,6 @@ export function openInfoItemSelector(
 		selectEventName: eventName,
 		title: Liferay.Language.get('select'),
 		url: itemSelectorURL,
+		...modalProps,
 	});
 }

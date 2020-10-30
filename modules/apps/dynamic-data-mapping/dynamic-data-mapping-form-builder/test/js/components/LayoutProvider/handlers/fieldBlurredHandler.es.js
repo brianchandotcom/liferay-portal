@@ -18,52 +18,67 @@ import handleFieldEdited from '../../../../../src/main/resources/META-INF/resour
 import {generateFieldName} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
 import mockFieldTypes from '../../../__mock__/mockFieldTypes.es';
 
+const addField = (props, state) => {
+	return handleFieldAdded(props, state, {
+		data: {},
+		fieldType: mockFieldTypes[0],
+		indexes: {
+			columnIndex: 0,
+			pageIndex: 0,
+			rowIndex: 0,
+		},
+	});
+}
+
+const blurField = (props, state, value) => {
+	return handleFieldBlurred(props, state, {
+		propertyName: 'fieldReference',
+		propertyValue: value,
+	});
+}
+
+const editField = (props, state, value) => {
+	return handleFieldEdited(props, state, {
+		propertyName: 'fieldReference',
+		propertyValue: value,
+	});
+}
+
+const getInitialFormContext = () => {
+	let state = {
+		focusedField: {},
+		pages: [{rows: [{columns: [{fields: []}]}]}],
+		rules: [],
+	};
+
+	const props = {
+		defaultLanguageId: 'en_US',
+		editingLanguageId: 'en_US',
+		fieldNameGenerator: (desiredName, currentName) => {
+			const {pages} = state;
+
+			return generateFieldName(pages, desiredName, currentName);
+		},
+	};
+
+	return {
+			props,
+			state
+		};
+}
+
 describe('LayoutProvider/handlers/fieldBlurredHandler', () => {
 	describe('handleFieldBlured(props, state, event)', () => {
 		it('updates the field reference with original fieldReference when field reference is empty', () => {
-			let state = {
-				focusedField: {},
-				pages: [{rows: [{columns: [{fields: []}]}]}],
-				rules: [],
-			};
+			let { props, state } = getInitialFormContext();
 
-			const props = {
-				defaultLanguageId: 'en_US',
-				editingLanguageId: 'en_US',
-				fieldNameGenerator: (desiredName, currentName) => {
-					const {pages} = state;
-
-					return generateFieldName(pages, desiredName, currentName);
-				},
-			};
-
-			// Adds a field
-
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
+			state = addField(props, state);
 
 			const defaultFieldReference = state.focusedField.fieldName;
 
-			// Edits the field reference with empty value
+			state = editField(props, state, '');
 
-			state = handleFieldEdited(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: '',
-			});
-
-			// Leaves the field
-
-			state = handleFieldBlurred(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: '',
-			});
+			state = blurField(props, state, '');
 
 			expect(state.focusedField.fieldReference).toEqual(
 				defaultFieldReference
@@ -71,68 +86,19 @@ describe('LayoutProvider/handlers/fieldBlurredHandler', () => {
 		});
 
 		it('updates the field reference with original fieldReference when field reference already exists', () => {
-			let state = {
-				focusedField: {},
-				pages: [{rows: [{columns: [{fields: []}]}]}],
-				rules: [],
-			};
+			let { props, state } = getInitialFormContext();
 
-			const props = {
-				defaultLanguageId: 'en_US',
-				editingLanguageId: 'en_US',
-				fieldNameGenerator: (desiredName, currentName) => {
-					const {pages} = state;
+			state = addField(props, state);
 
-					return generateFieldName(pages, desiredName, currentName);
-				},
-			};
+			state = editField(props, state, 'NewReference');
 
-			// Adds a field
-
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
-
-			// Edits the field reference
-
-			state = handleFieldEdited(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: 'NewReference',
-			});
-
-			// Adds a field
-
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
+			state = addField(props, state);
 
 			const defaultFieldReference = state.focusedField.fieldName;
 
-			// Edits the field reference
+			state = editField(props, state, 'NewReference');
 
-			state = handleFieldEdited(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: 'NewReference',
-			});
-
-			// Leaves the field
-
-			state = handleFieldBlurred(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: 'NewReference',
-			});
+			state = blurField(props, state, 'NewReference');
 
 			expect(state.focusedField.fieldReference).toEqual(
 				defaultFieldReference

@@ -20,6 +20,56 @@ import {DEFAULT_FIELD_NAME_REGEX} from '../../../../../src/main/resources/META-I
 import mockFieldTypes from '../../../__mock__/mockFieldTypes.es';
 import mockPages from '../../../__mock__/mockPages.es';
 
+const addField = (props, state) => {
+	return handleFieldAdded(props, state, {
+		data: {},
+		fieldType: mockFieldTypes[0],
+		indexes: {
+			columnIndex: 0,
+			pageIndex: 0,
+			rowIndex: 0,
+		},
+	});
+}
+
+const editField = (props, state, value) => {
+	return handleFieldEdited(props, state, {
+		propertyName: 'fieldReference',
+		propertyValue: value,
+	});
+}
+
+const getFieldReferenceSettingsProperty = (propertyName, state) => {
+	return settingsContextUtil.getSettingsContextProperty(
+		state.focusedField.settingsContext,
+		'fieldReference',
+		propertyName
+	);
+}
+
+const getInitialFormContext = () => {
+	let state = {
+		focusedField: {},
+		pages: [{rows: [{columns: [{fields: []}]}]}],
+		rules: [],
+	};
+
+	const props = {
+		defaultLanguageId: 'en_US',
+		editingLanguageId: 'en_US',
+		fieldNameGenerator: (desiredName, currentName) => {
+			const {pages} = state;
+
+			return generateFieldName(pages, desiredName, currentName);
+		},
+	};
+
+	return {
+			props,
+			state
+		};
+}
+
 describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 	describe('handleFieldEdited(props, state, event)', () => {
 		it('updates the field label', () => {
@@ -181,139 +231,46 @@ describe('LayoutProvider/handlers/fieldEditedHandler', () => {
 		});
 
 		it('updates the field reference', () => {
-			let state = {
-				focusedField: {},
-				pages: [{rows: [{columns: [{fields: []}]}]}],
-				rules: [],
-			};
+			let { props, state } = getInitialFormContext();
 
-			const props = {
-				defaultLanguageId: 'en_US',
-				editingLanguageId: 'en_US',
-				fieldNameGenerator: (desiredName, currentName) => {
-					const {pages} = state;
+			state = addField(props, state);
 
-					return generateFieldName(pages, desiredName, currentName);
-				},
-			};
-
-			// Adds a field
-
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
-
-			// Edits the field reference
-
-			state = handleFieldEdited(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: 'NewReference',
-			});
-
-			// Asserts name was updated
+			state = editField(props, state, 'NewReference');
 
 			expect(state.focusedField.fieldReference).toEqual('NewReference');
+
 			expect(
-				settingsContextUtil.getSettingsContextProperty(
-					state.focusedField.settingsContext,
-					'fieldReference'
-				)
+				getFieldReferenceSettingsProperty('value', state)
 			).toEqual('NewReference');
 		});
 
 		it('shows an error message if field reference already exists', () => {
-			let state = {
-				focusedField: {},
-				pages: [{rows: [{columns: [{fields: []}]}]}],
-				rules: [],
-			};
+			let { props, state } = getInitialFormContext();
 
-			const props = {
-				defaultLanguageId: 'en_US',
-				editingLanguageId: 'en_US',
-				fieldNameGenerator: (desiredName, currentName) => {
-					const {pages} = state;
+			state = addField(props, state);
 
-					return generateFieldName(pages, desiredName, currentName);
-				},
-			};
+			state = editField(props, state, 'NewReference');
 
-			// Adds a field
+			let valid = getFieldReferenceSettingsProperty('valid', state);
 
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
-
-			// Edits the field reference
-
-			state = handleFieldEdited(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: 'NewReference',
-			});
-
-			let valid = settingsContextUtil.getSettingsContextProperty(
-				state.focusedField.settingsContext,
-				'fieldReference',
-				'valid'
-			);
-
-			let displayErrors = settingsContextUtil.getSettingsContextProperty(
-				state.focusedField.settingsContext,
-				'fieldReference',
-				'displayErrors'
-			);
-
-			// Asserts if errors are not being displayed
+			let displayErrors =
+				getFieldReferenceSettingsProperty('displayErrors', state);
 
 			expect(valid).toEqual(true);
+
 			expect(displayErrors).toEqual(false);
 
-			// Adds another field
+			state = addField(props, state);
 
-			state = handleFieldAdded(props, state, {
-				data: {},
-				fieldType: mockFieldTypes[0],
-				indexes: {
-					columnIndex: 0,
-					pageIndex: 0,
-					rowIndex: 0,
-				},
-			});
+			state = editField(props, state, 'NewReference');
 
-			// Edits the field reference
+			valid = getFieldReferenceSettingsProperty('valid', state);
 
-			state = handleFieldEdited(props, state, {
-				propertyName: 'fieldReference',
-				propertyValue: 'NewReference',
-			});
-
-			valid = settingsContextUtil.getSettingsContextProperty(
-				state.focusedField.settingsContext,
-				'fieldReference',
-				'valid'
-			);
-
-			displayErrors = settingsContextUtil.getSettingsContextProperty(
-				state.focusedField.settingsContext,
-				'fieldReference',
-				'displayErrors'
-			);
-
-			// Asserts if errors are being displayed
+			displayErrors =
+				getFieldReferenceSettingsProperty('displayErrors', state);
 
 			expect(valid).toEqual(false);
+
 			expect(displayErrors).toEqual(true);
 		});
 	});

@@ -23,8 +23,6 @@ import React, {useCallback, useRef, useState} from 'react';
 import {Checkbox, HelpMessage, Input, RequiredMark} from './form/Components';
 import {alphanumeric, required, validate} from './form/validations';
 
-const STR_BLANK = ' ';
-
 const EditAdaptiveMedia = ({
 	actionUrl,
 	amImageConfigurationEntry,
@@ -93,7 +91,7 @@ const EditAdaptiveMedia = ({
 					'at-least-one-value-is-required'
 				);
 
-				err[maxHeightId] = STR_BLANK;
+				err[maxHeightId] = true;
 			}
 
 			return err;

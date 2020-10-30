@@ -78,14 +78,14 @@ const Input = ({
 				type={type}
 			/>
 
-			{error && <ErrorFeedback error={error} />}
+			{typeof error === 'string' && <ErrorFeedback error={error} />}
 		</ClayForm.Group>
 	);
 };
 
 Input.propTypes = {
 	disabled: PropTypes.bool,
-	error: PropTypes.string,
+	error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 	id: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,

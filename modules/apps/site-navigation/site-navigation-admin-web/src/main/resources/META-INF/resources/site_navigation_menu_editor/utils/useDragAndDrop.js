@@ -55,15 +55,18 @@ export const DragDropProvider = ({children}) => {
 	);
 };
 
-export function useDragItem(item) {
+export function useDragItem(item, onDragEnd) {
 	const {parentSiteNavigationMenuItemId, siteNavigationMenuItemId} = item;
 
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
-	const {setHorizontalOffset, setParentId, setVerticalOffset} = useContext(
-		DragDropContext
-	);
+	const {
+		parentId,
+		setHorizontalOffset,
+		setParentId,
+		setVerticalOffset,
+	} = useContext(DragDropContext);
 
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
 		begin() {
@@ -73,6 +76,8 @@ export function useDragItem(item) {
 			isDragging: !!monitor.isDragging(),
 		}),
 		end() {
+			onDragEnd(item.siteNavigationMenuItemId, parentId);
+
 			setHorizontalOffset(0);
 			setParentId(null);
 			setVerticalOffset(null);
@@ -118,13 +123,6 @@ export function useDropTarget(item) {
 		accept: ACCEPTING_ITEM_TYPE,
 		canDrop(source, monitor) {
 			return monitor.isOver();
-		},
-		drop(source, monitor) {
-			if (monitor.canDrop()) {
-
-				// TODO
-
-			}
 		},
 		hover(source, monitor) {
 			if (monitor.canDrop(source, monitor)) {

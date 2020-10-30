@@ -41,6 +41,7 @@ export const MenuItem = ({item}) => {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const {
 		deleteSiteNavigationMenuItemURL,
+		editSiteNavigationMenuItemParentURL,
 		languageDirection,
 		languageId,
 		portletNamespace,
@@ -50,14 +51,6 @@ export const MenuItem = ({item}) => {
 	const {siteNavigationMenuItemId, title, type} = item;
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const selected = useSelectedMenuItemId() === siteNavigationMenuItemId;
-
-	const {handlerRef, isDragging} = useDragItem(item);
-	const {targetRef} = useDropTarget(item);
-
-	const rtl = languageDirection[languageId] === 'rtl';
-	const itemStyle = rtl
-		? {marginRight: (itemPath.length - 1) * NESTING_MARGIN}
-		: {marginLeft: (itemPath.length - 1) * NESTING_MARGIN};
 
 	const deleteMenuItem = () => {
 		fetch(deleteSiteNavigationMenuItemURL, {
@@ -80,6 +73,34 @@ export const MenuItem = ({item}) => {
 				});
 			});
 	};
+
+	const updateMenuItemParent = (itemId, parentId) => {
+		const order = items
+			.filter((item) => item.parentSiteNavigationMenuItemId === parentId)
+			.findIndex((item) => item.siteNavigationMenuItemId === itemId);
+
+		fetch(editSiteNavigationMenuItemParentURL, {
+			body: objectToFormData({
+				[`${portletNamespace}siteNavigationMenuItemId`]: itemId,
+				[`${portletNamespace}parentSiteNavigationMenuItemId`]: parentId,
+				[`${portletNamespace}order`]: order,
+			}),
+			method: 'POST',
+		}).catch(() => {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		});
+	};
+
+	const {handlerRef, isDragging} = useDragItem(item, updateMenuItemParent);
+	const {targetRef} = useDropTarget(item);
+
+	const rtl = languageDirection[languageId] === 'rtl';
+	const itemStyle = rtl
+		? {marginRight: (itemPath.length - 1) * NESTING_MARGIN}
+		: {marginLeft: (itemPath.length - 1) * NESTING_MARGIN};
 
 	return (
 		<div ref={targetRef}>

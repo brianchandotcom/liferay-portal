@@ -27,6 +27,7 @@ export const ConstantsProvider = ({children, constants}) => (
 
 ConstantsProvider.propTypes = {
 	constants: PropTypes.shape({
+		editSiteNavigationMenuItemParentURL: PropTypes.string,
 		editSiteNavigationMenuItemURL: PropTypes.string,
 		editSiteNavigationMenuSettingsURL: PropTypes.string,
 		portletId: PropTypes.string,

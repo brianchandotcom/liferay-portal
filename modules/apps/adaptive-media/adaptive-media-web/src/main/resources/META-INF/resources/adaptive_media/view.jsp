@@ -144,7 +144,7 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 							</portlet:resourceURL>
 
 							<react:component
-								module="adaptive_media/js/AdaptiveMediaProgress.es"
+								module="adaptive_media/js/AdaptiveMediaProgress"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"adaptedImages", Math.min(adaptedImages, totalImages)

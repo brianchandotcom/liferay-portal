@@ -20,7 +20,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {disableEntryIcon, enableEntryIcon} from './utils/entryIcons.es';
+import {disableEntryIcon, enableEntryIcon} from './utils/entryIcons';
 
 const AdaptiveMediaProgress = ({
 	adaptedImages,

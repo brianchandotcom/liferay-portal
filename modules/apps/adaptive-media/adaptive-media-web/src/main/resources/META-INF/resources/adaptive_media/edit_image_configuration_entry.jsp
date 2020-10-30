@@ -64,7 +64,7 @@ automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
 		</portlet:actionURL>
 
 		<react:component
-			module="adaptive_media/js/EditAdaptiveMedia.es"
+			module="adaptive_media/js/EditAdaptiveMedia"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"actionUrl", editImageConfigurationEntryURL

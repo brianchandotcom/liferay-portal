@@ -20,8 +20,8 @@ import {normalizeFriendlyURL} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useRef, useState} from 'react';
 
-import {Checkbox, HelpMessage, Input, RequiredMark} from './form/Components.es';
-import {alphanumeric, required, validate} from './form/validations.es';
+import {Checkbox, HelpMessage, Input, RequiredMark} from './form/Components';
+import {alphanumeric, required, validate} from './form/validations';
 
 const STR_BLANK = ' ';
 

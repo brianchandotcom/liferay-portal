@@ -31,4 +31,7 @@ public class MFAFIDO2WebKeys {
 	public static final String MFA_FIDO2_VALIDATED_USER_ID =
 		"MFA_FIDO2_VALIDATED_USER_ID";
 
+	public static final String SETUP_MFA_CHECKER_SERVICE_ID =
+		"SETUP_MFA_CHECKER_SERVICE_ID";
+
 }

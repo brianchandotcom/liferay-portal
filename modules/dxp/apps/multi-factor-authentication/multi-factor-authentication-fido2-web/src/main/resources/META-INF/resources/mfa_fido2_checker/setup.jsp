@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntryLocalServiceUtil.getMFAFIDO2CredentialEntriesByUserId(themeDisplay.getUserId());
+%>
+
 <div id="<portlet:namespace />messageContainer"></div>
 
 <aui:button-row>
@@ -31,3 +35,49 @@
 </aui:button-row>
 
 <aui:input name="responseJSON" showRequiredLabel="yes" type="hidden" />
+
+<liferay-ui:search-container
+	iteratorURL="<%= renderResponse.createRenderURL() %>"
+	total="<%= mfaIDO2CredentialEntries.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= mfaIDO2CredentialEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="MFAFIDO2CredentialEntry"
+		modelVar="authenticator"
+	>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			name="authenticator-id"
+			value="<%= String.valueOf(authenticator.getPrimaryKey()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			name="registered-date"
+			value="<%= authenticator.getCreateDate().toString() %>"
+		/>
+
+		<liferay-ui:search-container-column-text>
+			<portlet:actionURL name="/my_account/setup_mfa/fido2/remove_authenticator" var="removeAuthenticatorURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="authenticatorId" value="<%= String.valueOf(authenticator.getPrimaryKey()) %>" />
+				<portlet:param name="setupMFACheckerServiceId" value="<%= String.valueOf(request.getAttribute(MFAFIDO2WebKeys.SETUP_MFA_CHECKER_SERVICE_ID)) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon-delete
+				confirmation="are-you-sure-you-want-to-remove-this-authenticator"
+				icon="times-circle"
+				message="remove"
+				showIcon="<%= true %>"
+				url="<%= removeAuthenticatorURL %>"
+			/>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
+</liferay-ui:search-container>

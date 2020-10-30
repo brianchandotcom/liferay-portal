@@ -23,6 +23,13 @@ import {config} from '../../config/index';
 export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 	const eventName = `${config.portletNamespace}selectSiteNavigationMenu`;
 
+	const title = value
+		? value.parentSiteNavigationMenuItemId &&
+		  value.parentSiteNavigationMenuItemId !== '0'
+			? `.../ ${value.title}`
+			: value.title
+		: null;
+
 	return (
 		<ClayForm.Group small>
 			<ItemSelector
@@ -33,7 +40,7 @@ export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 				onItemSelect={(navigationMenu) => {
 					onValueSelect(field.name, navigationMenu);
 				}}
-				selectedItemTitle={value?.title}
+				selectedItemTitle={title}
 				showMappedItems={false}
 			/>
 		</ClayForm.Group>

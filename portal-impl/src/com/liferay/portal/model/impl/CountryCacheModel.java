@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Country in entity cache.
  *
@@ -74,26 +76,52 @@ public class CountryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append(", countryId=");
 		sb.append(countryId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", billingAllowed=");
+		sb.append(billingAllowed);
+		sb.append(", shippingAllowed=");
+		sb.append(shippingAllowed);
 		sb.append(", a2=");
 		sb.append(a2);
 		sb.append(", a3=");
 		sb.append(a3);
 		sb.append(", number=");
 		sb.append(number);
+		sb.append(", subjectToVAT=");
+		sb.append(subjectToVAT);
 		sb.append(", idd=");
 		sb.append(idd);
 		sb.append(", zipRequired=");
 		sb.append(zipRequired);
+		sb.append(", position=");
+		sb.append(position);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", groupFilterEnabled=");
+		sb.append(groupFilterEnabled);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -104,7 +132,45 @@ public class CountryCacheModel
 		CountryImpl countryImpl = new CountryImpl();
 
 		countryImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			countryImpl.setUuid("");
+		}
+		else {
+			countryImpl.setUuid(uuid);
+		}
+
+		if (defaultLanguageId == null) {
+			countryImpl.setDefaultLanguageId("");
+		}
+		else {
+			countryImpl.setDefaultLanguageId(defaultLanguageId);
+		}
+
 		countryImpl.setCountryId(countryId);
+		countryImpl.setCompanyId(companyId);
+		countryImpl.setUserId(userId);
+
+		if (userName == null) {
+			countryImpl.setUserName("");
+		}
+		else {
+			countryImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			countryImpl.setCreateDate(null);
+		}
+		else {
+			countryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			countryImpl.setModifiedDate(null);
+		}
+		else {
+			countryImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			countryImpl.setName("");
@@ -112,6 +178,9 @@ public class CountryCacheModel
 		else {
 			countryImpl.setName(name);
 		}
+
+		countryImpl.setBillingAllowed(billingAllowed);
+		countryImpl.setShippingAllowed(shippingAllowed);
 
 		if (a2 == null) {
 			countryImpl.setA2("");
@@ -134,6 +203,8 @@ public class CountryCacheModel
 			countryImpl.setNumber(number);
 		}
 
+		countryImpl.setSubjectToVAT(subjectToVAT);
+
 		if (idd == null) {
 			countryImpl.setIdd("");
 		}
@@ -142,7 +213,16 @@ public class CountryCacheModel
 		}
 
 		countryImpl.setZipRequired(zipRequired);
+		countryImpl.setPosition(position);
 		countryImpl.setActive(active);
+		countryImpl.setGroupFilterEnabled(groupFilterEnabled);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			countryImpl.setLastPublishDate(null);
+		}
+		else {
+			countryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
 
 		countryImpl.resetOriginalValues();
 
@@ -152,24 +232,72 @@ public class CountryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
+		defaultLanguageId = objectInput.readUTF();
 
 		countryId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		billingAllowed = objectInput.readBoolean();
+
+		shippingAllowed = objectInput.readBoolean();
 		a2 = objectInput.readUTF();
 		a3 = objectInput.readUTF();
 		number = objectInput.readUTF();
+
+		subjectToVAT = objectInput.readBoolean();
 		idd = objectInput.readUTF();
 
 		zipRequired = objectInput.readBoolean();
 
+		position = objectInput.readDouble();
+
 		active = objectInput.readBoolean();
+
+		groupFilterEnabled = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (defaultLanguageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(defaultLanguageId);
+		}
+
 		objectOutput.writeLong(countryId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -177,6 +305,10 @@ public class CountryCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeBoolean(billingAllowed);
+
+		objectOutput.writeBoolean(shippingAllowed);
 
 		if (a2 == null) {
 			objectOutput.writeUTF("");
@@ -199,6 +331,8 @@ public class CountryCacheModel
 			objectOutput.writeUTF(number);
 		}
 
+		objectOutput.writeBoolean(subjectToVAT);
+
 		if (idd == null) {
 			objectOutput.writeUTF("");
 		}
@@ -208,17 +342,35 @@ public class CountryCacheModel
 
 		objectOutput.writeBoolean(zipRequired);
 
+		objectOutput.writeDouble(position);
+
 		objectOutput.writeBoolean(active);
+
+		objectOutput.writeBoolean(groupFilterEnabled);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
+	public String uuid;
+	public String defaultLanguageId;
 	public long countryId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public String name;
+	public boolean billingAllowed;
+	public boolean shippingAllowed;
 	public String a2;
 	public String a3;
 	public String number;
+	public boolean subjectToVAT;
 	public String idd;
 	public boolean zipRequired;
+	public double position;
 	public boolean active;
+	public boolean groupFilterEnabled;
+	public long lastPublishDate;
 
 }

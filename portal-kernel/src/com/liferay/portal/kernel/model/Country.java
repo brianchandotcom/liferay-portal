@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.CountryImpl")
 @ProviderType
-public interface Country extends CountryModel {
+public interface Country extends CountryModel, PersistedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

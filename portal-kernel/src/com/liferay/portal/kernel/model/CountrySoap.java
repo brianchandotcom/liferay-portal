@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,14 +34,27 @@ public class CountrySoap implements Serializable {
 		CountrySoap soapModel = new CountrySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setUuid(model.getUuid());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setCountryId(model.getCountryId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setBillingAllowed(model.isBillingAllowed());
+		soapModel.setShippingAllowed(model.isShippingAllowed());
 		soapModel.setA2(model.getA2());
 		soapModel.setA3(model.getA3());
 		soapModel.setNumber(model.getNumber());
+		soapModel.setSubjectToVAT(model.isSubjectToVAT());
 		soapModel.setIdd(model.getIdd());
 		soapModel.setZipRequired(model.isZipRequired());
+		soapModel.setPosition(model.getPosition());
 		soapModel.setActive(model.isActive());
+		soapModel.setGroupFilterEnabled(model.isGroupFilterEnabled());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -102,6 +116,22 @@ public class CountrySoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
 	public long getCountryId() {
 		return _countryId;
 	}
@@ -110,12 +140,76 @@ public class CountrySoap implements Serializable {
 		_countryId = countryId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public String getName() {
 		return _name;
 	}
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public boolean getBillingAllowed() {
+		return _billingAllowed;
+	}
+
+	public boolean isBillingAllowed() {
+		return _billingAllowed;
+	}
+
+	public void setBillingAllowed(boolean billingAllowed) {
+		_billingAllowed = billingAllowed;
+	}
+
+	public boolean getShippingAllowed() {
+		return _shippingAllowed;
+	}
+
+	public boolean isShippingAllowed() {
+		return _shippingAllowed;
+	}
+
+	public void setShippingAllowed(boolean shippingAllowed) {
+		_shippingAllowed = shippingAllowed;
 	}
 
 	public String getA2() {
@@ -142,6 +236,18 @@ public class CountrySoap implements Serializable {
 		_number = number;
 	}
 
+	public boolean getSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	public boolean isSubjectToVAT() {
+		return _subjectToVAT;
+	}
+
+	public void setSubjectToVAT(boolean subjectToVAT) {
+		_subjectToVAT = subjectToVAT;
+	}
+
 	public String getIdd() {
 		return _idd;
 	}
@@ -162,6 +268,14 @@ public class CountrySoap implements Serializable {
 		_zipRequired = zipRequired;
 	}
 
+	public double getPosition() {
+		return _position;
+	}
+
+	public void setPosition(double position) {
+		_position = position;
+	}
+
 	public boolean getActive() {
 		return _active;
 	}
@@ -174,14 +288,47 @@ public class CountrySoap implements Serializable {
 		_active = active;
 	}
 
+	public boolean getGroupFilterEnabled() {
+		return _groupFilterEnabled;
+	}
+
+	public boolean isGroupFilterEnabled() {
+		return _groupFilterEnabled;
+	}
+
+	public void setGroupFilterEnabled(boolean groupFilterEnabled) {
+		_groupFilterEnabled = groupFilterEnabled;
+	}
+
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
+	private String _uuid;
+	private String _defaultLanguageId;
 	private long _countryId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private String _name;
+	private boolean _billingAllowed;
+	private boolean _shippingAllowed;
 	private String _a2;
 	private String _a3;
 	private String _number;
+	private boolean _subjectToVAT;
 	private String _idd;
 	private boolean _zipRequired;
+	private double _position;
 	private boolean _active;
+	private boolean _groupFilterEnabled;
+	private Date _lastPublishDate;
 
 }

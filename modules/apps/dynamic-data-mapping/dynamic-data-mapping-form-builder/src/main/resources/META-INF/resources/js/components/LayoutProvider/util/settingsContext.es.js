@@ -41,7 +41,8 @@ export const getSettingsContextProperty = (
 export const setFieldReferenceErrorMessage = (
 	settingsContext,
 	propertyName,
-	displayErrors = true
+	displayErrors = true,
+	shouldUpdateValue = false
 ) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
@@ -55,6 +56,7 @@ export const setFieldReferenceErrorMessage = (
 					errorMessage: Liferay.Language.get(
 						'this-reference-is-already-being-used'
 					),
+					shouldUpdateValue,
 					valid: !displayErrors,
 				};
 			}
@@ -157,7 +159,11 @@ export const updateFieldName = (
 	return focusedField;
 };
 
-export const updateFieldReference = (focusedField, invalid = false) => {
+export const updateFieldReference = (
+	focusedField,
+	invalid = false,
+	shouldUpdateValue = false
+) => {
 	const {settingsContext} = focusedField;
 
 	focusedField = {
@@ -165,7 +171,8 @@ export const updateFieldReference = (focusedField, invalid = false) => {
 		settingsContext: setFieldReferenceErrorMessage(
 			settingsContext,
 			'fieldReference',
-			invalid
+			invalid,
+			shouldUpdateValue
 		),
 	};
 

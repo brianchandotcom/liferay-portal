@@ -166,7 +166,8 @@ export const handleFieldEdited = (props, state, event) => {
 						state.pages,
 						state.focusedField,
 						propertyValue
-					)
+					),
+					false
 				),
 			};
 		}

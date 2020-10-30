@@ -35,6 +35,7 @@ const Text = ({
 	onChange,
 	onFocus,
 	placeholder,
+	shouldUpdateValue,
 	syncDelay,
 	value: initialValue,
 }) => {
@@ -65,12 +66,20 @@ const Text = ({
 		if (
 			fieldName === 'fieldReference' &&
 			inputRef.current &&
-			inputRef.current.value !== initialValue
+			inputRef.current.value !== initialValue &&
+			(inputRef.current.value === '' || shouldUpdateValue)
 		) {
 			setValue(initialValue);
 			onChange({target: {value: initialValue}});
 		}
-	}, [initialValue, inputRef, fieldName, onChange, setValue]);
+	}, [
+		initialValue,
+		inputRef,
+		fieldName,
+		onChange,
+		setValue,
+		shouldUpdateValue,
+	]);
 
 	return (
 		<ClayInput
@@ -307,6 +316,7 @@ const Main = ({
 	placeholder,
 	predefinedValue = '',
 	readOnly,
+	shouldUpdateValue = false,
 	syncDelay = true,
 	value,
 	...otherProps
@@ -345,6 +355,7 @@ const Main = ({
 				onFocus={onFocus}
 				options={optionsMemo}
 				placeholder={placeholder}
+				shouldUpdateValue={shouldUpdateValue}
 				syncDelay={syncDelay}
 				value={value ? value : predefinedValue}
 			/>

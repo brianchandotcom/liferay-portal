@@ -43,7 +43,8 @@ export const handleFieldBlurred = (props, state, event) => {
 					...state,
 					focusedField: updateFieldReference(
 						state.focusedField,
-						false
+						false,
+						true
 					),
 				},
 				propertyName,

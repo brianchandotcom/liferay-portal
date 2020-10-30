@@ -266,6 +266,8 @@ components:
                 id:
                     format: int64
                     type: integer
+                status:
+                    type: integer
         DataRecordCollection:
             description:
                 https://www.schema.org/DataRecordCollection

@@ -30,14 +30,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -189,20 +188,13 @@ public class BackgroundImageFragmentEntryProcessor
 
 		Elements elements = document.select("[data-lfr-background-image-id]");
 
-		Stream<Element> uniqueElementsStream = elements.stream();
+		Set<String> ids = new HashSet<>();
 
-		Map<String, Long> idsMap = uniqueElementsStream.collect(
-			Collectors.groupingBy(
-				element -> element.attr("data-lfr-background-image-id"),
-				Collectors.counting()));
+		for (Element element : elements) {
+			if (ids.add(element.attr("data-lfr-background-image-id"))) {
+				continue;
+			}
 
-		Collection<String> ids = idsMap.keySet();
-
-		Stream<String> idsStream = ids.stream();
-
-		idsStream = idsStream.filter(id -> idsMap.get(id) > 1);
-
-		if (idsStream.count() > 0) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 

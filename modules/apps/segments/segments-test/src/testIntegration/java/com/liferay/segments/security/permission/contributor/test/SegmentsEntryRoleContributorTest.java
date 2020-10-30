@@ -245,6 +245,55 @@ public class SegmentsEntryRoleContributorTest {
 		}
 	}
 
+	@Test
+	public void testHasPermissionWithDisabledConfiguration() throws Exception {
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>() {
+				{
+					put("roleSegmentationEnabled", false);
+				}
+			};
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.segments.internal.configuration." +
+						"SegmentsServiceConfiguration",
+					properties)) {
+
+			_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			_organization = OrganizationTestUtil.addOrganization();
+
+			String actionKey = ActionKeys.DELETE;
+
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(), Organization.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				_role.getRoleId(), actionKey);
+
+			_user = UserTestUtil.addUser();
+
+			_user.setLastName(RandomTestUtil.randomString());
+
+			_user = _userLocalService.updateUser(_user);
+
+			_segmentsEntry = _addSegmentsEntry(_user.getLastName());
+
+			_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+				_segmentsEntry.getSegmentsEntryId(), _role.getRoleId(),
+				ServiceContextTestUtil.getServiceContext());
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(_user);
+
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					TestPropsValues.getGroupId(), Organization.class.getName(),
+					_organization.getOrganizationId(), actionKey));
+		}
+	}
+
 	private SegmentsEntry _addSegmentEntry(Organization organization)
 		throws Exception {
 

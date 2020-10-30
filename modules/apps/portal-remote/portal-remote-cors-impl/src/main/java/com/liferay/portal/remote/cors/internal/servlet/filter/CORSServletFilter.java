@@ -68,7 +68,8 @@ public class CORSServletFilter extends BaseFilter {
 		if (corsSupport.isValidCORSRequest(
 				httpServletRequest.getMethod(),
 				httpServletRequest::getHeader) &&
-			(PropsValues.CORS_DEVELOPMENT_AUTHORIZATION_ENABLED || _isGuest() ||
+			(PropsValues.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK ||
+			 _isGuest() ||
 			 OAuth2ProviderScopeLiferayAccessControlContext.
 				 isOAuth2AuthVerified())) {
 

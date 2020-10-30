@@ -225,7 +225,7 @@ public class PortalCORSServletFilter
 					 isOAuth2AuthVerified()) ||
 				_isGuest() ||
 				(!_isGuest() &&
-				 PropsValues.CORS_DEVELOPMENT_AUTHORIZATION_ENABLED)) {
+				 PropsValues.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK)) {
 
 				corsSupport.writeResponseHeaders(
 					httpServletRequest::getHeader,

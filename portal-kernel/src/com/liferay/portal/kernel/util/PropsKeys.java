@@ -636,8 +636,8 @@ public interface PropsKeys {
 	public static final String CONTROL_PANEL_NAVIGATION_MAX_SITES =
 		"control.panel.navigation.max.sites";
 
-	public static final String CORS_DEVELOPMENT_AUTHORIZATION_ENABLED =
-		"cors.development.authorization.enabled";
+	public static final String CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
+		"cors.disable.authorization.context.check";
 
 	public static final String COUNTER_DATA_CENTER_COUNT =
 		"counter.data.center.count";

@@ -3998,7 +3998,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.api.jar!snakeyaml.jar</file-name>
-				<version>1.23</version>
+				<version>1.27</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>http://www.snakeyaml.org</project-url>
 				<licenses>
@@ -4223,7 +4223,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!snakeyaml.jar</file-name>
-				<version>1.23</version>
+				<version>1.27</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>http://www.snakeyaml.org</project-url>
 				<licenses>
@@ -4394,13 +4394,13 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!commons-lang3.jar</file-name>
-				<version>3.4</version>
-				<project-name>Apache Commons Lang</project-name>
-				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!guava.jar</file-name>
+				<version>18.0</version>
+				<project-name>Guava: Google Core Libraries for Java</project-name>
+				<project-url>https://guava-libraries.googlecode.com/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4430,34 +4430,21 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!jackson-core-asl.jar</file-name>
-				<version>1.9.3</version>
-				<project-name>Jackson JSON processor</project-name>
-				<project-url>http://jackson.codehaus.org</project-url>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!jjwt.jar</file-name>
+				<version>0.4</version>
+				<project-name>JSON Web Token support for the JVM</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!jackson-mapper-asl.jar</file-name>
-				<version>1.9.3</version>
-				<project-name>Data mapper for Jackson JSON processor</project-name>
-				<project-url>http://jackson.codehaus.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!joda-convert.jar</file-name>
-				<version>1.2</version>
-				<project-name>Joda convert</project-name>
-				<project-url>http://joda-convert.sourceforge.net/</project-url>
+				<version>1.9.2</version>
+				<project-name>Joda-Convert</project-name>
+				<project-url>http://www.joda.org/joda-convert/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -4467,13 +4454,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!joda-time.jar</file-name>
-				<version>2.8.2</version>
+				<version>2.10.6</version>
 				<project-name>Joda-Time</project-name>
-				<project-url>http://www.joda.org/joda-time/</project-url>
+				<project-url>https://www.joda.org/joda-time/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4490,10 +4477,10 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!twilio-java-sdk.jar</file-name>
-				<version>4.0.2</version>
-				<project-name>twilio-java-sdk</project-name>
-				<project-url>http://www.twilio.com</project-url>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!twilio.jar</file-name>
+				<version>6.6.10</version>
+				<project-name>twilio</project-name>
+				<project-url>https://www.twilio.com</project-url>
 				<licenses>
 					<license>
 						<license-name>MIT License</license-name>
@@ -5674,7 +5661,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/spring-instrument.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -5687,7 +5674,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/spring-test.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7700,7 +7687,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-aop.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7713,7 +7700,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-aspects.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7726,7 +7713,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-beans.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7739,7 +7726,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context-support.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7752,7 +7739,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7765,7 +7752,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-core.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7778,7 +7765,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-expression.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7791,7 +7778,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-jdbc.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7804,7 +7791,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-jms.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7830,7 +7817,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-oxm.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7843,7 +7830,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-tx.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7856,7 +7843,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-web.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7869,7 +7856,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-webmvc.jar</file-name>
-				<version>5.2.3</version>
+				<version>5.2.10</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>

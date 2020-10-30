@@ -36,6 +36,11 @@ definition {
 
 		if (IsElementNotPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION")) {
 			DetailsView.nextEntry();
+
+			if (IsElementNotPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION")) {
+				DetailsView.previousEntry();
+			}
+
 			AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
 		}
 		else {

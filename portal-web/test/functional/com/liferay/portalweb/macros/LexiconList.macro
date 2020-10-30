@@ -38,7 +38,7 @@ definition {
 	macro viewListEntryLabel {
 		AssertTextEquals(
 			key_listEntry = "${listEntry}",
-			key_listEntrySubtitle = "${listEntryLabel}",
+			key_listEntryLabel = "${listEntryLabel}",
 			locator1 = "LexiconList#LIST_ENTRY_LABEL",
 			value1 = "${listEntryLabel}");
 	}

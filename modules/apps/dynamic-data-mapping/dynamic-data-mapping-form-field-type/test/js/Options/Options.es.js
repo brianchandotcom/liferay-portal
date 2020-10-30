@@ -623,6 +623,10 @@ describe('Options', () => {
 
 		fireEvent.blur(referenceInput);
 
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		expect(referenceInput.value).toEqual(
 			expect.stringMatching(DEFAULT_OPTION_NAME_REGEX)
 		);

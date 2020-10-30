@@ -199,7 +199,11 @@ import org.osgi.service.component.annotations.Reference;
 />
 
 <#if dependencyInjectorDS>
-	@Component(service = ${entity.name}Persistence.class)
+	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		@Component(service = {${entity.name}Persistence.class, BasePersistence.class})
+	<#else>
+		@Component(service = ${entity.name}Persistence.class)
+	</#if>
 
 	<#assign
 		columnBitmaskCacheEnabled = "_columnBitmaskEnabled"

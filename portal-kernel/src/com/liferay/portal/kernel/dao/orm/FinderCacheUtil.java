@@ -48,6 +48,10 @@ public class FinderCacheUtil {
 		return _finderCache;
 	}
 
+	public static Object getResult(FinderPath finderPath, Object[] args) {
+		return _finderCache.getResult(finderPath, args);
+	}
+
 	public static Object getResult(
 		FinderPath finderPath, Object[] args,
 		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl) {

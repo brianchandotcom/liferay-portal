@@ -38,6 +38,8 @@ public interface FinderCache {
 
 	public void clearLocalCache();
 
+	public Object getResult(FinderPath finderPath, Object[] args);
+
 	public Object getResult(
 		FinderPath finderPath, Object[] args,
 		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl);

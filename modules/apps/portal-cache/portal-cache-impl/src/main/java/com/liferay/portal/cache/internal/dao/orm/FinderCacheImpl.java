@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -41,6 +44,7 @@ import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLoc
 
 import java.io.Serializable;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -129,10 +133,7 @@ public class FinderCacheImpl
 	}
 
 	@Override
-	public Object getResult(
-		FinderPath finderPath, Object[] args,
-		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl) {
-
+	public Object getResult(FinderPath finderPath, Object[] args) {
 		if (!_valueObjectFinderCacheEnabled || !CacheRegistryUtil.isActive()) {
 			return null;
 		}
@@ -180,13 +181,26 @@ public class FinderCacheImpl
 			return cacheValue;
 		}
 
+		Map.Entry<String, Serializable> cacheResultEntry =
+			(Map.Entry<String, Serializable>)cacheValue;
+
+		BasePersistence<?> basePersistence =
+			_basePersistenceServiceTrackerMap.getService(
+				cacheResultEntry.getKey());
+
+		if (basePersistence == null) {
+			return null;
+		}
+
+		cacheValue = cacheResultEntry.getValue();
+
 		if (cacheValue instanceof List<?>) {
 			List<Serializable> primaryKeys = (List<Serializable>)cacheValue;
 
 			Set<Serializable> primaryKeysSet = new HashSet<>(primaryKeys);
 
 			Map<Serializable, ? extends BaseModel<?>> map =
-				basePersistenceImpl.fetchByPrimaryKeys(primaryKeysSet);
+				basePersistence.fetchByPrimaryKeys(primaryKeysSet);
 
 			if (map.size() < primaryKeysSet.size()) {
 				return null;
@@ -201,7 +215,15 @@ public class FinderCacheImpl
 			return Collections.unmodifiableList(list);
 		}
 
-		return basePersistenceImpl.fetchByPrimaryKey(cacheValue);
+		return basePersistence.fetchByPrimaryKey(cacheValue);
+	}
+
+	@Override
+	public Object getResult(
+		FinderPath finderPath, Object[] args,
+		BasePersistenceImpl<? extends BaseModel<?>> basePersistenceImpl) {
+
+		return getResult(finderPath, args);
 	}
 
 	@Override
@@ -238,7 +260,13 @@ public class FinderCacheImpl
 		if (result instanceof BaseModel<?>) {
 			BaseModel<?> model = (BaseModel<?>)result;
 
-			cacheValue = model.getPrimaryKeyObj();
+			if (finderPath.isBaseModelResult()) {
+				cacheValue = new AbstractMap.SimpleEntry<>(
+					model.getModelClassName(), model.getPrimaryKeyObj());
+			}
+			else {
+				cacheValue = model.getPrimaryKeyObj();
+			}
 		}
 		else if (result instanceof List<?>) {
 			List<?> objects = (List<?>)result;
@@ -257,13 +285,20 @@ public class FinderCacheImpl
 				ArrayList<Serializable> primaryKeys = new ArrayList<>(
 					objects.size());
 
+				String baseModelClassName = null;
+
 				for (Object object : objects) {
 					BaseModel<?> baseModel = (BaseModel<?>)object;
 
 					primaryKeys.add(baseModel.getPrimaryKeyObj());
+
+					if (baseModelClassName == null) {
+						baseModelClassName = baseModel.getModelClassName();
+					}
 				}
 
-				cacheValue = primaryKeys;
+				cacheValue = new AbstractMap.SimpleEntry<String, Serializable>(
+					baseModelClassName, primaryKeys);
 			}
 		}
 
@@ -480,11 +515,30 @@ public class FinderCacheImpl
 		_argumentsResolverServiceTracker = ServiceTrackerFactory.open(
 			bundleContext, ArgumentsResolver.class,
 			new ArgumentsResolverServiceTrackerCustomizer());
+
+		_basePersistenceServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<BasePersistence<?>>)(Class<?>)BasePersistence.class,
+				"(|(component.name=*PersistenceImpl)(&(bean.id=*Persistence)" +
+					"(!(bean.id=*Trash*Persistence))))",
+				(serviceReference, emitter) -> {
+					BasePersistence<?> basePersistence =
+						bundleContext.getService(serviceReference);
+
+					Class<?> modelClass = basePersistence.getModelClass();
+
+					emitter.emit(modelClass.getName());
+
+					bundleContext.ungetService(serviceReference);
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_argumentsResolverServiceTracker.close();
+
+		_basePersistenceServiceTrackerMap.close();
 	}
 
 	private void _clearCache(String cacheName) {
@@ -631,6 +685,8 @@ public class FinderCacheImpl
 	private ServiceTracker<ArgumentsResolver, ArgumentsResolver>
 		_argumentsResolverServiceTracker;
 	private volatile CacheKeyGenerator _baseModelCacheKeyGenerator;
+	private ServiceTrackerMap<String, BasePersistence<?>>
+		_basePersistenceServiceTrackerMap;
 	private BundleContext _bundleContext;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
 	private final Map<String, Set<String>> _dslQueryCacheNamesMap =

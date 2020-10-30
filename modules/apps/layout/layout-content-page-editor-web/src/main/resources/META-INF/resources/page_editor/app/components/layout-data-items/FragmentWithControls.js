@@ -12,10 +12,14 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {useSelector} from '../../store/index';
+import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Layout from '../Layout';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
@@ -23,6 +27,10 @@ import FragmentContentInteractionsFilter from '../fragment-content/FragmentConte
 import FragmentContentProcessor from '../fragment-content/FragmentContentProcessor';
 
 const FragmentWithControls = React.forwardRef(({item}, ref) => {
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
 	const [setRef, itemElement] = useSetRef(ref);
 
 	const getPortals = useCallback(
@@ -46,8 +54,34 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 		[]
 	);
 
+	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
+
+	const {
+		marginLeft,
+		marginRight,
+		maxWidth,
+		minWidth,
+		shadow,
+		width,
+	} = itemConfig.styles;
+
+	const style = {};
+
+	style.boxShadow = getFrontendTokenValue(shadow);
+	style.maxWidth = maxWidth;
+	style.minWidth = minWidth;
+	style.width = width;
+
 	return (
-		<Topper item={item} itemElement={itemElement}>
+		<Topper
+			className={classNames({
+				[`ml-${marginLeft}`]: marginLeft != null,
+				[`mr-${marginRight}`]: marginLeft != null,
+			})}
+			item={item}
+			itemElement={itemElement}
+			style={style}
+		>
 			<FragmentContentInteractionsFilter
 				fragmentEntryLinkId={item.config.fragmentEntryLinkId}
 				itemId={item.itemId}

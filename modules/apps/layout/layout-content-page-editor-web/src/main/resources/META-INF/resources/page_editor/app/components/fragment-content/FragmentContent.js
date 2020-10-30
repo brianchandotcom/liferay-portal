@@ -209,19 +209,22 @@ const FragmentContent = ({
 	style.border = `solid ${borderWidth}px`;
 	style.borderColor = getFrontendTokenValue(borderColor);
 	style.borderRadius = getFrontendTokenValue(borderRadius);
-	style.boxShadow = getFrontendTokenValue(shadow);
 	style.color = getFrontendTokenValue(textColor);
 	style.fontFamily = getFrontendTokenValue(fontFamily);
 	style.fontSize = getFrontendTokenValue(fontSize);
 	style.fontWeight = getFrontendTokenValue(fontWeight);
 	style.height = height;
 	style.maxHeight = maxHeight;
-	style.maxWidth = maxWidth;
 	style.minHeight = minHeight;
-	style.minWidth = minWidth;
 	style.opacity = opacity ? opacity / 100 : null;
 	style.overflow = overflow;
-	style.width = width;
+
+	if (!withinTopper) {
+		style.boxShadow = getFrontendTokenValue(shadow);
+		style.maxWidth = maxWidth;
+		style.minWidth = minWidth;
+		style.width = width;
+	}
 
 	if (backgroundImageValue) {
 		style.backgroundImage = `url(${backgroundImageValue})`;

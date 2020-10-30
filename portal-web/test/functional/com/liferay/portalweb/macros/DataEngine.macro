@@ -66,7 +66,7 @@ definition {
 		var key_fieldType = "${fieldType}";
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 
-		DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+		DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 			locator1 = "Sidebar#ADD_FIELD_TYPE",
 			locator2 = "Sidebar#ADD_FIELD_NESTED_TARGET",
 			value1 = "${fieldType}");

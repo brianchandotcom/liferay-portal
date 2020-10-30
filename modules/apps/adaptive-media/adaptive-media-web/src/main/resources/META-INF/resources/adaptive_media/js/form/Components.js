@@ -37,7 +37,7 @@ const HelpMessage = ({message}) => {
 	return (
 		<span
 			className="inline-item-after lfr-portal-tooltip tooltip-icon"
-			data-title={message}
+			title={message}
 		>
 			<ClayIcon symbol="question-circle-full" />
 		</span>

@@ -61,7 +61,9 @@ public interface DDMFormFieldTypeSettings {
 		return StringPool.BLANK;
 	}
 
-	@DDMFormField(label = "%field-name", required = true)
+	@DDMFormField(
+		label = "%field-name", required = true, visibilityExpression = "FALSE"
+	)
 	public String name();
 
 	@DDMFormField(required = true, visibilityExpression = "FALSE")

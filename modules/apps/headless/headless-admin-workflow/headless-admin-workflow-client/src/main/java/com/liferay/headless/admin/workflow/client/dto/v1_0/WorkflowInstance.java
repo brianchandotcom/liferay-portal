@@ -139,6 +139,27 @@ public class WorkflowInstance implements Cloneable, Serializable {
 
 	protected ObjectReviewed objectReviewed;
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setState(
+		UnsafeSupplier<String, Exception> stateUnsafeSupplier) {
+
+		try {
+			state = stateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String state;
+
 	public String getWorkflowDefinitionName() {
 		return workflowDefinitionName;
 	}

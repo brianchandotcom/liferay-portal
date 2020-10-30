@@ -123,6 +123,20 @@ public class WorkflowInstanceSerDes {
 			sb.append(String.valueOf(workflowInstance.getObjectReviewed()));
 		}
 
+		if (workflowInstance.getState() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"state\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowInstance.getState()));
+
+			sb.append("\"");
+		}
+
 		if (workflowInstance.getWorkflowDefinitionName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -217,6 +231,13 @@ public class WorkflowInstanceSerDes {
 				String.valueOf(workflowInstance.getObjectReviewed()));
 		}
 
+		if (workflowInstance.getState() == null) {
+			map.put("state", null);
+		}
+		else {
+			map.put("state", String.valueOf(workflowInstance.getState()));
+		}
+
 		if (workflowInstance.getWorkflowDefinitionName() == null) {
 			map.put("workflowDefinitionName", null);
 		}
@@ -286,6 +307,11 @@ public class WorkflowInstanceSerDes {
 					workflowInstance.setObjectReviewed(
 						ObjectReviewedSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "state")) {
+				if (jsonParserFieldValue != null) {
+					workflowInstance.setState((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

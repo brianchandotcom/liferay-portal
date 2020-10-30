@@ -15,6 +15,7 @@
 package com.liferay.segments.internal.security.permission.contributor;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +27,9 @@ import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
@@ -50,7 +53,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Drew Brokke
  */
-@Component(service = RoleContributor.class)
+@Component(
+	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
+	service = {}
+)
 public class SegmentsEntryRoleContributor implements RoleContributor {
 
 	@Override
@@ -77,6 +83,27 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		SegmentsServiceConfiguration segmentsServiceConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsServiceConfiguration.class, properties);
+
+		if (segmentsServiceConfiguration.roleSegmentationEnabled()) {
+			_serviceRegistration = bundleContext.registerService(
+				RoleContributor.class, this, new HashMapDictionary<>());
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
 		}
 	}
 
@@ -153,5 +180,7 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
 	)
 	private volatile SegmentsEntrySimulator _segmentsEntrySimulator;
+
+	private ServiceRegistration<RoleContributor> _serviceRegistration;
 
 }

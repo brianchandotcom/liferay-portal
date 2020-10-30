@@ -30,9 +30,6 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 
 import org.json.JSONArray;
@@ -291,6 +288,20 @@ public class PullRequest {
 		return headJSONObject.getString("sha");
 	}
 
+	public JSONArray getSenderSHAStatusesJSONArray() {
+		JSONArray statusesJSONArray = null;
+
+		try {
+			statusesJSONArray = JenkinsResultsParserUtil.toJSONArray(
+				_jsonObject.getString("statuses_url"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return statusesJSONArray;
+	}
+
 	public JSONObject getSenderSHAStatusJSONObject() {
 		JSONObject statusJSONObject = null;
 
@@ -306,20 +317,6 @@ public class PullRequest {
 		}
 
 		return statusJSONObject;
-	}
-
-	public JSONArray getSenderSHAStatusesJSONArray() {
-		JSONArray statusesJSONArray = null;
-
-		try {
-			statusesJSONArray = JenkinsResultsParserUtil.toJSONArray(
-				_jsonObject.getString("statuses_url"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return statusesJSONArray;
 	}
 
 	public String getSenderUsername() {

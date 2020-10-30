@@ -996,6 +996,14 @@ public abstract class BaseDataRecordResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (dataRecord.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1119,6 +1127,16 @@ public abstract class BaseDataRecordResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						dataRecord1.getStatus(), dataRecord2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1218,6 +1236,11 @@ public abstract class BaseDataRecordResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("status")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1264,6 +1287,7 @@ public abstract class BaseDataRecordResourceTestCase {
 			{
 				dataRecordCollectionId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
+				status = RandomTestUtil.randomInt();
 			}
 		};
 	}

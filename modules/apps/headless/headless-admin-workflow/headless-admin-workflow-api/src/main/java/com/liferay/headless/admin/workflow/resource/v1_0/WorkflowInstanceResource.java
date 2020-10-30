@@ -51,8 +51,8 @@ public interface WorkflowInstanceResource {
 	}
 
 	public Page<WorkflowInstance> getWorkflowInstancesPage(
-			String[] assetClassNames, Long[] assetPrimaryKeys,
-			Boolean completed, Pagination pagination)
+			String assetClassName, Long assetPrimaryKey, Boolean completed,
+			Pagination pagination)
 		throws Exception;
 
 	public WorkflowInstance postWorkflowInstanceSubmit(

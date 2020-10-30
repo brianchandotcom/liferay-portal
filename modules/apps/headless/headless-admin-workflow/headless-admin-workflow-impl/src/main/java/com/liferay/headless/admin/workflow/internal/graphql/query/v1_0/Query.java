@@ -207,12 +207,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstances(assetClassNames: ___, assetPrimaryKeys: ___, completed: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstances(assetClassName: ___, assetPrimaryKey: ___, completed: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowInstancePage workflowInstances(
-			@GraphQLName("assetClassNames") String[] assetClassNames,
-			@GraphQLName("assetPrimaryKeys") Long[] assetPrimaryKeys,
+			@GraphQLName("assetClassName") String assetClassName,
+			@GraphQLName("assetPrimaryKey") Long assetPrimaryKey,
 			@GraphQLName("completed") Boolean completed,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -223,14 +223,14 @@ public class Query {
 			this::_populateResourceContext,
 			workflowInstanceResource -> new WorkflowInstancePage(
 				workflowInstanceResource.getWorkflowInstancesPage(
-					assetClassNames, assetPrimaryKeys, completed,
+					assetClassName, assetPrimaryKey, completed,
 					Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstance(workflowInstanceId: ___){completed, dateCompletion, dateCreated, id, objectReviewed, workflowDefinitionName, workflowDefinitionVersion}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstance(workflowInstanceId: ___){completed, dateCompletion, dateCreated, id, objectReviewed, state, workflowDefinitionName, workflowDefinitionVersion}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowInstance workflowInstance(

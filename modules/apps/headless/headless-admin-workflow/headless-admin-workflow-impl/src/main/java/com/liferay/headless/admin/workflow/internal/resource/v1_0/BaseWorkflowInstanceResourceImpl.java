@@ -77,8 +77,8 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "assetClassNames"),
-			@Parameter(in = ParameterIn.QUERY, name = "assetPrimaryKeys"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetClassName"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetPrimaryKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "completed"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
@@ -88,10 +88,10 @@ public abstract class BaseWorkflowInstanceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowInstance")})
 	public Page<WorkflowInstance> getWorkflowInstancesPage(
-			@Parameter(hidden = true) @QueryParam("assetClassNames") String[]
-				assetClassNames,
-			@Parameter(hidden = true) @QueryParam("assetPrimaryKeys") Long[]
-				assetPrimaryKeys,
+			@Parameter(hidden = true) @QueryParam("assetClassName") String
+				assetClassName,
+			@Parameter(hidden = true) @QueryParam("assetPrimaryKey") Long
+				assetPrimaryKey,
 			@Parameter(hidden = true) @QueryParam("completed") Boolean
 				completed,
 			@Context Pagination pagination)

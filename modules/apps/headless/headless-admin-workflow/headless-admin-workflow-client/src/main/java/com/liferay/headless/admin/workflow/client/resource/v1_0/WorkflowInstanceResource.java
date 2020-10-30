@@ -43,13 +43,13 @@ public interface WorkflowInstanceResource {
 	}
 
 	public Page<WorkflowInstance> getWorkflowInstancesPage(
-			String[] assetClassNames, Long[] assetPrimaryKeys,
-			Boolean completed, Pagination pagination)
+			String assetClassName, Long assetPrimaryKey, Boolean completed,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowInstancesPageHttpResponse(
-			String[] assetClassNames, Long[] assetPrimaryKeys,
-			Boolean completed, Pagination pagination)
+			String assetClassName, Long assetPrimaryKey, Boolean completed,
+			Pagination pagination)
 		throws Exception;
 
 	public WorkflowInstance postWorkflowInstanceSubmit(
@@ -140,13 +140,13 @@ public interface WorkflowInstanceResource {
 		implements WorkflowInstanceResource {
 
 		public Page<WorkflowInstance> getWorkflowInstancesPage(
-				String[] assetClassNames, Long[] assetPrimaryKeys,
-				Boolean completed, Pagination pagination)
+				String assetClassName, Long assetPrimaryKey, Boolean completed,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkflowInstancesPageHttpResponse(
-					assetClassNames, assetPrimaryKeys, completed, pagination);
+					assetClassName, assetPrimaryKey, completed, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -169,8 +169,8 @@ public interface WorkflowInstanceResource {
 		}
 
 		public HttpInvoker.HttpResponse getWorkflowInstancesPageHttpResponse(
-				String[] assetClassNames, Long[] assetPrimaryKeys,
-				Boolean completed, Pagination pagination)
+				String assetClassName, Long assetPrimaryKey, Boolean completed,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -194,19 +194,14 @@ public interface WorkflowInstanceResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (assetClassNames != null) {
-				for (int i = 0; i < assetClassNames.length; i++) {
-					httpInvoker.parameter(
-						"assetClassNames", String.valueOf(assetClassNames[i]));
-				}
+			if (assetClassName != null) {
+				httpInvoker.parameter(
+					"assetClassName", String.valueOf(assetClassName));
 			}
 
-			if (assetPrimaryKeys != null) {
-				for (int i = 0; i < assetPrimaryKeys.length; i++) {
-					httpInvoker.parameter(
-						"assetPrimaryKeys",
-						String.valueOf(assetPrimaryKeys[i]));
-				}
+			if (assetPrimaryKey != null) {
+				httpInvoker.parameter(
+					"assetPrimaryKey", String.valueOf(assetPrimaryKey));
 			}
 
 			if (completed != null) {

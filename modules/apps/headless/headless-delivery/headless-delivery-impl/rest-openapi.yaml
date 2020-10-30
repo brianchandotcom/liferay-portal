@@ -1263,6 +1263,8 @@ components:
                 description:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
+                fragmentImageReference:
+                    $ref: "#/components/schemas/FragmentImageClassPKReference"
                 title:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
@@ -1270,6 +1272,24 @@ components:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                         - $ref: "#/components/schemas/FragmentMappedValue"
+            type: object
+        FragmentImageClassPKReference:
+            properties:
+                imageConfiguration:
+                    $ref: "#/components/schemas/FragmentImageConfiguration"
+                imageReference:
+                    additionalProperties:
+                        $ref: "#/components/schemas/ClassPKReference"
+                    type: object
+            type: object
+        FragmentImageConfiguration:
+            properties:
+                landscapeMobile:
+                    type: string
+                portraitMobile:
+                    type: string
+                tablet:
+                    type: string
             type: object
         FragmentInlineValue:
             properties:

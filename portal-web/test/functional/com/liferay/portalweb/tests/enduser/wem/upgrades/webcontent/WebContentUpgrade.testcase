@@ -193,27 +193,4 @@ definition {
 		AssertVisible(locator1 = "Button#PREVIEW");
 	}
 
-	@description = "This is a use case for LPS-98619."
-	@priority = "3"
-	test ViewWebContentWithImageArchive621021 {
-		property data.archive.type = "data-archive-web-content-with-image";
-		property database.types = "db2,mysql,oracle,postgresql,sybase";
-		property portal.version = "6.2.10.21";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content",
-			site = "${siteName}");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Web Content Title");
-
-		AssertVisible(locator1 = "Button#PREVIEW");
-	}
-
 }

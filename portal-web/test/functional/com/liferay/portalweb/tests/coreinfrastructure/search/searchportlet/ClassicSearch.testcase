@@ -4,7 +4,7 @@ definition {
 	property osgi.module.configuration.file.names = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config";
 	property osgi.module.configurations = "classicSearchPortletInFrontPage=&quot;true&quot;";
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7,solr";
+	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Web Search";
 

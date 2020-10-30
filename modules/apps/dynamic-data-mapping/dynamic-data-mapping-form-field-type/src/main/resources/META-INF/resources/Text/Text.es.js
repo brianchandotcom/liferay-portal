@@ -42,6 +42,8 @@ const Text = ({
 
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
+	const inputRef = useRef(null);
+
 	useEffect(() => {
 		if (prevEditingLanguageId !== editingLanguageId && localizable) {
 			const newValue =
@@ -59,15 +61,33 @@ const Text = ({
 		setValue,
 	]);
 
+	useEffect(() => {
+		if (
+			fieldName == 'fieldReference' &&
+			inputRef.current &&
+			initialValue !== inputRef.current.value
+		) {
+			setValue(initialValue);
+			onChange({target: {value: initialValue}});
+		}
+	}, [initialValue, inputRef, fieldName, onChange, setValue]);
+
 	return (
 		<ClayInput
 			className="ddm-field-text"
 			disabled={disabled}
 			id={id}
 			name={name}
-			onBlur={onBlur}
+			onBlur={(event) => {
+				if (fieldName == 'fieldReference') {
+					onBlur({target: {value: initialValue}});
+				}
+				else {
+					onBlur(event);
+				}
+			}}
 			onChange={(event) => {
-				if (fieldName === 'name') {
+				if (fieldName === 'name' || fieldName == 'fieldReference') {
 					event.target.value = normalizeFieldName(event.target.value);
 				}
 
@@ -76,6 +96,7 @@ const Text = ({
 			}}
 			onFocus={onFocus}
 			placeholder={placeholder}
+			ref={inputRef}
 			type="text"
 			value={value}
 		/>

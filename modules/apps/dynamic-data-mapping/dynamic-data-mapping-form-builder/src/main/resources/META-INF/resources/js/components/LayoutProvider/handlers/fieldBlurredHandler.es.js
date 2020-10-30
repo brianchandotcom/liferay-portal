@@ -32,8 +32,8 @@ export const handleFieldBlurred = (props, state, event) => {
 			propertyName === 'fieldReference' &&
 			(propertyValue === '' ||
 				findInvalidFieldReference(
-					state.pages,
 					state.focusedField,
+					state.pages,
 					propertyValue
 				))
 		) {

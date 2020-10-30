@@ -121,8 +121,8 @@ export const updateState = (props, state, propertyName, propertyValue) => {
 	};
 };
 
-export const findInvalidFieldReference = (pages, focusedField, value) => {
-	let foundInvalidFieldReference = false;
+export const findInvalidFieldReference = (focusedField, pages, value) => {
+	let hasInvalidFieldReference = false;
 
 	const visitor = new PagesVisitor(pages);
 
@@ -136,11 +136,11 @@ export const findInvalidFieldReference = (pages, focusedField, value) => {
 			focusedField.fieldName !== field.fieldName &&
 			fieldReference === value
 		) {
-			foundInvalidFieldReference = true;
+			hasInvalidFieldReference = true;
 		}
 	});
 
-	return foundInvalidFieldReference;
+	return hasInvalidFieldReference;
 };
 
 export const handleFieldEdited = (props, state, event) => {
@@ -163,8 +163,8 @@ export const handleFieldEdited = (props, state, event) => {
 				focusedField: updateFieldReference(
 					state.focusedField,
 					findInvalidFieldReference(
-						state.pages,
 						state.focusedField,
+						state.pages,
 						propertyValue
 					),
 					false

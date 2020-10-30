@@ -202,7 +202,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
-				getSiteNavigationMenuId());
+				getParentSiteNavigationMenuItemId());
 
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(

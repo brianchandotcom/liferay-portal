@@ -732,7 +732,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(filterBy = "Current Asset Library");
 
-		AssertElementPresent(
+		AssertElementNotPresent(
 			key_filterScope = "Scope: Current Asset Library",
 			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
 

@@ -40,6 +40,12 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 		<%= HtmlUtil.escape(fileVersion.getTitle()) %>
 	</h1>
 
+	<c:if test="<%= !Objects.equals(fileVersion.getTitle(), fileVersion.getFileName()) %>">
+		<h3 class="sidebar-title">
+			<%= HtmlUtil.escape(fileVersion.getFileName()) %>
+		</h3>
+	</c:if>
+
 	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 		<clay:label
 			displayType="info"

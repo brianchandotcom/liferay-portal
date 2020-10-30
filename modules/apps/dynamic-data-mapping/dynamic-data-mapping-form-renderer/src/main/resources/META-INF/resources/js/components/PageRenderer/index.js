@@ -12,10 +12,12 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import core from 'metal';
 import React from 'react';
 
 import {PageProvider} from '../../hooks/usePage.es';
+import {PagesVisitor} from '../../util/visitors.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import * as EditablePageHeader from './EditablePageHeader.es';
 import {Layout} from './Layout.es';
@@ -52,6 +54,9 @@ const PAGE_HEADER_TYPES = {
 const PAGE_HEADER_COMPONENT_TYPE = {
 	[PAGE_HEADER_TYPES.EDITABLE]: EditablePageHeader.PageHeader,
 };
+
+const ADMIN_PORTLET_NAME_SPACE =
+	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_';
 
 const isEmptyPage = ({rows}) => {
 	let empty = false;
@@ -167,6 +172,7 @@ const Renderer = ({
 	submitLabel,
 	view,
 	viewMode,
+	portletNamespace,
 }) => {
 	const empty = isEmptyPage(defaultPage);
 	const page = normalizePage(defaultPage, editingLanguageId);
@@ -183,6 +189,19 @@ const Renderer = ({
 	const Header =
 		PAGE_HEADER_COMPONENT_TYPE[page.headerRenderer] ||
 		Components.PageHeader;
+
+	let hasFieldRequired = false;
+
+	const visitor = new PagesVisitor(pages);
+
+	visitor.mapFields((field) => {
+		if (field.required) {
+			hasFieldRequired = true;
+		}
+	});
+
+	const isAdminPortletNamespace =
+		ADMIN_PORTLET_NAME_SPACE === portletNamespace;
 
 	return (
 		<Components.Container
@@ -215,6 +234,16 @@ const Renderer = ({
 				page={page}
 				pageIndex={pageIndex}
 			>
+				{hasFieldRequired && !isAdminPortletNamespace && (
+					<p aria-hidden="true" className="text-secondary">
+						<span className="c-mr-1 reference-mark">
+							<ClayIcon symbol="asterisk" />
+						</span>
+						{Liferay.Language.get(
+							'fields-required-icon-description'
+						)}
+					</p>
+				)}
 				<Layout
 					components={Components}
 					editable={editable}

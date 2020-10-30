@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
@@ -169,7 +170,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 			keywordsOptional.orElse(StringPool.BLANK));
 
 		searchResultsPortletDisplayContext.setRenderNothing(
-			isRenderNothing(searchRequest));
+			isRenderNothing(renderRequest, searchRequest));
 
 		searchResultsPortletDisplayContext.setSearchContainer(
 			buildSearchContainer(
@@ -412,7 +413,15 @@ public class SearchResultsPortlet extends MVCPortlet {
 		return http.removeParameter(urlString, paginationStartParameterName);
 	}
 
-	protected boolean isRenderNothing(SearchRequest searchRequest) {
+	protected boolean isRenderNothing(
+		RenderRequest renderRequest, SearchRequest searchRequest) {
+
+		long assetEntryId = ParamUtil.getLong(renderRequest, "assetEntryId");
+
+		if (assetEntryId != 0) {
+			return false;
+		}
+
 		if ((searchRequest.getQueryString() == null) &&
 			!searchRequest.isEmptySearchEnabled()) {
 

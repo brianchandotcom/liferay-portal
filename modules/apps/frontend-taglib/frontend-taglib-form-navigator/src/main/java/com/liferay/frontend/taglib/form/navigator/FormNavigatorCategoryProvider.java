@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-public interface FormNavigatorCategoryHelper {
+public interface FormNavigatorCategoryProvider {
 
 	public List<FormNavigatorCategory> getFormNavigatorCategories(
 		String formNavigatorId);

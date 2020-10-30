@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryHelper;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryProvider;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryHelper;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
 import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.frontend.taglib.form.navigator.internal.configuration.FormNavigatorEntryConfigurationRetriever;
@@ -45,8 +45,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = FormNavigatorEntryHelper.class)
-public class FormNavigatorEntryHelperImpl implements FormNavigatorEntryHelper {
+@Component(immediate = true, service = FormNavigatorEntryProvider.class)
+public class FormNavigatorEntryProviderImpl
+	implements FormNavigatorEntryProvider {
 
 	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
@@ -81,7 +82,7 @@ public class FormNavigatorEntryHelperImpl implements FormNavigatorEntryHelper {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
 
-		String[] categoryKeys = _formNavigatorCategoryHelper.getKeys(
+		String[] categoryKeys = _formNavigatorCategoryProvider.getKeys(
 			formNavigatorId);
 
 		for (String categoryKey : categoryKeys) {
@@ -263,10 +264,10 @@ public class FormNavigatorEntryHelperImpl implements FormNavigatorEntryHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FormNavigatorEntryHelperImpl.class);
+		FormNavigatorEntryProviderImpl.class);
 
 	@Reference
-	private FormNavigatorCategoryHelper _formNavigatorCategoryHelper;
+	private FormNavigatorCategoryProvider _formNavigatorCategoryProvider;
 
 	private ServiceTrackerMap<String, FormNavigatorContextProvider<?>>
 		_formNavigatorContextProviderMap;

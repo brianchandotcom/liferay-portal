@@ -516,23 +516,32 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 
 <clay:row>
 	<clay:col
-		id="image-card-block"
-		md="6"
+		id="simpleHorizontalCard"
+		md="4"
 	>
-		<clay:horizontal-card-v2
+		<clay:horizontal-card
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
 		/>
 	</clay:col>
 
 	<clay:col
-		id="image-card-icon-block"
-		md="6"
+		id="selectableHorizontalCard"
+		md="4"
 	>
-		<clay:horizontal-card-v2
+		<clay:horizontal-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
+			disabled="<%= true %>"
 			selectable="<%= true %>"
-			selected="<%= true %>"
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
+		/>
+	</clay:col>
+
+	<clay:col
+		id="modelHorizontalCard"
+		md="4"
+	>
+		<clay:horizontal-card
+			horizontalCard="<%= new ClaySampleHorizontalCard() %>"
 		/>
 	</clay:col>
 </clay:row>

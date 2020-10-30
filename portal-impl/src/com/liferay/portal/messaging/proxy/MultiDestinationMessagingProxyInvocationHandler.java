@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.messaging.proxy.BaseMultiDestinationProxyBean;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
 import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -43,7 +46,7 @@ public class MultiDestinationMessagingProxyInvocationHandler
 	public Object invoke(Object proxy, Method method, Object[] args)
 		throws Throwable {
 
-		if (ArrayUtil.contains(_objectMethods, method)) {
+		if (_objectMethods.contains(method)) {
 			return method.invoke(_baseMultiDestinationProxyBean, args);
 		}
 
@@ -71,8 +74,8 @@ public class MultiDestinationMessagingProxyInvocationHandler
 
 		};
 
-	private static final Method[] _objectMethods =
-		Object.class.getDeclaredMethods();
+	private static final Set<Method> _objectMethods = new HashSet<>(
+		Arrays.asList(Object.class.getDeclaredMethods()));
 
 	private final BaseMultiDestinationProxyBean _baseMultiDestinationProxyBean;
 

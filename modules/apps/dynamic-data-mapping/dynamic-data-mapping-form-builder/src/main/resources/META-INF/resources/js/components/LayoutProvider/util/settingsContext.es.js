@@ -21,17 +21,47 @@ import {
 import {getDefaultFieldName} from '../../../util/fieldSupport.es';
 import {updateFieldValidationProperty} from './fields.es';
 
-export const getSettingsContextProperty = (settingsContext, propertyName) => {
+export const getSettingsContextProperty = (
+	settingsContext,
+	propertyName,
+	propertyType = 'value'
+) => {
 	let propertyValue;
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields((field) => {
 		if (propertyName === field.fieldName) {
-			propertyValue = field.value;
+			propertyValue = field[propertyType];
 		}
 	});
 
 	return propertyValue;
+};
+
+export const setFieldReferenceErrorMessage = (
+	settingsContext,
+	propertyName,
+	displayErrors = true
+) => {
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	return {
+		...settingsContext,
+		pages: visitor.mapFields((field) => {
+			if (propertyName === field.fieldName) {
+				field = {
+					...field,
+					displayErrors,
+					errorMessage: Liferay.Language.get(
+						'this-reference-is-already-being-used'
+					),
+					valid: !displayErrors,
+				};
+			}
+
+			return field;
+		}),
+	};
 };
 
 export const updateSettingsContextProperty = (
@@ -123,6 +153,27 @@ export const updateFieldName = (
 			),
 		};
 	}
+
+	return focusedField;
+};
+
+export const updateFieldReference = (focusedField, invalid = false) => {
+	const {settingsContext} = focusedField;
+
+	focusedField = {
+		...focusedField,
+		settingsContext: invalid
+			? setFieldReferenceErrorMessage(
+					settingsContext,
+					'fieldReference',
+					true
+			  )
+			: setFieldReferenceErrorMessage(
+					settingsContext,
+					'fieldReference',
+					false
+			  ),
+	};
 
 	return focusedField;
 };

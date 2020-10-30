@@ -17,7 +17,9 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 import {getField} from '../../../util/fieldSupport.es';
 import {updateRulesReferences} from '../util/rules.es';
 import {
+	getSettingsContextProperty,
 	updateField,
+	updateFieldReference,
 	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
 
@@ -119,6 +121,25 @@ export const updateState = (props, state, propertyName, propertyValue) => {
 	};
 };
 
+export const findInvalidFieldReference = (pages, focusedField, value) => {
+	const visitor = new PagesVisitor(pages);
+	const equalFields = [];
+
+	visitor.mapFields((field) => {
+		const fieldReference = getSettingsContextProperty(
+			field.settingsContext,
+			'fieldReference'
+		);
+
+		equalFields.push(
+			focusedField.fieldName !== field.fieldName &&
+				fieldReference === value
+		);
+	});
+
+	return equalFields.find((field) => field);
+};
+
 export const handleFieldEdited = (props, state, event) => {
 	const {fieldName, propertyName, propertyValue} = event;
 	let newState = {};
@@ -128,6 +149,25 @@ export const handleFieldEdited = (props, state, event) => {
 			...state,
 			...(fieldName && {focusedField: getField(state.pages, fieldName)}),
 		};
+
+		if (propertyName === 'fieldReference') {
+			if (
+				propertyValue !== '' &&
+				propertyValue !== state.focusedField.fieldName
+			) {
+				state = {
+					...state,
+					focusedField: updateFieldReference(
+						state.focusedField,
+						findInvalidFieldReference(
+							state.pages,
+							state.focusedField,
+							propertyValue
+						)
+					),
+				};
+			}
+		}
 
 		newState = updateState(props, state, propertyName, propertyValue);
 	}

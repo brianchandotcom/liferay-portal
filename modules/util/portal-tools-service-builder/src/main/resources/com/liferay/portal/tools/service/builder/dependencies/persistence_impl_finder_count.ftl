@@ -59,7 +59,11 @@ public int countBy${entityFinder.name}(
 				</#list>
 			};
 
-			count = (Long)${finderCache}.getResult(finderPath, finderArgs, this);
+			count = (Long)${finderCache}.getResult(finderPath, finderArgs
+				<#if serviceBuilder.isVersionLTE_7_3_0()>
+					, this
+				</#if>
+				);
 		}
 	<#else>
 		FinderPath finderPath =
@@ -83,7 +87,11 @@ public int countBy${entityFinder.name}(
 			</#list>
 		};
 
-		Long count = (Long)${finderCache}.getResult(finderPath, finderArgs, this);
+		Long count = (Long)${finderCache}.getResult(finderPath, finderArgs
+			<#if serviceBuilder.isVersionLTE_7_3_0()>
+				, this
+			</#if>
+			);
 	</#if>
 
 	if (count == null) {
@@ -220,7 +228,11 @@ public int countBy${entityFinder.name}(
 					</#list>
 				};
 
-				count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
+				count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs
+					<#if serviceBuilder.isVersionLTE_7_3_0()>
+						, this
+					</#if>
+					);
 			}
 		<#else>
 			Object[] finderArgs = new Object[] {
@@ -239,7 +251,11 @@ public int countBy${entityFinder.name}(
 				</#list>
 			};
 
-			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
+			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs
+				<#if serviceBuilder.isVersionLTE_7_3_0()>
+					, this
+				</#if>
+				);
 		</#if>
 
 		if (count == null) {
@@ -377,7 +393,11 @@ public int countBy${entityFinder.name}(
 					</#list>
 				};
 
-				count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
+				count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs
+					<#if serviceBuilder.isVersionLTE_7_3_0()>
+						, this
+					</#if>
+					);
 			}
 		<#else>
 			Object[] finderArgs = new Object[] {
@@ -394,7 +414,11 @@ public int countBy${entityFinder.name}(
 				</#list>
 			};
 
-			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
+			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs
+				<#if serviceBuilder.isVersionLTE_7_3_0()>
+					, this
+				</#if>
+				);
 		</#if>
 
 		if (count == null) {

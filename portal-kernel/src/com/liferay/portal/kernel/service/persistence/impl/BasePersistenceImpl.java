@@ -206,7 +206,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		Object[] arguments = _getArguments(scalarValues);
 
-		Object cacheResult = finderCache.getResult(finderPath, arguments, this);
+		Object cacheResult = finderCache.getResult(finderPath, arguments);
 
 		if (cacheResult != null) {
 			return (R)cacheResult;

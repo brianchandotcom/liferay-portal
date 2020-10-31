@@ -27,11 +27,15 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +51,17 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class AccountForecastResourceImpl
 	extends BaseAccountForecastResourceImpl {
+
+	@Override
+	public void create(
+			Collection<AccountForecast> accountForecasts,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (AccountForecast accountForecast : accountForecasts) {
+			_createItem(accountForecast);
+		}
+	}
 
 	@Override
 	public Page<AccountForecast> getAccountForecastsByMonthlyRevenuePage(
@@ -97,6 +112,36 @@ public class AccountForecastResourceImpl
 		return Page.of(
 			_toAccountForecasts(commerceAccountCommerceMLForecasts), pagination,
 			totalItems);
+	}
+
+	private void _createItem(AccountForecast accountForecast) throws Exception {
+		CommerceAccountCommerceMLForecast commerceAccountCommerceMLForecast =
+			_commerceAccountCommerceMLForecastManager.create();
+
+		if (accountForecast.getActual() != null) {
+			commerceAccountCommerceMLForecast.setActual(
+				accountForecast.getActual());
+		}
+
+		commerceAccountCommerceMLForecast.setCommerceAccountId(
+			accountForecast.getAccount());
+		commerceAccountCommerceMLForecast.setCompanyId(
+			contextCompany.getCompanyId());
+		commerceAccountCommerceMLForecast.setForecast(
+			accountForecast.getForecast());
+		commerceAccountCommerceMLForecast.setForecastLowerBound(
+			accountForecast.getForecastLowerBound());
+		commerceAccountCommerceMLForecast.setForecastUpperBound(
+			accountForecast.getForecastUpperBound());
+		commerceAccountCommerceMLForecast.setPeriod("month");
+		commerceAccountCommerceMLForecast.setScope("commerce-account");
+		commerceAccountCommerceMLForecast.setTarget("revenue");
+		commerceAccountCommerceMLForecast.setTimestamp(
+			accountForecast.getTimestamp());
+
+		_commerceAccountCommerceMLForecastManager.
+			addCommerceAccountCommerceMLForecast(
+				commerceAccountCommerceMLForecast);
 	}
 
 	private List<AccountForecast> _toAccountForecasts(

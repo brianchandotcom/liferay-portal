@@ -59,7 +59,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.10"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "1.3.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "3.0.1"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.15"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.16"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "3.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.10"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.44"

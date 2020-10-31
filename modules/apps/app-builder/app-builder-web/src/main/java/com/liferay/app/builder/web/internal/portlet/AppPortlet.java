@@ -119,6 +119,22 @@ public class AppPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.APP_DEPLOYMENT_TYPE, _appDeploymentType);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		try {
+			renderRequest.setAttribute(
+				AppBuilderWebKeys.APP_PORTRAIT_URL,
+				user.getPortraitURL(themeDisplay));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
 		AppBuilderAppPortletTab appBuilderAppPortletTab =
 			AppDeployUtil.getAppBuilderAppPortletTab(_appBuilderApp.getScope());
 
@@ -137,22 +153,6 @@ public class AppPortlet extends MVCPortlet {
 			appBuilderAppPortletTab.getAppBuilderAppPortletTabContext(
 				_appBuilderApp,
 				ParamUtil.getLong(renderRequest, "dataRecordId")));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		User user = themeDisplay.getUser();
-
-		try {
-			renderRequest.setAttribute(
-				AppBuilderWebKeys.APP_PORTRAIT_URL,
-				user.getPortraitURL(themeDisplay));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
 
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);

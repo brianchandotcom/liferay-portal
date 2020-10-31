@@ -19,7 +19,6 @@
 				"metal-soy": ">=2.16.8",
 				"metal-soy-bundle": ">=2.16.8",
 				"metal-state": ">=2.16.8",
-				"metal-structs": ">=1.0.1",
 				"metal-uri": ">=2.4.0",
 				"metal-useragent": ">=3.0.0",
 				"metal-web-component": ">=2.16.8",

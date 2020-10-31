@@ -17,7 +17,6 @@
 import {isDefAndNotNull} from 'metal';
 import Ajax from 'metal-ajax';
 import CancellablePromise from 'metal-promise';
-import {MultiMap} from 'metal-structs';
 import Uri from 'metal-uri';
 import UA from 'metal-useragent';
 
@@ -234,10 +233,7 @@ class RequestScreen extends Screen {
 		}
 		let body = null;
 		let httpMethod = this.httpMethod;
-		const headers = new MultiMap();
-		Object.keys(this.httpHeaders).forEach((header) =>
-			headers.add(header, this.httpHeaders[header])
-		);
+		const headers = {...this.httpHeaders};
 		if (globals.capturedFormElement) {
 			this.addSafariXHRPolyfill();
 			body = this.getFormData(
@@ -245,9 +241,6 @@ class RequestScreen extends Screen {
 				globals.capturedFormButtonElement
 			);
 			httpMethod = RequestScreen.POST;
-			if (UA.isIeOrEdge) {
-				headers.add('If-None-Match', '"0"');
-			}
 		}
 		const requestPath = this.formatLoadPath(path);
 

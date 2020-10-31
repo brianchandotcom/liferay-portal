@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -92,12 +93,16 @@ public class DDMFormField implements Serializable {
 		setName(name);
 		setType(type);
 
-		setDDMFormFieldOptions(new DDMFormFieldOptions());
+		Locale locale = LocaleUtil.getDefault();
+
+		setDDMFormFieldOptions(new DDMFormFieldOptions(locale));
+
 		setFieldReference(name);
-		setLabel(new LocalizedValue());
-		setPredefinedValue(new LocalizedValue());
-		setStyle(new LocalizedValue());
-		setTip(new LocalizedValue());
+
+		setLabel(new LocalizedValue(locale));
+		setPredefinedValue(new LocalizedValue(locale));
+		setStyle(new LocalizedValue(locale));
+		setTip(new LocalizedValue(locale));
 	}
 
 	/**

@@ -23,7 +23,6 @@ class Route {
 	 * Route class.
 	 * @param {!string|RegExp|Function} path
 	 * @param {!Function} handler
-	 * @constructor
 	 */
 	constructor(path, handler) {
 		if (!isDefAndNotNull(path)) {

@@ -20,7 +20,6 @@ class Cacheable extends Disposable {
 
 	/**
 	 * Abstract class for defining cacheable behavior.
-	 * @constructor
 	 */
 	constructor() {
 		super();

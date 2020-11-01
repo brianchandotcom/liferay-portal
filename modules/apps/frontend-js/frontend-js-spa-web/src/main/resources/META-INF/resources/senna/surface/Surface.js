@@ -26,7 +26,6 @@ class Surface extends Disposable {
 	 * Surface class representing the references to elements on the page that
 	 * can potentially be updated by <code>App</code>.
 	 * @param {string} id
-	 * @constructor
 	 */
 	constructor(id) {
 		super();

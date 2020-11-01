@@ -36,8 +36,6 @@ class App extends EventEmitter {
 
 	/**
 	 * App class that handle routes and screens lifecycle.
-	 * @constructor
-	 * @extends {EventEmitter}
 	 */
 	constructor() {
 		super();

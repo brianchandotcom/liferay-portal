@@ -27,8 +27,6 @@ class Screen extends Cacheable {
 	 * Screen class is a special type of route handler that provides helper
 	 * utilities that adds lifecycle and methods to provide content to each
 	 * registered surface.
-	 * @constructor
-	 * @extends {Cacheable}
 	 */
 	constructor() {
 		super();

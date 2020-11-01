@@ -29,8 +29,6 @@ class RequestScreen extends Screen {
 	/**
 	 * Request screen abstract class to perform io operations on descendant
 	 * screens.
-	 * @constructor
-	 * @extends {Screen}
 	 */
 	constructor() {
 		super();

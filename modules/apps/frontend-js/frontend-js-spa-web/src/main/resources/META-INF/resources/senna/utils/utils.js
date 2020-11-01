@@ -162,6 +162,17 @@ class utils {
 	}
 
 	/**
+	 * Logs the provided message in DEV environments
+	 * @param {String} message
+	 */
+	static log(message) {
+		if (process.env.NODE_ENV === 'development') {
+			// eslint-disable-next-line
+			console.log(message);
+		}
+	}
+
+	/**
 	 * Removes all attributes form node.
 	 * @return {void}
 	 * @static

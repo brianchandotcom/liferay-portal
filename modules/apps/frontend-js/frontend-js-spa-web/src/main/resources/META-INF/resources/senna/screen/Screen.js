@@ -19,6 +19,7 @@ import {globalEval} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
 import Cacheable from '../cacheable/Cacheable';
+import utils from '../utils/utils';
 
 class Screen extends Cacheable {
 
@@ -60,7 +61,7 @@ class Screen extends Cacheable {
 	 * that requires its DOM to be visible. Lifecycle.
 	 */
 	activate() {
-		console.log('Screen [' + this + '] activate');
+		utils.log('Screen [' + this + '] activate');
 	}
 
 	/**
@@ -71,7 +72,7 @@ class Screen extends Cacheable {
 	 *     the current screen is locked and the next nagivation interrupted.
 	 */
 	beforeActivate() {
-		console.log('Screen [' + this + '] beforeActivate');
+		utils.log('Screen [' + this + '] beforeActivate');
 	}
 
 	/**
@@ -83,7 +84,7 @@ class Screen extends Cacheable {
 	 *     the current screen is locked and the next nagivation interrupted.
 	 */
 	beforeDeactivate() {
-		console.log('Screen [' + this + '] beforeDeactivate');
+		utils.log('Screen [' + this + '] beforeDeactivate');
 	}
 
 	/**
@@ -110,7 +111,7 @@ class Screen extends Cacheable {
 	 * timers. Lifecycle.
 	 */
 	deactivate() {
-		console.log('Screen [' + this + '] deactivate');
+		utils.log('Screen [' + this + '] deactivate');
 	}
 
 	/**
@@ -120,7 +121,7 @@ class Screen extends Cacheable {
 	 */
 	disposeInternal() {
 		super.disposeInternal();
-		console.log('Screen [' + this + '] dispose');
+		utils.log('Screen [' + this + '] dispose');
 	}
 
 	/**
@@ -159,7 +160,7 @@ class Screen extends Cacheable {
 	 *     navigation until it is resolved.
 	 */
 	flip(surfaces) {
-		console.log('Screen [' + this + '] flip');
+		utils.log('Screen [' + this + '] flip');
 
 		var transitions = [];
 
@@ -199,7 +200,7 @@ class Screen extends Cacheable {
 	 *     content is restored.
 	 */
 	getSurfaceContent() {
-		console.log('Screen [' + this + '] getSurfaceContent');
+		utils.log('Screen [' + this + '] getSurfaceContent');
 	}
 
 	/**
@@ -220,7 +221,7 @@ class Screen extends Cacheable {
 	 *     until it is resolved. This is useful for loading async content.
 	 */
 	load() {
-		console.log('Screen [' + this + '] load');
+		utils.log('Screen [' + this + '] load');
 
 		return CancellablePromise.resolve();
 	}

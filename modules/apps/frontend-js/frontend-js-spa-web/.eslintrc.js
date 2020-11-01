@@ -15,6 +15,5 @@
 module.exports = {
 	rules: {
 		'@liferay/portal/no-metal-plugins': 'off',
-		'no-console': 'off',
 	},
 };

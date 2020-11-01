@@ -343,12 +343,12 @@ class App extends EventEmitter {
 		const path = utils.getUrlPath(url);
 
 		if (!this.isLinkSameOrigin_(uri.getHost())) {
-			console.log('Offsite link clicked');
+			utils.log('Offsite link clicked');
 
 			return false;
 		}
 		if (!this.isSameBasePath_(path)) {
-			console.log("Link clicked outside app's base path");
+			utils.log("Link clicked outside app's base path");
 
 			return false;
 		}
@@ -359,7 +359,7 @@ class App extends EventEmitter {
 			return false;
 		}
 		if (!this.findRoute(path)) {
-			console.log('No route for ' + path);
+			utils.log('No route for ' + path);
 
 			return false;
 		}
@@ -394,7 +394,7 @@ class App extends EventEmitter {
 	 */
 	createScreenInstance(path, route) {
 		if (!this.pendingNavigate && path === this.activePath) {
-			console.log('Already at destination, refresh navigation');
+			utils.log('Already at destination, refresh navigation');
 
 			return this.activeScreen;
 		}
@@ -411,7 +411,7 @@ class App extends EventEmitter {
 			else {
 				screen = handler(route) || new Screen();
 			}
-			console.log('Create screen for [' + path + '] [' + screen + ']');
+			utils.log('Create screen for [' + path + '] [' + screen + ']');
 		}
 
 		return screen;
@@ -456,7 +456,7 @@ class App extends EventEmitter {
 			return this.pendingNavigate;
 		}
 
-		console.log('Navigate to [' + path + ']');
+		utils.log('Navigate to [' + path + ']');
 
 		this.stopPendingNavigate_();
 		this.isNavigationPending = true;
@@ -545,7 +545,7 @@ class App extends EventEmitter {
 		this.pendingNavigate = null;
 		globals.capturedFormElement = null;
 		globals.capturedFormButtonElement = null;
-		console.log('Navigation done');
+		utils.log('Navigation done');
 	}
 
 	/**
@@ -660,7 +660,7 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	handleNavigateError_(path, nextScreen, error) {
-		console.log(
+		utils.log(
 			'Navigation error for [' + nextScreen + '] (' + error.stack + ')'
 		);
 		this.emit('navigationError', {
@@ -1027,7 +1027,7 @@ class App extends EventEmitter {
 				this.pendingNavigate.path === event.path ||
 				this.navigationStrategy === NavigationStrategy.SCHEDULE_LAST
 			) {
-				console.log('Waiting...');
+				utils.log('Waiting...');
 
 				return;
 			}
@@ -1069,7 +1069,7 @@ class App extends EventEmitter {
 			event.shiftKey ||
 			event.button
 		) {
-			console.log(
+			utils.log(
 				'Navigate aborted, invalid mouse button or modifier key pressed.'
 			);
 
@@ -1087,7 +1087,7 @@ class App extends EventEmitter {
 	onDocSubmitDelegate_(event) {
 		var form = event.delegateTarget;
 		if (form.method === 'get') {
-			console.log('GET method not supported');
+			utils.log('GET method not supported');
 
 			return;
 		}
@@ -1178,7 +1178,7 @@ class App extends EventEmitter {
 		}
 
 		if (state.senna) {
-			console.log('History navigation to [' + state.path + ']');
+			utils.log('History navigation to [' + state.path + ']');
 			this.popstateScrollTop = state.scrollTop;
 			this.popstateScrollLeft = state.scrollLeft;
 			if (!this.nativeScrollRestorationSupported) {
@@ -1272,7 +1272,7 @@ class App extends EventEmitter {
 			);
 		}
 
-		console.log('Prefetching [' + path + ']');
+		utils.log('Prefetching [' + path + ']');
 
 		var nextScreen = this.createScreenInstance(path, route);
 
@@ -1336,7 +1336,7 @@ class App extends EventEmitter {
 		Object.keys(surfaces).forEach((id) => {
 			var surfaceContent = nextScreen.getSurfaceContent(id, params);
 			surfaces[id].addContent(nextScreen.getId(), surfaceContent);
-			console.log(
+			utils.log(
 				'Screen [' +
 					nextScreen.getId() +
 					'] add content to surface ' +

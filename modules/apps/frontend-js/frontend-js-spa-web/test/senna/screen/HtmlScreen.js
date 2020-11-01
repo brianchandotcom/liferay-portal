@@ -19,7 +19,7 @@ import globals from '../../../src/main/resources/META-INF/resources/senna/global
 import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 
-describe('HtmlScreen', function () {
+describe('HtmlScreen', () => {
 	beforeEach(() => {
 		jest.spyOn(console, 'log').mockImplementation(() => {});
 	});
@@ -31,7 +31,9 @@ describe('HtmlScreen', function () {
 		expect(screen.getTitleSelector()).toBe('div.title');
 	});
 
-	it.skip('returns loaded content', (done) => {
+	it('returns loaded content', (done) => {
+		fetch.mockResponse('content');
+
 		var screen = new HtmlScreen();
 		screen.load('/url').then((content) => {
 			expect(content).toBe('content');
@@ -39,30 +41,35 @@ describe('HtmlScreen', function () {
 		});
 	});
 
-	it.skip('sets title from response content', (done) => {
+	it('sets title from response content', (done) => {
+		fetch.mockResponse('<title>new</title>');
+
 		var screen = new HtmlScreen();
 		screen.load('/url').then(() => {
-			assert.strictEqual('new', screen.getTitle());
+			expect(screen.getTitle()).toBe('new');
 			done();
 		});
-		this.requests[0].respond(200, null, '<title>new</title>');
+
 	});
 
-	it.skip('nots set title from response content if not present', (done) => {
+	it('does not set title from response content if not present', (done) => {
+		fetch.mockResponse('content');
+
 		var screen = new HtmlScreen();
 		screen.load('/url').then(() => {
-			assert.strictEqual(null, screen.getTitle());
+			expect(screen.getTitle()).toBeNull();
 			done();
 		});
-		this.requests[0].respond(200, null, '');
 	});
 
 	it.skip('cancels load request to an url', (done) => {
+		fetch.mockResponse('');
+
 		var screen = new HtmlScreen();
 		screen
 			.load('/url')
 			.catch((reason) => {
-				assert.ok(reason instanceof Error);
+				expect(reason).toBeInstanceOf(Error);
 				done();
 			})
 			.cancel();

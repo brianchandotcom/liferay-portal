@@ -14,11 +14,10 @@
 
 'use strict';
 
+import {fetch} from 'frontend-js-web';
 import {isDefAndNotNull} from 'metal';
-import Ajax from 'metal-ajax';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
-import UA from 'metal-useragent';
 
 import errors from '../errors/errors';
 import globals from '../globals/globals';
@@ -139,10 +138,6 @@ class RequestScreen extends Screen {
 			uri.setPort(globals.window.location.port);
 		}
 
-		if (UA.isIeOrEdge && this.httpMethod === RequestScreen.GET) {
-			return uri.makeUnique().toString();
-		}
-
 		return uri.toString();
 	}
 
@@ -168,20 +163,32 @@ class RequestScreen extends Screen {
 	 */
 	getRequestPath() {
 		var request = this.getRequest();
+
 		if (request) {
-			var requestPath = request.requestPath;
-			var responseUrl = this.maybeExtractResponseUrlFromRequest(request);
-			if (responseUrl) {
-				requestPath = responseUrl;
-			}
-			if (UA.isIeOrEdge && this.httpMethod === RequestScreen.GET) {
-				requestPath = new Uri(requestPath).removeUnique().toString();
+			var requestPath = request.url;
+
+			var response = this.getResponse();
+
+			if (response) {
+				var responseUrl = response.url;
+
+				if (responseUrl) {
+					requestPath = responseUrl;
+				}
 			}
 
 			return utils.getUrlPath(requestPath);
 		}
 
 		return null;
+	}
+
+	/**
+	 * Gets the request object.
+	 * @return {?Object}
+	 */
+	getResponse() {
+		return this.response;
 	}
 
 	/**
@@ -233,52 +240,65 @@ class RequestScreen extends Screen {
 		}
 		let body = null;
 		let httpMethod = this.httpMethod;
-		const headers = {...this.httpHeaders};
+		const requestHeaders = {'X-PJAX': 'true', ...this.httpHeaders};
 		if (globals.capturedFormElement) {
-			this.addSafariXHRPolyfill();
 			body = this.getFormData(
 				globals.capturedFormElement,
 				globals.capturedFormButtonElement
 			);
 			httpMethod = RequestScreen.POST;
 		}
-		const requestPath = this.formatLoadPath(path);
 
-		return Ajax.request(
-			requestPath,
-			httpMethod,
-			body,
-			headers,
-			null,
-			this.timeout
-		)
-			.then((xhr) => {
-				this.removeSafariXHRPolyfill();
-				this.setRequest(xhr);
-				this.assertValidResponseStatusCode(xhr.status);
-				if (httpMethod === RequestScreen.GET && this.isCacheable()) {
-					this.addCache(xhr.responseText);
-				}
-				xhr.requestPath = requestPath;
+		const url = this.formatLoadPath(path);
 
-				return xhr.responseText;
+		this.setRequest({
+			method: httpMethod,
+			requestBody: body,
+			requestHeaders,
+			url
+		});
+
+		return Promise.race([
+			fetch(url, {
+				body,
+				headers: requestHeaders,
+				method: httpMethod,
+				mode: 'cors',
+				redirect: 'follow',
+				referrer: 'client'
 			})
-			.catch((reason) => {
-				this.removeSafariXHRPolyfill();
-				switch (reason.message) {
-					case errors.REQUEST_TIMEOUT:
-						reason.timeout = true;
-						break;
-					case errors.REQUEST_ERROR:
-						reason.requestError = true;
-						break;
-					case errors.REQUEST_PREMATURE_TERMINATION:
-						reason.requestError = true;
-						reason.requestPrematureTermination = true;
-						break;
-				}
-				throw reason;
-			});
+				.then(resp => {
+					this.assertValidResponseStatusCode(resp.status);
+
+					this.setResponse(resp);
+
+					return resp.clone().text();
+				})
+				.then(text => {
+					if (httpMethod === RequestScreen.GET && this.isCacheable()) {
+						this.addCache(text);
+					}
+
+					return text;
+				}),
+			new Promise((_, reject) => {
+				setTimeout(() => reject(new Error(errors.REQUEST_TIMEOUT)) , this.timeout);
+			})
+		]).catch((reason) => {
+			switch (reason.message) {
+				case errors.REQUEST_TIMEOUT:
+					reason.timeout = true;
+					break;
+				case errors.REQUEST_ERROR:
+					reason.requestError = true;
+					break;
+				case errors.REQUEST_PREMATURE_TERMINATION:
+					reason.requestError = true;
+					reason.requestPrematureTermination = true;
+					break;
+			}
+			throw reason;
+		});
 	}
 
 	/**
@@ -294,70 +314,6 @@ class RequestScreen extends Screen {
 				submittedButtonElement.name,
 				submittedButtonElement.value
 			);
-		}
-	}
-
-	/**
-	 * The following method tries to extract the response url value by checking
-	 * the custom response header 'X-Request-URL' if proper value is not present
-	 * in XMLHttpRequest. The value of responseURL will be the final URL
-	 * obtained after any redirects. Internet Explorer, Edge and Safari <= 7
-	 * does not yet support the feature. For more information see:
-	 * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseURL
-	 * https://xhr.spec.whatwg.org/#the-responseurl-attribute
-	 * @param {XMLHttpRequest} request
-	 * @return {?string} Response url best match.
-	 */
-	maybeExtractResponseUrlFromRequest(request) {
-		var responseUrl = request.responseURL;
-		if (responseUrl) {
-			return responseUrl;
-		}
-
-		return request.getResponseHeader(RequestScreen.X_REQUEST_URL_HEADER);
-	}
-
-	/**
-	 * This function set attribute data-safari-temp-disabled to
-	 * true and set disable attribute of an input type="file" tag
-	 * is used as a polyfill for iOS 11.3 Safari / macOS Safari 11.1
-	 * empty <input type="file"> XHR bug.
-	 * https://github.com/rails/rails/issues/32440
-	 * https://bugs.webkit.org/show_bug.cgi?id=184490
-	 */
-	addSafariXHRPolyfill() {
-		if (globals.capturedFormElement && UA.isSafari) {
-			const inputs = globals.capturedFormElement.querySelectorAll(
-				'input[type="file"]:not([disabled])'
-			);
-			for (let index = 0; index < inputs.length; index++) {
-				const input = inputs[index];
-				if (input.files.length > 0) {
-					return;
-				}
-				input.setAttribute('data-safari-temp-disabled', 'true');
-				input.setAttribute('disabled', '');
-			}
-		}
-	}
-
-	/**
-	 * This function remove attribute data-safari-temp-disabled and disable attribute
-	 * of an input type="file" tag is used as a polyfill for iOS 11.3 Safari / macOS Safari 11.1
-	 * empty <input type="file"> XHR bug.
-	 * https://github.com/rails/rails/issues/32440
-	 * https://bugs.webkit.org/show_bug.cgi?id=184490
-	 */
-	removeSafariXHRPolyfill() {
-		if (globals.capturedFormElement && UA.isSafari) {
-			const inputs = globals.capturedFormElement.querySelectorAll(
-				'input[type="file"][data-safari-temp-disabled]'
-			);
-			for (let index = 0; index < inputs.length; index++) {
-				const input = inputs[index];
-				input.removeAttribute('data-safari-temp-disabled');
-				input.removeAttribute('disabled');
-			}
 		}
 	}
 
@@ -386,6 +342,14 @@ class RequestScreen extends Screen {
 	}
 
 	/**
+	 * Sets the request object.
+	 * @param {?Object} request
+	 */
+	setResponse(response) {
+		this.response = response;
+	}
+
+	/**
 	 * Sets the request timeout in milliseconds.
 	 * @param {!number} timeout
 	 */
@@ -409,13 +373,5 @@ RequestScreen.GET = 'get';
  * @static
  */
 RequestScreen.POST = 'post';
-
-/**
- * Fallback http header to retrieve response request url.
- * @type {string}
- * @default 'X-Request-URL'
- * @static
- */
-RequestScreen.X_REQUEST_URL_HEADER = 'X-Request-URL';
 
 export default RequestScreen;

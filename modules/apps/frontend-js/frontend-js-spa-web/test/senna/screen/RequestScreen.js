@@ -12,6 +12,7 @@
  * details.
  */
 
+import errors from '../../../src/main/resources/META-INF/resources/senna/errors/errors';
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import RequestScreen from '../../../src/main/resources/META-INF/resources/senna/screen/RequestScreen';
 
@@ -50,14 +51,11 @@ describe('RequestScreen', function () {
 		expect(screen.getTimeout()).toBe(0);
 	});
 
-	it('returns request path if responseURL or X-Request-URL not present on screen beforeUpdateHistoryPath', () => {
+	it('returns request path if response.url not present on screen beforeUpdateHistoryPath', () => {
 		var screen = new RequestScreen();
 		jest.spyOn(screen, 'getRequest').mockImplementation(() => {
 			return {
-				getResponseHeader() {
-					return null;
-				},
-				requestPath: '/path',
+				url: '/path',
 			};
 		});
 
@@ -66,26 +64,17 @@ describe('RequestScreen', function () {
 
 	it('returns responseURL if present on screen beforeUpdateHistoryPath', () => {
 		var screen = new RequestScreen();
+
+		jest.spyOn(screen, 'getResponse').mockImplementation(() => {
+			return {
+				url: '/redirect',
+			};
+		});
+
 		jest.spyOn(screen, 'getRequest').mockImplementation(() => {
 			return {
 				requestPath: '/path',
 				responseURL: '/redirect',
-			};
-		});
-
-		expect(screen.beforeUpdateHistoryPath('/path')).toBe('/redirect');
-	});
-
-	it('returns X-Request-URL if present and responseURL is not on screen beforeUpdateHistoryPath', () => {
-		var screen = new RequestScreen();
-		jest.spyOn(screen, 'getRequest').mockImplementation(() => {
-			return {
-				getResponseHeader: (header) => {
-					return {
-						'X-Request-URL': '/redirect',
-					}[header];
-				},
-				requestPath: '/path',
 			};
 		});
 
@@ -109,50 +98,47 @@ describe('RequestScreen', function () {
 		expect(screen.getRequestPath()).toBeNull();
 	});
 
-	it.skip('sends request to an url', (done) => {
+	it('sends request to an url', (done) => {
+		fetch.mockResponse('');
+
 		var screen = new RequestScreen();
 		screen.load('/url').then(() => {
-			assert.strictEqual(
-				globals.window.location.origin + '/url',
-				screen.getRequest().url
-			);
-			assert.deepEqual(
-				{
-					'X-PJAX': 'true',
-					'X-Requested-With': 'XMLHttpRequest',
-				},
-				screen.getRequest().requestHeaders
-			);
+			expect(screen.getRequest().url).toBe(globals.window.location.origin + '/url');
+			expect(screen.getRequest().requestHeaders).toHaveProperty('X-PJAX', 'true');
+			expect(screen.getRequest().requestHeaders).toHaveProperty('X-Requested-With', 'XMLHttpRequest');
 			done();
 		});
-		this.requests[0].respond(200);
 	});
 
-	it.skip('should load response content from cache', (done) => {
+	it('loads response content from cache', (done) => {
+		fetch.mockResponse('');
+
 		var screen = new RequestScreen();
 		var cache = {};
 		screen.addCache(cache);
 		screen.load('/url').then((cachedContent) => {
-			assert.strictEqual(cache, cachedContent);
+			expect(cachedContent).toBe(cache);
 			done();
 		});
 	});
 
-	it.skip('should not load response content from cache for post requests', (done) => {
+	it('does not load response content from cache for post requests', (done) => {
+		fetch.mockResponse('');
+
 		var screen = new RequestScreen();
 		var cache = {};
 		screen.setHttpMethod(RequestScreen.POST);
 		screen.load('/url').then(() => {
 			screen.load('/url').then((cachedContent) => {
-				assert.notStrictEqual(cache, cachedContent);
+				expect(cachedContent).not.toBe(cache);
 				done();
 			});
-			this.requests[1].respond(200);
 		});
-		this.requests[0].respond(200);
 	});
 
-	it.skip('should cancel load request to an url', (done) => {
+	it.skip('cancels load request to an url', (done) => {
+		fetch.mockResponse('');
+
 		var screen = new RequestScreen();
 		screen
 			.load('/url')
@@ -164,62 +150,72 @@ describe('RequestScreen', function () {
 			.cancel();
 	});
 
-	it.skip('should fail for timeout request', (done) => {
+	it('fails for timeout request', (done) => {
+		fetch.mockResponse(() => new Promise((resolve) => {
+			setTimeout(() => {resolve('')}, 100);
+		}));
+
 		var screen = new RequestScreen();
 		screen.setTimeout(0);
+
 		screen.load('/url').catch((reason) => {
-			assert.ok(reason.timeout);
-			clearTimeout(id);
+			expect(reason.timeout).toBeTruthy();
 			done();
 		});
-		var id = setTimeout(() => this.requests[0].respond(200), 100);
 	});
 
-	it.skip('should fail for invalid status code response', (done) => {
+	it('fails for invalid status code response', (done) => {
+		fetch.mockResponse('', {status: 404});
+
 		new RequestScreen().load('/url').catch((error) => {
-			assert.ok(error.invalidStatus);
+			expect(error.invalidStatus).toBeTruthy();
 			done();
 		});
-		this.requests[0].respond(404);
 	});
 
-	it.skip('should return the correct http status code for "page not found"', (done) => {
+	it('returns the correct http status code for "page not found"', (done) => {
+		fetch.mockResponse('', {status: 404});
+
 		new RequestScreen().load('/url').catch((error) => {
-			assert.strictEqual(error.statusCode, 404);
+			expect(error.statusCode).toBe(404);
 			done();
 		});
-		this.requests[0].respond(404);
 	});
 
-	it.skip('should return the correct http status code for "unauthorised"', (done) => {
+	it('returns the correct http status code for "unauthorised"', (done) => {
+		fetch.mockResponse('', {status: 401});
+
 		new RequestScreen().load('/url').catch((error) => {
-			assert.strictEqual(error.statusCode, 401);
+			expect(error.statusCode).toBe(401);
 			done();
 		});
-		this.requests[0].respond(401);
 	});
 
-	it.skip('should fail for request errors response', (done) => {
+	it('fails for request errors response', (done) => {
+		fetch.mockReject(new Error(errors.REQUEST_ERROR));
+
 		new RequestScreen().load('/url').catch((error) => {
-			assert.ok(error.requestError);
+			expect(error.requestError).toBeTruthy();
 			done();
 		});
-		this.requests[0].error();
 	});
 
-	it.skip('should form navigate force post method and request body wrapped in FormData', (done) => {
+	it('forces post method and request body wrapped in FormData', (done) => {
+		fetch.mockResponse('');
+
 		globals.capturedFormElement = globals.document.createElement('form');
 		var screen = new RequestScreen();
 		screen.load('/url').then(() => {
-			assert.strictEqual(RequestScreen.POST, screen.getRequest().method);
-			assert.ok(screen.getRequest().requestBody instanceof FormData);
+			expect(screen.getRequest().method).toBe(RequestScreen.POST);
+			expect(screen.getRequest().requestBody).toBeInstanceOf(FormData);
 			globals.capturedFormElement = null;
 			done();
 		});
-		this.requests[0].respond(200);
 	});
 
-	it.skip('should add submit input button value into request FormData', (done) => {
+	it('adds submit input button value into request FormData', (done) => {
+		fetch.mockResponse('');
+
 		globals.capturedFormElement = globals.document.createElement('form');
 		const submitButton = globals.document.createElement('button');
 		submitButton.name = 'submitButton';
@@ -228,18 +224,18 @@ describe('RequestScreen', function () {
 		globals.capturedFormElement.appendChild(submitButton);
 		globals.capturedFormButtonElement = submitButton;
 		var screen = new RequestScreen();
-		var spy = sinon.spy(FormData.prototype, 'append');
+		var spy = jest.spyOn(FormData.prototype, 'append');
 		screen.load('/url').then(() => {
-			assert.ok(spy.calledWith(submitButton.name, submitButton.value));
+			expect(spy).toHaveBeenCalledWith(submitButton.name, submitButton.value);
 			globals.capturedFormElement = null;
 			globals.capturedFormButtonElement = null;
-			spy.restore();
 			done();
 		});
-		this.requests[0].respond(200);
 	});
 
-	it.skip('should navigate over same protocol the page was viewed on', (done) => {
+	it('navigates over same protocol the page was viewed on', (done) => {
+		fetch.mockResponse('');
+
 		var screen = new RequestScreen();
 		var wrongProtocol = globals.window.location.origin.replace(
 			'http',
@@ -247,9 +243,8 @@ describe('RequestScreen', function () {
 		);
 		screen.load(wrongProtocol + '/url').then(() => {
 			var url = screen.getRequest().url;
-			assert.ok(url.indexOf('http:') === 0);
+			expect(url.indexOf('http:')).toBe(0);
 			done();
 		});
-		this.requests[0].respond(200);
 	});
 });

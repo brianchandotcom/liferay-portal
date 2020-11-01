@@ -42,8 +42,15 @@ describe('App', function () {
 		const beforeunload = jest.fn();
 		window.onbeforeunload = beforeunload;
 
+		jest.resetAllMocks();
+
 		jest.spyOn(console, 'log').mockImplementation(() => {});
-		jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
+		jest.spyOn(window, 'scrollTo').mockImplementation((top, left) => {
+			globals.window.history.state.scrollTop = top;
+			globals.window.history.state.scrollLeft = left;
+			window.pageXOffset = top;
+			window.pageYOffset = left;
+		});
 	});
 
 	afterEach(() => {
@@ -536,7 +543,7 @@ describe('App', function () {
 		expect(this.app.canNavigate('http://external/path')).toBe(false);
 	});
 
-	it.skip('is able to navigate to route that ends with "/"', () => {
+	it('is able to navigate to route that ends with "/"', () => {
 		this.app = new App();
 		globals.window = {
 			history: {},
@@ -673,7 +680,7 @@ describe('App', function () {
 		});
 	});
 
-	it('cancles navigate', (done) => {
+	it('cancels navigate', (done) => {
 		var stub = jest.fn();
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
@@ -691,17 +698,22 @@ describe('App', function () {
 			.cancel();
 	});
 
-	it.skip('clears pendingNavigate after navigate', (done) => {
+	it('clears pendingNavigate after navigate', (done) => {
+		jest.spyOn(
+			utils,
+			'getCurrentBrowserPathWithoutHash'
+		).mockImplementation(() => '/path');
+
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.navigate('/path').then(() => {
-			expect(this.app.pendingNavigate).toBe(false);
+			expect(this.app.pendingNavigate).toBeFalsy();
 			done();
 		});
-		expect(this.app.pendingNavigate).toBe(true);
+		expect(this.app.pendingNavigate).toBeTruthy();
 	});
 
-	it.skip('waits for pendingNavigate if navigate to same path', (done) => {
+	it('waits for pendingNavigate if navigate to same path', (done) => {
 		class CacheScreen extends Screen {
 			constructor() {
 				super();
@@ -720,7 +732,7 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should navigate back when clicking browser back button', (done) => {
+	it('navigates back when clicking browser back button', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
@@ -729,20 +741,22 @@ describe('App', function () {
 			.then(() => this.app.navigate('/path2'))
 			.then(() => {
 				var activeScreen = this.app.activeScreen;
-				assert.strictEqual('/path2', globals.window.location.pathname);
+				expect(globals.window.location.pathname).toBe('/path2');
 				this.app.once('endNavigate', () => {
-					assert.strictEqual(
-						'/path1',
-						globals.window.location.pathname
-					);
-					assert.notStrictEqual(activeScreen, this.app.activeScreen);
+					expect(globals.window.location.pathname).toBe('/path1');
+					expect(this.app.activeScreen).not.toBe(activeScreen);
 					done();
 				});
 				globals.window.history.back();
 			});
 	});
 
-	it.skip('should not navigate back on a hash change', (done) => {
+	it('does not navigate back on a hash change', (done) => {
+		jest.spyOn(
+			utils,
+			'getCurrentBrowserPathWithoutHash'
+		).mockImplementation(() => '/path1');
+
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
@@ -750,17 +764,17 @@ describe('App', function () {
 			.navigate('/path1')
 			.then(() => this.app.navigate('/path1#hash'))
 			.then(() => {
-				var startNavigate = sinon.stub();
+				var startNavigate = jest.fn();
 				this.app.on('startNavigate', startNavigate);
 				dom.once(globals.window, 'popstate', () => {
-					assert.strictEqual(0, startNavigate.callCount);
+					expect(startNavigate).not.toHaveBeenCalled();
 					done();
 				});
 				globals.window.history.back();
 			});
 	});
 
-	it.skip('should only call beforeNavigate when waiting for pendingNavigate if navigate to same path', (done) => {
+	it('only calls beforeNavigate when waiting for pendingNavigate if navigate to same path', (done) => {
 		class CacheScreen extends Screen {
 			constructor() {
 				super();
@@ -771,18 +785,18 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', CacheScreen));
 		this.app.navigate('/path').then(() => {
 			this.app.navigate('/path');
-			var beforeNavigate = sinon.stub();
-			var startNavigate = sinon.stub();
+			var beforeNavigate = jest.fn();
+			var startNavigate = jest.fn();
 			this.app.on('beforeNavigate', beforeNavigate);
 			this.app.on('startNavigate', startNavigate);
 			this.app.navigate('/path');
-			assert.strictEqual(1, beforeNavigate.callCount);
-			assert.strictEqual(0, startNavigate.callCount);
+			expect(beforeNavigate).toHaveBeenCalled();
+			expect(startNavigate).not.toHaveBeenCalled();
 			done();
 		});
 	});
 
-	it.skip('should not wait for pendingNavigate if navigate to different path', (done) => {
+	it('does not wait for pendingNavigate if navigate to different path', (done) => {
 		class CacheScreen extends Screen {
 			constructor() {
 				super();
@@ -798,22 +812,22 @@ describe('App', function () {
 			.then(() => {
 				var pendingNavigate1 = this.app.navigate('/path1');
 				var pendingNavigate2 = this.app.navigate('/path2');
-				assert.ok(pendingNavigate1);
-				assert.ok(pendingNavigate2);
-				assert.notStrictEqual(pendingNavigate1, pendingNavigate2);
+				expect(pendingNavigate1).toBeTruthy();
+				expect(pendingNavigate2).toBeTruthy();
+				expect(pendingNavigate1).not.toBe(pendingNavigate2);
 				done();
 			});
 	});
 
-	it.skip('should simulate refresh on navigate to the same path', (done) => {
+	it('simulates refresh on navigate to the same path', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.once('startNavigate', (payload) => {
-			assert.ok(!payload.replaceHistory);
+			expect(payload.replaceHistory).toBeFalsy();
 		});
 		this.app.navigate('/path').then(() => {
 			this.app.once('startNavigate', (payload) => {
-				assert.ok(payload.replaceHistory);
+				expect(payload.replaceHistory).toBeTruthy();
 			});
 			this.app.navigate('/path').then(() => {
 				done();
@@ -821,7 +835,7 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should add loading css class on navigate', (done) => {
+	it('adds loading css class on navigate', (done) => {
 		var containsLoadingCssClass = () => {
 			return globals.document.documentElement.classList.contains(
 				this.app.getLoadingCssClass()
@@ -830,18 +844,18 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('startNavigate', () =>
-			assert.ok(containsLoadingCssClass())
+			expect(containsLoadingCssClass()).toBe(true)
 		);
 		this.app.on('endNavigate', () => {
-			assert.ok(!containsLoadingCssClass());
+			expect(containsLoadingCssClass()).toBe(false);
 			done();
 		});
 		this.app
 			.navigate('/path')
-			.then(() => assert.ok(!containsLoadingCssClass()));
+			.then(() => expect(containsLoadingCssClass()).toBe(false));
 	});
 
-	it.skip('should not remove loading css class on navigate if there is pending navigate', (done) => {
+	it('does not remove loading css class on navigate if there is pending navigate', (done) => {
 		var containsLoadingCssClass = () => {
 			return globals.document.documentElement.classList.contains(
 				this.app.getLoadingCssClass()
@@ -852,67 +866,63 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.once('startNavigate', () => {
 			this.app.once('startNavigate', () =>
-				assert.ok(containsLoadingCssClass())
+				expect(containsLoadingCssClass()).toBe(true)
 			);
 			this.app.once('endNavigate', () =>
-				assert.ok(containsLoadingCssClass())
+				expect(containsLoadingCssClass()).toBe(true)
 			);
 			this.app.navigate('/path2').then(() => {
-				assert.ok(!containsLoadingCssClass());
+				expect(containsLoadingCssClass()).toBe(false);
 				done();
 			});
 		});
 		this.app.navigate('/path1');
 	});
 
-	it.skip('should not navigate to unrouted paths', (done) => {
+	it('does not navigate to unrouted paths', (done) => {
 		this.app = new App();
 		this.app.on('endNavigate', (payload) => {
-			assert.ok(payload.error instanceof Error);
+			expect(payload.error).toBeInstanceOf(Error);
 		});
 		this.app.navigate('/path', true).catch((reason) => {
-			assert.ok(reason instanceof Error);
+			expect(reason).toBeInstanceOf(Error);
 			done();
 		});
 	});
 
-	it.skip('should store scroll position on page scroll', (done) => {
-		showPageScrollbar();
+	it('stores scroll position on page scroll', (done) => {
 		this.app = new App();
 		setTimeout(() => {
-			assert.strictEqual(100, globals.window.history.state.scrollTop);
-			assert.strictEqual(100, globals.window.history.state.scrollLeft);
-			hidePageScrollbar();
+			expect(globals.window.history.state.scrollTop).toBe(100);
+			expect(globals.window.history.state.scrollLeft).toBe(100);
 			done();
 		}, 300);
 		globals.window.scrollTo(100, 100);
 	});
 
-	it.skip('should not store page scroll position during navigate', (done) => {
+	it('does not store page scroll position during navigate', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('startNavigate', () => {
 			this.app.onScroll_(); // Coverage
-			assert.ok(!this.app.captureScrollPositionFromScrollEvent);
+			expect(this.app.captureScrollPositionFromScrollEvent).toBe(false);
 		});
-		assert.ok(this.app.captureScrollPositionFromScrollEvent);
+		expect(this.app.captureScrollPositionFromScrollEvent).toBe(true);
 		this.app.navigate('/path').then(() => {
-			assert.ok(this.app.captureScrollPositionFromScrollEvent);
+			expect(this.app.captureScrollPositionFromScrollEvent).toBe(true);
 			done();
 		});
 	});
 
-	it.skip('should update scroll position on navigate', (done) => {
-		showPageScrollbar();
+	it('updates scroll position on navigate', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.navigate('/path1').then(() => {
 			setTimeout(() => {
 				this.app.navigate('/path2').then(() => {
-					assert.strictEqual(0, window.pageXOffset);
-					assert.strictEqual(0, window.pageYOffset);
-					hidePageScrollbar();
+					expect(window.pageXOffset).toBe(0);
+					expect(window.pageYOffset).toBe(0);
 					done();
 				});
 			}, 300);
@@ -920,8 +930,7 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should not update scroll position on navigate if updateScrollPosition is disabled', (done) => {
-		showPageScrollbar();
+	it('does not update scroll position on navigate if updateScrollPosition is disabled', (done) => {
 		this.app = new App();
 		this.app.setUpdateScrollPosition(false);
 		this.app.addRoutes(new Route('/path1', Screen));
@@ -929,9 +938,8 @@ describe('App', function () {
 		this.app.navigate('/path1').then(() => {
 			setTimeout(() => {
 				this.app.navigate('/path2').then(() => {
-					assert.strictEqual(100, window.pageXOffset);
-					assert.strictEqual(100, window.pageYOffset);
-					hidePageScrollbar();
+					expect(window.pageXOffset).toBe(100);
+					expect(window.pageYOffset).toBe(100);
 					done();
 				});
 			}, 100);
@@ -939,20 +947,18 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should restore scroll position on navigate back', (done) => {
-		showPageScrollbar();
+	it('restores scroll position on navigate back', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.navigate('/path1').then(() => {
 			setTimeout(() => {
 				this.app.navigate('/path2').then(() => {
-					assert.strictEqual(0, window.pageXOffset);
-					assert.strictEqual(0, window.pageYOffset);
+					expect(window.pageXOffset).toBe(0);
+					expect(window.pageYOffset).toBe(0);
 					this.app.once('endNavigate', () => {
-						assert.strictEqual(100, window.pageXOffset);
-						assert.strictEqual(100, window.pageYOffset);
-						hidePageScrollbar();
+						expect(window.pageXOffset).toBe(100);
+						expect(window.pageYOffset).toBe(100);
 						done();
 					});
 					globals.window.history.back();
@@ -962,12 +968,12 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should dispatch navigate to current path', (done) => {
+	it.skip('dispatches navigate to current path', (done) => {
 		globals.window.history.replaceState({}, '', '/path1?foo=1#hash');
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('endNavigate', (payload) => {
-			assert.strictEqual('/path1?foo=1#hash', payload.path);
+			expect(payload.path).toBe('/path1?foo=1#hash');
 			globals.window.history.replaceState(
 				{},
 				'',
@@ -978,7 +984,7 @@ describe('App', function () {
 		this.app.dispatch();
 	});
 
-	it.skip('should prevent navigation when beforeDeactivate returns "true"', (done) => {
+	it('prevents navigation when beforeDeactivate returns "true"', (done) => {
 		class NoNavigateScreen extends Screen {
 			beforeDeactivate() {
 				return true;
@@ -989,16 +995,16 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.navigate('/path1').then(() => {
 			this.app.on('endNavigate', (payload) => {
-				assert.ok(payload.error instanceof Error);
+				expect(payload.error).toBeInstanceOf(Error);
 			});
 			this.app.navigate('/path2').catch((reason) => {
-				assert.ok(reason instanceof Error);
+				expect(reason).toBeInstanceOf(Error);
 				done();
 			});
 		});
 	});
 
-	it.skip('should prevent navigation when beforeDeactivate resolves to "true"', (done) => {
+	it('prevents navigation when beforeDeactivate resolves to "true"', (done) => {
 		class NoNavigateScreen extends Screen {
 			beforeDeactivate() {
 				return new Promise((resolve) => {
@@ -1011,16 +1017,16 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.navigate('/path1').then(() => {
 			this.app.on('endNavigate', (payload) => {
-				assert.ok(payload.error instanceof Error);
+				expect(payload.error).toBeInstanceOf(Error);
 			});
 			this.app.navigate('/path2').catch((reason) => {
-				assert.ok(reason instanceof Error);
+				expect(reason).toBeInstanceOf(Error);
 				done();
 			});
 		});
 	});
 
-	it.skip('should prevent navigation when beforeActivate returns "true"', (done) => {
+	it('prevents navigation when beforeActivate returns "true"', (done) => {
 		class NoNavigateScreen extends Screen {
 			beforeActivate() {
 				return true;
@@ -1030,20 +1036,20 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', NoNavigateScreen));
 		this.app.on('endNavigate', (payload) => {
-			assert.ok(payload.error instanceof Error);
+			expect(payload.error).toBeInstanceOf(Error);
 		});
 		this.app
 			.navigate('/path')
-			.then(() => assert.fail())
+			.then(() => done.fail())
 			.catch((reason) => {
-				assert.ok(reason instanceof Error);
-				assert.equal(reason.message, 'Cancelled by next screen');
+				expect(reason).toBeInstanceOf(Error);
+				expect(reason.message).toBe('Cancelled by next screen');
 
 				done();
 			});
 	});
 
-	it.skip('should prevent navigation when beforeActivate promise resolves to "true"', (done) => {
+	it('prevents navigation when beforeActivate promise resolves to "true"', (done) => {
 		class NoNavigateScreen extends Screen {
 			beforeActivate() {
 				return new Promise((resolve) => {
@@ -1055,63 +1061,74 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', NoNavigateScreen));
 		this.app.on('endNavigate', (payload) => {
-			assert.ok(payload.error instanceof Error);
+			expect(payload.error).toBeInstanceOf(Error);
 		});
 		this.app
 			.navigate('/path')
-			.then(() => assert.fail())
+			.then(() => done.fail())
 			.catch((reason) => {
-				assert.ok(reason instanceof Error);
-				assert.equal(reason.message, 'Cancelled by next screen');
+				expect(reason).toBeInstanceOf(Error);
+				expect(reason.message).toBe('Cancelled by next screen');
 
 				done();
 			});
 	});
 
-	it.skip('should prefetch paths', (done) => {
+	it('prefetches paths', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.prefetch('/path').then(() => {
-			assert.ok(this.app.screens['/path'] instanceof Screen);
+			expect(this.app.screens['/path']).toBeInstanceOf(Screen);
 			done();
 		});
 	});
 
-	it.skip('should prefetch fail on navigate to unrouted paths', (done) => {
+	it('prefetches fail on navigate to unrouted paths', (done) => {
 		this.app = new App();
 		this.app.on('endNavigate', (payload) => {
-			assert.ok(payload.error instanceof Error);
+			expect(payload.error).toBeInstanceOf(Error);
 		});
 		this.app.prefetch('/path').catch((reason) => {
-			assert.ok(reason instanceof Error);
+			expect(reason).toBeInstanceOf(Error);
 			done();
 		});
 	});
 
-	it.skip('should cancel prefetch', (done) => {
+	it('cancels prefetch', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('endNavigate', (payload) => {
-			assert.ok(payload.error instanceof Error);
+			expect(payload.error).toBeInstanceOf(Error);
 		});
 		this.app
 			.prefetch('/path')
 			.catch((reason) => {
-				assert.ok(reason instanceof Error);
+				expect(reason).toBeInstanceOf(Error);
 				done();
 			})
 			.cancel();
 	});
 
-	it.skip('should navigate when clicking on routed links', () => {
+	it('navigates when clicking on routed links', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		dom.triggerEvent(enterDocumentLinkElement('/path'), 'click');
-		assert.ok(this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeTruthy();
 		exitDocumentLinkElement();
 	});
 
-	it.skip('should not navigate when clicking on target blank links', () => {
+	it('does not navigate when clicking on target blank links', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		const link = enterDocumentLinkElement('/path');
@@ -1119,23 +1136,34 @@ describe('App', function () {
 		link.addEventListener('click', (event) => event.preventDefault());
 		dom.triggerEvent(link, 'click');
 		exitDocumentLinkElement();
-		assert.strictEqual(this.app.pendingNavigate, null);
+		expect(this.app.pendingNavigate).toBeNull();
 	});
 
-	it.skip('should pass original event object to "beforeNavigate" when a link is clicked', () => {
+	it('passes original event object to "beforeNavigate" when a link is clicked', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.on('beforeNavigate', (data) => {
-			assert.ok(data.event);
-			assert.equal('click', data.event.type);
+			expect(data.event).toBeTruthy();
+			expect(data.event.type).toBe('click');
 		});
 		dom.triggerEvent(enterDocumentLinkElement('/path'), 'click');
 		exitDocumentLinkElement();
 
-		assert.notEqual('/path', window.location.pathname);
+		expect(window.location.pathname).not.toBe('/path');
 	});
 
-	it.skip('should prevent navigation on both senna and the browser via beforeNavigate', () => {
+	it('prevents navigation on both senna and the browser via beforeNavigate', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/preventedPath', Screen));
 		this.app.on('beforeNavigate', (data, event) => {
@@ -1145,41 +1173,41 @@ describe('App', function () {
 		dom.triggerEvent(enterDocumentLinkElement('/preventedPath'), 'click');
 		exitDocumentLinkElement();
 
-		assert.notEqual('/preventedPath', window.location.pathname);
+		expect(window.location.pathname).not.toBe('/preventedPath');
 	});
 
-	it.skip('should not navigate when clicking on external links', () => {
+	it('does not navigate when clicking on external links', () => {
 		var link = enterDocumentLinkElement('http://sennajs.com');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(link, 'click', preventDefault);
 		dom.triggerEvent(link, 'click');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it.skip('should not navigate when clicking on links outside basepath', () => {
+	it('does not navigate when clicking on links outside basepath', () => {
 		var link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
 		dom.on(link, 'click', preventDefault);
 		dom.triggerEvent(link, 'click');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it.skip('should not navigate when clicking on unrouted links', () => {
+	it('does not navigate when clicking on unrouted links', () => {
 		var link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(link, 'click', preventDefault);
 		dom.triggerEvent(link, 'click');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it.skip('should not navigate when clicking on links with invalid mouse button or modifier keys pressed', () => {
+	it('does not navigate when clicking on links with invalid mouse button or modifier keys pressed', () => {
 		var link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
@@ -1200,11 +1228,11 @@ describe('App', function () {
 		dom.triggerEvent(link, 'click', {
 			button: true,
 		});
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it.skip('should not navigate when navigate fails synchronously', () => {
+	it('does not navigate when navigate fails synchronously', () => {
 		var link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
@@ -1214,20 +1242,20 @@ describe('App', function () {
 		};
 		dom.on(link, 'click', preventDefault);
 		dom.triggerEvent(link, 'click');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it.skip('should reload page on navigate back to a routed page without history state', (done) => {
+	it('reloads page on navigate back to a routed page without history state', (done) => {
 		this.app = new App();
-		this.app.reloadPage = sinon.stub();
+		this.app.reloadPage = jest.fn();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.navigate('/path1').then(() => {
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path2').then(() => {
 				dom.once(globals.window, 'popstate', () => {
-					assert.strictEqual(1, this.app.reloadPage.callCount);
+					expect(this.app.reloadPage).toHaveBeenCalled();
 					done();
 				});
 				globals.window.history.back();
@@ -1235,7 +1263,12 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should be able to update referrer when Screen history state returns null', (done) => {
+	it('updates referrer when Screen history state returns null', (done) => {
+		jest.spyOn(
+			utils,
+			'getCurrentBrowserPathWithoutHash'
+		).mockImplementation(() => '/path1');
+
 		class NullStateScreen extends Screen {
 			beforeUpdateHistoryState() {
 				return null;
@@ -1246,9 +1279,8 @@ describe('App', function () {
 		this.app.navigate('/path1').then(() => {
 			this.app.navigate('/path1#hash').then(() => {
 				dom.once(globals.window, 'popstate', () => {
-					assert.strictEqual(
-						'/path1',
-						utils.getCurrentBrowserPath(document.referrer)
+					expect(utils.getCurrentBrowserPath(document.referrer)).toBe(
+						'/path1'
 					);
 					done();
 				});
@@ -1257,16 +1289,21 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should not reload page on navigate back to a routed page with same path containing hashbang without history state', (done) => {
+	it('does not reload page on navigate back to a routed page with same path containing hashbang without history state', (done) => {
+		jest.spyOn(
+			utils,
+			'getCurrentBrowserPathWithoutHash'
+		).mockImplementation(() => '/path');
+
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
-		this.app.reloadPage = sinon.stub();
+		this.app.reloadPage = jest.fn();
 		this.app.navigate('/path').then(() => {
 			globals.window.location.hash = 'hash1';
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path').then(() => {
 				dom.once(globals.window, 'popstate', () => {
-					assert.strictEqual(0, this.app.reloadPage.callCount);
+					expect(this.app.reloadPage).not.toHaveBeenCalled();
 					done();
 				});
 				globals.window.history.back();
@@ -1274,17 +1311,17 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should reload page on navigate back to a routed page with different path containing hashbang without history state', (done) => {
+	it('reloads page on navigate back to a routed page with different path containing hashbang without history state', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
-		this.app.reloadPage = sinon.stub();
+		this.app.reloadPage = jest.fn();
 		this.app.navigate('/path1').then(() => {
 			globals.window.location.hash = 'hash1';
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path2').then(() => {
 				dom.once(globals.window, 'popstate', () => {
-					assert.strictEqual(1, this.app.reloadPage.callCount);
+					expect(this.app.reloadPage).toHaveBeenCalled();
 					done();
 				});
 				globals.window.history.back();
@@ -1292,31 +1329,42 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should not reload page on clicking links with same path containing different hashbang without history state', (done) => {
+	it('does not reload page on clicking links with same path containing different hashbang without history state', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
-		this.app.reloadPage = sinon.stub();
+		this.app.reloadPage = jest.fn();
 		window.history.replaceState(null, null, '/path#hash1');
 		dom.once(globals.window, 'popstate', () => {
-			assert.strictEqual(0, this.app.reloadPage.callCount);
+			expect(this.app.reloadPage).not.toHaveBeenCalled();
 			done();
 		});
 		dom.triggerEvent(globals.window, 'popstate');
 	});
 
-	it.skip('should not navigate on clicking links when onbeforeunload returns truthy value', () => {
-		const beforeunload = sinon.spy();
+	it('does not navigate on clicking links when onbeforeunload returns truthy value', () => {
+		const beforeunload = jest.fn();
 		window.onbeforeunload = beforeunload;
 		this.app = new App();
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.addRoutes(new Route('/path', Screen));
 		const link = enterDocumentLinkElement('/path');
 		dom.triggerEvent(link, 'click');
 		exitDocumentLinkElement();
-		assert.strictEqual(1, beforeunload.callCount);
+		expect(beforeunload).toHaveBeenCalled();
 	});
 
-	it.skip('should not navigate back to the previous page on navigate back when onbeforeunload returns a truthy value', (done) => {
-		const beforeunload = sinon.spy();
+	it('does not navigate back to the previous page on navigate back when onbeforeunload returns a truthy value', (done) => {
+		const beforeunload = jest.fn();
 		window.onbeforeunload = beforeunload;
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
@@ -1327,15 +1375,14 @@ describe('App', function () {
 
 				// assumes that the path must remain the same
 
-				assert.strictEqual('/path2', this.app.activePath);
-				assert.strictEqual(1, beforeunload.callCount);
+				expect(this.app.activePath).toBe('/path2');
+				expect(beforeunload).toHaveBeenCalled();
 				done();
 			});
 		});
 	});
 
-	it.skip('should resposition scroll to hashed anchors on hash popstate', (done) => {
-		showPageScrollbar();
+	it.skip('respositions scroll to hashed anchors on hash popstate', (done) => {
 		var link = enterDocumentLinkElement('/path');
 		link.style.position = 'absolute';
 		link.style.top = '1000px';
@@ -1348,10 +1395,9 @@ describe('App', function () {
 			globals.window.location.hash = 'other';
 			window.history.replaceState(null, null, null);
 			dom.once(globals.window, 'popstate', () => {
-				assert.strictEqual(1000, window.pageXOffset);
-				assert.strictEqual(1000, window.pageYOffset);
+				expect(window.pageXOffset).toBe(1000);
+				expect(window.pageYOffset).toBe(1000);
 				exitDocumentLinkElement();
-				hidePageScrollbar();
 
 				dom.once(globals.window, 'popstate', () => {
 					done();
@@ -1362,173 +1408,215 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should navigate when submitting routed forms', () => {
+	it('navigates when submitting routed forms', (done) => {
 		this.app = new App();
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.addRoutes(new Route('/path', Screen));
 		const form = enterDocumentFormElement('/path', 'post');
 		dom.triggerEvent(form, 'submit');
-		assert.ok(this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeTruthy();
 
-		return this.app.on('endNavigate', () => {
-			exitDocument(form);
-		});
-	});
-
-	it.skip('should not navigate when submitting routed forms if submit event was prevented', () => {
-		this.app = new App();
-		this.app.addRoutes(new Route('/path', Screen));
-		var form = enterDocumentFormElement('/path', 'post');
-
-		return new Promise((resolve, reject) => {
-			dom.once(form, 'submit', (event) => {
-				event.preventDefault();
-				assert.ok(!this.app.pendingNavigate);
-				resolve();
-			});
-			dom.triggerEvent(form, 'submit');
-		}).thenAlways(() => {
-			exitDocument(form);
-		});
-	});
-
-	it.skip('should not capture form element when submit event was prevented', () => {
-		this.app = new App();
-		this.app.addRoutes(new Route('/path', Screen));
-		var form = enterDocumentFormElement('/path', 'post');
-
-		return new Promise((resolve, reject) => {
-			dom.once(form, 'submit', (event) => {
-				event.preventDefault();
-				assert.ok(!globals.capturedFormElement);
-				resolve();
-			});
-			dom.triggerEvent(form, 'submit');
-		}).thenAlways(() => {
-			exitDocument(form);
-		});
-	});
-
-	it.skip('should expose form reference in event data when submitting routed forms', (done) => {
-		this.app = new App();
-		this.app.addRoutes(new Route('/path', Screen));
-		const form = enterDocumentFormElement('/path', 'post');
-		dom.triggerEvent(form, 'submit');
-		this.app.on('startNavigate', (data) => {
-			assert.ok(data.form);
-		});
-		this.app.on('endNavigate', (data) => {
-			assert.ok(data.form);
+		this.app.on('endNavigate', () => {
 			exitDocument(form);
 			done();
 		});
 	});
 
-	it.skip('should not navigate when submitting forms with method get', () => {
+	it('does not navigate when submitting routed forms if submit event was prevented', (done) => {
+		this.app = new App();
+		this.app.addRoutes(new Route('/path', Screen));
+		var form = enterDocumentFormElement('/path', 'post');
+
+		dom.once(form, 'submit', (event) => {
+			event.preventDefault();
+			expect(this.app.pendingNavigate).toBeFalsy();
+			exitDocument(form);
+			done();
+		});
+		dom.triggerEvent(form, 'submit');
+	});
+
+	it('does not capture form element when submit event was prevented', (done) => {
+		this.app = new App();
+		this.app.addRoutes(new Route('/path', Screen));
+		var form = enterDocumentFormElement('/path', 'post');
+
+		dom.once(form, 'submit', (event) => {
+			event.preventDefault();
+			expect(globals.capturedFormElement).toBeFalsy();
+			exitDocument(form);
+			done();
+		});
+
+		dom.triggerEvent(form, 'submit');
+	});
+
+	it('exposes form reference in event data when submitting routed forms', (done) => {
+		jest.spyOn(
+			utils,
+			'getCurrentBrowserPathWithoutHash'
+		).mockImplementation(() => '/path');
+
+		this.app = new App();
+		this.app.addRoutes(new Route('/path', Screen));
+		const form = enterDocumentFormElement('/path', 'post');
+		dom.triggerEvent(form, 'submit');
+		this.app.on('startNavigate', (data) => {
+			expect(data.form).toBeTruthy();
+		});
+		this.app.on('endNavigate', (data) => {
+			expect(data.form).toBeTruthy();
+			exitDocument(form);
+			done();
+		});
+	});
+
+	it('does not navigate when submitting forms with method get', () => {
 		var form = enterDocumentFormElement('/path', 'get');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
 		dom.on(form, 'submit', preventDefault);
 		dom.triggerEvent(form, 'submit');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
 
-	it.skip('should not navigate when submitting on external forms', () => {
+	it('does not navigate when submitting on external forms', () => {
 		var form = enterDocumentFormElement('http://sennajs.com', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(form, 'submit', preventDefault);
 		dom.triggerEvent(form, 'submit');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
 
-	it.skip('should not navigate when submitting on forms outside basepath', () => {
+	it('does not navigate when submitting on forms outside basepath', () => {
 		var form = enterDocumentFormElement('/path', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
 		dom.on(form, 'submit', preventDefault);
 		dom.triggerEvent(form, 'submit');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
 
-	it.skip('should not navigate when submitting on unrouted forms', () => {
+	it('does not navigate when submitting on unrouted forms', () => {
 		var form = enterDocumentFormElement('/path', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(form, 'submit', preventDefault);
 		dom.triggerEvent(form, 'submit');
-		assert.strictEqual(null, this.app.pendingNavigate);
+		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
 
-	it.skip('should not capture form if navigate fails when submitting forms', () => {
+	it('does not capture form if navigate fails when submitting forms', () => {
 		var form = enterDocumentFormElement('/path', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(form, 'submit', preventDefault);
 		dom.triggerEvent(form, 'submit');
-		assert.ok(!globals.capturedFormElement);
+		expect(globals.capturedFormElement).toBeFalsy();
 		exitDocument(form);
 	});
 
-	it.skip('should capture form on beforeNavigate', (done) => {
+	it('captures form on beforeNavigate', (done) => {
 		const form = enterDocumentFormElement('/path', 'post');
 		this.app = new App();
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('beforeNavigate', (event) => {
-			assert.ok(event.form);
+			expect(event.form).toBeTruthy();
 			exitDocument(form);
+			expect(globals.capturedFormElement).toBeTruthy();
 			globals.capturedFormElement = null;
 			done();
 		});
-		dom.on(form, 'submit', sinon.stub());
+		dom.on(form, 'submit', jest.fn());
 		dom.triggerEvent(form, 'submit');
-		assert.ok(globals.capturedFormElement);
 	});
 
-	it.skip('should capture form button when submitting', () => {
+	it('captures form button when submitting', (done) => {
 		const form = enterDocumentFormElement('/path', 'post');
 		const button = globals.document.createElement('button');
 		form.appendChild(button);
 		this.app = new App();
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', StubScreen));
 
-		return new Promise((resolve, reject) => {
-			this.app.on('beforeNavigate', (event) => {
-				assert.ok(globals.capturedFormButtonElement);
-				resolve();
-			});
-
-			dom.triggerEvent(form, 'submit');
-		}).thenAlways(() => {
+		this.app.on('beforeNavigate', () => {
+			expect(globals.capturedFormButtonElement).toBeTruthy();
 			exitDocument(form);
 			globals.capturedFormElement = null;
 			globals.capturedFormButtonElement = null;
+			done();
 		});
+
+		dom.triggerEvent(form, 'submit');
 	});
 
-	it.skip('should capture form button when clicking submit button', () => {
+	it('captures form button when clicking submit button', () => {
 		const form = enterDocumentFormElement('/path', 'post');
 		const button = globals.document.createElement('button');
 		button.type = 'submit';
 		button.tabindex = 1;
 		form.appendChild(button);
 		this.app = new App();
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
 		button.click();
-		assert.ok(globals.capturedFormButtonElement);
+		expect(globals.capturedFormButtonElement).toBeTruthy();
 		globals.capturedFormButtonElement = null;
 		exitDocument(form);
 	});
 
-	it.skip('should set redirect path if history path was redirected', (done) => {
+	it('sets redirect path if history path was redirected', (done) => {
 		class RedirectScreen extends Screen {
 			beforeUpdateHistoryPath() {
 				return '/redirect';
@@ -1537,13 +1625,13 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path').then(() => {
-			assert.strictEqual('/redirect', this.app.redirectPath);
-			assert.strictEqual('/path', this.app.activePath);
+			expect(this.app.redirectPath).toBe('/redirect');
+			expect(this.app.activePath).toBe('/path');
 			done();
 		});
 	});
 
-	it.skip('should update the state with the redirected path', (done) => {
+	it('updates the state with the redirected path', (done) => {
 		class RedirectScreen extends Screen {
 			beforeUpdateHistoryPath() {
 				return '/redirect';
@@ -1552,12 +1640,12 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path').then(() => {
-			assert.strictEqual('/redirect', globals.window.location.pathname);
+			expect(globals.window.location.pathname).toBe('/redirect');
 			done();
 		});
 	});
 
-	it.skip('should restore hashbang if redirect path is the same as requested path', (done) => {
+	it.skip('restores hashbang if redirect path is the same as requested path', (done) => {
 		class RedirectScreen extends Screen {
 			beforeUpdateHistoryPath() {
 				return '/path';
@@ -1566,12 +1654,12 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path#hash').then(() => {
-			assert.strictEqual('/path#hash', utils.getCurrentBrowserPath());
+			expect(utils.getCurrentBrowserPath()).toBe('/path#hash');
 			done();
 		});
 	});
 
-	it.skip('should not restore hashbang if redirect path is not the same as requested path', (done) => {
+	it.skip('does not restore hashbang if redirect path is not the same as requested path', (done) => {
 		class RedirectScreen extends Screen {
 			beforeUpdateHistoryPath() {
 				return '/redirect';
@@ -1580,31 +1668,44 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path#hash').then(() => {
-			assert.strictEqual('/redirect', utils.getCurrentBrowserPath());
+			expect(utils.getCurrentBrowserPath()).toBe('/redirect');
 			done();
 		});
 	});
 
-	it.skip('should skipLoadPopstate before page is loaded', (done) => {
+	it('does skipLoadPopstate before page is loaded', (done) => {
 		this.app = new App();
 		this.app.onLoad_(); // Simulate
-		assert.ok(this.app.skipLoadPopstate);
+		expect(this.app.skipLoadPopstate).toBe(true);
 		setTimeout(() => {
-			assert.ok(!this.app.skipLoadPopstate);
+			expect(this.app.skipLoadPopstate).toBe(false);
 			done();
 		}, 0);
 	});
 
-	it.skip('should respect screen lifecycle on navigate', () => {
+	it('respects screen lifecycle on navigate', (done) => {
 		class StubScreen2 extends Screen {}
-		StubScreen2.prototype.activate = sinon.spy();
-		StubScreen2.prototype.beforeDeactivate = sinon.spy();
-		StubScreen2.prototype.deactivate = sinon.spy();
-		StubScreen2.prototype.flip = sinon.spy();
-		StubScreen2.prototype.load = sinon.stub().returns(Promise.resolve());
-		StubScreen2.prototype.evaluateStyles = sinon.spy();
-		StubScreen2.prototype.evaluateScripts = sinon.spy();
+		StubScreen2.prototype.activate = jest.fn();
+		StubScreen2.prototype.beforeDeactivate = jest.fn();
+		StubScreen2.prototype.deactivate = jest.fn();
+		StubScreen2.prototype.flip = jest.fn();
+		StubScreen2.prototype.load = jest
+			.fn()
+			.mockImplementation(() => Promise.resolve());
+		StubScreen2.prototype.evaluateStyles = jest.fn();
+		StubScreen2.prototype.evaluateScripts = jest.fn();
 		this.app = new App();
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
 		this.app.addRoutes(new Route('/path1', StubScreen));
 		this.app.addRoutes(new Route('/path2', StubScreen2));
 
@@ -1626,15 +1727,19 @@ describe('App', function () {
 					StubScreen.prototype.disposeInternal,
 				];
 				for (var i = 1; i < lifecycleOrder.length - 1; i++) {
-					assert.ok(
-						lifecycleOrder[i - 1].calledBefore(lifecycleOrder[i])
+					expect(
+						lifecycleOrder[i - 1].mock.invocationCallOrder[0]
+					).toBeLessThan(
+						lifecycleOrder[i].mock.invocationCallOrder[0]
 					);
 				}
+
+				done();
 			});
 		});
 	});
 
-	it.skip('should render surfaces', (done) => {
+	it('renders surfaces', (done) => {
 		class ContentScreen extends Screen {
 			getSurfaceContent(surfaceId) {
 				return surfaceId;
@@ -1644,19 +1749,20 @@ describe('App', function () {
 			}
 		}
 		var surface = new Surface('surfaceId');
-		surface.addContent = sinon.stub();
+		surface.addContent = jest.fn();
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', ContentScreen));
 		this.app.addSurfaces(surface);
 		this.app.navigate('/path').then(() => {
-			assert.strictEqual(1, surface.addContent.callCount);
-			assert.strictEqual('screenId', surface.addContent.args[0][0]);
-			assert.strictEqual('surfaceId', surface.addContent.args[0][1]);
+			expect(surface.addContent).toHaveBeenCalledWith(
+				'screenId',
+				'surfaceId'
+			);
 			done();
 		});
 	});
 
-	it.skip('should pass extracted params to "getSurfaceContent"', (done) => {
+	it('passes extracted params to "getSurfaceContent"', (done) => {
 		var screen;
 		class ContentScreen extends Screen {
 			constructor() {
@@ -1668,32 +1774,22 @@ describe('App', function () {
 				return 'screenId';
 			}
 		}
-		ContentScreen.prototype.getSurfaceContent = sinon.stub();
+		ContentScreen.prototype.getSurfaceContent = jest.fn();
 
 		var surface = new Surface('surfaceId');
 		this.app = new App();
 		this.app.addRoutes(new Route('/path/:foo(\\d+)/:bar', ContentScreen));
 		this.app.addSurfaces(surface);
 		this.app.navigate('/path/123/abc').then(() => {
-			assert.strictEqual(1, screen.getSurfaceContent.callCount);
-			assert.strictEqual(
-				'surfaceId',
-				screen.getSurfaceContent.args[0][0]
-			);
-
-			var expectedParams = {
-				foo: '123',
+			expect(screen.getSurfaceContent).toHaveBeenCalledWith('surfaceId', {
 				bar: 'abc',
-			};
-			assert.deepEqual(
-				expectedParams,
-				screen.getSurfaceContent.args[0][1]
-			);
+				foo: '123',
+			});
 			done();
 		});
 	});
 
-	it.skip('should pass extracted params to "getSurfaceContent" with base path', (done) => {
+	it('passes extracted params to "getSurfaceContent" with base path', (done) => {
 		var screen;
 		class ContentScreen extends Screen {
 			constructor() {
@@ -1705,7 +1801,7 @@ describe('App', function () {
 				return 'screenId';
 			}
 		}
-		ContentScreen.prototype.getSurfaceContent = sinon.stub();
+		ContentScreen.prototype.getSurfaceContent = jest.fn();
 
 		var surface = new Surface('surfaceId');
 		this.app = new App();
@@ -1713,37 +1809,27 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/:foo(\\d+)/:bar', ContentScreen));
 		this.app.addSurfaces(surface);
 		this.app.navigate('/path/123/abc').then(() => {
-			assert.strictEqual(1, screen.getSurfaceContent.callCount);
-			assert.strictEqual(
-				'surfaceId',
-				screen.getSurfaceContent.args[0][0]
-			);
-
-			var expectedParams = {
-				foo: '123',
+			expect(screen.getSurfaceContent).toHaveBeenCalledWith('surfaceId', {
 				bar: 'abc',
-			};
-			assert.deepEqual(
-				expectedParams,
-				screen.getSurfaceContent.args[0][1]
-			);
+				foo: '123',
+			});
 			done();
 		});
 	});
 
-	it.skip('should extract params for the given route and path', () => {
+	it('extracts params for the given route and path', () => {
 		this.app = new App();
 		this.app.setBasePath('/path');
 		var route = new Route('/:foo(\\d+)/:bar', () => {});
 		var params = this.app.extractParams(route, '/path/123/abc');
-		var expectedParams = {
-			foo: '123',
+
+		expect(params).toEqual({
 			bar: 'abc',
-		};
-		assert.deepEqual(expectedParams, params);
+			foo: '123',
+		});
 	});
 
-	it.skip('should render default surface content when not provided by screen', (done) => {
+	it('renders default surface content when not provided by screen', (done) => {
 		class ContentScreen1 extends Screen {
 			getSurfaceContent(surfaceId) {
 				if (surfaceId === 'surfaceId1') {
@@ -1772,34 +1858,36 @@ describe('App', function () {
 		);
 		var surface1 = new Surface('surfaceId1');
 		var surface2 = new Surface('surfaceId2');
-		surface1.addContent = sinon.stub();
-		surface2.addContent = sinon.stub();
+		surface1.addContent = jest.fn();
+		surface2.addContent = jest.fn();
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', ContentScreen1));
 		this.app.addRoutes(new Route('/path2', ContentScreen2));
 		this.app.addSurfaces([surface1, surface2]);
 		this.app.navigate('/path1').then(() => {
-			assert.strictEqual(1, surface1.addContent.callCount);
-			assert.strictEqual('screenId1', surface1.addContent.args[0][0]);
-			assert.strictEqual('content1', surface1.addContent.args[0][1]);
-			assert.strictEqual(1, surface2.addContent.callCount);
-			assert.strictEqual('screenId1', surface2.addContent.args[0][0]);
-			assert.strictEqual(undefined, surface2.addContent.args[0][1]);
-			assert.strictEqual(
-				'default2',
-				surface2.getChild('default').innerHTML
+			expect(surface1.addContent).toHaveBeenCalledWith(
+				'screenId1',
+				'content1'
 			);
+
+			expect(surface2.addContent).toHaveBeenCalledWith(
+				'screenId1',
+				undefined
+			);
+			expect(surface2.getChild('default').innerHTML).toBe('default2');
+
 			this.app.navigate('/path2').then(() => {
-				assert.strictEqual(2, surface1.addContent.callCount);
-				assert.strictEqual('screenId2', surface1.addContent.args[1][0]);
-				assert.strictEqual(undefined, surface1.addContent.args[1][1]);
-				assert.strictEqual(
-					'default1',
-					surface1.getChild('default').innerHTML
+				expect(surface1.addContent).toHaveBeenCalledWith(
+					'screenId2',
+					undefined
 				);
-				assert.strictEqual(2, surface2.addContent.callCount);
-				assert.strictEqual('screenId2', surface2.addContent.args[1][0]);
-				assert.strictEqual('content2', surface2.addContent.args[1][1]);
+				expect(surface1.getChild('default').innerHTML).toBe('default1');
+
+				expect(surface2.addContent).toHaveBeenCalledWith(
+					'screenId2',
+					'content2'
+				);
+
 				dom.exitDocument(surface1.getElement());
 				dom.exitDocument(surface2.getElement());
 				done();
@@ -1807,10 +1895,10 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should add surface content after history path is updated', (done) => {
+	it('adds surface content after history path is updated', (done) => {
 		var surface = new Surface('surfaceId');
 		surface.addContent = () => {
-			assert.strictEqual('/path', globals.window.location.pathname);
+			expect(globals.window.location.pathname).toBe('/path');
 		};
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
@@ -1820,20 +1908,7 @@ describe('App', function () {
 		});
 	});
 
-	it.skip('should not navigate when HTML5 History api is not supported', () => {
-		var original = utils.isHtml5HistorySupported;
-		assert.throws(() => {
-			this.app = new App();
-			this.app.addRoutes(new Route('/path', Screen));
-			utils.isHtml5HistorySupported = () => {
-				return false;
-			};
-			this.app.navigate('/path');
-		}, Error);
-		utils.isHtml5HistorySupported = original;
-	});
-
-	it.skip('should navigate cancelling navigation to multiple paths after navigation is scheduled to keep only the last one', (done) => {
+	it.skip('navigates cancelling navigation to multiple paths after navigation is scheduled to keep only the last one', (done) => {
 		const app = (this.app = new App());
 
 		class TestScreen extends Screen {
@@ -1845,7 +1920,7 @@ describe('App', function () {
 			}
 
 			evaluateScripts(surfaces) {
-				assert.ok(app.scheduledNavigationEvent);
+				expect(app.scheduledNavigationEvent).toBeTruthy();
 
 				return super.evaluateScripts(surfaces);
 			}
@@ -1860,7 +1935,7 @@ describe('App', function () {
 			}
 
 			evaluateScripts(surfaces) {
-				assert.ok(app.scheduledNavigationEvent);
+				expect(app.scheduledNavigationEvent).toBeTruthy();
 
 				return super.evaluateScripts(surfaces);
 			}
@@ -1874,14 +1949,14 @@ describe('App', function () {
 
 		this.app.on('endNavigate', (event) => {
 			if (event.path === '/path3') {
-				assert.ok(!this.app.scheduledNavigationEvent);
-				assert.strictEqual(globals.window.location.pathname, '/path3');
+				expect(this.app.scheduledNavigationEvent).toBeFalsy();
+				expect(globals.window.location.pathname).toBe('/path3');
 				done();
 			}
 		});
 	});
 
-	it.skip('should navigate cancelling navigation to multiple paths when navigation strategy is setted up to be immediate', (done) => {
+	it('navigates cancelling navigation to multiple paths when navigation strategy is setted up to be immediate', (done) => {
 		this.app = new App();
 
 		class TestScreen extends Screen {
@@ -1908,18 +1983,18 @@ describe('App', function () {
 
 		this.app.navigate('/path1');
 
-		assert.ok(!this.app.scheduledNavigationEvent);
+		expect(this.app.scheduledNavigationEvent).toBeFalsy();
 
 		this.app.on('endNavigate', (event) => {
 			if (event.path === '/path3') {
-				assert.ok(!this.app.scheduledNavigationEvent);
-				assert.strictEqual(globals.window.location.pathname, '/path3');
+				expect(this.app.scheduledNavigationEvent).toBeFalsy();
+				expect(globals.window.location.pathname).toBe('/path3');
 				done();
 			}
 		});
 	});
 
-	it.skip('should set document title from screen title', (done) => {
+	it('sets document title from screen title', (done) => {
 		class TitledScreen extends Screen {
 			getTitle() {
 				return 'title';
@@ -1928,47 +2003,47 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', TitledScreen));
 		this.app.navigate('/path').then(() => {
-			assert.strictEqual('title', globals.document.title);
+			expect(globals.document.title).toBe('title');
 			done();
 		});
 	});
 
-	it.skip('should set globals.capturedFormElement to null after navigate', (done) => {
+	it('sets globals.capturedFormElement to null after navigate', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.navigate('/path').then(() => {
-			assert.strictEqual(null, globals.capturedFormElement);
+			expect(globals.capturedFormElement).toBeNull();
 			done();
 		});
 	});
 
-	it.skip('should cancel nested promises on canceled navigate', (done) => {
+	it.skip('cancels nested promises on canceled navigate', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', HtmlScreen));
 		this.app
 			.navigate('/path')
-			.then(() => assert.fail())
+			.then(() => done.fail())
 			.catch(() => {
-				assert.equal(this.requests.length, 0);
+				expect(fetch.mock.calls.length).toBe(0);
 				done();
 			})
 			.cancel();
 	});
 
-	it.skip('should cancel nested promises on canceled prefetch', (done) => {
+	it.skip('cancels nested promises on canceled prefetch', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', HtmlScreen));
 		this.app
 			.prefetch('/path')
-			.then(() => assert.fail())
+			.then(() => done.fail())
 			.catch(() => {
-				assert.ok(this.requests[0].aborted);
+				expect(fetch.mock.calls.length).toBe(0);
 				done();
 			})
 			.cancel();
 	});
 
-	it.skip('should wait for pendingNavigate before removing screen on double back navigation', (done) => {
+	it('waits for pendingNavigate before removing screen on double back navigation', (done) => {
 		class CacheScreen extends Screen {
 			constructor() {
 				super();
@@ -1993,16 +2068,16 @@ describe('App', function () {
 				var pendingNavigate;
 				app.on('startNavigate', () => {
 					pendingNavigate = app.pendingNavigate;
-					assert.ok(app.screens['/path2']);
+					expect(app.screens['/path2']).toBeTruthy();
 				});
 				app.once('endNavigate', () => {
 					if (app.isNavigationPending) {
-						assert.ok(!app.screens['/path2']);
+						expect(app.screens['/path2']).toBeFalsy();
 						done();
 					}
 					else {
 						pendingNavigate.thenAlways(() => {
-							assert.ok(!app.screens['/path2']);
+							expect(app.screens['/path2']).toBeFalsy();
 							done();
 						});
 						pendingNavigate.cancel();
@@ -2078,7 +2153,7 @@ describe('App', function () {
 			window.history.replaceState(null, null, null);
 
 			return this.app.navigate('/path2').then(() => {
-				return new Promise((resolve, reject) => {
+				return new Promise((resolve) => {
 					dom.once(globals.window, 'popstate', () => {
 						expect(this.app.reloadPage).not.toHaveBeenCalled();
 						resolve();
@@ -2112,14 +2187,4 @@ function exitDocumentLinkElement() {
 
 function preventDefault(event) {
 	event.preventDefault();
-}
-
-function showPageScrollbar() {
-	globals.document.documentElement.style.height = '9999px';
-	globals.document.documentElement.style.width = '9999px';
-}
-
-function hidePageScrollbar() {
-	globals.document.documentElement.style.height = '';
-	globals.document.documentElement.style.width = '';
 }

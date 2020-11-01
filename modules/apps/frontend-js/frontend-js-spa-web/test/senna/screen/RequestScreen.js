@@ -16,7 +16,7 @@ import errors from '../../../src/main/resources/META-INF/resources/senna/errors/
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import RequestScreen from '../../../src/main/resources/META-INF/resources/senna/screen/RequestScreen';
 
-describe('RequestScreen', function () {
+describe('RequestScreen', () => {
 	it('is cacheable', () => {
 		var screen = new RequestScreen();
 		expect(screen.isCacheable()).toBe(true);
@@ -103,9 +103,17 @@ describe('RequestScreen', function () {
 
 		var screen = new RequestScreen();
 		screen.load('/url').then(() => {
-			expect(screen.getRequest().url).toBe(globals.window.location.origin + '/url');
-			expect(screen.getRequest().requestHeaders).toHaveProperty('X-PJAX', 'true');
-			expect(screen.getRequest().requestHeaders).toHaveProperty('X-Requested-With', 'XMLHttpRequest');
+			expect(screen.getRequest().url).toBe(
+				globals.window.location.origin + '/url'
+			);
+			expect(screen.getRequest().requestHeaders).toHaveProperty(
+				'X-PJAX',
+				'true'
+			);
+			expect(screen.getRequest().requestHeaders).toHaveProperty(
+				'X-Requested-With',
+				'XMLHttpRequest'
+			);
 			done();
 		});
 	});
@@ -142,18 +150,23 @@ describe('RequestScreen', function () {
 		var screen = new RequestScreen();
 		screen
 			.load('/url')
-			.then(() => assert.fail())
+			.then(() => done.fail())
 			.catch(() => {
-				assert.ok(this.requests[0].aborted);
+				expect(fetch.mock.calls.length).toBe(0);
 				done();
 			})
 			.cancel();
 	});
 
 	it('fails for timeout request', (done) => {
-		fetch.mockResponse(() => new Promise((resolve) => {
-			setTimeout(() => {resolve('')}, 100);
-		}));
+		fetch.mockResponse(
+			() =>
+				new Promise((resolve) => {
+					setTimeout(() => {
+						resolve('');
+					}, 100);
+				})
+		);
 
 		var screen = new RequestScreen();
 		screen.setTimeout(0);
@@ -226,7 +239,10 @@ describe('RequestScreen', function () {
 		var screen = new RequestScreen();
 		var spy = jest.spyOn(FormData.prototype, 'append');
 		screen.load('/url').then(() => {
-			expect(spy).toHaveBeenCalledWith(submitButton.name, submitButton.value);
+			expect(spy).toHaveBeenCalledWith(
+				submitButton.name,
+				submitButton.value
+			);
 			globals.capturedFormElement = null;
 			globals.capturedFormButtonElement = null;
 			done();

@@ -255,7 +255,7 @@ class RequestScreen extends Screen {
 			method: httpMethod,
 			requestBody: body,
 			requestHeaders,
-			url
+			url,
 		});
 
 		return Promise.race([
@@ -265,36 +265,43 @@ class RequestScreen extends Screen {
 				method: httpMethod,
 				mode: 'cors',
 				redirect: 'follow',
-				referrer: 'client'
+				referrer: 'client',
 			})
-				.then(resp => {
+				.then((resp) => {
 					this.assertValidResponseStatusCode(resp.status);
 
 					this.setResponse(resp);
 
 					return resp.clone().text();
 				})
-				.then(text => {
-					if (httpMethod === RequestScreen.GET && this.isCacheable()) {
+				.then((text) => {
+					if (
+						httpMethod === RequestScreen.GET &&
+						this.isCacheable()
+					) {
 						this.addCache(text);
 					}
 
 					return text;
 				}),
 			new Promise((_, reject) => {
-				setTimeout(() => reject(new Error(errors.REQUEST_TIMEOUT)) , this.timeout);
-			})
+				setTimeout(
+					() => reject(new Error(errors.REQUEST_TIMEOUT)),
+					this.timeout
+				);
+			}),
 		]).catch((reason) => {
 			switch (reason.message) {
 				case errors.REQUEST_TIMEOUT:
 					reason.timeout = true;
 					break;
-				case errors.REQUEST_ERROR:
-					reason.requestError = true;
-					break;
 				case errors.REQUEST_PREMATURE_TERMINATION:
 					reason.requestError = true;
 					reason.requestPrematureTermination = true;
+					break;
+				case errors.REQUEST_ERROR:
+				default:
+					reason.requestError = true;
 					break;
 			}
 			throw reason;

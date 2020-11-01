@@ -102,8 +102,8 @@ describe('Route', () => {
 			const route = new Route('/path/:foo(\\d+)/:bar(\\w+)', jest.fn());
 			const params = route.extractParams('/path/123/abc');
 			expect(params).toEqual({
-				foo: '123',
 				bar: 'abc',
+				foo: '123',
 			});
 		});
 

@@ -126,7 +126,7 @@ class HtmlScreen extends RequestScreen {
 	 */
 	copyNodeAttributesFromContent_(content, node) {
 		content = content.replace(/[<]\s*html/gi, '<senna');
-		content = content.replace(/\/html\s*\>/gi, '/senna>');
+		content = content.replace(/\/html\s*>/gi, '/senna>');
 		let placeholder;
 		if (UA.isIe) {
 			const tempNode = globals.document

@@ -49,7 +49,6 @@ describe('HtmlScreen', () => {
 			expect(screen.getTitle()).toBe('new');
 			done();
 		});
-
 	});
 
 	it('does not set title from response content if not present', (done) => {

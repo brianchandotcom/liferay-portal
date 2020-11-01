@@ -15,6 +15,8 @@
 package com.liferay.commerce.shipment.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -48,7 +50,9 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.shipment.test.util.CommerceShipmentTestUtil;
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
+import com.liferay.commerce.test.util.CommerceTaxTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -62,6 +66,10 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -756,6 +764,108 @@ public class CommerceShipmentTest {
 
 		CommerceShipmentTestUtil.createEmptyOrderShipment(
 			_commerceChannel.getGroupId(), 0);
+	}
+
+	@Test
+	public void testShippingAmountAndShippingTaxes() throws Exception {
+		frutillaRule.scenario(
+			"When a shipping amount with tax is associated with an order the " +
+				"price object is correctly set"
+		).given(
+			"An order"
+		).and(
+			"A shipment with a shipping amount and tax on the shipment is set"
+		).when(
+			"I attach the shipment to the order"
+		).then(
+			"The price object has the shipping amount correctly set"
+		);
+
+		long commerceTaxCategoryId = CommerceTaxTestUtil.addTaxCategoryId(
+			_user.getGroupId());
+
+		CommerceTaxMethod commerceTaxMethod =
+			CommerceTaxTestUtil.addCommerceByAddressTaxMethod(
+				_user.getUserId(), _commerceChannel.getGroupId(), true);
+
+		double shippingTaxRate = 10;
+
+		CommerceTaxTestUtil.setCommerceMethodTaxRate(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			commerceTaxCategoryId, commerceTaxMethod.getCommerceTaxMethodId(),
+			shippingTaxRate);
+
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				_commerceChannel.getGroupId(),
+				CommerceConstants.TAX_SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"taxCategoryId", String.valueOf(commerceTaxCategoryId));
+
+		modifiableSettings.store();
+
+		CPInstance cpInstance = _createCPInstance(BigDecimal.valueOf(25));
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_createCommerceInventoryWarehouse(
+				_commerceChannel.getCommerceChannelId(), true);
+
+		int quantity = 10;
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
+			quantity);
+
+		BigDecimal value = BigDecimal.valueOf(5);
+
+		CommerceOrder commerceOrder =
+			CommerceTestUtil.createCommerceOrderForShipping(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency.getCommerceCurrencyId(), value);
+
+		commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_OPEN);
+
+		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+
+		_commerceOrders.add(commerceOrder);
+
+		int orderedQuantity = 1;
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			commerceOrder.getCommerceAccount(), commerceOrder);
+
+		CommerceTestUtil.addCommerceOrderItem(
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			orderedQuantity, commerceContext);
+
+		CommerceOrderPrice commerceOrderPrice =
+			_commerceOrderPriceCalculation.getCommerceOrderPrice(
+				commerceOrder, false, commerceContext);
+
+		CommerceMoney shippableValueCommerceMoney =
+			commerceOrderPrice.getShippingValue();
+
+		Assert.assertEquals(value, shippableValueCommerceMoney.getPrice());
+
+		BigDecimal expectedTaxValue = value.multiply(
+			BigDecimal.valueOf(shippingTaxRate));
+
+		expectedTaxValue = expectedTaxValue.divide(BigDecimal.valueOf(100));
+
+		CommerceMoney taxValueCommerceMoney = commerceOrderPrice.getTaxValue();
+
+		BigDecimal taxValue = taxValueCommerceMoney.getPrice();
+
+		Assert.assertEquals(expectedTaxValue, taxValue.stripTrailingZeros());
+
+		modifiableSettings.setValue("taxCategoryId", String.valueOf(0));
+
+		modifiableSettings.store();
 	}
 
 	@Test(expected = CommerceShipmentItemQuantityException.class)

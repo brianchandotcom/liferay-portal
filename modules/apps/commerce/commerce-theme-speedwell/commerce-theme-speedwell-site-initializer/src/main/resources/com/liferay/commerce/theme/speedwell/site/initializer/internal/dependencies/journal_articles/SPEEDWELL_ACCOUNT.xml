@@ -1,61 +1,61 @@
 <?xml version="1.0"?>
 
-<root available-locales="[£LOCALE£]" default-locale="[£LOCALE£]">
+<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]">
 	<dynamic-element index-type="keyword" instance-id="my-account-title" name="PageTitle" type="text">
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[My Account]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[My Account]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="my-orders-link" name="NavigationItemLinkOrders" type="link_to_layout">
 		<dynamic-element index-type="keyword" instance-id="my-orders-title" name="NavigationItemTitleOrders" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[My Orders]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[My Orders]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="my-orders-desc" name="NavigationItemDescriptionOrders" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Check out the cool things you bought]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Check out the cool things you bought]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[5@public@[£groupId£]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[5@public@[$groupId$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="login-and-security-link" name="NavigationItemLinkLogin" type="link_to_layout">
 		<dynamic-element index-type="keyword" instance-id="login-and-security-title" name="NavigationItemTitleLogin" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Login & Security]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Login & Security]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="login-and-security-desc" name="NavigationItemDescriptionLogin" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Security management made simple]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Security management made simple]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[6@public@[£groupId£]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[6@public@[$groupId$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="my-addresses-link" name="NavigationItemLinkAddresses" type="link_to_layout">
 		<dynamic-element index-type="keyword" instance-id="my-addresses-title" name="NavigationItemTitleAddresses" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[My Addresses]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[My Addresses]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="my-addresses-desc" name="NavigationItemDescriptionAddresses" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Where you want to have your orders delivered]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Where you want to have your orders delivered]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[7@public@[£groupId£]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[7@public@[$groupId$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="my-payment-methods-link" name="NavigationItemLinkPaymentMethods" type="link_to_layout">
 		<dynamic-element index-type="keyword" instance-id="my-payment-methods-title" name="NavigationItemTitlePaymentMethods" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[My Payment Methods]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[My Payment Methods]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="my-payment-methods-desc" name="NavigationItemDescriptionPaymentMethods" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Manage your payment options]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Manage your payment options]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[11@public@[£groupId£]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[11@public@[$groupId$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="my-subscriptions-link" name="NavigationItemLinkSubscriptions" type="link_to_layout">
 		<dynamic-element index-type="keyword" instance-id="my-subscriptions-title" name="NavigationItemTitleSubscriptions" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[My Subscriptions]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[My Subscriptions]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="my-subscriptions-desc" name="NavigationItemDescriptionSubscriptions" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Cancel anytime]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Cancel anytime]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[8@public@[£groupId£]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[8@public@[$groupId$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="my-downloads-link" name="NavigationItemLinkDownloads" type="link_to_layout">
 		<dynamic-element index-type="keyword" instance-id="my-downloads-title" name="NavigationItemTitleDownloads" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[My Downloads]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[My Downloads]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="my-downloads-desc" name="NavigationItemDescriptionDownloads" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Download your virtual purchases]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Download your virtual purchases]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[9@public@[£groupId£]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[9@public@[$groupId$]]]></dynamic-content>
 	</dynamic-element>
 </root>

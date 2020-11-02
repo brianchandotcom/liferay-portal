@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
-<root available-locales="[£LOCALE£]" default-locale="[£LOCALE£]">
+<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]">
 	<dynamic-element index-type="keyword" instance-id="mfdv" name="Title" type="text">
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Submit request as a guest]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Submit request as a guest]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="yuyp" name="Description" type="text_box">
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Make the purchase as a guest. You will only have to enter the data necessary to complete the transaction. If you want, you can register or log in now to make future orders more easily.]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Make the purchase as a guest. You will only have to enter the data necessary to complete the transaction. If you want, you can register or log in now to make future orders more easily.]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="qchd" name="ButtonLabel" type="text">
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Continue as a Guest]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Continue as a Guest]]></dynamic-content>
 	</dynamic-element>
 </root>

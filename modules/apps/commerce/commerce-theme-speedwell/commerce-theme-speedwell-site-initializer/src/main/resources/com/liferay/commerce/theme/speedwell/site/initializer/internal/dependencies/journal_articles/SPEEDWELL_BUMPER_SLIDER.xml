@@ -1,85 +1,85 @@
 <?xml version="1.0"?>
 
-<root available-locales="[£LOCALE£]" default-locale="[£LOCALE£]">
+<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]">
 	<dynamic-element index-type="text" instance-id="uzgx" name="Image2x9w" type="image">
 		<dynamic-element index-type="keyword" instance-id="iugq" name="captionCategory" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Interior equipment]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Interior equipment]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="xmtv" name="captionText" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Designed for living. Engineered to last.]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Designed for living. Engineered to last.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="zalf" name="captionButtonLabel" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Discover]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Discover]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="ujhv" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[2@public@[£groupId£]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Header_01.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Header_01.jpg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="kzgy" name="Image2x9w" type="image">
 		<dynamic-element index-type="keyword" instance-id="irsm" name="captionCategory" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Quality first]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Quality first]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="cfsc" name="captionText" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Built for the Human Race.]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Built for the Human Race.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="mkpu" name="captionButtonLabel" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Pre-order]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Pre-order]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="mjgw" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[2@public@[£groupId£]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Header_02.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Header_02.jpg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="vfau" name="Image2x9w" type="image">
 		<dynamic-element index-type="keyword" instance-id="wtjf" name="captionCategory" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Unique design]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Unique design]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="qawk" name="captionText" type="text">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[The relentless pursuit of perfection.]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[The relentless pursuit of perfection.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="vwsm" name="captionButtonLabel" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Shake it]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Shake it]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="wkzq" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[2@public@[£groupId£]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Header_03.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Header_03.jpg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="xgtj" name="StaticHighlight" type="text">
 		<dynamic-element index-type="keyword" instance-id="leue" name="HighlightDesc" type="text">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[Strongly reduced prices on spare parts of many brands]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[Strongly reduced prices on spare parts of many brands]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="text" instance-id="vspt" name="HighlightIcon" type="image">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Discount.png$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Discount.png$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Discount Price]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Discount Price]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iewq" name="StaticHighlight" type="text">
 		<dynamic-element index-type="keyword" instance-id="pfvn" name="HighlightDesc" type="text">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[Order for at least $250 and we deliver free of charge]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[Order for at least $250 and we deliver free of charge]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="text" instance-id="fjth" name="HighlightIcon" type="image">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Free_Shipping.png$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Free_Shipping.png$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Free Shipping]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Free Shipping]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="beyl" name="StaticHighlight" type="text">
 		<dynamic-element index-type="keyword" instance-id="oebk" name="HighlightDesc" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[Within 48 hours after payment receipt]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Within 48 hours after payment receipt]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="text" instance-id="aycz" name="HighlightIcon" type="image">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Delivery.png$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Delivery.png$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Great Delivery]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Great Delivery]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="vrpt" name="StaticHighlight" type="text">
 		<dynamic-element index-type="keyword" instance-id="zsji" name="HighlightDesc" type="text">
-			<dynamic-content language-id="[£LOCALE£]"><![CDATA[UPS, DFL, FedEx, GLS]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[UPS, DFL, FedEx, GLS]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="text" instance-id="piwd" name="HighlightIcon" type="image">
-			<dynamic-content language-id="[£LOCALE£]"> <![CDATA[[$Shipping_Method.png$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Shipping_Method.png$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[£LOCALE£]"><![CDATA[Shipping Method]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[Shipping Method]]></dynamic-content>
 	</dynamic-element>
 </root>

@@ -289,7 +289,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException {
 
-		_checkAccountOrderPermissions(
+		_checkAccountOrder(
 			groupId, commerceAccountId,
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 
@@ -310,7 +310,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public int getCommerceOrdersCount(long groupId, long commerceAccountId)
 		throws PortalException {
 
-		_checkAccountOrderPermissions(
+		_checkAccountOrder(
 			groupId, commerceAccountId,
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 
@@ -324,7 +324,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			int end)
 		throws PortalException {
 
-		_checkAccountOrderPermissions(
+		_checkAccountOrder(
 			groupId, commerceAccountId,
 			CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS);
 
@@ -352,7 +352,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long groupId, long commerceAccountId, String keywords)
 		throws PortalException {
 
-		_checkAccountOrderPermissions(
+		_checkAccountOrder(
 			groupId, commerceAccountId,
 			CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS);
 
@@ -383,7 +383,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			int end)
 		throws PortalException {
 
-		_checkAccountOrderPermissions(
+		_checkAccountOrder(
 			groupId, commerceAccountId,
 			CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS);
 
@@ -411,7 +411,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long groupId, long commerceAccountId, String keywords)
 		throws PortalException {
 
-		_checkAccountOrderPermissions(
+		_checkAccountOrder(
 			groupId, commerceAccountId,
 			CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS);
 
@@ -971,7 +971,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			serviceContext);
 	}
 
-	private void _checkAccountOrderPermissions(
+	private void _checkAccountOrder(
 			long groupId, long commerceAccountId, String action)
 		throws PortalException {
 

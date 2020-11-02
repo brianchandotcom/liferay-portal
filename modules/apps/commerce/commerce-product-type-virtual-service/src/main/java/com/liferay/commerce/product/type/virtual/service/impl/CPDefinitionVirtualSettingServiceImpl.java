@@ -170,7 +170,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			cpDefinitionId = cpInstance.getCPDefinitionId();
 		}
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(cpDefinitionId, action);
+		_checkCommerceCatalog(cpDefinitionId, action);
 	}
 
 	@ServiceReference(type = CommerceCatalogLocalService.class)
@@ -179,8 +179,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	protected CPDefinitionLocalService cpDefinitionLocalService;
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(

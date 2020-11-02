@@ -83,7 +83,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
@@ -196,7 +196,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.addCPInstance(
@@ -213,7 +213,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		cpInstanceLocalService.buildCPInstances(cpDefinitionId, serviceContext);
@@ -223,7 +223,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public void deleteCPInstance(long cpInstanceId) throws PortalException {
 		CPInstance cpInstance = cpInstanceService.getCPInstance(cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		cpInstanceLocalService.deleteCPInstance(cpInstance);
@@ -239,7 +239,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 				companyId, externalReferenceCode);
 
 		if (cpInstance != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpInstance.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
@@ -254,7 +254,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			cpInstanceId);
 
 		if (cpInstance != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpInstance.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
@@ -272,7 +272,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			return null;
 		}
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cProduct.getPublishedCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpInstanceLocalService.fetchCProductInstance(
@@ -285,8 +285,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPDefinitionInstances(
 			cpDefinitionId, status, start, end, orderByComparator);
@@ -296,8 +295,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPDefinitionInstancesCount(
 			cpDefinitionId, status);
@@ -308,7 +306,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpInstance;
@@ -320,7 +318,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.VIEW);
+		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPInstances(
 			groupId, status, start, end, orderByComparator);
@@ -330,7 +328,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public int getCPInstancesCount(long groupId, int status)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.VIEW);
+		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPInstancesCount(groupId, status);
 	}
@@ -342,7 +340,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		throws PortalException {
 
 		if (cpDefinitionId > 0) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpDefinitionId, ActionKeys.VIEW);
 		}
 
@@ -357,7 +355,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		throws PortalException {
 
 		if (cpDefinitionId > 0) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpDefinitionId, ActionKeys.VIEW);
 		}
 
@@ -371,7 +369,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.VIEW);
+		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.searchCPInstances(
 			companyId, new long[] {groupId}, keywords, status, start, end,
@@ -433,7 +431,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updateCPInstance(
@@ -453,7 +451,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updatePricingInfo(
@@ -469,7 +467,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updateShippingInfo(
@@ -491,7 +489,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updateSubscriptionInfo(
@@ -520,7 +518,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updateSubscriptionInfo(
@@ -568,7 +566,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			boolean neverExpire, String unspsc, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.upsertCPInstance(
 			cpDefinitionId, groupId, sku, gtin, manufacturerPartNumber,
@@ -580,7 +578,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			serviceContext);
 	}
 
-	private void _checkCommerceCatalogPermission(long groupId, String actionId)
+	private void _checkCommerceCatalog(long groupId, String actionId)
 		throws PortalException {
 
 		CommerceCatalog commerceCatalog =
@@ -594,7 +592,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			getPermissionChecker(), commerceCatalog, actionId);
 	}
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
+	private void _checkCommerceCatalogByCPDefinitionId(
 			long cpDefinitionId, String actionId)
 		throws PortalException {
 

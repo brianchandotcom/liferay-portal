@@ -46,8 +46,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 				double priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(
@@ -65,7 +64,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 				cpDefinitionSpecificationOptionValuePersistence.
 					findByPrimaryKey(cpDefinitionSpecificationOptionValueId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
 			ActionKeys.VIEW);
 
@@ -86,7 +85,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 					fetchCPDefinitionSpecificationOptionValue(
 						cpDefinitionSpecificationOptionValueId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
 			ActionKeys.VIEW);
 
@@ -105,7 +104,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 					getCPDefinitionSpecificationOptionValue(
 						cpDefinitionSpecificationOptionValueId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
 			ActionKeys.VIEW);
 
@@ -120,8 +119,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 					orderByComparator)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValues(
@@ -134,8 +132,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 				long cpDefinitionId, long cpOptionCategoryId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValues(
@@ -147,8 +144,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 			long cpDefinitionId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValuesCount(cpDefinitionId);
@@ -168,7 +164,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 					getCPDefinitionSpecificationOptionValue(
 						cpDefinitionSpecificationOptionValueId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
@@ -178,8 +174,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 				valueMap, priority, serviceContext);
 	}
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(

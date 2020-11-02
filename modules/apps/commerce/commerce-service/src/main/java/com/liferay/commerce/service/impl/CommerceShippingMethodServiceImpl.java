@@ -46,7 +46,7 @@ public class CommerceShippingMethodServiceImpl
 			long commerceCountryId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceAddressRestriction(
 			userId, groupId, commerceShippingMethodId, commerceCountryId);
@@ -74,7 +74,7 @@ public class CommerceShippingMethodServiceImpl
 			String engineKey, double priority, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceShippingMethod(
 			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
@@ -91,8 +91,7 @@ public class CommerceShippingMethodServiceImpl
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceShippingMethod.getGroupId());
+			_checkCommerceChannel(commerceShippingMethod.getGroupId());
 		}
 
 		return commerceShippingMethodLocalService.createCommerceShippingMethod(
@@ -108,8 +107,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceAddressRestrictionLocalService.
 				getCommerceAddressRestriction(commerceAddressRestrictionId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceAddressRestriction.getGroupId());
+		_checkCommerceChannel(commerceAddressRestriction.getGroupId());
 
 		commerceShippingMethodLocalService.deleteCommerceAddressRestriction(
 			commerceAddressRestrictionId);
@@ -123,8 +121,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingMethod.getGroupId());
+		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
 		commerceAddressRestrictionLocalService.
 			deleteCommerceAddressRestrictions(
@@ -140,8 +137,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingMethod.getGroupId());
+		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
 		commerceShippingMethodLocalService.deleteCommerceShippingMethod(
 			commerceShippingMethod);
@@ -157,8 +153,7 @@ public class CommerceShippingMethodServiceImpl
 				groupId, engineKey);
 
 		if (commerceShippingMethod != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceShippingMethod.getGroupId());
+			_checkCommerceChannel(commerceShippingMethod.getGroupId());
 		}
 
 		return commerceShippingMethod;
@@ -174,8 +169,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingMethod.getGroupId());
+		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethodLocalService.
 			getCommerceAddressRestrictions(
@@ -191,8 +185,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingMethod.getGroupId());
+		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethodLocalService.
 			getCommerceAddressRestrictionsCount(commerceShippingMethodId);
@@ -207,8 +200,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingMethod.getGroupId());
+		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethod;
 	}
@@ -217,7 +209,7 @@ public class CommerceShippingMethodServiceImpl
 	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
 			groupId);
@@ -228,7 +220,7 @@ public class CommerceShippingMethodServiceImpl
 			long groupId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
 			groupId, active);
@@ -239,7 +231,7 @@ public class CommerceShippingMethodServiceImpl
 			long groupId, long commerceCountryId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
 			groupId, commerceCountryId, active);
@@ -249,7 +241,7 @@ public class CommerceShippingMethodServiceImpl
 	public int getCommerceShippingMethodsCount(long groupId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.
 			getCommerceShippingMethodsCount(groupId, active);
@@ -265,8 +257,7 @@ public class CommerceShippingMethodServiceImpl
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceShippingMethod.getGroupId());
+			_checkCommerceChannel(commerceShippingMethod.getGroupId());
 		}
 
 		return commerceShippingMethodLocalService.setActive(
@@ -284,17 +275,14 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingMethod.getGroupId());
+		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
 		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
 			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
 			descriptionMap, imageFile, priority, active);
 	}
 
-	private void _checkCommerceChannelPermissionByGroupId(long groupId)
-		throws PortalException {
-
+	private void _checkCommerceChannel(long groupId) throws PortalException {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 

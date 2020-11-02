@@ -71,7 +71,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.addCPDefinition(
 			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
@@ -117,7 +117,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.addCPDefinition(
 			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
@@ -138,7 +138,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.copyCPDefinition(
 			cpDefinitionId, groupId);
@@ -149,7 +149,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, long categoryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		cpDefinitionLocalService.deleteAssetCategoryCPDefinition(
@@ -158,7 +158,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
@@ -172,7 +172,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			cpDefinitionId);
 
 		if (cpDefinition != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpDefinitionId, ActionKeys.VIEW);
 		}
 
@@ -190,7 +190,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 					companyId, externalReferenceCode);
 
 		if (cpDefinition != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpDefinition.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
@@ -205,7 +205,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			cpDefinitionLocalService.fetchCPDefinitionByCProductId(cProductId);
 
 		if (cpDefinition != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalogByCPDefinitionId(
 				cpDefinition.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
@@ -216,8 +216,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition getCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 	}
@@ -228,7 +227,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.VIEW);
+		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getCPDefinitions(
 			groupId, status, start, end, orderByComparator);
@@ -238,15 +237,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public int getCPDefinitionsCount(long groupId, int status)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.VIEW);
+		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
 	}
 
 	@Override
 	public String getLayoutUuid(long cpDefinitionId) throws PortalException {
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getLayoutUuid(cpDefinitionId);
 	}
@@ -255,8 +253,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
@@ -318,7 +315,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinition(
@@ -336,7 +333,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, boolean enable)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinitionAccountGroupFilter(
@@ -348,7 +345,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinitionCategorization(
@@ -360,7 +357,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, boolean enable)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinitionChannelFilter(
@@ -373,7 +370,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		cpDisplayLayoutLocalService.addCPDisplayLayout(
@@ -388,7 +385,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateShippingInfo(
@@ -403,7 +400,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateStatus(
@@ -421,7 +418,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long deliveryMaxSubscriptionCycles)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateSubscriptionInfo(
@@ -445,7 +442,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateSubscriptionInfo(
@@ -460,7 +457,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean telcoOrElectronics)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalogByCPDefinitionId(
 			cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateTaxCategoryInfo(
@@ -495,7 +492,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.upsertCPDefinition(
 			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
@@ -541,7 +538,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermission(groupId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.upsertCPDefinition(
 			groupId, userId, nameMap, shortDescriptionMap, descriptionMap,
@@ -558,7 +555,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			externalReferenceCode, serviceContext);
 	}
 
-	private void _checkCommerceCatalogPermission(long groupId, String actionId)
+	private void _checkCommerceCatalog(long groupId, String actionId)
 		throws PortalException {
 
 		CommerceCatalog commerceCatalog =
@@ -572,7 +569,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			getPermissionChecker(), commerceCatalog, actionId);
 	}
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
+	private void _checkCommerceCatalogByCPDefinitionId(
 			long cpDefinitionId, String actionId)
 		throws PortalException {
 

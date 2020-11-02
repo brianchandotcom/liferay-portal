@@ -47,7 +47,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			long userId, long groupId, long classPK, long commerceCountryId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			addCommerceAddressRestriction(
@@ -76,7 +76,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			String engineKey, double priority, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
@@ -94,8 +94,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				fetchCommerceAddressRestriction(commerceAddressRestrictionId);
 
 		if (commerceAddressRestriction != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceAddressRestriction.getGroupId());
+			_checkCommerceChannel(commerceAddressRestriction.getGroupId());
 		}
 
 		commercePaymentMethodGroupRelLocalService.
@@ -112,8 +111,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				getCommercePaymentMethodGroupRel(
 					commercePaymentMethodGroupRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commercePaymentMethodGroupRel.getGroupId());
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 
 		_commerceAddressRestrictionLocalService.
 			deleteCommerceAddressRestrictions(
@@ -132,8 +130,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				getCommercePaymentMethodGroupRel(
 					commercePaymentMethodGroupRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commercePaymentMethodGroupRel.getGroupId());
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 
 		commercePaymentMethodGroupRelLocalService.
 			deleteCommercePaymentMethodGroupRel(commercePaymentMethodGroupRel);
@@ -149,8 +146,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				fetchCommercePaymentMethodGroupRel(groupId, engineKey);
 
 		if (commercePaymentMethodGroupRel != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commercePaymentMethodGroupRel.getGroupId());
+			_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 		}
 
 		return commercePaymentMethodGroupRel;
@@ -170,8 +166,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			return Collections.emptyList();
 		}
 
-		_checkCommerceChannelPermissionByGroupId(
-			commercePaymentMethodGroupRel.getGroupId());
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommerceAddressRestrictions(
@@ -190,8 +185,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			return 0;
 		}
 
-		_checkCommerceChannelPermissionByGroupId(
-			commercePaymentMethodGroupRel.getGroupId());
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommerceAddressRestrictionsCount(classPK);
@@ -207,8 +201,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				getCommercePaymentMethodGroupRel(
 					commercePaymentMethodGroupRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commercePaymentMethodGroupRel.getGroupId());
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 
 		return commercePaymentMethodGroupRel;
 	}
@@ -218,7 +211,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			long groupId, String engineKey)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRel(groupId, engineKey);
@@ -229,7 +222,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			getCommercePaymentMethodGroupRels(long groupId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRels(groupId);
@@ -240,7 +233,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			getCommercePaymentMethodGroupRels(long groupId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRels(groupId, active);
@@ -252,7 +245,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				long groupId, boolean active, int start, int end)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRels(groupId, active, start, end);
@@ -266,7 +259,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 					orderByComparator)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRels(
@@ -281,7 +274,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 					orderByComparator)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRels(
@@ -294,7 +287,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				long groupId, long commerceCountryId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRels(
@@ -305,7 +298,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 	public int getCommercePaymentMethodGroupRelsCount(long groupId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRelsCount(groupId);
@@ -316,7 +309,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 			long groupId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRelsCount(groupId, active);
@@ -333,8 +326,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 					commercePaymentMethodGroupRelId);
 
 		if (commercePaymentMethodGroupRel != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commercePaymentMethodGroupRel.getGroupId());
+			_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 		}
 
 		return commercePaymentMethodGroupRelLocalService.setActive(
@@ -353,8 +345,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				getCommercePaymentMethodGroupRel(
 					commercePaymentMethodGroupRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commercePaymentMethodGroupRel.getGroupId());
+		_checkCommerceChannel(commercePaymentMethodGroupRel.getGroupId());
 
 		return commercePaymentMethodGroupRelLocalService.
 			updateCommercePaymentMethodGroupRel(
@@ -363,9 +354,7 @@ public class CommercePaymentMethodGroupRelServiceImpl
 				nameMap, descriptionMap, imageFile, priority, active);
 	}
 
-	private void _checkCommerceChannelPermissionByGroupId(long groupId)
-		throws PortalException {
-
+	private void _checkCommerceChannel(long groupId) throws PortalException {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 

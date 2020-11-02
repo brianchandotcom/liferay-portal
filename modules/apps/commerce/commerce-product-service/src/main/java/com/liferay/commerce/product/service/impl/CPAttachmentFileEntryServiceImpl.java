@@ -101,7 +101,7 @@ public class CPAttachmentFileEntryServiceImpl
 			if (cpDefinitionClassNameId ==
 					cpAttachmentFileEntry.getClassNameId()) {
 
-				_checkCommerceCatalogPermissionByCPDefinitionId(
+				_checkCommerceCatalog(
 					cpAttachmentFileEntry.getClassPK(), ActionKeys.VIEW);
 			}
 			else {
@@ -131,7 +131,7 @@ public class CPAttachmentFileEntryServiceImpl
 			if (cpDefinitionClassNameId ==
 					cpAttachmentFileEntry.getClassNameId()) {
 
-				_checkCommerceCatalogPermissionByCPDefinitionId(
+				_checkCommerceCatalog(
 					cpAttachmentFileEntry.getClassPK(), ActionKeys.VIEW);
 			}
 			else if (assetCategoryClassNameId ==
@@ -247,7 +247,7 @@ public class CPAttachmentFileEntryServiceImpl
 			if (cpDefinitionClassNameId ==
 					cpAttachmentFileEntry.getClassNameId()) {
 
-				_checkCommerceCatalogPermissionByCPDefinitionId(
+				_checkCommerceCatalog(
 					cpAttachmentFileEntry.getClassPK(), ActionKeys.VIEW);
 			}
 			else if (assetCategoryClassNameId ==
@@ -431,7 +431,7 @@ public class CPAttachmentFileEntryServiceImpl
 			CPDefinition.class);
 
 		if (classNameId == cpDefinitionClassNameId) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(classPK, actionId);
+			_checkCommerceCatalog(classPK, actionId);
 		}
 	}
 
@@ -443,8 +443,7 @@ public class CPAttachmentFileEntryServiceImpl
 		return CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES;
 	}
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(

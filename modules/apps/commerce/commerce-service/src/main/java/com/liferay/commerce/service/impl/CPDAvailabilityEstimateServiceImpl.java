@@ -40,8 +40,7 @@ public class CPDAvailabilityEstimateServiceImpl
 			long cpDefinitionId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpdAvailabilityEstimateLocalService.
 			fetchCPDAvailabilityEstimateByCPDefinitionId(cpDefinitionId);
@@ -53,8 +52,7 @@ public class CPDAvailabilityEstimateServiceImpl
 			long commerceAvailabilityEstimateId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpdAvailabilityEstimateLocalService.
 			updateCPDAvailabilityEstimate(
@@ -68,8 +66,7 @@ public class CPDAvailabilityEstimateServiceImpl
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	protected CPDefinitionLocalService cpDefinitionLocalService;
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(

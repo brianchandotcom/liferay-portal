@@ -53,7 +53,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -75,7 +75,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -96,7 +96,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 				cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalog(
 				cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
@@ -117,7 +117,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 				cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalog(
 				cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
@@ -137,7 +137,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -153,7 +153,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -170,7 +170,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -201,7 +201,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -221,7 +221,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -240,7 +240,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -294,7 +294,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -342,7 +342,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -350,8 +350,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 				cpDefinitionOptionValueRelId, preselected);
 	}
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(

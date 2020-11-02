@@ -44,12 +44,10 @@ public class CPDefinitionGroupedEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
 
 		for (long entryCPDefinitionId : entryCPDefinitionIds) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
-				entryCPDefinitionId, ActionKeys.VIEW);
+			_checkCommerceCatalog(entryCPDefinitionId, ActionKeys.VIEW);
 		}
 
 		cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntries(
@@ -65,7 +63,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 			cpDefinitionGroupedEntryPersistence.findByPrimaryKey(
 				cpDefinitionGroupedEntryId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionGroupedEntry.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionGroupedEntryLocalService.
@@ -78,8 +76,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionGroupedEntryLocalService.
 			getCPDefinitionGroupedEntries(
@@ -90,8 +87,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.VIEW);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionGroupedEntryLocalService.
 			getCPDefinitionGroupedEntriesCount(cpDefinitionId);
@@ -107,7 +103,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 				cpDefinitionGroupedEntryId);
 
 		if (cpDefinitionGroupedEntry != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalog(
 				cpDefinitionGroupedEntry.getEntryCPDefinitionId(),
 				ActionKeys.VIEW);
 		}
@@ -124,7 +120,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 			cpDefinitionGroupedEntryPersistence.findByPrimaryKey(
 				cpDefinitionGroupedEntryId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionGroupedEntry.getEntryCPDefinitionId(),
 			ActionKeys.UPDATE);
 
@@ -139,8 +135,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	protected CPDefinitionLocalService cpDefinitionLocalService;
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(

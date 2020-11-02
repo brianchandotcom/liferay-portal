@@ -56,7 +56,7 @@ public class CommerceTaxFixedRateServiceImpl
 			long cpTaxCategoryId, double rate)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateLocalService.addCommerceTaxFixedRate(
 			userId, groupId, commerceTaxMethodId, cpTaxCategoryId, rate);
@@ -70,8 +70,7 @@ public class CommerceTaxFixedRateServiceImpl
 			commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(
 				commerceTaxFixedRateId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxFixedRate.getGroupId());
+		_checkCommerceChannel(commerceTaxFixedRate.getGroupId());
 
 		commerceTaxFixedRateLocalService.deleteCommerceTaxFixedRate(
 			commerceTaxFixedRate);
@@ -87,8 +86,7 @@ public class CommerceTaxFixedRateServiceImpl
 				commerceTaxFixedRateId);
 
 		if (commerceTaxFixedRate != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceTaxFixedRate.getGroupId());
+			_checkCommerceChannel(commerceTaxFixedRate.getGroupId());
 		}
 
 		return commerceTaxFixedRate;
@@ -104,8 +102,7 @@ public class CommerceTaxFixedRateServiceImpl
 				cpTaxCategoryId, commerceTaxMethodId);
 
 		if (commerceTaxFixedRate != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceTaxFixedRate.getGroupId());
+			_checkCommerceChannel(commerceTaxFixedRate.getGroupId());
 		}
 
 		return commerceTaxFixedRate;
@@ -117,7 +114,7 @@ public class CommerceTaxFixedRateServiceImpl
 			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateLocalService.getCommerceTaxFixedRates(
 			commerceTaxMethodId, start, end, orderByComparator);
@@ -128,7 +125,7 @@ public class CommerceTaxFixedRateServiceImpl
 			long groupId, long commerceTaxMethodId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateLocalService.getCommerceTaxFixedRatesCount(
 			commerceTaxMethodId);
@@ -143,16 +140,13 @@ public class CommerceTaxFixedRateServiceImpl
 			commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(
 				commerceTaxFixedRateId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxFixedRate.getGroupId());
+		_checkCommerceChannel(commerceTaxFixedRate.getGroupId());
 
 		return commerceTaxFixedRateLocalService.updateCommerceTaxFixedRate(
 			commerceTaxFixedRateId, rate);
 	}
 
-	private void _checkCommerceChannelPermissionByGroupId(long groupId)
-		throws PortalException {
-
+	private void _checkCommerceChannel(long groupId) throws PortalException {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 

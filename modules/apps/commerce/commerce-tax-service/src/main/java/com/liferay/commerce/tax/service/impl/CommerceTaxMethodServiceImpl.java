@@ -43,7 +43,7 @@ public class CommerceTaxMethodServiceImpl
 			boolean percentage, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxMethodLocalService.addCommerceTaxMethod(
 			userId, groupId, nameMap, descriptionMap, engineKey, percentage,
@@ -71,7 +71,7 @@ public class CommerceTaxMethodServiceImpl
 			long groupId, long commerceTaxMethodId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxMethodLocalService.createCommerceTaxMethod(
 			commerceTaxMethodId);
@@ -85,8 +85,7 @@ public class CommerceTaxMethodServiceImpl
 			commerceTaxMethodLocalService.getCommerceTaxMethod(
 				commerceTaxMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxMethod.getGroupId());
+		_checkCommerceChannel(commerceTaxMethod.getGroupId());
 
 		commerceTaxMethodLocalService.deleteCommerceTaxMethod(
 			commerceTaxMethod);
@@ -97,7 +96,7 @@ public class CommerceTaxMethodServiceImpl
 			long groupId, String engineKey)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxMethodLocalService.fetchCommerceTaxMethod(
 			groupId, engineKey);
@@ -111,8 +110,7 @@ public class CommerceTaxMethodServiceImpl
 			commerceTaxMethodLocalService.getCommerceTaxMethod(
 				commerceTaxMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxMethod.getGroupId());
+		_checkCommerceChannel(commerceTaxMethod.getGroupId());
 
 		return commerceTaxMethodLocalService.getCommerceTaxMethod(
 			commerceTaxMethodId);
@@ -122,7 +120,7 @@ public class CommerceTaxMethodServiceImpl
 	public List<CommerceTaxMethod> getCommerceTaxMethods(long groupId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxMethodLocalService.getCommerceTaxMethods(groupId);
 	}
@@ -132,7 +130,7 @@ public class CommerceTaxMethodServiceImpl
 			long groupId, boolean active)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxMethodLocalService.getCommerceTaxMethods(
 			groupId, active);
@@ -147,8 +145,7 @@ public class CommerceTaxMethodServiceImpl
 				commerceTaxMethodId);
 
 		if (commerceTaxMethod != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceTaxMethod.getGroupId());
+			_checkCommerceChannel(commerceTaxMethod.getGroupId());
 		}
 
 		return commerceTaxMethodLocalService.setActive(
@@ -166,17 +163,14 @@ public class CommerceTaxMethodServiceImpl
 			commerceTaxMethodLocalService.getCommerceTaxMethod(
 				commerceTaxMethodId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxMethod.getGroupId());
+		_checkCommerceChannel(commerceTaxMethod.getGroupId());
 
 		return commerceTaxMethodLocalService.updateCommerceTaxMethod(
 			commerceTaxMethod.getCommerceTaxMethodId(), nameMap, descriptionMap,
 			percentage, active);
 	}
 
-	private void _checkCommerceChannelPermissionByGroupId(long groupId)
-		throws PortalException {
-
+	private void _checkCommerceChannel(long groupId) throws PortalException {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 

@@ -61,7 +61,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT);
 
-		_checkPermissionByC_C(clazz.getName(), classPK, ActionKeys.VIEW);
+		_checkCPDisplayLayout(clazz.getName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.addCPDisplayLayout(
 			userId, groupId, clazz, classPK, layoutUuid);
@@ -82,7 +82,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			getPermissionChecker(), cpDisplayLayout.getGroupId(),
 			ActionKeys.ADD_LAYOUT);
 
-		_checkPermissionByC_C(
+		_checkCPDisplayLayout(
 			cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
 			ActionKeys.VIEW);
 
@@ -100,7 +100,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			getPermissionChecker(), cpDisplayLayout.getGroupId(),
 			ActionKeys.ADD_LAYOUT);
 
-		_checkPermissionByC_C(
+		_checkCPDisplayLayout(
 			cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
 			ActionKeys.UPDATE);
 
@@ -119,7 +119,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 				getPermissionChecker(), _getLayout(cpDisplayLayout),
 				ActionKeys.VIEW);
 
-			_checkPermissionByC_C(
+			_checkCPDisplayLayout(
 				cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
 				ActionKeys.VIEW);
 		}
@@ -152,7 +152,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			getPermissionChecker(), _getLayout(cpDisplayLayout),
 			ActionKeys.UPDATE);
 
-		_checkPermissionByC_C(
+		_checkCPDisplayLayout(
 			cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
 			ActionKeys.VIEW);
 
@@ -160,7 +160,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			cpDisplayLayout.getCPDisplayLayoutId(), layoutUuid);
 	}
 
-	private void _checkPermissionByC_C(
+	private void _checkCPDisplayLayout(
 			String className, long classPK, String actionId)
 		throws PortalException {
 

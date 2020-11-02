@@ -43,8 +43,7 @@ public class CPDefinitionInventoryServiceImpl
 			int multipleOrderQuantity)
 		throws PortalException {
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionId, ActionKeys.UPDATE);
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 			userId, cpDefinitionId, cpDefinitionInventoryEngine,
@@ -61,7 +60,7 @@ public class CPDefinitionInventoryServiceImpl
 			cpDefinitionInventoryLocalService.getCPDefinitionInventory(
 				cpDefinitionInventoryId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionInventory.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		cpDefinitionInventoryLocalService.deleteCPDefinitionInventory(
@@ -78,7 +77,7 @@ public class CPDefinitionInventoryServiceImpl
 				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 
 		if (cpDefinitionInventory != null) {
-			_checkCommerceCatalogPermissionByCPDefinitionId(
+			_checkCommerceCatalog(
 				cpDefinitionInventory.getCPDefinitionId(), ActionKeys.UPDATE);
 		}
 
@@ -103,7 +102,7 @@ public class CPDefinitionInventoryServiceImpl
 			cpDefinitionInventoryLocalService.getCPDefinitionInventory(
 				cpDefinitionInventoryId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionInventory.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
@@ -126,7 +125,7 @@ public class CPDefinitionInventoryServiceImpl
 			cpDefinitionInventoryLocalService.getCPDefinitionInventory(
 				cpDefinitionInventoryId);
 
-		_checkCommerceCatalogPermissionByCPDefinitionId(
+		_checkCommerceCatalog(
 			cpDefinitionInventory.getCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
@@ -136,8 +135,7 @@ public class CPDefinitionInventoryServiceImpl
 			allowedOrderQuantities, multipleOrderQuantity);
 	}
 
-	private void _checkCommerceCatalogPermissionByCPDefinitionId(
-			long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(

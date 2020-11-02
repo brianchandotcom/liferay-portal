@@ -42,7 +42,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 			String zip, double rate)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			addCommerceTaxFixedRateAddressRel(
@@ -78,8 +78,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 				getCommerceTaxFixedRateAddressRel(
 					commerceTaxFixedRateAddressRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxFixedRateAddressRel.getGroupId());
+		_checkCommerceChannel(commerceTaxFixedRateAddressRel.getGroupId());
 
 		commerceTaxFixedRateAddressRelLocalService.
 			deleteCommerceTaxFixedRateAddressRel(
@@ -97,8 +96,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 					commerceTaxFixedRateAddressRelId);
 
 		if (commerceTaxFixedRateAddressRel != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceTaxFixedRateAddressRel.getGroupId());
+			_checkCommerceChannel(commerceTaxFixedRateAddressRel.getGroupId());
 		}
 
 		return commerceTaxFixedRateAddressRel;
@@ -112,7 +110,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 					orderByComparator)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRels(
@@ -124,7 +122,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 			long groupId, long commerceTaxMethodId)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			getCommerceTaxMethodFixedRateAddressRelsCount(commerceTaxMethodId);
@@ -141,8 +139,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 				getCommerceTaxFixedRateAddressRel(
 					commerceTaxFixedRateAddressRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceTaxFixedRateAddressRel.getGroupId());
+		_checkCommerceChannel(commerceTaxFixedRateAddressRel.getGroupId());
 
 		return commerceTaxFixedRateAddressRelLocalService.
 			updateCommerceTaxFixedRateAddressRel(
@@ -150,9 +147,7 @@ public class CommerceTaxFixedRateAddressRelServiceImpl
 				commerceRegionId, zip, rate);
 	}
 
-	private void _checkCommerceChannelPermissionByGroupId(long groupId)
-		throws PortalException {
-
+	private void _checkCommerceChannel(long groupId) throws PortalException {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 

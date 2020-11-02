@@ -48,7 +48,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 			BigDecimal rateUnitWeightPrice, double ratePercentage)
 		throws PortalException {
 
-		_checkCommerceChannelPermissionByGroupId(groupId);
+		_checkCommerceChannel(groupId);
 
 		return commerceShippingFixedOptionRelLocalService.
 			addCommerceShippingFixedOptionRel(
@@ -91,8 +91,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 				getCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingFixedOptionRel.getGroupId());
+		_checkCommerceChannel(commerceShippingFixedOptionRel.getGroupId());
 
 		commerceShippingFixedOptionRelLocalService.
 			deleteCommerceShippingFixedOptionRel(
@@ -110,8 +109,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 					commerceShippingFixedOptionRelId);
 
 		if (commerceShippingFixedOptionRel != null) {
-			_checkCommerceChannelPermissionByGroupId(
-				commerceShippingFixedOptionRel.getGroupId());
+			_checkCommerceChannel(commerceShippingFixedOptionRel.getGroupId());
 		}
 
 		return commerceShippingFixedOptionRel;
@@ -163,8 +161,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 				getCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId);
 
-		_checkCommerceChannelPermissionByGroupId(
-			commerceShippingFixedOptionRel.getGroupId());
+		_checkCommerceChannel(commerceShippingFixedOptionRel.getGroupId());
 
 		return commerceShippingFixedOptionRelLocalService.
 			updateCommerceShippingFixedOptionRel(
@@ -173,9 +170,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 				fixedPrice, rateUnitWeightPrice, ratePercentage);
 	}
 
-	private void _checkCommerceChannelPermissionByGroupId(long groupId)
-		throws PortalException {
-
+	private void _checkCommerceChannel(long groupId) throws PortalException {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 

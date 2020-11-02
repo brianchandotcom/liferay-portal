@@ -22,6 +22,6 @@ public class DispatchWebKeys {
 
 	public static final String DISPATCH_TRIGGER = "DISPATCH_TRIGGER";
 
-	public static final String FILE_NAME = "fileName";
+	public static final String FILE_ENTRY_NAME = "FILE_ENTRY_NAME";
 
 }

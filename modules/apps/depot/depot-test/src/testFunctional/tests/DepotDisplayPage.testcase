@@ -121,17 +121,17 @@ definition {
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "Document_1.jpg",
 			dmDocumentTypeName = "DM Document Type Name",
 			textField = "DM Document Text");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
+		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "DM Document Title");
+			rowEntry = "Document_1.jpg");
 
 		WebContent.editDisplayPage(pageName = "Display Page Template Name");
 
@@ -143,9 +143,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="DM Document Title.jpg","og:description" content="image/jpeg"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Document_1.jpg","og:description" content="image/jpeg"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/documents/${siteID}/0/DM+Document+Title.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
 	}
 
 	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."

@@ -174,7 +174,7 @@ public class ViewChangesDisplayContext {
 								_getHref(
 									_renderResponse.createActionURL(),
 									ActionRequest.ACTION_NAME,
-									"/publications/checkout_ct_collection",
+									"/change_tracking/checkout_ct_collection",
 									"redirect", _themeDisplay.getURLCurrent(),
 									"ctCollectionId",
 									String.valueOf(
@@ -194,8 +194,9 @@ public class ViewChangesDisplayContext {
 							_getHref(
 								_renderResponse.createRenderURL(),
 								"mvcRenderCommandName",
-								"/publications/edit_ct_collection", "redirect",
-								_themeDisplay.getURLCurrent(), "ctCollectionId",
+								"/change_tracking/edit_ct_collection",
+								"redirect", _themeDisplay.getURLCurrent(),
+								"ctCollectionId",
 								String.valueOf(
 									_ctCollection.getCtCollectionId()))
 						).put(
@@ -248,7 +249,7 @@ public class ViewChangesDisplayContext {
 						_getHref(
 							_renderResponse.createActionURL(),
 							ActionRequest.ACTION_NAME,
-							"/publications/delete_ct_collection", "redirect",
+							"/change_tracking/delete_ct_collection", "redirect",
 							getBackURL(), "ctCollectionId",
 							String.valueOf(_ctCollection.getCtCollectionId())),
 						"');} else{self.focus();}");

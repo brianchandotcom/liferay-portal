@@ -67,8 +67,9 @@ public class PublicationsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/publications/add_ct_collection",
-					"redirect", currentURLObj.toString());
+					"mvcRenderCommandName",
+					"/change_tracking/add_ct_collection", "redirect",
+					currentURLObj.toString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "create-new-publication"));

@@ -307,7 +307,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
 
 		addURL.setParameter(
-			"mvcRenderCommandName", "/publications/add_ct_collection");
+			"mvcRenderCommandName", "/change_tracking/add_ct_collection");
 
 		PortletURL backURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),

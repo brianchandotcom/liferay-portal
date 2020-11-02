@@ -18,7 +18,7 @@
 
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
-String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_NAME);
+String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_NAME);
 %>
 
 <liferay-portlet:actionURL name="editDispatchTalendJobArchive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />

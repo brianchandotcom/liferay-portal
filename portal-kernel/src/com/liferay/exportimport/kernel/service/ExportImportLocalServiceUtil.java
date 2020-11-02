@@ -124,6 +124,17 @@ public class ExportImportLocalServiceUtil {
 			exportImportConfiguration, file);
 	}
 
+	public static long importLayoutSetPrototypeInBackground(
+			long userId,
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				exportImportConfiguration,
+			java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().importLayoutSetPrototypeInBackground(
+			userId, exportImportConfiguration, file);
+	}
+
 	public static long importLayoutsInBackground(
 			long userId,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration

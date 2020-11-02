@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.poshi.runner;
 
 import com.liferay.gradle.plugins.poshi.runner.internal.util.GitRepositoryBuildAdapter;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.text.DateFormat;
@@ -27,7 +28,6 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.invocation.Gradle;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

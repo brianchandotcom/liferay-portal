@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.javadoc.formatter;
 
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 
@@ -27,7 +28,6 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

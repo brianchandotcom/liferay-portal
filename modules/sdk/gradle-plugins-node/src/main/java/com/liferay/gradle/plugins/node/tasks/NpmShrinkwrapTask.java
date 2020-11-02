@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.json.JsonOutput;
@@ -34,7 +35,6 @@ import org.gradle.api.Task;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

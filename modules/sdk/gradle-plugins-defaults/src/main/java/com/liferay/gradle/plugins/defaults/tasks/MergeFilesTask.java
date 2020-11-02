@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults.tasks;
 
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.BufferedWriter;
@@ -40,7 +41,6 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -78,7 +78,6 @@ public class MergeFilesTask extends DefaultTask {
 		return GradleUtil.toString(_separator);
 	}
 
-	@SuppressWarnings("unchecked")
 	public MergeFilesTask inputFiles(Iterable<?> inputFiles) {
 		GUtil.addToCollection(_inputFiles, inputFiles);
 

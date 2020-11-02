@@ -14,12 +14,13 @@
 
 package com.liferay.gradle.plugins.jsdoc;
 
+import com.liferay.gradle.util.GUtil;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.gradle.api.Project;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

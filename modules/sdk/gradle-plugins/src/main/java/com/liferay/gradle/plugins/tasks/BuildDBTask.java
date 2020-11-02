@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.GUtil;
 
 import java.io.File;
 
@@ -33,7 +34,6 @@ import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -49,7 +49,6 @@ public class BuildDBTask extends JavaExec {
 			"com/liferay/portal/tools/dependencies/portal-tools.properties");
 	}
 
-	@SuppressWarnings("unchecked")
 	public BuildDBTask databaseTypes(Iterable<Object> databaseTypes) {
 		GUtil.addToCollection(_databaseTypes, databaseTypes);
 

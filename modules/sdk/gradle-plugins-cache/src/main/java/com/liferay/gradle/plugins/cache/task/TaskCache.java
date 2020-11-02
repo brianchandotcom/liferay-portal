@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.cache.task;
 
 import com.liferay.gradle.plugins.cache.util.StringUtil;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -35,7 +36,6 @@ import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

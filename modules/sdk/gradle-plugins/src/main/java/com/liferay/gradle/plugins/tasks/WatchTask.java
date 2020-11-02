@@ -20,6 +20,7 @@ import com.liferay.gogo.shell.client.GogoShellClient;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.ArrayUtil;
+import com.liferay.gradle.util.GUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,7 +67,6 @@ import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
-import org.gradle.util.GUtil;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.dto.BundleDTO;
@@ -83,7 +83,6 @@ public class WatchTask extends DefaultTask {
 		ignoredManifestKeys(Constants.BND_LASTMODIFIED);
 	}
 
-	@SuppressWarnings("unchecked")
 	public WatchTask classLoaderFileExtensions(
 		Iterable<String> classLoaderFileExtensions) {
 
@@ -135,7 +134,6 @@ public class WatchTask extends DefaultTask {
 		return new File(project.getBuildDir(), "installedBundleId");
 	}
 
-	@SuppressWarnings("unchecked")
 	public WatchTask ignoredManifestKeys(Iterable<String> ignoredManifestKeys) {
 		GUtil.addToCollection(_ignoredManifestKeys, ignoredManifestKeys);
 

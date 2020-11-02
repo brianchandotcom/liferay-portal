@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.app.docker;
 
 import com.liferay.gradle.plugins.app.docker.internal.util.ExecStandardOutputCallable;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -32,7 +33,6 @@ import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

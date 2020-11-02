@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.go.internal;
 
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
@@ -37,7 +38,6 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.process.ExecSpec;
 import org.gradle.util.CollectionUtils;
-import org.gradle.util.GUtil;
 
 /**
  * @author Peter Shin
@@ -48,7 +48,6 @@ public class GoExecutor {
 		_project = project;
 	}
 
-	@SuppressWarnings("unchecked")
 	public GoExecutor args(Iterable<?> args) {
 		GUtil.addToCollection(_args, args);
 

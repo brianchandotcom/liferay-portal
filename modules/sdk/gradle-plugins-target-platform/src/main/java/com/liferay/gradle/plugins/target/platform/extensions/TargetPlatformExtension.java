@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.target.platform.extensions;
 import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPluginUtil;
+import com.liferay.gradle.util.GUtil;
 
 import groovy.lang.Closure;
 
@@ -39,7 +40,6 @@ import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
-import org.gradle.util.GUtil;
 
 /**
  * @author Gregory Amerson
@@ -214,7 +214,6 @@ public class TargetPlatformExtension {
 		_onlyIfSpec.and(onlyIfClosure);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setOnlyIf(Spec<Project> onlyIfSpec) {
 		_onlyIfSpec = new AndSpec<>(onlyIfSpec);
 	}
@@ -225,7 +224,6 @@ public class TargetPlatformExtension {
 		_resolveOnlyIfSpec.and(resolveOnlyIfClosure);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setResolveOnlyIf(Spec<Project> resolveOnlyIfSpec) {
 		_resolveOnlyIfSpec = new AndSpec<>(resolveOnlyIfSpec);
 	}
@@ -240,7 +238,6 @@ public class TargetPlatformExtension {
 		setSubprojects(Arrays.asList(subprojects));
 	}
 
-	@SuppressWarnings("unchecked")
 	public TargetPlatformExtension subprojects(Iterable<Project> subprojects) {
 		GUtil.addToCollection(_subprojects, subprojects);
 

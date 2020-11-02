@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.db.support.tasks;
 
 import com.liferay.gradle.plugins.db.support.internal.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -30,7 +31,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

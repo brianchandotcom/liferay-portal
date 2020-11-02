@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.whip;
 
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.Task;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

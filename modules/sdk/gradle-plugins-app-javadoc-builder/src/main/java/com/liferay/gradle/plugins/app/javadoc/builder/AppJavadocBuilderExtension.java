@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.app.javadoc.builder;
 
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -26,7 +27,6 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

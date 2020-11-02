@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults.tasks;
 
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.util.GUtil;
 
 import groovy.lang.Closure;
 
@@ -42,7 +43,6 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -97,7 +97,6 @@ public class ReplaceRegexTask extends DefaultTask {
 		return pre(Arrays.asList(preClosures));
 	}
 
-	@SuppressWarnings("unchecked")
 	public ReplaceRegexTask pre(Iterable<Closure<String>> preClosures) {
 		GUtil.addToCollection(_preClosures, preClosures);
 
@@ -111,7 +110,6 @@ public class ReplaceRegexTask extends DefaultTask {
 		return replaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
 	}
 
-	@SuppressWarnings("unchecked")
 	public ReplaceRegexTask replaceOnlyIf(
 		Iterable<Closure<Boolean>> replaceOnlyIfClosures) {
 

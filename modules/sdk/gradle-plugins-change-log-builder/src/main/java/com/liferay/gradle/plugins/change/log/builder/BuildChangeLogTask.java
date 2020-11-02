@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.change.log.builder;
 
 import com.liferay.gradle.plugins.change.log.builder.internal.util.GitUtil;
 import com.liferay.gradle.plugins.change.log.builder.internal.util.NaturalOrderStringComparator;
+import com.liferay.gradle.util.GUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -49,7 +50,6 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi

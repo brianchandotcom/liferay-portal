@@ -28,8 +28,10 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -219,9 +221,18 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		File portalDir = portalGitWorkingDirectory.getWorkingDirectory();
 
+		Map<String, String> parameters = new HashMap<>();
+
+		String testBaseDirName = _getTestBaseDirName();
+
+		if (testBaseDirName != null) {
+			parameters.put("test.base.dir.name", testBaseDirName);
+		}
+
 		try {
 			AntUtil.callTarget(
-				portalDir, "build-test.xml", "prepare-poshi-runner-properties");
+				portalDir, "build-test.xml", "prepare-poshi-runner-properties",
+				parameters);
 		}
 		catch (AntException antException) {
 			throw new RuntimeException(antException);
@@ -253,6 +264,35 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
+		}
+	}
+
+	private String _getTestBaseDirName() {
+		String testBaseDirName = System.getenv("test.base.dir.name");;
+
+		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+			testBaseDirName = System.getenv("env.TEST_BASE_DIR_NAME");
+		}
+
+		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+			testBaseDirName = System.getenv("TEST_BASE_DIR_NAME");
+		}
+
+		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+			return null;
+		}
+
+		File testBaseDir = new File(testBaseDirName);
+
+		if (!testBaseDir.exists() || !testBaseDir.isDirectory()) {
+			return null;
+		}
+
+		try {
+			return testBaseDir.getCanonicalPath();
+		}
+		catch (IOException ioException) {
+			return null;
 		}
 	}
 

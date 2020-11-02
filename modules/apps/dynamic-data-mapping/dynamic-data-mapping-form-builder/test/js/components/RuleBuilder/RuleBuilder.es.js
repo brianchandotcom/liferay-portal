@@ -200,7 +200,9 @@ describe('RuleBuilder', () => {
 
 		fetch.mockResponse(JSON.stringify([]));
 
-		dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
+		document.body.append(
+			'<button id="addFieldButton" class="hide"></button>'
+		);
 
 		fetch.mockResponse(JSON.stringify([]));
 

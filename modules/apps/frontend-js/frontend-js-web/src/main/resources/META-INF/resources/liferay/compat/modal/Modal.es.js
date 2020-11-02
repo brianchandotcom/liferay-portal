@@ -27,7 +27,6 @@ const KEY_CODE_ESC = 27;
  */
 
 class Modal extends Component {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -96,8 +95,7 @@ class Modal extends Component {
 			this._eventHandler.add(
 				dom.on(document, 'keyup', this._handleKeyup.bind(this))
 			);
-		}
-		else {
+		} else {
 			this._eventHandler.removeAllListeners();
 		}
 	}
@@ -111,12 +109,10 @@ class Modal extends Component {
 		const willShowOverlay = overlay && this.visible;
 
 		if (willShowOverlay) {
-			dom.enterDocument(this.overlayElement);
-
-			return;
+			document.body.append(this.overlayElement);
+		} else {
+			this.overlayElement.remove();
 		}
-
-		this.overlayElement.remove();
 	}
 
 	/**
@@ -132,8 +128,7 @@ class Modal extends Component {
 
 			this._autoFocus(this.autoFocus);
 			this._restrictFocus();
-		}
-		else {
+		} else {
 			this._unrestrictFocus();
 			this._shiftFocusBack();
 		}
@@ -243,7 +238,6 @@ class Modal extends Component {
 }
 
 Modal.STATE = {
-
 	/**
 	 * A selector for the element that should be automatically focused when the modal
 	 * becomes visible, or `false` if no auto focus should happen. Defaults to the

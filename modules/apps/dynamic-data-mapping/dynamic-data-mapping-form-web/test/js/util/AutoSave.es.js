@@ -21,13 +21,13 @@ const AUTOSAVE_INTERVAL = 2;
 const URL = '/sample/autosave';
 
 const createForm = () => {
-	dom.enterDocument('<form id="mockForm"></form>');
+	document.body.append('<form id="mockForm"></form>');
 
 	return document.querySelector('#mockForm');
 };
 
 const createInput = (id) => {
-	dom.enterDocument(`<input id="${id}" value="0" />`);
+	document.body.append(`<input id="${id}" value="0" />`);
 
 	return document.querySelector(`#${id}`);
 };

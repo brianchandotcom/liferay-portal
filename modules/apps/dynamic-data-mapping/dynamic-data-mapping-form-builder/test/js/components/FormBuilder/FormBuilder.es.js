@@ -123,9 +123,9 @@ describe('Builder', () => {
 
 		jest.useFakeTimers();
 
-		dom.enterDocument('<button id="addFieldButton"></button>');
-		dom.enterDocument('<div class="ddm-translation-manager"></div>');
-		dom.enterDocument('<div class="ddm-form-basic-info"></div>');
+		document.body.append('<button id="addFieldButton"></button>');
+		document.body.append('<div class="ddm-translation-manager"></div>');
+		document.body.append('<div class="ddm-form-basic-info"></div>');
 
 		addButton = document.querySelector('#addFieldButton');
 		basicInfo = document.querySelector('.ddm-form-basic-info');

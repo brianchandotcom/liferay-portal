@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -57,12 +59,13 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addAddress(
+		return addressLocalService.addAddress(
 			null, userId, className, classPK, null, null, street1, street2,
 			street3, city, zip, regionId, countryId, typeId, mailing, primary,
 			null, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Address addAddress(
 			String externalReferenceCode, long userId, String className,
@@ -120,7 +123,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 
-		return addAddress(
+		return addressLocalService.addAddress(
 			address.getExternalReferenceCode(), serviceContext.getUserId(),
 			className, classPK, address.getName(), address.getDescription(),
 			address.getStreet1(), address.getStreet2(), address.getStreet3(),
@@ -129,6 +132,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			address.isPrimary(), address.getPhoneNumber(), serviceContext);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
@@ -224,12 +228,13 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 
-		return updateAddress(
+		return addressLocalService.updateAddress(
 			addressId, address.getName(), address.getDescription(), street1,
 			street2, street3, city, zip, regionId, countryId, typeId, mailing,
 			primary, address.getPhoneNumber());
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Address updateAddress(
 			long addressId, String name, String description, String street1,

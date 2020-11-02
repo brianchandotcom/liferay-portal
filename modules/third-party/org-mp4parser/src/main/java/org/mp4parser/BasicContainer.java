@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BasicContainer implements Container {
+    private static Logger LOG = LoggerFactory.getLogger(BasicContainer.class);
+
     private List<Box> boxes = new ArrayList<Box>();
 
     public BasicContainer() {
@@ -113,6 +118,9 @@ public class BasicContainer implements Container {
                 } else {
                     throw e;
                 }
+            } catch (RuntimeException e) {
+                LOG.error("Error during box parsing: {}", e.toString());
+                return;
             }
         }
     }
@@ -139,3 +147,4 @@ public class BasicContainer implements Container {
         }
     }
 }
+/* @generated */

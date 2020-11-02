@@ -1,15 +1,15 @@
 {
 	"availableLanguageIds": [
-		"[£LOCALE£]"
+		"[$LOCALE$]"
 	],
-	"defaultLanguageId": "[£LOCALE£]",
+	"defaultLanguageId": "[$LOCALE$]",
 	"fields": [
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "text",
 			"label": {
-				"[£LOCALE£]": "Image"
+				"[$LOCALE$]": "Image"
 			},
 			"localizable": true,
 			"name": "Image2x9w",
@@ -18,22 +18,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "captionCategory"
+						"[$LOCALE$]": "captionCategory"
 					},
 					"localizable": true,
 					"name": "captionCategory",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -41,22 +41,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "captionText"
+						"[$LOCALE$]": "captionText"
 					},
 					"localizable": true,
 					"name": "captionText",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -64,22 +64,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "captionButtonLabel"
+						"[$LOCALE$]": "captionButtonLabel"
 					},
 					"localizable": true,
 					"name": "captionButtonLabel",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -88,38 +88,38 @@
 					"fieldNamespace": "ddm",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "captionButtonUrl"
+						"[$LOCALE$]": "captionButtonUrl"
 					},
 					"localizable": true,
 					"name": "captionButtonUrl",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "ddm-link-to-page"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-image"
 		},
@@ -127,7 +127,7 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Static Highlight"
+				"[$LOCALE$]": "Static Highlight"
 			},
 			"localizable": true,
 			"name": "StaticHighlight",
@@ -136,22 +136,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Highlight Description"
+						"[$LOCALE$]": "Highlight Description"
 					},
 					"localizable": true,
 					"name": "HighlightDesc",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -160,38 +160,38 @@
 					"fieldNamespace": "ddm",
 					"indexType": "text",
 					"label": {
-						"[£LOCALE£]": "Highlight Icon"
+						"[$LOCALE$]": "Highlight Icon"
 					},
 					"localizable": true,
 					"name": "HighlightIcon",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "ddm-image"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "text"
 		}

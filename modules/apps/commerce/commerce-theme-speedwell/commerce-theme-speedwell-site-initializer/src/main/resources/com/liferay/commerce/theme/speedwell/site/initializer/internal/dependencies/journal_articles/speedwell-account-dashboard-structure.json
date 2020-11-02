@@ -1,29 +1,29 @@
 {
 	"availableLanguageIds": [
-		"[£LOCALE£]"
+		"[$LOCALE$]"
 	],
-	"defaultLanguageId": "[£LOCALE£]",
+	"defaultLanguageId": "[$LOCALE$]",
 	"fields": [
 		{
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Page title"
+				"[$LOCALE$]": "Page title"
 			},
 			"localizable": true,
 			"name": "PageTitle",
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "text"
 		},
@@ -32,7 +32,7 @@
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Navigation Item Link"
+				"[$LOCALE$]": "Navigation Item Link"
 			},
 			"localizable": true,
 			"name": "NavigationItemLinkOrders",
@@ -41,22 +41,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Title"
+						"[$LOCALE$]": "Navigation Item Title"
 					},
 					"localizable": true,
 					"name": "NavigationItemTitleOrders",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -64,38 +64,38 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Description"
+						"[$LOCALE$]": "Navigation Item Description"
 					},
 					"localizable": true,
 					"name": "NavigationItemDescriptionOrders",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-link-to-page"
 		},
@@ -104,7 +104,7 @@
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Navigation Item Link"
+				"[$LOCALE$]": "Navigation Item Link"
 			},
 			"localizable": true,
 			"name": "NavigationItemLinkLogin",
@@ -113,22 +113,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Title"
+						"[$LOCALE$]": "Navigation Item Title"
 					},
 					"localizable": true,
 					"name": "NavigationItemTitleLogin",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -136,38 +136,38 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Description"
+						"[$LOCALE$]": "Navigation Item Description"
 					},
 					"localizable": true,
 					"name": "NavigationItemDescriptionLogin",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-link-to-page"
 		},
@@ -176,7 +176,7 @@
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Navigation Item Link"
+				"[$LOCALE$]": "Navigation Item Link"
 			},
 			"localizable": true,
 			"name": "NavigationItemLinkAddresses",
@@ -185,22 +185,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Title"
+						"[$LOCALE$]": "Navigation Item Title"
 					},
 					"localizable": true,
 					"name": "NavigationItemTitleAddresses",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -208,38 +208,38 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Description"
+						"[$LOCALE$]": "Navigation Item Description"
 					},
 					"localizable": true,
 					"name": "NavigationItemDescriptionAddresses",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-link-to-page"
 		},
@@ -248,7 +248,7 @@
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Navigation Item Link"
+				"[$LOCALE$]": "Navigation Item Link"
 			},
 			"localizable": true,
 			"name": "NavigationItemLinkPaymentMethods",
@@ -257,22 +257,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Title"
+						"[$LOCALE$]": "Navigation Item Title"
 					},
 					"localizable": true,
 					"name": "NavigationItemTitlePaymentMethods",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -280,38 +280,38 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Description"
+						"[$LOCALE$]": "Navigation Item Description"
 					},
 					"localizable": true,
 					"name": "NavigationItemDescriptionPaymentMethods",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-link-to-page"
 		},
@@ -320,7 +320,7 @@
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Navigation Item Link"
+				"[$LOCALE$]": "Navigation Item Link"
 			},
 			"localizable": true,
 			"name": "NavigationItemLinkSubscriptions",
@@ -329,22 +329,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Title"
+						"[$LOCALE$]": "Navigation Item Title"
 					},
 					"localizable": true,
 					"name": "NavigationItemTitleSubscriptions",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -352,38 +352,38 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Description"
+						"[$LOCALE$]": "Navigation Item Description"
 					},
 					"localizable": true,
 					"name": "NavigationItemDescriptionSubscriptions",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-link-to-page"
 		},
@@ -392,7 +392,7 @@
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Navigation Item Link"
+				"[$LOCALE$]": "Navigation Item Link"
 			},
 			"localizable": true,
 			"name": "NavigationItemLinkDownloads",
@@ -401,22 +401,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Title"
+						"[$LOCALE$]": "Navigation Item Title"
 					},
 					"localizable": true,
 					"name": "NavigationItemTitleDownloads",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -424,38 +424,38 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Navigation Item Description"
+						"[$LOCALE$]": "Navigation Item Description"
 					},
 					"localizable": true,
 					"name": "NavigationItemDescriptionDownloads",
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-link-to-page"
 		}

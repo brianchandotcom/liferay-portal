@@ -2,9 +2,9 @@
 	{
 		"ddmFormSettings": {
 			"availableLanguageIds": [
-				"en_US"
+				"[$LOCALE$]"
 			],
-			"defaultLanguageId": "en_US",
+			"defaultLanguageId": "[$LOCALE$]",
 			"fieldValues": [
 				{
 					"fieldReference": "requireAuthentication",
@@ -82,9 +82,9 @@
 		},
 		"ddmStructure": {
 			"availableLanguageIds": [
-				"en_US"
+				"[$LOCALE$]"
 			],
-			"defaultLanguageId": "en_US",
+			"defaultLanguageId": "[$LOCALE$]",
 			"fields": [
 				{
 					"autocomplete": false,
@@ -96,33 +96,33 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Name"
+						"[$LOCALE$]": "Name"
 					},
 					"localizable": true,
 					"name": "Name",
 					"options": [
 						{
 							"label": {
-								"en_US": "Option"
+								"[$LOCALE$]": "Option"
 							},
 							"value": "Option"
 						}
 					],
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text",
 					"validation": {
@@ -139,7 +139,7 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Company"
+						"[$LOCALE$]": "Company"
 					},
 					"localizable": true,
 					"multiple": false,
@@ -147,32 +147,32 @@
 					"options": [
 						{
 							"label": {
-								"en_US": "S Auto Service, Southern California"
+								"[$LOCALE$]": "S Auto Service, Southern California"
 							},
 							"value": "SAutoServiceSouthernCalifornia"
 						},
 						{
 							"label": {
-								"en_US": "S Auto Service, N America HQ"
+								"[$LOCALE$]": "S Auto Service, N America HQ"
 							},
 							"value": "SAutoServiceNAmericaHQ"
 						},
 						{
 							"label": {
-								"en_US": "S Auto Service, Northern California"
+								"[$LOCALE$]": "S Auto Service, Northern California"
 							},
 							"value": "SAutoServiceNorthernCalifornia"
 						}
 					],
 					"predefinedValue": {
-						"en_US": "[]"
+						"[$LOCALE$]": "[]"
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "select",
 					"validation": {
@@ -186,25 +186,25 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Phone Number"
+						"[$LOCALE$]": "Phone Number"
 					},
 					"localizable": true,
 					"name": "PhoneNumber",
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "numeric",
 					"validation": {
@@ -223,33 +223,33 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Email"
+						"[$LOCALE$]": "Email"
 					},
 					"localizable": true,
 					"name": "Email",
 					"options": [
 						{
 							"label": {
-								"en_US": "Option"
+								"[$LOCALE$]": "Option"
 							},
 							"value": "Option"
 						}
 					],
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text",
 					"validation": {
@@ -268,33 +268,33 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Product Name"
+						"[$LOCALE$]": "Product Name"
 					},
 					"localizable": true,
 					"name": "ProductName",
 					"options": [
 						{
 							"label": {
-								"en_US": "Option"
+								"[$LOCALE$]": "Option"
 							},
 							"value": "Option"
 						}
 					],
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text",
 					"validation": {
@@ -313,33 +313,33 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Batch No."
+						"[$LOCALE$]": "Batch No."
 					},
 					"localizable": true,
 					"name": "BatchNo",
 					"options": [
 						{
 							"label": {
-								"en_US": "Option"
+								"[$LOCALE$]": "Option"
 							},
 							"value": "Option"
 						}
 					],
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text",
 					"validation": {
@@ -353,19 +353,19 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Date Purchased"
+						"[$LOCALE$]": "Date Purchased"
 					},
 					"localizable": true,
 					"name": "DatePurchased",
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "date",
 					"validation": {
@@ -379,25 +379,25 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Number of Faulty Units"
+						"[$LOCALE$]": "Number of Faulty Units"
 					},
 					"localizable": true,
 					"name": "NumberOfFaultyUnits",
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "numeric",
 					"validation": {
@@ -411,25 +411,25 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Total Number Of Units"
+						"[$LOCALE$]": "Total Number Of Units"
 					},
 					"localizable": true,
 					"name": "TotalNumberOfUnits",
 					"placeholder": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "numeric",
 					"validation": {
@@ -443,19 +443,19 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Please insert any photos of the product that you think may be partially or totally defective"
+						"[$LOCALE$]": "Please insert any photos of the product that you think may be partially or totally defective"
 					},
 					"localizable": true,
 					"name": "PleaseInsertAnyPhotosOfTheProductThatYouThinkMayBePartiallyOrTotallyDefective",
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "document_library",
 					"validation": {
@@ -474,33 +474,33 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Details of the defect observed"
+						"[$LOCALE$]": "Details of the defect observed"
 					},
 					"localizable": true,
 					"name": "DetailsOfTheDefectObserved",
 					"options": [
 						{
 							"label": {
-								"en_US": "Option"
+								"[$LOCALE$]": "Option"
 							},
 							"value": "Option"
 						}
 					],
 					"placeholder": {
-						"en_US": "Please be as descriptive as possible."
+						"[$LOCALE$]": "Please be as descriptive as possible."
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text",
 					"validation": {
@@ -519,33 +519,33 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "Any additional message or comments?"
+						"[$LOCALE$]": "Any additional message or comments?"
 					},
 					"localizable": true,
 					"name": "AnyAdditionalMessageOrComments",
 					"options": [
 						{
 							"label": {
-								"en_US": "Option"
+								"[$LOCALE$]": "Option"
 							},
 							"value": "Option"
 						}
 					],
 					"placeholder": {
-						"en_US": "Please be as descriptive as possible."
+						"[$LOCALE$]": "Please be as descriptive as possible."
 					},
 					"predefinedValue": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"tooltip": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text",
 					"validation": {
@@ -557,20 +557,20 @@
 			],
 			"successPage": {
 				"body": {
-					"en_US": "We’ve successfully received your report and will get back to you shortly."
+					"[$LOCALE$]": "We’ve successfully received your report and will get back to you shortly."
 				},
 				"enabled": true,
 				"title": {
-					"en_US": "Your report has been submitted!"
+					"[$LOCALE$]": "Your report has been submitted!"
 				}
 			}
 		},
 		"ddmStructureLayout": {
-			"defaultLanguageId": "en_US",
+			"defaultLanguageId": "[$LOCALE$]",
 			"pages": [
 				{
 					"description": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"rows": [
 						{
@@ -607,12 +607,12 @@
 						}
 					],
 					"title": {
-						"en_US": "Contact Information"
+						"[$LOCALE$]": "Contact Information"
 					}
 				},
 				{
 					"description": {
-						"en_US": ""
+						"[$LOCALE$]": ""
 					},
 					"rows": [
 						{
@@ -685,7 +685,7 @@
 						}
 					],
 					"title": {
-						"en_US": "Product Details"
+						"[$LOCALE$]": "Product Details"
 					}
 				}
 			],

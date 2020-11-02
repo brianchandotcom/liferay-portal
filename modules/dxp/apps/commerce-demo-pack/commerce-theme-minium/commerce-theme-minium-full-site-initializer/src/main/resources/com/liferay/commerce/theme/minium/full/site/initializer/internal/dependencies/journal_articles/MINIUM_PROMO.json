@@ -1,30 +1,30 @@
 {
 	"availableLanguageIds": [
-		"[£LOCALE£]"
+		"[$LOCALE$]"
 	],
-	"defaultLanguageId": "[£LOCALE£]",
+	"defaultLanguageId": "[$LOCALE$]",
 	"fields": [
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "text",
 			"label": {
-				"[£LOCALE£]": "Content Image"
+				"[$LOCALE$]": "Content Image"
 			},
 			"localizable": true,
 			"name": "ContentImage",
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-image"
 		},
@@ -32,22 +32,22 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Sub Heading"
+				"[$LOCALE$]": "Sub Heading"
 			},
 			"localizable": true,
 			"name": "SubHeading",
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "text"
 		},
@@ -55,22 +55,22 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"[£LOCALE£]": "Link URL"
+				"[$LOCALE$]": "Link URL"
 			},
 			"localizable": true,
 			"name": "CTA",
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": true,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "text"
 		}

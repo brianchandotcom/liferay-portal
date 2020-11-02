@@ -1,15 +1,15 @@
 {
 	"availableLanguageIds": [
-		"[£LOCALE£]"
+		"[$LOCALE$]"
 	],
-	"defaultLanguageId": "[£LOCALE£]",
+	"defaultLanguageId": "[$LOCALE$]",
 	"fields": [
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "text",
 			"label": {
-				"[£LOCALE£]": "Image"
+				"[$LOCALE$]": "Image"
 			},
 			"localizable": true,
 			"name": "backgroundImage",
@@ -18,7 +18,7 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Call to action text"
+						"[$LOCALE$]": "Call to action text"
 					},
 					"localizable": true,
 					"name": "CallToActionText",
@@ -27,38 +27,38 @@
 							"dataType": "string",
 							"indexType": "keyword",
 							"label": {
-								"[£LOCALE£]": "Call to action secondary text"
+								"[$LOCALE$]": "Call to action secondary text"
 							},
 							"localizable": true,
 							"name": "CallToActionSecondaryText",
 							"predefinedValue": {
-								"[£LOCALE£]": ""
+								"[$LOCALE$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
 							"showLabel": true,
 							"style": {
-								"[£LOCALE£]": ""
+								"[$LOCALE$]": ""
 							},
 							"tip": {
-								"[£LOCALE£]": ""
+								"[$LOCALE$]": ""
 							},
 							"type": "text"
 						}
 					],
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				},
@@ -66,7 +66,7 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"[£LOCALE£]": "Form action"
+						"[$LOCALE$]": "Form action"
 					},
 					"localizable": true,
 					"name": "FormAction",
@@ -75,54 +75,54 @@
 							"dataType": "string",
 							"indexType": "keyword",
 							"label": {
-								"[£LOCALE£]": "Input placeholder"
+								"[$LOCALE$]": "Input placeholder"
 							},
 							"localizable": true,
 							"name": "InputPlaceholder",
 							"predefinedValue": {
-								"[£LOCALE£]": ""
+								"[$LOCALE$]": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
 							"showLabel": true,
 							"style": {
-								"[£LOCALE£]": ""
+								"[$LOCALE$]": ""
 							},
 							"tip": {
-								"[£LOCALE£]": ""
+								"[$LOCALE$]": ""
 							},
 							"type": "text"
 						}
 					],
 					"predefinedValue": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"tip": {
-						"[£LOCALE£]": ""
+						"[$LOCALE$]": ""
 					},
 					"type": "text"
 				}
 			],
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": true,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-image"
 		}

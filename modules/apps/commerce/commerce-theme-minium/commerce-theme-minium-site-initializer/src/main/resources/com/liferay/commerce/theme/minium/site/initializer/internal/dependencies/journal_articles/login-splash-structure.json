@@ -1,30 +1,30 @@
 {
 	"availableLanguageIds": [
-		"[£LOCALE£]"
+		"[$LOCALE$]"
 	],
-	"defaultLanguageId": "[£LOCALE£]",
+	"defaultLanguageId": "[$LOCALE$]",
 	"fields": [
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "text",
 			"label": {
-				"[£LOCALE£]": "Image"
+				"[$LOCALE$]": "Image"
 			},
 			"localizable": true,
 			"name": "splashImage",
 			"predefinedValue": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"tip": {
-				"[£LOCALE£]": ""
+				"[$LOCALE$]": ""
 			},
 			"type": "ddm-image"
 		}

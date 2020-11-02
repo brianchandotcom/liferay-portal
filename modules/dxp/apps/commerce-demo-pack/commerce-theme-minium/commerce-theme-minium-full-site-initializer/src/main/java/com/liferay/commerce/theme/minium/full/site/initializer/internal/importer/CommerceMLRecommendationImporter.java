@@ -18,12 +18,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
-import com.liferay.commerce.machine.learning.recommendation.model.ProductContentCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.model.ProductInteractionCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.model.UserCommerceMLRecommendation;
-import com.liferay.commerce.machine.learning.recommendation.service.ProductContentCommerceMLRecommendationService;
-import com.liferay.commerce.machine.learning.recommendation.service.ProductInteractionCommerceMLRecommendationService;
-import com.liferay.commerce.machine.learning.recommendation.service.UserCommerceMLRecommendationService;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendationManager;
+import com.liferay.commerce.machine.learning.recommendation.ProductInteractionCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.ProductInteractionCommerceMLRecommendationManager;
+import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendation;
+import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendationManager;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -144,7 +144,7 @@ public class CommerceMLRecommendationImporter {
 
 		ProductContentCommerceMLRecommendation
 			productContentCommerceMLRecommendation =
-				_productContentCommerceMLRecommendationService.create();
+				_productContentCommerceMLRecommendationManager.create();
 
 		productContentCommerceMLRecommendation.setCompanyId(
 			serviceContext.getCompanyId());
@@ -160,7 +160,7 @@ public class CommerceMLRecommendationImporter {
 		productContentCommerceMLRecommendation.setScore(
 			(float)jsonObject.getDouble("score"));
 
-		_productContentCommerceMLRecommendationService.
+		_productContentCommerceMLRecommendationManager.
 			addProductContentCommerceMLRecommendation(
 				productContentCommerceMLRecommendation);
 	}
@@ -216,7 +216,7 @@ public class CommerceMLRecommendationImporter {
 
 		ProductInteractionCommerceMLRecommendation
 			productInteractionCommerceMLRecommendation =
-				_productInteractionCommerceMLRecommendationService.create();
+				_productInteractionCommerceMLRecommendationManager.create();
 
 		productInteractionCommerceMLRecommendation.setCompanyId(
 			serviceContext.getCompanyId());
@@ -232,7 +232,7 @@ public class CommerceMLRecommendationImporter {
 		productInteractionCommerceMLRecommendation.setScore(
 			(float)jsonObject.getDouble("score"));
 
-		_productInteractionCommerceMLRecommendationService.
+		_productInteractionCommerceMLRecommendationManager.
 			addProductInteractionCommerceMLRecommendation(
 				productInteractionCommerceMLRecommendation);
 	}
@@ -290,7 +290,7 @@ public class CommerceMLRecommendationImporter {
 		long[] categoryIds = assetEntry.getCategoryIds();
 
 		UserCommerceMLRecommendation userCommerceMLRecommendation =
-			_userCommerceMLRecommendationService.create();
+			_userCommerceMLRecommendationManager.create();
 
 		userCommerceMLRecommendation.setAssetCategoryIds(categoryIds);
 		userCommerceMLRecommendation.setCompanyId(
@@ -305,7 +305,7 @@ public class CommerceMLRecommendationImporter {
 		userCommerceMLRecommendation.setScore(
 			(float)jsonObject.getDouble("score"));
 
-		_userCommerceMLRecommendationService.addUserCommerceMLRecommendation(
+		_userCommerceMLRecommendationManager.addUserCommerceMLRecommendation(
 			userCommerceMLRecommendation);
 	}
 
@@ -322,16 +322,16 @@ public class CommerceMLRecommendationImporter {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private ProductContentCommerceMLRecommendationService
-		_productContentCommerceMLRecommendationService;
+	private ProductContentCommerceMLRecommendationManager
+		_productContentCommerceMLRecommendationManager;
 
 	@Reference
-	private ProductInteractionCommerceMLRecommendationService
-		_productInteractionCommerceMLRecommendationService;
+	private ProductInteractionCommerceMLRecommendationManager
+		_productInteractionCommerceMLRecommendationManager;
 
 	@Reference
-	private UserCommerceMLRecommendationService
-		_userCommerceMLRecommendationService;
+	private UserCommerceMLRecommendationManager
+		_userCommerceMLRecommendationManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

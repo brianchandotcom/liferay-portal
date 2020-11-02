@@ -26,7 +26,6 @@
 	classes/**
 	css/clay/**
 	node_modules/**
-	xp_progress.js
 	yarn-*.js
 	zippableResources/**
 

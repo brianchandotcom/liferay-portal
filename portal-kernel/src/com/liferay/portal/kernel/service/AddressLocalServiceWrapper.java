@@ -445,6 +445,20 @@ public class AddressLocalServiceWrapper
 		return _addressLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.kernel.model.Address> searchAddresses(
+				long companyId, java.lang.String className, long classPK,
+				java.lang.String keywords,
+				java.util.LinkedHashMap<java.lang.String, java.lang.Object>
+					params,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _addressLocalService.searchAddresses(
+			companyId, className, classPK, keywords, params, start, end, sort);
+	}
+
 	/**
 	 * Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

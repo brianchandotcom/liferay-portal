@@ -112,12 +112,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, immediate = true, service = CPFileImporter.class)
 public class CPFileImporterImpl implements CPFileImporter {
 
-	public static final String GROUP_ID_PLACEHOLDER = "[£groupId£]";
+	public static final String GROUP_ID_PLACEHOLDER = "[$groupId$]";
 
 	public static final String IMG_TAG =
 		"<img alt='' src='%s' data-fileentryid='%s' />";
 
-	public static final String LOCALE_PLACEHOLDER = "[£LOCALE£]";
+	public static final String LOCALE_PLACEHOLDER = "[$LOCALE$]";
 
 	@Override
 	public void cleanLayouts(ServiceContext serviceContext)
@@ -659,6 +659,14 @@ public class CPFileImporterImpl implements CPFileImporter {
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
+		content = StringUtil.replace(
+			content, GROUP_ID_PLACEHOLDER,
+			String.valueOf(serviceContext.getScopeGroupId()));
+
+		content = StringUtil.replace(
+			content, LOCALE_PLACEHOLDER,
+			LocaleUtil.toLanguageId(serviceContext.getLocale()));
+
 		content = _replaceJournalArticleImages(
 			content, _journalArticleHTMLImagePattern,
 			fileEntry -> {
@@ -694,14 +702,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 				return jsonObject.toJSONString();
 			},
 			classLoader, dependenciesFilePath, serviceContext);
-
-		content = StringUtil.replace(
-			content, GROUP_ID_PLACEHOLDER,
-			String.valueOf(serviceContext.getScopeGroupId()));
-
-		content = StringUtil.replace(
-			content, LOCALE_PLACEHOLDER,
-			LocaleUtil.toLanguageId(serviceContext.getLocale()));
 
 		return content;
 	}

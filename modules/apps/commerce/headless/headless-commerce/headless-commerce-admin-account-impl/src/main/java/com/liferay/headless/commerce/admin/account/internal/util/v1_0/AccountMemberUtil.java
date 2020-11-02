@@ -74,6 +74,10 @@ public class AccountMemberUtil {
 						accountMember.getUserExternalReferenceCode());
 			}
 		}
+		else if (Validator.isNotNull(accountMember.getEmail())) {
+			user = userLocalService.getUserByEmailAddress(
+				companyId, accountMember.getEmail());
+		}
 		else {
 			user = userLocalService.getUser(accountMember.getUserId());
 		}

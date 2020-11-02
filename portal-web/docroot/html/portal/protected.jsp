@@ -41,7 +41,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		<meta content="0" http-equiv="Expires" />
 		<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
 
-		<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/xp_progress.js" type="text/javascript"></script>
+		<link class="lfr-css-file" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/clay.css")) %>" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body onLoad="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
@@ -53,9 +53,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
 						<br /><br />
 
-						<script type="text/javascript">
-							var progressBar = createBar(300, 15, '#FFFFFF', 1, '#000000', '', 85, 7, 3, '');
-						</script>
+						<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 					</td>
 				</tr>
 			</table>

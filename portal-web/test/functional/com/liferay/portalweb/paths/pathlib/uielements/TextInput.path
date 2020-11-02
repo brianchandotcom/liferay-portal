@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_ID</td>
+	<td>//input[contains(@id,'assetLibraryId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEPOT_UNNAMED_DEFAULT_TITLE</td>
 	<td>//input[contains(@value,'${key_unnamedTitle}')]</td>
 	<td></td>

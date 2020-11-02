@@ -714,6 +714,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_INDICATOR</td>
+	<td>//button[contains(@class,'staging-indicator-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAY</td>
 	<td>//button[contains(.,'Stay')]</td>
 	<td></td>

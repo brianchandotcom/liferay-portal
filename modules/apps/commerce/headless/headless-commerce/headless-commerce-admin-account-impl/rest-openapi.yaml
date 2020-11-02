@@ -54,6 +54,14 @@ components:
             schema:
                 type: integer
             style: form
+        searchQueryParam:
+            in: query
+            explode: true
+            name: search
+            required: false
+            schema:
+                type: string
+            style: form
         userIdPathParam:
             in: path
             explode: false
@@ -1560,10 +1568,12 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  explode: true
                   name: search
                   required: false
                   schema:
                       type: string
+                  style: form
                 - in: query
                   name: sort
                   required: false

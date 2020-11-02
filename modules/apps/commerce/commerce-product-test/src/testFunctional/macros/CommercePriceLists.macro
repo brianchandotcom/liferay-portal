@@ -1,0 +1,14 @@
+definition {
+
+    macro editPriceListEntryPrice {
+        SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+        Type(
+            key_text = "Price List Price",
+            locator1 = "TextInput#ANY",
+            value1 = "${priceListEntryPrice}");
+
+        Button.clickSave();
+    }
+
+}

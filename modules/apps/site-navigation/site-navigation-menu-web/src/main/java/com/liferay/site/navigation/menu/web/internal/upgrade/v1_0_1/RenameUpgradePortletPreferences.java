@@ -14,72 +14,72 @@
 
 package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_1;
 
-import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Balázs Sáfrány-Kovalik
+ * @author Preston Crary
  */
-public class RenameUpgradePortletPreferences
-	extends com.liferay.portal.kernel.upgrade.RenameUpgradePortletPreferences {
-
-	public RenameUpgradePortletPreferences() {
-		_preferenceNamesMap.put("includedLayouts", "expandedLevels");
-		_preferenceNamesMap.put("rootLayoutLevel", "rootMenuItemLevel");
-		_preferenceNamesMap.put("rootLayoutType", "rootMenuItemType");
-	}
+public class RenameUpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
-	protected String[] getPortletIds() {
-		return new String[] {
-			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU + "%"
-		};
+	protected void doUpgrade() throws Exception {
+		_renamePortletPreferences("includedLayouts", "expandedLevels");
+		_renamePortletPreferences("rootLayoutLevel", "rootMenuItemLevel");
+		_renamePortletPreferences("rootLayoutType", "rootMenuItemType");
 	}
 
-	@Override
-	protected Map<String, String> getPreferenceNamesMap() {
-		return _preferenceNamesMap;
+	private void _renamePortletPreferences(String oldName, String newName)
+		throws Exception {
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+			"PortletItem on PortletItem.portletItemId = " +
+				"PortletPreferences.ownerId");
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			"Company on Company.companyId = PortletPreferences.ownerId");
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+			"Group_ on Group_.groupId = PortletPreferences.ownerId");
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			"Layout on Layout.plid = PortletPreferences.plid");
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			"LayoutRevision on LayoutRevision.layoutRevisionId = " +
+				"PortletPreferences.plid");
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION,
+			"Organization_ on Organization_.organizationId = " +
+				"PortletPreferences.ownerId");
+
+		_renamePortletPreferences(
+			oldName, newName, PortletKeys.PREFS_OWNER_TYPE_USER,
+			"User_ on User_.userId = PortletPreferences.ownerId");
 	}
 
-	@Override
-	protected void updatePortletPreferences() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String whereClause = getUpdatePortletPreferencesWhereClause();
+	private void _renamePortletPreferences(
+			String oldName, String newName, int ownerType, String join)
+		throws Exception {
 
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, whereClause, "ownerId",
-				"PortletItem", "portletItemId");
-
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY, whereClause, "ownerId",
-				"Company", "companyId");
-
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, whereClause, "ownerId",
-				"Group_", "groupId");
-
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				"Layout", "plid");
-
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, whereClause, "plid",
-				"LayoutRevision", "layoutRevisionId");
-
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION, whereClause,
-				"ownerId", "Organization_", "organizationId");
-
-			updatePortletPreferencesWithOwnerType(
-				PortletKeys.PREFS_OWNER_TYPE_USER, whereClause, "ownerId",
-				"User_", "userId");
-		}
+		runSQL(
+			StringBundler.concat(
+				"update PortletPreferenceValue set name = '", newName,
+				"' where portletPreferencesId in (select portletPreferencesId ",
+				"from PortletPreferences inner join ", join,
+				" where PortletPreferences.ownerType = ", ownerType,
+				" and PortletPreferences.portletId like '",
+				SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
+				"%') and name = '", oldName, "'"));
 	}
-
-	private final Map<String, String> _preferenceNamesMap = new HashMap<>();
 
 }

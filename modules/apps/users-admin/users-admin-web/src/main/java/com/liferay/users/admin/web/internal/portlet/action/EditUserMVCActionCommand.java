@@ -100,6 +100,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_user"
@@ -192,6 +193,14 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		String portletId = _portal.getPortletId(actionRequest);
+
+		if (portletId.equals(UsersAdminPortletKeys.MY_ACCOUNT) &&
+			redirectToLogin(actionRequest, actionResponse)) {
+
+			return;
+		}
 
 		actionRequest = _wrapActionRequest(actionRequest);
 
@@ -554,6 +563,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	private DLAppLocalService _dlAppLocalService;
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private Portal _portal;
+
 	private UserService _userService;
 
 }

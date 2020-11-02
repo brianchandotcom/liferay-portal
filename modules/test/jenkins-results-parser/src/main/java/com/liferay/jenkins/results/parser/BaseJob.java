@@ -193,6 +193,10 @@ public abstract class BaseJob implements Job {
 					segmentTestClassGroup.getTestCasePropertiesContent();
 
 				if (testCasePropertiesContent != null) {
+					testCasePropertiesContent =
+						testCasePropertiesContent.replaceAll(
+							"\n", "\\${line.separator}");
+
 					segmentProperties.setProperty(
 						"test.case.properties", testCasePropertiesContent);
 				}

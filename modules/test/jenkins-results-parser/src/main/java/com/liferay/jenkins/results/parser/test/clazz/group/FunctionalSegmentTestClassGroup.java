@@ -84,11 +84,13 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
 
-		int batchIndex = getBatchIndex();
-
 		List<String> axisGroupNames = new ArrayList<>();
 
+		int batchIndex = getBatchIndex();
+
 		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
+			axisGroupNames.add(batchIndex + "_" + axisIndex);
+
 			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
 			sb.append(batchIndex);
 			sb.append("_");
@@ -103,16 +105,14 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 					",",
 					functionalAxisTestClassGroup.getTestClassMethodNames()));
 
-			sb.append("${line.separator}");
-
-			axisGroupNames.add(batchIndex + "_" + axisIndex);
+			sb.append("\n");
 		}
 
 		sb.append("RUN_TEST_CASE_METHOD_GROUP_");
 		sb.append(batchIndex);
 		sb.append("=");
-		sb.append(JenkinsResultsParserUtil.join(",", axisGroupNames));
-		sb.append("${line.separator}");
+		sb.append(JenkinsResultsParserUtil.join(" ", axisGroupNames));
+		sb.append("\n");
 
 		return sb.toString();
 	}

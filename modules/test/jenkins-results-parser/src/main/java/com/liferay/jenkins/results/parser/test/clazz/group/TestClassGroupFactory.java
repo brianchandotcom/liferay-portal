@@ -126,6 +126,14 @@ public class TestClassGroupFactory {
 			return new FunctionalSegmentTestClassGroup(
 				(FunctionalBatchTestClassGroup)batchTestClassGroup);
 		}
+		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			return new JUnitSegmentTestClassGroup(
+				(JUnitBatchTestClassGroup)batchTestClassGroup);
+		}
+		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
+			return new PluginsSegmentTestClassGroup(
+				(PluginsBatchTestClassGroup)batchTestClassGroup);
+		}
 
 		return new SegmentTestClassGroup(batchTestClassGroup);
 	}

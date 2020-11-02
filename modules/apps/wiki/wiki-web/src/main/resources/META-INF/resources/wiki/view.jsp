@@ -154,11 +154,15 @@ if (portletTitleBasedNavigation) {
 					<c:choose>
 						<c:when test="<%= print %>">
 							<aui:script>
-								print();
-
-								setTimeout(function () {
+								window.onafterprint = function () {
 									window.close();
-								}, 100);
+								};
+
+								window.onfocus = function () {
+									window.close();
+								};
+
+								print();
 							</aui:script>
 						</c:when>
 						<c:otherwise>

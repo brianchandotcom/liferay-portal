@@ -1466,7 +1466,8 @@ definition {
 		PageEditor.editContentDisplay(
 			documentandmedia = "true",
 			fragmentName = "Content Display",
-			imageFileName = "Document Title");
+			imageFileName = "Document Title",
+			sourceFileName = "Document_1.jpg");
 
 		PageEditor.clickPublish();
 
@@ -1475,7 +1476,7 @@ definition {
 			siteName = "Test Site Name");
 
 		AssertVisible(
-			key_imageFileName = "Document+Title",
+			key_imageFileName = "Document_1.jpg",
 			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
 	}
 
@@ -2222,7 +2223,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
@@ -2254,7 +2255,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
@@ -2290,7 +2291,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
@@ -2318,7 +2319,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
@@ -2354,7 +2355,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
@@ -2382,7 +2383,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
@@ -2418,7 +2419,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
@@ -2446,7 +2447,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
@@ -2482,7 +2483,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
@@ -2510,7 +2511,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document+Title.jpg')]",
+				key_entryContent = "//div[contains(@class,'asset-summary')]/div[contains(@class,'cover-image')][contains(@style,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
@@ -2728,7 +2729,7 @@ definition {
 
 		var n = "1";
 
-		for (var image : list "Document+Title+3.jpg,Document+Title+2.jpg,Document+Title+1.jpg") {
+		for (var image : list "Document_3.jpg,Document_2.jpg,Document_1.jpg") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryImage = "${image}",
@@ -2892,7 +2893,7 @@ definition {
 
 			AssertVisible(
 				key_colPosition = "1",
-				key_element = "//img[contains(@src,'Document+Title.jpg')]",
+				key_element = "//img[contains(@src,'Document_1.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
@@ -2919,7 +2920,7 @@ definition {
 
 		AssertVisible(
 			key_colPosition = "1",
-			key_image = "Document+Title.jpg",
+			key_image = "Document_1.jpg",
 			key_rowPosition = "1",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
 
@@ -2997,7 +2998,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
@@ -3029,7 +3030,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
@@ -3065,7 +3066,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
@@ -3093,7 +3094,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
@@ -3129,7 +3130,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
@@ -3157,7 +3158,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
@@ -3193,7 +3194,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
@@ -3221,7 +3222,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
@@ -3257,7 +3258,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
@@ -3285,7 +3286,7 @@ definition {
 			}
 
 			AssertVisible(
-				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document+Title.jpg')]",
+				key_entryContent = "//img[contains(@class,'preview-file-image')][contains(@src,'Document_2.jpg')]",
 				key_fragmentName = "Collection Display",
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");

@@ -347,7 +347,7 @@ definition {
 		task ("Assert the image of the Document Title 1 is shown in Image fragment") {
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document+Title+1.jpg",
+				key_image = "Document_1.jpg",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
@@ -383,7 +383,7 @@ definition {
 		task ("Assert the image of the Document Title 1 is still shown in Image fragment") {
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document+Title+1.jpg",
+				key_image = "Document_1.jpg",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}

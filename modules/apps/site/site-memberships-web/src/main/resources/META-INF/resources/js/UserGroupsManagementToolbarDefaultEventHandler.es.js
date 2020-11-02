@@ -17,7 +17,6 @@ import {
 	addParams,
 	openSelectionModal,
 } from 'frontend-js-web';
-import dom from 'metal-dom';
 
 class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedUserGroups() {

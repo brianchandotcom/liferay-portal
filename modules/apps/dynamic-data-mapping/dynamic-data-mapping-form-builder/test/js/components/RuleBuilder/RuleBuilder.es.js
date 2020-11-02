@@ -15,7 +15,6 @@
 import '../../__fixtures__/MockField.es';
 
 import userEvent from '@testing-library/user-event';
-import dom from 'metal-dom';
 
 import RuleBuilder from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RuleBuilder.es';
 

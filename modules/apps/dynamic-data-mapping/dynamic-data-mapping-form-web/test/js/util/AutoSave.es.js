@@ -12,8 +12,6 @@
  * details.
  */
 
-import {dom} from 'metal-dom';
-
 import AutoSave from '../../../src/main/resources/META-INF/resources/admin/js/util/AutoSave.es';
 
 const AUTOSAVE_INTERVAL = 2;

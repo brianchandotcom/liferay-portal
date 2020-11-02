@@ -13,7 +13,6 @@
  */
 
 import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
-import dom from 'metal-dom';
 
 class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	selectUserGroup(itemData) {

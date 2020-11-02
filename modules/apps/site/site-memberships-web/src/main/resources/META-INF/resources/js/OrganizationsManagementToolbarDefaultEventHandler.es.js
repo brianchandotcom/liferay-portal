@@ -13,7 +13,6 @@
  */
 
 import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
-import dom from 'metal-dom';
 
 class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedOrganizations() {

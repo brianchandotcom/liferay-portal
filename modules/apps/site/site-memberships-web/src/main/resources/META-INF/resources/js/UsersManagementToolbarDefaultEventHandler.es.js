@@ -18,7 +18,6 @@ import {
 	getPortletId,
 	openSelectionModal,
 } from 'frontend-js-web';
-import dom from 'metal-dom';
 
 class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedUsers() {

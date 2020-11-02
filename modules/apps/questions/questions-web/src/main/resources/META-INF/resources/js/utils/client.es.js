@@ -373,12 +373,12 @@ export const getThreadQuery = gql`
 	}
 `;
 
-export const getMessageBoardThreadByIdQuery = gql`
-	query messageBoardThreads($filter: String!, $siteKey: String!) {
-		messageBoardThreads(filter: $filter, flatten: true, siteKey: $siteKey) {
-			items {
-				friendlyUrlPath
-				id
+export const getSectionByMessageQuery = gql`
+	query messageBoardMessage($messageBoardMessageId: Long!) {
+		messageBoardMessage(messageBoardMessageId: $messageBoardMessageId) {
+			friendlyUrlPath
+			id
+			messageBoardThread {
 				messageBoardSection {
 					numberOfMessageBoardSections
 					parentMessageBoardSectionId

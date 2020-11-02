@@ -15,11 +15,10 @@
 import {useQuery} from '@apollo/client';
 
 /*eslint-disable no-unused-vars*/
-import React, {useContext} from 'react';
+import React from 'react';
 import {withRouter} from 'react-router-dom';
 
-import {AppContext} from '../AppContext.es';
-import {getMessageBoardThreadByIdQuery} from '../utils/client.es';
+import {getSectionByMessageQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
@@ -29,27 +28,19 @@ export default withRouter(
 			params: {questionId},
 		},
 	}) => {
-		const context = useContext(AppContext);
-
 		const historyPushParser = historyPushWithSlug(history.push);
 
-		useQuery(getMessageBoardThreadByIdQuery, {
-			onCompleted({messageBoardThreads}) {
-				if (messageBoardThreads.items) {
-					historyPushParser(
-						`/questions/${
-							context.useTopicNamesInURL
-								? messageBoardThreads.items[0]
-										.messageBoardSection.title
-								: messageBoardThreads.items[0]
-										.messageBoardSection.id
-						}/${messageBoardThreads.items[0].friendlyUrlPath}`
-					);
-				}
+		useQuery(getSectionByMessageQuery, {
+			onCompleted({messageBoardMessage}) {
+				historyPushParser(
+					`/questions/${
+						messageBoardMessage.messageBoardThread
+						.messageBoardSection.title
+					}/${messageBoardMessage.friendlyUrlPath}`
+				);
 			},
 			variables: {
-				filter: `id eq '${questionId}'`,
-				siteKey: context.siteKey,
+				messageBoardMessageId: questionId,
 			},
 		});
 

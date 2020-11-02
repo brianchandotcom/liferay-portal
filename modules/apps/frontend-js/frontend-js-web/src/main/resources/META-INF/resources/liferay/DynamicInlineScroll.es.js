@@ -25,7 +25,6 @@ import PortletBase from './PortletBase.es';
  * @extends {Component}
  */
 class DynamicInlineScroll extends PortletBase {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -70,8 +69,7 @@ class DynamicInlineScroll extends PortletBase {
 	addListItem_(listElement, pageIndex) {
 		const listItem = document.createElement('li');
 
-		dom.append(
-			listItem,
+		listItem.append(
 			`<a href="${this.getHREF_(pageIndex)}">${pageIndex}</a>`
 		);
 
@@ -164,8 +162,7 @@ class DynamicInlineScroll extends PortletBase {
 
 			if (pageIndexCurrent === 0) {
 				pageIndex = initialPages;
-			}
-			else {
+			} else {
 				pageIndex = pageIndexCurrent + initialPages;
 			}
 		}
@@ -193,7 +190,6 @@ class DynamicInlineScroll extends PortletBase {
  * @type {!Object}
  */
 DynamicInlineScroll.STATE = {
-
 	/**
 	 * Current page index.
 	 *

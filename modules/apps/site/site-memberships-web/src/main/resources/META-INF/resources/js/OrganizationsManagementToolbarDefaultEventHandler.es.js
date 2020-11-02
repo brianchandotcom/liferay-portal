@@ -37,7 +37,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 					);
 
 					selectedItem.forEach((item) => {
-						dom.append(addGroupOrganizationsFm, item);
+						addGroupOrganizationsFm.append(item);
 					});
 
 					submitForm(addGroupOrganizationsFm);

@@ -37,7 +37,7 @@ class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 					);
 
 					selectedItem.forEach((item) => {
-						dom.append(editUserGroupRoleFm, item);
+						editUserGroupRoleFm.append(item);
 					});
 
 					submitForm(

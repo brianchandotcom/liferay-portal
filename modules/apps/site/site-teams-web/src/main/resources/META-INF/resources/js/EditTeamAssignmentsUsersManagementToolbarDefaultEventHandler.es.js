@@ -24,7 +24,7 @@ class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends Defau
 					const addTeamUsersFm = this.one('#addTeamUsersFm');
 
 					selectedItem.forEach((item) => {
-						dom.append(addTeamUsersFm, item);
+						addTeamUsersFm.append(item);
 					});
 
 					submitForm(addTeamUsersFm);

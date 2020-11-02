@@ -279,8 +279,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 					'.panel-heading .sheet-subtitle'
 				);
 
-				dom.append(
-					displayTitle,
+				displayTitle.append(
 					'<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>'
 				);
 			}

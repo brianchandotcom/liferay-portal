@@ -186,7 +186,7 @@ renderResponse.setTitle(headerTitle);
 			);
 
 			if (settingsParametersElement) {
-				dom.append(settingsSupported, settingsParametersElement);
+				settingsSupported.append(settingsParametersElement);
 			}
 
 			var className = select.value;
@@ -200,7 +200,7 @@ renderResponse.setTitle(headerTitle);
 			);
 
 			if (repositoryParameters) {
-				dom.append(settingsParametersContainer, repositoryParameters);
+				settingsParametersContainer.append(repositoryParameters);
 			}
 		}
 	}

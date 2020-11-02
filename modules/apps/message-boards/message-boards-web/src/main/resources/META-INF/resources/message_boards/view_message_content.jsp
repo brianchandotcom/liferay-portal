@@ -338,7 +338,7 @@ if (portletTitleBasedNavigation) {
 					);
 
 					if (messageContainer) {
-						dom.append(messageContainer, response);
+						messageContainer.append(response);
 
 						runScriptsInElement.default(messageContainer.parentElement);
 
@@ -347,7 +347,7 @@ if (portletTitleBasedNavigation) {
 						);
 
 						if (replyContainer) {
-							dom.append(messageContainer, replyContainer);
+							messageContainer.append(replyContainer);
 						}
 					}
 				});

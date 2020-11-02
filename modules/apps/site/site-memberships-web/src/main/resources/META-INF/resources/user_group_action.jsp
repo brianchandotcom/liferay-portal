@@ -117,7 +117,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 							selectedItem,
 							index
 						) {
-							dom.append(addUserGroupGroupRoleFm, selectedItem);
+							addUserGroupGroupRoleFm.append(selectedItem);
 						});
 
 						submitForm(addUserGroupGroupRoleFm);
@@ -160,7 +160,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 							selectedItem,
 							index
 						) {
-							dom.append(unassignUserGroupGroupRoleFm, selectedItem);
+							unassignUserGroupGroupRoleFm.append(selectedItem);
 						});
 
 						submitForm(unassignUserGroupGroupRoleFm);

@@ -38,6 +38,7 @@ import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -378,6 +380,54 @@ public class FragmentLayoutStructureItemImporter
 
 		if (value != null) {
 			jsonObject.put("alt", value);
+		}
+
+		return jsonObject;
+	}
+
+	private JSONObject _createImageJSONObjectFromReference(
+		Map<String, Object> map) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (map == null) {
+			return jsonObject;
+		}
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			Map<String, Object> imageReferenceMap =
+				(Map<String, Object>)entry.getValue();
+
+			if (Objects.equals(
+					imageReferenceMap.get("className"),
+					FileEntry.class.getName())) {
+
+				long fileEntryId = GetterUtil.getLong(
+					imageReferenceMap.get("classPK"));
+
+				FileEntry fileEntry = null;
+
+				try {
+					fileEntry = _portletFileRepository.getPortletFileEntry(
+						fileEntryId);
+
+					jsonObject.put(
+						entry.getKey(),
+						JSONUtil.put(
+							"fileEntryId", fileEntryId
+						).put(
+							"url",
+							DLURLHelperUtil.getDownloadURL(
+								fileEntry, fileEntry.getFileVersion(), null,
+								StringPool.BLANK, false, false)
+						));
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to get file entry", portalException);
+					}
+				}
+			}
 		}
 
 		return jsonObject;
@@ -768,9 +818,53 @@ public class FragmentLayoutStructureItemImporter
 					JSONFactoryUtil.createJSONObject();
 
 				if (fragmentImageMap != null) {
-					baseFragmentFieldJSONObject =
-						_createBaseFragmentFieldJSONObject(
-							(Map<String, Object>)fragmentImageMap.get("url"));
+					if (fragmentImageMap.containsKey("url")) {
+						baseFragmentFieldJSONObject =
+							_createBaseFragmentFieldJSONObject(
+								(Map<String, Object>)fragmentImageMap.get(
+									"url"));
+					}
+
+					if (fragmentImageMap.containsKey(
+							"fragmentImageReference")) {
+
+						Map<String, Object> fragmentImageReferenceMap =
+							(Map<String, Object>)fragmentImageMap.get(
+								"fragmentImageReference");
+
+						baseFragmentFieldJSONObject =
+							_createImageJSONObjectFromReference(
+								(Map<String, Object>)
+									fragmentImageReferenceMap.get(
+										"imageReference"));
+
+						Map<String, String> imageConfigurationMap =
+							(Map<String, String>)fragmentImageReferenceMap.get(
+								"imageConfiguration");
+
+						JSONObject imageConfigurationJSONObject =
+							JSONFactoryUtil.createJSONObject();
+
+						for (Map.Entry<String, String> entry :
+								imageConfigurationMap.entrySet()) {
+
+							imageConfigurationJSONObject.put(
+								entry.getKey(), entry.getValue());
+						}
+
+						try {
+							editableFieldConfigJSONObject = JSONUtil.merge(
+								editableFieldConfigJSONObject,
+								JSONUtil.put(
+									"imageConfiguration",
+									imageConfigurationJSONObject));
+						}
+						catch (JSONException jsonException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(jsonException, jsonException);
+							}
+						}
+					}
 				}
 
 				try {

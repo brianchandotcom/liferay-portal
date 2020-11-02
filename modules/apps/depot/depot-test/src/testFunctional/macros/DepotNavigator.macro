@@ -212,6 +212,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 	}
 
+	macro openDepotDocumentsAndMediaAdminStaging {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+	}
+
 	macro openDepotMembershipsAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
@@ -228,6 +234,18 @@ definition {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+	}
+
+	macro openDepotWebContentAdminStaging {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+	}
+
+	macro switchStagingStatus {
+		Click(locator1 = "Button#STAGING_INDICATOR");
+
+		DropdownMenuItem.click(menuItem = "${stagingItem}");
 	}
 
 }

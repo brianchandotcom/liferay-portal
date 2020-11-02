@@ -1,5 +1,59 @@
 definition {
 
+	macro activateStaging {
+		Pause(locator1 = "3000");
+
+		if ("${remoteStaging}" == "true") {
+			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
+
+			Type(
+				locator1 = "SiteSettingsStaging#REMOTE_STAGING_IP",
+				value1 = "localhost");
+
+			if (isSet(remotePort)) {
+				Type(
+					locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
+					value1 = "${remotePort}");
+			}
+			else {
+				Type(
+					locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
+					value1 = "8080");
+			}
+
+			Paste(
+				locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
+				value1 = "${depotID}");
+		}
+		else {
+			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_LOCAL_LIVE");
+		}
+
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		if ("${remoteStaging}" == "true") {
+			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${depotName}?");
+
+			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
+				Pause(locator1 = "1000");
+			}
+		}
+
+		else {
+			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${depotName}?");
+
+			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
+				Pause(locator1 = "1000");
+			}
+
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_RESULT",
+				value1 = "SUCCESSFUL");
+		}
+	}
+
 	macro addDepot {
 		LexiconEntry.gotoAdd();
 
@@ -476,6 +530,61 @@ definition {
 		Button.click(button = "Save");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro remoteStagingSetUp {
+		if (isSet(remotePort)) {
+			User.loginPG(
+				nodePort = "${remotePort}",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+		else {
+			Navigator.openURL();
+		}
+
+		var depotID = "${depotID}";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Asset Libraries");
+
+		Depot.addDepot(depotName = "Remote Depot");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Asset Libraries");
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Remote Depot",
+			portlet = "Settings");
+
+		var depotID = "depotID";
+
+		Copy(
+			locator1 = "TextInput#DEPOT_ID",
+			value1 = "depotID");
+
+		if (isSet(remotePort)) {
+			User.loginPG(
+				nodePort = "8080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "${depotName}");
+
+		DepotNavigator.gotoPortlet(portlet = "Staging");
+
+		Depot.activateStaging(
+			depotID = "${depotID}",
+			depotName = "${depotName}",
+			remotePort = "${remotePort}",
+			remoteStaging = "true");
 	}
 
 	macro removeMember {

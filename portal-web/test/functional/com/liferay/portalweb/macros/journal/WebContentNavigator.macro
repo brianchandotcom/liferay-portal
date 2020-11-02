@@ -10,9 +10,16 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}");
+		if ("${liveSite}" == "true") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
+				value1 = "${webContentTitle}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "WC#ENTRY_LIST_TITLE",
+				value1 = "${webContentTitle}");
+		}
 
 		Click.waitForMenuToggleJSClick(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 	}
@@ -110,6 +117,7 @@ definition {
 
 	macro gotoPreviewEntryCP {
 		WebContentNavigator._openDescriptiveMenulistCP(
+			liveSite = "${liveSite}",
 			webContentTitle = "${webContentTitle}",
 			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 

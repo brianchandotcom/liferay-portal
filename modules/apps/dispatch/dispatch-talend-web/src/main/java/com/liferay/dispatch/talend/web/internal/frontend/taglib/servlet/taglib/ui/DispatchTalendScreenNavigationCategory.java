@@ -117,8 +117,7 @@ public class DispatchTalendScreenNavigationCategory
 			}
 		}
 
-		httpServletRequest.setAttribute(
-			DispatchWebKeys.FILE_NAME, talendFileEntryName);
+		httpServletRequest.setAttribute("fileEntryName", talendFileEntryName);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

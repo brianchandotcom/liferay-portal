@@ -1,15 +1,15 @@
 {
 	"availableLanguageIds": [
-		"en_US"
+		"[£LOCALE£]"
 	],
-	"defaultLanguageId": "en_US",
+	"defaultLanguageId": "[£LOCALE£]",
 	"fields": [
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "text",
 			"label": {
-				"en_US": "Image"
+				"[£LOCALE£]": "Image"
 			},
 			"localizable": true,
 			"name": "Image2x9w",
@@ -19,22 +19,22 @@
 					"fieldNamespace": "ddm",
 					"indexType": "text",
 					"label": {
-						"en_US": "captionImage"
+						"[£LOCALE£]": "captionImage"
 					},
 					"localizable": true,
 					"name": "captionImage",
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "ddm-image"
 				},
@@ -42,22 +42,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "captionCategory"
+						"[£LOCALE£]": "captionCategory"
 					},
 					"localizable": true,
 					"name": "captionCategory",
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "text"
 				},
@@ -65,22 +65,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "captionText"
+						"[£LOCALE£]": "captionText"
 					},
 					"localizable": true,
 					"name": "captionText",
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "text"
 				},
@@ -88,22 +88,22 @@
 					"dataType": "string",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "captionButtonLabel"
+						"[£LOCALE£]": "captionButtonLabel"
 					},
 					"localizable": true,
 					"name": "captionButtonLabel",
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "text"
 				},
@@ -112,38 +112,38 @@
 					"fieldNamespace": "ddm",
 					"indexType": "keyword",
 					"label": {
-						"en_US": "captionButtonUrl"
+						"[£LOCALE£]": "captionButtonUrl"
 					},
 					"localizable": true,
 					"name": "captionButtonUrl",
 					"predefinedValue": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"readOnly": false,
 					"repeatable": false,
 					"required": true,
 					"showLabel": true,
 					"style": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"tip": {
-						"en_US": ""
+						"[£LOCALE£]": ""
 					},
 					"type": "ddm-link-to-page"
 				}
 			],
 			"predefinedValue": {
-				"en_US": ""
+				"[£LOCALE£]": ""
 			},
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
 			"showLabel": true,
 			"style": {
-				"en_US": ""
+				"[£LOCALE£]": ""
 			},
 			"tip": {
-				"en_US": ""
+				"[£LOCALE£]": ""
 			},
 			"type": "ddm-image"
 		}

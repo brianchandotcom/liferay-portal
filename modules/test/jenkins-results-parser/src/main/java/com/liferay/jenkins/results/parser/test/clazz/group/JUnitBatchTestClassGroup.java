@@ -65,6 +65,43 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return JunitBatchTestClass.getJunitTestClasses();
 	}
 
+	@Override
+	public String getTestCasePropertiesContent() {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> axisIndexes = new ArrayList<>();
+
+		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
+			axisIndexes.add(String.valueOf(axisIndex));
+
+			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
+				axisIndex);
+
+			List<File> testClassFiles = axisTestClassGroup.getTestClassFiles();
+
+			sb.append("TEST_CLASS_GROUP_");
+			sb.append(axisIndex);
+			sb.append("=");
+
+			for (File testClassFile : testClassFiles) {
+				sb.append(testClassFile.toPath());
+				sb.append(",");
+			}
+
+			if (!testClassFiles.isEmpty()) {
+				sb.setLength(sb.length() - 1);
+			}
+
+			sb.append("\n");
+		}
+
+		sb.append("TEST_CLASS_GROUPS=");
+		sb.append(JenkinsResultsParserUtil.join(" ", axisIndexes));
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
 	public void writeTestCSVReportFile() throws Exception {
 		CSVReport csvReport = new CSVReport(
 			new CSVReport.Row(

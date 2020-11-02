@@ -28,7 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -43,6 +45,43 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
+	}
+
+	@Override
+	public String getTestCasePropertiesContent() {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> axisIndexes = new ArrayList<>();
+
+		for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
+			axisIndexes.add(String.valueOf(axisIndex));
+
+			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
+				axisIndex);
+
+			List<File> testClassFiles = axisTestClassGroup.getTestClassFiles();
+
+			sb.append("TEST_PLUGIN_GROUP_");
+			sb.append(axisIndex);
+			sb.append("=");
+
+			for (File testClassFile : testClassFiles) {
+				sb.append(testClassFile.getName());
+				sb.append(",");
+			}
+
+			if (!testClassFiles.isEmpty()) {
+				sb.setLength(sb.length() - 1);
+			}
+
+			sb.append("\n");
+		}
+
+		sb.append("TEST_PLUGIN_GROUPS=");
+		sb.append(JenkinsResultsParserUtil.join(" ", axisIndexes));
+		sb.append("\n");
+
+		return sb.toString();
 	}
 
 	public static class PluginsBatchTestClass extends BaseTestClass {

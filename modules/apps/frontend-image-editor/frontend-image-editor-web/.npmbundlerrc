@@ -1,9 +1,0 @@
-{
-	"ignore": [
-		"**/BrightnessWorker.js",
-		"**/ContrastWorker.js",
-		"**/EffectsHelper.js",
-		"**/EffectsWorker.js",
-		"**/SaturationWorker.js"
-	]
-}

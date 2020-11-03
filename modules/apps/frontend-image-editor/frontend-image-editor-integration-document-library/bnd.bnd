@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend Image Editor Integration Document Library
-Bundle-SymbolicName: com.liferay.frontend.image.editor.integration.document.library
-Bundle-Version: 5.0.0
-Web-ContextPath: /frontend-image-editor-integration-document-library

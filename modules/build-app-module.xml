@@ -82,7 +82,7 @@
 		>
 			<fileset
 				dir="hotfix"
-				includes="*.jar"
+				includes="*.jar,*.war"
 			/>
 		</copy>
 	</target>

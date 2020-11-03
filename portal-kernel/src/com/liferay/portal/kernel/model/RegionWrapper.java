@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +42,17 @@ public class RegionWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("regionId", getRegionId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("countryId", getCountryId());
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("name", getName());
 		attributes.put("active", isActive());
+		attributes.put("position", getPosition());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -61,6 +69,36 @@ public class RegionWrapper
 
 		if (regionId != null) {
 			setRegionId(regionId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long countryId = (Long)attributes.get("countryId");
@@ -86,6 +124,18 @@ public class RegionWrapper
 		if (active != null) {
 			setActive(active);
 		}
+
+		Double position = (Double)attributes.get("position");
+
+		if (position != null) {
+			setPosition(position);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	/**
@@ -99,6 +149,16 @@ public class RegionWrapper
 	}
 
 	/**
+	 * Returns the company ID of this region.
+	 *
+	 * @return the company ID of this region
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
+	}
+
+	/**
 	 * Returns the country ID of this region.
 	 *
 	 * @return the country ID of this region
@@ -106,6 +166,36 @@ public class RegionWrapper
 	@Override
 	public long getCountryId() {
 		return model.getCountryId();
+	}
+
+	/**
+	 * Returns the create date of this region.
+	 *
+	 * @return the create date of this region
+	 */
+	@Override
+	public Date getCreateDate() {
+		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the last publish date of this region.
+	 *
+	 * @return the last publish date of this region
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
+	}
+
+	/**
+	 * Returns the modified date of this region.
+	 *
+	 * @return the modified date of this region
+	 */
+	@Override
+	public Date getModifiedDate() {
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -126,6 +216,16 @@ public class RegionWrapper
 	@Override
 	public String getName() {
 		return model.getName();
+	}
+
+	/**
+	 * Returns the position of this region.
+	 *
+	 * @return the position of this region
+	 */
+	@Override
+	public double getPosition() {
+		return model.getPosition();
 	}
 
 	/**
@@ -159,6 +259,36 @@ public class RegionWrapper
 	}
 
 	/**
+	 * Returns the user ID of this region.
+	 *
+	 * @return the user ID of this region
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this region.
+	 *
+	 * @return the user name of this region
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
+	 * Returns the user uuid of this region.
+	 *
+	 * @return the user uuid of this region
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this region is active.
 	 *
 	 * @return <code>true</code> if this region is active; <code>false</code> otherwise
@@ -179,6 +309,16 @@ public class RegionWrapper
 	}
 
 	/**
+	 * Sets the company ID of this region.
+	 *
+	 * @param companyId the company ID of this region
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
 	 * Sets the country ID of this region.
 	 *
 	 * @param countryId the country ID of this region
@@ -186,6 +326,36 @@ public class RegionWrapper
 	@Override
 	public void setCountryId(long countryId) {
 		model.setCountryId(countryId);
+	}
+
+	/**
+	 * Sets the create date of this region.
+	 *
+	 * @param createDate the create date of this region
+	 */
+	@Override
+	public void setCreateDate(Date createDate) {
+		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the last publish date of this region.
+	 *
+	 * @param lastPublishDate the last publish date of this region
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	 * Sets the modified date of this region.
+	 *
+	 * @param modifiedDate the modified date of this region
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -206,6 +376,16 @@ public class RegionWrapper
 	@Override
 	public void setName(String name) {
 		model.setName(name);
+	}
+
+	/**
+	 * Sets the position of this region.
+	 *
+	 * @param position the position of this region
+	 */
+	@Override
+	public void setPosition(double position) {
+		model.setPosition(position);
 	}
 
 	/**
@@ -236,6 +416,36 @@ public class RegionWrapper
 	@Override
 	public void setRegionId(long regionId) {
 		model.setRegionId(regionId);
+	}
+
+	/**
+	 * Sets the user ID of this region.
+	 *
+	 * @param userId the user ID of this region
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this region.
+	 *
+	 * @param userName the user name of this region
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
+	}
+
+	/**
+	 * Sets the user uuid of this region.
+	 *
+	 * @param userUuid the user uuid of this region
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	@Override

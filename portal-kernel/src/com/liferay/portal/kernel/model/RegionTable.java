@@ -19,6 +19,8 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 
 import java.sql.Types;
 
+import java.util.Date;
+
 /**
  * The table class for the &quot;Region&quot; database table.
  *
@@ -34,6 +36,16 @@ public class RegionTable extends BaseTable<RegionTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<RegionTable, Long> regionId = createColumn(
 		"regionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<RegionTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, Long> userId = createColumn(
+		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, String> userName = createColumn(
+		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, Date> createDate = createColumn(
+		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, Date> modifiedDate = createColumn(
+		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Long> countryId = createColumn(
 		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, String> regionCode = createColumn(
@@ -42,6 +54,10 @@ public class RegionTable extends BaseTable<RegionTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, Double> position = createColumn(
+		"position", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, Date> lastPublishDate = createColumn(
+		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private RegionTable() {
 		super("Region", RegionTable::new);

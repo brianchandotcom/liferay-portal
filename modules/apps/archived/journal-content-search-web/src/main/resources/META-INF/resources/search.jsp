@@ -52,13 +52,6 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 		/>
 	</div>
 
-	<div class="search-results">
-		<liferay-ui:search-speed
-			hits="<%= journalContentSearchDisplayContext.getHits() %>"
-			searchContainer="<%= journalContentSearchDisplayContext.getSearchContainer() %>"
-		/>
-	</div>
-
 	<liferay-ui:search-container
 		searchContainer="<%= journalContentSearchDisplayContext.getSearchContainer() %>"
 	>

@@ -38,7 +38,6 @@ import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconHelpTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.LanguageTag;
-import com.liferay.taglib.ui.RatingsTag;
 import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
@@ -218,15 +217,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public RatingsTag getRatingsTag() throws Exception {
-		RatingsTag ratingsTag = new RatingsTag();
-
-		setUp(ratingsTag);
-
-		return ratingsTag;
-	}
-
-	@Override
 	public String getSetting(String name) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -391,25 +381,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		iconPortletTag.setPortlet(portlet);
 
 		iconPortletTag.runTag();
-	}
-
-	@Override
-	public void ratings(
-			String className, long classPK, int numberOfStars, String type,
-			String url)
-		throws Exception {
-
-		RatingsTag ratingsTag = new RatingsTag();
-
-		setUp(ratingsTag);
-
-		ratingsTag.setClassName(className);
-		ratingsTag.setClassPK(classPK);
-		ratingsTag.setNumberOfStars(numberOfStars);
-		ratingsTag.setType(type);
-		ratingsTag.setUrl(url);
-
-		ratingsTag.runTag();
 	}
 
 	@Override

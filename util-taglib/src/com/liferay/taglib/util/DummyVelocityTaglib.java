@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconTag;
-import com.liferay.taglib.ui.RatingsTag;
 
 import javax.portlet.WindowState;
 
@@ -99,11 +98,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public RatingsTag getRatingsTag() {
-		return null;
-	}
-
-	@Override
 	public String getSetting(String name) {
 		return null;
 	}
@@ -171,12 +165,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void portletIconPortlet(Portlet portlet) {
-	}
-
-	@Override
-	public void ratings(
-		String className, long classPK, int numberOfStars, String type,
-		String url) {
 	}
 
 	@Override

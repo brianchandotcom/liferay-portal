@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconTag;
-import com.liferay.taglib.ui.RatingsTag;
 
 import javax.portlet.WindowState;
 
@@ -73,8 +72,6 @@ public interface VelocityTaglib {
 
 	public PageContext getPageContext();
 
-	public RatingsTag getRatingsTag() throws Exception;
-
 	public String getSetting(String name);
 
 	public WindowState getWindowState(String windowState);
@@ -117,11 +114,6 @@ public interface VelocityTaglib {
 	public void portletIconPortlet() throws Exception;
 
 	public void portletIconPortlet(Portlet portlet) throws Exception;
-
-	public void ratings(
-			String className, long classPK, int numberOfStars, String type,
-			String url)
-		throws Exception;
 
 	public String renderURL(long plid, String portletName, String queryString)
 		throws Exception;

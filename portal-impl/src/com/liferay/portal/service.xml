@@ -2008,17 +2008,28 @@
 
 		<column name="regionId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
 		<!-- Other fields -->
 
 		<column name="countryId" type="long" />
 		<column name="regionCode" type="String" />
 		<column name="name" type="String" />
 		<column name="active" type="boolean" />
+		<column name="position" type="double" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
 		<order by="asc">
 			<order-column name="name" />
+			<order-column name="position" />
 		</order>
 
 		<!-- Finder methods -->

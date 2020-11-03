@@ -32,24 +32,6 @@
 	</c:choose>
 </liferay-ui:success>
 
-<liferay-ui:success key="configurationEntryAdded">
-
-	<%
-	AMImageConfigurationEntry amImageConfigurationEntry = (AMImageConfigurationEntry)SessionMessages.get(renderRequest, "configurationEntryAdded");
-	%>
-
-	<liferay-ui:message arguments="<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>" key="x-was-saved-successfully" translateArguments="<%= false %>" />
-</liferay-ui:success>
-
-<liferay-ui:success key="configurationEntryAddedAndIDRenamed">
-
-	<%
-	AMImageConfigurationEntry amImageConfigurationEntry = (AMImageConfigurationEntry)SessionMessages.get(renderRequest, "configurationEntryAddedAndIDRenamed");
-	%>
-
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(amImageConfigurationEntry.getName()), amImageConfigurationEntry.getUUID()} %>" key="x-was-saved-successfully.-the-id-was-duplicated-and-renamed-to-x" translateArguments="<%= false %>" />
-</liferay-ui:success>
-
 <liferay-ui:success key="configurationEntryEnabled">
 
 	<%
@@ -68,15 +50,6 @@
 	<liferay-ui:message arguments="<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>" key="x-was-disabled-successfully" translateArguments="<%= false %>" />
 </liferay-ui:success>
 
-<liferay-ui:success key="configurationEntryUpdated">
-
-	<%
-	AMImageConfigurationEntry amImageConfigurationEntry = (AMImageConfigurationEntry)SessionMessages.get(renderRequest, "configurationEntryUpdated");
-	%>
-
-	<liferay-ui:message arguments="<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>" key="x-was-saved-successfully" translateArguments="<%= false %>" />
-</liferay-ui:success>
-
 <liferay-ui:success key="configurationEntryUpdatedAndIDRenamed">
 
 	<%
@@ -84,15 +57,6 @@
 	%>
 
 	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(amImageConfigurationEntry.getName()), amImageConfigurationEntry.getUUID()} %>" key="x-was-saved-successfully.-the-id-was-duplicated-and-renamed-to-x" translateArguments="<%= false %>" />
-</liferay-ui:success>
-
-<liferay-ui:success key="highResolutionConfigurationEntryAdded">
-
-	<%
-	AMImageConfigurationEntry[] addedConfigurationEntries = (AMImageConfigurationEntry[])SessionMessages.get(renderRequest, "highResolutionConfigurationEntryAdded");
-	%>
-
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(addedConfigurationEntries[0].getName()), HtmlUtil.escape(addedConfigurationEntries[1].getName())} %>" key="x-and-x-were-saved-successfully" translateArguments="<%= false %>" />
 </liferay-ui:success>
 
 <liferay-ui:success key="optimizeImages" message="processing-images.-this-could-take-a-while-depending-on-the-number-of-images" />

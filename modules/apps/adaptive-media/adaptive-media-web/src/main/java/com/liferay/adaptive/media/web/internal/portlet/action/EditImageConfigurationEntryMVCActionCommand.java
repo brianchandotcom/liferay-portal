@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -107,8 +107,12 @@ public class EditImageConfigurationEntryMVCActionCommand
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
 
 		try {
+			String message = "";
+
 			if (amImageConfigurationEntryOptional.isPresent()) {
 				AMImageConfigurationEntry amImageConfigurationEntry =
 					amImageConfigurationEntryOptional.get();
@@ -130,14 +134,19 @@ public class EditImageConfigurationEntryMVCActionCommand
 						newUuid, properties);
 
 				if (autoModifiedUuid) {
-					SessionMessages.add(
-						actionRequest, "configurationEntryUpdatedAndIDRenamed",
-						amImageConfigurationEntry);
+					message = LanguageUtil.format(
+						resourceBundle,
+						"x-was-saved-successfully.-the-id-was-duplicated-and-renamed-to-x",
+						new String[] {
+							HtmlUtil.escape(
+								amImageConfigurationEntry.getName()),
+							amImageConfigurationEntry.getUUID()
+						});
 				}
 				else {
-					SessionMessages.add(
-						actionRequest, "configurationEntryUpdated",
-						amImageConfigurationEntry);
+					message = LanguageUtil.format(
+						resourceBundle, "x-was-saved-successfully",
+						amImageConfigurationEntry.getName());
 				}
 			}
 			else {
@@ -156,29 +165,40 @@ public class EditImageConfigurationEntryMVCActionCommand
 								themeDisplay.getCompanyId(),
 								amImageConfigurationEntry);
 
-					SessionMessages.add(
-						actionRequest, "highResolutionConfigurationEntryAdded",
-						new AMImageConfigurationEntry[] {
-							amImageConfigurationEntry,
-							highResolutionAMImageConfigurationEntry
+					message = LanguageUtil.format(
+						resourceBundle, "x-and-x-were-saved-successfully",
+						new String[] {
+							HtmlUtil.escape(
+								amImageConfigurationEntry.getName()),
+							HtmlUtil.escape(
+								highResolutionAMImageConfigurationEntry.
+									getName())
 						});
 				}
 				else {
 					if (autoModifiedUuid) {
-						SessionMessages.add(
-							actionRequest,
-							"configurationEntryAddedAndIDRenamed",
-							amImageConfigurationEntry);
+						message = LanguageUtil.format(
+							resourceBundle,
+							"x-was-saved-successfully.-the-id-was-duplicated-and-renamed-to-x",
+							new String[] {
+								HtmlUtil.escape(
+									amImageConfigurationEntry.getName()),
+								amImageConfigurationEntry.getUUID()
+							});
 					}
 					else {
-						SessionMessages.add(
-							actionRequest, "configurationEntryAdded",
-							amImageConfigurationEntry);
+						message = LanguageUtil.format(
+							resourceBundle, "x-was-saved-successfully",
+							amImageConfigurationEntry.getName());
 					}
 				}
 			}
 
-			jsonObject.put("success", true);
+			jsonObject.put(
+				"message", message
+			).put(
+				"success", true
+			);
 		}
 		catch (AMImageConfigurationException amImageConfigurationException) {
 			String errorMessage = "";
@@ -217,11 +237,8 @@ public class EditImageConfigurationEntryMVCActionCommand
 					"please-enter-a-max-width-or-max-height-value-larger-than-0";
 			}
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
 			jsonObject.put(
-				"errorMessage", LanguageUtil.get(resourceBundle, errorMessage)
+				"message", LanguageUtil.get(resourceBundle, errorMessage)
 			).put(
 				"success", false
 			);

@@ -84,12 +84,12 @@ const EditAdaptiveMedia = ({
 				method: 'POST',
 			})
 				.then((res) => res.json())
-				.then((response) => {
-					if (response.success) {
+				.then(({success, message}) => {
+					if (success) {
 						Liferay.Util.navigate(redirect);
 					}
 					else {
-						setErrorMessage(response.errorMessage);
+						setErrorMessage(message);
 						scrollToTop();
 					}
 				});
@@ -172,11 +172,9 @@ const EditAdaptiveMedia = ({
 
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
-			{errorMessage &&
-				<ClayAlert displayType="danger">
-					{errorMessage}
-				</ClayAlert>
-			}
+			{errorMessage && (
+				<ClayAlert displayType="danger">{errorMessage}</ClayAlert>
+			)}
 
 			{!configurationEntryEditable && (
 				<div className="alert alert-info">

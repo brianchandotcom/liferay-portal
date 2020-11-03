@@ -17,6 +17,7 @@ package com.liferay.social.bookmarks.taglib.servlet.taglib;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -198,9 +199,22 @@ public class SocialBookmarksTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			try {
+				Layout layout = themeDisplay.getLayout();
+
 				_url = PortalUtil.getCanonicalURL(
-					_urlImpl.toString(), themeDisplay,
-					themeDisplay.getLayout());
+					_urlImpl.toString(), themeDisplay, layout);
+
+				try {
+					_url = PortalUtil.getAlternateURL(
+						_url, themeDisplay, themeDisplay.getLocale(), layout);
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to get alternate URL " + _urlImpl,
+							portalException);
+					}
+				}
 			}
 			catch (PortalException portalException) {
 				_log.error(

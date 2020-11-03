@@ -766,6 +766,484 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-61632."
+	@priority = "3"
+	test AddWCWithSecondComplexStructure {
+		task ("Add a widget page and WCD to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Set Default Portal Language to Portuguese") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+			Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Portuguese (Brazil)");
+		}
+
+		task ("Import the second complex structure") {
+			LAR.importSiteCP(
+				larFileName = "site-with-complex-structures-2.lar",
+				siteName = "test-site-name",
+				uploadFrom = "dependencies");
+		}
+
+		task ("Select WC Template Name as template, save as draft and publish") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			WebContent.selectTemplateCP(
+				confirm = "false",
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name");
+
+			Button.clickSaveAsDraft();
+
+			PortletEntry.publish();
+		}
+
+		task ("Save as Draft, and then preview other versions") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			Button.clickSaveAsDraft();
+
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Complex Title 1",
+				menuItem = "View History");
+
+			LexiconTable.viewTableEntryPartialText(
+				tableEntry = "Web Content Complex Title 1",
+				tableEntryPartialText = "1.0");
+
+			LexiconTable.viewTableEntryPartialText(
+				tableEntry = "Web Content Complex Title 1",
+				tableEntryPartialText = "1.1");
+		}
+
+		task ("Edit article and save") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			PortletEntry.publish();
+		}
+
+		task ("Duplicate all fields that can be duplicated, 1-4 times") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			for (var fieldName : list "ItemUFComunicado,ListaDDI,Item,Estado") {
+				DDLRecord.addRepeatableField(fieldName = "${fieldName}");
+			}
+
+			Click(locator1 = "//div[contains(@data-fieldname,'ItemDoParagrafoBanner')]/a[contains(@class,'ddm-repeatable-add-button')]");
+
+			Click(locator1 = "//div[contains(@data-fieldname,'ItemPais')]/a[contains(@class,'ddm-repeatable-add-button')]");
+
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,Item,Estado") {
+				WebContent.viewRepeatedField(fieldName = "${fieldName}");
+			}
+
+			AssertElementPresent(locator1 = "xpath=(//div[@data-fieldname='ItemPais'][2]/a[contains(@class,'ddm-repeatable-add-button')]/../div/label[contains(.,'País')])");
+
+			PortletEntry.publish();
+		}
+		task ("Remove duplicates") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,Item,Estado") {
+				DDLRecord.deleteRepeatableField(
+					fieldName = "${fieldName}",
+					fieldNumber = "2");
+
+				AssertElementNotPresent(locator1 = "//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input");
+			}
+
+			Click(locator1 = "//div[contains(@data-fieldname,'ItemPais')]/a[contains(@class,'ddm-repeatable-delete-button') and not(contains(@hidden,'hidden'))]");
+
+			AssertElementNotPresent(locator1 = "xpath=(//div[@data-fieldname='ItemPais'][2]/a[contains(@class,'ddm-repeatable-add-button')]/../div/label[contains(.,'País')])");
+
+			PortletEntry.publish();
+		}
+
+		task ("Disable 'Searchable'") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			DynamicDataMapping.editFieldIndexable(fieldFieldLabel = "Label UF Comunicado");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "text1");
+
+			Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Complex Title 1");
+		}
+
+		task ("Preview fields entered") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Complex Title 1");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var i = "1";
+
+			while (!("${i}" == "121")) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
+					value1 = "text${i}");
+
+				var i = ${i} + 1;
+			}
+
+			AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.png')]");
+
+			takeScreenshot();
+		}
+
+		task ("Display in Web Content Display widget") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Complex Title 1");
+
+			IFrame.closeFrame();
+
+			var i = "1";
+
+			while (!("${i}" == "121")) {
+				WebContent.viewPGViaWCD(webContentContent = "text${i}");
+
+				var i = ${i} + 1;
+			}
+
+			AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.png')]");
+
+			takeScreenshot();
+		}
+
+		task ("Copy Article successfully") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.copyCP(webContentTitle = "Web Content Complex Title 1");
+		}
+
+		task ("Copy Structure successfully") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.copyCP(
+				structureCopyName = "WC Structure Copy Name",
+				structureName = "WC Structure Name");
+		}
+
+		task ("Duplicate the last field group with many nested fields, 10 times, and save") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			DoubleClick(
+				key_fieldFieldLabel = "Lista de Países",
+				locator1 = "DDMEditStructure#FORM_FIELD");
+
+			MouseOver(
+				key_fieldFieldLabel = "Lista de Países",
+				locator1 = "DDMEditStructure#FORM_FIELD");
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				Click.clickNoMouseOverNoWaitForVisible(
+					locator1 = "//div[contains(@class,'form-builder-field-hover')]//button[*[name()='svg'][contains(@class,'plus')]]",
+					siteURLKey = "test-site-name");
+			}
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Move quad nested field to non-nested and save") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			/*comment out, will apply this in data engine
+
+			for (var nestedFieldLabel : list "Item UF Comunicado,Mensagem de erro de máscara,Mensagem de campo obrigatório,Mensagem de e-mail de confirmação divergente") {
+				DynamicDataMapping.moveNestedField(
+					fieldFieldLabel = "Label UF Comunicado",
+					nestedFieldLabel = "${nestedFieldLabel}");
+			}
+
+			for (var key_nestedFieldLabel : list "Item UF Comunicado,Mensagem de erro de máscara,Mensagem de campo obrigatório,Mensagem de e-mail de confirmação divergente") {
+				AssertElementNotPresent(
+					locator1 = "DDMEditStructure#FORM_FIELD_NESTED_ANY",
+					siteURLKey = "test-site-name");
+			}
+			*/
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add translation labels") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			Click.clickNoMouseOver(
+				key_localizedLanguage = "en_US",
+				locator1 = "Icon#AVAILABLE_TRANSLATION");
+
+			DoubleClick(
+				key_fieldFieldLabel = "Label UF Comunicado",
+				locator1 = "DDMEditStructure#FORM_FIELD");
+
+			DynamicDataMapping.editFieldLabel(
+				field = "Label UF Comunicado",
+				fieldFieldLabel = "Label UF Release",
+				fieldName = "LabelUFComunicado");
+
+			DoubleClick(
+				key_fieldFieldLabel = "Url imagem do banner",
+				locator1 = "DDMEditStructure#FORM_FIELD");
+
+			DynamicDataMapping.editFieldLabel(
+				field = "Url imagem do banner",
+				fieldFieldLabel = "Url banner image",
+				fieldName = "UrlImagemBanner");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			Click.clickNoMouseOver(
+				key_localizedLanguage = "en_US",
+				locator1 = "Icon#AVAILABLE_TRANSLATION");
+
+			DynamicDataMapping.viewField(
+				field = "Label UF Comunicado",
+				fieldFieldLabel = "Label UF Release",
+				fieldName = "LabelUFComunicado");
+
+			DynamicDataMapping.viewField(
+				field = "Url imagem do banner",
+				fieldFieldLabel = "Url banner image",
+				fieldName = "UrlImagemBanner");
+		}
+
+		task ("Add new translation") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			Form.addTranslation(localizedLanguage = "Chinese (China)");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			AssertVisible(
+				key_localizedLanguage = "zh_CN",
+				locator1 = "Icon#AVAILABLE_TRANSLATION");
+		}
+
+		task ("Remove translation") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			ClickNoError(
+				key_localizedLanguage = "zh_CN",
+				locator1 = "Icon#AVAILABLE_TRANSLATION_DELETE");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this language?");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			AssertElementNotPresent(
+				key_localizedLanguage = "zh_CN",
+				locator1 = "Icon#AVAILABLE_TRANSLATION");
+		}
+
+		task ("View Translation while Editing article") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			PortletEntry.changeLocale(locale = "en-US");
+
+			AssertVisible(
+				key_fieldFieldLabel = "Label UF Release",
+				key_fieldName = "LabelUFComunicado",
+				locator1 = "DDMField#WEB_CONTENT");
+
+			AssertVisible(
+				key_fieldFieldLabel = "Url banner image",
+				key_fieldName = "UrlImagemBanner",
+				locator1 = "DDMField#WEB_CONTENT");
+		}
+
+		task ("Add Default values to structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit Default Values",
+				rowEntry = "WC Structure Name");
+
+			Type(
+				key_fieldDefaultValue = "LabelUFComunicado",
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "Edited LabelUFComunicado Field");
+
+			Type(
+				key_fieldDefaultValue = "ListaUFComunidado",
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "Edited ListaUFComunidado Field");
+
+			Button.clickSave();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit Default Values",
+				rowEntry = "WC Structure Name");
+
+			AssertTextEquals(
+				key_fieldDefaultValue = "LabelUFComunicado",
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "Edited LabelUFComunicado Field");
+
+			AssertTextEquals(
+				key_fieldDefaultValue = "ListaUFComunidado",
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "Edited ListaUFComunidado Field");
+		}
+
+		task ("Move to another folder") {
+			JSONWebcontent.addFolder(
+				folderDescription = "WC Folder Description",
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Web Content Complex Title 1");
+
+			WebContent.moveToFolderCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "Web Content Complex Title 1");
+		}
+
+		task ("Set all fields to Required and check submission") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Copy Name");
+
+			for (var fieldName : list "Label UF Comunicado,Lista UF Comunicado,Mensagem de erro de timeout,Titulo Mobile,Titulo,Informe Titulo,Informativo Formulario Cadastro,Titulo Programa Milhas,Texo Box Programa Amigo,Informe Programa Milhas,Footer Cadastro,Botao Cadastrar,Footer Cadastro Mobile,Botao Cadastrar Mobile,Informe Programa Amigo,Botao Quero Participar,Botao Quero Participar Mobile,Nacionalidade,Rotulo - Primeiro Nome,Título do banner,Rótulo - Nome do meio,Rótulo - Sobrenome,Rótulo - Email,Rótulo - Confirmação Email,Rótulo - Senha,Rótulo - Confirmação Senha,Rótulo - Box programa amiga,DDI,CPF,Passaporte,Celular,Data de Nascimento,Gênero,País de residência,UF,CEP,Cidade,Bairro,Endereço,Número,Complemento,Texto Box Amigo,País") {
+				DynamicDataMapping.editFieldSettings(fieldFieldLabel = "${fieldName}");
+
+				DynamicDataMapping.editFieldRequired(fieldFieldLabel = "${fieldName}");
+			}
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Copy Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Copy Name",
+				webContentTitle = "Web Content Complex Title 2");
+
+			PortletEntry.publish();
+
+			for (var fieldName : list "LabelUFComunicado,ListaUFComunidado,msgTimeOut,TituloMobile,Titulo,InformativoFormularioCadastro,TituloProgramaMilhas,TexoBoxProgramaAmigo,InformeProgramaMilhas,FooterCadastro,BotaoCadastrar,FooterCadastroMobile,BotaoCadastrarMobile,InformeProgramaAmigo,BotaoQueroParticipar,BotaoQueroParticiparMobile,Nacionalidade,PrimeiroNome,TituloBanner,NomeDoMeio,Sobrenome,Email,EmailConfirma,Senha,ConfirmaSenha,CheckBox,DDI,CPF,passaporte,Celular,DataDeNascimento,Genero,paisDeResidencia,UF,CEP,Cidade,Bairro,Endereco,NumeroEndereco,Complemento,TextoBoxAmigo,ItemPais") {
+				AssertTextEquals.assertPartialText(
+					key_fieldName = "${fieldName}",
+					locator1 = "TextInput#SPECIFIC_FIELD_REQUIRED_ALERT",
+					value1 = "This field is required.");
+			}
+		}
+
+		task ("Enable Staging,Publish to live site, assert value entered persists,including images and links") {
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Staging");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+			Search.searchCP(searchTerm = "Web Content Complex Title 1");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			AssertTextEquals(
+				key_fieldDefaultValue = "LabelUFComunicado",
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "text1");
+
+			AssertTextEquals(
+				key_fieldDefaultValue = "ListaUFComunidado",
+				locator1 = "DDMField#DDM_INPUT",
+				value1 = "text2");
+
+			AssertTextEquals(
+				key_fieldName = "UrlImagemBanner",
+				locator1 = "TextInput#DDM",
+				value1 = "Document_1.png");
+
+			takeScreenshot();
+		}
+	}
+
 	@priority = "4"
 	test AddWebContentViaWCDWithGlobalStructureAndLocalTemplate {
 		property testray.component.names = "Web Content Administration";

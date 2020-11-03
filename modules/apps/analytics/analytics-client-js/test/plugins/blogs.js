@@ -12,8 +12,8 @@
  * details.
  */
 
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import dom from 'metal-dom';
 
 import AnalyticsClient from '../../src/analytics';
 
@@ -97,7 +97,7 @@ describe('Blogs Plugin', () => {
 
 			blogElement.appendChild(imageInsideBlog);
 
-			dom.triggerEvent(imageInsideBlog, 'click');
+			userEvent.click(imageInsideBlog);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -127,7 +127,7 @@ describe('Blogs Plugin', () => {
 
 			blogElement.appendChild(linkInsideBlog);
 
-			dom.triggerEvent(linkInsideBlog, 'click');
+			userEvent.click(linkInsideBlog);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -156,7 +156,7 @@ describe('Blogs Plugin', () => {
 
 			blogElement.appendChild(paragraphInsideBlog);
 
-			dom.triggerEvent(paragraphInsideBlog, 'click');
+			userEvent.click(paragraphInsideBlog);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({

@@ -14,6 +14,7 @@
 
 import '../../__fixtures__/MockField.es';
 
+import userEvent from '@testing-library/user-event';
 import dom from 'metal-dom';
 
 import RuleBuilder from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RuleBuilder.es';
@@ -227,7 +228,7 @@ describe('RuleBuilder', () => {
 	it('renders rule screen creator when click add button', () => {
 		const addbutton = document.querySelector('#addFieldButton');
 
-		dom.triggerEvent(addbutton, 'click', {});
+		userEvent.click(addbutton);
 
 		jest.runAllTimers();
 

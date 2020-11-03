@@ -14,7 +14,7 @@
 
 import '../../__fixtures__/MockField.es';
 
-import {dom as MetalTestUtil} from 'metal-dom';
+import userEvent from '@testing-library/user-event';
 
 import PageRenderer from '../../../src/main/resources/META-INF/resources/js/components/Page/PageRenderer.es';
 import mockPages from '../../__mock__/mockPages.es';
@@ -61,10 +61,9 @@ describe('PageRenderer', () => {
 		);
 		const spy = jest.spyOn(component, 'emit');
 
-		pageTitle.value = 'Page Title';
-
 		jest.runAllTimers();
-		MetalTestUtil.triggerEvent(pageTitle, 'keyup', {});
+
+		userEvent.type(pageTitle, 'Page Title');
 
 		expect(spy).toHaveBeenCalled();
 		expect(spy).toHaveBeenCalledWith('updatePage', expect.any(Object));
@@ -82,10 +81,9 @@ describe('PageRenderer', () => {
 		);
 		const spy = jest.spyOn(component, 'emit');
 
-		pageDescription.value = 'Page Description';
-
 		jest.runAllTimers();
-		MetalTestUtil.triggerEvent(pageDescription, 'keyup', {});
+
+		userEvent.type(pageDescription, 'Page Description');
 
 		expect(spy).toHaveBeenCalled();
 		expect(spy).toHaveBeenCalledWith('updatePage', expect.any(Object));

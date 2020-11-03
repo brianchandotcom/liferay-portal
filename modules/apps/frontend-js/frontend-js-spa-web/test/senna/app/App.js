@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fireEvent} from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 import {dom, exitDocument} from 'metal-dom';
 import {EventEmitter} from 'metal-events';
 
@@ -1123,7 +1125,7 @@ describe('App', function () {
 			'syncScrollPositionSyncThenAsync_'
 		).mockImplementation(() => {});
 
-		dom.triggerEvent(enterDocumentLinkElement('/path'), 'click');
+		userEvent.click(enterDocumentLinkElement('/path'));
 		expect(this.app.pendingNavigate).toBeTruthy();
 		exitDocumentLinkElement();
 	});
@@ -1134,7 +1136,7 @@ describe('App', function () {
 		const link = enterDocumentLinkElement('/path');
 		link.setAttribute('target', '_blank');
 		link.addEventListener('click', (event) => event.preventDefault());
-		dom.triggerEvent(link, 'click');
+		userEvent.click(link);
 		exitDocumentLinkElement();
 		expect(this.app.pendingNavigate).toBeNull();
 	});
@@ -1157,7 +1159,7 @@ describe('App', function () {
 			expect(data.event).toBeTruthy();
 			expect(data.event.type).toBe('click');
 		});
-		dom.triggerEvent(enterDocumentLinkElement('/path'), 'click');
+		userEvent.click(enterDocumentLinkElement('/path'));
 		exitDocumentLinkElement();
 
 		expect(window.location.pathname).not.toBe('/path');
@@ -1170,7 +1172,7 @@ describe('App', function () {
 			data.event.preventDefault();
 			event.preventDefault();
 		});
-		dom.triggerEvent(enterDocumentLinkElement('/preventedPath'), 'click');
+		userEvent.click(enterDocumentLinkElement('/preventedPath'));
 		exitDocumentLinkElement();
 
 		expect(window.location.pathname).not.toBe('/preventedPath');
@@ -1181,7 +1183,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(link, 'click', preventDefault);
-		dom.triggerEvent(link, 'click');
+		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
@@ -1192,7 +1194,7 @@ describe('App', function () {
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
 		dom.on(link, 'click', preventDefault);
-		dom.triggerEvent(link, 'click');
+		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
@@ -1202,7 +1204,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(link, 'click', preventDefault);
-		dom.triggerEvent(link, 'click');
+		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
@@ -1212,22 +1214,16 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
+
 		dom.on(link, 'click', preventDefault);
-		dom.triggerEvent(link, 'click', {
-			altKey: true,
-		});
-		dom.triggerEvent(link, 'click', {
-			ctrlKey: true,
-		});
-		dom.triggerEvent(link, 'click', {
-			metaKey: true,
-		});
-		dom.triggerEvent(link, 'click', {
-			shiftKey: true,
-		});
-		dom.triggerEvent(link, 'click', {
-			button: true,
-		});
+
+		userEvent.click(link, {altKey: false});
+		userEvent.click(link, {ctrlKey: false});
+		userEvent.click(link, {metaKey: false});
+		userEvent.click(link, {shiftKey: false});
+		userEvent.click(link, {button: 1});
+		userEvent.click(link, {button: 2});
+
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
@@ -1241,7 +1237,7 @@ describe('App', function () {
 			throw new Error();
 		};
 		dom.on(link, 'click', preventDefault);
-		dom.triggerEvent(link, 'click');
+		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
@@ -1338,7 +1334,7 @@ describe('App', function () {
 			expect(this.app.reloadPage).not.toHaveBeenCalled();
 			done();
 		});
-		dom.triggerEvent(globals.window, 'popstate');
+		fireEvent(globals.window, new PopStateEvent('popstate'));
 	});
 
 	it('does not navigate on clicking links when onbeforeunload returns truthy value', () => {
@@ -1358,7 +1354,7 @@ describe('App', function () {
 
 		this.app.addRoutes(new Route('/path', Screen));
 		const link = enterDocumentLinkElement('/path');
-		dom.triggerEvent(link, 'click');
+		userEvent.click(link);
 		exitDocumentLinkElement();
 		expect(beforeunload).toHaveBeenCalled();
 	});
@@ -1423,7 +1419,7 @@ describe('App', function () {
 
 		this.app.addRoutes(new Route('/path', Screen));
 		const form = enterDocumentFormElement('/path', 'post');
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeTruthy();
 
 		this.app.on('endNavigate', () => {
@@ -1443,7 +1439,7 @@ describe('App', function () {
 			exitDocument(form);
 			done();
 		});
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 	});
 
 	it('does not capture form element when submit event was prevented', (done) => {
@@ -1458,7 +1454,7 @@ describe('App', function () {
 			done();
 		});
 
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 	});
 
 	it('exposes form reference in event data when submitting routed forms', (done) => {
@@ -1470,7 +1466,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		const form = enterDocumentFormElement('/path', 'post');
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		this.app.on('startNavigate', (data) => {
 			expect(data.form).toBeTruthy();
 		});
@@ -1487,7 +1483,7 @@ describe('App', function () {
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
 		dom.on(form, 'submit', preventDefault);
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
@@ -1497,7 +1493,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(form, 'submit', preventDefault);
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
@@ -1508,7 +1504,7 @@ describe('App', function () {
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
 		dom.on(form, 'submit', preventDefault);
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
@@ -1518,7 +1514,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(form, 'submit', preventDefault);
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocument(form);
 	});
@@ -1528,7 +1524,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		dom.on(form, 'submit', preventDefault);
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 		expect(globals.capturedFormElement).toBeFalsy();
 		exitDocument(form);
 	});
@@ -1557,7 +1553,7 @@ describe('App', function () {
 			done();
 		});
 		dom.on(form, 'submit', jest.fn());
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 	});
 
 	it('captures form button when submitting', (done) => {
@@ -1587,7 +1583,7 @@ describe('App', function () {
 			done();
 		});
 
-		dom.triggerEvent(form, 'submit');
+		fireEvent.submit(form);
 	});
 
 	it('captures form button when clicking submit button', () => {
@@ -1913,7 +1909,7 @@ describe('App', function () {
 
 		class TestScreen extends Screen {
 			evaluateStyles(surfaces) {
-				dom.triggerEvent(enterDocumentLinkElement('/path2'), 'click');
+				userEvent.click(enterDocumentLinkElement('/path2'));
 				exitDocumentLinkElement();
 
 				return super.evaluateStyles(surfaces);
@@ -1928,7 +1924,7 @@ describe('App', function () {
 
 		class TestScreen2 extends Screen {
 			evaluateStyles(surfaces) {
-				dom.triggerEvent(enterDocumentLinkElement('/path3'), 'click');
+				userEvent.click(enterDocumentLinkElement('/path3'));
 				exitDocumentLinkElement();
 
 				return super.evaluateStyles(surfaces);
@@ -1961,7 +1957,7 @@ describe('App', function () {
 
 		class TestScreen extends Screen {
 			load(path) {
-				dom.triggerEvent(enterDocumentLinkElement('/path2'), 'click');
+				userEvent.click(enterDocumentLinkElement('/path2'));
 				exitDocumentLinkElement();
 
 				return super.load(path);
@@ -1970,7 +1966,7 @@ describe('App', function () {
 
 		class TestScreen2 extends Screen {
 			load(path) {
-				dom.triggerEvent(enterDocumentLinkElement('/path3'), 'click');
+				userEvent.click(enterDocumentLinkElement('/path3'));
 				exitDocumentLinkElement();
 
 				return super.load(path);

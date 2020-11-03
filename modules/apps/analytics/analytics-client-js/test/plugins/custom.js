@@ -12,8 +12,8 @@
  * details.
  */
 
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import dom from 'metal-dom';
 
 import AnalyticsClient from '../../src/analytics';
 
@@ -145,7 +145,7 @@ describe('Custom Asset Plugin', () => {
 
 			customAssetElement.appendChild(imageInsideCustomAsset);
 
-			dom.triggerEvent(imageInsideCustomAsset, 'click');
+			userEvent.click(imageInsideCustomAsset);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -175,7 +175,7 @@ describe('Custom Asset Plugin', () => {
 
 			customAssetElement.appendChild(linkInsideCustomAsset);
 
-			dom.triggerEvent(linkInsideCustomAsset, 'click');
+			userEvent.click(linkInsideCustomAsset);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -207,7 +207,7 @@ describe('Custom Asset Plugin', () => {
 
 			customAssetElement.appendChild(paragraphInsideCustomAsset);
 
-			dom.triggerEvent(paragraphInsideCustomAsset, 'click');
+			userEvent.click(paragraphInsideCustomAsset);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -243,7 +243,7 @@ describe('Custom Asset Plugin', () => {
 
 			customAssetElement.appendChild(linkInsideCustomAsset);
 
-			dom.triggerEvent(linkInsideCustomAsset, 'click');
+			userEvent.click(linkInsideCustomAsset);
 
 			expect(Analytics.getEvents().length).toEqual(2);
 

@@ -14,7 +14,7 @@
 
 import '../../__fixtures__/MockField.es';
 
-import dom from 'metal-dom';
+import userEvent from '@testing-library/user-event';
 
 import RuleEditor from '../../../src/main/resources/META-INF/resources/js/components/RuleEditor/RuleEditor.es';
 import mockPages from '../../__mock__/mockPages.es';
@@ -1045,7 +1045,7 @@ describe('Rule Editor', () => {
 
 				jest.runAllTimers();
 
-				dom.triggerEvent(component.refs.save.element, 'click', {});
+				userEvent.click(component.refs.save.element);
 
 				jest.runAllTimers();
 
@@ -1113,7 +1113,7 @@ describe('Rule Editor', () => {
 
 				jest.runAllTimers();
 
-				dom.triggerEvent(component.refs.cancel.element, 'click', {});
+				userEvent.click(component.refs.cancel.element);
 
 				jest.runAllTimers();
 
@@ -1174,7 +1174,7 @@ describe('Rule Editor', () => {
 
 				jest.runAllTimers();
 
-				dom.triggerEvent(component.refs.save.element, 'click', {});
+				userEvent.click(component.refs.save.element);
 
 				jest.runAllTimers();
 

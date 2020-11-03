@@ -12,7 +12,7 @@
  * details.
  */
 
-import dom from 'metal-dom';
+import userEvent from '@testing-library/user-event';
 
 import Email from '../../../../src/main/resources/META-INF/resources/admin/js/components/ShareFormModal/Email.es';
 
@@ -74,9 +74,7 @@ describe('Email', () => {
 
 		const message = component.element.querySelector('#message');
 
-		message.value = 'New message';
-
-		dom.triggerEvent(message, 'input', {});
+		userEvent.type(message, 'New message');
 
 		jest.runAllTimers();
 
@@ -92,9 +90,7 @@ describe('Email', () => {
 
 		const subject = component.element.querySelector('#subject');
 
-		subject.value = 'New Subject';
-
-		dom.triggerEvent(subject, 'input', {});
+		userEvent.type(subject, 'New Subject');
 
 		jest.runAllTimers();
 

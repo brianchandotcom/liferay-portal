@@ -12,7 +12,7 @@
  * details.
  */
 
-import {dom as MetalTestUtil} from 'metal-dom';
+import userEvent from '@testing-library/user-event';
 
 import Tooltip from '../../../src/main/resources/META-INF/resources/components/Tooltip/Tooltip.es';
 
@@ -51,7 +51,7 @@ describe('Field Tooltip', () => {
 
 		const {tooltipTarget} = component.refs;
 
-		MetalTestUtil.triggerEvent(tooltipTarget, 'mouseover');
+		userEvent.hover(tooltipTarget);
 
 		expect(component.showContent).toBe(true);
 		expect(component).toMatchSnapshot();

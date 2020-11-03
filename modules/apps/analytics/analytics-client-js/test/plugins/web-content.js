@@ -12,8 +12,8 @@
  * details.
  */
 
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import dom from 'metal-dom';
 
 import AnalyticsClient from '../../src/analytics';
 
@@ -97,7 +97,7 @@ describe('WebContent Plugin', () => {
 
 			webContentElement.appendChild(imageInsideWebContent);
 
-			dom.triggerEvent(imageInsideWebContent, 'click');
+			userEvent.click(imageInsideWebContent);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -127,7 +127,7 @@ describe('WebContent Plugin', () => {
 
 			webContentElement.appendChild(linkInsideWebContent);
 
-			dom.triggerEvent(linkInsideWebContent, 'click');
+			userEvent.click(linkInsideWebContent);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -159,7 +159,7 @@ describe('WebContent Plugin', () => {
 
 			webContentElement.appendChild(paragraphInsideWebContent);
 
-			dom.triggerEvent(paragraphInsideWebContent, 'click');
+			userEvent.click(paragraphInsideWebContent);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({

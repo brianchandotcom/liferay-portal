@@ -447,6 +447,56 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "DM Document Title");
 	}
 
+	@description = "This ensures that a depot document associated with a tag cannot be searched on a connected site when searching is disabled."
+	@priority = "5"
+	test SearchForUnsearchableTag {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc",
+			tagNameList = "depot");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.configureSearch(
+			depotName = "Test Depot Name",
+			item = "Make Unsearchable",
+			siteList = "Site Name",
+			tableEntryText = "No");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "depot");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "depot");
+	}
+
 	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
 	test SearchForUnsearchableUser {

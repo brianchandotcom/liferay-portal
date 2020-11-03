@@ -43,7 +43,7 @@ public class ProductInteractionRecommendationBatchEngineTaskItemDelegate
 
 	@Override
 	public void createItem(
-			ProductInteractionRecommendation item,
+			ProductInteractionRecommendation productInteractionRecommendation,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -54,14 +54,17 @@ public class ProductInteractionRecommendationBatchEngineTaskItemDelegate
 		productInteractionCommerceMLRecommendation.setCompanyId(
 			contextCompany.getCompanyId());
 		productInteractionCommerceMLRecommendation.setCreateDate(
-			item.getCreateDate());
+			productInteractionRecommendation.getCreateDate());
 		productInteractionCommerceMLRecommendation.setEntryClassPK(
-			item.getProductId());
-		productInteractionCommerceMLRecommendation.setJobId(item.getJobId());
-		productInteractionCommerceMLRecommendation.setRank(item.getRank());
+			productInteractionRecommendation.getProductId());
+		productInteractionCommerceMLRecommendation.setJobId(
+			productInteractionRecommendation.getJobId());
+		productInteractionCommerceMLRecommendation.setRank(
+			productInteractionRecommendation.getRank());
 		productInteractionCommerceMLRecommendation.setRecommendedEntryClassPK(
-			item.getRecommendedProductId());
-		productInteractionCommerceMLRecommendation.setScore(item.getScore());
+			productInteractionRecommendation.getRecommendedProductId());
+		productInteractionCommerceMLRecommendation.setScore(
+			productInteractionRecommendation.getScore());
 
 		_productInteractionCommerceMLRecommendationManager.
 			addProductInteractionCommerceMLRecommendation(

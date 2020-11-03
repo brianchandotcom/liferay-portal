@@ -78,6 +78,8 @@ public class LayoutPageTemplateStructureStagedModelDataHandler
 
 		importedLayoutPageTemplateStructure.setGroupId(
 			portletDataContext.getScopeGroupId());
+		importedLayoutPageTemplateStructure.setCompanyId(
+			portletDataContext.getCompanyId());
 
 		Element element = portletDataContext.getImportDataElement(
 			importedLayoutPageTemplateStructure);

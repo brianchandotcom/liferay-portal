@@ -108,6 +108,8 @@ public class AssetDisplayPageStagedModelDataHandler
 
 		importedAssetDisplayPageEntry.setGroupId(
 			portletDataContext.getScopeGroupId());
+		importedAssetDisplayPageEntry.setCompanyId(
+			portletDataContext.getCompanyId());
 		importedAssetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		importedAssetDisplayPageEntry.setPlid(plid);

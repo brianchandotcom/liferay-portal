@@ -138,6 +138,8 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 
 		importedDEDataDefinitionFieldLink.setGroupId(
 			portletDataContext.getScopeGroupId());
+		importedDEDataDefinitionFieldLink.setCompanyId(
+			portletDataContext.getCompanyId());
 		importedDEDataDefinitionFieldLink.setClassNameId(
 			_portal.getClassNameId(
 				deDataDefinitionFieldLinkElement.attributeValue(

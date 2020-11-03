@@ -116,6 +116,8 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 		importedLayoutPageTemplateStructureRel.setGroupId(
 			portletDataContext.getScopeGroupId());
+		importedLayoutPageTemplateStructureRel.setCompanyId(
+			portletDataContext.getCompanyId());
 		importedLayoutPageTemplateStructureRel.setLayoutPageTemplateStructureId(
 			layoutPageTemplateStructureId);
 		importedLayoutPageTemplateStructureRel.setSegmentsExperienceId(

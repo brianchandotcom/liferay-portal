@@ -115,6 +115,7 @@ public class SegmentsEntryStagedModelDataHandler
 			(SegmentsEntry)segmentsEntry.clone();
 
 		importedSegmentsEntry.setGroupId(portletDataContext.getScopeGroupId());
+		importedSegmentsEntry.setCompanyId(portletDataContext.getCompanyId());
 
 		String criteria =
 			_segmentsEntryExportImportContentProcessor.

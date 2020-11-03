@@ -173,6 +173,8 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		importedLayoutClassedModelUsage.setGroupId(
 			portletDataContext.getScopeGroupId());
+		importedLayoutClassedModelUsage.setCompanyId(
+			portletDataContext.getCompanyId());
 
 		Map<Long, Long> plids =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

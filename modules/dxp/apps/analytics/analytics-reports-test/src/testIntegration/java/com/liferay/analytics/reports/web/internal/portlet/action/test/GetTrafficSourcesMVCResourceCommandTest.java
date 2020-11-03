@@ -229,25 +229,25 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					Assert.assertEquals("referral", jsonObject2.get("name"));
 
-					Assert.assertNull(jsonObject2.get("value"));
+					Assert.assertEquals(0, jsonObject2.getInt("value"));
 
 					JSONObject jsonObject3 = jsonArray.getJSONObject(2);
 
 					Assert.assertEquals("social", jsonObject3.get("name"));
 
-					Assert.assertNull(jsonObject3.get("value"));
+					Assert.assertEquals(0, jsonObject3.getInt("value"));
 
 					JSONObject jsonObject4 = jsonArray.getJSONObject(3);
 
 					Assert.assertEquals("paid", jsonObject4.get("name"));
 
-					Assert.assertNull(jsonObject4.get("value"));
+					Assert.assertEquals(0, jsonObject4.getInt("value"));
 
 					JSONObject jsonObject5 = jsonArray.getJSONObject(4);
 
 					Assert.assertEquals("direct", jsonObject5.get("name"));
 
-					Assert.assertNull(jsonObject5.get("value"));
+					Assert.assertEquals(0, jsonObject5.getInt("value"));
 				});
 		}
 		finally {
@@ -323,9 +323,13 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "referral"
 							).put(
+								"share", String.format("%.2f", 0.00)
+							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "referral")
+							).put(
+								"value", 0
 							),
 							JSONUtil.put(
 								"helpMessage",
@@ -337,9 +341,13 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "social"
 							).put(
+								"share", String.format("%.2f", 0.00)
+							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "social")
+							).put(
+								"value", 0
 							),
 							JSONUtil.put(
 								"helpMessage",
@@ -351,9 +359,13 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "direct"
 							).put(
+								"share", String.format("%.2f", 0.00)
+							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "direct")
+							).put(
+								"value", 0
 							),
 							JSONUtil.put(
 								"helpMessage",
@@ -365,9 +377,13 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "paid"
 							).put(
+								"share", String.format("%.2f", 0.00)
+							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "paid")
+							).put(
+								"value", 0
 							),
 							JSONUtil.put(
 								"helpMessage",
@@ -379,9 +395,13 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "organic"
 							).put(
+								"share", String.format("%.2f", 0.00)
+							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "organic")
+							).put(
+								"value", 0
 							)
 						).toJSONString(),
 						jsonArray.toJSONString());

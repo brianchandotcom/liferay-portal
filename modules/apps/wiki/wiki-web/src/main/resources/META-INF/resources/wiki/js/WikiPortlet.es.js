@@ -50,8 +50,7 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 
 		this._events = [];
 		this._attachEvents();
-	};
-
+	}
 
 	dispose() {
 		this._events.forEach(({event, listener, target}) =>
@@ -67,11 +66,106 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 	}
 
 	_attachEvents() {
+		const formatSelect = document.getElementById(
+			`${this._namespace}format`
+		);
+
+		if (formatSelect) {
+			this._currentFormatLabel = formatSelect.options[
+				formatSelect.selectedIndex
+			].text.trim();
+			this._currentFormatIndex = formatSelect.selectedIndex;
+
+			this._addEventListener(formatSelect, 'change', (e) => {
+				this._changeWikiFormat(e);
+			});
+		}
 	}
 
+	/**
+	 * Changes the wiki page format. Previously user is informed that she
+	 * may lose some formatting with a confirm dialog.
+	 *
+	 * @protected
+	 * @param {Event} event The select event that triggered the change action
+	 */
+	_changeWikiFormat(event) {
+		const formatSelect = event.currentTarget;
 
+		const newFormat = formatSelect.options[
+			formatSelect.selectedIndex
+		].text.trim();
+
+		const confirmMessage = Liferay.Util.sub(
+			this._strings.confirmLoseFormatting,
+			this._currentFormatLabel,
+			newFormat
+		);
+
+		if (confirm(confirmMessage)) {
+			const form = this.rootNode.querySelector(
+				`[name="${this._namespace}fm"]`
+			);
+			form.setAttribute('action', this._renderUrl);
+			this._save();
+		}
+		else {
+			formatSelect.selectedIndex = this.currentFormatIndex;
+		}
+	}
+
+	/**
+	 * Checks if there are images that have not been uploaded yet.
+	 * In that case, it removes them after asking
+	 * confirmation to the user.
+	 *
+	 * @protected
+	 * @return {Boolean} False if there are temporal images and
+	 * user does not confirm she wants to lose them. True in other case.
+	 */
+	_removeTempImages() {
+		const tempImages = this.rootNode.querySelector('img[data-random-id]');
+		let discardTempImages = true;
+
+		if (tempImages && tempImages.length > 0) {
+			if (confirm(this._strings.confirmDiscardImages)) {
+				tempImages.forEach((node) => {
+					node.parentElement.remove();
+				});
+			}
+			else {
+				discardTempImages = false;
+			}
+		}
+
+		return discardTempImages;
+	}
+
+	/**
+	 * Submits the wiki page.
+	 *
+	 * @protected
+	 */
+	_save() {
+		const namespace = this._namespace;
+
+		if (this._removeTempImages()) {
+			document.getElementById(namespace + this._constants.CMD).value = this._currentAction;
+
+			const contentEditor = window[`${namespace}contentEditor`];
+
+			if (contentEditor) {
+				document.getElementById(`${namespace}content`).value = contentEditor.getHTML();
+			}
+
+			submitForm(document[`${namespace}fm`]);
+		}
+	}
  }
-class WikiPortlet extends PortletBase {
+
+ export default WikiPortlet;
+
+class WikiPortlet2 extends PortletBase {
 
 	/**
 	 * @inheritDoc
@@ -320,4 +414,4 @@ WikiPortlet.STATE = {
 	},
 };
 
-export default WikiPortlet;
+//export default WikiPortlet;

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -179,10 +178,47 @@ public class EditImageConfigurationEntryMVCActionCommand
 			jsonObject.put("success", true);
 		}
 		catch (AMImageConfigurationException amImageConfigurationException) {
-			SessionErrors.add(
-				actionRequest, amImageConfigurationException.getClass());
+			String errorMessage = "";
 
-			jsonObject.put("success", false);
+			if (amImageConfigurationException instanceof
+					AMImageConfigurationException.
+						DuplicateAMImageConfigurationNameException) {
+
+				errorMessage = "a-configuration-with-this-name-already-exists";
+			}
+			else if (amImageConfigurationException instanceof
+						AMImageConfigurationException.InvalidHeightException) {
+
+				errorMessage = "please-enter-a-max-height-value-larger-than-0";
+			}
+			else if (amImageConfigurationException instanceof
+						AMImageConfigurationException.InvalidNameException) {
+
+				errorMessage = "please-enter-a-valid-name";
+			}
+			else if (amImageConfigurationException instanceof
+						AMImageConfigurationException.InvalidUuidException) {
+
+				errorMessage = "please-enter-a-valid-identifier";
+			}
+			else if (amImageConfigurationException instanceof
+						AMImageConfigurationException.InvalidWidthException) {
+
+				errorMessage = "please-enter-a-max-width-value-larger-than-0";
+			}
+			else if (amImageConfigurationException instanceof
+						AMImageConfigurationException.
+							RequiredWidthOrHeightException) {
+
+				errorMessage =
+					"please-enter-a-max-width-or-max-height-value-larger-than-0";
+			}
+
+			jsonObject.put(
+				"errorMessage", errorMessage
+			).put(
+				"success", false
+			);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

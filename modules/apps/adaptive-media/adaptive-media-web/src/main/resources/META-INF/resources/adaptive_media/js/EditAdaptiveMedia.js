@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
@@ -22,6 +23,8 @@ import React, {useCallback, useState} from 'react';
 
 import {Checkbox, HelpMessage, Input, RequiredMark} from './form/Components';
 import {alphanumeric, required, validate} from './form/validations';
+
+const scrollToTop = () => window.scrollTo({behavior: 'smooth', top: 0});
 
 const EditAdaptiveMedia = ({
 	actionUrl,
@@ -34,6 +37,7 @@ const EditAdaptiveMedia = ({
 }) => {
 	const [automaticId, setAutomaticId] = useState(automaticUuid);
 	const [addHighResolution, setAddHighResolution] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(null);
 
 	const nameId = `${namespace}name`;
 	const descriptionId = `${namespace}description`;
@@ -84,11 +88,10 @@ const EditAdaptiveMedia = ({
 					if (response.success) {
 						Liferay.Util.navigate(redirect);
 					}
-				})
-				.catch(() => {
-
-					//TODO
-
+					else {
+						setErrorMessage(response.errorMessage);
+						scrollToTop();
+					}
 				});
 		},
 		validate: (values) => {
@@ -169,6 +172,12 @@ const EditAdaptiveMedia = ({
 
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
+			{errorMessage &&
+				<ClayAlert displayType="danger">
+					{Liferay.Language.get(errorMessage)}
+				</ClayAlert>
+			}
+
 			{!configurationEntryEditable && (
 				<div className="alert alert-info">
 					{Liferay.Language.get(

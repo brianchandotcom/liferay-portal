@@ -27,8 +27,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.adaptive.media.exception.AMImageConfigurationException" %><%@
-page import="com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry" %><%@
+<%@ page import="com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry" %><%@
 page import="com.liferay.adaptive.media.image.service.AMImageEntryLocalServiceUtil" %><%@
 page import="com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesAllConfigurationsBackgroundTaskExecutor" %><%@
 page import="com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesSingleConfigurationBackgroundTaskExecutor" %><%@

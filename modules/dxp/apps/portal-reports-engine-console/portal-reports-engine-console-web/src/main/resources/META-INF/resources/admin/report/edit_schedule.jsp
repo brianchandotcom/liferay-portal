@@ -80,7 +80,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 		</aui:fieldset>
 
 		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="schedule">
-			<liferay-ui:input-scheduler />
+			<liferay-util:include page="/admin/report/input_scheduler.jsp" servletContext="<%= application %>" />
 		</aui:fieldset>
 
 		<%

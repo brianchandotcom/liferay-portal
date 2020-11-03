@@ -69,9 +69,9 @@ public class CORSServletFilter extends BaseFilter {
 				httpServletRequest.getMethod(),
 				httpServletRequest::getHeader) &&
 			(PropsValues.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK ||
-			 _isGuest() ||
 			 OAuth2ProviderScopeLiferayAccessControlContext.
-				 isOAuth2AuthVerified())) {
+				 isOAuth2AuthVerified() ||
+			 _isGuest())) {
 
 			corsSupport.writeResponseHeaders(
 				httpServletRequest::getHeader, httpServletResponse::setHeader);

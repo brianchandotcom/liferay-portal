@@ -218,14 +218,13 @@ public class PortalCORSServletFilter
 				return;
 			}
 
-			if ((corsSupport.isValidCORSRequest(
+			if (corsSupport.isValidCORSRequest(
 					httpServletRequest.getMethod(),
 					httpServletRequest::getHeader) &&
+				(PropsValues.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK ||
 				 OAuth2ProviderScopeLiferayAccessControlContext.
-					 isOAuth2AuthVerified()) ||
-				_isGuest() ||
-				(!_isGuest() &&
-				 PropsValues.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK)) {
+					 isOAuth2AuthVerified() ||
+				 _isGuest())) {
 
 				corsSupport.writeResponseHeaders(
 					httpServletRequest::getHeader,

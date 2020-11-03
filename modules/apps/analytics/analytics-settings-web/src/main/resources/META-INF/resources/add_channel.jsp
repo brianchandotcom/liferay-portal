@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/view_configuration_screen");
+portletURL.setParameter("mvcRenderCommandName", "/configuration_admin/view_configuration_screen");
 portletURL.setParameter("configurationScreenKey", "1-synced-sites");
 
 String redirect = portletURL.toString();

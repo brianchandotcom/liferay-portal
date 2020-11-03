@@ -592,7 +592,6 @@ definition {
 	@priority = "4"
 	test RolesPermissionsDynamicDataLists {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

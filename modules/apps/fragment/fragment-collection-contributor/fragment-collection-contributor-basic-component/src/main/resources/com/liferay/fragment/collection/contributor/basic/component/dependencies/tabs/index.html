@@ -27,6 +27,7 @@
 							class="navbar-text-truncate"
 							data-lfr-editable-id="title${i+1}"
 							data-lfr-editable-type="text"
+							data-lfr-priority="${i+1}"
 							tabindex="-1"
 						>
 							Tab ${i+1}
@@ -41,7 +42,7 @@
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
 		<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
-			<lfr-drop-zone></lfr-drop-zone>
+			<lfr-drop-zone data-lfr-priority="${i+1}"></lfr-drop-zone>
 		</div>
 		[/#list]
 	</div>

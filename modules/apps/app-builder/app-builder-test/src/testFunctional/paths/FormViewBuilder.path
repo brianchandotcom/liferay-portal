@@ -543,6 +543,60 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>RULE_BUILDER_GO_BACK</td>
+	<td>//button[contains(@class,'btn btn-secondary')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELD_SETS_TAB</td>
+	<td>//button[contains(@class,'btn btn-unstyled') and contains(.,'Fieldsets')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CREATE_NEW_FIELD_SETS</td>
+	<td>//button[contains(@class,'btn-secondary') and contains(.,'Create New Fieldset')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELD_SET_NAME</td>
+	<td>//input[contains(@placeholder,'Untitled Fieldset')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELD_SET_SAVE_BUTTON</td>
+	<td>//div[contains(@class, 'btn-group-item')]//button[contains(@class,'btn-primary')][contains(text(),'Save')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELD_SET_ELLIPSIS_ACTION</td>
+	<td>//div[contains(@class, 'field-type autofit-row autofit-row-center')]['${key_rowNumber}']//div[contains(@class, 'autofit-col pr-2')]//div[contains(@class, 'dropdown')]//button[contains(@class, 'btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELD_SET_DISABLED_ELLIPSIS_ACTION</td>
+	<td>//div[contains(@class, 'field-type disabled autofit-row autofit-row-center')]['${key_rowNumber}']//div[contains(@class, 'autofit-col pr-2')]//div[contains(@class, 'dropdown')]//button[contains(@class, 'btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>EMPTY_FORM_FIELD</td>
+	<td>//p[contains(text(),'Drag fields from the sidebar to compose your form.')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FORM_FIELD_FIRST_ROW</td>
+	<td>//div[contains(@class,"placeholder row")]//div[contains(@data-ddm-field-page, "0") and contains(@data-ddm-field-row, "0")]//div[contains(@class, "ddm-target")]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

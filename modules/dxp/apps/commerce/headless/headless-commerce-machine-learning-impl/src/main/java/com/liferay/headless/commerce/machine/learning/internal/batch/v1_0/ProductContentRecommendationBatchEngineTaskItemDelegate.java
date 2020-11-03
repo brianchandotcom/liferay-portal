@@ -43,7 +43,7 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 
 	@Override
 	public void createItem(
-			ProductContentRecommendation item,
+			ProductContentRecommendation productContentRecommendation,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -54,14 +54,17 @@ public class ProductContentRecommendationBatchEngineTaskItemDelegate
 		productContentCommerceMLRecommendation.setCompanyId(
 			contextCompany.getCompanyId());
 		productContentCommerceMLRecommendation.setCreateDate(
-			item.getCreateDate());
+			productContentRecommendation.getCreateDate());
 		productContentCommerceMLRecommendation.setEntryClassPK(
-			item.getProductId());
-		productContentCommerceMLRecommendation.setJobId(item.getJobId());
-		productContentCommerceMLRecommendation.setRank(item.getRank());
+			productContentRecommendation.getProductId());
+		productContentCommerceMLRecommendation.setJobId(
+			productContentRecommendation.getJobId());
+		productContentCommerceMLRecommendation.setRank(
+			productContentRecommendation.getRank());
 		productContentCommerceMLRecommendation.setRecommendedEntryClassPK(
-			item.getRecommendedProductId());
-		productContentCommerceMLRecommendation.setScore(item.getScore());
+			productContentRecommendation.getRecommendedProductId());
+		productContentCommerceMLRecommendation.setScore(
+			productContentRecommendation.getScore());
 
 		_productContentCommerceMLRecommendationManager.
 			addProductContentCommerceMLRecommendation(

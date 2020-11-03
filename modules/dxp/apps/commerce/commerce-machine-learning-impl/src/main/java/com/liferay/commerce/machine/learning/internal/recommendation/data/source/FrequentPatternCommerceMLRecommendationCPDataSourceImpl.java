@@ -93,8 +93,6 @@ public class FrequentPatternCommerceMLRecommendationCPDataSourceImpl
 			return new CPDataSourceResult(Collections.emptyList(), 0);
 		}
 
-		long groupId = portal.getScopeGroupId(httpServletRequest);
-
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
 		List<FrequentPatternCommerceMLRecommendation>
@@ -121,6 +119,8 @@ public class FrequentPatternCommerceMLRecommendationCPDataSourceImpl
 			}
 
 			try {
+				long groupId = portal.getScopeGroupId(httpServletRequest);
+
 				CPCatalogEntry recommendedCPCatalogEntry =
 					cpDefinitionHelper.getCPCatalogEntry(
 						commerceAccount.getCommerceAccountId(), groupId,

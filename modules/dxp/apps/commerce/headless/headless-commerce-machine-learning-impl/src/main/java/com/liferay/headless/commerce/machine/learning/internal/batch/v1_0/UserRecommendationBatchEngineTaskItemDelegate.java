@@ -44,22 +44,25 @@ public class UserRecommendationBatchEngineTaskItemDelegate
 
 	@Override
 	public void createItem(
-			UserRecommendation item, Map<String, Serializable> parameters)
+			UserRecommendation userRecommendation,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		UserCommerceMLRecommendation userCommerceMLRecommendation =
 			_userCommerceMLRecommendationManager.create();
 
 		userCommerceMLRecommendation.setAssetCategoryIds(
-			ArrayUtil.toArray(item.getAssetCategoryIds()));
+			ArrayUtil.toArray(userRecommendation.getAssetCategoryIds()));
 		userCommerceMLRecommendation.setCompanyId(
 			contextCompany.getCompanyId());
-		userCommerceMLRecommendation.setCreateDate(item.getCreateDate());
-		userCommerceMLRecommendation.setEntryClassPK(item.getProductId());
-		userCommerceMLRecommendation.setJobId(item.getJobId());
+		userCommerceMLRecommendation.setCreateDate(
+			userRecommendation.getCreateDate());
+		userCommerceMLRecommendation.setEntryClassPK(
+			userRecommendation.getProductId());
+		userCommerceMLRecommendation.setJobId(userRecommendation.getJobId());
 		userCommerceMLRecommendation.setRecommendedEntryClassPK(
-			item.getRecommendedProductId());
-		userCommerceMLRecommendation.setScore(item.getScore());
+			userRecommendation.getRecommendedProductId());
+		userCommerceMLRecommendation.setScore(userRecommendation.getScore());
 
 		_userCommerceMLRecommendationManager.addUserCommerceMLRecommendation(
 			userCommerceMLRecommendation);

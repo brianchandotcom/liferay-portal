@@ -44,7 +44,7 @@ public class FrequentPatternRecommendationBatchEngineTaskItemDelegate
 
 	@Override
 	public void createItem(
-			FrequentPatternRecommendation item,
+			FrequentPatternRecommendation frequentPatternRecommendation,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -53,17 +53,20 @@ public class FrequentPatternRecommendationBatchEngineTaskItemDelegate
 				_frequentPatternCommerceMLRecommendationManager.create();
 
 		frequentPatternCommerceMLRecommendation.setAntecedentIds(
-			ArrayUtil.toArray(item.getAntecedentIds()));
+			ArrayUtil.toArray(
+				frequentPatternRecommendation.getAntecedentIds()));
 		frequentPatternCommerceMLRecommendation.setAntecedentIdsLength(
-			item.getAntecedentIdsLength());
+			frequentPatternRecommendation.getAntecedentIdsLength());
 		frequentPatternCommerceMLRecommendation.setCompanyId(
 			contextCompany.getCompanyId());
 		frequentPatternCommerceMLRecommendation.setCreateDate(
-			item.getCreateDate());
-		frequentPatternCommerceMLRecommendation.setJobId(item.getJobId());
+			frequentPatternRecommendation.getCreateDate());
+		frequentPatternCommerceMLRecommendation.setJobId(
+			frequentPatternRecommendation.getJobId());
 		frequentPatternCommerceMLRecommendation.setRecommendedEntryClassPK(
-			item.getRecommendedProductId());
-		frequentPatternCommerceMLRecommendation.setScore(item.getScore());
+			frequentPatternRecommendation.getRecommendedProductId());
+		frequentPatternCommerceMLRecommendation.setScore(
+			frequentPatternRecommendation.getScore());
 
 		_frequentPatternCommerceMLRecommendationManager.
 			addFrequentPatternCommerceMLRecommendation(

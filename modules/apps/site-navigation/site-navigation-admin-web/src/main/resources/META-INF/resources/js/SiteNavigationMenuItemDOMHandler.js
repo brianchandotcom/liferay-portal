@@ -17,7 +17,6 @@ import {
 	closest,
 	contains,
 	hasClass,
-	next,
 	removeClasses,
 	toElement,
 } from 'metal-dom';
@@ -86,7 +85,17 @@ const getId = function (menuItem) {
  * @return {HTMLElement|null}
  */
 const getNextSibling = function (menuItem) {
-	next(menuItem, `.${MENU_ITEM_CLASSNAME}`);
+	let element = menuItem;
+
+	while (element) {
+		element = element.nextSibling;
+
+		if (element && element.classList.has(MENU_ITEM_CLASSNAME)) {
+			return element;
+		}
+	}
+
+	return null;
 };
 
 /**

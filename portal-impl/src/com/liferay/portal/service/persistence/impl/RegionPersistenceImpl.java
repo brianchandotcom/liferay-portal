@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -46,6 +49,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1952,6 +1956,8 @@ public class RegionPersistenceImpl
 		region.setNew(true);
 		region.setPrimaryKey(regionId);
 
+		region.setCompanyId(CompanyThreadLocal.getCompanyId());
+
 		return region;
 	}
 
@@ -2056,6 +2062,29 @@ public class RegionPersistenceImpl
 		}
 
 		RegionModelImpl regionModelImpl = (RegionModelImpl)region;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (region.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				region.setCreateDate(now);
+			}
+			else {
+				region.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!regionModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				region.setModifiedDate(now);
+			}
+			else {
+				region.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

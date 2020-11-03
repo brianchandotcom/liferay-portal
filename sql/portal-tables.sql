@@ -1051,10 +1051,17 @@ create table RecentLayoutSetBranch (
 create table Region (
 	mvccVersion LONG default 0 not null,
 	regionId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
 	countryId LONG,
 	regionCode VARCHAR(75) null,
 	name VARCHAR(75) null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	position DOUBLE,
+	lastPublishDate DATE null
 );
 
 create table Release_ (

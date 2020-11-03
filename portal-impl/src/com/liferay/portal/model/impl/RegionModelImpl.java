@@ -18,14 +18,17 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionModel;
 import com.liferay.portal.kernel.model.RegionSoap;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -38,6 +41,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -69,8 +73,12 @@ public class RegionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"regionId", Types.BIGINT},
-		{"countryId", Types.BIGINT}, {"regionCode", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"active_", Types.BOOLEAN}
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"countryId", Types.BIGINT},
+		{"regionCode", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"active_", Types.BOOLEAN}, {"position", Types.DOUBLE},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,20 +87,29 @@ public class RegionModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("regionCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("position", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Region (mvccVersion LONG default 0 not null,regionId LONG not null primary key,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN)";
+		"create table Region (mvccVersion LONG default 0 not null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN,position DOUBLE,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Region";
 
-	public static final String ORDER_BY_JPQL = " ORDER BY region.name ASC";
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY region.name ASC, region.position ASC";
 
-	public static final String ORDER_BY_SQL = " ORDER BY Region.name ASC";
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Region.name ASC, Region.position ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -144,6 +161,13 @@ public class RegionModelImpl
 	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long POSITION_COLUMN_BITMASK = 16L;
+
+	/**
 	 * Converts the soap model instance into a normal model instance.
 	 *
 	 * @param soapModel the soap model instance to convert
@@ -160,10 +184,17 @@ public class RegionModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setRegionId(soapModel.getRegionId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCountryId(soapModel.getCountryId());
 		model.setRegionCode(soapModel.getRegionCode());
 		model.setName(soapModel.getName());
 		model.setActive(soapModel.isActive());
+		model.setPosition(soapModel.getPosition());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -319,6 +350,21 @@ public class RegionModelImpl
 		attributeGetterFunctions.put("regionId", Region::getRegionId);
 		attributeSetterBiConsumers.put(
 			"regionId", (BiConsumer<Region, Long>)Region::setRegionId);
+		attributeGetterFunctions.put("companyId", Region::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Region, Long>)Region::setCompanyId);
+		attributeGetterFunctions.put("userId", Region::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Region, Long>)Region::setUserId);
+		attributeGetterFunctions.put("userName", Region::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Region, String>)Region::setUserName);
+		attributeGetterFunctions.put("createDate", Region::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Region, Date>)Region::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Region::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate", (BiConsumer<Region, Date>)Region::setModifiedDate);
 		attributeGetterFunctions.put("countryId", Region::getCountryId);
 		attributeSetterBiConsumers.put(
 			"countryId", (BiConsumer<Region, Long>)Region::setCountryId);
@@ -331,6 +377,14 @@ public class RegionModelImpl
 		attributeGetterFunctions.put("active", Region::getActive);
 		attributeSetterBiConsumers.put(
 			"active", (BiConsumer<Region, Boolean>)Region::setActive);
+		attributeGetterFunctions.put("position", Region::getPosition);
+		attributeSetterBiConsumers.put(
+			"position", (BiConsumer<Region, Double>)Region::setPosition);
+		attributeGetterFunctions.put(
+			"lastPublishDate", Region::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<Region, Date>)Region::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -366,6 +420,108 @@ public class RegionModelImpl
 		}
 
 		_regionId = regionId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@JSON
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userName = userName;
+	}
+
+	@JSON
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createDate = createDate;
+	}
+
+	@JSON
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -473,6 +629,36 @@ public class RegionModelImpl
 			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
+	@JSON
+	@Override
+	public double getPosition() {
+		return _position;
+	}
+
+	@Override
+	public void setPosition(double position) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_position = position;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -498,7 +684,7 @@ public class RegionModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, Region.class.getName(), getPrimaryKey());
+			getCompanyId(), Region.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -529,10 +715,17 @@ public class RegionModelImpl
 
 		regionImpl.setMvccVersion(getMvccVersion());
 		regionImpl.setRegionId(getRegionId());
+		regionImpl.setCompanyId(getCompanyId());
+		regionImpl.setUserId(getUserId());
+		regionImpl.setUserName(getUserName());
+		regionImpl.setCreateDate(getCreateDate());
+		regionImpl.setModifiedDate(getModifiedDate());
 		regionImpl.setCountryId(getCountryId());
 		regionImpl.setRegionCode(getRegionCode());
 		regionImpl.setName(getName());
 		regionImpl.setActive(isActive());
+		regionImpl.setPosition(getPosition());
+		regionImpl.setLastPublishDate(getLastPublishDate());
 
 		regionImpl.resetOriginalValues();
 
@@ -544,6 +737,20 @@ public class RegionModelImpl
 		int value = 0;
 
 		value = getName().compareTo(region.getName());
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getPosition() < region.getPosition()) {
+			value = -1;
+		}
+		else if (getPosition() > region.getPosition()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		if (value != 0) {
 			return value;
@@ -601,6 +808,8 @@ public class RegionModelImpl
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
+		_setModifiedDate = false;
+
 		_columnBitmask = 0;
 	}
 
@@ -611,6 +820,36 @@ public class RegionModelImpl
 		regionCacheModel.mvccVersion = getMvccVersion();
 
 		regionCacheModel.regionId = getRegionId();
+
+		regionCacheModel.companyId = getCompanyId();
+
+		regionCacheModel.userId = getUserId();
+
+		regionCacheModel.userName = getUserName();
+
+		String userName = regionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			regionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			regionCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			regionCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			regionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			regionCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		regionCacheModel.countryId = getCountryId();
 
@@ -631,6 +870,17 @@ public class RegionModelImpl
 		}
 
 		regionCacheModel.active = isActive();
+
+		regionCacheModel.position = getPosition();
+
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			regionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			regionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
 
 		return regionCacheModel;
 	}
@@ -705,10 +955,18 @@ public class RegionModelImpl
 
 	private long _mvccVersion;
 	private long _regionId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _countryId;
 	private String _regionCode;
 	private String _name;
 	private boolean _active;
+	private double _position;
+	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -741,10 +999,17 @@ public class RegionModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("regionId", _regionId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("countryId", _countryId);
 		_columnOriginalValues.put("regionCode", _regionCode);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("position", _position);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -772,13 +1037,27 @@ public class RegionModelImpl
 
 		columnBitmasks.put("regionId", 2L);
 
-		columnBitmasks.put("countryId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("regionCode", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("name", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("active_", 32L);
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("countryId", 128L);
+
+		columnBitmasks.put("regionCode", 256L);
+
+		columnBitmasks.put("name", 512L);
+
+		columnBitmasks.put("active_", 1024L);
+
+		columnBitmasks.put("position", 2048L);
+
+		columnBitmasks.put("lastPublishDate", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

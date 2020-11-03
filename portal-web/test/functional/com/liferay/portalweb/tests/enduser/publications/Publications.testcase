@@ -491,8 +491,6 @@ definition {
 
 		Publications.schedulePublication(publicationsName = "Publication Name");
 
-		Publications.gotoScheduledPublications();
-
 		Publications.schedulePublication(
 			publicationsName = "Publication Name",
 			reschedule = "true");

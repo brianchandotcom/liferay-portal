@@ -2967,6 +2967,7 @@ definition {
 		App.saveApp();
 	}
 
+<<<<<<< HEAD
 	@description = "As an App Adm, I want to make my app's name available in different languages"
 	@priority = "5"
 	test ValidateAppLocalization {
@@ -3055,6 +3056,68 @@ definition {
 		Navigator.openURL();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "en-US/");
+=======
+	@description = "Usecase for LPS-107630 As n App Adm,I want to use an existing fieldset"
+	@priority = "5"
+	test UseExistingFieldSet {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object one",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.setUpFieldSetOptions(
+			fieldSetName = "Field Sets",
+			fieldType = "Select from List",
+			fieldType2 = "Single Selection",
+			fieldType3 = "Multiple Selection");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.setName(formViewName = "Form One");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Field Sets");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.dragAndDropFieldSet(fieldType = "Select from List");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.deleteDisabledFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Delete");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.setName(formViewName = "Form One");
+
+		FormViewBuilder.save();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object two",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.addFieldSetByDragAndDrop(fieldType = "Field Sets");
+>>>>>>> LRQA-61972 Added UseExistingFieldSet test
 	}
 
 	@description = "Make sure the search result show if the column is available to be added or already inserted in the table view"

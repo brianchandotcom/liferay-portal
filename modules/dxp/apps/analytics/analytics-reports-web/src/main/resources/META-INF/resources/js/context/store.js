@@ -23,16 +23,12 @@ export const StoreContext = createContext([INITIAL_STATE, () => {}]);
 
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === ADD_HISTORICAL_WARNING) {
-		return {
-			...state,
-			historicalWarning: true,
-		};
+		return state.historicalWarning
+			? state
+			: {...state, historicalWarning: true};
 	}
 	else if (action.type === ADD_WARNING) {
-		return {
-			...state,
-			warning: true,
-		};
+		return state.warning ? state : {...state, warning: true};
 	}
 
 	return state;

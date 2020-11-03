@@ -585,8 +585,8 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 						if (MapUtil.isNotEmpty(localeJSONObjectMap)) {
 							setFragmentImageReference(
 								() -> _toFragmentImageClassPKReference(
-									localeJSONObjectMap,
-									jsonObject.getJSONObject("config")));
+									jsonObject.getJSONObject("config"),
+									localeJSONObjectMap));
 						}
 						else {
 							setUrl(
@@ -650,14 +650,18 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 	}
 
 	private FragmentImageClassPKReference _toFragmentImageClassPKReference(
-		Map<String, JSONObject> localeJSONObjectMap,
-		JSONObject configJSONObject) {
+		JSONObject configJSONObject,
+		Map<String, JSONObject> localeJSONObjectMap) {
+
+		JSONObject imageConfigurationJSONObject =
+			configJSONObject.getJSONObject("imageConfiguration");
+
+		if (imageConfigurationJSONObject == null) {
+			return null;
+		}
 
 		return new FragmentImageClassPKReference() {
 			{
-				JSONObject imageConfigurationJSONObject =
-					configJSONObject.getJSONObject("imageConfiguration");
-
 				imageConfiguration = new FragmentImageConfiguration() {
 					{
 						landscapeMobile =

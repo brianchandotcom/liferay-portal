@@ -1,0 +1,38 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compile group: "org.tallison", name: "isoparser", version: "1.9.41.2"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+
+	rename {
+		"isoparser.jar"
+	}
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/mp4parser/BasicContainer.java"
+
+	originalLibModuleName = "isoparser"
+	originalLibSrcBaseUrl = "https://repository-cdn.liferay.com/nexus/content/groups/public/org/tallison/"
+}

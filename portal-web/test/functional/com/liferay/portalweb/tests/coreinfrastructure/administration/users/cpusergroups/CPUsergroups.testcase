@@ -58,7 +58,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test AddUserGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -292,7 +292,7 @@ definition {
 			userGroupName = "UG UserGroup Name");
 	}
 
-	@priority = "3"
+	@priority = "5"
 	test SearchCurrentMembersAssignedToUserGroup {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPUsergroups#SearchCurrentMembersAssignedToUserGroup";

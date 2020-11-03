@@ -238,8 +238,6 @@ const FragmentContent = ({
 			className={classNames(
 				className,
 				`mb-${marginBottom || 0}`,
-				`ml-${marginLeft || 0}`,
-				`mr-${marginRight || 0}`,
 				`mt-${marginTop || 0}`,
 				`pb-${paddingBottom || 0}`,
 				`pl-${paddingLeft || 0}`,
@@ -248,6 +246,8 @@ const FragmentContent = ({
 				'page-editor__fragment-content',
 				{
 					'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
+					[`ml-${marginLeft || 0}`]: !withinTopper,
+					[`mr-${marginRight || 0}`]: !withinTopper,
 					[textAlign
 						? textAlign.startsWith('text-')
 							? textAlign

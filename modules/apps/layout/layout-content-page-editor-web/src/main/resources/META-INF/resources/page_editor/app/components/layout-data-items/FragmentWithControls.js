@@ -76,7 +76,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 		<Topper
 			className={classNames({
 				[`ml-${marginLeft}`]: marginLeft != null,
-				[`mr-${marginRight}`]: marginLeft != null,
+				[`mr-${marginRight}`]: marginRight != null,
 			})}
 			item={item}
 			itemElement={itemElement}

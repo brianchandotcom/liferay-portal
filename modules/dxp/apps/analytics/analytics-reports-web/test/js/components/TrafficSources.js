@@ -20,46 +20,48 @@ describe('TrafficSources', () => {
 
 	it('displays the traffic sources with buttons to view keywords', async () => {
 		const mockTrafficSourcesDataProvider = jest.fn(() =>
-			Promise.resolve([
-				{
-					countryKeywords: [
-						{
-							countryCode: 'us',
-							countryName: 'United States',
-							keywords: [],
-						},
-						{
-							countryCode: 'es',
-							countryName: 'Spain',
-							keywords: [],
-						},
-					],
-					helpMessage: 'Testing Help Message',
-					name: 'testing',
-					share: 30,
-					title: 'Testing',
-					value: 32178,
-				},
-				{
-					countryKeywords: [
-						{
-							countryCode: 'us',
-							countryName: 'United States',
-							keywords: [],
-						},
-						{
-							countryCode: 'es',
-							countryName: 'Spain',
-							keywords: [],
-						},
-					],
-					helpMessage: 'Second Testing Help Message',
-					name: 'second-testing',
-					share: 70,
-					title: 'Second Testing',
-					value: 278256,
-				},
-			])
+			Promise.resolve({
+				trafficSources: [
+					{
+						countryKeywords: [
+							{
+								countryCode: 'us',
+								countryName: 'United States',
+								keywords: [],
+							},
+							{
+								countryCode: 'es',
+								countryName: 'Spain',
+								keywords: [],
+							},
+						],
+						helpMessage: 'Testing Help Message',
+						name: 'testing',
+						share: 30,
+						title: 'Testing',
+						value: 32178,
+					},
+					{
+						countryKeywords: [
+							{
+								countryCode: 'us',
+								countryName: 'United States',
+								keywords: [],
+							},
+							{
+								countryCode: 'es',
+								countryName: 'Spain',
+								keywords: [],
+							},
+						],
+						helpMessage: 'Second Testing Help Message',
+						name: 'second-testing',
+						share: 70,
+						title: 'Second Testing',
+						value: 278256,
+					},
+				],
+			})
 		);
 
 		const {getByText} = render(
@@ -95,46 +97,48 @@ describe('TrafficSources', () => {
 
 	it('displays the traffic sources without buttons to view keywords when the value is 0', async () => {
 		const mockTrafficSourcesDataProvider = jest.fn(() =>
-			Promise.resolve([
-				{
-					countryKeywords: [
-						{
-							countryCode: 'us',
-							countryName: 'United States',
-							keywords: [],
-						},
-						{
-							countryCode: 'es',
-							countryName: 'Spain',
-							keywords: [],
-						},
-					],
-					helpMessage: 'Testing Help Message',
-					name: 'testing',
-					share: 0,
-					title: 'Testing',
-					value: 0,
-				},
-				{
-					countryKeywords: [
-						{
-							countryCode: 'us',
-							countryName: 'United States',
-							keywords: [],
-						},
-						{
-							countryCode: 'es',
-							countryName: 'Spain',
-							keywords: [],
-						},
-					],
-					helpMessage: 'Second Testing Help Message',
-					name: 'second-testing',
-					share: 0,
-					title: 'Second Testing',
-					value: 0,
-				},
-			])
+			Promise.resolve({
+				trafficSources: [
+					{
+						countryKeywords: [
+							{
+								countryCode: 'us',
+								countryName: 'United States',
+								keywords: [],
+							},
+							{
+								countryCode: 'es',
+								countryName: 'Spain',
+								keywords: [],
+							},
+						],
+						helpMessage: 'Testing Help Message',
+						name: 'testing',
+						share: 0,
+						title: 'Testing',
+						value: 0,
+					},
+					{
+						countryKeywords: [
+							{
+								countryCode: 'us',
+								countryName: 'United States',
+								keywords: [],
+							},
+							{
+								countryCode: 'es',
+								countryName: 'Spain',
+								keywords: [],
+							},
+						],
+						helpMessage: 'Second Testing Help Message',
+						name: 'second-testing',
+						share: 0,
+						title: 'Second Testing',
+						value: 0,
+					},
+				],
+			})
 		);
 
 		const {getAllByText, getByText} = render(
@@ -170,44 +174,46 @@ describe('TrafficSources', () => {
 
 	it('displays the traffic sources without buttons to view keywords when the value is missing', async () => {
 		const mockTrafficSourcesDataProvider = jest.fn(() =>
-			Promise.resolve([
-				{
-					countryKeywords: [
-						{
-							countryCode: 'us',
-							countryName: 'United States',
-							keywords: [],
-						},
-						{
-							countryCode: 'es',
-							countryName: 'Spain',
-							keywords: [],
-						},
-					],
-					helpMessage: 'Testing Help Message',
-					name: 'testing',
-					share: 0,
-					title: 'Testing',
-				},
-				{
-					countryKeywords: [
-						{
-							countryCode: 'us',
-							countryName: 'United States',
-							keywords: [],
-						},
-						{
-							countryCode: 'es',
-							countryName: 'Spain',
-							keywords: [],
-						},
-					],
-					helpMessage: 'Second Testing Help Message',
-					name: 'second-testing',
-					share: 0,
-					title: 'Second Testing',
-				},
-			])
+			Promise.resolve({
+				trafficSources: [
+					{
+						countryKeywords: [
+							{
+								countryCode: 'us',
+								countryName: 'United States',
+								keywords: [],
+							},
+							{
+								countryCode: 'es',
+								countryName: 'Spain',
+								keywords: [],
+							},
+						],
+						helpMessage: 'Testing Help Message',
+						name: 'testing',
+						share: 0,
+						title: 'Testing',
+					},
+					{
+						countryKeywords: [
+							{
+								countryCode: 'us',
+								countryName: 'United States',
+								keywords: [],
+							},
+							{
+								countryCode: 'es',
+								countryName: 'Spain',
+								keywords: [],
+							},
+						],
+						helpMessage: 'Second Testing Help Message',
+						name: 'second-testing',
+						share: 0,
+						title: 'Second Testing',
+					},
+				],
+			})
 		);
 
 		const {getAllByText, getByText} = render(
@@ -243,23 +249,25 @@ describe('TrafficSources', () => {
 
 	it('displays a dash instead of value when the value is missing', async () => {
 		const mockTrafficSourcesDataProvider = jest.fn(() =>
-			Promise.resolve([
-				{
-					countryKeywords: [],
-					helpMessage: 'Testing Help Message',
-					name: 'testing',
-					share: 100,
-					title: 'Testing',
-					value: 32178,
-				},
-				{
-					countryKeywords: [],
-					helpMessage: 'Second Testing Help Message',
-					name: 'second-testing',
-					share: 0,
-					title: 'Second Testing',
-				},
-			])
+			Promise.resolve({
+				trafficSources: [
+					{
+						countryKeywords: [],
+						helpMessage: 'Testing Help Message',
+						name: 'testing',
+						share: 100,
+						title: 'Testing',
+						value: 32178,
+					},
+					{
+						countryKeywords: [],
+						helpMessage: 'Second Testing Help Message',
+						name: 'second-testing',
+						share: 0,
+						title: 'Second Testing',
+					},
+				],
+			})
 		);
 
 		const {getByText} = render(
@@ -287,24 +295,26 @@ describe('TrafficSources', () => {
 
 	it('displays a message informing the user that there is no incoming traffic from search engines yet', async () => {
 		const mockTrafficSourcesDataProvider = jest.fn(() =>
-			Promise.resolve([
-				{
-					countryKeywords: [],
-					helpMessage: 'Testing Help Message',
-					name: 'testing',
-					share: 0,
-					title: 'Testing',
-					value: 0,
-				},
-				{
-					countryKeywords: [],
-					helpMessage: 'Second Testing Help Message',
-					name: 'second-testing',
-					share: 0,
-					title: 'Second Testing',
-					value: 0,
-				},
-			])
+			Promise.resolve({
+				trafficSources: [
+					{
+						countryKeywords: [],
+						helpMessage: 'Testing Help Message',
+						name: 'testing',
+						share: 0,
+						title: 'Testing',
+						value: 0,
+					},
+					{
+						countryKeywords: [],
+						helpMessage: 'Second Testing Help Message',
+						name: 'second-testing',
+						share: 0,
+						title: 'Second Testing',
+						value: 0,
+					},
+				],
+			})
 		);
 
 		const {getAllByText, getByText} = render(

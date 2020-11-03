@@ -1641,42 +1641,6 @@ definition {
 			dmDocumentTitle = "Document_1.doc");
 	}
 
-	@description = "This test covers LPS-107966. It ensures that the image description can be propagated after creating a new image via image editor in web content."
-	@priority = "3"
-	test ViewImageDescriptionAfterImageEditedViaWebContent {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoAddCP();
-
-		ImageEditor.gotoImageEditorViaItemSelector(
-			ckEditor = "true",
-			imageFileName = "Document_2.jpg",
-			navTab = "Documents and Media");
-
-		ImageEditor.rotateImage(rotateDirection = "right");
-
-		Pause(locator1 = "3000");
-
-		ImageEditor.applyChangesAndSaveFile();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Document_2 (1).jpg");
-
-		AssertTextEquals(
-			locator1 = "TextArea#DESCRIPTION",
-			value1 = "DM Document Description");
-	}
-
 	@description = "This test covers LPS-93601 and LPS-91661. It ensures that the user can check all files in the current pagination using the DM toolbar and can move documents not on the current pagination to another folder."
 	@priority = "4"
 	test ViewPaginationToolbarCheckboxAndMoveMultiplePaginationDocuments {

@@ -13,7 +13,6 @@
  */
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
-import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
@@ -297,7 +296,7 @@ const withActionableFields = (ChildComponent) => {
 		}
 
 		_hasLeftField(relatedTarget) {
-			return !relatedTarget.closest(
+			return !relatedTarget?.closest(
 				'.dropdown-menu,.ddm-field-actions-container'
 			);
 		}

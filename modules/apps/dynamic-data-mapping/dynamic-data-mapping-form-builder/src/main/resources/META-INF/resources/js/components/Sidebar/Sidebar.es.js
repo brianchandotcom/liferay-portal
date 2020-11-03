@@ -614,7 +614,7 @@ class Sidebar extends Component {
 				indexes,
 			};
 
-			if (data.target.closest(data.target, '.col-empty')) {
+			if (data.target?.closest(data.target, '.col-empty')) {
 				const addedToPlaceholder = data.target.closest('.placeholder');
 
 				dispatch('fieldAdded', {
@@ -773,7 +773,7 @@ class Sidebar extends Component {
 	}
 
 	_isControlProductMenuItem(node) {
-		return !!node.closest('.sidenav-toggler');
+		return !!node?.closest('.sidenav-toggler');
 	}
 
 	_isEditMode() {
@@ -783,15 +783,15 @@ class Sidebar extends Component {
 	}
 
 	_isModalElement(node) {
-		return node.closest('.modal');
+		return node?.closest('.modal');
 	}
 
 	_isProductMenuSidebarItem(node) {
-		return !!node.closest('.sidenav-menu');
+		return !!node?.closest('.sidenav-menu');
 	}
 
 	_isOutsideModal(node) {
-		return !node.closest('.close-modal');
+		return !node?.closest('.close-modal');
 	}
 
 	_isSettingsElement(target) {
@@ -810,9 +810,9 @@ class Sidebar extends Component {
 
 	_isSidebarElement(node) {
 		const {element} = this;
-		const alloyEditorToolbarNode = node.closest('.ae-ui');
-		const fieldColumnNode = node.closest('.col-ddm');
-		const fieldTypesDropdownNode = node.closest('.dropdown-menu');
+		const alloyEditorToolbarNode = node?.closest('.ae-ui');
+		const fieldColumnNode = node?.closest('.col-ddm');
+		const fieldTypesDropdownNode = node?.closest('.dropdown-menu');
 
 		return (
 			alloyEditorToolbarNode ||
@@ -824,7 +824,7 @@ class Sidebar extends Component {
 	}
 
 	_isTranslationItem(node) {
-		return !!node.closest('.lfr-translationmanager');
+		return !!node?.closest('.lfr-translationmanager');
 	}
 
 	_mergeFieldTypeSettings(oldSettingsContext, newSettingsContext) {

@@ -25,12 +25,18 @@ import EditTableViewContext, {
 } from './EditTableViewContext.es';
 import {getColumnIndex, getColumnNode, getFieldTypeLabel} from './utils.es';
 
+const getTableResponsiveNode = (container) => {
+	return container.querySelector('.table-responsive');
+};
+
 const getStyle = (container, index) => {
 	const columnNode = getColumnNode(container, index);
 
 	return {
 		height: container.offsetHeight,
-		left: columnNode.offsetLeft,
+		left:
+			columnNode.offsetLeft -
+			getTableResponsiveNode(container).scrollLeft,
 		position: 'absolute',
 		top: container.offsetTop,
 		width: columnNode.offsetWidth,
@@ -57,6 +63,15 @@ const Overlay = ({
 		},
 		true,
 		window
+	);
+
+	useEventListener(
+		'scroll',
+		() => {
+			setStyle(getStyle(container, index));
+		},
+		true,
+		getTableResponsiveNode(container)
 	);
 
 	useLayoutEffect(() => {

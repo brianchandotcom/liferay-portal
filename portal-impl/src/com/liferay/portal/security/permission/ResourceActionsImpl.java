@@ -790,9 +790,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	private void _checkPortletLayoutManagerActions(Set<String> actions) {
-		if (!actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
-			!actions.contains(ActionKeys.ADD_TO_PAGE)) {
-
+		if (!actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 			actions.add(ActionKeys.ADD_TO_PAGE);
 		}
 

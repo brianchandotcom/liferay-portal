@@ -446,23 +446,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		ResourceActionsBag portletResourceActionsBag = _getResourceActionsBag(
 			name);
 
-		Set<String> actions =
-			portletResourceActionsBag.getLayoutManagerActions();
-
-		// This check can never return an empty list. If the list is empty, it
-		// means that the portlet does not have an explicit resource-actions
-		// configuration file and should therefore be handled as if it has
-		// defaults of CONFIGURATION, PREFERENCES, and VIEW.
-
-		if (actions.isEmpty()) {
-			actions = new LinkedHashSet<>();
-
-			actions.add(ActionKeys.CONFIGURATION);
-			actions.add(ActionKeys.PREFERENCES);
-			actions.add(ActionKeys.VIEW);
-		}
-
-		return new ArrayList<>(actions);
+		return new ArrayList<>(
+			portletResourceActionsBag.getLayoutManagerActions());
 	}
 
 	@Override

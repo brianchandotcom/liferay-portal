@@ -52,7 +52,7 @@ export default function Navigation({
 		page,
 	});
 
-	const {getHistoricalReads, getHistoricalViews} = api;
+	const {getHistoricalReads, getHistoricalViews, getTrafficSources} = api;
 
 	const handleCurrentPage = useCallback((currentPage) => {
 		setCurrentPage({view: currentPage.view});
@@ -68,12 +68,6 @@ export default function Navigation({
 		return api
 			.getTotalViews()
 			.then((response) => response.analyticsReportsTotalViews);
-	}, [api]);
-
-	const handleTrafficSources = useCallback(() => {
-		return api
-			.getTrafficSources()
-			.then((response) => response.trafficSources);
 	}, [api]);
 
 	const handleTrafficSourceClick = (trafficSources, trafficSourceName) => {
@@ -159,7 +153,7 @@ export default function Navigation({
 						timeSpanOptions={timeSpanOptions}
 						totalReadsDataProvider={handleTotalReads}
 						totalViewsDataProvider={handleTotalViews}
-						trafficSourcesDataProvider={handleTrafficSources}
+						trafficSourcesDataProvider={getTrafficSources}
 						viewURLs={viewURLs}
 					/>
 				</div>

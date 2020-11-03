@@ -86,7 +86,7 @@ const getFieldType = (fieldName, pages) => {
 
 const optionBelongsToRule = (condition, options) => {
 	return options.some(
-		(option) => option.value === condition.operands[1].value
+		(option) => option.value === condition.operands[1]?.value
 	);
 };
 
@@ -201,13 +201,15 @@ const formatRules = (pages, rules) => {
 			if (
 				firstOperandFieldExists &&
 				fieldWithOptions(firstOperandFieldType) &&
-				condition.operands[1].type != 'field'
+				condition.operands[1]?.type != 'field'
 			) {
 				const fieldName = condition.operands[0].value;
 				const options = getFieldOptions(fieldName, pages);
 
 				secondOperandFieldExists =
-					options && optionBelongsToRule(condition, options);
+					options &&
+					options[0]?.value !== '' &&
+					optionBelongsToRule(condition, options);
 			}
 
 			if (
@@ -262,7 +264,22 @@ const formatRules = (pages, rules) => {
 	return formattedRules;
 };
 
-const fieldNameBelongsToAction = (fieldName, actions) => {
+const expressionHasNonNumericFields = (action, pages) => {
+	const expressionFields = getExpressionFields(action);
+	let hasNonNumericFields = false;
+
+	if (expressionFields && expressionFields.length > 0) {
+		expressionFields.forEach((field) => {
+			if (getFieldType(field, pages) !== 'numeric') {
+				hasNonNumericFields = true;
+			}
+		});
+	}
+
+	return hasNonNumericFields;
+};
+
+const fieldNameBelongsToAction = (actions, fieldName, pages) => {
 	const emptyField = '[]';
 
 	return actions
@@ -283,7 +300,8 @@ const fieldNameBelongsToAction = (fieldName, actions) => {
 				if (fieldName === '') {
 					return (
 						expression.indexOf(emptyField) !== -1 ||
-						target === fieldName
+						target === fieldName ||
+						expressionHasNonNumericFields(action, pages)
 					);
 				}
 				else {
@@ -300,7 +318,7 @@ const fieldNameBelongsToAction = (fieldName, actions) => {
 		.some((fieldFound) => fieldFound === true);
 };
 
-const fieldNameBelongsToCondition = (fieldName, conditions) => {
+const fieldNameBelongsToCondition = (conditions, fieldName) => {
 	return conditions
 		.map((condition) => {
 			return condition.operands
@@ -310,16 +328,16 @@ const fieldNameBelongsToCondition = (fieldName, conditions) => {
 		.some((fieldFound) => fieldFound === true);
 };
 
-const findRuleByFieldName = (fieldName, rules) => {
+const findRuleByFieldName = (fieldName, pages, rules) => {
 	return rules.some(
 		(rule) =>
-			fieldNameBelongsToAction(fieldName, rule.actions) ||
-			fieldNameBelongsToCondition(fieldName, rule.conditions)
+			fieldNameBelongsToAction(rule.actions, fieldName, pages) ||
+			fieldNameBelongsToCondition(rule.conditions, fieldName)
 	);
 };
 
-const findInvalidRule = (rule) => {
-	return findRuleByFieldName('', [rule]);
+const findInvalidRule = (pages, rule) => {
+	return findRuleByFieldName('', pages, [rule]);
 };
 
 export default {

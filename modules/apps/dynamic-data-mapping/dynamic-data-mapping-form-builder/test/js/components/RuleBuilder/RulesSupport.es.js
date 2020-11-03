@@ -76,7 +76,7 @@ describe('RulesSupport', () => {
 		expect(condition.operands[1].value).toEqual('');
 	});
 
-	describe('findRuleByFieldName(fieldName, rules)', () => {
+	describe('findRuleByFieldName(fieldName, pages, rules)', () => {
 		it('returns false if field does not belong to rule', () => {
 			const rules = [
 				{
@@ -105,7 +105,7 @@ describe('RulesSupport', () => {
 			];
 
 			expect(
-				RulesSupport.findRuleByFieldName('text3', rules)
+				RulesSupport.findRuleByFieldName('text3', null, rules)
 			).toBeFalsy();
 		});
 
@@ -137,15 +137,15 @@ describe('RulesSupport', () => {
 			];
 
 			expect(
-				RulesSupport.findRuleByFieldName('date1', rules)
+				RulesSupport.findRuleByFieldName('date1', null, rules)
 			).toBeTruthy();
 
 			expect(
-				RulesSupport.findRuleByFieldName('text1', rules)
+				RulesSupport.findRuleByFieldName('text1', null, rules)
 			).toBeTruthy();
 
 			expect(
-				RulesSupport.findRuleByFieldName('text2', rules)
+				RulesSupport.findRuleByFieldName('text2', null, rules)
 			).toBeTruthy();
 		});
 
@@ -174,11 +174,11 @@ describe('RulesSupport', () => {
 			];
 
 			expect(
-				RulesSupport.findRuleByFieldName('num1', rules)
+				RulesSupport.findRuleByFieldName('num1', null, rules)
 			).toBeTruthy();
 
 			expect(
-				RulesSupport.findRuleByFieldName('num2', rules)
+				RulesSupport.findRuleByFieldName('num2', null, rules)
 			).toBeTruthy();
 		});
 
@@ -211,11 +211,11 @@ describe('RulesSupport', () => {
 			];
 
 			expect(
-				RulesSupport.findRuleByFieldName('select1', rules)
+				RulesSupport.findRuleByFieldName('select1', null, rules)
 			).toBeTruthy();
 
 			expect(
-				RulesSupport.findRuleByFieldName('text2', rules)
+				RulesSupport.findRuleByFieldName('text2', null, rules)
 			).toBeTruthy();
 		});
 	});

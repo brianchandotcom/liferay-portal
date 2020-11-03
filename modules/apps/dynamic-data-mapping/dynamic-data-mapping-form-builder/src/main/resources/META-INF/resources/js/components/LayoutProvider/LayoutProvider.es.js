@@ -442,7 +442,10 @@ class LayoutProvider extends Component {
 	_handleFieldDeleted(event) {
 		const {rules} = this.state;
 
-		if (rules && RulesSupport.findRuleByFieldName(event.fieldName, rules)) {
+		if (
+			rules &&
+			RulesSupport.findRuleByFieldName(event.fieldName, null, rules)
+		) {
 			openModal({
 				bodyHTML: Liferay.Language.get(
 					'a-rule-is-applied-to-this-field'

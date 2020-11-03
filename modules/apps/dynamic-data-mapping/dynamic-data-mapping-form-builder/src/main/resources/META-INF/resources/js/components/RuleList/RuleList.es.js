@@ -76,7 +76,7 @@ class RuleList extends Component {
 					logicalOperator = rule.logicalOperator.toLowerCase();
 				}
 
-				invalidRule = RulesSupport.findInvalidRule(rule);
+				invalidRule = RulesSupport.findInvalidRule(this.pages, rule);
 
 				return {
 					...rule,

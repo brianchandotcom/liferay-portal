@@ -385,7 +385,7 @@ const Options = ({
 	const handleConfirmDelete = (index, option) => {
 		if (
 			builderRules &&
-			RulesSupport.findRuleByFieldName(option, builderRules)
+			RulesSupport.findRuleByFieldName(option, null, builderRules)
 		) {
 			openModal({
 				bodyHTML: Liferay.Language.get(

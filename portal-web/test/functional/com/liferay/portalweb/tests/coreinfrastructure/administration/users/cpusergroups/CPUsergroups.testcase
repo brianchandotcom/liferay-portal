@@ -137,8 +137,10 @@ definition {
 		UserGroup.viewDefault();
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test AddUserGroups {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -249,8 +251,10 @@ definition {
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name Edit");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test RemoveMember {
+		property portal.acceptance = "true";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -344,8 +348,10 @@ definition {
 		AssertNotVisible(locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_2");
 	}
 
-	@priority = "3"
+	@priority = "5"
 	test SearchUserGroup {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

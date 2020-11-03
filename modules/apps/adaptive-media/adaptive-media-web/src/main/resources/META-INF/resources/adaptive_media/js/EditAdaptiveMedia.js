@@ -174,7 +174,7 @@ const EditAdaptiveMedia = ({
 		<ClayForm onSubmit={formik.handleSubmit}>
 			{errorMessage &&
 				<ClayAlert displayType="danger">
-					{Liferay.Language.get(errorMessage)}
+					{errorMessage}
 				</ClayAlert>
 			}
 

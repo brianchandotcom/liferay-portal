@@ -42,6 +42,17 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
+	macro addFieldSetByDragAndDrop {
+		Pause(locator1 = "10000");
+
+		var key_fieldLabel = "${fieldType}";
+
+		DragAndDrop.dragAndDropToObject(
+			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
+			locator2 = "FormViewBuilder#EMPTY_FORM_FIELD",
+			value1 = "${fieldType}");
+	}
+
 	macro addFieldToObject {
 		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_PLUS");
 
@@ -160,8 +171,6 @@ definition {
 
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 	}
-
-	macro deleteFromObjectViaX {
 		MouseOver(
 			key_fieldLabel = "${fieldName}",
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
@@ -206,6 +215,14 @@ definition {
 		FormViewBuilder.viewCheckboxNotChecked(
 			fieldName = "${fieldName}",
 			fieldValue = "${fieldValue}");
+	}
+
+	macro dragAndDropFieldSet {
+		DragAndDrop(
+			fieldLabel = "${fieldType}",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			locator2 = "FormViewBuilder#FORM_FIELD_FIRST_ROW",
+			value1 = "${fieldType}");
 	}
 
 	macro editDate {
@@ -452,6 +469,52 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
 			value1 = "${ruleName}");
+	}
+
+	macro setUpFieldSetOptions {
+		var key_fieldType = "${fieldType}";
+		var key_fieldSetName = "${fieldSetName}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Single${number}",
+				optionValue = "Single ${number}",
+				rowNumber = "${number}");
+		}
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "${fieldSetName}");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType2}");
+
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Option${number}",
+				optionValue = "Option ${number}",
+				rowNumber = "${number}");
+		}
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType2}");
+
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Option${number}",
+				optionValue = "Option ${number}",
+				rowNumber = "${number}");
+		}
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
 	}
 
 	macro setUpTwoFieldSets {

@@ -20,6 +20,9 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.web.internal.constants.AMPortletKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -101,6 +104,8 @@ public class EditImageConfigurationEntryMVCActionCommand
 			newUuid = ParamUtil.getString(actionRequest, "newUuid");
 		}
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		try {
 			if (amImageConfigurationEntryOptional.isPresent()) {
 				AMImageConfigurationEntry amImageConfigurationEntry =
@@ -170,11 +175,18 @@ public class EditImageConfigurationEntryMVCActionCommand
 					}
 				}
 			}
+
+			jsonObject.put("success", true);
 		}
 		catch (AMImageConfigurationException amImageConfigurationException) {
 			SessionErrors.add(
 				actionRequest, amImageConfigurationException.getClass());
+
+			jsonObject.put("success", false);
 		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	private AMImageConfigurationEntry _addHighResolutionConfigurationEntry(

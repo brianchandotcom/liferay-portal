@@ -16,9 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import {normalizeFriendlyURL} from 'frontend-js-web';
+import {fetch, normalizeFriendlyURL, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {Checkbox, HelpMessage, Input, RequiredMark} from './form/Components';
 import {alphanumeric, required, validate} from './form/validations';
@@ -34,7 +34,6 @@ const EditAdaptiveMedia = ({
 }) => {
 	const [automaticId, setAutomaticId] = useState(automaticUuid);
 	const [addHighResolution, setAddHighResolution] = useState(false);
-	const formRef = useRef(null);
 
 	const nameId = `${namespace}name`;
 	const descriptionId = `${namespace}description`;
@@ -73,9 +72,24 @@ const EditAdaptiveMedia = ({
 				? amImageConfigurationEntry.name
 				: '',
 			[newUuidId]: configurationEntryUuid,
+			[`${namespace}uuid`]: configurationEntryUuid,
 		},
-		onSubmit: () => {
-			submitForm(formRef.current);
+		onSubmit: (values) => {
+			fetch(actionUrl, {
+				body: objectToFormData(values),
+				method: 'POST',
+			})
+				.then((res) => res.json())
+				.then((response) => {
+					if (response.success) {
+						Liferay.Util.navigate(redirect);
+					}
+				})
+				.catch(() => {
+
+					//TODO
+
+				});
 		},
 		validate: (values) => {
 			const err = validate(
@@ -154,12 +168,7 @@ const EditAdaptiveMedia = ({
 	};
 
 	return (
-		<ClayForm
-			action={actionUrl}
-			method="post"
-			onSubmit={formik.handleSubmit}
-			ref={formRef}
-		>
+		<ClayForm onSubmit={formik.handleSubmit}>
 			{!configurationEntryEditable && (
 				<div className="alert alert-info">
 					{Liferay.Language.get(
@@ -167,18 +176,6 @@ const EditAdaptiveMedia = ({
 					)}
 				</div>
 			)}
-
-			<input
-				name={`${namespace}redirect`}
-				type="hidden"
-				value={redirect}
-			/>
-
-			<input
-				name={`${namespace}uuid`}
-				type="hidden"
-				value={configurationEntryUuid}
-			/>
 
 			<Input
 				error={touched[nameId] && errors[nameId]}

@@ -12,35 +12,40 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useEffect, useState} from 'react';
 
-import {useRequest} from '../../../hooks/index.es';
+import useResource from '../../../hooks/useResource.es';
 import {getLocalizedValue} from '../../../utils/lang.es';
 import ListItems from './ListItems.es';
 
 const EditAppStepContent = ({
+	alertProps,
 	defaultLanguageId,
 	endpoint,
 	emptyState,
 	itemId,
-	shortCutButton,
 	onSelect,
+	params = {},
 	parseItems = (items) => items,
+	shortCutButtonProps,
 	staticItems = [],
 	stepHeader,
 }) => {
 	const [searchText, setSearchText] = useState('');
+	const [showAlert, setShowAlert] = useState(false);
 
 	useEffect(() => {
 		setSearchText('');
 	}, [stepHeader]);
 
-	const {
-		response: {items = []},
-		isLoading,
-	} = useRequest(endpoint);
+	const {isLoading, refetch, response} = useResource({endpoint, params});
+
+	const items = response?.items ?? [];
 
 	const filteredItems = [
 		...staticItems,
@@ -67,8 +72,31 @@ const EditAppStepContent = ({
 					/>
 				</ClayLayout.ContentCol>
 
-				{shortCutButton}
+				{shortCutButtonProps && (
+					<ClayButton
+						{...shortCutButtonProps}
+						onClick={() =>
+							shortCutButtonProps.onClick({setShowAlert})
+						}
+					>
+						{shortCutButtonProps.label}
+						<ClayIcon className="ml-2" symbol="shortcut" />
+					</ClayButton>
+				)}
 			</ClayLayout.ContentRow>
+
+			{showAlert && alertProps && (
+				<ClayLayout.ContentRow className="pl-4 pr-4">
+					<ClayAlert
+						className="w-100"
+						displayType={alertProps.displayType}
+						onClose={() => setShowAlert(false)}
+						title={alertProps.title}
+					>
+						{alertProps.content({refetch})}
+					</ClayAlert>
+				</ClayLayout.ContentRow>
+			)}
 
 			<ClayLayout.ContentRow className="pl-4 pr-4 scrollable-container">
 				<ClayLayout.ContentCol expand>

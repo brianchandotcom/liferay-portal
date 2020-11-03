@@ -181,7 +181,7 @@ public class DLViewFileEntryDisplayContext {
 		FileEntry fileEntry = getFileEntry();
 
 		if (!fileEntry.hasLock()) {
-			return "alert-dander";
+			return "alert-danger";
 		}
 
 		return "alert-info";

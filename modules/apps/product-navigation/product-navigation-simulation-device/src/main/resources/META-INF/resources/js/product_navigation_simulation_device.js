@@ -481,9 +481,6 @@ AUI.add(
 					var dialog = Liferay.Util.getWindow(instance._dialogId);
 
 					dialog.hide();
-
-					instance._simulationDeviceNode.remove();
-					instance._simulationDeviceNode = null;
 				},
 
 				initializer() {
@@ -527,9 +524,8 @@ AUI.add(
 				showDeviceDialog() {
 					var instance = this;
 
-					if (instance._simulationDeviceNode === null) {
-						instance.initializer();
-					}
+					instance._simulationDeviceNode.remove();
+					BODY.append(instance._simulationDeviceNode);
 
 					var dialog = Liferay.Util.getWindow(instance._dialogId);
 

@@ -461,8 +461,11 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This is a use case for LPS-40580."
 	@priority = "4"
 	test ViewUserGroupPermissionsNoAsUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
 			roleTitle = "Roles Regrole Name");
@@ -482,90 +485,24 @@ definition {
 			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
 			roleTitle = "Roles Regrole Name");
 
-		for (var userNumber : list "1,2,3") {
-			JSONUser.addUser(
-				userEmailAddress = "userea${userNumber}@liferay.com",
-				userFirstName = "userfn${userNumber}",
-				userLastName = "userln${userNumber}",
-				userScreenName = "usersn${userNumber}");
-		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Roles Regrole Name",
-			userScreenName = "usersn1");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Organization Name",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userName = "userfn1 userln1",
 			userScreenName = "usersn1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Organization Name",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userName = "userfn2 userln2",
-			userScreenName = "usersn2");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Regrole Name",
+			userEmailAddress = "userea1@liferay.com");
 
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG UserGroup Name Description",
 			userGroupName = "UG UserGroup Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn2");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.assignMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn3");
 
 		User.logoutPG();
 
@@ -578,13 +515,18 @@ definition {
 			panel = "Control Panel",
 			portlet = "User Groups");
 
-		var key_userGroupName = "UG UserGroup Name";
-
 		AssertTextEquals(
+			key_userGroupName = "UG UserGroup Name",
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
 			value1 = "UG UserGroup Name");
 
-		AssertElementNotPresent(locator1 = "UserGroups#USER_GROUP_TABLE_ACTIONS");
+		AssertElementNotPresent(
+			key_userGroupName = "UG UserGroup Name",
+			locator1 = "UserGroups#USER_GROUP_TABLE_ACTIONS");
+
+		AssertElementNotPresent(
+			key_userGroupName = "UG UserGroup Name",
+			locator1 = "UserGroups#USER_GROUP_TABLE_NAME_LINK");
 
 		User.logoutUserPG();
 

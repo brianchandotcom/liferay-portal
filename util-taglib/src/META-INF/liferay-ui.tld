@@ -1928,29 +1928,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
-		<name>organization-search-container-results</name>
-		<tag-class>com.liferay.taglib.ui.OrganizationSearchContainerResultsTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>Whether to force use the database for search. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>forceDatabase</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<name>organizationParams</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>parentOrganizationId</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a page iterator for paginating through lists of items.</description>
 		<name>page-iterator</name>
 		<tag-class>com.liferay.taglib.ui.PageIteratorTag</tag-class>

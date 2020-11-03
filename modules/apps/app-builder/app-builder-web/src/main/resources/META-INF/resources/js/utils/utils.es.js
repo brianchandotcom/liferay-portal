@@ -20,7 +20,7 @@ export const concatValues = (values) =>
 			` ${Liferay.Language.get('and').toLowerCase()} $1`
 		);
 
-export const isEqualObjects = (firstObj = {}, secondObj = {}) => {
+export const isEqualObjects = (firstObj, secondObj) => {
 	if (typeof firstObj !== 'object' || typeof secondObj !== 'object') {
 		return false;
 	}

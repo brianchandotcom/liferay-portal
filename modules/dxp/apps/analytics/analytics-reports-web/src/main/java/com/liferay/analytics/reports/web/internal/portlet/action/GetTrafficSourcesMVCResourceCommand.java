@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -173,7 +174,10 @@ public class GetTrafficSourcesMVCResourceCommand
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 
-			return new ArrayList<>(emptyMap.values());
+			return Arrays.asList(
+				new TrafficSource("direct"), new TrafficSource("organic"),
+				new TrafficSource("paid"), new TrafficSource("referral"),
+				new TrafficSource("social"));
 		}
 	}
 

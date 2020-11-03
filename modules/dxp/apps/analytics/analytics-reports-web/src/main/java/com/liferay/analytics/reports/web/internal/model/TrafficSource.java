@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -42,8 +43,17 @@ public class TrafficSource {
 
 		_countrySearchKeywordsList = countrySearchKeywordsList;
 		_name = name;
+		_error = false;
 		_trafficAmount = trafficAmount;
 		_trafficShare = trafficShare;
+	}
+
+	public TrafficSource(String name) {
+		_countrySearchKeywordsList = Collections.emptyList();
+		_name = name;
+		_error = true;
+		_trafficAmount = 0;
+		_trafficShare = 0;
 	}
 
 	@Override
@@ -128,13 +138,13 @@ public class TrafficSource {
 			"name", getName()
 		);
 
-		if (_trafficShare > 0) {
+		if (!_error) {
 			jsonObject.put("share", String.format("%.2f", _trafficShare));
 		}
 
 		jsonObject.put("title", title);
 
-		if (_trafficAmount > 0) {
+		if (!_error) {
 			jsonObject.put("value", Math.toIntExact(_trafficAmount));
 		}
 
@@ -168,5 +178,6 @@ public class TrafficSource {
 	private String _name;
 	private long _trafficAmount;
 	private double _trafficShare;
+	private boolean _error;
 
 }

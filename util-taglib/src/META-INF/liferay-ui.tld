@@ -1489,12 +1489,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.2.0, with no direct replacement.</description>
-		<name>input-scheduler</name>
-		<tag-class>com.liferay.taglib.ui.InputSchedulerTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
 		<description>Creates a configurable search box.</description>
 		<name>input-search</name>
 		<tag-class>com.liferay.taglib.ui.InputSearchTag</tag-class>

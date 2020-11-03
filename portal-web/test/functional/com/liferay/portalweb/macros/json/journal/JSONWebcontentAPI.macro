@@ -109,4 +109,25 @@ definition {
 		}
 	}
 
+	macro _getResourcePrimKeyByURLTitle {
+		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
+
+		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d urlTitle=${urlTitle}
+		''';
+
+		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['resourcePrimKey']");
+		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "[&quot;", "");
+		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "&quot;]", "");
+
+		return "${resourcePrimKey}";
+	}
+
 }

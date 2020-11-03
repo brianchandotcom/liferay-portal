@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -201,7 +202,7 @@ public class PortletPreferencesFactoryImplUnitTest {
 
 	@Test
 	public void testEmptyPortletPreferences() {
-		String expectedXML = _getPortletPreferencesXML(null, null);
+		String expectedXML = PortletConstants.DEFAULT_PREFERENCES;
 
 		PortletPreferencesImpl portletPreferencesImpl =
 			new PortletPreferencesImpl();

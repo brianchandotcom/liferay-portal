@@ -135,7 +135,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	}
 
 	/**
-	 * @see com.liferay.frontend.image.editor.integration.document.library.internal.display.context.ImageEditorDLViewFileVersionDisplayContext#_addEditWithImageEditorUIItem
+	 * @see com.liferay.sharing.document.library.internal.display.context.SharingDLViewFileVersionDisplayContext#_addSharingUIItem(List, BaseUIItem)
 	 */
 	private <T extends BaseUIItem> List<T> _addEditInGoogleDocsUIItem(
 		List<T> uiItems, T editInGoogleDocsUIItem) {

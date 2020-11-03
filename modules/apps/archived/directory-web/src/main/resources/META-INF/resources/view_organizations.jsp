@@ -100,13 +100,54 @@ if (parentOrganizationId > 0) {
 
 			organizationParams.put("organizationsTree", ListUtil.fromArray(parentOrganization));
 		}
+
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 		%>
 
-		<liferay-ui:organization-search-container-results
-			forceDatabase="<%= !portletName.equals(PortletKeys.DIRECTORY) %>"
-			organizationParams="<%= organizationParams %>"
-			parentOrganizationId="<%= parentOrganizationId %>"
-		/>
+		<liferay-ui:search-container-results>
+			<c:choose>
+				<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
+
+					<%
+					organizationParams.put("expandoAttributes", searchTerms.getKeywords());
+
+					Sort sort = SortFactoryUtil.getSort(Organization.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+
+					BaseModelSearchResult<Organization> baseModelSearchResult = null;
+
+					if (searchTerms.isAdvancedSearch()) {
+						baseModelSearchResult = OrganizationLocalServiceUtil.searchOrganizations(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+					}
+					else {
+						baseModelSearchResult = OrganizationLocalServiceUtil.searchOrganizations(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+					}
+
+					searchContainer.setResults(baseModelSearchResult.getBaseModels());
+					searchContainer.setTotal(baseModelSearchResult.getLength());
+					%>
+
+				</c:when>
+				<c:otherwise>
+
+					<%
+					if (searchTerms.isAdvancedSearch()) {
+						total = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator());
+
+						results = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					}
+					else {
+						total = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams);
+
+						results = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					}
+
+					searchContainer.setTotal(total);
+					searchContainer.setResults(results);
+					%>
+
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"

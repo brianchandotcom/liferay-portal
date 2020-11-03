@@ -3287,55 +3287,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that toggles the visibility of the content of the component matching the given <![CDATA[<code>id</code>]]>. Default icons are used as the component's default mechanism for showing and hiding the content. Deprecated as of 7.3.0, with no direct replacement.</description>
-		<name>toggle</name>
-		<tag-class>com.liferay.taglib.ui.ToggleTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>Whether to initially show content by default. The default value is <![CDATA[<code>true</code>]]>.</description>
-			<name>defaultShowContent</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>An icon to use as the mechanism for hiding the content. You can specify the location of an image file to use in the icon; otherwise a default icon is used.</description>
-			<name>hideImage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Text to display as a link for hiding the content. It overrides the <![CDATA[<code>hideImage</code>]]> attribute. Note that the <![CDATA[<code>showMessage</code>]]> attribute must also be configured in order for the hide message to render.</description>
-			<name>hideMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The ID of a component instance whose content's visibility to toggle.</description>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>An icon to use as the mechanism for showing the content. You can specify the location of an image file to use in the icon; otherwise a default icon is used.</description>
-			<name>showImage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A link to use as the mechanism for showing the content. The text value of this attribute is used as the link's text. The message takes precedence over showing an image, via the <![CDATA[<code>showImage</code>]]> attribute. If you specify a <![CDATA[<code>showMessage</code>]]> attribute, you should also specify the <![CDATA[<code>hideMessage</code>]]> attribute; a <![CDATA[<code>null</code>]]> is otherwise displayed for the text of the hide link.</description>
-			<name>showMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Text to be prefixed to the <![CDATA[<code>Toggle()</code>]]> function that is called to toggle visibility of the content. If this is not configured, a random key is generated and prefixed to the <![CDATA[<code>Toggle()</code>]]> function. For example, a value of <![CDATA[<code>run</code>]]> would result in a function named <![CDATA[<code>runToggle()</code>]]>.</description>
-			<name>stateVar</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>toggle-value</name>
 		<tag-class>com.liferay.taglib.ui.ToggleValueTag</tag-class>
 		<body-content>JSP</body-content>

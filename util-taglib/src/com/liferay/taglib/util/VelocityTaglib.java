@@ -169,11 +169,6 @@ public interface VelocityTaglib {
 			String defaultPreferences)
 		throws Exception;
 
-	public void toggle(
-			String id, String showImage, String hideImage, String showMessage,
-			String hideMessage, boolean defaultShowContent)
-		throws Exception;
-
 	public String wrapPortlet(String wrapPage, String portletPage)
 		throws Exception;
 

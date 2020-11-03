@@ -243,12 +243,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void toggle(
-		String id, String showImage, String hideImage, String showMessage,
-		String hideMessage, boolean defaultShowContent) {
-	}
-
-	@Override
 	public String wrapPortlet(String wrapPage, String portletPage) {
 		return StringPool.BLANK;
 	}

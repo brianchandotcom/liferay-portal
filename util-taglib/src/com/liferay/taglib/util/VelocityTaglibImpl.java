@@ -38,7 +38,6 @@ import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconHelpTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.LanguageTag;
-import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
 
@@ -531,18 +530,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		RuntimeTag.doTag(
 			portletName, instanceId, queryString, defaultPreferences,
 			_pageContext, _httpServletRequest, _httpServletResponse);
-	}
-
-	@Override
-	public void toggle(
-			String id, String showImage, String hideImage, String showMessage,
-			String hideMessage, boolean defaultShowContent)
-		throws Exception {
-
-		ToggleTag.doTag(
-			id, showImage, hideImage, showMessage, hideMessage,
-			defaultShowContent, null, _servletContext, _httpServletRequest,
-			_httpServletResponse);
 	}
 
 	@Override

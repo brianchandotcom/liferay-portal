@@ -267,7 +267,8 @@ public class LayoutCopyHelperTest {
 		PortletPreferences sourcePortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				sourceLayout, portletId,
-				"<portlet-preferences><layout1/></portlet-preferences>");
+				"<portlet-preferences><preference><name>layout</name><value>1" +
+					"</value></preference></portlet-preferences>");
 
 		Layout targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), StringPool.BLANK);

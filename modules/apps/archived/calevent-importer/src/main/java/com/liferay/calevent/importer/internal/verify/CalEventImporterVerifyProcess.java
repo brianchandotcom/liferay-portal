@@ -14,6 +14,7 @@
 
 package com.liferay.calevent.importer.internal.verify;
 
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -884,8 +885,9 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		}
 
 		for (AssetCategory assetCategory : assetCategories) {
-			_assetEntryLocalService.addAssetCategoryAssetEntry(
-				assetCategory.getCategoryId(), entryId);
+			_assetEntryAssetCategoryRelLocalService.
+				addAssetEntryAssetCategoryRel(
+					entryId, assetCategory.getCategoryId());
 		}
 
 		// Asset links
@@ -1391,6 +1393,10 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

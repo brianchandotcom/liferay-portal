@@ -2,19 +2,19 @@
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
   <__mvccVersion>5</__mvccVersion>
-  <__uuid>a3802011-57e1-3260-250f-8425829b742c</__uuid>
-  <__pageId>38871</__pageId>
-  <__resourcePrimKey>38869</__resourcePrimKey>
+  <__uuid>e997a38c-b1b0-e9c4-9455-e2a2b812f482</__uuid>
+  <__pageId>45035</__pageId>
+  <__resourcePrimKey>45012</__resourcePrimKey>
   <__groupId>20121</__groupId>
   <__companyId>20097</__companyId>
   <__userId>20125</__userId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2017-04-07 15:21:44.307</__createDate>
-  <__modifiedDate class="sql-timestamp">2020-10-28 07:35:06.659</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2020-11-03 03:06:03.919</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
-  <__nodeId>38859</__nodeId>
+  <__nodeId>45002</__nodeId>
   <__title>FrontPage</__title>
-  <__version>1.1</__version>
+  <__version>1.4</__version>
   <__minorEdit>false</__minorEdit>
   <__content>==Research Projects for Spacecraft Fuel Alternatives 327==
 
@@ -26,7 +26,13 @@ This wiki isn’t meant to be the place for your final project. Just use it as a
 
 [[Cranberries]] 
 
-[[Landfill Waste]]</__content>
+[[Landfill Waste]]
+
+[[@data_handler_company_url@@data_handler_public_servlet_mapping@/space-fuel-alternatives-327/space-history/-/wiki/Electricity/FrontPage|The Decline and Fall of Electricity]]
+
+[[@data_handler_company_url@@data_handler_public_servlet_mapping@/space-fuel-alternatives-327/space-history/-/wiki/Reusable+Technology/FrontPage|The Necessity for Reusable Technology]]
+
+[[@data_handler_company_url@@data_handler_public_servlet_mapping@/space-fuel-alternatives-327/space-history/-/wiki/Green+Energy/FrontPage|Green Energy Options]]</__content>
   <__summary></__summary>
   <__format>creole</__format>
   <__head>false</__head>
@@ -35,7 +41,7 @@ This wiki isn’t meant to be the place for your final project. Just use it as a
   <__status>0</__status>
   <__statusByUserId>20125</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2020-10-28 05:02:34.777</__statusDate>
+  <__statusDate class="sql-timestamp">2020-11-03 03:01:09.828</__statusDate>
   <__columnBitmask>0</__columnBitmask>
   <__attachmentsFolderId>0</__attachmentsFolderId>
 </WikiPage>

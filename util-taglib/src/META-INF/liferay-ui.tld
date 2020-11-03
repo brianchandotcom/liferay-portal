@@ -3106,22 +3106,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
-		<name>search-speed</name>
-		<tag-class>com.liferay.taglib.ui.SearchSpeedTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>hits</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>searchContainer</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a search instance that can be toggled between basic and advanced search.</description>
 		<name>search-toggle</name>
 		<tag-class>com.liferay.taglib.ui.SearchToggleTag</tag-class>

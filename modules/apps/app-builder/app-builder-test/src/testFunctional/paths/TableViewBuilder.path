@@ -12,6 +12,12 @@
 <!--COLUMN_FIELDS-->
 
 <tr>
+    <td>ADD_FIELD_POSITION</td>
+    <td>xpath=(//div[contains(@class,'drop-zone')])[2]</td>
+    <td></td>
+</tr>
+
+<tr>
 	<td>COLUMN_LABEL</td>
 	<td>//table//div[contains(@class,'col') and contains(.,'${columnLabel}')]</td>
 	<td></td>

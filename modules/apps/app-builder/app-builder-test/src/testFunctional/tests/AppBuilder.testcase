@@ -3028,6 +3028,64 @@ definition {
 		DetailsView.deleteEntry(itemName = "Changed");
 	}
 
+	@description = "This is a use case for LPS-95964"
+	@priority = "5"
+	test ViewFieldSetsInTableView {
+		property portal.acceptance = "true";
+
+		var myFormViewName = "My Registration form";
+		var myTableViewName = "My display table";
+		var myAppName = "My Registration app";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.setName(formViewName = "Fields from Fieldsets");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Text");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Numeric");
+
+		TableViewBuilder.addColumnByDragAndDrop(fieldType = "Text");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "Text");
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Numeric");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "Numeric");
+
+		TableViewBuilder.validateDisabledField(fieldType = "Text");
+
+		TableViewBuilder.validateDisabledField(fieldType = "Numeric");
+
+		TableViewBuilder.setName(tableViewName = "Table View");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "Table View");
+
+		TableViewBuilder.deleteSelectedColumnByName(columnLabel = "Text");
+
+		TableViewBuilder.save();
+	}
+
 	@description = "Saved form view rules run during new entry submissions"
 	@priority = "5"
 	test ViewFormViewRules {

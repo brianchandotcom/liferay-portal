@@ -280,6 +280,10 @@ definition {
 		Click(locator1 = "FormViewBuilder#FIELDS_TAB");
 	}
 
+	macro goToFieldsetsTab {
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+	}
+
 	macro gotoRules {
 		Click(locator1 = "FormViewBuilder#RULES_TAB");
 	}
@@ -406,6 +410,27 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
 			value1 = "${ruleName}");
+	}
+
+	macro setUpTwoFieldSets {
+		var key_fieldType = "${fieldType}";
+		var key_fieldSetName = "${fieldSetName}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "${fieldSetName}");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType2}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
 	}
 
 	macro switchToAdvancedTab {

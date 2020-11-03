@@ -22,6 +22,21 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
 	}
 
+	macro addColumnByDragAndDrop {
+		Pause(locator1 = "10000");
+
+		var key_fieldLabel = "${fieldType}";
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
+			locator2 = "TableViewBuilder#ADD_FIELD_POSITION",
+			value1 = "${fieldType}");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
+	}
+
 	macro clearSearch {
 		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
 	}

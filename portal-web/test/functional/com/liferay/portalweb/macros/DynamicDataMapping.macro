@@ -524,13 +524,16 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			var articleId = JSONWebcontentSetter.setArticleId(
+			var urlTitle = StringUtil.replace("${fieldPredefinedValue}", " ", "-");
+			var urlTitle = StringUtil.lowerCase("${urlTitle}");
+
+			var resourcePrimKey = JSONWebcontentAPI._getResourcePrimKeyByURLTitle(
 				groupName = "${groupName}",
-				title = "${fieldPredefinedValue}");
+				urlTitle = "${urlTitle}");
 
 			AssertTextEquals(
 				locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_WEB_CONTENT_ARTICLE_CONTENT",
-				value1 = "Web Content: ${articleId}");
+				value1 = "Web Content: ${resourcePrimKey}");
 		}
 
 		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");

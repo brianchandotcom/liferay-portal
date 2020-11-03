@@ -60,6 +60,11 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
+	public JSONArray getDataAttributesJSONArray() {
+		return JSONUtil.put("lfr-priority");
+	}
+
+	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)

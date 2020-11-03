@@ -23,9 +23,11 @@ import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalS
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
@@ -839,6 +841,75 @@ public class CommerceOrderTest {
 		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
 		_commerceAccountLocalService.deleteCommerceAccount(commerceAccount);
 		_commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
+	}
+
+	@Test
+	public void testValidateAccountOrdersLimit() throws Exception {
+		frutillaRule.scenario(
+			"Try to add 3 orders with account cart number limit set to 3"
+		).given(
+			"A B2B Site"
+		).and(
+			"A Group"
+		).and(
+			"A User"
+		).when(
+			"I try to get pending orders by channelGroupId and the accountId"
+		).then(
+			"I should have only 2 order"
+		);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				_commerceChannel.getGroupId(),
+				CommerceConstants.ORDER_FIELDS_SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue("accountCartMaxAllowed", "2");
+
+		modifiableSettings.store();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.addBusinessCommerceAccount(
+				"Test Business Account", 0, null, null, true, null,
+				new long[] {_user.getUserId()},
+				new String[] {_user.getEmailAddress()}, _serviceContext);
+
+		long commerceChannelGroupId = _commerceChannel.getGroupId();
+
+		_commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), commerceChannelGroupId,
+			commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), commerceChannelGroupId,
+			commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		try {
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), commerceChannelGroupId,
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+		}
+		catch (CommerceOrderAccountLimitException
+					commerceOrderAccountLimitException) {
+
+			Assert.assertNotNull(commerceOrderAccountLimitException);
+		}
+
+		int pendingCommerceOrdersCount =
+			_commerceOrderService.getPendingCommerceOrdersCount(
+				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+				StringPool.BLANK);
+
+		Assert.assertEquals(2, pendingCommerceOrdersCount);
+
+		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
+		_commerceAccountLocalService.deleteCommerceAccount(commerceAccount);
 	}
 
 	@Rule

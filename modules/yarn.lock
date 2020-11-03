@@ -2001,10 +2001,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@34.0.0":
-  version "34.0.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-34.0.0.tgz#a5b956f59f2101e3dfbb34b5e884619de44fde50"
-  integrity sha512-f5dcL0R0X+NiL8SOqEbkLqbUX1Ps7Hf9nejQBTz9mG/RKP9ZRlOYAn72Xr5bzgiH6KUAZbMKxrsi/Hq0xp08YQ==
+"@liferay/npm-scripts@34.0.1":
+  version "34.0.1"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-34.0.1.tgz#124055b7d4e856f44ddd256015fb7431f844091c"
+  integrity sha512-dEsY/C8IRJezpuW9c09CyzhT68DAqPqVvUdnTUUoVTf34+fSvSayQIA/IfRHFb0qILhlUoMUWS2PptNeBVY0/w==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

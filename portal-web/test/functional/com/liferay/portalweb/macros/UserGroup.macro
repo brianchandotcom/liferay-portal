@@ -173,7 +173,24 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-		PortletEntry.inputName(name = "${userGroupNameEdit}");
+		if (isSet(userGroupNameEdit)) {
+			PortletEntry.inputName(name = "${userGroupNameEdit}");
+		}
+		else if (isSet(userGroupDescriptionEdit)) {
+			PortletEntry.inputDescription(description = "${userGroupDescriptionEdit}");
+		}
+		else if (isSet(userGroupSite)) {
+			Select(
+				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
+				value1 = "${userGroupSite}");
+
+			if ("${checkEnablePropagationCheckbox}" == "true") {
+				AssertChecked(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
+			}
+			else {
+				Uncheck(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
+			}
+		}
 
 		PortletEntry.save();
 	}

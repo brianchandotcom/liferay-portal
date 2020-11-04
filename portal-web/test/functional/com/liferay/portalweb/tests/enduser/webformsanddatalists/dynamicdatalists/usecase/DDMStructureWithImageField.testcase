@@ -124,7 +124,7 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			key_field = "Image",
+			fieldName = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 

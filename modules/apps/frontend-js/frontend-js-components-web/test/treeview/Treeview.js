@@ -276,4 +276,57 @@ describe('Treeview', () => {
 			);
 		});
 	});
+
+	describe('Treeview with filter prop', () => {
+		it('filters the node comparing the node name ignoring case when a string is supplied', () => {
+			const nodes = [
+				{
+					icon: 'cog',
+					id: '1',
+					name: 'Sandro',
+				},
+				{
+					icon: 'cog',
+					id: '2',
+					name: 'sandro polo',
+				},
+				{
+					icon: 'cog',
+					id: '3',
+					name: 'Pablo',
+				},
+			];
+
+			const {getByText} = render(
+				<Treeview filter={'Sandro'} nodes={nodes} />
+			);
+
+			expect(getByText('Sandro')).toBeInTheDocument();
+			expect(getByText('sandro polo')).toBeInTheDocument();
+		});
+
+		it('uses custom filter function if passed', () => {
+			const nodes = [
+				{
+					icon: 'cog',
+					id: '1',
+					name: 'Sandro',
+				},
+				{
+					icon: 'cog',
+					id: '2',
+					name: 'sandro polo',
+				},
+			];
+
+			const exactMatchFilter = (node) => node.name === 'Sandro';
+
+			const {getByText, queryByText} = render(
+				<Treeview filter={exactMatchFilter} nodes={nodes} />
+			);
+
+			expect(getByText('Sandro')).toBeInTheDocument();
+			expect(queryByText('sandro polo')).not.toBeInTheDocument();
+		});
+	});
 });

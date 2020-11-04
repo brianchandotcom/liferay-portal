@@ -1018,7 +1018,7 @@ definition {
 	macro editFriendlyURL {
 		Panel.expandPanel(panel = "Friendly URL");
 
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#FRIENDLY_URL",
 			value1 = "${webContentFriendlyURL}");
 	}

@@ -39,7 +39,13 @@ import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 
 const DropDown = () => {
-	const [{fieldTypes}, dispatch] = useContext(FormViewContext);
+	const [
+		{
+			config: {allowNestedFields},
+			fieldTypes,
+		},
+		dispatch,
+	] = useContext(FormViewContext);
 	const [active, setActive] = useState(false);
 
 	const onClickFieldType = (fieldTypeName) => {
@@ -60,9 +66,19 @@ const DropDown = () => {
 		}
 	}, [active]);
 
-	const filteredFieldTypes = fieldTypes.filter(({scope}) =>
-		scope.includes('app-builder')
-	);
+	const filteredFieldTypes = fieldTypes.filter(({name, scope}) => {
+		if (!scope.includes('app-builder')) {
+			return false;
+		}
+
+		//Remove Fields Group field from left sidebar
+
+		if (name === 'fieldset' && !allowNestedFields) {
+			return false;
+		}
+
+		return true;
+	});
 
 	filteredFieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
 

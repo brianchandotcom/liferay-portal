@@ -33,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RegionModel
-	extends AuditedModel, BaseModel<Region>, MVCCModel, ShardedModel {
+	extends BaseModel<Region>, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -70,6 +70,23 @@ public interface RegionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this region.
+	 *
+	 * @return the uuid of this region
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this region.
+	 *
+	 * @param uuid the uuid of this region
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the region ID of this region.

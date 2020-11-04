@@ -76,10 +76,12 @@ public class RegionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", regionId=");
 		sb.append(regionId);
 		sb.append(", companyId=");
@@ -114,6 +116,14 @@ public class RegionCacheModel
 		RegionImpl regionImpl = new RegionImpl();
 
 		regionImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			regionImpl.setUuid("");
+		}
+		else {
+			regionImpl.setUuid(uuid);
+		}
+
 		regionImpl.setRegionId(regionId);
 		regionImpl.setCompanyId(companyId);
 		regionImpl.setUserId(userId);
@@ -173,6 +183,7 @@ public class RegionCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
 
 		regionId = objectInput.readLong();
 
@@ -196,6 +207,13 @@ public class RegionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		objectOutput.writeLong(regionId);
 
@@ -236,6 +254,7 @@ public class RegionCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
 	public long regionId;
 	public long companyId;
 	public long userId;

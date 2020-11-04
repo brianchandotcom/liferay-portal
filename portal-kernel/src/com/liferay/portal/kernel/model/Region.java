@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.RegionImpl")
 @ProviderType
-public interface Region extends RegionModel {
+public interface Region extends PersistedModel, RegionModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

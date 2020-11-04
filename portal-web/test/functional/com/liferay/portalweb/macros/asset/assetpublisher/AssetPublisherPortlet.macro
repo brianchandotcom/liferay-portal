@@ -391,7 +391,10 @@ definition {
 			Panel.expandPanel(panel = "Asset Entries");
 
 			if (isSet(depotName)) {
-				Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_IN_DEPOT");
+				AssertClick(
+					key_depotName = "Test Depot Name",
+					locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_IN_DEPOT",
+					value1 = "Test Depot Name");
 			}
 			else {
 				Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON");

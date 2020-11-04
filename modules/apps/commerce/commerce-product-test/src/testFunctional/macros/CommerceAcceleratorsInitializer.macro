@@ -196,11 +196,13 @@ definition {
 	}
 
 	macro viewMiniumSelectedAccount {
-		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_SELECTED_ACCOUNT",
 			value1 = "${selectedAccount}");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 	}
 
 	macro viewSpeedwellAccount {

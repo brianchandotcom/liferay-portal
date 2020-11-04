@@ -966,6 +966,24 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String getBuildURLByJenkinsReportURL(
+		String jenkinsReportURL) {
+
+		Matcher matcher = _jenkinsReportURLPattern.matcher(jenkinsReportURL);
+
+		matcher.find();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(matcher.group("masterURL"));
+		sb.append("job/");
+		sb.append(matcher.group("jobName"));
+		sb.append("/");
+		sb.append(matcher.group("buildNumber"));
+
+		return sb.toString();
+	}
+
 	public static BufferedReader getCachedFileBufferedReader(String key) {
 		File cachedTextFile = _getCacheFile(key);
 
@@ -4050,6 +4068,10 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _jenkinsMasterPattern = Pattern.compile(
 		"(?<cohortName>test-\\d+)-\\d+");
 	private static Hashtable<?, ?> _jenkinsProperties;
+	private static final Pattern _jenkinsReportURLPattern = Pattern.compile(
+		"(?<masterURL>http(?:|s)://test-\\d+-\\d+.*(\\.liferay\\.com)?)" +
+			"userContent/+jobs/+(?<jobName>[^/]+)/builds/" +
+				"(?<buildNumber>\\d+)/+jenkins-report\\.html");
 	private static final Pattern _jenkinsSlavesPropertyNamePattern =
 		Pattern.compile("master.slaves\\((.+)\\)");
 	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(

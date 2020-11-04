@@ -706,6 +706,14 @@ definition {
 
 		PortletEntry.publish();
 
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Dynamic Data Lists Display Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
 		DDLRecord.viewViaDDLDisplayPG(
 			ddlListName = "List Name",
 			ddlRecordFieldData = "Text Edit",

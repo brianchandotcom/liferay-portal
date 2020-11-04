@@ -261,6 +261,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_IN_DEPOT</td>
+	<td>//div[contains(.,'Asset Entries')]/following-sibling::div//a[@title='Select in Test Depot Name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET</td>
 	<td>//a[@data-title='Select ${key_assetType}']</td>
 	<td></td>

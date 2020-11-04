@@ -369,10 +369,33 @@ definition {
 
 		Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL");
 
+		if (isSet(depotName)) {
+			Panel.expandPanel(panel = "Scope");
+
+			Click(locator1 = "Configuration#SCOPE_SELECT");
+
+			MenuItem.click(menuItem = "Other Site or Asset Library...");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+			Navigator.gotoNavTab(navTab = "Asset Libraries");
+
+			SiteSelector.selectSite(site = "${depotName}");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
 		if (isSet(assetTitle)) {
 			Panel.expandPanel(panel = "Asset Entries");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON");
+			if (isSet(depotName)) {
+				Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_IN_DEPOT");
+			}
+			else {
+				Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON");
+			}
 
 			var key_assetType = "${assetType}";
 

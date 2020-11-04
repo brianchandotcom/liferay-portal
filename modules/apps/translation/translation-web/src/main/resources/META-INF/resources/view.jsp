@@ -15,3 +15,59 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute(ViewDisplayContext.class.getName());
+%>
+
+<clay:management-toolbar
+	displayContext="<%= viewDisplayContext.getTranslationEntryManagementToolbarDisplayContext() %>"
+/>
+
+<clay:container-fluid>
+	<aui:form action="<%= viewDisplayContext.getActionURL() %>" cssClass="container-fluid-1280" name="fm">
+		<liferay-ui:search-container
+			id="searchContainer"
+			searchContainer="<%= viewDisplayContext.getSearchContainer() %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.translation.model.TranslationEntry"
+				keyProperty="translationEntryId"
+				modelVar="translationEntry"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-title"
+					name="title"
+					value="<%= viewDisplayContext.getTitle(translationEntry) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="type"
+					value="<%= viewDisplayContext.getModelName(translationEntry) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="language"
+					property="languageId"
+				/>
+
+				<liferay-ui:search-container-column-status
+					cssClass="table-cell-expand-smallest"
+					name="status"
+					property="status"
+				/>
+
+				<liferay-ui:search-container-column-date
+					cssClass="table-cell-expand-smallest"
+					name="modified-date"
+					property="modifiedDate"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</aui:form>
+</clay:container-fluid>

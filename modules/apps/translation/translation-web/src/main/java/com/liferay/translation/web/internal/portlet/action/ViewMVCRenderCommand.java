@@ -15,12 +15,16 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
+import com.liferay.translation.web.internal.display.context.ViewDisplayContext;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -38,7 +42,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			ViewDisplayContext.class.getName(),
+			new ViewDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse),
+				_translationEntryLocalService));
+
 		return "/view.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private TranslationEntryLocalService _translationEntryLocalService;
 
 }

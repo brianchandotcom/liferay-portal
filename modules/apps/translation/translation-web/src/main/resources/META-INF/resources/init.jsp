@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.info.field.InfoField" %><%@
@@ -37,6 +38,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.translation.web.internal.display.context.TranslateDisplayContext" %><%@
+page import="com.liferay.translation.web.internal.display.context.ViewDisplayContext" %><%@
 page import="com.liferay.translation.web.internal.display.context.ViewTranslationDisplayContext" %>
 
 <%@ page import="java.util.List" %>

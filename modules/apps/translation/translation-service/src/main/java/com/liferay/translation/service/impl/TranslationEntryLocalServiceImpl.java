@@ -227,7 +227,7 @@ public class TranslationEntryLocalServiceImpl
 						new ByteArrayInputStream(
 							content.getBytes(StandardCharsets.UTF_8))));
 
-			return deleteTranslationEntry(translationEntry);
+			return translationEntry;
 		}
 		catch (PortalException | RuntimeException exception) {
 			throw exception;

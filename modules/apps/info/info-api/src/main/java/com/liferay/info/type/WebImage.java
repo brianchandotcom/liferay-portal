@@ -32,6 +32,12 @@ public class WebImage {
 		_url = url;
 	}
 
+	public WebImage(String url, long fileEntryId) {
+		this(url);
+
+		_fileEntryId = fileEntryId;
+	}
+
 	public String getAlt() {
 		if (_altInfoLocalizedValue != null) {
 			return _altInfoLocalizedValue.getValue(LocaleUtil.getDefault());
@@ -44,6 +50,10 @@ public class WebImage {
 		getAltInfoLocalizedValueOptional() {
 
 		return Optional.ofNullable(_altInfoLocalizedValue);
+	}
+
+	public long getFileEntryId() {
+		return _fileEntryId;
 	}
 
 	public String getUrl() {
@@ -72,8 +82,11 @@ public class WebImage {
 		JSONObject jsonObject = JSONUtil.put("url", _url);
 
 		if (_altInfoLocalizedValue != null) {
-			jsonObject = jsonObject.put(
-				"alt", _altInfoLocalizedValue.getValue(locale));
+			jsonObject.put("alt", _altInfoLocalizedValue.getValue(locale));
+		}
+
+		if (_fileEntryId > 0) {
+			jsonObject.put("fileEntryId", _fileEntryId);
 		}
 
 		return jsonObject;
@@ -85,6 +98,7 @@ public class WebImage {
 	}
 
 	private InfoLocalizedValue<String> _altInfoLocalizedValue;
+	private long _fileEntryId;
 	private final String _url;
 
 }

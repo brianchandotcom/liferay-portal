@@ -141,6 +141,8 @@ public class AssetCategoriesSelectorDisplayContext {
 			"disabled", true
 		).put(
 			"expanded", true
+		).put(
+			"vocabulary", true
 		);
 
 		return JSONUtil.put(jsonObject);

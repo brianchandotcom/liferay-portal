@@ -30,6 +30,18 @@ function visit(nodes, callback) {
 	});
 }
 
+function getFilter(filterQuery) {
+	if (!filterQuery) {
+		return null;
+	}
+
+	const filterQueryLowerCase = filterQuery.toLowerCase();
+
+	return (node) =>
+		!node.vocabulary &&
+		node.name.toLowerCase().indexOf(filterQueryLowerCase) !== -1;
+}
+
 function SelectCategory({
 	addCategoryURL,
 	itemSelectorSaveEvent,
@@ -39,7 +51,7 @@ function SelectCategory({
 	nodes,
 }) {
 	const flattenedNodes = useMemo(() => {
-		if (nodes.length === 1 && nodes[0].vocabulary) {
+		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
 			return nodes[0].children;
 		}
 
@@ -49,12 +61,6 @@ function SelectCategory({
 	const [filterQuery, setFilterQuery] = useState('');
 
 	const selectedNodesRef = useRef(null);
-
-	const handleQueryChange = useCallback((event) => {
-		const value = event.target.value;
-
-		setFilterQuery(value);
-	}, []);
 
 	const handleAddCategoryClick = useCallback(() => {
 		const dialog = Liferay.Util.getWindow(itemSelectorSaveEvent);
@@ -160,7 +166,9 @@ function SelectCategory({
 						<div className="input-group-item">
 							<input
 								className="form-control h-100 input-group-inset input-group-inset-after"
-								onChange={handleQueryChange}
+								onChange={(event) =>
+									setFilterQuery(event.target.value)
+								}
 								placeholder={Liferay.Language.get('search')}
 								type="text"
 							/>
@@ -192,7 +200,7 @@ function SelectCategory({
 						{flattenedNodes.length > 0 ? (
 							<Treeview
 								NodeComponent={Treeview.Card}
-								filterQuery={filterQuery}
+								filter={getFilter(filterQuery)}
 								initialSelectedNodeIds={initialSelectedNodeIds}
 								multiSelection={multiSelection}
 								nodes={flattenedNodes}

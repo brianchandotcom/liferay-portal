@@ -212,6 +212,11 @@ public class FragmentEntryProcessorHelperImpl
 
 			value = contentAccessor.getContent();
 		}
+		else if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			return webImage.toJSONObject();
+		}
 
 		return formatMappedValue(
 			value, fragmentEntryProcessorContext.getLocale());

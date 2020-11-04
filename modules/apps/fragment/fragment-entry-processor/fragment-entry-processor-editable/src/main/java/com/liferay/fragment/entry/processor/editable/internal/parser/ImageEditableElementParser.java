@@ -180,6 +180,9 @@ public class ImageEditableElementParser implements EditableElementParser {
 				value = StringPool.BLANK;
 			}
 		}
+		else {
+			fileEntryId = configJSONObject.getLong("fileEntryId", 0);
+		}
 
 		value = value.trim();
 

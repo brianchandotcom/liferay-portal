@@ -268,13 +268,13 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		var key_userScreenName = "usersn3";
-
 		AssertTextEquals.assertPartialText(
+			key_userScreenName = "usersn3",
 			locator1 = "SiteMemberships#USER_TABLE_NAME",
 			value1 = "userfn3 userln3");
 
 		AssertTextEquals(
+			key_userScreenName = "usersn3",
 			locator1 = "SiteMemberships#USER_TABLE_SCREEN_NAME",
 			value1 = "usersn3");
 

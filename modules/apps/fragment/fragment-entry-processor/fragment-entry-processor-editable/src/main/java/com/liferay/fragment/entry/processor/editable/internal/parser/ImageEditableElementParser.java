@@ -66,6 +66,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 		String fieldName, Locale locale, Object fieldValue) {
 
 		String alt = StringPool.BLANK;
+		long fileEntryId = 0;
 
 		if (fieldValue == null) {
 			alt = StringUtil.replace(
@@ -75,6 +76,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
 
 			alt = fieldValueJSONObject.getString("alt");
+			fileEntryId = fieldValueJSONObject.getLong("fileEntryId");
 		}
 		else if (fieldValue instanceof WebImage) {
 			WebImage webImage = (WebImage)fieldValue;
@@ -88,9 +90,15 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 				alt = infoLocalizedValue.getValue();
 			}
+
+			fileEntryId = webImage.getFileEntryId();
 		}
 
-		return JSONUtil.put("alt", alt);
+		return JSONUtil.put(
+			"alt", alt
+		).put(
+			"fileEntryId", fileEntryId
+		);
 	}
 
 	@Override

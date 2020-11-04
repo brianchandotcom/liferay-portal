@@ -267,20 +267,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryProcessorContext.getLocale());
 			}
 
-			if (Objects.equals(
+			JSONObject configJSONObject = JSONUtil.merge(
+				editableValueJSONObject.getJSONObject("config"),
+				mappedValueConfigJSONObject);
+
+			editableElementParser.replace(element, value, configJSONObject);
+
+			if (!Objects.equals(
 					fragmentEntryProcessorContext.getMode(),
 					FragmentEntryLinkConstants.EDIT)) {
-
-				editableElementParser.replace(
-					element, value,
-					editableValueJSONObject.getJSONObject("config"));
-			}
-			else {
-				JSONObject configJSONObject = JSONUtil.merge(
-					editableValueJSONObject.getJSONObject("config"),
-					mappedValueConfigJSONObject);
-
-				editableElementParser.replace(element, value, configJSONObject);
 
 				String mapperType = configJSONObject.getString(
 					"mapperType", element.attr("type"));

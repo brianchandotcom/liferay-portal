@@ -10,6 +10,7 @@
 				<include>themes/pom.xml</include>
 				<include>.gitignore</include>
 				<include>build.gradle</include>
+				<include>Dockerfile.ext</include>
 				<include>gradle.properties</include>
 				<include>gradle-local.properties</include>
 				<include>platform.bndrun</include>

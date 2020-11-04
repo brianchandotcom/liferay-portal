@@ -569,6 +569,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				" /usr/local/liferay/scripts/pre-configure/" +
 					_LIFERAY_IMAGE_SETUP_SCRIPT);
 
+		File file = project.file("Dockerfile.ext");
+
+		if (file.exists()) {
+			dockerfile.instructionsFromTemplate(file);
+		}
+
 		dockerfile.setDescription(
 			"Creates a Dockerfile to build the Liferay Workspace Docker " +
 				"image.");

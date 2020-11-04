@@ -1,0 +1,15 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn createDockerfile
+
+	doLast {
+		File expectedFile = createDockerfile.destFile.getAsFile().get()
+
+		assert expectedFile.exists()
+
+		String expectedComment = expectedFile.text
+
+		assert expectedComment.indexOf("# extra comment") != -1;
+	}
+}

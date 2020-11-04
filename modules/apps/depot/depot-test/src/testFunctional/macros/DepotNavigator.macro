@@ -230,6 +230,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage/-/recycle_bin/entries");
 	}
 
+	macro openDepotRecycleBinAdminStaging {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage/-/recycle_bin/entries");
+	}
+
 	macro openDepotWebContentAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
@@ -239,13 +245,17 @@ definition {
 	macro openDepotWebContentAdminStaging {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 	}
 
 	macro switchStagingStatus {
 		Click(locator1 = "Button#STAGING_INDICATOR");
 
 		DropdownMenuItem.click(menuItem = "${stagingItem}");
+
+		if ("${stagingItem}" == "Publish to Live") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
 	}
 
 }

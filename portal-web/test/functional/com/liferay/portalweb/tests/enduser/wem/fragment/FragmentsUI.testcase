@@ -4,7 +4,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Fragments";
-	property testray.component.name = "Theme";
+	property testray.component.names = "Theme";
 
 	setUp {
 		task ("Set up instance and sign in") {

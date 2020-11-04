@@ -6,6 +6,7 @@
 /development/appium.jar
 /development/catalina.jar
 /development/com.liferay.jenkins.results.parser.jar
+/development/com.liferay.poshi.core.jar
 /development/db2jcc.jar
 /development/db2jcc_license_cu.jar
 /development/deployment.jar

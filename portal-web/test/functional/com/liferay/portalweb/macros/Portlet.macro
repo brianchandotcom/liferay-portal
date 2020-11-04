@@ -375,6 +375,8 @@ definition {
 
 	@summary = "Start the current Liferay Portal instance."
 	macro startServer {
+		var appServerType = PropsUtil.get("app.server.type");
+
 		if ("${deleteLiferayHome}" == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
@@ -394,6 +396,20 @@ definition {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "start-app-server");
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		if (("${appServerType}" == "jboss") || ("${appServerType}" == "wildfly")) {
+			User.loginPG(
+				password = "${password}",
+				userEmailAddress = "${userEmailAddress}");
 		}
 	}
 

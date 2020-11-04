@@ -2002,7 +2002,7 @@
 
 		<reference entity="LayoutSetBranch" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="false" name="Region" remote-service="true">
+	<entity local-service="true" name="Region" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

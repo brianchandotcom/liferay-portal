@@ -23,6 +23,7 @@ import {
 	containsField,
 	normalizeDataLayoutRows,
 } from '../../../utils/dataLayoutVisitor.es';
+import {normalizeState} from '../../../utils/saveDataDefinition.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({availableLanguageIds, childrenContext, fieldSet}) => {
@@ -37,15 +38,26 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const normalizedFieldSet = {
+		const dataDefinitionDefault = {
 			...fieldSet,
 			availableLanguageIds,
 			dataDefinitionFields,
-			defaultDataLayout: {
-				...fieldSet.defaultDataLayout,
-				dataLayoutPages,
-			},
 			name,
+		};
+
+		const dataLayoutDefault = {
+			...fieldSet.defaultDataLayout,
+			dataLayoutPages,
+		};
+
+		const {normalizedDataDefinition, normalizedDataLayout} = normalizeState(
+			dataDefinitionDefault,
+			dataLayoutDefault
+		);
+
+		const normalizedFieldSet = {
+			...normalizedDataDefinition,
+			defaultDataLayout: normalizedDataLayout,
 		};
 
 		return updateItem(

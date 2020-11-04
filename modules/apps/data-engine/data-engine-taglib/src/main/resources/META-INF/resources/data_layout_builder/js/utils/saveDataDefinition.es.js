@@ -78,57 +78,76 @@ const normalizeField = (availableLanguageIds, field) => {
 	};
 };
 
+export const normalizeState = (dataDefinition, dataLayout) => {
+	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	let normalizedDataLayout;
+	let normalizedDataDefinition;
+
+	if (dataLayout) {
+		normalizedDataLayout = {
+			...dataLayout,
+			dataLayoutPages: dataLayout.dataLayoutPages.map(
+				(dataLayoutPage) => ({
+					...dataLayoutPage,
+					dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
+						(dataLayoutRow) => ({
+							...dataLayoutRow,
+							dataLayoutColumns: (
+								dataLayoutRow.dataLayoutColumns || []
+							).map((dataLayoutColumn) => ({
+								...dataLayoutColumn,
+								fieldNames: dataLayoutColumn.fieldNames || [],
+							})),
+						})
+					),
+					description: {
+						...dataLayout.description,
+						[defaultLanguageId]:
+							dataLayoutPage.description[defaultLanguageId] || '',
+					},
+					title: {
+						...dataLayoutPage.title,
+						[defaultLanguageId]:
+							dataLayoutPage.title[defaultLanguageId] || '',
+					},
+				})
+			),
+			dataRules: dataLayout.dataRules.map((rule) => {
+				delete rule.ruleEditedIndex;
+
+				return rule;
+			}),
+		};
+	}
+
+	if (dataDefinition) {
+		normalizedDataDefinition = {
+			...dataDefinition,
+			dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
+				(field) =>
+					normalizeField(dataDefinition.availableLanguageIds, field)
+			),
+			name: {
+				...dataDefinition.name,
+				[defaultLanguageId]:
+					dataDefinition.name[defaultLanguageId] || '',
+			},
+		};
+	}
+
+	return {normalizedDataDefinition, normalizedDataLayout};
+};
+
 export default ({
 	dataDefinition,
 	dataDefinitionId,
 	dataLayout,
 	dataLayoutId,
 }) => {
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
-
-	const normalizedDataLayout = {
-		...dataLayout,
-		dataLayoutPages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
-			...dataLayoutPage,
-			dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
-				(dataLayoutRow) => ({
-					...dataLayoutRow,
-					dataLayoutColumns: (
-						dataLayoutRow.dataLayoutColumns || []
-					).map((dataLayoutColumn) => ({
-						...dataLayoutColumn,
-						fieldNames: dataLayoutColumn.fieldNames || [],
-					})),
-				})
-			),
-			description: {
-				...dataLayout.description,
-				[defaultLanguageId]:
-					dataLayoutPage.description[defaultLanguageId] || '',
-			},
-			title: {
-				...dataLayoutPage.title,
-				[defaultLanguageId]:
-					dataLayoutPage.title[defaultLanguageId] || '',
-			},
-		})),
-		dataRules: dataLayout.dataRules.map((rule) => {
-			delete rule.ruleEditedIndex;
-
-			return rule;
-		}),
-	};
-
-	const normalizedDataDefinition = {
-		...dataDefinition,
-		dataDefinitionFields: dataDefinition.dataDefinitionFields.map((field) =>
-			normalizeField(dataDefinition.availableLanguageIds, field)
-		),
-		name: {
-			...dataDefinition.name,
-			[defaultLanguageId]: dataDefinition.name[defaultLanguageId] || '',
-		},
-	};
+	const {normalizedDataDefinition, normalizedDataLayout} = normalizeState(
+		dataDefinition,
+		dataLayout
+	);
 
 	const updateDefinition = () =>
 		updateItem(

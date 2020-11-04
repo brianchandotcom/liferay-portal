@@ -51,7 +51,7 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	 * @private
 	 */
 	updateVisibility_(typeSelect) {
-		this.businessAccountOnlySection?.classList.toggle(
+		this.businessAccountOnlySection.classList.toggle(
 			'hide',
 			typeSelect.value === 'person'
 		);

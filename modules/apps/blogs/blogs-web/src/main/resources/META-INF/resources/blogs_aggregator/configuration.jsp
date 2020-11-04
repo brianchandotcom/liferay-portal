@@ -139,7 +139,10 @@ if (organizationId > 0) {
 									selectionMethodElement.value === 'users'
 								);
 
-								usersSelectionOptions.classList.toggle('hide', showUsersSelectionOptions);
+								usersSelectionOptions.classList.toggle(
+									'hide',
+									showUsersSelectionOptions
+								);
 							}
 						});
 					}

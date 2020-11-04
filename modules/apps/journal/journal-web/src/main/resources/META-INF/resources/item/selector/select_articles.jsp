@@ -392,7 +392,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 						});
 					}
 
-					formCheckCard.classList.add('active');
+					if (formCheckCard) {
+						formCheckCard.classList.add('active');
+					}
 				</c:when>
 				<c:otherwise>
 					var activeArticles = document.querySelectorAll('.articles.active');
@@ -404,7 +406,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 						});
 					}
 
-					articles.classList.add('active');
+					if (articles) {
+						articles.classList.add('active');
+					}
 				</c:otherwise>
 			</c:choose>
 

@@ -33,6 +33,7 @@
 		<field name="endDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="overlapAllowed" type="boolean" />
+		<field name="singleNodeExecution" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="system" type="boolean" />
 		<field name="taskExecutorType" type="String" />

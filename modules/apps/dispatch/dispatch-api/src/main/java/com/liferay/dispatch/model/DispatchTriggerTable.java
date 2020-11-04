@@ -62,6 +62,10 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 		createColumn(
 			"overlapAllowed", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<DispatchTriggerTable, Boolean> singleNodeExecution =
+		createColumn(
+			"singleNodeExecution", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Date> startDate = createColumn(
 		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Boolean> system = createColumn(

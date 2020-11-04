@@ -78,7 +78,7 @@ public class DispatchTriggerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class DispatchTriggerCacheModel
 		sb.append(name);
 		sb.append(", overlapAllowed=");
 		sb.append(overlapAllowed);
+		sb.append(", singleNodeExecution=");
+		sb.append(singleNodeExecution);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", system=");
@@ -171,6 +173,7 @@ public class DispatchTriggerCacheModel
 		}
 
 		dispatchTriggerImpl.setOverlapAllowed(overlapAllowed);
+		dispatchTriggerImpl.setSingleNodeExecution(singleNodeExecution);
 
 		if (startDate == Long.MIN_VALUE) {
 			dispatchTriggerImpl.setStartDate(null);
@@ -221,6 +224,8 @@ public class DispatchTriggerCacheModel
 		name = objectInput.readUTF();
 
 		overlapAllowed = objectInput.readBoolean();
+
+		singleNodeExecution = objectInput.readBoolean();
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
@@ -267,6 +272,8 @@ public class DispatchTriggerCacheModel
 		}
 
 		objectOutput.writeBoolean(overlapAllowed);
+
+		objectOutput.writeBoolean(singleNodeExecution);
 		objectOutput.writeLong(startDate);
 
 		objectOutput.writeBoolean(system);
@@ -298,6 +305,7 @@ public class DispatchTriggerCacheModel
 	public long endDate;
 	public String name;
 	public boolean overlapAllowed;
+	public boolean singleNodeExecution;
 	public long startDate;
 	public boolean system;
 	public String taskExecutorType;

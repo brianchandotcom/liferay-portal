@@ -45,6 +45,7 @@ public class DispatchTriggerSoap implements Serializable {
 		soapModel.setEndDate(model.getEndDate());
 		soapModel.setName(model.getName());
 		soapModel.setOverlapAllowed(model.isOverlapAllowed());
+		soapModel.setSingleNodeExecution(model.isSingleNodeExecution());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setSystem(model.isSystem());
 		soapModel.setTaskExecutorType(model.getTaskExecutorType());
@@ -212,6 +213,18 @@ public class DispatchTriggerSoap implements Serializable {
 		_overlapAllowed = overlapAllowed;
 	}
 
+	public boolean getSingleNodeExecution() {
+		return _singleNodeExecution;
+	}
+
+	public boolean isSingleNodeExecution() {
+		return _singleNodeExecution;
+	}
+
+	public void setSingleNodeExecution(boolean singleNodeExecution) {
+		_singleNodeExecution = singleNodeExecution;
+	}
+
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -260,6 +273,7 @@ public class DispatchTriggerSoap implements Serializable {
 	private Date _endDate;
 	private String _name;
 	private boolean _overlapAllowed;
+	private boolean _singleNodeExecution;
 	private Date _startDate;
 	private boolean _system;
 	private String _taskExecutorType;

@@ -273,6 +273,27 @@ public interface DispatchTriggerModel
 	public void setOverlapAllowed(boolean overlapAllowed);
 
 	/**
+	 * Returns the single node execution of this dispatch trigger.
+	 *
+	 * @return the single node execution of this dispatch trigger
+	 */
+	public boolean getSingleNodeExecution();
+
+	/**
+	 * Returns <code>true</code> if this dispatch trigger is single node execution.
+	 *
+	 * @return <code>true</code> if this dispatch trigger is single node execution; <code>false</code> otherwise
+	 */
+	public boolean isSingleNodeExecution();
+
+	/**
+	 * Sets whether this dispatch trigger is single node execution.
+	 *
+	 * @param singleNodeExecution the single node execution of this dispatch trigger
+	 */
+	public void setSingleNodeExecution(boolean singleNodeExecution);
+
+	/**
 	 * Returns the start date of this dispatch trigger.
 	 *
 	 * @return the start date of this dispatch trigger

@@ -27,6 +27,7 @@ create table DispatchTrigger (
 	endDate DATE null,
 	name VARCHAR(75) null,
 	overlapAllowed BOOLEAN,
+	singleNodeExecution BOOLEAN,
 	startDate DATE null,
 	system_ BOOLEAN,
 	taskExecutorType VARCHAR(75) null,

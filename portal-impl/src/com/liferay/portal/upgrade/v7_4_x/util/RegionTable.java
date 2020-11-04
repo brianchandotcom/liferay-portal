@@ -28,13 +28,13 @@ public class RegionTable {
 	public static final String TABLE_NAME = "Region";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"regionId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"countryId", Types.BIGINT},
-		{"regionCode", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"active_", Types.BOOLEAN}, {"position", Types.DOUBLE},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"regionId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"countryId", Types.BIGINT}, {"regionCode", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"active_", Types.BOOLEAN},
+		{"position", Types.DOUBLE}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -42,6 +42,8 @@ new HashMap<String, Integer>();
 
 static {
 TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 
@@ -69,14 +71,15 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table Region (mvccVersion LONG default 0 not null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN,position DOUBLE,lastPublishDate DATE null)";
+"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN,position DOUBLE,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Region";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_2D9A426F on Region (active_)",
 		"create index IX_11FB3E42 on Region (countryId, active_)",
-		"create unique index IX_A2635F5C on Region (countryId, regionCode[$COLUMN_LENGTH:75$])"
+		"create unique index IX_A2635F5C on Region (countryId, regionCode[$COLUMN_LENGTH:75$])",
+		"create index IX_60C0214E on Region (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 
 }

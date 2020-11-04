@@ -195,7 +195,6 @@ definition {
 	@priority = "4"
 	test UserGroupSiteOwnerPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteOwnerPermissions";
 
 		ApplicationsMenu.gotoPortlet(

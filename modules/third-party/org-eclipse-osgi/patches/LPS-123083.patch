@@ -1,0 +1,29 @@
+diff --git a/org/eclipse/osgi/internal/loader/sources/PackageSource.java b/org/eclipse/osgi/internal/loader/sources/PackageSource.java
+index b54a40b..7e93220 100644
+--- a/org/eclipse/osgi/internal/loader/sources/PackageSource.java
++++ b/org/eclipse/osgi/internal/loader/sources/PackageSource.java
+@@ -118,8 +118,7 @@ public abstract class PackageSource implements KeyedElement {
+ 			return true;
+ 		}
+ 		// 2) get the package name from the specified className
+-		String pkgName = BundleLoader.getPackageName(className);
+-		if (pkgName.startsWith("java.")) //$NON-NLS-1$
++		if (className.startsWith("java.")) //$NON-NLS-1$
+ 			return true;
+ 
+ 		BundleLoader producerBL = getBundleLoader(registrant);
+@@ -129,6 +128,8 @@ public abstract class PackageSource implements KeyedElement {
+ 		if (consumerBL == null)
+ 			return false;
+ 		// 3) for the specified bundle, find the wiring for the package.  If no wiring is found return true
++		String pkgName = BundleLoader.getPackageName(className);
++
+ 		PackageSource consumerSource = consumerBL.getPackageSource(pkgName);
+ 		if (consumerSource == null)
+ 			return true;
+@@ -192,3 +193,4 @@ public abstract class PackageSource implements KeyedElement {
+ 		return producerWiring == null ? null : (BundleLoader) producerWiring.getModuleLoader();
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

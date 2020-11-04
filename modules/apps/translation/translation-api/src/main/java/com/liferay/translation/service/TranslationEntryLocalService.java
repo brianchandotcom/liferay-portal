@@ -67,6 +67,7 @@ public interface TranslationEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.translation.service.impl.TranslationEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the translation entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TranslationEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String languageId,
 			InfoItemReference infoItemReference,
@@ -74,6 +75,7 @@ public interface TranslationEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String className, long classPK, String content,
 			String contentType, String languageId,
@@ -334,6 +336,7 @@ public interface TranslationEntryLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public TranslationEntry updateStatus(
 			long userId, long translationEntryId, int status,
 			ServiceContext serviceContext,

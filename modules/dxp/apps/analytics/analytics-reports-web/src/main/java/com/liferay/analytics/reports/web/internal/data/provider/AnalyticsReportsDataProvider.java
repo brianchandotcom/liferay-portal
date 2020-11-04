@@ -27,6 +27,8 @@ import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -188,26 +190,8 @@ public class AnalyticsReportsDataProvider {
 		throws PortalException {
 
 		try {
-			String response = _asahFaroBackendClient.doGet(
-				companyId, "api/seo/1.0/traffic-sources?url=" + url);
-
-			TypeFactory typeFactory = _objectMapper.getTypeFactory();
-
-			List<TrafficSource> trafficSources = _objectMapper.readValue(
-				response,
-				typeFactory.constructCollectionType(
-					List.class, TrafficSource.class));
-
-			Stream<TrafficSource> trafficSourcesStream =
-				trafficSources.stream();
-
-			Map<String, TrafficSource> trafficSourceMap =
-				trafficSourcesStream.map(
-					trafficSource -> new AbstractMap.SimpleEntry<>(
-						trafficSource.getName(), trafficSource)
-				).collect(
-					Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-				);
+			Map<String, TrafficSource> trafficSourceMap = _getTrafficSources(
+				companyId, url);
 
 			Map<String, AcquisitionChannel> acquisitionChannels =
 				getAcquisitionChannels(companyId, url);
@@ -241,7 +225,7 @@ public class AnalyticsReportsDataProvider {
 		}
 		catch (Exception exception) {
 			throw new PortalException(
-				"Unable to get traffic sources", exception);
+				"Unable to get acquisition channels", exception);
 		}
 	}
 
@@ -270,6 +254,40 @@ public class AnalyticsReportsDataProvider {
 
 		return value.longValue();
 	}
+
+	private Map<String, TrafficSource> _getTrafficSources(
+		long companyId, String url) {
+
+		try {
+			String response = _asahFaroBackendClient.doGet(
+				companyId, "api/seo/1.0/traffic-sources?url=" + url);
+
+			TypeFactory typeFactory = _objectMapper.getTypeFactory();
+
+			List<TrafficSource> trafficSources = _objectMapper.readValue(
+				response,
+				typeFactory.constructCollectionType(
+					List.class, TrafficSource.class));
+
+			Stream<TrafficSource> trafficSourcesStream =
+				trafficSources.stream();
+
+			return trafficSourcesStream.map(
+				trafficSource -> new AbstractMap.SimpleEntry<>(
+					trafficSource.getName(), trafficSource)
+			).collect(
+				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+			);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get traffic sources", exception);
+
+			return Collections.emptyMap();
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsReportsDataProvider.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{

@@ -175,9 +175,9 @@ public class TrafficSource {
 	}
 
 	private List<CountrySearchKeywords> _countrySearchKeywordsList;
+	private boolean _error;
 	private String _name;
 	private long _trafficAmount;
 	private double _trafficShare;
-	private boolean _error;
 
 }

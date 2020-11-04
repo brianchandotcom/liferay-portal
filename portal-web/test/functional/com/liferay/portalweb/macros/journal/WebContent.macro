@@ -905,10 +905,14 @@ definition {
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 
 		if (isSet(webContentContentEdit)) {
-			Type.typeCKEditorWaitForCKEditor(
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			Type(
 				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				locator1 = "CKEditor#BODY",
 				value1 = "${webContentContentEdit}");
+
+			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(webContentSelectWCFile)) {

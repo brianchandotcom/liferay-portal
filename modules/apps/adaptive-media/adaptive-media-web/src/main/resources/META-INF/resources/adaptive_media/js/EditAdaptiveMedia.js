@@ -190,11 +190,11 @@ const EditAdaptiveMedia = ({
 			)}
 
 			{!configurationEntryEditable && (
-				<div className="alert alert-info">
+				<ClayAlert>
 					{Liferay.Language.get(
 						'the-images-for-this-resolution-are-already-adapted'
 					)}
-				</div>
+				</ClayAlert>
 			)}
 
 			<Input

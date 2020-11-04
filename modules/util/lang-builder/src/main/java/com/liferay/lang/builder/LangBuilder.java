@@ -433,11 +433,6 @@ public class LangBuilder {
 					sb.append(key);
 					sb.append(StringPool.EQUAL);
 					sb.append(translatedText);
-
-					if (translatedText.equals(array[1])) {
-						sb.append(LanguageBuilderUtil.AUTOMATIC_COPY);
-					}
-
 					sb.append("\n");
 				}
 			}

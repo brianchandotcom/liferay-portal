@@ -170,7 +170,8 @@ public class FileEntryInfoItemFieldValuesProvider
 				WebImage fileURLWebImage = new WebImage(
 					_dlURLHelper.getDownloadURL(
 						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK));
+						StringPool.BLANK),
+					fileEntry.getFileEntryId());
 
 				fileURLWebImage.setAlt(fileEntry.getTitle());
 
@@ -231,7 +232,8 @@ public class FileEntryInfoItemFieldValuesProvider
 			}
 
 			WebImage imagePreviewURLWebImage = new WebImage(
-				_dlURLHelper.getImagePreviewURL(fileEntry, null));
+				_dlURLHelper.getImagePreviewURL(fileEntry, null),
+				fileEntry.getFileEntryId());
 
 			imagePreviewURLWebImage.setAlt(fileEntry.getTitle());
 

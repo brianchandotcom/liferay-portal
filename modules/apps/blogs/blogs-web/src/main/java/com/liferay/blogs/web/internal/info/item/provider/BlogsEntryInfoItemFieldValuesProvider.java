@@ -102,7 +102,8 @@ public class BlogsEntryInfoItemFieldValuesProvider
 
 			if (themeDisplay != null) {
 				WebImage smallWebImage = new WebImage(
-					blogsEntry.getSmallImageURL(themeDisplay));
+					blogsEntry.getSmallImageURL(themeDisplay),
+					blogsEntry.getSmallImageFileEntryId());
 
 				smallWebImage.setAlt(blogsEntry.getSmallImageAlt());
 
@@ -112,7 +113,8 @@ public class BlogsEntryInfoItemFieldValuesProvider
 						smallWebImage));
 
 				WebImage coverWebImage = new WebImage(
-					blogsEntry.getCoverImageURL(themeDisplay));
+					blogsEntry.getCoverImageURL(themeDisplay),
+					blogsEntry.getCoverImageFileEntryId());
 
 				coverWebImage.setAlt(blogsEntry.getCoverImageAlt());
 

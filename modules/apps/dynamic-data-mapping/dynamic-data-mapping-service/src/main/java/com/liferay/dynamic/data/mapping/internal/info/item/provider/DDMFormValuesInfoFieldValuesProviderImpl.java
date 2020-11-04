@@ -173,7 +173,8 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 			WebImage webImage = new WebImage(
 				_dlURLHelper.getDownloadURL(
 					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK));
+					StringPool.BLANK),
+				fileEntry.getFileEntryId());
 
 			webImage.setAlt(jsonObject.getString("alt"));
 

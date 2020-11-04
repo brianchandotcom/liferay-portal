@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -173,6 +174,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public void apply(Project project) {
 		final WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
+		_configureWorkspaceExtension(project, workspaceExtension);
 
 		GradleUtil.applyPlugin(project, DockerRemoteApiPlugin.class);
 		GradleUtil.applyPlugin(project, LifecycleBasePlugin.class);
@@ -524,20 +527,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			"LIFERAY_WORKSPACE_ENVIRONMENT",
 			workspaceExtension.getEnvironment());
 
-		Project rootProject = project.getRootProject();
+		Property<String> containerNameProperty =
+			dockerCreateContainer.getContainerName();
 
-		rootProject.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project p) {
-					Property<String> property =
-						dockerCreateContainer.getContainerName();
-
-					property.set(_getDockerContainerId(project));
-				}
-
-			});
+		containerNameProperty.set(_getDockerContainerId(project));
 
 		Task cleanTask = GradleUtil.getTask(
 			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
@@ -1324,6 +1317,29 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureWorkspaceExtension(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		workspaceExtension.setDockerContainerId(project.getName() + "-liferay");
+
+		Object version = project.getVersion();
+
+		if (Objects.equals(version, "unspecified")) {
+			String dockerImageLiferay =
+				workspaceExtension.getDockerImageLiferay();
+
+			int index = dockerImageLiferay.indexOf(":");
+
+			version = dockerImageLiferay.substring(index + 1);
+		}
+		else {
+			version = project.getVersion();
+		}
+
+		workspaceExtension.setDockerImageId(
+			String.format("%s-liferay:%s", project.getName(), version));
 	}
 
 	private void _createTouchFile(File dir) throws IOException {

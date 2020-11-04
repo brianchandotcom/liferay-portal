@@ -30,12 +30,9 @@ const KEY_CODE = {
 const ItemSelectorPreview = ({
 	container,
 	currentIndex = 0,
-	editItemURL,
 	handleSelectedItem,
 	headerTitle,
 	items,
-	uploadItemReturnType,
-	uploadItemURL,
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [itemList, setItemList] = useState(items);
@@ -171,81 +168,14 @@ const ItemSelectorPreview = ({
 		handleSelectedItem(currentItem);
 	};
 
-	const handleSaveEdit = (e) => {
-		const itemData = e.data.file;
-
-		const editedItemMetadata = {
-			groups: [
-				{
-					data: [
-						{
-							key: Liferay.Language.get('format'),
-							value: itemData.type,
-						},
-						{
-							key: Liferay.Language.get('name'),
-							value: itemData.title,
-						},
-					],
-					title: Liferay.Language.get('file-info'),
-				},
-			],
-		};
-
-		const editedItem = {
-			fileentryid: currentItem.fileentryid,
-			metadata: JSON.stringify(editedItemMetadata),
-			returntype: uploadItemReturnType,
-			title: itemData.title,
-			url: itemData.url,
-			value: itemData.resolvedValue,
-		};
-
-		const updatedItemList = [...itemList, editedItem];
-		updateItemList(updatedItemList);
-		setCurrentItemIndex(updatedItemList.length - 1);
-	};
-
-	const handleClickEdit = () => {
-		const itemTitle = currentItem.title;
-		const editDialogTitle = `${Liferay.Language.get(
-			'edit'
-		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
-
-		const editEntityBaseZIndex = Liferay.zIndex.WINDOW;
-
-		Liferay.Util.editEntity(
-			{
-				dialog: {
-					destroyOnHide: true,
-					zIndex: editEntityBaseZIndex + 100,
-				},
-				id: 'Edit_' + itemTitle,
-				stack: false,
-				title: editDialogTitle,
-				uri: editItemURL,
-				urlParams: {
-					entityURL: currentItem.url,
-					saveFileEntryId: currentItem.fileentryid,
-					saveFileName: itemTitle,
-					saveParamName: 'imageSelectorFileName',
-					saveURL: uploadItemURL,
-				},
-			},
-			handleSaveEdit
-		);
-	};
-
 	return (
 		<div className="fullscreen item-selector-preview">
 			<Header
 				disabledAddButton={!currentItem.url}
 				handleClickAdd={handleClickDone}
 				handleClickBack={handleClickBack}
-				handleClickEdit={handleClickEdit}
 				headerTitle={headerTitle}
 				infoButtonRef={infoButtonRef}
-				showEditIcon={!!editItemURL}
 				showInfoIcon={!!currentItem.metadata}
 			/>
 
@@ -268,7 +198,6 @@ const ItemSelectorPreview = ({
 ItemSelectorPreview.propTypes = {
 	container: PropTypes.instanceOf(Element).isRequired,
 	currentIndex: PropTypes.number,
-	editItemURL: PropTypes.string,
 	handleSelectedItem: PropTypes.func.isRequired,
 	headerTitle: PropTypes.string.isRequired,
 	items: PropTypes.arrayOf(
@@ -281,8 +210,6 @@ ItemSelectorPreview.propTypes = {
 			value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		})
 	).isRequired,
-	uploadItemReturnType: PropTypes.string,
-	uploadItemURL: PropTypes.string,
 };
 
 export default ItemSelectorPreview;

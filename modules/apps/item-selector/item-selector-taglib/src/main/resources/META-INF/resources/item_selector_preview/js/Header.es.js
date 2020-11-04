@@ -22,10 +22,8 @@ const Header = ({
 	disabledAddButton = false,
 	handleClickAdd,
 	handleClickBack,
-	handleClickEdit,
 	headerTitle,
 	infoButtonRef,
-	showEditIcon,
 	showInfoIcon,
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
@@ -53,18 +51,6 @@ const Header = ({
 			<nav className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 				<ClayLayout.ContainerFluid>
 					<ul className="navbar-nav">
-						{showEditIcon && (
-							<li className="btn-group-item nav-item">
-								<ClayButton
-									borderless
-									displayType="secondary"
-									monospaced
-									onClick={handleClickEdit}
-								>
-									<ClayIcon symbol="pencil" />
-								</ClayButton>
-							</li>
-						)}
 						{showInfoIcon && (
 							<li className="btn-group-item nav-item">
 								<ClayButton
@@ -98,9 +84,7 @@ Header.propTypes = {
 	disabledAddButton: PropTypes.bool,
 	handleClickAdd: PropTypes.func.isRequired,
 	handleClickBack: PropTypes.func.isRequired,
-	handleClickEdit: PropTypes.func,
 	headerTitle: PropTypes.string.isRequired,
-	showEditIcon: PropTypes.bool,
 	showInfoIcon: PropTypes.bool,
 };
 

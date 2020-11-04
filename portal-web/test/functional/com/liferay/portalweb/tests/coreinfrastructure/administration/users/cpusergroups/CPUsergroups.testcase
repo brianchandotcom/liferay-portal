@@ -213,7 +213,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "User Groups");
 
-		UserGroup.deleteUserCP(userGroupName = "UG UserGroup Name");
+		UserGroup.deleteCP(
+			userGroupName = "UG UserGroup Name",
+			withUser = "Yes");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

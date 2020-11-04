@@ -17,14 +17,32 @@ package com.liferay.portal.vulcan.aggregation;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Javier Gamarra
  */
 public class FacetUtil {
+
+	public static Facet toFacet(
+		BucketAggregationResult bucketAggregationResult) {
+
+		return new Facet(
+			bucketAggregationResult.getName(),
+			TransformUtil.transform(
+				bucketAggregationResult.getBuckets(),
+				bucket -> new Facet.FacetValue(
+					GetterUtil.getInteger(bucket.getDocCount()),
+					bucket.getKey())));
+	}
 
 	public static Facet toFacet(
 		com.liferay.portal.kernel.search.facet.Facet facet) {
@@ -43,6 +61,37 @@ public class FacetUtil {
 				termCollectors,
 				termCollector -> new Facet.FacetValue(
 					termCollector.getFrequency(), termCollector.getTerm())));
+	}
+
+	public static List<Facet> toFacets(AggregationResult aggregationResult) {
+		List<Facet> facets = new ArrayList<>();
+
+		if (aggregationResult instanceof BucketAggregationResult) {
+			facets.add(toFacet((BucketAggregationResult)aggregationResult));
+		}
+		else if (aggregationResult instanceof HierarchicalAggregationResult) {
+			facets.addAll(
+				toFacets((HierarchicalAggregationResult)aggregationResult));
+		}
+
+		return facets;
+	}
+
+	public static List<Facet> toFacets(
+		HierarchicalAggregationResult hierarchicalAggregationResult) {
+
+		List<Facet> facets = new ArrayList<>();
+
+		Map<String, AggregationResult> aggregationResults =
+			hierarchicalAggregationResult.getChildrenAggregationResultsMap();
+
+		for (AggregationResult aggregationResult :
+				aggregationResults.values()) {
+
+			facets.addAll(toFacets(aggregationResult));
+		}
+
+		return facets;
 	}
 
 	private static String _getFacetCriteria(

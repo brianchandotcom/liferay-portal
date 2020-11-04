@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.aggregation.FacetUtil;
@@ -134,7 +136,7 @@ public class SearchUtil {
 		}
 
 		return Page.of(
-			actions, _getFacets(searchContext.getFacets()), items, pagination,
+			actions, _getFacets(searchContext), items, pagination,
 			indexer.searchCount(searchContext));
 	}
 
@@ -302,10 +304,28 @@ public class SearchUtil {
 			booleanQuery, BooleanClauseOccur.MUST.getName());
 	}
 
-	private static List<Facet> _getFacets(
-		Map<String, com.liferay.portal.kernel.search.facet.Facet> facets) {
+	private static List<Facet> _getFacets(SearchContext searchContext) {
+		Map<String, com.liferay.portal.kernel.search.facet.Facet>
+			searchContextFacets = searchContext.getFacets();
 
-		return TransformUtil.transform(facets.values(), FacetUtil::toFacet);
+		List<Facet> facets = TransformUtil.transform(
+			searchContextFacets.values(), FacetUtil::toFacet);
+
+		SearchResponse searchResponse =
+			(SearchResponse)searchContext.getAttribute("search.response");
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchResponse.getAggregationResultsMap();
+
+		if (aggregationResultsMap != null) {
+			for (AggregationResult aggregationResult :
+					aggregationResultsMap.values()) {
+
+				facets.addAll(FacetUtil.toFacets(aggregationResult));
+			}
+		}
+
+		return facets;
 	}
 
 	private static Object[] _getOrderByComparatorColumns(Sort[] sorts) {

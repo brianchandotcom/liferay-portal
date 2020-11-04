@@ -17,7 +17,12 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import {fetch, normalizeFriendlyURL, objectToFormData} from 'frontend-js-web';
+import {
+	fetch,
+	normalizeFriendlyURL,
+	objectToFormData,
+	openToast,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -84,8 +89,16 @@ const EditAdaptiveMedia = ({
 				method: 'POST',
 			})
 				.then((res) => res.json())
-				.then(({success, message}) => {
+				.then(({message, success}) => {
 					if (success) {
+						const title = Liferay.Language.get('success');
+
+						openToast({
+							message,
+							title,
+							type: 'success',
+						});
+
 						Liferay.Util.navigate(redirect);
 					}
 					else {

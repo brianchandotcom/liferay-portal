@@ -101,10 +101,11 @@ public class FragmentEntryLinkStagedModelDataHandler
 		String editableValues = fragmentEntryLink.getEditableValues();
 
 		if (Validator.isNotNull(editableValues)) {
-			_fragmentEntryLinkExportImportContentProcessor.
-				replaceExportContentReferences(
-					portletDataContext, fragmentEntryLink, editableValues, true,
-					false);
+			editableValues =
+				_fragmentEntryLinkExportImportContentProcessor.
+					replaceExportContentReferences(
+						portletDataContext, fragmentEntryLink, editableValues,
+						true, false);
 		}
 
 		fragmentEntryLink.setEditableValues(editableValues);

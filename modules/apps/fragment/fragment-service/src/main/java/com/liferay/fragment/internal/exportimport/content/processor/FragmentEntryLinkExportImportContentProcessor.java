@@ -91,6 +91,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 					portletDataContext, stagedModel, content,
 					exportReferencedContent, escapeContent);
 
+		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
+
 		JSONObject editableProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
 				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
@@ -141,6 +143,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 			_layoutReferencesExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, stagedModel, content);
+
+		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
 
 		JSONObject editableProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(

@@ -23,10 +23,10 @@ import TreeviewContext from './TreeviewContext';
 
 export default function TreeviewCard({node}) {
 	const {state} = useContext(TreeviewContext);
-	const {filterQuery, focusedNodeId} = state;
+	const {filter, focusedNodeId} = state;
 
 	const path =
-		node.nodePath && filterQuery ? (
+		node.nodePath && filter ? (
 			<div className="lfr-card-subtitle-text text-default text-truncate treeview-node-name">
 				{node.nodePath}
 			</div>

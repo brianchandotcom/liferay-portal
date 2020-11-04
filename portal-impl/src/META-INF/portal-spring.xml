@@ -188,6 +188,7 @@
 	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutRevisionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence" />
 	<bean class="com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl" id="com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutSetBranchPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence" />
+	<bean class="com.liferay.portal.service.impl.RegionLocalServiceImpl" id="com.liferay.portal.kernel.service.RegionLocalService" />
 	<bean class="com.liferay.portal.service.impl.RegionServiceImpl" id="com.liferay.portal.kernel.service.RegionService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RegionPersistence" />
 	<bean class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />

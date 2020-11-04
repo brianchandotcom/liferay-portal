@@ -1050,6 +1050,7 @@ create table RecentLayoutSetBranch (
 
 create table Region (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	regionId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

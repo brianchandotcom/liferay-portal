@@ -1209,6 +1209,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Region">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="regionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

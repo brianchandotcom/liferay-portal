@@ -1420,6 +1420,29 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the region local service.
+	 *
+	 * @return the region local service
+	 */
+	public com.liferay.portal.kernel.service.RegionLocalService
+		getRegionLocalService() {
+
+		return regionLocalService;
+	}
+
+	/**
+	 * Sets the region local service.
+	 *
+	 * @param regionLocalService the region local service
+	 */
+	public void setRegionLocalService(
+		com.liferay.portal.kernel.service.RegionLocalService
+			regionLocalService) {
+
+		this.regionLocalService = regionLocalService;
+	}
+
+	/**
 	 * Returns the region persistence.
 	 *
 	 * @return the region persistence
@@ -1876,6 +1899,12 @@ public abstract class OrganizationLocalServiceBaseImpl
 
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.RegionLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.RegionLocalService
+		regionLocalService;
 
 	@BeanReference(type = RegionPersistence.class)
 	protected RegionPersistence regionPersistence;

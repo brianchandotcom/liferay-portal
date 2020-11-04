@@ -859,17 +859,15 @@ public class StructuredContentResourceImpl
 				}
 
 				SearchRequestBuilder searchRequestBuilder =
-					_searchRequestBuilderFactory.builder(
-						searchContext
-					).sorts(
-						SortUtil.getFieldSorts(
-							_ddmIndexer, searchContext.getSorts(), _queries,
-							_sorts)
-					);
+					_searchRequestBuilderFactory.builder(searchContext);
 
 				AggregationUtil.processVulcanAggregation(
 					_aggregations, _ddmIndexer, _queries, searchRequestBuilder,
 					aggregation);
+
+				SortUtil.processSorts(
+					_ddmIndexer, searchRequestBuilder, searchContext.getSorts(),
+					_queries, _sorts);
 			},
 			sorts,
 			document -> _toStructuredContent(

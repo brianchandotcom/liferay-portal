@@ -16,8 +16,6 @@ package com.liferay.headless.delivery.internal.search.filter;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -48,19 +46,8 @@ public class FilterUtil {
 			termFilterField);
 
 		return ddmIndexer.createFieldValueQueryFilter(
-			_getDDMStructureFieldName(ddmStructureField), termFilter.getValue(),
+			ddmStructureField.getDDMStructureFieldName(), termFilter.getValue(),
 			LocaleUtil.fromLanguageId(ddmStructureField.getLocale()));
-	}
-
-	private static String _getDDMStructureFieldName(
-		DDMStructureField ddmStructureField) {
-
-		return StringBundler.concat(
-			DDMIndexer.DDM_FIELD_PREFIX, ddmStructureField.getIndexType(),
-			DDMIndexer.DDM_FIELD_SEPARATOR,
-			ddmStructureField.getDDMStructureId(),
-			DDMIndexer.DDM_FIELD_SEPARATOR, ddmStructureField.getName(),
-			StringPool.UNDERLINE, ddmStructureField.getLocale());
 	}
 
 }

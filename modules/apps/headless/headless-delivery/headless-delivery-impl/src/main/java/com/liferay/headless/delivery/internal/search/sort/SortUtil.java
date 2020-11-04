@@ -16,12 +16,9 @@ package com.liferay.headless.delivery.internal.search.sort;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.NestedSort;
 import com.liferay.portal.search.sort.SortOrder;
@@ -35,8 +32,9 @@ import java.util.List;
  */
 public class SortUtil {
 
-	public static FieldSort[] getFieldSorts(
-		DDMIndexer ddmIndexer, Sort[] oldSorts, Queries queries, Sorts sorts) {
+	public static void processSorts(
+		DDMIndexer ddmIndexer, SearchRequestBuilder searchRequestBuilder,
+		Sort[] oldSorts, Queries queries, Sorts sorts) {
 
 		List<FieldSort> fieldSorts = new ArrayList<>();
 
@@ -57,50 +55,22 @@ public class SortUtil {
 				sortFieldName);
 
 			FieldSort fieldSort = sorts.field(
-				_getFieldSortField(ddmStructureField), sortOrder);
+				ddmStructureField.getDDMStructureNestedTypeSortableFieldName(),
+				sortOrder);
 
 			NestedSort nestedSort = sorts.nested(DDMIndexer.DDM_FIELD_ARRAY);
 
 			nestedSort.setFilterQuery(
 				queries.term(
-					_getNestedSortFilterQueryTermField(),
-					_getNestedSortFilterQueryValue(ddmStructureField)));
+					DDMStructureField.getNestedFieldName(),
+					ddmStructureField.getDDMStructureFieldName()));
 
 			fieldSort.setNestedSort(nestedSort);
 
 			fieldSorts.add(fieldSort);
 		}
 
-		return fieldSorts.toArray(new FieldSort[0]);
-	}
-
-	private static String _getFieldSortField(
-		DDMStructureField ddmStructureField) {
-
-		return StringBundler.concat(
-			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
-			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
-			StringUtil.upperCaseFirstLetter(ddmStructureField.getIndexType()),
-			StringPool.UNDERLINE, ddmStructureField.getLocale(),
-			StringPool.UNDERLINE, ddmStructureField.getType(),
-			StringPool.UNDERLINE, Field.SORTABLE_FIELD_SUFFIX);
-	}
-
-	private static String _getNestedSortFilterQueryTermField() {
-		return StringBundler.concat(
-			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
-			DDMIndexer.DDM_FIELD_NAME);
-	}
-
-	private static String _getNestedSortFilterQueryValue(
-		DDMStructureField ddmStructureField) {
-
-		return StringBundler.concat(
-			DDMIndexer.DDM_FIELD_PREFIX, ddmStructureField.getIndexType(),
-			DDMIndexer.DDM_FIELD_SEPARATOR,
-			ddmStructureField.getDDMStructureId(),
-			DDMIndexer.DDM_FIELD_SEPARATOR, ddmStructureField.getName(),
-			StringPool.UNDERLINE, ddmStructureField.getLocale());
+		searchRequestBuilder.sorts(fieldSorts.toArray(new FieldSort[0]));
 	}
 
 }

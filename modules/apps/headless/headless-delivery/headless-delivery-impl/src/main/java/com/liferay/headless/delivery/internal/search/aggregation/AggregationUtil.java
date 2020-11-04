@@ -16,9 +16,6 @@ package com.liferay.headless.delivery.internal.search.aggregation;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
@@ -63,14 +60,14 @@ public class AggregationUtil {
 
 			TermsAggregation termsAggregation = aggregations.terms(
 				vulcanAggregationEntry.getKey(),
-				_getTermQueryField(ddmStructureField));
+				ddmStructureField.getDDMStructureNestedFieldName());
 
 			FilterAggregation filterAggregation = aggregations.filter(
 				"filterAggregation",
 				queries.term(
 					DDMIndexer.DDM_FIELD_ARRAY + "." +
 						DDMIndexer.DDM_FIELD_NAME,
-					_getDDMStructureNestedFieldName(ddmStructureField)));
+					ddmStructureField.getDDMStructureFieldName()));
 
 			filterAggregation.addChildAggregation(termsAggregation);
 
@@ -81,27 +78,6 @@ public class AggregationUtil {
 
 			searchRequestBuilder.addAggregation(nestedAggregation);
 		}
-	}
-
-	private static String _getDDMStructureNestedFieldName(
-		DDMStructureField ddmStructureField) {
-
-		return StringBundler.concat(
-			DDMIndexer.DDM_FIELD_PREFIX, ddmStructureField.getIndexType(),
-			DDMIndexer.DDM_FIELD_SEPARATOR,
-			ddmStructureField.getDDMStructureId(),
-			DDMIndexer.DDM_FIELD_SEPARATOR, ddmStructureField.getName(),
-			StringPool.UNDERLINE, ddmStructureField.getLocale());
-	}
-
-	private static String _getTermQueryField(
-		DDMStructureField ddmStructureField) {
-
-		return StringBundler.concat(
-			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
-			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
-			StringUtil.upperCaseFirstLetter(ddmStructureField.getIndexType()),
-			StringPool.UNDERLINE, ddmStructureField.getLocale());
 	}
 
 }

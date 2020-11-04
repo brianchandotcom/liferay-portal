@@ -15,7 +15,9 @@
 package com.liferay.headless.delivery.internal.dynamic.data.mapping;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -36,24 +38,39 @@ public class DDMStructureField {
 			ddmFieldParts[3]);
 	}
 
-	public String getDDMStructureId() {
-		return _ddmStructureId;
+	public static String getNestedFieldName() {
+		return StringBundler.concat(
+			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+			DDMIndexer.DDM_FIELD_NAME);
 	}
 
-	public String getIndexType() {
-		return _indexType;
+	public String getDDMStructureFieldName() {
+		return StringBundler.concat(
+			DDMIndexer.DDM_FIELD_PREFIX, _indexType,
+			DDMIndexer.DDM_FIELD_SEPARATOR, _ddmStructureId,
+			DDMIndexer.DDM_FIELD_SEPARATOR, _name, StringPool.UNDERLINE,
+			_locale);
+	}
+
+	public String getDDMStructureNestedFieldName() {
+		return StringBundler.concat(
+			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
+			StringUtil.upperCaseFirstLetter(_indexType), StringPool.UNDERLINE,
+			_locale);
+	}
+
+	public String getDDMStructureNestedTypeSortableFieldName() {
+		return StringBundler.concat(
+			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
+			StringUtil.upperCaseFirstLetter(_indexType), StringPool.UNDERLINE,
+			_locale, StringPool.UNDERLINE, _type, StringPool.UNDERLINE,
+			Field.SORTABLE_FIELD_SUFFIX);
 	}
 
 	public String getLocale() {
 		return _locale;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getType() {
-		return _type;
 	}
 
 	private DDMStructureField(

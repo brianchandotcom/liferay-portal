@@ -47,6 +47,7 @@ const EditFormView = (props) => {
 		dataDefinitionId,
 		dataLayoutBuilder,
 		dataLayoutId,
+		isPopUpWindow,
 		newCustomObject,
 		showTranslationManager,
 	} = parseProps(props);
@@ -76,6 +77,7 @@ const EditFormView = (props) => {
 					/>
 
 					<FormViewUpperToolbar
+						isPopUpWindow={isPopUpWindow}
 						newCustomObject={newCustomObject}
 						showTranslationManager={showTranslationManager}
 					/>

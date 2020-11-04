@@ -145,9 +145,13 @@ export const PortalControlMenu = ({backURL, title, url}) => {
 	backURL = resolveBackURL(backURL, url);
 
 	useEffect(() => {
-		document.querySelector(
+		const headerTitle = document.querySelector(
 			'.tools-control-group .control-menu-level-1-heading'
-		).innerHTML = title;
+		);
+
+		if (headerTitle) {
+			headerTitle.innerHTML = title;
+		}
 	}, [title]);
 
 	return <>{backURL && <BackButton backURL={backURL} />}</>;

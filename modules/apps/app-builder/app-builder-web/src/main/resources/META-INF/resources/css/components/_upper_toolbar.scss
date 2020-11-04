@@ -2,6 +2,17 @@ body.open .app-builder-upper-toolbar {
 	width: calc(100% - #{$productMenuWidth});
 }
 
+.app-builder-popup {
+	.app-builder-upper-toolbar {
+		top: 0;
+	}
+
+	.multi-panel-sidebar {
+		height: calc(100vh - 64px);
+		top: 64px;
+	}
+}
+
 .app-builder-upper-toolbar {
 	height: $upperToolbarHeight;
 	position: fixed;

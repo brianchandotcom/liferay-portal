@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
@@ -26,7 +27,11 @@ import {errorToast, successToast} from '../../utils/toast.es';
 import {getValidName} from '../../utils/utils.es';
 import FormViewContext from './FormViewContext.es';
 
-export default ({newCustomObject, showTranslationManager}) => {
+export default function FormViewUpperToolbar({
+	isPopUpWindow,
+	newCustomObject,
+	showTranslationManager,
+}) {
 	const [defaultLanguageId, setDefaultLanguageId] = useState('');
 	const [editingLanguageId, setEditingLanguageId] = useState('');
 	const [isLoading, setLoading] = useState(false);
@@ -97,12 +102,23 @@ export default ({newCustomObject, showTranslationManager}) => {
 		errorToast(title);
 	};
 
-	const onSuccess = () => {
+	const onSuccess = (newFormView) => {
 		successToast(
 			Liferay.Language.get('the-form-view-was-saved-successfully')
 		);
 
-		Liferay.Util.navigate(listUrl);
+		if (isPopUpWindow) {
+			const tLiferay = window.top?.Liferay;
+
+			tLiferay.fire('newFormViewCreated', {
+				newFormView,
+			});
+
+			tLiferay.fire('closeModal');
+		}
+		else {
+			Liferay.Util.navigate(listUrl);
+		}
 	};
 
 	const onSave = () => {
@@ -130,54 +146,69 @@ export default ({newCustomObject, showTranslationManager}) => {
 		return null;
 	}
 
-	return (
-		<UpperToolbar>
-			{showTranslationManager && (
-				<UpperToolbar.Group>
-					<TranslationManager
-						defaultLanguageId={defaultLanguageId}
-						editingLanguageId={editingLanguageId}
-						onEditingLanguageIdChange={onEditingLanguageIdChange}
-						translatedLanguageIds={{
-							...dataLayout.name,
-							...initialAvailableLanguageIds.reduce(
-								(acc, cur) => {
-									acc[cur] = cur;
+	const actionButtons = (
+		<ClayButton.Group spaced>
+			<ClayButton displayType="secondary" onClick={onCancel}>
+				{Liferay.Language.get('cancel')}
+			</ClayButton>
 
-									return acc;
-								},
-								{}
-							),
-						}}
-					/>
-				</UpperToolbar.Group>
-			)}
-
-			<UpperToolbar.Input
-				onChange={onDataLayoutNameChange}
-				onKeyDown={onKeyDown}
-				placeholder={Liferay.Language.get('untitled-form-view')}
-				value={dataLayout.name[editingLanguageId] || ''}
-			/>
-
-			<UpperToolbar.Group>
-				<UpperToolbar.Button displayType="secondary" onClick={onCancel}>
-					{Liferay.Language.get('cancel')}
-				</UpperToolbar.Button>
-
-				<UpperToolbar.Button
-					disabled={
-						isLoading ||
-						!dataLayout.name[editingLanguageId] ||
-						DataLayoutVisitor.isDataLayoutEmpty(
-							dataLayout.dataLayoutPages
-						)
-					}
-					onClick={onSave}
-				>
-					{Liferay.Language.get('save')}
-				</UpperToolbar.Button>
-			</UpperToolbar.Group>
-		</UpperToolbar>
+			<ClayButton
+				className="m-0"
+				disabled={
+					isLoading ||
+					!dataLayout.name[editingLanguageId] ||
+					DataLayoutVisitor.isDataLayoutEmpty(
+						dataLayout.dataLayoutPages
+					)
+				}
+				onClick={onSave}
+			>
+				{Liferay.Language.get('save')}
+			</ClayButton>
+		</ClayButton.Group>
 	);
-};
+
+	return (
+		<>
+			<UpperToolbar>
+				{showTranslationManager && (
+					<UpperToolbar.Group>
+						<TranslationManager
+							defaultLanguageId={defaultLanguageId}
+							editingLanguageId={editingLanguageId}
+							onEditingLanguageIdChange={
+								onEditingLanguageIdChange
+							}
+							translatedLanguageIds={{
+								...dataLayout.name,
+								...initialAvailableLanguageIds.reduce(
+									(acc, cur) => {
+										acc[cur] = cur;
+
+										return acc;
+									},
+									{}
+								),
+							}}
+						/>
+					</UpperToolbar.Group>
+				)}
+
+				<UpperToolbar.Input
+					onChange={onDataLayoutNameChange}
+					onKeyDown={onKeyDown}
+					placeholder={Liferay.Language.get('untitled-form-view')}
+					value={dataLayout.name[editingLanguageId] || ''}
+				/>
+
+				{!isPopUpWindow && (
+					<UpperToolbar.Group>{actionButtons}</UpperToolbar.Group>
+				)}
+			</UpperToolbar>
+
+			{isPopUpWindow && (
+				<div className="dialog-footer">{actionButtons}</div>
+			)}
+		</>
+	);
+}

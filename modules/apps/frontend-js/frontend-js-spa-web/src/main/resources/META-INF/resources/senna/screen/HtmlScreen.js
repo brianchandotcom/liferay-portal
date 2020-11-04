@@ -12,13 +12,10 @@
  * details.
  */
 
-'use strict';
-
 import {getUid} from 'metal';
 import {buildFragment, globalEval, globalEvalStyles, match} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
-import UA from 'metal-useragent';
 
 import globals from '../globals/globals';
 import Surface from '../surface/Surface';
@@ -125,17 +122,10 @@ class HtmlScreen extends RequestScreen {
 	copyNodeAttributesFromContent_(content, node) {
 		content = content.replace(/[<]\s*html/gi, '<senna');
 		content = content.replace(/\/html\s*>/gi, '/senna>');
-		let placeholder;
-		if (UA.isIe) {
-			const tempNode = globals.document
-				.createRange()
-				.createContextualFragment(content);
-			placeholder = tempNode.querySelector('senna');
-		}
-		else {
-			node.innerHTML = content;
-			placeholder = node.querySelector('senna');
-		}
+
+		node.innerHTML = content;
+
+		const placeholder = node.querySelector('senna');
 
 		if (placeholder) {
 			utils.clearNodeAttributes(node);
@@ -346,26 +336,9 @@ class HtmlScreen extends RequestScreen {
 			this.resolveTitleFromVirtualDocument();
 			this.resolveMetaTagsFromVirtualDocument();
 			this.assertSameBodyIdInVirtualDocument();
-			if (UA.isIe) {
-				this.makeTemporaryStylesHrefsUnique_();
-			}
 
 			return content;
 		});
-	}
-
-	/**
-	 * Queries temporary styles from virtual document, and makes them unique.
-	 * This is necessary for caching and load event firing issues specific to
-	 * IE11. https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7940171/
-	 */
-	makeTemporaryStylesHrefsUnique_() {
-		var temporariesInDoc = this.virtualQuerySelectorAll_(
-			HtmlScreen.selectors.stylesTemporary
-		);
-		temporariesInDoc.forEach((style) =>
-			this.replaceStyleAndMakeUnique_(style)
-		);
 	}
 
 	/**
@@ -392,7 +365,7 @@ class HtmlScreen extends RequestScreen {
 		return new CancellablePromise((resolve) => {
 			elements.forEach((element) =>
 				document.head.appendChild(
-					UA.isIe ? element : utils.setElementWithRandomHref(element)
+					utils.setElementWithRandomHref(element)
 				)
 			);
 			resolve();

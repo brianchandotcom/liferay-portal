@@ -64,7 +64,7 @@
 	},
 	{
 		"code": "BRL",
-		"name": "Brazilian real",
+		"name": "Brazilian Real",
 		"primary": false,
 		"priority": 10,
 		"symbol": "R$"

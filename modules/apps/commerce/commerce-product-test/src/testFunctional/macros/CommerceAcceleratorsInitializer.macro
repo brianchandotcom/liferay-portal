@@ -46,7 +46,7 @@ definition {
 	}
 
 	macro createNewAccountViaFront {
-		Click.clickNoMouseOver(
+		Click.mouseDownMouseUp(
 			key_text = "Add Account",
 			locator1 = "Button#ANY");
 

@@ -81,7 +81,7 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addViaCKEditor(
+		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

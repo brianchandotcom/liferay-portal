@@ -369,7 +369,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "User Groups");
 
-		UserGroup.addSiteCP(
+		UserGroup.editCP(
 			userGroupName = "UG UserGroup Name",
 			userGroupSite = "Site Template Name");
 

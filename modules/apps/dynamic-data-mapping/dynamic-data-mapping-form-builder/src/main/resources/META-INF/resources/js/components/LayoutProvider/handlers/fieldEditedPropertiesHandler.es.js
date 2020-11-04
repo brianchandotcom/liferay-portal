@@ -22,7 +22,7 @@ const updateState = (props, state, properties) => {
 	const {fieldName: previousFocusedFieldName} = focusedField;
 	let newFocusedField;
 
-	const {defaultLanguageId} = props;
+	const {editingLanguageId} = props;
 
 	if (properties.length === 1) {
 		const [{name, value}] = properties;
@@ -40,7 +40,7 @@ const updateState = (props, state, properties) => {
 									props,
 									nestedField,
 									'label',
-									nestedField.label[defaultLanguageId]
+									nestedField.label[editingLanguageId]
 								);
 							}
 						);

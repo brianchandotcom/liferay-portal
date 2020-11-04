@@ -29,6 +29,7 @@ import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistr
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -54,13 +54,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.io.Serializable;
 
@@ -590,7 +588,7 @@ public class ViewChangesDisplayContext {
 				jsonArray.put(
 					JSONUtil.put(
 						"href",
-						_getHref(
+						PublicationsPortletURLUtil.getHref(
 							_renderResponse.createActionURL(),
 							ActionRequest.ACTION_NAME,
 							"/change_tracking/checkout_ct_collection",
@@ -609,7 +607,7 @@ public class ViewChangesDisplayContext {
 			jsonArray.put(
 				JSONUtil.put(
 					"href",
-					_getHref(
+					PublicationsPortletURLUtil.getHref(
 						_renderResponse.createRenderURL(),
 						"mvcRenderCommandName",
 						"/change_tracking/edit_ct_collection", "redirect",
@@ -625,22 +623,11 @@ public class ViewChangesDisplayContext {
 		if (CTCollectionPermission.contains(
 				permissionChecker, _ctCollection, ActionKeys.PERMISSIONS)) {
 
-			String href = StringBundler.concat(
-				"javascript: Liferay.Util.openWindow({dialog: {destroyOnHide: ",
-				"true,},dialogIframe: {bodyCssClass: 'dialog-with-footer'},",
-				"title:'", _language.get(_httpServletRequest, "permissions"),
-				"',uri:'",
-				PermissionsURLTag.doTag(
-					StringPool.BLANK, CTCollection.class.getName(),
-					HtmlUtil.escape(_ctCollection.getName()), null,
-					String.valueOf(_ctCollection.getCtCollectionId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					_httpServletRequest),
-				"',});");
-
 			jsonArray.put(
 				JSONUtil.put(
-					"href", href
+					"href",
+					PublicationsPortletURLUtil.getPermissionsHref(
+						_httpServletRequest, _ctCollection, _language)
 				).put(
 					"label", _language.get(_httpServletRequest, "permissions")
 				).put(
@@ -651,44 +638,23 @@ public class ViewChangesDisplayContext {
 		if (CTCollectionPermission.contains(
 				permissionChecker, _ctCollection, ActionKeys.DELETE)) {
 
-			jsonArray.put(JSONUtil.put("type", "divider"));
-
-			String href = StringBundler.concat(
-				"javascript:if(confirm('",
-				_language.get(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-delete-this-publication"),
-				"')){ submitForm(document.hrefFm,'",
-				_getHref(
-					_renderResponse.createActionURL(),
-					ActionRequest.ACTION_NAME,
-					"/change_tracking/delete_ct_collection", "redirect",
-					getBackURL(), "ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId())),
-				"');} else{self.focus();}");
-
 			jsonArray.put(
+				JSONUtil.put("type", "divider")
+			).put(
 				JSONUtil.put(
-					"href", href
+					"href",
+					PublicationsPortletURLUtil.getDeleteHref(
+						_httpServletRequest, _renderResponse, getBackURL(),
+						_ctCollection.getCtCollectionId(), _language)
 				).put(
 					"label", _language.get(_httpServletRequest, "delete")
 				).put(
 					"symbolLeft", "times-circle"
-				));
+				)
+			);
 		}
 
 		return jsonArray;
-	}
-
-	private String _getHref(PortletURL portletURL, Object... parameters) {
-		for (int i = 0; i < parameters.length; i += 2) {
-			String parameterName = String.valueOf(parameters[i]);
-			String parameterValue = String.valueOf(parameters[i + 1]);
-
-			portletURL.setParameter(parameterName, parameterValue);
-		}
-
-		return portletURL.toString();
 	}
 
 	private Set<Long> _getRootClassNameIds(CTClosure ctClosure) {

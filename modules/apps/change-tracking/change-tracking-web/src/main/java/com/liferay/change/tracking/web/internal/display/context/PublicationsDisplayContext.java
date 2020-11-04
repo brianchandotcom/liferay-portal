@@ -23,22 +23,19 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Collections;
 import java.util.List;
@@ -239,7 +235,7 @@ public class PublicationsDisplayContext {
 				jsonArray.put(
 					JSONUtil.put(
 						"href",
-						_getHref(
+						PublicationsPortletURLUtil.getHref(
 							_renderResponse.createActionURL(),
 							ActionRequest.ACTION_NAME,
 							"/change_tracking/checkout_ct_collection",
@@ -258,7 +254,7 @@ public class PublicationsDisplayContext {
 			jsonArray.put(
 				JSONUtil.put(
 					"href",
-					_getHref(
+					PublicationsPortletURLUtil.getHref(
 						_renderResponse.createRenderURL(),
 						"mvcRenderCommandName",
 						"/change_tracking/edit_ct_collection", "redirect",
@@ -274,7 +270,7 @@ public class PublicationsDisplayContext {
 		jsonArray.put(
 			JSONUtil.put(
 				"href",
-				_getHref(
+				PublicationsPortletURLUtil.getHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
 					"/change_tracking/view_changes", "backURL",
 					_themeDisplay.getURLCurrent(), "ctCollectionId",
@@ -288,22 +284,11 @@ public class PublicationsDisplayContext {
 		if (CTCollectionPermission.contains(
 				permissionChecker, ctCollection, ActionKeys.PERMISSIONS)) {
 
-			String href = StringBundler.concat(
-				"javascript: Liferay.Util.openWindow({dialog: {destroyOnHide: ",
-				"true,},dialogIframe: {bodyCssClass: 'dialog-with-footer'},",
-				"title:'", _language.get(_httpServletRequest, "permissions"),
-				"',uri:'",
-				PermissionsURLTag.doTag(
-					StringPool.BLANK, CTCollection.class.getName(),
-					HtmlUtil.escape(ctCollection.getName()), null,
-					String.valueOf(ctCollection.getCtCollectionId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					_httpServletRequest),
-				"',});");
-
 			jsonArray.put(
 				JSONUtil.put(
-					"href", href
+					"href",
+					PublicationsPortletURLUtil.getPermissionsHref(
+						_httpServletRequest, ctCollection, _language)
 				).put(
 					"label", _language.get(_httpServletRequest, "permissions")
 				).put(
@@ -314,30 +299,21 @@ public class PublicationsDisplayContext {
 		if (CTCollectionPermission.contains(
 				permissionChecker, ctCollection, ActionKeys.DELETE)) {
 
-			jsonArray.put(JSONUtil.put("type", "divider"));
-
-			String href = StringBundler.concat(
-				"javascript:if(confirm('",
-				_language.get(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-delete-this-publication"),
-				"')){ submitForm(document.hrefFm,'",
-				_getHref(
-					_renderResponse.createActionURL(),
-					ActionRequest.ACTION_NAME,
-					"/change_tracking/delete_ct_collection", "redirect",
-					_themeDisplay.getURLCurrent(), "ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId())),
-				"');} else{self.focus();}");
-
 			jsonArray.put(
+				JSONUtil.put("type", "divider")
+			).put(
 				JSONUtil.put(
-					"href", href
+					"href",
+					PublicationsPortletURLUtil.getDeleteHref(
+						_httpServletRequest, _renderResponse,
+						_themeDisplay.getURLCurrent(),
+						ctCollection.getCtCollectionId(), _language)
 				).put(
 					"label", _language.get(_httpServletRequest, "delete")
 				).put(
 					"symbolLeft", "times-circle"
-				));
+				)
+			);
 		}
 
 		if (isPublishEnabled(ctCollection.getCtCollectionId()) &&
@@ -350,7 +326,7 @@ public class PublicationsDisplayContext {
 				jsonArray.put(
 					JSONUtil.put(
 						"href",
-						_getHref(
+						PublicationsPortletURLUtil.getHref(
 							_renderResponse.createRenderURL(),
 							"mvcRenderCommandName",
 							"/change_tracking/view_conflicts", "redirect",
@@ -367,7 +343,7 @@ public class PublicationsDisplayContext {
 			jsonArray.put(
 				JSONUtil.put(
 					"href",
-					_getHref(
+					PublicationsPortletURLUtil.getHref(
 						_renderResponse.createRenderURL(),
 						"mvcRenderCommandName",
 						"/change_tracking/view_conflicts", "redirect",
@@ -381,17 +357,6 @@ public class PublicationsDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private String _getHref(PortletURL portletURL, Object... parameters) {
-		for (int i = 0; i < parameters.length; i += 2) {
-			String parameterName = String.valueOf(parameters[i]);
-			String parameterValue = String.valueOf(parameters[i + 1]);
-
-			portletURL.setParameter(parameterName, parameterValue);
-		}
-
-		return portletURL.toString();
 	}
 
 	private String _getOrderByCol() {

@@ -658,6 +658,8 @@ definition {
 				webContentTitle = "WC WebContent Title Edit");
 
 			Button.clickSubmitForPublication();
+
+			Pause(locator1 = "2000");
 		}
 
 		task ("View the usages of the Web Content article") {

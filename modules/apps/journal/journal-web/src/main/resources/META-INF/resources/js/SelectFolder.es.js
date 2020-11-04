@@ -19,7 +19,7 @@ import {Treeview} from 'frontend-js-components-web';
 import React, {useCallback, useMemo, useState} from 'react';
 
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
-	const [filterQuery, setFilterQuery] = useState('');
+	const [filter, setFilter] = useState('');
 
 	const nodesById = useMemo(() => {
 		const result = {};
@@ -40,7 +40,7 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	const handleQueryChange = useCallback((event) => {
 		const value = event.target.value;
 
-		setFilterQuery(value);
+		setFilter(value);
 	}, []);
 
 	const handleSelectionChange = (selectedNodeIds) => {
@@ -80,7 +80,7 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 
 			<Treeview
 				NodeComponent={Treeview.Card}
-				filterQuery={filterQuery}
+				filter={filter}
 				nodes={nodes}
 				onSelectedNodesChange={handleSelectionChange}
 			/>

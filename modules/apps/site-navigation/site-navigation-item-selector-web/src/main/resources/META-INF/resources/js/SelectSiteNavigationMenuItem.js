@@ -42,12 +42,12 @@ function findSiteNavigationMenuItem(
 }
 
 const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
-	const [filterQuery, setFilterQuery] = useState('');
+	const [filter, setFilter] = useState('');
 
 	const handleQueryChange = useCallback((event) => {
 		const value = event.target.value;
 
-		setFilterQuery(value);
+		setFilter(value);
 	}, []);
 
 	const handleSelectionChange = (selectedNodeIds) => {
@@ -94,7 +94,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 
 			<Treeview
 				NodeComponent={Treeview.Card}
-				filterQuery={filterQuery}
+				filter={filter}
 				nodes={nodes}
 				onSelectedNodesChange={handleSelectionChange}
 			/>

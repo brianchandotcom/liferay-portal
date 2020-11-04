@@ -319,65 +319,6 @@ definition {
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
-
-		JSONRole.addRegularRole(
-			roleKey = "Test UserGroup Role",
-			roleTitle = "Test UserGroup Role");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet",
-			roleTitle = "Test UserGroup Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.bookmarks",
-			roleTitle = "Test UserGroup Role");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoAssignees(roleTitle = "Test UserGroup Role");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "User Groups");
-
-		Role.addAssignees(assigneeName = "UG UserGroup Name");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
-
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		Navigator.gotoNavTab(navTab = "Control Panel");
-
-		AssertElementNotPresent(
-			key_category = "Sites",
-			locator1 = "ApplicationsMenu#CATEGORY");
-
-		User.logoutUserPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.removeMemberCP(
-			userGroupName = "UG UserGroup Name",
-			userScreenName = "test");
 	}
 
 	@priority = "4"

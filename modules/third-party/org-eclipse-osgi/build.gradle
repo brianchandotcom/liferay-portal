@@ -28,6 +28,7 @@ patch {
 	fileNames "org/eclipse/osgi/internal/framework/FilterImpl.java"
 	fileNames "org/eclipse/osgi/internal/loader/ModuleClassLoader.java"
 	fileNames "org/eclipse/osgi/internal/loader/classpath/ClasspathManager.java"
+	fileNames "org/eclipse/osgi/internal/loader/sources/PackageSource.java"
 	fileNames "org/eclipse/osgi/internal/log/LoggerContextTargetMap.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java"

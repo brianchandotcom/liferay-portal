@@ -173,13 +173,13 @@
 <!--IMAGE_FIELD-->
 <tr>
 	<td>IMAGE_FIELD_SELECT</td>
-	<td>//div[contains(@id, JournalPortlet_Image)]//div[contains(@class, 'button-holder')]//span[contains(text(), 'Select')]</td>
+	<td>//label[contains(.,'Image')]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <!--LINK TO PAGE_FIELD-->
 <tr>
 	<td>LINK_TO_PAGE_SELECT</td>
-	<td>//p[contains(.,'Link to Page')]/..//button[contains(.,'Select')]</td>
+	<td>//label[contains(.,'Link to Page')]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <!--WC_FIELD-->

@@ -21,6 +21,7 @@ import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
+import com.liferay.headless.commerce.admin.account.internal.constants.v1_0.AccountMemberBatchEngineTaskItemDelegateConstants;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountMemberUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Sort;
@@ -39,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
+	property = "batch.engine.task.item.delegate.name=" + AccountMemberBatchEngineTaskItemDelegateConstants.COMMERCE_ACCOUNT_MEMBER,
 	service = BatchEngineTaskItemDelegate.class
 )
 public class AccountMemberBatchEngineTaskItemDelegate

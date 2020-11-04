@@ -128,6 +128,9 @@ public class SegmentsExperimentUtil {
 			String.valueOf(segmentsExperiment.getSegmentsExperimentId())
 		).put(
 			"status", toStatusJSONObject(locale, segmentsExperiment.getStatus())
+		).put(
+			"viewSegmentsExperimentDetailsURL",
+			_getViewSegmentsExperimentDetailsURL(segmentsExperiment)
 		);
 	}
 
@@ -176,6 +179,28 @@ public class SegmentsExperimentUtil {
 		).put(
 			"value", statusObject.getValue()
 		);
+	}
+
+	private static String _getLiferayAnalyticsURL(long companyId) {
+		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
+	}
+
+	private static String _getViewSegmentsExperimentDetailsURL(
+		SegmentsExperiment segmentsExperiment) {
+
+		if (segmentsExperiment == null) {
+			return StringPool.BLANK;
+		}
+
+		String liferayAnalyticsURL = _getLiferayAnalyticsURL(
+			segmentsExperiment.getCompanyId());
+
+		if (Validator.isNull(liferayAnalyticsURL)) {
+			return StringPool.BLANK;
+		}
+
+		return liferayAnalyticsURL + "/tests/overview/" +
+			segmentsExperiment.getSegmentsExperimentKey();
 	}
 
 	private static boolean _isEditable(SegmentsExperiment segmentsExperiment) {

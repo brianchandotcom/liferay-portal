@@ -357,7 +357,7 @@
 	<tag>
 		<description></description>
 		<name>checkbox</name>
-		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.CheckboxTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.CheckboxTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
@@ -366,25 +366,31 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>defaultEventHandler</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -396,7 +402,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, replaced by the attribute <![CDATA[<code>cssClass</code>]]>.</description>
 			<name>elementClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -422,7 +428,7 @@
 		<attribute>
 			<description></description>
 			<name>label</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -432,7 +438,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>showLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -443,6 +449,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
 		<description></description>
@@ -2767,7 +2774,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-
 		<attribute>
 			<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 			<name>contributorKey</name>

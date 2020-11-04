@@ -32,24 +32,32 @@
 
 	<tbody>
 		<tr>
-			<td><clay:checkbox checked="<%= true %>" label="My Input" name="name" showLabel="<%= false %>" /></td>
+			<td><clay:checkbox checked="<%= true %>" name="name" /></td>
 			<td>On</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox label="My Input" name="name" showLabel="<%= false %>" /></td>
+			<td><clay:checkbox name="name" /></td>
 			<td>Off</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox checked="<%= true %>" disabled="<%= true %>" label="My Input" name="name" showLabel="<%= false %>" /></td>
+			<td><clay:checkbox cssClass="custom-css-class" checked="<%= true %>" id="customId" name="name" /></td>
+			<td>With custom class and id</td>
+		</tr>
+		<tr>
+			<td><clay:checkbox label="Checkbox with Label" name="checkboxWithLabel" /></td>
+			<td>With Label</td>
+		</tr>
+		<tr>
+			<td><clay:checkbox checked="<%= true %>" disabled="<%= true %>" name="name" /></td>
 			<td>On disabled</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox disabled="<%= true %>" label="My Input" name="name" showLabel="<%= false %>" /></td>
+			<td><clay:checkbox disabled="<%= true %>" name="name" /></td>
 			<td>Off disabled</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox indeterminate="<%= true %>" label="My Input" name="name" showLabel="<%= false %>" /></td>
-			<td>Checkbox Variable for multiple selection</td>
+			<td><clay:checkbox indeterminate="<%= true %>" name="name" /></td>
+			<td>Indeterminate</td>
 		</tr>
 	</tbody>
 </table>

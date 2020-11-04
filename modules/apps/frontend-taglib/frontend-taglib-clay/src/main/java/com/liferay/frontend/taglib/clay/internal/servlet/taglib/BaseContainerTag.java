@@ -362,14 +362,11 @@ public class BaseContainerTag extends AttributesTagSupport {
 
 		jspWriter.write("<");
 		jspWriter.write(_containerElement);
-		jspWriter.write(" class=\"");
-		jspWriter.write(processCssClasses(new LinkedHashSet<>()));
-		jspWriter.write("\"");
+
+		renderCssClassAttribute();
 
 		if (Validator.isNotNull(getId())) {
-			jspWriter.write(" id=\"");
-			jspWriter.write(getId());
-			jspWriter.write("\"");
+			renderIdAttribute();
 		}
 
 		_writeDynamicAttributes(jspWriter);
@@ -377,6 +374,22 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write(">");
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	protected void renderCssClassAttribute() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write(" class=\"");
+		jspWriter.write(processCssClasses(new LinkedHashSet<>()));
+		jspWriter.write("\"");
+	}
+
+	protected void renderIdAttribute() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write(" id=\"");
+		jspWriter.write(getId());
+		jspWriter.write("\"");
 	}
 
 	private void _writeDynamicAttributes(JspWriter jspWriter) throws Exception {

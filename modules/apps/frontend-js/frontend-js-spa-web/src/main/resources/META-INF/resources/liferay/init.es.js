@@ -108,14 +108,16 @@ const initSPA = function () {
 				if (globals.document.activeElement.matches(buttonSelector)) {
 					globals.capturedFormButtonElement =
 						globals.document.activeElement;
-				} else {
+				}
+				else {
 					globals.capturedFormButtonElement = formElement.querySelector(
 						buttonSelector
 					);
 				}
 
 				app.navigate(utils.getUrlPath(url));
-			} else {
+			}
+			else {
 				formElement.submit();
 			}
 		});
@@ -137,7 +139,8 @@ export default {
 			globals.document.addEventListener('DOMContentLoaded', () => {
 				callback.call(this, initSPA());
 			});
-		} else {
+		}
+		else {
 			callback.call(this, initSPA());
 		}
 	},

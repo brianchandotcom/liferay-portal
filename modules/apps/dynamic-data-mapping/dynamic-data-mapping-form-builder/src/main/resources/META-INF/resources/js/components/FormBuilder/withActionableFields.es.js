@@ -296,8 +296,11 @@ const withActionableFields = (ChildComponent) => {
 		}
 
 		_hasLeftField(relatedTarget) {
-			return !relatedTarget?.closest(
-				'.dropdown-menu,.ddm-field-actions-container'
+			return (
+				relatedTarget &&
+				!relatedTarget.closest(
+					'.dropdown-menu,.ddm-field-actions-container'
+				)
 			);
 		}
 	}

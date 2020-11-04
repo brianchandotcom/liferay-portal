@@ -2118,7 +2118,7 @@ definition {
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(

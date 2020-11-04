@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TEXT</td>
-	<td>//p[contains(.,'${key_fieldFieldLabel}')]//following-sibling::span[contains(@class,'form-text')]</td>
+	<td>//*[contains(.,'${key_fieldFieldLabel}')]//following-sibling::span[contains(@class,'form-text')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Commerce Tax Engine Remote
+Bundle-SymbolicName: com.liferay.commerce.tax.engine.remote
+Bundle-Version: 1.0.0
+Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Web-ContextPath: /commerce-tax-engine-remote

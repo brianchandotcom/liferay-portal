@@ -51,9 +51,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Rubén Pulido
  */
-public class DisplayPageUsagesDisplayContext {
+public class AssetDisplayPageUsagesDisplayContext {
 
-	public DisplayPageUsagesDisplayContext(
+	public AssetDisplayPageUsagesDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -123,7 +123,7 @@ public class DisplayPageUsagesDisplayContext {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName",
-			"/layout_page_template/view_display_page_usages");
+			"/layout_page_template/view_asset_display_page_usages");
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter(
 			"layoutPageTemplateEntryId",

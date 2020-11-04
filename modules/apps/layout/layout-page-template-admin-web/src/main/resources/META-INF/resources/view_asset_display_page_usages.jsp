@@ -17,26 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageUsagesDisplayContext displayPageUsagesDisplayContext = new DisplayPageUsagesDisplayContext(request, renderRequest, renderResponse);
+AssetDisplayPageUsagesDisplayContext assetDisplayPageUsagesDisplayContext = new AssetDisplayPageUsagesDisplayContext(request, renderRequest, renderResponse);
 
-DisplayPageUsagesManagementToolbarDisplayContext displayPageUsagesManagementToolbarDisplayContext = new DisplayPageUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageUsagesDisplayContext.getSearchContainer());
+AssetDisplayPageUsagesManagementToolbarDisplayContext assetDisplayPageUsagesManagementToolbarDisplayContext = new AssetDisplayPageUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPageUsagesDisplayContext.getSearchContainer());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(displayPageUsagesDisplayContext.getRedirect());
+portletDisplay.setURLBack(assetDisplayPageUsagesDisplayContext.getRedirect());
 
-LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(displayPageUsagesDisplayContext.getLayoutPageTemplateEntryId());
+LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(assetDisplayPageUsagesDisplayContext.getLayoutPageTemplateEntryId());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTemplateEntry.getName()));
 %>
 
 <clay:management-toolbar
-	displayContext="<%= displayPageUsagesManagementToolbarDisplayContext %>"
+	displayContext="<%= assetDisplayPageUsagesManagementToolbarDisplayContext %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		id="assetDisplayPageEntries"
-		searchContainer="<%= displayPageUsagesDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= assetDisplayPageUsagesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.display.page.model.AssetDisplayPageEntry"
@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="title"
-				value="<%= HtmlUtil.escape(displayPageUsagesDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
+				value="<%= HtmlUtil.escape(assetDisplayPageUsagesDisplayContext.getTitle(assetDisplayPageEntry, themeDisplay.getLocale())) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -70,6 +70,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 </aui:form>
 
 <liferay-frontend:component
-	componentId="<%= displayPageUsagesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/DisplayPageUsagesManagementToolbarDefaultEventHandler.es"
+	componentId="<%= assetDisplayPageUsagesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AssetDisplayPageUsagesManagementToolbarDefaultEventHandler.es"
 />

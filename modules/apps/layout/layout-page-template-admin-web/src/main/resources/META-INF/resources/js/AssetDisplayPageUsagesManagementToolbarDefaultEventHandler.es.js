@@ -14,8 +14,8 @@
 
 import {DefaultEventHandler} from 'frontend-js-web';
 
-class DisplayPageUsagesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteDisplayPageEntry(itemData) {
+class AssetDisplayPageUsagesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	deleteAssetDisplayPageEntry(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -23,11 +23,14 @@ class DisplayPageUsagesManagementToolbarDefaultEventHandler extends DefaultEvent
 				)
 			)
 		) {
-			submitForm(this.one('#fm'), itemData.deleteDisplayPageEntryURL);
+			submitForm(
+				this.one('#fm'),
+				itemData.deleteAssetDisplayPageEntryURL
+			);
 		}
 	}
 
-	updateDisplayPageEntry(itemData) {
+	updateAssetDisplayPageEntry(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -35,9 +38,12 @@ class DisplayPageUsagesManagementToolbarDefaultEventHandler extends DefaultEvent
 				)
 			)
 		) {
-			submitForm(this.one('#fm'), itemData.updateDisplayPageEntryURL);
+			submitForm(
+				this.one('#fm'),
+				itemData.updateAssetDisplayPageEntryURL
+			);
 		}
 	}
 }
 
-export default DisplayPageUsagesManagementToolbarDefaultEventHandler;
+export default AssetDisplayPageUsagesManagementToolbarDefaultEventHandler;

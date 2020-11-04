@@ -35,10 +35,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Rubén Pulido
  */
-public class DisplayPageUsagesManagementToolbarDisplayContext
+public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public DisplayPageUsagesManagementToolbarDisplayContext(
+	public AssetDisplayPageUsagesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -56,11 +56,12 @@ public class DisplayPageUsagesManagementToolbarDisplayContext
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				dropdownItem.putData("action", "deleteDisplayPageEntry");
+				dropdownItem.putData("action", "deleteAssetDisplayPageEntry");
 				dropdownItem.putData(
-					"deleteDisplayPageEntryURL",
+					"deleteAssetDisplayPageEntryURL",
 					_getPortletURL(
-						"/layout_page_template/delete_display_page_entry"));
+						"/layout_page_template/delete_asset_display_page_" +
+							"entry"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest,
@@ -68,11 +69,12 @@ public class DisplayPageUsagesManagementToolbarDisplayContext
 			}
 		).add(
 			dropdownItem -> {
-				dropdownItem.putData("action", "updateDisplayPageEntry");
+				dropdownItem.putData("action", "updateAssetDisplayPageEntry");
 				dropdownItem.putData(
-					"updateDisplayPageEntryURL",
+					"updateAssetDisplayPageEntryURL",
 					_getPortletURL(
-						"/layout_page_template/update_display_page_entry"));
+						"/layout_page_template/update_asset_display_page_" +
+							"entry"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest,
@@ -83,12 +85,12 @@ public class DisplayPageUsagesManagementToolbarDisplayContext
 
 	@Override
 	public String getComponentId() {
-		return "displayPageUsagesManagementToolbar";
+		return "assetDisplayPageUsagesManagementToolbar";
 	}
 
 	@Override
 	public String getDefaultEventHandler() {
-		return "displayPageUsagesManagementToolbarDefaultEventHandler";
+		return "assetDisplayPageUsagesManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

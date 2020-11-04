@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-		"mvc.command.name=/layout_page_template/delete_display_page_entry"
+		"mvc.command.name=/layout_page_template/delete_asset_display_page_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteDisplayPageEntryMVCActionCommand
+public class DeleteAssetDisplayPageEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

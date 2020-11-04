@@ -39,7 +39,7 @@ public class ViewDisplayPageUsagesMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view_display_page_usages.jsp";
+		return "/view_asset_display_page_usages.jsp";
 	}
 
 }

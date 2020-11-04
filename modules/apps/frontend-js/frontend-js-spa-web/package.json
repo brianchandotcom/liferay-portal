@@ -2,7 +2,6 @@
 	"dependencies": {
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
-		"metal-debounce": "^2.0.2",
 		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",
 		"metal-path-parser": "1.0.4",

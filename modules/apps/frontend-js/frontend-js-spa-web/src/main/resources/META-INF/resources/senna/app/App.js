@@ -12,10 +12,8 @@
  * details.
  */
 
-'use strict';
-
+import {debounce} from 'frontend-js-web';
 import {array, async, isDefAndNotNull, isString, object} from 'metal';
-import debounce from 'metal-debounce';
 import {addClasses, delegate, match, on, removeClasses} from 'metal-dom';
 import {EventEmitter, EventHandler} from 'metal-events';
 import CancellablePromise from 'metal-promise';

@@ -47,6 +47,9 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 		this._strings = strings;
 
 		this.rootNode = document.getElementById(rootNodeId);
+		this.workflowActionInputNode = document.getElementById(
+			`${namespace}workflowAction`
+		);
 
 		this._events = [];
 		this._attachEvents();
@@ -66,8 +69,10 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 	}
 
 	_attachEvents() {
+		const namespace = this._namespace;
+
 		const formatSelect = document.getElementById(
-			`${this._namespace}format`
+			`${namespace}format`
 		);
 
 		if (formatSelect) {
@@ -78,6 +83,28 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 
 			this._addEventListener(formatSelect, 'change', (e) => {
 				this._changeWikiFormat(e);
+			});
+		}
+
+		const publishButton = document.getElementById(
+			`${namespace}publishButton`
+		);
+
+		if (publishButton) {
+			this._addEventListener(publishButton, 'click', (e) => {
+				this.workflowActionInputNode.value = this._constants.ACTION_PUBLISH;
+				this._save();
+			});
+		}
+
+		const saveButton = document.getElementById(
+			`${namespace}saveButton`
+		);
+
+		if (saveButton) {
+			this._addEventListener(saveButton, 'click', (e) => {
+				this.workflowActionInputNode.value = this._constants.ACTION_SAVE_DRAFT;
+				this._save();
 			});
 		}
 	}

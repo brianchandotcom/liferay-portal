@@ -185,7 +185,7 @@
 <!--WC_FIELD-->
 <tr>
 	<td>WC_FIELD_SELECT</td>
-	<td>//p[contains(.,'Web Content')]/..//button[contains(.,'Select')]</td>
+	<td>//label[contains(.,'Web Content')]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 </tbody>

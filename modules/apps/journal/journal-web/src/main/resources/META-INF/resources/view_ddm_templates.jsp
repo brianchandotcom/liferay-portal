@@ -33,7 +33,7 @@ if (ddmStructure != null) {
 	navigationItems='<%= journalDisplayContext.getNavigationItems("templates") %>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>"
 />
 

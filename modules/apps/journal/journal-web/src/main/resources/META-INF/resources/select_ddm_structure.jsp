@@ -22,7 +22,7 @@ JournalSelectDDMStructureDisplayContext journalSelectDDMStructureDisplayContext 
 SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisplayContext.getDDMStructureSearch();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new JournalSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMStructureDisplayContext) %>"
 />
 

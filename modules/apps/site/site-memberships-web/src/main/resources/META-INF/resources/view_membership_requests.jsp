@@ -31,7 +31,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 	navigationItems="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewMembershipRequestsDisplayContext) %>"
 />
 

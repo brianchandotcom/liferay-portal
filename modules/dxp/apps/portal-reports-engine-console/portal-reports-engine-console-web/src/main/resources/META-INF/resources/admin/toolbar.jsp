@@ -61,7 +61,7 @@ portletURL.setParameter("tabs1", tabs1);
 	/>
 </c:if>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= reportsEngineDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= reportsEngineDisplayContext.getCreationMenu() %>"
 	disabled="<%= reportsEngineDisplayContext.isDisabled() %>"

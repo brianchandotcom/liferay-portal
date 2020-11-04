@@ -28,7 +28,7 @@ request.setAttribute(UsersAdminWebKeys.STATUS, viewFlatUsersDisplayContext.getSt
 String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
 />
 

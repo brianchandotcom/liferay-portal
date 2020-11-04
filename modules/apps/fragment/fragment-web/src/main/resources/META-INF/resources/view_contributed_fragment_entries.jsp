@@ -20,7 +20,7 @@
 ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentDisplayContext);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= contributedFragmentManagementToolbarDisplayContext %>"
 />
 

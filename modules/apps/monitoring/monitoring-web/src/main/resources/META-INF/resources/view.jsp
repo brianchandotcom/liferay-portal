@@ -38,7 +38,7 @@ PortletURL sortingURL = PortletURLUtil.clone(portletURL, renderResponse);
 sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	disabled="<%= ListUtil.isEmpty(userTrackers) %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"

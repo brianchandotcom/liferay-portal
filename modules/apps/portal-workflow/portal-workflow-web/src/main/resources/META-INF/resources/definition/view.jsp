@@ -33,7 +33,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("definitionsNavigation", definitionsNavigation);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= workflowDefinitionDisplayContext.getClearResultsURL(request) %>"
 	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
 	filterDropdownItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"

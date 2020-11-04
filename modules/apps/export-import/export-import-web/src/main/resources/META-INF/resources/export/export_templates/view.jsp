@@ -59,7 +59,7 @@ if (liveGroup == null) {
 ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext = new ExportTemplatesToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, liveGroupId, company, portletURL);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= exportTemplatesToolbarDisplayContext %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"

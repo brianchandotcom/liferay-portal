@@ -75,7 +75,7 @@ wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, W
 WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	componentId="wikiNodesManagementToolbar"
 	creationMenu="<%= wikiNodesManagementToolbarDisplayContext.getCreationMenu() %>"

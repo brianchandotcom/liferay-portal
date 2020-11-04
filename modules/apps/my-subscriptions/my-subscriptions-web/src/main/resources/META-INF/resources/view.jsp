@@ -24,7 +24,7 @@ MySubscriptionsManagementToolbarDisplayContext mySubscriptionsManagementToolbarD
 int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotalItems();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= mySubscriptionsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	componentId="mySubscriptionsManagementToolbar"
 	disabled="<%= mySubscriptionsManagementToolbarDisplayContext.isDisabled() %>"

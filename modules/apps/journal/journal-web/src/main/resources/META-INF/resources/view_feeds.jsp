@@ -32,7 +32,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	navigationItems='<%= journalDisplayContext.getNavigationItems("feeds") %>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= journalFeedsManagementToolbarDisplayContext %>"
 />
 

@@ -16,7 +16,7 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= kaleoFormsAdminDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= kaleoFormsAdminDisplayContext.getClearResultsURL() %>"
 	componentId="kaleoFormsManagementToolbar"

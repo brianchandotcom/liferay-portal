@@ -16,7 +16,7 @@
 
 <%@ include file="/polls/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= pollsDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= pollsDisplayContext.getClearResultsURL() %>"
 	componentId="pollsManagementToolbar"

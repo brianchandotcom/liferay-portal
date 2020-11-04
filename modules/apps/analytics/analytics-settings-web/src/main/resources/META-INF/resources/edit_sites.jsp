@@ -35,7 +35,7 @@ GroupDisplayContext groupDisplayContext = new GroupDisplayContext("/analytics_se
 		<liferay-ui:message key="choose-sites-to-sync" />
 	</h2>
 
-	<clay:management-toolbar
+	<clay:management-toolbar-v2
 		displayContext="<%= new GroupManagementToolbarDisplayContext(groupDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 	/>
 

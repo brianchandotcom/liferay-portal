@@ -22,7 +22,7 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionResourcesManagementToolbarDisplayContext = new FragmentCollectionResourcesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionResourcesDisplayContext);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= fragmentCollectionResourcesManagementToolbarDisplayContext %>"
 />
 

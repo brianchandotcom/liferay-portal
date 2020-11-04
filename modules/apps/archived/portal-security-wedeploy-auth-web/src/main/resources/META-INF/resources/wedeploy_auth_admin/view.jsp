@@ -28,7 +28,7 @@ weDeployAuthAppsSearchContainer.setTotal(WeDeployAuthAppLocalServiceUtil.getWeDe
 weDeployAuthAppsSearchContainer.setResults(WeDeployAuthAppLocalServiceUtil.getWeDeployAuthApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new WeDeployAuthAppsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, weDeployAuthAppsSearchContainer) %>"
 />
 

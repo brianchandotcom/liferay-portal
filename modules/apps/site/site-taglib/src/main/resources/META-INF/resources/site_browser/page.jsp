@@ -21,7 +21,7 @@ String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-
 long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
 />
 

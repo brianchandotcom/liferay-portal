@@ -72,7 +72,7 @@ searchBaseURL.setParameter("resetCur", Boolean.TRUE.toString());
 String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPortletResponse.getNamespace() + "keywords");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= searchURL %>"
 	itemsTotal="<%= wikiPagesSearchContainer.getTotal() %>"
 	searchActionURL="<%= searchURL %>"

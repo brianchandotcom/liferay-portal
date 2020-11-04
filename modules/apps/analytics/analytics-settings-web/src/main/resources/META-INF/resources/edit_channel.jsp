@@ -72,7 +72,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 		GroupDisplayContext groupDisplayContext = new GroupDisplayContext("/analytics_settings/edit_channel", renderRequest, renderResponse);
 		%>
 
-		<clay:management-toolbar
+		<clay:management-toolbar-v2
 			displayContext="<%= new GroupManagementToolbarDisplayContext(groupDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 		/>
 

@@ -22,7 +22,7 @@ DepotAdminDisplayContext depotAdminDisplayContext = new DepotAdminDisplayContext
 DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayContext = new DepotAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, depotAdminDisplayContext);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= depotAdminManagementToolbarDisplayContext %>"
 />
 

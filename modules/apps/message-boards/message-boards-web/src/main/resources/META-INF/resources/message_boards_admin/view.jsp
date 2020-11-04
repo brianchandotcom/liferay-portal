@@ -69,7 +69,7 @@ mbAdminListDisplayContext.populateResultsAndTotal(entriesSearchContainer);
 String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	componentId="mbEntriesManagementToolbar"

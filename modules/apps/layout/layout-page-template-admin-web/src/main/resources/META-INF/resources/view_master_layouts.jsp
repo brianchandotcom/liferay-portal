@@ -29,7 +29,7 @@ MasterLayoutDisplayContext masterLayoutDisplayContext = new MasterLayoutDisplayC
 MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplayContext = new MasterLayoutManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, masterLayoutDisplayContext);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= masterLayoutManagementToolbarDisplayContext %>"
 />
 

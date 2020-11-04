@@ -16,7 +16,7 @@
 
 <%@ include file="/definition_link/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"

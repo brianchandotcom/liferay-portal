@@ -62,7 +62,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= kbSuggestionListManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="kbSuggestionListManagementToolbar"

@@ -31,7 +31,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayContext = new DisplayPageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageDisplayContext);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= displayPageManagementToolbarDisplayContext %>"
 />
 

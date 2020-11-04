@@ -24,7 +24,7 @@ String eventName = liferayPortletResponse.getNamespace() + "assignSiteRoles";
 request.setAttribute("view.jsp-eventName", eventName);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= segmentsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= segmentsDisplayContext.getClearResultsURL() %>"
 	componentId="segmentsEntriesManagementToolbar"

@@ -24,7 +24,7 @@
 	navigationItems="<%= siteMySitesDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new SiteMySitesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteMySitesDisplayContext) %>"
 />
 

@@ -22,7 +22,7 @@ DDMFormViewFormInstanceRecordsDisplayContext ddmFormViewFormInstanceRecordsDispl
 PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"
 	componentId="ddmFormInstanceRecordsManagementToolbar"

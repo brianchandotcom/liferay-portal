@@ -74,7 +74,7 @@ if (organization != null) {
 		SearchContainer<Object> searchContainer = viewTreeManagementToolbarDisplayContext.getSearchContainer();
 		%>
 
-		<clay:management-toolbar
+		<clay:management-toolbar-v2
 			actionDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getActionDropdownItems() %>"
 			clearResultsURL="<%= viewTreeManagementToolbarDisplayContext.getClearResultsURL() %>"
 			componentId="viewTreeManagementToolbar"

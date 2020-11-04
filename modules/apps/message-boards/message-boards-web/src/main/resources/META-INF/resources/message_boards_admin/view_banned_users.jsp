@@ -32,7 +32,7 @@ MBBannedUsersManagementToolbarDisplayContext mbBannedUsersManagementToolbarDispl
 int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= mbBannedUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	componentId="mbBannedUsersManagementToolbar"
 	disabled="<%= totalBannedUsers == 0 %>"

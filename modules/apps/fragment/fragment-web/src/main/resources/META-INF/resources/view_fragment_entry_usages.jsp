@@ -142,7 +142,7 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 					</clay:content-row>
 				</h2>
 
-				<clay:management-toolbar
+				<clay:management-toolbar-v2
 					displayContext="<%= fragmentEntryUsageManagementToolbarDisplayContext %>"
 				/>
 

@@ -22,7 +22,7 @@ ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext contentD
 ContentDashboardItemTypeItemSelectorViewDisplayContext contentDashboardItemTypeItemSelectorViewDisplayContext = (ContentDashboardItemTypeItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardItemTypeItemSelectorViewDisplayContext.class.getName());
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= contentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext %>"
 />
 

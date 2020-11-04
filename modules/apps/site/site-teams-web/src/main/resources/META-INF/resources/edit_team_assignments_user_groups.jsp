@@ -27,7 +27,7 @@ EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAss
 	navigationItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext %>"
 />
 

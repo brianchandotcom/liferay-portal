@@ -39,7 +39,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= redirect %>"
 	itemsTotal="<%= configurationEntryIterator.getTotal() %>"
 	searchActionURL="<%= searchURL.toString() %>"

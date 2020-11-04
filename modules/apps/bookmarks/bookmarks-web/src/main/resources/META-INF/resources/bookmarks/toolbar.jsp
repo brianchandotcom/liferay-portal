@@ -20,7 +20,7 @@
 BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContext = new BookmarksManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, bookmarksGroupServiceOverriddenConfiguration, portalPreferences, trashHelper);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= bookmarksManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="bookmarksManagementToolbar"

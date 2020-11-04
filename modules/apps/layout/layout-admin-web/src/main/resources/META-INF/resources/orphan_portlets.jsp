@@ -30,7 +30,7 @@ portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= orphanPortletsManagementToolbarDisplayContext %>"
 />
 

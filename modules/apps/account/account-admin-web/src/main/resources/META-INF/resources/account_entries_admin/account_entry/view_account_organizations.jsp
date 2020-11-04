@@ -29,7 +29,7 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>"
 />
 

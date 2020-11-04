@@ -21,7 +21,7 @@
 	navigationItems="<%= ddmFormBrowserDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= ddmFormBrowserDisplayContext.getClearResultsURL() %>"
 	disabled="<%= ddmFormBrowserDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormBrowserDisplayContext.getFilterItemsDropdownItems() %>"

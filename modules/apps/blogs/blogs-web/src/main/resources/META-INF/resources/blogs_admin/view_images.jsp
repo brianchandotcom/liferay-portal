@@ -50,7 +50,7 @@ BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayCont
 String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	componentId="blogImagesManagementToolbar"

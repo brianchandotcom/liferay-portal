@@ -22,7 +22,7 @@ StyleBookDisplayContext styleBookDisplayContext = new StyleBookDisplayContext(re
 StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContext = new StyleBookManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, styleBookDisplayContext.getStyleBookEntriesSearchContainer());
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= styleBookManagementToolbarDisplayContext %>"
 />
 

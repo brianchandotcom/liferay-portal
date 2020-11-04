@@ -22,7 +22,7 @@ SiteNavigationMenuItemSelectorViewDisplayContext siteNavigationMenuItemSelectorV
 String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationMenuItemSelectorViewDisplayContext) %>"
 />
 

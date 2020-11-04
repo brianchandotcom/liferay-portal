@@ -41,7 +41,7 @@ SearchContainer<PasswordPolicy> searchContainer = viewPasswordPoliciesManagement
 PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getCreationMenu() %>"

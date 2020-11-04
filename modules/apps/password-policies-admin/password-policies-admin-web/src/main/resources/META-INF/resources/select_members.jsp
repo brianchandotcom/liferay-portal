@@ -46,7 +46,7 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 	navigationItems="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"

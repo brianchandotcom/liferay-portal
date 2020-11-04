@@ -22,7 +22,7 @@ DLSelectDDMStructureDisplayContext dlSelectDDMStructureDisplayContext = new DLSe
 SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructureSearch = dlSelectDDMStructureDisplayContext.getDDMStructureSearch();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new DLSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dlSelectDDMStructureDisplayContext) %>"
 />
 

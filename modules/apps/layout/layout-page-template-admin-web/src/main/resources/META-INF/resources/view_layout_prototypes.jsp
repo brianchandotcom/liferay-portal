@@ -29,7 +29,7 @@ LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototyp
 LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarDisplayContext = new LayoutPrototypeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPrototypeDisplayContext);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= layoutPrototypeManagementToolbarDisplayContext %>"
 />
 

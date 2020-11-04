@@ -39,7 +39,7 @@ sortingURL.setParameter("displayStyle", displayStyle);
 sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	creationMenu='<%=
 		new JSPCreationMenu(pageContext) {
 			{

@@ -39,7 +39,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 	/>
 </c:if>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= ddlViewRecordsDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddlViewRecordsDisplayContext.getClearResultsURL() %>"
 	componentId='<%= randomNamespace + "ddlViewRecordsManagementToolbar" %>'

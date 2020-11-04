@@ -20,7 +20,7 @@
 SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.SELECT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= selectSegmentsEntryDisplayContext.getClearResultsURL() %>"
 	componentId="selectSegmentsEntryManagementToolbar"
 	disabled="<%= selectSegmentsEntryDisplayContext.isDisabledManagementBar() %>"

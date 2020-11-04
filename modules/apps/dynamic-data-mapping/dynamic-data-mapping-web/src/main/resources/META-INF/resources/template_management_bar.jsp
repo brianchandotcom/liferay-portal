@@ -20,7 +20,7 @@
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems='<%= ddmDisplayContext.getActionItemsDropdownItems("deleteTemplates") %>'
 	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
 	componentId="ddmTemplateManagementToolbar"

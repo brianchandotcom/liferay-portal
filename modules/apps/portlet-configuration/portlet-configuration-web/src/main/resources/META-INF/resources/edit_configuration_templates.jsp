@@ -32,7 +32,7 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
-			<clay:management-toolbar
+			<clay:management-toolbar-v2
 				displayContext="<%= portletConfigurationTemplatesManagementToolbarDisplayContext %>"
 			/>
 

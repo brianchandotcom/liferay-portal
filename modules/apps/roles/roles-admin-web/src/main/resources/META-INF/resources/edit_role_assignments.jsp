@@ -56,7 +56,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	navigationItems="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="editRoleAssignmentsManagementToolbar"

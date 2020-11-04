@@ -30,7 +30,7 @@ PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
 	searchContainerId="blogEntries"
 	supportsBulkActions="<%= true %>"

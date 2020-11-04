@@ -48,7 +48,7 @@ portletURL.setParameter("tabs1", tabs1);
 	%>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= workflowTaskDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowTaskDisplayContext.getFilterOptions() %>"
 	itemsTotal="<%= workflowTaskDisplayContext.getTotalItems() %>"

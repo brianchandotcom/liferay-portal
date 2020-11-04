@@ -41,7 +41,7 @@ SearchContainer<UserGroup> searchContainer = viewUserGroupsManagementToolbarDisp
 PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= viewUserGroupsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= viewUserGroupsManagementToolbarDisplayContext.getCreationMenu() %>"

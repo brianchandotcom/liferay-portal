@@ -22,7 +22,7 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 searchContainer.setId("selectPublication");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new SelectPublicationManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
 />
 

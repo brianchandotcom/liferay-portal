@@ -67,7 +67,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	%>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= notificationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= notificationsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="notificationsManagementToolbar"

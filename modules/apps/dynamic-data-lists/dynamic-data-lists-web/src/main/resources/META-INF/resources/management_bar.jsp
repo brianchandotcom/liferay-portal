@@ -20,7 +20,7 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= ddlDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddlDisplayContext.getClearResultsURL() %>"
 	componentId="ddlManagementToolbar"

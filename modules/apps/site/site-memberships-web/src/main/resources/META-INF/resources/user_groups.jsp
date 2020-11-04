@@ -29,7 +29,7 @@ Role role = userGroupsDisplayContext.getRole();
 	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= userGroupsManagementToolbarDisplayContext %>"
 />
 

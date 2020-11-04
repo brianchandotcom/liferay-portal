@@ -33,7 +33,7 @@ if (group != null) {
 }
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= siteAdminManagementToolbarDisplayContext %>"
 />
 

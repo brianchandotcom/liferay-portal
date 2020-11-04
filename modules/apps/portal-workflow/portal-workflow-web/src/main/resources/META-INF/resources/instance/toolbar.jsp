@@ -16,7 +16,7 @@
 
 <%@ include file="/instance/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= workflowInstanceViewDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowInstanceViewDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowInstanceViewDisplayContext.getTotalItems() %>"

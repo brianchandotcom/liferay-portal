@@ -66,7 +66,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	%>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= announcementsAdminViewManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="announcementsAdminViewManagementToolbar"

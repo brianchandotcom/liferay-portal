@@ -38,7 +38,7 @@ AppManagerSearchResultsManagementToolbarDisplayContext appManagerSearchResultsMa
 SearchContainer<Object> searchContainer = appManagerSearchResultsManagementToolbarDisplayContext.getSearchContainer();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= redirect %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= appManagerSearchResultsManagementToolbarDisplayContext.getSearchActionURL() %>"

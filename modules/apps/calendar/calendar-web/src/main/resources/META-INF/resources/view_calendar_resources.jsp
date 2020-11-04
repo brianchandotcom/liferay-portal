@@ -20,7 +20,7 @@
 CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(renderRequest);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= calendarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= calendarDisplayContext.getCreationMenu() %>"
 	disabled="<%= calendarDisplayContext.isDisabledManagementBar() %>"

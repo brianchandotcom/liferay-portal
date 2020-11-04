@@ -29,7 +29,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 %>
 
 <c:if test="<%= !stagingGroup %>">
-	<clay:management-toolbar
+	<clay:management-toolbar-v2
 		displayContext="<%= redirectManagementToolbarDisplayContext %>"
 	/>
 </c:if>

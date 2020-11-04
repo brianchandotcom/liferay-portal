@@ -44,7 +44,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 			navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 		/>
 
-		<clay:management-toolbar
+		<clay:management-toolbar-v2
 			displayContext="<%= journalHistoryManagementToolbarDisplayContext %>"
 		/>
 

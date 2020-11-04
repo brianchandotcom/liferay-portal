@@ -28,7 +28,7 @@ SearchContainer<UserGroup> userGroupSearch = selectUserGroupManagementToolbarDis
 renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= selectUserGroupManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= userGroupSearch.getTotal() %>"
 	searchActionURL="<%= selectUserGroupManagementToolbarDisplayContext.getSearchActionURL() %>"

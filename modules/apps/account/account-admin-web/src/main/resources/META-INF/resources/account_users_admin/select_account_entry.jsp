@@ -32,7 +32,7 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 }
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
 />
 

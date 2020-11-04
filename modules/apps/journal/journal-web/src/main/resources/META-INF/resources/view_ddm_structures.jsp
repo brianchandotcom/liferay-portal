@@ -27,7 +27,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 	navigationItems='<%= journalDisplayContext.getNavigationItems("structures") %>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= journalDDMStructuresManagementToolbarDisplayContext %>"
 />
 

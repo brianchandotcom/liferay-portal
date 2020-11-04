@@ -45,7 +45,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	%>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= uadExportProcessManagementToolbarDisplayContext %>"
 />
 

@@ -25,7 +25,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collections") %>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= assetListManagementToolbarDisplayContext %>"
 />
 

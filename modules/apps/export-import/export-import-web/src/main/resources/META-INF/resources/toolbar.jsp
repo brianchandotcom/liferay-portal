@@ -20,7 +20,7 @@
 ExportImportToolbarDisplayContext exportImportToolbarDisplayContext = new ExportImportToolbarDisplayContext(request, liferayPortletResponse);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= exportImportToolbarDisplayContext.getActionDropdownItems() %>"
 	creationMenu="<%= exportImportToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= exportImportToolbarDisplayContext.getFilterDropdownItems() %>"

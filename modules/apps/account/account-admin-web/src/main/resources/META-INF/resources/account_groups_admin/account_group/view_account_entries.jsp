@@ -31,7 +31,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(accountGroupDisplay.getName());
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext %>"
 />
 

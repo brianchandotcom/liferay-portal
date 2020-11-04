@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= new AssetBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetBrowserDisplayContext) %>"
 />
 

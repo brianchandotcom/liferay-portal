@@ -16,7 +16,7 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= ddmFormAdminDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmFormAdminDisplayContext.getClearResultsURL() %>"
 	componentId="ddmFormManagementToolbar"

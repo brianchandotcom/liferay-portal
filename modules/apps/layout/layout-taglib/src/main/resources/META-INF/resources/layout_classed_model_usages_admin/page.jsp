@@ -117,7 +117,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 					</c:choose>
 				</h3>
 
-				<clay:management-toolbar
+				<clay:management-toolbar-v2
 					displayContext="<%= new LayoutClassedModelUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutClassedModelUsagesDisplayContext.getSearchContainer()) %>"
 				/>
 

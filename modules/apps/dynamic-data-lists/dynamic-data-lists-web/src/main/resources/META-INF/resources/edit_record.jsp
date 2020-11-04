@@ -103,7 +103,7 @@ else {
 </portlet:actionURL>
 
 <c:if test="<%= record != null %>">
-	<clay:management-toolbar
+	<clay:management-toolbar-v2
 		infoPanelId="infoPanelId"
 		namespace="<%= liferayPortletResponse.getNamespace() %>"
 		selectable="<%= false %>"

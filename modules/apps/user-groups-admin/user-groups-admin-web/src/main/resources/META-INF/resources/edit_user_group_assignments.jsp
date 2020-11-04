@@ -65,7 +65,7 @@ SearchContainer<User> searchContainer = editUserGroupAssignmentsManagementToolba
 PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="editUserGroupAssignmentsManagementToolbar"

@@ -173,7 +173,7 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("liferay-ui:search:searchContainer");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= clearResultsURL.toString() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"

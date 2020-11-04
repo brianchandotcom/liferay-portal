@@ -29,7 +29,7 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryService
 renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTemplateEntry.getName()));
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= assetDisplayPageUsagesManagementToolbarDisplayContext %>"
 />
 

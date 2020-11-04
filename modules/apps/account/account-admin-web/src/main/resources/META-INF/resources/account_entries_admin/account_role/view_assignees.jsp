@@ -34,7 +34,7 @@ SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = Acco
 ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssigneesManagementToolbarDisplayContext = new ViewAccountRoleAssigneesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleUserDisplaySearchContainer);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewAccountRoleAssigneesManagementToolbarDisplayContext %>"
 />
 

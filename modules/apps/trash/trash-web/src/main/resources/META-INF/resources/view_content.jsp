@@ -24,7 +24,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 <c:choose>
 	<c:when test="<%= trashHandler.isContainerModel() %>">
-		<clay:management-toolbar
+		<clay:management-toolbar-v2
 			displayContext="<%= new TrashContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, trashDisplayContext) %>"
 		/>
 

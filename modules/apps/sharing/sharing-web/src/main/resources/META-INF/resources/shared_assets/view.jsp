@@ -25,7 +25,7 @@ ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAsset
 	navigationItems="<%= viewSharedAssetsDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	defaultEventHandler='<%= liferayPortletResponse.getNamespace() + "SharedAssets" %>'
 	filterDropdownItems="<%= viewSharedAssetsDisplayContext.getFilterDropdownItems() %>"
 	selectable="<%= false %>"

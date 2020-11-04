@@ -92,7 +92,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					<%= LanguageUtil.format(request, "content-x", contentDashboardAdminDisplayContext.getSearchContainer().getTotal(), false) %>
 				</h2>
 
-				<clay:management-toolbar
+				<clay:management-toolbar-v2
 					displayContext="<%= contentDashboardAdminManagementToolbarDisplayContext %>"
 					elementClasses="content-dashboard-management-toolbar"
 				/>

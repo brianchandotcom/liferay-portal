@@ -40,7 +40,7 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.Du
 RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDisplayContext)request.getAttribute(ResultRankingsPortletKeys.RESULT_RANKINGS_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= rankingPortletDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= rankingPortletDisplayContext.getClearResultsURL() %>"
 	componentId="resultsRankingEntriesManagementToolbar"

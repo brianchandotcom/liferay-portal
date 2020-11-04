@@ -44,7 +44,7 @@ else {
 	navigationItems='<%= journalDisplayContext.getNavigationItems("web-content") %>'
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= journalManagementToolbarDisplayContext %>"
 />
 

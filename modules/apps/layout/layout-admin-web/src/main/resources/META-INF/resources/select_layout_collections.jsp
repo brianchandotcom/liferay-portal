@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 />
 
 <c:if test="<%= selectLayoutCollectionDisplayContext.isCollections() %>">
-	<clay:management-toolbar
+	<clay:management-toolbar-v2
 		displayContext="<%= selectCollectionManagementToolbarDisplayContext %>"
 	/>
 </c:if>

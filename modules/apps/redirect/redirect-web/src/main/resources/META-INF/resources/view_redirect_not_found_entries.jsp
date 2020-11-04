@@ -24,7 +24,7 @@ SearchContainer<RedirectNotFoundEntry> redirectNotFoundEntriesSearchContainer = 
 RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesManagementToolbarDisplayContext = new RedirectNotFoundEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectNotFoundEntriesSearchContainer);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= redirectNotFoundEntriesManagementToolbarDisplayContext %>"
 />
 

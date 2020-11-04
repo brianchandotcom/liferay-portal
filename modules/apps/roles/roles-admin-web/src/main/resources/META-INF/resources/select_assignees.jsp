@@ -47,7 +47,7 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 	navigationItems="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= editRoleAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
 	defaultEventHandler="<%= editRoleAssignmentsManagementToolbarDisplayContext.getDefaultEventHandler() %>"

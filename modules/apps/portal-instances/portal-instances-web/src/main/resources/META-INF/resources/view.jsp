@@ -24,7 +24,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	creationMenu='<%=
 		new JSPCreationMenu(pageContext) {
 			{

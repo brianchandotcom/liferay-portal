@@ -20,7 +20,7 @@
 PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= ddmDataProviderDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmDataProviderDisplayContext.getClearResultsURL() %>"
 	componentId="ddmDataProviderManagementToolbar"

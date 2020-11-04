@@ -119,7 +119,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 					</c:choose>
 				</h3>
 
-				<clay:management-toolbar
+				<clay:management-toolbar-v2
 					displayContext="<%= new AssetEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetEntryUsagesDisplayContext.getSearchContainer()) %>"
 				/>
 

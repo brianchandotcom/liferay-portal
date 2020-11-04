@@ -39,7 +39,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(liferayPortletResponse, portletURL) %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= viewRolesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= viewRolesManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="viewRolesManagementToolbar"

@@ -22,7 +22,7 @@ OAuth2ConnectedApplicationsManagementToolbarDisplayContext oAuth2ConnectedApplic
 int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2AuthorizationsCount();
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= userOAuth2AuthorizationsCount == 0 %>"
 	filterDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"

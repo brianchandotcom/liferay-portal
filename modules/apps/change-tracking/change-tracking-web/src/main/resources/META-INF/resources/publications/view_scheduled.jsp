@@ -30,7 +30,7 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 	navigationItems="<%= viewScheduledDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewScheduledManagementToolbarDisplayContext %>"
 />
 

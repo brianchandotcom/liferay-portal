@@ -16,7 +16,7 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	clearResultsURL="<%= kaleoDesignerDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= kaleoDesignerDisplayContext.getCreationMenu(pageContext) %>"
 	filterDropdownItems="<%= kaleoDesignerDisplayContext.getFilterItemsDropdownItems() %>"

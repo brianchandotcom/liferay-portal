@@ -34,7 +34,7 @@ page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.cont
 SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.getAttribute(SynonymsPortletKeys.SYNONYMS_DISPLAY_CONTEXT);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= synonymsDisplayContext.getActionDropdownMultipleItems() %>"
 	componentId="synonymSetsEntriesManagementToolbar"
 	creationMenu="<%= synonymsDisplayContext.getCreationMenu() %>"

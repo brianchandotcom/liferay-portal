@@ -22,7 +22,7 @@
 
 <h3>DEFAULT STATE</h3>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	creationMenu="<%= managementToolbarsDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="mySearchActionURL?key1=val1&key2=val2&key3=val3"
@@ -35,7 +35,7 @@
 
 <h3>ACTIVE STATE</h3>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= managementToolbarsDisplayContext.getActionDropdownItems() %>"
 	checkboxStatus="checked"
 	itemsTotal="<%= 42 %>"
@@ -45,7 +45,7 @@
 
 <h3>WITH RESULTS BAR</h3>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	creationMenu="<%= managementToolbarsDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= managementToolbarsDisplayContext.getFilterLabelItems() %>"

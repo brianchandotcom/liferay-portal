@@ -37,7 +37,7 @@ GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageMa
 			<clay:col
 				lg="12"
 			>
-				<clay:management-toolbar
+				<clay:management-toolbar-v2
 					displayContext="<%= groupFragmentEntryUsageManagementToolbarDisplayContext %>"
 				/>
 

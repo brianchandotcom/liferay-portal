@@ -22,7 +22,7 @@ SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = Accoun
 ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementToolbarDisplayContext = new ViewAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewAccountEntriesManagementToolbarDisplayContext %>"
 />
 

@@ -33,7 +33,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 	}
 </style>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
 />
 

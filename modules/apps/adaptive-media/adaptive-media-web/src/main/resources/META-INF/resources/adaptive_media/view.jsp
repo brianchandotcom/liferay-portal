@@ -20,7 +20,7 @@
 AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, currentURLObj);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	creationMenu="<%= amManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"

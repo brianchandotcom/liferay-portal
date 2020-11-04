@@ -22,7 +22,7 @@ SearchContainer<AccountGroupDisplay> accountGroupDisplaySearchContainer = Accoun
 ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementToolbarDisplayContext = new ViewAccountGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountGroupDisplaySearchContainer);
 %>
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	displayContext="<%= viewAccountGroupsManagementToolbarDisplayContext %>"
 />
 

@@ -18,7 +18,7 @@
 
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />
 
-<clay:management-toolbar
+<clay:management-toolbar-v2
 	actionDropdownItems="<%= layoutSetPrototypeDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= layoutSetPrototypeDisplayContext.getClearResultsURL() %>"
 	componentId="layoutSetPrototypeWebManagementToolbar"

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -114,13 +113,12 @@ public class PublicationsDisplayContext {
 		return ParamUtil.getString(_renderRequest, "displayStyle", "list");
 	}
 
-	public Map<String, Object> getDropdownReactData(CTCollection ctCollection) {
+	public Map<String, Object> getDropdownReactData(
+		CTCollection ctCollection, PermissionChecker permissionChecker) {
+
 		return HashMapBuilder.<String, Object>put(
 			"dropdownItems",
 			() -> {
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
-
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				if (CTCollectionPermission.contains(

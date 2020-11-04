@@ -99,7 +99,7 @@ portletDisplay.setShowBackIcon(true);
 
 						<react:component
 							module="publications/js/DropdownMenu"
-							props="<%= viewChangesDisplayContext.getDropdownReactData() %>"
+							props="<%= viewChangesDisplayContext.getDropdownReactData(permissionChecker) %>"
 						/>
 					</li>
 				</c:when>

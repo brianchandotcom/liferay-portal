@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -153,13 +152,12 @@ public class ViewChangesDisplayContext {
 		return _ctCollection;
 	}
 
-	public Map<String, Object> getDropdownReactData() {
+	public Map<String, Object> getDropdownReactData(
+		PermissionChecker permissionChecker) {
+
 		return HashMapBuilder.<String, Object>put(
 			"dropdownItems",
 			() -> {
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
-
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				if (CTCollectionPermission.contains(

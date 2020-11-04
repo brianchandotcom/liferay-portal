@@ -125,7 +125,7 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 
 					<react:component
 						module="publications/js/DropdownMenu"
-						props="<%= publicationsDisplayContext.getDropdownReactData(ctCollection) %>"
+						props="<%= publicationsDisplayContext.getDropdownReactData(ctCollection, permissionChecker) %>"
 					/>
 				</div>
 			</liferay-ui:search-container-column-text>

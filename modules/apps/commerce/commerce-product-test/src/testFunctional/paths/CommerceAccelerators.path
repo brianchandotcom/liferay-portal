@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_SWITCHER_BACK_BUTTON</td>
+	<td>//button[@class='commerce-account-switcher__back']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SWITCHER_EMPTY_TABLE</td>
 	<td>//div[@class='commerce-account-switcher__empty-table']</td>
 	<td></td>

@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
 import {
@@ -26,7 +26,7 @@ import {
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-import {Checkbox, HelpMessage, Input, RequiredMark} from './form/Components';
+import {HelpMessage, Input, RequiredMark} from './form/Components';
 import {alphanumeric, required, validate} from './form/validations';
 
 const scrollToTop = () => window.scrollTo({behavior: 'smooth', top: 0});
@@ -274,15 +274,16 @@ const EditAdaptiveMedia = ({
 				</ClayLayout.Row>
 
 				{!amImageConfigurationEntry && (
-					<Checkbox
+					<ClayCheckbox
 						checked={addHighResolution}
 						label={Liferay.Language.get(
 							'add-a-resolution-for-high-density-displays'
 						)}
 						name={highResolutionId}
-						onChange={() =>
-							setAddHighResolution(!addHighResolution)
-						}
+						onChange={() => {
+							setAddHighResolution(!addHighResolution);
+							setFieldValue(highResolutionId, !addHighResolution);
+						}}
 					/>
 				)}
 			</div>

@@ -12,12 +12,10 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-const Checkbox = ({...restProps}) => <ClayCheckbox value="on" {...restProps} />;
 
 const ErrorFeedback = ({error}) => {
 	return (
@@ -106,4 +104,4 @@ const RequiredMark = () => {
 	);
 };
 
-export {Checkbox, ErrorFeedback, Input, HelpMessage, RequiredMark};
+export {ErrorFeedback, Input, HelpMessage, RequiredMark};

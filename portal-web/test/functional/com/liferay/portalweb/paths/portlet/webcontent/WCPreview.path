@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_IMAGE</td>
+	<td>//img[contains(@src,'${key_imageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD</td>
 	<td>//div[@class='portlet-body']/div[contains(@class,'m-4')]</td>
 	<td></td>

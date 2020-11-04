@@ -357,8 +357,8 @@ StringCastCheck | [Performance](performance_checks.markdown#performance-checks) 
 SubstringCheck | [Performance](performance_checks.markdown#performance-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds cases like `s.substring(1, s.length())` (use `s.substring(1)` instead). |
 TLDElementOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .tld | Checks the order of attributers in `.tld` file. |
 TLDTypeCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
-TXTEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | Finds missing and unnecessary empty lines. |
-TXTStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | Applies rules to enforce consisteny in code style. |
+TXTEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | | Finds missing and unnecessary empty lines. |
+TXTStylingCheck | [Styling](styling_checks.markdown#styling-checks) | | Applies rules to enforce consisteny in code style. |
 TernaryOperatorCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds use of ternary operator in `java` files (use if statement instead). |
 TestClassCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java | Checks that names of test classes follow naming conventions. |
 ThreadLocalUtilCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds new instances of `java.lang.Thread` (use `ThreadLocalUtil.create` instead). |

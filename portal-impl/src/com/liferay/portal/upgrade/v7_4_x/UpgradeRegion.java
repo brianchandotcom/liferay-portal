@@ -63,6 +63,12 @@ public class UpgradeRegion extends UpgradeProcess {
 				RegionTable.class,
 				new AlterTableAddColumn("lastPublishDate", "DATE null"));
 		}
+
+		if (!hasColumn("Region", "uuid_")) {
+			alter(
+				RegionTable.class,
+				new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
+		}
 	}
 
 }

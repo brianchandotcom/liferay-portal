@@ -2416,12 +2416,7 @@ definition {
 					locator1 = "DDMField#RICH_TEXT",
 					value1 = "${webContentRichText}");
 			}
-			else if (isSet(webContentTextBoxFieldName)) {
-				AssertTextEquals(
-					key_fieldName = "${webContentTextBoxFieldName}",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
-			}
+
 			else {
 				AssertTextEquals(
 					key_fieldName = "TextBox",

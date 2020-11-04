@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -135,13 +134,18 @@ public class ViewChangesDisplayContext {
 	}
 
 	public String getBackURL() {
-		String backURL = ParamUtil.getString(_renderRequest, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			return backURL;
-		}
-
 		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/change_tracking/view_history");
+		}
+		else if (_ctCollection.getStatus() ==
+					WorkflowConstants.STATUS_SCHEDULED) {
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/change_tracking/view_scheduled");
+		}
 
 		return portletURL.toString();
 	}

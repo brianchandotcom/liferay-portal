@@ -124,8 +124,6 @@ public class PublicationsDisplayContext {
 		reviewURL.setParameter(
 			"mvcRenderCommandName", "/change_tracking/view_changes");
 		reviewURL.setParameter(
-			"backURL", _portal.getCurrentURL(_renderRequest));
-		reviewURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
 
 		return reviewURL.toString();
@@ -272,8 +270,7 @@ public class PublicationsDisplayContext {
 				"href",
 				PublicationsPortletURLUtil.getHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_tracking/view_changes", "backURL",
-					_themeDisplay.getURLCurrent(), "ctCollectionId",
+					"/change_tracking/view_changes", "ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()))
 			).put(
 				"label", _language.get(_httpServletRequest, "review-changes")

@@ -54,7 +54,6 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 			<liferay-portlet:renderURL var="changesURL">
 				<portlet:param name="mvcRenderCommandName" value="/change_tracking/view_changes" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 			</liferay-portlet:renderURL>
 

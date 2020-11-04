@@ -25,6 +25,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class TranslationEntryLocalServiceImpl
 	extends TranslationEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String languageId,
@@ -84,6 +87,7 @@ public class TranslationEntryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String className, long classPK, String content,
@@ -167,6 +171,7 @@ public class TranslationEntryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public TranslationEntry updateStatus(
 			long userId, long translationEntryId, int status,

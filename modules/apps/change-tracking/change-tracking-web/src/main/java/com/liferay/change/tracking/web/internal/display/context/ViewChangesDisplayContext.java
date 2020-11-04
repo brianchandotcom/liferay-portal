@@ -153,119 +153,11 @@ public class ViewChangesDisplayContext {
 	}
 
 	public Map<String, Object> getDropdownReactData(
-		PermissionChecker permissionChecker) {
+			PermissionChecker permissionChecker)
+		throws Exception {
 
-		return HashMapBuilder.<String, Object>put(
-			"dropdownItems",
-			() -> {
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-				if (CTCollectionPermission.contains(
-						permissionChecker, _ctCollection, ActionKeys.UPDATE)) {
-
-					if (_ctCollection.getCtCollectionId() !=
-							_activeCTCollectionId) {
-
-						jsonArray.put(
-							JSONUtil.put(
-								"href",
-								_getHref(
-									_renderResponse.createActionURL(),
-									ActionRequest.ACTION_NAME,
-									"/change_tracking/checkout_ct_collection",
-									"redirect", _themeDisplay.getURLCurrent(),
-									"ctCollectionId",
-									String.valueOf(
-										_ctCollection.getCtCollectionId()))
-							).put(
-								"label",
-								_language.get(
-									_httpServletRequest, "work-on-publication")
-							).put(
-								"symbolLeft", "radio-button"
-							));
-					}
-
-					jsonArray.put(
-						JSONUtil.put(
-							"href",
-							_getHref(
-								_renderResponse.createRenderURL(),
-								"mvcRenderCommandName",
-								"/change_tracking/edit_ct_collection",
-								"redirect", _themeDisplay.getURLCurrent(),
-								"ctCollectionId",
-								String.valueOf(
-									_ctCollection.getCtCollectionId()))
-						).put(
-							"label", _language.get(_httpServletRequest, "edit")
-						).put(
-							"symbolLeft", "pencil"
-						));
-				}
-
-				if (CTCollectionPermission.contains(
-						permissionChecker, _ctCollection,
-						ActionKeys.PERMISSIONS)) {
-
-					String href = StringBundler.concat(
-						"javascript: Liferay.Util.openWindow({dialog: {",
-						"destroyOnHide: true,},dialogIframe: {bodyCssClass: ",
-						"'dialog-with-footer'},title:'",
-						_language.get(_httpServletRequest, "permissions"),
-						"',uri:'",
-						PermissionsURLTag.doTag(
-							StringPool.BLANK, CTCollection.class.getName(),
-							HtmlUtil.escape(_ctCollection.getName()), null,
-							String.valueOf(_ctCollection.getCtCollectionId()),
-							LiferayWindowState.POP_UP.toString(), null,
-							_httpServletRequest),
-						"',});");
-
-					jsonArray.put(
-						JSONUtil.put(
-							"href", href
-						).put(
-							"label",
-							_language.get(_httpServletRequest, "permissions")
-						).put(
-							"symbolLeft", "password-policies"
-						));
-				}
-
-				if (CTCollectionPermission.contains(
-						permissionChecker, _ctCollection, ActionKeys.DELETE)) {
-
-					jsonArray.put(JSONUtil.put("type", "divider"));
-
-					String href = StringBundler.concat(
-						"javascript:if(confirm('",
-						_language.get(
-							_httpServletRequest,
-							"are-you-sure-you-want-to-delete-this-publication"),
-						"')){ submitForm(document.hrefFm,'",
-						_getHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME,
-							"/change_tracking/delete_ct_collection", "redirect",
-							getBackURL(), "ctCollectionId",
-							String.valueOf(_ctCollection.getCtCollectionId())),
-						"');} else{self.focus();}");
-
-					jsonArray.put(
-						JSONUtil.put(
-							"href", href
-						).put(
-							"label",
-							_language.get(_httpServletRequest, "delete")
-						).put(
-							"symbolLeft", "times-circle"
-						));
-				}
-
-				return jsonArray;
-			}
-		).build();
+		return Collections.singletonMap(
+			"dropdownItems", _getDropdownItemsJSONArray(permissionChecker));
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {
@@ -683,6 +575,109 @@ public class ViewChangesDisplayContext {
 		}
 
 		return contextViewJSONObject;
+	}
+
+	private JSONArray _getDropdownItemsJSONArray(
+			PermissionChecker permissionChecker)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (CTCollectionPermission.contains(
+				permissionChecker, _ctCollection, ActionKeys.UPDATE)) {
+
+			if (_ctCollection.getCtCollectionId() != _activeCTCollectionId) {
+				jsonArray.put(
+					JSONUtil.put(
+						"href",
+						_getHref(
+							_renderResponse.createActionURL(),
+							ActionRequest.ACTION_NAME,
+							"/change_tracking/checkout_ct_collection",
+							"redirect", _themeDisplay.getURLCurrent(),
+							"ctCollectionId",
+							String.valueOf(_ctCollection.getCtCollectionId()))
+					).put(
+						"label",
+						_language.get(
+							_httpServletRequest, "work-on-publication")
+					).put(
+						"symbolLeft", "radio-button"
+					));
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href",
+					_getHref(
+						_renderResponse.createRenderURL(),
+						"mvcRenderCommandName",
+						"/change_tracking/edit_ct_collection", "redirect",
+						_themeDisplay.getURLCurrent(), "ctCollectionId",
+						String.valueOf(_ctCollection.getCtCollectionId()))
+				).put(
+					"label", _language.get(_httpServletRequest, "edit")
+				).put(
+					"symbolLeft", "pencil"
+				));
+		}
+
+		if (CTCollectionPermission.contains(
+				permissionChecker, _ctCollection, ActionKeys.PERMISSIONS)) {
+
+			String href = StringBundler.concat(
+				"javascript: Liferay.Util.openWindow({dialog: {destroyOnHide: ",
+				"true,},dialogIframe: {bodyCssClass: 'dialog-with-footer'},",
+				"title:'", _language.get(_httpServletRequest, "permissions"),
+				"',uri:'",
+				PermissionsURLTag.doTag(
+					StringPool.BLANK, CTCollection.class.getName(),
+					HtmlUtil.escape(_ctCollection.getName()), null,
+					String.valueOf(_ctCollection.getCtCollectionId()),
+					LiferayWindowState.POP_UP.toString(), null,
+					_httpServletRequest),
+				"',});");
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href", href
+				).put(
+					"label", _language.get(_httpServletRequest, "permissions")
+				).put(
+					"symbolLeft", "password-policies"
+				));
+		}
+
+		if (CTCollectionPermission.contains(
+				permissionChecker, _ctCollection, ActionKeys.DELETE)) {
+
+			jsonArray.put(JSONUtil.put("type", "divider"));
+
+			String href = StringBundler.concat(
+				"javascript:if(confirm('",
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-publication"),
+				"')){ submitForm(document.hrefFm,'",
+				_getHref(
+					_renderResponse.createActionURL(),
+					ActionRequest.ACTION_NAME,
+					"/change_tracking/delete_ct_collection", "redirect",
+					getBackURL(), "ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId())),
+				"');} else{self.focus();}");
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href", href
+				).put(
+					"label", _language.get(_httpServletRequest, "delete")
+				).put(
+					"symbolLeft", "times-circle"
+				));
+		}
+
+		return jsonArray;
 	}
 
 	private String _getHref(PortletURL portletURL, Object... parameters) {

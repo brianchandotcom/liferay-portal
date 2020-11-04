@@ -453,19 +453,11 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "Collaboration Test Application");
 
-		if (IsElementNotPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
-			Navigator.openURL();
+		Pause(locator1 = "3000");
 
-			Navigator.gotoPage(pageName = "Documents and Media Page");
-
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			Pause(locator1 = "3000");
-
-			DMNavigator.gotoRepository(
-				dmRepositoryName = "Collaboration Test Application",
-				guest = "true");
-		}
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Document_1.doc",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 
 		User.loginUserPG(
 			password = "test",

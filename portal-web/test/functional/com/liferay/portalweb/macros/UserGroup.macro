@@ -47,27 +47,6 @@ definition {
 		}
 	}
 
-	macro addSiteCP {
-		UserGroup.gotoActionsCmd(userGroupName = "${userGroupName}");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
-
-		if (isSet(userGroupSite)) {
-			Select(
-				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
-				value1 = "${userGroupSite}");
-
-			if ("${checkEnablePropagationCheckbox}" == "true") {
-				AssertChecked(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
-			}
-			else {
-				Uncheck(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
-			}
-		}
-
-		PortletEntry.save();
-	}
-
 	macro assignAllMembersCP {
 		Search.searchCP(searchTerm = "${userGroupName}");
 

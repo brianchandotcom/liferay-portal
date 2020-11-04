@@ -22,7 +22,7 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -67,16 +67,15 @@ public class CProductInfoListProvider implements InfoListProvider<CProduct> {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		return LanguageUtil.get(_getResourceBundle(locale), "products");
+	}
 
-		return LanguageUtil.get(resourceBundle, "products");
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	@Reference
 	private CProductLocalService _cProductLocalService;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.commerce.lang)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

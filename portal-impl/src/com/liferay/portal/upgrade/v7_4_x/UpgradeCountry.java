@@ -24,6 +24,8 @@ public class UpgradeCountry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		runSQLTemplate("update-7.3.0-7.4.0-country.sql", false);
+
 		if (!hasColumn("Country", "uuid_")) {
 			alter(
 				CountryTable.class,

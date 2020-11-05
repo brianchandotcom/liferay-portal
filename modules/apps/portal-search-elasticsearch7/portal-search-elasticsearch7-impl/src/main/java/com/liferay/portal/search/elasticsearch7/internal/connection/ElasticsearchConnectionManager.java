@@ -114,11 +114,21 @@ public class ElasticsearchConnectionManager
 	public ElasticsearchConnection getElasticsearchConnection(
 		String connectionId) {
 
+		ElasticsearchConnection elasticsearchConnection =
+			_elasticsearchConnections.get(connectionId);
+
 		if (_log.isInfoEnabled()) {
-			_log.info("Getting connection with ID: " + connectionId);
+			if (elasticsearchConnection != null) {
+				_log.info("Returning connection with ID: " + connectionId);
+			}
+			else {
+				_log.info(
+					"Connection not found. Returning null for ID: " +
+						connectionId);
+			}
 		}
 
-		return _elasticsearchConnections.get(connectionId);
+		return elasticsearchConnection;
 	}
 
 	public String getLocalClusterConnectionId() {
@@ -267,12 +277,16 @@ public class ElasticsearchConnectionManager
 	protected ElasticsearchConnection getElasticsearchConnection(
 		String connectionId, boolean preferLocalCluster) {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Connection requested for ID: " + connectionId);
+		}
+
 		if (!Validator.isBlank(connectionId)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Getting connection with ID: " + connectionId);
 			}
 
-			return _elasticsearchConnections.get(connectionId);
+			return getElasticsearchConnection(connectionId);
 		}
 
 		if (operationModeResolver.isDevelopmentModeEnabled()) {
@@ -282,7 +296,7 @@ public class ElasticsearchConnectionManager
 						" connection");
 			}
 
-			return _elasticsearchConnections.get(
+			return getElasticsearchConnection(
 				ConnectionConstants.SIDECAR_CONNECTION_ID);
 		}
 
@@ -296,7 +310,7 @@ public class ElasticsearchConnectionManager
 							localClusterConnectionId);
 				}
 
-				return _elasticsearchConnections.get(localClusterConnectionId);
+				return getElasticsearchConnection(localClusterConnectionId);
 			}
 		}
 
@@ -314,7 +328,7 @@ public class ElasticsearchConnectionManager
 					remoteClusterConnectionId);
 		}
 
-		return _elasticsearchConnections.get(remoteClusterConnectionId);
+		return getElasticsearchConnection(remoteClusterConnectionId);
 	}
 
 	@Reference(unbind = "-")

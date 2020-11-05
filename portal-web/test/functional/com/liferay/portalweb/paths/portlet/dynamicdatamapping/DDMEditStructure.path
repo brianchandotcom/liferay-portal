@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER</td>
-	<td>//div[contains(@class,'ddm-field-container')]//label[.='${key_fieldFieldLabel}']/../../div</td>
+	<td>//div[contains(@class,'ddm-field-container')]//*[.='${key_fieldFieldLabel}']/../../div</td>
 	<td></td>
 </tr>
 <tr>

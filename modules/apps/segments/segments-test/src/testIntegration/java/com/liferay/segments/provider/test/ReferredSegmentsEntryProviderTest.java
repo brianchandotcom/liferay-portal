@@ -399,8 +399,7 @@ public class ReferredSegmentsEntryProviderTest {
 
 		Context context = new Context();
 
-		context.put(Context.LANGUAGE_ID, "en");
-		context.put(Context.SIGNED_IN, true);
+		context.put("languageId", "en");
 
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(

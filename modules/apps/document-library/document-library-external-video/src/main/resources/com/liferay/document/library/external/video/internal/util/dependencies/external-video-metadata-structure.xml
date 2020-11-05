@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>EXTERNAL_VIDEO</name>
+		<description>external-video-metadata</description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"[$LOCALE_DEFAULT$]"
+					],
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "DESCRIPTION"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "DESCRIPTION",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "TITLE"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "TITLE",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "URL"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "URL",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
+							"dataType": "html",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "HTML"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "HTML",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						}
+					]
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"DESCRIPTION"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"EMBEDDABLE_URL"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"ICON_URL"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"ID"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"NAME"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"URL"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "External Video Metadata"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

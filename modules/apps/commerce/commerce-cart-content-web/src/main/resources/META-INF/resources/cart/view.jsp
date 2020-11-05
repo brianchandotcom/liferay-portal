@@ -78,16 +78,26 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 				>
 
 					<%
-					CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+					CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 
-					String thumbnailSrc = commerceCartContentDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem);
+					long cpDefinitionId = 0;
 
-					List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.getKeyValuePairs(commerceOrderItem.getCPDefinitionId(), commerceOrderItem.getJson(), locale);
+					String thumbnailSrc = StringPool.BLANK;
 
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-					for (KeyValuePair keyValuePair : keyValuePairs) {
-						stringJoiner.add(keyValuePair.getValue());
+					if (cpInstance != null) {
+						CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+						cpDefinitionId = cpDefinition.getCPDefinitionId();
+
+						thumbnailSrc = commerceCartContentDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem);
+
+						List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.getKeyValuePairs(commerceOrderItem.getCPDefinitionId(), commerceOrderItem.getJson(), locale);
+
+						for (KeyValuePair keyValuePair : keyValuePairs) {
+							stringJoiner.add(keyValuePair.getValue());
+						}
 					}
 					%>
 
@@ -99,8 +109,8 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					<liferay-ui:search-container-column-text
 						name="description"
 					>
-						<a class="font-weight-bold" href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-							<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
+						<a class="font-weight-bold" href="<%= (cpDefinitionId == 0) ? StringPool.BLANK : commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinitionId, themeDisplay) %>">
+							<%= HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
 						</a>
 
 						<h6 class="text-default">

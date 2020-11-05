@@ -62,6 +62,13 @@ public class TranslationEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.translation.model.TranslationEntry
+			deleteTranslationEntry(long translationEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteTranslationEntry(translationEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

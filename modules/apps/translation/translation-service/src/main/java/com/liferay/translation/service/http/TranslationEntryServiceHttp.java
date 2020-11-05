@@ -143,6 +143,47 @@ public class TranslationEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.translation.model.TranslationEntry
+			deleteTranslationEntry(
+				HttpPrincipal httpPrincipal, long translationEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TranslationEntryServiceUtil.class, "deleteTranslationEntry",
+				_deleteTranslationEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, translationEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.translation.model.TranslationEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		TranslationEntryServiceHttp.class);
 
@@ -159,5 +200,7 @@ public class TranslationEntryServiceHttp {
 			com.liferay.info.item.InfoItemFieldValues.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _deleteTranslationEntryParameterTypes2 =
+		new Class[] {long.class};
 
 }

@@ -111,6 +111,25 @@ public class TranslationEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.translation.model.TranslationEntrySoap
+			deleteTranslationEntry(long translationEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.translation.model.TranslationEntry returnValue =
+				TranslationEntryServiceUtil.deleteTranslationEntry(
+					translationEntryId);
+
+			return com.liferay.translation.model.TranslationEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		TranslationEntryServiceSoap.class);
 

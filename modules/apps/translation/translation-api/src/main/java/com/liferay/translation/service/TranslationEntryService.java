@@ -63,6 +63,9 @@ public interface TranslationEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public TranslationEntry deleteTranslationEntry(long translationEntryId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

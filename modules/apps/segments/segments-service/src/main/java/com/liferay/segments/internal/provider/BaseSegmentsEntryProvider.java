@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -228,32 +227,26 @@ public abstract class BaseSegmentsEntryProvider
 		Criteria.Conjunction contextConjunction = getConjunction(
 			segmentsEntry, Criteria.Type.CONTEXT);
 
-		if (context != null) {
-			if (Validator.isNotNull(contextFilterString)) {
-				boolean matchesContext = false;
+		if ((context != null) && Validator.isNotNull(contextFilterString)) {
+			boolean matchesContext = false;
 
-				try {
-					matchesContext = oDataMatcher.matches(
-						contextFilterString, context);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-				}
-
-				if (matchesContext &&
-					contextConjunction.equals(Criteria.Conjunction.OR)) {
-
-					return true;
-				}
-
-				if (!matchesContext &&
-					contextConjunction.equals(Criteria.Conjunction.AND)) {
-
-					return false;
-				}
+			try {
+				matchesContext = oDataMatcher.matches(
+					contextFilterString, context);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 
-			if (!GetterUtil.getBoolean(context.get(Context.SIGNED_IN))) {
+			if (matchesContext &&
+				contextConjunction.equals(Criteria.Conjunction.OR)) {
+
+				return true;
+			}
+
+			if (!matchesContext &&
+				contextConjunction.equals(Criteria.Conjunction.AND)) {
+
 				return false;
 			}
 		}

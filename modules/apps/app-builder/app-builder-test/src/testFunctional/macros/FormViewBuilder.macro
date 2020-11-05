@@ -143,6 +143,8 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
 	}
 
 	macro deleteFieldSetEntry {
@@ -155,6 +157,8 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 	}
 
 	macro deleteFromObjectViaX {
@@ -466,7 +470,7 @@ definition {
 
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType1}");
 
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",

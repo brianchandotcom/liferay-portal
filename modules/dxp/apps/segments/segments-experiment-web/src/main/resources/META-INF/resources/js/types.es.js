@@ -18,8 +18,8 @@ const SegmentsExperimentGoal = PropTypes.shape({
 });
 
 const SegmentsExperimentStatus = PropTypes.shape({
-	label: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
+	label: PropTypes.string,
+	value: PropTypes.number,
 });
 
 const SegmentsExperimentType = PropTypes.shape({

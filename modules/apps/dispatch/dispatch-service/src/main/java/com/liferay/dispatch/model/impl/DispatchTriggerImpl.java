@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.model.impl;
 
-import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 /**
@@ -25,20 +24,6 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 	public DispatchTriggerImpl() {
 	}
 
-	public DispatchTriggerExecutionMode getDispatchTriggerExecutionMode() {
-		if (_dispatchTriggerExecutionMode == null) {
-			_dispatchTriggerExecutionMode =
-				DispatchTriggerExecutionMode.ALL_NODES;
-
-			if (isSingleNodeExecution()) {
-				_dispatchTriggerExecutionMode =
-					DispatchTriggerExecutionMode.SINGLE_NODE;
-			}
-		}
-
-		return _dispatchTriggerExecutionMode;
-	}
-
 	public UnicodeProperties getTaskSettingsUnicodeProperties() {
 		if (_taskSettingsUnicodeProperties == null) {
 			_taskSettingsUnicodeProperties = new UnicodeProperties(true);
@@ -47,22 +32,6 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 		}
 
 		return _taskSettingsUnicodeProperties;
-	}
-
-	public void setDispatchTriggerExecutionMode(
-		DispatchTriggerExecutionMode dispatchTriggerExecutionMode) {
-
-		_dispatchTriggerExecutionMode = dispatchTriggerExecutionMode;
-
-		boolean singleNodeExecution = false;
-
-		if (_dispatchTriggerExecutionMode ==
-				DispatchTriggerExecutionMode.SINGLE_NODE) {
-
-			singleNodeExecution = true;
-		}
-
-		super.setSingleNodeExecution(singleNodeExecution);
 	}
 
 	public void setTaskSettings(String taskSettings) {
@@ -83,8 +52,6 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 		super.setTaskSettings(_taskSettingsUnicodeProperties.toString());
 	}
 
-	private transient DispatchTriggerExecutionMode
-		_dispatchTriggerExecutionMode;
 	private transient UnicodeProperties _taskSettingsUnicodeProperties;
 
 }

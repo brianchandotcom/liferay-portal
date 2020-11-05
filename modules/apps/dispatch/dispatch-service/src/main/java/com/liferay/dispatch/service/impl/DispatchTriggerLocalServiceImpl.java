@@ -20,9 +20,9 @@ import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
-import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -108,12 +108,13 @@ public class DispatchTriggerLocalServiceImpl
 		resourceLocalService.deleteResource(
 			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
-			dispatchTrigger.getDispatchTriggerExecutionMode();
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getTaskClusterMode());
 
 		_deleteSchedulerJob(
 			dispatchTrigger.getDispatchTriggerId(),
-			dispatchTriggerExecutionMode.getStorageType());
+			dispatchTaskClusterMode.getStorageType());
 
 		return dispatchTrigger;
 	}
@@ -156,14 +157,15 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 
-		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
-			dispatchTrigger.getDispatchTriggerExecutionMode();
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getTaskClusterMode());
 
 		try {
 			return _schedulerEngineHelper.getNextFireTime(
 				_getJobName(dispatchTriggerId),
 				_getGroupName(dispatchTriggerId),
-				dispatchTriggerExecutionMode.getStorageType());
+				dispatchTaskClusterMode.getStorageType());
 		}
 		catch (SchedulerException schedulerException) {
 			_log.error(schedulerException, schedulerException);
@@ -179,14 +181,15 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 
-		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
-			dispatchTrigger.getDispatchTriggerExecutionMode();
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getTaskClusterMode());
 
 		try {
 			return _schedulerEngineHelper.getPreviousFireTime(
 				_getJobName(dispatchTriggerId),
 				_getGroupName(dispatchTriggerId),
-				dispatchTriggerExecutionMode.getStorageType());
+				dispatchTaskClusterMode.getStorageType());
 		}
 		catch (SchedulerException schedulerException) {
 			_log.error(schedulerException, schedulerException);
@@ -215,7 +218,7 @@ public class DispatchTriggerLocalServiceImpl
 			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
 			int startDateMonth, int startDateDay, int startDateYear,
 			int startDateHour, int startDateMinute,
-			DispatchTriggerExecutionMode dispatchTriggerExecutionMode)
+			DispatchTaskClusterMode dispatchTaskClusterMode)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -241,19 +244,18 @@ public class DispatchTriggerLocalServiceImpl
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute, DispatchTriggerStartDateException.class));
 
-		dispatchTrigger.setDispatchTriggerExecutionMode(
-			dispatchTriggerExecutionMode);
+		dispatchTrigger.setTaskClusterMode(dispatchTaskClusterMode.getMode());
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		_deleteSchedulerJob(
-			dispatchTriggerId, dispatchTriggerExecutionMode.getStorageType());
+			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
 
 		if (active) {
 			_addSchedulerJob(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
-				dispatchTriggerExecutionMode.getStorageType());
+				dispatchTaskClusterMode.getStorageType());
 		}
 
 		return dispatchTrigger;

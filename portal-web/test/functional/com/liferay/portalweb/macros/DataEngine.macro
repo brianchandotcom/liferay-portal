@@ -110,6 +110,12 @@ definition {
 		}
 	}
 
+	macro addRepeatableField {
+		var key_fieldName = "${fieldName}";
+
+		Click(locator1 = "DDMField#FIELD_DUPLICATE");
+	}
+
 	macro deleteField {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",

@@ -538,14 +538,14 @@ definition {
 
 		if (isSet(webContentDate)) {
 			Type(
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#DE_DDM",
 				value1 = "${webContentDate}");
 		}
 
 		if (isSet(webContentDecimal)) {
 			Type(
 				key_fieldName = "Decimal",
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#DE_DDM",
 				value1 = "${webContentDecimal}");
 		}
 

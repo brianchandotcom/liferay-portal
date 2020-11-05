@@ -13,7 +13,6 @@
  */
 
 import MapBase from 'map-common/js/MapBase.es';
-import {toElement} from 'metal-dom';
 import {Config} from 'metal-state';
 
 import OpenStreetMapDialog from './OpenStreetMapDialog.es';
@@ -50,7 +49,7 @@ class MapOpenStreetMap extends MapBase {
 		};
 
 		const map = L.map(
-			toElement(this.boundingBox),
+			document.querySelector(this.boundingBox),
 			Object.assign(mapConfig, controlsConfig)
 		);
 
@@ -79,7 +78,11 @@ class MapOpenStreetMap extends MapBase {
 	addControl(control, position) {
 		const LeafLetControl = L.Control.extend({
 			onAdd() {
-				return toElement(control);
+				if (typeof control === 'string') {
+					control = document.querySelector(control);
+				}
+
+				return control;
 			},
 
 			options: {

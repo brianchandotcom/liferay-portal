@@ -14,9 +14,16 @@
 
 import core from 'metal';
 import Component from 'metal-component';
-import dom from 'metal-dom';
 
 import objectToFormData from './util/form/object_to_form_data.es';
+
+function toElementHelper(elementOrSelector) {
+	if (typeof elementOrSelector === 'string') {
+		elementOrSelector = document.querySelector(elementOrSelector);
+	}
+
+	return elementOrSelector;
+}
 
 /**
  * Provides helper functions that simplify querying the DOM for elements related
@@ -40,7 +47,7 @@ class PortletBase extends Component {
 	 *         tree order.
 	 */
 	all(selectors, root) {
-		root = dom.toElement(root) || this.rootNode || document;
+		root = toElementHelper(root) || this.rootNode || document;
 
 		return root.querySelectorAll(
 			this.namespaceSelectors_(
@@ -133,7 +140,7 @@ class PortletBase extends Component {
 	 *         or <code>null</code>.
 	 */
 	one(selectors, root) {
-		root = dom.toElement(root) || this.rootNode || document;
+		root = toElementHelper(root) || this.rootNode || document;
 
 		return root.querySelector(
 			this.namespaceSelectors_(
@@ -151,8 +158,8 @@ class PortletBase extends Component {
 	 * @return {Element} The portlet's default root node element.
 	 */
 	rootNodeValueFn_() {
-		return dom.toElement(
-			`#p_p_id${this.portletNamespace || this.namespace}`
+		return document.getElementById(
+			`p_p_id${this.portletNamespace || this.namespace}`
 		);
 	}
 }
@@ -197,7 +204,7 @@ PortletBase.STATE = {
 	 * @type {Element}
 	 */
 	rootNode: {
-		setter: dom.toElement,
+		setter: toElementHelper,
 		valueFn: 'rootNodeValueFn_',
 	},
 };

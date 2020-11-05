@@ -90,7 +90,7 @@ for (int i = 0; i < categoryKeys.length; i++) {
 <aui:script require="metal-dom/src/dom">
 	var dom = metalDomSrcDom.default;
 
-	var redirectField = dom.toElement(
+	var redirectField = document.querySelector(
 		'input[name="<portlet:namespace />redirect"]'
 	);
 	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';

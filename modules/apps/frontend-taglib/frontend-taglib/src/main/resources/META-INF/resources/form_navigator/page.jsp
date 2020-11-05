@@ -72,7 +72,7 @@ String tabs1Param = randomNamespace + "tabs1";
 </c:if>
 
 <aui:script require="metal-dom/src/dom as dom">
-	var redirectField = dom.toElement(
+	var redirectField = document.querySelector(
 		'input[name="<portlet:namespace />redirect"]'
 	);
 	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';

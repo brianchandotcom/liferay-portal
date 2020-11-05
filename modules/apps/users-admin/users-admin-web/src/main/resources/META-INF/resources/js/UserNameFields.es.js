@@ -254,7 +254,9 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	formNode: Config.required().setter(dom.toElement).writeOnce(),
+	formNode: Config.required()
+		.setter((selector) => document.querySelector(selector))
+		.writeOnce(),
 
 	/**
 	 * Language id select field.
@@ -262,7 +264,9 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	languageIdSelectNode: Config.required().setter(dom.toElement).writeOnce(),
+	languageIdSelectNode: Config.required()
+		.setter((selector) => document.querySelector(selector))
+		.writeOnce(),
 
 	/**
 	 * HTML element containing the user name fields.
@@ -270,7 +274,9 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	userNameFieldsNode: Config.required().setter(dom.toElement).writeOnce(),
+	userNameFieldsNode: Config.required()
+		.setter((selector) => document.querySelector(selector))
+		.writeOnce(),
 };
 
 export default UserNameFields;

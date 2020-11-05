@@ -13,7 +13,6 @@
  */
 
 import {isDef, isObject, isString} from 'metal';
-import dom from 'metal-dom';
 
 import setFormValues from './set_form_values.es';
 
@@ -28,7 +27,9 @@ import setFormValues from './set_form_values.es';
  */
 
 export default function postForm(form, options) {
-	form = dom.toElement(form);
+	if (typeof form === 'string') {
+		form = document.querySelector(form);
+	}
 
 	if (form && form.nodeName === 'FORM') {
 		form.setAttribute('method', 'post');

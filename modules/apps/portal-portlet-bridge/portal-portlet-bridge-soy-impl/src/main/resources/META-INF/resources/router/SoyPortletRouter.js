@@ -13,7 +13,6 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import dom from 'metal-dom';
 import {toRegex} from 'metal-path-parser';
 import Router from 'metal-router';
 import State from 'metal-state';
@@ -580,7 +579,7 @@ SoyPortletRouter.STATE = {
 	 * @type {string}
 	 */
 	element: {
-		setter: dom.toElement,
+		setter: (val) => document.querySelector(val),
 	},
 
 	/**
@@ -631,7 +630,7 @@ SoyPortletRouter.STATE = {
 	 * @type {string}
 	 */
 	portletWrapper: {
-		setter: dom.toElement,
+		setter: (val) => document.querySelector(val),
 	},
 };
 

@@ -13,7 +13,6 @@
  */
 
 import {isInputNode} from 'map-common/js/validators.es';
-import {toElement} from 'metal-dom';
 import State, {Config} from 'metal-state';
 
 /**
@@ -29,7 +28,7 @@ class GoogleMapsSearch extends State {
 	 */
 	constructor(...args) {
 		super(...args);
-		const inputNode = toElement(this.inputNode);
+		const inputNode = this.inputNode;
 		this._handlePlaceChanged = this._handlePlaceChanged.bind(this);
 
 		this._autocomplete = new google.maps.places.Autocomplete(inputNode);

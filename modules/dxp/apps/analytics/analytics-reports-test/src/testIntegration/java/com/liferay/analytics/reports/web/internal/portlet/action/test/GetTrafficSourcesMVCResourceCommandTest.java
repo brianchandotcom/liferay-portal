@@ -323,7 +323,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "referral"
 							).put(
-								"share", String.format("%.2f", 0.00)
+								"share", String.format("%.1f", 0.0)
 							).put(
 								"title",
 								ResourceBundleUtil.getString(
@@ -341,7 +341,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "social"
 							).put(
-								"share", String.format("%.2f", 0.00)
+								"share", String.format("%.1f", 0.0)
 							).put(
 								"title",
 								ResourceBundleUtil.getString(
@@ -359,7 +359,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "direct"
 							).put(
-								"share", String.format("%.2f", 0.00)
+								"share", String.format("%.1f", 0.0)
 							).put(
 								"title",
 								ResourceBundleUtil.getString(
@@ -377,7 +377,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "paid"
 							).put(
-								"share", String.format("%.2f", 0.00)
+								"share", String.format("%.1f", 0.0)
 							).put(
 								"title",
 								ResourceBundleUtil.getString(
@@ -395,7 +395,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "organic"
 							).put(
-								"share", String.format("%.2f", 0.00)
+								"share", String.format("%.1f", 0.0)
 							).put(
 								"title",
 								ResourceBundleUtil.getString(

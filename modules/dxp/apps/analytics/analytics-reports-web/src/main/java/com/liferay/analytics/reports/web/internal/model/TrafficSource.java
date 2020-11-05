@@ -139,7 +139,7 @@ public class TrafficSource {
 		);
 
 		if (!_error) {
-			jsonObject.put("share", String.format("%.2f", _trafficShare));
+			jsonObject.put("share", String.format("%.1f", _trafficShare));
 		}
 
 		jsonObject.put("title", title);

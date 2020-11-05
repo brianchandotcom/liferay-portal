@@ -288,10 +288,10 @@ public class AnalyticsReportsDataProviderTest {
 		Assert.assertEquals(
 			trafficSources.toString(), 2, trafficSources.size());
 		Assert.assertEquals(
-			String.valueOf(new TrafficSource(null, "organic", 3849L, 94.25D)),
+			String.valueOf(new TrafficSource(null, "organic", 3849L, 94.2D)),
 			String.valueOf(trafficSources.get("organic")));
 		Assert.assertEquals(
-			String.valueOf(new TrafficSource(null, "paid", 235L, 5.75D)),
+			String.valueOf(new TrafficSource(null, "paid", 235L, 5.8D)),
 			String.valueOf(trafficSources.get("paid")));
 	}
 
@@ -357,7 +357,7 @@ public class AnalyticsReportsDataProviderTest {
 							).put(
 								"trafficAmount", 1192L
 							).put(
-								"trafficShare", 83.93D
+								"trafficShare", 83.9D
 							),
 							JSONUtil.put(
 								"countryKeywords",
@@ -384,7 +384,7 @@ public class AnalyticsReportsDataProviderTest {
 							).put(
 								"trafficAmount", 2010L
 							).put(
-								"trafficShare", 44.07D
+								"trafficShare", 44.1D
 							)
 						).toString()
 					).build()));
@@ -405,7 +405,7 @@ public class AnalyticsReportsDataProviderTest {
 								new SearchKeyword("liferay", 1, 3600, 2880L),
 								new SearchKeyword(
 									"liferay portal", 1, 390, 312L)))),
-					"organic", 3192L, 93.94D)),
+					"organic", 3192L, 93.9D)),
 			String.valueOf(trafficSources.get("organic")));
 		Assert.assertEquals(
 			String.valueOf(

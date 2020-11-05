@@ -93,7 +93,7 @@ public class AcquisitionChannel {
 		).put(
 			"name", getName()
 		).put(
-			"share", String.format("%.2f", getTrafficShare())
+			"share", String.format("%.1f", getTrafficShare())
 		).put(
 			"title", title
 		).put(

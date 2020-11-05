@@ -78,6 +78,16 @@ const normalizeField = (availableLanguageIds, field) => {
 	};
 };
 
+/**
+ * Normalize DD and DL state
+ * @param {object} dataDefinition
+ * @param {object} dataLayout
+ * @returns {object} {normalizedDataLayout, normalizedDataDefinition}
+ * @description This Normalization is necessary to handle
+ * differences data structures between across the components, such as
+ * App Builder, Data Engine and Forms
+ */
+
 export const normalizeState = (dataDefinition, dataLayout) => {
 	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 	let normalizedDataLayout;

@@ -60,6 +60,60 @@ const ModalContent = ({
 		state: {dataDefinition, dataLayout},
 	} = childrenContext;
 
+	const actionProps = {
+		availableLanguageIds: dataDefinition?.availableLanguageIds,
+		childrenContext,
+		defaultLanguageId,
+		fieldSet,
+	};
+
+	const createFieldSet = useCreateFieldSet(actionProps);
+	const saveFieldSet = useSaveFieldSet(actionProps);
+	const propagateFieldSet = usePropagateFieldSet();
+
+	const onSave = () => {
+		const hasRemovedField = () => {
+			const fieldNames = fieldSet.dataDefinitionFields.map(
+				({name}) => name
+			);
+
+			const [prevLayoutFields, actualLayoutFields] = [
+				fieldSet.defaultDataLayout.dataLayoutPages,
+				dataLayout.dataLayoutPages,
+			].map((layout) =>
+				fieldNames.filter((field) => containsField(layout, field))
+			);
+
+			return !!prevLayoutFields.filter(
+				(field) => !actualLayoutFields.includes(field)
+			).length;
+		};
+
+		if (fieldSet) {
+			propagateFieldSet({
+				fieldSet,
+				modal: {
+					actionMessage: Liferay.Language.get('propagate'),
+					fieldSetMessage: Liferay.Language.get(
+						'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
+					),
+					headerMessage: Liferay.Language.get('propagate-changes'),
+					...(hasRemovedField() && {
+						warningMessage: Liferay.Language.get(
+							'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
+						),
+					}),
+				},
+				onPropagate: () => saveFieldSet(name),
+			})
+				.then(onClose)
+				.catch(onClose);
+		}
+		else {
+			createFieldSet(name).then(onClose).catch(onClose);
+		}
+	};
+
 	const changeZIndex = (zIndex) => {
 		document
 			.querySelectorAll('.ddm-field-actions-container')
@@ -138,61 +192,6 @@ const ModalContent = ({
 		}
 	}, [dispatch, editingDataDefinition]);
 
-	const availableLanguageIds = dataDefinition?.availableLanguageIds;
-
-	const actionProps = {
-		availableLanguageIds,
-		childrenContext,
-		fieldSet,
-	};
-
-	const createFieldSet = useCreateFieldSet(actionProps);
-	const saveFieldSet = useSaveFieldSet(actionProps);
-	const propagateFieldSet = usePropagateFieldSet();
-
-	const onSave = () => {
-		const hasRemovedField = () => {
-			const fieldNames = fieldSet.dataDefinitionFields.map(
-				({name}) => name
-			);
-
-			const [prevLayoutFields, actualLayoutFields] = [
-				fieldSet.defaultDataLayout.dataLayoutPages,
-				dataLayout.dataLayoutPages,
-			].map((layout) =>
-				fieldNames.filter((field) => containsField(layout, field))
-			);
-
-			return !!prevLayoutFields.filter(
-				(field) => !actualLayoutFields.includes(field)
-			).length;
-		};
-
-		if (fieldSet) {
-			propagateFieldSet({
-				fieldSet,
-				modal: {
-					actionMessage: Liferay.Language.get('propagate'),
-					fieldSetMessage: Liferay.Language.get(
-						'do-you-want-to-propagate-the-changes-to-other-objects-views-using-this-fieldset'
-					),
-					headerMessage: Liferay.Language.get('propagate-changes'),
-					...(hasRemovedField() && {
-						warningMessage: Liferay.Language.get(
-							'the-changes-include-the-deletion-of-fields-and-may-erase-the-data-collected-permanently'
-						),
-					}),
-				},
-				onPropagate: () => saveFieldSet(name),
-			})
-				.then(onClose)
-				.catch(onClose);
-		}
-		else {
-			createFieldSet(name).then(onClose).catch(onClose);
-		}
-	};
-
 	return (
 		<>
 			<ClayModal.Header>
@@ -204,9 +203,6 @@ const ModalContent = ({
 				<TranslationManager
 					defaultLanguageId={defaultLanguageId}
 					editingLanguageId={editingLanguageId}
-					onActiveChange={(active) =>
-						changeZIndex(active ? null : '1050')
-					}
 					onEditingLanguageIdChange={onEditingLanguageIdChange}
 					translatedLanguageIds={name}
 				/>

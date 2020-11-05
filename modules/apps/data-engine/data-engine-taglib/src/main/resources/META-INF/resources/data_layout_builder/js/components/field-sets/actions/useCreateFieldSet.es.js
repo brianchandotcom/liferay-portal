@@ -21,7 +21,7 @@ import {addItem} from '../../../utils/client.es';
 import {normalizeState} from '../../../utils/saveDataDefinition.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
-export default ({availableLanguageIds, childrenContext}) => {
+export default ({availableLanguageIds, childrenContext, defaultLanguageId}) => {
 	const [{fieldSets}, dispatch] = useContext(AppContext);
 	const {state: childrenState} = childrenContext;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -45,6 +45,7 @@ export default ({availableLanguageIds, childrenContext}) => {
 				dataLayoutPages,
 				name,
 			},
+			defaultLanguageId,
 		};
 
 		return addItem(

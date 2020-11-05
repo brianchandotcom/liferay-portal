@@ -63,6 +63,16 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 				<aui:fieldset>
 					<aui:input name="active" />
 
+					<c:choose>
+						<c:when test="<%= ClusterExecutorUtil.isEnabled() %>">
+							<aui:input name="singleNodeExecution" />
+						</c:when>
+						<c:otherwise>
+							<aui:input disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-cluster-environment" ignoreRequestValue="<%= true %>" name="singleNodeExecution" type="checkbox" value="<%= true %>" />
+							<aui:input name="singleNodeExecution" type="hidden" value="<%= true %>" />
+						</c:otherwise>
+					</c:choose>
+
 					<aui:input name="overlapAllowed" />
 
 					<aui:input name="cronExpression" />

@@ -55,6 +55,10 @@ definition {
 
 		Button.clickPublish();
 
+		WaitForElementNotPresent(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");

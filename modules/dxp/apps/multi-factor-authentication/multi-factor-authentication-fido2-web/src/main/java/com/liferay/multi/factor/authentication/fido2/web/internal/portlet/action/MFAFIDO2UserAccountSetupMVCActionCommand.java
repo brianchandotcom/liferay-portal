@@ -14,12 +14,14 @@
 
 package com.liferay.multi.factor.authentication.fido2.web.internal.portlet.action;
 
+import com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2CredentialEntry;
 import com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,9 +54,22 @@ public class MFAFIDO2UserAccountSetupMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry =
+			_mfaFIDO2CredentialEntryLocalService.getMFAFIDO2CredentialEntry(
+				ParamUtil.getLong(actionRequest, "authenticatorId"));
+
+		if ((themeDisplay == null) ||
+			(themeDisplay.getUserId() != mfaFIDO2CredentialEntry.getUserId())) {
+
+			throw new PrincipalException();
+		}
+
 		try {
 			_mfaFIDO2CredentialEntryLocalService.deleteMFAFIDO2CredentialEntry(
-				ParamUtil.getLong(actionRequest, "authenticatorId"));
+				mfaFIDO2CredentialEntry.getMfaFIDO2CredentialEntryId());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -66,9 +81,6 @@ public class MFAFIDO2UserAccountSetupMVCActionCommand
 			ParamUtil.getString(actionRequest, "redirect"));
 
 		if (Validator.isBlank(redirect)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			redirect = themeDisplay.getPortalURL();
 		}
 

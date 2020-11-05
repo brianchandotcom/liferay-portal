@@ -23,6 +23,7 @@ import {Sidebar} from './Sidebar';
 
 export default function App({
 	editorMode,
+	portletNamespace,
 	script: initialScript,
 	showCacheableWarning,
 	showLanguageChangeWarning,
@@ -51,6 +52,8 @@ export default function App({
 				/>
 
 				<ClosableAlert
+					id={`${portletNamespace}-cacheableWarningMessage`}
+					linkedCheckboxId={`${portletNamespace}cacheable`}
 					message={Liferay.Language.get(
 						'this-template-is-marked-as-cacheable.-avoid-using-code-that-uses-request-handling,-the-cms-query-api,-taglibs,-or-other-dynamic-features.-uncheck-the-cacheable-property-if-dynamic-behavior-is-needed'
 					)}
@@ -72,6 +75,7 @@ export default function App({
 
 App.propTypes = {
 	editorMode: PropTypes.oneOf(['ftl', 'xml', 'velocity']).isRequired,
+	portletNamespace: PropTypes.string.isRequired,
 	script: PropTypes.string.isRequired,
 	showCacheableWarning: PropTypes.bool.isRequired,
 	showLanguageChangeWarning: PropTypes.bool.isRequired,

@@ -14,15 +14,27 @@
 
 import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-export const ClosableAlert = ({message, visible: initialVisible}) => {
+export const ClosableAlert = ({
+	id,
+	linkedCheckboxId,
+	message,
+	visible: initialVisible,
+}) => {
 	const [visible, setVisible] = useState(!!initialVisible);
+
+	useEffect(() => {
+		if (id && linkedCheckboxId) {
+			Liferay.Util.toggleBoxes(linkedCheckboxId, id);
+		}
+	}, [id, linkedCheckboxId]);
 
 	return (
 		visible && (
 			<ClayAlert
 				displayType="warning"
+				id={id}
 				onClose={() => setVisible(false)}
 				title={Liferay.Language.get('warning')}
 			>
@@ -33,6 +45,8 @@ export const ClosableAlert = ({message, visible: initialVisible}) => {
 };
 
 ClosableAlert.propTypes = {
+	id: PropTypes.string,
+	linkedCheckboxId: PropTypes.string,
 	message: PropTypes.string.isRequired,
 	visible: PropTypes.bool.isRequired,
 };

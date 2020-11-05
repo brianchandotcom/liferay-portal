@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -49,11 +50,15 @@ import com.liferay.trash.TrashHelper;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import org.springframework.util.FileSystemUtils;
 
 /**
  * @author Michael C. Han
@@ -204,6 +209,11 @@ public class DLFileEntryModelDocumentContributor
 			if (inputStream != null) {
 				try {
 					inputStream.close();
+					String path =
+						SystemProperties.get(SystemProperties.TMP_DIR) +
+							"/liferay/s3";
+
+					FileSystemUtils.deleteRecursively(Paths.get(path));
 				}
 				catch (IOException ioException) {
 				}

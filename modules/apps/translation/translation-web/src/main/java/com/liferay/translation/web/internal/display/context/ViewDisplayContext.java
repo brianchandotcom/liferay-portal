@@ -189,9 +189,13 @@ public class ViewDisplayContext {
 			long translationEntryId = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			results.add(
-				_translationEntryLocalService.getTranslationEntry(
-					translationEntryId));
+			TranslationEntry translationEntry =
+				_translationEntryLocalService.fetchTranslationEntry(
+					translationEntryId);
+
+			if (translationEntry != null) {
+				results.add(translationEntry);
+			}
 		}
 
 		_searchContainer.setResults(results);

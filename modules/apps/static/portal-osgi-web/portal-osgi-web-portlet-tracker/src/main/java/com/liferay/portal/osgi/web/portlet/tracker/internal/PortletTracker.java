@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -922,11 +921,7 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.kernel.model.Portlet portletModel) {
 
-		Map<String, Set<String>> portletModes =
-			HashMapBuilder.<String, Set<String>>put(
-				ContentTypes.TEXT_HTML,
-				SetUtil.fromArray(new String[] {toLowerCase(PortletMode.VIEW)})
-			).build();
+		Map<String, Set<String>> portletModes = null;
 
 		List<String> portletModesStrings = StringPlus.asList(
 			serviceReference.getProperty("javax.portlet.portlet-mode"));
@@ -947,7 +942,15 @@ public class PortletTracker
 			mimeTypePortletModes.addAll(
 				toLowerCaseSet(portletModesStringParts[1]));
 
+			if (portletModes == null) {
+				portletModes = new HashMap<>(_defaultPortletModes);
+			}
+
 			portletModes.put(mimeType, mimeTypePortletModes);
+		}
+
+		if (portletModes == null) {
+			portletModes = _defaultPortletModes;
 		}
 
 		portletModel.setPortletModes(portletModes);
@@ -1156,18 +1159,7 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.kernel.model.Portlet portletModel) {
 
-		Map<String, Set<String>> windowStates =
-			HashMapBuilder.<String, Set<String>>put(
-				ContentTypes.TEXT_HTML,
-				SetUtil.fromArray(
-					new String[] {
-						toLowerCase(LiferayWindowState.EXCLUSIVE),
-						toLowerCase(LiferayWindowState.POP_UP),
-						toLowerCase(WindowState.MAXIMIZED),
-						toLowerCase(WindowState.MINIMIZED),
-						toLowerCase(WindowState.NORMAL)
-					})
-			).build();
+		Map<String, Set<String>> windowStates = null;
 
 		List<String> windowStatesStrings = StringPlus.asList(
 			serviceReference.getProperty("javax.portlet.window-state"));
@@ -1201,7 +1193,15 @@ public class PortletTracker
 				mimeTypeWindowStates.addAll(windowStatesSet);
 			}
 
+			if (windowStates == null) {
+				windowStates = new HashMap<>(_defaultWindowStates);
+			}
+
 			windowStates.put(mimeType, mimeTypeWindowStates);
+		}
+
+		if (windowStates == null) {
+			windowStates = _defaultPortletModes;
 		}
 
 		portletModel.setWindowStates(windowStates);
@@ -1393,6 +1393,22 @@ public class PortletTracker
 	private static final String _NAMESPACE = "com.liferay.portlet.";
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletTracker.class);
+
+	private static final Map<String, Set<String>> _defaultPortletModes =
+		Collections.singletonMap(
+			ContentTypes.TEXT_HTML,
+			Collections.singleton(String.valueOf(PortletMode.VIEW)));
+	private static final Map<String, Set<String>> _defaultWindowStates =
+		Collections.singletonMap(
+			ContentTypes.TEXT_HTML,
+			SetUtil.fromArray(
+				new String[] {
+					String.valueOf(LiferayWindowState.EXCLUSIVE),
+					String.valueOf(LiferayWindowState.POP_UP),
+					String.valueOf(WindowState.MAXIMIZED),
+					String.valueOf(WindowState.MINIMIZED),
+					String.valueOf(WindowState.NORMAL)
+				}));
 
 	private BundleContext _bundleContext;
 

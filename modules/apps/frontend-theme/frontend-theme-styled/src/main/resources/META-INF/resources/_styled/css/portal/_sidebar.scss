@@ -72,6 +72,10 @@
 			height: 2rem;
 			padding: 0.1875rem 0;
 			width: 2rem;
+
+			&.input-localized-trigger {
+				padding: 0;
+			}
 		}
 	}
 

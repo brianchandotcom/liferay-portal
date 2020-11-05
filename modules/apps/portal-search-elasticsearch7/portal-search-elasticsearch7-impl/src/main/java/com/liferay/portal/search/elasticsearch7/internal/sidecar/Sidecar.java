@@ -432,7 +432,16 @@ public class Sidecar {
 		for (String jvmOption :
 				_elasticsearchConfigurationWrapper.sidecarJVMOptions()) {
 
-			arguments.add(jvmOption);
+			if (jvmOption.contains("|")) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						jvmOption + " is not a valid format for the JVM " +
+							"options and will be ignored");
+				}
+			}
+			else {
+				arguments.add(jvmOption);
+			}
 		}
 
 		if (_elasticsearchConfigurationWrapper.sidecarDebug()) {

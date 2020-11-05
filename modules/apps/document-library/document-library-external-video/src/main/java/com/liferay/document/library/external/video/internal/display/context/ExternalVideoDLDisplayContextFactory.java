@@ -18,6 +18,9 @@ import com.liferay.document.library.display.context.BaseDLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.external.video.internal.ExternalVideo;
+import com.liferay.document.library.external.video.internal.constants.ExternalVideoConstants;
+import com.liferay.document.library.external.video.internal.resolver.ExternalVideoResolver;
 import com.liferay.document.library.external.video.internal.util.ExternalVideoMetadataHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -94,7 +97,8 @@ public class ExternalVideoDLDisplayContextFactory
 		if (externalVideoMetadataHelper.isExternalVideo()) {
 			return new ExternalVideoDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, httpServletRequest,
-				httpServletResponse, fileEntry);
+				httpServletResponse, fileEntry,
+				_getExternalVideo(externalVideoMetadataHelper));
 		}
 
 		return parentDLEditFileEntryDisplayContext;
@@ -151,6 +155,20 @@ public class ExternalVideoDLDisplayContextFactory
 		return parentDLViewFileVersionDisplayContext;
 	}
 
+	private ExternalVideo _getExternalVideo(
+		ExternalVideoMetadataHelper externalVideoMetadataHelper) {
+
+		if (externalVideoMetadataHelper.containsField(
+				ExternalVideoConstants.DDM_FIELD_NAME_URL)) {
+
+			return _externalVideoResolver.resolve(
+				externalVideoMetadataHelper.getFieldValue(
+					ExternalVideoConstants.DDM_FIELD_NAME_URL));
+		}
+
+		return null;
+	}
+
 	@Reference
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
@@ -162,6 +180,9 @@ public class ExternalVideoDLDisplayContextFactory
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private ExternalVideoResolver _externalVideoResolver;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

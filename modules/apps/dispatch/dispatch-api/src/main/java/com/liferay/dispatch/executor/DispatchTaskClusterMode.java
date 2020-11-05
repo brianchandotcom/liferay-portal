@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.dispatch.trigger;
+package com.liferay.dispatch.executor;
 
 import com.liferay.portal.kernel.scheduler.StorageType;
 
 /**
  * @author Matija Petanjek
  */
-public enum DispatchTriggerExecutionMode {
+public enum DispatchTaskClusterMode {
 
 	ALL_NODES(StorageType.MEMORY), SINGLE_NODE(StorageType.PERSISTED);
 
-	public static DispatchTriggerExecutionMode getDispatchTriggerExecutionMode(
+	public static DispatchTaskClusterMode getDispatchTriggerExecutionMode(
 		boolean singleNodeExecution) {
 
 		if (singleNodeExecution) {
@@ -37,7 +37,7 @@ public enum DispatchTriggerExecutionMode {
 		return _storageType;
 	}
 
-	private DispatchTriggerExecutionMode(StorageType storageType) {
+	private DispatchTaskClusterMode(StorageType storageType) {
 		_storageType = storageType;
 	}
 

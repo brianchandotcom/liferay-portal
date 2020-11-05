@@ -98,6 +98,9 @@ public class CommercePricingDataSetConstants {
 		COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS =
 			"commercePricingClassesCPDefinitions";
 
+	public static final String COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES =
+		"commerceProductPricingClasses";
+
 	public static final String COMMERCE_DATA_SET_KEY_PROMOTION_ENTRIES =
 		"commercePromotionEntries";
 

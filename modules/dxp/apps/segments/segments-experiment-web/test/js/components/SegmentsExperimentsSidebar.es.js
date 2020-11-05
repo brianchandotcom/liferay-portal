@@ -85,8 +85,12 @@ describe('SegmentsExperimentsSidebar', () => {
 		expect(defaultExperience).not.toBe(null);
 
 		getByText(segmentsExperiment.name);
-		getByText('review-and-run-test');
+
 		getByText('edit');
+		getByText('delete');
+
+		getByText('review-and-run-test');
+		getByText('view-data-in-analytics-cloud');
 	});
 
 	it('Renders modal to create experiment when the user clicks on create test button', async () => {

@@ -49,7 +49,7 @@ import CodeMirror from 'codemirror';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-export const CodeMirrorEditor = ({content, mode, onChange}) => {
+export const CodeMirrorEditor = ({content, inputChannel, mode, onChange}) => {
 	const [editor, setEditor] = useState();
 	const [editorWrapper, setEditorWrapper] = useState();
 	const initialContentRef = useRef(content);
@@ -109,6 +109,16 @@ export const CodeMirrorEditor = ({content, mode, onChange}) => {
 		}
 	}, [content, editor]);
 
+	useEffect(() => {
+		if (inputChannel) {
+			const removeListener = inputChannel.onData((data) => {
+				editor?.replaceSelection(data);
+			});
+
+			return removeListener;
+		}
+	}, [editor, inputChannel]);
+
 	return (
 		<div
 			className="ddm_template_editor__CodeMirrorEditor"
@@ -119,6 +129,9 @@ export const CodeMirrorEditor = ({content, mode, onChange}) => {
 
 CodeMirrorEditor.propTypes = {
 	content: PropTypes.string.isRequired,
+	inputChannel: PropTypes.shape({
+		onData: PropTypes.func.isRequired,
+	}),
 	mode: PropTypes.oneOf(['ftl', 'xml', 'velocity']),
 	onChange: PropTypes.func.isRequired,
 };

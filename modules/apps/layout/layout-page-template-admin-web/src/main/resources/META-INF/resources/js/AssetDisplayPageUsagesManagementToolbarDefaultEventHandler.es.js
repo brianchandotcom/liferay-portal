@@ -33,7 +33,9 @@ class AssetDisplayPageUsagesManagementToolbarDefaultEventHandler extends Default
 	updateAssetDisplayPageEntry(itemData) {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-unassign-this')
+				Liferay.Language.get(
+					'are-you-sure-you-do-not-want-to-set-a-display-page-for-this'
+				)
 			)
 		) {
 			submitForm(

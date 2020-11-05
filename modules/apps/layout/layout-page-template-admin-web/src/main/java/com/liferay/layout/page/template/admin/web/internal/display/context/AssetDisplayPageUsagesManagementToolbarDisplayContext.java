@@ -64,7 +64,8 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 							"entry"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						httpServletRequest, "set-to-default-display-page"));
+						httpServletRequest,
+						"unassign-and-set-to-default-display-page"));
 			}
 		).add(
 			dropdownItem -> {
@@ -75,7 +76,9 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 						"/layout_page_template/update_asset_display_page_" +
 							"entry"));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "unassign"));
+					LanguageUtil.get(
+						httpServletRequest,
+						"unassign-and-do-not-set-display-page"));
 			}
 		).build();
 	}

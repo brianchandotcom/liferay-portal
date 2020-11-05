@@ -15,24 +15,33 @@
 package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -44,6 +53,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Pei-Jung Lan
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AddressLocalServiceTest {
 
@@ -78,6 +88,70 @@ public class AddressLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchAddresses() throws Exception {
+		String keywords = RandomTestUtil.randomString();
+
+		Address address1 = _addAddress(null);
+		Address address2 = _addAddress(
+			keywords + RandomTestUtil.randomString(), -1, null);
+		Address address3 = _addAddress(
+			keywords + RandomTestUtil.randomString(), -1, null);
+
+		_assertSearchAddress(
+			Arrays.asList(address1, address2, address3), null, null);
+		_assertSearchAddress(Arrays.asList(address2, address3), keywords, null);
+	}
+
+	@Test
+	public void testSearchAddressesPagination() throws Exception {
+		String keywords = RandomTestUtil.randomString();
+
+		List<Address> expectedAddresses = Arrays.asList(
+			_addAddress(keywords + RandomTestUtil.randomString(), -1, null),
+			_addAddress(keywords + RandomTestUtil.randomString(), -1, null),
+			_addAddress(keywords + RandomTestUtil.randomString(), -1, null),
+			_addAddress(keywords + RandomTestUtil.randomString(), -1, null),
+			_addAddress(keywords + RandomTestUtil.randomString(), -1, null));
+
+		Comparator<Address> comparator = Comparator.comparing(
+			Address::getName, String.CASE_INSENSITIVE_ORDER);
+
+		_assertSearchAddressesPaginationSort(
+			ListUtil.sort(expectedAddresses, comparator), keywords,
+			SortFactoryUtil.create("name", false));
+		_assertSearchAddressesPaginationSort(
+			ListUtil.sort(expectedAddresses, comparator.reversed()), keywords,
+			SortFactoryUtil.create("name", true));
+	}
+
+	@Test
+	public void testSearchAddressesWithParam() throws Exception {
+		ListType businessType = _listTypeLocalService.getListType(
+			"business", ListTypeConstants.CONTACT_ADDRESS);
+
+		Address businessAddress = _addAddress(
+			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
+
+		ListType personalType = _listTypeLocalService.getListType(
+			"personal", ListTypeConstants.CONTACT_ADDRESS);
+
+		Address personalAddress = _addAddress(
+			RandomTestUtil.randomString(), personalType.getListTypeId(), null);
+
+		_assertSearchAddress(
+			Arrays.asList(businessAddress), null,
+			_getLinkedHashMap(
+				"typeIds", new long[] {businessType.getListTypeId()}));
+		_assertSearchAddress(
+			Arrays.asList(businessAddress, personalAddress), null,
+			_getLinkedHashMap(
+				"typeIds",
+				new long[] {
+					businessType.getListTypeId(), personalType.getListTypeId()
+				}));
+	}
+
+	@Test
 	public void testUpdateAddress() throws Exception {
 		Address address = _addAddress("1234567890");
 
@@ -100,18 +174,80 @@ public class AddressLocalServiceTest {
 	}
 
 	private Address _addAddress(String phoneNumber) throws Exception {
+		return _addAddress(RandomTestUtil.randomString(), -1, phoneNumber);
+	}
+
+	private Address _addAddress(String name, long typeId, String phoneNumber)
+		throws Exception {
+
 		User user = TestPropsValues.getUser();
 
-		ListType listType = _listTypeLocalService.getListType(
-			"personal", ListTypeConstants.CONTACT_ADDRESS);
+		if (typeId < 0) {
+			ListType listType = _listTypeLocalService.getListType(
+				"personal", ListTypeConstants.CONTACT_ADDRESS);
+
+			typeId = listType.getListTypeId();
+		}
 
 		return _addressLocalService.addAddress(
 			null, user.getUserId(), Contact.class.getName(),
-			user.getContactId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, RandomTestUtil.randomString(), null, 0, 0,
-			listType.getListTypeId(), false, false, phoneNumber,
-			ServiceContextTestUtil.getServiceContext());
+			user.getContactId(), name, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString(), null, 0, 0, typeId, false, false,
+			phoneNumber, ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertSearchAddress(
+			List<Address> expectedAddresses, String keyword,
+			LinkedHashMap<String, Object> params)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		BaseModelSearchResult<Address> baseModelSearchResult =
+			_addressLocalService.searchAddresses(
+				user.getCompanyId(), Contact.class.getName(),
+				user.getContactId(), keyword, params, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			expectedAddresses.size(), baseModelSearchResult.getLength());
+		Assert.assertTrue(
+			expectedAddresses.containsAll(
+				baseModelSearchResult.getBaseModels()));
+	}
+
+	private void _assertSearchAddressesPaginationSort(
+			List<Address> expectedAddresses, String keywords, Sort sort)
+		throws Exception {
+
+		int end = 3;
+		int start = 1;
+
+		User user = TestPropsValues.getUser();
+
+		BaseModelSearchResult<Address> baseModelSearchResult =
+			_addressLocalService.searchAddresses(
+				user.getCompanyId(), Contact.class.getName(),
+				user.getContactId(), keywords, null, start, end, sort);
+
+		List<Address> actualAddresses = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			actualAddresses.toString(), end - start, actualAddresses.size());
+
+		for (int i = 0; i < (end - start); i++) {
+			Assert.assertEquals(
+				expectedAddresses.get(start + i), actualAddresses.get(i));
+		}
+	}
+
+	private LinkedHashMap<String, Object> _getLinkedHashMap(
+		String key, Object value) {
+
+		return LinkedHashMapBuilder.<String, Object>put(
+			key, value
+		).build();
 	}
 
 	@Inject

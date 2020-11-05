@@ -203,45 +203,12 @@ public class EditImageConfigurationEntryMVCActionCommand
 			);
 		}
 		catch (AMImageConfigurationException amImageConfigurationException) {
-			String errorMessage = "";
-
-			if (amImageConfigurationException instanceof
-					AMImageConfigurationException.
-						DuplicateAMImageConfigurationNameException) {
-
-				errorMessage = "a-configuration-with-this-name-already-exists";
-			}
-			else if (amImageConfigurationException instanceof
-						AMImageConfigurationException.InvalidHeightException) {
-
-				errorMessage = "please-enter-a-max-height-value-larger-than-0";
-			}
-			else if (amImageConfigurationException instanceof
-						AMImageConfigurationException.InvalidNameException) {
-
-				errorMessage = "please-enter-a-valid-name";
-			}
-			else if (amImageConfigurationException instanceof
-						AMImageConfigurationException.InvalidUuidException) {
-
-				errorMessage = "please-enter-a-valid-identifier";
-			}
-			else if (amImageConfigurationException instanceof
-						AMImageConfigurationException.InvalidWidthException) {
-
-				errorMessage = "please-enter-a-max-width-value-larger-than-0";
-			}
-			else if (amImageConfigurationException instanceof
-						AMImageConfigurationException.
-							RequiredWidthOrHeightException) {
-
-				errorMessage =
-					"please-enter-a-max-width-or-max-height-value-larger-" +
-						"than-0";
-			}
-
 			jsonObject.put(
-				"message", LanguageUtil.get(resourceBundle, errorMessage)
+				"message",
+				LanguageUtil.get(
+					resourceBundle,
+					_errorMessagesMap.get(
+						amImageConfigurationException.getClass()))
 			).put(
 				"success", false
 			);
@@ -317,6 +284,30 @@ public class EditImageConfigurationEntryMVCActionCommand
 
 		return false;
 	}
+
+	private static final Map<Class<? extends Exception>, String>
+		_errorMessagesMap =
+			HashMapBuilder.<Class<? extends Exception>, String>put(
+				AMImageConfigurationException.
+					DuplicateAMImageConfigurationNameException.class,
+				"a-configuration-with-this-name-already-exists"
+			).put(
+				AMImageConfigurationException.InvalidHeightException.class,
+				"please-enter-a-max-height-value-larger-than-0"
+			).put(
+				AMImageConfigurationException.InvalidNameException.class,
+				"please-enter-a-valid-name"
+			).put(
+				AMImageConfigurationException.InvalidUuidException.class,
+				"please-enter-a-valid-identifier"
+			).put(
+				AMImageConfigurationException.InvalidWidthException.class,
+				"please-enter-a-max-width-value-larger-than-0"
+			).put(
+				AMImageConfigurationException.RequiredWidthOrHeightException.
+					class,
+				"please-enter-a-max-width-or-max-height-value-larger-than-0"
+			).build();
 
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

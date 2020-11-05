@@ -21,6 +21,14 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface DLFilePicker {
 
+	public default String getCurrentIconURL() {
+		return null;
+	}
+
+	public default String getCurrentTitle() {
+		return null;
+	}
+
 	public String getDescriptionFieldName();
 
 	public String getIconFieldName();

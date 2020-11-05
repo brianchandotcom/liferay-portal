@@ -16,9 +16,9 @@ package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerService;
-import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -193,16 +193,15 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			startDateHour += 12;
 		}
 
-		boolean singleNodeExecution = ParamUtil.getBoolean(
-			actionRequest, "singleNodeExecution");
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				ParamUtil.getInteger(actionRequest, "taskClusterMode"));
 
 		_dispatchTriggerService.updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
 			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
 			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute,
-			DispatchTriggerExecutionMode.getDispatchTriggerExecutionMode(
-				singleNodeExecution));
+			startDateMinute, dispatchTaskClusterMode);
 	}
 
 	protected DispatchTrigger updateDispatchTrigger(

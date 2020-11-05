@@ -16,12 +16,12 @@ package com.liferay.dispatch.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -156,8 +156,7 @@ public class DispatchMessageListenerTest {
 			0, 0, 0, 0, true, overlapAllowed, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
-			DispatchTriggerExecutionMode.values()
-				[RandomTestUtil.randomInt(0, 1)]);
+			DispatchTaskClusterMode.DISABLED);
 
 		_executeAndWaitFor(
 			TestDispatchTaskExecutor.SLEEP_MILLIS + 1000,

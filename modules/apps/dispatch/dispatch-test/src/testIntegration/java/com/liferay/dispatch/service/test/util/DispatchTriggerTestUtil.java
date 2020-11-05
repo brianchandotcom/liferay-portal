@@ -15,7 +15,6 @@
 package com.liferay.dispatch.service.test.util;
 
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -105,13 +104,6 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
-			public DispatchTriggerExecutionMode
-				getDispatchTriggerExecutionMode() {
-
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
 			public long getDispatchTriggerId() {
 				throw new UnsupportedOperationException();
 			}
@@ -184,6 +176,11 @@ public class DispatchTriggerTestUtil {
 			@Override
 			public boolean getSystem() {
 				return _system;
+			}
+
+			@Override
+			public int getTaskClusterMode() {
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -297,13 +294,6 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
-			public void setDispatchTriggerExecutionMode(
-				DispatchTriggerExecutionMode dispatchTriggerExecutionMode) {
-
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
 			public void setDispatchTriggerId(long dispatchTriggerId) {
 				throw new UnsupportedOperationException();
 			}
@@ -384,6 +374,11 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public void setSystem(boolean system) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setTaskClusterMode(int taskClusterMode) {
 				throw new UnsupportedOperationException();
 			}
 

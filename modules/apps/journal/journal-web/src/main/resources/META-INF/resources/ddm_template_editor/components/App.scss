@@ -1,0 +1,16 @@
+@import 'CodeMirrorEditor';
+
+.ddm_template_editor__App {
+	display: flex;
+
+	&-content {
+		flex-grow: 1;
+		overflow: hidden;
+		padding-left: 24px;
+	}
+
+	&-sidebar {
+		flex-shrink: 0;
+		width: 30ch;
+	}
+}

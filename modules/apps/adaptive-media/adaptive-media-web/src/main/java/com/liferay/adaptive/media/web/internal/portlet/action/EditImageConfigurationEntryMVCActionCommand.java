@@ -136,7 +136,8 @@ public class EditImageConfigurationEntryMVCActionCommand
 				if (autoModifiedUuid) {
 					message = LanguageUtil.format(
 						resourceBundle,
-						"x-was-saved-successfully.-the-id-was-duplicated-and-renamed-to-x",
+						"x-was-saved-successfully.-the-id-was-duplicated-and-" +
+							"renamed-to-x",
 						new String[] {
 							HtmlUtil.escape(
 								amImageConfigurationEntry.getName()),
@@ -179,7 +180,8 @@ public class EditImageConfigurationEntryMVCActionCommand
 					if (autoModifiedUuid) {
 						message = LanguageUtil.format(
 							resourceBundle,
-							"x-was-saved-successfully.-the-id-was-duplicated-and-renamed-to-x",
+							"x-was-saved-successfully.-the-id-was-duplicated-" +
+								"and-renamed-to-x",
 							new String[] {
 								HtmlUtil.escape(
 									amImageConfigurationEntry.getName()),
@@ -234,7 +236,8 @@ public class EditImageConfigurationEntryMVCActionCommand
 							RequiredWidthOrHeightException) {
 
 				errorMessage =
-					"please-enter-a-max-width-or-max-height-value-larger-than-0";
+					"please-enter-a-max-width-or-max-height-value-larger-" +
+						"than-0";
 			}
 
 			jsonObject.put(

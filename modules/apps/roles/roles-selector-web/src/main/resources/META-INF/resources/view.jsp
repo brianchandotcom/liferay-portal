@@ -166,11 +166,14 @@ String methodName = null;
 </liferay-util:buffer>
 
 <%
+PortletURL clearResultsURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
+clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
 SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("liferay-ui:search:searchContainer");
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= portletURL.toString() %>"
+	clearResultsURL="<%= clearResultsURL.toString() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= portletURL.toString() %>"

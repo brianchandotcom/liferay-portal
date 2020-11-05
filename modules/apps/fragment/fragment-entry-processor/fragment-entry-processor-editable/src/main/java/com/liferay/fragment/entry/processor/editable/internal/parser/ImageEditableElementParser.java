@@ -171,7 +171,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 
-				fileEntryId = jsonObject.getLong("fileEntryId", 0);
+				fileEntryId = jsonObject.getLong("fileEntryId");
 				value = jsonObject.getString("url");
 			}
 			catch (JSONException jsonException) {
@@ -181,7 +181,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 			}
 		}
 		else {
-			fileEntryId = configJSONObject.getLong("fileEntryId", 0);
+			fileEntryId = configJSONObject.getLong("fileEntryId");
 		}
 
 		value = value.trim();

@@ -44,6 +44,11 @@ public abstract class BaseUserCard
 	}
 
 	@Override
+	public String getIcon() {
+		return "user";
+	}
+
+	@Override
 	public String getImageSrc() {
 		if (user.getPortraitId() <= 0) {
 			return null;
@@ -66,6 +71,11 @@ public abstract class BaseUserCard
 	@Override
 	public String getSubtitle() {
 		return user.getScreenName();
+	}
+
+	@Override
+	public String getUserColorClass() {
+		return "primary";
 	}
 
 	protected final RenderRequest renderRequest;

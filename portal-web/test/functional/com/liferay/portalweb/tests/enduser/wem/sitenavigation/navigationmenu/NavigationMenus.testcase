@@ -129,7 +129,7 @@ definition {
 		}
 
 		task ("Assert no Page option in drop down list") {
-			LexiconEntry.gotoAdd();
+			Click(locator1 = "Button#PLUS");
 
 			MenuItem.viewNotPresent(menuItem = "Page");
 

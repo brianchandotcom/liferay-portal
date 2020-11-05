@@ -62,6 +62,8 @@ public class GetExternalVideoFieldsMVCResourceCommand
 					"HTML",
 					GetterUtil.getString(externalVideo.getEmbeddableHTML())
 				).put(
+					"ICON_URL", GetterUtil.getString(externalVideo.getIconURL())
+				).put(
 					"TITLE", GetterUtil.getString(externalVideo.getTitle())
 				).put(
 					"URL", GetterUtil.getString(externalVideo.getURL())

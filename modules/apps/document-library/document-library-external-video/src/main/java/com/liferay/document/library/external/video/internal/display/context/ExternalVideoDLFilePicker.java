@@ -52,7 +52,7 @@ public class ExternalVideoDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getIconFieldName() {
-		return null;
+		return "ICON_URL";
 	}
 
 	@Override

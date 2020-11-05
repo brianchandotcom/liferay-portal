@@ -22,7 +22,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -57,6 +60,11 @@ public class FacebookExternalVideoProvider implements ExternalVideoProvider {
 			}
 
 			@Override
+			public String getIconURL() {
+				return _servletContext.getContextPath() + "/icons/facebook.png";
+			}
+
+			@Override
 			public String getTitle() {
 				return null;
 			}
@@ -85,5 +93,10 @@ public class FacebookExternalVideoProvider implements ExternalVideoProvider {
 		Pattern.compile("(https?://(?:www\\.)?facebook.com/watch/?v=\\S*)"),
 		Pattern.compile("(https?://(?:www\\.)?facebook.com/\\S*/videos/\\S*)"),
 		Pattern.compile("(https?://(?:www.)?facebook.com/watch/?\\?v=.*)"));
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.external.video)"
+	)
+	private ServletContext _servletContext;
 
 }

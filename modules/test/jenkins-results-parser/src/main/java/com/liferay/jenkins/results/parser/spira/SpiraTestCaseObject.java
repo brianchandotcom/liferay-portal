@@ -284,12 +284,12 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			}
 
 			if ((testCaseFilePath != null) && !testCaseFilePath.isEmpty()) {
-				SpiraCustomProperty.Value spiraCustomValue =
-					SpiraCustomProperty.createSpiraCustomPropertyValue(
+				SpiraCustomPropertyValue spiraCustomPropertyValue =
+					SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
 						filePathSpiraCustomProperty, testCaseFilePath);
 
 				searchParameterList.add(
-					new SearchQuery.SearchParameter(spiraCustomValue));
+					new SearchQuery.SearchParameter(spiraCustomPropertyValue));
 			}
 
 			List<SpiraTestCaseObject> spiraTestCaseObjects =
@@ -350,8 +350,8 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			"PropertyNumber",
 			executionTypeSpiraCustomProperty.getPropertyNumber());
 
-		SpiraCustomProperty.Value spiraCustomPropertyValue =
-			SpiraCustomProperty.createSpiraCustomPropertyValue(
+		SpiraCustomPropertyValue spiraCustomPropertyValue =
+			SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
 				executionTypeSpiraCustomProperty, "Automatic");
 
 		executionTypeJSONObject.put(

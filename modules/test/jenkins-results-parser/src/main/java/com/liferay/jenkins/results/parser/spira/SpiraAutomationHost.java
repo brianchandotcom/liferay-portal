@@ -77,8 +77,8 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 				spiraProject, SpiraAutomationHost.class, "Jenkins Master",
 				SpiraCustomProperty.Type.LIST);
 
-		SpiraCustomProperty.Value jenkinsMasterSpiraCustomPropertyValue =
-			SpiraCustomProperty.createSpiraCustomPropertyValue(
+		SpiraCustomPropertyValue jenkinsMasterSpiraCustomPropertyValue =
+			SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
 				jenkinsMasterSpiraCustomProperty, jenkinsMaster.getName());
 
 		jenkinsMasterJSONObject.put(

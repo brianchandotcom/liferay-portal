@@ -32,7 +32,7 @@ public class SearchQuery<T extends SpiraArtifact> {
 	public static class SearchParameter {
 
 		public SearchParameter(
-			SpiraCustomProperty.Value spiraCustomPropertyValue) {
+			SpiraCustomPropertyValue spiraCustomPropertyValue) {
 
 			SpiraCustomProperty spiraCustomProperty =
 				spiraCustomPropertyValue.getSpiraCustomProperty();
@@ -80,9 +80,9 @@ public class SearchQuery<T extends SpiraArtifact> {
 		}
 
 		public boolean matches(JSONObject jsonObject) {
-			if (_value instanceof SpiraCustomProperty.Value) {
-				SpiraCustomProperty.Value spiraCustomPropertyValue =
-					(SpiraCustomProperty.Value)_value;
+			if (_value instanceof SpiraCustomPropertyValue) {
+				SpiraCustomPropertyValue spiraCustomPropertyValue =
+					(SpiraCustomPropertyValue)_value;
 
 				JSONArray customPropertiesJSONArray = jsonObject.getJSONArray(
 					"CustomProperties");
@@ -116,9 +116,9 @@ public class SearchQuery<T extends SpiraArtifact> {
 
 				filterJSONObject.put("IntValue", intValue);
 			}
-			else if (_value instanceof SpiraCustomProperty.Value) {
-				SpiraCustomProperty.Value spiraCustomPropertyValue =
-					(SpiraCustomProperty.Value)_value;
+			else if (_value instanceof SpiraCustomPropertyValue) {
+				SpiraCustomPropertyValue spiraCustomPropertyValue =
+					(SpiraCustomPropertyValue)_value;
 
 				SpiraCustomProperty spiraCustomProperty =
 					spiraCustomPropertyValue.getSpiraCustomProperty();
@@ -149,15 +149,18 @@ public class SearchQuery<T extends SpiraArtifact> {
 		}
 
 		private boolean _matchesCustomProperty(
-			JSONObject jsonObject, SpiraCustomProperty.Value value) {
+			JSONObject jsonObject,
+			SpiraCustomPropertyValue spiraCustomPropertyValue) {
 
 			SpiraCustomProperty spiraCustomProperty =
-				value.getSpiraCustomProperty();
+				spiraCustomPropertyValue.getSpiraCustomProperty();
 
 			SpiraCustomProperty.Type type = spiraCustomProperty.getType();
 
 			if (type == SpiraCustomProperty.Type.LIST) {
-				if (value.getID() == jsonObject.optInt("IntegerValue")) {
+				if (spiraCustomPropertyValue.getID() == jsonObject.optInt(
+						"IntegerValue")) {
+
 					return true;
 				}
 
@@ -173,7 +176,9 @@ public class SearchQuery<T extends SpiraArtifact> {
 				}
 
 				for (int i = 0; i < jsonArray.length(); i++) {
-					if (jsonArray.getInt(i) == value.getID()) {
+					if (jsonArray.getInt(i) ==
+							spiraCustomPropertyValue.getID()) {
+
 						return true;
 					}
 				}
@@ -182,7 +187,7 @@ public class SearchQuery<T extends SpiraArtifact> {
 			if (type == SpiraCustomProperty.Type.TEXT) {
 				String stringValue = jsonObject.optString("StringValue");
 
-				if (stringValue.contains(value.getName())) {
+				if (stringValue.contains(spiraCustomPropertyValue.getName())) {
 					return true;
 				}
 

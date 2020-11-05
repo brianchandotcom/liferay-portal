@@ -266,7 +266,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			SpiraTestCaseObject spiraTestCaseObject,
 			SpiraAutomationHost spiraAutomationHost, RunnerFormat runnerFormat,
 			String runnerStackTrace, long duration, Status status,
-			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
+			List<SpiraCustomPropertyValue> spiraCustomPropertyValues) {
 
 			_spiraTestCaseObject = spiraTestCaseObject;
 			_spiraAutomationHost = spiraAutomationHost;
@@ -281,7 +281,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			Supplier<SpiraTestCaseObject> spiraTestCaseObjectSupplier,
 			SpiraAutomationHost spiraAutomationHost, RunnerFormat runnerFormat,
 			String runnerStackTrace, long duration, Status status,
-			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
+			List<SpiraCustomPropertyValue> spiraCustomPropertyValues) {
 
 			_spiraTestCaseObjectSupplier = spiraTestCaseObjectSupplier;
 			_spiraAutomationHost = spiraAutomationHost;
@@ -299,7 +299,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				return customPropertyValuesJSONArray;
 			}
 
-			for (SpiraCustomProperty.Value spiraCustomPropertyValue :
+			for (SpiraCustomPropertyValue spiraCustomPropertyValue :
 					_spiraCustomPropertyValues) {
 
 				SpiraCustomProperty spiraCustomProperty =
@@ -451,8 +451,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		private final long _duration;
 		private final RunnerFormat _runnerFormat;
 		private final SpiraAutomationHost _spiraAutomationHost;
-		private final List<SpiraCustomProperty.Value>
-			_spiraCustomPropertyValues;
+		private final List<SpiraCustomPropertyValue> _spiraCustomPropertyValues;
 		private SpiraTestCaseObject _spiraTestCaseObject;
 		private transient Supplier<SpiraTestCaseObject>
 			_spiraTestCaseObjectSupplier;

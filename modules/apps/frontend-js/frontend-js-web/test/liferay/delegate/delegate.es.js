@@ -40,18 +40,20 @@ describe('delegate', () => {
 		expect(listener).toHaveBeenCalled();
 	});
 
-	it("doesn't trigger delegated event for parents of given element", () => {
-		document.body.innerHTML = `<div class="match">
-				<div data-testid="nomatch"></div>
-			</div>`;
+	it('triggers event on the parent if target is the child of the selector element', () => {
+		document.body.innerHTML = `<div class="match" data-testid="match">
+				<div>
+					<div data-testid="most-inner-match"></div>
+				</div>
+			</div >`;
 
 		const listener = jest.fn();
 
 		delegate(document, 'click', '.match', listener);
 
-		userEvent.click(getByTestId(document, 'nomatch'));
+		userEvent.click(getByTestId(document, 'most-inner-match'));
 
-		expect(listener).not.toHaveBeenCalled();
+		expect(listener).toHaveBeenCalled();
 	});
 
 	it('stops triggering event if stopPropagation is called', () => {

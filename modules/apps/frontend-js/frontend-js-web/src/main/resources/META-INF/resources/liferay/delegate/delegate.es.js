@@ -35,11 +35,16 @@ function isDisabled(node) {
  */
 function delegate(element, eventName, selector, callback) {
 	const eventHandler = (event) => {
-		if (eventName === 'click' && isDisabled(event.target)) {
+		const {defaultPrevented, target} = event;
+
+		if (eventName === 'click' && isDisabled(target)) {
 			return;
 		}
 
-		if (!event.defaultPrevented && event.target.matches(selector)) {
+		if (
+			!defaultPrevented &&
+			(target.matches(selector) || target.closest(selector))
+		) {
 			callback(event);
 		}
 	};

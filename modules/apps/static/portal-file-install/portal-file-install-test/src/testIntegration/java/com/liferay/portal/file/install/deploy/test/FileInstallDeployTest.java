@@ -271,7 +271,7 @@ public class FileInstallDeployTest {
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);
 
-			Files.deleteIfExists(path);
+			_uninstall(_TEST_JAR_SYMBOLIC_NAME, path);
 		}
 	}
 
@@ -369,9 +369,9 @@ public class FileInstallDeployTest {
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);
 
-			Files.deleteIfExists(path);
+			_uninstall(_TEST_JAR_SYMBOLIC_NAME, path);
 
-			Files.deleteIfExists(fragmentPath);
+			_uninstall(testFragmentSymbolicName, fragmentPath);
 		}
 	}
 
@@ -485,9 +485,9 @@ public class FileInstallDeployTest {
 		finally {
 			_bundleContext.removeBundleListener(bundleListener);
 
-			Files.deleteIfExists(path);
+			_uninstall(_TEST_JAR_SYMBOLIC_NAME, path);
 
-			Files.deleteIfExists(optionalProviderPath);
+			_uninstall(testOptionalProviderSymbolicName, optionalProviderPath);
 		}
 	}
 
@@ -499,6 +499,44 @@ public class FileInstallDeployTest {
 		}
 
 		return null;
+	}
+
+	private void _uninstall(String symbolicName, Path path) throws Exception {
+		if (!Files.exists(path)) {
+			return;
+		}
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		BundleListener bundleListener = new BundleListener() {
+
+			@Override
+			public void bundleChanged(BundleEvent bundleEvent) {
+				Bundle bundle = bundleEvent.getBundle();
+
+				if (!Objects.equals(bundle.getSymbolicName(), symbolicName)) {
+					return;
+				}
+
+				int type = bundleEvent.getType();
+
+				if (type == BundleEvent.UNINSTALLED) {
+					countDownLatch.countDown();
+				}
+			}
+
+		};
+
+		_bundleContext.addBundleListener(bundleListener);
+
+		try {
+			Files.deleteIfExists(path);
+
+			countDownLatch.await();
+		}
+		finally {
+			_bundleContext.removeBundleListener(bundleListener);
+		}
 	}
 
 	private void _updateConfiguration(UnsafeRunnable<Exception> runnable)

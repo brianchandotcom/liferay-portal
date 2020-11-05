@@ -506,7 +506,7 @@ definition {
 		task ("Assert the page item shows its Spanish name") {
 			AssertVisible(
 				key_itemName = "Nombre de la página de prueba",
-				locator1 = "SiteNavigationMenu#ITEM_LINK");
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 
 			NavigationMenusAdmin.openItemSidebar(itemName = "Nombre de la página de prueba");
 
@@ -522,7 +522,7 @@ definition {
 		task ("Assert the submenu item shows its Spanish name") {
 			AssertVisible(
 				key_itemName = "Submenú Nombre",
-				locator1 = "SiteNavigationMenu#ITEM_LINK");
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 
 			NavigationMenusAdmin.openItemSidebar(itemName = "Submenú Nombre");
 
@@ -538,7 +538,7 @@ definition {
 		task ("Assert the URL item shows its Spanish name") {
 			AssertVisible(
 				key_itemName = "Liferay (Spanish)",
-				locator1 = "SiteNavigationMenu#ITEM_LINK");
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 
 			NavigationMenusAdmin.openItemSidebar(itemName = "Liferay (Spanish)");
 

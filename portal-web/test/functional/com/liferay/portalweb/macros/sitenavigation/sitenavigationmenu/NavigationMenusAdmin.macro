@@ -199,7 +199,7 @@ definition {
 
 		Click(
 			key_itemName = "${itemName}",
-			locator1 = "SiteNavigationMenu#ITEM_LINK");
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 
 		AssertTextEquals(
 			key_itemName = "${itemName}",

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.CountryLocalServiceBaseImpl;
 
@@ -87,13 +88,127 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Country deleteCountry(Country country) {
+		return null;
+	}
+
+	@Override
+	public Country deleteCountry(long countryId) {
+		return null;
+	}
+
+	@Override
+	public Country fetchCountryByA2(long companyId, String a2) {
+		return null;
+	}
+
+	@Override
+	public Country fetchCountryByA3(long companyId, String a3) {
+		return null;
+	}
+
+	@Override
+	public Country fetchCountryByName(long companyId, String name) {
+		return null;
+	}
+
+	@Override
+	public Country fetchCountryByNumber(long companyId, String number) {
+		return null;
+	}
+
+	@Override
 	public List<Country> getCompanyCountries(long companyId) {
 		return countryPersistence.findByCompanyId(companyId);
 	}
 
 	@Override
+	public List<Country> getCompanyCountries(long companyId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public List<Country> getCompanyCountries(
+		long companyId, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public List<Country> getCompanyCountries(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
 	public int getCompanyCountriesCount(long companyId) {
 		return countryPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public int getCompanyCountriesCount(long companyId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public int getCompanyCountriesCount(
+		long companyId, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public int getCompanyCountriesCount(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public Country getCountryByA2(long companyId, String a2) {
+		return null;
+	}
+
+	@Override
+	public Country getCountryByA3(long companyId, String a3) {
+		return null;
+	}
+
+	@Override
+	public Country getCountryByName(long companyId, String name) {
+		return null;
+	}
+
+	@Override
+	public Country getCountryByNumber(long companyId, String number) {
+		return null;
+	}
+
+	@Override
+	public Country setActive(long countryId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public Country updateCountry(
+		long countryId, String a2, String a3, boolean active,
+		boolean billingAllowed, String idd, String name, String number,
+		double position, boolean shippingAllowed, boolean subjectToVAT,
+		Map<String, String> titleMap) {
+
+		return null;
+	}
+
+	@Override
+	public Country updateCountryGroupFilterEnabled(
+			long countryId, boolean groupFilterEnabled) {
+
+		return null;
 	}
 
 	protected void validate(

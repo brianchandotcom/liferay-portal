@@ -107,6 +107,20 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 				this._save();
 			});
 		}
+
+		const searchContainerId = `${namespace}pageAttachments`;
+
+		Liferay.componentReady(searchContainerId).then((searchContainer) => {
+			searchContainer
+				.get('contentBox')
+				.delegate(
+					'click',
+					this._removeAttachment.bind(this),
+					'.delete-attachment'
+				)
+		});
+
+		this.searchContainerId = searchContainerId;
 	}
 
 	/**
@@ -139,6 +153,30 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 		else {
 			formatSelect.selectedIndex = this.currentFormatIndex;
 		}
+	}
+
+	/**
+	 * Sends a request to remove the selected attachment.
+	 *
+	 * @protected
+	 * @param {Event} event The click event that triggered the remove action
+	 */
+	_removeAttachment(event) {
+		const link = event.currentTarget;
+
+		const deleteURL = link.getAttribute('data-url');
+
+		fetch(deleteURL).then(() => {
+			Liferay.componentReady(this.searchContainerId).then(
+				(searchContainer) => {
+					searchContainer.deleteRow(
+						link.ancestor('tr'),
+						link.getAttribute('data-rowid')
+					);
+					searchContainer.updateDataStore();
+				}
+			);
+		});
 	}
 
 	/**

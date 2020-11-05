@@ -125,6 +125,77 @@ definition {
 			webContentTitle = "WC Otsikko");
 	}
 
+	@description = "This is a use case for LRQA-61632. Add web content with translated Text field."
+	@priority = "4"
+	test AddWebContentWithTranslatedTextField {
+		task ("Add a structure with Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+		}
+
+		task ("Add the Spanish (Spain) translation to structure") {
+			Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+		}
+
+		task ("Type content in Text field under en-US") {
+			Type(
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "This is a Text field");
+		}
+
+		task ("Type content in Text field under es-ES") {
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			Type(
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "Este es un campo de texto");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert localized content are shown in published web content under Localization") {
+			WebContentAdmin.gotoEntry(entry = "Web Content Title");
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "This is a Text field");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "Este es un campo de texto");
+		}
+	}
+
 	@priority = "4"
 	test ViewChangedDefaultPortalLanguageViaWebContent {
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ViewChangedDefaultPortalLanguageViaWebContent";

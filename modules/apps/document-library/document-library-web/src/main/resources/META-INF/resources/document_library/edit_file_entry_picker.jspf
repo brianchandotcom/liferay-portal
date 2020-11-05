@@ -69,7 +69,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 					fields['<%= dlFilePicker.getDescriptionFieldName() %>'];
 
 				var documentDescriptionElement = document.getElementById(
-					'<portlet:namespace />documentDescription'
+					'<portlet:namespace />description'
 				);
 
 				if (documentDescriptionElement) {

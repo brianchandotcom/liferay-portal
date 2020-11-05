@@ -614,7 +614,7 @@ class Sidebar extends Component {
 				indexes,
 			};
 
-			if (data.target.closest(data.target, '.col-empty')) {
+			if (data.target && data.target.closest('.col-empty')) {
 				const addedToPlaceholder = data.target.closest('.placeholder');
 
 				dispatch('fieldAdded', {

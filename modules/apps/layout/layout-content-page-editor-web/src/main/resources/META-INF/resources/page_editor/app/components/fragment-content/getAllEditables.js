@@ -35,6 +35,7 @@ export default function getAllEditables(fragmentElement) {
 		).map((editableElement) => {
 			const editableId = editableElement.getAttribute('id');
 			const type = editableElement.getAttribute('type');
+			const priority = editableElement.dataset.lfrPriority || Infinity;
 
 			return {
 				editableId,
@@ -42,6 +43,7 @@ export default function getAllEditables(fragmentElement) {
 				element: fragmentElement.querySelector(
 					`lfr-editable[id="${editableId}"]`
 				),
+				priority,
 				processor: Processors[type] || Processors.fallback,
 				type,
 			};
@@ -52,6 +54,7 @@ export default function getAllEditables(fragmentElement) {
 		).map((editableElement) => {
 			const editableId = editableElement.dataset.lfrEditableId;
 			const type = editableElement.dataset.lfrEditableType;
+			const priority = editableElement.dataset.lfrPriority || Infinity;
 
 			return {
 				editableId,
@@ -59,6 +62,7 @@ export default function getAllEditables(fragmentElement) {
 				element: fragmentElement.querySelector(
 					`[data-lfr-editable-id="${editableId}"]`
 				),
+				priority,
 				processor: Processors[type] || Processors.fallback,
 				type,
 			};
@@ -70,6 +74,7 @@ export default function getAllEditables(fragmentElement) {
 			)
 		).map((editableElement) => {
 			const editableId = editableElement.dataset.lfrBackgroundImageId;
+			const priority = editableElement.dataset.lfrPriority || Infinity;
 
 			return {
 				editableId,
@@ -77,6 +82,7 @@ export default function getAllEditables(fragmentElement) {
 				element: fragmentElement.querySelector(
 					`[data-lfr-background-image-id="${editableId}"]`
 				),
+				priority,
 				processor: Processors['background-image'],
 				type: 'background-image',
 			};

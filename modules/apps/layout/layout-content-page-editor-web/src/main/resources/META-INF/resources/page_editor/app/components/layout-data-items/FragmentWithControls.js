@@ -20,11 +20,11 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import Layout from '../Layout';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
 import FragmentContentInteractionsFilter from '../fragment-content/FragmentContentInteractionsFilter';
 import FragmentContentProcessor from '../fragment-content/FragmentContentProcessor';
+import getAllPortals from './getAllPortals';
 
 const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const selectedViewportSize = useSelector(
@@ -33,26 +33,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 
 	const [setRef, itemElement] = useSetRef(ref);
 
-	const getPortals = useCallback(
-		(element) =>
-			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
-				(dropZoneElement) => {
-					const mainItemId =
-						dropZoneElement.getAttribute('uuid') || '';
-
-					const Component = () =>
-						mainItemId ? <Layout mainItemId={mainItemId} /> : null;
-
-					Component.displayName = `DropZone(${mainItemId})`;
-
-					return {
-						Component,
-						element: dropZoneElement,
-					};
-				}
-			),
-		[]
-	);
+	const getPortals = useCallback((element) => getAllPortals(element), []);
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 

@@ -18,6 +18,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import getAllEditables from '../../../app/components/fragment-content/getAllEditables';
+import getAllPortals from '../../../app/components/layout-data-items/getAllPortals';
 import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
 import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
@@ -180,6 +181,7 @@ function visit(
 
 		const documentFragment = getDocumentFragment(fragmentEntryLink.content);
 		const editables = getAllEditables(documentFragment);
+		const portals = getAllPortals(documentFragment);
 
 		const editableTypes = fragmentEntryLink.editableTypes;
 

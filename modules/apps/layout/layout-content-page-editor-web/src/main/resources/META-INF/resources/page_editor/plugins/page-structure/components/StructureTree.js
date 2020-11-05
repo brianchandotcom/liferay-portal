@@ -215,7 +215,7 @@ function visit(
 				});
 			}
 			else {
-				const {mainItemId} = element;
+				const {dropZoneId, mainItemId} = element;
 
 				children.push({
 					...visit(items[mainItemId], items, {
@@ -231,7 +231,7 @@ function visit(
 						selectedViewportSize,
 					}),
 
-					name: Liferay.Language.get('drop-zone'),
+					name: `${Liferay.Language.get('drop-zone')} ${dropZoneId}`,
 					removable: false,
 				});
 			}

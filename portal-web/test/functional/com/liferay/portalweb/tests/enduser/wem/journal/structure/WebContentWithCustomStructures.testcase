@@ -1565,12 +1565,11 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DynamicDataMapping.addField(
-				field = "HTML",
+			DataEngine.addField(
 				fieldFieldLabel = "HTML",
-				fieldName = "HTML");
+				fieldType = "Text");
 
-			DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "HTML");
+			DataEngine.editFieldRepeatable(fieldFieldLabel = "HTML");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -1586,21 +1585,21 @@ definition {
 
 			PortletEntry.inputTitle(title = "Web Content Title");
 
-			DDLRecord.addRepeatableField(fieldName = "HTML");
+			DataEngine.addRepeatableField(fieldName = "HTML");
 		}
 
 		task ("Type content to the first HTML field") {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "HTML",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+			Type(
+				key_fieldName = "HTML",
+				locator1 = "TextInput#DE_DDM",
 				value1 = "This is the first HTML field");
 		}
 
 		task ("Type content to the second HTML field") {
-			Type.typeCKEditorWaitForCKEditor(
-				index = "2",
-				key_fieldLabel = "HTML",
-				locator1 = "CKEditor#ANY_BODY_FIELD_WEB_CONTENT_ARTICLE",
+			Type(
+				key_fieldName = "HTML",
+				key_index = "2",
+				locator1 = "TextInput#ANY_DE_DDM",
 				value1 = "This is the second HTML field");
 
 			PortletEntry.publish();

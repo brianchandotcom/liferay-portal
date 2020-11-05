@@ -228,7 +228,9 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		JSONGroup.addGroup(groupName = "Site Name 2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoStructures();
 
@@ -236,31 +238,27 @@ definition {
 			structureDescription = "3 Column with Images Description",
 			structureName = "3 Column with Images");
 
-		DynamicDataMapping.addField(
-			field = "Text Box",
+		DataEngine.addField(
 			fieldFieldLabel = "Title",
-			fieldName = "title");
+			fieldType = "Rich Text");
 
 		for (var count : list "1,2,3") {
-			DynamicDataMapping.addField(
-				field = "Image",
+			DataEngine.addField(
 				fieldFieldLabel = "Image ${count}",
-				fieldName = "image${count}");
+				fieldType = "Image");
 
-			DynamicDataMapping.addField(
-				field = "Text Box",
+			DataEngine.addField(
 				fieldFieldLabel = "Heading ${count}1",
-				fieldName = "heading${count}");
+				fieldType = "Rich Text");
 
-			DynamicDataMapping.addField(
-				field = "Text Box",
+			DataEngine.addField(
 				fieldFieldLabel = "Content ${count}",
-				fieldName = "content${count}");
+				fieldType = "Rich Text");
 		}
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoTemplates();
 
@@ -271,21 +269,7 @@ definition {
 			templateFile = "Frontpage 3 Column with Images Template.txt",
 			templateName = "Frontpage 3 Column with Images Template");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		LAR.exportPortlet(larFileName = "structure-templates.lar");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
-
-		NavItem.gotoTemplates();
-
-		WebContentTemplates.addCP(
-			structureName = "Global WC Structure Name",
-			templateDescription = "Global WC Template Description",
-			templateFieldNames = "Text",
-			templateName = "Global WC Template Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		LAR.exportPortlet(larFileName = "structure-templates.lar");
 
@@ -295,20 +279,23 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Global WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "3 Column with Images");
 
 		WebContent.addWithStructureCP(
-			webContentText = "Green Waste",
-			webContentTitle = "Web Content Title");
+			fieldName = "title",
+			webContentTextBox = "Green Waste",
+			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			webContentTitle = "Agricultural Science Front Page");
 
 		PortletEntry.publish();
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		WebContent.viewTitle(webContentTitle = "Agricultural Science Front Page");
 
 		WebContent.viewWithStructureCP(
-			fieldName = "text",
-			webContentText = "Green Waste",
-			webContentTitle = "Web Content Title");
+			fieldName = "title",
+			webContentTextBox = "Green Waste",
+			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			webContentTitle = "Agricultural Science Front Page");
 	}
 
 	@priority = "4"
@@ -498,15 +485,13 @@ definition {
 			structureDescription = "News Description",
 			structureName = "News");
 
-		DynamicDataMapping.addField(
-			field = "Image",
+		DataEngine.addField(
 			fieldFieldLabel = "Cover Image",
-			fieldName = "NewsCoverImage");
+			fieldType = "Image");
 
-		DynamicDataMapping.addField(
-			field = "Text Box",
+		DataEngine.addField(
 			fieldFieldLabel = "Content",
-			fieldName = "NewsContent");
+			fieldType = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -518,25 +503,21 @@ definition {
 			structureDescription = "Events Description",
 			structureName = "Events");
 
-		DynamicDataMapping.addField(
-			field = "Image",
+		DataEngine.addField(
 			fieldFieldLabel = "Cover Image",
-			fieldName = "EventCoverImage");
+			fieldType = "Image");
 
-		DynamicDataMapping.addField(
-			field = "Text",
+		DataEngine.addField(
 			fieldFieldLabel = "Headline",
-			fieldName = "EventHeadline");
+			fieldType = "Text");
 
-		DynamicDataMapping.addField(
-			field = "Date",
+		DataEngine.addField(
 			fieldFieldLabel = "EventDate",
-			fieldName = "EventDate");
+			fieldType = "Date");
 
-		DynamicDataMapping.addField(
-			field = "Text Box",
-			fieldFieldLabel = "Lead Text",
-			fieldName = "EventLeadText");
+		DataEngine.addField(
+			fieldFieldLabel = "LeadText",
+			fieldType = "Rich Text");
 
 		WebContentStructures.saveCP();
 

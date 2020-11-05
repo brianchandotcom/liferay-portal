@@ -95,6 +95,8 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				ConnectionConstants.SIDECAR_CONNECTION_ID);
 		}
 		else {
+			_startupSuccessful = false;
+
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(7);
 
@@ -116,7 +118,8 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 			_sidecar = new Sidecar(
 				clusterExecutor, elasticsearchConfigurationWrapper,
 				getElasticsearchInstancePaths(), processExecutor,
-				new ProcessExecutorPathsImpl(props), _settingsContributors);
+				new ProcessExecutorPathsImpl(props), _settingsContributors,
+				this);
 
 			ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
 				new ElasticsearchConnectionBuilder();
@@ -138,6 +141,8 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 
 			elasticsearchConnectionManager.addElasticsearchConnection(
 				elasticsearchConnectionBuilder.build());
+
+			_startupSuccessful = true;
 		}
 	}
 
@@ -161,6 +166,10 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 		).workPath(
 			workPath
 		).build();
+	}
+
+	protected boolean isStartupSuccessful() {
+		return _startupSuccessful;
 	}
 
 	protected void removeSettingsContributor(
@@ -209,5 +218,6 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 	private final Set<SettingsContributor> _settingsContributors =
 		new ConcurrentSkipListSet<>();
 	private Sidecar _sidecar;
+	private boolean _startupSuccessful;
 
 }

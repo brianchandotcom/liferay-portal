@@ -25,6 +25,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.constants.Co
 import com.liferay.portal.search.elasticsearch7.internal.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.PathUtil;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
+import com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager;
 import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
@@ -68,7 +69,7 @@ public class ElasticsearchConnectionFixture
 			elasticsearchConfigurationWrapper,
 			createElasticsearchInstancePaths(), new LocalProcessExecutor(),
 			() -> _TMP_PATH.resolve("lib-process-executor"),
-			getSettingsContributors());
+			getSettingsContributors(), Mockito.mock(SidecarManager.class));
 
 		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
 			new ElasticsearchConnectionBuilder();

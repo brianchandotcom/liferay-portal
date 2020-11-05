@@ -79,7 +79,8 @@ public class Sidecar {
 		ElasticsearchInstancePaths elasticsearchInstancePaths,
 		ProcessExecutor processExecutor,
 		ProcessExecutorPaths processExecutorPaths,
-		Collection<SettingsContributor> settingsContributors) {
+		Collection<SettingsContributor> settingsContributors,
+		SidecarManager sidecarManager) {
 
 		_clusterExecutor = clusterExecutor;
 		_dataHomePath = elasticsearchInstancePaths.getDataPath();
@@ -89,6 +90,7 @@ public class Sidecar {
 		_processExecutorPaths = processExecutorPaths;
 		_settingsContributors = settingsContributors;
 		_sidecarHomePath = elasticsearchInstancePaths.getHomePath();
+		_sidecarManager = sidecarManager;
 	}
 
 	public String getNetworkHostAddress() {
@@ -105,8 +107,8 @@ public class Sidecar {
 		ProcessChannel<Serializable> processChannel =
 			executeSidecarMainProcess();
 
-		FutureListener<Serializable> futureListener =
-			new RestartFutureListener();
+		FutureListener<Serializable> futureListener = new RestartFutureListener(
+			_sidecarManager);
 
 		addFutureListener(processChannel, futureListener);
 
@@ -591,10 +593,15 @@ public class Sidecar {
 	private FutureListener<Serializable> _restartFutureListener;
 	private final Collection<SettingsContributor> _settingsContributors;
 	private final Path _sidecarHomePath;
+	private SidecarManager _sidecarManager;
 	private Path _sidecarTempDirPath;
 
 	private static class RestartFutureListener
 		implements FutureListener<Serializable> {
+
+		public RestartFutureListener(SidecarManager sidecarManager) {
+			_sidecarManager = sidecarManager;
+		}
 
 		@Override
 		public void complete(Future<Serializable> future) {
@@ -608,14 +615,16 @@ public class Sidecar {
 				}
 			}
 
-			SidecarComponentUtil.disableSidecarManager();
+			if (_sidecarManager.isStartupSuccessful()) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Restarting sidecar Elasticsearch process");
+				}
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Restarting sidecar Elasticsearch process");
+				_sidecarManager.applyConfigurations();
 			}
-
-			SidecarComponentUtil.enableSidecarManager();
 		}
+
+		private SidecarManager _sidecarManager;
 
 	}
 

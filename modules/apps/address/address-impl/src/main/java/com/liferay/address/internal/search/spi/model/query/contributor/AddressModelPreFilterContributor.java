@@ -14,19 +14,27 @@
 
 package com.liferay.address.internal.search.spi.model.query.contributor;
 
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -81,6 +89,19 @@ public class AddressModelPreFilterContributor
 		}
 
 		long[] typeIds = (long[])params.get("typeIds");
+		String[] typeNames = (String[])params.get("typeNames");
+
+		if (ArrayUtil.isNotEmpty(typeNames)) {
+			if (typeIds == null) {
+				typeIds = _getTypeIds(searchContext, typeNames);
+			}
+			else {
+				typeIds = ArrayUtil.append(
+					typeIds, _getTypeIds(searchContext, typeNames));
+			}
+
+			typeIds = ArrayUtil.unique(typeIds);
+		}
 
 		if (ArrayUtil.isNotEmpty(typeIds)) {
 			TermsFilter termsFilter = new TermsFilter("typeId");
@@ -90,5 +111,45 @@ public class AddressModelPreFilterContributor
 			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 		}
 	}
+
+	private long[] _getTypeIds(
+		SearchContext searchContext, String[] typeNames) {
+
+		long classNameId = GetterUtil.getLong(
+			searchContext.getAttribute(Field.CLASS_NAME_ID));
+
+		if (classNameId <= 0) {
+			return new long[0];
+		}
+
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			classNameId);
+
+		if (className == null) {
+			return new long[0];
+		}
+
+		Stream<String> typeNamesStream = Arrays.stream(typeNames);
+
+		return typeNamesStream.mapToLong(
+			typeName -> {
+				ListType listType = _listTypeLocalService.getListType(
+					typeName,
+					className.getClassName() + ListTypeConstants.ADDRESS);
+
+				if (listType != null) {
+					return listType.getListTypeId();
+				}
+
+				return -1;
+			}
+		).toArray();
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 }

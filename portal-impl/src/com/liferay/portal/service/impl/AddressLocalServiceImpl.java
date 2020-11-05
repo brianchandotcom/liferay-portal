@@ -29,17 +29,33 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -220,6 +236,18 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
+	public BaseModelSearchResult<Address> searchAddresses(
+			long companyId, String className, long classPK, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, className, classPK, keywords, params, start, end, sort);
+
+		return searchAddresses(searchContext);
+	}
+
+	@Override
 	public Address updateAddress(
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId, long typeId,
@@ -279,6 +307,104 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 
 		return address;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, String className, long classPK, String keywords,
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.CLASS_NAME_ID,
+				classNameLocalService.getClassNameId(className)
+			).put(
+				Field.CLASS_PK, classPK
+			).put(
+				Field.NAME, keywords
+			).put(
+				"city", keywords
+			).put(
+				"countryName", keywords
+			).put(
+				"params", params
+			).put(
+				"regionName", keywords
+			).put(
+				"zip", keywords
+			).build());
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
+	}
+
+	protected List<Address> getAddresses(Hits hits) throws PortalException {
+		List<Document> documents = hits.toList();
+
+		List<Address> addresses = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long addressId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			Address address = fetchAddress(addressId);
+
+			if (address == null) {
+				addresses = null;
+
+				Indexer<Address> indexer = IndexerRegistryUtil.getIndexer(
+					Address.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (addresses != null) {
+				addresses.add(address);
+			}
+		}
+
+		return addresses;
+	}
+
+	protected BaseModelSearchResult<Address> searchAddresses(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<Address> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Address.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<Address> addresses = getAddresses(hits);
+
+			if (addresses != null) {
+				return new BaseModelSearchResult<>(addresses, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected void validate(

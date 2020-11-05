@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>RICH_TEXT</td>
-	<td>//p[contains(.,'${key_fieldName}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
+	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

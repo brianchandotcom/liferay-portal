@@ -501,7 +501,7 @@ definition {
 			structureFieldName = "Text",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			textBoxFieldName = "TextBox",
+			textBoxFieldName = "Rich Text",
 			webContentRichText = "WC WebContent TextBox",
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");

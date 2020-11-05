@@ -180,54 +180,62 @@ function visit(
 		icon = fragmentEntryLink.icon || icon;
 
 		const documentFragment = getDocumentFragment(fragmentEntryLink.content);
-		const editables = getAllEditables(documentFragment);
-		const portals = getAllPortals(documentFragment);
+		const elements = [
+			...getAllEditables(documentFragment),
+			...getAllPortals(documentFragment),
+		];
+		const sortedElements = elements.sort((a, b) => a.priority - b.priority);
 
 		const editableTypes = fragmentEntryLink.editableTypes;
 
-		editables.forEach(({editableId}) => {
-			const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
-			const type =
-				editableTypes[editableId] || EDITABLE_TYPES.backgroundImage;
+		sortedElements.forEach((element) => {
+			if (element.editableId) {
+				const {editableId} = element;
 
-			children.push({
-				activable:
-					canUpdateEditables &&
-					canActivateEditable(selectedViewportSize, type),
-				children: [],
-				disabled: !isMasterPage && itemInMasterLayout,
-				dragAndDropHoveredItemId,
-				draggable: false,
-				expanded: childId === activeItemId,
-				icon: EDITABLE_TYPE_ICONS[type],
-				id: childId,
-				itemType: ITEM_TYPES.editable,
-				name: editableId,
-				onHoverNode,
-				parentId: item.parentId,
-				removable: false,
-			});
-		});
+				const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
+				const type =
+					editableTypes[editableId] || EDITABLE_TYPES.backgroundImage;
 
-		children.push(
-			...item.children.map((childItemId) => ({
-				...visit(items[childItemId], items, {
-					activeItemId,
-					canUpdateEditables,
-					canUpdateItemConfiguration,
+				children.push({
+					activable:
+						canUpdateEditables &&
+						canActivateEditable(selectedViewportSize, type),
+					children: [],
+					disabled: !isMasterPage && itemInMasterLayout,
 					dragAndDropHoveredItemId,
-					fragmentEntryLinks,
-					isMasterPage,
-					layoutData,
-					masterLayoutData,
+					draggable: false,
+					expanded: childId === activeItemId,
+					icon: EDITABLE_TYPE_ICONS[type],
+					id: childId,
+					itemType: ITEM_TYPES.editable,
+					name: editableId,
 					onHoverNode,
-					selectedViewportSize,
-				}),
+					parentId: item.parentId,
+					removable: false,
+				});
+			}
+			else {
+				const {mainItemId} = element;
 
-				name: Liferay.Language.get('drop-zone'),
-				removable: false,
-			}))
-		);
+				children.push({
+					...visit(items[mainItemId], items, {
+						activeItemId,
+						canUpdateEditables,
+						canUpdateItemConfiguration,
+						dragAndDropHoveredItemId,
+						fragmentEntryLinks,
+						isMasterPage,
+						layoutData,
+						masterLayoutData,
+						onHoverNode,
+						selectedViewportSize,
+					}),
+
+					name: Liferay.Language.get('drop-zone'),
+					removable: false,
+				});
+			}
+		});
 	}
 	else {
 		item.children.forEach((childId) => {

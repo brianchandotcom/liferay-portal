@@ -14,15 +14,29 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {ButtonList} from './ButtonList';
 import {CollapsableButtonList} from './CollapsableButtonList';
 
 const SEARCH_INPUT_ID = 'ddm_template_editor_Sidebar-SearchInputId';
 
-export const Sidebar = ({onButtonClick, templateVariableGroups}) => {
+export const Sidebar = ({
+	onButtonClick,
+	templateVariableGroups: initialTemplateVariableGroups,
+}) => {
 	const [filteredItems, setFilteredItems] = useState(null);
+
+	const templateVariableGroups = useMemo(
+		() =>
+			initialTemplateVariableGroups.map((group) => ({
+				...group,
+				items: group.items.map((item) =>
+					item.repeatable ? {...item, label: `${item.label}*`} : item
+				),
+			})),
+		[initialTemplateVariableGroups]
+	);
 
 	const handleSearchInputChange = (event) => {
 		const slugify = (str) => str.toLowerCase().replace(/\s/g, '');

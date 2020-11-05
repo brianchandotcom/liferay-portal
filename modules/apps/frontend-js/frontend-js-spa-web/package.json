@@ -2,7 +2,6 @@
 	"dependencies": {
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",
-		"metal-path-parser": "1.0.4",
 		"metal-promise": "3.0.5",
 		"metal-uri": "2.4.0"
 	},

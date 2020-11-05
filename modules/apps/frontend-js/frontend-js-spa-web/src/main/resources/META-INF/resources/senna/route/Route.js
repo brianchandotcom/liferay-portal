@@ -12,7 +12,7 @@
  * details.
  */
 
-import {extractData, parse, toRegex} from 'metal-path-parser';
+import {extractData, parse, toRegex} from '../utils/pathParser';
 
 class Route {
 

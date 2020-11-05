@@ -24,13 +24,13 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn(DispatchTriggerTable.TABLE_NAME, "singleNodeExecution")) {
+		if (hasColumn(DispatchTriggerTable.TABLE_NAME, "taskClusterMode")) {
 			return;
 		}
 
 		alter(
 			DispatchTriggerTable.class,
-			new AlterTableAddColumn("singleNodeExecution", "BOOLEAN"));
+			new AlterTableAddColumn("taskClusterMode", "INTEGER"));
 	}
 
 }

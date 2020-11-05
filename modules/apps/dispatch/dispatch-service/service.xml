@@ -67,6 +67,7 @@
 		<column name="singleNodeExecution" type="boolean" />
 		<column name="startDate" type="Date" />
 		<column name="system" type="boolean" />
+		<column name="taskClusterMode" type="int" />
 		<column name="taskExecutorType" type="String" />
 		<column name="taskSettings" type="String" />
 

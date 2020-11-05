@@ -15,9 +15,14 @@
 package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -30,7 +35,7 @@ public class TranslationEntryManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public TranslationEntryManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
+		String defaultEventHandler, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<?> searchContainer) {
@@ -38,11 +43,32 @@ public class TranslationEntryManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_defaultEventHandler = defaultEventHandler;
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "deleteSelectedTranslationEntries");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	@Override
 	public String getClearResultsURL() {
 		return getSearchActionURL();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return _defaultEventHandler;
 	}
 
 	@Override
@@ -56,5 +82,7 @@ public class TranslationEntryManagementToolbarDisplayContext
 	public String getSearchContainerId() {
 		return "searchContainer";
 	}
+
+	private final String _defaultEventHandler;
 
 }

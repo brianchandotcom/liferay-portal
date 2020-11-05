@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -108,6 +109,17 @@ public class TranslationEntryServiceImpl
 			serviceContext);
 	}
 
+	@Override
+	public TranslationEntry deleteTranslationEntry(long translationEntryId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), translationEntryId, ActionKeys.DELETE);
+
+		return translationEntryLocalService.deleteTranslationEntry(
+			translationEntryId);
+	}
+
 	private void _checkPermission(
 			long groupId, String languageId,
 			InfoItemReference infoItemReference)
@@ -140,6 +152,11 @@ public class TranslationEntryServiceImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.translation.model.TranslationEntry)"
+	)
+	private ModelResourcePermission<TranslationEntry> _modelResourcePermission;
 
 	@Reference
 	private SAXReader _saxReader;

@@ -15,7 +15,9 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
 import com.liferay.translation.web.internal.display.context.ViewDisplayContext;
@@ -48,10 +50,15 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				_portal.getHttpServletRequest(renderRequest),
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse),
-				_translationEntryLocalService));
+				_modelResourcePermission, _translationEntryLocalService));
 
 		return "/view.jsp";
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.translation.model.TranslationEntry)"
+	)
+	private ModelResourcePermission<TranslationEntry> _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

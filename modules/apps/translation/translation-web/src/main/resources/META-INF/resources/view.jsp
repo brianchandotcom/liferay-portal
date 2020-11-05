@@ -35,6 +35,14 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 				keyProperty="translationEntryId"
 				modelVar="translationEntry"
 			>
+
+				<%
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", viewDisplayContext.getAvailableActions(translationEntry)
+					).build());
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
 					name="title"
@@ -63,6 +71,12 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 					name="modified-date"
 					property="modifiedDate"
 				/>
+
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						dropdownItems="<%= viewDisplayContext.getActionDropdownItems(translationEntry) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
@@ -71,3 +85,9 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	componentId="<%= viewDisplayContext.getDefaultEventHandler() %>"
+	context="<%= viewDisplayContext.getComponentContext() %>"
+	module="js/translate/TranslationManagementToolbarDefaultEventHandler.es"
+/>

@@ -136,8 +136,8 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 			return spiraCustomPropertyValue;
 		}
 
-		SpiraCustomList.Value spiraCustomListValue =
-			SpiraCustomList.createSpiraCustomListValue(
+		SpiraCustomListValue spiraCustomListValue =
+			SpiraCustomListValue.createSpiraCustomListValue(
 				spiraCustomProperty.getSpiraProject(),
 				spiraCustomProperty.getSpiraCustomList(), value);
 
@@ -238,7 +238,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		SpiraCustomList spiraCustomList = getSpiraCustomList();
 
-		for (SpiraCustomList.Value spiraCustomListValue :
+		for (SpiraCustomListValue spiraCustomListValue :
 				spiraCustomList.getSpiraCustomListValues()) {
 
 			_spiraCustomPropertyValues.add(
@@ -306,10 +306,10 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		}
 
 		protected Value(
-			SpiraCustomList.Value spiraCustomValue,
+			SpiraCustomListValue spiraCustomListValue,
 			SpiraCustomProperty spiraCustomProperty) {
 
-			super(spiraCustomValue.toJSONObject());
+			super(spiraCustomListValue.toJSONObject());
 
 			_spiraCustomProperty = spiraCustomProperty;
 		}
@@ -367,7 +367,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	}
 
 	protected void addSpiraCustomListValue(
-		SpiraCustomList.Value spiraCustomListValue) {
+		SpiraCustomListValue spiraCustomListValue) {
 
 		JSONObject customListJSONObject = jsonObject.optJSONObject(
 			"CustomList");

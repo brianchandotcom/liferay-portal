@@ -352,8 +352,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 							getSpiraProject(), SpiraTestCaseRun.class,
 							spiraCustomProperty.getName());
 
-					SpiraCustomList.Value spiraCustomListValue =
-						SpiraCustomList.createSpiraCustomListValue(
+					SpiraCustomListValue spiraCustomListValue =
+						SpiraCustomListValue.createSpiraCustomListValue(
 							getSpiraProject(), spiraCustomList,
 							spiraCustomPropertyValue.getName());
 

@@ -34,16 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ITEM_ENTRY_STICKER</td>
-	<td>//div[contains(@class,'navigation-menu-item')][@data-title='${key_itemName}']//span[*[name()='svg'][contains(@class,'icon')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ITEM_LINK</td>
-	<td>//div[contains(@class,'card')]//span[normalize-space()='${key_itemName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USE_CUSTOM_NAME_CHECKBOX</td>
 	<td>//label[contains(.,'Use Custom Name')]/input[@type='checkbox']</td>
 	<td></td>

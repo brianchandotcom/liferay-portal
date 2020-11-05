@@ -65,11 +65,10 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 
 					<c:choose>
 						<c:when test="<%= ClusterExecutorUtil.isEnabled() %>">
-							<aui:input name="singleNodeExecution" />
+							<aui:input name="taskClusterMode" value="1" />
 						</c:when>
 						<c:otherwise>
-							<aui:input disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-cluster-environment" ignoreRequestValue="<%= true %>" name="singleNodeExecution" type="checkbox" value="<%= true %>" />
-							<aui:input name="singleNodeExecution" type="hidden" value="<%= true %>" />
+							<aui:input disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-cluster-environment" ignoreRequestValue="<%= true %>" name="taskClusterMode" value="0" />
 						</c:otherwise>
 					</c:choose>
 

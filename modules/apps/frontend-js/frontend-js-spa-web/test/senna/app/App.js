@@ -15,9 +15,9 @@
 import {fireEvent} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import {dom, exitDocument} from 'metal-dom';
-import {EventEmitter} from 'metal-events';
 
 import App from '../../../src/main/resources/META-INF/resources/senna/app/App';
+import EventEmitter from '../../../src/main/resources/META-INF/resources/senna/events/EventEmitter';
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import Route from '../../../src/main/resources/META-INF/resources/senna/route/Route';
 import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';

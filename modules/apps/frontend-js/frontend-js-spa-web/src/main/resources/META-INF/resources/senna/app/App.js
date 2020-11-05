@@ -14,10 +14,11 @@
 
 import {debounce} from 'frontend-js-web';
 import {addClasses, delegate, match, on, removeClasses} from 'metal-dom';
-import {EventEmitter, EventHandler} from 'metal-events';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
+import EventEmitter from '../events/EventEmitter';
+import EventHandler from '../events/EventHandler';
 import globals from '../globals/globals';
 import Route from '../route/Route';
 import Screen from '../screen/Screen';

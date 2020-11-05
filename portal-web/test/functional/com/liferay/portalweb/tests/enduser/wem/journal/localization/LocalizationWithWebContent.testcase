@@ -267,4 +267,73 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-61632. View structure default value in translated Text field."
+	@priority = "4"
+	test ViewStructureDefaultValueInTranslatedTextField {
+		task ("Add a structure with Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+		}
+
+		task ("Add the Spanish (Spain) translation to structure") {
+			Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add default value to translated Text field") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit Default Values",
+				rowEntry = "WC Structure Name");
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			Type(
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "This is a Text field");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			Type(
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "Este es un campo de texto");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Assert localized content are shown under Localization") {
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "This is a Text field");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "Text",
+				locator1 = "TextInput#DDM",
+				value1 = "Este es un campo de texto");
+		}
+	}
+
 }

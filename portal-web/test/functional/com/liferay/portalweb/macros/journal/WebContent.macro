@@ -280,7 +280,7 @@ definition {
 		if (isSet(webContentText)) {
 			Type(
 				key_fieldName = "${structureFieldName}",
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#DE_DDM",
 				value1 = "${webContentText}");
 		}
 

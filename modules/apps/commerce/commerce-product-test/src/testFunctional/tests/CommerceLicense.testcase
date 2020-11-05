@@ -21,7 +21,7 @@ definition {
 
 	@priority = "5"
 	test ViewCommerceDisabled {
-		property disable.commerce = "true";
+		property commerce.enabled = "false";
 		property portal.release = "true";
 
 		ApplicationsMenuHelper.openApplicationsMenu();

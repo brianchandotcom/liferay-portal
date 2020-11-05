@@ -4328,10 +4328,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 
-					<get-testcase-property property.name="disable.commerce" />
+					<get-testcase-property property.name="commerce.enabled" />
 
 					<if>
-						<equals arg1="${disable.commerce}" arg2="true" />
+						<equals arg1="${commerce.enabled}" arg2="false" />
 						<then>
 							<delete failonerror="false" file="${test.app.server.dir}/deploy/portal-commerce-license.xml" />
 						</then>
@@ -5496,13 +5496,13 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<echo>${app.server.waiting.url} has loaded</echo>
 
-			<get-testcase-property property.name="disable.commerce" />
+			<get-testcase-property property.name="commerce.enabled" />
 
 			<if>
 				<and>
 					<equals arg1="${build.profile}" arg2="dxp" />
 					<not>
-						<equals arg1="${disable.commerce}" arg2="true" />
+						<equals arg1="${commerce.enabled}" arg2="false" />
 					</not>
 					<or>
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-fixpack-release" />

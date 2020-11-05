@@ -214,12 +214,6 @@ definition {
 	}
 
 	macro toggleAutomaticallyAddNewPagesToMenu {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			MetalComponent.waitForManagementBar();
-		}
-
 		Click(locator1 = "SiteNavigationMenu#SIDEBAR_COG");
 
 		if ("${toggleValue}" == "enable") {

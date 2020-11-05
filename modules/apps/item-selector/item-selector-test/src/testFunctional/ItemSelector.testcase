@@ -389,12 +389,13 @@ definition {
 			depotName = "Test Depot Name");
 
 		for (var documentNumber : list "_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23") {
-			JSONDocument.addFileWithUploadedFile(
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document JPG${documentNumber}",
-				groupName = "Test Depot Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_4.jpg");
+				dmDocumentFile = "Document_4.jpg",
+				dmDocumentFileName = "Document${documentNumber}.jpg",
+				dmDocumentTitle = "DM Document JPG${documentNumber}");
 		}
 
 		DepotNavigator.openDepotAdmin();
@@ -406,12 +407,13 @@ definition {
 		Depot.connectSite(siteList = "Site Name");
 
 		for (var documentNumber : list "_1,_2,_3,_4,_5,_6,_7") {
-			JSONDocument.addFileWithUploadedFile(
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document JPG${documentNumber}",
-				groupName = "Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_1.jpg");
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentFileName = "Document${documentNumber}.jpg",
+				dmDocumentTitle = "DM Document JPG${documentNumber}");
 		}
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");

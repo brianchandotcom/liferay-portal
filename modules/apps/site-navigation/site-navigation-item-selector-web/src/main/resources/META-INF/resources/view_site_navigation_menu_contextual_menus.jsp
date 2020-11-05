@@ -45,7 +45,7 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 			>
 				<clay:button
 					cssClass="align-items-center contextual-menu-option contextual-menu-selector d-flex justify-content-center"
-					data-contextualMenu='<%= jsonObject.getString("value") %>'
+					data-contextual-menu='<%= jsonObject.getString("value") %>'
 					data-title='<%= jsonObject.getString("title") %>'
 					displayType="unstyled"
 				>

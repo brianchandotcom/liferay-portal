@@ -23,6 +23,7 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
@@ -1621,6 +1622,13 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 }
 
-export default function (props) {
-	return <ChangeTrackingChangesView {...props} />;
-}
+export default (appProps) => (
+	<Router>
+		<Route
+			path="/"
+			render={(props) => (
+				<ChangeTrackingChangesView {...appProps} {...props} />
+			)}
+		/>
+	</Router>
+);

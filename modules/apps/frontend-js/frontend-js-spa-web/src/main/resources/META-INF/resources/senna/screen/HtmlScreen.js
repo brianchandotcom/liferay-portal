@@ -12,7 +12,6 @@
  * details.
  */
 
-import {getUid} from 'metal';
 import {buildFragment, globalEval, globalEvalStyles, match} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
@@ -109,7 +108,7 @@ class HtmlScreen extends RequestScreen {
 	assertSameBodyIdInVirtualDocument() {
 		var bodySurface = this.virtualDocument.querySelector('body');
 		if (!globals.document.body.id) {
-			globals.document.body.id = 'senna_surface_' + getUid();
+			globals.document.body.id = 'senna_surface_' + utils.getUid();
 		}
 		if (bodySurface) {
 			bodySurface.id = globals.document.body.id;

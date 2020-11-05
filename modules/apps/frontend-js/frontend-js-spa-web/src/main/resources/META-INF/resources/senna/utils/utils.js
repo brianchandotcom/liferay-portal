@@ -12,12 +12,17 @@
  * details.
  */
 
-'use strict';
-
 import {exitDocument} from 'metal-dom';
 import Uri from 'metal-uri';
 
 import globals from '../globals/globals';
+
+/**
+ * Counter for unique id.
+ * @type {Number}
+ * @private
+ */
+let uniqueIdCounter_ = 1;
 
 /**
  * A collection of static utility functions.
@@ -78,6 +83,10 @@ class utils {
 			offsetLeft,
 			offsetTop,
 		};
+	}
+
+	static getUid() {
+		return uniqueIdCounter_++;
 	}
 
 	/**
@@ -228,6 +237,25 @@ class utils {
 				return referrer;
 			},
 		});
+	}
+
+	/**
+	 * Slices the given array, just like Array.prototype.slice, but this
+	 * is faster and working on all array-like objects (like arguments).
+	 * @param {!Object} arr Array-like object to slice.
+	 * @param {number} start The index that should start the slice.
+	 * @param {number=} end The index where the slice should end, not
+	 *   included in the final array. If not given, all elements after the
+	 *   start index will be included.
+	 * @return {!Array}
+	 */
+	static slice(arr, start, end = arr.length) {
+		const sliced = [];
+		for (let i = start; i < end; i++) {
+			sliced.push(arr[i]);
+		}
+
+		return sliced;
 	}
 }
 

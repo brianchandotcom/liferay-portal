@@ -12,12 +12,10 @@
  * details.
  */
 
-'use strict';
-
-import {Disposable, isDefAndNotNull} from 'metal';
 import {append, exitDocument, removeChildren} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
+import Disposable from '../Disposable';
 import globals from '../globals/globals';
 
 class Surface extends Disposable {
@@ -95,7 +93,7 @@ class Surface extends Disposable {
 	addContent(screenId, opt_content) {
 		var child = this.defaultChild;
 
-		if (isDefAndNotNull(opt_content)) {
+		if (opt_content) {
 			child = this.getChild(screenId);
 			if (child) {
 				removeChildren(child);

@@ -12,9 +12,7 @@
  * details.
  */
 
-'use strict';
-
-import {Disposable} from 'metal';
+import Disposable from '../Disposable';
 
 class Cacheable extends Disposable {
 

@@ -12,10 +12,6 @@
  * details.
  */
 
-'use strict';
-
-import {async} from 'metal';
-
 import globals from '../senna/globals/globals';
 import {utils, version} from '../senna/senna';
 import App from './app/App.es';
@@ -81,7 +77,7 @@ const initSPA = function () {
 	]);
 
 	Liferay.Util.submitForm = function (form) {
-		async.nextTick(() => {
+		setTimeout(() => {
 			const formElement = Object.isPrototypeOf.call(
 				HTMLFormElement.prototype,
 				form
@@ -120,7 +116,7 @@ const initSPA = function () {
 			else {
 				formElement.submit();
 			}
-		});
+		}, 0);
 	};
 
 	Liferay.initComponentCache();

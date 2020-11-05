@@ -12,9 +12,6 @@
  * details.
  */
 
-'use strict';
-
-import {getUid} from 'metal';
 import {globalEval} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
@@ -36,7 +33,7 @@ class Screen extends Cacheable {
 		 * @type {string}
 		 * @protected
 		 */
-		this.id = this.makeId_(getUid());
+		this.id = this.makeId_(utils.getUid());
 
 		/**
 		 * Holds the screen meta tags. Relevant when the meta tags

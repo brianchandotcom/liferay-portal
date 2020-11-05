@@ -15,7 +15,6 @@
 'use strict';
 
 import {fetch} from 'frontend-js-web';
-import {isDefAndNotNull} from 'metal';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
@@ -233,7 +232,7 @@ class RequestScreen extends Screen {
 	 */
 	load(path) {
 		const cache = this.getCache();
-		if (isDefAndNotNull(cache)) {
+		if (cache) {
 			return CancellablePromise.resolve(cache);
 		}
 		let body = null;

@@ -13,10 +13,10 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import core from 'metal';
 import dom from 'metal-dom';
 
 import {App} from '../../senna/senna';
+import utils from '../../senna/utils/utils';
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
 
@@ -73,7 +73,7 @@ class LiferayApp extends App {
 		const body = document.body;
 
 		if (!body.id) {
-			body.id = 'senna_surface' + core.getUid();
+			body.id = 'senna_surface' + utils.getUid();
 		}
 
 		this.addSurfaces(new LiferaySurface(body.id));
@@ -94,7 +94,7 @@ class LiferayApp extends App {
 			const uri = new URL(path, window.location.origin);
 
 			if (uri.searchParams.get('p_p_lifecycle') === '1') {
-				this.activePath = this.activePath + `__${core.getUid()}`;
+				this.activePath = this.activePath + `__${utils.getUid()}`;
 
 				this.screens[this.activePath] = this.screens[path];
 

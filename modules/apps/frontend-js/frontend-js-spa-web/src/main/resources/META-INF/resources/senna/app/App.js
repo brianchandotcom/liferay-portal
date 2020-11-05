@@ -13,7 +13,6 @@
  */
 
 import {debounce} from 'frontend-js-web';
-import {array, async, isDefAndNotNull, isString, object} from 'metal';
 import {addClasses, delegate, match, on, removeClasses} from 'metal-dom';
 import {EventEmitter, EventHandler} from 'metal-events';
 import CancellablePromise from 'metal-promise';
@@ -315,7 +314,7 @@ class App extends EventEmitter {
 			surfaces = [surfaces];
 		}
 		surfaces.forEach((surface) => {
-			if (isString(surface)) {
+			if (typeof surface === 'string') {
 				surface = new Surface(surface);
 			}
 			this.surfaces[surface.getId()] = surface;
@@ -745,7 +744,7 @@ class App extends EventEmitter {
 				winner = true;
 			}
 		};
-		async.nextTick(switchScrollPositionRace);
+		setTimeout(switchScrollPositionRace, 0);
 		globals.document.addEventListener(
 			'scroll',
 			switchScrollPositionRace,
@@ -777,13 +776,11 @@ class App extends EventEmitter {
 			this.navigationStrategy === NavigationStrategy.SCHEDULE_LAST
 		) {
 			this.scheduledNavigationQueue = [
-				object.mixin(
-					{
-						href,
-						isScheduledNavigation: true,
-					},
-					event
-				),
+				{
+					href,
+					isScheduledNavigation: true,
+				},
+				...event,
 			];
 
 			return true;
@@ -1291,7 +1288,7 @@ class App extends EventEmitter {
 	 */
 	prepareNavigateHistory_(path, nextScreen, opt_replaceHistory) {
 		let title = nextScreen.getTitle();
-		if (!isString(title)) {
+		if (typeof title !== 'string') {
 			title = this.getDefaultTitle();
 		}
 		let redirectPath = nextScreen.beforeUpdateHistoryPath(path);
@@ -1302,7 +1299,7 @@ class App extends EventEmitter {
 			hash
 		);
 		const historyState = {
-			form: isDefAndNotNull(globals.capturedFormElement),
+			form: !!globals.capturedFormElement,
 			path,
 			redirectPath,
 			scrollLeft: 0,
@@ -1339,7 +1336,7 @@ class App extends EventEmitter {
 					'[' +
 					surfaces[id] +
 					'] [' +
-					(isDefAndNotNull(surfaceContent) ? '...' : 'empty') +
+					(surfaceContent ? '...' : 'empty') +
 					']'
 			);
 		});
@@ -1358,7 +1355,13 @@ class App extends EventEmitter {
 	 * @return {boolean} True if an element was removed.
 	 */
 	removeRoute(route) {
-		return array.remove(this.routes, route);
+		const routeIndex = this.routes.indexOf(route);
+
+		if (routeIndex >= 0) {
+			Array.prototype.splice.call(this.routes, routeIndex, 1);
+		}
+
+		return routeIndex >= 0;
 	}
 
 	/**
@@ -1486,7 +1489,7 @@ class App extends EventEmitter {
 
 	/**
 	 * Sync document scroll position twice, the first one synchronous and then
-	 * one inside <code>async.nextTick</code>. Relevant to browsers that fires
+	 * one inside <code>setTimeout(cb, 0)</code>. Relevant to browsers that fires
 	 * scroll restoration asynchronously after popstate.
 	 * @protected
 	 * @return {?CancellablePromise=}
@@ -1507,7 +1510,7 @@ class App extends EventEmitter {
 		};
 
 		return new CancellablePromise(
-			(resolve) => sync() & async.nextTick(() => sync() & resolve())
+			(resolve) => sync() & setTimeout(() => sync() & resolve(), 0)
 		);
 	}
 

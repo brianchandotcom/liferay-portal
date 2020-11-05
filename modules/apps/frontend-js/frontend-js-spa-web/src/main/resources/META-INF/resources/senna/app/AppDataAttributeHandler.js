@@ -12,10 +12,7 @@
  * details.
  */
 
-'use strict';
-
-import {Disposable, getUid, isDefAndNotNull, isElement, object} from 'metal';
-
+import Disposable from '../Disposable';
 import globals from '../globals/globals';
 import Route from '../route/Route';
 import HtmlScreen from '../screen/HtmlScreen';
@@ -52,7 +49,12 @@ class AppDataAttributeHandler extends Disposable {
 	 * Inits application based on information scanned from document.
 	 */
 	handle() {
-		if (!isElement(this.baseElement)) {
+		if (
+			!(
+				this.baseElement &&
+				this.baseElement.nodeType === Node.ELEMENT_NODE
+			)
+		) {
 			throw new Error(
 				'Senna data attribute handler base element ' +
 					'not set or invalid, try setting a valid element that ' +
@@ -169,8 +171,10 @@ class AppDataAttributeHandler extends Disposable {
 	 */
 	maybeParseLinkRouteHandler_(link) {
 		var handler = link.getAttribute('type');
-		if (isDefAndNotNull(handler)) {
-			handler = object.getObjectByName(handler);
+		if (handler) {
+			handler = handler
+				.split('.')
+				.reduce((part, key) => part[key], window);
 		}
 
 		return handler;
@@ -183,7 +187,7 @@ class AppDataAttributeHandler extends Disposable {
 	 */
 	maybeParseLinkRoutePath_(link) {
 		var path = link.getAttribute('href');
-		if (isDefAndNotNull(path)) {
+		if (path) {
 			if (path.indexOf('regex:') === 0) {
 				path = new RegExp(path.substring(6));
 			}
@@ -197,7 +201,7 @@ class AppDataAttributeHandler extends Disposable {
 	 */
 	maybeSetBasePath_() {
 		var basePath = this.baseElement.getAttribute(dataAttributes.basePath);
-		if (isDefAndNotNull(basePath)) {
+		if (basePath) {
 			this.app.setBasePath(basePath);
 			utils.log('Senna scanned base path ' + basePath);
 		}
@@ -211,7 +215,7 @@ class AppDataAttributeHandler extends Disposable {
 		var linkSelector = this.baseElement.getAttribute(
 			dataAttributes.linkSelector
 		);
-		if (isDefAndNotNull(linkSelector)) {
+		if (linkSelector) {
 			this.app.setLinkSelector(linkSelector);
 			utils.log('Senna scanned link selector ' + linkSelector);
 		}
@@ -225,7 +229,7 @@ class AppDataAttributeHandler extends Disposable {
 		var loadingCssClass = this.baseElement.getAttribute(
 			dataAttributes.loadingCssClass
 		);
-		if (isDefAndNotNull(loadingCssClass)) {
+		if (loadingCssClass) {
 			this.app.setLoadingCssClass(loadingCssClass);
 			utils.log('Senna scanned loading css class ' + loadingCssClass);
 		}
@@ -239,7 +243,7 @@ class AppDataAttributeHandler extends Disposable {
 		var updateScrollPosition = this.baseElement.getAttribute(
 			dataAttributes.updateScrollPosition
 		);
-		if (isDefAndNotNull(updateScrollPosition)) {
+		if (updateScrollPosition) {
 			if (updateScrollPosition === 'false') {
 				this.app.setUpdateScrollPosition(false);
 			}
@@ -271,7 +275,7 @@ class AppDataAttributeHandler extends Disposable {
 	 */
 	updateElementIdIfSpecialSurface_(element) {
 		if (!element.id && element === globals.document.body) {
-			element.id = 'senna_surface_' + getUid();
+			element.id = 'senna_surface_' + utils.getUid();
 		}
 	}
 

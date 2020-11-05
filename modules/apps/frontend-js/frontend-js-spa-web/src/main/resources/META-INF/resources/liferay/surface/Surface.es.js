@@ -12,7 +12,6 @@
  * details.
  */
 
-import core from 'metal';
 import dom from 'metal-dom';
 
 import Surface from '../../senna/surface/Surface';
@@ -31,7 +30,7 @@ class LiferaySurface extends Surface {
 	 */
 
 	addContent(screenId, content) {
-		if (core.isString(content)) {
+		if (typeof content === 'string') {
 			content = dom.buildFragment(content);
 		}
 

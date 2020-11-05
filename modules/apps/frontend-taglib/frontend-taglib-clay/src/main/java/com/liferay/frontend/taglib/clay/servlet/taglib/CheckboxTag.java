@@ -35,23 +35,11 @@ public class CheckboxTag extends BaseContainerTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		if (Validator.isNotNull(_label)) {
+			setDynamicAttribute(StringPool.BLANK, "aria-label", _label);
+		}
+
 		return super.doStartTag();
-	}
-
-	public boolean getChecked() {
-		return _checked;
-	}
-
-	public boolean getDisabled() {
-		return _disabled;
-	}
-
-	public boolean getIndeterminate() {
-		return _indeterminate;
-	}
-
-	public boolean getInline() {
-		return _inline;
 	}
 
 	public String getLabel() {
@@ -64,6 +52,22 @@ public class CheckboxTag extends BaseContainerTag {
 
 	public String getValue() {
 		return _value;
+	}
+
+	public boolean isChecked() {
+		return _checked;
+	}
+
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
+	public boolean isIndeterminate() {
+		return _indeterminate;
+	}
+
+	public boolean isInline() {
+		return _inline;
 	}
 
 	public void setChecked(boolean checked) {
@@ -148,22 +152,20 @@ public class CheckboxTag extends BaseContainerTag {
 
 		jspWriter.write("<label><input");
 
-		if (Validator.isNotNull(_label)) {
-			setDynamicAttribute(StringPool.BLANK, "aria-label", _label);
-		}
+		super.writeDynamicAttributes();
 
 		if (_checked) {
 			jspWriter.write(" checked");
 		}
 
-		super.renderCssClassAttribute();
+		super.writeCssClassAttribute();
 
 		if (_disabled) {
 			jspWriter.write(" disabled");
 		}
 
 		if (Validator.isNotNull(getId())) {
-			super.renderIdAttribute();
+			super.writeIdAttribute();
 		}
 
 		if (Validator.isNotNull(_name)) {
@@ -194,7 +196,7 @@ public class CheckboxTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected void renderCssClassAttribute() throws Exception {
+	protected void writeCssClassAttribute() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write(" class=\"custom-checkbox custom-control");
@@ -207,7 +209,11 @@ public class CheckboxTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected void renderIdAttribute() {
+	protected void writeDynamicAttributes() {
+	}
+
+	@Override
+	protected void writeIdAttribute() {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:checkbox:";

@@ -363,20 +363,20 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write("<");
 		jspWriter.write(_containerElement);
 
-		renderCssClassAttribute();
+		writeCssClassAttribute();
 
 		if (Validator.isNotNull(getId())) {
-			renderIdAttribute();
+			writeIdAttribute();
 		}
 
-		_writeDynamicAttributes(jspWriter);
+		writeDynamicAttributes();
 
 		jspWriter.write(">");
 
 		return EVAL_BODY_INCLUDE;
 	}
 
-	protected void renderCssClassAttribute() throws Exception {
+	protected void writeCssClassAttribute() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write(" class=\"");
@@ -384,21 +384,24 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write("\"");
 	}
 
-	protected void renderIdAttribute() throws Exception {
+	protected void writeDynamicAttributes() throws Exception {
+		String dynamicAttributesString = InlineUtil.buildDynamicAttributes(
+			getDynamicAttributes());
+
+		if (!dynamicAttributesString.isEmpty()) {
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write(" ");
+			jspWriter.write(dynamicAttributesString);
+		}
+	}
+
+	protected void writeIdAttribute() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write(" id=\"");
 		jspWriter.write(getId());
 		jspWriter.write("\"");
-	}
-
-	private void _writeDynamicAttributes(JspWriter jspWriter) throws Exception {
-		String dynamicAttributesString = InlineUtil.buildDynamicAttributes(
-			getDynamicAttributes());
-
-		if (!dynamicAttributesString.isEmpty()) {
-			jspWriter.write(dynamicAttributesString);
-		}
 	}
 
 	private Map<String, Object> _additionalProps;

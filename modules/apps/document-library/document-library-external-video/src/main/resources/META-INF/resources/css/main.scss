@@ -1,0 +1,14 @@
+.preview-file {
+	.preview-file-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		overflow: auto;
+		position: relative;
+		text-align: center;
+
+		&.preview-file-max-height {
+			max-height: 480px;
+		}
+	}
+}

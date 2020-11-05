@@ -424,7 +424,12 @@ public class JournalArticleAssetRenderer
 					getClassName(), getClassPK(), themeDisplay);
 
 			if (Validator.isNotNull(friendlyURL)) {
-				return friendlyURL + StringPool.SLASH + _article.getId();
+				if (!_article.isApproved()) {
+					friendlyURL =
+						friendlyURL + StringPool.SLASH + _article.getId();
+				}
+
+				return friendlyURL;
 			}
 		}
 

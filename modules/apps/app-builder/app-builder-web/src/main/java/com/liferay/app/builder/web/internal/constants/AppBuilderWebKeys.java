@@ -37,6 +37,8 @@ public class AppBuilderWebKeys {
 	@Deprecated
 	public static final String DATA_LAYOUT_IDS = "DATA_LAYOUT_IDS";
 
+	public static final String DATA_RECORD_ID = "DATA_RECORD_ID";
+
 	public static final String SHOW_FORM_VIEW = "SHOW_FORM_VIEW";
 
 	public static final String SHOW_NATIVE_OBJECTS_TAB =

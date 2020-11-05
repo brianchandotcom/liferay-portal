@@ -13,12 +13,11 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
 import {useChannel} from '../hooks/useChannel';
 import {ClosableAlert} from './ClosableAlert';
-import {CodeMirrorEditor} from './CodeMirrorEditor';
-import {ScriptInput} from './ScriptInput';
+import {Editor} from './Editor';
 import {Sidebar} from './Sidebar';
 
 export default function App({
@@ -30,29 +29,6 @@ export default function App({
 	templateVariableGroups,
 }) {
 	const inputChannel = useChannel();
-	const [script, setScript] = useState(initialScript);
-
-	const scriptRef = useRef(script);
-	scriptRef.current = script;
-
-	useEffect(() => {
-		const eventHandler = Liferay.on(
-			`${portletNamespace}saveTemplate`,
-			() => {
-				const scriptInputElement = document.getElementById(
-					`${portletNamespace}scriptContent`
-				);
-
-				if (scriptInputElement) {
-					scriptInputElement.value = scriptRef.current;
-				}
-			}
-		);
-
-		return () => {
-			eventHandler.detach();
-		};
-	}, [portletNamespace]);
 
 	return (
 		<div className="ddm_template_editor__App">
@@ -82,21 +58,19 @@ export default function App({
 					visible={showCacheableWarning}
 				/>
 
-				<CodeMirrorEditor
-					content={script}
+				<Editor
+					editorMode={editorMode}
+					initialScript={initialScript}
 					inputChannel={inputChannel}
-					mode={editorMode}
-					onChange={setScript}
+					portletNamespace={portletNamespace}
 				/>
-
-				<ScriptInput onSelectScript={setScript} />
 			</div>
 		</div>
 	);
 }
 
 App.propTypes = {
-	editorMode: PropTypes.oneOf(['ftl', 'xml', 'velocity']).isRequired,
+	editorMode: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	script: PropTypes.string.isRequired,
 	showCacheableWarning: PropTypes.bool.isRequired,

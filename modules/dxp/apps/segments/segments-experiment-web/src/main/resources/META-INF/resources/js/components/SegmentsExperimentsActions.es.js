@@ -40,7 +40,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 		experiment,
 		reviewExperimentModal,
 		variants,
-		viewExperimentURL,
+		viewExperimentDetailsURL,
 	} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
 
@@ -48,9 +48,6 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 		onClose: () => dispatch(closeReviewAndRunExperiment()),
 	});
 	const {APIService} = useContext(SegmentsExperimentsContext);
-
-	const viewExperimentDetailsURL =
-		viewExperimentURL || experiment.viewSegmentsExperimentDetailsURL;
 
 	return (
 		<>

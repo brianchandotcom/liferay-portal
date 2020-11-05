@@ -111,6 +111,9 @@ public class SegmentsExperimentUtil {
 		).put(
 			"description", segmentsExperiment.getDescription()
 		).put(
+			"detailsURL",
+			_getViewSegmentsExperimentDetailsURL(segmentsExperiment)
+		).put(
 			"editable", _isEditable(segmentsExperiment)
 		).put(
 			"goal",
@@ -128,9 +131,6 @@ public class SegmentsExperimentUtil {
 			String.valueOf(segmentsExperiment.getSegmentsExperimentId())
 		).put(
 			"status", toStatusJSONObject(locale, segmentsExperiment.getStatus())
-		).put(
-			"viewSegmentsExperimentDetailsURL",
-			_getViewSegmentsExperimentDetailsURL(segmentsExperiment)
 		);
 	}
 

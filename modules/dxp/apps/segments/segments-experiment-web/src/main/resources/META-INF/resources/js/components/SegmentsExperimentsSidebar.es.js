@@ -54,7 +54,6 @@ function SegmentsExperimentsSidebar({
 	initialSegmentsExperiment,
 	initialSegmentsVariants,
 	initialSelectedSegmentsExperienceId = '0',
-	viewSegmentsExperimentDetailsURL,
 	winnerSegmentsVariantId,
 }) {
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
@@ -65,7 +64,6 @@ function SegmentsExperimentsSidebar({
 			initialSegmentsExperiment,
 			initialSegmentsVariants,
 			initialSelectedSegmentsExperienceId,
-			viewSegmentsExperimentDetailsURL,
 			winnerSegmentsVariantId,
 		},
 		getInitialState
@@ -207,6 +205,7 @@ function SegmentsExperimentsSidebar({
 				const {
 					confidenceLevel,
 					description,
+					detailsURL,
 					editable,
 					goal,
 					name,
@@ -214,7 +213,6 @@ function SegmentsExperimentsSidebar({
 					segmentsExperienceId,
 					segmentsExperimentId,
 					status,
-					viewSegmentsExperimentDetailsURL,
 				} = segmentsExperiment;
 
 				openSuccessToast();
@@ -227,6 +225,7 @@ function SegmentsExperimentsSidebar({
 					addSegmentsExperiment({
 						confidenceLevel,
 						description,
+						detailsURL,
 						editable,
 						goal,
 						name,
@@ -234,7 +233,6 @@ function SegmentsExperimentsSidebar({
 						segmentsExperienceId,
 						segmentsExperimentId,
 						status,
-						viewSegmentsExperimentDetailsURL,
 					})
 				);
 			})

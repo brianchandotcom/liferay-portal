@@ -242,14 +242,14 @@ definition {
 	macro viewItemNested {
 		AssertElementPresent(
 			key_itemName = "${itemName}",
-			key_parentItemName = "${parentItemName}",
+			key_marginLeft = "${marginLeft}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
 	}
 
 	macro viewItemNotNested {
 		AssertElementNotPresent(
 			key_itemName = "${itemName}",
-			key_parentItemName = "${parentItemName}",
+			key_marginLeft = "${marginLeft}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
 	}
 

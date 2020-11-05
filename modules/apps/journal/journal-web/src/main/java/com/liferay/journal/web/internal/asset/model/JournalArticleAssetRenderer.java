@@ -438,8 +438,11 @@ public class JournalArticleAssetRenderer
 		sb.append(groupFriendlyURL);
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 		sb.append(_article.getUrlTitle(themeDisplay.getLocale()));
-		sb.append(StringPool.SLASH);
-		sb.append(_article.getId());
+
+		if (!_article.isApproved()) {
+			sb.append(StringPool.SLASH);
+			sb.append(_article.getId());
+		}
 
 		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}

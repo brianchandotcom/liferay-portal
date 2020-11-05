@@ -59,6 +59,31 @@ public class TranslationEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateTranslationEntryDoesNotDeleteTranslationEntryOnPublish()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), "test title", "test content");
+
+		_translationEntryLocalService.addOrUpdateTranslationEntry(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey(),
+			StringUtil.replace(
+				TranslationTestUtil.readFileToString(
+					"test-journal-article-simple.xlf"),
+				"[$JOURNAL_ARTICLE_ID$]",
+				String.valueOf(journalArticle.getResourcePrimKey())),
+			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(
+			_translationEntryLocalService.fetchTranslationEntry(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(),
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN)));
+	}
+
+	@Test
 	public void testAddOrUpdateTranslationEntryDoesNotWriteToTheJournalArticleOnDraft()
 		throws Exception {
 
@@ -117,12 +142,6 @@ public class TranslationEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			"título de pruebas", journalArticle.getTitle(LocaleUtil.SPAIN));
-
-		Assert.assertNull(
-			_translationEntryLocalService.fetchTranslationEntry(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey(),
-				LocaleUtil.toLanguageId(LocaleUtil.SPAIN)));
 	}
 
 	@DeleteAfterTestRun

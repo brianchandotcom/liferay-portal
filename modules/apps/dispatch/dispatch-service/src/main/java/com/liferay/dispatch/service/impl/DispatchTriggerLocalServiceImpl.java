@@ -22,6 +22,7 @@ import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
+import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -107,7 +108,12 @@ public class DispatchTriggerLocalServiceImpl
 		resourceLocalService.deleteResource(
 			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		_deleteSchedulerJob(dispatchTrigger.getDispatchTriggerId());
+		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
+			dispatchTrigger.getDispatchTriggerExecutionMode();
+
+		_deleteSchedulerJob(
+			dispatchTrigger.getDispatchTriggerId(),
+			dispatchTriggerExecutionMode.getStorageType());
 
 		return dispatchTrigger;
 	}
@@ -146,11 +152,18 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
-	public Date getNextFireDate(long dispatchTriggerId) {
+	public Date getNextFireDate(long dispatchTriggerId) throws PortalException {
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
+
+		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
+			dispatchTrigger.getDispatchTriggerExecutionMode();
+
 		try {
 			return _schedulerEngineHelper.getNextFireTime(
 				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+				_getGroupName(dispatchTriggerId),
+				dispatchTriggerExecutionMode.getStorageType());
 		}
 		catch (SchedulerException schedulerException) {
 			_log.error(schedulerException, schedulerException);
@@ -160,11 +173,20 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
-	public Date getPreviousFireDate(long dispatchTriggerId) {
+	public Date getPreviousFireDate(long dispatchTriggerId)
+		throws PortalException {
+
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
+
+		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
+			dispatchTrigger.getDispatchTriggerExecutionMode();
+
 		try {
 			return _schedulerEngineHelper.getPreviousFireTime(
 				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+				_getGroupName(dispatchTriggerId),
+				dispatchTriggerExecutionMode.getStorageType());
 		}
 		catch (SchedulerException schedulerException) {
 			_log.error(schedulerException, schedulerException);
@@ -192,7 +214,8 @@ public class DispatchTriggerLocalServiceImpl
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
 			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute)
+			int startDateHour, int startDateMinute,
+			DispatchTriggerExecutionMode dispatchTriggerExecutionMode)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -218,14 +241,19 @@ public class DispatchTriggerLocalServiceImpl
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute, DispatchTriggerStartDateException.class));
 
+		dispatchTrigger.setDispatchTriggerExecutionMode(
+			dispatchTriggerExecutionMode);
+
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
-		_deleteSchedulerJob(dispatchTriggerId);
+		_deleteSchedulerJob(
+			dispatchTriggerId, dispatchTriggerExecutionMode.getStorageType());
 
 		if (active) {
 			_addSchedulerJob(
 				dispatchTriggerId, cronExpression,
-				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate());
+				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
+				dispatchTriggerExecutionMode.getStorageType());
 		}
 
 		return dispatchTrigger;
@@ -278,7 +306,7 @@ public class DispatchTriggerLocalServiceImpl
 
 	private void _addSchedulerJob(
 			long dispatchTriggerId, String cronExpression, Date startDate,
-			Date endDate)
+			Date endDate, StorageType storageType)
 		throws PortalException {
 
 		Trigger trigger = _triggerFactory.createTrigger(
@@ -287,7 +315,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		try {
 			_schedulerEngineHelper.schedule(
-				trigger, StorageType.PERSISTED, null,
+				trigger, storageType, null,
 				DispatchConstants.EXECUTOR_DESTINATION_NAME,
 				_getPayload(dispatchTriggerId), 1000);
 
@@ -305,11 +333,13 @@ public class DispatchTriggerLocalServiceImpl
 		}
 	}
 
-	private void _deleteSchedulerJob(long dispatchTriggerId) {
+	private void _deleteSchedulerJob(
+		long dispatchTriggerId, StorageType storageType) {
+
 		try {
 			_schedulerEngineHelper.delete(
 				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+				_getGroupName(dispatchTriggerId), storageType);
 		}
 		catch (SchedulerException schedulerException) {
 			_log.error(

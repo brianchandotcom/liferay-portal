@@ -17,6 +17,7 @@ package com.liferay.dispatch.service.impl;
 import com.liferay.dispatch.constants.DispatchActionKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerServiceBaseImpl;
+import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -101,7 +102,8 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
 			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute)
+			int startDateHour, int startDateMinute,
+			DispatchTriggerExecutionMode dispatchTriggerExecutionMode)
 		throws PortalException {
 
 		_dispatchTriggerModelResourcePermission.check(
@@ -111,7 +113,7 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
 			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
 			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute);
+			startDateMinute, dispatchTriggerExecutionMode);
 	}
 
 	@Override

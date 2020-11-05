@@ -189,7 +189,7 @@ definition {
 
 			NavigationMenusAdmin.viewItemNested(
 				itemName = "Test Page Name 1",
-				parentItemName = "Home");
+				marginLeft = "48px");
 
 			DragAndDrop.dragAndDropObjectMoveTwice(
 				key_sourceItemName = "Test Page Name 2",
@@ -201,7 +201,7 @@ definition {
 
 			NavigationMenusAdmin.viewItemNested(
 				itemName = "Test Page Name 2",
-				parentItemName = "Test Page Name 1");
+				marginLeft = "96px");
 
 			DragAndDrop.dragAndDropObjectMoveTwice(
 				key_sourceItemName = "Test Page Name 3",
@@ -213,7 +213,7 @@ definition {
 
 			NavigationMenusAdmin.viewItemNested(
 				itemName = "Test Page Name 3",
-				parentItemName = "Test Page Name 2");
+				marginLeft = "144px");
 		}
 
 		task ("Navigate to Home") {

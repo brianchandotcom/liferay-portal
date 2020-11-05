@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ITEM_ENTRY_NESTED</td>
-	<td>//div[contains(@class,'navigation-menu-item')][@data-title='${key_parentItemName}']/div[contains(@class,'navigation-menu-item')][@data-title='${key_itemName}']</td>
+	<td>//div[contains(@class,'MenuItem')][contains(@style,'margin-left: ${key_marginLeft}')]//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>

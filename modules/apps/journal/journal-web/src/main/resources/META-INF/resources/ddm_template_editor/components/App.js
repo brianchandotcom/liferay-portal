@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useChannel} from '../hooks/useChannel';
 import {ClosableAlert} from './ClosableAlert';
@@ -31,6 +31,28 @@ export default function App({
 }) {
 	const inputChannel = useChannel();
 	const [script, setScript] = useState(initialScript);
+
+	const scriptRef = useRef(script);
+	scriptRef.current = script;
+
+	useEffect(() => {
+		const eventHandler = Liferay.on(
+			`${portletNamespace}saveTemplate`,
+			() => {
+				const scriptInputElement = document.getElementById(
+					`${portletNamespace}scriptContent`
+				);
+
+				if (scriptInputElement) {
+					scriptInputElement.value = scriptRef.current;
+				}
+			}
+		);
+
+		return () => {
+			eventHandler.detach();
+		};
+	}, [portletNamespace]);
 
 	return (
 		<div className="ddm_template_editor__App">

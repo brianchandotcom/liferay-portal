@@ -21,6 +21,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -154,7 +155,9 @@ public class DispatchMessageListenerTest {
 			dispatchTrigger.getDispatchTriggerId(), false, _CRON_EXPRESSION, 0,
 			0, 0, 0, 0, true, overlapAllowed, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+			DispatchTriggerExecutionMode.values()
+				[RandomTestUtil.randomInt(0, 1)]);
 
 		_executeAndWaitFor(
 			TestDispatchTaskExecutor.SLEEP_MILLIS + 1000,

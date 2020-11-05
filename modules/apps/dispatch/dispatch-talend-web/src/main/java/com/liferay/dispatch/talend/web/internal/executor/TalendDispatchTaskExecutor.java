@@ -130,8 +130,9 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private List<String> _getArguments(
-		DispatchTrigger dispatchTrigger, String rootDirectoryName,
-		String shFileName) {
+			DispatchTrigger dispatchTrigger, String rootDirectoryName,
+			String shFileName)
+		throws PortalException {
 
 		List<String> arguments = new ArrayList<>();
 

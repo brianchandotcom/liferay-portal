@@ -59,7 +59,9 @@ public class DispatchTriggerDisplayContext {
 		return _dispatchRequestHelper.getDispatchTrigger();
 	}
 
-	public String getNextFireDateString(long dispatchTriggerId) {
+	public String getNextFireDateString(long dispatchTriggerId)
+		throws PortalException {
+
 		Date nextRunDate = _dispatchTriggerLocalService.getNextFireDate(
 			dispatchTriggerId);
 

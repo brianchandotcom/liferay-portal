@@ -15,6 +15,7 @@
 package com.liferay.dispatch.service.test.util;
 
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -104,6 +105,13 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
+			public DispatchTriggerExecutionMode
+				getDispatchTriggerExecutionMode() {
+
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
 			public long getDispatchTriggerId() {
 				throw new UnsupportedOperationException();
 			}
@@ -160,6 +168,11 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public Serializable getPrimaryKeyObj() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean getSingleNodeExecution() {
 				throw new UnsupportedOperationException();
 			}
 
@@ -239,6 +252,11 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
+			public boolean isSingleNodeExecution() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
 			public boolean isSystem() {
 				return _system;
 			}
@@ -275,6 +293,13 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public void setCronExpression(String cronExpression) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setDispatchTriggerExecutionMode(
+				DispatchTriggerExecutionMode dispatchTriggerExecutionMode) {
+
 				throw new UnsupportedOperationException();
 			}
 
@@ -344,6 +369,11 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void setSingleNodeExecution(boolean singleNodeExecution) {
 				throw new UnsupportedOperationException();
 			}
 

@@ -21,11 +21,11 @@ import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
+import com.liferay.dispatch.trigger.DispatchTriggerExecutionMode;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -161,13 +161,18 @@ public class DispatchTriggerLocalServiceTest {
 		expectedDispatchTrigger = DispatchTriggerTestUtil.randomDispatchTrigger(
 			expectedDispatchTrigger, 1);
 
+		DispatchTriggerExecutionMode dispatchTriggerExecutionMode =
+			DispatchTriggerExecutionMode.values()
+				[RandomTestUtil.randomInt(0, 1)];
+
 		try {
 			dispatchTrigger =
 				_dispatchTriggerLocalService.updateDispatchTrigger(
 					dispatchTrigger.getDispatchTriggerId(),
 					expectedDispatchTrigger.isActive(),
 					expectedDispatchTrigger.getCronExpression(), 5, 5, 2024, 11,
-					11, false, true, 4, 4, 2024, 12, 0);
+					11, false, true, 4, 4, 2024, 12, 0,
+					dispatchTriggerExecutionMode);
 
 			_basicAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 
@@ -185,7 +190,7 @@ public class DispatchTriggerLocalServiceTest {
 				String.format(
 					"DISPATCH_GROUP_%07d",
 					dispatchTrigger.getDispatchTriggerId()),
-				StorageType.PERSISTED);
+				dispatchTriggerExecutionMode.getStorageType());
 
 			Assert.assertNull(jobState);
 		}

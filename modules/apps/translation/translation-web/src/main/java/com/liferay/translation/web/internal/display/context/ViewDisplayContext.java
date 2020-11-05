@@ -82,6 +82,16 @@ public class ViewDisplayContext {
 		return DropdownItemListBuilder.add(
 			() -> _modelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), translationEntry,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(getTranslatePortletURL(translationEntry));
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
+		).add(
+			() -> _modelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), translationEntry,
 				ActionKeys.DELETE),
 			dropdownItem -> {
 				ActionURL deleteTranslationEntryURL =
@@ -216,6 +226,25 @@ public class ViewDisplayContext {
 			translationEntry.getTranslationEntryId());
 
 		return assetRenderer.getTitle(_themeDisplay.getLocale());
+	}
+
+	public PortletURL getTranslatePortletURL(
+		TranslationEntry translationEntry) {
+
+		PortletURL translatePortletURL =
+			_liferayPortletResponse.createRenderURL();
+
+		translatePortletURL.setParameter(
+			"mvcRenderCommandName", "/translation/translate");
+		translatePortletURL.setParameter(
+			"redirect",
+			String.valueOf(_liferayPortletResponse.createRenderURL()));
+		translatePortletURL.setParameter(
+			"classNameId", String.valueOf(translationEntry.getClassNameId()));
+		translatePortletURL.setParameter(
+			"classPK", String.valueOf(translationEntry.getClassPK()));
+
+		return translatePortletURL;
 	}
 
 	public TranslationEntryManagementToolbarDisplayContext

@@ -45,6 +45,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
+					href="<%= viewDisplayContext.getTranslatePortletURL(translationEntry) %>"
 					name="title"
 					value="<%= viewDisplayContext.getTitle(translationEntry) %>"
 				/>

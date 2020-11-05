@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
@@ -109,8 +109,11 @@ public class BasicInfoDisplayRequestAttributesContributor
 
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
-				PortalUtil.getClassNameId(infoItemDetails.getClassName()));
+				_portal.getClassNameId(infoItemDetails.getClassName()));
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

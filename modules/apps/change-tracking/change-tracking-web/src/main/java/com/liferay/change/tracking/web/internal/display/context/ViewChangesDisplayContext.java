@@ -22,7 +22,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
-import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
@@ -54,12 +53,15 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
+
+import java.net.URL;
 
 import java.text.Format;
 
@@ -77,7 +79,6 @@ import java.util.Queue;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -268,6 +269,22 @@ public class ViewChangesDisplayContext {
 			"activeCTCollection",
 			_ctCollection.getCtCollectionId() == _activeCTCollectionId
 		).put(
+			"basePath",
+			() -> {
+				RenderURL baseURL = _renderResponse.createRenderURL();
+
+				baseURL.setParameter(
+					"mvcRenderCommandName", "/change_tracking/view_changes");
+				baseURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+
+				URL url = new URL(baseURL.toString());
+
+				return StringBundler.concat(
+					url.getPath(), StringPool.QUESTION, url.getQuery());
+			}
+		).put(
 			"changes",
 			() -> {
 				JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();
@@ -323,6 +340,10 @@ public class ViewChangesDisplayContext {
 				return modelsJSONObject;
 			}
 		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"pathParam", ParamUtil.getString(_renderRequest, "path")
+		).put(
 			"renderCTEntryURL",
 			() -> {
 				ResourceURL renderCTEntryURL =
@@ -361,32 +382,6 @@ public class ViewChangesDisplayContext {
 				}
 
 				return rootDisplayClassesJSONArray;
-			}
-		).put(
-			"saveSessionStateURL",
-			() -> {
-				ResourceURL saveSessionStateURL =
-					_renderResponse.createResourceURL();
-
-				saveSessionStateURL.setResourceID(
-					"/change_tracking/save_session_state");
-
-				return saveSessionStateURL.toString();
-			}
-		).put(
-			"sessionState",
-			() -> {
-				PortletSession portletSession =
-					_renderRequest.getPortletSession();
-
-				String sessionState = (String)portletSession.getAttribute(
-					CTWebKeys.VIEW_CHANGES_SESSION_STATE);
-
-				if (sessionState == null) {
-					return null;
-				}
-
-				return JSONFactoryUtil.createJSONObject(sessionState);
 			}
 		).put(
 			"siteNames",

@@ -31,16 +31,18 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const {
 			activeCTCollection,
+			basePath,
 			changes,
 			contextView,
 			ctCollectionId,
 			discardURL,
+			history,
 			models,
+			namespace,
+			pathParam,
 			renderCTEntryURL,
 			renderDiffURL,
 			rootDisplayClasses,
-			saveSessionStateURL,
-			sessionState,
 			siteNames,
 			spritemap,
 			typeNames,
@@ -48,16 +50,17 @@ class ChangeTrackingChangesView extends React.Component {
 		} = props;
 
 		this.activeCTCollection = activeCTCollection;
+		this.basePath = basePath;
 		this.changes = changes;
 		this.contextView = contextView;
 		this.ctCollectionId = ctCollectionId;
 		this.discardURL = discardURL;
+		this.history = history;
 		this.models = models;
+		this.namespace = namespace;
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
 		this.rootDisplayClasses = rootDisplayClasses;
-		this.saveSessionStateURL = saveSessionStateURL;
-		this.sessionState = sessionState;
 		this.siteNames = siteNames;
 		this.spritemap = spritemap;
 		this.typeNames = typeNames;
@@ -65,192 +68,14 @@ class ChangeTrackingChangesView extends React.Component {
 
 		this.globalSiteName = Liferay.Language.get('global');
 
-		const keys = Object.keys(this.models);
+		this._populateModelInfo();
 
-		for (let i = 0; i < keys.length; i++) {
-			const model = this.models[keys[i]];
+		const pathState = this._getPathState(pathParam);
 
-			if (model.groupId) {
-				model.siteName = this.siteNames[model.groupId.toString()];
-			}
-			else {
-				model.siteName = this.globalSiteName;
-			}
-
-			model.typeName = this.typeNames[model.modelClassNameId.toString()];
-
-			if (model.ctEntryId) {
-				model.changeTypeLabel = Liferay.Language.get('modified');
-
-				if (model.changeType === 'added') {
-					model.changeTypeLabel = Liferay.Language.get('added');
-				}
-				else if (model.changeType === 'deleted') {
-					model.changeTypeLabel = Liferay.Language.get('deleted');
-				}
-
-				model.userName = this.userInfo[
-					model.userId.toString()
-				].userName;
-
-				if (model.siteName === this.globalSiteName) {
-					let key = Liferay.Language.get('x-modified-a-x-x-ago');
-
-					if (model.changeType === 'added') {
-						key = Liferay.Language.get('x-added-a-x-x-ago');
-					}
-					else if (model.changeType === 'deleted') {
-						key = Liferay.Language.get('x-deleted-a-x-x-ago');
-					}
-
-					model.description = this._format(key, [
-						model.userName,
-						model.typeName,
-						model.timeDescription,
-					]);
-				}
-				else {
-					let key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
-
-					if (model.changeType === 'added') {
-						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
-					}
-					else if (model.changeType === 'deleted') {
-						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
-					}
-
-					model.description = this._format(key, [
-						model.userName,
-						model.typeName,
-						model.siteName,
-						model.timeDescription,
-					]);
-				}
-			}
-		}
-
-		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
-			const rootDisplayClassInfo = this.contextView[
-				this.rootDisplayClasses[i]
-			];
-
-			let hideable = true;
-
-			for (let i = 0; i < rootDisplayClassInfo.children.length; i++) {
-				const model = this.models[
-					rootDisplayClassInfo.children[i].modelKey.toString()
-				];
-
-				if (!model.hideable) {
-					hideable = false;
-				}
-			}
-
-			rootDisplayClassInfo.hideable = hideable;
-		}
-
-		let filterClass = 'everything';
-		let nodeId = 0;
-		let showHideable = false;
-		let viewType = 'changes';
-
-		if (
-			this.activeCTCollection &&
-			this.sessionState &&
-			this.sessionState.ctCollectionId &&
-			this.sessionState.ctCollectionId === this.ctCollectionId
-		) {
-			filterClass = this.sessionState.filterClass;
-			showHideable = this.sessionState.showHideable;
-			viewType = this.sessionState.viewType;
-
-			if (
-				filterClass !== 'everything' &&
-				!this.contextView[filterClass]
-			) {
-				filterClass = 'everything';
-			}
-			else if (
-				viewType === 'changes' &&
-				this.sessionState.path.length > 0
-			) {
-				const modelClassNameId = this.sessionState.path[0]
-					.modelClassNameId;
-				const modelClassPK = this.sessionState.path[0].modelClassPK;
-
-				for (let i = 0; i < this.changes.length; i++) {
-					const modelKey = this.changes[i];
-
-					const model = this.models[modelKey.toString()];
-
-					if (
-						modelClassNameId === model.modelClassNameId &&
-						modelClassPK === model.modelClassPK
-					) {
-						nodeId = modelKey;
-					}
-				}
-			}
-			else if (viewType === 'context') {
-				let contextNode = this.contextView.everything;
-
-				if (filterClass !== 'everything') {
-					contextNode = this.contextView[filterClass];
-				}
-
-				for (let i = 0; i < this.sessionState.path.length; i++) {
-					if (!contextNode.children) {
-						break;
-					}
-
-					const sessionNode = this.sessionState.path[i];
-
-					for (let j = 0; j < contextNode.children.length; j++) {
-						const child = contextNode.children[j];
-
-						const model = this.models[child.modelKey.toString()];
-
-						if (
-							model.modelClassNameId ===
-								sessionNode.modelClassNameId &&
-							model.modelClassPK === sessionNode.modelClassPK
-						) {
-							if (filterClass !== 'everything' && i === 0) {
-								const stack = [this.contextView.everything];
-
-								while (stack.length > 0) {
-									const element = stack.pop();
-
-									if (element.nodeId === child.nodeId) {
-										contextNode = element;
-
-										break;
-									}
-									else if (!element.children) {
-										continue;
-									}
-
-									for (
-										let i = 0;
-										i < element.children.length;
-										i++
-									) {
-										stack.push(element.children[i]);
-									}
-								}
-							}
-							else {
-								contextNode = child;
-							}
-
-							nodeId = contextNode.nodeId;
-
-							break;
-						}
-					}
-				}
-			}
-		}
+		const filterClass = pathState.filterClass;
+		const nodeId = pathState.nodeId;
+		const showHideable = pathState.showHideable;
+		const viewType = pathState.viewType;
 
 		const node = this._getNode(filterClass, nodeId, viewType);
 
@@ -260,6 +85,27 @@ class ChangeTrackingChangesView extends React.Component {
 			nodeId,
 			viewType
 		);
+
+		if (pathParam) {
+			const updatedPathParam = this._getPathParam(
+				breadcrumbItems,
+				filterClass,
+				showHideable,
+				viewType
+			);
+
+			if (pathParam !== updatedPathParam) {
+				AUI().use('liferay-portlet-url', () => {
+					this.history.replace(
+						this.basePath +
+							'&' +
+							this.namespace +
+							'path=' +
+							updatedPathParam
+					);
+				});
+			}
+		}
 
 		this.state = {
 			ascending: true,
@@ -278,15 +124,60 @@ class ChangeTrackingChangesView extends React.Component {
 		};
 
 		this._updateRenderContent(node);
+	}
 
-		this._updateSessionState(
-			breadcrumbItems,
-			filterClass,
-			showHideable,
-			viewType
-		);
+	componentDidMount() {
+		this.history.listen((location, action) => {
+			if (action !== 'POP') {
+				return;
+			}
 
-		this._saveSessionState();
+			const params = new URLSearchParams(location.search);
+
+			const pathState = this._getPathState(
+				params.get(this.namespace + 'path')
+			);
+
+			const filterClass = pathState.filterClass;
+			const nodeId = pathState.nodeId;
+			const showHideable = pathState.showHideable;
+			const viewType = pathState.viewType;
+
+			if (viewType === 'context' && this.contextView.errorMessage) {
+				this.setState({
+					renderInnerHTML: null,
+					viewType,
+				});
+
+				return;
+			}
+
+			const node = this._getNode(filterClass, nodeId, viewType);
+
+			const breadcrumbItems = this._getBreadcrumbItems(
+				node,
+				filterClass,
+				nodeId,
+				viewType
+			);
+
+			this.setState({
+				breadcrumbItems,
+				children: this._filterHideableNodes(
+					node.children,
+					showHideable
+				),
+				dropdown: '',
+				filterClass,
+				node,
+				page: 1,
+				renderInnerHTML: null,
+				showHideable,
+				viewType,
+			});
+
+			this._updateRenderContent(node);
+		});
 	}
 
 	_clone(json) {
@@ -851,6 +742,30 @@ class ChangeTrackingChangesView extends React.Component {
 		return null;
 	}
 
+	_getPathParam(breadcrumbItems, filterClass, showHideable, viewType) {
+		let path = showHideable.toString() + '/' + viewType + '/' + filterClass;
+
+		if (breadcrumbItems && breadcrumbItems.length > 0) {
+			let tree = '';
+
+			for (let i = 0; i < breadcrumbItems.length; i++) {
+				const breadcrumbItem = breadcrumbItems[i];
+
+				if (breadcrumbItem.modelClassNameId) {
+					tree +=
+						'/' +
+						breadcrumbItem.modelClassNameId.toString() +
+						'-' +
+						breadcrumbItem.modelClassPK.toString();
+				}
+			}
+
+			path += tree;
+		}
+
+		return path;
+	}
+
 	_getPortraitURL(node) {
 		return this.userInfo[node.userId.toString()].portraitURL;
 	}
@@ -907,6 +822,126 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rootDisplayOptions;
+	}
+
+	_getPathState(pathParam) {
+		if (!pathParam) {
+			return {
+				filterClass: 'everything',
+				nodeId: 0,
+				showHideable: false,
+				viewType: 'changes',
+			};
+		}
+
+		const parts = pathParam.split('/');
+
+		const path = [];
+
+		if (parts.length > 3) {
+			for (let i = 3; i < parts.length; i++) {
+				const part = parts[i];
+
+				const keys = part.split('-');
+
+				path.push({
+					modelClassNameId: keys[0],
+					modelClassPK: keys[1],
+				});
+			}
+		}
+
+		const pathState = {
+			filterClass: parts[2],
+			nodeId: 0,
+			showHideable: parts[0] === 'true',
+			viewType: parts[1],
+		};
+
+		if (
+			pathState.filterClass !== 'everything' &&
+			!this.contextView[pathState.filterClass]
+		) {
+			pathState.filterClass = 'everything';
+		}
+		else if (pathState.viewType === 'changes' && path.length > 0) {
+			const modelClassNameId = path[0].modelClassNameId;
+			const modelClassPK = path[0].modelClassPK;
+
+			for (let i = 0; i < this.changes.length; i++) {
+				const modelKey = this.changes[i];
+
+				const model = this.models[modelKey.toString()];
+
+				if (
+					modelClassNameId === model.modelClassNameId &&
+					modelClassPK === model.modelClassPK
+				) {
+					pathState.nodeId = modelKey;
+				}
+			}
+		}
+		else if (pathState.viewType === 'context') {
+			let contextNode = this.contextView.everything;
+
+			if (pathState.filterClass !== 'everything') {
+				contextNode = this.contextView[pathState.filterClass];
+			}
+
+			for (let i = 0; i < path.length; i++) {
+				if (!contextNode.children) {
+					break;
+				}
+
+				const sessionNode = path[i];
+
+				for (let j = 0; j < contextNode.children.length; j++) {
+					const child = contextNode.children[j];
+
+					const model = this.models[child.modelKey.toString()];
+
+					if (
+						model.modelClassNameId ===
+							sessionNode.modelClassNameId &&
+						model.modelClassPK === sessionNode.modelClassPK
+					) {
+						if (pathState.filterClass !== 'everything' && i === 0) {
+							const stack = [this.contextView.everything];
+
+							while (stack.length > 0) {
+								const element = stack.pop();
+
+								if (element.nodeId === child.nodeId) {
+									contextNode = element;
+
+									break;
+								}
+								else if (!element.children) {
+									continue;
+								}
+
+								for (
+									let i = 0;
+									i < element.children.length;
+									i++
+								) {
+									stack.push(element.children[i]);
+								}
+							}
+						}
+						else {
+							contextNode = child;
+						}
+
+						pathState.nodeId = contextNode.nodeId;
+
+						break;
+					}
+				}
+			}
+		}
+
+		return pathState;
 	}
 
 	_getTableHead() {
@@ -1199,14 +1234,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		this._updateRenderContent(node);
 
-		this._updateSessionState(
-			breadcrumbItems,
-			filterClass,
-			showHideable,
-			viewType
-		);
-
-		this._saveSessionState();
+		this._pushState(breadcrumbItems, filterClass, showHideable, viewType);
 	}
 
 	_handlePageChange(page) {
@@ -1216,12 +1244,6 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_handleShowHideableToggle(showHideable) {
-		if (this.sessionState) {
-			this.sessionState.showHideable = showHideable;
-
-			this._saveSessionState();
-		}
-
 		if (!showHideable) {
 			if (
 				this.state.viewType === 'context' &&
@@ -1252,6 +1274,13 @@ class ChangeTrackingChangesView extends React.Component {
 			),
 			showHideable,
 		});
+
+		this._pushState(
+			this.state.breadcrumbItems,
+			this.state.filterClass,
+			showHideable,
+			this.state.viewType
+		);
 	}
 
 	_handleSortColumnChange(column) {
@@ -1274,6 +1303,105 @@ class ChangeTrackingChangesView extends React.Component {
 			ascending: true,
 			sortDirectionClass: 'order-arrow-down-active',
 		});
+	}
+
+	_populateModelInfo() {
+		const keys = Object.keys(this.models);
+
+		for (let i = 0; i < keys.length; i++) {
+			const model = this.models[keys[i]];
+
+			if (model.groupId) {
+				model.siteName = this.siteNames[model.groupId.toString()];
+			}
+			else {
+				model.siteName = this.globalSiteName;
+			}
+
+			model.typeName = this.typeNames[model.modelClassNameId.toString()];
+
+			if (model.ctEntryId) {
+				model.changeTypeLabel = Liferay.Language.get('modified');
+
+				if (model.changeType === 'added') {
+					model.changeTypeLabel = Liferay.Language.get('added');
+				}
+				else if (model.changeType === 'deleted') {
+					model.changeTypeLabel = Liferay.Language.get('deleted');
+				}
+
+				model.userName = this.userInfo[
+					model.userId.toString()
+				].userName;
+
+				if (model.siteName === this.globalSiteName) {
+					let key = Liferay.Language.get('x-modified-a-x-x-ago');
+
+					if (model.changeType === 'added') {
+						key = Liferay.Language.get('x-added-a-x-x-ago');
+					}
+					else if (model.changeType === 'deleted') {
+						key = Liferay.Language.get('x-deleted-a-x-x-ago');
+					}
+
+					model.description = this._format(key, [
+						model.userName,
+						model.typeName,
+						model.timeDescription,
+					]);
+				}
+				else {
+					let key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
+
+					if (model.changeType === 'added') {
+						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
+					}
+					else if (model.changeType === 'deleted') {
+						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
+					}
+
+					model.description = this._format(key, [
+						model.userName,
+						model.typeName,
+						model.siteName,
+						model.timeDescription,
+					]);
+				}
+			}
+		}
+
+		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
+			const rootDisplayClassInfo = this.contextView[
+				this.rootDisplayClasses[i]
+			];
+
+			let hideable = true;
+
+			for (let i = 0; i < rootDisplayClassInfo.children.length; i++) {
+				const model = this.models[
+					rootDisplayClassInfo.children[i].modelKey.toString()
+				];
+
+				if (!model.hideable) {
+					hideable = false;
+				}
+			}
+
+			rootDisplayClassInfo.hideable = hideable;
+		}
+	}
+
+	_pushState(breadcrumbItems, filterClass, showHideable, viewType) {
+		const pathParam = this._getPathParam(
+			breadcrumbItems,
+			filterClass,
+			showHideable,
+			viewType
+		);
+
+		this.history.push(
+			this.basePath + '&' + this.namespace + 'path=' + pathParam
+		);
 	}
 
 	_renderEntry() {
@@ -1513,20 +1641,6 @@ class ChangeTrackingChangesView extends React.Component {
 		);
 	}
 
-	_saveSessionState() {
-		if (!this.activeCTCollection) {
-			return;
-		}
-
-		fetch(this.saveSessionStateURL, {
-			body: JSON.stringify(this.sessionState),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-		});
-	}
-
 	_updateRenderContent(node) {
 		if (!node.modelClassNameId) {
 			return;
@@ -1542,35 +1656,6 @@ class ChangeTrackingChangesView extends React.Component {
 					});
 				});
 		});
-	}
-
-	_updateSessionState(breadcrumbItems, filterClass, showHideable, viewType) {
-		if (!this.activeCTCollection) {
-			return;
-		}
-
-		const path = [];
-
-		if (breadcrumbItems) {
-			for (let i = 0; i < breadcrumbItems.length; i++) {
-				const breadcrumbItem = breadcrumbItems[i];
-
-				if (breadcrumbItem.modelClassNameId) {
-					path.push({
-						modelClassNameId: breadcrumbItem.modelClassNameId,
-						modelClassPK: breadcrumbItem.modelClassPK,
-					});
-				}
-			}
-		}
-
-		this.sessionState = {
-			ctCollectionId: this.ctCollectionId,
-			filterClass,
-			path,
-			showHideable,
-			viewType,
-		};
 	}
 
 	render() {

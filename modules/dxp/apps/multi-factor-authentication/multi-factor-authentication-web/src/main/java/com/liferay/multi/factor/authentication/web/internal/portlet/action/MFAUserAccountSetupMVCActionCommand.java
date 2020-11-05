@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -84,15 +85,20 @@ public class MFAUserAccountSetupMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		long setupMFACheckerUserId = ParamUtil.getLong(
-			actionRequest, "setupMFACheckerUserId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			throw new PrincipalException();
+		}
+
+		final long userId = themeDisplay.getUserId();
 
 		if (ParamUtil.getBoolean(actionRequest, "mfaRemoveExistingSetup")) {
-			setupMFAChecker.removeExistingSetup(setupMFACheckerUserId);
+			setupMFAChecker.removeExistingSetup(userId);
 		}
 		else if (!setupMFAChecker.setUp(
-					_portal.getHttpServletRequest(actionRequest),
-					setupMFACheckerUserId)) {
+					_portal.getHttpServletRequest(actionRequest), userId)) {
 
 			SessionErrors.add(actionRequest, "userAccountSetupFailed");
 		}
@@ -101,9 +107,6 @@ public class MFAUserAccountSetupMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "redirect"));
 
 		if (Validator.isBlank(redirect)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			redirect = themeDisplay.getPortalURL();
 		}
 

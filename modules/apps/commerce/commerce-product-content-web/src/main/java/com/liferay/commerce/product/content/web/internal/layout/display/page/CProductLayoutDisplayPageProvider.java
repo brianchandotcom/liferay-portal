@@ -20,6 +20,8 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,7 +50,17 @@ public class CProductLayoutDisplayPageProvider
 			CProduct cProduct = _cProductLocalService.getCProduct(
 				infoItemReference.getClassPK());
 
-			return new CProductLayoutDisplayPageObjectProvider(cProduct);
+			long groupId = cProduct.getGroupId();
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext != null) {
+				groupId = serviceContext.getScopeGroupId();
+			}
+
+			return new CProductLayoutDisplayPageObjectProvider(
+				cProduct, groupId);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -63,7 +75,7 @@ public class CProductLayoutDisplayPageProvider
 			CProduct cProduct = _cProductLocalService.getCProduct(
 				GetterUtil.getLong(urlTitle));
 
-			return new CProductLayoutDisplayPageObjectProvider(cProduct);
+			return new CProductLayoutDisplayPageObjectProvider(cProduct, groupId);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

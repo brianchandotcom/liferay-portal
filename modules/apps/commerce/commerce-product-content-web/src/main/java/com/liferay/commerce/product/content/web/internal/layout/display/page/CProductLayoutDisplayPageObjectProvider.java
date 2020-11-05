@@ -19,8 +19,6 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -31,8 +29,10 @@ import java.util.Locale;
 public class CProductLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<CProduct> {
 
-	public CProductLayoutDisplayPageObjectProvider(CProduct cProduct) {
+	public CProductLayoutDisplayPageObjectProvider(CProduct cProduct, long groupId) {
 		_cProduct = cProduct;
+
+		_groupId = groupId;
 
 		_cpDefinition =
 			CPDefinitionLocalServiceUtil.fetchCPDefinitionByCProductId(
@@ -66,14 +66,7 @@ public class CProductLayoutDisplayPageObjectProvider
 
 	@Override
 	public long getGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getScopeGroupId();
-		}
-
-		return _cProduct.getGroupId();
+		return _groupId;
 	}
 
 	@Override
@@ -93,5 +86,6 @@ public class CProductLayoutDisplayPageObjectProvider
 
 	private final CPDefinition _cpDefinition;
 	private final CProduct _cProduct;
+	private final long _groupId;
 
 }

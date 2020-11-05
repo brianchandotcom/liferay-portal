@@ -57,6 +57,10 @@ public class CommerceProductDataSetConstants {
 	public static final String COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS =
 		"commerceProductOptions";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES =
 		"commerceProductPricingClasses";
 

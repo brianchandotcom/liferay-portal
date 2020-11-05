@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration;
+import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.helper.CrossClusterReplicationHelperImpl;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
@@ -140,6 +141,21 @@ public class CrossClusterReplicationConfigurationModelListener
 	protected void addRemoteAndFollowIndexes(
 		String remoteClusterAlias, Dictionary<String, Object> properties) {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Enabling Cross-Cluster Replication");
+		}
+
+		Log log = LogFactoryUtil.getLog(
+			CrossClusterReplicationHelperImpl.class);
+
+		if (!log.isInfoEnabled()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"For more information, enable INFO logs on " +
+						CrossClusterReplicationHelperImpl.class);
+			}
+		}
+
 		String[] excludedIndexes = GetterUtil.getStringValues(
 			properties.get("excludedIndexes"));
 
@@ -214,6 +230,10 @@ public class CrossClusterReplicationConfigurationModelListener
 	protected void unfollowIndexesAndDeleteRemoteCluster(
 		String[] ccrLocalClusterConnectionConfigurations,
 		String remoteClusterAlias, String[] excludedIndexes) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Disabling Cross-Cluster Replication");
+		}
 
 		for (String ccrLocalClusterConnectionConfiguration :
 				ccrLocalClusterConnectionConfigurations) {

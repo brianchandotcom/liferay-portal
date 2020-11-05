@@ -28,13 +28,13 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-theme:defineObjects />
 
 <%
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-String spritemap = (String)request.getAttribute("liferay-commerce:account-selector:spritemap");
 String createNewOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:createNewOrderURL");
-String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
-String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");
 CurrentAccountModel currentAccount = (CurrentAccountModel)request.getAttribute("liferay-commerce:account-selector:currentAccount");
 CurrentOrderModel currentOrder = (CurrentOrderModel)request.getAttribute("liferay-commerce:account-selector:currentOrder");
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
+String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");
+String spritemap = (String)request.getAttribute("liferay-commerce:account-selector:spritemap");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_account_selector") + StringPool.UNDERLINE;
 

@@ -60,9 +60,11 @@ function AccountSticker({className, logoURL, name, size}) {
 
 function updateRemoteCurrentAccount(id, url, refresh) {
 	const formData = new FormData();
+
 	formData.append('accountId', id);
 
 	const formattedURL = new URL(url, themeDisplay.getPortalURL());
+
 	formattedURL.searchParams.append('groupId', themeDisplay.getScopeGroupId());
 	formattedURL.searchParams.append('p_auth', Liferay.authToken);
 

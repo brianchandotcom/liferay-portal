@@ -21,12 +21,13 @@ const CONFIRM_DISCARD_IMAGES = Liferay.Language.get(
 const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 	'you-may-lose-formatting-when-switching-from-x-to-x'
 );
+
 /**
  * WikiPortlet
  *
  */
 
- class WikiPortlet {
+class WikiPortlet {
 	constructor({
 		constants,
 		currentAction,
@@ -69,9 +70,7 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 	_attachEvents() {
 		const namespace = this._namespace;
 
-		const formatSelect = document.getElementById(
-			`${namespace}format`
-		);
+		const formatSelect = document.getElementById(`${namespace}format`);
 
 		if (formatSelect) {
 			this._currentFormatLabel = formatSelect.options[
@@ -89,18 +88,16 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 		);
 
 		if (publishButton) {
-			this._addEventListener(publishButton, 'click', (e) => {
+			this._addEventListener(publishButton, 'click', () => {
 				this.workflowActionInputNode.value = this._constants.ACTION_PUBLISH;
 				this._save();
 			});
 		}
 
-		const saveButton = document.getElementById(
-			`${namespace}saveButton`
-		);
+		const saveButton = document.getElementById(`${namespace}saveButton`);
 
 		if (saveButton) {
-			this._addEventListener(saveButton, 'click', (e) => {
+			this._addEventListener(saveButton, 'click', () => {
 				this.workflowActionInputNode.value = this._constants.ACTION_SAVE_DRAFT;
 				this._save();
 			});
@@ -115,7 +112,7 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 					'click',
 					this._removeAttachment.bind(this),
 					'.delete-attachment'
-				)
+				);
 		});
 
 		this.searchContainerId = searchContainerId;
@@ -213,17 +210,21 @@ const CONFIRM_LOSE_FORMATTING = Liferay.Language.get(
 		const namespace = this._namespace;
 
 		if (this._removeTempImages()) {
-			document.getElementById(namespace + this._constants.CMD).value = this._currentAction;
+			document.getElementById(
+				namespace + this._constants.CMD
+			).value = this._currentAction;
 
 			const contentEditor = window[`${namespace}contentEditor`];
 
 			if (contentEditor) {
-				document.getElementById(`${namespace}content`).value = contentEditor.getHTML();
+				document.getElementById(
+					`${namespace}content`
+				).value = contentEditor.getHTML();
 			}
 
 			submitForm(document[`${namespace}fm`]);
 		}
 	}
- }
+}
 
- export default WikiPortlet;
+export default WikiPortlet;

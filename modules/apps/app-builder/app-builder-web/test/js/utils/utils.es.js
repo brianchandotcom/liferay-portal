@@ -44,7 +44,7 @@ describe('Utils', () => {
 
 	describe('isEqualObjects', () => {
 		it('call without args', () => {
-			expect(isEqualObjects()).toBeTruthy();
+			expect(isEqualObjects()).toBeFalsy();
 		});
 
 		it('call with non objects', () => {

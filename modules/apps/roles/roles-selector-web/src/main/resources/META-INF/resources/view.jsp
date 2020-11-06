@@ -167,6 +167,7 @@ String methodName = null;
 
 <%
 PortletURL clearResultsURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
+
 clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("liferay-ui:search:searchContainer");

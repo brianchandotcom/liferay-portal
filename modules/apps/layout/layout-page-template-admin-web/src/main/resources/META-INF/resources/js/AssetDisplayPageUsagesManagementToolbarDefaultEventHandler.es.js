@@ -19,7 +19,7 @@ class AssetDisplayPageUsagesManagementToolbarDefaultEventHandler extends Default
 		if (
 			confirm(
 				Liferay.Language.get(
-					'are-you-sure-you-want-to-use-the-default-display-page-for-this'
+					'are-you-sure-you-want-to-use-the-default-display-page-template-for-this'
 				)
 			)
 		) {
@@ -34,7 +34,7 @@ class AssetDisplayPageUsagesManagementToolbarDefaultEventHandler extends Default
 		if (
 			confirm(
 				Liferay.Language.get(
-					'are-you-sure-you-do-not-want-to-set-a-display-page-for-this'
+					'are-you-sure-you-do-not-want-to-set-a-display-page-template-for-this'
 				)
 			)
 		) {

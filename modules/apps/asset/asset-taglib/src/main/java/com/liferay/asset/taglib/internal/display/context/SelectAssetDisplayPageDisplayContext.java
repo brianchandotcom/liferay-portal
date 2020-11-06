@@ -268,7 +268,8 @@ public class SelectAssetDisplayPageDisplayContext {
 
 		try {
 			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(_classPK);
+				assetRendererFactory.getAssetRenderer(
+					_classPK, AssetRendererFactory.TYPE_LATEST);
 
 			String viewInContextURL = assetRenderer.getURLViewInContext(
 				_liferayPortletRequest, _liferayPortletResponse,

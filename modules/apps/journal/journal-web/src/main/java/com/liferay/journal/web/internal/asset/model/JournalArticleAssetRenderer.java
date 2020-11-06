@@ -126,7 +126,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public long getClassPK() {
-		return getClassPK(_article);
+		return _article.getResourcePrimKey();
 	}
 
 	@Override

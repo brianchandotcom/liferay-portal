@@ -102,8 +102,18 @@ export const MenuItem = ({item}) => {
 		? {marginRight: (itemPath.length - 1) * NESTING_MARGIN}
 		: {marginLeft: (itemPath.length - 1) * NESTING_MARGIN};
 
+	const parentItemId =
+		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';
+
 	return (
-		<div ref={targetRef}>
+		<div
+			aria-label={`${title} (${type})`}
+			aria-level={itemPath.length}
+			data-item-id={item.siteNavigationMenuItemId}
+			data-parent-item-id={parentItemId}
+			ref={targetRef}
+			role="listitem"
+		>
 			<ClayCard
 				className={classNames('site_navigation_menu_editor_MenuItem', {
 					dragging: isDragging,
@@ -114,6 +124,10 @@ export const MenuItem = ({item}) => {
 				style={itemStyle}
 			>
 				<ClayCheckbox
+					aria-label={Liferay.Util.sub(
+						Liferay.Language.get('select-x'),
+						`${title} (${type})`
+					)}
 					checked={selected}
 					onChange={() => {
 						setSelectedMenuItemId(siteNavigationMenuItemId);
@@ -138,6 +152,10 @@ export const MenuItem = ({item}) => {
 
 							<ClayLayout.ContentCol gutters>
 								<ClayButtonWithIcon
+									aria-label={Liferay.Util.sub(
+										Liferay.Language.get('delete-x'),
+										`${title} (${type})`
+									)}
 									displayType="unstyled"
 									onClick={deleteMenuItem}
 									small

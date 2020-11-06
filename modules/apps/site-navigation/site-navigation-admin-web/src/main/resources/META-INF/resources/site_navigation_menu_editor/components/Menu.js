@@ -21,7 +21,7 @@ export const Menu = () => {
 	const items = useItems();
 
 	return (
-		<div className="container p-3">
+		<div className="container p-3" role="list">
 			{items.map((item) => (
 				<MenuItem item={item} key={item.siteNavigationMenuItemId} />
 			))}

@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -33,6 +36,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
@@ -61,7 +66,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearCache() {
-		_finderCacheImpl.clearCache();
+		_notifyFinderCache(null, null, false);
 
 		clearLocalCache();
 
@@ -72,7 +77,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearCache(Class<?> clazz) {
-		_finderCacheImpl.clearByEntityCache(clazz.getName());
+		_notifyFinderCache(clazz.getName(), null, false);
 
 		clearLocalCache();
 
@@ -90,7 +95,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void dispose() {
-		_finderCacheImpl.dispose();
+		_notifyFinderCache(null, null, true);
 
 		_portalCaches.clear();
 	}
@@ -297,7 +302,7 @@ public class EntityCacheImpl
 			cacheName = portalCacheName.substring(_GROUP_KEY_PREFIX.length());
 		}
 
-		_finderCacheImpl.removeCacheByEntityCache(cacheName);
+		_notifyFinderCache(cacheName, null, true);
 
 		_portalCaches.remove(cacheName);
 	}
@@ -360,7 +365,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void removeCache(String className) {
-		_finderCacheImpl.removeCacheByEntityCache(className);
+		_notifyFinderCache(className, null, true);
 
 		_portalCaches.remove(className);
 
@@ -417,12 +422,78 @@ public class EntityCacheImpl
 		portalCacheManager.registerPortalCacheManagerListener(this);
 	}
 
+	@Reference(unbind = "-")
+	protected void setFinderCacheImpl(FinderCacheImpl finderCacheImpl) {
+		_finderCacheImpl = finderCacheImpl;
+	}
+
 	private boolean _isLocalCacheEnabled() {
 		if (_localCache == null) {
 			return false;
 		}
 
 		return ThreadLocalFilterThreadLocal.isFilterInvoked();
+	}
+
+	private void _notify(
+		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+
+		FinderCacheImpl finderCacheImpl = _finderCacheImpl;
+
+		if (finderCacheImpl == null) {
+			return;
+		}
+
+		if (removePortalCache == null) {
+			finderCacheImpl.updateByEntityCache(className, baseModel);
+		}
+		else if (baseModel != null) {
+			finderCacheImpl.removeByEntityCache(className, baseModel);
+		}
+		else if (removePortalCache) {
+			if (className == null) {
+				finderCacheImpl.dispose();
+			}
+			else {
+				finderCacheImpl.removeCacheByEntityCache(className);
+			}
+		}
+		else {
+			if (className == null) {
+				finderCacheImpl.clearCache();
+			}
+			else {
+				finderCacheImpl.clearByEntityCache(className);
+			}
+		}
+	}
+
+	private void _notifyFinderCache(
+		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+
+		_notify(className, baseModel, removePortalCache);
+
+		if (!_clusterExecutor.isEnabled() ||
+			!ClusterInvokeThreadLocal.isEnabled()) {
+
+			return;
+		}
+
+		try {
+			MethodHandler methodHandler = new MethodHandler(
+				_notifyMethodKey,
+				new Object[] {className, baseModel, removePortalCache});
+
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(methodHandler, true);
+
+			clusterRequest.setFireAndForget(true);
+
+			_clusterExecutor.execute(clusterRequest);
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to notify cluster", throwable);
+		}
 	}
 
 	private void _putResult(
@@ -436,7 +507,7 @@ public class EntityCacheImpl
 		}
 
 		if (!quiet && updateFinderCache) {
-			_finderCacheImpl.updateByEntityCache(clazz.getName(), baseModel);
+			_notifyFinderCache(clazz.getName(), baseModel, null);
 		}
 
 		CacheModel<?> result = baseModel.toCacheModel();
@@ -470,7 +541,7 @@ public class EntityCacheImpl
 		}
 
 		if (baseModel != null) {
-			_finderCacheImpl.removeByEntityCache(clazz.getName(), baseModel);
+			_notifyFinderCache(clazz.getName(), baseModel, false);
 		}
 
 		if (_isLocalCacheEnabled()) {
@@ -508,8 +579,13 @@ public class EntityCacheImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		EntityCacheImpl.class);
 
+	private static volatile FinderCacheImpl _finderCacheImpl;
+	private static final MethodKey _notifyMethodKey = new MethodKey(
+		EntityCacheImpl.class, "_notify", String.class, BaseModel.class,
+		Boolean.class);
+
 	@Reference
-	private FinderCacheImpl _finderCacheImpl;
+	private ClusterExecutor _clusterExecutor;
 
 	private ThreadLocal<LRUMap> _localCache;
 

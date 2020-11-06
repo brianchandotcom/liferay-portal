@@ -220,22 +220,22 @@ function OverlayContainer({allowEdit, root}) {
 		// Apply CSS overrides.
 
 		const css = `
-			#banner {
+			#banner, #footer,
+			#banner .input-group .input-group-item .input-group-inset-after.form-control:hover {
 				cursor: not-allowed;
 			}
-			#banner a, #banner button {
+			#banner a, #banner button,
+			#footer a, #footer button {
 				cursor: not-allowed;
 				pointer-events: none;
+			}
+			#banner section.portlet:hover .portlet-content.portlet-content-editable {
+				border-color: transparent;
 			}
 			#content {
 				position: relative;
 				cursor: not-allowed;
 			}
-
-			.portlet-content-editable {
-				border-color: transparent;
-			}
-
 			.portlet-topper {
 				visibility: hidden;
 			}

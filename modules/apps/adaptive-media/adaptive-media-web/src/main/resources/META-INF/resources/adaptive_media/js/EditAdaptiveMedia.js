@@ -91,11 +91,9 @@ const EditAdaptiveMedia = ({
 				.then((response) => response.json())
 				.then(({message, success}) => {
 					if (success) {
-						const title = Liferay.Language.get('success');
-
 						openToast({
 							message,
-							title,
+							title: Liferay.Language.get('success'),
 							type: 'success',
 						});
 
@@ -105,6 +103,13 @@ const EditAdaptiveMedia = ({
 						setErrorMessage(message);
 						scrollToTop();
 					}
+				})
+				.catch(() => {
+					openToast({
+						message: Liferay.Language.get('an-unexpected-error-occurred'),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
 				});
 		},
 		validate: (values) => {

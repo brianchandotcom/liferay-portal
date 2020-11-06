@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -85,6 +87,14 @@ public class DLEditDDMStructureDisplayContext {
 			).build());
 	}
 
+	public Map<String, Object> getComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"contentTitle", "name"
+		).put(
+			"defaultLanguageId", getDefaultLanguageId()
+		).build();
+	}
+
 	public DDMStructure getDDMStructure() {
 		if (_ddmStructure != null) {
 			return _ddmStructure;
@@ -105,6 +115,16 @@ public class DLEditDDMStructureDisplayContext {
 			_httpServletRequest, "ddmStructureId");
 
 		return _ddmStructureId;
+	}
+
+	public String getDefaultLanguageId() {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		if (ddmStructure == null) {
+			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		}
+
+		return ddmStructure.getDefaultLanguageId();
 	}
 
 	public String getFields() throws PortalException {
@@ -185,8 +205,26 @@ public class DLEditDDMStructureDisplayContext {
 		return _script;
 	}
 
+	public String getSelectedLanguageId() {
+		if (Validator.isNotNull(_defaultLanguageId)) {
+			return _defaultLanguageId;
+		}
+
+		_defaultLanguageId = ParamUtil.getString(
+			_httpServletRequest, "languageId");
+
+		if (Validator.isNotNull(_defaultLanguageId)) {
+			return _defaultLanguageId;
+		}
+
+		_defaultLanguageId = getDefaultLanguageId();
+
+		return _defaultLanguageId;
+	}
+
 	private DDMStructure _ddmStructure;
 	private Long _ddmStructureId;
+	private String _defaultLanguageId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _parentDDMStructureId;

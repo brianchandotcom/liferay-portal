@@ -143,12 +143,12 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 					}
 					%>
 
-					<div class="border-right c-mr-1 c-mr-sm-3 c-pr-sm-3">
-						<span class="text-secondary">
+					<div class="border-right c-mr-1 c-mr-sm-3 c-pr-sm-3 position-relative">
+						<div class="bg-white c-px-1 header-assign-label position-absolute text-secondary">
 							<liferay-ui:message key="assigned-to" />:
-						</span>
+						</div>
 
-						<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" onclick="<portlet:namespace />toggleDropdown();" type="button">
+						<button aria-expanded="false" aria-haspopup="true" class="align-items-center btn btn-secondary d-flex dropdown-toggle header-assign-button justify-content-between" data-toggle="dropdown" onclick="<portlet:namespace />toggleDropdown();" type="button">
 							<liferay-ui:message key="<%= assignee %>" />
 
 							<clay:icon

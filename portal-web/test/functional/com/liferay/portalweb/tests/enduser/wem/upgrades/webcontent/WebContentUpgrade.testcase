@@ -193,4 +193,14 @@ definition {
 		AssertVisible(locator1 = "Button#PREVIEW");
 	}
 
+	@description = "This is a use case for LRQA-62801."
+	@priority = "4"
+	test ViewWebContentWithPredefinedValueInWebContentFieldArchive701014 {
+		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.0.10.14";
+
+		Upgrade.viewWebContentWithPredefinedValueInWebContentField();
+	}
+
 }

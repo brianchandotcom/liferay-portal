@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.form.navigator.internal;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.frontend.taglib.form.navigator.internal.servlet.taglib.ui.WrapperFormNavigatorCategory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -25,67 +23,66 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+import java.util.function.Function;
+
 /**
  * @author Eudaldo Alonso
  */
-public class FormNavigatorCategoryServiceTrackerCustomizer
-	implements ServiceTrackerCustomizer
-		<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory,
-		 ServiceRegistration<FormNavigatorCategory>> {
+public class WrapperRegistratorServiceTrackerCustomizer<T, W>
+	implements ServiceTrackerCustomizer<T, ServiceRegistration<W>> {
 
-	public FormNavigatorCategoryServiceTrackerCustomizer(
-		BundleContext bundleContext) {
+	public WrapperRegistratorServiceTrackerCustomizer(
+		BundleContext bundleContext, Class<W> clazz,
+		Function<T, W> wrapperFunction, String... propertyNames) {
 
 		_bundleContext = bundleContext;
+		_clazz = clazz;
+		_wrapperFunction = wrapperFunction;
+		_propertyNames = propertyNames;
 	}
 
 	@Override
-	public ServiceRegistration<FormNavigatorCategory> addingService(
-		ServiceReference
-			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory>
-				serviceReference) {
+	public ServiceRegistration<W> addingService(
+		ServiceReference<T> serviceReference) {
 
 		return _bundleContext.registerService(
-			FormNavigatorCategory.class,
-			new WrapperFormNavigatorCategory(
-				_bundleContext.getService(serviceReference)),
+			_clazz,
+			_wrapperFunction.apply(_bundleContext.getService(serviceReference)),
 			_buildProperties(serviceReference));
 	}
 
 	@Override
 	public void modifiedService(
-		ServiceReference
-			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory>
-				serviceReference,
-		ServiceRegistration<FormNavigatorCategory> serviceRegistration) {
+		ServiceReference<T> serviceReference,
+		ServiceRegistration<W> serviceRegistration) {
 
 		serviceRegistration.setProperties(_buildProperties(serviceReference));
 	}
 
 	@Override
 	public void removedService(
-		ServiceReference
-			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory>
-				serviceReference,
-		ServiceRegistration<FormNavigatorCategory> serviceRegistration) {
+		ServiceReference<T> serviceReference,
+		ServiceRegistration<W> serviceRegistration) {
 
 		serviceRegistration.unregister();
 	}
 
 	private Dictionary<String, Object> _buildProperties(
-		ServiceReference
-			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory>
-				serviceReference) {
+		ServiceReference<?> serviceReference) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(
-			"form.navigator.category.order",
-			serviceReference.getProperty("form.navigator.category.order"));
+		for (String propertyName : _propertyNames) {
+			properties.put(
+				propertyName, serviceReference.getProperty(propertyName));
+		}
 
 		return properties;
 	}
 
 	private final BundleContext _bundleContext;
+	private final Class<W> _clazz;
+	private final String[] _propertyNames;
+	private final Function<T, W> _wrapperFunction;
 
 }

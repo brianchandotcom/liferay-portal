@@ -415,9 +415,13 @@ public class FinderCacheImpl
 		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
 			className);
 
-		for (FinderPath finderPath :
-				_getFinderPaths(_getCacheNameWithoutPagination(className))) {
+		Set<FinderPath> finderPaths = new HashSet<>();
 
+		finderPaths.addAll(
+			_getFinderPaths(_getCacheNameWithoutPagination(className)));
+		finderPaths.addAll(_getFinderPaths(className));
+
+		for (FinderPath finderPath : finderPaths) {
 			if (baseModel.isNew()) {
 				_removeResult(
 					finderPath,
@@ -434,13 +438,6 @@ public class FinderCacheImpl
 					argumentsResolver.getArguments(
 						finderPath, baseModel, true, true));
 			}
-		}
-
-		for (FinderPath finderPath : _getFinderPaths(className)) {
-			_removeResult(
-				finderPath,
-				argumentsResolver.getArguments(
-					finderPath, baseModel, true, true));
 		}
 	}
 

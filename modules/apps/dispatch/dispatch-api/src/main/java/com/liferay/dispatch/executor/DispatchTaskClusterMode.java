@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.scheduler.StorageType;
  */
 public enum DispatchTaskClusterMode {
 
-	ALL_NODES(1, StorageType.MEMORY), DISABLED(0, StorageType.MEMORY),
-	MASTER_ONLY(2, StorageType.PERSISTED);
+	ALL_NODES(1, StorageType.MEMORY), NOT_APPLICABLE(0, StorageType.PERSISTED),
+	SINGLE_NODE(2, StorageType.PERSISTED);
 
 	public static DispatchTaskClusterMode valueOf(int mode) {
 		for (DispatchTaskClusterMode dispatchTaskClusterMode : values()) {

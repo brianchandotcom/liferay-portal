@@ -203,6 +203,16 @@ definition {
 		Upgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
+	@description = "This is a use case for LRQA-62834."
+	@priority = "4"
+	test ViewWebContentWithPredefinedValueInWebContentFieldArchive721 {
+		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.viewWebContentWithPredefinedValueInWebContentField();
+	}
+
 	@description = "This is a use case for LRQA-62830."
 	@priority = "4"
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive71103 {

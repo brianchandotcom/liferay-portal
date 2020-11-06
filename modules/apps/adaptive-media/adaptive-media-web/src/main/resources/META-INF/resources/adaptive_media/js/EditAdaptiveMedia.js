@@ -61,10 +61,10 @@ const EditAdaptiveMedia = ({
 		const curMaxWidth = properties['max-width'];
 		const curMaxHeight = properties['max-height'];
 
-		if (curMaxWidth != 0) {
+		if (curMaxWidth !== 0) {
 			maxWidth = curMaxWidth;
 		}
-		if (curMaxHeight != 0) {
+		if (curMaxHeight !== 0) {
 			maxHeight = curMaxHeight;
 		}
 	}

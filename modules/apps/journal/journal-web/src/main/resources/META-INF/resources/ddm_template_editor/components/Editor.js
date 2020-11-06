@@ -19,6 +19,7 @@ import {CodeMirrorEditor} from './CodeMirrorEditor';
 import {ScriptInput} from './ScriptInput';
 
 export const Editor = ({
+	autocompleteData,
 	editorMode,
 	initialScript,
 	inputChannel,
@@ -51,6 +52,7 @@ export const Editor = ({
 	return (
 		<>
 			<CodeMirrorEditor
+				autocompleteData={autocompleteData}
 				content={script}
 				inputChannel={inputChannel}
 				mode={editorMode}
@@ -63,6 +65,7 @@ export const Editor = ({
 };
 
 Editor.propTypes = {
+	autocompleteData: PropTypes.string.isRequired,
 	editorMode: PropTypes.oneOf(['ftl', 'xml', 'velocity']).isRequired,
 	initialScript: PropTypes.string.isRequired,
 	inputChannel: PropTypes.object.isRequired,

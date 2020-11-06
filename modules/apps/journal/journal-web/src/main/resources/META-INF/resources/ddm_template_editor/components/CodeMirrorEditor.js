@@ -49,7 +49,13 @@ import CodeMirror from 'codemirror';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-export const CodeMirrorEditor = ({content, inputChannel, mode, onChange}) => {
+export const CodeMirrorEditor = ({
+	autocompleteData,
+	content,
+	inputChannel,
+	mode,
+	onChange,
+}) => {
 	const [editor, setEditor] = useState();
 	const [editorWrapper, setEditorWrapper] = useState();
 	const initialContentRef = useRef(content);
@@ -58,6 +64,71 @@ export const CodeMirrorEditor = ({content, inputChannel, mode, onChange}) => {
 		if (!editorWrapper) {
 			return;
 		}
+
+		let wordList = [];
+
+		try {
+			wordList = Object.keys(JSON.parse(autocompleteData).variables)
+				.sort()
+				.map((word) => ({lowerCaseWord: word.toLowerCase(), word}));
+		}
+		catch (error) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error('Error loading editor autocomplete data', error);
+			}
+		}
+
+		const getWordContext = (cm) => {
+			const currentRange = cm.findWordAt({
+				...cm.getCursor(),
+				sticky: 'before',
+				xRel: 0,
+			});
+
+			const getRange = (range) => {
+				return cm.getRange(range.anchor, range.head);
+			};
+
+			return {
+				current: getRange(currentRange),
+				next: getRange(
+					cm.findWordAt(cm.findPosH(currentRange.head, 1, 'char'))
+				),
+				previous: getRange(
+					cm.findWordAt(cm.findPosH(currentRange.anchor, -1, 'char'))
+				),
+			};
+		};
+
+		const hint = (cm) => {
+			const {current, next, previous} = getWordContext(cm);
+			const cursorPosition = cm.getCursor();
+
+			const closeVariable = next !== '}';
+			const openVariable = current !== '${' && previous !== '${';
+
+			return {
+				from: {
+					...cursorPosition,
+					ch: cursorPosition.ch - current.length,
+				},
+				list: wordList
+					.map(({lowerCaseWord, word}) => ({
+						index: lowerCaseWord.indexOf(current),
+						lowerCaseWord,
+						word,
+					}))
+					.filter(({index}) => index >= 0)
+					.sort(({index: indexA}, {index: indexB}) => indexA - indexB)
+					.map(({word}) => ({
+						displayText: word,
+						text: `${openVariable ? '${' : ''}${word}${
+							closeVariable ? '}' : ''
+						}`,
+					})),
+				to: cursorPosition,
+			};
+		};
 
 		const codeMirror = CodeMirror(editorWrapper, {
 			autoCloseTags: true,
@@ -69,6 +140,7 @@ export const CodeMirrorEditor = ({content, inputChannel, mode, onChange}) => {
 			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
 			hintOptions: {
 				completeSingle: false,
+				hint,
 			},
 			indentWithTabs: true,
 			inputStyle: 'contenteditable',
@@ -84,8 +156,17 @@ export const CodeMirrorEditor = ({content, inputChannel, mode, onChange}) => {
 			viewportMargin: Infinity,
 		});
 
+		codeMirror.on('change', (cm) => {
+			const {current} = getWordContext(cm);
+
+			if (current === '${') {
+				codeMirror.showHint();
+			}
+		});
+
+		window.codeMirror = codeMirror;
 		setEditor(codeMirror);
-	}, [editorWrapper, mode]);
+	}, [autocompleteData, editorWrapper, mode]);
 
 	useEffect(() => {
 		if (!editor) {
@@ -128,6 +209,7 @@ export const CodeMirrorEditor = ({content, inputChannel, mode, onChange}) => {
 };
 
 CodeMirrorEditor.propTypes = {
+	autocompleteData: PropTypes.string.isRequired,
 	content: PropTypes.string.isRequired,
 	inputChannel: PropTypes.shape({
 		onData: PropTypes.func.isRequired,

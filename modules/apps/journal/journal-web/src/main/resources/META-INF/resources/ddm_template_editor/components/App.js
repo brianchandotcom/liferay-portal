@@ -21,6 +21,7 @@ import {Editor} from './Editor';
 import {Sidebar} from './Sidebar';
 
 export default function App({
+	editorAutocompleteData,
 	editorMode,
 	portletNamespace,
 	script: initialScript,
@@ -59,6 +60,7 @@ export default function App({
 				/>
 
 				<Editor
+					autocompleteData={editorAutocompleteData}
 					editorMode={editorMode}
 					initialScript={initialScript}
 					inputChannel={inputChannel}
@@ -70,6 +72,7 @@ export default function App({
 }
 
 App.propTypes = {
+	editorAutocompleteData: PropTypes.string.isRequired,
 	editorMode: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	script: PropTypes.string.isRequired,

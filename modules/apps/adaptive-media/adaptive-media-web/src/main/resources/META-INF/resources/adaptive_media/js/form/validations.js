@@ -13,7 +13,7 @@
  */
 
 const alphanumeric = (value) =>
-	/^[a-zA-Z0-9_-]+$/.test(value)
+	/^[\w-]+$/.test(value)
 		? undefined
 		: Liferay.Language.get(
 				'please-enter-only-alphanumeric-characters-dashes-or-underscores'

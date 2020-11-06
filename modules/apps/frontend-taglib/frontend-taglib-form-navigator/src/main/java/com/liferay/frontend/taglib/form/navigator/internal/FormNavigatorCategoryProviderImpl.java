@@ -108,10 +108,8 @@ public class FormNavigatorCategoryProviderImpl
 	protected void activate(BundleContext bundleContext) {
 		_formNavigatorCategories = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, FormNavigatorCategory.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(formNavigatorCategory, emitter) -> emitter.emit(
-					formNavigatorCategory.getFormNavigatorId())),
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, FormNavigatorCategory::getFormNavigatorId),
 			new PropertyServiceReferenceComparator<>(
 				"form.navigator.category.order"));
 

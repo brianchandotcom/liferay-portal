@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.portal.component.blacklist.internal.activator.ComponentBlacklistImplBundleActivator
 Bundle-Name: Liferay Portal Component Blacklist Implementation
 Bundle-SymbolicName: com.liferay.portal.component.blacklist.impl
 Bundle-Version: 5.0.0

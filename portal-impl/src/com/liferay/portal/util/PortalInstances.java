@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -223,8 +222,6 @@ public class PortalInstances {
 
 				if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 					webIdsList.add(0, webId);
-
-					DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
 				}
 				else {
 					webIdsList.add(webId);

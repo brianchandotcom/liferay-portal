@@ -198,12 +198,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_MARGIN_LEFT</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'ml-${key_marginLeft}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@class,'ml-${key_marginLeft}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_MARGIN_RIGHT</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'mr-${key_marginRight}')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@class,'ml-${key_marginRight}')]</td>
 	<td></td>
 </tr>
 <tr>

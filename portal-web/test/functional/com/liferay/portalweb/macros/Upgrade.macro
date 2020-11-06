@@ -2094,10 +2094,7 @@ definition {
 				key_fragmentName = "card",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
 
-			AssertElementPresent(
-				key_boxShadow = "rgba(0, 0, 0, 0.176) 0px 1rem 3rem",
-				key_fragmentName = "card",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOX_SHADOW_IN_VIEW_MODE");
+			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'card')]/parent::div[contains(@style,'box-shadow: rgba(0, 0, 0, 0.176) 0px 1rem 3rem')]");
 		}
 
 		task ("Assert styles of Heading in edit mode") {

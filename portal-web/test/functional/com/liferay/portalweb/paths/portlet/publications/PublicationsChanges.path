@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_ELLIPSIS</td>
-	<td>//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td>//h2[contains(@class,'autofit-row')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

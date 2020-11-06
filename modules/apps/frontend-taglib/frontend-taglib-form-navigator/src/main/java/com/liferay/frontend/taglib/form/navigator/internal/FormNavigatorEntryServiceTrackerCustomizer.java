@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.form.navigator.internal.servlet.taglib.ui.Wra
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
-import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -32,45 +31,25 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class FormNavigatorEntryServiceTrackerCustomizer
 	implements ServiceTrackerCustomizer
 		<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry<?>,
-		 FormNavigatorEntry<?>> {
+		 ServiceRegistration<FormNavigatorEntry<?>>> {
 
 	public FormNavigatorEntryServiceTrackerCustomizer(
-		BundleContext bundleContext,
-		Map
-			<ServiceReference
-				<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry
-					<?>>,
-			 ServiceRegistration<FormNavigatorEntry<?>>> serviceRegistrations) {
+		BundleContext bundleContext) {
 
 		_bundleContext = bundleContext;
-		_serviceRegistrations = serviceRegistrations;
 	}
 
 	@Override
-	public FormNavigatorEntry<?> addingService(
+	public ServiceRegistration<FormNavigatorEntry<?>> addingService(
 		ServiceReference
 			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry<?>>
 				serviceReference) {
 
-		FormNavigatorEntry<?> formNavigatorEntry =
+		return _bundleContext.registerService(
+			(Class<FormNavigatorEntry<?>>)(Class<?>)FormNavigatorEntry.class,
 			new WrapperFormNavigatorEntry(
-				_bundleContext.getService(serviceReference));
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			"form.navigator.entry.order",
-			serviceReference.getProperty("form.navigator.entry.order"));
-
-		ServiceRegistration<FormNavigatorEntry<?>> serviceRegistration =
-			_bundleContext.registerService(
-				(Class<FormNavigatorEntry<?>>)
-					(Class<?>)FormNavigatorEntry.class,
-				formNavigatorEntry, properties);
-
-		_serviceRegistrations.put(serviceReference, serviceRegistration);
-
-		return formNavigatorEntry;
+				_bundleContext.getService(serviceReference)),
+			_buildProperties(serviceReference));
 	}
 
 	@Override
@@ -78,11 +57,9 @@ public class FormNavigatorEntryServiceTrackerCustomizer
 		ServiceReference
 			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry<?>>
 				serviceReference,
-		FormNavigatorEntry<?> formNavigatorEntry) {
+		ServiceRegistration<FormNavigatorEntry<?>> serviceRegistration) {
 
-		removedService(serviceReference, formNavigatorEntry);
-
-		addingService(serviceReference);
+		serviceRegistration.setProperties(_buildProperties(serviceReference));
 	}
 
 	@Override
@@ -90,18 +67,25 @@ public class FormNavigatorEntryServiceTrackerCustomizer
 		ServiceReference
 			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry<?>>
 				serviceReference,
-		FormNavigatorEntry<?> formNavigatorEntry) {
-
-		ServiceRegistration<FormNavigatorEntry<?>> serviceRegistration =
-			_serviceRegistrations.remove(serviceReference);
+		ServiceRegistration<FormNavigatorEntry<?>> serviceRegistration) {
 
 		serviceRegistration.unregister();
 	}
 
+	private Dictionary<String, Object> _buildProperties(
+		ServiceReference
+			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry<?>>
+				serviceReference) {
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			"form.navigator.entry.order",
+			serviceReference.getProperty("form.navigator.entry.order"));
+
+		return properties;
+	}
+
 	private final BundleContext _bundleContext;
-	private final Map
-		<ServiceReference
-			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry<?>>,
-		 ServiceRegistration<FormNavigatorEntry<?>>> _serviceRegistrations;
 
 }

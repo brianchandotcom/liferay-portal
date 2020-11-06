@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.dispatch.constants.DispatchWebKeys" %><%@
 page import="com.liferay.dispatch.exception.NoSuchLogException" %><%@
 page import="com.liferay.dispatch.exception.NoSuchTriggerException" %><%@
+page import="com.liferay.dispatch.executor.DispatchTaskClusterMode" %><%@
 page import="com.liferay.dispatch.executor.DispatchTaskStatus" %><%@
 page import="com.liferay.dispatch.model.DispatchLog" %><%@
 page import="com.liferay.dispatch.model.DispatchTrigger" %><%@

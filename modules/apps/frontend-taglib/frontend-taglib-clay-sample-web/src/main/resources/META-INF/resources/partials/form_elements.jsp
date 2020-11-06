@@ -40,7 +40,7 @@
 			<td>Off</td>
 		</tr>
 		<tr>
-			<td><clay:checkbox cssClass="custom-css-class" checked="<%= true %>" id="customId" name="name" /></td>
+			<td><clay:checkbox checked="<%= true %>" cssClass="custom-css-class" id="customId" name="name" /></td>
 			<td>With custom class and id</td>
 		</tr>
 		<tr>

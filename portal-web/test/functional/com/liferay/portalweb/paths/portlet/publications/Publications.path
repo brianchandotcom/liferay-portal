@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//a[contains(@id,'PublicationsPortlet')]/span[contains(.,'Publish')]</td>
+	<td>//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>

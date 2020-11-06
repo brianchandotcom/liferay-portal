@@ -188,7 +188,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
-	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'box-shadow: var(--${key_boxShadow})')]</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]/parent::div[contains(@style,'box-shadow: var(--${key_boxShadow})')]</td>
 	<td></td>
 </tr>
 <tr>

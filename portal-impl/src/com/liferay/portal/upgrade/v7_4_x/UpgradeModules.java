@@ -31,6 +31,8 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.portal.bundle.blacklist.impl",
+		"com.liferay.portal.component.blacklist.impl",
 		"com.liferay.portal.search"
 	};
 

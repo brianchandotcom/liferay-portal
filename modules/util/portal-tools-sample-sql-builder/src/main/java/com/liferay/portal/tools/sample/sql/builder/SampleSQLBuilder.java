@@ -181,6 +181,21 @@ public class SampleSQLBuilder {
 
 				if (s.length() > 0) {
 					if (s.startsWith("insert into ")) {
+						if (!s.endsWith(");")) {
+							StringBundler sb = new StringBundler();
+
+							while (!s.endsWith(");")) {
+								sb.append(s);
+								sb.append(StringPool.NEW_LINE);
+
+								s = unsyncBufferedReader.readLine();
+							}
+
+							sb.append(s);
+
+							s = sb.toString();
+						}
+
 						compressSQL(
 							db, dir, insertSQLWriters, insertSQLs,
 							s.substring(12));

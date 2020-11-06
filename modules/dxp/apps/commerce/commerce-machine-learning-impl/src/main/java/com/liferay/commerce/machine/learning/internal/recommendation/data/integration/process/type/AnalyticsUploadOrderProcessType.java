@@ -15,7 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type;
 
 import com.liferay.commerce.data.integration.process.type.ProcessType;
-import com.liferay.commerce.machine.learning.internal.data.integration.BaseCommerceMLProcessType;
+import com.liferay.commerce.machine.learning.internal.data.integration.BaseProcessType;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ProcessType.class
 )
-public class AnalyticsUploadOrderProcessType extends BaseCommerceMLProcessType {
+public class AnalyticsUploadOrderProcessType extends BaseProcessType {
 
 	public static final String KEY = "analytics-upload-order";
 

@@ -115,7 +115,9 @@ public class DispatchTriggerServiceSoap {
 				int endDateMonth, int endDateDay, int endDateYear,
 				int endDateHour, int endDateMinute, boolean neverEnd,
 				boolean overlapAllowed, int startDateMonth, int startDateDay,
-				int startDateYear, int startDateHour, int startDateMinute)
+				int startDateYear, int startDateHour, int startDateMinute,
+				com.liferay.dispatch.executor.DispatchTaskClusterMode
+					dispatchTaskClusterMode)
 		throws RemoteException {
 
 		try {
@@ -124,7 +126,8 @@ public class DispatchTriggerServiceSoap {
 					dispatchTriggerId, active, cronExpression, endDateMonth,
 					endDateDay, endDateYear, endDateHour, endDateMinute,
 					neverEnd, overlapAllowed, startDateMonth, startDateDay,
-					startDateYear, startDateHour, startDateMinute);
+					startDateYear, startDateHour, startDateMinute,
+					dispatchTaskClusterMode);
 
 			return com.liferay.dispatch.model.DispatchTriggerSoap.toSoapModel(
 				returnValue);

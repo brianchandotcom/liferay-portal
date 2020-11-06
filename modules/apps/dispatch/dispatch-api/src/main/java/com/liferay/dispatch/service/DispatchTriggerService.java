@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.service;
 
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -79,7 +80,8 @@ public interface DispatchTriggerService extends BaseService {
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
 			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute)
+			int startDateHour, int startDateMinute,
+			DispatchTaskClusterMode dispatchTaskClusterMode)
 		throws PortalException;
 
 	public DispatchTrigger updateDispatchTrigger(

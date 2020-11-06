@@ -301,7 +301,9 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.Date getNextFireDate(long dispatchTriggerId) {
+	public static java.util.Date getNextFireDate(long dispatchTriggerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getNextFireDate(dispatchTriggerId);
 	}
 
@@ -324,7 +326,9 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.Date getPreviousFireDate(long dispatchTriggerId) {
+	public static java.util.Date getPreviousFireDate(long dispatchTriggerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getPreviousFireDate(dispatchTriggerId);
 	}
 
@@ -365,14 +369,16 @@ public class DispatchTriggerLocalServiceUtil {
 				int endDateMonth, int endDateDay, int endDateYear,
 				int endDateHour, int endDateMinute, boolean neverEnd,
 				boolean overlapAllowed, int startDateMonth, int startDateDay,
-				int startDateYear, int startDateHour, int startDateMinute)
+				int startDateYear, int startDateHour, int startDateMinute,
+				com.liferay.dispatch.executor.DispatchTaskClusterMode
+					dispatchTaskClusterMode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
 			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
 			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute);
+			startDateMinute, dispatchTaskClusterMode);
 	}
 
 	public static com.liferay.dispatch.model.DispatchTrigger

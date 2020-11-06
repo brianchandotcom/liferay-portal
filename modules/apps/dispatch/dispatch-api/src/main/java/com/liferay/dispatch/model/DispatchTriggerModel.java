@@ -273,27 +273,6 @@ public interface DispatchTriggerModel
 	public void setOverlapAllowed(boolean overlapAllowed);
 
 	/**
-	 * Returns the single node execution of this dispatch trigger.
-	 *
-	 * @return the single node execution of this dispatch trigger
-	 */
-	public boolean getSingleNodeExecution();
-
-	/**
-	 * Returns <code>true</code> if this dispatch trigger is single node execution.
-	 *
-	 * @return <code>true</code> if this dispatch trigger is single node execution; <code>false</code> otherwise
-	 */
-	public boolean isSingleNodeExecution();
-
-	/**
-	 * Sets whether this dispatch trigger is single node execution.
-	 *
-	 * @param singleNodeExecution the single node execution of this dispatch trigger
-	 */
-	public void setSingleNodeExecution(boolean singleNodeExecution);
-
-	/**
 	 * Returns the start date of this dispatch trigger.
 	 *
 	 * @return the start date of this dispatch trigger
@@ -327,6 +306,20 @@ public interface DispatchTriggerModel
 	 * @param system the system of this dispatch trigger
 	 */
 	public void setSystem(boolean system);
+
+	/**
+	 * Returns the task cluster mode of this dispatch trigger.
+	 *
+	 * @return the task cluster mode of this dispatch trigger
+	 */
+	public int getTaskClusterMode();
+
+	/**
+	 * Sets the task cluster mode of this dispatch trigger.
+	 *
+	 * @param taskClusterMode the task cluster mode of this dispatch trigger
+	 */
+	public void setTaskClusterMode(int taskClusterMode);
 
 	/**
 	 * Returns the task executor type of this dispatch trigger.

@@ -217,7 +217,9 @@ public class DispatchTriggerServiceHttp {
 				int endDateDay, int endDateYear, int endDateHour,
 				int endDateMinute, boolean neverEnd, boolean overlapAllowed,
 				int startDateMonth, int startDateDay, int startDateYear,
-				int startDateHour, int startDateMinute)
+				int startDateHour, int startDateMinute,
+				com.liferay.dispatch.executor.DispatchTaskClusterMode
+					dispatchTaskClusterMode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -229,7 +231,8 @@ public class DispatchTriggerServiceHttp {
 				methodKey, dispatchTriggerId, active, cronExpression,
 				endDateMonth, endDateDay, endDateYear, endDateHour,
 				endDateMinute, neverEnd, overlapAllowed, startDateMonth,
-				startDateDay, startDateYear, startDateHour, startDateMinute);
+				startDateDay, startDateYear, startDateHour, startDateMinute,
+				dispatchTaskClusterMode);
 
 			Object returnObj = null;
 
@@ -322,7 +325,8 @@ public class DispatchTriggerServiceHttp {
 		new Class[] {
 			long.class, boolean.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, boolean.class,
-			int.class, int.class, int.class, int.class, int.class
+			int.class, int.class, int.class, int.class, int.class,
+			com.liferay.dispatch.executor.DispatchTaskClusterMode.class
 		};
 	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
 		new Class[] {

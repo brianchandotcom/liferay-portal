@@ -79,8 +79,8 @@ public class DispatchTriggerModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
 		{"cronExpression", Types.VARCHAR}, {"endDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"overlapAllowed", Types.BOOLEAN},
-		{"singleNodeExecution", Types.BOOLEAN}, {"startDate", Types.TIMESTAMP},
-		{"system_", Types.BOOLEAN}, {"taskExecutorType", Types.VARCHAR},
+		{"startDate", Types.TIMESTAMP}, {"system_", Types.BOOLEAN},
+		{"taskClusterMode", Types.INTEGER}, {"taskExecutorType", Types.VARCHAR},
 		{"taskSettings", Types.CLOB}
 	};
 
@@ -100,15 +100,15 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("overlapAllowed", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("singleNodeExecution", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("taskClusterMode", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("taskExecutorType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("taskSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,singleNodeExecution BOOLEAN,startDate DATE null,system_ BOOLEAN,taskExecutorType VARCHAR(75) null,taskSettings TEXT null)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN,taskClusterMode INTEGER,taskExecutorType VARCHAR(75) null,taskSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 
@@ -196,9 +196,9 @@ public class DispatchTriggerModelImpl
 		model.setEndDate(soapModel.getEndDate());
 		model.setName(soapModel.getName());
 		model.setOverlapAllowed(soapModel.isOverlapAllowed());
-		model.setSingleNodeExecution(soapModel.isSingleNodeExecution());
 		model.setStartDate(soapModel.getStartDate());
 		model.setSystem(soapModel.isSystem());
+		model.setTaskClusterMode(soapModel.getTaskClusterMode());
 		model.setTaskExecutorType(soapModel.getTaskExecutorType());
 		model.setTaskSettings(soapModel.getTaskSettings());
 
@@ -415,12 +415,6 @@ public class DispatchTriggerModelImpl
 			(BiConsumer<DispatchTrigger, Boolean>)
 				DispatchTrigger::setOverlapAllowed);
 		attributeGetterFunctions.put(
-			"singleNodeExecution", DispatchTrigger::getSingleNodeExecution);
-		attributeSetterBiConsumers.put(
-			"singleNodeExecution",
-			(BiConsumer<DispatchTrigger, Boolean>)
-				DispatchTrigger::setSingleNodeExecution);
-		attributeGetterFunctions.put(
 			"startDate", DispatchTrigger::getStartDate);
 		attributeSetterBiConsumers.put(
 			"startDate",
@@ -429,6 +423,12 @@ public class DispatchTriggerModelImpl
 		attributeSetterBiConsumers.put(
 			"system",
 			(BiConsumer<DispatchTrigger, Boolean>)DispatchTrigger::setSystem);
+		attributeGetterFunctions.put(
+			"taskClusterMode", DispatchTrigger::getTaskClusterMode);
+		attributeSetterBiConsumers.put(
+			"taskClusterMode",
+			(BiConsumer<DispatchTrigger, Integer>)
+				DispatchTrigger::setTaskClusterMode);
 		attributeGetterFunctions.put(
 			"taskExecutorType", DispatchTrigger::getTaskExecutorType);
 		attributeSetterBiConsumers.put(
@@ -707,27 +707,6 @@ public class DispatchTriggerModelImpl
 
 	@JSON
 	@Override
-	public boolean getSingleNodeExecution() {
-		return _singleNodeExecution;
-	}
-
-	@JSON
-	@Override
-	public boolean isSingleNodeExecution() {
-		return _singleNodeExecution;
-	}
-
-	@Override
-	public void setSingleNodeExecution(boolean singleNodeExecution) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_singleNodeExecution = singleNodeExecution;
-	}
-
-	@JSON
-	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -760,6 +739,21 @@ public class DispatchTriggerModelImpl
 		}
 
 		_system = system;
+	}
+
+	@JSON
+	@Override
+	public int getTaskClusterMode() {
+		return _taskClusterMode;
+	}
+
+	@Override
+	public void setTaskClusterMode(int taskClusterMode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_taskClusterMode = taskClusterMode;
 	}
 
 	@JSON
@@ -877,9 +871,9 @@ public class DispatchTriggerModelImpl
 		dispatchTriggerImpl.setEndDate(getEndDate());
 		dispatchTriggerImpl.setName(getName());
 		dispatchTriggerImpl.setOverlapAllowed(isOverlapAllowed());
-		dispatchTriggerImpl.setSingleNodeExecution(isSingleNodeExecution());
 		dispatchTriggerImpl.setStartDate(getStartDate());
 		dispatchTriggerImpl.setSystem(isSystem());
+		dispatchTriggerImpl.setTaskClusterMode(getTaskClusterMode());
 		dispatchTriggerImpl.setTaskExecutorType(getTaskExecutorType());
 		dispatchTriggerImpl.setTaskSettings(getTaskSettings());
 
@@ -1026,8 +1020,6 @@ public class DispatchTriggerModelImpl
 
 		dispatchTriggerCacheModel.overlapAllowed = isOverlapAllowed();
 
-		dispatchTriggerCacheModel.singleNodeExecution = isSingleNodeExecution();
-
 		Date startDate = getStartDate();
 
 		if (startDate != null) {
@@ -1038,6 +1030,8 @@ public class DispatchTriggerModelImpl
 		}
 
 		dispatchTriggerCacheModel.system = isSystem();
+
+		dispatchTriggerCacheModel.taskClusterMode = getTaskClusterMode();
 
 		dispatchTriggerCacheModel.taskExecutorType = getTaskExecutorType();
 
@@ -1141,9 +1135,9 @@ public class DispatchTriggerModelImpl
 	private Date _endDate;
 	private String _name;
 	private boolean _overlapAllowed;
-	private boolean _singleNodeExecution;
 	private Date _startDate;
 	private boolean _system;
+	private int _taskClusterMode;
 	private String _taskExecutorType;
 	private String _taskSettings;
 
@@ -1188,9 +1182,9 @@ public class DispatchTriggerModelImpl
 		_columnOriginalValues.put("endDate", _endDate);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("overlapAllowed", _overlapAllowed);
-		_columnOriginalValues.put("singleNodeExecution", _singleNodeExecution);
 		_columnOriginalValues.put("startDate", _startDate);
 		_columnOriginalValues.put("system_", _system);
+		_columnOriginalValues.put("taskClusterMode", _taskClusterMode);
 		_columnOriginalValues.put("taskExecutorType", _taskExecutorType);
 		_columnOriginalValues.put("taskSettings", _taskSettings);
 	}
@@ -1241,11 +1235,11 @@ public class DispatchTriggerModelImpl
 
 		columnBitmasks.put("overlapAllowed", 2048L);
 
-		columnBitmasks.put("singleNodeExecution", 4096L);
+		columnBitmasks.put("startDate", 4096L);
 
-		columnBitmasks.put("startDate", 8192L);
+		columnBitmasks.put("system_", 8192L);
 
-		columnBitmasks.put("system_", 16384L);
+		columnBitmasks.put("taskClusterMode", 16384L);
 
 		columnBitmasks.put("taskExecutorType", 32768L);
 

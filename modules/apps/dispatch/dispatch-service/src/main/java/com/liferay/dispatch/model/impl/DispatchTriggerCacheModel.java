@@ -104,12 +104,12 @@ public class DispatchTriggerCacheModel
 		sb.append(name);
 		sb.append(", overlapAllowed=");
 		sb.append(overlapAllowed);
-		sb.append(", singleNodeExecution=");
-		sb.append(singleNodeExecution);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
+		sb.append(", taskClusterMode=");
+		sb.append(taskClusterMode);
 		sb.append(", taskExecutorType=");
 		sb.append(taskExecutorType);
 		sb.append(", taskSettings=");
@@ -173,7 +173,6 @@ public class DispatchTriggerCacheModel
 		}
 
 		dispatchTriggerImpl.setOverlapAllowed(overlapAllowed);
-		dispatchTriggerImpl.setSingleNodeExecution(singleNodeExecution);
 
 		if (startDate == Long.MIN_VALUE) {
 			dispatchTriggerImpl.setStartDate(null);
@@ -183,6 +182,7 @@ public class DispatchTriggerCacheModel
 		}
 
 		dispatchTriggerImpl.setSystem(system);
+		dispatchTriggerImpl.setTaskClusterMode(taskClusterMode);
 
 		if (taskExecutorType == null) {
 			dispatchTriggerImpl.setTaskExecutorType("");
@@ -224,11 +224,11 @@ public class DispatchTriggerCacheModel
 		name = objectInput.readUTF();
 
 		overlapAllowed = objectInput.readBoolean();
-
-		singleNodeExecution = objectInput.readBoolean();
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
+
+		taskClusterMode = objectInput.readInt();
 		taskExecutorType = objectInput.readUTF();
 		taskSettings = (String)objectInput.readObject();
 	}
@@ -272,11 +272,11 @@ public class DispatchTriggerCacheModel
 		}
 
 		objectOutput.writeBoolean(overlapAllowed);
-
-		objectOutput.writeBoolean(singleNodeExecution);
 		objectOutput.writeLong(startDate);
 
 		objectOutput.writeBoolean(system);
+
+		objectOutput.writeInt(taskClusterMode);
 
 		if (taskExecutorType == null) {
 			objectOutput.writeUTF("");
@@ -305,9 +305,9 @@ public class DispatchTriggerCacheModel
 	public long endDate;
 	public String name;
 	public boolean overlapAllowed;
-	public boolean singleNodeExecution;
 	public long startDate;
 	public boolean system;
+	public int taskClusterMode;
 	public String taskExecutorType;
 	public String taskSettings;
 

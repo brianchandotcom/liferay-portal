@@ -27,9 +27,9 @@ create table DispatchTrigger (
 	endDate DATE null,
 	name VARCHAR(75) null,
 	overlapAllowed BOOLEAN,
-	singleNodeExecution BOOLEAN,
 	startDate DATE null,
 	system_ BOOLEAN,
+	taskClusterMode INTEGER,
 	taskExecutorType VARCHAR(75) null,
 	taskSettings TEXT null
 );

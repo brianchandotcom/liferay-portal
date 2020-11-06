@@ -285,10 +285,15 @@ definition {
 		}
 
 		if (isSet(webContentRichText)) {
-			Type(
+			SelectFrame.selectFrameNoLoading(
 				key_fieldName = "${textBoxFieldName}",
-				locator1 = "DDMField#RICH_TEXT",
+				locator1 = "DDMField#RICH_TEXT");
+
+			Type(
+				locator1 = "CKEditor#BODY",
 				value1 = "${webContentRichText}");
+			
+			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(templateName)) {

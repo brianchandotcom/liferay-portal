@@ -12,11 +12,12 @@
  * details.
  */
 
-import {AOP} from 'frontend-js-web';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {delegate, on} from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
+
+import {LocaleChangedHandler} from './LocaleChangedHandler.es';
 
 const ACTION_INPUT_NAME = 'javax-portlet-action';
 
@@ -67,15 +68,11 @@ class JournalPortlet extends PortletBase {
 			);
 		}
 
-		this._defaultLocaleChangedHandler = Liferay.after(
-			'inputLocalized:defaultLocaleChanged',
-			this._onDefaultLocaleChange.bind(this)
-		);
-
-		this._localeChangedHandler = Liferay.after(
-			'inputLocalized:localeChanged',
-			this._onLocaleChange.bind(this)
-		);
+		this._localeChangedHandler = new LocaleChangedHandler({
+			contentTitle: this.contentTitle,
+			defaultLanguageId: this.defaultLanguageId,
+			namespace: this.namespace,
+		});
 
 		this._selectedLanguageId = this.defaultLanguageId;
 
@@ -94,8 +91,7 @@ class JournalPortlet extends PortletBase {
 	 */
 	detached() {
 		this._eventHandler.removeAllListeners();
-		this._defaultLocaleChangedHandler.detach();
-		this._localeChangedHandler.detach();
+		this._localeChangedHandler.detachLocaleChangedEventListener();
 	}
 
 	/**
@@ -139,42 +135,6 @@ class JournalPortlet extends PortletBase {
 		const actionName = actionInput.value;
 
 		this._saveArticle(actionName);
-	}
-
-	/**
-	 * Updates defaultLocale
-	 * @param {Event} event
-	 */
-	_onDefaultLocaleChange(event) {
-		if (event.item) {
-			this.defaultLanguageId = event.item.getAttribute('data-value');
-		}
-	}
-
-	/**
-	 * Updates description and title values on locale changed
-	 * @param {Event} event
-	 */
-	_onLocaleChange(event) {
-		const selectedLanguageId = event.item.getAttribute('data-value');
-
-		this._selectedLanguageId = selectedLanguageId;
-
-		if (selectedLanguageId) {
-			this._updateLocalizableInput(
-				'descriptionMapAsXML',
-				this.defaultLanguageId,
-				selectedLanguageId
-			);
-
-			this._updateLocalizableInput(
-				'titleMapAsXML',
-				this.defaultLanguageId,
-				selectedLanguageId
-			);
-
-			this._updateLanguageIdInput(selectedLanguageId);
-		}
 	}
 
 	/**
@@ -295,62 +255,11 @@ class JournalPortlet extends PortletBase {
 			this._setActionName(actionName);
 		}
 	}
-
-	/**
-	 * @private
-	 */
-	_updateLanguageIdInput(selectedLanguageId) {
-		const languageIdInput = document.getElementById(this.ns('languageId'));
-
-		languageIdInput.value = selectedLanguageId;
-	}
-
-	/**
-	 * Updates the localized input with the default language's translation
-	 * when there is not translation for the selected language
-	 * @param {string} name
-	 * @param {string} defaultLanguageId
-	 * @param {string} selectedLanguageId
-	 * @private
-	 */
-	_updateLocalizableInput(name, defaultLanguageId, selectedLanguageId) {
-		const inputComponent = Liferay.component(this.ns(name));
-
-		if (inputComponent) {
-			const inputSelectedValue = inputComponent.getValue(
-				selectedLanguageId
-			);
-
-			if (inputSelectedValue === '') {
-				const inputDefaultValue = inputComponent.getValue(
-					defaultLanguageId
-				);
-
-				// LPS-92493
-
-				const eventHandler = AOP.before(
-					() => AOP.prevent(),
-					inputComponent,
-					'updateInputLanguage'
-				);
-
-				inputComponent.selectFlag(selectedLanguageId);
-				inputComponent.updateInput(inputDefaultValue);
-
-				// setInterval declared in ckeditor.jsp is triggering
-				// the updateInputLanguage function, so with this
-				// we guarantee that this function is not called
-
-				setTimeout(() => {
-					eventHandler.detach();
-				}, 400);
-			}
-		}
-	}
 }
 
 JournalPortlet.STATE = {
 	_selectedLanguageId: Config.internal().string(),
+	contentTitle: Config.string(),
 	defaultLanguageId: Config.string(),
 };
 

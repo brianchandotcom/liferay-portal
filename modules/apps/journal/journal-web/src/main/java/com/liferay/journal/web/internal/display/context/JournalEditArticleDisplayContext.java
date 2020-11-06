@@ -181,6 +181,8 @@ public class JournalEditArticleDisplayContext {
 
 	public Map<String, Object> getComponentContext() {
 		return HashMapBuilder.<String, Object>put(
+			"contentTitle", "titleMapAsXML"
+		).put(
 			"defaultLanguageId", getDefaultArticleLanguageId()
 		).build();
 	}

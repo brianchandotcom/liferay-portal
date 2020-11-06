@@ -2,15 +2,26 @@
 
 .ddm_template_editor__App {
 	display: flex;
+	flex-wrap: wrap-reverse;
+
+	@supports (gap: 24px) {
+		gap: 24px;
+	}
 
 	&-content {
-		flex-grow: 1;
+		flex-basis: 40ch;
+		flex-grow: 10;
 		overflow: hidden;
-		padding-left: 24px;
 	}
 
 	&-sidebar {
+		flex-basis: 30ch;
+		flex-grow: 1;
 		flex-shrink: 0;
-		width: 30ch;
+		margin-bottom: 24px;
+
+		@supports not (gap: 24px) {
+			margin-right: 24px;
+		}
 	}
 }

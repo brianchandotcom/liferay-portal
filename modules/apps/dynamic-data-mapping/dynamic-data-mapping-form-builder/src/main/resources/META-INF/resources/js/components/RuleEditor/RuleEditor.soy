@@ -158,7 +158,6 @@
 	{@param? _handleDataProviderOutputEdited: any}
 	{@param? _handleDeleteAction: any}
 	{@param? _handleDeleteCondition: any}
-	{@param? _handleEditExpression: any}
 	{@param? _handleFirstOperandFieldEdited: any}
 	{@param? _handleLogicalOperationChange: any}
 	{@param? _handleModalButtonClicked: any}
@@ -251,7 +250,6 @@
 					{param _handleDataProviderInputEdited: $_handleDataProviderInputEdited /}
 					{param _handleDataProviderOutputEdited: $_handleDataProviderOutputEdited /}
 					{param _handleDeleteAction: $_handleDeleteAction /}
-					{param _handleEditExpression: $_handleEditExpression /}
 					{param _handleTargetSelection: $_handleTargetSelection /}
 					{param actionExpression: $action.expression /}
 					{param actionInputs: $action.inputs /}
@@ -427,7 +425,6 @@
 	}
 	{@param spritemap: string}
 	{@param? _handleActionSelection: any}
-	{@param? _handleEditExpression: any}
 	{@param? _handleDataProviderInputEdited: any}
 	{@param? _handleDataProviderOutputEdited: any}
 	{@param? _handleDeleteAction: any}
@@ -543,10 +540,7 @@
 				</div>
 
 				{if $showTargetCalculator and $targetSelected}
-					{call Calculator.render}
-						{param events: [
-							'editExpression': $_handleEditExpression
-						]/}
+					{call CalculatorReactAdapter.render}
 						{param expression: $actionExpression /}
 						{param fields: $calculatorFields /}
 						{param functions: $calculatorFunctions /}

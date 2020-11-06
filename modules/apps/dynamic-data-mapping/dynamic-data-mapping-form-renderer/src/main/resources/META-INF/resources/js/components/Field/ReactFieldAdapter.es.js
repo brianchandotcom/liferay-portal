@@ -14,7 +14,7 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import Soy from 'metal-soy';
-import React from 'react';
+import React, {forwardRef} from 'react';
 
 import {PageProvider} from '../../hooks/usePage.es';
 import {useFieldTypesResource} from '../../hooks/useResource.es';
@@ -30,7 +30,7 @@ import templates from './ReactFieldAdapter.soy';
  * the `usePage` and we need to bring the `usePage` here since this component
  * will not have a React context above it.
  */
-export const ReactFieldAdapter = ({fieldType, instance, ...field}) => {
+export const ReactFieldAdapter = forwardRef(({fieldType, instance, ...field}) => {
 	const {resource: fieldTypes} = useFieldTypesResource();
 
 	if (!fieldType || fieldType === '') {
@@ -62,7 +62,7 @@ export const ReactFieldAdapter = ({fieldType, instance, ...field}) => {
 			</ClayIconSpriteContext.Provider>
 		</PageProvider>
 	);
-};
+});
 
 const ReactComponentAdapter = getConnectedReactComponentAdapter(
 	ReactFieldAdapter

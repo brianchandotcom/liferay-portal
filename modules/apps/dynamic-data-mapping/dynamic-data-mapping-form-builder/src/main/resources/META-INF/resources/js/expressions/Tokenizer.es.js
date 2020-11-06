@@ -20,7 +20,7 @@ const OPERATORS = ['*', '/', '+', '-'];
  * Tokenizer.
  * Transforms an expression into tokens and token into an expression
  */
-class Tokenizer {
+export class Tokenizer {
 	static stringifyTokens(tokens) {
 		return tokens.reduce((expression, token) => {
 			let {value} = token;

@@ -25,7 +25,7 @@
 .liferay-ddm-form-builder-calculator {
 	flex-direction: column;
 
-	.calculator-button-area li {
+	.calculator-button-area button {
 		&.disabled {
 			pointer-events: none;
 		}

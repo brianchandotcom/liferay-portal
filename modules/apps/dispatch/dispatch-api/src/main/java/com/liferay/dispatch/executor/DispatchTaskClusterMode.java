@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.scheduler.StorageType;
  */
 public enum DispatchTaskClusterMode {
 
-	ALL_NODES(1, StorageType.MEMORY), NOT_APPLICABLE(0, StorageType.PERSISTED),
-	SINGLE_NODE(2, StorageType.PERSISTED);
+	ALL_NODES("all-nodes", 1, StorageType.MEMORY),
+	NOT_APPLICABLE("not-applicable", 0, StorageType.PERSISTED),
+	SINGLE_NODE("single-node", 2, StorageType.PERSISTED);
 
 	public static DispatchTaskClusterMode valueOf(int mode) {
 		for (DispatchTaskClusterMode dispatchTaskClusterMode : values()) {
@@ -34,6 +35,10 @@ public enum DispatchTaskClusterMode {
 		throw new IllegalArgumentException("Illegal task cluster mode " + mode);
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
 	public int getMode() {
 		return _mode;
 	}
@@ -42,11 +47,15 @@ public enum DispatchTaskClusterMode {
 		return _storageType;
 	}
 
-	private DispatchTaskClusterMode(int mode, StorageType storageType) {
+	private DispatchTaskClusterMode(
+		String label, int mode, StorageType storageType) {
+
+		_label = label;
 		_mode = mode;
 		_storageType = storageType;
 	}
 
+	private final String _label;
 	private final int _mode;
 	private final StorageType _storageType;
 

@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.form.navigator.internal.servlet.taglib.ui.Wra
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
-import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -35,15 +34,9 @@ public class FormNavigatorCategoryServiceTrackerCustomizer
 		 FormNavigatorCategory> {
 
 	public FormNavigatorCategoryServiceTrackerCustomizer(
-		BundleContext bundleContext,
-		Map
-			<ServiceReference
-				<com.liferay.portal.kernel.servlet.taglib.ui.
-					FormNavigatorCategory>,
-			 ServiceRegistration<FormNavigatorCategory>> serviceRegistrations) {
+		BundleContext bundleContext) {
 
 		_bundleContext = bundleContext;
-		_serviceRegistrations = serviceRegistrations;
 	}
 
 	@Override
@@ -90,16 +83,10 @@ public class FormNavigatorCategoryServiceTrackerCustomizer
 				serviceReference,
 		FormNavigatorCategory formNavigatorCategory) {
 
-		ServiceRegistration<FormNavigatorCategory> serviceRegistration =
-			_serviceRegistrations.remove(serviceReference);
 
 		serviceRegistration.unregister();
 	}
 
 	private final BundleContext _bundleContext;
-	private final Map
-		<ServiceReference
-			<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory>,
-		 ServiceRegistration<FormNavigatorCategory>> _serviceRegistrations;
 
 }

@@ -405,7 +405,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldName = "Text");
+				fieldType = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}

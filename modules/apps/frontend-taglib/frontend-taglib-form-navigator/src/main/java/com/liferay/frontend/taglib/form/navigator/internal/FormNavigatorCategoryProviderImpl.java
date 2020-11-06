@@ -125,6 +125,8 @@ public class FormNavigatorCategoryProviderImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
+
+		_formNavigatorCategories.close();
 	}
 
 	private ServiceTrackerMap<String, List<FormNavigatorCategory>>

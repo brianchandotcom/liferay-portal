@@ -85,6 +85,24 @@ else {
 
 							themeContainer.setContent(responseData);
 
+							var newCheckboxNames = [];
+							var checkboxInputs = themeContainer.all(
+								'input[type=checkbox]'
+							);
+
+							checkboxInputs.each(function (item, index) {
+								var checkboxName = item.attr('name');
+								newCheckboxNames.push(
+									checkboxName.substring(
+										'<portlet:namespace />'.length
+									)
+								);
+							});
+
+							document.querySelector(
+								'#<portlet:namespace />checkboxNames'
+							).value = newCheckboxNames.join(',');
+
 							selThemeId = selectedItem;
 						});
 				}

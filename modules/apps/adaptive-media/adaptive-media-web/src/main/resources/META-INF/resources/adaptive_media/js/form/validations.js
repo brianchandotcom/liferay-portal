@@ -33,7 +33,7 @@ const validate = (fields, values) => {
 				errors[inputName] = error;
 			}
 
-			return !!error;
+			return error;
 		});
 	});
 

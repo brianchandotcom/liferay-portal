@@ -75,6 +75,16 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class FinderCacheImpl
 	implements CacheRegistryItem, FinderCache, PortalCacheManagerListener {
 
+	public void clearByEntityCache(String className) {
+		clearLocalCache();
+
+		_clearCache(className);
+		_clearCache(_getCacheNameWithPagination(className));
+		_clearCache(_getCacheNameWithoutPagination(className));
+
+		_clearDSLQueryCache(className);
+	}
+
 	@Override
 	public void clearCache() {
 		clearLocalCache();
@@ -86,15 +96,7 @@ public class FinderCacheImpl
 
 	@Override
 	public void clearCache(Class<?> clazz) {
-		clearLocalCache();
-
-		String className = clazz.getName();
-
-		_clearCache(className);
-		_clearCache(_getCacheNameWithPagination(className));
-		_clearCache(_getCacheNameWithoutPagination(className));
-
-		_clearDSLQueryCache(className);
+		clearByEntityCache(clazz.getName());
 	}
 
 	/**
@@ -341,20 +343,18 @@ public class FinderCacheImpl
 		putResult(finderPath, args, result);
 	}
 
-	public void removeByEntityCache(Class<?> clazz, BaseModel<?> baseModel) {
+	public void removeByEntityCache(String className, BaseModel<?> baseModel) {
 		clearLocalCache();
 
-		String cacheName = clazz.getName();
+		_clearCache(_getCacheNameWithPagination(className));
+		_clearCache(_getCacheNameWithoutPagination(className));
 
-		_clearCache(_getCacheNameWithPagination(cacheName));
-		_clearCache(_getCacheNameWithoutPagination(cacheName));
-
-		_clearDSLQueryCache(cacheName);
+		_clearDSLQueryCache(className);
 
 		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
-			cacheName);
+			className);
 
-		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
+		for (FinderPath finderPath : _getFinderPaths(className)) {
 			removeResult(
 				finderPath,
 				argumentsResolver.getArguments(
@@ -401,24 +401,22 @@ public class FinderCacheImpl
 		_removeResult(finderPath, args);
 	}
 
-	public void updateByEntityCache(Class<?> clazz, BaseModel<?> baseModel) {
+	public void updateByEntityCache(String className, BaseModel<?> baseModel) {
 		if (!_valueObjectFinderCacheEnabled) {
 			return;
 		}
 
 		clearLocalCache();
 
-		String cacheName = clazz.getName();
+		_clearCache(_getCacheNameWithPagination(className));
 
-		_clearCache(_getCacheNameWithPagination(cacheName));
-
-		_clearDSLQueryCache(cacheName);
+		_clearDSLQueryCache(className);
 
 		ArgumentsResolver argumentsResolver = _argumentsResolvers.get(
-			cacheName);
+			className);
 
 		for (FinderPath finderPath :
-				_getFinderPaths(_getCacheNameWithoutPagination(cacheName))) {
+				_getFinderPaths(_getCacheNameWithoutPagination(className))) {
 
 			if (baseModel.isNew()) {
 				_removeResult(
@@ -438,7 +436,7 @@ public class FinderCacheImpl
 			}
 		}
 
-		for (FinderPath finderPath : _getFinderPaths(cacheName)) {
+		for (FinderPath finderPath : _getFinderPaths(className)) {
 			_removeResult(
 				finderPath,
 				argumentsResolver.getArguments(

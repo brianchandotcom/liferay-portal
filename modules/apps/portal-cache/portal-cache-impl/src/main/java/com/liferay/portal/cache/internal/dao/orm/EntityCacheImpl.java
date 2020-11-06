@@ -72,7 +72,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearCache(Class<?> clazz) {
-		_finderCacheImpl.clearCache(clazz);
+		_finderCacheImpl.clearByEntityCache(clazz.getName());
 
 		clearLocalCache();
 
@@ -436,7 +436,7 @@ public class EntityCacheImpl
 		}
 
 		if (!quiet && updateFinderCache) {
-			_finderCacheImpl.updateByEntityCache(clazz, baseModel);
+			_finderCacheImpl.updateByEntityCache(clazz.getName(), baseModel);
 		}
 
 		CacheModel<?> result = baseModel.toCacheModel();
@@ -470,7 +470,7 @@ public class EntityCacheImpl
 		}
 
 		if (baseModel != null) {
-			_finderCacheImpl.removeByEntityCache(clazz, baseModel);
+			_finderCacheImpl.removeByEntityCache(clazz.getName(), baseModel);
 		}
 
 		if (_isLocalCacheEnabled()) {

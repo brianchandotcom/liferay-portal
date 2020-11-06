@@ -146,8 +146,9 @@ public interface JournalServiceConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
-		description = "single-asset-publish-includes-version-history-help",
-		name = "single-asset-publish-includes-version-history", required = false
+		description = "single-asset-publish-process-includes-version-history-help",
+		name = "single-asset-publish-process-includes-version-history",
+		required = false
 	)
 	public boolean singleAssetPublishIncludeVersionHistory();
 

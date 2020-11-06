@@ -190,6 +190,10 @@ public class ServiceTrackerFactory {
 							serviceReference.getProperty(propertyName));
 					}
 
+					properties.put(
+						"original.service.id",
+						serviceReference.getProperty("service.id"));
+
 					return properties;
 				}
 

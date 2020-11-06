@@ -285,7 +285,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									buttonClasses += action.getAdditionalClasses();
 								}
 								else {
-									buttonClasses += "btn-default";
+									buttonClasses += "btn-secondary";
 								}
 
 								boolean submitCheck = Validator.isNull(action.getId());

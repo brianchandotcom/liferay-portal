@@ -52,7 +52,6 @@ public class MBMessageAssetRendererFactory
 	public static final String TYPE = "message";
 
 	public MBMessageAssetRendererFactory() {
-		setCategorizable(false);
 		setLinkable(true);
 		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
 		setSearchable(true);

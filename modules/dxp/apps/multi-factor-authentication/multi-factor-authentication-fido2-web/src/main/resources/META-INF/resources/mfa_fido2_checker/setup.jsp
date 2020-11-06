@@ -77,7 +77,6 @@ List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntry
 			<portlet:actionURL name="/my_account/setup_mfa/fido2/remove_authenticator" var="removeAuthenticatorURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="authenticatorId" value="<%= String.valueOf(authenticator.getPrimaryKey()) %>" />
-				<portlet:param name="setupMFACheckerServiceId" value="<%= String.valueOf(request.getAttribute(MFAFIDO2WebKeys.SETUP_MFA_CHECKER_SERVICE_ID)) %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete

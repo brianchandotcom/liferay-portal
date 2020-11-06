@@ -112,6 +112,13 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	</div>
 </aui:form>
 
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
+	context="<%= journalEditDDMStructuresDisplayContext.getComponentContext() %>"
+	module="js/LocaleChangedHandler.es"
+	servletContext="<%= application %>"
+/>
+
 <aui:script>
 	function <portlet:namespace />getInputLocalizedValues(field) {
 		var inputLocalized = Liferay.component('<portlet:namespace />' + field);

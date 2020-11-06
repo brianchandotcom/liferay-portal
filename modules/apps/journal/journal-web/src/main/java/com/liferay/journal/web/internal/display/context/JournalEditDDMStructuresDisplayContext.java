@@ -139,6 +139,14 @@ public class JournalEditDDMStructuresDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public Map<String, Object> getComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"contentTitle", "name"
+		).put(
+			"defaultLanguageId", getDefaultLanguageId()
+		).build();
+	}
+
 	public DDMForm getDDMForm() {
 		try {
 			return DDMUtil.getDDMForm(getScript());
@@ -169,6 +177,16 @@ public class JournalEditDDMStructuresDisplayContext {
 			_httpServletRequest, "ddmStructureId");
 
 		return _ddmStructureId;
+	}
+
+	public String getDefaultLanguageId() {
+		DDMForm ddmForm = getDDMForm();
+
+		if (ddmForm == null) {
+			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		}
+
+		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 	}
 
 	public String getFields() throws PortalException {

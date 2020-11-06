@@ -206,6 +206,10 @@ public class PortletPreferencesFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {

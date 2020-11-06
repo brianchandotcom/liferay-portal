@@ -1791,18 +1791,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/isoparser.jar</file-name>
-				<version>1.9.41.2</version>
-				<project-name>ISO Parser</project-name>
-				<project-url>https://github.com/tballison/mp4parser</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jabsorb.jar</file-name>
 				<version>1.3.2.LIFERAY-PATCHED-1</version>
 				<project-name>jabsorb</project-name>
@@ -2527,6 +2515,18 @@
 					<license>
 						<license-name>LGPL 3.0</license-name>
 						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/mp4parser.jar</file-name>
+				<version>1.9.41.2.LIFERAY-PATCHED-1</version>
+				<project-name>ISO Parser</project-name>
+				<project-url>https://github.com/tballison/mp4parser</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

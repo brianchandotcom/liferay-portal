@@ -3239,6 +3239,26 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
+	macro viewWebContentWithPredefinedValueInWebContentField {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content",
+			site = "${siteName}");
+
+		for (var webContentTitle : list "Web Content Title,Web Content With Predefined Value") {
+			WebContentAdmin.viewEntryWorkflowStatus(
+				entry = "${webContentTitle}",
+				workflowStatus = "Approved");
+		}
+
+		WebContent.viewWithStructureCP(
+			webContentTitle = "Web Content With Predefined Value",
+			webContentWebContent = "Web Content Title",
+			webContentWebContentFieldName = "WebContent");
+	}
+
 	macro viewWebContextsCORS {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

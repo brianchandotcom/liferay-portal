@@ -33,10 +33,6 @@
 	}
 }
 
-.commerce-header-title {
-	max-width: 300px;
-}
-
 .commerce-header {
 	position: sticky;
 	top: 0;
@@ -50,18 +46,16 @@
 		}
 	}
 
-	.separator-left {
-		margin-left: 36px;
-		padding-left: 16px;
+	.header-details {
+		max-width: 300px;
 
-		&:before {
-			background-color: $border-color;
-			content: '';
-			height: 24px;
-			left: 0;
-			position: absolute;
-			top: 12px;
-			width: 1px;
+		@media screen and (max-width: 576px) {
+			flex-grow: 1;
+			width: 0;
+		}
+
+		@media screen and (min-width: 576px) {
+			min-width: 100px;
 		}
 	}
 }

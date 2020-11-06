@@ -23,7 +23,17 @@ DLFileEntryType fileEntryType = (DLFileEntryType)request.getAttribute(WebKeys.DO
 
 long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryTypeId");
 
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
 long dataDefinitionId = BeanParamUtil.getLong(fileEntryType, request, "dataDefinitionId");
+
+if (dataDefinitionId != 0) {
+	com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(dataDefinitionId);
+
+	defaultLanguageId = ddmStructure.getDefaultLanguageId();
+}
+
+String languageId = ParamUtil.getString(request, "languageId", defaultLanguageId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -42,6 +52,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<aui:input name="dataDefinitionId" type="hidden" value="<%= dataDefinitionId %>" />
 	<aui:input name="dataDefinition" type="hidden" />
 	<aui:input name="dataLayout" type="hidden" />
+	<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
 	<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
@@ -92,6 +103,19 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 		</clay:container-fluid>
 	</div>
 </aui:form>
+
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"contentTitle", "name"
+		).put(
+			"defaultLanguageId", defaultLanguageId
+		).build()
+	%>'
+	module="document_library/js/LocaleChangedHandler.es"
+	servletContext="<%= application %>"
+/>
 
 <aui:script>
 	function <portlet:namespace />getInputLocalizedValues(field) {

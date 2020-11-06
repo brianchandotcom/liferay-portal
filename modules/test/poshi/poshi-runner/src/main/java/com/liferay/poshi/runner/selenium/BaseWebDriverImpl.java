@@ -89,6 +89,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
@@ -995,8 +996,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		try {
 			object1 = getWebElement(argument1);
 		}
-		catch (ElementNotFoundPoshiRunnerException
-					elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException | InvalidSelectorException
+					exception) {
 
 			object1 = argument1;
 		}
@@ -1004,8 +1005,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		try {
 			object2 = getWebElement(argument2);
 		}
-		catch (ElementNotFoundPoshiRunnerException
-					elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException | InvalidSelectorException
+					exception) {
 
 			object2 = argument2;
 		}
@@ -1274,8 +1275,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		try {
 			object1 = getWebElement(argument1);
 		}
-		catch (ElementNotFoundPoshiRunnerException
-					elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException | InvalidSelectorException
+					exception) {
 
 			object1 = argument1;
 		}
@@ -1283,8 +1284,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		try {
 			object2 = getWebElement(argument2);
 		}
-		catch (ElementNotFoundPoshiRunnerException
-					elementNotFoundPoshiRunnerException) {
+		catch (ElementNotFoundPoshiRunnerException | InvalidSelectorException
+					exception) {
 
 			object2 = argument2;
 		}
@@ -3844,8 +3845,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				try {
 					object = getWebElement(argument);
 				}
-				catch (ElementNotFoundPoshiRunnerException
-							elementNotFoundPoshiRunnerException) {
+				catch (ElementNotFoundPoshiRunnerException |
+					   InvalidSelectorException exception) {
 
 					object = argument;
 				}

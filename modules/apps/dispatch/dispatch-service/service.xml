@@ -64,7 +64,6 @@
 		<column name="endDate" type="Date" />
 		<column name="name" type="String" />
 		<column name="overlapAllowed" type="boolean" />
-		<column name="singleNodeExecution" type="boolean" />
 		<column name="startDate" type="Date" />
 		<column name="system" type="boolean" />
 		<column name="taskClusterMode" type="int" />

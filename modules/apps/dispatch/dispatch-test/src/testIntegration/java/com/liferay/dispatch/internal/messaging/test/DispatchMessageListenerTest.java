@@ -156,7 +156,7 @@ public class DispatchMessageListenerTest {
 			0, 0, 0, 0, true, overlapAllowed, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
-			DispatchTaskClusterMode.DISABLED);
+			DispatchTaskClusterMode.NOT_APPLICABLE);
 
 		_executeAndWaitFor(
 			TestDispatchTaskExecutor.SLEEP_MILLIS + 1000,

@@ -164,11 +164,6 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
-			public boolean getSingleNodeExecution() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
 			public Date getStartDate() {
 				throw new UnsupportedOperationException();
 			}
@@ -245,11 +240,6 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public boolean isOverlapAllowed() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public boolean isSingleNodeExecution() {
 				throw new UnsupportedOperationException();
 			}
 
@@ -359,11 +349,6 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public void setSingleNodeExecution(boolean singleNodeExecution) {
 				throw new UnsupportedOperationException();
 			}
 

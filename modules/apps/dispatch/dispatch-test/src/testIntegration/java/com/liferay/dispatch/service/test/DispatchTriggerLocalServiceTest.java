@@ -162,7 +162,7 @@ public class DispatchTriggerLocalServiceTest {
 			expectedDispatchTrigger, 1);
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
-			DispatchTaskClusterMode.DISABLED;
+			DispatchTaskClusterMode.NOT_APPLICABLE;
 
 		try {
 			dispatchTrigger =

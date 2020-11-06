@@ -31,6 +31,30 @@ import {alphanumeric, required, validate} from './form/validations';
 
 const scrollToTop = () => window.scrollTo({behavior: 'smooth', top: 0});
 
+const VALID_INPUT_KEYS = new Set([
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'ArrowUp',
+	'ArrowRight',
+	'ArrowDown',
+	'ArrowLeft',
+	'Backspace',
+	'Up',
+	'Right',
+	'Down',
+	'Left',
+	'Enter',
+	'Tab',
+]);
+
 const EditAdaptiveMedia = ({
 	actionUrl,
 	amImageConfigurationEntry,
@@ -159,30 +183,6 @@ const EditAdaptiveMedia = ({
 	};
 
 	const handleKeydownNumbersOnly = (event) => {
-		const VALID_INPUT_KEYS = new Set([
-			'0',
-			'1',
-			'2',
-			'3',
-			'4',
-			'5',
-			'6',
-			'7',
-			'8',
-			'9',
-			'ArrowUp',
-			'ArrowRight',
-			'ArrowDown',
-			'ArrowLeft',
-			'Backspace',
-			'Up',
-			'Right',
-			'Down',
-			'Left',
-			'Enter',
-			'Tab',
-		]);
-
 		if (!VALID_INPUT_KEYS.has(event.key)) {
 			event.preventDefault();
 		}

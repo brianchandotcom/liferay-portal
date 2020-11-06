@@ -130,7 +130,7 @@ public class FormNavigatorCategoryProviderImpl
 	private ServiceTrackerMap<String, List<FormNavigatorCategory>>
 		_formNavigatorCategories;
 	private ServiceTracker
-		<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory,
-		 FormNavigatorCategory> _serviceTracker;
+		<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory, ?>
+			_serviceTracker;
 
 }

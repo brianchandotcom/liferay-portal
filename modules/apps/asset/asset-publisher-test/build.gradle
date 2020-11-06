@@ -13,7 +13,7 @@ dependencies {
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
-	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
+	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:petra:petra-lang")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":core:registry-api")

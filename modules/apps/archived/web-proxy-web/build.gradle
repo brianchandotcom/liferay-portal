@@ -15,7 +15,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

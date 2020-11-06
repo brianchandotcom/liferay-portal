@@ -7,7 +7,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
-	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

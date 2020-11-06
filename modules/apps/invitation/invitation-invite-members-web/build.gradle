@@ -18,7 +18,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:invitation:invitation-invite-members-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
-	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

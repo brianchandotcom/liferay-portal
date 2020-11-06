@@ -3,7 +3,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
+	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":core:registry-api")

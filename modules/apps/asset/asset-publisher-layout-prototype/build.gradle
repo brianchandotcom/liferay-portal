@@ -7,5 +7,5 @@ dependencies {
 	compileOnly project(":apps:asset:asset-publisher-api")
 	compileOnly project(":apps:asset:asset-tags-navigation-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 }

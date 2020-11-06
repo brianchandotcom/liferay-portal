@@ -12,7 +12,7 @@ dependencies {
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
-	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

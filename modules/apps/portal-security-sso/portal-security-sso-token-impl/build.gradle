@@ -8,8 +8,8 @@ dependencies {
 	compileOnly project(":apps:portal-configuration:portal-configuration-upgrade-api")
 	compileOnly project(":apps:portal-security-sso:portal-security-sso-token-api")
 	compileOnly project(":apps:portal-security:portal-security-export-import-api")
-	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 }

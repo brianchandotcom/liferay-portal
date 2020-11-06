@@ -13,8 +13,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:marketplace:marketplace-api");
 	compileOnly project(":apps:portal:portal-aop-api")
-	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

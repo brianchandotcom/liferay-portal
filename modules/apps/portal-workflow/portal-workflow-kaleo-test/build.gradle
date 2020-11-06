@@ -13,7 +13,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	testIntegrationCompile project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	testIntegrationCompile project(":apps:portal-workflow:portal-workflow-kaleo-runtime-api")
-	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
+	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":core:registry-api")

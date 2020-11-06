@@ -82,7 +82,11 @@ definition {
 	}
 
 	macro deletePublication {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_publicationsName = "${publicationsName}",
+			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		ClickNoError(
 			key_menuItem = "Delete",

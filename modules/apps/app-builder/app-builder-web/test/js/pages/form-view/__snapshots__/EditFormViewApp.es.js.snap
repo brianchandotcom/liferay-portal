@@ -431,25 +431,30 @@ exports[`EditFormViewApp renders 1`] = `
                 class="input-group"
               >
                 <div
-                  class="input-group-item"
+                  class="btn-group"
+                  role="group"
                 >
-                  <button
-                    class="ml-3 btn btn-sm btn-secondary"
-                    type="button"
+                  <div
+                    class="btn-group-item"
                   >
-                    cancel
-                  </button>
-                </div>
-                <div
-                  class="input-group-item"
-                >
-                  <button
-                    class="ml-3 btn btn-sm btn-primary"
-                    disabled=""
-                    type="button"
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                    >
+                      cancel
+                    </button>
+                  </div>
+                  <div
+                    class="btn-group-item"
                   >
-                    save
-                  </button>
+                    <button
+                      class="m-0 btn btn-primary"
+                      disabled=""
+                      type="button"
+                    >
+                      save
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

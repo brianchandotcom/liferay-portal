@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>AUTOMATICALLY_RESOLVED_TABLE</td>
-	<td>//table[contains(@class,'publications-conflicts-table')]//td[contains(.,'Automatically Resolved')]</td>
+	<td>//div[contains(@class,'publications-conflicts-container')]//span[contains(.,'Automatically Resolved')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,6 +14,9 @@
 
 package com.liferay.address.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -127,18 +130,30 @@ public class AddressModelPreFilterContributor
 
 		return typeNamesStream.mapToLong(
 			typeName -> {
-				ListType listType = _listTypeLocalService.getListType(
-					typeName,
-					className.getClassName() + ListTypeConstants.ADDRESS);
+				String listTypeType =
+					className.getClassName() + ListTypeConstants.ADDRESS;
 
-				if (listType != null) {
-					return listType.getListTypeId();
+				ListType listType = _listTypeLocalService.getListType(
+					typeName, listTypeType);
+
+				if (listType == null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"No list type found for ", listTypeType,
+								" with the name: ", typeName));
+					}
+
+					return -1;
 				}
 
-				return -1;
+				return listType.getListTypeId();
 			}
 		).toArray();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddressModelPreFilterContributor.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

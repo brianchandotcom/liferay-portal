@@ -58,14 +58,14 @@ const EditAdaptiveMedia = ({
 	if (amImageConfigurationEntry) {
 		const properties = amImageConfigurationEntry.properties;
 
-		const curMaxWidth = properties['max-width'];
-		const curMaxHeight = properties['max-height'];
+		const currrentMaxWidth = properties['max-width'];
+		const currrentMaxHeight = properties['max-height'];
 
-		if (curMaxWidth !== 0) {
-			maxWidth = curMaxWidth;
+		if (currrentMaxWidth !== 0) {
+			maxWidth = currrentMaxWidth;
 		}
-		if (curMaxHeight !== 0) {
-			maxHeight = curMaxHeight;
+		if (currrentMaxHeight !== 0) {
+			maxHeight = currrentMaxHeight;
 		}
 	}
 
@@ -88,7 +88,7 @@ const EditAdaptiveMedia = ({
 				body: objectToFormData(values),
 				method: 'POST',
 			})
-				.then((res) => res.json())
+				.then((response) => response.json())
 				.then(({message, success}) => {
 					if (success) {
 						const title = Liferay.Language.get('success');
@@ -108,7 +108,7 @@ const EditAdaptiveMedia = ({
 				});
 		},
 		validate: (values) => {
-			const err = validate(
+			const errorsList = validate(
 				{
 					[nameId]: [required],
 					[newUuidId]: [alphanumeric],
@@ -117,14 +117,14 @@ const EditAdaptiveMedia = ({
 			);
 
 			if (!values[maxWidthId] && !values[maxHeightId]) {
-				err[maxWidthId] = Liferay.Language.get(
+				errorsList[maxWidthId] = Liferay.Language.get(
 					'at-least-one-value-is-required'
 				);
 
-				err[maxHeightId] = true;
+				errorsList[maxHeightId] = true;
 			}
 
-			return err;
+			return errorsList;
 		},
 	});
 

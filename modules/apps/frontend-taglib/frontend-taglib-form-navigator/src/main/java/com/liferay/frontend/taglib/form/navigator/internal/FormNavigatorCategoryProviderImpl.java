@@ -21,8 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -128,9 +126,6 @@ public class FormNavigatorCategoryProviderImpl
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FormNavigatorCategoryProviderImpl.class);
 
 	private ServiceTrackerMap<String, List<FormNavigatorCategory>>
 		_formNavigatorCategories;

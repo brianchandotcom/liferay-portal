@@ -88,19 +88,13 @@ public class AddressModelPreFilterContributor
 			return;
 		}
 
-		long[] typeIds = (long[])params.get("typeIds");
+		long[] typeIds = (long[])params.getOrDefault("typeIds", new long[0]);
 		String[] typeNames = (String[])params.get("typeNames");
 
 		if (ArrayUtil.isNotEmpty(typeNames)) {
-			if (typeIds == null) {
-				typeIds = _getTypeIds(searchContext, typeNames);
-			}
-			else {
-				typeIds = ArrayUtil.append(
-					typeIds, _getTypeIds(searchContext, typeNames));
-			}
-
-			typeIds = ArrayUtil.unique(typeIds);
+			typeIds = ArrayUtil.unique(
+				ArrayUtil.append(
+					typeIds, _getTypeIds(searchContext, typeNames)));
 		}
 
 		if (ArrayUtil.isNotEmpty(typeIds)) {

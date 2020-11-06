@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ScheduledTaskExecutorService.class
 )
 public class AssetCategoryCommerceMLForecastScheduledTaskExecutorService
-	extends BaseForecastScheduledTaskExecutorService {
+	extends BaseCommerceMLForecastScheduledTaskExecutorService {
 
 	@Override
 	public String getName() {

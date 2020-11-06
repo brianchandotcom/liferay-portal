@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -166,9 +165,7 @@ public class S3Store implements Store {
 			S3Object s3Object = getS3Object(
 				companyId, repositoryId, fileName, versionLabel);
 
-			File file = _s3FileCache.getCacheFile(s3Object, fileName);
-
-			return new FileInputStream(file);
+			return _s3FileCache.getCacheFileInputStream(s3Object, fileName);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);

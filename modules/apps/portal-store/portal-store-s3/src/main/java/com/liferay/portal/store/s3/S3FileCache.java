@@ -16,8 +16,8 @@ package com.liferay.portal.store.s3;
 
 import com.amazonaws.services.s3.model.S3Object;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Michael C. Han
@@ -26,7 +26,8 @@ public interface S3FileCache {
 
 	public void cleanUpCacheFiles();
 
-	public File getCacheFile(S3Object s3Object, String fileName)
+	public InputStream getCacheFileInputStream(
+			S3Object s3Object, String fileName)
 		throws IOException;
 
 }

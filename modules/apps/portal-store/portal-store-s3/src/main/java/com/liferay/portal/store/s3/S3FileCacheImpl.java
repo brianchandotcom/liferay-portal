@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,7 +95,8 @@ public class S3FileCacheImpl implements S3FileCache {
 	}
 
 	@Override
-	public File getCacheFile(S3Object s3Object, String fileName)
+	public InputStream getCacheFileInputStream(
+			S3Object s3Object, String fileName)
 		throws IOException {
 
 		StringBundler sb = new StringBundler(4);
@@ -119,7 +121,7 @@ public class S3FileCacheImpl implements S3FileCache {
 			if (cacheFile.exists() &&
 				(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
 
-				return cacheFile;
+				return new FileInputStream(cacheFile);
 			}
 
 			if (inputStream == null) {
@@ -133,7 +135,7 @@ public class S3FileCacheImpl implements S3FileCache {
 			}
 		}
 
-		return cacheFile;
+		return new FileInputStream(cacheFile);
 	}
 
 	@Activate

@@ -22,18 +22,24 @@ import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +48,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -125,6 +132,24 @@ public class JournalEditDDMTemplateDisplayContext {
 			getDDMTemplateId());
 
 		return _ddmTemplate;
+	}
+
+	public HashMap<String, Object> getDDMTemplateEditorContext()
+		throws Exception {
+
+		return HashMapBuilder.<String, Object>put(
+			"editorAutocompleteData", getAutocompleteJSON()
+		).put(
+			"editorMode", getEditorMode()
+		).put(
+			"script", getScript()
+		).put(
+			"showCacheableWarning", isCacheable()
+		).put(
+			"showLanguageChangeWarning", getShowLanguageChangeWarning()
+		).put(
+			"templateVariableGroups", getTemplateVariableGroupJSONArray()
+		).build();
 	}
 
 	public long getDDMTemplateId() {
@@ -234,6 +259,18 @@ public class JournalEditDDMTemplateDisplayContext {
 		return _script;
 	}
 
+	public boolean getShowLanguageChangeWarning() {
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if ((ddmTemplate != null) && (getTemplateLanguageTypes().length > 1) &&
+			!Objects.equals(ddmTemplate.getLanguage(), getLanguage())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getSmallImageSource() {
 		if (Validator.isNotNull(_smallImageSource)) {
 			return _smallImageSource;
@@ -312,6 +349,63 @@ public class JournalEditDDMTemplateDisplayContext {
 
 	public String[] getTemplateLanguageTypes() {
 		return _journalWebConfiguration.journalDDMTemplateLanguageTypes();
+	}
+
+	public JSONArray getTemplateVariableGroupJSONArray() throws Exception {
+		JournalDDMTemplateHelper journalDDMTemplateHelper =
+			(JournalDDMTemplateHelper)_httpServletRequest.getAttribute(
+				JournalDDMTemplateHelper.class.getName());
+		JSONArray templateVariableGroupJSONArray =
+			JSONFactoryUtil.createJSONArray();
+		ResourceBundle resourceBundle = getTemplateHandlerResourceBundle();
+
+		for (TemplateVariableGroup templateVariableGroup :
+				getTemplateVariableGroups()) {
+
+			if (templateVariableGroup.isEmpty()) {
+				continue;
+			}
+
+			JSONArray templateVariableDefinitionJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (TemplateVariableDefinition templateVariableDefinition :
+					templateVariableGroup.getTemplateVariableDefinitions()) {
+
+				templateVariableDefinitionJSONArray.put(
+					JSONUtil.put(
+						"content",
+						journalDDMTemplateHelper.getDataContent(
+							templateVariableDefinition, getLanguage())
+					).put(
+						"label",
+						LanguageUtil.get(
+							_httpServletRequest, resourceBundle,
+							templateVariableDefinition.getLabel())
+					).put(
+						"repeatable",
+						templateVariableDefinition.isCollection() ||
+						templateVariableDefinition.isRepeatable()
+					).put(
+						"tooltip",
+						journalDDMTemplateHelper.getPaletteItemTitle(
+							_httpServletRequest, resourceBundle,
+							templateVariableDefinition)
+					));
+			}
+
+			templateVariableGroupJSONArray.put(
+				JSONUtil.put(
+					"items", templateVariableDefinitionJSONArray
+				).put(
+					"label",
+					LanguageUtil.get(
+						_httpServletRequest, resourceBundle,
+						templateVariableGroup.getLabel())
+				));
+		}
+
+		return templateVariableGroupJSONArray;
 	}
 
 	public Collection<TemplateVariableGroup> getTemplateVariableGroups()

@@ -483,7 +483,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_GO_BACK</td>
-	<td>//button[contains(@class,'btn btn-secondary')]</td>
+	<td>//div[contains(@class, 'sidebar-header')]//button[contains(@class,'btn btn-secondary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -503,7 +503,7 @@
 </tr>
 <tr>
 	<td>FIELD_SET_SAVE_BUTTON</td>
-	<td>//div[contains(@class, 'btn-group-item')]//button[contains(@class,'btn-primary')][contains(text(),'Save')]</td>
+	<td>//div[contains(@class, 'modal-footer')]//button[contains(@class,'btn-primary')][contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 

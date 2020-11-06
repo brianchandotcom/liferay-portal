@@ -28,7 +28,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
-			layoutName = "Staging Test Page");
+			layoutName = "Test Page");
 
 		Staging.remoteStagingSetUp(
 			remotePort = "9080",

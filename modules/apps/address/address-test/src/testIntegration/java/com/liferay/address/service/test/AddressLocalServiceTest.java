@@ -15,6 +15,7 @@
 package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
@@ -36,13 +37,19 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -125,6 +132,43 @@ public class AddressLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchAddressesWithInvalidTypeName() throws Exception {
+		ListType businessType = _listTypeLocalService.getListType(
+			"business", ListTypeConstants.CONTACT_ADDRESS);
+
+		Address address = _addAddress(
+			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					_LOG_NAME, Level.DEBUG)) {
+
+			String typeName = RandomTestUtil.randomString();
+
+			_assertSearchAddress(
+				Collections.emptyList(), null,
+				_getLinkedHashMap("typeNames", new String[] {typeName}));
+			_assertSearchAddress(
+				Arrays.asList(address), null,
+				_getLinkedHashMap(
+					"typeNames",
+					new String[] {businessType.getName(), typeName}));
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No list type found for ",
+					ListTypeConstants.CONTACT_ADDRESS, " with the name: ",
+					typeName),
+				loggingEvent.getMessage());
+		}
+	}
+
+	@Test
 	public void testSearchAddressesWithParam() throws Exception {
 		ListType businessType = _listTypeLocalService.getListType(
 			"business", ListTypeConstants.CONTACT_ADDRESS);
@@ -149,6 +193,15 @@ public class AddressLocalServiceTest {
 				new long[] {
 					businessType.getListTypeId(), personalType.getListTypeId()
 				}));
+		_assertSearchAddress(
+			Arrays.asList(businessAddress), null,
+			_getLinkedHashMap(
+				"typeNames", new String[] {businessType.getName()}));
+		_assertSearchAddress(
+			Arrays.asList(businessAddress, personalAddress), null,
+			_getLinkedHashMap(
+				"typeNames",
+				new String[] {businessType.getName(), personalType.getName()}));
 	}
 
 	@Test
@@ -249,6 +302,10 @@ public class AddressLocalServiceTest {
 			key, value
 		).build();
 	}
+
+	private static final String _LOG_NAME =
+		"com.liferay.address.internal.search.spi.model.query.contributor." +
+			"AddressModelPreFilterContributor";
 
 	@Inject
 	private static AddressLocalService _addressLocalService;

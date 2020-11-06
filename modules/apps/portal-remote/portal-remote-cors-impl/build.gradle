@@ -10,11 +10,11 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
-	compileOnly project(":apps:petra:petra-url-pattern-mapper")
 	compileOnly project(":apps:portal-remote:portal-remote-cors-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:petra:petra-url-pattern-mapper")
 }

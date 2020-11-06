@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.security.permission.contributor.RoleContributor
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.context.RequestContextMapper;
-import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Drew Brokke
  */
 @Component(
-	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
+	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
 	service = {}
 )
 public class SegmentsEntryRoleContributor implements RoleContributor {
@@ -90,11 +90,11 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		SegmentsServiceConfiguration segmentsServiceConfiguration =
+		SegmentsConfiguration segmentsConfiguration =
 			ConfigurableUtil.createConfigurable(
-				SegmentsServiceConfiguration.class, properties);
+				SegmentsConfiguration.class, properties);
 
-		if (segmentsServiceConfiguration.roleSegmentationEnabled()) {
+		if (segmentsConfiguration.roleSegmentationEnabled()) {
 			_serviceRegistration = bundleContext.registerService(
 				RoleContributor.class, this, new HashMapDictionary<>());
 		}

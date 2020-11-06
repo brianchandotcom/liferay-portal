@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
+import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.internal.constants.SegmentsDestinationNames;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
+	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
 	immediate = true,
 	service = {
 		MessageListener.class, SegmentsEntryRelIndexerMessageListener.class
@@ -59,8 +59,8 @@ public class SegmentsEntryRelIndexerMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_segmentsServiceConfiguration = ConfigurableUtil.createConfigurable(
-			SegmentsServiceConfiguration.class, properties);
+		_segmentsConfiguration = ConfigurableUtil.createConfigurable(
+			SegmentsConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
 
@@ -68,7 +68,7 @@ public class SegmentsEntryRelIndexerMessageListener
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_segmentsServiceConfiguration.segmentsPreviewCheckInterval(),
+			_segmentsConfiguration.segmentsPreviewCheckInterval(),
 			TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
@@ -123,10 +123,10 @@ public class SegmentsEntryRelIndexerMessageListener
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
+	private volatile SegmentsConfiguration _segmentsConfiguration;
+
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
-	private volatile SegmentsServiceConfiguration _segmentsServiceConfiguration;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
-import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Eduardo García
  */
 @Component(
-	configurationPid = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
+	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
 	service = {}
 )
 public class SegmentsServicePreAction extends Action {
@@ -81,11 +81,11 @@ public class SegmentsServicePreAction extends Action {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		SegmentsServiceConfiguration segmentsServiceConfiguration =
+		SegmentsConfiguration segmentsConfiguration =
 			ConfigurableUtil.createConfigurable(
-				SegmentsServiceConfiguration.class, properties);
+				SegmentsConfiguration.class, properties);
 
-		if (segmentsServiceConfiguration.segmentationEnabled()) {
+		if (segmentsConfiguration.segmentationEnabled()) {
 			_serviceRegistration = bundleContext.registerService(
 				LifecycleAction.class, this,
 				MapUtil.singletonDictionary(

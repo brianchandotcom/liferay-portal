@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.configuration;
+package com.liferay.segments.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,11 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "segments")
 @Meta.OCD(
-	id = "com.liferay.segments.internal.configuration.SegmentsServiceConfiguration",
+	id = "com.liferay.segments.configuration.SegmentsConfiguration",
 	localization = "content/Language",
 	name = "segments-service-configuration-name"
 )
-public interface SegmentsServiceConfiguration {
+public interface SegmentsConfiguration {
 
 	@Meta.AD(
 		deflt = "true", description = "segmentation-enabled-description",

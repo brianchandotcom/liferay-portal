@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -78,7 +79,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = AssetEntryAssetCategoryRelPersistence.class)
+@Component(
+	service = {
+		AssetEntryAssetCategoryRelPersistence.class, BasePersistence.class
+	}
+)
 public class AssetEntryAssetCategoryRelPersistenceImpl
 	extends BasePersistenceImpl<AssetEntryAssetCategoryRel>
 	implements AssetEntryAssetCategoryRelPersistence {
@@ -204,7 +209,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
@@ -586,7 +591,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			finderArgs = new Object[] {assetEntryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -733,7 +738,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
@@ -1116,7 +1121,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			finderArgs = new Object[] {assetCategoryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1240,8 +1245,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(
-				_finderPathFetchByA_A, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByA_A, finderArgs);
 		}
 
 		if (result instanceof AssetEntryAssetCategoryRel) {
@@ -1371,7 +1375,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			finderArgs = new Object[] {assetEntryId, assetCategoryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2004,7 +2008,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2083,7 +2087,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

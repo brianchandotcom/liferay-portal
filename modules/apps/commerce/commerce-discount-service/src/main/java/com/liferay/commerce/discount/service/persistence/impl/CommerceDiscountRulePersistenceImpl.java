@@ -191,7 +191,7 @@ public class CommerceDiscountRulePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountRule commerceDiscountRule : list) {
@@ -564,7 +564,7 @@ public class CommerceDiscountRulePersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceDiscountId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1026,7 +1026,7 @@ public class CommerceDiscountRulePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1096,7 +1096,7 @@ public class CommerceDiscountRulePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

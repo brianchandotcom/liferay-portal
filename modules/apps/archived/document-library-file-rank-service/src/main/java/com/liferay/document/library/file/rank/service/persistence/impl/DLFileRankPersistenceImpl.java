@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -73,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = DLFileRankPersistence.class)
+@Component(service = {DLFileRankPersistence.class, BasePersistence.class})
 public class DLFileRankPersistenceImpl
 	extends BasePersistenceImpl<DLFileRank> implements DLFileRankPersistence {
 
@@ -187,7 +188,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -542,7 +543,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -681,7 +682,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -1039,7 +1040,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1181,7 +1182,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -1567,7 +1568,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1724,7 +1725,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
@@ -2135,7 +2136,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId, active};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2270,8 +2271,7 @@ public class DLFileRankPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_U_F, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_U_F, finderArgs);
 		}
 
 		if (result instanceof DLFileRank) {
@@ -2394,7 +2394,7 @@ public class DLFileRankPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, userId, fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2843,7 +2843,7 @@ public class DLFileRankPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DLFileRank>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2913,7 +2913,7 @@ public class DLFileRankPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

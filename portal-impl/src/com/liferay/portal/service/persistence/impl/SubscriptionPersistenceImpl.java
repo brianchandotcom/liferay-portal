@@ -184,7 +184,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Subscription>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -541,8 +541,7 @@ public class SubscriptionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -684,7 +683,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Subscription>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -1072,8 +1071,7 @@ public class SubscriptionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1223,7 +1221,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Subscription>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -1612,8 +1610,7 @@ public class SubscriptionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, classNameId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1771,7 +1768,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Subscription>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -2183,8 +2180,7 @@ public class SubscriptionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, classNameId, classPK};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2384,7 +2380,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Subscription>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByC_U_C_C, finderArgs, this);
+				_finderPathWithPaginationFindByC_U_C_C, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -2563,7 +2559,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_U_C_C, finderArgs, this);
+				_finderPathFetchByC_U_C_C, finderArgs);
 		}
 
 		if (result instanceof Subscription) {
@@ -2681,8 +2677,7 @@ public class SubscriptionPersistenceImpl
 			companyId, userId, classNameId, classPK
 		};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -2756,7 +2751,7 @@ public class SubscriptionPersistenceImpl
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByC_U_C_C, finderArgs, this);
+			_finderPathWithPaginationCountByC_U_C_C, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -3252,7 +3247,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Subscription>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3322,7 +3317,7 @@ public class SubscriptionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

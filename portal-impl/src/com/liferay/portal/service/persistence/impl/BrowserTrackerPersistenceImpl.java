@@ -148,7 +148,7 @@ public class BrowserTrackerPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUserId, finderArgs, this);
+				_finderPathFetchByUserId, finderArgs);
 		}
 
 		if (result instanceof BrowserTracker) {
@@ -238,8 +238,7 @@ public class BrowserTrackerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -670,7 +669,7 @@ public class BrowserTrackerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<BrowserTracker>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -740,7 +739,7 @@ public class BrowserTrackerPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -77,7 +78,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = DLFileVersionPreviewPersistence.class)
+@Component(
+	service = {DLFileVersionPreviewPersistence.class, BasePersistence.class}
+)
 public class DLFileVersionPreviewPersistenceImpl
 	extends BasePersistenceImpl<DLFileVersionPreview>
 	implements DLFileVersionPreviewPersistence {
@@ -201,7 +204,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileVersionPreview>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersionPreview dlFileVersionPreview : list) {
@@ -578,7 +581,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 			finderArgs = new Object[] {fileEntryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -723,7 +726,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileVersionPreview>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersionPreview dlFileVersionPreview : list) {
@@ -1103,7 +1106,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 			finderArgs = new Object[] {fileVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1225,8 +1228,7 @@ public class DLFileVersionPreviewPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(
-				_finderPathFetchByF_F, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByF_F, finderArgs);
 		}
 
 		if (result instanceof DLFileVersionPreview) {
@@ -1336,7 +1338,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 			finderArgs = new Object[] {fileEntryId, fileVersionId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1475,8 +1477,7 @@ public class DLFileVersionPreviewPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(
-				_finderPathFetchByF_F_P, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByF_F_P, finderArgs);
 		}
 
 		if (result instanceof DLFileVersionPreview) {
@@ -1597,7 +1598,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				fileEntryId, fileVersionId, previewStatus
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2227,7 +2228,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DLFileVersionPreview>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2303,7 +2304,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

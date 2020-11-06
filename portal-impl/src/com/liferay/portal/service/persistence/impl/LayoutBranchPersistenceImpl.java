@@ -183,7 +183,7 @@ public class LayoutBranchPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutBranch layoutBranch : list) {
@@ -550,8 +550,7 @@ public class LayoutBranchPersistenceImpl
 
 		Object[] finderArgs = new Object[] {layoutSetBranchId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -696,7 +695,7 @@ public class LayoutBranchPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutBranch layoutBranch : list) {
@@ -1086,8 +1085,7 @@ public class LayoutBranchPersistenceImpl
 
 		Object[] finderArgs = new Object[] {layoutSetBranchId, plid};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1220,7 +1218,7 @@ public class LayoutBranchPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByL_P_N, finderArgs, this);
+				_finderPathFetchByL_P_N, finderArgs);
 		}
 
 		if (result instanceof LayoutBranch) {
@@ -1339,8 +1337,7 @@ public class LayoutBranchPersistenceImpl
 
 		Object[] finderArgs = new Object[] {layoutSetBranchId, plid, name};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1519,7 +1516,7 @@ public class LayoutBranchPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutBranch layoutBranch : list) {
@@ -1934,8 +1931,7 @@ public class LayoutBranchPersistenceImpl
 
 		Object[] finderArgs = new Object[] {layoutSetBranchId, plid, master};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2383,7 +2379,7 @@ public class LayoutBranchPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2453,7 +2449,7 @@ public class LayoutBranchPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

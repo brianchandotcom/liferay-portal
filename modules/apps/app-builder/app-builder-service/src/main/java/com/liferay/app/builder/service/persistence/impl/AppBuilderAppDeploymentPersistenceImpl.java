@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,7 +75,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = AppBuilderAppDeploymentPersistence.class)
+@Component(
+	service = {AppBuilderAppDeploymentPersistence.class, BasePersistence.class}
+)
 public class AppBuilderAppDeploymentPersistenceImpl
 	extends BasePersistenceImpl<AppBuilderAppDeployment>
 	implements AppBuilderAppDeploymentPersistence {
@@ -197,7 +200,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderAppDeployment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderAppDeployment appBuilderAppDeployment : list) {
@@ -569,7 +572,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {appBuilderAppId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -688,8 +691,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByA_T, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByA_T, finderArgs);
 		}
 
 		if (result instanceof AppBuilderAppDeployment) {
@@ -822,7 +824,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {appBuilderAppId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1313,7 +1315,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderAppDeployment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1384,7 +1386,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

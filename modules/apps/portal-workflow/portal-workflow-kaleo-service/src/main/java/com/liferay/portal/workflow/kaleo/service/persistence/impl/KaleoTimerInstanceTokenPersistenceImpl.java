@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,7 +75,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = KaleoTimerInstanceTokenPersistence.class)
+@Component(
+	service = {KaleoTimerInstanceTokenPersistence.class, BasePersistence.class}
+)
 public class KaleoTimerInstanceTokenPersistenceImpl
 	extends BasePersistenceImpl<KaleoTimerInstanceToken>
 	implements KaleoTimerInstanceTokenPersistence {
@@ -197,7 +200,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
@@ -569,7 +572,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		Object[] finderArgs = new Object[] {kaleoInstanceId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -688,7 +691,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByKITI_KTI, finderArgs, this);
+				_finderPathFetchByKITI_KTI, finderArgs);
 		}
 
 		if (result instanceof KaleoTimerInstanceToken) {
@@ -808,7 +811,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		Object[] finderArgs = new Object[] {kaleoInstanceTokenId, kaleoTimerId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -962,7 +965,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
@@ -1359,7 +1362,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		Object[] finderArgs = new Object[] {kaleoInstanceTokenId, completed};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1524,7 +1527,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTimerInstanceToken kaleoTimerInstanceToken : list) {
@@ -1949,7 +1952,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			kaleoInstanceTokenId, blocking, completed
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2452,7 +2455,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KaleoTimerInstanceToken>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2523,7 +2526,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

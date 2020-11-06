@@ -188,7 +188,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LVEntryLocalizationVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
@@ -566,7 +566,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {lvEntryLocalizationId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -688,8 +688,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByLvEntryLocalizationId_Version, finderArgs,
-				this);
+				_finderPathFetchByLvEntryLocalizationId_Version, finderArgs);
 		}
 
 		if (result instanceof LVEntryLocalizationVersion) {
@@ -796,7 +795,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {lvEntryLocalizationId, version};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -944,7 +943,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LVEntryLocalizationVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
@@ -1317,7 +1316,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {lvEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1463,7 +1462,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LVEntryLocalizationVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
@@ -1861,7 +1860,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {lvEntryId, version};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2017,7 +2016,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LVEntryLocalizationVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
@@ -2445,7 +2444,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {lvEntryId, languageId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2597,8 +2596,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByLvEntryId_LanguageId_Version, finderArgs,
-				this);
+				_finderPathFetchByLvEntryId_LanguageId_Version, finderArgs);
 		}
 
 		if (result instanceof LVEntryLocalizationVersion) {
@@ -2726,7 +2724,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {lvEntryId, languageId, version};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3261,7 +3259,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LVEntryLocalizationVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3334,7 +3332,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

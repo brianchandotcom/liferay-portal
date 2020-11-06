@@ -189,7 +189,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountRel commerceDiscountRel : list) {
@@ -562,7 +562,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceDiscountId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -710,7 +710,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountRel commerceDiscountRel : list) {
@@ -1105,7 +1105,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceDiscountId, classNameId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1257,7 +1257,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountRel commerceDiscountRel : list) {
@@ -1649,7 +1649,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2104,7 +2104,7 @@ public class CommerceDiscountRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2174,7 +2174,7 @@ public class CommerceDiscountRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

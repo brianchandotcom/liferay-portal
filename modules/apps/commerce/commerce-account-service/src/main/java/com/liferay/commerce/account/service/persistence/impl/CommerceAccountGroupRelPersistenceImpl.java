@@ -190,7 +190,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAccountGroupRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAccountGroupRel commerceAccountGroupRel : list) {
@@ -567,7 +567,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceAccountGroupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -714,7 +714,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAccountGroupRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAccountGroupRel commerceAccountGroupRel : list) {
@@ -1108,7 +1108,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1241,8 +1241,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_C_C, finderArgs);
 		}
 
 		if (result instanceof CommerceAccountGroupRel) {
@@ -1356,7 +1355,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 			classNameId, classPK, commerceAccountGroupId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1860,7 +1859,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAccountGroupRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1931,7 +1930,7 @@ public class CommerceAccountGroupRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

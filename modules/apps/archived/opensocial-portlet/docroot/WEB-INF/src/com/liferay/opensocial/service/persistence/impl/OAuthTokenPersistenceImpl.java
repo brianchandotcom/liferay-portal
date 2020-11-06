@@ -193,7 +193,7 @@ public class OAuthTokenPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuthToken>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuthToken oAuthToken : list) {
@@ -632,8 +632,7 @@ public class OAuthTokenPersistenceImpl
 
 		Object[] finderArgs = new Object[] {gadgetKey, serviceName};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -814,7 +813,7 @@ public class OAuthTokenPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_G_S_M_T, finderArgs, this);
+				_finderPathFetchByU_G_S_M_T, finderArgs);
 		}
 
 		if (result instanceof OAuthToken) {
@@ -996,8 +995,7 @@ public class OAuthTokenPersistenceImpl
 			userId, gadgetKey, serviceName, moduleId, tokenName
 		};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1525,7 +1523,7 @@ public class OAuthTokenPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<OAuthToken>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1595,7 +1593,7 @@ public class OAuthTokenPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

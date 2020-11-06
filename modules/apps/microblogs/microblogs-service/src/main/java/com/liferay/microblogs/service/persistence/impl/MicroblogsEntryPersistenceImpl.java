@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -81,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = MicroblogsEntryPersistence.class)
+@Component(service = {MicroblogsEntryPersistence.class, BasePersistence.class})
 public class MicroblogsEntryPersistenceImpl
 	extends BasePersistenceImpl<MicroblogsEntry>
 	implements MicroblogsEntryPersistence {
@@ -201,7 +202,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -895,7 +896,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1076,7 +1077,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -1768,7 +1769,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1958,7 +1959,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -2693,7 +2694,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2906,7 +2907,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -3902,7 +3903,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByCCNI_CCPK, finderArgs, this);
+				_finderPathWithPaginationFindByCCNI_CCPK, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -4017,7 +4018,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {creatorClassNameId, creatorClassPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4081,7 +4082,7 @@ public class MicroblogsEntryPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByCCNI_CCPK, finderArgs, this);
+			_finderPathWithPaginationCountByCCNI_CCPK, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -4378,7 +4379,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -5121,7 +5122,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {creatorClassNameId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5330,7 +5331,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -6074,7 +6075,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {type, parentMicroblogsEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6294,7 +6295,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -7342,7 +7343,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs, this);
+				_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -7468,7 +7469,7 @@ public class MicroblogsEntryPersistenceImpl
 			companyId, creatorClassNameId, creatorClassPK
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7537,7 +7538,7 @@ public class MicroblogsEntryPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_CCNI_CCPK, finderArgs, this);
+			_finderPathWithPaginationCountByC_CCNI_CCPK, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -7861,7 +7862,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -8648,7 +8649,7 @@ public class MicroblogsEntryPersistenceImpl
 			companyId, creatorClassNameId, type
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -8882,7 +8883,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -9927,7 +9928,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs, this);
+				_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -10055,7 +10056,7 @@ public class MicroblogsEntryPersistenceImpl
 			creatorClassNameId, creatorClassPK, type
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -10124,7 +10125,7 @@ public class MicroblogsEntryPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByCCNI_CCPK_T, finderArgs, this);
+			_finderPathWithPaginationCountByCCNI_CCPK_T, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -10466,7 +10467,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -11569,7 +11570,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_CCNI_CCPK_T, finderArgs, this);
+				_finderPathWithPaginationFindByC_CCNI_CCPK_T, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -11706,7 +11707,7 @@ public class MicroblogsEntryPersistenceImpl
 			companyId, creatorClassNameId, creatorClassPK, type
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -11782,7 +11783,7 @@ public class MicroblogsEntryPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_CCNI_CCPK_T, finderArgs, this);
+			_finderPathWithPaginationCountByC_CCNI_CCPK_T, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -12141,7 +12142,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
@@ -13013,7 +13014,7 @@ public class MicroblogsEntryPersistenceImpl
 			userId, _getTime(createDate), type, socialRelationType
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -13574,7 +13575,7 @@ public class MicroblogsEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -13644,7 +13645,7 @@ public class MicroblogsEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

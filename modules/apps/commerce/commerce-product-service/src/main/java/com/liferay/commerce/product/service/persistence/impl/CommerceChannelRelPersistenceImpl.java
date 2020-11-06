@@ -189,7 +189,7 @@ public class CommerceChannelRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceChannelRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceChannelRel commerceChannelRel : list) {
@@ -560,7 +560,7 @@ public class CommerceChannelRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceChannelId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -704,7 +704,7 @@ public class CommerceChannelRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceChannelRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceChannelRel commerceChannelRel : list) {
@@ -1096,7 +1096,7 @@ public class CommerceChannelRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1227,8 +1227,7 @@ public class CommerceChannelRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_C_C, finderArgs);
 		}
 
 		if (result instanceof CommerceChannelRel) {
@@ -1340,7 +1339,7 @@ public class CommerceChannelRelPersistenceImpl
 			classNameId, classPK, commerceChannelId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1827,7 +1826,7 @@ public class CommerceChannelRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceChannelRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1897,7 +1896,7 @@ public class CommerceChannelRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

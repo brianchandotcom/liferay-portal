@@ -185,7 +185,7 @@ public class ServiceComponentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ServiceComponent>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ServiceComponent serviceComponent : list) {
@@ -582,8 +582,7 @@ public class ServiceComponentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {buildNamespace};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -717,7 +716,7 @@ public class ServiceComponentPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByBNS_BNU, finderArgs, this);
+				_finderPathFetchByBNS_BNU, finderArgs);
 		}
 
 		if (result instanceof ServiceComponent) {
@@ -831,8 +830,7 @@ public class ServiceComponentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {buildNamespace, buildNumber};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1299,7 +1297,7 @@ public class ServiceComponentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ServiceComponent>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1369,7 +1367,7 @@ public class ServiceComponentPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

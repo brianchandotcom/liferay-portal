@@ -188,7 +188,7 @@ public class CommerceOrderPaymentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceOrderPayment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceOrderPayment commerceOrderPayment : list) {
@@ -559,7 +559,7 @@ public class CommerceOrderPaymentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceOrderId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1015,7 +1015,7 @@ public class CommerceOrderPaymentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceOrderPayment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1085,7 +1085,7 @@ public class CommerceOrderPaymentPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

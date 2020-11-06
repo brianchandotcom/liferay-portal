@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -77,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  * @generated
  */
-@Component(service = SamlSpSessionPersistence.class)
+@Component(service = {SamlSpSessionPersistence.class, BasePersistence.class})
 public class SamlSpSessionPersistenceImpl
 	extends BasePersistenceImpl<SamlSpSession>
 	implements SamlSpSessionPersistence {
@@ -169,7 +170,7 @@ public class SamlSpSessionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchBySamlSpSessionKey, finderArgs, this);
+				_finderPathFetchBySamlSpSessionKey, finderArgs);
 		}
 
 		if (result instanceof SamlSpSession) {
@@ -275,7 +276,7 @@ public class SamlSpSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {samlSpSessionKey};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -401,7 +402,7 @@ public class SamlSpSessionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByJSessionId, finderArgs, this);
+				_finderPathFetchByJSessionId, finderArgs);
 		}
 
 		if (result instanceof SamlSpSession) {
@@ -519,7 +520,7 @@ public class SamlSpSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {jSessionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -674,7 +675,7 @@ public class SamlSpSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlSpSession>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlSpSession samlSpSession : list) {
@@ -1063,7 +1064,7 @@ public class SamlSpSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {nameIdValue};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1187,7 +1188,7 @@ public class SamlSpSessionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchBySessionIndex, finderArgs, this);
+				_finderPathFetchBySessionIndex, finderArgs);
 		}
 
 		if (result instanceof SamlSpSession) {
@@ -1307,7 +1308,7 @@ public class SamlSpSessionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {sessionIndex};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1804,7 +1805,7 @@ public class SamlSpSessionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SamlSpSession>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1874,7 +1875,7 @@ public class SamlSpSessionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

@@ -192,7 +192,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -609,7 +609,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -744,7 +744,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof CPDefinitionSpecificationOptionValue) {
@@ -862,7 +862,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1033,7 +1033,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -1476,7 +1476,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1638,7 +1638,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -2029,7 +2029,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2173,7 +2173,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -2569,7 +2569,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2720,7 +2720,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -3126,7 +3126,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPSpecificationOptionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3273,7 +3273,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -3673,7 +3673,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPOptionCategoryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3798,7 +3798,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_CSOVI, finderArgs, this);
+				_finderPathFetchByC_CSOVI, finderArgs);
 		}
 
 		if (result instanceof CPDefinitionSpecificationOptionValue) {
@@ -3910,7 +3910,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			CPDefinitionSpecificationOptionValueId, CPDefinitionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4073,7 +4073,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -4496,7 +4496,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			CPDefinitionId, CPSpecificationOptionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4655,7 +4655,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionSpecificationOptionValue
@@ -5074,7 +5074,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId, CPOptionCategoryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5655,7 +5655,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CPDefinitionSpecificationOptionValue>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5730,7 +5730,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

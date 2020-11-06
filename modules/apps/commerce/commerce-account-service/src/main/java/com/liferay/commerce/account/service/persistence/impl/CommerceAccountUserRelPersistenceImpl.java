@@ -191,7 +191,7 @@ public class CommerceAccountUserRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAccountUserRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAccountUserRel commerceAccountUserRel : list) {
@@ -564,7 +564,7 @@ public class CommerceAccountUserRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceAccountId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -708,7 +708,7 @@ public class CommerceAccountUserRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAccountUserRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAccountUserRel commerceAccountUserRel : list) {
@@ -1083,7 +1083,7 @@ public class CommerceAccountUserRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceAccountUserId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1552,7 +1552,7 @@ public class CommerceAccountUserRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAccountUserRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1622,7 +1622,7 @@ public class CommerceAccountUserRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

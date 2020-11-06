@@ -164,7 +164,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByHostname, finderArgs, this);
+				_finderPathFetchByHostname, finderArgs);
 		}
 
 		if (result instanceof VirtualHost) {
@@ -276,8 +276,7 @@ public class VirtualHostPersistenceImpl
 
 			finderArgs = new Object[] {hostname};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -440,7 +439,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VirtualHost virtualHost : list) {
@@ -838,8 +837,7 @@ public class VirtualHostPersistenceImpl
 
 			finderArgs = new Object[] {companyId, layoutSetId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -979,7 +977,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_L_D, finderArgs, this);
+				_finderPathFetchByC_L_D, finderArgs);
 		}
 
 		if (result instanceof VirtualHost) {
@@ -1116,8 +1114,7 @@ public class VirtualHostPersistenceImpl
 				companyId, layoutSetId, defaultVirtualHost
 			};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1714,7 +1711,7 @@ public class VirtualHostPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<VirtualHost>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1790,7 +1787,7 @@ public class VirtualHostPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

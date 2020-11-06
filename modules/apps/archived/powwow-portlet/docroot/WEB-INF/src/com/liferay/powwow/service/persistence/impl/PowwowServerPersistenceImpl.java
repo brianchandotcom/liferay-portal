@@ -193,7 +193,7 @@ public class PowwowServerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowServer>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowServer powwowServer : list) {
@@ -608,8 +608,7 @@ public class PowwowServerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {providerType, active};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1070,7 +1069,7 @@ public class PowwowServerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowServer>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1140,7 +1139,7 @@ public class PowwowServerPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

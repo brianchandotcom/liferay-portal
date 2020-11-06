@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -79,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = KBCommentPersistence.class)
+@Component(service = {KBCommentPersistence.class, BasePersistence.class})
 public class KBCommentPersistenceImpl
 	extends BasePersistenceImpl<KBComment> implements KBCommentPersistence {
 
@@ -195,7 +196,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -575,7 +576,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -705,7 +706,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof KBComment) {
@@ -816,7 +817,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -982,7 +983,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -1394,7 +1395,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1549,7 +1550,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -1904,7 +1905,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2047,7 +2048,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -2435,7 +2436,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, classNameId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2584,7 +2585,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -2970,7 +2971,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3120,7 +3121,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -3508,7 +3509,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3665,7 +3666,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -4076,7 +4077,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -4241,7 +4242,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -4744,7 +4745,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_C_S, finderArgs, this);
+				_finderPathWithPaginationFindByC_C_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
@@ -4860,7 +4861,7 @@ public class KBCommentPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -4927,7 +4928,7 @@ public class KBCommentPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_C_S, finderArgs, this);
+			_finderPathWithPaginationCountByC_C_S, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -5419,7 +5420,7 @@ public class KBCommentPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<KBComment>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5489,7 +5490,7 @@ public class KBCommentPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

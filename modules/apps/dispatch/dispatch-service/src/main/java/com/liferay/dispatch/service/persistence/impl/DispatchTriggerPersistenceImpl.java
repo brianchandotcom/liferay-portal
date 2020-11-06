@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -77,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matija Petanjek
  * @generated
  */
-@Component(service = DispatchTriggerPersistence.class)
+@Component(service = {DispatchTriggerPersistence.class, BasePersistence.class})
 public class DispatchTriggerPersistenceImpl
 	extends BasePersistenceImpl<DispatchTrigger>
 	implements DispatchTriggerPersistence {
@@ -197,7 +198,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -891,7 +892,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1082,7 +1083,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -1818,7 +1819,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1993,8 +1994,7 @@ public class DispatchTriggerPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_N, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs);
 		}
 
 		if (result instanceof DispatchTrigger) {
@@ -2105,7 +2105,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2274,7 +2274,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
@@ -3070,7 +3070,7 @@ public class DispatchTriggerPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, taskExecutorType};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3627,7 +3627,7 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3697,7 +3697,7 @@ public class DispatchTriggerPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

@@ -205,7 +205,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryReplenishmentItem
@@ -610,7 +610,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceInventoryWarehouseId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -751,7 +751,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryReplenishmentItem
@@ -1159,7 +1159,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {sku};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1316,7 +1316,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryReplenishmentItem
@@ -1728,7 +1728,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(availabilityDate)};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1892,7 +1892,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryReplenishmentItem
@@ -2326,7 +2326,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, sku};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2496,7 +2496,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceInventoryReplenishmentItem
@@ -2953,7 +2953,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		Object[] finderArgs = new Object[] {sku, _getTime(availabilityDate)};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3495,7 +3495,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3568,7 +3568,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

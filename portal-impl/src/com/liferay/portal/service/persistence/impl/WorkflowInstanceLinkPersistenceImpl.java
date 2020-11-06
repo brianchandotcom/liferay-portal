@@ -207,7 +207,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<WorkflowInstanceLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowInstanceLink workflowInstanceLink : list) {
@@ -633,8 +633,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 			finderArgs = new Object[] {groupId, companyId, classNameId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -814,7 +813,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<WorkflowInstanceLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowInstanceLink workflowInstanceLink : list) {
@@ -1268,8 +1267,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 				groupId, companyId, classNameId, classPK
 			};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1893,7 +1891,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<WorkflowInstanceLink>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1969,7 +1967,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

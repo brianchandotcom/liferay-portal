@@ -191,7 +191,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceNotificationTemplate commerceNotificationTemplate :
@@ -587,7 +587,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -720,7 +720,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof CommerceNotificationTemplate) {
@@ -835,7 +835,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1003,7 +1003,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceNotificationTemplate commerceNotificationTemplate :
@@ -1426,7 +1426,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1583,7 +1583,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceNotificationTemplate commerceNotificationTemplate :
@@ -2297,7 +2297,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2489,7 +2489,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceNotificationTemplate commerceNotificationTemplate :
@@ -3243,7 +3243,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, enabled};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3454,7 +3454,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceNotificationTemplate commerceNotificationTemplate :
@@ -4297,7 +4297,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, type, enabled};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -4929,7 +4929,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceNotificationTemplate>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5002,7 +5002,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

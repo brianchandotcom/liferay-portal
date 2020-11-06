@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -76,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = MessagePersistence.class)
+@Component(service = {MessagePersistence.class, BasePersistence.class})
 public class MessagePersistenceImpl
 	extends BasePersistenceImpl<Message> implements MessagePersistence {
 
@@ -191,8 +192,7 @@ public class MessagePersistenceImpl
 		List<Message> list = null;
 
 		if (useFinderCache) {
-			list = (List<Message>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Message>)finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Message message : list) {
@@ -548,7 +548,7 @@ public class MessagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -680,8 +680,7 @@ public class MessagePersistenceImpl
 		List<Message> list = null;
 
 		if (useFinderCache) {
-			list = (List<Message>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Message>)finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Message message : list) {
@@ -1036,7 +1035,7 @@ public class MessagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {folderId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1149,8 +1148,7 @@ public class MessagePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByF_R, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByF_R, finderArgs);
 		}
 
 		if (result instanceof Message) {
@@ -1265,7 +1263,7 @@ public class MessagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {folderId, remoteMessageId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1722,8 +1720,7 @@ public class MessagePersistenceImpl
 		List<Message> list = null;
 
 		if (useFinderCache) {
-			list = (List<Message>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Message>)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1793,7 +1790,7 @@ public class MessagePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

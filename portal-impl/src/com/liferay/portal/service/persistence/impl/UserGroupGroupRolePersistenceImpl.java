@@ -192,7 +192,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
@@ -569,8 +569,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			finderArgs = new Object[] {userGroupId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -712,7 +711,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
@@ -1084,8 +1083,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1226,7 +1224,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
@@ -1598,8 +1596,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			finderArgs = new Object[] {roleId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1748,7 +1745,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
@@ -2149,8 +2146,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			finderArgs = new Object[] {userGroupId, groupId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2305,7 +2301,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
@@ -2705,8 +2701,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			finderArgs = new Object[] {groupId, roleId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2843,7 +2838,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_G_R, finderArgs, this);
+				_finderPathFetchByU_G_R, finderArgs);
 		}
 
 		if (result instanceof UserGroupGroupRole) {
@@ -2959,8 +2954,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			finderArgs = new Object[] {userGroupId, groupId, roleId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -3570,7 +3564,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<UserGroupGroupRole>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3646,7 +3640,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

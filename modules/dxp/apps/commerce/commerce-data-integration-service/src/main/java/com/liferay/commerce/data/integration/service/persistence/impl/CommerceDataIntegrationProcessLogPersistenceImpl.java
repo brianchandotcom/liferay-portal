@@ -201,7 +201,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceDataIntegrationProcessLog>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDataIntegrationProcessLog
@@ -602,7 +602,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CDataIntegrationProcessId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -753,7 +753,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceDataIntegrationProcessLog>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDataIntegrationProcessLog
@@ -1163,7 +1163,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CDataIntegrationProcessId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1675,7 +1675,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceDataIntegrationProcessLog>)finderCache.getResult(
-					finderPath, finderArgs, this);
+					finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1748,7 +1748,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

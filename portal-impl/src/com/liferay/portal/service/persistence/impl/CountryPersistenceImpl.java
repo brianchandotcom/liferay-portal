@@ -149,7 +149,7 @@ public class CountryPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByName, finderArgs, this);
+				_finderPathFetchByName, finderArgs);
 		}
 
 		if (result instanceof Country) {
@@ -250,8 +250,7 @@ public class CountryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {name};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -370,7 +369,7 @@ public class CountryPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByA2, finderArgs, this);
+				_finderPathFetchByA2, finderArgs);
 		}
 
 		if (result instanceof Country) {
@@ -471,8 +470,7 @@ public class CountryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {a2};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -591,7 +589,7 @@ public class CountryPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByA3, finderArgs, this);
+				_finderPathFetchByA3, finderArgs);
 		}
 
 		if (result instanceof Country) {
@@ -692,8 +690,7 @@ public class CountryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {a3};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -838,7 +835,7 @@ public class CountryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Country>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Country country : list) {
@@ -1193,8 +1190,7 @@ public class CountryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {active};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1635,7 +1631,7 @@ public class CountryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Country>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1705,7 +1701,7 @@ public class CountryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

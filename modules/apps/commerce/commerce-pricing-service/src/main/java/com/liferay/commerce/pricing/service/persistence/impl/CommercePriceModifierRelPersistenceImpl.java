@@ -192,7 +192,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommercePriceModifierRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePriceModifierRel commercePriceModifierRel : list) {
@@ -569,7 +569,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commercePriceModifierId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -722,7 +722,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommercePriceModifierRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePriceModifierRel commercePriceModifierRel : list) {
@@ -1122,7 +1122,7 @@ public class CommercePriceModifierRelPersistenceImpl
 			commercePriceModifierId, classNameId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1275,7 +1275,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommercePriceModifierRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommercePriceModifierRel commercePriceModifierRel : list) {
@@ -1669,7 +1669,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1804,7 +1804,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByCPM_CN_CPK, finderArgs, this);
+				_finderPathFetchByCPM_CN_CPK, finderArgs);
 		}
 
 		if (result instanceof CommercePriceModifierRel) {
@@ -1918,7 +1918,7 @@ public class CommercePriceModifierRelPersistenceImpl
 			commercePriceModifierId, classNameId, classPK
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2427,7 +2427,7 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommercePriceModifierRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2498,7 +2498,7 @@ public class CommercePriceModifierRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

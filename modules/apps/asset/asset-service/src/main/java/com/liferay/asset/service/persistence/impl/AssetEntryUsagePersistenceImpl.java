@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -86,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
  com.liferay.layout.model.impl.LayoutClassedModelUsageImpl}
  * @generated
  */
-@Component(service = AssetEntryUsagePersistence.class)
+@Component(service = {AssetEntryUsagePersistence.class, BasePersistence.class})
 @Deprecated
 public class AssetEntryUsagePersistenceImpl
 	extends BasePersistenceImpl<AssetEntryUsage>
@@ -207,7 +208,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
@@ -600,7 +601,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -736,7 +737,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof AssetEntryUsage) {
@@ -856,7 +857,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1028,7 +1029,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
@@ -1453,7 +1454,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1619,7 +1620,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
@@ -1994,7 +1995,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {assetEntryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2133,7 +2134,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
@@ -2500,7 +2501,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2649,7 +2650,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
@@ -3048,7 +3049,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {assetEntryId, type};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -3215,7 +3216,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
@@ -3669,7 +3670,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			finderArgs = new Object[] {containerType, containerKey, plid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -3840,7 +3841,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByA_C_C_P, finderArgs, this);
+				_finderPathFetchByA_C_C_P, finderArgs);
 		}
 
 		if (result instanceof AssetEntryUsage) {
@@ -3982,7 +3983,7 @@ public class AssetEntryUsagePersistenceImpl
 				assetEntryId, containerType, containerKey, plid
 			};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -4658,7 +4659,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetEntryUsage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -4734,7 +4735,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

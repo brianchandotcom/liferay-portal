@@ -189,7 +189,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAddressRestriction>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAddressRestriction commerceAddressRestriction :
@@ -564,7 +564,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceCountryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -710,7 +710,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAddressRestriction>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceAddressRestriction commerceAddressRestriction :
@@ -1106,7 +1106,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1237,8 +1237,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_C_C, finderArgs);
 		}
 
 		if (result instanceof CommerceAddressRestriction) {
@@ -1352,7 +1351,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 			classNameId, classPK, commerceCountryId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1868,7 +1867,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceAddressRestriction>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1941,7 +1940,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

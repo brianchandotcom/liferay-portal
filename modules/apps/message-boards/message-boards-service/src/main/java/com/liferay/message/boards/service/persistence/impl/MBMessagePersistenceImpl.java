@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -95,7 +96,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = MBMessagePersistence.class)
+@Component(service = {MBMessagePersistence.class, BasePersistence.class})
 public class MBMessagePersistenceImpl
 	extends BasePersistenceImpl<MBMessage> implements MBMessagePersistence {
 
@@ -214,7 +215,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -603,7 +604,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -739,7 +740,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof MBMessage) {
@@ -859,7 +860,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1031,7 +1032,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -1452,7 +1453,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1613,7 +1614,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -2301,7 +2302,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2491,7 +2492,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -2858,7 +2859,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2997,7 +2998,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -3361,7 +3362,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {userId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -3501,7 +3502,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -3867,7 +3868,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -4010,7 +4011,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -4377,7 +4378,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -4522,7 +4523,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -4892,7 +4893,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {parentMessageId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -5041,7 +5042,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -5772,7 +5773,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -5981,7 +5982,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -6717,7 +6718,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, categoryId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -6898,8 +6899,7 @@ public class MBMessagePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_US, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByG_US, finderArgs);
 		}
 
 		if (result instanceof MBMessage) {
@@ -7019,7 +7019,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, urlSubject};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -7188,7 +7188,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -7919,7 +7919,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -8128,7 +8128,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -8524,7 +8524,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {companyId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -8681,7 +8681,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -9157,7 +9157,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				_finderPathWithPaginationFindByU_C, finderArgs, this);
+				_finderPathWithPaginationFindByU_C, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -9276,7 +9276,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {userId, classNameId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -9347,7 +9347,7 @@ public class MBMessagePersistenceImpl
 			finderArgs = new Object[] {userId, StringUtil.merge(classNameIds)};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByU_C, finderArgs, this);
+				_finderPathWithPaginationCountByU_C, finderArgs);
 		}
 
 		if (count == null) {
@@ -9518,7 +9518,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -9915,7 +9915,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -10072,7 +10072,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -10470,7 +10470,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId, parentMessageId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -10625,7 +10625,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -11020,7 +11020,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId, answer};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -11175,7 +11175,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -11570,7 +11570,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -11715,7 +11715,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -12110,7 +12110,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -12266,7 +12266,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -12661,7 +12661,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {threadId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -12818,7 +12818,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -13215,7 +13215,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {parentMessageId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -13376,7 +13376,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -14151,7 +14151,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -14379,7 +14379,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -15155,7 +15155,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, categoryId, threadId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -15385,7 +15385,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -16160,7 +16160,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, categoryId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -16388,7 +16388,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -16808,7 +16808,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {userId, classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -16979,7 +16979,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -17483,7 +17483,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				_finderPathWithPaginationFindByU_C_S, finderArgs, this);
+				_finderPathWithPaginationFindByU_C_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -17611,7 +17611,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {userId, classNameId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -17689,7 +17689,7 @@ public class MBMessagePersistenceImpl
 			};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByU_C_S, finderArgs, this);
+				_finderPathWithPaginationCountByU_C_S, finderArgs);
 		}
 
 		if (count == null) {
@@ -17877,7 +17877,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -18297,7 +18297,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {classNameId, classPK, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -18477,7 +18477,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -19295,7 +19295,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, categoryId, threadId, answer};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -19547,7 +19547,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -20365,7 +20365,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {groupId, categoryId, threadId, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -20617,7 +20617,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMessage mbMessage : list) {
@@ -21064,7 +21064,7 @@ public class MBMessagePersistenceImpl
 
 			finderArgs = new Object[] {userId, classNameId, classPK, status};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -21722,7 +21722,7 @@ public class MBMessagePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<MBMessage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -21798,7 +21798,7 @@ public class MBMessagePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

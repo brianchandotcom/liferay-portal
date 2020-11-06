@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -78,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = StyleBookEntryPersistence.class)
+@Component(service = {StyleBookEntryPersistence.class, BasePersistence.class})
 public class StyleBookEntryPersistenceImpl
 	extends BasePersistenceImpl<StyleBookEntry>
 	implements StyleBookEntryPersistence {
@@ -195,7 +196,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -578,7 +579,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -736,7 +737,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -1149,7 +1150,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1314,7 +1315,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -1730,7 +1731,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1876,7 +1877,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G_Head, finderArgs, this);
+				_finderPathFetchByUUID_G_Head, finderArgs);
 		}
 
 		if (result instanceof StyleBookEntry) {
@@ -1995,7 +1996,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2168,7 +2169,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -2584,7 +2585,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2756,7 +2757,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -3194,7 +3195,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3358,7 +3359,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -3717,7 +3718,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3860,7 +3861,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -4250,7 +4251,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4404,7 +4405,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -4796,7 +4797,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, defaultStyleBookEntry};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4959,7 +4960,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -5379,7 +5380,7 @@ public class StyleBookEntryPersistenceImpl
 			groupId, defaultStyleBookEntry, head
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -5528,7 +5529,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -5946,7 +5947,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6107,7 +6108,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -6547,7 +6548,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, name, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -6723,7 +6724,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (StyleBookEntry styleBookEntry : list) {
@@ -7140,7 +7141,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, styleBookEntryKey};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -7288,7 +7289,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_SBEK_Head, finderArgs, this);
+				_finderPathFetchByG_SBEK_Head, finderArgs);
 		}
 
 		if (result instanceof StyleBookEntry) {
@@ -7411,7 +7412,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, styleBookEntryKey, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7545,7 +7546,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByHeadId, finderArgs, this);
+				_finderPathFetchByHeadId, finderArgs);
 		}
 
 		if (result instanceof StyleBookEntry) {
@@ -7635,7 +7636,7 @@ public class StyleBookEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {headId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -8142,7 +8143,7 @@ public class StyleBookEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<StyleBookEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -8212,7 +8213,7 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

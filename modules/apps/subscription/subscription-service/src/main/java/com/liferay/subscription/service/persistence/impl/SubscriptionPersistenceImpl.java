@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -82,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = SubscriptionPersistence.class)
+@Component(service = {SubscriptionPersistence.class, BasePersistence.class})
 public class SubscriptionPersistenceImpl
 	extends BasePersistenceImpl<Subscription>
 	implements SubscriptionPersistence {
@@ -201,7 +202,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -568,7 +569,7 @@ public class SubscriptionPersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -707,7 +708,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -1073,7 +1074,7 @@ public class SubscriptionPersistenceImpl
 
 			finderArgs = new Object[] {userId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1221,7 +1222,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -1618,7 +1619,7 @@ public class SubscriptionPersistenceImpl
 
 			finderArgs = new Object[] {groupId, userId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1774,7 +1775,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -2172,7 +2173,7 @@ public class SubscriptionPersistenceImpl
 
 			finderArgs = new Object[] {userId, classNameId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2336,7 +2337,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -2757,7 +2758,7 @@ public class SubscriptionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2963,7 +2964,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_U_C_C, finderArgs, this);
+				_finderPathWithPaginationFindByC_U_C_C, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
@@ -3145,7 +3146,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_U_C_C, finderArgs, this);
+				_finderPathFetchByC_U_C_C, finderArgs);
 		}
 
 		if (result instanceof Subscription) {
@@ -3270,7 +3271,7 @@ public class SubscriptionPersistenceImpl
 
 			finderArgs = new Object[] {companyId, userId, classNameId, classPK};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -3355,7 +3356,7 @@ public class SubscriptionPersistenceImpl
 			};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByC_U_C_C, finderArgs, this);
+				_finderPathWithPaginationCountByC_U_C_C, finderArgs);
 		}
 
 		if (count == null) {
@@ -3990,7 +3991,7 @@ public class SubscriptionPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<Subscription>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -4066,7 +4067,7 @@ public class SubscriptionPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

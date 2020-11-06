@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -72,7 +73,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = AppBuilderAppDataRecordLinkPersistence.class)
+@Component(
+	service = {
+		AppBuilderAppDataRecordLinkPersistence.class, BasePersistence.class
+	}
+)
 public class AppBuilderAppDataRecordLinkPersistenceImpl
 	extends BasePersistenceImpl<AppBuilderAppDataRecordLink>
 	implements AppBuilderAppDataRecordLinkPersistence {
@@ -195,7 +200,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderAppDataRecordLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderAppDataRecordLink appBuilderAppDataRecordLink :
@@ -570,7 +575,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		Object[] finderArgs = new Object[] {appBuilderAppId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -680,7 +685,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByDDLRecordId, finderArgs, this);
+				_finderPathFetchByDDLRecordId, finderArgs);
 		}
 
 		if (result instanceof AppBuilderAppDataRecordLink) {
@@ -788,7 +793,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		Object[] finderArgs = new Object[] {ddlRecordId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -935,7 +940,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderAppDataRecordLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderAppDataRecordLink appBuilderAppDataRecordLink :
@@ -1423,7 +1428,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderAppDataRecordLink>)finderCache.getResult(
-				_finderPathWithPaginationFindByA_D, finderArgs, this);
+				_finderPathWithPaginationFindByA_D, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderAppDataRecordLink appBuilderAppDataRecordLink :
@@ -1537,7 +1542,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		Object[] finderArgs = new Object[] {appBuilderAppId, ddlRecordId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1599,7 +1604,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByA_D, finderArgs, this);
+			_finderPathWithPaginationCountByA_D, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -2099,7 +2104,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderAppDataRecordLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2172,7 +2177,7 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

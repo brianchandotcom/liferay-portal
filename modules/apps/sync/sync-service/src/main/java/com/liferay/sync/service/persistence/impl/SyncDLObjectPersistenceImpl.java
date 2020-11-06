@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -74,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = SyncDLObjectPersistence.class)
+@Component(service = {SyncDLObjectPersistence.class, BasePersistence.class})
 public class SyncDLObjectPersistenceImpl
 	extends BasePersistenceImpl<SyncDLObject>
 	implements SyncDLObjectPersistence {
@@ -183,7 +184,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -570,7 +571,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {treePath};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -717,7 +718,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -1106,7 +1107,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {modifiedTime, repositoryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1259,7 +1260,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -1648,7 +1649,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {repositoryId, parentFolderId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1789,7 +1790,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -2204,7 +2205,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {repositoryId, event};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2370,7 +2371,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -2785,7 +2786,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {repositoryId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2941,7 +2942,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -3382,7 +3383,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {treePath, event};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3562,7 +3563,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -3998,7 +3999,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {version, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4148,8 +4149,7 @@ public class SyncDLObjectPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByT_T, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByT_T, finderArgs);
 		}
 
 		if (result instanceof SyncDLObject) {
@@ -4260,7 +4260,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {type, typePK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4425,7 +4425,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -4959,7 +4959,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				_finderPathWithPaginationFindByM_R_NotE, finderArgs, this);
+				_finderPathWithPaginationFindByM_R_NotE, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -5097,7 +5097,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {modifiedTime, repositoryId, event};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -5181,7 +5181,7 @@ public class SyncDLObjectPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByM_R_NotE, finderArgs, this);
+			_finderPathWithPaginationCountByM_R_NotE, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -5383,7 +5383,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -5917,7 +5917,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				_finderPathWithPaginationFindByR_P_T, finderArgs, this);
+				_finderPathWithPaginationFindByR_P_T, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
@@ -6054,7 +6054,7 @@ public class SyncDLObjectPersistenceImpl
 
 		Object[] finderArgs = new Object[] {repositoryId, parentFolderId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -6138,7 +6138,7 @@ public class SyncDLObjectPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByR_P_T, finderArgs, this);
+			_finderPathWithPaginationCountByR_P_T, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -6618,7 +6618,7 @@ public class SyncDLObjectPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SyncDLObject>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -6688,7 +6688,7 @@ public class SyncDLObjectPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

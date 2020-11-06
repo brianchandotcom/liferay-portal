@@ -196,7 +196,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
@@ -589,7 +589,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {bigDecimalValue};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -735,7 +735,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
@@ -1128,7 +1128,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {bigDecimalValue};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1274,7 +1274,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
@@ -1667,7 +1667,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {bigDecimalValue};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2102,7 +2102,7 @@ public class BigDecimalEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<BigDecimalEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2172,7 +2172,7 @@ public class BigDecimalEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -88,7 +89,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = DDMDataProviderInstancePersistence.class)
+@Component(
+	service = {DDMDataProviderInstancePersistence.class, BasePersistence.class}
+)
 public class DDMDataProviderInstancePersistenceImpl
 	extends BasePersistenceImpl<DDMDataProviderInstance>
 	implements DDMDataProviderInstancePersistence {
@@ -210,7 +213,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstance>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
@@ -613,7 +616,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 			finderArgs = new Object[] {uuid};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -750,7 +753,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof DDMDataProviderInstance) {
@@ -873,7 +876,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 			finderArgs = new Object[] {uuid, groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1047,7 +1050,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstance>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
@@ -1475,7 +1478,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 			finderArgs = new Object[] {uuid, companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1639,7 +1642,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstance>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
@@ -2569,7 +2572,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstance>)finderCache.getResult(
-				_finderPathWithPaginationFindByGroupId, finderArgs, this);
+				_finderPathWithPaginationFindByGroupId, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
@@ -2679,7 +2682,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 			finderArgs = new Object[] {groupId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2745,7 +2748,7 @@ public class DDMDataProviderInstancePersistenceImpl
 			finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByGroupId, finderArgs, this);
+				_finderPathWithPaginationCountByGroupId, finderArgs);
 		}
 
 		if (count == null) {
@@ -3015,7 +3018,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstance>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
@@ -3393,7 +3396,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -4045,7 +4048,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<DDMDataProviderInstance>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -4122,7 +4125,7 @@ public class DDMDataProviderInstancePersistenceImpl
 
 		if (productionMode) {
 			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

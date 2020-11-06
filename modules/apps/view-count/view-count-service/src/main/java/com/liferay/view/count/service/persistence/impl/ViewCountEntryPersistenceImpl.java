@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -67,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  * @generated
  */
-@Component(service = ViewCountEntryPersistence.class)
+@Component(service = {ViewCountEntryPersistence.class, BasePersistence.class})
 public class ViewCountEntryPersistenceImpl
 	extends BasePersistenceImpl<ViewCountEntry>
 	implements ViewCountEntryPersistence {
@@ -443,7 +444,7 @@ public class ViewCountEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ViewCountEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -513,7 +514,7 @@ public class ViewCountEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

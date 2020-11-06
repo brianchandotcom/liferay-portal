@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -87,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = WikiPagePersistence.class)
+@Component(service = {WikiPagePersistence.class, BasePersistence.class})
 public class WikiPagePersistenceImpl
 	extends BasePersistenceImpl<WikiPage> implements WikiPagePersistence {
 
@@ -206,7 +207,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -565,7 +566,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {resourcePrimKey};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -700,7 +701,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -1080,7 +1081,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1210,7 +1211,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof WikiPage) {
@@ -1321,7 +1322,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1486,7 +1487,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -1898,7 +1899,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2051,7 +2052,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -2406,7 +2407,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2540,7 +2541,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -2921,7 +2922,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {format};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3078,7 +3079,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -3466,7 +3467,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {resourcePrimKey, nodeId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3616,7 +3617,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -4004,7 +4005,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {resourcePrimKey, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4154,7 +4155,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -4563,7 +4564,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, title};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4725,7 +4726,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -5107,7 +5108,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5257,7 +5258,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -5671,7 +5672,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, parentTitle};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5836,7 +5837,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -6250,7 +6251,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, redirectTitle};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6412,7 +6413,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -6796,7 +6797,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6926,8 +6927,7 @@ public class WikiPagePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByR_N_V, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByR_N_V, finderArgs);
 		}
 
 		if (result instanceof WikiPage) {
@@ -7033,7 +7033,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {resourcePrimKey, nodeId, version};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7196,7 +7196,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -7607,7 +7607,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {resourcePrimKey, nodeId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7771,7 +7771,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -8183,7 +8183,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {resourcePrimKey, nodeId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -8343,7 +8343,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -9108,7 +9108,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, nodeId, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -9327,7 +9327,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -10093,7 +10093,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, nodeId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -10311,7 +10311,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -10722,7 +10722,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, nodeId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -10857,8 +10857,7 @@ public class WikiPagePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByN_T_V, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByN_T_V, finderArgs);
 		}
 
 		if (result instanceof WikiPage) {
@@ -10976,7 +10975,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, title, version};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -11152,7 +11151,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -11589,7 +11588,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, title, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -11765,7 +11764,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -12202,7 +12201,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, title, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -12381,7 +12380,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -12818,7 +12817,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head, parentTitle};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -12997,7 +12996,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -13434,7 +13433,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head, redirectTitle};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -13608,7 +13607,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -14019,7 +14018,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -14170,7 +14169,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -14581,7 +14580,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -14750,7 +14749,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -15557,7 +15556,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId, nodeId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -15800,7 +15799,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -16658,7 +16657,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, nodeId, title, head};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -16925,7 +16924,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -17731,7 +17730,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, nodeId, head, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -17976,7 +17975,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -18440,7 +18439,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head, parentTitle, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -18623,7 +18622,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -19087,7 +19086,7 @@ public class WikiPagePersistenceImpl
 
 		Object[] finderArgs = new Object[] {nodeId, head, parentTitle, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -19282,7 +19281,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -19748,7 +19747,7 @@ public class WikiPagePersistenceImpl
 			nodeId, head, redirectTitle, status
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -19931,7 +19930,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -20397,7 +20396,7 @@ public class WikiPagePersistenceImpl
 			nodeId, head, redirectTitle, status
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -20599,7 +20598,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
@@ -21503,7 +21502,7 @@ public class WikiPagePersistenceImpl
 			groupId, nodeId, head, parentTitle, status
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(6);
@@ -22143,7 +22142,7 @@ public class WikiPagePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WikiPage>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -22213,7 +22212,7 @@ public class WikiPagePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

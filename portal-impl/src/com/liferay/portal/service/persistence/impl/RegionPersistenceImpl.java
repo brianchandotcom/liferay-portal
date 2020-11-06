@@ -178,7 +178,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -533,8 +533,7 @@ public class RegionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {countryId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -666,7 +665,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -1021,8 +1020,7 @@ public class RegionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {active};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1138,7 +1136,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_R, finderArgs, this);
+				_finderPathFetchByC_R, finderArgs);
 		}
 
 		if (result instanceof Region) {
@@ -1249,8 +1247,7 @@ public class RegionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {countryId, regionCode};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1413,7 +1410,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -1797,8 +1794,7 @@ public class RegionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {countryId, active};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2225,7 +2221,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2295,7 +2291,7 @@ public class RegionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

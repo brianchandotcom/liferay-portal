@@ -193,7 +193,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -583,7 +583,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -714,7 +714,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof CPAttachmentFileEntry) {
@@ -827,7 +827,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -995,7 +995,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -1413,7 +1413,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1579,7 +1579,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -1972,7 +1972,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2113,7 +2113,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -2529,7 +2529,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {_getTime(displayDate), status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2674,8 +2674,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_F, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_C_F, finderArgs);
 		}
 
 		if (result instanceof CPAttachmentFileEntry) {
@@ -2783,7 +2782,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK, fileEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2944,7 +2943,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -3413,7 +3412,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 			classNameId, classPK, _getTime(displayDate), status
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -3606,7 +3605,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -4049,7 +4048,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK, type, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -4216,7 +4215,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPAttachmentFileEntry cpAttachmentFileEntry : list) {
@@ -4659,7 +4658,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {classNameId, classPK, type, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -4799,8 +4798,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
 		}
 
 		if (result instanceof CPAttachmentFileEntry) {
@@ -4933,7 +4931,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5493,7 +5491,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPAttachmentFileEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5563,7 +5561,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

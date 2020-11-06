@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -72,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = AccountRolePersistence.class)
+@Component(service = {AccountRolePersistence.class, BasePersistence.class})
 public class AccountRolePersistenceImpl
 	extends BasePersistenceImpl<AccountRole> implements AccountRolePersistence {
 
@@ -191,7 +192,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -549,7 +550,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -689,7 +690,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -1130,8 +1131,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				_finderPathWithPaginationFindByAccountEntryId, finderArgs,
-				this);
+				_finderPathWithPaginationFindByAccountEntryId, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountRole accountRole : list) {
@@ -1233,7 +1233,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {accountEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1288,7 +1288,7 @@ public class AccountRolePersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(accountEntryIds)};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByAccountEntryId, finderArgs, this);
+			_finderPathWithPaginationCountByAccountEntryId, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -1406,7 +1406,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByRoleId, finderArgs, this);
+				_finderPathFetchByRoleId, finderArgs);
 		}
 
 		if (result instanceof AccountRole) {
@@ -1509,7 +1509,7 @@ public class AccountRolePersistenceImpl
 
 		Object[] finderArgs = new Object[] {roleId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1932,7 +1932,7 @@ public class AccountRolePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AccountRole>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2002,7 +2002,7 @@ public class AccountRolePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

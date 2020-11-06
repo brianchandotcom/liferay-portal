@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -79,7 +80,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = WorkflowMetricsSLADefinitionPersistence.class)
+@Component(
+	service = {
+		WorkflowMetricsSLADefinitionPersistence.class, BasePersistence.class
+	}
+)
 public class WorkflowMetricsSLADefinitionPersistenceImpl
 	extends BasePersistenceImpl<WorkflowMetricsSLADefinition>
 	implements WorkflowMetricsSLADefinitionPersistence {
@@ -198,7 +203,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -594,7 +599,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -727,7 +732,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof WorkflowMetricsSLADefinition) {
@@ -842,7 +847,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1010,7 +1015,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -1433,7 +1438,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1573,7 +1578,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByWMSLAD_A, finderArgs, this);
+				_finderPathFetchByWMSLAD_A, finderArgs);
 		}
 
 		if (result instanceof WorkflowMetricsSLADefinition) {
@@ -1698,7 +1703,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			workflowMetricsSLADefinitionId, active
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1851,7 +1856,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -2248,7 +2253,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2405,7 +2410,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -2826,7 +2831,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, active, processId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3002,7 +3007,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -3478,7 +3483,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, active, name, processId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -3675,7 +3680,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -4127,7 +4132,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			companyId, active, processId, status
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -4305,7 +4310,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
@@ -4817,7 +4822,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			companyId, active, processId, processVersion, status
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(6);
@@ -5407,7 +5412,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5480,7 +5485,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

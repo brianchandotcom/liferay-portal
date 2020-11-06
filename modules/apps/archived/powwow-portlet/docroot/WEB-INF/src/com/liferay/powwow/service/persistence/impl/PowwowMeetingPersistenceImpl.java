@@ -181,7 +181,7 @@ public class PowwowMeetingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowMeeting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
@@ -871,8 +871,7 @@ public class PowwowMeetingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1059,7 +1058,7 @@ public class PowwowMeetingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowMeeting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
@@ -1425,8 +1424,7 @@ public class PowwowMeetingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {powwowServerId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1559,7 +1557,7 @@ public class PowwowMeetingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowMeeting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
@@ -1918,8 +1916,7 @@ public class PowwowMeetingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2061,7 +2058,7 @@ public class PowwowMeetingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowMeeting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
@@ -2450,8 +2447,7 @@ public class PowwowMeetingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2601,7 +2597,7 @@ public class PowwowMeetingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowMeeting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
@@ -2991,8 +2987,7 @@ public class PowwowMeetingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {powwowServerId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3436,7 +3431,7 @@ public class PowwowMeetingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<PowwowMeeting>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3506,7 +3501,7 @@ public class PowwowMeetingPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

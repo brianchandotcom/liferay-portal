@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -81,7 +82,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = SiteNavigationMenuPersistence.class)
+@Component(
+	service = {SiteNavigationMenuPersistence.class, BasePersistence.class}
+)
 public class SiteNavigationMenuPersistenceImpl
 	extends BasePersistenceImpl<SiteNavigationMenu>
 	implements SiteNavigationMenuPersistence {
@@ -200,7 +203,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -588,7 +591,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -718,7 +721,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof SiteNavigationMenu) {
@@ -829,7 +832,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -995,7 +998,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -1412,7 +1415,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1570,7 +1573,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -2487,7 +2490,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				_finderPathWithPaginationFindByGroupId, finderArgs, this);
+				_finderPathWithPaginationFindByGroupId, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -2588,7 +2591,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2643,7 +2646,7 @@ public class SiteNavigationMenuPersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByGroupId, finderArgs, this);
+			_finderPathWithPaginationCountByGroupId, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -2883,8 +2886,7 @@ public class SiteNavigationMenuPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_N, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByG_N, finderArgs);
 		}
 
 		if (result instanceof SiteNavigationMenu) {
@@ -2995,7 +2997,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3150,7 +3152,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -4196,7 +4198,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_LikeN, finderArgs, this);
+				_finderPathWithPaginationFindByG_LikeN, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -4324,7 +4326,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, name};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4397,7 +4399,7 @@ public class SiteNavigationMenuPersistenceImpl
 		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds), name};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_LikeN, finderArgs, this);
+			_finderPathWithPaginationCountByG_LikeN, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -4729,7 +4731,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -5469,7 +5471,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5674,7 +5676,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
@@ -6416,7 +6418,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, auto};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6983,7 +6985,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<SiteNavigationMenu>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -7053,7 +7055,7 @@ public class SiteNavigationMenuPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

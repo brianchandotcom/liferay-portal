@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -79,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Lundgren
  * @generated
  */
-@Component(service = CalendarBookingPersistence.class)
+@Component(service = {CalendarBookingPersistence.class, BasePersistence.class})
 public class CalendarBookingPersistenceImpl
 	extends BasePersistenceImpl<CalendarBooking>
 	implements CalendarBookingPersistence {
@@ -196,7 +197,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -580,7 +581,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -710,7 +711,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof CalendarBooking) {
@@ -821,7 +822,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -987,7 +988,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -1403,7 +1404,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1563,7 +1564,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -1925,7 +1926,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {calendarId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2067,7 +2068,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -2437,7 +2438,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {calendarResourceId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2583,7 +2584,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -2955,7 +2956,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {parentCalendarBookingId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3104,7 +3105,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -3483,7 +3484,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {recurringCalendarBookingId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3602,8 +3603,7 @@ public class CalendarBookingPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_P, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_P, finderArgs);
 		}
 
 		if (result instanceof CalendarBooking) {
@@ -3706,7 +3706,7 @@ public class CalendarBookingPersistenceImpl
 			calendarId, parentCalendarBookingId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3828,8 +3828,7 @@ public class CalendarBookingPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_V, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_V, finderArgs);
 		}
 
 		if (result instanceof CalendarBooking) {
@@ -3940,7 +3939,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {calendarId, vEventUid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4105,7 +4104,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -4580,7 +4579,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_S, finderArgs, this);
+				_finderPathWithPaginationFindByC_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -4690,7 +4689,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {calendarId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4752,7 +4751,7 @@ public class CalendarBookingPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_S, finderArgs, this);
+			_finderPathWithPaginationCountByC_S, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -4921,7 +4920,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarBooking calendarBooking : list) {
@@ -5314,7 +5313,7 @@ public class CalendarBookingPersistenceImpl
 
 		Object[] finderArgs = new Object[] {parentCalendarBookingId, status};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5833,7 +5832,7 @@ public class CalendarBookingPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CalendarBooking>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5903,7 +5902,7 @@ public class CalendarBookingPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

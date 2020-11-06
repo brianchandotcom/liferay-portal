@@ -187,7 +187,7 @@ public class CommerceApplicationBrandPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceApplicationBrand>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceApplicationBrand commerceApplicationBrand : list) {
@@ -897,7 +897,7 @@ public class CommerceApplicationBrandPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1412,7 +1412,7 @@ public class CommerceApplicationBrandPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceApplicationBrand>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1483,7 +1483,7 @@ public class CommerceApplicationBrandPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -70,7 +71,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = StatusPersistence.class)
+@Component(service = {StatusPersistence.class, BasePersistence.class})
 public class StatusPersistenceImpl
 	extends BasePersistenceImpl<Status> implements StatusPersistence {
 
@@ -155,7 +156,7 @@ public class StatusPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUserId, finderArgs, this);
+				_finderPathFetchByUserId, finderArgs);
 		}
 
 		if (result instanceof Status) {
@@ -243,7 +244,7 @@ public class StatusPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -380,8 +381,7 @@ public class StatusPersistenceImpl
 		List<Status> list = null;
 
 		if (useFinderCache) {
-			list = (List<Status>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Status>)finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Status status : list) {
@@ -739,7 +739,7 @@ public class StatusPersistenceImpl
 
 		Object[] finderArgs = new Object[] {modifiedDate};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -870,8 +870,7 @@ public class StatusPersistenceImpl
 		List<Status> list = null;
 
 		if (useFinderCache) {
-			list = (List<Status>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Status>)finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Status status : list) {
@@ -1226,7 +1225,7 @@ public class StatusPersistenceImpl
 
 		Object[] finderArgs = new Object[] {online};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1367,8 +1366,7 @@ public class StatusPersistenceImpl
 		List<Status> list = null;
 
 		if (useFinderCache) {
-			list = (List<Status>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Status>)finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Status status : list) {
@@ -1755,7 +1753,7 @@ public class StatusPersistenceImpl
 
 		Object[] finderArgs = new Object[] {modifiedDate, online};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2176,8 +2174,7 @@ public class StatusPersistenceImpl
 		List<Status> list = null;
 
 		if (useFinderCache) {
-			list = (List<Status>)finderCache.getResult(
-				finderPath, finderArgs, this);
+			list = (List<Status>)finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2247,7 +2244,7 @@ public class StatusPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

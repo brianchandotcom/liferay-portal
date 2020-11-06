@@ -182,7 +182,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -862,8 +862,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1044,7 +1043,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -1399,8 +1398,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1539,7 +1537,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -1900,8 +1898,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {assigneeUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2040,7 +2037,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -2401,8 +2398,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {resolverUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2544,7 +2540,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -3266,8 +3262,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3471,7 +3466,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -4201,8 +4196,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, assigneeUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4406,7 +4400,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -5136,8 +5130,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, resolverUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5340,7 +5333,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -5808,7 +5801,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByU_S, finderArgs, this);
+				_finderPathWithPaginationFindByU_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -5917,8 +5910,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5978,7 +5970,7 @@ public class TasksEntryPersistenceImpl
 		Object[] finderArgs = new Object[] {userId, StringUtil.merge(statuses)};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByU_S, finderArgs, this);
+			_finderPathWithPaginationCountByU_S, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -6144,7 +6136,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -6618,7 +6610,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByA_S, finderArgs, this);
+				_finderPathWithPaginationFindByA_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -6727,8 +6719,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {assigneeUserId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6790,7 +6781,7 @@ public class TasksEntryPersistenceImpl
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByA_S, finderArgs, this);
+			_finderPathWithPaginationCountByA_S, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -6961,7 +6952,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -7973,7 +7964,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_U_S, finderArgs, this);
+				_finderPathWithPaginationFindByG_U_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -8089,8 +8080,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, userId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -8157,7 +8147,7 @@ public class TasksEntryPersistenceImpl
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByG_U_S, finderArgs, this);
+			_finderPathWithPaginationCountByG_U_S, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -8472,7 +8462,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -9491,7 +9481,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_A_S, finderArgs, this);
+				_finderPathWithPaginationFindByG_A_S, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
@@ -9607,8 +9597,7 @@ public class TasksEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, assigneeUserId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -9675,7 +9664,7 @@ public class TasksEntryPersistenceImpl
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByG_A_S, finderArgs, this);
+			_finderPathWithPaginationCountByG_A_S, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -10273,7 +10262,7 @@ public class TasksEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -10343,7 +10332,7 @@ public class TasksEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

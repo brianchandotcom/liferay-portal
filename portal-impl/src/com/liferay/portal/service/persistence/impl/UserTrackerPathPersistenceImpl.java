@@ -183,7 +183,7 @@ public class UserTrackerPathPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<UserTrackerPath>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserTrackerPath userTrackerPath : list) {
@@ -550,8 +550,7 @@ public class UserTrackerPathPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userTrackerId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -974,7 +973,7 @@ public class UserTrackerPathPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<UserTrackerPath>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1044,7 +1043,7 @@ public class UserTrackerPathPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

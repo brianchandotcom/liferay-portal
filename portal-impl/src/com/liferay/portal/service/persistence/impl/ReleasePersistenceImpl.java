@@ -157,7 +157,7 @@ public class ReleasePersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByServletContextName, finderArgs, this);
+				_finderPathFetchByServletContextName, finderArgs);
 		}
 
 		if (result instanceof Release) {
@@ -265,8 +265,7 @@ public class ReleasePersistenceImpl
 
 		Object[] finderArgs = new Object[] {servletContextName};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -731,7 +730,7 @@ public class ReleasePersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Release>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -801,7 +800,7 @@ public class ReleasePersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

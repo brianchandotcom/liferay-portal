@@ -198,7 +198,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategoryProperty>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategoryProperty assetCategoryProperty : list) {
@@ -575,8 +575,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			finderArgs = new Object[] {companyId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -721,7 +720,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategoryProperty>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategoryProperty assetCategoryProperty : list) {
@@ -1098,8 +1097,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			finderArgs = new Object[] {categoryId};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1249,7 +1247,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategoryProperty>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategoryProperty assetCategoryProperty : list) {
@@ -1676,8 +1674,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			finderArgs = new Object[] {companyId, key};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -1821,7 +1818,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByCA_K, finderArgs, this);
+				_finderPathFetchByCA_K, finderArgs);
 		}
 
 		if (result instanceof AssetCategoryProperty) {
@@ -1943,8 +1940,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			finderArgs = new Object[] {categoryId, key};
 
-			count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+			count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 		}
 
 		if (count == null) {
@@ -2604,7 +2600,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<AssetCategoryProperty>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2680,7 +2676,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		if (productionMode) {
 			count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
 		}
 
 		if (count == null) {

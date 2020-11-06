@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -72,7 +73,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = AppBuilderWorkflowTaskLinkPersistence.class)
+@Component(
+	service = {
+		AppBuilderWorkflowTaskLinkPersistence.class, BasePersistence.class
+	}
+)
 public class AppBuilderWorkflowTaskLinkPersistenceImpl
 	extends BasePersistenceImpl<AppBuilderWorkflowTaskLink>
 	implements AppBuilderWorkflowTaskLinkPersistence {
@@ -195,7 +200,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderWorkflowTaskLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink :
@@ -569,7 +574,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 
 		Object[] finderArgs = new Object[] {appBuilderAppId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -721,7 +726,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderWorkflowTaskLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink :
@@ -1124,7 +1129,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 			appBuilderAppId, appBuilderAppVersionId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1293,7 +1298,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderWorkflowTaskLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink :
@@ -1763,7 +1768,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 			appBuilderAppId, appBuilderAppVersionId, workflowTaskName
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1933,7 +1938,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByA_A_D_W, finderArgs, this);
+				_finderPathFetchByA_A_D_W, finderArgs);
 		}
 
 		if (result instanceof AppBuilderWorkflowTaskLink) {
@@ -2093,7 +2098,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 			workflowTaskName
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -2609,7 +2614,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AppBuilderWorkflowTaskLink>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2682,7 +2687,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

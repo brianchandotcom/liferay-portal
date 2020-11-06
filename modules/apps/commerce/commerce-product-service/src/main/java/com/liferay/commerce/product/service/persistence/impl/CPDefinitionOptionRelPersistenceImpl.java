@@ -189,7 +189,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -579,7 +579,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -710,7 +710,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof CPDefinitionOptionRel) {
@@ -823,7 +823,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -991,7 +991,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -1409,7 +1409,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1566,7 +1566,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -1934,7 +1934,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2072,7 +2072,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -2440,7 +2440,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2581,7 +2581,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -2952,7 +2952,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3068,8 +3068,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
 		}
 
 		if (result instanceof CPDefinitionOptionRel) {
@@ -3170,7 +3169,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId, CPOptionId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3323,7 +3322,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -3716,7 +3715,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId, required};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3870,7 +3869,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionOptionRel cpDefinitionOptionRel : list) {
@@ -4266,7 +4265,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId, skuContributor};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4389,8 +4388,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_K, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_K, finderArgs);
 		}
 
 		if (result instanceof CPDefinitionOptionRel) {
@@ -4503,7 +4501,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CPDefinitionId, key};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5059,7 +5057,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPDefinitionOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -5129,7 +5127,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

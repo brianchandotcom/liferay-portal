@@ -186,7 +186,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceTaxMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceTaxMethod commerceTaxMethod : list) {
@@ -549,7 +549,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -664,8 +664,7 @@ public class CommerceTaxMethodPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_E, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByG_E, finderArgs);
 		}
 
 		if (result instanceof CommerceTaxMethod) {
@@ -776,7 +775,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, engineKey};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -939,7 +938,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceTaxMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceTaxMethod commerceTaxMethod : list) {
@@ -1330,7 +1329,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, active};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1811,7 +1810,7 @@ public class CommerceTaxMethodPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceTaxMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1881,7 +1880,7 @@ public class CommerceTaxMethodPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

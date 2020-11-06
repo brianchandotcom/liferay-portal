@@ -180,7 +180,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsFlag announcementsFlag : list) {
@@ -545,8 +545,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -682,7 +681,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsFlag announcementsFlag : list) {
@@ -1044,8 +1043,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		Object[] finderArgs = new Object[] {entryId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1168,7 +1166,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_E_V, finderArgs, this);
+				_finderPathFetchByU_E_V, finderArgs);
 		}
 
 		if (result instanceof AnnouncementsFlag) {
@@ -1274,8 +1272,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		Object[] finderArgs = new Object[] {userId, entryId, value};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -1734,7 +1731,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1804,7 +1801,7 @@ public class AnnouncementsFlagPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

@@ -186,7 +186,7 @@ public class CommerceShippingMethodPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShippingMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShippingMethod commerceShippingMethod : list) {
@@ -554,7 +554,7 @@ public class CommerceShippingMethodPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -670,8 +670,7 @@ public class CommerceShippingMethodPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_E, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByG_E, finderArgs);
 		}
 
 		if (result instanceof CommerceShippingMethod) {
@@ -785,7 +784,7 @@ public class CommerceShippingMethodPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, engineKey};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -950,7 +949,7 @@ public class CommerceShippingMethodPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShippingMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceShippingMethod commerceShippingMethod : list) {
@@ -1342,7 +1341,7 @@ public class CommerceShippingMethodPersistenceImpl
 
 		Object[] finderArgs = new Object[] {groupId, active};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1842,7 +1841,7 @@ public class CommerceShippingMethodPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceShippingMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1912,7 +1911,7 @@ public class CommerceShippingMethodPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

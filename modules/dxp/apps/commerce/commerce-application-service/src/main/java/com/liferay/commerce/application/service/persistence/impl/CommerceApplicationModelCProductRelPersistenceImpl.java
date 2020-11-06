@@ -202,7 +202,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceApplicationModelCProductRel>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceApplicationModelCProductRel
@@ -611,7 +611,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceApplicationModelId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -757,7 +757,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceApplicationModelCProductRel>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceApplicationModelCProductRel
@@ -1146,7 +1146,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 
 		Object[] finderArgs = new Object[] {CProductId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1661,7 +1661,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 		if (useFinderCache) {
 			list =
 				(List<CommerceApplicationModelCProductRel>)
-					finderCache.getResult(finderPath, finderArgs, this);
+					finderCache.getResult(finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1735,7 +1735,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

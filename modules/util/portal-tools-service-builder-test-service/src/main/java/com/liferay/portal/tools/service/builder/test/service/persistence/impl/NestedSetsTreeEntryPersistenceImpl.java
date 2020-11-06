@@ -521,7 +521,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<NestedSetsTreeEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -591,7 +591,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;
@@ -647,7 +647,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountAncestors, finderArgs, this);
+			_finderPathWithPaginationCountAncestors, finderArgs);
 
 		if (count == null) {
 			try {
@@ -674,7 +674,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountDescendants, finderArgs, this);
+			_finderPathWithPaginationCountDescendants, finderArgs);
 
 		if (count == null) {
 			try {
@@ -705,7 +705,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 
 		List<NestedSetsTreeEntry> list =
 			(List<NestedSetsTreeEntry>)finderCache.getResult(
-				_finderPathWithPaginationGetAncestors, finderArgs, this);
+				_finderPathWithPaginationGetAncestors, finderArgs);
 
 		if ((list != null) && !list.isEmpty()) {
 			for (NestedSetsTreeEntry tempNestedSetsTreeEntry : list) {
@@ -752,7 +752,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 
 		List<NestedSetsTreeEntry> list =
 			(List<NestedSetsTreeEntry>)finderCache.getResult(
-				_finderPathWithPaginationGetDescendants, finderArgs, this);
+				_finderPathWithPaginationGetDescendants, finderArgs);
 
 		if ((list != null) && !list.isEmpty()) {
 			for (NestedSetsTreeEntry tempNestedSetsTreeEntry : list) {

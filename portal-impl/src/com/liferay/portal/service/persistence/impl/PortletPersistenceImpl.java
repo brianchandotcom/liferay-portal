@@ -179,7 +179,7 @@ public class PortletPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Portlet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Portlet portlet : list) {
@@ -535,8 +535,7 @@ public class PortletPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -652,7 +651,7 @@ public class PortletPersistenceImpl
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_P, finderArgs, this);
+				_finderPathFetchByC_P, finderArgs);
 		}
 
 		if (result instanceof Portlet) {
@@ -763,8 +762,7 @@ public class PortletPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, portletId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1212,7 +1210,7 @@ public class PortletPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Portlet>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1282,7 +1280,7 @@ public class PortletPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

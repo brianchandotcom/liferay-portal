@@ -189,7 +189,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountUsageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
@@ -566,7 +566,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		Object[] finderArgs = new Object[] {commerceDiscountId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -718,7 +718,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountUsageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
@@ -1122,7 +1122,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			commerceAccountId, commerceDiscountId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1277,7 +1277,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountUsageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
@@ -1680,7 +1680,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			commerceOrderId, commerceDiscountId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1846,7 +1846,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountUsageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
@@ -2284,7 +2284,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			commerceAccountId, commerceOrderId, commerceDiscountId
 		};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2774,7 +2774,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CommerceDiscountUsageEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -2847,7 +2847,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

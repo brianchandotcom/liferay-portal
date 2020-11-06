@@ -188,7 +188,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPMeasurementUnit>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPMeasurementUnit cpMeasurementUnit : list) {
@@ -574,7 +574,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -704,7 +704,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
+				_finderPathFetchByUUID_G, finderArgs);
 		}
 
 		if (result instanceof CPMeasurementUnit) {
@@ -815,7 +815,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -981,7 +981,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPMeasurementUnit>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPMeasurementUnit cpMeasurementUnit : list) {
@@ -1398,7 +1398,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1557,7 +1557,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPMeasurementUnit>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPMeasurementUnit cpMeasurementUnit : list) {
@@ -1923,7 +1923,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2065,7 +2065,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPMeasurementUnit>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPMeasurementUnit cpMeasurementUnit : list) {
@@ -2456,7 +2456,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2587,8 +2587,7 @@ public class CPMeasurementUnitPersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_K_T, finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByC_K_T, finderArgs);
 		}
 
 		if (result instanceof CPMeasurementUnit) {
@@ -2706,7 +2705,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, key, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2884,7 +2883,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPMeasurementUnit>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPMeasurementUnit cpMeasurementUnit : list) {
@@ -3298,7 +3297,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId, primary, type};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -3817,7 +3816,7 @@ public class CPMeasurementUnitPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<CPMeasurementUnit>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -3887,7 +3886,7 @@ public class CPMeasurementUnitPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

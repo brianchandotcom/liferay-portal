@@ -185,7 +185,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LocalizedEntryLocalization>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LocalizedEntryLocalization localizedEntryLocalization :
@@ -559,7 +559,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {localizedEntryId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -681,8 +681,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByLocalizedEntryId_LanguageId, finderArgs,
-				this);
+				_finderPathFetchByLocalizedEntryId_LanguageId, finderArgs);
 		}
 
 		if (result instanceof LocalizedEntryLocalization) {
@@ -805,7 +804,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		Object[] finderArgs = new Object[] {localizedEntryId, languageId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1309,7 +1308,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<LocalizedEntryLocalization>)finderCache.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 		}
 
 		if (list == null) {
@@ -1382,7 +1381,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	@Override
 	public int countAll() {
 		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;

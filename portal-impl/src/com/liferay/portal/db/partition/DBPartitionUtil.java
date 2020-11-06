@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -106,6 +107,22 @@ public class DBPartitionUtil {
 
 	public static boolean removeDBPartition(long companyId) {
 		return _DATABASE_PARTITION_ENABLED;
+	}
+
+	public static void setDefaultCompanyId(Connection connection)
+		throws SQLException {
+
+		if (_DATABASE_PARTITION_ENABLED) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select companyId from Company where webId = '" +
+						PropsValues.COMPANY_DEFAULT_WEB_ID + "'");
+				ResultSet rs = ps.executeQuery()) {
+
+				if (rs.next()) {
+					_defaultCompanyId = rs.getLong(1);
+				}
+			}
+		}
 	}
 
 	public static void setDefaultCompanyId(long companyId) {

@@ -66,6 +66,8 @@ public class DBInitUtil {
 
 		try (Connection connection = _dataSource.getConnection()) {
 			_init(db, connection);
+
+			DBPartitionUtil.setDefaultCompanyId(connection);
 		}
 	}
 

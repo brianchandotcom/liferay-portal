@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * @author Riccardo Ferrari
  */
-public abstract class BaseCommerceMLProcessType implements ProcessType {
+public abstract class BaseProcessType implements ProcessType {
 
 	@Override
 	public String getLabel(Locale locale) {

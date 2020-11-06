@@ -17,7 +17,6 @@ package com.liferay.commerce.machine.learning.internal.forecast.data.integration
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService;
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
-import com.liferay.commerce.machine.learning.internal.data.integration.CommerceMLScheduledTaskExecutorService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -31,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-public abstract class BaseForecastScheduledTaskExecutorService
+public abstract class BaseCommerceMLForecastScheduledTaskExecutorService
 	implements ScheduledTaskExecutorService {
 
 	@Override
@@ -43,7 +42,7 @@ public abstract class BaseForecastScheduledTaskExecutorService
 				getCommerceDataIntegrationProcess(
 					commerceDataIntegrationProcessId);
 
-		commerceMLScheduledTaskExecutorService.executeScheduledTask(
+		commerceMLForecastScheduledTaskExecutorService.executeScheduledTask(
 			commerceDataIntegrationProcess.getUserId(),
 			commerceDataIntegrationProcess.
 				getCommerceDataIntegrationProcessId(),
@@ -88,7 +87,7 @@ public abstract class BaseForecastScheduledTaskExecutorService
 		commerceDataIntegrationProcessLocalService;
 
 	@Reference
-	protected CommerceMLScheduledTaskExecutorService
-		commerceMLScheduledTaskExecutorService;
+	protected CommerceMLForecastScheduledTaskExecutorService
+		commerceMLForecastScheduledTaskExecutorService;
 
 }

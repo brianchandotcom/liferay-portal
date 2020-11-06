@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.data.integration;
+package com.liferay.commerce.machine.learning.internal.forecast.data.integration;
 
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog;
@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = CommerceMLScheduledTaskExecutorService.class
+	service = CommerceMLForecastScheduledTaskExecutorService.class
 )
-public class CommerceMLScheduledTaskExecutorService {
+public class CommerceMLForecastScheduledTaskExecutorService {
 
 	public void executeScheduledTask(
 			long userId, long commerceDataIntegrationProcessId,
@@ -102,7 +102,7 @@ public class CommerceMLScheduledTaskExecutorService {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceMLScheduledTaskExecutorService.class);
+		CommerceMLForecastScheduledTaskExecutorService.class);
 
 	@Reference
 	private CommerceDataIntegrationProcessLocalService

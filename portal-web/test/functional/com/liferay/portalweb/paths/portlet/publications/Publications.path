@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>LIST_PUBLICATION_ELLIPSIS</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

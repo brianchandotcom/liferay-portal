@@ -391,7 +391,6 @@ public class BaseContainerTag extends AttributesTagSupport {
 		if (!dynamicAttributesString.isEmpty()) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write(" ");
 			jspWriter.write(dynamicAttributesString);
 		}
 	}

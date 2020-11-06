@@ -35,15 +35,16 @@ public class CheckboxTag extends BaseContainerTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		if (Validator.isNotNull(_label)) {
-			setDynamicAttribute(StringPool.BLANK, "aria-label", _label);
+		if (Validator.isNotNull(getLabel())) {
+			setDynamicAttribute(StringPool.BLANK, "aria-label", getLabel());
 		}
 
 		return super.doStartTag();
 	}
 
 	public String getLabel() {
-		return _label;
+		return LanguageUtil.get(
+			TagResourceBundleUtil.getResourceBundle(pageContext), _label);
 	}
 
 	public String getName() {
@@ -123,12 +124,8 @@ public class CheckboxTag extends BaseContainerTag {
 		props.put("indeterminate", _indeterminate);
 		props.put("inline", _inline);
 
-		if (Validator.isNotNull(_label)) {
-			props.put(
-				"label",
-				LanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext),
-					_label));
+		if (Validator.isNotNull(getLabel())) {
+			props.put("label", getLabel());
 		}
 
 		props.put("name", _name);
@@ -150,7 +147,7 @@ public class CheckboxTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<label><input");
+		jspWriter.write("<label><input ");
 
 		super.writeDynamicAttributes();
 

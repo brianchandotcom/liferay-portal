@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = BatchCommerceMLScheduledTaskExecutorService.class
+	service = BatchScheduledTaskExecutorService.class
 )
-public class BatchCommerceMLScheduledTaskExecutorService
-	extends BaseBatchCommerceMLScheduledTaskExecutorService {
+public class BatchScheduledTaskExecutorService
+	extends BaseScheduledTaskExecutorService {
 
 	public void executeScheduledTask(
 			long commerceDataIntegrationProcessId,
@@ -198,7 +198,7 @@ public class BatchCommerceMLScheduledTaskExecutorService
 	private static final int _MAX_POLL_COUNT = 180;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchCommerceMLScheduledTaskExecutorService.class);
+		BatchScheduledTaskExecutorService.class);
 
 	@Reference
 	private CommerceMLGatewayClient _commerceMLGatewayClient;

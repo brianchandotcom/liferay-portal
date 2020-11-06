@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
+public abstract class BaseScheduledTaskExecutorService {
 
 	public CommerceDataIntegrationProcessLog runExportTask(
 			CommerceDataIntegrationProcess commerceDataIntegrationProcess,
@@ -217,6 +217,6 @@ public abstract class BaseBatchCommerceMLScheduledTaskExecutorService {
 		commerceDataIntegrationProcessLogLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseBatchCommerceMLScheduledTaskExecutorService.class);
+		BaseScheduledTaskExecutorService.class);
 
 }

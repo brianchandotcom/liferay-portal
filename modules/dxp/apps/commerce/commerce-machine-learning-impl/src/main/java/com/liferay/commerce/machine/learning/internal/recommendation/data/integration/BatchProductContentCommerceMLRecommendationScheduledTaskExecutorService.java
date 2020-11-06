@@ -17,8 +17,8 @@ package com.liferay.commerce.machine.learning.internal.recommendation.data.integ
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService;
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
-import com.liferay.commerce.machine.learning.internal.data.integration.BatchCommerceMLScheduledTaskExecutorService;
 import com.liferay.commerce.machine.learning.internal.data.integration.BatchEngineTaskItemDelegateResourceMapper;
+import com.liferay.commerce.machine.learning.internal.data.integration.BatchScheduledTaskExecutorService;
 import com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type.BatchProductContentCommerceMLRecommendationProcessType;
 import com.liferay.headless.commerce.admin.catalog.constants.v1_0.ProductBatchEngineTaskItemDelegateConstants;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
@@ -82,7 +82,7 @@ public class
 				).build(),
 				null));
 
-		_batchCommerceMLScheduledTaskExecutorService.executeScheduledTask(
+		_batchScheduledTaskExecutorService.executeScheduledTask(
 			commerceDataIntegrationProcessId, _EXPORT_RESOURCE_NAMES,
 			getContextProperties(commerceDataIntegrationProcess.getCompanyId()),
 			importResources.toArray(
@@ -105,8 +105,8 @@ public class
 		};
 
 	@Reference
-	private BatchCommerceMLScheduledTaskExecutorService
-		_batchCommerceMLScheduledTaskExecutorService;
+	private BatchScheduledTaskExecutorService
+		_batchScheduledTaskExecutorService;
 
 	@Reference
 	private CommerceDataIntegrationProcessLocalService

@@ -14,10 +14,17 @@
 
 package com.liferay.osgi.util;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
+import java.util.function.Function;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -132,6 +139,62 @@ public class ServiceTrackerFactory {
 		serviceTracker.open();
 
 		return serviceTracker;
+	}
+
+	public static <T, W> ServiceTracker<T, ServiceRegistration<W>>
+		openWrapperRegistrator(
+			BundleContext bundleContext, Class<T> trackedClass,
+			Class<W> registeredClass, Function<T, W> wrapperFunction,
+			String... propertyNames) {
+
+		return open(
+			bundleContext, trackedClass,
+			new ServiceTrackerCustomizer<T, ServiceRegistration<W>>() {
+
+				@Override
+				public ServiceRegistration<W> addingService(
+					ServiceReference<T> serviceReference) {
+
+					return bundleContext.registerService(
+						registeredClass,
+						wrapperFunction.apply(
+							bundleContext.getService(serviceReference)),
+						_buildProperties(serviceReference));
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<T> serviceReference,
+					ServiceRegistration<W> serviceRegistration) {
+
+					serviceRegistration.setProperties(
+						_buildProperties(serviceReference));
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<T> serviceReference,
+					ServiceRegistration<W> serviceRegistration) {
+
+					serviceRegistration.unregister();
+				}
+
+				private Dictionary<String, Object> _buildProperties(
+					ServiceReference<?> serviceReference) {
+
+					Dictionary<String, Object> properties =
+						new HashMapDictionary<>();
+
+					for (String propertyName : propertyNames) {
+						properties.put(
+							propertyName,
+							serviceReference.getProperty(propertyName));
+					}
+
+					return properties;
+				}
+
+			});
 	}
 
 	public static <T> T throwException(Throwable throwable) {

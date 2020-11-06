@@ -38,10 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = AnalyticsCommerceMLScheduledTaskExecutorService.class
+	service = AnalyticsScheduledTaskExecutorService.class
 )
-public class AnalyticsCommerceMLScheduledTaskExecutorService
-	extends BaseBatchCommerceMLScheduledTaskExecutorService {
+public class AnalyticsScheduledTaskExecutorService
+	extends BaseScheduledTaskExecutorService {
 
 	public void downloadResources(
 			long commerceDataIntegrationProcessId,
@@ -201,7 +201,7 @@ public class AnalyticsCommerceMLScheduledTaskExecutorService
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsCommerceMLScheduledTaskExecutorService.class);
+		AnalyticsScheduledTaskExecutorService.class);
 
 	@Reference
 	private AnalyticsBatchClient _analyticsBatchClient;

@@ -15,7 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.data.integration;
 
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
-import com.liferay.commerce.machine.learning.internal.data.integration.AnalyticsCommerceMLScheduledTaskExecutorService;
+import com.liferay.commerce.machine.learning.internal.data.integration.AnalyticsScheduledTaskExecutorService;
 import com.liferay.commerce.machine.learning.internal.data.integration.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type.AnalyticsUploadOrderProcessType;
 import com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type.AnalyticsUploadProductProcessType;
@@ -48,7 +48,7 @@ public class AnalyticsUploadOrderScheduledTaskExecutorServiceImpl
 	public void runProcess(long commerceDataIntegrationProcessId)
 		throws IOException, PortalException {
 
-		_analyticsCommerceMLScheduledTaskExecutorService.uploadResources(
+		_analyticsScheduledTaskExecutorService.uploadResources(
 			commerceDataIntegrationProcessId, _EXPORT_RESOURCE_NAMES);
 	}
 
@@ -60,7 +60,7 @@ public class AnalyticsUploadOrderScheduledTaskExecutorServiceImpl
 		};
 
 	@Reference
-	private AnalyticsCommerceMLScheduledTaskExecutorService
-		_analyticsCommerceMLScheduledTaskExecutorService;
+	private AnalyticsScheduledTaskExecutorService
+		_analyticsScheduledTaskExecutorService;
 
 }

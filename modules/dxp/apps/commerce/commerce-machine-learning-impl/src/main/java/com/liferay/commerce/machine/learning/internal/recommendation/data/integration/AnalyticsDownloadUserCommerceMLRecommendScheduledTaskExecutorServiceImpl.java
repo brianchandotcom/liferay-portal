@@ -15,7 +15,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.data.integration;
 
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
-import com.liferay.commerce.machine.learning.internal.data.integration.AnalyticsCommerceMLScheduledTaskExecutorService;
+import com.liferay.commerce.machine.learning.internal.data.integration.AnalyticsScheduledTaskExecutorService;
 import com.liferay.commerce.machine.learning.internal.data.integration.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type.AnalyticsDownloadUserCommerceMLRecommendationProcessType;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductInteractionRecommendation;
@@ -91,14 +91,14 @@ public class
 				).build(),
 				null));
 
-		_analyticsCommerceMLScheduledTaskExecutorService.downloadResources(
+		_analyticsScheduledTaskExecutorService.downloadResources(
 			commerceDataIntegrationProcessId,
 			importResources.toArray(
 				new BatchEngineTaskItemDelegateResourceMapper[0]));
 	}
 
 	@Reference
-	private AnalyticsCommerceMLScheduledTaskExecutorService
-		_analyticsCommerceMLScheduledTaskExecutorService;
+	private AnalyticsScheduledTaskExecutorService
+		_analyticsScheduledTaskExecutorService;
 
 }

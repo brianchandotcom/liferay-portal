@@ -25,12 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alberto Chaparro
  */
-@Component(
-	immediate = true,
-	service = {
-		ComponentBlacklistImplUpgrade.class, UpgradeStepRegistrator.class
-	}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ComponentBlacklistImplUpgrade implements UpgradeStepRegistrator {
 
 	@Override

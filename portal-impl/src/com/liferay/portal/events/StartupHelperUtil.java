@@ -47,6 +47,8 @@ import java.util.List;
 public class StartupHelperUtil {
 
 	public static void initResourceActions() {
+		ResourceActionLocalServiceUtil.checkResourceActions();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<String> modelNames = ResourceActionsUtil.getModelNames();
 

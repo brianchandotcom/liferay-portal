@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Time;
@@ -183,8 +182,6 @@ public class DBUpgrader {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check resource actions");
 		}
-
-		ResourceActionLocalServiceUtil.checkResourceActions();
 
 		StartupHelperUtil.initResourceActions();
 	}

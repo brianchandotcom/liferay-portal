@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -150,8 +149,6 @@ public class StartupAction extends SimpleAction {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check resource actions");
 		}
-
-		ResourceActionLocalServiceUtil.checkResourceActions();
 
 		StartupHelperUtil.initResourceActions();
 

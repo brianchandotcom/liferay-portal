@@ -184,9 +184,9 @@ public class DBUpgrader {
 			_log.debug("Check resource actions");
 		}
 
-		StartupHelperUtil.initResourceActions();
-
 		ResourceActionLocalServiceUtil.checkResourceActions();
+
+		StartupHelperUtil.initResourceActions();
 	}
 
 	private static int _getBuildNumberForMissedUpgradeProcesses(int buildNumber)

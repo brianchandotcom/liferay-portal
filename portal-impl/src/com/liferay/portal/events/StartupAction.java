@@ -151,17 +151,14 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Check resource actions");
 		}
 
+		ResourceActionLocalServiceUtil.checkResourceActions();
+
 		StartupHelperUtil.initResourceActions();
 
 		if (StartupHelperUtil.isDBNew()) {
-			ResourceActionLocalServiceUtil.checkResourceActions();
-
 			DBUpgrader.verify();
 
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
-		}
-		else {
-			ResourceActionLocalServiceUtil.checkResourceActions();
 		}
 
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {

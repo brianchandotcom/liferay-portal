@@ -30,39 +30,41 @@ import templates from './ReactFieldAdapter.soy';
  * the `usePage` and we need to bring the `usePage` here since this component
  * will not have a React context above it.
  */
-export const ReactFieldAdapter = forwardRef(({fieldType, instance, ...field}) => {
-	const {resource: fieldTypes} = useFieldTypesResource();
+export const ReactFieldAdapter = forwardRef(
+	({fieldType, instance, ...field}) => {
+		const {resource: fieldTypes} = useFieldTypesResource();
 
-	if (!fieldType || fieldType === '') {
-		return null;
+		if (!fieldType || fieldType === '') {
+			return null;
+		}
+
+		const emit = (name, event) => {
+			instance.emit(name, {
+				...event,
+				fieldInstance: {
+					...event.fieldInstance,
+					element: instance.element,
+				},
+			});
+		};
+
+		return (
+			<PageProvider value={{...field, fieldTypes}}>
+				<ClayIconSpriteContext.Provider value={field.spritemap}>
+					<Field
+						field={{
+							...field,
+							type: fieldType,
+						}}
+						onBlur={(event) => emit('fieldBlurred', event)}
+						onChange={(event) => emit('fieldEdited', event)}
+						onFocus={(event) => emit('fieldFocused', event)}
+					/>
+				</ClayIconSpriteContext.Provider>
+			</PageProvider>
+		);
 	}
-
-	const emit = (name, event) => {
-		instance.emit(name, {
-			...event,
-			fieldInstance: {
-				...event.fieldInstance,
-				element: instance.element,
-			},
-		});
-	};
-
-	return (
-		<PageProvider value={{...field, fieldTypes}}>
-			<ClayIconSpriteContext.Provider value={field.spritemap}>
-				<Field
-					field={{
-						...field,
-						type: fieldType,
-					}}
-					onBlur={(event) => emit('fieldBlurred', event)}
-					onChange={(event) => emit('fieldEdited', event)}
-					onFocus={(event) => emit('fieldFocused', event)}
-				/>
-			</ClayIconSpriteContext.Provider>
-		</PageProvider>
-	);
-});
+);
 
 const ReactComponentAdapter = getConnectedReactComponentAdapter(
 	ReactFieldAdapter

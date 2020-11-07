@@ -107,6 +107,12 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 		}
 
+		let loading = false;
+
+		if (node.modelClassNameId) {
+			loading = true;
+		}
+
 		this.state = {
 			ascending: true,
 			breadcrumbItems,
@@ -115,6 +121,7 @@ class ChangeTrackingChangesView extends React.Component {
 			delta: 20,
 			dropdown: '',
 			filterClass,
+			loading,
 			node,
 			page: 1,
 			renderInnerHTML: null,
@@ -122,8 +129,6 @@ class ChangeTrackingChangesView extends React.Component {
 			sortDirectionClass: 'order-arrow-down-active',
 			viewType,
 		};
-
-		this._updateRenderContent(node);
 	}
 
 	componentDidMount() {
@@ -161,23 +166,36 @@ class ChangeTrackingChangesView extends React.Component {
 				viewType
 			);
 
-			this.setState({
-				breadcrumbItems,
-				children: this._filterHideableNodes(
-					node.children,
-					showHideable
-				),
-				dropdown: '',
-				filterClass,
-				node,
-				page: 1,
-				renderInnerHTML: null,
-				showHideable,
-				viewType,
-			});
-
-			this._updateRenderContent(node);
+			this.setState(
+				{
+					breadcrumbItems,
+					children: this._filterHideableNodes(
+						node.children,
+						showHideable
+					),
+					filterClass,
+					node,
+					page: 1,
+					showHideable,
+					viewType,
+				},
+				() => this._updateRenderContent(node)
+			);
 		});
+
+		if (this.state.node.modelClassNameId) {
+			AUI().use('liferay-portlet-url', () => {
+				fetch(this._getRenderURL(this.state.node))
+					.then((response) => response.text())
+					.then((text) => {
+						this.setState({
+							dropdown: this._getDropdown(this.state.node),
+							loading: false,
+							renderInnerHTML: {__html: text},
+						});
+					});
+			});
+		}
 	}
 
 	_clone(json) {
@@ -1220,19 +1238,21 @@ class ChangeTrackingChangesView extends React.Component {
 			viewType
 		);
 
-		this.setState({
-			breadcrumbItems,
-			children: this._filterHideableNodes(node.children, showHideable),
-			dropdown: '',
-			filterClass,
-			node,
-			page: 1,
-			renderInnerHTML: null,
-			showHideable,
-			viewType,
-		});
-
-		this._updateRenderContent(node);
+		this.setState(
+			{
+				breadcrumbItems,
+				children: this._filterHideableNodes(
+					node.children,
+					showHideable
+				),
+				filterClass,
+				node,
+				page: 1,
+				showHideable,
+				viewType,
+			},
+			() => this._updateRenderContent(node)
+		);
 
 		this._pushState(breadcrumbItems, filterClass, showHideable, viewType);
 	}
@@ -1406,11 +1426,23 @@ class ChangeTrackingChangesView extends React.Component {
 
 	_renderEntry() {
 		if (this.state.renderInnerHTML === null) {
+			if (this.state.loading) {
+				return (
+					<span aria-hidden="true" className="loading-animation" />
+				);
+			}
+
 			return '';
 		}
 
 		return (
-			<div className="sheet">
+			<div
+				className={
+					this.state.loading
+						? 'sheet publications-sheet-loading'
+						: 'sheet'
+				}
+			>
 				<h2 className="autofit-row sheet-title">
 					<div className="autofit-col autofit-col-expand">
 						<span className="heading-text">
@@ -1422,11 +1454,18 @@ class ChangeTrackingChangesView extends React.Component {
 
 					{this.state.dropdown}
 				</h2>
+				<div className="sheet-section">
+					{this.state.loading && (
+						<div className="publications-loading-animation-wrapper">
+							<span
+								aria-hidden="true"
+								className="loading-animation"
+							/>
+						</div>
+					)}
 
-				<div
-					className="sheet-section"
-					dangerouslySetInnerHTML={this.state.renderInnerHTML}
-				/>
+					<div dangerouslySetInnerHTML={this.state.renderInnerHTML} />
+				</div>
 			</div>
 		);
 	}
@@ -1643,19 +1682,33 @@ class ChangeTrackingChangesView extends React.Component {
 
 	_updateRenderContent(node) {
 		if (!node.modelClassNameId) {
+			this.setState({
+				dropdown: '',
+				loading: false,
+				renderInnerHTML: null,
+			});
+
 			return;
 		}
 
-		AUI().use('liferay-portlet-url', () => {
-			fetch(this._getRenderURL(node))
-				.then((response) => response.text())
-				.then((text) => {
-					this.setState({
-						dropdown: this._getDropdown(node),
-						renderInnerHTML: {__html: text},
-					});
+		this.setState(
+			{
+				loading: true,
+			},
+			() => {
+				AUI().use('liferay-portlet-url', () => {
+					fetch(this._getRenderURL(node))
+						.then((response) => response.text())
+						.then((text) => {
+							this.setState({
+								dropdown: this._getDropdown(node),
+								loading: false,
+								renderInnerHTML: {__html: text},
+							});
+						});
 				});
-		});
+			}
+		);
 	}
 
 	render() {

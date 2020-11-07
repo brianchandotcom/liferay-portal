@@ -192,6 +192,19 @@
 			}
 		}
 
+		.publications-loading-animation-wrapper {
+			height: 100%;
+			left: 0;
+			opacity: 1;
+			position: absolute;
+			width: 100%;
+			z-index: 10;
+		}
+
+		.publications-sheet-loading {
+			opacity: 0.5;
+		}
+
 		.sheet {
 			margin-bottom: 16px;
 		}

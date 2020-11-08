@@ -19,11 +19,20 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.ContextualMenu;
+import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
+import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.SiteNavigationMenuSource;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -100,6 +109,46 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 									).put(
 										"value", "stacked"
 									)))
+						),
+						JSONUtil.put(
+							"defaultValue", "0"
+						).put(
+							"label",
+							LanguageUtil.get(resourceBundle, "sublevels")
+						).put(
+							"name", "sublevels"
+						).put(
+							"type", "select"
+						).put(
+							"typeOptions",
+							JSONUtil.put(
+								"validValues",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"label", "all"
+									).put(
+										"value", "0"
+									),
+									JSONUtil.put(
+										"label", "1"
+									).put(
+										"value", "1"
+									),
+									JSONUtil.put(
+										"label", "2"
+									).put(
+										"value", "2"
+									),
+									JSONUtil.put(
+										"label", "3"
+									).put(
+										"value", "3"
+									),
+									JSONUtil.put(
+										"label", "4"
+									).put(
+										"value", "4"
+									)))
 						))))
 		).toString();
 	}
@@ -124,27 +173,13 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			NavigationMenuTag navigationMenuTag = new NavigationMenuTag();
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			if (Objects.equals(
-					_getDisplayStyle(fragmentRendererContext), "stacked")) {
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				Group companyGroup = _groupLocalService.getCompanyGroup(
-					themeDisplay.getCompanyId());
-
-				DDMTemplate ddmTemplate = _ddmTemplateService.fetchTemplate(
-					companyGroup.getGroupId(),
-					_portal.getClassNameId(NavItem.class), "LIST-MENU-FTL");
-
-				navigationMenuTag.setDdmTemplateGroupId(
-					ddmTemplate.getGroupId());
-				navigationMenuTag.setDdmTemplateKey(
-					ddmTemplate.getTemplateKey());
-			}
+			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
+				themeDisplay.getCompanyId(), fragmentRendererContext,
+				themeDisplay.getScopeGroupId());
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
 		}
@@ -161,15 +196,114 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		_servletContext = servletContext;
 	}
 
-	private String _getDisplayStyle(
-		FragmentRendererContext fragmentRendererContext) {
+	private void _configureMenu(
+			long groupId,
+			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
+			NavigationMenuTag navigationMenuTag)
+		throws PortalException {
+
+		MenuDisplayFragmentConfiguration.Source source =
+			menuDisplayFragmentConfiguration.getSource();
+
+		if (source instanceof ContextualMenu) {
+			ContextualMenu contextualMenu = (ContextualMenu)source;
+
+			navigationMenuTag.setRootItemType("relative");
+
+			if (contextualMenu == ContextualMenu.SAME_LEVEL) {
+				navigationMenuTag.setRootItemLevel(1);
+			}
+			else if (contextualMenu == ContextualMenu.SECOND_LEVEL) {
+				navigationMenuTag.setRootItemLevel(0);
+			}
+			else if (contextualMenu == ContextualMenu.UPPER_LEVEL) {
+				navigationMenuTag.setRootItemLevel(2);
+			}
+		}
+		else if (source instanceof SiteNavigationMenuSource) {
+			SiteNavigationMenuSource siteNavigationMenuSource =
+				(SiteNavigationMenuSource)source;
+
+			navigationMenuTag.setRootItemType("select");
+
+			long siteNavigationMenuId =
+				siteNavigationMenuSource.getSiteNavigationMenuId();
+
+			navigationMenuTag.setSiteNavigationMenuId(siteNavigationMenuId);
+
+			long parentSiteNavigationMenuItemId =
+				siteNavigationMenuSource.getParentSiteNavigationMenuItemId();
+
+			if (parentSiteNavigationMenuItemId > 0) {
+				if (_isLayoutHierarchy(siteNavigationMenuId)) {
+					Layout layout = _layoutService.fetchLayout(
+						groupId, false, parentSiteNavigationMenuItemId);
+
+					navigationMenuTag.setRootItemId(layout.getUuid());
+				}
+				else {
+					navigationMenuTag.setRootItemId(
+						String.valueOf(parentSiteNavigationMenuItemId));
+				}
+			}
+		}
+
+		navigationMenuTag.setDisplayDepth(
+			menuDisplayFragmentConfiguration.getNumberOfSublevels() + 1);
+	}
+
+	private NavigationMenuTag _getNavigationMenuTag(
+			long companyId, FragmentRendererContext fragmentRendererContext,
+			long groupId)
+		throws PortalException {
+
+		NavigationMenuTag navigationMenuTag = new NavigationMenuTag();
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		return (String)_fragmentEntryConfigurationParser.getFieldValue(
-			getConfiguration(fragmentRendererContext),
-			fragmentEntryLink.getEditableValues(), "displayStyle");
+		MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
+			_menuDisplayFragmentConfigurationParser.parse(
+				getConfiguration(fragmentRendererContext),
+				fragmentEntryLink.getEditableValues());
+
+		DDMTemplate ddmTemplate = _getTagDDMTemplate(
+			companyId, menuDisplayFragmentConfiguration.getDisplayStyle());
+
+		if (ddmTemplate != null) {
+			navigationMenuTag.setDdmTemplateGroupId(ddmTemplate.getGroupId());
+			navigationMenuTag.setDdmTemplateKey(ddmTemplate.getTemplateKey());
+		}
+
+		_configureMenu(
+			groupId, menuDisplayFragmentConfiguration, navigationMenuTag);
+
+		return navigationMenuTag;
+	}
+
+	private DDMTemplate _getTagDDMTemplate(
+			long companyId, DisplayStyle displayStyle)
+		throws PortalException {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
+
+		String ddmTemplateKey = "NAVBAR-BLANK-FTL";
+
+		if (Objects.equals(displayStyle, DisplayStyle.STACKED)) {
+			ddmTemplateKey = "LIST-MENU-FTL";
+		}
+
+		return _ddmTemplateService.fetchTemplate(
+			companyGroup.getGroupId(), _portal.getClassNameId(NavItem.class),
+			ddmTemplateKey);
+	}
+
+	private boolean _isLayoutHierarchy(long siteNavigationMenuId) {
+		if (siteNavigationMenuId == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference
@@ -180,6 +314,13 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
+	private MenuDisplayFragmentConfigurationParser
+		_menuDisplayFragmentConfigurationParser;
 
 	@Reference
 	private Portal _portal;

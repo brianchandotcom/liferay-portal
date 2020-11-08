@@ -23,11 +23,11 @@ import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentCo
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.SiteNavigationMenuSource;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
@@ -69,88 +70,19 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		return JSONUtil.put(
-			"fieldSets",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"fields",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"label", "source"
-						).put(
-							"name", "source"
-						).put(
-							"type", "navigationMenuSelector"
-						),
-						JSONUtil.put(
-							"defaultValue", "horizontal"
-						).put(
-							"label", "display-style"
-						).put(
-							"name", "displayStyle"
-						).put(
-							"type", "select"
-						).put(
-							"typeOptions",
-							JSONUtil.put(
-								"validValues",
-								JSONUtil.putAll(
-									JSONUtil.put(
-										"label",
-										LanguageUtil.get(
-											resourceBundle, "horizontal")
-									).put(
-										"value", "horizontal"
-									),
-									JSONUtil.put(
-										"label",
-										LanguageUtil.get(
-											resourceBundle, "stacked")
-									).put(
-										"value", "stacked"
-									)))
-						),
-						JSONUtil.put(
-							"defaultValue", "0"
-						).put(
-							"label",
-							LanguageUtil.get(resourceBundle, "sublevels")
-						).put(
-							"name", "sublevels"
-						).put(
-							"type", "select"
-						).put(
-							"typeOptions",
-							JSONUtil.put(
-								"validValues",
-								JSONUtil.putAll(
-									JSONUtil.put(
-										"label", "all"
-									).put(
-										"value", "0"
-									),
-									JSONUtil.put(
-										"label", "1"
-									).put(
-										"value", "1"
-									),
-									JSONUtil.put(
-										"label", "2"
-									).put(
-										"value", "2"
-									),
-									JSONUtil.put(
-										"label", "3"
-									).put(
-										"value", "3"
-									),
-									JSONUtil.put(
-										"label", "4"
-									).put(
-										"value", "4"
-									)))
-						))))
-		).toString();
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(
+					getClass(),
+					"/META-INF/resources/fragment/renderer/menu/display" +
+						"/configuration.json"));
+
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override

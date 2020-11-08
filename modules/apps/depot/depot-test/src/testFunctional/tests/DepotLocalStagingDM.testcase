@@ -376,6 +376,95 @@ definition {
 			value1 = "Document_2.jpg");
 	}
 
+	@description = "This ensures that an image is edited multiple times in depot can be published in staging site when enabling local staging."
+	@priority = "5"
+	test PublishImageWithLatestVersion {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "Edit DM Document Description",
+			dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "Edit DM Document Description",
+			dmDocumentDescriptionEdit = "This is an edit DM Document Description",
+			dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "Document_2.jpg",
+			assetType = "Basic Document",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		MouseOver(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEW_VERSION_NUMBER",
+			value1 = "1.2");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
+			value1 = "Document_2.jpg");
+
+		AssertTextEquals.assertPartialText(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "This is an edit DM Document Description");
+	}
+
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling local staging."
 	@priority = "5"
 	test SelectUnavailableStructure {

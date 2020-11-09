@@ -139,9 +139,29 @@ class ChangeTrackingChangesView extends React.Component {
 
 			const params = new URLSearchParams(location.search);
 
-			const pathState = this._getPathState(
-				params.get(this.namespace + 'path')
-			);
+			const newPathParam = params.get(this.namespace + 'path');
+
+			const pathState = this._getPathState(newPathParam);
+
+			if (
+				newPathParam ===
+				this._getPathParam(
+					this.state.breadcrumbItems,
+					this.state.filterClass,
+					!this.state.showHideable,
+					this.state.viewType
+				)
+			) {
+				this.setState({
+					children: this._filterHideableNodes(
+						this.state.node.children,
+						pathState.showHideable
+					),
+					showHideable: pathState.showHideable,
+				});
+
+				return;
+			}
 
 			const filterClass = pathState.filterClass;
 			const nodeId = pathState.nodeId;

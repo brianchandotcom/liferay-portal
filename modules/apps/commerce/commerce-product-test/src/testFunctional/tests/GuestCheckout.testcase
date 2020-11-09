@@ -992,6 +992,57 @@ definition {
 			value1 = "Your order has been processed but not completed yet.");
 	}
 
+	test GuestCheckoutEnabledWithoutAuthenticationPage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutEnabledWithoutAuthenticationPage";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Guest Checkout",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Guest Checkout",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		User.logoutPG();
+
+		Navigator.openSiteURL(siteName = "Speedwell");
+
+		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Pause(locator1 = "5000");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			guestEmail = "buyer@liferay.com",
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+	}
+
 	test GuestCheckoutWithNoShippableProduct {
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithNoShippableProduct";

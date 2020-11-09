@@ -84,6 +84,39 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 	protected Date getPortletLastPublishDate(long groupId, String portletId)
 		throws Exception {
 
+		if (!hasColumn("PortletPreferences", "preferences")) {
+			try (PreparedStatement ps = connection.prepareStatement(
+					StringBundler.concat(
+						"select PortletPreferenceValue.smallValue from ",
+						"PortletPreferenceValue inner join PortletPreferences ",
+						"on PortletPreferences.portletPreferencesId = ",
+						"PortletPreferenceValue.portletPreferencesId where ",
+						"PortletPreferences.plid = ? and ",
+						"PortletPreferences.ownerType = ? and ",
+						"PortletPreferences.ownerId = ? and ",
+						"PortletPreferences.portletId = ? and ",
+						"PortletPreferenceValue.name = ?"))) {
+
+				ps.setLong(1, LayoutConstants.DEFAULT_PLID);
+				ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_GROUP);
+				ps.setLong(3, groupId);
+				ps.setString(4, portletId);
+				ps.setString(5, "last-publish-date");
+
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						String value = rs.getString("smallValue");
+
+						if (Validator.isNotNull(value)) {
+							return new Date(GetterUtil.getLong(value));
+						}
+					}
+				}
+			}
+
+			return null;
+		}
+
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select preferences from PortletPreferences where plid = ? " +
 					"and ownerType = ? and ownerId = ? and portletId = ?")) {

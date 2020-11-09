@@ -299,7 +299,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			StringUtil.read(
 				getClass(),
 				"/META-INF/resources/fragment/renderer/menu/display" +
-					"/styles.css"),
+					"/styles.tmpl"),
 			"${", "}", values);
 
 		printWriter.write(styles);

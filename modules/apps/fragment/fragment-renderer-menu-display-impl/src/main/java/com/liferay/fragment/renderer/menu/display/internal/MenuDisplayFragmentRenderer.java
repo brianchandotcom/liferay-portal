@@ -35,14 +35,20 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -105,13 +111,24 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			FragmentEntryLink fragmentEntryLink =
+				fragmentRendererContext.getFragmentEntryLink();
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
+				_menuDisplayFragmentConfigurationParser.parse(
+					getConfiguration(fragmentRendererContext),
+					fragmentEntryLink.getEditableValues(),
+					themeDisplay.getScopeGroupId());
+
+			_writeCss(httpServletResponse, menuDisplayFragmentConfiguration);
+
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
-				themeDisplay.getCompanyId(), fragmentRendererContext,
-				themeDisplay.getScopeGroupId());
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				menuDisplayFragmentConfiguration);
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
 		}
@@ -185,19 +202,11 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private NavigationMenuTag _getNavigationMenuTag(
-			long companyId, FragmentRendererContext fragmentRendererContext,
-			long groupId)
+			long companyId, long groupId,
+			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
 		throws PortalException {
 
 		NavigationMenuTag navigationMenuTag = new NavigationMenuTag();
-
-		FragmentEntryLink fragmentEntryLink =
-			fragmentRendererContext.getFragmentEntryLink();
-
-		MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
-			_menuDisplayFragmentConfigurationParser.parse(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues());
 
 		DDMTemplate ddmTemplate = _getTagDDMTemplate(
 			companyId, menuDisplayFragmentConfiguration.getDisplayStyle());
@@ -236,6 +245,42 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		}
 
 		return false;
+	}
+
+	private void _writeCss(
+			HttpServletResponse httpServletResponse,
+			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
+		throws IOException {
+
+		HashMap<String, String> values = HashMapBuilder.put(
+			"hoveredItemColor",
+			() -> {
+				Optional<String> hoveredItemColorOptional =
+					menuDisplayFragmentConfiguration.
+						getHoveredItemColorOptional();
+
+				return hoveredItemColorOptional.orElse("inherit");
+			}
+		).put(
+			"selectedItemColor",
+			() -> {
+				Optional<String> selectedItemColorOptional =
+					menuDisplayFragmentConfiguration.getSelectedItemColor();
+
+				return selectedItemColorOptional.orElse("inherit");
+			}
+		).build();
+
+		String styles = StringUtil.replace(
+			StringUtil.read(
+				getClass(),
+				"/META-INF/resources/fragment/renderer/menu/display" +
+					"/styles.css"),
+			"${", "}", values);
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.write(styles);
 	}
 
 	@Reference

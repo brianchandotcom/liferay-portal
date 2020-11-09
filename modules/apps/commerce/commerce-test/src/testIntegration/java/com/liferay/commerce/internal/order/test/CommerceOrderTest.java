@@ -138,7 +138,10 @@ public class CommerceOrderTest {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		_commerceOrderLocalService.deleteCommerceOrders(
+			_commerceChannel.getGroupId());
+
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
@@ -908,8 +911,7 @@ public class CommerceOrderTest {
 
 		Assert.assertEquals(2, pendingCommerceOrdersCount);
 
-		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
-		_commerceAccountLocalService.deleteCommerceAccount(commerceAccount);
+		_commerceAccounts.add(commerceAccount);
 	}
 
 	@Rule
@@ -1016,6 +1018,9 @@ public class CommerceOrderTest {
 	@Inject
 	private CommerceAccountOrganizationRelLocalService
 		_commerceAccountOrganizationRelLocalService;
+
+	@DeleteAfterTestRun
+	private final List<CommerceAccount> _commerceAccounts = new ArrayList<>();
 
 	@Inject
 	private CommerceAccountUserRelLocalService

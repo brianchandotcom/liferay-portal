@@ -25,11 +25,12 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 </liferay-util:html-top>
 
 <clay:container-fluid
+	cssClass="contextual-menu-selector p-4"
 	id='<%= liferayPortletResponse.getNamespace() + "contextualMenuSelector" %>'
 >
-	<p class="m-4 text-secondary">
+	<div class="alert alert-info">
 		<liferay-ui:message key="this-will-make-the-menu-show-only-related-pages.-select-here-the-type-of-relationship-of-the-pages-to-display" />
-	</p>
+	</div>
 
 	<clay:row
 		cssClass="mt-5 text-center"

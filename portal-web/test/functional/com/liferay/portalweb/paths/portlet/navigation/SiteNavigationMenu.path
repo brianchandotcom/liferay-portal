@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ITEM_ENTRY_DRAG_ICON</td>
-	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_sourceItemName}']/parent::div/preceding-sibling::div[contains(@draggable,'true')]//*[name()='svg'][contains(@class,'lexicon-icon-drag')]</td>
+	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_sourceItemName}']/parent::div/preceding-sibling::div[contains(@draggable,'true')]</td>
 	<td></td>
 </tr>
 <tr>

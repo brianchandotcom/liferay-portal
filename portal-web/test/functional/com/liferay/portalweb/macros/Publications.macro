@@ -301,15 +301,11 @@ definition {
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Schedule");
-
-			Click(locator1 = "Publications#NEXT_BUTTON");
 		}
 		else if ("${gotoReviewPublications}" == "true") {
 			Publications.gotoReviewPublications();
 
 			Click(locator1 = "Publications#SCHEDULE_BUTTON");
-
-			Click(locator1 = "Publications#NEXT_BUTTON");
 		}
 		else if ("${reschedule}" == "true") {
 			Publications.gotoScheduledPublications();
@@ -326,25 +322,36 @@ definition {
 			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
 			MenuItem.click(menuItem = "Schedule");
-
-			Click(locator1 = "Publications#NEXT_BUTTON");
 		}
 
-		var utcHours = Time.getUTCHours();
-		var utcMinutes = Time.getUTCMinutes();
+		var publishDateDay = DateUtil.getCurrentDate();
+		var publishDateMonth = DateUtil.getCurrentMonth();
+		var publishDateYear = DateUtil.getCurrentYear();
+		var publishDate = "${publishDateYear}-${publishDateMonth}-${publishDateDay}";
+
+		Type(
+			locator1 = "Publications#PUBLISH_DATE",
+			value1 = "${publishDate}");
+
+		var publishTimeHours = Time.getUTCHours();
+		var publishTimeMinutes = Time.getUTCMinutes();
 
 		if ("${utcMinutes}" == "59") {
-			utcHours = MathUtil.sum("${utcHours}", "1");
+			publishTimeHours = MathUtil.sum("${publishTimeHours}", "1");
 
-			utcMinutes = "00";
+			publishTimeMinutes = "00";
 		}
 		else {
-			utcMinutes = MathUtil.sum("${utcMinutes}", "1");
+			publishTimeMinutes = MathUtil.sum("${publishTimeMinutes}", "1");
 		}
 
 		Type(
-			locator1 = "Publications#PUBLISH_TIME",
-			value1 = "${utcHours}:${utcMinutes}");
+			locator1 = "Publications#PUBLISH_TIME_HOURS",
+			value1 = "${publishTimeHours}");
+
+		Type(
+			locator1 = "Publications#PUBLISH_TIME_MINUTES",
+			value1 = "${publishTimeMinutes}");
 
 		Click(locator1 = "Publications#SCHEDULE_BUTTON");
 	}

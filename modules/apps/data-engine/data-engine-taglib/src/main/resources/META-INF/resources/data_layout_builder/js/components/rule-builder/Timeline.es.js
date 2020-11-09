@@ -106,7 +106,7 @@ const ListItem = ({children, className, ...otherProps}) => (
 	</li>
 );
 
-const ListHeader = ({items, operator, title, ...otherProps}) => (
+const ListHeader = ({disabled, items, operator, title, ...otherProps}) => (
 	<ListItem {...otherProps}>
 		<ClayPanel displayTitle={title} displayType="secondary">
 			{operator && (
@@ -115,6 +115,7 @@ const ListHeader = ({items, operator, title, ...otherProps}) => (
 					trigger={
 						<ClayButton
 							className="dropdown-toggle-operator mr-3"
+							disabled={disabled}
 							displayType="secondary"
 						>
 							<span className="dropdown-toggle-selected-value text-uppercase">

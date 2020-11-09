@@ -151,6 +151,31 @@ public class SummarySerDes {
 			sb.append("\"");
 		}
 
+		if (summary.getShippingValueWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingValueWithTaxAmount\": ");
+
+			sb.append(summary.getShippingValueWithTaxAmount());
+		}
+
+		if (summary.getShippingValueWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingValueWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(summary.getShippingValueWithTaxAmountFormatted()));
+
+			sb.append("\"");
+		}
+
 		if (summary.getSubtotal() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -400,6 +425,25 @@ public class SummarySerDes {
 				String.valueOf(summary.getShippingValueFormatted()));
 		}
 
+		if (summary.getShippingValueWithTaxAmount() == null) {
+			map.put("shippingValueWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingValueWithTaxAmount",
+				String.valueOf(summary.getShippingValueWithTaxAmount()));
+		}
+
+		if (summary.getShippingValueWithTaxAmountFormatted() == null) {
+			map.put("shippingValueWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"shippingValueWithTaxAmountFormatted",
+				String.valueOf(
+					summary.getShippingValueWithTaxAmountFormatted()));
+		}
+
 		if (summary.getSubtotal() == null) {
 			map.put("subtotal", null);
 		}
@@ -568,6 +612,23 @@ public class SummarySerDes {
 
 				if (jsonParserFieldValue != null) {
 					summary.setShippingValueFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingValueWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					summary.setShippingValueWithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingValueWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					summary.setShippingValueWithTaxAmountFormatted(
 						(String)jsonParserFieldValue);
 				}
 			}

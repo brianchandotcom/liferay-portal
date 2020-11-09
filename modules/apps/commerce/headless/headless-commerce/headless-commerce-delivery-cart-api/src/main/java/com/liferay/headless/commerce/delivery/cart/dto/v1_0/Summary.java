@@ -257,6 +257,71 @@ public class Summary implements Serializable {
 	protected String shippingValueFormatted;
 
 	@Schema
+	public Double getShippingValueWithTaxAmount() {
+		return shippingValueWithTaxAmount;
+	}
+
+	public void setShippingValueWithTaxAmount(
+		Double shippingValueWithTaxAmount) {
+
+		this.shippingValueWithTaxAmount = shippingValueWithTaxAmount;
+	}
+
+	@JsonIgnore
+	public void setShippingValueWithTaxAmount(
+		UnsafeSupplier<Double, Exception>
+			shippingValueWithTaxAmountUnsafeSupplier) {
+
+		try {
+			shippingValueWithTaxAmount =
+				shippingValueWithTaxAmountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double shippingValueWithTaxAmount;
+
+	@Schema
+	public String getShippingValueWithTaxAmountFormatted() {
+		return shippingValueWithTaxAmountFormatted;
+	}
+
+	public void setShippingValueWithTaxAmountFormatted(
+		String shippingValueWithTaxAmountFormatted) {
+
+		this.shippingValueWithTaxAmountFormatted =
+			shippingValueWithTaxAmountFormatted;
+	}
+
+	@JsonIgnore
+	public void setShippingValueWithTaxAmountFormatted(
+		UnsafeSupplier<String, Exception>
+			shippingValueWithTaxAmountFormattedUnsafeSupplier) {
+
+		try {
+			shippingValueWithTaxAmountFormatted =
+				shippingValueWithTaxAmountFormattedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String shippingValueWithTaxAmountFormatted;
+
+	@Schema
 	public Double getSubtotal() {
 		return subtotal;
 	}
@@ -725,6 +790,30 @@ public class Summary implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(shippingValueFormatted));
+
+			sb.append("\"");
+		}
+
+		if (shippingValueWithTaxAmount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingValueWithTaxAmount\": ");
+
+			sb.append(shippingValueWithTaxAmount);
+		}
+
+		if (shippingValueWithTaxAmountFormatted != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingValueWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shippingValueWithTaxAmountFormatted));
 
 			sb.append("\"");
 		}

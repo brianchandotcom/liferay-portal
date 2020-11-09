@@ -190,6 +190,57 @@ public class Summary implements Cloneable, Serializable {
 
 	protected String shippingValueFormatted;
 
+	public Double getShippingValueWithTaxAmount() {
+		return shippingValueWithTaxAmount;
+	}
+
+	public void setShippingValueWithTaxAmount(
+		Double shippingValueWithTaxAmount) {
+
+		this.shippingValueWithTaxAmount = shippingValueWithTaxAmount;
+	}
+
+	public void setShippingValueWithTaxAmount(
+		UnsafeSupplier<Double, Exception>
+			shippingValueWithTaxAmountUnsafeSupplier) {
+
+		try {
+			shippingValueWithTaxAmount =
+				shippingValueWithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double shippingValueWithTaxAmount;
+
+	public String getShippingValueWithTaxAmountFormatted() {
+		return shippingValueWithTaxAmountFormatted;
+	}
+
+	public void setShippingValueWithTaxAmountFormatted(
+		String shippingValueWithTaxAmountFormatted) {
+
+		this.shippingValueWithTaxAmountFormatted =
+			shippingValueWithTaxAmountFormatted;
+	}
+
+	public void setShippingValueWithTaxAmountFormatted(
+		UnsafeSupplier<String, Exception>
+			shippingValueWithTaxAmountFormattedUnsafeSupplier) {
+
+		try {
+			shippingValueWithTaxAmountFormatted =
+				shippingValueWithTaxAmountFormattedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String shippingValueWithTaxAmountFormatted;
+
 	public Double getSubtotal() {
 		return subtotal;
 	}

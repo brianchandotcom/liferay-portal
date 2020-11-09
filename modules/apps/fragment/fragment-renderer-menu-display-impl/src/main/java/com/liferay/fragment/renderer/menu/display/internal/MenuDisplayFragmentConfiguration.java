@@ -14,16 +14,21 @@
 
 package com.liferay.fragment.renderer.menu.display.internal;
 
+import java.util.Optional;
+
 /**
  * @author Víctor Galán
  */
 public class MenuDisplayFragmentConfiguration {
 
 	public MenuDisplayFragmentConfiguration(
-		DisplayStyle displayStyle, int numberOfSublevels, Source source) {
+		DisplayStyle displayStyle, String hoveredItemColor,
+		int numberOfSublevels, String selectedItemColor, Source source) {
 
 		_displayStyle = displayStyle;
+		_hoveredItemColor = hoveredItemColor;
 		_numberOfSublevels = numberOfSublevels;
+		_selectedItemColor = selectedItemColor;
 		_source = source;
 	}
 
@@ -31,8 +36,16 @@ public class MenuDisplayFragmentConfiguration {
 		return _displayStyle;
 	}
 
+	public Optional<String> getHoveredItemColorOptional() {
+		return Optional.ofNullable(_hoveredItemColor);
+	}
+
 	public int getNumberOfSublevels() {
 		return _numberOfSublevels;
+	}
+
+	public Optional<String> getSelectedItemColor() {
+		return Optional.ofNullable(_selectedItemColor);
 	}
 
 	public Source getSource() {
@@ -77,7 +90,9 @@ public class MenuDisplayFragmentConfiguration {
 	}
 
 	private final DisplayStyle _displayStyle;
+	private final String _hoveredItemColor;
 	private final int _numberOfSublevels;
+	private final String _selectedItemColor;
 	private final Source _source;
 
 }

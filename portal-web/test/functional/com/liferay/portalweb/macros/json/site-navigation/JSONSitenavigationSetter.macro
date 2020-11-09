@@ -24,4 +24,20 @@ definition {
 		return "${siteNavigationMenuId}";
 	}
 
+	macro setSiteNavigationMenuItemId {
+		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName}");
+
+		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}");
+
+		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
+			groupId = "${groupId}",
+			siteNavigationMenuName = "${siteNavigationMenuName}");
+
+		var siteNavigationMenuItemId = JSONSitenavigationAPI._getSiteNavigationMenuItemIdByName(
+			siteNavigationMenuId = "${siteNavigationMenuId}",
+			siteNavigationMenuItemName = "${siteNavigationMenuItemName}");
+
+		return "${siteNavigationMenuItemId}";
+	}
+
 }

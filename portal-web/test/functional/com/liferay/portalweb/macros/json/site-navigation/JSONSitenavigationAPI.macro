@@ -50,4 +50,23 @@ definition {
 		return "${siteNavigationMenuId}";
 	}
 
+	@summary = "Helper function to get a siteNavigationMenuItemId via JSON"
+	macro _getSiteNavigationMenuItemIdByName {
+		Variables.assertDefined(parameterList = "${siteNavigationMenuId},${siteNavigationMenuItemName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \
+				-u test@liferay.com:test \
+				-d siteNavigationMenuId=${siteNavigationMenuId}
+		''';
+
+		var siteNavigationMenuItemId = JSONCurlUtil.post("${curl}", "$.[?(@['typeSettings'] contains '${siteNavigationMenuItemName}')]['siteNavigationMenuItemId']");
+		var siteNavigationMenuItemId = StringUtil.replace("${siteNavigationMenuItemId}", "[&quot;", "");
+		var siteNavigationMenuItemId = StringUtil.replace("${siteNavigationMenuItemId}", "&quot;]", "");
+
+		return "${siteNavigationMenuItemId}";
+	}
+
 }

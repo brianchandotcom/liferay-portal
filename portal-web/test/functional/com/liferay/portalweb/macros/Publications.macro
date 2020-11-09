@@ -361,7 +361,12 @@ definition {
 			locator1 = "Publications#PUBLISH_TIME_MINUTES",
 			value1 = "${publishTimeMinutes}");
 
-		Click(locator1 = "Publications#SCHEDULE_BUTTON");
+		if ("${reschedule}" == "true") {
+			Click(locator1 = "Publications#RESCHEDULE_BUTTON");
+		}
+		else {
+			Click(locator1 = "Publications#SCHEDULE_BUTTON");
+		}
 	}
 
 	macro search {

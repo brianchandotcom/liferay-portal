@@ -107,10 +107,12 @@ definition {
 				value1 = "${addressCountry}");
 		}
 
-		AssertTextEquals(
-			key_paymentMethod = "${paymentMethod}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
-			value1 = "${paymentMethod}");
+		if (isSet(paymentMethod)) {
+			AssertTextEquals(
+				key_paymentMethod = "${paymentMethod}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+				value1 = "${paymentMethod}");
+		}
 
 		AssertTextEquals(
 			key_productName = "${productName}",

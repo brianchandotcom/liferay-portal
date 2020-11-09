@@ -18,13 +18,16 @@ import {addItem, updateItem} from './client.es';
  * Normalize field
  * @param {Array} availableLanguageIds
  * @param {Object} field
+ * @param {String?} defaultLanguageId
  * @description some fields are translated with the language of
  * themeDisplay.getDefaultLanguageId() which is not necessarily the language of dataDefinition,
  * so we need to normalize all fields so that they receive themeDisplay.getDefaultLanguageId()
  */
-const normalizeField = (availableLanguageIds, field) => {
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
-
+const normalizeField = (
+	availableLanguageIds,
+	field,
+	defaultLanguageId = themeDisplay.getDefaultLanguageId()
+) => {
 	const toArray = (value) =>
 		availableLanguageIds.reduce((accumulator, currentValue) => {
 			accumulator[currentValue] =
@@ -72,7 +75,11 @@ const normalizeField = (availableLanguageIds, field) => {
 		nestedDataDefinitionFields: field.nestedDataDefinitionFields.length
 			? field.nestedDataDefinitionFields.map((nestedField) => ({
 					...nestedField,
-					...normalizeField(availableLanguageIds, nestedField),
+					...normalizeField(
+						availableLanguageIds,
+						nestedField,
+						defaultLanguageId
+					),
 			  }))
 			: [],
 	};
@@ -82,14 +89,18 @@ const normalizeField = (availableLanguageIds, field) => {
  * Normalize DD and DL state
  * @param {object} dataDefinition
  * @param {object} dataLayout
+ * @param {String?} defaultLanguageId
  * @returns {object} {normalizedDataLayout, normalizedDataDefinition}
  * @description This Normalization is necessary to handle
  * differences data structures between across the components, such as
  * App Builder, Data Engine and Forms
  */
 
-export const normalizeState = (dataDefinition, dataLayout) => {
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+export const normalizeState = (
+	dataDefinition,
+	dataLayout,
+	defaultLanguageId = themeDisplay.getDefaultLanguageId()
+) => {
 	let normalizedDataLayout;
 	let normalizedDataDefinition;
 
@@ -135,13 +146,23 @@ export const normalizeState = (dataDefinition, dataLayout) => {
 			...dataDefinition,
 			dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
 				(field) =>
-					normalizeField(dataDefinition.availableLanguageIds, field)
+					normalizeField(
+						dataDefinition.availableLanguageIds,
+						field,
+						defaultLanguageId
+					)
 			),
-			name: {
-				...dataDefinition.name,
-				[defaultLanguageId]:
-					dataDefinition.name[defaultLanguageId] || '',
-			},
+			name: dataDefinition.availableLanguageIds.reduce(
+				(accumulator, currentValue) => {
+					accumulator[currentValue] =
+						dataDefinition.name[currentValue] ||
+						dataDefinition.name[defaultLanguageId] ||
+						'';
+
+					return accumulator;
+				},
+				{}
+			),
 		};
 	}
 

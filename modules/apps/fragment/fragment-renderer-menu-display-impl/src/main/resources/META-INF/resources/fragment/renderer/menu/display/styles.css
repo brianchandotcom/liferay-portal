@@ -1,23 +1,23 @@
 <style>
 
-.list-menu ul {
+#${fragmentId} .list-menu ul {
 	list-style: none;
 }
 
-.nav {
+#${fragmentId} .nav {
 	font-size: inherit;
 	font-weight: inherit;
 }
 
-.lfr-nav-item > a {
+#${fragmentId} .lfr-nav-item > a {
 	color: inherit;
 }
 
-.lfr-nav-item.selected > a {
+#${fragmentId} .lfr-nav-item.selected > a {
 	color: ${selectedItemColor};
 }
 
-.lfr-nav-item > a:hover {
+#${fragmentId} .lfr-nav-item > a:hover {
 	color: ${hoveredItemColor};
 }
 </style>

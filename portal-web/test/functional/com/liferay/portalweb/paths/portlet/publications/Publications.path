@@ -164,6 +164,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULE_NAV_BAR</td>
+	<td>//li[contains(@class,'tbar-item')]/a[contains(.,'Schedule')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_PUBLICATION_NAME</td>
 	<td>//a[contains(.,'${key_publicationsName}')]</td>
 	<td></td>

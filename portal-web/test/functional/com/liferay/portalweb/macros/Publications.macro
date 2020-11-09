@@ -305,7 +305,7 @@ definition {
 		else if ("${gotoReviewPublications}" == "true") {
 			Publications.gotoReviewPublications();
 
-			Click(locator1 = "Publications#SCHEDULE_BUTTON");
+			Click(locator1 = "Publications#SCHEDULE_NAV_BAR");
 		}
 		else if ("${reschedule}" == "true") {
 			Publications.gotoScheduledPublications();

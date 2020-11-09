@@ -21,6 +21,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 %>
 
 <div class="container-fluid-1280 p-4" id="<portlet:namespace />siteNavigationMenuLevelSelector">
+	<div class="alert alert-info">
+		<liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" />
+	</div>
+
 	<div class="align-items-center d-flex justify-content-between">
 		<liferay-site-navigation:breadcrumb
 			breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
@@ -32,7 +36,8 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 			data-site-navigation-menu-id="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
 			data-title="<%= selectSiteNavigationMenuDisplayContext.getCurrentLevelTitle() %>"
 			displayType="primary"
-			label='<%= LanguageUtil.get(resourceBundle, "select-level") %>'
+			label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'
+			small="<%= true %>"
 		/>
 	</div>
 

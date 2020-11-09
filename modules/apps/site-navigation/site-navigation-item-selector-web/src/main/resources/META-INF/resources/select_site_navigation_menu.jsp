@@ -26,7 +26,9 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 	</c:when>
 	<c:otherwise>
 		<div class="container-fluid-1280 p-4">
-			<p class="text-secondary"><liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" /></p>
+			<div class="alert alert-info">
+				<liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" />
+			</div>
 
 			<liferay-site-navigation:breadcrumb
 				breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"

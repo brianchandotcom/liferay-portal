@@ -119,6 +119,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_DATE</td>
+	<td>//div[@class='date-picker']//input[contains(@class,'input-group-inset') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TIME_HOURS</td>
+	<td>//input[contains(@class,'clay-time-hours') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TIME_MINUTES</td>
+	<td>//input[contains(@class,'clay-time-minutes') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISHED_PUBLICATIONS_NAME</td>
 	<td>//div[contains(@class,'publication-name') and contains(.,'${key_publicationsName}')]</td>
 	<td></td>

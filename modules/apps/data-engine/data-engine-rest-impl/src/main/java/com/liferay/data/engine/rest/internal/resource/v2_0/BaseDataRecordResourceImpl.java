@@ -118,7 +118,7 @@ public abstract class BaseDataRecordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-records' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-records' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -214,7 +214,7 @@ public abstract class BaseDataRecordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-records' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-records' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -386,7 +386,7 @@ public abstract class BaseDataRecordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -427,7 +427,7 @@ public abstract class BaseDataRecordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-records/{dataRecordId}' -d $'{"dataRecordCollectionId": ___, "dataRecordValues": ___, "id": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

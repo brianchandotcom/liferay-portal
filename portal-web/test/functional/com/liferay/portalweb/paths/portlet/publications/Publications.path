@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>LIST_PUBLICATION_ELLIPSIS</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

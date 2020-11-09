@@ -211,23 +211,32 @@ public class SelectSiteNavigationMenuDisplayContext {
 				groupIds, _themeDisplay.getCompanyGroupId());
 		}
 
+		List<SiteNavigationMenu> staticSiteNavigationMenus =
+			_getStaticSiteNavigationMenus();
+
+		int start = searchContainer.getStart();
+
+		int staticSiteNavigationMenusCount = staticSiteNavigationMenus.size();
+
+		if (start != 0) {
+			start -= staticSiteNavigationMenusCount;
+		}
+
 		List<SiteNavigationMenu> siteNavigationMenus =
 			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-				groupIds, searchContainer.getStart(), searchContainer.getEnd(),
-				null);
+				groupIds, start, searchContainer.getEnd(), null);
+
 		int siteNavigationMenusCount =
 			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(groupIds);
 
-		if (searchContainer.getStart() == 0) {
+		if (start == 0) {
 			siteNavigationMenus = ListUtil.concat(
-				Collections.singletonList(
-					_getPublicPagesHierarchySiteNavigationMenu()),
-				siteNavigationMenus);
-			siteNavigationMenusCount++;
+				staticSiteNavigationMenus, siteNavigationMenus);
 		}
 
 		searchContainer.setResults(siteNavigationMenus);
-		searchContainer.setTotal(siteNavigationMenusCount);
+		searchContainer.setTotal(
+			siteNavigationMenusCount + staticSiteNavigationMenusCount);
 
 		return searchContainer;
 	}
@@ -451,6 +460,11 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		return siteNavigationItems;
+	}
+
+	private List<SiteNavigationMenu> _getStaticSiteNavigationMenus() {
+		return Collections.singletonList(
+			_getPublicPagesHierarchySiteNavigationMenu());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

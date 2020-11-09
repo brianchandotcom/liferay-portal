@@ -85,6 +85,7 @@ public class CProductInfoItemFieldValuesProvider
 					).values(
 						cpDefinition.getNameMap()
 					).build()));
+
 			cProductInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CProductInfoItemFields.descriptionInfoField,
@@ -95,6 +96,11 @@ public class CProductInfoItemFieldValuesProvider
 					).values(
 						cpDefinition.getDescriptionMap()
 					).build()));
+
+			cProductInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CProductInfoItemFields.defaultImage,
+					cpDefinition.getDefaultImageFileURL()));
 
 			ThemeDisplay themeDisplay = _getThemeDisplay();
 

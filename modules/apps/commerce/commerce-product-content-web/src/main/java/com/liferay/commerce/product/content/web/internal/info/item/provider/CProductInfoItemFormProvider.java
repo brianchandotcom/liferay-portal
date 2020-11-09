@@ -74,6 +74,8 @@ public class CProductInfoItemFormProvider
 			CProductInfoItemFields.titleInfoField
 		).infoFieldSetEntry(
 			CProductInfoItemFields.descriptionInfoField
+		).infoFieldSetEntry(
+			CProductInfoItemFields.defaultImage
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.commerce.lang", "basic-information")

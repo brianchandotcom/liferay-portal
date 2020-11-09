@@ -33,6 +33,11 @@ public class SafePNGInputStream extends InputStream {
 	}
 
 	@Override
+	public void close() throws IOException {
+		_bufferedInputStream.close();
+	}
+
+	@Override
 	public int read() throws IOException {
 		if (_firstRun) {
 			_detectPNGSignature();

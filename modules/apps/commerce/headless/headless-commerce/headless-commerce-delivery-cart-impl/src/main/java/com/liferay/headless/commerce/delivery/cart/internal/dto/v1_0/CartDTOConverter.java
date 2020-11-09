@@ -209,6 +209,12 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		BigDecimal commerceOrderPriceShippingValuePrice =
 			commerceOrderPriceShippingValueCommerceMoney.getPrice();
 
+		CommerceMoney commerceOrderShippingValueWithTaxAmountCommerceMoney =
+			commerceOrder.getShippingWithTaxAmountMoney();
+
+		BigDecimal commerceOrderPriceShippingValueWithTaxAmountPrice =
+			commerceOrderShippingValueWithTaxAmountCommerceMoney.getPrice();
+
 		CommerceMoney commerceOrderPriceSubtotalCommerceMoney =
 			commerceOrder.getSubtotalMoney();
 
@@ -229,14 +235,10 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				commerceChannel.getPriceDisplayType(),
 				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 
-			commerceOrderPriceShippingValuePrice =
-				commerceOrder.getShippingWithTaxAmount();
 			orderPriceSubtotalPrice = commerceOrder.getSubtotalWithTaxAmount();
 			orderPriceTotalPrice = commerceOrder.getTotalWithTaxAmount();
 		}
 
-		BigDecimal finalCommerceOrderPriceShippingValuePrice =
-			commerceOrderPriceShippingValuePrice;
 		BigDecimal finalOrderPriceSubtotalPrice = orderPriceSubtotalPrice;
 		BigDecimal finalOrderPriceTotalPrice = orderPriceTotalPrice;
 
@@ -247,9 +249,15 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 					_commerceOrderItemService.getCommerceOrderItemsQuantity(
 						commerceOrder.getCommerceOrderId());
 				shippingValue =
-					finalCommerceOrderPriceShippingValuePrice.doubleValue();
+					commerceOrderPriceShippingValuePrice.doubleValue();
 				shippingValueFormatted =
 					commerceOrderPriceShippingValueCommerceMoney.format(locale);
+				shippingValueWithTaxAmount =
+					commerceOrderPriceShippingValueWithTaxAmountPrice.
+						doubleValue();
+				shippingValueWithTaxAmountFormatted =
+					commerceOrderShippingValueWithTaxAmountCommerceMoney.format(
+						locale);
 				subtotal = finalOrderPriceSubtotalPrice.doubleValue();
 				subtotalFormatted =
 					commerceOrderPriceSubtotalCommerceMoney.format(locale);

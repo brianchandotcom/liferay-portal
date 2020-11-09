@@ -1082,6 +1082,59 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testValidationExpressionWithNumericField() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormField(
+			"field0", "numeric", FieldConstants.INTEGER);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			new DDMFormFieldValidationExpression() {
+				{
+					setName("neq");
+					setValue("field0!={parameter}");
+				}
+			});
+		ddmFormFieldValidation.setErrorMessageLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"This field should not be zero.", LocaleUtil.US));
+		ddmFormFieldValidation.setParameterLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue("0", LocaleUtil.US));
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("0")));
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			doEvaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Map<String, Object> ddmFormFieldPropertyChanges =
+			ddmFormFieldsPropertyChanges.get(
+				new DDMFormEvaluatorFieldContextKey(
+					"field0", "field0_instanceId"));
+
+		Assert.assertEquals(
+			"This field should not be zero.",
+			ddmFormFieldPropertyChanges.get("errorMessage"));
+		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
+	}
+
+	@Test
 	public void testValidationForRepeatableField() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 

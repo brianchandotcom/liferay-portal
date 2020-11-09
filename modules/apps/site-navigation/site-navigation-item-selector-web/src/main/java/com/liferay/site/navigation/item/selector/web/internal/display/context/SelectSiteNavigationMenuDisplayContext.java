@@ -78,7 +78,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws Exception {
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
-		breadcrumbEntries.add(_getAllBreadcrumbEntry());
+		breadcrumbEntries.add(_getMenusBreadcrumbEntry());
 
 		if (getSiteNavigationMenuId() == 0) {
 			breadcrumbEntries.addAll(_getLayoutBreadcrumbEntries());
@@ -240,18 +240,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 		};
 	}
 
-	private BreadcrumbEntry _getAllBreadcrumbEntry() {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_themeDisplay.getLocale(), getClass());
-
-		String backURL = ParamUtil.getString(
-			_httpServletRequest, "backURL",
-			PortalUtil.getCurrentURL(_httpServletRequest));
-
-		return _createBreadcrumbEntry(
-			LanguageUtil.get(resourceBundle, "all"), backURL);
-	}
-
 	private List<BreadcrumbEntry> _getAncestorsBreadcrumbEntries()
 		throws Exception {
 
@@ -328,6 +316,18 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		return breadcrumbEntries;
+	}
+
+	private BreadcrumbEntry _getMenusBreadcrumbEntry() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		String backURL = ParamUtil.getString(
+			_httpServletRequest, "backURL",
+			PortalUtil.getCurrentURL(_httpServletRequest));
+
+		return _createBreadcrumbEntry(
+			LanguageUtil.get(resourceBundle, "menus"), backURL);
 	}
 
 	private PortletRequest _getPortletRequest() {

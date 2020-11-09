@@ -80,10 +80,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 		breadcrumbEntries.add(_getMenusBreadcrumbEntry());
 
-		if (getSiteNavigationMenuId() == 0) {
+		long siteNavigationMenuId = getSiteNavigationMenuId();
+
+		if (siteNavigationMenuId == 0) {
 			breadcrumbEntries.addAll(_getLayoutBreadcrumbEntries());
 		}
-		else {
+		else if (siteNavigationMenuId > 0) {
 			breadcrumbEntries.addAll(_getSiteNavigationMenuBreadcrumbEntries());
 		}
 

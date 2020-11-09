@@ -23,6 +23,7 @@ import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentCo
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.SiteNavigationMenuSource;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -111,8 +112,14 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
+
+			String fragmentId = _getFragmentId(fragmentEntryLink);
+
+			printWriter.write("<div id=\"" + fragmentId + "\">");
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
@@ -124,13 +131,16 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					fragmentEntryLink.getEditableValues(),
 					themeDisplay.getScopeGroupId());
 
-			_writeCss(httpServletResponse, menuDisplayFragmentConfiguration);
+			_writeCss(
+				fragmentId, menuDisplayFragmentConfiguration, printWriter);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				menuDisplayFragmentConfiguration);
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
+
+			printWriter.write("</div>");
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -201,6 +211,17 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			menuDisplayFragmentConfiguration.getNumberOfSublevels() + 1);
 	}
 
+	private String _getFragmentId(FragmentEntryLink fragmentEntryLink) {
+		StringBundler fragmentIdSB = new StringBundler(4);
+
+		fragmentIdSB.append("fragment-");
+		fragmentIdSB.append(fragmentEntryLink.getFragmentEntryId());
+		fragmentIdSB.append("-");
+		fragmentIdSB.append(fragmentEntryLink.getNamespace());
+
+		return fragmentIdSB.toString();
+	}
+
 	private NavigationMenuTag _getNavigationMenuTag(
 			long companyId, long groupId,
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
@@ -248,11 +269,14 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _writeCss(
-			HttpServletResponse httpServletResponse,
-			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
+			String fragmentId,
+			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
+			PrintWriter printWriter)
 		throws IOException {
 
 		HashMap<String, String> values = HashMapBuilder.put(
+			"fragmentId", fragmentId
+		).put(
 			"hoveredItemColor",
 			() -> {
 				Optional<String> hoveredItemColorOptional =
@@ -277,8 +301,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 				"/META-INF/resources/fragment/renderer/menu/display" +
 					"/styles.css"),
 			"${", "}", values);
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.write(styles);
 	}

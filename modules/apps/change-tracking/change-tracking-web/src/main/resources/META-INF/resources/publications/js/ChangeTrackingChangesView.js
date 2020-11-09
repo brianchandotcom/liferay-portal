@@ -597,9 +597,11 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 
 			breadcrumbItems.push({
+				hideable: parent.hideable,
 				label: parent.title,
 				modelClassNameId: parent.modelClassNameId,
 				modelClassPK: parent.modelClassPK,
+				nodeId: parent.nodeId,
 				onClick: () =>
 					this._handleNavigationUpdate({
 						filterClass,
@@ -763,6 +765,7 @@ class ChangeTrackingChangesView extends React.Component {
 					const model = this.models[element.modelKey.toString()];
 
 					parents.push({
+						hideable: model.hideable,
 						modelClassNameId: model.modelClassNameId,
 						modelClassPK: model.modelClassPK,
 						nodeId: element.nodeId,
@@ -1298,8 +1301,26 @@ class ChangeTrackingChangesView extends React.Component {
 				return;
 			}
 			else if (this.state.node.hideable) {
+				let nodeId = 0;
+
+				for (
+					let i = this.state.breadcrumbItems.length - 2;
+					i > 0;
+					i--
+				) {
+					const breadcrumbItem = this.state.breadcrumbItems[i];
+
+					if (!breadcrumbItem.hideable) {
+						if (breadcrumbItem.nodeId) {
+							nodeId = breadcrumbItem.nodeId;
+						}
+
+						break;
+					}
+				}
+
 				this._handleNavigationUpdate({
-					nodeId: 0,
+					nodeId,
 					showHideable,
 				});
 

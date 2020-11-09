@@ -208,36 +208,36 @@ exports[`EditApp renders 1`] = `
           </div>
         </div>
       </div>
-    </div>
-    <h4
-      class="card-divider"
-    />
-    <div
-      class="bg-transparent card-footer"
-    >
+      <h4
+        class="card-divider"
+      />
       <div
-        class="autofit-row"
+        class="bg-transparent card-footer"
       >
         <div
-          class="col-md-4"
+          class="autofit-row"
         >
-          <button
-            class="btn btn-secondary"
-            type="button"
+          <div
+            class="col-md-4"
           >
-            cancel
-          </button>
-        </div>
-        <div
-          class="offset-md-4 text-right col-md-4"
-        >
-          <button
-            class="btn btn-primary"
-            disabled=""
-            type="button"
+            <button
+              class="btn btn-secondary"
+              type="button"
+            >
+              cancel
+            </button>
+          </div>
+          <div
+            class="offset-md-4 text-right col-md-4"
           >
-            next
-          </button>
+            <button
+              class="btn btn-primary"
+              disabled=""
+              type="button"
+            >
+              next
+            </button>
+          </div>
         </div>
       </div>
     </div>

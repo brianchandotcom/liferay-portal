@@ -376,7 +376,7 @@ definition {
 			value1 = "Document_2.jpg");
 	}
 
-	@description = "This ensures that an image is edited multiple times in depot can be published in staging site when enabling local staging."
+	@description = "This ensures that the latest version of an image in a depot can be published in local staging site."
 	@priority = "5"
 	test PublishImageWithLatestVersion {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");

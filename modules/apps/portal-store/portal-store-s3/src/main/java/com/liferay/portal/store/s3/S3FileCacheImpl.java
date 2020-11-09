@@ -19,6 +19,7 @@ import com.amazonaws.services.s3.model.S3Object;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -117,13 +118,23 @@ public class S3FileCacheImpl implements S3FileCache {
 
 		File cacheFile = new File(cacheFileName);
 
-		try (InputStream inputStream = s3Object.getObjectContent()) {
-			if (cacheFile.exists() &&
-				(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
+		if (cacheFile.exists() &&
+			(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
 
-				return new FileInputStream(cacheFile);
+			return new FileInputStream(cacheFile);
+		}
+
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			InputStream inputStream = s3Object.getObjectContent();
+
+			if (inputStream == null) {
+				throw new IOException("S3 object input stream is null");
 			}
 
+			return inputStream;
+		}
+
+		try (InputStream inputStream = s3Object.getObjectContent()) {
 			if (inputStream == null) {
 				throw new IOException("S3 object input stream is null");
 			}

@@ -223,7 +223,20 @@ public class ServletContextUtil {
 	private static long _getLastModified(
 		ServletContext servletContext, String path) {
 
-		Long lastModifiedLong = ContextResourcePathsUtil.visitResources(
+		boolean root = StringPool.SLASH.equals(path);
+
+		Long lastModifiedLong = null;
+
+		if (root) {
+			lastModifiedLong = (Long)servletContext.getAttribute(
+				_BUNDLE_RESOURCES_LAST_MODIFIED);
+
+			if (lastModifiedLong != null) {
+				return lastModifiedLong;
+			}
+		}
+
+		lastModifiedLong = ContextResourcePathsUtil.visitResources(
 			servletContext, path, null,
 			enumeration -> {
 				long lastModified = 0;
@@ -258,6 +271,11 @@ public class ServletContextUtil {
 			});
 
 		if (lastModifiedLong != null) {
+			if (root) {
+				servletContext.setAttribute(
+					_BUNDLE_RESOURCES_LAST_MODIFIED, lastModifiedLong);
+			}
+
 			return lastModifiedLong;
 		}
 
@@ -289,6 +307,9 @@ public class ServletContextUtil {
 
 		return lastModified;
 	}
+
+	private static final String _BUNDLE_RESOURCES_LAST_MODIFIED =
+		"BUNDLE_RESOURCES_LAST_MODIFIED";
 
 	private static final String _EXT_CLASS = ".class";
 

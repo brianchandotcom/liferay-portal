@@ -73,20 +73,34 @@ export const updateSettingsContextProperty = (
 	propertyValue
 ) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
+	const isLocalizablePropertyValue = typeof propertyValue === 'object';
+	const isLocalizableLabel =
+		propertyName === 'label' && isLocalizablePropertyValue;
 
 	return {
 		...settingsContext,
 		pages: visitor.mapFields((field) => {
 			if (propertyName === field.fieldName) {
+				let value = propertyValue;
+
+				if (isLocalizableLabel) {
+					value = propertyValue[editingLanguageId];
+				}
+
 				field = {
 					...field,
-					value: propertyValue,
+					value,
 				};
 
 				if (field.localizable) {
+					if (isLocalizableLabel) {
+						field.localizedValue = {
+							...propertyValue,
+						};
+					}
 					field.localizedValue = {
 						...field.localizedValue,
-						[editingLanguageId]: propertyValue,
+						[editingLanguageId]: value,
 					};
 				}
 			}
@@ -213,6 +227,7 @@ export const updateFieldLabel = (
 	value
 ) => {
 	let {fieldName, settingsContext} = focusedField;
+	let label = value;
 
 	if (
 		generateFieldNameUsingFieldLabel &&
@@ -229,10 +244,14 @@ export const updateFieldLabel = (
 		settingsContext = updates.settingsContext;
 	}
 
+	if (typeof value === 'object') {
+		label = value[editingLanguageId] || value[defaultLanguageId];
+	}
+
 	return {
 		...focusedField,
 		fieldName,
-		label: value,
+		label,
 		settingsContext: updateSettingsContextProperty(
 			editingLanguageId,
 			settingsContext,

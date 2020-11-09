@@ -80,6 +80,8 @@ export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 				dataLayoutBuilder.dispatch(
 					'fieldSetAdded',
 					dropFieldSet({
+						availableLanguageIds:
+							dataDefinition.availableLanguageIds,
 						dataLayoutBuilder,
 						fieldName,
 						fieldSet: data.fieldSet,

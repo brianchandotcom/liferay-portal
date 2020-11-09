@@ -102,6 +102,7 @@ export const dropLayoutBuilderField = ({
 };
 
 export const dropFieldSet = ({
+	availableLanguageIds = [],
 	dataLayoutBuilder,
 	fieldName,
 	fieldSet,
@@ -119,7 +120,9 @@ export const dropFieldSet = ({
 		...otherProps,
 		defaultLanguageId: fieldSet.defaultLanguageId,
 		fieldName,
-		fieldSet: dataLayoutBuilder.getDDMForm(fieldSet),
+		fieldSet: dataLayoutBuilder.getFieldSetDDMForm(fieldSet, {
+			availableLanguageIds,
+		}),
 		indexes,
 		parentFieldName,
 		useFieldName,

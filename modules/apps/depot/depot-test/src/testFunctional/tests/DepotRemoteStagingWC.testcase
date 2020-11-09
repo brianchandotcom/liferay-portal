@@ -60,6 +60,8 @@ definition {
 	@description = "This ensures that image in basic article in depot can be deleted and republished in staging site when enabling remote staging."
 	@priority = "5"
 	test DeleteImageInDepot {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#DeleteImageInDepot";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
@@ -162,6 +164,8 @@ definition {
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling remote staging."
 	@priority = "5"
 	test EditFriendlyURLInDepot {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#EditFriendlyURLInDepot";
+
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
@@ -278,6 +282,8 @@ definition {
 	@description = "This ensures that image in basic article in depot can be edited and republished in staging site when enabling remote staging."
 	@priority = "5"
 	test EditImageInDepot {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#EditImageInDepot";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addCP(

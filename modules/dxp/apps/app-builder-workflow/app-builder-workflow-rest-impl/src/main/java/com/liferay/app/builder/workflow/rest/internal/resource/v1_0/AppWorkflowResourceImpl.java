@@ -62,15 +62,15 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 				appId, 0);
 
 		if (workflowDefinitionLink != null) {
-			_appBuilderWorkflowTaskLinkLocalService.
-				deleteAppBuilderWorkflowTaskLinks(appId);
-
 			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 				workflowDefinitionLink);
-
-			_appWorkflowResourceHelper.undeployWorkflowDefinition(
-				appId, contextCompany.getCompanyId(), contextUser.getUserId());
 		}
+
+		_appBuilderWorkflowTaskLinkLocalService.
+			deleteAppBuilderWorkflowTaskLinks(appId);
+
+		_appWorkflowResourceHelper.undeployWorkflowDefinition(
+			appId, contextCompany.getCompanyId(), contextUser.getUserId());
 	}
 
 	@Override

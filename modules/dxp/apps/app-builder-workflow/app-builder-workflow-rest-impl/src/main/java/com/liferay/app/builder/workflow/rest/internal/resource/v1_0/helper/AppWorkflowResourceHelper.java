@@ -205,6 +205,14 @@ public class AppWorkflowResourceHelper {
 			long appId, long companyId, long userId)
 		throws PortalException {
 
+		int workflowDefinitionsCount =
+			_workflowDefinitionManager.getWorkflowDefinitionsCount(
+				companyId, String.valueOf(appId));
+
+		if (workflowDefinitionsCount == 0) {
+			return;
+		}
+
 		WorkflowDefinition workflowDefinition = getLatestWorkflowDefinition(
 			appId, companyId);
 

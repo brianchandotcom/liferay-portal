@@ -107,16 +107,16 @@ export default ({
 								dataDefinitionId={dataDefinitionId}
 								defaultLanguageId={defaultLanguageId}
 							/>
+
+							<h4 className="card-divider"></h4>
+
+							<EditAppFooter
+								currentStep={currentStep}
+								defaultLanguageId={defaultLanguageId}
+								editingLanguageId={editingLanguageId}
+								onCurrentStepChange={setCurrentStep}
+							/>
 						</div>
-
-						<h4 className="card-divider"></h4>
-
-						<EditAppFooter
-							currentStep={currentStep}
-							defaultLanguageId={defaultLanguageId}
-							editingLanguageId={editingLanguageId}
-							onCurrentStepChange={setCurrentStep}
-						/>
 					</ClayLayout.ContainerFluid>
 				</EditAppContext.Provider>
 			</Loading>

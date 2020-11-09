@@ -49,9 +49,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 				cssClass="table-title"
 				name="name"
 			>
-				<clay:icon
-					cssClass="mr-2"
-					symbol="page"
+				<clay:sticker
+					cssClass="bg-light mr-2"
+					displayType="light"
+					icon="page"
 				/>
 
 				<a href="<%= siteNavigationMenuEntry.getURL() %>">

@@ -42,11 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/my_account/setup_mfa/fido2/remove_authenticator"
+		"mvc.command.name=/multi-factor-authentication-fido2/remove_mfa_fido2_credential_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class MFAFIDO2UserAccountSetupMVCActionCommand
+public class RemoveMFAFIDO2CredentialEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -59,7 +59,7 @@ public class MFAFIDO2UserAccountSetupMVCActionCommand
 
 		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry =
 			_mfaFIDO2CredentialEntryLocalService.getMFAFIDO2CredentialEntry(
-				ParamUtil.getLong(actionRequest, "authenticatorId"));
+				ParamUtil.getLong(actionRequest, "mfaFIDO2CredentialEntryId"));
 
 		if ((themeDisplay == null) ||
 			(themeDisplay.getUserId() != mfaFIDO2CredentialEntry.getUserId())) {
@@ -88,7 +88,7 @@ public class MFAFIDO2UserAccountSetupMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MFAFIDO2UserAccountSetupMVCActionCommand.class);
+		RemoveMFAFIDO2CredentialEntryMVCActionCommand.class);
 
 	@Reference
 	private MFAFIDO2CredentialEntryLocalService

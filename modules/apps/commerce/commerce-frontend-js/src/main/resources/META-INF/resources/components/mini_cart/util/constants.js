@@ -33,6 +33,7 @@ export const ITEMS_LIST = 'ItemsList';
 export const ITEMS_LIST_ACTIONS = 'ItemsListActions';
 export const OPENER = 'Opener';
 export const ORDER_BUTTON = 'OrderButton';
+export const SUMMARY = 'Summary';
 
 /**
  * 	Cart labels keys constants

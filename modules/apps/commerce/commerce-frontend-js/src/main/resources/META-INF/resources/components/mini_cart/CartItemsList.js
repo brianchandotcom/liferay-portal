@@ -16,7 +16,6 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import Summary from '../summary/Summary';
 import MiniCartContext from './MiniCartContext';
 import {ADD_PRODUCT} from './util/constants';
 
@@ -47,7 +46,7 @@ function CartItemsList({items}) {
 
 					{itemsQuantity > 0 && (
 						<>
-							<Summary
+							<CartViews.Summary
 								dataMapper={summaryDataMapper}
 								isLoading={isUpdating}
 								summaryData={summary}

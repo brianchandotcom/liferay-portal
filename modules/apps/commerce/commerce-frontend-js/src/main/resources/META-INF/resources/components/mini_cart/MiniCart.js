@@ -37,6 +37,7 @@ import {
 	REMOVE_ALL_ITEMS,
 	REVIEW_ORDER,
 	SUBMIT_ORDER,
+	SUMMARY,
 	VIEW_DETAILS,
 	YOUR_ORDER,
 } from './util/constants';
@@ -240,6 +241,14 @@ MiniCart.propTypes = {
 			}),
 		]),
 		[ORDER_BUTTON]: PropTypes.oneOfType([
+			PropTypes.shape({
+				component: PropTypes.func,
+			}),
+			PropTypes.shape({
+				contentRendererModuleUrl: PropTypes.string,
+			}),
+		]),
+		[SUMMARY]: PropTypes.oneOfType([
 			PropTypes.shape({
 				component: PropTypes.func,
 			}),

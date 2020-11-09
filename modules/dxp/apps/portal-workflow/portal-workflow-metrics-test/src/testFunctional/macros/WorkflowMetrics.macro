@@ -1043,12 +1043,13 @@ definition {
 
 			if (!(IsTextEqual.isPartialText(locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATION_DATE", value1 = "${key_currentDate}"))) {
 				var key_currentDateDay = MathUtil.sum("${key_currentDateDay}", "1");
-				var key_currentDate = "${key_currentDateMonthShort} ${key_currentDateDay}, ${key_currentDateYear}";
 
 				var isLessThan10 = MathUtil.isLessThan("${key_currentDateDay}", "10");
 				if ("${isLessThan10}" == "true") {
 					var key_currentDateDay = "0${key_currentDateDay}";
 				}
+
+				var key_currentDate = "${key_currentDateMonthShort} ${key_currentDateDay}, ${key_currentDateYear}";
 			}
 
 			AssertTextEquals.assertPartialText(
@@ -1080,12 +1081,13 @@ definition {
 
 			if (!(IsTextEqual.isPartialText(locator1 = "WorkflowAllItems#DETAIL_PAGE_END_DATE", value1 = "${key_currentDate}"))) {
 				var key_currentDateDay = MathUtil.sum("${key_currentDateDay}", "1");
-				var key_currentDate = "${key_currentDateMonthShort} ${key_currentDateDay}, ${key_currentDateYear}";
 
 				var isLessThan10 = MathUtil.isLessThan("${key_currentDateDay}", "10");
 				if ("${isLessThan10}" == "true") {
 					var key_currentDateDay = "0${key_currentDateDay}";
 				}
+
+				var key_currentDate = "${key_currentDateMonthShort} ${key_currentDateDay}, ${key_currentDateYear}";
 			}
 
 			AssertTextEquals.assertPartialText(

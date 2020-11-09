@@ -375,7 +375,7 @@ public class DataRecordResourceImpl
 			PrincipalThreadLocal.getUserId(), dataRecordId, ddmStorageId,
 			new ServiceContext() {
 				{
-					setAttribute("status", ddlRecordSetVersion.getStatus());
+					setAttribute("status", ddlRecord.getStatus());
 				}
 			});
 

@@ -2019,10 +2019,10 @@
 		<!-- Other fields -->
 
 		<column name="countryId" type="long" />
-		<column name="regionCode" type="String" />
-		<column name="name" type="String" />
 		<column name="active" type="boolean" />
+		<column name="name" type="String" />
 		<column name="position" type="double" />
+		<column name="regionCode" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -2040,13 +2040,13 @@
 		<finder name="Active" return-type="Collection">
 			<finder-column name="active" />
 		</finder>
-		<finder name="C_R" return-type="Region" unique="true">
-			<finder-column name="countryId" />
-			<finder-column name="regionCode" />
-		</finder>
 		<finder name="C_A" return-type="Collection">
 			<finder-column name="countryId" />
 			<finder-column name="active" />
+		</finder>
+		<finder name="C_R" return-type="Region" unique="true">
+			<finder-column name="countryId" />
+			<finder-column name="regionCode" />
 		</finder>
 
 		<!-- References -->

@@ -137,7 +137,7 @@ definition {
 	macro gotoEventDetails {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 	}

@@ -177,14 +177,14 @@ definition {
 	macro selectSpecificEvent {
 		var key_eventTitle = "${eventTitle}";
 
+		Refresh();
+
 		if (contains("${eventTitle}", "All Day")) {
 			AssertClick.assertPartialTextClickAtNoMouseOver(
 				locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY",
 				value1 = "${eventTitle}");
 		}
 		else if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW")) {
-			CalendarNavigator.gotoView(viewType = "Week");
-
 			if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY"))) {
 				Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
 			}
@@ -215,8 +215,6 @@ definition {
 				value1 = "${eventTitle}");
 		}
 		else if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW")) {
-			CalendarNavigator.gotoView(viewType = "Week");
-
 			if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY"))) {
 				Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
 			}

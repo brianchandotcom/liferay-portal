@@ -14,16 +14,14 @@
 
 import AJAX from '../../../utilities/AJAX/index';
 
-const PRODUCT_GROUPS_PATH = '/product-groups';
-
 const VERSION = 'v1.0';
 
-function resolvePath(basePath = '', productGroupId = '') {
-	return `${basePath}${VERSION}${PRODUCT_GROUPS_PATH}/${productGroupId}`;
+function resolveProductsPath(basePath, channelId) {
+	return `${basePath}${VERSION}/channels/${channelId}/products`;
 }
 
 export default (basePath) => ({
-	addProductGroup: (json) => AJAX.POST(`${resolvePath(basePath)}`, json),
-	addProductToProductGroup: (id, json) =>
-		AJAX.POST(`${resolvePath(basePath, id)}/product-group-products`, json),
+	getBaseURL: (channelId) => resolveProductsPath(basePath, channelId),
+	getProductsByChannelId: (channelId, ...params) =>
+		AJAX.GET(resolveProductsPath(basePath, channelId), ...params),
 });

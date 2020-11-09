@@ -20,8 +20,14 @@ const BASE_OPTIONS = {
 	...fetchParams,
 };
 
-function _fetch(url, options = {}) {
-	return fetch(url, {...BASE_OPTIONS, ...options})
+function _fetch(url, options = {}, params = {}) {
+	const formattedUrl = new URL(url, Liferay.ThemeDisplay.getPortalURL());
+
+	Object.entries(params).map(([key, value]) => {
+		formattedUrl.searchParams.append(key, value);
+	});
+
+	return fetch(formattedUrl, {...BASE_OPTIONS, ...options})
 		.then((response) => {
 			if (!response.ok) {
 				return response
@@ -42,47 +48,47 @@ function _fetch(url, options = {}) {
 }
 
 const AJAX = {
-	DELETE(apiUrl, customOptions = {}) {
+	DELETE(apiUrl, customOptions = {}, params = {}) {
 		const options = {
 			method: 'DELETE',
 			...customOptions,
 		};
 
-		return _fetch(apiUrl, options);
+		return _fetch(apiUrl, options, params);
 	},
 
-	GET(apiUrl, customOptions = {}) {
-		return _fetch(apiUrl, customOptions);
+	GET(apiUrl, customOptions = {}, params = {}) {
+		return _fetch(apiUrl, customOptions, params);
 	},
 
-	PATCH(apiUrl, jsonProps = {}, customOptions = {}) {
+	PATCH(apiUrl, jsonProps = {}, customOptions = {}, params = {}) {
 		const options = {
 			body: JSON.stringify(jsonProps),
 			method: 'PATCH',
 			...customOptions,
 		};
 
-		return _fetch(apiUrl, options);
+		return _fetch(apiUrl, options, params);
 	},
 
-	POST(apiUrl, json = {}, customOptions = {}) {
+	POST(apiUrl, json = {}, customOptions = {}, params = {}) {
 		const options = {
 			body: JSON.stringify(json),
 			method: 'POST',
 			...customOptions,
 		};
 
-		return _fetch(apiUrl, options);
+		return _fetch(apiUrl, options, params);
 	},
 
-	PUT(apiUrl, json = {}, customOptions = {}) {
+	PUT(apiUrl, json = {}, customOptions = {}, params = {}) {
 		const options = {
 			body: JSON.stringify(json),
 			method: 'PUT',
 			...customOptions,
 		};
 
-		return _fetch(apiUrl, options);
+		return _fetch(apiUrl, options, params);
 	},
 };
 

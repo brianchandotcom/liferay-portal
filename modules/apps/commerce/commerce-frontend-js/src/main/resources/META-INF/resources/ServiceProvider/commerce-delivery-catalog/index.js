@@ -12,17 +12,13 @@
  * details.
  */
 
-import AJAX from '../../../utilities/AJAX/index';
+import {composeAPI} from '../composeAPI';
+import * as v1 from './v1.0/index';
 
-const CATALOG_PATH = '/catalog';
+const BASE_ENDPOINT = '/o/headless-commerce-delivery-catalog/';
 
-const VERSION = 'v1.0';
+const APIs = {
+	v1,
+};
 
-function resolveCatalogPath(basePath = '', catalogId = '') {
-	return `${basePath}${VERSION}${CATALOG_PATH}/${catalogId}`;
-}
-
-export default (basePath) => ({
-	getCatalogById: (catalogId) =>
-		AJAX.GET(resolveCatalogPath(basePath, catalogId)),
-});
+export default (version) => composeAPI(version, APIs, BASE_ENDPOINT);

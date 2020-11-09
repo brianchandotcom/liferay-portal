@@ -39,6 +39,11 @@ module.exports = [
 		page: 'gallery.html',
 	},
 	{
+		entry: 'GlobalSearch',
+		name: 'Global Search',
+		page: 'global-search.html',
+	},
+	{
 		entry: 'ItemFinder',
 		name: 'Item finder',
 		page: 'item-finder.html',

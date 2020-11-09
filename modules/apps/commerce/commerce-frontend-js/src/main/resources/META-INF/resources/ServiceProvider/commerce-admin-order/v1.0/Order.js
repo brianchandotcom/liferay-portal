@@ -24,5 +24,5 @@ function resolveCatalogPath(basePath = '') {
 
 export default (basePath) => ({
 	baseURL: resolveCatalogPath(basePath),
-	getOrders: () => AJAX.GET(resolveCatalogPath(basePath)),
+	getOrders: (...params) => AJAX.GET(resolveCatalogPath(basePath), ...params),
 });

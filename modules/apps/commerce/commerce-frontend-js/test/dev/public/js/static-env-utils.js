@@ -14,7 +14,13 @@
 
 const Liferay = {
 	Language: {
-		get: (v) => v,
+		get: (key) => {
+			let counter = 0;
+
+			return key.replace(new RegExp('(^x-)|(-x-)|(-x$)', 'gm'), (match) =>
+				match.replace('x', `{${counter++}}`)
+			);
+		},
 	},
 	ThemeDisplay: {
 		getCanonicalURL: () => '/',
@@ -23,6 +29,14 @@ const Liferay = {
 		getPathThemeImages: () => '/assets',
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => 111111,
+	},
+	Util: {
+		sub: (key, ...values) => {
+			return values.reduce(
+				(acc, value, i) => acc.replace(new RegExp(`{[${i}]}`), value),
+				key
+			);
+		},
 	},
 	component: () => {},
 	detach: (name, fn) => {
@@ -46,6 +60,9 @@ const Liferay = {
 		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`,
 		'Content-Type': 'application/json',
 	}),
+	staticEnvTestUtils: {
+		print: (message, type) => ({message, type}),
+	},
 };
 
 window.Liferay = Liferay;

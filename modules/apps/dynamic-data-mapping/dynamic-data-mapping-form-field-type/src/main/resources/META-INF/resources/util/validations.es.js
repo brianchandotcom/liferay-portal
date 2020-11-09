@@ -15,6 +15,13 @@
 export const VALIDATIONS = {
 	numeric: [
 		{
+			label: Liferay.Language.get('is-equal-to'),
+			name: 'neq',
+			parameterMessage: Liferay.Language.get('number-placeholder'),
+			regex: /^(.+)!=(\d+\.?\d*)?$/,
+			template: '{name}!={parameter}',
+		},
+		{
 			label: Liferay.Language.get('is-greater-than-or-equal-to'),
 			name: 'lt',
 			parameterMessage: Liferay.Language.get('number-placeholder'),

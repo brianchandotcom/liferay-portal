@@ -94,11 +94,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEXT_BUTTON</td>
-	<td>//*[contains(@class,'btn')][normalize-space(text())='Next']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLICATION_NAME</td>
 	<td>//input[contains(@name,'name')]</td>
 	<td></td>
@@ -121,11 +116,6 @@
 <tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TIME</td>
-	<td>//span[@class='lfr-input-time']/input[contains(@name,'publishTime') and @type='text']</td>
 	<td></td>
 </tr>
 <tr>

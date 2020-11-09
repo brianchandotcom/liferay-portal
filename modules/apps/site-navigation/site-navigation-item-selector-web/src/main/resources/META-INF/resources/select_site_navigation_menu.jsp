@@ -28,6 +28,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 		<div class="container-fluid-1280 p-4">
 			<p class="text-secondary"><liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" /></p>
 
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
+			/>
+
 			<liferay-ui:search-container
 				cssClass="table-hover"
 				searchContainer="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuSearchContainer() %>"

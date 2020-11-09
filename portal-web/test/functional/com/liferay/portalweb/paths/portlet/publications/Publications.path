@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESCHEDULE_BUTTON</td>
+	<td>//*[contains(@class,'btn')][normalize-space(text())='Reschedule']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVERT_BUTTON</td>
 	<td>//td[contains(.,'${key_publicationsName}')]//following-sibling::td[contains(.,'Revert')]</td>
 	<td></td>

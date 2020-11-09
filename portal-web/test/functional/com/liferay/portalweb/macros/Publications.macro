@@ -345,11 +345,19 @@ definition {
 			publishTimeMinutes = MathUtil.sum("${publishTimeMinutes}", "1");
 		}
 
-		Type(
+		Click(locator1 = "Publications#PUBLISH_TIME_HOURS");
+
+		DoubleClick.javaScriptDoubleClick(locator1 = "Publications#PUBLISH_TIME_HOURS");
+
+		Type.sendKeys(
 			locator1 = "Publications#PUBLISH_TIME_HOURS",
 			value1 = "${publishTimeHours}");
 
-		Type(
+		Click(locator1 = "Publications#PUBLISH_TIME_MINUTES");
+
+		DoubleClick.javaScriptDoubleClick(locator1 = "Publications#PUBLISH_TIME_MINUTES");
+
+		Type.sendKeys(
 			locator1 = "Publications#PUBLISH_TIME_MINUTES",
 			value1 = "${publishTimeMinutes}");
 

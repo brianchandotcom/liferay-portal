@@ -26,6 +26,16 @@
 					}
 				},
 				{
+					"label": "hovered-item-color",
+					"name": "hoveredItemColor",
+					"type": "colorPicker"
+				},
+				{
+					"label": "selected-item-color",
+					"name": "selectedItemColor",
+					"type": "colorPicker"
+				},
+				{
 					"defaultValue": "-1",
 					"label": "sublevels",
 					"name": "sublevels",

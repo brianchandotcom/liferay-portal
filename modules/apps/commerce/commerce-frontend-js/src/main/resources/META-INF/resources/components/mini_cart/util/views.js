@@ -28,7 +28,9 @@ import {
 	ITEMS_LIST_ACTIONS,
 	OPENER,
 	ORDER_BUTTON,
+	SUMMARY,
 } from './constants';
+import Summary from '../../summary/Summary';
 
 export const DEFAULT_VIEWS = {
 	[CART]: {component: Wrapper},
@@ -38,6 +40,7 @@ export const DEFAULT_VIEWS = {
 	[ITEMS_LIST_ACTIONS]: {component: CartItemsListActions},
 	[OPENER]: {component: Opener},
 	[ORDER_BUTTON]: {component: OrderButton},
+	[SUMMARY]: {component: Summary},
 };
 
 function resolveView({component, contentRendererModuleUrl}) {

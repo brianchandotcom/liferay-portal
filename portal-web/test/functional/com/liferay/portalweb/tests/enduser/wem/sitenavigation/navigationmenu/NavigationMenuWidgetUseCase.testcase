@@ -179,41 +179,63 @@ definition {
 		}
 
 		task ("Make a page hierarchy") {
-			DragAndDrop.dragAndDropObjectMoveTwice(
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_itemName = "Test Page Name 1",
 				key_sourceItemName = "Test Page Name 1",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
-				position1 = "100,0",
-				position2 = "100,-25");
+				locator2 = "SiteNavigationMenu#ITEM_ENTRY");
 
 			Pause(locator1 = "5000");
 
 			NavigationMenusAdmin.viewItemNested(
+				groupName = "Guest",
 				itemName = "Test Page Name 1",
-				marginLeft = "48px");
+				parentItemName = "Home",
+				siteNavigationMenuName = "Navigation Menu Name");
 
-			DragAndDrop.dragAndDropObjectMoveTwice(
-				key_sourceItemName = "Test Page Name 2",
-				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
-				position1 = "150,0",
-				position2 = "150,-25");
+			var i = "0";
+
+			while ("${i}" != "2") {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_itemName = "Test Page Name 2",
+					key_sourceItemName = "Test Page Name 2",
+					locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+					locator2 = "SiteNavigationMenu#ITEM_ENTRY");
+
+				Pause(locator1 = "1000");
+
+				var i = ${i} + 1;
+			}
 
 			Pause(locator1 = "5000");
 
 			NavigationMenusAdmin.viewItemNested(
+				groupName = "Guest",
 				itemName = "Test Page Name 2",
-				marginLeft = "96px");
+				parentItemName = "Test Page Name 1",
+				siteNavigationMenuName = "Navigation Menu Name");
 
-			DragAndDrop.dragAndDropObjectMoveTwice(
-				key_sourceItemName = "Test Page Name 3",
-				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
-				position1 = "200,0",
-				position2 = "200,-25");
+			var i = "0";
+
+			while ("${i}" != "3") {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_itemName = "Test Page Name 3",
+					key_sourceItemName = "Test Page Name 3",
+					locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+					locator2 = "SiteNavigationMenu#ITEM_ENTRY");
+
+				Pause(locator1 = "1000");
+
+				var i = ${i} + 1;
+			}
 
 			Pause(locator1 = "5000");
 
 			NavigationMenusAdmin.viewItemNested(
+				groupName = "Guest",
 				itemName = "Test Page Name 3",
-				marginLeft = "144px");
+				parentItemName = "Test Page Name 2",
+				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Navigate to Home") {

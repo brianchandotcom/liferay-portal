@@ -31,6 +31,7 @@ export {useFieldTypesResource} from './js/hooks/useResource.es';
 export {default as Pages} from './js/components/Pages.es';
 export {Field} from './js/components/Field/Field.es';
 export {EVENT_TYPES} from './js/actions/eventTypes.es';
+export {FieldStateless} from './js/components/Field/FieldStateless.es';
 export {PageProvider, usePage} from './js/hooks/usePage.es';
 export {FormProvider, FormNoopProvider, useForm} from './js/hooks/useForm.es';
 export {Layout} from './js/components/PageRenderer/Layout.es';

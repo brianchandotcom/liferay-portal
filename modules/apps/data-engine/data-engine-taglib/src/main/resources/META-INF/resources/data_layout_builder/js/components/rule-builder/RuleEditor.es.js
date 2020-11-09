@@ -12,10 +12,149 @@
  * details.
  */
 
+import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
 import ClayButton from '@clayui/button';
-import React from 'react';
+import React, {useReducer, useState} from 'react';
 
 import Timeline from './Timeline.es';
+
+const OPERATION_TYPE = {
+	ACTIONS: 'actions',
+	CONDITIONS: 'conditions',
+};
+
+const OPERATION_DATA = {
+	[OPERATION_TYPE.ACTIONS]: {
+		component: Action,
+		expression: Liferay.Language.get('if'),
+		name: Liferay.Language.get('actions'),
+	},
+	[OPERATION_TYPE.CONDITIONS]: {
+		component: Condition,
+		expression: Liferay.Language.get('do'),
+		name: Liferay.Language.get('condition'),
+	},
+};
+
+const getOperators = (onClick) => {
+	return [
+		{label: 'OR', onClick},
+		{label: 'AND', onClick}
+	]
+};
+
+function FieldOperator({operator, readOnly, onChange}) {
+	return (
+		<FieldStateless
+			type="select"
+			placeholder={Liferay.Language.get('choose-an-option')}
+			showEmptyOption={false}
+			readOnly={readOnly}
+			onChange={(event) => onChange(event.value)}
+			value={[operator]}
+		/>
+	);
+}
+
+function Condition({conditions, name, expression, state, dispatch}) {
+	return (
+		<Timeline.List>
+			<Timeline.Header
+				title={name}
+				operator={state.logicalOperator}
+				items={getOperators(() => {})}
+				disabled={conditions.length === 1}
+			/>
+			{conditions.map(({operator, [left, right]}, index) => (
+				<Timeline.Item key={index}>
+					<Timeline.Condition expression={expression}>
+						<FieldStateless
+							type="select"
+							placeholder={Liferay.Language.get('choose-an-option')}
+							fixedOptions={[{
+								dataType: 'user',
+								label: Liferay.Language.get('user'),
+								name: 'user',
+								value: 'user',
+							}]}
+							showEmptyOption={false}
+							onChange={(event) => setValue(event.value)}
+							value={[left.value]}
+						/>
+						<FieldOperator
+							readOnly={!!left.value}
+							operator={operator}
+							onChange={() => {}}
+						/>
+					</Timeline.Condition>
+					{conditions.length > 1 && (
+						<>
+							<Timeline.Operator operator={state.logicalOperator} />
+							<Timeline.ActionTrash />
+						</>
+					)}
+				</Timeline.Item>
+			))}
+			<Timeline.Item>
+				<Timeline.IncrementButton />
+			</Timeline.Item>
+		</Timeline.List>
+	);
+};
+
+function Action({name, expression, state, dispatch}) {
+	return (
+		<Timeline.List>
+			<Timeline.Header
+				title={name}
+			/>
+			<Timeline.Item>
+				<Timeline.Condition expression={expression}>
+					<input />
+				</Timeline.Condition>
+				<Timeline.ActionTrash />
+			</Timeline.Item>
+			<Timeline.Item>
+				<Timeline.IncrementButton />
+			</Timeline.Item>
+		</Timeline.List>
+	)
+};
+
+const reducer = (state, action) => {
+	switch (action.type) {
+		case value:
+			break;
+		default:
+			break;
+	}
+};
+
+const init = ({rule: {logicalOperator, ...operations}, ...otherProps}) => {
+	return {
+		...otherProps,
+		logicalOperator,
+		operations: Object.keys(operations).map(key => ({key, [key]: operations[key]})),
+	}
+};
+
+export function Editor(props) {
+	const [state, dispatch] = useReducer(reducer, props, init);
+
+	return state.operations.map(({key, ...otherProps}) => {
+		const {component: Component, ...otherData} = OPERATION_DATA[key];
+
+		return (
+			<Component
+				{...otherData}
+				{...otherProps}
+				dispatch={dispatch}
+				key={key}
+				state={state}
+			/>
+		);
+	});
+}
 
 export default function RuleEditor({onCancel, onSubmit}) {
 	return (
@@ -31,30 +170,7 @@ export default function RuleEditor({onCancel, onSubmit}) {
 					)}
 				</h4>
 			</div>
-			<Timeline.List>
-				<Timeline.Header title={Liferay.Language.get('condition')} />
-				<Timeline.Item>
-					<Timeline.Condition expression={Liferay.Language.get('if')}>
-						<input />
-					</Timeline.Condition>
-					<Timeline.ActionTrash />
-				</Timeline.Item>
-				<Timeline.Item>
-					<Timeline.IncrementButton />
-				</Timeline.Item>
-			</Timeline.List>
-			<Timeline.List>
-				<Timeline.Header title={Liferay.Language.get('actions')} />
-				<Timeline.Item>
-					<Timeline.Condition expression={Liferay.Language.get('do')}>
-						<input />
-					</Timeline.Condition>
-					<Timeline.ActionTrash />
-				</Timeline.Item>
-				<Timeline.Item>
-					<Timeline.IncrementButton />
-				</Timeline.Item>
-			</Timeline.List>
+			<Editor />
 			<div className="liferay-ddm-form-rule-builder-footer">
 				<ClayButton.Group spaced>
 					<ClayButton displayType="primary" onClick={onSubmit}>

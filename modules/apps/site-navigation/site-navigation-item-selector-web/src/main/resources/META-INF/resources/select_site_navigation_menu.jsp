@@ -52,9 +52,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 						colspan="<%= 2 %>"
 						name="name"
 					>
-						<clay:icon
-							cssClass="mr-2"
-							symbol="sites"
+						<clay:sticker
+							cssClass="bg-light mr-2"
+							displayType="light"
+							icon="sites"
 						/>
 
 						<a href="<%= selectSiteNavigationMenuDisplayContext.getSelectSiteNavigationMenuLevelURL(siteNavigationMenu.getSiteNavigationMenuId()) %>">

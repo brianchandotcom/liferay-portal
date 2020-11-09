@@ -55,7 +55,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 					%>
 
 					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
+						cssClass="table-cell-expand"
 						name="name"
 					>
 						<clay:sticker
@@ -75,6 +75,13 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 								label="default"
 							/>
 						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-minw-300"
+						name="marked-as"
+					>
+						<liferay-ui:message key="<%= siteNavigationMenu.getTypeKey() %>" />
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 

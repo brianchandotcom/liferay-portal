@@ -230,6 +230,14 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public FileEntry getFileEntryByFileName(long folderId, String fileName)
+		throws PortalException {
+
+		return newFileEntryProxyBean(
+			_localRepository.getFileEntryByFileName(folderId, fileName));
+	}
+
+	@Override
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException {
 		FileEntry fileEntry = _localRepository.getFileEntryByUuid(uuid);
 

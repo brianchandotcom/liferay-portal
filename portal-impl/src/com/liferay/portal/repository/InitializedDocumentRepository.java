@@ -251,6 +251,15 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
+	public FileEntry getFileEntryByFileName(long folderId, String fileName)
+		throws PortalException {
+
+		checkDocumentRepository();
+
+		return documentRepository.getFileEntryByFileName(folderId, fileName);
+	}
+
+	@Override
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException {
 		checkDocumentRepository();
 

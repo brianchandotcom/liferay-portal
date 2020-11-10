@@ -127,6 +127,13 @@ public interface DocumentRepository extends CapabilityProvider {
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException;
 
+	public default FileEntry getFileEntryByFileName(
+			long folderId, String fileName)
+		throws PortalException {
+
+		return getFileEntry(folderId, fileName);
+	}
+
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
 
 	public FileShortcut getFileShortcut(long fileShortcutId)

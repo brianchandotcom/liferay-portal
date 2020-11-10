@@ -454,6 +454,16 @@ public class LiferayRepository
 	}
 
 	@Override
+	public FileEntry getFileEntryByFileName(long folderId, String fileName)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = dlFileEntryService.getFileEntryByFileName(
+			getGroupId(), toFolderId(folderId), fileName);
+
+		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Override
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException {
 		DLFileEntry dlFileEntry =
 			dlFileEntryService.getFileEntryByUuidAndGroupId(uuid, getGroupId());

@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>NEEDS_MANUAL_RESOLUTION_TABLE</td>
-	<td>//table[contains(@class,'publications-conflicts-table')]//td[contains(.,'Needs Manual Resolution')]</td>
+	<td>//div[contains(@class,'publications-conflicts-container')]//span[contains(.,'Needs Manual Resolution')]</td>
 	<td></td>
 </tr>
 <tr>

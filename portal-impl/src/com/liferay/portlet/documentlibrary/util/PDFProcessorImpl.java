@@ -683,133 +683,144 @@ public class PDFProcessorImpl
 
 		stopWatch.start();
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
-			ProcessCallable<String> processCallable =
-				new LiferayPDFBoxProcessCallable(
-					ServerDetector.getServerId(),
-					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					HashMapBuilder.putAll(
-						Log4JUtil.getCustomLogSettings()
-					).put(
-						PropsUtil.class.getName(), "WARN"
-					).build(),
-					decryptedFile, thumbnailFile, previewFiles,
-					getThumbnailType(fileVersion), getPreviewType(fileVersion),
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
-					generatePreview, generateThumbnail);
+		try {
+			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+				ProcessCallable<String> processCallable =
+					new LiferayPDFBoxProcessCallable(
+						ServerDetector.getServerId(),
+						PropsUtil.get(PropsKeys.LIFERAY_HOME),
+						HashMapBuilder.putAll(
+							Log4JUtil.getCustomLogSettings()
+						).put(
+							PropsUtil.class.getName(), "WARN"
+						).build(),
+						decryptedFile, thumbnailFile, previewFiles,
+						getThumbnailType(fileVersion),
+						getPreviewType(fileVersion),
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
+						generatePreview, generateThumbnail);
 
-			ProcessChannel<String> processChannel = _processExecutor.execute(
-				_pdfProcessConfig, processCallable);
+				ProcessChannel<String> processChannel =
+					_processExecutor.execute(
+						_pdfProcessConfig, processCallable);
 
-			Future<String> future = processChannel.getProcessNoticeableFuture();
+				Future<String> future =
+					processChannel.getProcessNoticeableFuture();
 
-			String processIdentity = String.valueOf(
-				fileVersion.getFileVersionId());
+				String processIdentity = String.valueOf(
+					fileVersion.getFileVersionId());
 
-			long pdfBoxTimeout =
-				PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX;
+				long pdfBoxTimeout =
+					PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX;
 
-			if (_log.isDebugEnabled()) {
-				if (generateThumbnail && generatePreview) {
-					_log.debug(
-						StringBundler.concat(
-							"Waiting for ", pdfBoxTimeout,
-							" seconds to generate thumbnail and preview for ",
-							decryptedFile.getPath()));
-				}
-				else {
-					if (generateThumbnail) {
+				if (_log.isDebugEnabled()) {
+					if (generateThumbnail && generatePreview) {
 						_log.debug(
 							StringBundler.concat(
 								"Waiting for ", pdfBoxTimeout,
-								" seconds to generate thumbnail for ",
-								decryptedFile.getPath()));
+								" seconds to generate thumbnail and preview ",
+								"for ", decryptedFile.getPath()));
 					}
+					else {
+						if (generateThumbnail) {
+							_log.debug(
+								StringBundler.concat(
+									"Waiting for ", pdfBoxTimeout,
+									" seconds to generate thumbnail for ",
+									decryptedFile.getPath()));
+						}
 
-					if (generatePreview) {
-						_log.debug(
+						if (generatePreview) {
+							_log.debug(
+								StringBundler.concat(
+									"Waiting for ", pdfBoxTimeout,
+									" seconds to generate preview for ",
+									decryptedFile.getPath()));
+						}
+					}
+				}
+
+				try {
+					future.get(pdfBoxTimeout, TimeUnit.SECONDS);
+
+					futures.put(processIdentity, future);
+				}
+				catch (TimeoutException timeoutException) {
+					String message = null;
+
+					if (generateThumbnail && generatePreview) {
+						message =
 							StringBundler.concat(
-								"Waiting for ", pdfBoxTimeout,
-								" seconds to generate preview for ",
-								decryptedFile.getPath()));
+								"Timeout when generating thumbnail and ",
+								"preview for ", decryptedFile.getPath());
 					}
-				}
-			}
-
-			try {
-				future.get(pdfBoxTimeout, TimeUnit.SECONDS);
-
-				futures.put(processIdentity, future);
-			}
-			catch (TimeoutException timeoutException) {
-				String message = null;
-
-				if (generateThumbnail && generatePreview) {
-					message =
-						"Timeout when generating thumbnail and preview for " +
-							decryptedFile.getPath();
-				}
-				else {
-					if (generateThumbnail) {
-						message =
-							"Timeout when generating thumbnail for " +
+					else {
+						if (generateThumbnail) {
+							message =
+								"Timeout when generating thumbnail for " +
 								decryptedFile.getPath();
-					}
+						}
 
-					if (generatePreview) {
-						message =
-							"Timeout when generating preview for " +
+						if (generatePreview) {
+							message =
+								"Timeout when generating preview for " +
 								decryptedFile.getPath();
+						}
 					}
+
+					if (future.cancel(true)) {
+						message +=
+							" resulted in a canceled timeout for " + future;
+					}
+
+					_fileVersionPreviewEventListener.onFailure(fileVersion);
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(message);
+					}
+
+					throw timeoutException;
 				}
-
-				if (future.cancel(true)) {
-					message += " resulted in a canceled timeout for " + future;
-				}
-
-				_fileVersionPreviewEventListener.onFailure(fileVersion);
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-
-				throw timeoutException;
 			}
-			catch (Exception exception) {
-				_fileVersionPreviewEventListener.onFailure(fileVersion);
+			else {
+				LiferayPDFBoxConverter liferayConverter =
+					new LiferayPDFBoxConverter(
+						decryptedFile, thumbnailFile, previewFiles,
+						getPreviewType(fileVersion),
+						getThumbnailType(fileVersion),
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
+						generatePreview, generateThumbnail);
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to process ",
-							fileVersion.getFileVersionId(), " ",
-							fileVersion.getTitle(), "."));
-				}
-				else if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Unable to process ",
-							fileVersion.getFileVersionId(), " ",
-							fileVersion.getTitle(), "."),
-						exception);
-				}
-
-				throw exception;
+				liferayConverter.generateImagesPB();
 			}
 		}
-		else {
-			LiferayPDFBoxConverter liferayConverter =
-				new LiferayPDFBoxConverter(
-					decryptedFile, thumbnailFile, previewFiles,
-					getPreviewType(fileVersion), getThumbnailType(fileVersion),
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
-					generatePreview, generateThumbnail);
+		catch (TimeoutException timeoutException) {
+			throw timeoutException;
+		}
+		catch (Exception exception) {
+			_fileVersionPreviewEventListener.onFailure(fileVersion);
 
-			liferayConverter.generateImagesPB();
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to process ",
+						fileVersion.getFileVersionId(), " ",
+						fileVersion.getTitle(), "."));
+			}
+			else if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to process ",
+						fileVersion.getFileVersionId(), " ",
+						fileVersion.getTitle(), "."),
+					exception);
+			}
+
+			throw exception;
 		}
 
 		FileUtil.delete(decryptedFile);

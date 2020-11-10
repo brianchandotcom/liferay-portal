@@ -73,6 +73,15 @@ renderResponse.setTitle(role.getTitle(locale));
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
+<c:if test='<%= !SegmentsEntryDisplayContext.isRoleSegmentationEnabled() && tabs2.equals("segments") %>'>
+	<clay:stripe
+		elementClasses="assign-roles-segments-warning"
+		message="to-enable-assign-roles-by-segment-go-to-system-settings-segments-segments-service"
+		style="warning"
+		title="assigning-roles-by-segment-is-disabled"
+	/>
+</c:if>
+
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="current" />

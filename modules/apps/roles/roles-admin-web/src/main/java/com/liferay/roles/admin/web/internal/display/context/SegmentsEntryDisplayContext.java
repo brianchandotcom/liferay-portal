@@ -14,25 +14,34 @@
 
 package com.liferay.roles.admin.web.internal.display.context;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
+@Component(
+	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
+	service = {}
+)
 public class SegmentsEntryDisplayContext {
 
 	public static String getGroupDescriptiveName(
@@ -62,6 +71,27 @@ public class SegmentsEntryDisplayContext {
 			segmentsEntryId);
 	}
 
+	public static boolean isRoleSegmentationEnabled() {
+		return _roleSegmentationEnabled;
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		SegmentsConfiguration segmentsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsConfiguration.class, properties);
+
+		_roleSegmentationEnabled =
+			segmentsConfiguration.roleSegmentationEnabled();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_roleSegmentationEnabled = false;
+	}
+
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
@@ -80,6 +110,7 @@ public class SegmentsEntryDisplayContext {
 	}
 
 	private static GroupLocalService _groupLocalService;
+	private static boolean _roleSegmentationEnabled;
 	private static SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
 	private static UserLocalService _userLocalService;
 

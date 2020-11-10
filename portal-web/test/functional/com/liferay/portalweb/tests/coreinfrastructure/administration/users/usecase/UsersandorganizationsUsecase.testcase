@@ -407,6 +407,51 @@ definition {
 		User.viewUserInfomationUserGroupsCP(userGroupName = "UG UserGroup Name");
 	}
 
+	@description = "Add a site to an organization, assign user to that organization and assert it displays in My Dashboard"
+	@priority = "5"
+	test AssignUserToOrganizationWithSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Organization Name",
+			organizationSite = "true");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		LexiconEntry.viewEntryName(rowEntry = "Organization Name");
+
+		ProductMenu.viewNoSite(site = "Organization Name");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+
+		Site.viewNoMySitesViaMySitesPG(siteName = "Organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name",
+			userEmailAddress = "test@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+
+		LexiconEntry.viewEntryName(rowEntry = "Organization Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Organization Name",
+			searchTerm = "Organization");
+	}
+
 	@priority = "4"
 	test CannotViewSiteSettingsInUserPersonalSite {
 		Navigator.gotoPersonalSite();

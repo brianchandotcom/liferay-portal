@@ -204,12 +204,7 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 			this.setState({dateError: null});
 		}
 
-		if (typeof date === 'string' && validDate) {
-			this.setState({date: new Date(date + ' 12:00:00')});
-		}
-		else {
-			this.setState({date});
-		}
+		this.setState({date});
 	}
 
 	handleTimeChange(time) {

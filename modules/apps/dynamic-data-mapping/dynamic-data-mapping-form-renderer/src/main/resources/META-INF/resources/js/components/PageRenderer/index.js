@@ -55,7 +55,7 @@ const PAGE_HEADER_COMPONENT_TYPE = {
 	[PAGE_HEADER_TYPES.EDITABLE]: EditablePageHeader.PageHeader,
 };
 
-const ADMIN_PORTLET_NAME_SPACE =
+const ADMIN_PORTLET_NAMESPACE =
 	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_';
 
 const isEmptyPage = ({rows}) => {
@@ -201,7 +201,7 @@ const Renderer = ({
 	});
 
 	const isAdminPortletNamespace =
-		ADMIN_PORTLET_NAME_SPACE === portletNamespace;
+		ADMIN_PORTLET_NAMESPACE === portletNamespace;
 
 	return (
 		<Components.Container

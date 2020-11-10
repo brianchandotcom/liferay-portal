@@ -108,6 +108,12 @@ definition {
 		Organization.viewCP(
 			orgName = "Organization Name",
 			orgType = "Organization");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Organization Name");
+
+		ProductMenu.viewNoSite(site = "Organization Name");
+
+		Site.viewNoMySitesViaMySitesPG(siteName = "Organization Name");
 	}
 
 	@priority = "3"

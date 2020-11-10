@@ -179,9 +179,6 @@ exports[`EditApp renders 1`] = `
           </div>
         </div>
         <div
-          class="pl-4 pr-4 autofit-row"
-        />
-        <div
           class="pl-4 pr-4 scrollable-container autofit-row"
         >
           <div

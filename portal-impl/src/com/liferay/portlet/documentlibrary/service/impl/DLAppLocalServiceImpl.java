@@ -531,6 +531,37 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the file entry with the file name in the folder.
+	 *
+	 * @param  groupId the primary key of the file entry's group
+	 * @param  folderId the primary key of the file entry's folder
+	 * @param  fileName the file entry's file name
+	 * @return the file entry with the file name in the folder
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public FileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		try {
+			LocalRepository localRepository = getLocalRepository(groupId);
+
+			return localRepository.getFileEntryByFileName(folderId, fileName);
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				throw noSuchFileEntryException;
+			}
+
+			LocalRepository localRepository =
+				repositoryProvider.getFolderLocalRepository(folderId);
+
+			return localRepository.getFileEntryByFileName(folderId, fileName);
+		}
+	}
+
+	/**
 	 * Returns the file entry with the UUID and group.
 	 *
 	 * @param  uuid the file entry's UUID

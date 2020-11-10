@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,6 +32,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -87,6 +89,48 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	@Override
 	public String getName() {
 		return jsonObject.getString("Name");
+	}
+
+	@Override
+	public List<SpiraCustomProperty> getSpiraCustomProperties() {
+		return SpiraCustomProperty.getSpiraCustomProperties(
+			getSpiraProject(), getClass());
+	}
+
+	@Override
+	public List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues() {
+		List<SpiraCustomPropertyValue> spiraCustomPropertyValues =
+			new ArrayList<>();
+
+		if (!jsonObject.has("CustomProperties")) {
+			return spiraCustomPropertyValues;
+		}
+
+		JSONArray customPropertiesJSONArray = jsonObject.getJSONArray(
+			"CustomProperties");
+
+		for (int i = 0; i < customPropertiesJSONArray.length(); i++) {
+			JSONObject customPropertyJSONObject =
+				customPropertiesJSONArray.getJSONObject(i);
+
+			List<SpiraCustomProperty> spiraCustomProperties =
+				getSpiraCustomProperties();
+
+			SpiraCustomProperty spiraCustomProperty = spiraCustomProperties.get(
+				customPropertyJSONObject.getInt("PropertyNumber") - 1);
+
+			List<SpiraCustomPropertyValue> values =
+				SpiraCustomPropertyValue.getSpiraCustomPropertyValues(
+					spiraCustomProperty, customPropertyJSONObject);
+
+			if (values == null) {
+				continue;
+			}
+
+			spiraCustomPropertyValues.addAll(values);
+		}
+
+		return spiraCustomPropertyValues;
 	}
 
 	@Override

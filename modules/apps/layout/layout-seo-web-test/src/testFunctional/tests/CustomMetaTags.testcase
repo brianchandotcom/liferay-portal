@@ -134,15 +134,15 @@ definition {
 			customContentsList = "custom Tag 1 content,custom Tag 2 content,custom Tag 3 content",
 			newCustomContent = "contenido de metaetiqueta personalizado");
 
-		CustomMetaTags.removeTag(tagNum = "1");
+		CustomMetaTags.removeTag(tagNum = "2");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
 
-		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 2 property" content="contenido de metaetiqueta personalizado",property="custom Tag 3 property" content="contenido de metaetiqueta personalizado"''');
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado",property="custom Tag 3 property" content="contenido de metaetiqueta personalizado"''');
 
-		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado"''');
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 2 property" content="contenido de metaetiqueta personalizado"''');
 	}
 
 	@description = "This ensures that the custom meta tag can not be generated without property or content."

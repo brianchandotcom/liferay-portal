@@ -54,16 +54,17 @@ textarea.form-control, textarea.form-control-plaintext, .form-control.form-contr
 	padding: 0.1em 0.5em;
 }
 
-.lfr-api-signature {
+.lfr-api-service-result {
 	font-size: 1.1em;
-	padding: 2px;
 }
 
-.lfr-api-signature:hover {
+.lfr-api-service-result:hover {
 	background-color: #F5F5F5;
+	text-decoration: none;
 }
 
 .lfr-api-section {
+	margin-bottom: 1.5em;
 	padding-left: 25px;
 	position: relative;
 }

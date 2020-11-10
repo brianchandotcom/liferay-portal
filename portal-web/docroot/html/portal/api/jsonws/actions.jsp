@@ -91,6 +91,7 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 			collapsible="<%= true %>"
 			extended="<%= true %>"
 			id='<%= "apiService" + HtmlUtil.getAUICompatibleId(jsonWebServiceClassName) + "Panel" %>'
+			markupView="lexicon"
 			persistState="<%= true %>"
 			title="<%= panelTitle %>"
 		>
@@ -107,8 +108,8 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 					String serviceSignature = jsonWebServiceActionMapping.getSignature();
 				%>
 
-					<li class="lfr-api-signature <%= serviceSignature.equals(signature) ? "selected" : StringPool.BLANK %>">
-						<a class="lfr-api-service-result method-name" data-metaData="<%= jsonWebServiceClassName %>" href="<%= HttpUtil.addParameter(jsonWSContextPath, "signature", serviceSignature) %>">
+					<li class="lfr-api-signature <%= serviceSignature.equals(signature) ? "border border-primary my-2 rounded selected" : StringPool.BLANK %>">
+						<a class="d-block lfr-api-service-result method-name py-1 px-2 rounded" data-metaData="<%= jsonWebServiceClassName %>" href="<%= HttpUtil.addParameter(jsonWSContextPath, "signature", serviceSignature) %>">
 							<%= path %>
 						</a>
 					</li>

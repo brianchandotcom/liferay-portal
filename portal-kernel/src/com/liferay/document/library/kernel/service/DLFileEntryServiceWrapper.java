@@ -263,6 +263,15 @@ public class DLFileEntryServiceWrapper
 	}
 
 	@Override
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryService.getFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
+	@Override
 	public DLFileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -737,6 +737,15 @@ public class DLFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryLocalService.getFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
+	@Override
 	public DLFileEntry getFileEntryByName(
 			long groupId, long folderId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

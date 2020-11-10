@@ -368,6 +368,24 @@ public class DLAppLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the file entry with the file name in the folder.
+	 *
+	 * @param groupId the primary key of the file entry's group
+	 * @param folderId the primary key of the file entry's folder
+	 * @param fileName the file entry's file name
+	 * @return the file entry with the file name in the folder
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getFileEntryByFileName(long groupId, long folderId, String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppLocalService.getFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
+	/**
 	 * Returns the file entry with the UUID and group.
 	 *
 	 * @param uuid the file entry's UUID

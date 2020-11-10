@@ -305,6 +305,20 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
+	 * Returns the file entry with the file name in the folder.
+	 *
+	 * @param groupId the primary key of the file entry's group
+	 * @param folderId the primary key of the file entry's folder
+	 * @param fileName the file entry's file name
+	 * @return the file entry with the file name in the folder
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException;
+
+	/**
 	 * Returns the file entry with the UUID and group.
 	 *
 	 * @param uuid the file entry's UUID

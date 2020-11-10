@@ -500,6 +500,11 @@ public interface DLFileEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry getFileEntryByName(
 			long groupId, long folderId, String name)
 		throws PortalException;

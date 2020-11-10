@@ -824,17 +824,25 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecordVersion ddlRecordVersion = record.getLatestRecordVersion();
 
-		String version = getNextVersion(
-			ddlRecordVersion.getVersion(), true,
-			serviceContext.getWorkflowAction());
-
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),
 			WorkflowConstants.STATUS_APPROVED);
 
-		addRecordVersion(user, record, ddmStorageId, version, 0, status);
+		if (ddlRecordVersion.isApproved()) {
+			ddlRecordVersion = addRecordVersion(
+				user, record, ddmStorageId,
+				getNextVersion(
+					ddlRecordVersion.getVersion(), true,
+					serviceContext.getWorkflowAction()),
+				0, status);
+		}
+		else {
+			updateRecordVersion(
+				user, ddlRecordVersion, ddlRecordVersion.getVersion(), 0,
+				status, serviceContext);
+		}
 
-		record.setVersion(version);
+		record.setVersion(ddlRecordVersion.getVersion());
 
 		return ddlRecordPersistence.update(record);
 	}

@@ -978,6 +978,442 @@ public class DispatchTriggerUtil {
 	}
 
 	/**
+	 * Returns all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @return the matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int taskClusterMode) {
+
+		return getPersistence().findByA_TCM(active, taskClusterMode);
+	}
+
+	/**
+	 * Returns a range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int taskClusterMode, int start, int end) {
+
+		return getPersistence().findByA_TCM(
+			active, taskClusterMode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int taskClusterMode, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return getPersistence().findByA_TCM(
+			active, taskClusterMode, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int taskClusterMode, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByA_TCM(
+			active, taskClusterMode, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger findByA_TCM_First(
+			boolean active, int taskClusterMode,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws com.liferay.dispatch.exception.NoSuchTriggerException {
+
+		return getPersistence().findByA_TCM_First(
+			active, taskClusterMode, orderByComparator);
+	}
+
+	/**
+	 * Returns the first dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger fetchByA_TCM_First(
+		boolean active, int taskClusterMode,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return getPersistence().fetchByA_TCM_First(
+			active, taskClusterMode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger findByA_TCM_Last(
+			boolean active, int taskClusterMode,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws com.liferay.dispatch.exception.NoSuchTriggerException {
+
+		return getPersistence().findByA_TCM_Last(
+			active, taskClusterMode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger fetchByA_TCM_Last(
+		boolean active, int taskClusterMode,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return getPersistence().fetchByA_TCM_Last(
+			active, taskClusterMode, orderByComparator);
+	}
+
+	/**
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param dispatchTriggerId the primary key of the current dispatch trigger
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next dispatch trigger
+	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
+	 */
+	public static DispatchTrigger[] findByA_TCM_PrevAndNext(
+			long dispatchTriggerId, boolean active, int taskClusterMode,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws com.liferay.dispatch.exception.NoSuchTriggerException {
+
+		return getPersistence().findByA_TCM_PrevAndNext(
+			dispatchTriggerId, active, taskClusterMode, orderByComparator);
+	}
+
+	/**
+	 * Returns all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @return the matching dispatch triggers that the user has permission to view
+	 */
+	public static List<DispatchTrigger> filterFindByA_TCM(
+		boolean active, int taskClusterMode) {
+
+		return getPersistence().filterFindByA_TCM(active, taskClusterMode);
+	}
+
+	/**
+	 * Returns a range of all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers that the user has permission to view
+	 */
+	public static List<DispatchTrigger> filterFindByA_TCM(
+		boolean active, int taskClusterMode, int start, int end) {
+
+		return getPersistence().filterFindByA_TCM(
+			active, taskClusterMode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers that the user has permission to view
+	 */
+	public static List<DispatchTrigger> filterFindByA_TCM(
+		boolean active, int taskClusterMode, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return getPersistence().filterFindByA_TCM(
+			active, taskClusterMode, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param dispatchTriggerId the primary key of the current dispatch trigger
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next dispatch trigger
+	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
+	 */
+	public static DispatchTrigger[] filterFindByA_TCM_PrevAndNext(
+			long dispatchTriggerId, boolean active, int taskClusterMode,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws com.liferay.dispatch.exception.NoSuchTriggerException {
+
+		return getPersistence().filterFindByA_TCM_PrevAndNext(
+			dispatchTriggerId, active, taskClusterMode, orderByComparator);
+	}
+
+	/**
+	 * Returns all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @return the matching dispatch triggers that the user has permission to view
+	 */
+	public static List<DispatchTrigger> filterFindByA_TCM(
+		boolean active, int[] taskClusterModes) {
+
+		return getPersistence().filterFindByA_TCM(active, taskClusterModes);
+	}
+
+	/**
+	 * Returns a range of all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers that the user has permission to view
+	 */
+	public static List<DispatchTrigger> filterFindByA_TCM(
+		boolean active, int[] taskClusterModes, int start, int end) {
+
+		return getPersistence().filterFindByA_TCM(
+			active, taskClusterModes, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers that the user has permission to view
+	 */
+	public static List<DispatchTrigger> filterFindByA_TCM(
+		boolean active, int[] taskClusterModes, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return getPersistence().filterFindByA_TCM(
+			active, taskClusterModes, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @return the matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int[] taskClusterModes) {
+
+		return getPersistence().findByA_TCM(active, taskClusterModes);
+	}
+
+	/**
+	 * Returns a range of all the dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int[] taskClusterModes, int start, int end) {
+
+		return getPersistence().findByA_TCM(
+			active, taskClusterModes, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int[] taskClusterModes, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return getPersistence().findByA_TCM(
+			active, taskClusterModes, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching dispatch triggers
+	 */
+	public static List<DispatchTrigger> findByA_TCM(
+		boolean active, int[] taskClusterModes, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByA_TCM(
+			active, taskClusterModes, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes all the dispatch triggers where active = &#63; and taskClusterMode = &#63; from the database.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 */
+	public static void removeByA_TCM(boolean active, int taskClusterMode) {
+		getPersistence().removeByA_TCM(active, taskClusterMode);
+	}
+
+	/**
+	 * Returns the number of dispatch triggers where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @return the number of matching dispatch triggers
+	 */
+	public static int countByA_TCM(boolean active, int taskClusterMode) {
+		return getPersistence().countByA_TCM(active, taskClusterMode);
+	}
+
+	/**
+	 * Returns the number of dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @return the number of matching dispatch triggers
+	 */
+	public static int countByA_TCM(boolean active, int[] taskClusterModes) {
+		return getPersistence().countByA_TCM(active, taskClusterModes);
+	}
+
+	/**
+	 * Returns the number of dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterMode the task cluster mode
+	 * @return the number of matching dispatch triggers that the user has permission to view
+	 */
+	public static int filterCountByA_TCM(boolean active, int taskClusterMode) {
+		return getPersistence().filterCountByA_TCM(active, taskClusterMode);
+	}
+
+	/**
+	 * Returns the number of dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 *
+	 * @param active the active
+	 * @param taskClusterModes the task cluster modes
+	 * @return the number of matching dispatch triggers that the user has permission to view
+	 */
+	public static int filterCountByA_TCM(
+		boolean active, int[] taskClusterModes) {
+
+		return getPersistence().filterCountByA_TCM(active, taskClusterModes);
+	}
+
+	/**
 	 * Caches the dispatch trigger in the entity cache if it is enabled.
 	 *
 	 * @param dispatchTrigger the dispatch trigger

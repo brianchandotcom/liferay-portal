@@ -228,6 +228,9 @@ public interface DispatchTriggerLocalService
 	public DispatchTrigger getDispatchTrigger(long dispatchTriggerId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DispatchTrigger> getDispatchTriggers(boolean active, int mode);
+
 	/**
 	 * Returns a range of all the dispatch triggers.
 	 *

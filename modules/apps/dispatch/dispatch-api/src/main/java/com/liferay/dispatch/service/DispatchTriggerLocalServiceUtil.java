@@ -258,6 +258,12 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getDispatchTrigger(dispatchTriggerId);
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+		getDispatchTriggers(boolean active, int mode) {
+
+		return getService().getDispatchTriggers(active, mode);
+	}
+
 	/**
 	 * Returns a range of all the dispatch triggers.
 	 *

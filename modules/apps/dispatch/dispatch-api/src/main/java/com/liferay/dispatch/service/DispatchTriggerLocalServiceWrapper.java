@@ -274,6 +274,13 @@ public class DispatchTriggerLocalServiceWrapper
 			dispatchTriggerId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+		getDispatchTriggers(boolean active, int mode) {
+
+		return _dispatchTriggerLocalService.getDispatchTriggers(active, mode);
+	}
+
 	/**
 	 * Returns a range of all the dispatch triggers.
 	 *

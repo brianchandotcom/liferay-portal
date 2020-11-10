@@ -138,15 +138,15 @@ public class RegionPersistenceTest {
 
 		newRegion.setModifiedDate(RandomTestUtil.nextDate());
 
-		newRegion.setCountryId(RandomTestUtil.nextLong());
+		newRegion.setActive(RandomTestUtil.randomBoolean());
 
-		newRegion.setRegionCode(RandomTestUtil.randomString());
+		newRegion.setCountryId(RandomTestUtil.nextLong());
 
 		newRegion.setName(RandomTestUtil.randomString());
 
-		newRegion.setActive(RandomTestUtil.randomBoolean());
-
 		newRegion.setPosition(RandomTestUtil.nextDouble());
+
+		newRegion.setRegionCode(RandomTestUtil.randomString());
 
 		newRegion.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -171,14 +171,14 @@ public class RegionPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingRegion.getModifiedDate()),
 			Time.getShortTimestamp(newRegion.getModifiedDate()));
+		Assert.assertEquals(existingRegion.isActive(), newRegion.isActive());
 		Assert.assertEquals(
 			existingRegion.getCountryId(), newRegion.getCountryId());
-		Assert.assertEquals(
-			existingRegion.getRegionCode(), newRegion.getRegionCode());
 		Assert.assertEquals(existingRegion.getName(), newRegion.getName());
-		Assert.assertEquals(existingRegion.isActive(), newRegion.isActive());
 		AssertUtils.assertEquals(
 			existingRegion.getPosition(), newRegion.getPosition());
+		Assert.assertEquals(
+			existingRegion.getRegionCode(), newRegion.getRegionCode());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingRegion.getLastPublishDate()),
 			Time.getShortTimestamp(newRegion.getLastPublishDate()));
@@ -203,6 +203,13 @@ public class RegionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByCountryId() throws Exception {
 		_persistence.countByCountryId(RandomTestUtil.nextLong());
 
@@ -210,10 +217,11 @@ public class RegionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByActive() throws Exception {
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
 
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
+		_persistence.countByC_A(RandomTestUtil.randomBoolean(), 0L);
 	}
 
 	@Test
@@ -223,14 +231,6 @@ public class RegionPersistenceTest {
 		_persistence.countByC_R(0L, "null");
 
 		_persistence.countByC_R(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByC_A() throws Exception {
-		_persistence.countByC_A(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -260,9 +260,9 @@ public class RegionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"Region", "mvccVersion", true, "uuid", true, "regionId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "countryId", true, "regionCode", true,
-			"name", true, "active", true, "position", true, "lastPublishDate",
-			true);
+			true, "modifiedDate", true, "active", true, "countryId", true,
+			"name", true, "position", true, "regionCode", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -545,15 +545,15 @@ public class RegionPersistenceTest {
 
 		region.setModifiedDate(RandomTestUtil.nextDate());
 
-		region.setCountryId(RandomTestUtil.nextLong());
+		region.setActive(RandomTestUtil.randomBoolean());
 
-		region.setRegionCode(RandomTestUtil.randomString());
+		region.setCountryId(RandomTestUtil.nextLong());
 
 		region.setName(RandomTestUtil.randomString());
 
-		region.setActive(RandomTestUtil.randomBoolean());
-
 		region.setPosition(RandomTestUtil.nextDouble());
+
+		region.setRegionCode(RandomTestUtil.randomString());
 
 		region.setLastPublishDate(RandomTestUtil.nextDate());
 

@@ -1216,16 +1216,16 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
 		<field name="countryId" type="long" />
-		<field name="regionCode" type="String">
-			<validator name="required" />
-		</field>
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="active" type="boolean" />
 		<field name="position" type="double">
 			<validator name="number" />
+		</field>
+		<field name="regionCode" type="String">
+			<validator name="required" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>

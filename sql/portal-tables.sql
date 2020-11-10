@@ -1057,11 +1057,11 @@ create table Region (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	countryId LONG,
-	regionCode VARCHAR(75) null,
-	name VARCHAR(75) null,
 	active_ BOOLEAN,
+	countryId LONG,
+	name VARCHAR(75) null,
 	position DOUBLE,
+	regionCode VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 

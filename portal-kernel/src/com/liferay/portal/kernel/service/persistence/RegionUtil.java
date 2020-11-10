@@ -461,6 +461,170 @@ public class RegionUtil {
 	}
 
 	/**
+	 * Returns all the regions where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the matching regions
+	 */
+	public static List<Region> findByActive(boolean active) {
+		return getPersistence().findByActive(active);
+	}
+
+	/**
+	 * Returns a range of all the regions where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of regions
+	 * @param end the upper bound of the range of regions (not inclusive)
+	 * @return the range of matching regions
+	 */
+	public static List<Region> findByActive(
+		boolean active, int start, int end) {
+
+		return getPersistence().findByActive(active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the regions where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of regions
+	 * @param end the upper bound of the range of regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching regions
+	 */
+	public static List<Region> findByActive(
+		boolean active, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
+
+		return getPersistence().findByActive(
+			active, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the regions where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of regions
+	 * @param end the upper bound of the range of regions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching regions
+	 */
+	public static List<Region> findByActive(
+		boolean active, int start, int end,
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByActive(
+			active, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first region in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching region
+	 * @throws NoSuchRegionException if a matching region could not be found
+	 */
+	public static Region findByActive_First(
+			boolean active, OrderByComparator<Region> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
+
+		return getPersistence().findByActive_First(active, orderByComparator);
+	}
+
+	/**
+	 * Returns the first region in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching region, or <code>null</code> if a matching region could not be found
+	 */
+	public static Region fetchByActive_First(
+		boolean active, OrderByComparator<Region> orderByComparator) {
+
+		return getPersistence().fetchByActive_First(active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last region in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching region
+	 * @throws NoSuchRegionException if a matching region could not be found
+	 */
+	public static Region findByActive_Last(
+			boolean active, OrderByComparator<Region> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
+
+		return getPersistence().findByActive_Last(active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last region in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching region, or <code>null</code> if a matching region could not be found
+	 */
+	public static Region fetchByActive_Last(
+		boolean active, OrderByComparator<Region> orderByComparator) {
+
+		return getPersistence().fetchByActive_Last(active, orderByComparator);
+	}
+
+	/**
+	 * Returns the regions before and after the current region in the ordered set where active = &#63;.
+	 *
+	 * @param regionId the primary key of the current region
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next region
+	 * @throws NoSuchRegionException if a region with the primary key could not be found
+	 */
+	public static Region[] findByActive_PrevAndNext(
+			long regionId, boolean active,
+			OrderByComparator<Region> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
+
+		return getPersistence().findByActive_PrevAndNext(
+			regionId, active, orderByComparator);
+	}
+
+	/**
+	 * Removes all the regions where active = &#63; from the database.
+	 *
+	 * @param active the active
+	 */
+	public static void removeByActive(boolean active) {
+		getPersistence().removeByActive(active);
+	}
+
+	/**
+	 * Returns the number of regions where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the number of matching regions
+	 */
+	public static int countByActive(boolean active) {
+		return getPersistence().countByActive(active);
+	}
+
+	/**
 	 * Returns all the regions where countryId = &#63;.
 	 *
 	 * @param countryId the country ID
@@ -629,167 +793,186 @@ public class RegionUtil {
 	}
 
 	/**
-	 * Returns all the regions where active = &#63;.
+	 * Returns all the regions where active = &#63; and countryId = &#63;.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @return the matching regions
 	 */
-	public static List<Region> findByActive(boolean active) {
-		return getPersistence().findByActive(active);
+	public static List<Region> findByC_A(boolean active, long countryId) {
+		return getPersistence().findByC_A(active, countryId);
 	}
 
 	/**
-	 * Returns a range of all the regions where active = &#63;.
+	 * Returns a range of all the regions where active = &#63; and countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @return the range of matching regions
 	 */
-	public static List<Region> findByActive(
-		boolean active, int start, int end) {
+	public static List<Region> findByC_A(
+		boolean active, long countryId, int start, int end) {
 
-		return getPersistence().findByActive(active, start, end);
+		return getPersistence().findByC_A(active, countryId, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the regions where active = &#63;.
+	 * Returns an ordered range of all the regions where active = &#63; and countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching regions
 	 */
-	public static List<Region> findByActive(
-		boolean active, int start, int end,
+	public static List<Region> findByC_A(
+		boolean active, long countryId, int start, int end,
 		OrderByComparator<Region> orderByComparator) {
 
-		return getPersistence().findByActive(
-			active, start, end, orderByComparator);
+		return getPersistence().findByC_A(
+			active, countryId, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the regions where active = &#63;.
+	 * Returns an ordered range of all the regions where active = &#63; and countryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
-	public static List<Region> findByActive(
-		boolean active, int start, int end,
+	public static List<Region> findByC_A(
+		boolean active, long countryId, int start, int end,
 		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByActive(
-			active, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByC_A(
+			active, countryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first region in the ordered set where active = &#63;.
+	 * Returns the first region in the ordered set where active = &#63; and countryId = &#63;.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching region
 	 * @throws NoSuchRegionException if a matching region could not be found
 	 */
-	public static Region findByActive_First(
-			boolean active, OrderByComparator<Region> orderByComparator)
+	public static Region findByC_A_First(
+			boolean active, long countryId,
+			OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
 
-		return getPersistence().findByActive_First(active, orderByComparator);
+		return getPersistence().findByC_A_First(
+			active, countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the first region in the ordered set where active = &#63;.
+	 * Returns the first region in the ordered set where active = &#63; and countryId = &#63;.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching region, or <code>null</code> if a matching region could not be found
 	 */
-	public static Region fetchByActive_First(
-		boolean active, OrderByComparator<Region> orderByComparator) {
+	public static Region fetchByC_A_First(
+		boolean active, long countryId,
+		OrderByComparator<Region> orderByComparator) {
 
-		return getPersistence().fetchByActive_First(active, orderByComparator);
+		return getPersistence().fetchByC_A_First(
+			active, countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last region in the ordered set where active = &#63;.
+	 * Returns the last region in the ordered set where active = &#63; and countryId = &#63;.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching region
 	 * @throws NoSuchRegionException if a matching region could not be found
 	 */
-	public static Region findByActive_Last(
-			boolean active, OrderByComparator<Region> orderByComparator)
+	public static Region findByC_A_Last(
+			boolean active, long countryId,
+			OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
 
-		return getPersistence().findByActive_Last(active, orderByComparator);
+		return getPersistence().findByC_A_Last(
+			active, countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the last region in the ordered set where active = &#63;.
+	 * Returns the last region in the ordered set where active = &#63; and countryId = &#63;.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching region, or <code>null</code> if a matching region could not be found
 	 */
-	public static Region fetchByActive_Last(
-		boolean active, OrderByComparator<Region> orderByComparator) {
+	public static Region fetchByC_A_Last(
+		boolean active, long countryId,
+		OrderByComparator<Region> orderByComparator) {
 
-		return getPersistence().fetchByActive_Last(active, orderByComparator);
+		return getPersistence().fetchByC_A_Last(
+			active, countryId, orderByComparator);
 	}
 
 	/**
-	 * Returns the regions before and after the current region in the ordered set where active = &#63;.
+	 * Returns the regions before and after the current region in the ordered set where active = &#63; and countryId = &#63;.
 	 *
 	 * @param regionId the primary key of the current region
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next region
 	 * @throws NoSuchRegionException if a region with the primary key could not be found
 	 */
-	public static Region[] findByActive_PrevAndNext(
-			long regionId, boolean active,
+	public static Region[] findByC_A_PrevAndNext(
+			long regionId, boolean active, long countryId,
 			OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
 
-		return getPersistence().findByActive_PrevAndNext(
-			regionId, active, orderByComparator);
+		return getPersistence().findByC_A_PrevAndNext(
+			regionId, active, countryId, orderByComparator);
 	}
 
 	/**
-	 * Removes all the regions where active = &#63; from the database.
+	 * Removes all the regions where active = &#63; and countryId = &#63; from the database.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 */
-	public static void removeByActive(boolean active) {
-		getPersistence().removeByActive(active);
+	public static void removeByC_A(boolean active, long countryId) {
+		getPersistence().removeByC_A(active, countryId);
 	}
 
 	/**
-	 * Returns the number of regions where active = &#63;.
+	 * Returns the number of regions where active = &#63; and countryId = &#63;.
 	 *
 	 * @param active the active
+	 * @param countryId the country ID
 	 * @return the number of matching regions
 	 */
-	public static int countByActive(boolean active) {
-		return getPersistence().countByActive(active);
+	public static int countByC_A(boolean active, long countryId) {
+		return getPersistence().countByC_A(active, countryId);
 	}
 
 	/**
@@ -854,189 +1037,6 @@ public class RegionUtil {
 	 */
 	public static int countByC_R(long countryId, String regionCode) {
 		return getPersistence().countByC_R(countryId, regionCode);
-	}
-
-	/**
-	 * Returns all the regions where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @return the matching regions
-	 */
-	public static List<Region> findByC_A(long countryId, boolean active) {
-		return getPersistence().findByC_A(countryId, active);
-	}
-
-	/**
-	 * Returns a range of all the regions where countryId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param start the lower bound of the range of regions
-	 * @param end the upper bound of the range of regions (not inclusive)
-	 * @return the range of matching regions
-	 */
-	public static List<Region> findByC_A(
-		long countryId, boolean active, int start, int end) {
-
-		return getPersistence().findByC_A(countryId, active, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the regions where countryId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param start the lower bound of the range of regions
-	 * @param end the upper bound of the range of regions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching regions
-	 */
-	public static List<Region> findByC_A(
-		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
-
-		return getPersistence().findByC_A(
-			countryId, active, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the regions where countryId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param start the lower bound of the range of regions
-	 * @param end the upper bound of the range of regions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching regions
-	 */
-	public static List<Region> findByC_A(
-		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByC_A(
-			countryId, active, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public static Region findByC_A_First(
-			long countryId, boolean active,
-			OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
-
-		return getPersistence().findByC_A_First(
-			countryId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the first region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public static Region fetchByC_A_First(
-		long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator) {
-
-		return getPersistence().fetchByC_A_First(
-			countryId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public static Region findByC_A_Last(
-			long countryId, boolean active,
-			OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
-
-		return getPersistence().findByC_A_Last(
-			countryId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public static Region fetchByC_A_Last(
-		long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator) {
-
-		return getPersistence().fetchByC_A_Last(
-			countryId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns the regions before and after the current region in the ordered set where countryId = &#63; and active = &#63;.
-	 *
-	 * @param regionId the primary key of the current region
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	public static Region[] findByC_A_PrevAndNext(
-			long regionId, long countryId, boolean active,
-			OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchRegionException {
-
-		return getPersistence().findByC_A_PrevAndNext(
-			regionId, countryId, active, orderByComparator);
-	}
-
-	/**
-	 * Removes all the regions where countryId = &#63; and active = &#63; from the database.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 */
-	public static void removeByC_A(long countryId, boolean active) {
-		getPersistence().removeByC_A(countryId, active);
-	}
-
-	/**
-	 * Returns the number of regions where countryId = &#63; and active = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param active the active
-	 * @return the number of matching regions
-	 */
-	public static int countByC_A(long countryId, boolean active) {
-		return getPersistence().countByC_A(countryId, active);
 	}
 
 	/**

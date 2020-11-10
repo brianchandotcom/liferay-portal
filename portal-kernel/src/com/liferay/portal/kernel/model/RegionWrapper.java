@@ -49,11 +49,11 @@ public class RegionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("countryId", getCountryId());
-		attributes.put("regionCode", getRegionCode());
-		attributes.put("name", getName());
 		attributes.put("active", isActive());
+		attributes.put("countryId", getCountryId());
+		attributes.put("name", getName());
 		attributes.put("position", getPosition());
+		attributes.put("regionCode", getRegionCode());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -109,16 +109,16 @@ public class RegionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
+		}
+
 		Long countryId = (Long)attributes.get("countryId");
 
 		if (countryId != null) {
 			setCountryId(countryId);
-		}
-
-		String regionCode = (String)attributes.get("regionCode");
-
-		if (regionCode != null) {
-			setRegionCode(regionCode);
 		}
 
 		String name = (String)attributes.get("name");
@@ -127,16 +127,16 @@ public class RegionWrapper
 			setName(name);
 		}
 
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
-
 		Double position = (Double)attributes.get("position");
 
 		if (position != null) {
 			setPosition(position);
+		}
+
+		String regionCode = (String)attributes.get("regionCode");
+
+		if (regionCode != null) {
+			setRegionCode(regionCode);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

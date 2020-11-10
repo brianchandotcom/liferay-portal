@@ -376,7 +376,7 @@ create index IX_711995A5 on RecentLayoutSetBranch (groupId);
 create index IX_23FF0700 on RecentLayoutSetBranch (layoutSetBranchId);
 create unique index IX_4654D204 on RecentLayoutSetBranch (userId, layoutSetId);
 
-create index IX_2D9A426F on Region (active_);
+create index IX_F4941CF2 on Region (active_, countryId);
 create index IX_11FB3E42 on Region (countryId, active_);
 create unique index IX_A2635F5C on Region (countryId, regionCode[$COLUMN_LENGTH:75$]);
 create index IX_60C0214E on Region (uuid_[$COLUMN_LENGTH:75$], companyId);

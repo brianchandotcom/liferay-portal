@@ -94,16 +94,16 @@ public class RegionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", countryId=");
-		sb.append(countryId);
-		sb.append(", regionCode=");
-		sb.append(regionCode);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", countryId=");
+		sb.append(countryId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", position=");
 		sb.append(position);
+		sb.append(", regionCode=");
+		sb.append(regionCode);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -149,14 +149,8 @@ public class RegionCacheModel
 			regionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		regionImpl.setActive(active);
 		regionImpl.setCountryId(countryId);
-
-		if (regionCode == null) {
-			regionImpl.setRegionCode("");
-		}
-		else {
-			regionImpl.setRegionCode(regionCode);
-		}
 
 		if (name == null) {
 			regionImpl.setName("");
@@ -165,8 +159,14 @@ public class RegionCacheModel
 			regionImpl.setName(name);
 		}
 
-		regionImpl.setActive(active);
 		regionImpl.setPosition(position);
+
+		if (regionCode == null) {
+			regionImpl.setRegionCode("");
+		}
+		else {
+			regionImpl.setRegionCode(regionCode);
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			regionImpl.setLastPublishDate(null);
@@ -194,13 +194,13 @@ public class RegionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		countryId = objectInput.readLong();
-		regionCode = objectInput.readUTF();
-		name = objectInput.readUTF();
-
 		active = objectInput.readBoolean();
 
+		countryId = objectInput.readLong();
+		name = objectInput.readUTF();
+
 		position = objectInput.readDouble();
+		regionCode = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -231,14 +231,9 @@ public class RegionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(countryId);
+		objectOutput.writeBoolean(active);
 
-		if (regionCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(regionCode);
-		}
+		objectOutput.writeLong(countryId);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -247,9 +242,15 @@ public class RegionCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeBoolean(active);
-
 		objectOutput.writeDouble(position);
+
+		if (regionCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(regionCode);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -261,11 +262,11 @@ public class RegionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long countryId;
-	public String regionCode;
-	public String name;
 	public boolean active;
+	public long countryId;
+	public String name;
 	public double position;
+	public String regionCode;
 	public long lastPublishDate;
 
 }

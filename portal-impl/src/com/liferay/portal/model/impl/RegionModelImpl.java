@@ -78,9 +78,9 @@ public class RegionModelImpl
 		{"regionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"countryId", Types.BIGINT}, {"regionCode", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"active_", Types.BOOLEAN},
-		{"position", Types.DOUBLE}, {"lastPublishDate", Types.TIMESTAMP}
+		{"active_", Types.BOOLEAN}, {"countryId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"position", Types.DOUBLE},
+		{"regionCode", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,16 +95,16 @@ public class RegionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("regionCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("regionCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN,position DOUBLE,lastPublishDate DATE null)";
+		"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,countryId LONG,name VARCHAR(75) null,position DOUBLE,regionCode VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Region";
 
@@ -205,11 +205,11 @@ public class RegionModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCountryId(soapModel.getCountryId());
-		model.setRegionCode(soapModel.getRegionCode());
-		model.setName(soapModel.getName());
 		model.setActive(soapModel.isActive());
+		model.setCountryId(soapModel.getCountryId());
+		model.setName(soapModel.getName());
 		model.setPosition(soapModel.getPosition());
+		model.setRegionCode(soapModel.getRegionCode());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -384,21 +384,21 @@ public class RegionModelImpl
 		attributeGetterFunctions.put("modifiedDate", Region::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate", (BiConsumer<Region, Date>)Region::setModifiedDate);
-		attributeGetterFunctions.put("countryId", Region::getCountryId);
-		attributeSetterBiConsumers.put(
-			"countryId", (BiConsumer<Region, Long>)Region::setCountryId);
-		attributeGetterFunctions.put("regionCode", Region::getRegionCode);
-		attributeSetterBiConsumers.put(
-			"regionCode", (BiConsumer<Region, String>)Region::setRegionCode);
-		attributeGetterFunctions.put("name", Region::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<Region, String>)Region::setName);
 		attributeGetterFunctions.put("active", Region::getActive);
 		attributeSetterBiConsumers.put(
 			"active", (BiConsumer<Region, Boolean>)Region::setActive);
+		attributeGetterFunctions.put("countryId", Region::getCountryId);
+		attributeSetterBiConsumers.put(
+			"countryId", (BiConsumer<Region, Long>)Region::setCountryId);
+		attributeGetterFunctions.put("name", Region::getName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Region, String>)Region::setName);
 		attributeGetterFunctions.put("position", Region::getPosition);
 		attributeSetterBiConsumers.put(
 			"position", (BiConsumer<Region, Double>)Region::setPosition);
+		attributeGetterFunctions.put("regionCode", Region::getRegionCode);
+		attributeSetterBiConsumers.put(
+			"regionCode", (BiConsumer<Region, String>)Region::setRegionCode);
 		attributeGetterFunctions.put(
 			"lastPublishDate", Region::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -584,80 +584,6 @@ public class RegionModelImpl
 
 	@JSON
 	@Override
-	public long getCountryId() {
-		return _countryId;
-	}
-
-	@Override
-	public void setCountryId(long countryId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_countryId = countryId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCountryId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("countryId"));
-	}
-
-	@JSON
-	@Override
-	public String getRegionCode() {
-		if (_regionCode == null) {
-			return "";
-		}
-		else {
-			return _regionCode;
-		}
-	}
-
-	@Override
-	public void setRegionCode(String regionCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_regionCode = regionCode;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalRegionCode() {
-		return getColumnOriginalValue("regionCode");
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_name = name;
-	}
-
-	@JSON
-	@Override
 	public boolean getActive() {
 		return _active;
 	}
@@ -689,6 +615,51 @@ public class RegionModelImpl
 
 	@JSON
 	@Override
+	public long getCountryId() {
+		return _countryId;
+	}
+
+	@Override
+	public void setCountryId(long countryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_countryId = countryId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCountryId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("countryId"));
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	@JSON
+	@Override
 	public double getPosition() {
 		return _position;
 	}
@@ -700,6 +671,35 @@ public class RegionModelImpl
 		}
 
 		_position = position;
+	}
+
+	@JSON
+	@Override
+	public String getRegionCode() {
+		if (_regionCode == null) {
+			return "";
+		}
+		else {
+			return _regionCode;
+		}
+	}
+
+	@Override
+	public void setRegionCode(String regionCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_regionCode = regionCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalRegionCode() {
+		return getColumnOriginalValue("regionCode");
 	}
 
 	@JSON
@@ -785,11 +785,11 @@ public class RegionModelImpl
 		regionImpl.setUserName(getUserName());
 		regionImpl.setCreateDate(getCreateDate());
 		regionImpl.setModifiedDate(getModifiedDate());
-		regionImpl.setCountryId(getCountryId());
-		regionImpl.setRegionCode(getRegionCode());
-		regionImpl.setName(getName());
 		regionImpl.setActive(isActive());
+		regionImpl.setCountryId(getCountryId());
+		regionImpl.setName(getName());
 		regionImpl.setPosition(getPosition());
+		regionImpl.setRegionCode(getRegionCode());
 		regionImpl.setLastPublishDate(getLastPublishDate());
 
 		regionImpl.resetOriginalValues();
@@ -924,15 +924,9 @@ public class RegionModelImpl
 			regionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		regionCacheModel.active = isActive();
+
 		regionCacheModel.countryId = getCountryId();
-
-		regionCacheModel.regionCode = getRegionCode();
-
-		String regionCode = regionCacheModel.regionCode;
-
-		if ((regionCode != null) && (regionCode.length() == 0)) {
-			regionCacheModel.regionCode = null;
-		}
 
 		regionCacheModel.name = getName();
 
@@ -942,9 +936,15 @@ public class RegionModelImpl
 			regionCacheModel.name = null;
 		}
 
-		regionCacheModel.active = isActive();
-
 		regionCacheModel.position = getPosition();
+
+		regionCacheModel.regionCode = getRegionCode();
+
+		String regionCode = regionCacheModel.regionCode;
+
+		if ((regionCode != null) && (regionCode.length() == 0)) {
+			regionCacheModel.regionCode = null;
+		}
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1035,11 +1035,11 @@ public class RegionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _countryId;
-	private String _regionCode;
-	private String _name;
 	private boolean _active;
+	private long _countryId;
+	private String _name;
 	private double _position;
+	private String _regionCode;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1079,11 +1079,11 @@ public class RegionModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("countryId", _countryId);
-		_columnOriginalValues.put("regionCode", _regionCode);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("countryId", _countryId);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("position", _position);
+		_columnOriginalValues.put("regionCode", _regionCode);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1125,15 +1125,15 @@ public class RegionModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("countryId", 256L);
+		columnBitmasks.put("active_", 256L);
 
-		columnBitmasks.put("regionCode", 512L);
+		columnBitmasks.put("countryId", 512L);
 
 		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("active_", 2048L);
+		columnBitmasks.put("position", 2048L);
 
-		columnBitmasks.put("position", 4096L);
+		columnBitmasks.put("regionCode", 4096L);
 
 		columnBitmasks.put("lastPublishDate", 8192L);
 

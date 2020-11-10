@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.document.library.external.video.internal.provider;
+package com.liferay.document.library.external.video.provider;
 
-import com.liferay.document.library.external.video.internal.DLExternalVideo;
+import com.liferay.document.library.external.video.DLExternalVideo;
 
 /**
  * @author Alejandro Tardín

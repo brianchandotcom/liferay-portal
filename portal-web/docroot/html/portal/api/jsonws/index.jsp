@@ -58,4 +58,16 @@
 			</p>
 		</footer>
 	</div>
+
+	<script data-senna-track="permanent" id="APIScrollIntoView" type="text/javascript">
+		Liferay.once('endNavigate', function(event) {
+			setTimeout(() => {
+				const selected = document.querySelector('#services .lfr-api-signature.selected');
+
+				if (selected) {
+					selected.scrollIntoView({behavior: 'smooth'});
+				}	
+			}, 0);
+		});
+	</script>
 </c:if>

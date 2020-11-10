@@ -170,6 +170,10 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		return jsonObject.getInt("PropertyNumber");
 	}
 
+	public Class<? extends SpiraArtifact> getSpiraArtifactClass() {
+		return _spiraArtifactClass;
+	}
+
 	public SpiraCustomList getSpiraCustomList() {
 		if (!_hasCustomList()) {
 			return null;

@@ -19,8 +19,11 @@ const alphanumeric = (value) =>
 				'please-enter-only-alphanumeric-characters-dashes-or-underscores'
 		  );
 
-const required = (value) =>
-	value ? undefined : Liferay.Language.get('this-field-is-required');
+const required = (value) => {
+	if (!value) {
+		return Liferay.Language.get('this-field-is-required');
+	}
+};
 
 const validate = (fields, values) => {
 	const errors = {};

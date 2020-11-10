@@ -35,6 +35,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-113806. View auto image resolution when image resolution is greater than original image and original image is greater than viewport."
+	@priority = "4"
+	test ViewAutoImageResolutionWhenImageResolutionIsGreaterThanOriginalImageAndOriginalImageIsGreaterThanViewport {
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Select an Image with width between 600px and 700px") {
+			PageEditor.editFragmentImage(
+				fileName = "analytics-cloud-hero-image.png",
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "Responsive Image",
+				imageFileName = "analytics-cloud-hero-image.png");
+		}
+
+		task ("Change to the Landscape Phone viewport") {
+			Click(
+				key_deviceType = "Landscape Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Assert Auto image resolution is selected") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Auto");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Landscape Phone viewport") {
+			var widthLandscapePhone = PageEditor.getWidthOfSelectedImageResolution();
+			var fileSizeLandscapePhone = PageEditor.getFileSizeOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width of image resolution equal with orignal image") {
+			TestUtils.assertEquals(
+				actual = "${widthLandscapePhone}",
+				expected = "650");
+		}
+
+		task ("Assert the File Size of image resolution shown") {
+			AssertTextEquals.assertPartialText(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL",
+				value1 = "${fileSizeLandscapePhone}");
+		}
+	}
+
 	@description = "This is a test for LPS-113806. View auto image resolution when orignal image is greater than image resolution and image resolution is greater than viewport."
 	@priority = "5"
 	test ViewAutoImageResolutionWhenOriginalImageIsGreaterThanImageResolutionAndImageResolutionIsGreaterThanViewport {

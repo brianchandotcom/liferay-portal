@@ -1179,7 +1179,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@ignore
 	@priority = "3"
 	test OrganizationDropDownItems {
 		for (var siteName : list "Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H") {
@@ -1240,7 +1239,6 @@ definition {
 			value1 = "Site Name H");
 	}
 
-	@ignore
 	@priority = "3"
 	test OrganizationSiteDefaultUserAssociations {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#OrganizationSiteDefaultUserAssociations";

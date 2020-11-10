@@ -13,48 +13,44 @@ my-project
 │   ├── local
 │   ├── prod
 │   └── uat
-├── ext
-│   ├── core ext
-│   └── module exts
 ├── modules
 │   ├── apis
 │   ├── services
 │   ├── java widgets
-│   └── js widgets
-├── themes
-│   └── js themes
-└── wars
-    ├── java ee widgets (spring mvc, jsf, etc)
-    └── java themes
+│   ├── js widgets
+│   ├── java ee widgets (spring mvc, jsf, etc)
+│   └── java themes
+└── themes
+    └── js themes
 ```
 
 ### Running Liferay DXP locally
 ```
-my-project $ gw initBundle
-my-project $ gw deploy   
+my-project $ blade gw initBundle
+my-project $ blade gw deploy   
 my-project $ blade server run
 ```
 ### Running Liferay DXP in Docker
 ```
-my-project $ gw createDockerContainer 
-my-project $ gw startDockerContainer
+my-project $ blade gw createDockerContainer 
+my-project $ blade gw startDockerContainer
 ```
 
 ### Creating a Liferay DXP distribution
 
 #### Creating a tar
 ```
-my-project $ gw distBundleTar
+my-project $ blade gw distBundleTar
 ```
 
 #### Creating a zip
 ```
-my-project $ gw distBundleZip
+my-project $ blade gw distBundleZip
 ```
 
 #### Creating a docker image
 ```
-my-project $ gw buildDockerImage
+my-project $ blade gw buildDockerImage
 ```
 
 ### Create a Liferay DXP module

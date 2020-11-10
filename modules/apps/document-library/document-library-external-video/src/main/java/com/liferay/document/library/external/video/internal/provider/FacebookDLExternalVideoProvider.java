@@ -14,7 +14,8 @@
 
 package com.liferay.document.library.external.video.internal.provider;
 
-import com.liferay.document.library.external.video.internal.DLExternalVideo;
+import com.liferay.document.library.external.video.DLExternalVideo;
+import com.liferay.document.library.external.video.provider.DLExternalVideoProvider;
 import com.liferay.frontend.editor.embed.EditorEmbedProvider;
 import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;

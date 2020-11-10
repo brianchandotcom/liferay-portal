@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.external.video.internal.portlet.action;
 
-import com.liferay.document.library.external.video.internal.DLExternalVideo;
+import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
-import com.liferay.document.library.external.video.internal.resolver.DLExternalVideoResolver;
+import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;

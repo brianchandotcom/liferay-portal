@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.external.video.internal;
+package com.liferay.document.library.external.video;
 
 /**
  * @author Alejandro Tardín

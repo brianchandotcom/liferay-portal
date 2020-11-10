@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -357,6 +359,7 @@ public class DDMFormPagesTemplateContextFactory {
 				_ddmFormRenderingContext.getGroupId());
 			formEvaluatorEvaluateRequestBuilder.withUserId(
 				PortalUtil.getUserId(httpServletRequest));
+			formEvaluatorEvaluateRequestBuilder.withViewMode(_isViewMode());
 
 			_ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
 				formEvaluatorEvaluateRequestBuilder.build());
@@ -367,6 +370,28 @@ public class DDMFormPagesTemplateContextFactory {
 			throw new IllegalStateException(
 				"Unexpected error occurred during form evaluation", exception);
 		}
+	}
+
+	private boolean _isViewMode() {
+		Boolean viewMode = _ddmFormRenderingContext.getProperty("viewMode");
+
+		if (viewMode != null) {
+			return viewMode;
+		}
+
+		String portletNamespace =
+			_ddmFormRenderingContext.getPortletNamespace();
+
+		if ((portletNamespace != null) &&
+			!StringUtil.equals(
+				portletNamespace,
+				PortalUtil.getPortletNamespace(
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -248,7 +248,7 @@ public class S3FileCacheCleanUpTest {
 		return fileTime.toMillis();
 	}
 
-	private static final S3FileCache _s3FileCache = new S3FileCacheImpl();
+	private static final S3FileCache _s3FileCache = new S3FileCache();
 
 	static {
 		ReflectionTestUtil.setFieldValue(

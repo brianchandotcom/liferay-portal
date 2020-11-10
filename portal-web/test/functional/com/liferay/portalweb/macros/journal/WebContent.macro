@@ -292,7 +292,7 @@ definition {
 			Type(
 				locator1 = "CKEditor#BODY",
 				value1 = "${webContentRichText}");
-			
+
 			SelectFrame(value1 = "relative=top");
 		}
 

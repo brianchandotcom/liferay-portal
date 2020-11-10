@@ -28,7 +28,10 @@ import {
 } from '../drag-and-drop/dragTypes.es';
 import {getDataDefinitionField} from '../utils/dataDefinition.es';
 import generateDataDefinitionFieldName from '../utils/generateDataDefinitionFieldName.es';
-import {normalizeState} from '../utils/saveDataDefinition.es';
+import {
+	normalizeDataDefinition,
+	normalizeDataLayout,
+} from '../utils/saveDataDefinition.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
 
@@ -468,10 +471,8 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	getFieldSetDDMForm(fieldSet, dataDefinition) {
-		const {
-			normalizedDataDefinition: fieldSetNormalized,
-			normalizedDataLayout: fieldSetDataLayout,
-		} = normalizeState(
+		const {defaultDataLayout, defaultLanguageId} = fieldSet;
+		const fieldSetNormalized = normalizeDataDefinition(
 			{
 				...fieldSet,
 				availableLanguageIds: [
@@ -482,8 +483,11 @@ class DataLayoutBuilder extends React.Component {
 					]),
 				],
 			},
-			fieldSet.defaultDataLayout,
-			fieldSet.defaultLanguageId
+			defaultLanguageId
+		);
+		const fieldSetDataLayout = normalizeDataLayout(
+			defaultDataLayout,
+			defaultLanguageId
 		);
 
 		return this.getDDMForm(fieldSetNormalized, fieldSetDataLayout);

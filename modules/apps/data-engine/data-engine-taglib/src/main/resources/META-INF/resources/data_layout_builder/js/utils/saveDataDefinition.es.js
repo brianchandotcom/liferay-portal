@@ -86,87 +86,74 @@ const normalizeField = (
 };
 
 /**
- * Normalize DD and DL state
- * @param {object} dataDefinition
- * @param {object} dataLayout
- * @param {String?} defaultLanguageId
- * @returns {object} {normalizedDataLayout, normalizedDataDefinition}
- * @description This Normalization is necessary to handle
- * differences data structures between across the components, such as
- * App Builder, Data Engine and Forms
+ *
+ * @param {*} dataDefinition
+ * @param {*} defaultLanguageId
  */
 
-export const normalizeState = (
+export const normalizeDataDefinition = (
 	dataDefinition,
+	defaultLanguageId = themeDisplay.getDefaultLanguageId()
+) => {
+	return {
+		...dataDefinition,
+		dataDefinitionFields: dataDefinition.dataDefinitionFields.map((field) =>
+			normalizeField(
+				dataDefinition.availableLanguageIds,
+				field,
+				defaultLanguageId
+			)
+		),
+		name: dataDefinition.availableLanguageIds.reduce(
+			(accumulator, currentValue) => {
+				accumulator[currentValue] =
+					dataDefinition.name[currentValue] ||
+					dataDefinition.name[defaultLanguageId] ||
+					'';
+
+				return accumulator;
+			},
+			{}
+		),
+	};
+};
+
+export const normalizeDataLayout = (
 	dataLayout,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId()
 ) => {
-	let normalizedDataLayout;
-	let normalizedDataDefinition;
-
-	if (dataLayout) {
-		normalizedDataLayout = {
-			...dataLayout,
-			dataLayoutPages: dataLayout.dataLayoutPages.map(
-				(dataLayoutPage) => ({
-					...dataLayoutPage,
-					dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
-						(dataLayoutRow) => ({
-							...dataLayoutRow,
-							dataLayoutColumns: (
-								dataLayoutRow.dataLayoutColumns || []
-							).map((dataLayoutColumn) => ({
-								...dataLayoutColumn,
-								fieldNames: dataLayoutColumn.fieldNames || [],
-							})),
-						})
-					),
-					description: {
-						...dataLayout.description,
-						[defaultLanguageId]:
-							dataLayoutPage.description[defaultLanguageId] || '',
-					},
-					title: {
-						...dataLayoutPage.title,
-						[defaultLanguageId]:
-							dataLayoutPage.title[defaultLanguageId] || '',
-					},
+	return {
+		...dataLayout,
+		dataLayoutPages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
+			...dataLayoutPage,
+			dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
+				(dataLayoutRow) => ({
+					...dataLayoutRow,
+					dataLayoutColumns: (
+						dataLayoutRow.dataLayoutColumns || []
+					).map((dataLayoutColumn) => ({
+						...dataLayoutColumn,
+						fieldNames: dataLayoutColumn.fieldNames || [],
+					})),
 				})
 			),
-			dataRules: dataLayout.dataRules.map((rule) => {
-				delete rule.ruleEditedIndex;
+			description: {
+				...dataLayout.description,
+				[defaultLanguageId]:
+					dataLayoutPage.description[defaultLanguageId] || '',
+			},
+			title: {
+				...dataLayoutPage.title,
+				[defaultLanguageId]:
+					dataLayoutPage.title[defaultLanguageId] || '',
+			},
+		})),
+		dataRules: dataLayout.dataRules.map((rule) => {
+			delete rule.ruleEditedIndex;
 
-				return rule;
-			}),
-		};
-	}
-
-	if (dataDefinition) {
-		normalizedDataDefinition = {
-			...dataDefinition,
-			dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
-				(field) =>
-					normalizeField(
-						dataDefinition.availableLanguageIds,
-						field,
-						defaultLanguageId
-					)
-			),
-			name: dataDefinition.availableLanguageIds.reduce(
-				(accumulator, currentValue) => {
-					accumulator[currentValue] =
-						dataDefinition.name[currentValue] ||
-						dataDefinition.name[defaultLanguageId] ||
-						'';
-
-					return accumulator;
-				},
-				{}
-			),
-		};
-	}
-
-	return {normalizedDataDefinition, normalizedDataLayout};
+			return rule;
+		}),
+	};
 };
 
 export default ({
@@ -175,10 +162,8 @@ export default ({
 	dataLayout,
 	dataLayoutId,
 }) => {
-	const {normalizedDataDefinition, normalizedDataLayout} = normalizeState(
-		dataDefinition,
-		dataLayout
-	);
+	const normalizedDataDefinition = normalizeDataDefinition(dataDefinition);
+	const normalizedDataLayout = normalizeDataLayout(dataLayout);
 
 	const updateDefinition = () =>
 		updateItem(

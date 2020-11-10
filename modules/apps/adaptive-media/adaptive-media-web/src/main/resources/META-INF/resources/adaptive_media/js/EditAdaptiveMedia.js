@@ -283,6 +283,7 @@ const EditAdaptiveMedia = ({
 				{!amImageConfigurationEntry && (
 					<ClayCheckbox
 						checked={addHighResolution}
+						id={highResolutionId}
 						label={Liferay.Language.get(
 							'add-a-resolution-for-high-density-displays'
 						)}

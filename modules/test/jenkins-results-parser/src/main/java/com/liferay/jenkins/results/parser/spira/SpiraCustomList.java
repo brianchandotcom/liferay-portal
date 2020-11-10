@@ -75,10 +75,24 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		}
 	}
 
+	public SpiraCustomListValue getSpiraCustomListValueByID(int id) {
+		for (SpiraCustomListValue spiraCustomListValue :
+				getSpiraCustomListValues()) {
+
+			if (id == spiraCustomListValue.getID()) {
+				return spiraCustomListValue;
+			}
+		}
+
+		return null;
+	}
+
 	public SpiraCustomListValue getSpiraCustomListValueByName(String name) {
-		for (SpiraCustomListValue value : getSpiraCustomListValues()) {
-			if (name.equals(value.getName())) {
-				return value;
+		for (SpiraCustomListValue spiraCustomListValue :
+				getSpiraCustomListValues()) {
+
+			if (name.equals(spiraCustomListValue.getName())) {
+				return spiraCustomListValue;
 			}
 		}
 

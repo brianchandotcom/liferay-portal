@@ -3456,6 +3456,7 @@ definition {
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
 	@priority = "5"
 	test ViewTitleListItemStyleInDifferentListStyles {
+		property environment.acceptance = "true";
 		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 

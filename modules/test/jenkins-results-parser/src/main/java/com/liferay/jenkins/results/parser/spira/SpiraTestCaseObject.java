@@ -177,6 +177,26 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return _parentSpiraTestCaseFolder;
 	}
 
+	public SpiraTestCaseRun getSpiraTestCaseRunByID(int testCaseRunID) {
+		List<SpiraTestCaseRun> spiraTestCaseRuns =
+			SpiraTestCaseRun.getSpiraTestCaseRuns(
+				getSpiraProject(), this,
+				new SearchQuery.SearchParameter(
+					SpiraTestCaseRun.KEY_ID, testCaseRunID));
+
+		if (spiraTestCaseRuns.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case run ID " + testCaseRunID);
+		}
+
+		if (spiraTestCaseRuns.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case run ID " + testCaseRunID);
+		}
+
+		return spiraTestCaseRuns.get(0);
+	}
+
 	public List<SpiraTestCaseRun> getSpiraTestCaseRuns() {
 		return SpiraTestCaseRun.getSpiraTestCaseRuns(getSpiraProject(), this);
 	}

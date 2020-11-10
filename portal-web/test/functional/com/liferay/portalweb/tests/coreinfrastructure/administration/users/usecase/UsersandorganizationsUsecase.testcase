@@ -1605,6 +1605,75 @@ definition {
 			securityQuestions = "This is just a test");
 	}
 
+	@description = "This test adds tags to organizations and asserts proper organization displays when tag is searched"
+	@priority = "4"
+	test SearchTags {
+		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#SearchTags";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name 1",
+			orgType = "Organization");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.editOrganizationCP(orgName = "Organization Name 1");
+
+		Organization.addCategorizationCP(
+			orgName = "Organization Name 1",
+			tagName = "alpha");
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.editOrganizationCP(orgName = "Organization Name 2");
+
+		Organization.addCategorizationCP(
+			orgName = "Organization Name 2",
+			tagName = "bravo");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Organization Name 1",
+			searchTerm = "alpha");
+
+		Organization.searchCP(
+			orgName = "Organization Name 2",
+			searchTerm = "bravo");
+
+		Organization.searchCP(
+			orgName = "Organization Name 1",
+			searchTerm = "1");
+
+		Organization.searchCP(
+			orgName = "Organization Name 2",
+			searchTerm = "2");
+	}
+
 	@description = "This is a use case for LPS-104643."
 	@priority = "3"
 	test UpdateExistUserEmailAddressByScript {

@@ -1229,7 +1229,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			return _dlAppService.getFileEntry(groupId, parentFolderId, name);
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
-			return (FileEntry)DLFileEntryUtil.findByG_F_FN(
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+			}
+
+			return _dlAppService.getFileEntryByFileName(
 				groupId, parentFolderId, name);
 		}
 	}

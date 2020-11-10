@@ -12,12 +12,17 @@
  * details.
  */
 
-function runJSFromText(text, next = () => {}) {
+function runJSFromText(text, next = () => {}, appendFn) {
 	const scriptElement = document.createElement('script');
 
 	scriptElement.text = text;
 
-	document.head.appendChild(scriptElement);
+	if (appendFn) {
+		appendFn(scriptElement);
+	}
+	else {
+		document.head.appendChild(scriptElement);
+	}
 
 	scriptElement.remove();
 
@@ -26,7 +31,7 @@ function runJSFromText(text, next = () => {}) {
 	return scriptElement;
 }
 
-function runJSFromFile(src, next = () => {}) {
+function runJSFromFile(src, next = () => {}, appendFn) {
 	const scriptElement = document.createElement('script');
 
 	scriptElement.src = src;
@@ -40,12 +45,17 @@ function runJSFromFile(src, next = () => {}) {
 	scriptElement.addEventListener('load', callback);
 	scriptElement.addEventListener('error', callback);
 
-	document.head.appendChild(scriptElement);
+	if (appendFn) {
+		appendFn(scriptElement);
+	}
+	else {
+		document.head.appendChild(scriptElement);
+	}
 
 	return scriptElement;
 }
 
-function runScriptsInOrder(scripts, i) {
+function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
 	const scriptElement = scripts[i];
 
 	if (
@@ -56,27 +66,29 @@ function runScriptsInOrder(scripts, i) {
 	}
 
 	const runNextScript = () => {
+		defaultFn();
+
 		if (i < scripts.length - 1) {
-			runScriptsInOrder(scripts, i + 1);
+			runScriptsInOrder(scripts, i + 1, defaultFn, appendFn);
 		}
 	};
 
 	scriptElement.remove();
 
 	if (scriptElement.src) {
-		return runJSFromFile(scriptElement.src, runNextScript);
+		return runJSFromFile(scriptElement.src, runNextScript, appendFn);
 	}
 	else {
-		return runJSFromText(scriptElement.text, runNextScript);
+		return runJSFromText(scriptElement.text, runNextScript, appendFn);
 	}
 }
 
-export default function (element) {
+export default function (element, defaultFn = () => {}, appendFn) {
 	const scripts = element.querySelectorAll('script');
 
 	if (!scripts.length) {
 		return;
 	}
 
-	runScriptsInOrder(scripts, 0);
+	runScriptsInOrder(scripts, 0, defaultFn, appendFn);
 }

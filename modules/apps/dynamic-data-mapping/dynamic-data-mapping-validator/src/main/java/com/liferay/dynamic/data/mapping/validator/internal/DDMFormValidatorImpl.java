@@ -229,7 +229,11 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 
 		if (optionsValues.isEmpty()) {
-			throw new MustSetOptionsForField(ddmFormField.getName());
+			LocalizedValue localizedValue = ddmFormField.getLabel();
+
+			throw new MustSetOptionsForField(
+				localizedValue.getString(ddmFormDefaultLocale),
+				ddmFormField.getName());
 		}
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {

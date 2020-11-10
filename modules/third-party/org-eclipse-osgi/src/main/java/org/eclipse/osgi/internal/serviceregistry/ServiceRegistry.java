@@ -1068,11 +1068,11 @@ public class ServiceRegistry {
 				return empty;
 			}
 
-			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
-		}
+			if (filter == null) {
+				return result;
+			}
 
-		if (filter == null) {
-			return result;
+			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
 		}
 
 		for (Iterator<ServiceRegistrationImpl<?>> iter = result.iterator(); iter.hasNext();) {

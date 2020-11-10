@@ -1,0 +1,20 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java b/modules/third-party/org-eclipse-osgi/src/main/java/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+index 1e669c9..0847d0f 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
++++ b/modules/third-party/org-eclipse-osgi/src/main/java/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+@@ -1068,11 +1068,11 @@ public class ServiceRegistry {
+ 				return empty;
+ 			}
+ 
+-			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
+-		}
++			if (filter == null) {
++				return result;
++			}
+ 
+-		if (filter == null) {
+-			return result;
++			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
+ 		}
+ 
+ 		for (Iterator<ServiceRegistrationImpl<?>> iter = result.iterator(); iter.hasNext();) {

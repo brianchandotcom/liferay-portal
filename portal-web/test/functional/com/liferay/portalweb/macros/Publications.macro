@@ -324,7 +324,7 @@ definition {
 			MenuItem.click(menuItem = "Schedule");
 		}
 
-		var publishDateDay = DateUtil.getCurrentDate();
+		var publishDateDay = Time.getUTCDay();
 		var publishDateMonth = DateUtil.getCurrentMonth();
 		var publishDateYear = DateUtil.getCurrentYear();
 		var publishDate = "${publishDateYear}-${publishDateMonth}-${publishDateDay}";

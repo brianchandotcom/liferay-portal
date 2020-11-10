@@ -237,8 +237,6 @@ public class MVCPortlet extends LiferayPortlet {
 			getInitParameter("mvc-resource-command-package-prefix"),
 			getPortletName(), portletId, MVCResourceCommand.class,
 			"ResourceCommand");
-
-		_initValidPaths(templatePath);
 	}
 
 	@Override
@@ -559,8 +557,10 @@ public class MVCPortlet extends LiferayPortlet {
 			_log.error(path + " is not a valid include");
 		}
 		else {
-			if (Validator.isNotNull(path) && !_validPaths.contains(path) &&
-				!_validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
+			Set<String> validPaths = _getValidPaths();
+
+			if (Validator.isNotNull(path) && !validPaths.contains(path) &&
+				!validPaths.contains(_PATH_META_INF_RESOURCES.concat(path))) {
 
 				throw new PortletException(
 					StringBundler.concat(
@@ -694,7 +694,15 @@ public class MVCPortlet extends LiferayPortlet {
 		return paths;
 	}
 
-	private void _initValidPaths(String rootPath) {
+	private Set<String> _getValidPaths() {
+		if (_validPaths == null) {
+			_validPaths = _initValidPaths(templatePath);
+		}
+
+		return _validPaths;
+	}
+
+	private Set<String> _initValidPaths(String rootPath) {
 		PortletContext portletContext = getPortletContext();
 
 		String portletContextName = portletContext.getPortletContextName();
@@ -703,10 +711,10 @@ public class MVCPortlet extends LiferayPortlet {
 			portletContextName);
 
 		if (validPathsMap != null) {
-			_validPaths = validPathsMap.get(rootPath);
+			Set<String> validPaths = validPathsMap.get(rootPath);
 
-			if (_validPaths != null) {
-				return;
+			if (validPaths != null) {
+				return validPaths;
 			}
 		}
 		else {
@@ -725,14 +733,12 @@ public class MVCPortlet extends LiferayPortlet {
 						" because root path is configured to have access to ",
 						"all portal paths"));
 
-				_validPaths = validPathsMap.computeIfAbsent(
+				return validPathsMap.computeIfAbsent(
 					rootPath, key -> Collections.emptySet());
-
-				return;
 			}
 		}
 
-		_validPaths = validPathsMap.computeIfAbsent(
+		return validPathsMap.computeIfAbsent(
 			rootPath,
 			key -> {
 				Set<String> validPaths = _getJspPaths(key);

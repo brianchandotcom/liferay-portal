@@ -1569,6 +1569,32 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		logger.lifecycle "Added {}", jarFile.name
 	}
 
+	portalArtifactsDir.eachFile {
+		File portalArtifactDir ->
+
+		File servicesDir = new File(portalArtifactDir, "META-INF/services")
+
+		if (servicesDir.exists()) {
+			servicesDir.eachFile {
+				File servicesFile ->
+
+				servicesFile.getText("UTF-8").eachLine {
+					String line ->
+
+					if (Validator.isNotNull(line)) {
+						File file = new File(portalArtifactDir, line.replace('.' as char, '/' as char) + ".class")
+
+						if (!file.exists()) {
+							delete servicesFile
+
+							return
+						}
+					}
+				}
+			}
+		}
+	}
+
 	return dependencies
 }
 

@@ -32,6 +32,22 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			Navigator.openSiteURL(siteName = "Guest");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Adaptive Media");
+
+			if (IsElementPresent(key_imageName = "Image Resolution", locator1 = "AdaptiveMediaTable#NAME")) {
+				AdaptiveMedia.disableImageResolution(
+					imageName = "Image Resolution",
+					imageState = "Disabled",
+					percentAdapted = "0");
+
+				AdaptiveMedia.deleteImageResolution(imageName = "Image Resolution");
+			}
 		}
 	}
 

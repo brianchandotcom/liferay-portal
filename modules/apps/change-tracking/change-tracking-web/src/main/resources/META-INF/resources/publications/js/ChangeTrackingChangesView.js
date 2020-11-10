@@ -139,33 +139,12 @@ class ChangeTrackingChangesView extends React.Component {
 
 			const params = new URLSearchParams(location.search);
 
-			const newPathParam = params.get(this.namespace + 'path');
-
-			const pathState = this._getPathState(newPathParam);
-
-			if (
-				newPathParam ===
-				this._getPathParam(
-					this.state.breadcrumbItems,
-					this.state.filterClass,
-					!this.state.showHideable,
-					this.state.viewType
-				)
-			) {
-				this.setState({
-					children: this._filterHideableNodes(
-						this.state.node.children,
-						pathState.showHideable
-					),
-					showHideable: pathState.showHideable,
-				});
-
-				return;
-			}
+			const pathState = this._getPathState(
+				params.get(this.namespace + 'path')
+			);
 
 			const filterClass = pathState.filterClass;
 			const nodeId = pathState.nodeId;
-			const showHideable = pathState.showHideable;
 			const viewType = pathState.viewType;
 
 			if (viewType === 'context' && this.contextView.errorMessage) {
@@ -186,6 +165,16 @@ class ChangeTrackingChangesView extends React.Component {
 				viewType
 			);
 
+			let showHideable = this.state.showHideable;
+
+			if (
+				node.hideable ||
+				(filterClass !== 'everything' &&
+					this.contextView[filterClass].hideable)
+			) {
+				showHideable = true;
+			}
+
 			this.setState(
 				{
 					breadcrumbItems,
@@ -199,7 +188,22 @@ class ChangeTrackingChangesView extends React.Component {
 					showHideable,
 					viewType,
 				},
-				() => this._updateRenderContent(node)
+				() => {
+					this.history.replace(
+						this.basePath +
+							'&' +
+							this.namespace +
+							'path=' +
+							this._getPathParam(
+								breadcrumbItems,
+								filterClass,
+								showHideable,
+								viewType
+							)
+					);
+
+					this._updateRenderContent(node);
+				}
 			);
 		});
 
@@ -1336,11 +1340,15 @@ class ChangeTrackingChangesView extends React.Component {
 			showHideable,
 		});
 
-		this._pushState(
+		const pathParam = this._getPathParam(
 			this.state.breadcrumbItems,
 			this.state.filterClass,
 			showHideable,
 			this.state.viewType
+		);
+
+		this.history.replace(
+			this.basePath + '&' + this.namespace + 'path=' + pathParam
 		);
 	}
 

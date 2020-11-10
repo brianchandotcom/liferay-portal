@@ -39,7 +39,7 @@ definition {
 
 	@priority = "3"
 	test CustomizeNewWatchedDirectory {
-		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy";
+		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeNewWatchedDirectory";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

@@ -1187,6 +1187,28 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public FileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		try {
+			Repository repository = getRepository(groupId);
+
+			return repository.getFileEntryByFileName(folderId, fileName);
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				throw noSuchFileEntryException;
+			}
+
+			Repository repository = repositoryProvider.getFolderRepository(
+				folderId);
+
+			return repository.getFileEntryByFileName(folderId, fileName);
+		}
+	}
+
 	/**
 	 * Returns the file entry with the UUID and group.
 	 *

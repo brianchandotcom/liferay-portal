@@ -389,6 +389,21 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	@Override
+	public DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry =
+			dlFileEntryLocalService.getFileEntryByFileName(
+				groupId, folderId, fileName);
+
+		_dlFileEntryModelResourcePermission.check(
+			getPermissionChecker(), dlFileEntry, ActionKeys.VIEW);
+
+		return dlFileEntry;
+	}
+
+	@Override
 	public DLFileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 

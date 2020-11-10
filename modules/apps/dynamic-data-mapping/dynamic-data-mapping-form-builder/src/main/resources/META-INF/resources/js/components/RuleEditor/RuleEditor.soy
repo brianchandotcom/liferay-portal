@@ -541,6 +541,9 @@
 
 				{if $showTargetCalculator and $targetSelected}
 					{call CalculatorReactAdapter.render}
+						{param events: [
+							'editExpression': $_handleEditExpression
+						]/}
 						{param expression: $actionExpression /}
 						{param fields: $calculatorFields /}
 						{param functions: $calculatorFunctions /}

@@ -13,18 +13,60 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import React from 'react';
+import ClayDropDown from '@clayui/drop-down';
+import React, {useState} from 'react';
 
-import Dropdown from './Dropdown.es';
+function Dropdown({
+	items,
+	onItemSelected = () => {},
+	resultSelected,
+	...otherProps
+}) {
+	const [active, setActive] = useState(false);
+
+	return (
+		<ClayDropDown
+			active={active}
+			onActiveChange={setActive}
+			{...otherProps}
+		>
+			<ClayDropDown.ItemList>
+				{items.map((item, i) => {
+					if (!item.separator) {
+						return (
+							<ClayDropDown.Item
+								aria-label={item.label}
+								key={item.label}
+								onClick={() => onItemSelected(item)}
+								title={item.tooltip}
+							>
+								{item.label}
+								{resultSelected && (
+									<span className="calculate-fieldname">
+										{` ${Liferay.Language.get(
+											'field-name'
+										)}: ${resultSelected}`}
+									</span>
+								)}
+							</ClayDropDown.Item>
+						);
+					}
+
+					return <ClayDropDown.Divider key={i} />;
+				})}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
+	);
+}
 
 const ONE_TO_NINE = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-const OPERATORS = {
-	ADD: {label: Liferay.Language.get('add'), value: '+'},
-	DIVIDE: {label: Liferay.Language.get('divide'), value: '/'},
-	MULTIPLY: {label: Liferay.Language.get('multiply'), value: '*'},
-	SUBTRACT: {label: Liferay.Language.get('subtract'), value: '-'},
-};
+const OPERATORS = [
+	{label: Liferay.Language.get('add'), value: '+'},
+	{label: Liferay.Language.get('divide'), value: '/'},
+	{label: Liferay.Language.get('multiply'), value: '*'},
+	{label: Liferay.Language.get('subtract'), value: '-'},
+];
 
 const TOKEN_TYPES = {
 	BACKSPACE: 'Backspace',
@@ -40,7 +82,7 @@ function CalculatorButtonArea({
 	disableNumbers,
 	disableOperators,
 	functions,
-	onCalculatorInput,
+	onClick,
 	onFunctionSelected,
 	resultSelected,
 }) {
@@ -52,7 +94,7 @@ function CalculatorButtonArea({
 					className="border-top-left calculator-button"
 					displayType="secondary"
 					onClick={() =>
-						onCalculatorInput({
+						onClick({
 							tokenType: TOKEN_TYPES.BACKSPACE,
 							tokenValue: 'backspace',
 						})
@@ -67,7 +109,7 @@ function CalculatorButtonArea({
 					displayType="secondary"
 					monospaced
 					onClick={() =>
-						onCalculatorInput({
+						onClick({
 							tokenType: TOKEN_TYPES.PARENTHESIS_LEFT,
 							tokenValue: '(',
 						})
@@ -84,7 +126,7 @@ function CalculatorButtonArea({
 					displayType="secondary"
 					monospaced
 					onClick={() =>
-						onCalculatorInput({
+						onClick({
 							tokenType: TOKEN_TYPES.PARENTHESIS_RIGHT,
 							tokenValue: ')',
 						})
@@ -102,7 +144,7 @@ function CalculatorButtonArea({
 						key={value}
 						monospaced
 						onClick={() =>
-							onCalculatorInput({
+							onClick({
 								tokenType: TOKEN_TYPES.LITERAL,
 								tokenValue: value,
 							})
@@ -118,7 +160,7 @@ function CalculatorButtonArea({
 					displayType="secondary"
 					monospaced
 					onClick={() =>
-						onCalculatorInput({
+						onClick({
 							tokenType: TOKEN_TYPES.LITERAL,
 							tokenValue: '0',
 						})
@@ -133,7 +175,7 @@ function CalculatorButtonArea({
 					displayType="secondary"
 					monospaced
 					onClick={() =>
-						onCalculatorInput({
+						onClick({
 							tokenType: TOKEN_TYPES.LITERAL,
 							tokenValue: '.',
 						})
@@ -160,66 +202,24 @@ function CalculatorButtonArea({
 							/>
 						}
 					/>
-					<ClayButton
-						aria-label={OPERATORS.ADD.label}
-						className="calculator-button"
-						disabled={disableOperators}
-						displayType="secondary"
-						monospaced
-						onClick={() =>
-							onCalculatorInput({
-								tokenType: TOKEN_TYPES.OPERATOR,
-								tokenValue: OPERATORS.ADD.value,
-							})
-						}
-					>
-						{OPERATORS.ADD.value}
-					</ClayButton>
-					<ClayButton
-						aria-label={OPERATORS.SUBTRACT.label}
-						className="calculator-button"
-						disabled={disableOperators}
-						displayType="secondary"
-						monospaced
-						onClick={() =>
-							onCalculatorInput({
-								tokenType: TOKEN_TYPES.OPERATOR,
-								tokenValue: OPERATORS.SUBTRACT.value,
-							})
-						}
-					>
-						{OPERATORS.SUBTRACT.value}
-					</ClayButton>
-					<ClayButton
-						aria-label={OPERATORS.MULTIPLY.label}
-						className="calculator-button"
-						disabled={disableOperators}
-						displayType="secondary"
-						monospaced
-						onClick={() =>
-							onCalculatorInput({
-								tokenType: TOKEN_TYPES.OPERATOR,
-								tokenValue: OPERATORS.MULTIPLY.value,
-							})
-						}
-					>
-						{OPERATORS.MULTIPLY.value}
-					</ClayButton>
-					<ClayButton
-						aria-label={OPERATORS.DIVIDE.label}
-						className="border-bottom-left border-bottom-right calculator-button"
-						disabled={disableOperators}
-						displayType="secondary"
-						monospaced
-						onClick={() =>
-							onCalculatorInput({
-								tokenType: TOKEN_TYPES.OPERATOR,
-								tokenValue: OPERATORS.DIVIDE.value,
-							})
-						}
-					>
-						{OPERATORS.DIVIDE.value}
-					</ClayButton>
+					{OPERATORS.map(({label, value}) => (
+						<ClayButton
+							aria-label={label}
+							className="calculator-button"
+							disabled={disableOperators}
+							displayType="secondary"
+							key={label}
+							monospaced
+							onClick={() =>
+								onClick({
+									tokenType: TOKEN_TYPES.OPERATOR,
+									tokenValue: value,
+								})
+							}
+						>
+							{value}
+						</ClayButton>
+					))}
 				</div>
 			</div>
 		</div>

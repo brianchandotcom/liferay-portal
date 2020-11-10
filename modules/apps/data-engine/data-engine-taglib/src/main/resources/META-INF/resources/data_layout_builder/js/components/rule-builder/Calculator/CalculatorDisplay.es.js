@@ -20,7 +20,7 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
-function CalculatorDisplay({expression, placeholder}) {
+function CalculatorDisplay({expression}) {
 	const {resource: fieldTypes} = useFieldTypesResource();
 
 	return (
@@ -30,7 +30,9 @@ function CalculatorDisplay({expression, placeholder}) {
 					field={{
 						displayStyle: 'multiline',
 						name: 'calculator-expression',
-						placeholder,
+						placeholder: Liferay.Language.get(
+							'the-expression-will-be-displayed-here'
+						),
 						readOnly: true,
 						showLabel: false,
 						type: 'text',

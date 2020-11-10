@@ -13,14 +13,13 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import {Token, Tokenizer} from 'dynamic-data-mapping-form-builder';
-import {useStateSafe} from 'frontend-js-react-web';
-import React, {forwardRef, useCallback, useEffect, useMemo} from 'react';
+import React, {forwardRef, useCallback, useMemo, useState} from 'react';
 
 import CalculatorButtonArea from './CalculatorButtonArea.es';
 import CalculatorDisplay from './CalculatorDisplay.es';
-import Dropdown from './Dropdown.es';
 
 function getRepeatableFields(fields) {
 	return fields.filter(({repeatable}) => repeatable === true);
@@ -123,20 +122,16 @@ function removeTokenFromExpression({expression}) {
 const Calculator = forwardRef(
 	(
 		{
-			expression: initialExpression = '',
-			fields = [],
-			functions = [],
-			index = 0,
-			onEditExpression = () => {},
-			repeatableFields = getRepeatableFields(fields),
+			expression: initialExpression,
+			fields,
+			functions,
+			index,
+			onEditExpression,
 			resultSelected,
-			placeholder = Liferay.Language.get(
-				'the-expression-will-be-displayed-here'
-			),
 		},
 		ref
 	) => {
-		const [expression, setExpression] = useStateSafe(initialExpression);
+		const [expression, setExpression] = useState(initialExpression);
 
 		const {
 			disableDot,
@@ -146,29 +141,29 @@ const Calculator = forwardRef(
 			showOnlyRepeatableFields,
 		} = useMemo(() => getStateBasedOnExpression(expression), [expression]);
 
+		const repeatableFields = useMemo(() => getRepeatableFields(fields), [
+			fields,
+		]);
+
 		const dropdownItems = showOnlyRepeatableFields
 			? repeatableFields
 			: fields;
 
 		const updateExpression = useCallback(
 			({index, newExpression}) => {
-				setExpression(newExpression);
+				const newMaskedExpression = newExpression.replace(/[[\]]/g, '');
+
+				setExpression(newMaskedExpression);
 
 				onEditExpression({
 					index,
-					newExpression,
+					newMaskedExpression,
 				});
 			},
 			[onEditExpression, setExpression]
 		);
 
-		useEffect(() => {
-			const newExpression = expression.replace(/[[\]]/g, '');
-
-			updateExpression({index, newExpression});
-		}, [expression, index, updateExpression]);
-
-		const handleCalculatorInput = ({tokenType, tokenValue}) => {
+		const handleButtonClick = ({tokenType, tokenValue}) => {
 			if (tokenValue === 'backspace') {
 				const newExpression = removeTokenFromExpression({expression});
 
@@ -200,7 +195,7 @@ const Calculator = forwardRef(
 			updateExpression({index, newExpression});
 		};
 
-		const handleFieldSelected = ({item: {fieldName}}) => {
+		const handleFieldSelected = ({fieldName}) => {
 			const newExpression = addTokenToExpression({
 				expression,
 				tokenType: Token.VARIABLE,
@@ -219,12 +214,13 @@ const Calculator = forwardRef(
 							md={3}
 						>
 							<div className="liferay-ddm-form-builder-calculator">
-								<Dropdown
+								<ClayDropDownWithItems
 									className="calculator-add-field-button-container"
-									items={dropdownItems}
-									onItemSelected={(item) =>
-										handleFieldSelected(item)
-									}
+									items={dropdownItems.map((item) => ({
+										...item,
+										onClick: () =>
+											handleFieldSelected(item),
+									}))}
 									trigger={
 										<ClayButton
 											className="btn-lg calculator-add-field-button ddm-button"
@@ -240,7 +236,7 @@ const Calculator = forwardRef(
 									disableNumbers={disableNumbers}
 									disableOperators={disableOperators}
 									functions={functions}
-									onCalculatorInput={handleCalculatorInput}
+									onClick={handleButtonClick}
 									onFunctionSelected={handleFunctionSelected}
 									resultSelected={resultSelected}
 								/>
@@ -250,10 +246,7 @@ const Calculator = forwardRef(
 							className="calculate-container-fields"
 							md="9"
 						>
-							<CalculatorDisplay
-								expression={expression}
-								placeholder={placeholder}
-							/>
+							<CalculatorDisplay expression={expression} />
 						</ClayLayout.Col>
 					</div>
 				</ClayLayout.Col>

@@ -239,9 +239,7 @@ const Renderer = ({
 						<span className="c-mr-1 reference-mark">
 							<ClayIcon symbol="asterisk" />
 						</span>
-						{Liferay.Language.get(
-							'fields-required-icon-description'
-						)}
+						{Liferay.Language.get('indicates-required-fields')}
 					</p>
 				)}
 				<Layout

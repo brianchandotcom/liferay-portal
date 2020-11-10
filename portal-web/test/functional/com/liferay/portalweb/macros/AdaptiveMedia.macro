@@ -31,13 +31,17 @@ definition {
 			PortletEntry.inputDescription(description = "${description}");
 		}
 
-		Type(
-			locator1 = "TextInput#MAX_WIDTH",
-			value1 = "${maxWidth}");
+		if (isSet(maxWidth)) {
+			Type(
+				locator1 = "TextInput#MAX_WIDTH",
+				value1 = "${maxWidth}");
+		}
 
-		Type(
-			locator1 = "TextInput#MAX_HEIGHT",
-			value1 = "${maxHeight}");
+		if (isSet(maxHeight)) {
+			Type(
+				locator1 = "TextInput#MAX_HEIGHT",
+				value1 = "${maxHeight}");
+		}
 
 		if (isSet(addHighDensityDisplay)) {
 			Check(locator1 = "Checkbox#ADD_HIGH_DENSITY_DISPLAY");

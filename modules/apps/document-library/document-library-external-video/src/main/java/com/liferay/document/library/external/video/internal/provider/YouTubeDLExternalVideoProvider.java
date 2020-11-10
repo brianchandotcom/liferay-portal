@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.HttpURLConnection;
 
@@ -65,12 +66,14 @@ public class YouTubeDLExternalVideoProvider
 
 			Http.Response response = options.getResponse();
 
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				return null;
-			}
+			final JSONObject jsonObject;
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				responseJSON);
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				jsonObject = JSONFactoryUtil.createJSONObject();
+			}
+			else {
+				jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+			}
 
 			return new DLExternalVideo() {
 
@@ -81,7 +84,8 @@ public class YouTubeDLExternalVideoProvider
 
 				@Override
 				public String getEmbeddableHTML() {
-					return jsonObject.getString("html");
+					return StringUtil.replace(
+						getTpl(), "{embedId}", matcher.group(1));
 				}
 
 				@Override

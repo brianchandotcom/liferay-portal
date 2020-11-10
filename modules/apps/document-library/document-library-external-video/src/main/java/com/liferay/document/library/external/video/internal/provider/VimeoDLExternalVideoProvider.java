@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
 
@@ -51,7 +53,9 @@ public class VimeoDLExternalVideoProvider
 
 	@Override
 	public DLExternalVideo getDLExternalVideo(String url) {
-		if (!_matches(url)) {
+		String vimeoVideoId = _getVimeoVideoId(url);
+
+		if (Validator.isNull(vimeoVideoId)) {
 			return null;
 		}
 
@@ -65,12 +69,14 @@ public class VimeoDLExternalVideoProvider
 
 			Http.Response response = options.getResponse();
 
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				return null;
-			}
+			final JSONObject jsonObject;
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				responseJSON);
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				jsonObject = JSONFactoryUtil.createJSONObject();
+			}
+			else {
+				jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+			}
 
 			return new DLExternalVideo() {
 
@@ -81,7 +87,8 @@ public class VimeoDLExternalVideoProvider
 
 				@Override
 				public String getEmbeddableHTML() {
-					return jsonObject.getString("html");
+					return StringUtil.replace(
+						getTpl(), "{embedId}", vimeoVideoId);
 				}
 
 				@Override
@@ -134,16 +141,16 @@ public class VimeoDLExternalVideoProvider
 		);
 	}
 
-	private boolean _matches(String url) {
+	private String _getVimeoVideoId(String url) {
 		for (Pattern urlPattern : _urlPatterns) {
 			Matcher matcher = urlPattern.matcher(url);
 
 			if (matcher.matches()) {
-				return true;
+				return matcher.group(1);
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

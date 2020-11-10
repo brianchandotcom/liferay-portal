@@ -23,89 +23,11 @@ body {
 #wrapper {
 	margin: auto;
 	min-width: 0;
-	width: 960px;
-}
-
-#banner {
-	min-height: 100px;
-}
-
-#banner:after {
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	visibility: hidden;
-}
-
-#header-content {
-	margin: 0 auto;
-	text-align: left;
-	width: 760px;
-}
-
-#footer {
-	clear: both;
-	padding-top: 2em;
-}
-
-h2, h3 {
-	color: #333;
-	font-size: 2em;
-	font-weight: bold;
-	margin: 0;
-}
-
-h3 {
-	font-size: 1.6em;
-	line-height: 1;
-	margin-bottom: 0.2em;
 }
 
 .loading-results {
 	background: url(<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif) no-repeat 50%;
 	min-height: 2em;
-}
-
-.lfr-api-navigation-content {
-	padding: 0;
-}
-
-.lfr-api-navigation .lfr-panel-titlebar {
-	margin-bottom: 0;
-}
-
-.lfr-api-navigation .lfr-panel-title {
-	padding-left: 5px;
-	text-shadow: #FFF 1px 1px;
-}
-
-.lfr-api-navigation .lfr-panel-titlebar .lfr-panel-button {
-	display: none;
-}
-
-.lfr-api-navigation .lfr-panel-content {
-	background-color: #FFF;
-	padding: 5px 0;
-}
-
-.lfr-api-navigation .lfr-panel-content li a {
-	display: block;
-	padding: 3px 15px;
-}
-
-.lfr-api-navigation .lfr-panel-content li a:hover {
-	background-color: #EBF0F5;
-}
-
-.lfr-api-navigation .lfr-panel-content li.selected a {
-	background-color: #5B677D;
-	color: #FFF;
-	text-decoration: none;
-}
-
-.lfr-api-details-content {
-	padding-left: 25px;
 }
 
 .lfr-action-label {
@@ -155,10 +77,6 @@ h3 {
 	background-image: url(<%= themeDisplay.getPathThemeImages() %>/api/execute.png);
 }
 
-.lfr-api-section {
-	margin-bottom: 1.5em;
-}
-
 .lfr-api-method .lfr-api-param-name {
 	color: #333;
 }
@@ -171,38 +89,8 @@ h3 {
 	color: #B00;
 }
 
-.lfr-api-http-method {
-	font-size: 1.1em;
-	font-weight: normal;
-	margin: 0;
-	position: absolute;
-	right: 0;
-	top: -1.5em;
-}
-
-.lfr-api-http-method dt, .lfr-api-http-method dd {
-	display: inline-block;
-	margin-right: 0.5em;
-	vertical-align: middle;
-}
-
-.lfr-api-http-method dt {
-	color: #555;
-}
-
-.lfr-api-http-method dd {
-	background-color: #0A0;
-	font-size: 0.7em;
-	font-weight: bold;
-}
-
-.lfr-api-param {
-	padding: 0.5em 0;
-}
-
 .lfr-api-param-comment {
 	color: #444;
-	margin: 0 0 1em;
 }
 
 .lfr-api-param-name {
@@ -216,22 +104,9 @@ h3 {
 	color: #999;
 }
 
-.lfr-api-context .field-element, .lfr-api-context .field-content {
-	width: 100%;
-}
-
-.lfr-api-service-search .field-content {
-	margin-top: 2px;
-}
-
 .no-matches {
 	color: #999;
 	padding: 1em 0;
-}
-
-.yui3-highlight {
-	background-color: #C1D8F4;
-	font-weight: bold;
 }
 
 .lfr-api-results {
@@ -244,11 +119,6 @@ h3 {
 	height: 200px;
 	overflow: auto;
 	padding: 0 0.5em 1em;
-}
-
-.field-content, .field-inline .field-content {
-	margin-bottom: 10px;
-	margin-top: 5px;
 }
 
 .suffix {

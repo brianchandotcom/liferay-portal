@@ -34,6 +34,71 @@ definition {
 		}
 	}
 
+	@description = "This test adds five suborganizations to an organization"
+	@priority = "5"
+	test AddMultipleSuborganizations {
+		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AddMultipleSuborganizations";
+		property testray.component.names = "Training";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name 1",
+			orgType = "Organization");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		var count = "1";
+
+		while ("${count}" != "5") {
+			JSONOrganization.addOrganization(
+				organizationName = "Suborganization Name ${count}",
+				parentOrganizationName = "Organization Name 1");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UsersAndOrganizationsNavigator.gotoOrganizations();
+
+			Organization.viewParentOrganizationCP(
+				orgName = "Suborganization Name ${count}",
+				parentOrgName = "Organization Name 1",
+				subOrgName = "Suborganization Name ${count}");
+
+			var count = ${count} + 1;
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Suborganization Name 1",
+			searchTerm = "Suborganization");
+
+		Organization.searchCP(
+			orgName = "Suborganization Name 2",
+			searchTerm = "Suborganization");
+	}
+
 	@priority = "3"
 	test AddOrganizationName50Characters {
 		ApplicationsMenu.gotoPortlet(

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {globalEval} from 'metal-dom';
+import {runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -37,7 +37,7 @@ const Captcha = ({html, name, ...otherProps}) => {
 
 	useEffect(() => {
 		if (elRef.current) {
-			globalEval.runScriptsInElement(elRef.current);
+			runScriptsInElement(elRef.current);
 		}
 	}, [elRef]);
 

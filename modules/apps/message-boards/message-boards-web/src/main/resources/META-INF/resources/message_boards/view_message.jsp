@@ -62,7 +62,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 	</div>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as domAll">
+<aui:script require="frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
 	window['<portlet:namespace />addReplyToMessage'] = function (messageId, quote) {
 		var addQuickReplyContainer = document.querySelector(
 			'#<portlet:namespace />addReplyToMessage' + messageId + ' .panel'
@@ -101,7 +101,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 				.then(function (response) {
 					addQuickReplyContainer.innerHTML = response;
 
-					domAll.globalEval.runScriptsInElement(addQuickReplyContainer);
+					runScriptsInElement.default(addQuickReplyContainer);
 
 					addQuickReplyContainer.classList.remove('hide');
 					addQuickReplyLoadingMask.classList.add('hide');

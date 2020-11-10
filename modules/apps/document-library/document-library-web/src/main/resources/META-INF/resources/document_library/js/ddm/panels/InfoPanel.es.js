@@ -14,8 +14,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
-import {globalEval} from 'metal-dom';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 export default function InfoPanel({title, url}) {
@@ -64,7 +63,7 @@ class InfoPanelBody extends React.Component {
 
 	componentDidMount() {
 		if (this._ref.current) {
-			globalEval.runScriptsInElement(this._ref.current);
+			runScriptsInElement(this._ref.current);
 
 			this._ref.current.addEventListener('change', this._handleOnChange);
 		}

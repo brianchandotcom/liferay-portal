@@ -12,9 +12,8 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
 import Component from 'metal-component';
-import {globalEval} from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -55,7 +54,7 @@ class CPOptionValueDetail extends Component {
 			.then((text) => {
 				optionValueDetail.innerHTML = text;
 
-				globalEval.runScriptsInElement(optionValueDetail);
+				runScriptsInElement(optionValueDetail);
 
 				var name = optionValueDetail.querySelector(
 					'#' + instance.namespace + 'optionValueName'

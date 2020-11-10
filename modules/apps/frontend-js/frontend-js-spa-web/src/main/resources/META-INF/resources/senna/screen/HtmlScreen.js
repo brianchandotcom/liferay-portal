@@ -12,7 +12,7 @@
  * details.
  */
 
-import {buildFragment, globalEval, globalEvalStyles, match} from 'metal-dom';
+import {buildFragment, globalEvalStyles, match} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
@@ -154,7 +154,7 @@ class HtmlScreen extends RequestScreen {
 	 */
 	evaluateScripts(surfaces) {
 		var evaluateTrackedScripts = this.evaluateTrackedResources_(
-			globalEval.runScriptsInElement,
+			runScriptsInElement,
 			HtmlScreen.selectors.scripts,
 			HtmlScreen.selectors.scriptsTemporary,
 			HtmlScreen.selectors.scriptsPermanent

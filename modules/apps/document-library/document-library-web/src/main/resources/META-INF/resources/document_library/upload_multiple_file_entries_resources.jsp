@@ -216,7 +216,7 @@ else {
 					}
 					%>
 
-					<aui:script position="inline" require="metal-dom/src/all/dom as dom">
+					<aui:script position="inline" require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
 						var documentTypeMenuList = document.querySelector(
 							'#<portlet:namespace />documentTypeSelector .lfr-menu-list'
 						);
@@ -237,9 +237,7 @@ else {
 										if (commonFileMetadataContainer) {
 											commonFileMetadataContainer.innerHTML = response;
 
-											dom.globalEval.runScriptsInElement(
-												commonFileMetadataContainer
-											);
+											runScriptsInElement.default(commonFileMetadataContainer);
 										}
 
 										var fileNodes = document.querySelectorAll(

@@ -12,7 +12,10 @@
  * details.
  */
 
-import {globalEval} from 'metal-dom';
+'use strict';
+
+import {runScriptsInElement} from 'frontend-js-web';
+import {getUid} from 'metal';
 import CancellablePromise from 'metal-promise';
 
 import Cacheable from '../cacheable/Cacheable';
@@ -129,7 +132,7 @@ class Screen extends Cacheable {
 	evaluateScripts(surfaces) {
 		Object.keys(surfaces).forEach((sId) => {
 			if (surfaces[sId].activeChild) {
-				globalEval.runScriptsInElement(surfaces[sId].activeChild);
+				runScriptsInElement(surfaces[sId].activeChild);
 			}
 		});
 

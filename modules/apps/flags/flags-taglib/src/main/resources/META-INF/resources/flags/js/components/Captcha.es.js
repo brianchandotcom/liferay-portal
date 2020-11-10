@@ -12,8 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
-import {globalEval} from 'metal-dom';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
@@ -30,7 +29,7 @@ function Captcha({uri}) {
 	useLayoutEffect(() => {
 		if (html) {
 			ref.current.innerHTML = html;
-			globalEval.runScriptsInElement(ref.current);
+			runScriptsInElement(ref.current);
 		}
 	}, [html]);
 

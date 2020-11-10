@@ -52,10 +52,11 @@ export default function FieldSets({keywords}) {
 		if (fieldSet) {
 			const {context} = appProps;
 			const {defaultDataLayout, id: dataDefinitionId} = fieldSet;
-			const ddmForm = dataLayoutBuilder.getDDMForm(
+			const ddmForm = dataLayoutBuilder.getFieldSetDDMForm(
 				fieldSet,
-				defaultDataLayout
+				dataDefinition
 			);
+
 			const [{rows}] = ddmForm.pages;
 
 			delete ddmForm.pages;

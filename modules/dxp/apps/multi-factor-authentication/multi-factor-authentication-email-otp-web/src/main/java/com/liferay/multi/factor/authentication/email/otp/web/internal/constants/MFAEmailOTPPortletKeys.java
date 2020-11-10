@@ -19,7 +19,7 @@ package com.liferay.multi.factor.authentication.email.otp.web.internal.constants
  */
 public class MFAEmailOTPPortletKeys {
 
-	public static final String MFA_EMAIL_OTP_VERIFY_PORTLET =
+	public static final String MFA_EMAIL_OTP_VERIFY =
 		"com_liferay_multi_factor_authentication_portlet_web_internal_" +
 			"portlet_MFAEmailOTPVerifyPortlet";
 

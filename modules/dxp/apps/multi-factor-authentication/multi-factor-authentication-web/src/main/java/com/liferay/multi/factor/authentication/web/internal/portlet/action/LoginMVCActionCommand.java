@@ -195,7 +195,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			httpServletRequest, MFAPortletKeys.VERIFY, plid,
+			httpServletRequest, MFAPortletKeys.MFA_VERIFY, plid,
 			PortletRequest.RENDER_PHASE);
 
 		liferayPortletURL.setParameter(

@@ -44,9 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.mvc-command-names-default-views=/mfa_email_otp_verify/verify",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/mfa_email_otp_verify/",
-		"javax.portlet.name=" + MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY_PORTLET,
+		"javax.portlet.name=" + MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY,
 		"javax.portlet.resource-bundle=content.Language",
-		"portlet.add.default.resource.check.whitelist=" + MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY_PORTLET
+		"portlet.add.default.resource.check.whitelist=" + MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY
 	},
 	service = Portlet.class
 )
@@ -56,7 +56,7 @@ public class MFAEmailOTPVerifyPortlet extends MVCPortlet {
 	protected void activate(BundleContext bundleContext) {
 		PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST = ArrayUtil.append(
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
-			MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY_PORTLET);
+			MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY);
 
 		_interruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();
@@ -66,7 +66,7 @@ public class MFAEmailOTPVerifyPortlet extends MVCPortlet {
 	protected void deactivate() {
 		PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST = ArrayUtil.remove(
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
-			MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY_PORTLET);
+			MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY);
 
 		_interruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();

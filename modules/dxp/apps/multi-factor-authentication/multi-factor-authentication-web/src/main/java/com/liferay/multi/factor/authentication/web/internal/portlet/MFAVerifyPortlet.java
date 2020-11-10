@@ -44,9 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.mvc-command-names-default-views=/mfa_verify/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/mfa_verify/",
-		"javax.portlet.name=" + MFAPortletKeys.VERIFY,
+		"javax.portlet.name=" + MFAPortletKeys.MFA_VERIFY,
 		"javax.portlet.resource-bundle=content.Language",
-		"portlet.add.default.resource.check.whitelist=" + MFAPortletKeys.VERIFY
+		"portlet.add.default.resource.check.whitelist=" + MFAPortletKeys.MFA_VERIFY
 	},
 	service = Portlet.class
 )
@@ -56,7 +56,7 @@ public class MFAVerifyPortlet extends MVCPortlet {
 	protected void activate(BundleContext bundleContext) {
 		PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST = ArrayUtil.append(
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
-			MFAPortletKeys.VERIFY);
+			MFAPortletKeys.MFA_VERIFY);
 
 		_interruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();
@@ -66,7 +66,7 @@ public class MFAVerifyPortlet extends MVCPortlet {
 	protected void deactivate() {
 		PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST = ArrayUtil.remove(
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
-			MFAPortletKeys.VERIFY);
+			MFAPortletKeys.MFA_VERIFY);
 
 		_interruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();

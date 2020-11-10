@@ -479,7 +479,7 @@ definition {
 
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType1}");
 
 		for (var number : list "1,2,3") {
 			FormViewBuilder.editOptionsRow(

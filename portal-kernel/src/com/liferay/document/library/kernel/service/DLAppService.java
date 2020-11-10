@@ -743,6 +743,11 @@ public interface DLAppService extends BaseService {
 	public FileEntry getFileEntry(long groupId, long folderId, String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException;
+
 	/**
 	 * Returns the file entry with the UUID and group.
 	 *

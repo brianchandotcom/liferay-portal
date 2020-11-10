@@ -978,6 +978,25 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
+			getFileEntryByFileName(long groupId, long folderId, String fileName)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.repository.model.FileEntry returnValue =
+				DLAppServiceUtil.getFileEntryByFileName(
+					groupId, folderId, fileName);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Returns the file entry with the UUID and group.
 	 *

@@ -490,6 +490,25 @@ public class DLFileEntryServiceSoap {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntrySoap
+			getFileEntryByFileName(long groupId, long folderId, String fileName)
+		throws RemoteException {
+
+		try {
+			com.liferay.document.library.kernel.model.DLFileEntry returnValue =
+				DLFileEntryServiceUtil.getFileEntryByFileName(
+					groupId, folderId, fileName);
+
+			return com.liferay.document.library.kernel.model.DLFileEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntrySoap
 			getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws RemoteException {
 

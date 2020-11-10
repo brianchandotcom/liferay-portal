@@ -898,6 +898,15 @@ public class DLAppServiceWrapper
 		return _dlAppService.getFileEntry(groupId, folderId, title);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getFileEntryByFileName(long groupId, long folderId, String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.getFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
 	/**
 	 * Returns the file entry with the UUID and group.
 	 *

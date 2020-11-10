@@ -261,6 +261,13 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry
+			getFileEntryByFileName(long groupId, long folderId, String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFileEntryByFileName(groupId, folderId, fileName);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntry
 			getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

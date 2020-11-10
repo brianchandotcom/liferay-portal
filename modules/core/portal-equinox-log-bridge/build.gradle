@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-9"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-10"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileOnly project(":core:petra:petra-string")
 }

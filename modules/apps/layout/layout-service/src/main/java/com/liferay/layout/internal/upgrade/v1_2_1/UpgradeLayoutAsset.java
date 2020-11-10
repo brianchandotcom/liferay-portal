@@ -16,12 +16,11 @@ package com.liferay.layout.internal.upgrade.v1_2_1;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.util.List;
 
 /**
  * @author István András Dézsi
@@ -40,23 +39,24 @@ public class UpgradeLayoutAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long[] assetCategoryIds = new long[0];
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
 
-		String[] assetTagNames = new String[0];
+		actionableDynamicQuery.setPerformActionMethod(
+			(Layout layout) -> _updateAsset(layout));
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		actionableDynamicQuery.performActions();
+	}
 
-		for (Layout layout : layouts) {
-			assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-				Layout.class.getName(), layout.getPlid());
+	private void _updateAsset(Layout layout) throws PortalException {
+		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
+			Layout.class.getName(), layout.getPlid());
 
-			assetTagNames = _assetTagLocalService.getTagNames(
-				Layout.class.getName(), layout.getPlid());
+		String[] assetTagNames = _assetTagLocalService.getTagNames(
+			Layout.class.getName(), layout.getPlid());
 
-			_layoutLocalService.updateAsset(
-				layout.getUserId(), layout, assetCategoryIds, assetTagNames);
-		}
+		_layoutLocalService.updateAsset(
+			layout.getUserId(), layout, assetCategoryIds, assetTagNames);
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;

@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
+	property portal.upstream = "true";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -52,6 +52,7 @@ definition {
 
 	test AssertGuestCartIsTransferredToAccount {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartIsTransferredToAccount";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -151,6 +152,7 @@ definition {
 
 	test AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartItemIsNotTransferredIfSkuIsAlreadyPresent";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -280,6 +282,7 @@ definition {
 
 	test AssertGuestCartItemIsTransferredToExistingCart {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCartItemIsTransferredToExistingCart";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -409,6 +412,7 @@ definition {
 
 	test AssertGuestCheckoutAuthenticationPage {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestCheckoutAuthenticationPage";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -460,6 +464,7 @@ definition {
 
 	test AssertGuestsWithSameEmailHaveDifferentAccounts {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertGuestsWithSameEmailHaveDifferentAccounts";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -580,6 +585,7 @@ definition {
 
 	test AssertNewAccountIsCreatedAfterGuestCheckout {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#AssertNewAccountIsCreatedAfterGuestCheckout";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -657,6 +663,7 @@ definition {
 
 	test GuestAccountIsNotCombinedWithExistingUserAccount {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestAccountIsNotCombinedWithExistingUserAccount";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -821,6 +828,7 @@ definition {
 
 	test GuestCheckoutDisabled {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutDisabled";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -926,6 +934,7 @@ definition {
 
 	test GuestCheckoutEnabled {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutEnabled";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -1045,6 +1054,7 @@ definition {
 
 	test GuestCheckoutWithNoShippableProduct {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithNoShippableProduct";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -1123,6 +1133,7 @@ definition {
 
 	test GuestCheckoutWithShippableProduct {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutWithShippableProduct";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -1185,6 +1196,7 @@ definition {
 
 	test UserAccountIsNotCombinedWithExistingGuestAccount {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#UserAccountIsNotCombinedWithExistingGuestAccount";
 
 		ApplicationsMenu.gotoPortlet(

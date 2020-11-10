@@ -53,6 +53,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-114283. Can select an image resolution manually in the desktop viewport."
+	@priority = "5"
+	test SelectImageResolutionManuallyInTheDesktopViewport {
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Select an Image with width greater than 2000px") {
+			PageEditor.editFragmentImage(
+				fileName = "high_resolution_photo.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "Responsive Image",
+				imageFileName = "high_resolution_photo.jpg");
+
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.clickEditableField(
+				fragmentName = "Image",
+				id = "image-square");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Take down the File Size of image resolution") {
+			var fileSizeAuto = PageEditor.getFileSizeOfSelectedImageResolution();
+		}
+
+		task ("Select the Preview-1000x0 image resolution") {
+			Select(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Preview-1000x0");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Preview-1000x0");
+		}
+
+		task ("Take down the Width and File Size of image resolution") {
+			var widthManual = PageEditor.getWidthOfSelectedImageResolution();
+			var fileSizeManual = PageEditor.getFileSizeOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width and File Size of image resolution equal with orignal image") {
+			TestUtils.assertEquals(
+				actual = "${widthManual}",
+				expected = "1000");
+		}
+
+		task ("Assert the File Size become smaller than automatic selection") {
+			TestUtils.isGreaterThan(
+				actual = "${fileSizeAuto}",
+				expected = "${fileSizeManual}");
+		}
+	}
+
 	@description = "This is a test for LPS-113806. View auto image resolution when image resolution is greater than original image and original image is greater than viewport."
 	@priority = "4"
 	test ViewAutoImageResolutionWhenImageResolutionIsGreaterThanOriginalImageAndOriginalImageIsGreaterThanViewport {

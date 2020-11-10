@@ -12,7 +12,7 @@
  * details.
  */
 
-function runJSFromText(text) {
+function runJSFromText(text, next = () => {}) {
 	const scriptElement = document.createElement('script');
 
 	scriptElement.text = text;
@@ -21,16 +21,20 @@ function runJSFromText(text) {
 
 	scriptElement.remove();
 
+	next();
+
 	return scriptElement;
 }
 
-function runJSFromFile(src) {
+function runJSFromFile(src, next = () => {}) {
 	const scriptElement = document.createElement('script');
 
 	scriptElement.src = src;
 
 	const callback = function () {
 		scriptElement.remove();
+
+		next();
 	};
 
 	scriptElement.addEventListener('load', callback);
@@ -41,17 +45,29 @@ function runJSFromFile(src) {
 	return scriptElement;
 }
 
-function runScript(scriptElement) {
-	if (scriptElement.type && scriptElement.type !== 'text/javascript') {
+function runScriptsInOrder(scripts, i) {
+	const scriptElement = scripts[i];
+
+	if (
+		!scriptElement ||
+		(scriptElement.type && scriptElement.type !== 'text/javascript')
+	) {
 		return;
 	}
+
+	const runNextScript = () => {
+		if (i < scripts.length - 1) {
+			runScriptsInOrder(scripts, i + 1);
+		}
+	};
 
 	scriptElement.remove();
 
 	if (scriptElement.src) {
-		return runJSFromFile(scriptElement.src);
-	} else {
-		return runJSFromText(scriptElement.text);
+		return runJSFromFile(scriptElement.src, runNextScript);
+	}
+	else {
+		return runJSFromText(scriptElement.text, runNextScript);
 	}
 }
 
@@ -62,9 +78,5 @@ export default function (element) {
 		return;
 	}
 
-	for (let index = 0; index < scripts.length; index++) {
-		const scriptElement = scripts[index];
-
-		runScript(scriptElement);
-	}
+	runScriptsInOrder(scripts, 0);
 }

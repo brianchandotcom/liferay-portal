@@ -166,13 +166,13 @@ const Renderer = ({
 	pageIndex = 0,
 	pages,
 	paginationMode,
+	portletNamespace,
 	readOnly,
 	showSubmitButton,
 	strings,
 	submitLabel,
 	view,
 	viewMode,
-	portletNamespace,
 }) => {
 	const empty = isEmptyPage(defaultPage);
 	const page = normalizePage(defaultPage, editingLanguageId);

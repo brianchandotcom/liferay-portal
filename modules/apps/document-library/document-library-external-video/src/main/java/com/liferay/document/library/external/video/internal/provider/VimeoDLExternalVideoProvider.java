@@ -15,6 +15,9 @@
 package com.liferay.document.library.external.video.internal.provider;
 
 import com.liferay.document.library.external.video.internal.DLExternalVideo;
+import com.liferay.frontend.editor.embed.EditorEmbedProvider;
+import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 
@@ -37,8 +41,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = DLExternalVideoProvider.class)
-public class VimeoDLExternalVideoProvider implements DLExternalVideoProvider {
+@Component(
+	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO,
+	service = {DLExternalVideoProvider.class, EditorEmbedProvider.class}
+)
+public class VimeoDLExternalVideoProvider
+	implements DLExternalVideoProvider, EditorEmbedProvider {
 
 	@Override
 	public DLExternalVideo getDLExternalVideo(String url) {
@@ -100,6 +108,31 @@ public class VimeoDLExternalVideoProvider implements DLExternalVideoProvider {
 		}
 	}
 
+	@Override
+	public String getId() {
+		return "vimeo";
+	}
+
+	@Override
+	public String getTpl() {
+		return StringBundler.concat(
+			"<iframe allowfullscreen frameborder=\"0\" height=\"315\" ",
+			"mozallowfullscreen ",
+			"src=\"https://player.vimeo.com/video/{embedId}\" ",
+			"webkitallowfullscreen width=\"560\"></iframe>");
+	}
+
+	@Override
+	public String[] getURLSchemes() {
+		Stream<Pattern> stream = _urlPatterns.stream();
+
+		return stream.map(
+			Pattern::pattern
+		).toArray(
+			String[]::new
+		);
+	}
+
 	private boolean _matches(String url) {
 		for (Pattern urlPattern : _urlPatterns) {
 			Matcher matcher = urlPattern.matcher(url);
@@ -117,11 +150,17 @@ public class VimeoDLExternalVideoProvider implements DLExternalVideoProvider {
 
 	private static final List<Pattern> _urlPatterns = Arrays.asList(
 		Pattern.compile(
-			"https?://(?:www\\.)?vimeo\\.com/album/.*/video/(\\S*)"),
-		Pattern.compile("https?://(?:www\\.)?vimeo\\.com/channels/.*/(\\S*)"),
+			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/album\\/.*\\/video" +
+				"\\/(\\S*)"),
 		Pattern.compile(
-			"https?://(?:www\\.)?vimeo\\.com/groups/.*/videos\\/(\\S*)"),
-		Pattern.compile("https?://(?:www\\.)?vimeo\\.com/(\\S*)$"));
+			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/showcase\\/.*\\/video" +
+				"\\/(\\S*)"),
+		Pattern.compile(
+			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/channels\\/.*\\/(\\S*)"),
+		Pattern.compile(
+			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/groups\\/.*\\/videos" +
+				"\\/(\\S*)"),
+		Pattern.compile("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/(\\S*)$"));
 
 	@Reference
 	private Http _http;

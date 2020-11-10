@@ -183,7 +183,10 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 	const axisNames = {
 		x: vocabularies[0]?.vocabularyName,
-		y: showLegend && vocabularies[0]?.categories?.[0]?.vocabularyName,
+		y:
+			showLegend &&
+			vocabularies.find(({categories}) => categories)?.categories[0]
+				.vocabularyName,
 	};
 
 	const noCheckboxesChecked = Object.keys(checkboxes).every(

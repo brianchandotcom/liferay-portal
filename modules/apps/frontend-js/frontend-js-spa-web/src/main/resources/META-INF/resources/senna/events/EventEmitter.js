@@ -16,7 +16,7 @@ import Disposable from '../Disposable';
 import utils from '../utils/utils';
 import EventHandle from './EventHandle';
 
-const singleArray_ = [0];
+const singleArray = [0];
 
 /**
  * EventEmitter utility.
@@ -245,7 +245,7 @@ class EventEmitter extends Disposable {
 			if (--amount === 0) {
 				self.removeListener(event, handlerInternal);
 			}
-			listener.apply(self, arguments); // eslint-disable-line
+			listener.apply(self, arguments);
 		}
 
 		self.addSingleListener_(event, handlerInternal, false, listener);
@@ -264,7 +264,7 @@ class EventEmitter extends Disposable {
 
 		return (
 			fn === listener ||
-			(listenerObj.origin && listenerObj.origin === listener) // eslint-disable-line
+			(listenerObj.origin && listenerObj.origin === listener)
 		);
 	}
 
@@ -299,7 +299,7 @@ class EventEmitter extends Disposable {
 	 * @return {!EventHandle} Can be used to remove the listener.
 	 */
 	on() {
-		return this.addListener.apply(this, arguments); // eslint-disable-line
+		return this.addListener.apply(this, arguments);
 	}
 
 	/**
@@ -311,7 +311,7 @@ class EventEmitter extends Disposable {
 		this.listenerHandlers_ = this.addHandler_(
 			this.listenerHandlers_,
 			handler
-		); // eslint-disable-line
+		);
 	}
 
 	/**
@@ -375,7 +375,7 @@ class EventEmitter extends Disposable {
 	 * @return {!Object} Returns emitter, so calls can be chained.
 	 */
 	removeListener() {
-		return this.off.apply(this, arguments); // eslint-disable-line
+		return this.off.apply(this, arguments);
 	}
 
 	/**
@@ -445,8 +445,8 @@ class EventEmitter extends Disposable {
 	 */
 	toEventsArray_(events) {
 		if (typeof events === 'string') {
-			singleArray_[0] = events;
-			events = singleArray_;
+			singleArray[0] = events;
+			events = singleArray;
 		}
 
 		return events;

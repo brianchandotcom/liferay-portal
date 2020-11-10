@@ -745,7 +745,7 @@ class App extends EventEmitter {
 				winner = true;
 			}
 		};
-		setTimeout(switchScrollPositionRace, 0);
+		setTimeout(switchScrollPositionRace);
 		globals.document.addEventListener(
 			'scroll',
 			switchScrollPositionRace,
@@ -1113,7 +1113,7 @@ class App extends EventEmitter {
 			// after the load event occured, but not in the same event-loop cycle.
 
 			this.skipLoadPopstate = false;
-		}, 0);
+		});
 
 		// Try to reposition scroll to the hashed anchor when page loads.
 
@@ -1359,7 +1359,7 @@ class App extends EventEmitter {
 		const routeIndex = this.routes.indexOf(route);
 
 		if (routeIndex >= 0) {
-			Array.prototype.splice.call(this.routes, routeIndex, 1);
+			this.routes.splice(routeIndex, 1);
 		}
 
 		return routeIndex >= 0;
@@ -1510,9 +1510,14 @@ class App extends EventEmitter {
 			}
 		};
 
-		return new CancellablePromise(
-			(resolve) => sync() & setTimeout(() => sync() & resolve(), 0)
-		);
+		return new CancellablePromise((resolve) => {
+			sync();
+
+			setTimeout(() => {
+				sync();
+				resolve();
+			});
+		});
 	}
 
 	/**

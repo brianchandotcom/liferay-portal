@@ -116,7 +116,7 @@ const initSPA = function () {
 			else {
 				formElement.submit();
 			}
-		}, 0);
+		});
 	};
 
 	Liferay.initComponentCache();

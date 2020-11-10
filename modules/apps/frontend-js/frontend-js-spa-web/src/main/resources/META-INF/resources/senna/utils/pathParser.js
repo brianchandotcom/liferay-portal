@@ -84,7 +84,7 @@ function escape(str) {
  * @param {string}
  */
 function makeTrailingSlashOptional(regex) {
-	if (/\/$/.test(regex)) {
+	if (regex.endsWith('/')) {
 		regex += '?';
 	}
 	else {

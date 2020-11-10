@@ -22,7 +22,7 @@ import globals from '../globals/globals';
  * @type {Number}
  * @private
  */
-let uniqueIdCounter_ = 1;
+let uniqueIdCounter = 1;
 
 /**
  * A collection of static utility functions.
@@ -86,7 +86,7 @@ class utils {
 	}
 
 	static getUid() {
-		return uniqueIdCounter_++;
+		return uniqueIdCounter++;
 	}
 
 	/**

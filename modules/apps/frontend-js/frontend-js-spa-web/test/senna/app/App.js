@@ -1676,7 +1676,7 @@ describe('App', function () {
 		setTimeout(() => {
 			expect(this.app.skipLoadPopstate).toBe(false);
 			done();
-		}, 0);
+		});
 	});
 
 	it('respects screen lifecycle on navigate', (done) => {

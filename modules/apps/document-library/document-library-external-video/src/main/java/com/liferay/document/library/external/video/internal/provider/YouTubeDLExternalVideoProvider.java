@@ -15,6 +15,9 @@
 package com.liferay.document.library.external.video.internal.provider;
 
 import com.liferay.document.library.external.video.internal.DLExternalVideo;
+import com.liferay.frontend.editor.embed.EditorEmbedProvider;
+import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -35,8 +38,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = DLExternalVideoProvider.class)
-public class YouTubeDLExternalVideoProvider implements DLExternalVideoProvider {
+@Component(
+	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO,
+	service = {DLExternalVideoProvider.class, EditorEmbedProvider.class}
+)
+public class YouTubeDLExternalVideoProvider
+	implements DLExternalVideoProvider, EditorEmbedProvider {
 
 	@Override
 	public DLExternalVideo getDLExternalVideo(String url) {
@@ -101,11 +108,30 @@ public class YouTubeDLExternalVideoProvider implements DLExternalVideoProvider {
 		}
 	}
 
+	@Override
+	public String getId() {
+		return "youtube";
+	}
+
+	@Override
+	public String getTpl() {
+		return StringBundler.concat(
+			"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
+			"height=\"315\" frameborder=\"0\" ",
+			"src=\"https://www.youtube.com/embed/{embedId}?rel=0\" ",
+			"width=\"560\"></iframe>");
+	}
+
+	@Override
+	public String[] getURLSchemes() {
+		return new String[] {_urlPattern.pattern()};
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		YouTubeDLExternalVideoProvider.class);
 
 	private static final Pattern _urlPattern = Pattern.compile(
-		"https?://(?:www\\.)?youtube.com/watch\\?v=(\\S*)$");
+		"https?:\\/\\/(?:www\\.)?youtube\\.com\\/watch\\?v=(\\S*)$");
 
 	@Reference
 	private Http _http;

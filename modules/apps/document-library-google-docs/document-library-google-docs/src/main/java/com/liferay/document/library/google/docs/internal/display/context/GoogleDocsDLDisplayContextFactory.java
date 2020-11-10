@@ -90,7 +90,7 @@ public class GoogleDocsDLDisplayContextFactory
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, httpServletRequest,
-				httpServletResponse, fileEntry);
+				httpServletResponse, fileEntry, googleDocsMetadataHelper);
 		}
 
 		return parentDLEditFileEntryDisplayContext;

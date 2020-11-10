@@ -21,6 +21,7 @@ import React, {useEffect, useState} from 'react';
 import {getItem} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import DropDownWithSearch from '../dropdown-with-search/DropDownWithSearch.es';
+import NewCustomObjectModal from './NewCustomObjectModal.es';
 
 export function getDataObjects() {
 	return getItem(
@@ -38,11 +39,13 @@ export function getDataObjects() {
 export default function SelectObjects({
 	defaultValue,
 	label,
+	onCreateObject = () => {},
 	onSelect,
 	selectedValue,
 	visible,
 }) {
 	const [items, setItems] = useState([]);
+	const [isModalVisible, setModalVisible] = useState(false);
 	const [state, setState] = useState({
 		error: null,
 		isLoading: true,
@@ -148,6 +151,7 @@ export default function SelectObjects({
 							data-tooltip-align="bottom"
 							data-tooltip-delay="0"
 							displayType="secondary"
+							onClick={() => setModalVisible(true)}
 							small
 							symbol="plus"
 							title={Liferay.Language.get('new-custom-object')}
@@ -183,6 +187,16 @@ export default function SelectObjects({
 					{ItemWithLabel}
 				</DropDownWithSearch.Items>
 			</DropDownWithSearch>
+
+			{isModalVisible && (
+				<NewCustomObjectModal
+					onCloseModal={() => setModalVisible(false)}
+					onCreateObject={(newObject) => {
+						onCreateObject(newObject);
+						doFetch();
+					}}
+				/>
+			)}
 		</>
 	);
 }

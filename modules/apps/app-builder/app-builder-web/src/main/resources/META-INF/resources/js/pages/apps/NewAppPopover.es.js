@@ -14,8 +14,9 @@
 
 import ClayButton from '@clayui/button';
 import {compile} from 'path-to-regexp';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import {AppContext} from '../../AppContext.es';
 import Popover from '../../components/popover/Popover.es';
 import SelectObjects from '../../components/select-objects/SelectObjects.es';
 import useBackUrl from '../../hooks/useBackUrl.es';
@@ -24,6 +25,7 @@ const NewAppPopover = (
 	{alignElement, editPath, history, onCancel, visible},
 	forwardRef
 ) => {
+	const {objectsPortletURL} = useContext(AppContext);
 	const [selectedObject, setSelectedObject] = useState({});
 	const withBackUrl = useBackUrl();
 
@@ -32,6 +34,16 @@ const NewAppPopover = (
 			withBackUrl(
 				compile(editPath[0])({dataDefinitionId: selectedObject.id})
 			)
+		);
+	};
+
+	const onCreateObject = (newObject) => {
+		Liferay.Util.navigate(
+			Liferay.Util.PortletURL.createRenderURL(objectsPortletURL, {
+				dataDefinitionId: newObject.id,
+				mvcRenderCommandName: '/edit_form_view',
+				newCustomObject: true,
+			})
 		);
 	};
 
@@ -47,6 +59,7 @@ const NewAppPopover = (
 						<SelectObjects
 							alignElement={alignElement}
 							label={Liferay.Language.get('select-object')}
+							onCreateObject={onCreateObject}
 							onSelect={setSelectedObject}
 							selectedValue={selectedObject}
 							visible={visible}

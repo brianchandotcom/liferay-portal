@@ -132,7 +132,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 		</aui:form>
 	</div>
 
-	<aui:script>
+	<script>
 		function <portlet:namespace />deleteKBComment(kbCommentId) {
 			var form = document.getElementById('<portlet:namespace />fm');
 
@@ -163,5 +163,5 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 				);
 			}
 		}
-	</aui:script>
+	</script>
 </c:if>

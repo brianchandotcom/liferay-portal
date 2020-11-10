@@ -288,7 +288,7 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </div>
 
-<aui:script>
+<script>
 	<c:if test="<%= kbArticle == null %>">
 		var titleInput = document.getElementById('<portlet:namespace />title');
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
@@ -359,7 +359,7 @@ if (portletTitleBasedNavigation) {
 		).value = window.<portlet:namespace />contentEditor.getHTML();
 		updateMultipleKBArticleAttachments();
 	});
-</aui:script>
+</script>
 
 <%!
 private String _getFriendlyURLPrefix(long parentResourceClassNameId, long parentResourcePrimKey) throws PortalException {

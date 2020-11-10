@@ -111,7 +111,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	var deleteKBTemplates = function () {
 		if (
 			confirm(
@@ -153,4 +153,4 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 			}
 		});
 	});
-</aui:script>
+</script>

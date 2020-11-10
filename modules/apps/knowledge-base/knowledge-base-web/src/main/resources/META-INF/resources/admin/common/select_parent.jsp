@@ -288,9 +288,9 @@ kbObjectSearchContainer.setResults(results);
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />fm',
 		'<%= HtmlUtil.escape(eventName) %>'
 	);
-</aui:script>
+</script>

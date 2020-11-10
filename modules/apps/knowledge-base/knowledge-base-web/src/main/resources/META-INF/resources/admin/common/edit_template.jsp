@@ -77,7 +77,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	function <portlet:namespace />updateKBTemplate() {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
@@ -88,4 +88,4 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 			},
 		});
 	}
-</aui:script>
+</script>

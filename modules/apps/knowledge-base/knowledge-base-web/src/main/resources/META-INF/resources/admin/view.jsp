@@ -318,7 +318,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	</div>
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	var deleteEntries = function () {
 		if (
 			confirm(
@@ -348,4 +348,4 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			}
 		});
 	});
-</aui:script>
+</script>

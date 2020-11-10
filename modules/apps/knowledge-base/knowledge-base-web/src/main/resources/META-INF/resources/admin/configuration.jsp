@@ -255,7 +255,7 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />save() {
 		var form = document.getElementById('<portlet:namespace />fm');
 
@@ -285,4 +285,4 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 			submitForm(form);
 		}
 	}
-</aui:script>
+</script>

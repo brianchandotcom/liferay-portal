@@ -128,7 +128,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	var <portlet:namespace />form = document.getElementById(
 		'<portlet:namespace />fm'
 	);
@@ -170,4 +170,4 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 				});
 			});
 	}
-</aui:script>
+</script>

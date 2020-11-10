@@ -122,7 +122,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 	</aui:button-row>
 </c:if>
 
-<aui:script sandbox="<%= true %>">
+<script>
 	var deleteButtonElement = document.getElementById(
 		'<portlet:namespace />deleteButton'
 	);
@@ -138,4 +138,4 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 			}
 		});
 	}
-</aui:script>
+</script>

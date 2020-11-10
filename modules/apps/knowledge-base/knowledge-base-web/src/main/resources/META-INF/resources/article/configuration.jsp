@@ -102,7 +102,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	var <portlet:namespace />form = document.getElementById(
 		'<portlet:namespace />fm'
 	);
@@ -141,4 +141,4 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 				});
 			});
 	}
-</aui:script>
+</script>

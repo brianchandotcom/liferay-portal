@@ -89,7 +89,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 	<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	var deleteKBComments = function () {
 		if (
 			confirm(
@@ -119,4 +119,4 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 			}
 		});
 	});
-</aui:script>
+</script>

@@ -550,13 +550,23 @@ public class VideoProcessorImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to process ", fileVersion.getFileVersionId(), " ",
-					fileVersion.getTitle(), "."),
-				exception);
-
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to process ", fileVersion.getFileVersionId(),
+						" ", fileVersion.getTitle(), "."));
+			}
+			else if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to process ", fileVersion.getFileVersionId(),
+						" ", fileVersion.getTitle(), "."),
+					exception);
+			}
+
+			throw exception;
 		}
 
 		addFileToStore(

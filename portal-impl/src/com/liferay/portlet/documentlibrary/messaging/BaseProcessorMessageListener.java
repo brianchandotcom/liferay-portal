@@ -39,6 +39,11 @@ public abstract class BaseProcessorMessageListener extends BaseMessageListener {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to process file version " +
+						destinationFileVersion.getFileVersionId());
+			}
+			else if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to process file version " +
 						destinationFileVersion.getFileVersionId(),
 					exception);
 			}

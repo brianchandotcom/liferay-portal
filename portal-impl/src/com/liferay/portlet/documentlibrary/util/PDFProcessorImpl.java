@@ -744,42 +744,57 @@ public class PDFProcessorImpl
 				futures.put(processIdentity, future);
 			}
 			catch (TimeoutException timeoutException) {
-				String errorMessage = null;
+				String message = null;
 
 				if (generateThumbnail && generatePreview) {
-					errorMessage =
+					message =
 						"Timeout when generating thumbnail and preview for " +
 							decryptedFile.getPath();
 				}
 				else {
 					if (generateThumbnail) {
-						errorMessage =
+						message =
 							"Timeout when generating thumbnail for " +
 								decryptedFile.getPath();
 					}
 
 					if (generatePreview) {
-						errorMessage =
+						message =
 							"Timeout when generating preview for " +
 								decryptedFile.getPath();
 					}
 				}
 
 				if (future.cancel(true)) {
-					errorMessage +=
-						" resulted in a canceled timeout for " + future;
+					message += " resulted in a canceled timeout for " + future;
 				}
 
-				_log.error(errorMessage);
-
 				_fileVersionPreviewEventListener.onFailure(fileVersion);
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(message);
+				}
 
 				throw timeoutException;
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
-
 				_fileVersionPreviewEventListener.onFailure(fileVersion);
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to process ",
+							fileVersion.getFileVersionId(), " ",
+							fileVersion.getTitle(), "."));
+				}
+				else if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Unable to process ",
+							fileVersion.getFileVersionId(), " ",
+							fileVersion.getTitle(), "."),
+						exception);
+				}
 
 				throw exception;
 			}

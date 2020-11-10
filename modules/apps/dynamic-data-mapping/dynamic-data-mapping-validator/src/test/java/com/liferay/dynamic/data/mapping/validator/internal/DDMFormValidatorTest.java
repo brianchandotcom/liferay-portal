@@ -323,6 +323,19 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = MustSetOptionsForField.class)
+	public void testNoOptionsSetForGrid() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"Grid", DDMFormFieldType.GRID);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
+	@Test(expected = MustSetOptionsForField.class)
 	public void testNoOptionsSetForMultipleCheckbox() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);

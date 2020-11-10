@@ -54,8 +54,8 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.2.1",
 			new UpgradeLayoutAsset(
-				_assetCategoryLocalService, _assetTagLocalService,
-				_layoutLocalService));
+				_assetCategoryLocalService, _assetEntryLocalService,
+				_assetTagLocalService, _layoutLocalService));
 	}
 
 	@Reference

@@ -153,8 +153,8 @@ describe('Validation', () => {
 				en_US: undefined,
 			},
 			expression: {
-				name: 'lt',
-				value: 'numericfield<{parameter}',
+				name: 'neq',
+				value: 'numericfield!={parameter}',
 			},
 			parameter: {
 				en_US: undefined,

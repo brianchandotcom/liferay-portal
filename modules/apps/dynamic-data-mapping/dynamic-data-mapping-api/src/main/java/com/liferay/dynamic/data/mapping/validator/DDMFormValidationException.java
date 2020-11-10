@@ -168,10 +168,25 @@ public class DDMFormValidationException extends PortalException {
 			_fieldName = fieldName;
 		}
 
+		public MustSetOptionsForField(String fieldLabel, String fieldName) {
+			super(
+				String.format(
+					"At least one option must be set for field name %s",
+					fieldName));
+
+			_fieldLabel = fieldLabel;
+			_fieldName = fieldName;
+		}
+
+		public String getFieldLabel() {
+			return _fieldLabel;
+		}
+
 		public String getFieldName() {
 			return _fieldName;
 		}
 
+		private String _fieldLabel;
 		private String _fieldName;
 
 	}

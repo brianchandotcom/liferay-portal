@@ -736,6 +736,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_RESOLUTION_LABEL</td>
+	<td>//div[contains(@class,'image-properties-panel__resolution-label')][contains(.,'${key_resolutionLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_SELECTOR_CONTENT_INPUT</td>
 	<td>//input[contains(@class,'item-selector__content-input')][contains(@value,'${key_contentName}')]</td>
 	<td></td>

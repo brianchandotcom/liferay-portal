@@ -48,7 +48,6 @@ import java.io.PrintWriter;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -251,7 +250,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 		String ddmTemplateKey = "NAVBAR-BLANK-FTL";
 
-		if (Objects.equals(displayStyle, DisplayStyle.STACKED)) {
+		if (displayStyle == DisplayStyle.STACKED) {
 			ddmTemplateKey = "LIST-MENU-FTL";
 		}
 

@@ -1702,6 +1702,16 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
+	macro getFileSizeOfSelectedImageResolution {
+		var key_resolutionLabel = "File Size";
+
+		var fileSize = selenium.getText("PageEditor#IMAGE_RESOLUTION_LABEL");
+		var fileSize = StringUtil.extractFirst("${fileSize}", ".");
+		var fileSize = StringUtil.extractDigits("${fileSize}");
+
+		return "${fileSize}";
+	}
+
 	macro getWidthOfSelectedImageResolution {
 		var key_resolutionLabel = "Width";
 

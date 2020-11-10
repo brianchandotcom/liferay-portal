@@ -20,9 +20,27 @@ body {
 	padding: 0 !important;
 }
 
+.portal-popup:not(.article-preview) #main-content, .portal-popup:not(.article-preview) #wrapper {
+	position: static;
+}
+
 #wrapper {
 	margin: auto;
 	min-width: 0;
+}
+
+#banner img {
+	height: 56px;
+	width: auto;
+}
+
+#content {
+	padding-bottom: 37px;
+	padding-top: 56px;
+}
+
+textarea.form-control, textarea.form-control-plaintext, .form-control.form-control-textarea {
+	height: auto;
 }
 
 .loading-results {
@@ -141,4 +159,11 @@ body {
 .alert.alert-warning .lfr-inline-code {
 	background-color: #EEB;
 	color: #333;
+}
+
+@media only screen and (min-width: 768px) {
+	.lfr-api-details, .lfr-api-navigation {
+		overflow-y: scroll;
+		height: calc(100vh - (56px + 37px));
+	}
 }

@@ -3075,7 +3075,7 @@ definition {
 
 		FormViewBuilder.setUpFieldSetOptions(
 			fieldSetName = "Field Sets",
-			fieldType = "Select from List",
+			fieldType1 = "Select from List",
 			fieldType2 = "Single Selection",
 			fieldType3 = "Multiple Selection");
 
@@ -3097,7 +3097,7 @@ definition {
 
 		FormViewBuilder.setUpTwoFieldSets(
 			fieldSetName = "Field Sets",
-			fieldType = "Text",
+			fieldType1 = "Text",
 			fieldType2 = "Numeric");
 
 		FormViewBuilder.setName(formViewName = "Form One");

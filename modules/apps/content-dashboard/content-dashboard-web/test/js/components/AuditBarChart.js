@@ -20,7 +20,7 @@ import AuditBarChart from '../../../src/main/resources/META-INF/resources/js/com
 
 import '@testing-library/jest-dom/extend-expect';
 
-const mockVocabulariesOneCategory = [
+const mockOneVocabulary = [
 	{
 		key: 'business-decision-maker',
 		name: 'Business Decision Maker',
@@ -47,7 +47,7 @@ const mockVocabulariesOneCategory = [
 	},
 ];
 
-const mockVocabulariesTwoCategories = [
+const mockTwoVocabularies = [
 	{
 		categories: [
 			{
@@ -150,18 +150,42 @@ const mockVocabulariesTwoCategories = [
 	},
 ];
 
+const mockTwoVocabulariesWithCategoriesInTheFirstVocabulary = [
+	{
+		key: 'business-decision-maker',
+		name: 'Business Decision Maker',
+		vocabularyName: 'Audience',
+	},
+	{
+		categories: [
+			{
+				key: 'education',
+				name: 'Education',
+				value: 125,
+				vocabularyName: 'Stage',
+			},
+			{
+				key: 'selection',
+				name: 'Selection',
+				value: 317,
+				vocabularyName: 'Stage',
+			},
+		],
+		key: 'business-end-user',
+		name: 'Business End User',
+		vocabularyName: 'Audience',
+	},
+];
+
 describe('AuditBarChart', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 		cleanup();
 	});
 
-	it('renders audit bar chart from one category', () => {
+	it('renders audit bar chart from one vocabulary', () => {
 		const {container, getByText} = render(
-			<AuditBarChart
-				rtl={false}
-				vocabularies={mockVocabulariesOneCategory}
-			/>
+			<AuditBarChart rtl={false} vocabularies={mockOneVocabulary} />
 		);
 
 		expect(getByText('Audience')).toBeInTheDocument();
@@ -177,12 +201,9 @@ describe('AuditBarChart', () => {
 		expect(bars.length).toBe(4);
 	});
 
-	it('renders audit bar chart from two categories', () => {
+	it('renders audit bar chart from two vocabularies', () => {
 		const {container, getByText} = render(
-			<AuditBarChart
-				rtl={false}
-				vocabularies={mockVocabulariesTwoCategories}
-			/>
+			<AuditBarChart rtl={false} vocabularies={mockTwoVocabularies} />
 		);
 
 		expect(getByText('Stage:')).toBeInTheDocument();
@@ -202,12 +223,33 @@ describe('AuditBarChart', () => {
 		expect(bars.length).toBe(12);
 	});
 
-	it('renders audit bar chart only from checked categories from legend', () => {
-		const {container, getByLabelText} = render(
+	it('renders audit bar chart from two vocabularies without categories in the first one', () => {
+		const {container, getByText} = render(
 			<AuditBarChart
 				rtl={false}
-				vocabularies={mockVocabulariesTwoCategories}
+				vocabularies={
+					mockTwoVocabulariesWithCategoriesInTheFirstVocabulary
+				}
 			/>
+		);
+
+		expect(getByText('Stage:')).toBeInTheDocument();
+		expect(getByText('Education')).toBeInTheDocument();
+		expect(getByText('Selection')).toBeInTheDocument();
+
+		expect(getByText('Audience')).toBeInTheDocument();
+		expect(getByText('Business Decision Maker')).toBeInTheDocument();
+		expect(getByText('Business End User')).toBeInTheDocument();
+
+		const bars = container.getElementsByClassName(
+			'recharts-layer recharts-bar-rectangle'
+		);
+		expect(bars.length).toBe(4);
+	});
+
+	it('renders audit bar chart only from checked categories from legend', () => {
+		const {container, getByLabelText} = render(
+			<AuditBarChart rtl={false} vocabularies={mockTwoVocabularies} />
 		);
 
 		const bars = container.getElementsByClassName(
@@ -231,12 +273,9 @@ describe('AuditBarChart', () => {
 		expect(bars.length).toBe(0);
 	});
 
-	it('renders audit bar chart message when there are no categories selected', () => {
+	it('renders audit bar chart message when there are no vocabularies selected', () => {
 		const {getByLabelText, getByText} = render(
-			<AuditBarChart
-				rtl={false}
-				vocabularies={mockVocabulariesTwoCategories}
-			/>
+			<AuditBarChart rtl={false} vocabularies={mockTwoVocabularies} />
 		);
 
 		const educationCheckbox = getByLabelText('Education');

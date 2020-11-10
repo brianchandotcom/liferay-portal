@@ -377,11 +377,9 @@ export const getSectionByMessageQuery = gql`
 	query messageBoardMessage($messageBoardMessageId: Long!) {
 		messageBoardMessage(messageBoardMessageId: $messageBoardMessageId) {
 			friendlyUrlPath
-			id
 			messageBoardThread {
 				messageBoardSection {
-					numberOfMessageBoardSections
-					parentMessageBoardSectionId
+					id
 					title
 				}
 			}

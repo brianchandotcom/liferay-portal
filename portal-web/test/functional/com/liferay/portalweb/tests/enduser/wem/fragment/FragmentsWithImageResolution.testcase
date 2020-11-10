@@ -1,0 +1,86 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-113806. View auto image resolution when orignal image is greater than viewport and viewport is greater than image resolution."
+	@priority = "4"
+	test ViewAutoImageResolutionWhenOriginalImageIsGreaterThanViewportAndViewportIsGreaterThanImageResolution {
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Select an Image with width greater than 2000px") {
+			PageEditor.editFragmentImage(
+				fileName = "high_resolution_photo.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "Responsive Image",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Assert Auto image resolution is selected") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Resolution",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Auto");
+		}
+
+		task ("Take down the Width and File Size of image resolution") {
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+			var fileSize = PageEditor.getFileSizeOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width and File Size of image resolution equal with orignal image") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "5464");
+
+			TestUtils.assertEquals(
+				actual = "${fileSize}",
+				expected = "4405");
+		}
+	}
+
+}

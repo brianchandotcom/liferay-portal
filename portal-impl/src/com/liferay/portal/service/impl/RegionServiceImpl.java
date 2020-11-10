@@ -112,7 +112,7 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 	@Override
 	public List<Region> getRegions(long countryId, boolean active) {
 		return regionPersistence.findByC_A(
-			countryId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			active, countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			_getOrderByComparator(countryId));
 	}
 

@@ -374,9 +374,7 @@ public class PortletTracker
 
 			portletBagFactory.create(portletModel, portlet, true);
 
-			deployPortlet(
-				serviceReference, portletModel,
-				_companyLocalService.getCompanies());
+			deployPortlet(serviceReference, portletModel);
 
 			portletModel.setReady(true);
 
@@ -1256,8 +1254,7 @@ public class PortletTracker
 
 	protected void deployPortlet(
 			ServiceReference<Portlet> serviceReference,
-			com.liferay.portal.kernel.model.Portlet portletModel,
-			List<Company> companies)
+			com.liferay.portal.kernel.model.Portlet portletModel)
 		throws PortalException {
 
 		List<String> categoryNames = StringPlus.asList(
@@ -1267,17 +1264,8 @@ public class PortletTracker
 			categoryNames.add("category.undefined");
 		}
 
-		String[] categoryNamesArray = ArrayUtil.toStringArray(categoryNames);
-
-		for (Company company : companies) {
-			com.liferay.portal.kernel.model.Portlet companyPortletModel =
-				(com.liferay.portal.kernel.model.Portlet)portletModel.clone();
-
-			companyPortletModel.setCompanyId(company.getCompanyId());
-
-			_portletLocalService.deployRemotePortlet(
-				companyPortletModel, categoryNamesArray, false);
-		}
+		_portletLocalService.deployRemotePortlet(
+			portletModel, ArrayUtil.toStringArray(categoryNames), false);
 	}
 
 	protected Object get(

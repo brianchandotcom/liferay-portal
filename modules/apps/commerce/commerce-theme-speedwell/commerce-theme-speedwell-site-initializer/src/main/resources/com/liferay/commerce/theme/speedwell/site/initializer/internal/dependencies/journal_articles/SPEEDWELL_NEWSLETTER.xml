@@ -12,7 +12,7 @@
 			<dynamic-element index-type="keyword" instance-id="fvha" name="InputPlaceholder" type="text">
 				<dynamic-content language-id="[$LOCALE$]"><![CDATA[E-mail]]></dynamic-content>
 			</dynamic-element>
-			<dynamic-content language-id="[$LOCALE$]"><![CDATA[1@public@[$groupId$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[1@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Newsletter.jpg$]]]></dynamic-content>
 	</dynamic-element>

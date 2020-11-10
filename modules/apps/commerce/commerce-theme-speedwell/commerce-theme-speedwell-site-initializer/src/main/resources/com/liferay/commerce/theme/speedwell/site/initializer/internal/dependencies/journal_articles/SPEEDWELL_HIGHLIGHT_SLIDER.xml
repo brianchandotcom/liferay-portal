@@ -15,7 +15,7 @@
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Discover]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="whjf" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_01.jpg$]]]></dynamic-content>
 	</dynamic-element>
@@ -33,7 +33,7 @@
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Discover]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="oskg" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_02.jpg$]]]></dynamic-content>
 	</dynamic-element>
@@ -51,7 +51,7 @@
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Discover]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="yqqd" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_03.jpg$]]]></dynamic-content>
 	</dynamic-element>
@@ -69,7 +69,7 @@
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Pre-order]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="geho" name="captionButtonUrl" type="link_to_layout">
-			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$groupId$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Header_02.jpg$]]]></dynamic-content>
 	</dynamic-element>

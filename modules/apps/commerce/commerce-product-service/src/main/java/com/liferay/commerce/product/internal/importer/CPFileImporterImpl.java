@@ -112,7 +112,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, immediate = true, service = CPFileImporter.class)
 public class CPFileImporterImpl implements CPFileImporter {
 
-	public static final String GROUP_ID_PLACEHOLDER = "[$groupId$]";
+	public static final String GROUP_ID_PLACEHOLDER = "[$GROUP_ID$]";
 
 	public static final String IMG_TAG =
 		"<img alt='' src='%s' data-fileentryid='%s' />";

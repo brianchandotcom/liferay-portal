@@ -1,5 +1,17 @@
 definition {
 
+	macro getUTCDay {
+		var javaScript = '''
+		var utcDate = new Date().getUTCDate().toString();
+
+		return utcDate;
+		''';
+
+		var utcDate = selenium.getEval("${javaScript}");
+
+		return "${utcDate}";
+	}
+
 	macro getUTCHours {
 		var javaScript = '''
 		var utcHours = new Date().getUTCHours().toString();

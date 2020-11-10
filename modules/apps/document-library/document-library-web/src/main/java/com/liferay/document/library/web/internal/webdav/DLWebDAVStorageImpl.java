@@ -1226,15 +1226,15 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		throws PortalException {
 
 		try {
-			return _dlAppService.getFileEntry(groupId, parentFolderId, name);
+			return _dlAppService.getFileEntryByFileName(
+				groupId, parentFolderId, name);
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
-			return _dlAppService.getFileEntryByFileName(
-				groupId, parentFolderId, name);
+			return _dlAppService.getFileEntry(groupId, parentFolderId, name);
 		}
 	}
 

@@ -118,9 +118,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 
 	private static String _getName(FileEntry fileEntry, boolean appendPath) {
 		if (appendPath) {
-			String name = fileEntry.getTitle();
-
-			return DLWebDAVUtil.escapeRawTitle(name);
+			return DLWebDAVUtil.escapeRawTitle(fileEntry.getFileName());
 		}
 
 		return StringPool.BLANK;

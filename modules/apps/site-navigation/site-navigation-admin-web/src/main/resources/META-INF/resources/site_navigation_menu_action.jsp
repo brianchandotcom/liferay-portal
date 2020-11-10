@@ -83,6 +83,18 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</c:if>
 
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="/site_navigation_admin/delete_site_navigation_menu" var="deleteSiteNavigationMenuURL">
+			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			trash="<%= false %>"
+			url="<%= deleteSiteNavigationMenuURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
 		<div class="border-top dropdown-subheader">
 			<liferay-ui:message key="mark-as" />
@@ -152,18 +164,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			message="social-navigation"
 			onClick="<%= taglibOnClickSocial %>"
 			url="javascript:;"
-		/>
-	</c:if>
-
-	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/site_navigation_admin/delete_site_navigation_menu" var="deleteSiteNavigationMenuURL">
-			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			trash="<%= false %>"
-			url="<%= deleteSiteNavigationMenuURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

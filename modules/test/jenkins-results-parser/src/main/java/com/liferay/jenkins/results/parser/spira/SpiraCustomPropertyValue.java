@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -43,6 +48,79 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 			spiraCustomPropertyValue);
 
 		return spiraCustomPropertyValue;
+	}
+
+	public static List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues(
+		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
+
+		SpiraCustomProperty.Type spiraCustomPropertyType =
+			spiraCustomProperty.getType();
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.LIST) {
+			Object integerValue = valueJSONObject.get("IntegerValue");
+
+			if (!(integerValue instanceof Integer)) {
+				return null;
+			}
+
+			SpiraCustomList spiraCustomList = _getSpiraCustomList(
+				spiraCustomProperty, valueJSONObject);
+
+			SpiraCustomListValue spiraCustomListValue =
+				spiraCustomList.getSpiraCustomListValueByID(
+					(Integer)integerValue);
+
+			return Arrays.asList(
+				new SpiraCustomPropertyValue(
+					spiraCustomListValue, spiraCustomProperty));
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.MULTILIST) {
+			Object integerListValue = valueJSONObject.get("IntegerListValue");
+
+			if (!(integerListValue instanceof JSONArray)) {
+				return null;
+			}
+
+			JSONArray integerListValueJSONArray = (JSONArray)integerListValue;
+
+			List<SpiraCustomPropertyValue> spiraCustomPropertyValues =
+				new ArrayList<>();
+
+			for (int i = 0; i < integerListValueJSONArray.length(); i++) {
+				int integerValue = integerListValueJSONArray.getInt(i);
+
+				if (integerValue <= 0) {
+					continue;
+				}
+
+				SpiraCustomList spiraCustomList = _getSpiraCustomList(
+					spiraCustomProperty, valueJSONObject);
+
+				SpiraCustomListValue spiraCustomListValue =
+					spiraCustomList.getSpiraCustomListValueByID(integerValue);
+
+				spiraCustomPropertyValues.add(
+					new SpiraCustomPropertyValue(
+						spiraCustomListValue, spiraCustomProperty));
+			}
+
+			return spiraCustomPropertyValues;
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.TEXT) {
+			Object stringValue = valueJSONObject.get("StringValue");
+
+			if (!(stringValue instanceof String)) {
+				return null;
+			}
+
+			return Arrays.asList(
+				new SpiraCustomPropertyValue(
+					(String)stringValue, spiraCustomProperty));
+		}
+
+		return null;
 	}
 
 	public SpiraCustomProperty getSpiraCustomProperty() {
@@ -76,6 +154,22 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 	}
 
 	protected static final String KEY_ID = "CustomPropertyValueId";
+
+	private static SpiraCustomList _getSpiraCustomList(
+		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
+
+		JSONObject definitionJSONObject = valueJSONObject.getJSONObject(
+			"Definition");
+
+		List<SpiraCustomList> spiraCustomLists =
+			SpiraCustomList.getSpiraCustomLists(
+				spiraCustomProperty.getSpiraProject(),
+				spiraCustomProperty.getSpiraArtifactClass(),
+				new SearchQuery.SearchParameter(
+					"Name", definitionJSONObject.getString("Name")));
+
+		return spiraCustomLists.get(0);
+	}
 
 	private final SpiraCustomProperty _spiraCustomProperty;
 

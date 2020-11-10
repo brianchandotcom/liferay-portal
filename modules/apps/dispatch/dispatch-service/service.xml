@@ -93,6 +93,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="taskExecutorType" />
 		</finder>
+		<finder name="A_TCM" return-type="Collection">
+			<finder-column name="active" />
+			<finder-column arrayable-operator="OR" name="taskClusterMode" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DispatchLogStartDate</exception>

@@ -92,6 +92,11 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public String getIcon() {
+		return "sites";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());

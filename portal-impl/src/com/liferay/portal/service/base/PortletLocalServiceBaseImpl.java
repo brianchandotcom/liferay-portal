@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
@@ -427,6 +428,47 @@ public abstract class PortletLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the company local service.
+	 *
+	 * @return the company local service
+	 */
+	public com.liferay.portal.kernel.service.CompanyLocalService
+		getCompanyLocalService() {
+
+		return companyLocalService;
+	}
+
+	/**
+	 * Sets the company local service.
+	 *
+	 * @param companyLocalService the company local service
+	 */
+	public void setCompanyLocalService(
+		com.liferay.portal.kernel.service.CompanyLocalService
+			companyLocalService) {
+
+		this.companyLocalService = companyLocalService;
+	}
+
+	/**
+	 * Returns the company persistence.
+	 *
+	 * @return the company persistence
+	 */
+	public CompanyPersistence getCompanyPersistence() {
+		return companyPersistence;
+	}
+
+	/**
+	 * Sets the company persistence.
+	 *
+	 * @param companyPersistence the company persistence
+	 */
+	public void setCompanyPersistence(CompanyPersistence companyPersistence) {
+		this.companyPersistence = companyPersistence;
+	}
+
+	/**
 	 * Returns the portlet preferences local service.
 	 *
 	 * @return the portlet preferences local service
@@ -696,6 +738,15 @@ public abstract class PortletLocalServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.CompanyLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.CompanyLocalService
+		companyLocalService;
+
+	@BeanReference(type = CompanyPersistence.class)
+	protected CompanyPersistence companyPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class

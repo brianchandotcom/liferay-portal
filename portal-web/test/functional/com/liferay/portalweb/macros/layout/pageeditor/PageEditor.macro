@@ -1702,6 +1702,15 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
+	macro getWidthOfSelectedImageResolution {
+		var key_resolutionLabel = "Width";
+
+		var width = selenium.getText("PageEditor#IMAGE_RESOLUTION_LABEL");
+		var width = StringUtil.extractDigits("${width}");
+
+		return "${width}";
+	}
+
 	macro gotoCommentList {
 		Click.pauseClickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
 

@@ -148,7 +148,7 @@
 <!--RULE_BUILDER_CALCULATE-->
 <tr>
     <td>RULE_BUILDER_CALCULATE_OPERATOR</td>
-    <td>//ul[contains(@class,'calculator-buttons-operators')]//li[@data-token-value='${key_calculateOperator}']</td>
+    <td>//div[contains(@class,'calculator-buttons-operators')]//button[contains(., '${key_calculateOperator}') and contains(@class, 'calculator-button')]</td>
     <td></td>
 </tr>
 <tr>

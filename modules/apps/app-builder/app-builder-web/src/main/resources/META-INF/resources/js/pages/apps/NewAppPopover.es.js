@@ -41,7 +41,7 @@ const NewAppPopover = (
 		Liferay.Util.navigate(
 			Liferay.Util.PortletURL.createRenderURL(objectsPortletURL, {
 				dataDefinitionId: newObject.id,
-				mvcRenderCommandName: '/edit_form_view',
+				mvcRenderCommandName: '/app_builder/edit_form_view',
 				newCustomObject: true,
 			})
 		);

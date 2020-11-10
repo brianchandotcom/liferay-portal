@@ -42,6 +42,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -136,7 +137,18 @@ public class DDMFormEvaluatorHelper {
 		stream.filter(
 			DDMFormRule::isEnabled
 		).forEach(
-			this::evaluateDDMFormRule
+			rule -> {
+				evaluateDDMFormRule(rule);
+
+				_ddmFormFieldsPropertyChanges.forEach(
+					(key, value) -> {
+						if (_ddmFormEvaluatorEvaluateRequest.isViewMode() &&
+							!isFieldVisible(key)) {
+
+							value.put("value", StringPool.BLANK);
+						}
+					});
+			}
 		);
 
 		verifyFieldsMarkedAsRequired();

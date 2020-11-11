@@ -114,6 +114,8 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");

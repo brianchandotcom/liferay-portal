@@ -715,6 +715,8 @@ definition {
 
 		Button.clickPublish();
 
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
@@ -786,6 +788,8 @@ definition {
 			webContentTitle = "WebContent Title 1 Edit");
 
 		Button.clickPublish();
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

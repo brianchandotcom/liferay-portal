@@ -74,6 +74,8 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoViewStatus(

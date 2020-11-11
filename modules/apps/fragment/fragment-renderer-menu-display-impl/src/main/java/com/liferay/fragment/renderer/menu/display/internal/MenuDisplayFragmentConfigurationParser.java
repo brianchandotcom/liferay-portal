@@ -51,11 +51,16 @@ public class MenuDisplayFragmentConfigurationParser {
 		DisplayStyle displayStyle = _getDisplayStyle(
 			configuration, editableValues);
 
+		Map<String, FrontendToken> frontendTokenMap = _getFrontendTokens(
+			groupId);
+
 		String hoveredItemColor = _getColorPickerValue(
-			configuration, editableValues, "hoveredItemColor", groupId);
+			configuration, editableValues, "hoveredItemColor",
+			frontendTokenMap);
 
 		String selectedItemColor = _getColorPickerValue(
-			configuration, editableValues, "selectedItemColor", groupId);
+			configuration, editableValues, "selectedItemColor",
+			frontendTokenMap);
 
 		MenuDisplayFragmentConfiguration.Source source = _getSource(
 			configuration, editableValues);
@@ -69,7 +74,7 @@ public class MenuDisplayFragmentConfigurationParser {
 
 	private String _getColorPickerValue(
 		String configuration, String editableValues, String fieldName,
-		long groupId) {
+		Map<String, FrontendToken> frontendTokenMap) {
 
 		String value = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(
@@ -78,9 +83,6 @@ public class MenuDisplayFragmentConfigurationParser {
 		if (Validator.isNull(value)) {
 			return null;
 		}
-
-		Map<String, FrontendToken> frontendTokenMap = _getFrontendTokens(
-			groupId);
 
 		FrontendToken frontendToken = frontendTokenMap.get(value);
 
@@ -117,10 +119,6 @@ public class MenuDisplayFragmentConfigurationParser {
 	}
 
 	private Map<String, FrontendToken> _getFrontendTokens(long groupId) {
-		if (_frontendTokens != null) {
-			return _frontendTokens;
-		}
-
 		Map<String, FrontendToken> frontendTokens = new HashMap<>();
 
 		try {
@@ -145,8 +143,6 @@ public class MenuDisplayFragmentConfigurationParser {
 		catch (Exception exception) {
 			_log.error("Cannot get frontend tokens", exception);
 		}
-
-		_frontendTokens = frontendTokens;
 
 		return frontendTokens;
 	}
@@ -205,8 +201,6 @@ public class MenuDisplayFragmentConfigurationParser {
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
-
-	private Map<String, FrontendToken> _frontendTokens;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

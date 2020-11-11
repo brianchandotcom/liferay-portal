@@ -15,7 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
-import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -178,27 +178,28 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 	private void _configureTaskProcessResources(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
-		taskContainer.named(
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME,
-			processResources -> {
-				processResources.dependsOn(
-					CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+		taskContainer.withType(
+			BuildCSSTask.class,
+			buildCSS -> taskContainer.named(
+				JavaPlugin.PROCESS_RESOURCES_TASK_NAME,
+				processResources -> {
+					processResources.dependsOn(buildCSS);
 
-				Copy copy = (Copy)processResources;
+					Copy copy = (Copy)processResources;
 
-				copy.exclude("**/*.css");
-				copy.exclude("**/*.scss");
+					copy.exclude("**/*.css");
+					copy.exclude("**/*.scss");
 
-				copy.filesMatching(
-					"**/.sass-cache/",
-					details -> {
-						String path = details.getPath();
+					copy.filesMatching(
+						"**/.sass-cache/",
+						details -> {
+							String path = details.getPath();
 
-						details.setPath(path.replace(".sass-cache/", ""));
-					});
+							details.setPath(path.replace(".sass-cache/", ""));
+						});
 
-				copy.setIncludeEmptyDirs(false);
-			});
+					copy.setIncludeEmptyDirs(false);
+				}));
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

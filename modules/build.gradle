@@ -425,18 +425,6 @@ gradle.beforeProject {
 			}
 		}
 
-		pluginManager.withPlugin("com.liferay.js.module.config.generator") {
-			downloadLiferayModuleConfigGenerator {
-				enabled = false
-			}
-		}
-
-		pluginManager.withPlugin("com.liferay.js.transpiler") {
-			downloadMetalCli {
-				enabled = false
-			}
-		}
-
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			configurations {
 				xmltask
@@ -527,12 +515,6 @@ gradle.beforeProject {
 						bndPrintJarFiles << archivePath
 					}
 				}
-			}
-		}
-
-		pluginManager.withPlugin("com.liferay.soy.translation") {
-			replaceSoyTranslation {
-				enabled = false
 			}
 		}
 

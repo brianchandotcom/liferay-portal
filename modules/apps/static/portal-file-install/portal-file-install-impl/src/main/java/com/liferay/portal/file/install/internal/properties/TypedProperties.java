@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -147,6 +148,10 @@ public class TypedProperties {
 		writer.write(sb.toString());
 	}
 
+	protected String getEnv(String propertyValue) {
+		return System.getenv(propertyValue);
+	}
+
 	private boolean _isCommentLine(String line) {
 		String string = line.trim();
 
@@ -206,11 +211,24 @@ public class TypedProperties {
 
 			String value = matcher.group(2);
 
-			value = value.trim();
+			value = InterpolationUtil.substVars(value.trim());
+
+			if (value.startsWith("LIFERAY_")) {
+				value = InterpolationUtil.substVars(
+					GetterUtil.getString(getEnv(value)));
+
+				matcher = _propertyValuePattern.matcher(value);
+
+				if (!matcher.matches()) {
+					_log.error("Unable to parse property value: " + value);
+
+					return false;
+				}
+			}
 
 			_propertyName = key.trim();
 
-			_propertyValue = InterpolationUtil.substVars(value);
+			_propertyValue = value;
 
 			return true;
 		}
@@ -288,9 +306,12 @@ public class TypedProperties {
 		private final Pattern _linePattern = Pattern.compile(
 			"(\\s*[0-9a-zA-Z-_\\.]+\\s*)=(\\s*[TILFDXSCBilfdxscb]?" +
 				"(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
-					"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*)");
+					"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*|(LIFERAY_\\S*))");
 		private String _propertyName;
 		private String _propertyValue;
+		private final Pattern _propertyValuePattern = Pattern.compile(
+			"(\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
+				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*)");
 		private final List<String> _values = new ArrayList<>();
 
 	}

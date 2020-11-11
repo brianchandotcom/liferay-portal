@@ -246,39 +246,6 @@ definition {
 	}
 
 	@priority = "5"
-	test AddOrganizationSite {
-		property testray.component.names = "Training";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addSiteCP(orgName = "Organization Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.viewCP(
-			siteMember = "Organization",
-			siteName = "Organization Name",
-			siteType = "Private");
-	}
-
-	@priority = "5"
 	test AddOrganizationSitePrivatePage {
 		property testray.component.names = "Training";
 

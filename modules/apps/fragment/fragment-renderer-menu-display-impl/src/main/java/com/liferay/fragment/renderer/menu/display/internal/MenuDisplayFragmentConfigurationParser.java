@@ -152,20 +152,14 @@ public class MenuDisplayFragmentConfigurationParser {
 			JSONObject jsonObject = (JSONObject)object;
 
 			if (jsonObject.has("contextualMenu")) {
-				String contextualMenu = jsonObject.getString("contextualMenu");
-
-				return ContextualMenu.parse(contextualMenu);
+				return ContextualMenu.parse(
+					jsonObject.getString("contextualMenu"));
 			}
 			else if (jsonObject.has("siteNavigationMenuId")) {
-				long siteNavigationMenuId = jsonObject.getLong(
-					"siteNavigationMenuId");
-
-				long parentSiteNavigationMenuItemId = jsonObject.getLong(
-					"parentSiteNavigationMenuItemId");
-
 				return new MenuDisplayFragmentConfiguration.
 					SiteNavigationMenuSource(
-						parentSiteNavigationMenuItemId, siteNavigationMenuId);
+						jsonObject.getLong("parentSiteNavigationMenuItemId"),
+						jsonObject.getLong("siteNavigationMenuId"));
 			}
 		}
 

@@ -278,8 +278,10 @@ definition {
 			siteType = "Private");
 	}
 
-	@priority = "3"
+	@priority = "5"
 	test AddOrganizationSitePrivatePage {
+		property testray.component.names = "Training";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		ApplicationsMenu.gotoPortlet(
@@ -299,6 +301,16 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.addSiteCP(orgName = "Organization Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.viewCP(
+			siteMember = "Organization",
+			siteName = "Organization Name",
+			siteType = "Private");
 
 		SitePages.openPagesAdmin(siteURLKey = "Organization Name");
 

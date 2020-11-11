@@ -23,13 +23,13 @@ public class MenuDisplayFragmentConfiguration {
 
 	public MenuDisplayFragmentConfiguration(
 		DisplayStyle displayStyle, String hoveredItemColor,
-		int numberOfSublevels, String selectedItemColor, Source source) {
+		String selectedItemColor, Source source, int sublevels) {
 
 		_displayStyle = displayStyle;
 		_hoveredItemColor = hoveredItemColor;
-		_numberOfSublevels = numberOfSublevels;
 		_selectedItemColor = selectedItemColor;
 		_source = source;
+		_sublevels = sublevels;
 	}
 
 	public DisplayStyle getDisplayStyle() {
@@ -40,16 +40,16 @@ public class MenuDisplayFragmentConfiguration {
 		return Optional.ofNullable(_hoveredItemColor);
 	}
 
-	public int getNumberOfSublevels() {
-		return _numberOfSublevels;
-	}
-
 	public Optional<String> getSelectedItemColor() {
 		return Optional.ofNullable(_selectedItemColor);
 	}
 
 	public Source getSource() {
 		return _source;
+	}
+
+	public int sublevels() {
+		return _sublevels;
 	}
 
 	public static class SiteNavigationMenuSource implements Source {
@@ -91,8 +91,8 @@ public class MenuDisplayFragmentConfiguration {
 
 	private final DisplayStyle _displayStyle;
 	private final String _hoveredItemColor;
-	private final int _numberOfSublevels;
 	private final String _selectedItemColor;
 	private final Source _source;
+	private final int _sublevels;
 
 }

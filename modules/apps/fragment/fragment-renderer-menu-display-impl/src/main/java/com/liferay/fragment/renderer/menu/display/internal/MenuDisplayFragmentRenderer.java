@@ -207,7 +207,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		}
 
 		navigationMenuTag.setDisplayDepth(
-			menuDisplayFragmentConfiguration.getNumberOfSublevels() + 1);
+			menuDisplayFragmentConfiguration.sublevels() + 1);
 	}
 
 	private String _getFragmentId(FragmentEntryLink fragmentEntryLink) {

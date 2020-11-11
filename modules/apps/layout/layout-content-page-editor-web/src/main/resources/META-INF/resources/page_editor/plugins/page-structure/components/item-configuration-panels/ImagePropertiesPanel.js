@@ -49,8 +49,7 @@ export function ImagePropertiesPanel({item}) {
 		DEFAULT_IMAGE_CONFIGURATION
 	);
 	const [imageConfigurations, setImageConfigurations] = useState([]);
-	const [imageFileSize, setImageFileSize] = useState('');
-	const [imageSize, setImageSize] = useState(null);
+	const [imageSize, setImageSize] = useState({fileSize: null, width: null});
 
 	const canUpdateImage = selectedViewportSize === VIEWPORT_SIZES.desktop;
 
@@ -112,12 +111,9 @@ export function ImagePropertiesPanel({item}) {
 					};
 
 					setImageSize({
+						fileSize: autoImageConfiguration.size || null,
 						width: autoImageConfiguration.width,
 					});
-
-					if (autoImageConfiguration.size) {
-						setImageFileSize(autoImageConfiguration.size);
-					}
 				}
 				else {
 					const viewportImageConfiguration = imageConfigurations.find(
@@ -130,12 +126,9 @@ export function ImagePropertiesPanel({item}) {
 					) || {width: editableElement.naturalWidth};
 
 					setImageSize({
+						fileSize: viewportImageConfiguration.size || null,
 						width: viewportImageConfiguration.width,
 					});
-
-					if (viewportImageConfiguration.size) {
-						setImageFileSize(viewportImageConfiguration.size);
-					}
 				}
 			};
 
@@ -194,7 +187,6 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.alt,
 		editableConfig.imageConfiguration,
 		editableValue,
-		imageFileSize,
 		imageConfigurations,
 		selectedViewportSize,
 		languageId,
@@ -247,7 +239,7 @@ export function ImagePropertiesPanel({item}) {
 		setImageConfiguration(DEFAULT_IMAGE_CONFIGURATION);
 		setImageConfigurations([]);
 		setImageDescription('');
-		setImageFileSize('');
+		setImageSize({fileSize: null, width: null});
 
 		const nextEditableValueConfig = {
 			...editableValue.config,
@@ -333,18 +325,18 @@ export function ImagePropertiesPanel({item}) {
 				</ClayForm.Group>
 			)}
 
-			{config.adaptiveMediaEnabled && imageTitle && imageSize && (
+			{config.adaptiveMediaEnabled && imageTitle && imageSize.width && (
 				<div className="page-editor__image-properties-panel__resolution-label">
 					<b>{Liferay.Language.get('width')}:</b>
 					<span className="ml-1">{imageSize.width}px</span>
 				</div>
 			)}
 
-			{config.adaptiveMediaEnabled && imageTitle && imageFileSize && (
+			{config.adaptiveMediaEnabled && imageTitle && imageSize.fileSize && (
 				<div className="mb-3 page-editor__image-properties-panel__resolution-label">
 					<b>{Liferay.Language.get('file-size')}:</b>
 					<span className="ml-1">
-						{Number(imageFileSize).toFixed(2)}kB
+						{Number(imageSize.fileSize).toFixed(2)}kB
 					</span>
 				</div>
 			)}

@@ -86,6 +86,44 @@ exports[`RuleList shows rule list 1`] = `
 </div>
 `;
 
+exports[`RuleList shows rule list for calculator 1`] = `
+<div class="form-builder-rule-builder-container">
+  <h1 class="form-builder-section-title text-default">rule-builder</h1>
+  <div class="liferay-ddm-form-rule-rules-list-container">
+    <div class="ddm-rule-list-container form-builder-rule-list">
+      <ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
+        <li class="list-group-item">
+          <div class="clamp-horizontal list-group-item-content">
+            <p class="form-builder-rule-builder-rule-description text-default"><b>if </b>
+              <div class="ddm-condition-container"><span>field </span><span class="label label-lg label-secondary" data-original-title="Numeric Field 1" title="Numeric Field 1"><span class="text-truncate-inline"><span class="text-truncate">Numeric Field 1</span></span></span></div><b class="text-lowercase"><em> is-not-empty </em></b><br><span><b>calculate-field-x-as-x</b></span>
+            </p>
+          </div>
+          <div class="list-group-item-field">
+            <div class="card-col-field">
+              <div class="dropdown dropdown-action">
+                <div class="ddm-rule-list-settings" data-card-id="0">
+                  <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+                        <use xlink:href="icons.svg#ellipsis-v"></use>
+                      </svg></button></div><button class="component-action cursor-pointer dropdown-toggle" data-rule-index="0"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+                      <use xlink:href="icons.svg#ellipsis-v"></use>
+                    </svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="dropdown-menu" ref="menu">
+  <ul class="list-unstyled">
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="edit" type="button">edit</button></li>
+    <li tabindex="-1"><button class="btn dropdown-item btn-sm btn-link" aria-label="delete" type="button">delete</button></li>
+  </ul>
+</div>
+`;
+
 exports[`RuleList shows the label broken rule when a rule is incomplete 1`] = `
 <div class="form-builder-rule-builder-container">
   <h1 class="form-builder-section-title text-default">rule-builder</h1>

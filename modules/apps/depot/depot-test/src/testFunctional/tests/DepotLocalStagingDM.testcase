@@ -214,6 +214,10 @@ definition {
 	test PublishDMWithDocumentType {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(

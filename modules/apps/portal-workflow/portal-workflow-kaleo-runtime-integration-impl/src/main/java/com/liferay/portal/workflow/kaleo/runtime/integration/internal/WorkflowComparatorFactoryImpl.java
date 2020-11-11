@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowDefinitionModifiedDateComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowDefinitionNameComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowInstanceCompletedComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowInstanceEndDateComparator;
@@ -46,6 +47,16 @@ import org.osgi.service.component.annotations.Component;
 )
 public class WorkflowComparatorFactoryImpl
 	implements WorkflowComparatorFactory {
+
+	@Override
+	public OrderByComparator<WorkflowDefinition>
+		getDefinitionModifiedDateComparator(boolean ascending) {
+
+		return new WorkflowDefinitionModifiedDateComparator(
+			ascending, "modifiedDate ASC, version ASC",
+			"modifiedDate DESC, version DESC",
+			new String[] {"modifiedDate", "version"});
+	}
 
 	@Override
 	public OrderByComparator<WorkflowDefinition> getDefinitionNameComparator(

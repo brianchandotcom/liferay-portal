@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface WorkflowComparatorFactory {
 
+	public OrderByComparator<WorkflowDefinition>
+		getDefinitionModifiedDateComparator(boolean ascending);
+
 	public OrderByComparator<WorkflowDefinition> getDefinitionNameComparator(
 		boolean ascending);
 

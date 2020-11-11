@@ -193,39 +193,6 @@ definition {
 		}
 	}
 
-	macro assignUser {
-		Organization.gotoCP(
-			orgName = "${orgName}",
-			searchToken = "${orgName}");
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Assign Users");
-
-		AssertElementPresent.assertVisible(locator1 = "Button#DONE");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertTextEquals(
-			key_userScreenName = "${userScreenName}",
-			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
-
-		Check(
-			key_userScreenName = "${userScreenName}",
-			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
-
-		Pause(locator1 = "3000");
-
-		SelectFrameTop();
-
-		AssertClick.assertTextClickAtWaitForLastScript(
-			locator1 = "Button#DONE",
-			value1 = "Done");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro addSecurityQuestionsCP {
 		MenuBar.gotoSecurityQuestions();
 
@@ -390,6 +357,39 @@ definition {
 		IFrame.selectTopFrame();
 
 		Click(locator1 = "Icon#CLOSE");
+	}
+
+	macro assignUser {
+		Organization.gotoCP(
+			orgName = "${orgName}",
+			searchToken = "${orgName}");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Assign Users");
+
+		AssertElementPresent.assertVisible(locator1 = "Button#DONE");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			key_userScreenName = "${userScreenName}",
+			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
+			value1 = "${userScreenName}");
+
+		Check(
+			key_userScreenName = "${userScreenName}",
+			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
+
+		Pause(locator1 = "3000");
+
+		SelectFrameTop();
+
+		AssertClick.assertTextClickAtWaitForLastScript(
+			locator1 = "Button#DONE",
+			value1 = "Done");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro deactivateMemberCP {

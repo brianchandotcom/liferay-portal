@@ -3,7 +3,7 @@ definition {
 	macro clearSearchResult {
 		Click(locator1 = "Link#CLEAR");
 
-		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");		
+		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
 	macro openSearchAdmin {

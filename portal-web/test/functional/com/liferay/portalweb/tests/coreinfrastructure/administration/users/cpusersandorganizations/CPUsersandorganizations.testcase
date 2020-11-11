@@ -29,59 +29,6 @@ definition {
 	}
 
 	@priority = "5"
-	test AssignUser {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.assignUser(
-			orgName = "Organization Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userName = "userfn userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.gotoCP(
-			orgName = "Organization Name",
-			searchToken = "Organization");
-
-		Organization.viewAssignMemberCP(userName = "userfn userln");
-	}
-
-	@priority = "5"
 	test AddOrganization {
 		property testray.component.names = "Training";
 
@@ -519,29 +466,6 @@ definition {
 			userScreenName = "usersn");
 
 		AssertConsoleTextNotPresent(value1 = "FileNotFoundException");
-	}
-
-	@priority = "3"
-	test EditUserDisplaySettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserDisplaySettingsCP(
-			displaySettingsGreeting = "Welcome Selenium01!",
-			userScreenName = "usersn");
 	}
 
 	@description = "This is a use case for LPS-102425."
@@ -1070,6 +994,59 @@ definition {
 			userScreenName = "11111");
 	}
 
+	@priority = "5"
+	test AssignUser {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.assignUser(
+			orgName = "Organization Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userName = "userfn userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoCP(
+			orgName = "Organization Name",
+			searchToken = "Organization");
+
+		Organization.viewAssignMemberCP(userName = "userfn userln");
+	}
+
 	@priority = "4"
 	test ChangeUserPassword {
 		ApplicationsMenu.gotoPortlet(
@@ -1321,6 +1298,48 @@ definition {
 		User.viewNoUsersFoundCP();
 	}
 
+	@description = "This is a use case for LPS-121271."
+	@priority = "3"
+	test EditAlertsandAnnouncementsDelivery {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		User.editUserAlertsAndAnnouncementsDeliveryCP(
+			checkbox = "Enable",
+			deliveryOptions = "General,Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoAlertsAndAnnouncementsDelivery();
+
+		AssertChecked(
+			key_tableEntry = "General",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		AssertChecked(
+			key_tableEntry = "Test",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		AssertNotChecked(
+			key_tableEntry = "News",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+	}
+
 	@priority = "5"
 	test EditOrganizationSite {
 		property portal.acceptance = "true";
@@ -1459,6 +1478,29 @@ definition {
 			siteName = "Organization Name",
 			teamDescription = "Site Team Description Edit",
 			teamName = "Site Team Name Edit");
+	}
+
+	@priority = "3"
+	test EditUserDisplaySettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editUserDisplaySettingsCP(
+			displaySettingsGreeting = "Welcome Selenium01!",
+			userScreenName = "usersn");
 	}
 
 	@priority = "5"
@@ -2217,48 +2259,6 @@ definition {
 		AssertValue(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
 			value1 = "11/24/1984");
-	}
-
-	@description = "This is a use case for LPS-121271."
-	@priority = "3"
-	test EditAlertsandAnnouncementsDelivery {
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UserNavigator.gotoUser(userScreenName = "usersn");
-
-		User.editUserAlertsAndAnnouncementsDeliveryCP(
-			checkbox = "Enable",
-			deliveryOptions = "General,Test");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UserNavigator.gotoUser(userScreenName = "usersn");
-
-		UserNavigator.gotoAlertsAndAnnouncementsDelivery();
-
-		AssertChecked(
-			key_tableEntry = "General",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-		AssertChecked(
-			key_tableEntry = "Test",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-		AssertNotChecked(
-			key_tableEntry = "News",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 	}
 
 }

@@ -67,25 +67,57 @@ function getStateBasedOnExpression(expression) {
 		showOnlyRepeatableFields,
 	};
 }
+function isImplicitMultiplication(lastToken, newToken) {
+	switch (newToken.type) {
+		case Token.LEFT_PARENTHESIS:
+			isImplicitMultiplicationByLeftParenthesis(lastToken);
+			break;
+		case Token.FUNCTION:
+			isImplicitMultiplicationByFunction(lastToken);
+			break;
+		case Token.VARIABLE:
+			isImplicitMultiplicationByVariable(lastToken);
+			break;
+		case Token.LITERAL:
+			isImplicitMultiplicationByLiteral(lastToken);
+			break;
+		default:
+			return false;
+	}
+}
+
+function isImplicitMultiplicationByLeftParenthesis(lastToken) {
+	return (
+		lastToken.type !== Token.OPERATOR &&
+		lastToken.type !== Token.FUNCTION &&
+		lastToken.type !== Token.LEFT_PARENTHESIS
+	);
+}
+
+function isImplicitMultiplicationByFunction(lastToken) {
+	return (
+		lastToken.type !== Token.OPERATOR &&
+		lastToken.type !== Token.LEFT_PARENTHESIS
+	);
+}
+
+function isImplicitMultiplicationByVariable(lastToken) {
+	return (
+		lastToken.type === Token.VARIABLE || lastToken.type === Token.LITERAL
+	);
+}
+
+function isImplicitMultiplicationByLiteral(lastToken) {
+	return (
+		lastToken.type === Token.VARIABLE || lastToken.type === Token.FUNCTION
+	);
+}
 
 function shouldAddImplicitMultiplication(tokens, newToken) {
 	const lastToken = tokens[tokens.length - 1];
 
 	return (
-		lastToken !== undefined &&
-		((newToken.type === Token.LEFT_PARENTHESIS &&
-			lastToken.type !== Token.OPERATOR &&
-			lastToken.type !== Token.FUNCTION &&
-			lastToken.type !== Token.LEFT_PARENTHESIS) ||
-			(newToken.type === Token.FUNCTION &&
-				lastToken.type !== Token.OPERATOR &&
-				lastToken.type !== Token.LEFT_PARENTHESIS) ||
-			(newToken.type === Token.VARIABLE &&
-				(lastToken.type === Token.VARIABLE ||
-					lastToken.type === Token.LITERAL)) ||
-			(newToken.type === Token.LITERAL &&
-				(lastToken.type === Token.VARIABLE ||
-					lastToken.type === Token.FUNCTION)))
+		lastToken !== undefined && isImplicitMultiplication(lastToken, newToken)
 	);
 }
 

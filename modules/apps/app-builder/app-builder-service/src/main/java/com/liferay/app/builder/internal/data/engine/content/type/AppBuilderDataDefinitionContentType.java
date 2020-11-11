@@ -51,6 +51,11 @@ public class AppBuilderDataDefinitionContentType
 	}
 
 	@Override
+	public boolean allowInvalidAvailableLocalesForProperty() {
+		return true;
+	}
+
+	@Override
 	public long getClassNameId() {
 		return _portal.getClassNameId(AppBuilderApp.class);
 	}

@@ -19,15 +19,13 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataIt
 import {VIEWPORT_SIZES} from '../../../app/config/constants/viewportSizes';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
-import selectEditableValue from '../../../app/selectors/selectEditableValue';
-import isMapped from '../../../app/utils/isMapped';
 import {CollectionGeneralPanel} from '../components/item-configuration-panels/CollectionGeneralPanel';
 import ContainerLinkPanel from '../components/item-configuration-panels/ContainerLinkPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
 import {FragmentGeneralPanel} from '../components/item-configuration-panels/FragmentGeneralPanel';
 import {FragmentStylesPanel} from '../components/item-configuration-panels/FragmentStylesPanel';
-import {ImagePropertiesPanel} from '../components/item-configuration-panels/ImagePropertiesPanel';
+import ImageSourcePanel from '../components/item-configuration-panels/ImageSourcePanel';
 import {MappingPanel} from '../components/item-configuration-panels/MappingPanel';
 import {RowGeneralPanel} from '../components/item-configuration-panels/RowGeneralPanel';
 import {RowStylesPanel} from '../components/item-configuration-panels/RowStylesPanel';
@@ -40,7 +38,7 @@ export const PANEL_IDS = {
 	editableMapping: 'editableMapping',
 	fragmentGeneral: 'fragmentGeneral',
 	fragmentStyles: 'fragmentStyles',
-	imageProperties: 'imageProperties',
+	imageSource: 'imageSource',
 	rowGeneral: 'rowGeneral',
 	rowStyles: 'rowStyles',
 };
@@ -81,9 +79,9 @@ export const PANELS = {
 		label: Liferay.Language.get('styles'),
 		priority: 0,
 	},
-	[PANEL_IDS.imageProperties]: {
-		component: ImagePropertiesPanel,
-		label: Liferay.Language.get('image'),
+	[PANEL_IDS.imageSource]: {
+		component: ImageSourcePanel,
+		label: Liferay.Language.get('image-source'),
 		priority: 3,
 	},
 	[PANEL_IDS.rowGeneral]: {
@@ -125,14 +123,6 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
 
 	if (canUpdateEditables && activeItem.editableId) {
-		const editableValue = selectEditableValue(
-			state,
-			activeItem.fragmentEntryLinkId,
-			activeItem.editableId,
-			activeItem.editableValueNamespace
-		);
-		const editableIsMapped = isMapped(editableValue);
-
 		panelsIds = {
 			[PANEL_IDS.editableLink]:
 				[
@@ -141,16 +131,13 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 					EDITABLE_TYPES.link,
 				].includes(activeItem.type) &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
-			[PANEL_IDS.imageProperties]:
-				(!editableIsMapped &&
-					[
-						EDITABLE_TYPES.image,
-						EDITABLE_TYPES.backgroundImage,
-					].includes(activeItem.type)) ||
-				(state.selectedViewportSize !== VIEWPORT_SIZES.desktop &&
-					activeItem.type === EDITABLE_TYPES.image),
+			[PANEL_IDS.imageSource]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				(activeItem.type === EDITABLE_TYPES.image ||
+					activeItem.type === EDITABLE_TYPES.backgroundImage),
 			[PANEL_IDS.editableMapping]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				activeItem.type !== EDITABLE_TYPES.image,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {

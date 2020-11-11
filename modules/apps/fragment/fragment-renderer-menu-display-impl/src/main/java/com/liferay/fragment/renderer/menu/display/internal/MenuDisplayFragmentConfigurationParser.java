@@ -169,7 +169,7 @@ public class MenuDisplayFragmentConfigurationParser {
 			}
 		}
 
-		return ContextualMenu.SAME_LEVEL;
+		return ContextualMenu.SELF_AND_SIBLINGS;
 	}
 
 	private int _getSublevels(String configuration, String editableValues) {

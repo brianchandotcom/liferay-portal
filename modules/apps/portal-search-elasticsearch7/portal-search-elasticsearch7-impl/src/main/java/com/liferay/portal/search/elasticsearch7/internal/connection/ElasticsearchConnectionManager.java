@@ -131,6 +131,10 @@ public class ElasticsearchConnectionManager
 		return elasticsearchConnection;
 	}
 
+	public Collection<ElasticsearchConnection> getElasticsearchConnections() {
+		return _elasticsearchConnections.values();
+	}
+
 	public String getLocalClusterConnectionId() {
 		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
 

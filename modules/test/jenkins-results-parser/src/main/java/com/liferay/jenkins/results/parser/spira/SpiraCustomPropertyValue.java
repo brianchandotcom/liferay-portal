@@ -69,6 +69,35 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 			"Unsupported custom property type " + spiraCustomPropertyType);
 	}
 
+	public static SpiraCustomPropertyValue getSpiraCustomPropertyValue(
+		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
+
+		SpiraCustomProperty.Type spiraCustomPropertyType =
+			spiraCustomProperty.getType();
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.INTEGER) {
+			return new IntegerSpiraCustomPropertyValue(
+				valueJSONObject, spiraCustomProperty);
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.LIST) {
+			return new ListSpiraCustomPropertyValue(
+				valueJSONObject, spiraCustomProperty);
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.MULTILIST) {
+			return new MultiListSpiraCustomPropertyValue(
+				valueJSONObject, spiraCustomProperty);
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.TEXT) {
+			return new TextSpiraCustomPropertyValue(
+				valueJSONObject, spiraCustomProperty);
+		}
+
+		return null;
+	}
+
 	public static List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues(
 		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
 

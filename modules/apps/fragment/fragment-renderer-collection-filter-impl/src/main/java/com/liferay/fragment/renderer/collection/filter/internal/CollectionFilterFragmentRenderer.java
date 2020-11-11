@@ -16,6 +16,8 @@ package com.liferay.fragment.renderer.collection.filter.internal;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -23,17 +25,22 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.io.PrintWriter;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Rubén Pulido
  */
-@Component(service = FragmentRenderer.class)
+@Component(
+	configurationPid = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration",
+	service = FragmentRenderer.class
+)
 public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 	@Override
@@ -65,7 +72,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return true;
+		return _ffFragmentRendererCollectionFilterConfiguration.enabled();
 	}
 
 	@Override
@@ -85,5 +92,16 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffFragmentRendererCollectionFilterConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFFragmentRendererCollectionFilterConfiguration.class,
+				properties);
+	}
+
+	private volatile FFFragmentRendererCollectionFilterConfiguration
+		_ffFragmentRendererCollectionFilterConfiguration;
 
 }

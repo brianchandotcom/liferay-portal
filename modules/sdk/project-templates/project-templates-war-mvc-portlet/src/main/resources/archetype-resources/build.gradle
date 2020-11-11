@@ -25,14 +25,3 @@ dependencies {
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
 }
-
-war {
-	dependsOn buildCSS
-	exclude "**/*.scss"
-
-	filesMatching("**/.sass-cache/") {
-		it.path = it.path.replace(".sass-cache/", "")
-	}
-
-	includeEmptyDirs = false
-}

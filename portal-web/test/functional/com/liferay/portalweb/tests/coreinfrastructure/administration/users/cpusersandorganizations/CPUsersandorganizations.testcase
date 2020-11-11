@@ -60,7 +60,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -398,7 +398,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userFirstName = "Test",
 			userLastName = "Test",
@@ -1444,7 +1444,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1687,7 +1687,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userScreenName = "usersn");
 
@@ -1884,7 +1884,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userFirstName = "userfn",
 			userLastName = "userln",

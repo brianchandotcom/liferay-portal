@@ -300,7 +300,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name 1",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -311,7 +311,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name 1",
 			userFirstName = "Test",
 			userLastName = "Test",

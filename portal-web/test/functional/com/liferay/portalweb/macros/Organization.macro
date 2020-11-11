@@ -193,7 +193,7 @@ definition {
 		}
 	}
 
-	macro addMemberCP {
+	macro assignUser {
 		Organization.gotoCP(
 			orgName = "${orgName}",
 			searchToken = "${orgName}");

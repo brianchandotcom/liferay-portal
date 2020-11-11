@@ -321,7 +321,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name 1",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
@@ -1103,7 +1103,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
@@ -1139,7 +1139,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Organization Name",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
@@ -1223,7 +1223,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Site Name M",
 			userFirstName = "Test",
 			userLastName = "Test",

@@ -369,7 +369,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Sub-organization1",
 			userFirstName = "user2",
 			userLastName = "user2",

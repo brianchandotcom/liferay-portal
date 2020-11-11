@@ -307,7 +307,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Site Organization Name",
 			userFirstName = "Test",
 			userLastName = "Test",

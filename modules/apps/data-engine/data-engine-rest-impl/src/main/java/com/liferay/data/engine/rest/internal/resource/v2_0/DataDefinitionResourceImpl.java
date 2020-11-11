@@ -1734,6 +1734,15 @@ public class DataDefinitionResourceImpl
 				return;
 			}
 
+			if ((ddmFormValidationException instanceof
+					DDMFormValidationException.
+						MustSetValidAvailableLocalesForProperty) &&
+				dataDefinitionContentType.
+					allowInvalidAvailableLocalesForProperty()) {
+
+				return;
+			}
+
 			throw _toDataDefinitionValidationException(
 				ddmFormValidationException);
 		}

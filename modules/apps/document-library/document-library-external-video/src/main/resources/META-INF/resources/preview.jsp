@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String embeddableHTML = (String)request.getAttribute(ExternalVideoWebKeys.EMBEDDABLE_HTML);
+String embeddableHTML = (String)request.getAttribute(DLExternalVideoWebKeys.EMBEDDABLE_HTML);
 %>
 
 <liferay-util:html-top

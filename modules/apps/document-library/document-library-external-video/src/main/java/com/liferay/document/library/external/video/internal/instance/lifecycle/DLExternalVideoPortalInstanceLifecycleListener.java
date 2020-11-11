@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.external.video.internal.instance.lifecycle;
 
-import com.liferay.document.library.external.video.internal.util.ExternalVideoDLFileEntryTypeHelper;
+import com.liferay.document.library.external.video.internal.util.DLExternalVideoDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
@@ -42,22 +42,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
-public class ExternalVideoPortalInstanceLifecycleListener
+public class DLExternalVideoPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
-			ExternalVideoDLFileEntryTypeHelper
-				externalVideoDLFileEntryTypeHelper =
-					new ExternalVideoDLFileEntryTypeHelper(
+			DLExternalVideoDLFileEntryTypeHelper
+				dlExternalVideoDLFileEntryTypeHelper =
+					new DLExternalVideoDLFileEntryTypeHelper(
 						company, _defaultDDMStructureHelper,
 						_classNameLocalService.getClassNameId(
 							DLFileEntryMetadata.class),
 						_ddmStructureLocalService, _dlFileEntryTypeLocalService,
 						_userLocalService);
 
-			externalVideoDLFileEntryTypeHelper.
+			dlExternalVideoDLFileEntryTypeHelper.
 				addExternalVideoDLFileEntryType();
 		}
 		catch (PortalException portalException) {

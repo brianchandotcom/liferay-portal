@@ -15,10 +15,25 @@
 package com.liferay.document.library.external.video.internal.constants;
 
 /**
+ * @author Iván Zaera
  * @author Alejandro Tardín
  */
-public class ExternalVideoWebKeys {
+public class DLExternalVideoConstants {
 
-	public static final String EMBEDDABLE_HTML = "EMBEDDABLE_HTML";
+	public static final String DDM_FIELD_NAME_DESCRIPTION = "DESCRIPTION";
+
+	public static final String DDM_FIELD_NAME_HTML = "HTML";
+
+	public static final String DDM_FIELD_NAME_TITLE = "TITLE";
+
+	public static final String DDM_FIELD_NAME_URL = "URL";
+
+	public static final String DDM_STRUCTURE_KEY_EXTERNAL_VIDEO =
+		"EXTERNAL_VIDEO";
+
+	public static final String DL_FILE_ENTRY_TYPE_KEY = "EXTERNAL_VIDEO";
+
+	public static final String DL_FILE_ENTRY_TYPE_NAME =
+		"External Video Shortcut";
 
 }

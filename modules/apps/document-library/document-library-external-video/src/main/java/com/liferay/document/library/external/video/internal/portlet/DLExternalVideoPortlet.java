@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.external.video.internal.portlet;
 
-import com.liferay.document.library.external.video.internal.constants.ExternalVideoPortletKeys;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -37,11 +37,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.name=" + ExternalVideoPortletKeys.EXTERNAL_VIDEO,
+		"javax.portlet.name=" + DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
 	},
 	service = Portlet.class
 )
-public class ExternalVideoPortlet extends MVCPortlet {
+public class DLExternalVideoPortlet extends MVCPortlet {
 }

@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.external.video.internal;
+package com.liferay.document.library.external.video.internal.provider;
+
+import com.liferay.document.library.external.video.internal.DLExternalVideo;
 
 /**
  * @author Alejandro Tardín
  */
-public interface ExternalVideo {
+public interface DLExternalVideoProvider {
 
-	public String getDescription();
-
-	public String getEmbeddableHTML();
-
-	public String getIconURL();
-
-	public String getTitle();
-
-	public String getURL();
+	public DLExternalVideo getDLExternalVideo(String url);
 
 }

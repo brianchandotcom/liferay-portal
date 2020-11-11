@@ -23,7 +23,7 @@ import java.util.List;
  * @author Iván Zaera
  * @author Alejandro Tardín
  */
-public class ExternalVideoUIItemsUtil {
+public class DLExternalVideoUIItemsUtil {
 
 	public static void processUIItems(List<? extends UIItem> uiItems) {
 		_removeUIItem(uiItems, DLUIItemKeys.CANCEL_CHECKOUT);

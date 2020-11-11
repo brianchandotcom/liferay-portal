@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.external.video.internal.util;
 
-import com.liferay.document.library.external.video.internal.constants.ExternalVideoConstants;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -36,9 +36,9 @@ import java.util.Map;
  * @author Iván Zaera
  * @author Alejandro Tardín
  */
-public class ExternalVideoDLFileEntryTypeHelper {
+public class DLExternalVideoDLFileEntryTypeHelper {
 
-	public ExternalVideoDLFileEntryTypeHelper(
+	public DLExternalVideoDLFileEntryTypeHelper(
 		Company company, DefaultDDMStructureHelper defaultDDMStructureHelper,
 		long dlFileEntryMetadataClassNameId,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -56,7 +56,7 @@ public class ExternalVideoDLFileEntryTypeHelper {
 	public void addExternalVideoDLFileEntryType() throws Exception {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
-			ExternalVideoConstants.DDM_STRUCTURE_KEY_EXTERNAL_VIDEO);
+			DLExternalVideoConstants.DDM_STRUCTURE_KEY_EXTERNAL_VIDEO);
 
 		if (ddmStructure == null) {
 			ddmStructure = _addExternalVideoDDMStructure();
@@ -94,7 +94,7 @@ public class ExternalVideoDLFileEntryTypeHelper {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
-			ExternalVideoConstants.DL_FILE_ENTRY_TYPE_KEY);
+			DLExternalVideoConstants.DL_FILE_ENTRY_TYPE_KEY);
 
 		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
 
@@ -111,7 +111,7 @@ public class ExternalVideoDLFileEntryTypeHelper {
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getDefault(),
-			ExternalVideoConstants.DL_FILE_ENTRY_TYPE_NAME
+			DLExternalVideoConstants.DL_FILE_ENTRY_TYPE_NAME
 		).build();
 
 		Map<Locale, String> descriptionMap = new HashMap<>();
@@ -125,7 +125,7 @@ public class ExternalVideoDLFileEntryTypeHelper {
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
 			defaultUserId, _company.getGroupId(),
-			ExternalVideoConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap,
+			DLExternalVideoConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap,
 			descriptionMap, new long[] {ddmStructureId}, serviceContext);
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.external.video.internal.provider;
 
-import com.liferay.document.library.external.video.internal.ExternalVideo;
+import com.liferay.document.library.external.video.internal.DLExternalVideo;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Http;
 
 import java.net.HttpURLConnection;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,14 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ExternalVideoProvider.class)
-public class YouTubeExternalVideoProvider implements ExternalVideoProvider {
+@Component(service = DLExternalVideoProvider.class)
+public class VimeoDLExternalVideoProvider implements DLExternalVideoProvider {
 
 	@Override
-	public ExternalVideo getExternalVideo(String url) {
-		Matcher matcher = _urlPattern.matcher(url);
-
-		if (!matcher.matches()) {
+	public DLExternalVideo getDLExternalVideo(String url) {
+		if (!_matches(url)) {
 			return null;
 		}
 
@@ -50,8 +50,7 @@ public class YouTubeExternalVideoProvider implements ExternalVideoProvider {
 			Http.Options options = new Http.Options();
 
 			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-			options.setLocation(
-				"https://www.youtube.com/oembed?format=json&url=" + url);
+			options.setLocation("https://vimeo.com/api/oembed.json?url=" + url);
 
 			String responseJSON = _http.URLtoString(options);
 
@@ -64,11 +63,11 @@ public class YouTubeExternalVideoProvider implements ExternalVideoProvider {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				responseJSON);
 
-			return new ExternalVideo() {
+			return new DLExternalVideo() {
 
 				@Override
 				public String getDescription() {
-					return null;
+					return jsonObject.getString("description");
 				}
 
 				@Override
@@ -79,7 +78,7 @@ public class YouTubeExternalVideoProvider implements ExternalVideoProvider {
 				@Override
 				public String getIconURL() {
 					return _servletContext.getContextPath() +
-						"/icons/youtube.png";
+						"/icons/vimeo.png";
 				}
 
 				@Override
@@ -101,11 +100,28 @@ public class YouTubeExternalVideoProvider implements ExternalVideoProvider {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		YouTubeExternalVideoProvider.class);
+	private boolean _matches(String url) {
+		for (Pattern urlPattern : _urlPatterns) {
+			Matcher matcher = urlPattern.matcher(url);
 
-	private static final Pattern _urlPattern = Pattern.compile(
-		"https?://(?:www\\.)?youtube.com/watch\\?v=(\\S*)$");
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		VimeoDLExternalVideoProvider.class);
+
+	private static final List<Pattern> _urlPatterns = Arrays.asList(
+		Pattern.compile(
+			"https?://(?:www\\.)?vimeo\\.com/album/.*/video/(\\S*)"),
+		Pattern.compile("https?://(?:www\\.)?vimeo\\.com/channels/.*/(\\S*)"),
+		Pattern.compile(
+			"https?://(?:www\\.)?vimeo\\.com/groups/.*/videos\\/(\\S*)"),
+		Pattern.compile("https?://(?:www\\.)?vimeo\\.com/(\\S*)$"));
 
 	@Reference
 	private Http _http;

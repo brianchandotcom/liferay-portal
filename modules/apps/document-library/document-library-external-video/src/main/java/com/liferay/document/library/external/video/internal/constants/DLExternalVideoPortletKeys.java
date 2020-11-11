@@ -17,10 +17,10 @@ package com.liferay.document.library.external.video.internal.constants;
 /**
  * @author Alejandro Tardín
  */
-public class ExternalVideoPortletKeys {
+public class DLExternalVideoPortletKeys {
 
-	public static final String EXTERNAL_VIDEO =
+	public static final String DL_EXTERNAL_VIDEO =
 		"com_liferay_document_library_external_video_portlet_" +
-			"ExternalVideoPortlet";
+			"DLExternalVideoPortlet";
 
 }

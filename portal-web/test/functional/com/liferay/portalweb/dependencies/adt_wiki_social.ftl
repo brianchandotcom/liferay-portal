@@ -233,7 +233,7 @@
 >
 	<#if wikiPortletInstanceConfiguration.enablePageRatings()>
 		<div class="${cssClass}">
-			<@liferay_ui["ratings"]
+			<@liferay_ratings["ratings"]
 				className=wikiPageClassName
 				classPK=entry.getResourcePrimKey()
 			/>

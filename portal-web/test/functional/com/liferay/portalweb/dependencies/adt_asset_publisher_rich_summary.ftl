@@ -166,7 +166,7 @@
 <#macro getRatings>
 	<#if getterUtil.getBoolean(enableRatings) && assetRenderer.isRatable()>
 		<div class="asset-ratings">
-			<@liferay_ui["ratings"]
+			<@liferay_ratings["ratings"]
 				className=entry.getClassName()
 				classPK=entry.getClassPK()
 			/>

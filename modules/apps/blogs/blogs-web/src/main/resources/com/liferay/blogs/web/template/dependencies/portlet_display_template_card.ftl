@@ -177,7 +177,7 @@
 
 							<#if blogsPortletInstanceConfiguration.enableRatings()>
 								<div class="autofit-col">
-									<@liferay_ui["ratings"]
+									<@liferay_ratings["ratings"]
 										className="com.liferay.blogs.model.BlogsEntry"
 										classPK=curBlogEntry.getEntryId()
 									/>

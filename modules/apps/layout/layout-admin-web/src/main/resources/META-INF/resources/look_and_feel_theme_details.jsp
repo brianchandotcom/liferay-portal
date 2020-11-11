@@ -213,31 +213,16 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 </c:if>
 
 <c:if test="<%= !colorSchemes.isEmpty() %>">
-	<aui:script use="aui-base,aui-event-key">
-		var colorSchemesContainer = A.one(
-			'#<portlet:namespace />colorSchemesContainer'
-		);
-
-		colorSchemesContainer.delegate(
-			['click', 'keydown'],
-			function (event) {
-				if (!event.keyCode || event.keyCode === 13 || event.keyCode === 32) {
-					event.preventDefault();
-
-					var currentTarget = event.currentTarget;
-
-					colorSchemesContainer
-						.all('.color-scheme-selector')
-						.removeClass('selected');
-
-					currentTarget.addClass('selected');
-
-					A.one('#<portlet:namespace />regularColorSchemeId').val(
-						currentTarget.attr('data-color-scheme-id')
-					);
-				}
-			},
-			'.color-scheme-selector'
-		);
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"buttonCssClass", ".color-scheme-selector"
+			).put(
+				"containerId", liferayPortletResponse.getNamespace() + "colorSchemesContainer"
+			).put(
+				"regularColorSchemeInputId", liferayPortletResponse.getNamespace() + "regularColorSchemeId"
+			).build()
+		%>'
+		module="js/LookAndFeelThemeDetails"
+	/>
 </c:if>

@@ -462,6 +462,15 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			userScreenName = "usersn2");
 
+		JSONLayout.addPublicLayoutByGroupName(
+			groupName = "Organization Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Organization Name LFR_ORGANIZATION",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 		Navigator.openSiteURL(siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
@@ -471,15 +480,6 @@ definition {
 		SitePages.addPublicPage(
 			pageName = "Search Page",
 			pageTemplateName = "Search");
-
-		JSONLayout.addPublicLayoutByGroupName(
-			groupName = "Organization Name",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Organization Name LFR_ORGANIZATION",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",

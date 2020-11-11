@@ -29,7 +29,7 @@ function resolveCartItemsPath(basePath = '', itemId) {
 }
 
 export default (basePath) => ({
-	createItemsByCartId: (cartId, json) =>
+	createItemByCartId: (cartId, json) =>
 		AJAX.POST(resolveItemsPath(basePath, cartId), json),
 
 	deleteItemById: (itemId) =>

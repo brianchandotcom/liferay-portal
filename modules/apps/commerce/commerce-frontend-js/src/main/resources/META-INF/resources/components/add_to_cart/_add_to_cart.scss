@@ -1,4 +1,5 @@
 .add-to-cart {
+	margin: 0.5rem 0;
 	&-block {
 		input {
 			width: 60px;
@@ -51,14 +52,16 @@
 	height: 6px;
 	opacity: 0.6;
 	position: absolute;
-	right: -3px;
-	top: -6px;
+	right: -6px;
+	top: -9px;
 	transform: scale(0);
 	transform-origin: 50%;
 	transition: opacity 0.2s ease-in,
 		transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	width: 6px;
 	z-index: 1;
+	opacity: 0.5;
+	transform: scale(1);
 
 	&.active {
 		opacity: 1;
@@ -87,6 +90,12 @@
 
 	&-inline {
 		margin-left: $spacer;
+	}
+	&.rtl {
+		direction: rtl;
+	}
+	&.trl {
+		direction: rtl;
 	}
 }
 

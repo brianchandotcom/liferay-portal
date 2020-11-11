@@ -24,6 +24,16 @@
 		top: -99999px;
 	}
 
+	.lexicon-icon-drag {
+		color: $gray-500;
+		height: 20px;
+		width: 20px;
+	}
+
+	.lexicon-icon-times-circle {
+		color: $gray-600;
+	}
+
 	[draggable='true'] {
 		cursor: grab;
 	}

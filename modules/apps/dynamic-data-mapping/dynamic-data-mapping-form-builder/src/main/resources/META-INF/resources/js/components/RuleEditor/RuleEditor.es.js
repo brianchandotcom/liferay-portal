@@ -34,6 +34,7 @@ import templates from './RuleEditor.soy';
 
 const fieldOptionStructure = Config.shapeOf({
 	dataType: Config.string(),
+	fieldReference: Config.string(),
 	name: Config.string(),
 	options: Config.arrayOf(
 		Config.shapeOf({
@@ -1528,7 +1529,7 @@ class RuleEditor extends Component {
 						...prev,
 						{
 							...option,
-							title: option.fieldName,
+							title: option.fieldReference,
 							type: 'item',
 						},
 				  ];

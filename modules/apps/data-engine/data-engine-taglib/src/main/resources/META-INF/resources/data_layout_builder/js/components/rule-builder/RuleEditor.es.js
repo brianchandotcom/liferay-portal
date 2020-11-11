@@ -13,8 +13,7 @@
  */
 
 import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
-import ClayButton from '@clayui/button';
-import React, {useReducer, useState} from 'react';
+import React, {useMemo, useReducer} from 'react';
 
 import Timeline from './Timeline.es';
 
@@ -25,71 +24,170 @@ const OPERATION_TYPE = {
 
 const OPERATION_DATA = {
 	[OPERATION_TYPE.ACTIONS]: {
-		component: Action,
+		component: Actions,
 		expression: Liferay.Language.get('if'),
 		name: Liferay.Language.get('actions'),
 	},
 	[OPERATION_TYPE.CONDITIONS]: {
-		component: Condition,
+		component: Conditions,
 		expression: Liferay.Language.get('do'),
 		name: Liferay.Language.get('condition'),
 	},
 };
 
-const getOperators = (onClick) => {
-	return [
-		{label: 'OR', onClick},
-		{label: 'AND', onClick}
-	]
+const BINARY_OPERATOR = [
+	'belongs-to',
+	'contains',
+	'equals-to',
+	'greater-than-equals',
+	'greater-than',
+	'less-than-equals',
+	'less-than',
+	'not-contains',
+	'not-equals-to',
+];
+
+const OPERATOR_TYPES = {
+	double: 'number',
+	integer: 'number',
+	text: 'text',
+	user: 'user',
 };
 
-function FieldOperator({operator, readOnly, onChange}) {
+const ACTIONS_TYPES = {
+	CHANGE_OPERATOR: 'CHANGE_OPERATOR',
+	ADD_IDENTIFIER_RIGHT: 'ADD_IDENTIFIER_RIGHT',
+};
+
+function FieldOperator({
+	fields,
+	left,
+	onChange,
+	operator,
+	operatorsByType,
+	readOnly,
+	right,
+}) {
+	const options = useMemo(() => {
+		const fieldId = left.value;
+
+		if (!fieldId) {
+			return [];
+		}
+
+		const field = fields.find(({value}) => value === fieldId);
+		const dataType = field?.dataType ?? fieldId;
+		const fieldType = OPERATOR_TYPES[dataType] ?? OPERATOR_TYPES.text;
+
+		return operatorsByType[fieldType].map((operator) => ({
+			...operator,
+			value: operator.name,
+		}));
+	}, [left, fields, operatorsByType]);
+
 	return (
-		<FieldStateless
-			type="select"
-			placeholder={Liferay.Language.get('choose-an-option')}
-			showEmptyOption={false}
-			readOnly={readOnly}
-			onChange={(event) => onChange(event.value)}
-			value={[operator]}
-		/>
+		<>
+			<FieldStateless
+				onChange={(event) => onChange(event.value, 'operator')}
+				options={options}
+				placeholder={Liferay.Language.get('choose-an-option')}
+				readOnly={readOnly}
+				showEmptyOption={false}
+				type="select"
+				value={[operator]}
+			/>
+			{BINARY_OPERATOR[operator] && (
+				<FieldStateless
+					onChange={(event) => onChange(event.value, 'type')}
+					options={[
+						{
+							label: Liferay.Language.get('value'),
+							value: 'value',
+						},
+						{
+							label: Liferay.Language.get('other-field'),
+							value: 'field',
+						},
+					]}
+					placeholder={Liferay.Language.get('choose-an-option')}
+					showEmptyOption={false}
+					type="select"
+					value={[
+						left.type === 'field'
+							? 'field'
+							: left.type
+							? 'value'
+							: '',
+					]}
+				/>
+			)}
+		</>
 	);
 }
 
-function Condition({conditions, name, expression, state, dispatch}) {
+function Conditions({conditions, dispatch, expression, name, state}) {
+	const onOperatorChange = (value, type) => {
+		switch (type) {
+			case 'operator':
+				dispatch({payload: value, type: ACTIONS_TYPES.CHANGE_OPERATOR});
+				break;
+			case 'type':
+				dispatch({
+					payload: {},
+					type: ACTIONS_TYPES.ADD_IDENTIFIER_RIGHT,
+				});
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
 		<Timeline.List>
 			<Timeline.Header
-				title={name}
-				operator={state.logicalOperator}
-				items={getOperators(() => {})}
 				disabled={conditions.length === 1}
+				items={[
+					{label: 'OR', onClick: () => {}},
+					{label: 'AND', onClick: () => {}},
+				]}
+				operator={state.logicalOperator}
+				title={name}
 			/>
-			{conditions.map(({operator, [left, right]}, index) => (
+			{conditions.map(({operator, operands: [left, right]}, index) => (
 				<Timeline.Item key={index}>
 					<Timeline.Condition expression={expression}>
 						<FieldStateless
-							type="select"
-							placeholder={Liferay.Language.get('choose-an-option')}
-							fixedOptions={[{
-								dataType: 'user',
-								label: Liferay.Language.get('user'),
-								name: 'user',
-								value: 'user',
-							}]}
-							showEmptyOption={false}
+							fixedOptions={[
+								{
+									dataType: 'user',
+									label: Liferay.Language.get('user'),
+									name: 'user',
+									value: 'user',
+								},
+							]}
 							onChange={(event) => setValue(event.value)}
+							placeholder={Liferay.Language.get(
+								'choose-an-option'
+							)}
+							showEmptyOption={false}
+							type="select"
 							value={[left.value]}
 						/>
 						<FieldOperator
-							readOnly={!!left.value}
+							fields={state.fields}
+							left={left}
+							onChange={onOperatorChange}
 							operator={operator}
-							onChange={() => {}}
+							operatorsByType={state.operatorsByType}
+							readOnly={!!left.value}
+							right={right}
 						/>
 					</Timeline.Condition>
 					{conditions.length > 1 && (
 						<>
-							<Timeline.Operator operator={state.logicalOperator} />
+							<Timeline.Operator
+								operator={state.logicalOperator}
+							/>
 							<Timeline.ActionTrash />
 						</>
 					)}
@@ -100,14 +198,12 @@ function Condition({conditions, name, expression, state, dispatch}) {
 			</Timeline.Item>
 		</Timeline.List>
 	);
-};
+}
 
-function Action({name, expression, state, dispatch}) {
+function Actions({dispatch, expression, name, state}) {
 	return (
 		<Timeline.List>
-			<Timeline.Header
-				title={name}
-			/>
+			<Timeline.Header title={name} />
 			<Timeline.Item>
 				<Timeline.Condition expression={expression}>
 					<input />
@@ -118,8 +214,8 @@ function Action({name, expression, state, dispatch}) {
 				<Timeline.IncrementButton />
 			</Timeline.Item>
 		</Timeline.List>
-	)
-};
+	);
+}
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -134,8 +230,11 @@ const init = ({rule: {logicalOperator, ...operations}, ...otherProps}) => {
 	return {
 		...otherProps,
 		logicalOperator,
-		operations: Object.keys(operations).map(key => ({key, [key]: operations[key]})),
-	}
+		operations: Object.keys(operations).map((key) => ({
+			key,
+			[key]: operations[key],
+		})),
+	};
 };
 
 export function Editor(props) {
@@ -154,33 +253,4 @@ export function Editor(props) {
 			/>
 		);
 	});
-}
-
-export default function RuleEditor({onCancel, onSubmit}) {
-	return (
-		<Timeline>
-			<div className="liferay-ddm-form-rule-builder-header">
-				<h2 className="form-builder-section-title text-default">
-					{Liferay.Language.get('rule')}
-				</h2>
-
-				<h4 className="text-default">
-					{Liferay.Language.get(
-						'define-condition-and-action-to-change-fields-and-elements-on-the-form'
-					)}
-				</h4>
-			</div>
-			<Editor />
-			<div className="liferay-ddm-form-rule-builder-footer">
-				<ClayButton.Group spaced>
-					<ClayButton displayType="primary" onClick={onSubmit}>
-						{Liferay.Language.get('save')}
-					</ClayButton>
-					<ClayButton displayType="secondary" onClick={onCancel}>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
-				</ClayButton.Group>
-			</div>
-		</Timeline>
-	);
 }

@@ -50,6 +50,7 @@ describe('getAllEditables', () => {
 				editableId: 'img-old',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: ImageProcessor,
 				type: 'image',
 			},
@@ -57,6 +58,7 @@ describe('getAllEditables', () => {
 				editableId: 'link-old',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: LinkProcessor,
 				type: 'link',
 			},
@@ -64,6 +66,7 @@ describe('getAllEditables', () => {
 				editableId: 'html-old',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: HTMLProcessor,
 				type: 'html',
 			},
@@ -71,6 +74,7 @@ describe('getAllEditables', () => {
 				editableId: 'text-old',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: TextProcessor,
 				type: 'text',
 			},
@@ -78,6 +82,7 @@ describe('getAllEditables', () => {
 				editableId: 'rich-text-old',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: RichTextProcessor,
 				type: 'rich-text',
 			},
@@ -85,6 +90,7 @@ describe('getAllEditables', () => {
 				editableId: 'img-new',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLImageElement),
+				priority: Infinity,
 				processor: ImageProcessor,
 				type: 'image',
 			},
@@ -92,6 +98,7 @@ describe('getAllEditables', () => {
 				editableId: 'link-new',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLAnchorElement),
+				priority: Infinity,
 				processor: LinkProcessor,
 				type: 'link',
 			},
@@ -99,6 +106,7 @@ describe('getAllEditables', () => {
 				editableId: 'html-new',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: HTMLProcessor,
 				type: 'html',
 			},
@@ -106,6 +114,7 @@ describe('getAllEditables', () => {
 				editableId: 'text-new',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLParagraphElement),
+				priority: Infinity,
 				processor: TextProcessor,
 				type: 'text',
 			},
@@ -113,6 +122,7 @@ describe('getAllEditables', () => {
 				editableId: 'rich-text-new',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLParagraphElement),
+				priority: Infinity,
 				processor: RichTextProcessor,
 				type: 'rich-text',
 			},
@@ -120,6 +130,7 @@ describe('getAllEditables', () => {
 				editableId: 'background-image',
 				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLDivElement),
+				priority: Infinity,
 				processor: BackgroundImageProcessor,
 				type: 'background-image',
 			},
@@ -146,6 +157,7 @@ describe('getAllEditables', () => {
 				editableId: 'img-old',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLElement),
+				priority: Infinity,
 				processor: ImageProcessor,
 				type: 'image',
 			},
@@ -153,6 +165,7 @@ describe('getAllEditables', () => {
 				editableId: 'img-new',
 				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLImageElement),
+				priority: Infinity,
 				processor: ImageProcessor,
 				type: 'image',
 			},
@@ -160,6 +173,86 @@ describe('getAllEditables', () => {
 				editableId: 'background-image',
 				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLDivElement),
+				priority: Infinity,
+				processor: BackgroundImageProcessor,
+				type: 'background-image',
+			},
+		]);
+	});
+
+	it('takes into account the priority attibute', () => {
+		const element = document.createElement('div');
+
+		element.innerHTML = `
+	  <lfr-editable data-lfr-priority="1" id="img-old" type="image"><img src="placeholder.jpg" alt="Placeholder"></lfr-editable>
+	  
+      <img data-lfr-editable-id="img-new" data-lfr-editable-type="image" data-lfr-priority="2" src="placeholder.jpg" alt="Placeholder">
+	  
+	  <a data-lfr-editable-id="link-new" data-lfr-editable-type="link" data-lfr-priority="3" href="#placeholder" target="_blank">Go to placeholder</a>
+	 
+	  <article data-lfr-editable-id="html-new" data-lfr-editable-type="html" data-lfr-priority="4"><h1>Placeholder</h1></article>
+	 
+	  <p data-lfr-editable-id="text-new" data-lfr-editable-type="text" data-lfr-priority="5">Placeholder</p>
+	 
+	  <p data-lfr-editable-id="rich-text-new" data-lfr-editable-type="rich-text" data-lfr-priority="6">Placeholder</p>
+	 
+	  <div data-lfr-background-image-id="background-image" data-lfr-priority="7"></div>
+    `;
+
+		expect(getAllEditables(element)).toEqual([
+			{
+				editableId: 'img-old',
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLElement),
+				priority: '1',
+				processor: ImageProcessor,
+				type: 'image',
+			},
+			{
+				editableId: 'img-new',
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLImageElement),
+				priority: '2',
+				processor: ImageProcessor,
+				type: 'image',
+			},
+			{
+				editableId: 'link-new',
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLAnchorElement),
+				priority: '3',
+				processor: LinkProcessor,
+				type: 'link',
+			},
+			{
+				editableId: 'html-new',
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLElement),
+				priority: '4',
+				processor: HTMLProcessor,
+				type: 'html',
+			},
+			{
+				editableId: 'text-new',
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLParagraphElement),
+				priority: '5',
+				processor: TextProcessor,
+				type: 'text',
+			},
+			{
+				editableId: 'rich-text-new',
+				editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLParagraphElement),
+				priority: '6',
+				processor: RichTextProcessor,
+				type: 'rich-text',
+			},
+			{
+				editableId: 'background-image',
+				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				element: expect.any(HTMLDivElement),
+				priority: '7',
 				processor: BackgroundImageProcessor,
 				type: 'background-image',
 			},

@@ -60,11 +60,8 @@ const renderComponent = ({
 					getState={() => ({
 						fragmentEntryLinks: {
 							'001': {
-								content: {
-									value: {
-										content: '<div>001</div>',
-									},
-								},
+								content:
+									'<div>001<span data-lfr-editable-id="05-editable">editable</span></div>',
 								editableTypes: {
 									'05-editable': 'text',
 								},

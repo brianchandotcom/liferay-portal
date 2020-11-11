@@ -231,6 +231,12 @@ export function ImagePropertiesPanel({item}) {
 			[languageId]: nextEditableValueContent,
 		};
 
+		delete nextEditableValue.classNameId;
+		delete nextEditableValue.classPK;
+		delete nextEditableValue.collectionFieldId;
+		delete nextEditableValue.fieldId;
+		delete nextEditableValue.mappedField;
+
 		const nextEditableValues = {
 			...editableValues,
 

@@ -36,8 +36,8 @@ export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
 
 	const dispatch = useDispatch();
-	const imageConfigurationId = useId();
-	const imageDescriptionId = useId();
+	const imageConfigurationSelectId = useId();
+	const imageDescriptionInputId = useId();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -296,13 +296,13 @@ export function ImagePropertiesPanel({item}) {
 
 			{config.adaptiveMediaEnabled && imageConfigurations?.length > 0 && (
 				<ClayForm.Group className="mb-2">
-					<label htmlFor={imageConfigurationId}>
+					<label htmlFor={imageConfigurationSelectId}>
 						{Liferay.Language.get('resolution')}
 					</label>
 					<ClaySelectWithOption
 						className={'form-control form-control-sm'}
-						id={imageConfigurationId}
-						name={imageConfigurationId}
+						id={imageConfigurationSelectId}
+						name={imageConfigurationSelectId}
 						onChange={(event) => {
 							const imageConfiguration =
 								editableConfig.imageConfiguration || {};
@@ -343,11 +343,11 @@ export function ImagePropertiesPanel({item}) {
 
 			{canUpdateImage && type === EDITABLE_TYPES.image && (
 				<ClayForm.Group>
-					<label htmlFor={imageDescriptionId}>
+					<label htmlFor={imageDescriptionInputId}>
 						{Liferay.Language.get('image-description')}
 					</label>
 					<ClayInput
-						id={imageDescriptionId}
+						id={imageDescriptionInputId}
 						onBlur={() => {
 							const previousValue = editableConfig.alt || '';
 

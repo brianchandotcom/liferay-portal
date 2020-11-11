@@ -390,10 +390,6 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "Error:One or more entries could not be deleted.");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_2",
 				value1 = "Error:You cannot delete display page templates that are used by one or more entities. Please view the usages and try to unassign them.");
 
 			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");

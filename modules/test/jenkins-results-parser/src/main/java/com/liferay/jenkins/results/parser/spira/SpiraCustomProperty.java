@@ -245,8 +245,9 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 	public static enum Type {
 
-		BOOLEAN(4), DATE(5), DECIMAL(3), INTEGER(2), LIST(6), MULTILIST(7),
-		TEXT(1), USER(8);
+		BOOLEAN(4, "Boolean"), DATE(5, "Date"), DECIMAL(3, "Decimal"),
+		INTEGER(2, "Integer"), LIST(6, "List"), MULTILIST(7, "MultiList"),
+		TEXT(1, "Text"), USER(8, "User");
 
 		public static Type get(Integer id) {
 			return _types.get(id);
@@ -256,8 +257,13 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 			return _id;
 		}
 
-		private Type(Integer id) {
+		public String getName() {
+			return _name;
+		}
+
+		private Type(Integer id, String name) {
 			_id = id;
+			_name = name;
 		}
 
 		private static Map<Integer, Type> _types = new HashMap<>();
@@ -269,6 +275,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		}
 
 		private final Integer _id;
+		private final String _name;
 
 	}
 

@@ -1159,6 +1159,65 @@ definition {
 			userPassword = "Invalid");
 	}
 
+	@description = "This is a use case for LPS-123120."
+	@priority = "3"
+	test ClearSearchResults {
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoActionsCmd(orgName = "Organization Name");
+
+		MenuItem.click(menuItem = "Assign Organization Roles");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Search.searchCP(searchTerm = "Organization Administrator");
+
+		Search.clearSearchResult();
+
+		AssertTextEquals(
+			key_roleTitle = "Organization Administrator",
+			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE",
+			value1 = "Organization Administrator");
+
+		Click(
+			key_roleTitle = "Organization Administrator",
+			locator1 = "UsersAndOrganizationsAssignOrganizationalRoles#ROLE_TITLE");
+
+		Navigator.gotoNavItem(navItem = "Available");
+
+		Search.searchCP(searchTerm = "test");
+
+		Search.clearSearchResult();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoActionsCmd(orgName = "Organization Name");
+
+		MenuItem.click(menuItem = "Assign Users");
+
+		AssertElementPresent.assertVisible(locator1 = "Button#DONE");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Search.searchCP(searchTerm = "test");
+
+		Search.clearSearchResult();
+	}
+
 	@priority = "5"
 	test DeleteOrganization {
 		property portal.acceptance = "true";

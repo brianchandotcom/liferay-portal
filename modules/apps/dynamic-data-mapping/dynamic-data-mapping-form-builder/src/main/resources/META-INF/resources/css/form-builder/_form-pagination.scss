@@ -24,7 +24,7 @@ $c: '.ddm-form-pagination';
 		min-height: 90px;
 	}
 
-	.dmm-wizard,
+	.ddm-wizard,
 	.ddm-pagination {
 		width: 100%;
 	}
@@ -39,6 +39,11 @@ $c: '.ddm-form-pagination';
 
 	.ddm-page-settings {
 		margin-left: 2.4rem;
+	}
+
+	.ddm-wizard {
+		margin-bottom: 24px;
+		padding: 0 15px;
 	}
 
 	.multi-step-item {

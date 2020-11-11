@@ -463,7 +463,7 @@ body .ddm-user-view-content {
 
 .lfr-ddm-form-page-description,
 .lfr-ddm-form-page-title {
-	padding-left: 32px;
+	padding-left: 8px;
 	padding-right: 32px;
 }
 
@@ -618,5 +618,7 @@ legend .reference-mark,
 p .reference-mark {
 	color: #b95000;
 	font-size: 6px;
-	margin-left: 4px;
+	margin: 4px 0 32px;
+	padding-left: 8px;
+	padding-right: 4px;
 }

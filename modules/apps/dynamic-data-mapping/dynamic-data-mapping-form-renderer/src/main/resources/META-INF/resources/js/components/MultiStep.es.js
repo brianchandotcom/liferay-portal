@@ -23,7 +23,7 @@ export const MultiStep = ({activePage, editable, pages}) => {
 
 	return (
 		<div className="ddm-form-pagination position-relative wizard-mode">
-			<ol className="dmm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
+			<ol className="ddm-wizard multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 				{pages.map((page, index) => (
 					<li
 						className={classnames('multi-step-item', {

@@ -19,6 +19,8 @@ import {useConstants} from '../contexts/ConstantsContext';
 import {useItems} from '../contexts/ItemsContext';
 import getDescendantsCount from '../utils/getDescendantsCount';
 
+const HANDLER_OFFSET = 10;
+
 const getItemStyles = (currentOffset, ref, rtl) => {
 	if (!currentOffset || !ref.current) {
 		return {
@@ -28,8 +30,8 @@ const getItemStyles = (currentOffset, ref, rtl) => {
 
 	const rect = ref.current.getBoundingClientRect();
 	const x = rtl
-		? currentOffset.x + rect.width * 0.5 - window.innerWidth
-		: currentOffset.x - rect.width * 0.5;
+		? currentOffset.x + HANDLER_OFFSET - window.innerWidth
+		: currentOffset.x - HANDLER_OFFSET;
 	const y = currentOffset.y - rect.height * 0.5;
 
 	const transform = `translate(${x}px, ${y}px)`;

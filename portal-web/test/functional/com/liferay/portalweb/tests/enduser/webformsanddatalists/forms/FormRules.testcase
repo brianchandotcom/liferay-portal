@@ -655,7 +655,7 @@ definition {
 	@description = "This is a use case for LPS-119818."
 	@priority = "5"
 	test DeleteFieldThatBelongsToARule {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		Navigator.openURL();

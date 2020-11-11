@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.internal;
+package com.liferay.gradle.plugins;
 
 import aQute.bnd.osgi.Constants;
 
-import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;

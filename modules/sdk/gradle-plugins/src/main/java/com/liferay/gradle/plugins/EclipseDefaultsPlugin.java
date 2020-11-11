@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.internal;
+package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 

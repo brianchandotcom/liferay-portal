@@ -25,6 +25,11 @@ public class TextSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		return jsonObject.optString("StringValue");
 	}
 
+	@Override
+	public String getValue() {
+		return getStringValue();
+	}
+
 	protected TextSpiraCustomPropertyValue(
 		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {
 

@@ -134,6 +134,10 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		return spiraCustomProperty.getURL();
 	}
 
+	public String getValue() {
+		return null;
+	}
+
 	protected SpiraCustomPropertyValue(
 		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {
 

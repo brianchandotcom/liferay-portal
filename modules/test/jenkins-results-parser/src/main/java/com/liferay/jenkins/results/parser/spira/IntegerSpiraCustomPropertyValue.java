@@ -25,6 +25,11 @@ public class IntegerSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		return jsonObject.optInt("IntegerValue");
 	}
 
+	@Override
+	public String getValue() {
+		return String.valueOf(getIntegerValue());
+	}
+
 	protected IntegerSpiraCustomPropertyValue(
 		Integer integerValue, SpiraCustomProperty spiraCustomProperty) {
 

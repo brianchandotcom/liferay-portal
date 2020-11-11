@@ -56,6 +56,24 @@ public class MultiListSpiraCustomPropertyValue
 		return spiraCustomListValues;
 	}
 
+	@Override
+	public String getValue() {
+		StringBuilder sb = new StringBuilder();
+
+		for (SpiraCustomListValue spiraCustomListValue :
+				getSpiraCustomListValues()) {
+
+			sb.append(spiraCustomListValue.getName());
+			sb.append(",");
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return sb.toString();
+	}
+
 	protected MultiListSpiraCustomPropertyValue(
 		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {
 

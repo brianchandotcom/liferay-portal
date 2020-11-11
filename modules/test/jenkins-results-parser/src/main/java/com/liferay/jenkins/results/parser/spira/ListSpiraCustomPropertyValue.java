@@ -47,6 +47,17 @@ public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		return spiraCustomList.getSpiraCustomListValueByID(integerValue);
 	}
 
+	@Override
+	public String getValue() {
+		SpiraCustomListValue spiraCustomListValue = getSpiraCustomListValue();
+
+		if (spiraCustomListValue == null) {
+			return "";
+		}
+
+		return spiraCustomListValue.getName();
+	}
+
 	protected ListSpiraCustomPropertyValue(
 		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {
 

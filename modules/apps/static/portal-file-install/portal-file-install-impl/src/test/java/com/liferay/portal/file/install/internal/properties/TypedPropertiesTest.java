@@ -34,6 +34,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
 /**
  * @author Matthew Tambara
  */
@@ -258,6 +260,62 @@ public class TypedPropertiesTest {
 
 			_assertSave(typedProperties, StringPool.BLANK);
 		}
+	}
+
+	@Test
+	public void testLoadBadValueEnvVariable() throws IOException {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					TypedProperties.class.getName(), Level.WARNING)) {
+
+			TypedProperties typedProperties = new TypedProperties();
+
+			typedProperties = Mockito.spy(typedProperties);
+
+			Mockito.when(
+				typedProperties.getEnv(Mockito.anyString())
+			).thenReturn(
+				"FOO_ENV_VALUE"
+			);
+
+			typedProperties.load(
+				new StringReader("testKey=LIFERAY_FOO_ENV_VALUE"));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to parse property value: FOO_ENV_VALUE",
+				logRecord.getMessage());
+		}
+	}
+
+	@Test
+	public void testLoadEnvVariable() throws IOException {
+		TypedProperties typedProperties = new TypedProperties();
+
+		typedProperties = Mockito.spy(typedProperties);
+
+		Mockito.when(
+			typedProperties.getEnv(Mockito.anyString())
+		).thenReturn(
+			"B\"true\""
+		);
+
+		typedProperties.load(new StringReader("testKey=LIFERAY_FOO_ENV_VALUE"));
+
+		Assert.assertEquals(true, typedProperties.get("testKey"));
+	}
+
+	@Test
+	public void testLoadNonexistentEnvVariable() throws IOException {
+		TypedProperties typedProperties = _createTypedProperties(
+			"testKey=LIFERAY_FOO_ENV_VALUE");
+
+		Assert.assertNull(typedProperties.get("LIFERAY_FOO_ENV_VALUE"));
 	}
 
 	@Test

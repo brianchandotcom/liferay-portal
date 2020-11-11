@@ -29,7 +29,7 @@ definition {
 	}
 
 	@priority = "5"
-	test AddMember {
+	test AssignUser {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 

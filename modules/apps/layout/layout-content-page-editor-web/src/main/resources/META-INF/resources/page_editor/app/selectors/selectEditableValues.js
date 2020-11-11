@@ -12,8 +12,11 @@
  * details.
  */
 
-export default function selectEditableValue(state, fragmentEntryLinkId) {
-	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+export default function selectEditableValue(
+	{fragmentEntryLinks},
+	fragmentEntryLinkId
+) {
+	const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
 
 	return (fragmentEntryLink && fragmentEntryLink.editableValues) || {};
 }

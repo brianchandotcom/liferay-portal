@@ -16,12 +16,15 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFra
 import selectEditableValues from './selectEditableValues';
 
 export default function selectEditableValue(
-	state,
+	{fragmentEntryLinks},
 	fragmentEntryLinkId,
 	editableId,
 	processorType = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 ) {
-	const editableValues = selectEditableValues(state, fragmentEntryLinkId);
+	const editableValues = selectEditableValues(
+		{fragmentEntryLinks},
+		fragmentEntryLinkId
+	);
 
 	return (
 		(editableValues[processorType] &&

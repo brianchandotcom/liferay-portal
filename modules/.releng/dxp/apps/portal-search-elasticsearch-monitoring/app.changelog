@@ -1,0 +1,10 @@
+#
+# Liferay App Version 4.0.0
+#
+
+app.artifacts-4.0.0=\
+	com.liferay.portal.search.elasticsearch.monitoring.web-1.0.7.jar
+
+app.change.log-4.0.0=LPS-119196 LPS-122403 LPS-77699 LPS-99013 LRQA-51488 RELEASE-3100
+
+app.git.id-4.0.0=8b41d25f20b34c8f6a76529aa348361134154520

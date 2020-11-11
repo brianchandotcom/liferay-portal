@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -67,17 +66,6 @@ public class ElasticsearchConnectionConfigurationActivationHandler {
 
 		elasticsearchConnectionManager.addElasticsearchConnection(
 			elasticsearchConnectionBuilder.build());
-	}
-
-	@Deactivate
-	protected void deactivate(Map<String, Object> properties) {
-		ElasticsearchConnectionConfiguration
-			elasticsearchConnectionConfiguration =
-				ConfigurableUtil.createConfigurable(
-					ElasticsearchConnectionConfiguration.class, properties);
-
-		elasticsearchConnectionManager.removeElasticsearchConnection(
-			elasticsearchConnectionConfiguration.connectionId());
 	}
 
 	@Reference

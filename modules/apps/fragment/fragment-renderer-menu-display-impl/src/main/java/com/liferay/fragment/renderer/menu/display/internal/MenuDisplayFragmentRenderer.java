@@ -105,11 +105,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return true;
-	}
-
-	@Override
 	public void render(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,

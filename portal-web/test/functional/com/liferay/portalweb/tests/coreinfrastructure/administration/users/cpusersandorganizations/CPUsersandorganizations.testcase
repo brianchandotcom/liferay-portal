@@ -1701,6 +1701,8 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln",
 			userScreenName = "usersn");
+
+		Search.clearSearchResult();
 	}
 
 	@priority = "4"

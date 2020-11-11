@@ -12,7 +12,7 @@
  * details.
  */
 
-function runJSFromText(text, next = () => {}, appendFn) {
+function runJSFromText(text, next, appendFn) {
 	const scriptElement = document.createElement('script');
 
 	scriptElement.text = text;
@@ -27,11 +27,9 @@ function runJSFromText(text, next = () => {}, appendFn) {
 	scriptElement.remove();
 
 	next();
-
-	return scriptElement;
 }
 
-function runJSFromFile(src, next = () => {}, appendFn) {
+function runJSFromFile(src, next, appendFn) {
 	const scriptElement = document.createElement('script');
 
 	scriptElement.src = src;
@@ -51,8 +49,6 @@ function runJSFromFile(src, next = () => {}, appendFn) {
 	else {
 		document.head.appendChild(scriptElement);
 	}
-
-	return scriptElement;
 }
 
 function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
@@ -76,10 +72,10 @@ function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
 	scriptElement.remove();
 
 	if (scriptElement.src) {
-		return runJSFromFile(scriptElement.src, runNextScript, appendFn);
+		runJSFromFile(scriptElement.src, runNextScript, appendFn);
 	}
 	else {
-		return runJSFromText(scriptElement.text, runNextScript, appendFn);
+		runJSFromText(scriptElement.text, runNextScript, appendFn);
 	}
 }
 
@@ -87,6 +83,8 @@ export default function (element, defaultFn = () => {}, appendFn) {
 	const scripts = element.querySelectorAll('script');
 
 	if (!scripts.length) {
+		defaultFn();
+
 		return;
 	}
 

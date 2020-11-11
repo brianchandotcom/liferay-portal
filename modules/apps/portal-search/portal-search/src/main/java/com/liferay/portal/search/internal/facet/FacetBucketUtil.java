@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Bryan Engler
@@ -37,7 +38,9 @@ public class FacetBucketUtil {
 
 			String value = field.getValue();
 
-			if ((lower.compareTo(value) <= 0) && (value.compareTo(upper) < 0)) {
+			if (Validator.isNotNull(lower) && (lower.compareTo(value) <= 0) &&
+				Validator.isNotNull(upper) && (value.compareTo(upper) < 0)) {
+
 				return true;
 			}
 

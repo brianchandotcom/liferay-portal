@@ -137,7 +137,6 @@ function CalculatorButtonArea({
 				</ClayButton>
 				{ONE_TO_NINE.map((value) => (
 					<ClayButton
-						aria-label={value}
 						className="calculator-button"
 						disabled={disableNumbers}
 						displayType="secondary"

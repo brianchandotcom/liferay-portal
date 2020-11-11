@@ -135,6 +135,14 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 	}
 
 	protected SpiraCustomPropertyValue(
+		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {
+
+		super(jsonObject);
+
+		_spiraCustomProperty = spiraCustomProperty;
+	}
+
+	protected SpiraCustomPropertyValue(
 		SpiraCustomListValue spiraCustomListValue,
 		SpiraCustomProperty spiraCustomProperty) {
 
@@ -151,6 +159,33 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		jsonObject.put("Name", propertyValue);
 
 		_spiraCustomProperty = spiraCustomProperty;
+	}
+
+	protected JSONObject getDefinitionJSONObject() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		SpiraCustomProperty.Type spiraCustomPropertyType =
+			spiraCustomProperty.getType();
+
+		JSONObject definitionJSONObject = new JSONObject();
+
+		definitionJSONObject.put(
+			"ArtifactTypeId", spiraCustomProperty.getArtifactTypeId());
+		definitionJSONObject.put(
+			"CustomPropertyId", spiraCustomProperty.getID());
+		definitionJSONObject.put(
+			"CustomPropertyTypeId", spiraCustomPropertyType.getID());
+		definitionJSONObject.put(
+			"CustomPropertyTypeName", spiraCustomPropertyType.getName());
+		definitionJSONObject.put("Name", spiraCustomProperty.getName());
+		definitionJSONObject.put(
+			"ProjectTemplateId", spiraProject.getProjectTemplateID());
+		definitionJSONObject.put(
+			"PropertyNumber", spiraCustomProperty.getPropertyNumber());
+
+		return definitionJSONObject;
 	}
 
 	protected static final String KEY_ID = "CustomPropertyValueId";

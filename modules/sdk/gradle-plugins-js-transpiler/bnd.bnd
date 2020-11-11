@@ -1,5 +1,0 @@
-Bundle-Description: The JS Transpiler Gradle plugin lets you run metal-cli to build Metal.js code, compile Soy files, and transpile ES6 to ES5.
-Bundle-Name: Liferay Gradle Plugins JS Transpiler
-Bundle-SymbolicName: com.liferay.gradle.plugins.js.transpiler
-Bundle-Version: 2.4.61
-Export-Package: com.liferay.gradle.plugins.js.transpiler

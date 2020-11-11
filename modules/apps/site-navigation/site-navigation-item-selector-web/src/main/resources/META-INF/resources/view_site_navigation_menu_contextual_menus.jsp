@@ -53,7 +53,7 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 					<img alt="<%= jsonObject.getString("title") %>" class="contextual-menu-image p-5" src="<%= jsonObject.getString("imageURL") %>" />
 				</clay:button>
 
-				<p class="font-weight-bold mt-3">
+				<p class="font-weight-bold mb-2 mt-3">
 					<%= jsonObject.getString("title") %>
 				</p>
 

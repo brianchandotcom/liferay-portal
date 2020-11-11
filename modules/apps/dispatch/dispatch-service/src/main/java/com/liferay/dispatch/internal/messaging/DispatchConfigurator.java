@@ -15,6 +15,11 @@
 package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -23,6 +28,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -36,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matija Petanjek
  */
-@Component(service = {})
+@Component(immediate = true, service = {})
 public class DispatchConfigurator {
 
 	@Activate
@@ -79,11 +85,60 @@ public class DispatchConfigurator {
 
 		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
+
+		_scheduleMemorySchedulerJobs();
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_unscheduleMemorySchedulerJobs();
+
 		_serviceRegistration.unregister();
+	}
+
+	private void _scheduleMemorySchedulerJobs() {
+		List<DispatchTrigger> dispatchTriggers =
+			_dispatchTriggerLocalService.getDispatchTriggers(
+				true, DispatchTaskClusterMode.ALL_NODES.getMode());
+
+		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
+			try {
+				_dispatchTriggerHelper.addSchedulerJob(
+					dispatchTrigger.getDispatchTriggerId(),
+					dispatchTrigger.getCronExpression(),
+					dispatchTrigger.getStartDate(),
+					dispatchTrigger.getEndDate(),
+					DispatchTaskClusterMode.ALL_NODES.getStorageType());
+			}
+			catch (DispatchTriggerSchedulerException
+						dispatchTriggerSchedulerException) {
+
+				_log.error(
+					dispatchTriggerSchedulerException.getMessage(),
+					dispatchTriggerSchedulerException);
+			}
+		}
+	}
+
+	private void _unscheduleMemorySchedulerJobs() {
+		List<DispatchTrigger> dispatchTriggers =
+			_dispatchTriggerLocalService.getDispatchTriggers(
+				true, DispatchTaskClusterMode.ALL_NODES.getMode());
+
+		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
+			try {
+				_dispatchTriggerHelper.unscheduleSchedulerJob(
+					dispatchTrigger.getDispatchTriggerId(),
+					DispatchTaskClusterMode.ALL_NODES.getStorageType());
+			}
+			catch (DispatchTriggerSchedulerException
+						dispatchTriggerSchedulerException) {
+
+				_log.error(
+					dispatchTriggerSchedulerException.getMessage(),
+					dispatchTriggerSchedulerException);
+			}
+		}
 	}
 
 	private static final int _MAXIMUM_QUEUE_SIZE = 100;
@@ -93,6 +148,12 @@ public class DispatchConfigurator {
 
 	@Reference
 	private DestinationFactory _destinationFactory;
+
+	@Reference
+	private DispatchTriggerHelper _dispatchTriggerHelper;
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	private ServiceRegistration<Destination> _serviceRegistration;
 

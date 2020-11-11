@@ -227,8 +227,6 @@ public class LayoutAdaptiveMediaProcessorImpl
 				continue;
 			}
 
-			Matcher matcher = _cssPropertyPattern.matcher(styleText);
-
 			StringBundler sb = new StringBundler();
 
 			String elementId = styledElement.attr("id");
@@ -238,6 +236,8 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 				styledElement.attr("id", elementId);
 			}
+
+			Matcher matcher = _cssPropertyPattern.matcher(styleText);
 
 			while (matcher.find()) {
 				sb.append(

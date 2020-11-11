@@ -99,6 +99,24 @@ class RuleList extends Component {
 								outputLabel,
 							};
 						}
+						else if (action.action == 'calculate') {
+							const fields = [];
+
+							const visitor = new PagesVisitor(this.pages);
+
+							visitor.mapFields((field) => {
+								fields.push(field);
+							});
+
+							newAction = {
+								...action,
+								expression: RulesSupport.replaceFieldNameByFieldLabel(
+									action.expression,
+									fields
+								),
+								label: this._getFieldLabel(action.target),
+							};
+						}
 						else if (action.action == 'jump-to-page') {
 							newAction = {
 								...action,

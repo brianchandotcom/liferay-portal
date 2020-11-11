@@ -322,6 +322,22 @@ const findInvalidRule = (rule) => {
 	return findRuleByFieldName('', [rule]);
 };
 
+const replaceFieldNameByFieldLabel = (expression, fields) => {
+	const operands = expression.match(DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION);
+
+	let newExpression = expression;
+
+	operands.map((operand) => {
+		return fields.forEach((field) => {
+			if (field.fieldName === operand) {
+				newExpression = newExpression.replace(operand, field.label);
+			}
+		});
+	});
+
+	return newExpression;
+};
+
 export default {
 	clearAllConditionFieldValues,
 	clearFirstOperandValue,
@@ -333,5 +349,6 @@ export default {
 	formatRules,
 	getFieldOptions,
 	getFieldType,
+	replaceFieldNameByFieldLabel,
 	syncActions,
 };

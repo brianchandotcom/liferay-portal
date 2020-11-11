@@ -19,6 +19,7 @@ import {Config} from 'metal-state';
 
 import Token from '../../expressions/Token.es';
 import Tokenizer from '../../expressions/Tokenizer.es';
+import RulesSupport from '../RuleBuilder/RulesSupport.es';
 import templates from './Calculator.soy';
 
 /**
@@ -98,7 +99,12 @@ class Calculator extends Component {
 		return {
 			...state,
 			...this.getStateBasedOnExpression(expression),
-			expression: expression.replace(/[[\]]/g, ''),
+			expression: expression
+				? RulesSupport.replaceFieldNameByFieldLabel(
+						expression.replace(/[[\]]/g, ''),
+						this.fields
+				  )
+				: expression,
 			placeholder: Liferay.Language.get(
 				'the-expression-will-be-displayed-here'
 			),

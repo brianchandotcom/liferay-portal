@@ -102,6 +102,8 @@ public class DDMFormTemplateContextProcessor {
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
+		setDDMFormFieldAllowGuestUsers(
+			jsonObject.getBoolean("allowGuestUsers"), ddmFormField);
 		setDDMFormFieldAlphabeticalOrder(
 			jsonObject.getBoolean("alphabeticalOrder"), ddmFormField);
 		setDDMFormFieldCollapsible(
@@ -244,6 +246,12 @@ public class DDMFormTemplateContextProcessor {
 
 	protected void setDDMFormDefaultLocale() {
 		_ddmForm.setDefaultLocale(_locale);
+	}
+
+	protected void setDDMFormFieldAllowGuestUsers(
+		boolean allowGuestUsers, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty("allowGuestUsers", allowGuestUsers);
 	}
 
 	protected void setDDMFormFieldAlphabeticalOrder(

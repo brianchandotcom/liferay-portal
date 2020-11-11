@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
@@ -45,7 +46,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {"label", "tip", "required"}
+							size = 12,
+							value = {
+								"label", "tip", "required", "allowGuestUsers"
+							}
 						)
 					}
 				)
@@ -74,4 +78,11 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 )
 public interface DocumentLibraryDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(
+		dataType = "boolean", label = "%allow-guest-users-to-send-files",
+		properties = "showAsSwitcher=true", type = "checkbox"
+	)
+	public boolean allowGuestUsers();
+
 }

@@ -168,14 +168,14 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			navigationMenuTag.setRootItemType("relative");
 
-			if (contextualMenu == ContextualMenu.SAME_LEVEL) {
-				navigationMenuTag.setRootItemLevel(1);
-			}
-			else if (contextualMenu == ContextualMenu.SECOND_LEVEL) {
+			if (contextualMenu == ContextualMenu.CHILDREN) {
 				navigationMenuTag.setRootItemLevel(0);
 			}
-			else if (contextualMenu == ContextualMenu.UPPER_LEVEL) {
+			else if (contextualMenu == ContextualMenu.PARENT_AND_ITS_SIBLINGS) {
 				navigationMenuTag.setRootItemLevel(2);
+			}
+			else if (contextualMenu == ContextualMenu.SELF_AND_SIBLINGS) {
+				navigationMenuTag.setRootItemLevel(1);
 			}
 		}
 		else if (source instanceof SiteNavigationMenuSource) {

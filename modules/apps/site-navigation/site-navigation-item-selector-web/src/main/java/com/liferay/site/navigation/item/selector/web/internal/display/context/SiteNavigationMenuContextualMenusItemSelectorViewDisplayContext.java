@@ -73,33 +73,33 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 		return JSONUtil.putAll(
 			JSONUtil.put(
 				"description",
-				LanguageUtil.get(resourceBundle, "second-level-description")
+				LanguageUtil.get(resourceBundle, "children-description")
 			).put(
-				"imageURL", _getImageURL("second_level.svg")
+				"imageURL", _getImageURL("children.svg")
 			).put(
-				"title", LanguageUtil.get(resourceBundle, "second-level")
+				"title", LanguageUtil.get(resourceBundle, "children")
 			).put(
-				"value", "second-level"
+				"value", "children"
 			),
 			JSONUtil.put(
 				"description",
-				LanguageUtil.get(resourceBundle, "same-level-description")
+				LanguageUtil.get(resourceBundle, "self-and-siblings-description")
 			).put(
-				"imageURL", _getImageURL("same_level.svg")
+				"imageURL", _getImageURL("self_and_siblings.svg")
 			).put(
-				"title", LanguageUtil.get(resourceBundle, "same-level")
+				"title", LanguageUtil.get(resourceBundle, "self-and-siblings")
 			).put(
-				"value", "same-level"
+				"value", "self-and-siblings"
 			),
 			JSONUtil.put(
 				"description",
-				LanguageUtil.get(resourceBundle, "upper-level-description")
+				LanguageUtil.get(resourceBundle, "parent-and-its-siblings-description")
 			).put(
-				"imageURL", _getImageURL("upper_level.svg")
+				"imageURL", _getImageURL("parent_and_its_siblings.svg")
 			).put(
-				"title", LanguageUtil.get(resourceBundle, "upper-level")
+				"title", LanguageUtil.get(resourceBundle, "parent-and-its-siblings")
 			).put(
-				"value", "upper-level"
+				"value", "parent-and-its-siblings"
 			));
 	}
 

@@ -77,8 +77,9 @@ public class MenuDisplayFragmentConfiguration {
 
 	public enum ContextualMenu implements Source {
 
-		SAME_LEVEL("same-level"), SECOND_LEVEL("second-level"),
-		UPPER_LEVEL("upper-level");
+		CHILDREN("children"),
+		PARENT_AND_ITS_SIBLINGS("parent-and-its-siblings"),
+		SELF_AND_SIBLINGS("self-and-siblings");
 
 		public static ContextualMenu parse(String stringValue) {
 			for (ContextualMenu contextualMenu : values()) {
@@ -87,7 +88,7 @@ public class MenuDisplayFragmentConfiguration {
 				}
 			}
 
-			return SAME_LEVEL;
+			return SELF_AND_SIBLINGS;
 		}
 
 		public String getValue() {

@@ -29,25 +29,44 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 	public static SpiraCustomPropertyValue createSpiraCustomPropertyValue(
 		SpiraCustomProperty spiraCustomProperty, String value) {
 
-		SpiraCustomPropertyValue spiraCustomPropertyValue =
-			spiraCustomProperty.getSpiraCustomPropertyValue(value);
-
-		if (spiraCustomPropertyValue != null) {
-			return spiraCustomPropertyValue;
+		if (value == null) {
+			throw new RuntimeException("Invalid value " + value);
 		}
 
-		SpiraCustomListValue spiraCustomListValue =
-			SpiraCustomListValue.createSpiraCustomListValue(
-				spiraCustomProperty.getSpiraProject(),
-				spiraCustomProperty.getSpiraCustomList(), value);
+		SpiraCustomProperty.Type spiraCustomPropertyType =
+			spiraCustomProperty.getType();
 
-		spiraCustomPropertyValue = new SpiraCustomPropertyValue(
-			spiraCustomListValue, spiraCustomProperty);
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.INTEGER) {
+			if (!value.matches("\\d+")) {
+				throw new RuntimeException("Invalid integer value " + value);
+			}
 
-		spiraCustomProperty.addSpiraCustomPropertyValue(
-			spiraCustomPropertyValue);
+			return new IntegerSpiraCustomPropertyValue(
+				Integer.valueOf(value), spiraCustomProperty);
+		}
 
-		return spiraCustomPropertyValue;
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.LIST) {
+			return new ListSpiraCustomPropertyValue(
+				SpiraCustomListValue.createSpiraCustomListValue(
+					spiraCustomProperty.getSpiraProject(),
+					spiraCustomProperty.getSpiraCustomList(), value),
+				spiraCustomProperty);
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.MULTILIST) {
+			return new MultiListSpiraCustomPropertyValue(
+				SpiraCustomListValue.createSpiraCustomListValue(
+					spiraCustomProperty.getSpiraProject(),
+					spiraCustomProperty.getSpiraCustomList(), value),
+				spiraCustomProperty);
+		}
+
+		if (spiraCustomPropertyType == SpiraCustomProperty.Type.TEXT) {
+			return new TextSpiraCustomPropertyValue(value, spiraCustomProperty);
+		}
+
+		throw new RuntimeException(
+			"Unsupported custom property type " + spiraCustomPropertyType);
 	}
 
 	public static List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues(

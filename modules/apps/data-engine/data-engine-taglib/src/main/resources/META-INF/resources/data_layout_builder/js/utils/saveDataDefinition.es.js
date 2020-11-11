@@ -86,9 +86,9 @@ const normalizeField = (
 };
 
 /**
- *
- * @param {*} dataDefinition
- * @param {*} defaultLanguageId
+ * Normalize Data Definition
+ * @param {Object} dataDefinition
+ * @param {String?} defaultLanguageId
  */
 
 export const normalizeDataDefinition = (
@@ -117,6 +117,12 @@ export const normalizeDataDefinition = (
 		),
 	};
 };
+
+/**
+ * Normalize Data Layout
+ * @param {Object} dataLayout
+ * @param {String?} defaultLanguageId
+ */
 
 export const normalizeDataLayout = (
 	dataLayout,

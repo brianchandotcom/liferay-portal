@@ -77,7 +77,7 @@ const ModalContent = ({
 				({name}) => name
 			);
 
-			const [prevLayoutFields, actualLayoutFields] = [
+			const [prevLayoutFields, currentLayoutFields] = [
 				fieldSet.defaultDataLayout.dataLayoutPages,
 				dataLayout.dataLayoutPages,
 			].map((layout) =>
@@ -85,7 +85,7 @@ const ModalContent = ({
 			);
 
 			return !!prevLayoutFields.filter(
-				(field) => !actualLayoutFields.includes(field)
+				(field) => !currentLayoutFields.includes(field)
 			).length;
 		};
 
@@ -225,7 +225,7 @@ const ModalContent = ({
 								'untitled-fieldset'
 							)}
 							type="text"
-							value={name[editingLanguageId]}
+							value={name[editingLanguageId] || ''}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
@@ -248,7 +248,7 @@ const ModalContent = ({
 						</ClayButton>
 						<ClayButton
 							disabled={
-								!name[defaultLanguageId] || dataLayoutIsEmpty
+								!name[editingLanguageId] || dataLayoutIsEmpty
 							}
 							onClick={onSave}
 						>

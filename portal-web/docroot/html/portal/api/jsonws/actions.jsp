@@ -43,7 +43,7 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 	</aui:select>
 </c:if>
 
-<aui:input autoFocus="<%= true %>" cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
+<aui:input cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
 
 <div class="services" id="services">
 

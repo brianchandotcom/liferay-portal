@@ -19,8 +19,6 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.defaults.LiferayThemeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -338,10 +336,7 @@ public class LiferayRelengUtil {
 		for (Configuration configuration : project.getConfigurations()) {
 			String configurationName = configuration.getName();
 
-			if (configurationName.equals(_JS_COMPILE_CONFIGURATION_NAME) ||
-				configurationName.equals(_SOY_COMPILE_CONFIGURATION_NAME) ||
-				configurationName.startsWith("test")) {
-
+			if (configurationName.startsWith("test")) {
 				continue;
 			}
 
@@ -476,14 +471,8 @@ public class LiferayRelengUtil {
 	private static final String _IGNORED_MESSAGE_PATTERN =
 		WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN;
 
-	private static final String _JS_COMPILE_CONFIGURATION_NAME =
-		JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME;
-
 	private static final String _MODULES_DIR_NAME = "modules";
 
 	private static final String _RELENG_DIR_NAME = ".releng";
-
-	private static final String _SOY_COMPILE_CONFIGURATION_NAME =
-		JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME;
 
 }

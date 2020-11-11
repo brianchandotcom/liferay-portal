@@ -60,7 +60,7 @@ The Soy plugin adds two tasks to your project:
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
 `buildSoy` | \- | [`BuildSoyTask`](#buildsoytask) | Compiles Closure Templates into JavaScript functions.
-`wrapSoyAlloyTemplate` | - `processResources` if `java` is applied <br> - `transpileJS` if [`com.liferay.js.transpiler`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler) is applied | [`WrapSoyAlloyTemplateTask`](#wrapsoyalloytemplatetask) | Wraps the JavaScript functions compiled from Closure Templates into AlloyUI modules.
+`wrapSoyAlloyTemplate` | - `processResources` if `java` is applied | [`WrapSoyAlloyTemplateTask`](#wrapsoyalloytemplatetask) | Wraps the JavaScript functions compiled from Closure Templates into AlloyUI modules.
 
 The plugin also adds the following dependencies to tasks defined by the `java`
 plugin:
@@ -111,7 +111,7 @@ The Soy Translation plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`replaceSoyTranslation` | - `processResources` if `java` is applied <br> - `transpileJS` if [`com.liferay.js.transpiler`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler) is applied | [`ReplaceSoyTranslationTask`](#replacesoytranslationtask) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
+`replaceSoyTranslation` | - `processResources` if `java` is applied | [`ReplaceSoyTranslationTask`](#replacesoytranslationtask) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
 
 The plugin also adds the following dependencies to tasks defined by the `java`
 plugin:

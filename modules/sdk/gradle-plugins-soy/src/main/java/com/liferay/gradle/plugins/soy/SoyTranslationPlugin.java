@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.soy;
 
-import com.liferay.gradle.plugins.soy.internal.SoyPluginConstants;
 import com.liferay.gradle.plugins.soy.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.soy.tasks.ReplaceSoyTranslationTask;
 
@@ -49,7 +48,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 		_addTaskReplaceSoyTranslation(project);
 	}
 
-	@SuppressWarnings("rawtypes")
 	private ReplaceSoyTranslationTask _addTaskReplaceSoyTranslation(
 		Project project) {
 
@@ -68,18 +66,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			Collections.singleton("**/*.soy.js"));
 
 		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withId(
-			SoyPluginConstants.JS_TRANSPILER_PLUGIN_ID,
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					replaceSoyTranslationTask.dependsOn(
-						SoyPluginConstants.TRANSPILE_JS_TASK_NAME);
-				}
-
-			});
 
 		pluginContainer.withType(
 			JavaPlugin.class,

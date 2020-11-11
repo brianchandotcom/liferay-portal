@@ -49,8 +49,6 @@ import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeIns
 import com.liferay.gradle.plugins.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
@@ -352,15 +350,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
-
-		if (GradleUtil.hasTask(
-				project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
-
-			GradleUtil.applyPlugin(project, JSTranspilerBasePlugin.class);
-		}
-		else {
-			GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
-		}
 
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);

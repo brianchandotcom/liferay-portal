@@ -62,7 +62,6 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
@@ -508,19 +507,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 		}
-
-		GradleUtil.withPlugin(
-			project, JSTranspilerPlugin.class,
-			new Action<JSTranspilerPlugin>() {
-
-				@Override
-				public void execute(JSTranspilerPlugin jsTranspilerPlugin) {
-					_configureConfigurationNoCrossRepoDependencies(
-						project, gitRepo,
-						JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME);
-				}
-
-			});
 
 		GradleUtil.withPlugin(
 			project, RESTBuilderPlugin.class,
@@ -2357,50 +2343,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
-	}
-
-	private void _configureConfigurationNoCrossRepoDependencies(
-		final Project project, final GitRepo gitRepo, String name) {
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, name);
-
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
-
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
-
-				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					if (gitRepo == null) {
-						return;
-					}
-
-					DependencySet dependencySet =
-						resolvableDependencies.getDependencies();
-
-					for (ProjectDependency projectDependency :
-							dependencySet.withType(ProjectDependency.class)) {
-
-						Project dependencyProject =
-							projectDependency.getDependencyProject();
-
-						GitRepo dependencyGitRepo = GitRepo.getGitRepo(
-							dependencyProject.getProjectDir());
-
-						if (!gitRepo.dir.equals(dependencyGitRepo.dir)) {
-							throw new GradleException(
-								projectDependency + " in " + project +
-									" is not allowed to cross subrepository " +
-										"boundaries");
-						}
-					}
-				}
-
-			});
 	}
 
 	private void _configureConfigurations(

@@ -26,6 +26,10 @@ public interface DataDefinitionContentType {
 		return false;
 	}
 
+	public default boolean allowInvalidAvailableLocalesForProperty() {
+		return false;
+	}
+
 	public long getClassNameId();
 
 	public default String getContentType() {

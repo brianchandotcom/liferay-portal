@@ -397,8 +397,10 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
-		String captchaText = (String)httpSession.getAttribute(
-			_getHttpSessionKey(WebKeys.CAPTCHA_TEXT, httpServletRequest));
+		String httpSessionKey = _getHttpSessionKey(
+			WebKeys.CAPTCHA_TEXT, httpServletRequest);
+
+		String captchaText = (String)httpSession.getAttribute(httpSessionKey);
 
 		if (captchaText == null) {
 			_log.error(
@@ -413,7 +415,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			ParamUtil.getString(httpServletRequest, "captchaText"));
 
 		if (valid) {
-			httpSession.removeAttribute(WebKeys.CAPTCHA_TEXT);
+			httpSession.removeAttribute(httpSessionKey);
 		}
 
 		return valid;

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,11 +110,7 @@ public class MenuDisplayFragmentConfigurationParser {
 			_fragmentEntryConfigurationParser.getFieldValue(
 				configuration, editableValues, "displayStyle"));
 
-		if (Objects.equals(displayStyle, "stacked")) {
-			return DisplayStyle.STACKED;
-		}
-
-		return DisplayStyle.HORIZONTAL;
+		return DisplayStyle.parse(displayStyle);
 	}
 
 	private Map<String, FrontendToken> _getFrontendTokens(long groupId) {
@@ -159,17 +154,7 @@ public class MenuDisplayFragmentConfigurationParser {
 			if (jsonObject.has("contextualMenu")) {
 				String contextualMenu = jsonObject.getString("contextualMenu");
 
-				if (Objects.equals(contextualMenu, "same-level")) {
-					return ContextualMenu.SAME_LEVEL;
-				}
-
-				if (Objects.equals(contextualMenu, "second-level")) {
-					return ContextualMenu.SECOND_LEVEL;
-				}
-
-				if (Objects.equals(contextualMenu, "upper-level")) {
-					return ContextualMenu.UPPER_LEVEL;
-				}
+				return ContextualMenu.parse(contextualMenu);
 			}
 			else if (jsonObject.has("siteNavigationMenuId")) {
 				long siteNavigationMenuId = jsonObject.getLong(

@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.renderer.menu.display.internal;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -76,13 +77,54 @@ public class MenuDisplayFragmentConfiguration {
 
 	public enum ContextualMenu implements Source {
 
-		SAME_LEVEL, SECOND_LEVEL, UPPER_LEVEL
+		SAME_LEVEL("same-level"), SECOND_LEVEL("second-level"),
+		UPPER_LEVEL("upper-level");
+
+		public static ContextualMenu parse(String stringValue) {
+			for (ContextualMenu contextualMenu : values()) {
+				if (Objects.equals(contextualMenu.getValue(), stringValue)) {
+					return contextualMenu;
+				}
+			}
+
+			return SAME_LEVEL;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private ContextualMenu(String value) {
+			_value = value;
+		}
+
+		private final String _value;
 
 	}
 
 	public enum DisplayStyle {
 
-		HORIZONTAL, STACKED
+		HORIZONTAL("horizontal"), STACKED("stacked");
+
+		public static DisplayStyle parse(String stringValue) {
+			for (DisplayStyle displayStyle : values()) {
+				if (Objects.equals(displayStyle.getValue(), stringValue)) {
+					return displayStyle;
+				}
+			}
+
+			return HORIZONTAL;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private DisplayStyle(String value) {
+			_value = value;
+		}
+
+		private final String _value;
 
 	}
 

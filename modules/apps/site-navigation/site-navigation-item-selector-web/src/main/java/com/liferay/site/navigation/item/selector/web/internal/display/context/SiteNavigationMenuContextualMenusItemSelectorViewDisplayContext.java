@@ -83,7 +83,8 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 			),
 			JSONUtil.put(
 				"description",
-				LanguageUtil.get(resourceBundle, "self-and-siblings-description")
+				LanguageUtil.get(
+					resourceBundle, "self-and-siblings-description")
 			).put(
 				"imageURL", _getImageURL("self_and_siblings.svg")
 			).put(
@@ -93,11 +94,13 @@ public class SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext {
 			),
 			JSONUtil.put(
 				"description",
-				LanguageUtil.get(resourceBundle, "parent-and-its-siblings-description")
+				LanguageUtil.get(
+					resourceBundle, "parent-and-its-siblings-description")
 			).put(
 				"imageURL", _getImageURL("parent_and_its_siblings.svg")
 			).put(
-				"title", LanguageUtil.get(resourceBundle, "parent-and-its-siblings")
+				"title",
+				LanguageUtil.get(resourceBundle, "parent-and-its-siblings")
 			).put(
 				"value", "parent-and-its-siblings"
 			));

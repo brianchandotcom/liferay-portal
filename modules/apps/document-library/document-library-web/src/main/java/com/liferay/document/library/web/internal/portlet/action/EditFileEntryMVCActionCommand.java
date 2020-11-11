@@ -1095,12 +1095,18 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Add file entry
 
-				String uniqueFileName = DLUtil.getUniqueFileName(
-					themeDisplay.getScopeGroupId(), folderId, title);
+				String extension = FileUtil.getExtension(sourceFileName);
+
+				String uniqueTitle = DLUtil.getUniqueFileName(
+					themeDisplay.getScopeGroupId(), folderId,
+					FileUtil.stripExtension(sourceFileName));
+
+				String uniqueFileName = DLUtil.getSanitizedFileName(
+					uniqueTitle, extension);
 
 				fileEntry = _dlAppService.addFileEntry(
 					repositoryId, folderId, uniqueFileName, contentType,
-					uniqueFileName, description, changeLog, inputStream, size,
+					uniqueTitle, description, changeLog, inputStream, size,
 					serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(

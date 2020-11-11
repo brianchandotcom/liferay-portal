@@ -543,7 +543,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AddUserDisplaySettings {
+	test EditUserDisplaySettings {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -2242,7 +2242,7 @@ definition {
 
 	@description = "This is a use case for LPS-121271."
 	@priority = "3"
-	test ViewUserPreferencesSaved {
+	test EditAlertsandAnnouncementsDelivery {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

@@ -21,6 +21,8 @@ import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
+import selectLanguageId from '../../../../app/selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import ImageService from '../../../../app/services/ImageService';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
@@ -32,14 +34,23 @@ const DEFAULT_IMAGE_CONFIGURATION = 'auto';
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
+
 	const dispatch = useDispatch();
 	const imageConfigurationId = useId();
 	const imageDescriptionId = useId();
-	const state = useSelector((state) => state);
-
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const languageId = useSelector(selectLanguageId);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+	const editables = useSelector((state) => state.editables);
+	const [imageConfiguration, setImageConfiguration] = useState(
+		DEFAULT_IMAGE_CONFIGURATION
+	);
+	const [imageConfigurations, setImageConfigurations] = useState([]);
+	const [imageFileSize, setImageFileSize] = useState('');
+	const [imageSize, setImageSize] = useState(null);
 
 	const canUpdateImage = selectedViewportSize === VIEWPORT_SIZES.desktop;
 
@@ -49,42 +60,22 @@ export function ImagePropertiesPanel({item}) {
 			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
 
 	const editableValues =
-		state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+		fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
 	const editableValue = editableValues[processorKey][editableId];
 
 	const editableConfig = editableValue.config || {};
 
-	const [imageDescription, setImageDescription] = useState(
-		editableConfig.alt || ''
-	);
-
-	const [imageConfiguration, setImageConfiguration] = useState(
-		DEFAULT_IMAGE_CONFIGURATION
-	);
-
-	const [imageConfigurations, setImageConfigurations] = useState([]);
-
-	const [imageFileSize, setImageFileSize] = useState('');
-
-	const editables = useSelector((state) => state.editables);
-
 	const editableElement = editables
 		? editables[item.parentId]?.[item.itemId]?.element
 		: undefined;
 
-	const [imageSize, setImageSize] = useState(null);
-
-	const editableContent = useSelector((state) => {
-		const content = selectEditableValueContent(
-			state,
-			fragmentEntryLinkId,
-			editableId,
-			processorKey
-		);
-
-		return content;
-	});
+	const editableContent = selectEditableValueContent(
+		{fragmentEntryLinks, languageId},
+		fragmentEntryLinkId,
+		editableId,
+		processorKey
+	);
 
 	const imageUrl =
 		typeof editableContent === 'string'
@@ -94,6 +85,10 @@ export function ImagePropertiesPanel({item}) {
 	const imageTitle =
 		editableConfig.imageTitle ||
 		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
+
+	const [imageDescription, setImageDescription] = useState(
+		editableConfig.alt || ''
+	);
 
 	useEffect(() => {
 		if (editableElement !== null) {
@@ -202,7 +197,7 @@ export function ImagePropertiesPanel({item}) {
 		imageFileSize,
 		imageConfigurations,
 		selectedViewportSize,
-		state.languageId,
+		languageId,
 	]);
 
 	const updateEditableConfig = (
@@ -235,13 +230,13 @@ export function ImagePropertiesPanel({item}) {
 			updateEditableValuesThunk({
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
-				segmentsExperienceId: state.segmentsExperienceId,
+				segmentsExperienceId,
 			})
 		);
 	};
 
 	const onImageChange = (imageTitle, imageUrl, fileEntryId) => {
-		const {editableValues} = state.fragmentEntryLinks[fragmentEntryLinkId];
+		const {editableValues} = fragmentEntryLinks[fragmentEntryLinkId];
 
 		const editableProcessorValues = editableValues[processorKey];
 
@@ -271,7 +266,7 @@ export function ImagePropertiesPanel({item}) {
 		nextEditableValue = {
 			...editableValue,
 			config: nextEditableValueConfig,
-			[state.languageId]: nextEditableValueContent,
+			[languageId]: nextEditableValueContent,
 		};
 
 		const nextEditableValues = {
@@ -289,7 +284,7 @@ export function ImagePropertiesPanel({item}) {
 			updateEditableValuesThunk({
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
-				segmentsExperienceId: state.segmentsExperienceId,
+				segmentsExperienceId,
 			})
 		);
 	};

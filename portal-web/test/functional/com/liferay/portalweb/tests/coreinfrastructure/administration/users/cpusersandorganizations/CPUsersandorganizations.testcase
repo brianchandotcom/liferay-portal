@@ -1676,6 +1676,8 @@ definition {
 		Organization.searchCP(
 			orgName = "Organization Name",
 			searchTerm = "Organization Name");
+
+		Search.clearSearchResult();
 	}
 
 	@priority = "4"

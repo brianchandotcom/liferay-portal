@@ -51,6 +51,18 @@ public abstract class BaseBuiltInJSModule implements JSModule {
 		_name = name;
 		_dependencies = dependencies;
 		_flagsJSONObject = flagsJSONObject;
+
+		_id = ModuleNameUtil.getModuleId(_jsPackage, _name);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_jsPackage.getName());
+		sb.append(StringPool.AT);
+		sb.append(_jsPackage.getVersion());
+		sb.append(StringPool.SLASH);
+		sb.append(_name);
+
+		_resolvedId = sb.toString();
 	}
 
 	@Override
@@ -80,7 +92,7 @@ public abstract class BaseBuiltInJSModule implements JSModule {
 
 	@Override
 	public String getId() {
-		return ModuleNameUtil.getModuleId(_jsPackage, _name);
+		return _id;
 	}
 
 	@Override
@@ -95,15 +107,7 @@ public abstract class BaseBuiltInJSModule implements JSModule {
 
 	@Override
 	public String getResolvedId() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_jsPackage.getName());
-		sb.append(StringPool.AT);
-		sb.append(_jsPackage.getVersion());
-		sb.append(StringPool.SLASH);
-		sb.append(_name);
-
-		return sb.toString();
+		return _resolvedId;
 	}
 
 	@Override
@@ -133,7 +137,9 @@ public abstract class BaseBuiltInJSModule implements JSModule {
 
 	private final Collection<String> _dependencies;
 	private final JSONObject _flagsJSONObject;
+	private final String _id;
 	private final JSPackage _jsPackage;
 	private final String _name;
+	private final String _resolvedId;
 
 }

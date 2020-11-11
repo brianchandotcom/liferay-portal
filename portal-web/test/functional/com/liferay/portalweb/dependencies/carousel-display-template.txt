@@ -20,7 +20,7 @@
 						<#assign article = cur_contents.getData()?eval />
 
 						<#-- Here is our taglib call -->
-						<@liferay_ui["asset-display"]
+						<@liferay_asset["asset-display"]
 							className=article.className
 							classPK=getterUtil.getLong(article.classPK, 0)
 							template="full_content"

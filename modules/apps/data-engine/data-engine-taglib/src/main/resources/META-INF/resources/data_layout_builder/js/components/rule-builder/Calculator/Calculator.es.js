@@ -217,7 +217,7 @@ const Calculator = forwardRef(
 								<ClayDropDownWithItems
 									className="calculator-add-field-button-container"
 									items={dropdownItems.map((item) => ({
-										...item,
+										label: item.label,
 										onClick: () =>
 											handleFieldSelected(item),
 									}))}

@@ -420,8 +420,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				TempFileEntryUtil.getOriginalTempFileName(
 					tempFileEntry.getFileName());
 
-			String uniqueFileName = DLUtil.getUniqueFileName(
-				tempFileEntry.getGroupId(), folderId, originalSelectedFileName);
+			String extension = FileUtil.getExtension(originalSelectedFileName);
+
+			String uniqueTitle = DLUtil.getUniqueFileName(
+				tempFileEntry.getGroupId(), folderId,
+				FileUtil.stripExtension(originalSelectedFileName));
 
 			String mimeType = tempFileEntry.getMimeType();
 			InputStream inputStream = tempFileEntry.getContentStream();
@@ -430,10 +433,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
+			String uniqueFileName = DLUtil.getSanitizedFileName(
+				uniqueTitle, extension);
+
 			FileEntry fileEntry = _dlAppService.addFileEntry(
-				repositoryId, folderId, uniqueFileName, mimeType,
-				uniqueFileName, description, changeLog, inputStream, size,
-				serviceContext);
+				repositoryId, folderId, uniqueFileName, mimeType, uniqueTitle,
+				description, changeLog, inputStream, size, serviceContext);
 
 			_assetDisplayPageEntryFormProcessor.process(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),

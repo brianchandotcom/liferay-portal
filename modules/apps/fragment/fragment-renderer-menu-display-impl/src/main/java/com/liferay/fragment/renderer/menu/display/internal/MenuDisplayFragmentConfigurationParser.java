@@ -54,18 +54,17 @@ public class MenuDisplayFragmentConfigurationParser {
 		String hoveredItemColor = _getColorPickerValue(
 			configuration, editableValues, "hoveredItemColor", groupId);
 
-		int numberOfSublevels = _getNumberOfSublevels(
-			configuration, editableValues);
-
 		String selectedItemColor = _getColorPickerValue(
 			configuration, editableValues, "selectedItemColor", groupId);
 
 		MenuDisplayFragmentConfiguration.Source source = _getSource(
 			configuration, editableValues);
 
+		int sublevels = _getSublevels(configuration, editableValues);
+
 		return new MenuDisplayFragmentConfiguration(
-			displayStyle, hoveredItemColor, numberOfSublevels,
-			selectedItemColor, source);
+			displayStyle, hoveredItemColor, selectedItemColor, source,
+			sublevels);
 	}
 
 	private String _getColorPickerValue(
@@ -152,14 +151,6 @@ public class MenuDisplayFragmentConfigurationParser {
 		return frontendTokens;
 	}
 
-	private int _getNumberOfSublevels(
-		String configuration, String editableValues) {
-
-		return GetterUtil.getInteger(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				configuration, editableValues, "sublevels"));
-	}
-
 	private MenuDisplayFragmentConfiguration.Source _getSource(
 		String configuration, String editableValues) {
 
@@ -198,6 +189,12 @@ public class MenuDisplayFragmentConfigurationParser {
 		}
 
 		return ContextualMenu.SAME_LEVEL;
+	}
+
+	private int _getSublevels(String configuration, String editableValues) {
+		return GetterUtil.getInteger(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues, "sublevels"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

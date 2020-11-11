@@ -18,7 +18,7 @@ import Uri from 'metal-uri';
 
 import globals from '../globals/globals';
 import Surface from '../surface/Surface';
-import utils from '../utils/utils';
+import {clearNodeAttributes, copyNodeAttributes, getUid} from '../utils/utils';
 import RequestScreen from './RequestScreen';
 
 class HtmlScreen extends RequestScreen {
@@ -108,7 +108,7 @@ class HtmlScreen extends RequestScreen {
 	assertSameBodyIdInVirtualDocument() {
 		var bodySurface = this.virtualDocument.querySelector('body');
 		if (!globals.document.body.id) {
-			globals.document.body.id = 'senna_surface_' + utils.getUid();
+			globals.document.body.id = 'senna_surface_' + getUid();
 		}
 		if (bodySurface) {
 			bodySurface.id = globals.document.body.id;
@@ -127,8 +127,8 @@ class HtmlScreen extends RequestScreen {
 		const placeholder = node.querySelector('senna');
 
 		if (placeholder) {
-			utils.clearNodeAttributes(node);
-			utils.copyNodeAttributes(placeholder, node);
+			clearNodeAttributes(node);
+			copyNodeAttributes(placeholder, node);
 		}
 	}
 
@@ -145,7 +145,7 @@ class HtmlScreen extends RequestScreen {
 	 */
 	disposePendingStyles() {
 		if (this.pendingStyles) {
-			utils.removeElementsFromDocument(this.pendingStyles);
+			this.pendingStyles.forEach((element) => element.remove());
 		}
 	}
 
@@ -194,7 +194,7 @@ class HtmlScreen extends RequestScreen {
 		);
 
 		return new CancellablePromise((resolve) => {
-			utils.removeElementsFromDocument(resourcesInDocument);
+			resourcesInDocument.forEach((element) => element.remove());
 			this.runFaviconInElement_(resourcesInVirtual).then(() => resolve());
 		});
 	}
@@ -255,7 +255,7 @@ class HtmlScreen extends RequestScreen {
 			evaluatorFn(
 				frag,
 				() => {
-					utils.removeElementsFromDocument(temporariesInDoc);
+					temporariesInDoc.forEach((element) => element.remove());
 					resolve();
 				},
 				opt_appendResourceFn
@@ -268,8 +268,8 @@ class HtmlScreen extends RequestScreen {
 	 */
 	flip(surfaces) {
 		return super.flip(surfaces).then(() => {
-			utils.clearNodeAttributes(globals.document.documentElement);
-			utils.copyNodeAttributes(
+			clearNodeAttributes(globals.document.documentElement);
+			copyNodeAttributes(
 				this.virtualDocument,
 				globals.document.documentElement
 			);
@@ -282,7 +282,7 @@ class HtmlScreen extends RequestScreen {
 		const currentMetaNodes = this.querySelectorAll_('meta');
 		const metasFromVirtualDocument = this.metas;
 		if (currentMetaNodes) {
-			utils.removeElementsFromDocument(currentMetaNodes);
+			currentMetaNodes.forEach((element) => element.remove());
 			if (metasFromVirtualDocument) {
 				metasFromVirtualDocument.forEach((meta) =>
 					globals.document.head.appendChild(meta)
@@ -348,7 +348,7 @@ class HtmlScreen extends RequestScreen {
 		if (style.href) {
 			var newStyle = globals.document.createElement(style.tagName);
 			style.href = new Uri(style.href).makeUnique().toString();
-			utils.copyNodeAttributes(style, newStyle);
+			copyNodeAttributes(style, newStyle);
 			style.parentNode.replaceChild(newStyle, style);
 			style.disabled = true;
 		}
@@ -362,11 +362,11 @@ class HtmlScreen extends RequestScreen {
 	 */
 	runFaviconInElement_(elements) {
 		return new CancellablePromise((resolve) => {
-			elements.forEach((element) =>
-				document.head.appendChild(
-					utils.setElementWithRandomHref(element)
-				)
-			);
+			elements.forEach((element) => {
+				element.href = element.href + '?q=' + Math.random();
+
+				document.head.appendChild(element);
+			});
 			resolve();
 		});
 	}

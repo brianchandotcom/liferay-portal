@@ -13,7 +13,6 @@
  */
 
 import Disposable from '../Disposable';
-import utils from '../utils/utils';
 import EventHandle from './EventHandle';
 
 const singleArray = [0];
@@ -161,7 +160,7 @@ class EventEmitter extends Disposable {
 			return false;
 		}
 
-		const args = utils.slice(arguments, 1);
+		const args = Array.prototype.slice.call(arguments, 1);
 		this.runListeners_(listeners, args, this.buildFacade_(event));
 
 		return true;

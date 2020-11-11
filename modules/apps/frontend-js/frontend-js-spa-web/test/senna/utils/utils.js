@@ -12,10 +12,17 @@
  * details.
  */
 
-import Uri from 'metal-uri';
-
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
-import utils from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
+import {
+	clearNodeAttributes,
+	copyNodeAttributes,
+	getCurrentBrowserPath,
+	getCurrentBrowserPathWithoutHash,
+	getUrlPath,
+	getUrlPathWithoutHash,
+	getUrlPathWithoutHashAndSearch,
+	isCurrentBrowserPath,
+} from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('utils', () => {
 	beforeAll(() => {
@@ -42,7 +49,7 @@ describe('utils', () => {
 		nodeA.setAttribute('b', 'valueB');
 
 		var nodeB = document.createElement('div');
-		utils.copyNodeAttributes(nodeA, nodeB);
+		copyNodeAttributes(nodeA, nodeB);
 
 		expect(nodeA.attributes.length).toBe(nodeB.attributes.length);
 		expect(nodeA.getAttribute('a')).toBe(nodeB.getAttribute('a'));
@@ -56,7 +63,7 @@ describe('utils', () => {
 		node.setAttribute('a', 'valueA');
 		node.setAttribute('b', 'valueB');
 
-		utils.clearNodeAttributes(node);
+		clearNodeAttributes(node);
 
 		expect(node.getAttribute('a')).toBeNull();
 		expect(node.getAttribute('b')).toBeNull();
@@ -64,57 +71,40 @@ describe('utils', () => {
 	});
 
 	it('gets path from url', () => {
-		expect(utils.getUrlPath('http://hostname/path?a=1#hash')).toBe(
+		expect(getUrlPath('http://hostname/path?a=1#hash')).toBe(
 			'/path?a=1#hash'
 		);
 	});
 
 	it('gets path from url excluding hashbang', () => {
-		expect(
-			utils.getUrlPathWithoutHash('http://hostname/path?a=1#hash')
-		).toBe('/path?a=1');
+		expect(getUrlPathWithoutHash('http://hostname/path?a=1#hash')).toBe(
+			'/path?a=1'
+		);
 	});
 
 	it('gets path from url excluding hashbang and search', () => {
 		expect(
-			utils.getUrlPathWithoutHashAndSearch(
-				'http://hostname/path?a=1#hash'
-			)
+			getUrlPathWithoutHashAndSearch('http://hostname/path?a=1#hash')
 		).toBe('/path');
 	});
 
 	it('tests if path is current browser path', () => {
+		expect(isCurrentBrowserPath('http://hostname/path?a=1')).toBeTruthy();
 		expect(
-			utils.isCurrentBrowserPath('http://hostname/path?a=1')
+			isCurrentBrowserPath('http://hostname/path?a=1#hash')
 		).toBeTruthy();
+		expect(!isCurrentBrowserPath('http://hostname/path1?a=1')).toBeTruthy();
 		expect(
-			utils.isCurrentBrowserPath('http://hostname/path?a=1#hash')
+			!isCurrentBrowserPath('http://hostname/path1?a=1#hash')
 		).toBeTruthy();
-		expect(
-			!utils.isCurrentBrowserPath('http://hostname/path1?a=1')
-		).toBeTruthy();
-		expect(
-			!utils.isCurrentBrowserPath('http://hostname/path1?a=1#hash')
-		).toBeTruthy();
-		expect(!utils.isCurrentBrowserPath()).toBeTruthy();
+		expect(!isCurrentBrowserPath()).toBeTruthy();
 	});
 
 	it('gets current browser path', () => {
-		expect(utils.getCurrentBrowserPath()).toBe('/path?a=1#hash');
+		expect(getCurrentBrowserPath()).toBe('/path?a=1#hash');
 	});
 
 	it('gets current browser path excluding hashbang', () => {
-		expect(utils.getCurrentBrowserPathWithoutHash()).toBe('/path?a=1');
-	});
-
-	it('tests if Html5 history is supported', () => {
-		expect(utils.isHtml5HistorySupported()).toBeTruthy();
-		globals.window.history = null;
-		expect(!utils.isHtml5HistorySupported()).toBeTruthy();
-	});
-
-	it('tests if a given url is a valid web (http/https) uri', () => {
-		expect(utils.isWebUri('tel:+999999999')).toBeFalsy();
-		expect(utils.isWebUri('http://localhost:12345')).toBeInstanceOf(Uri);
+		expect(getCurrentBrowserPathWithoutHash()).toBe('/path?a=1');
 	});
 });

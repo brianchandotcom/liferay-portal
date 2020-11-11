@@ -23,7 +23,11 @@ import Route from '../../../src/main/resources/META-INF/resources/senna/route/Ro
 import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
-import utils from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
+import utils, {
+	getCurrentBrowserPath,
+	getNodeOffset,
+	getUrlPathWithoutHash,
+} from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 class StubScreen extends Screen {}
 StubScreen.prototype.activate = jest.fn();
@@ -701,11 +705,6 @@ describe('App', function () {
 	});
 
 	it('clears pendingNavigate after navigate', (done) => {
-		jest.spyOn(
-			utils,
-			'getCurrentBrowserPathWithoutHash'
-		).mockImplementation(() => '/path');
-
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.navigate('/path').then(() => {
@@ -754,11 +753,6 @@ describe('App', function () {
 	});
 
 	it('does not navigate back on a hash change', (done) => {
-		jest.spyOn(
-			utils,
-			'getCurrentBrowserPathWithoutHash'
-		).mockImplementation(() => '/path1');
-
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addRoutes(new Route('/path2', Screen));
@@ -979,7 +973,7 @@ describe('App', function () {
 			globals.window.history.replaceState(
 				{},
 				'',
-				utils.getCurrentBrowserPath()
+				getCurrentBrowserPath()
 			);
 			done();
 		});
@@ -1260,11 +1254,6 @@ describe('App', function () {
 	});
 
 	it('updates referrer when Screen history state returns null', (done) => {
-		jest.spyOn(
-			utils,
-			'getCurrentBrowserPathWithoutHash'
-		).mockImplementation(() => '/path1');
-
 		class NullStateScreen extends Screen {
 			beforeUpdateHistoryState() {
 				return null;
@@ -1275,7 +1264,7 @@ describe('App', function () {
 		this.app.navigate('/path1').then(() => {
 			this.app.navigate('/path1#hash').then(() => {
 				dom.once(globals.window, 'popstate', () => {
-					expect(utils.getCurrentBrowserPath(document.referrer)).toBe(
+					expect(getCurrentBrowserPath(document.referrer)).toBe(
 						'/path1'
 					);
 					done();
@@ -1286,11 +1275,6 @@ describe('App', function () {
 	});
 
 	it('does not reload page on navigate back to a routed page with same path containing hashbang without history state', (done) => {
-		jest.spyOn(
-			utils,
-			'getCurrentBrowserPathWithoutHash'
-		).mockImplementation(() => '/path');
-
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.reloadPage = jest.fn();
@@ -1461,7 +1445,7 @@ describe('App', function () {
 		jest.spyOn(
 			utils,
 			'getCurrentBrowserPathWithoutHash'
-		).mockImplementation(() => '/path');
+		).mockImplementation(() => '/asdasdasdasas');
 
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
@@ -1650,7 +1634,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path#hash').then(() => {
-			expect(utils.getCurrentBrowserPath()).toBe('/path#hash');
+			expect(getCurrentBrowserPath()).toBe('/path#hash');
 			done();
 		});
 	});
@@ -1664,7 +1648,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path#hash').then(() => {
-			expect(utils.getCurrentBrowserPath()).toBe('/redirect');
+			expect(getCurrentBrowserPath()).toBe('/redirect');
 			done();
 		});
 	});
@@ -2093,7 +2077,7 @@ describe('App', function () {
 		this.app.addSurfaces(['surfaceId1']);
 		this.app.navigate('/path1#surfaceId1').then(() => {
 			const surfaceNode = document.querySelector('#surfaceId1');
-			const {offsetLeft, offsetTop} = utils.getNodeOffset(surfaceNode);
+			const {offsetLeft, offsetTop} = getNodeOffset(surfaceNode);
 			expect(window.pageYOffset).toBe(offsetTop);
 			expect(window.pageXOffset).toBe(offsetLeft);
 			dom.exitDocument(parentNode);
@@ -2113,23 +2097,21 @@ describe('App', function () {
 				return this.app.navigate('/path2');
 			})
 			.then(() => {
-				expect(
-					utils.getUrlPathWithoutHash(globals.document.referrer)
-				).toBe('/path1');
+				expect(getUrlPathWithoutHash(globals.document.referrer)).toBe(
+					'/path1'
+				);
 
 				return this.app.navigate('/path3');
 			})
 			.then(() => {
-				expect(
-					utils.getUrlPathWithoutHash(globals.document.referrer)
-				).toBe('/path2');
+				expect(getUrlPathWithoutHash(globals.document.referrer)).toBe(
+					'/path2'
+				);
 				this.app.on(
 					'endNavigate',
 					() => {
 						expect(
-							utils.getUrlPathWithoutHash(
-								globals.document.referrer
-							)
+							getUrlPathWithoutHash(globals.document.referrer)
 						).toBe('/path1');
 						done();
 					},

@@ -12,15 +12,13 @@
  * details.
  */
 
-'use strict';
-
 import {fetch} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
 import errors from '../errors/errors';
 import globals from '../globals/globals';
-import utils from '../utils/utils';
+import {getUrlPath} from '../utils/utils';
 import Screen from './Screen';
 
 class RequestScreen extends Screen {
@@ -174,7 +172,7 @@ class RequestScreen extends Screen {
 				}
 			}
 
-			return utils.getUrlPath(requestPath);
+			return getUrlPath(requestPath);
 		}
 
 		return null;

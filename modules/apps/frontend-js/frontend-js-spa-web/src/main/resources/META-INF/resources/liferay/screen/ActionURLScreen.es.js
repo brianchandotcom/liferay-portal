@@ -12,7 +12,7 @@
  * details.
  */
 
-import {utils} from '../../senna/senna';
+import {getUrlPath} from '../../senna/utils/utils';
 import EventScreen from './EventScreen.es';
 
 /**
@@ -53,7 +53,7 @@ class ActionURLScreen extends EventScreen {
 				uri.searchParams.set('p_p_lifecycle', '0');
 			}
 
-			requestPath = utils.getUrlPath(uri.toString());
+			requestPath = getUrlPath(uri.toString());
 		}
 
 		return requestPath;

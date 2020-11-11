@@ -13,7 +13,8 @@
  */
 
 import globals from '../senna/globals/globals';
-import {utils, version} from '../senna/senna';
+import {version} from '../senna/senna';
+import {getUrlPath} from '../senna/utils/utils';
 import App from './app/App.es';
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import RenderURLScreen from './screen/RenderURLScreen.es';
@@ -111,7 +112,7 @@ const initSPA = function () {
 					);
 				}
 
-				app.navigate(utils.getUrlPath(url));
+				app.navigate(getUrlPath(url));
 			}
 			else {
 				formElement.submit();

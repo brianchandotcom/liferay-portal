@@ -16,7 +16,7 @@ import {globalEval} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
 import Cacheable from '../cacheable/Cacheable';
-import utils from '../utils/utils';
+import {getUid, log} from '../utils/utils';
 
 class Screen extends Cacheable {
 
@@ -33,7 +33,7 @@ class Screen extends Cacheable {
 		 * @type {string}
 		 * @protected
 		 */
-		this.id = this.makeId_(utils.getUid());
+		this.id = this.makeId_(getUid());
 
 		/**
 		 * Holds the screen meta tags. Relevant when the meta tags
@@ -56,7 +56,7 @@ class Screen extends Cacheable {
 	 * that requires its DOM to be visible. Lifecycle.
 	 */
 	activate() {
-		utils.log('Screen [' + this + '] activate');
+		log('Screen [' + this + '] activate');
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Screen extends Cacheable {
 	 *     the current screen is locked and the next nagivation interrupted.
 	 */
 	beforeActivate() {
-		utils.log('Screen [' + this + '] beforeActivate');
+		log('Screen [' + this + '] beforeActivate');
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Screen extends Cacheable {
 	 *     the current screen is locked and the next nagivation interrupted.
 	 */
 	beforeDeactivate() {
-		utils.log('Screen [' + this + '] beforeDeactivate');
+		log('Screen [' + this + '] beforeDeactivate');
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Screen extends Cacheable {
 	 * timers. Lifecycle.
 	 */
 	deactivate() {
-		utils.log('Screen [' + this + '] deactivate');
+		log('Screen [' + this + '] deactivate');
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Screen extends Cacheable {
 	 */
 	disposeInternal() {
 		super.disposeInternal();
-		utils.log('Screen [' + this + '] dispose');
+		log('Screen [' + this + '] dispose');
 	}
 
 	/**
@@ -155,7 +155,7 @@ class Screen extends Cacheable {
 	 *     navigation until it is resolved.
 	 */
 	flip(surfaces) {
-		utils.log('Screen [' + this + '] flip');
+		log('Screen [' + this + '] flip');
 
 		var transitions = [];
 
@@ -195,7 +195,7 @@ class Screen extends Cacheable {
 	 *     content is restored.
 	 */
 	getSurfaceContent() {
-		utils.log('Screen [' + this + '] getSurfaceContent');
+		log('Screen [' + this + '] getSurfaceContent');
 	}
 
 	/**
@@ -216,7 +216,7 @@ class Screen extends Cacheable {
 	 *     until it is resolved. This is useful for loading async content.
 	 */
 	load() {
-		utils.log('Screen [' + this + '] load');
+		log('Screen [' + this + '] load');
 
 		return CancellablePromise.resolve();
 	}

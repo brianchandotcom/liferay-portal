@@ -23,7 +23,17 @@ import globals from '../globals/globals';
 import Route from '../route/Route';
 import Screen from '../screen/Screen';
 import Surface from '../surface/Surface';
-import utils from '../utils/utils';
+import utils, {
+	getCurrentBrowserPath,
+	getCurrentBrowserPathWithoutHash,
+	getNodeOffset,
+	getUrlPath,
+	getUrlPathWithoutHash,
+	getUrlPathWithoutHashAndSearch,
+	log,
+	removePathTrailingSlash,
+	setReferrer,
+} from '../utils/utils';
 
 const NavigationStrategy = {
 	IMMEDIATE: 'immediate',
@@ -330,37 +340,38 @@ class App extends EventEmitter {
 	 * @return {boolean}
 	 */
 	canNavigate(url) {
-		const uri = utils.isWebUri(url);
+		try {
+			const uri = new Uri(url);
 
-		if (!uri) {
+			const path = getUrlPath(url);
+
+			if (!this.isLinkSameOrigin_(uri.getHost())) {
+				log('Offsite link clicked');
+
+				return false;
+			}
+			if (!this.isSameBasePath_(path)) {
+				log("Link clicked outside app's base path");
+
+				return false;
+			}
+
+			// Prevents navigation if it's a hash change on the same url.
+
+			if (uri.getHash() && utils.isCurrentBrowserPath(path)) {
+				return false;
+			}
+			if (!this.findRoute(path)) {
+				log('No route for ' + path);
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (error) {
 			return false;
 		}
-
-		const path = utils.getUrlPath(url);
-
-		if (!this.isLinkSameOrigin_(uri.getHost())) {
-			utils.log('Offsite link clicked');
-
-			return false;
-		}
-		if (!this.isSameBasePath_(path)) {
-			utils.log("Link clicked outside app's base path");
-
-			return false;
-		}
-
-		// Prevents navigation if it's a hash change on the same url.
-
-		if (uri.getHash() && utils.isCurrentBrowserPath(path)) {
-			return false;
-		}
-		if (!this.findRoute(path)) {
-			utils.log('No route for ' + path);
-
-			return false;
-		}
-
-		return true;
 	}
 
 	/**
@@ -390,7 +401,7 @@ class App extends EventEmitter {
 	 */
 	createScreenInstance(path, route) {
 		if (!this.pendingNavigate && path === this.activePath) {
-			utils.log('Already at destination, refresh navigation');
+			log('Already at destination, refresh navigation');
 
 			return this.activeScreen;
 		}
@@ -407,7 +418,7 @@ class App extends EventEmitter {
 			else {
 				screen = handler(route) || new Screen();
 			}
-			utils.log('Create screen for [' + path + '] [' + screen + ']');
+			log('Create screen for [' + path + '] [' + screen + ']');
 		}
 
 		return screen;
@@ -433,7 +444,7 @@ class App extends EventEmitter {
 	 * @return {CancellablePromise} Returns a pending request cancellable promise.
 	 */
 	dispatch() {
-		return this.navigate(utils.getCurrentBrowserPath(), true);
+		return this.navigate(getCurrentBrowserPath(), true);
 	}
 
 	/**
@@ -452,7 +463,7 @@ class App extends EventEmitter {
 			return this.pendingNavigate;
 		}
 
-		utils.log('Navigate to [' + path + ']');
+		log('Navigate to [' + path + ']');
 
 		this.stopPendingNavigate_();
 		this.isNavigationPending = true;
@@ -535,13 +546,13 @@ class App extends EventEmitter {
 
 		this.activePath = path;
 		this.activeScreen = nextScreen;
-		this.browserPathBeforeNavigate = utils.getCurrentBrowserPathWithoutHash();
+		this.browserPathBeforeNavigate = getCurrentBrowserPathWithoutHash();
 		this.screens[path] = nextScreen;
 		this.isNavigationPending = false;
 		this.pendingNavigate = null;
 		globals.capturedFormElement = null;
 		globals.capturedFormButtonElement = null;
-		utils.log('Navigation done');
+		log('Navigation done');
 	}
 
 	/**
@@ -628,16 +639,16 @@ class App extends EventEmitter {
 	 */
 	getRoutePath(path) {
 		if (this.getIgnoreQueryStringFromRoutePath()) {
-			path = utils.getUrlPathWithoutHashAndSearch(path);
+			path = getUrlPathWithoutHashAndSearch(path);
 
-			return utils.getUrlPathWithoutHashAndSearch(
+			return getUrlPathWithoutHashAndSearch(
 				path.substr(this.basePath.length)
 			);
 		}
 
-		path = utils.getUrlPathWithoutHash(path);
+		path = getUrlPathWithoutHash(path);
 
-		return utils.getUrlPathWithoutHash(path.substr(this.basePath.length));
+		return getUrlPathWithoutHash(path.substr(this.basePath.length));
 	}
 
 	/**
@@ -656,9 +667,7 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	handleNavigateError_(path, nextScreen, error) {
-		utils.log(
-			'Navigation error for [' + nextScreen + '] (' + error.stack + ')'
-		);
+		log('Navigation error for [' + nextScreen + '] (' + error.stack + ')');
 		this.emit('navigationError', {
 			error,
 			nextScreen,
@@ -813,7 +822,7 @@ class App extends EventEmitter {
 
 		var navigateFailed = false;
 		try {
-			this.navigate(utils.getUrlPath(href), false, event);
+			this.navigate(getUrlPath(href), false, event);
 		}
 		catch (err) {
 
@@ -911,9 +920,7 @@ class App extends EventEmitter {
 				hash.substring(1)
 			);
 			if (anchorElement) {
-				const {offsetLeft, offsetTop} = utils.getNodeOffset(
-					anchorElement
-				);
+				const {offsetLeft, offsetTop} = getNodeOffset(anchorElement);
 				globals.window.scrollTo(offsetLeft, offsetTop);
 			}
 		}
@@ -941,7 +948,7 @@ class App extends EventEmitter {
 	 * @return {!string} Returns the path with the hash restored.
 	 */
 	maybeRestoreRedirectPathHash_(path, redirectPath, hash) {
-		if (redirectPath === utils.getUrlPathWithoutHash(path)) {
+		if (redirectPath === getUrlPathWithoutHash(path)) {
 			return redirectPath + hash;
 		}
 
@@ -956,7 +963,7 @@ class App extends EventEmitter {
 		var hash = globals.window.location.hash;
 		var anchorElement = globals.document.getElementById(hash.substring(1));
 		if (anchorElement) {
-			const {offsetLeft, offsetTop} = utils.getNodeOffset(anchorElement);
+			const {offsetLeft, offsetTop} = getNodeOffset(anchorElement);
 			this.saveHistoryCurrentPageScrollPosition_(offsetTop, offsetLeft);
 		}
 	}
@@ -969,12 +976,6 @@ class App extends EventEmitter {
 	 * @return {CancellablePromise} Returns a pending request cancellable promise.
 	 */
 	navigate(path, opt_replaceHistory, opt_event) {
-		if (!utils.isHtml5HistorySupported()) {
-			throw new Error(
-				'HTML5 History is not supported. Senna will not intercept navigation.'
-			);
-		}
-
 		if (opt_event) {
 			globals.capturedFormElement = opt_event.capturedFormElement;
 			globals.capturedFormButtonElement =
@@ -1021,7 +1022,7 @@ class App extends EventEmitter {
 				this.pendingNavigate.path === event.path ||
 				this.navigationStrategy === NavigationStrategy.SCHEDULE_LAST
 			) {
-				utils.log('Waiting...');
+				log('Waiting...');
 
 				return;
 			}
@@ -1063,7 +1064,7 @@ class App extends EventEmitter {
 			event.shiftKey ||
 			event.button
 		) {
-			utils.log(
+			log(
 				'Navigate aborted, invalid mouse button or modifier key pressed.'
 			);
 
@@ -1081,7 +1082,7 @@ class App extends EventEmitter {
 	onDocSubmitDelegate_(event) {
 		var form = event.delegateTarget;
 		if (form.method === 'get') {
-			utils.log('GET method not supported');
+			log('GET method not supported');
 
 			return;
 		}
@@ -1172,7 +1173,7 @@ class App extends EventEmitter {
 		}
 
 		if (state.senna) {
-			utils.log('History navigation to [' + state.path + ']');
+			log('History navigation to [' + state.path + ']');
 			this.popstateScrollTop = state.scrollTop;
 			this.popstateScrollLeft = state.scrollLeft;
 			if (!this.nativeScrollRestorationSupported) {
@@ -1180,7 +1181,7 @@ class App extends EventEmitter {
 			}
 			this.once('endNavigate', () => {
 				if (state.referrer) {
-					utils.setReferrer(state.referrer);
+					setReferrer(state.referrer);
 				}
 			});
 			const uri = new Uri(state.path);
@@ -1266,7 +1267,7 @@ class App extends EventEmitter {
 			);
 		}
 
-		utils.log('Prefetching [' + path + ']');
+		log('Prefetching [' + path + ']');
 
 		var nextScreen = this.createScreenInstance(path, route);
 
@@ -1330,7 +1331,7 @@ class App extends EventEmitter {
 		Object.keys(surfaces).forEach((id) => {
 			var surfaceContent = nextScreen.getSurfaceContent(id, params);
 			surfaces[id].addContent(nextScreen.getId(), surfaceContent);
-			utils.log(
+			log(
 				'Screen [' +
 					nextScreen.getId() +
 					'] add content to surface ' +
@@ -1406,7 +1407,7 @@ class App extends EventEmitter {
 	 * @param {!string} path
 	 */
 	setBasePath(basePath) {
-		this.basePath = utils.removePathTrailingSlash(basePath);
+		this.basePath = removePathTrailingSlash(basePath);
 	}
 
 	/**
@@ -1542,7 +1543,7 @@ class App extends EventEmitter {
 			globals.window.history.pushState(state, title, path);
 		}
 
-		utils.setReferrer(referrer);
+		setReferrer(referrer);
 
 		const titleNode = globals.document.querySelector('title');
 		if (titleNode) {

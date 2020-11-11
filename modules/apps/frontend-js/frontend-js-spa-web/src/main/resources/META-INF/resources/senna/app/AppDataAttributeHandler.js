@@ -16,7 +16,7 @@ import Disposable from '../Disposable';
 import globals from '../globals/globals';
 import Route from '../route/Route';
 import HtmlScreen from '../screen/HtmlScreen';
-import utils from '../utils/utils';
+import {getUid, log} from '../utils/utils';
 import App from './App';
 import dataAttributes from './dataAttributes';
 
@@ -63,7 +63,7 @@ class AppDataAttributeHandler extends Disposable {
 		}
 
 		if (!this.baseElement.hasAttribute(dataAttributes.senna)) {
-			utils.log(
+			log(
 				'Senna was not initialized from data attributes. ' +
 					'In order to enable its usage from data attributes try setting ' +
 					'in the base element, e.g. `<body data-senna>`.'
@@ -76,7 +76,7 @@ class AppDataAttributeHandler extends Disposable {
 			throw new Error('Senna app was already initialized.');
 		}
 
-		utils.log('Senna initialized from data attribute.');
+		log('Senna initialized from data attribute.');
 
 		this.app = new App();
 		this.maybeAddRoutes_();
@@ -124,7 +124,7 @@ class AppDataAttributeHandler extends Disposable {
 		);
 		if (!this.app.hasRoutes()) {
 			this.app.addRoutes(new Route(/.*/, HtmlScreen));
-			utils.log("Senna can't find route elements, adding default.");
+			log("Senna can't find route elements, adding default.");
 		}
 	}
 
@@ -161,7 +161,7 @@ class AppDataAttributeHandler extends Disposable {
 			this.maybeParseLinkRouteHandler_(link)
 		);
 		this.app.addRoutes(route);
-		utils.log('Senna scanned route ' + route.getPath());
+		log('Senna scanned route ' + route.getPath());
 	}
 
 	/**
@@ -203,7 +203,7 @@ class AppDataAttributeHandler extends Disposable {
 		var basePath = this.baseElement.getAttribute(dataAttributes.basePath);
 		if (basePath) {
 			this.app.setBasePath(basePath);
-			utils.log('Senna scanned base path ' + basePath);
+			log('Senna scanned base path ' + basePath);
 		}
 	}
 
@@ -217,7 +217,7 @@ class AppDataAttributeHandler extends Disposable {
 		);
 		if (linkSelector) {
 			this.app.setLinkSelector(linkSelector);
-			utils.log('Senna scanned link selector ' + linkSelector);
+			log('Senna scanned link selector ' + linkSelector);
 		}
 	}
 
@@ -231,7 +231,7 @@ class AppDataAttributeHandler extends Disposable {
 		);
 		if (loadingCssClass) {
 			this.app.setLoadingCssClass(loadingCssClass);
-			utils.log('Senna scanned loading css class ' + loadingCssClass);
+			log('Senna scanned loading css class ' + loadingCssClass);
 		}
 	}
 
@@ -250,9 +250,7 @@ class AppDataAttributeHandler extends Disposable {
 			else {
 				this.app.setUpdateScrollPosition(true);
 			}
-			utils.log(
-				'Senna scanned update scroll position ' + updateScrollPosition
-			);
+			log('Senna scanned update scroll position ' + updateScrollPosition);
 		}
 	}
 
@@ -275,7 +273,7 @@ class AppDataAttributeHandler extends Disposable {
 	 */
 	updateElementIdIfSpecialSurface_(element) {
 		if (!element.id && element === globals.document.body) {
-			element.id = 'senna_surface_' + utils.getUid();
+			element.id = 'senna_surface_' + getUid();
 		}
 	}
 

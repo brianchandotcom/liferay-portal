@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.headless.admin.content.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.content.dto.v1_0.StructuredContentVersionInformation;
@@ -18,6 +19,7 @@ import com.liferay.headless.admin.content.dto.v1_0.VersionInformation;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 
 import java.lang.reflect.Field;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -26,11 +28,11 @@ import java.util.stream.Stream;
  */
 public class StructuredContentVersionInformationBuilder {
 
-
 	public StructuredContentVersionInformationBuilder(
 		StructuredContent structuredContent) {
 
 		_structuredContent = structuredContent;
+
 		_structuredContentVersionInformation =
 			new StructuredContentVersionInformation();
 	}

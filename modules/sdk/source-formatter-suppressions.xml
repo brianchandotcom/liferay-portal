@@ -6,11 +6,11 @@
 		<suppress checks="CamelCaseNameCheck" files="gradle-util/src/main/java/com/liferay/gradle/util/FileUtil\.java" />
 		<suppress checks="JSONNamingCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/internal/WatchOSGiPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/LiferayExtPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins-workspace/src/main/java/com/liferay/gradle/plugins/workspace/LiferayOSGiExtPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/JspCDefaultsPlugin\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayExtPlugin\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiExtPlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayOSGiPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/WatchOSGiPlugin\.java" />
 		<suppress checks="OperatorOperandCheck" files="project-templates/project-templates/src/test/java/com/liferay/project/templates/ProjectTemplateFilesTest\.java" />
 		<suppress checks="TryWithResourcesCheck" files="ant-beanshell/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-gradle/.*" />
@@ -22,6 +22,7 @@
 		<suppress checks="BNDBundleInformationCheck" files="gradle-plugins-target-platform/src/gradleTest/.*" />
 		<suppress checks="BNDBundleInformationCheck" files="gradle-plugins-workspace/src/gradleTest/.*" />
 		<suppress checks="BNDBundleInformationCheck" files="project-templates/project-templates-npm-vuejs-portlet/bnd\.bnd" />
+		<suppress checks="BNDExportsCheck" files="gradle-plugins-workspace/bnd.bnd" />
 		<suppress checks="BNDWebContextPathCheck" files="gradle-plugins-workspace/src/gradleTest/targetPlatformDefault/modules/foo-rule/bnd.bnd" />
 		<suppress checks="CopyrightCheck" files="ant-bnd/src/main/java/com/liferay/ant/bnd/metatype/MetatypePlugin\.java" />
 		<suppress checks="GradleBlockOrderCheck" files="gradle-plugins-workspace/src/gradleTest/product.*/settings.gradle" />
@@ -31,12 +32,12 @@
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-bnd/.*" />
 		<suppress checks="JavaDiamondOperatorCheck" files="ant-gradle/.*" />
 		<suppress checks="JavaLongLinesCheck" files="gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/LiferayRelengPlugin\.java" />
-		<suppress checks="JavaModuleInternalImportsCheck" files="gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
+		<suppress checks="JavaModuleInternalImportsCheck" files="gradle-plugins-workspace/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
 		<suppress checks="JavaPackagePathCheck" files=".*/foo-api/.*" />
 		<suppress checks="JavaPackagePathCheck" files="gradle-plugins-source-formatter/src/gradleTest/.*" />
-		<suppress checks="JavaPackagePathCheck" files="gradle-plugins/src/gradleTest/ext/.*" />
-		<suppress checks="JavaPackagePathCheck" files="gradle-plugins/src/gradleTest/extAlternative/.*" />
-		<suppress checks="JavaPackagePathCheck" files="gradle-plugins/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
+		<suppress checks="JavaPackagePathCheck" files="gradle-plugins-workspace/src/gradleTest/ext/.*" />
+		<suppress checks="JavaPackagePathCheck" files="gradle-plugins-workspace/src/gradleTest/extAlternative/.*" />
+		<suppress checks="JavaPackagePathCheck" files="gradle-plugins-workspace/src/gradleTest/osgiExt/src/main/java/com/liferay/login/web/internal/portlet/util/LoginUtil\.java" />
 		<suppress checks="JavaPackagePathCheck" files="project-templates/project-templates-api/src/test/java.*" />
 		<suppress checks="JavaStaticMethodCheck" files="gradle-plugins-node/src/main/java/com/liferay/gradle/plugins/node/tasks/NpmInstallTask\.java" />
 		<suppress checks="JavaTermOrderCheck" files="gradle-plugins-source-formatter/src/gradleTest/smoke/src/main/java/com/liferay/sample/GreetingBuilder\.java" />

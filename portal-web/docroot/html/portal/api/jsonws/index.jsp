@@ -53,7 +53,7 @@
 		</div>
 
 		<footer class="card fixed-bottom m-0 p-2 rounded-0" id="footer" role="contentinfo">
-			<p class="powered-by m-0">
+			<p class="m-0 powered-by">
 				<liferay-ui:message key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
 			</p>
 		</footer>
@@ -61,12 +61,12 @@
 
 	<script data-senna-track="permanent" id="APIScrollIntoView" type="text/javascript">
 		Liferay.once('endNavigate', function(event) {
-			setTimeout(() => {
+			setTimeout(function() {
 				const selected = document.querySelector('#services .lfr-api-signature.selected');
 
 				if (selected) {
 					selected.scrollIntoView({behavior: 'smooth'});
-				}	
+				}
 			}, 0);
 		});
 	</script>

@@ -36,7 +36,7 @@ String signature = ParamUtil.getString(request, "signature");
 						<liferay-ui:message key="http-method" />
 					</h4>
 
-					<span class="label label-lg label-inverse-success ml-3">
+					<span class="label label-inverse-success label-lg ml-3">
 						<span class="label-item label-item-expand">
 							<%= jsonWebServiceActionMapping.getMethod() %>
 						</span>

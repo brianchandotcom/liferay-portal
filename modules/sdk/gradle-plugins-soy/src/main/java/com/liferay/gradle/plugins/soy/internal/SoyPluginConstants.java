@@ -23,9 +23,6 @@ public interface SoyPluginConstants {
 
 	public static final String CONFIG_JS_MODULES_TASK_NAME = "configJSModules";
 
-	public static final String JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID =
-		"com.liferay.js.module.config.generator";
-
 	public static final String JS_TRANSPILER_PLUGIN_ID =
 		"com.liferay.js.transpiler";
 

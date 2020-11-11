@@ -136,18 +136,6 @@ public class SoyPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withId(
-			SoyPluginConstants.JS_MODULE_CONFIG_GENERATOR_PLUGIN_ID,
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					wrapSoyAlloyTemplateTask.dependsOn(
-						SoyPluginConstants.CONFIG_JS_MODULES_TASK_NAME);
-				}
-
-			});
-
-		pluginContainer.withId(
 			SoyPluginConstants.JS_TRANSPILER_PLUGIN_ID,
 			new Action<Plugin>() {
 

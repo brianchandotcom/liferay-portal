@@ -143,7 +143,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 							Boolean.FALSE.toString());
 						dropdownItem.setLabel(
 							LanguageUtil.get(
-								_httpServletRequest, "custom-publication"));
+								_httpServletRequest, "custom-publish-process"));
 					});
 			}
 		};

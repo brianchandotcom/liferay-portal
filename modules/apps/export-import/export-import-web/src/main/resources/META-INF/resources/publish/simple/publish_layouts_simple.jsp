@@ -60,7 +60,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 	<clay:link
 		displayType="link"
 		href="<%= advancedPublishURL.toString() %>"
-		label="switch-to-advanced-publication"
+		label="switch-to-advanced-publish-process"
 		small="<%= true %>"
 		type="button"
 	/>
@@ -108,7 +108,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 						<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
 					</aui:fieldset>
 
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="changes-since-last-publication" markupView="lexicon">
+					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="changes-since-last-publish-process" markupView="lexicon">
 						<li class="options portlet-list-simple">
 							<ul class="portlet-list">
 
@@ -237,7 +237,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 				</aui:fieldset-group>
 
 				<span class="publish-simple-help-text">
-					<liferay-ui:message key="simple-publication-help" />
+					<liferay-ui:message key="simple-publish-process-help" />
 				</span>
 			</ul>
 		</clay:container-fluid>

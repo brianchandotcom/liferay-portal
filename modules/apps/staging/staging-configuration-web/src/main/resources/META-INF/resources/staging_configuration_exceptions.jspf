@@ -29,7 +29,7 @@
 		dismissible="<%= true %>"
 		type="WARNING"
 	>
-		<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
+		<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publish-process" />
 
 		<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -37,7 +37,7 @@
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			confirmation="are-you-sure-you-want-to-remove-the-initial-staging-publication"
+			confirmation="are-you-sure-you-want-to-remove-the-initial-staging-publish-process"
 			label="<%= true %>"
 			message="clear"
 			url="<%= deleteBackgroundTaskURL %>"
@@ -53,9 +53,9 @@
 	<liferay-staging:alert
 		type="WARNING"
 	>
-		<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+		<liferay-ui:message key="an-inital-staging-publish-process-is-in-progress" />
 
-		<a id="<portlet:namespace />publishProcessesLink"><liferay-ui:message key="the-status-of-the-publication-can-be-checked-on-the-publish-screen" /></a>
+		<a id="<portlet:namespace />publishProcessesLink"><liferay-ui:message key="the-status-of-the-publish-process-can-be-checked-on-the-publish-screen" /></a>
 	</liferay-staging:alert>
 
 	<script>
@@ -68,7 +68,7 @@
 				publishProcessesLink.addEventListener('click', function (event) {
 					Liferay.Util.openWindow({
 						id: 'publishProcesses',
-						title: '<liferay-ui:message key="initial-publication" />',
+						title: '<liferay-ui:message key="initial-publish-process" />',
 
 						<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
@@ -111,7 +111,7 @@
 </c:if>
 
 <liferay-ui:error exception="<%= Exception.class %>">
-	<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
+	<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publish-process" />
 
 	<%= errorException.toString() %>
 </liferay-ui:error>

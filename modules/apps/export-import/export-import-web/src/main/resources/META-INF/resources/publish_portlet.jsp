@@ -19,7 +19,7 @@
 <liferay-staging:defineObjects />
 
 <%
-String tabs3 = ParamUtil.getString(request, "tabs3", "new-publication-process");
+String tabs3 = ParamUtil.getString(request, "tabs3", "new-publish-process");
 
 String errorMessageKey = StringPool.BLANK;
 
@@ -95,7 +95,7 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 		</c:when>
 		<c:when test="<%= (themeDisplay.getURLPublishToLive() != null) || layout.isTypeControlPanel() %>">
 			<c:choose>
-				<c:when test='<%= tabs3.equals("copy-from-live") || tabs3.equals("new-publication-process") %>'>
+				<c:when test='<%= tabs3.equals("copy-from-live") || tabs3.equals("new-publish-process") %>'>
 					<liferay-util:include page="/publish_portlet_publish_or_copy.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:when test='<%= tabs3.equals("current-and-previous") %>'>

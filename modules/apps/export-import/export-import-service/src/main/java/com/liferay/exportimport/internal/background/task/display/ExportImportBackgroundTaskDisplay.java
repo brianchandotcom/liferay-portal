@@ -161,7 +161,8 @@ public class ExportImportBackgroundTaskDisplay
 
 		if (hasRemoteMessage()) {
 			_messageKey =
-				"please-wait-as-the-publication-processes-on-the-remote-site";
+				"please-wait-as-the-publish-processes-complete-on-the-remote-" +
+					"site";
 		}
 		else if (hasStagedModelMessage()) {
 			_messageKey = "exporting";

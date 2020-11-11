@@ -61,7 +61,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 		</portlet:renderURL>
 
 		<liferay-frontend:add-menu-item
-			title='<%= LanguageUtil.get(request, "custom-publication") %>'
+			title='<%= LanguageUtil.get(request, "custom-publish-process") %>'
 			url="<%= addNewCustomProcessURL %>"
 		/>
 	</liferay-frontend:add-menu>

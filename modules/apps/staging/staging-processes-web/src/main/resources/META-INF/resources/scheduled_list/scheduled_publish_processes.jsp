@@ -46,7 +46,7 @@ else {
 
 <div id="<portlet:namespace />scheduledPublishProcessesSearchContainer">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-scheduled-publication-processes-were-found"
+		emptyResultsMessage="no-scheduled-publish-processes-were-found"
 		id="scheduledPublishProcesses"
 		iteratorURL="<%= renderURL %>"
 		orderByCol="<%= orderByCol %>"
@@ -97,7 +97,7 @@ else {
 				String description = schedulerResponse.getDescription();
 
 				if (description.equals(StringPool.BLANK)) {
-					description = LanguageUtil.get(request, "untitled-scheduled-publication");
+					description = LanguageUtil.get(request, "untitled-scheduled-publish-process");
 				}
 				%>
 

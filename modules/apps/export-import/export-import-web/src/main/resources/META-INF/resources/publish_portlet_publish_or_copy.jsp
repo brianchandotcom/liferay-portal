@@ -19,9 +19,9 @@
 <liferay-staging:defineObjects />
 
 <%
-String tabs3 = ParamUtil.getString(request, "tabs3", "new-publication-process");
+String tabs3 = ParamUtil.getString(request, "tabs3", "new-publish-process");
 
-boolean newPublication = tabs3.equals("new-publication-process");
+boolean newPublication = tabs3.equals("new-publish-process");
 
 String defaultRange = ExportImportDateUtil.RANGE_ALL;
 String javascriptOnSubmitFunction = "event.halt(); " + liferayPortletResponse.getNamespace();

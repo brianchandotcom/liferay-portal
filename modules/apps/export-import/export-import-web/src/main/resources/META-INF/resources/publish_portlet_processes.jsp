@@ -39,7 +39,7 @@ else {
 
 <clay:container-fluid>
 	<liferay-ui:search-container
-		emptyResultsMessage="no-publication-processes-were-found"
+		emptyResultsMessage="no-publish-processes-were-found"
 		iteratorURL="<%= portletURL %>"
 		orderByCol="<%= orderByCol %>"
 		orderByComparator="<%= BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType) %>"

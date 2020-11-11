@@ -80,7 +80,7 @@
 			</c:if>
 
 			<li class="layout-selector-options">
-				<aui:fieldset helpMessage="child-page-publication-warning" label='<%= "pages-to-" + action %>'>
+				<aui:fieldset helpMessage="child-page-publish-process-warning" label='<%= "pages-to-" + action %>'>
 					<c:choose>
 						<c:when test="<%= disableInputs %>">
 							<liferay-util:buffer

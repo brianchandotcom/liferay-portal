@@ -22,7 +22,7 @@ boolean hasPublishStagingPermission = GroupPermissionUtil.contains(permissionChe
 
 <liferay-staging:process-list
 	deleteMenu="<%= hasPublishStagingPermission %>"
-	emptyResultsMessage="no-publication-processes-were-found"
+	emptyResultsMessage="no-publish-processes-were-found"
 	localTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>"
 	mvcRenderCommandName="publishLayoutsView"
 	relaunchMenu="<%= hasPublishStagingPermission %>"

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs3 = ParamUtil.getString(request, "tabs3", "new-publication-process");
+String tabs3 = ParamUtil.getString(request, "tabs3", "new-publish-process");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -30,10 +30,10 @@ portletURL.setParameter("portletResource", portletResource);
 		<aui:nav cssClass="navbar-nav">
 
 			<%
-			portletURL.setParameter("tabs3", "new-publication-process");
+			portletURL.setParameter("tabs3", "new-publish-process");
 			%>
 
-			<aui:nav-item href="<%= portletURL.toString() %>" label="new-publication-process" selected='<%= tabs3.equals("new-publication-process") %>' />
+			<aui:nav-item href="<%= portletURL.toString() %>" label="new-publish-process" selected='<%= tabs3.equals("new-publish-process") %>' />
 
 			<%
 			Group scopeGroup = themeDisplay.getScopeGroup();

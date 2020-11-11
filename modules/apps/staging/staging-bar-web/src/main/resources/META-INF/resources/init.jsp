@@ -137,7 +137,7 @@ private String _getStatusMessage(LayoutRevision layoutRevision, long liveLayoutR
 	String statusMessage = null;
 
 	if (layoutRevision.isHead()) {
-		statusMessage = "ready-for-publication";
+		statusMessage = "ready-for-publish-process";
 	}
 
 	if (layoutRevision.getLayoutRevisionId() == liveLayoutRevisionId) {

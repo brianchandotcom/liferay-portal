@@ -71,7 +71,8 @@ public class LayoutStagingBackgroundTaskDisplay
 		if ((sourceGroup != null) && !sourceGroup.isStagingGroup() &&
 			(backgroundTask.getGroupId() == sourceGroup.getGroupId())) {
 
-			return LanguageUtil.get(httpServletRequest, "initial-publication");
+			return LanguageUtil.get(
+				httpServletRequest, "initial-publish-process");
 		}
 
 		if (Validator.isNull(backgroundTask.getName())) {

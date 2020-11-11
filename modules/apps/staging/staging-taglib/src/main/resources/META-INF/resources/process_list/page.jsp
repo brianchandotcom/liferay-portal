@@ -32,7 +32,7 @@
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-publication-processes-were-found"
+		emptyResultsMessage="no-publish-processes-were-found"
 		id="<%= searchContainerId %>"
 		iteratorURL="<%= renderURL %>"
 		orderByCol="<%= orderByCol %>"

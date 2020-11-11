@@ -54,7 +54,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			%>
 
 			<liferay-ui:icon
-				message='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication" %>'
+				message='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publish-process" %>'
 				url="<%= taglibURL %>"
 			/>
 		</c:if>

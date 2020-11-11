@@ -1,0 +1,36 @@
+import java.util.jar.JarEntry
+import java.util.jar.JarInputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+
+apply plugin: "com.liferay.ext.plugin"
+
+task runGradleTest
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn war
+
+	doLast {
+		File warFile = war.archivePath
+
+		assert warFile.name == "test-ext.war"
+
+		ZipFile zipFile = new ZipFile(warFile)
+
+		zipFile.withCloseable {
+			InputStream inputStream = zipFile.getInputStream(zipFile.getEntry("WEB-INF/ext-test-ext.xml"))
+
+			String extXml = inputStream.text
+
+			assert extXml.contains("<servlet-context-name>test-ext</servlet-context-name>")
+
+			assert !extXml.contains("<file>ext-test-ext.xml</file>")
+		}
+	}
+}

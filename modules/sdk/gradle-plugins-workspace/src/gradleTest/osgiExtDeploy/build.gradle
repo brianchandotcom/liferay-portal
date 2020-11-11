@@ -1,0 +1,25 @@
+apply plugin: "com.liferay.osgi.ext.plugin"
+
+task runGradleTest
+
+dependencies {
+	originalModule group: "com.liferay", name: "com.liferay.login.web.api", version: "1.0.0"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn deploy
+
+	doLast {
+		File bundleDir = file("../../../bundle")
+
+		File jarFile = new File(bundleDir, "osgi/marketplace/override/com.liferay.login.web.api.jar")
+
+		assert jarFile.exists()
+	}
+}

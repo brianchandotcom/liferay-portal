@@ -1,0 +1,38 @@
+apply plugin: "com.liferay.soy"
+apply plugin: "java"
+
+task runGradleTest
+
+processResources {
+	dependsOn buildSoy
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn classes
+
+	doLast {
+		FileTree soyFileTree = fileTree(dir: sourceSets.main.output.resourcesDir, include: "**/*.soy")
+
+		soyFileTree.each {
+			File soyJsFile = file(relativePath(it) + ".js")
+
+			assert soyJsFile.exists()
+
+			File expectedSoyJsFile = file(soyJsFile.name + ".expected")
+
+			assert expectedSoyJsFile.text.normalize() == soyJsFile.text.normalize()
+		}
+	}
+}
+
+wrapSoyAlloyTemplate {
+	enabled = true
+	moduleName = "samples-hello-world"
+	namespace = "samples"
+}

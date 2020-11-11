@@ -1,0 +1,8 @@
+var __CONFIG__ = {
+    modules: {
+        "samples@1.0.0/math/math": {
+            "dependencies": ["exports"],
+            "path": "samples@1.0.0/math/math.js"
+        }
+    }
+};

@@ -215,6 +215,18 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editFieldReferenceMetal {
+		FormFields.editText(
+			fieldName = "fieldReference",
+			fieldValue = "${fieldValue}");
+
+		var key_fieldName = "${fieldValue}";
+
+		AssertTextEquals(
+			locator1 = "Form#FIELD_REFERENCE",
+			value1 = "${fieldValue}");
+	}
+
 	macro editImageDescription {
 		var descriptionPosition = "${descriptionPosition}";
 

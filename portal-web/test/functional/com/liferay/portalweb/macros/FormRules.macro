@@ -145,6 +145,18 @@ definition {
 		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST");
 	}
 
+	macro selectCalculateFieldByFieldReference {
+		AssertClick(
+			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_BUTTON",
+			value1 = "Add Field");
+
+		var key_calculateFieldOption = "Field Reference: ${calculateFieldOption}";
+
+		ScrollBy(value1 = "0, 230");
+
+		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST");
+	}
+
 	macro selectCalculateResultField {
 		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_RESULT_FIELD");
 
@@ -225,6 +237,13 @@ definition {
 		AssertElementPresent(
 			key_ruleNumber = "${ruleNumber}",
 			locator1 = "FormRules#RULE_BUILDER_BROKEN");
+	}
+
+	macro viewCalculatorExpression {
+		AssertTextEquals(
+			key_calculatorExpression = "${calculatorExpression}",
+			locator1 = "FormRules#RULE_BUILDER_CALCULATE_RESULT_EXPRESSION",
+			value1 = "${calculatorExpression}");
 	}
 
 	macro viewConditionFieldConstantSummary {

@@ -155,6 +155,12 @@
 </tr>
 
 <tr>
+	<td>SIDEBAR_ADVANCED_FIELD_REFERENCE</td>
+	<td>//input[contains(@name,'fieldReference')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_TEXT</td>
 	<td>//input[contains(@name,'predefinedValue')]</td>
 	<td></td>

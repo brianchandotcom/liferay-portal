@@ -256,6 +256,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>FIELD_REFERENCE</td>
+    <td>//input[contains(@name,'fieldReference')]</td>
+    <td></td>
+</tr>
+<tr>
     <td></td>
     <td></td>
     <td></td>

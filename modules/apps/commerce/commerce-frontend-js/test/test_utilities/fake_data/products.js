@@ -16,35 +16,34 @@ import faker from 'faker';
 
 import {getRandomInt, processFakeRequestData} from '../index';
 
-export let accounts = [];
+export let products = [];
 
-export const accountTemplate = {
-	emailAddresses: ['email@test.com'],
+export const productTemplate = {
 	id: 999999,
-	logoURL: '/test-logo-folder/test.jpg',
-	name: 'TEST ACCOUNT NAME',
+	name: 'TEST PRODUCT NAME',
+	productId: 999999,
+	urlImage: '/test-logo-folder/test.jpg',
 };
 
-export function generateFakeAccounts(total) {
-	accounts = [accountTemplate];
+export function generateFakeProducts(total) {
+	products = [productTemplate];
 
 	for (let i = 0; i < total - 1; i++) {
-		accounts.push({
-			...accountTemplate,
-			emailAddresses: new Array(getRandomInt(0, 2)).map(
-				faker.internet.email
-			),
+		products.push({
+			...productTemplate,
 			id: i,
-			name: faker.company.companyName(),
+			name: faker.commerce.productName(),
+			productId: i,
+			urlImage: faker.image.business(),
 		});
 	}
 
-	return accounts;
+	return products;
 }
 
-export function getAccounts(url, itemsLength = getRandomInt(40, 60)) {
-	if (!accounts.length) {
-		generateFakeAccounts(itemsLength);
+export function getProducts(url, itemsLength = getRandomInt(40, 60)) {
+	if (!products.length) {
+		generateFakeProducts(itemsLength);
 	}
 
 	const {
@@ -53,7 +52,7 @@ export function getAccounts(url, itemsLength = getRandomInt(40, 60)) {
 		page,
 		pageSize,
 		totalCount,
-	} = processFakeRequestData(url, accounts, [accountTemplate]);
+	} = processFakeRequestData(url, products, [productTemplate]);
 
 	return {
 		actions: {},

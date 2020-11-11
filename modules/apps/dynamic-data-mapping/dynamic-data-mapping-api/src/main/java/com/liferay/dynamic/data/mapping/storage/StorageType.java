@@ -22,9 +22,13 @@ import java.util.Objects;
  */
 public enum StorageType {
 
-	JSON("json");
+	DEFAULT("default"), JSON("json");
 
 	public static StorageType parse(String value) {
+		if (Objects.equals(DEFAULT.getValue(), value)) {
+			return DEFAULT;
+		}
+
 		if (Objects.equals(JSON.getValue(), value)) {
 			return JSON;
 		}

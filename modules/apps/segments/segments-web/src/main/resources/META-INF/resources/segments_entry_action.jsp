@@ -22,6 +22,8 @@ String[] excludedRoleNames = (String[])request.getAttribute(SegmentsWebKeys.EXCL
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
+
+SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT);
 %>
 
 <liferay-ui:icon-menu
@@ -61,7 +63,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 	Group group = GroupLocalServiceUtil.getGroup(segmentsEntry.getGroupId());
 	%>
 
-	<c:if test="<%= !group.isCompany() && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
+	<c:if test="<%= segmentsDisplayContext.isRoleSegmentationEnabled() && !group.isCompany() && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
 
 		<%
 		ItemSelector itemSelector = (ItemSelector)request.getAttribute(SegmentsWebKeys.ITEM_SELECTOR);

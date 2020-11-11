@@ -60,12 +60,13 @@ public class SegmentsDisplayContext {
 
 	public SegmentsDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse,
+		RenderResponse renderResponse, boolean roleSegmentationEnabled,
 		SegmentsEntryService segmentsEntryService) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_roleSegmentationEnabled = roleSegmentationEnabled;
 		_segmentsEntryService = segmentsEntryService;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -297,6 +298,10 @@ public class SegmentsDisplayContext {
 		return true;
 	}
 
+	public boolean isRoleSegmentationEnabled() {
+		return _roleSegmentationEnabled;
+	}
+
 	public boolean isShowCreationMenu() {
 		if (SegmentsResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(),
@@ -453,6 +458,7 @@ public class SegmentsDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final boolean _roleSegmentationEnabled;
 	private SearchContainer<SegmentsEntry> _searchContainer;
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;

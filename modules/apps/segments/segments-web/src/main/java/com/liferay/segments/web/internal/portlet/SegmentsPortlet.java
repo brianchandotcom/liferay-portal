@@ -15,11 +15,13 @@
 package com.liferay.segments.web.internal.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
+import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
@@ -27,18 +29,24 @@ import com.liferay.segments.web.internal.display.context.SegmentsDisplayContext;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
  */
 @Component(
+	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -75,12 +83,30 @@ public class SegmentsPortlet extends MVCPortlet {
 		SegmentsDisplayContext segmentsDisplayContext =
 			new SegmentsDisplayContext(
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _segmentsEntryService);
+				renderResponse, _roleSegmentationEnabled,
+				_segmentsEntryService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT, segmentsDisplayContext);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		SegmentsConfiguration segmentsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SegmentsConfiguration.class, properties);
+
+		_roleSegmentationEnabled =
+			segmentsConfiguration.roleSegmentationEnabled();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_roleSegmentationEnabled = false;
 	}
 
 	private String[] _getExcludedRoleNames() {
@@ -100,6 +126,8 @@ public class SegmentsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	private boolean _roleSegmentationEnabled;
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;

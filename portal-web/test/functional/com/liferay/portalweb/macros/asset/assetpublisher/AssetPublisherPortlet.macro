@@ -1127,9 +1127,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Icon#FLAG");
 
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LABEL");
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR");
 
-		AssertElementPresent(locator1 = "Ratings#AVERAGE_LABEL");
+		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 
 		AssertElementPresent(locator1 = "Button#SUBSCRIBE");
 

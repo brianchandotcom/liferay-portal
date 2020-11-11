@@ -92,6 +92,11 @@ dependencies {
 	compile(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.2") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
+	compile(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.4") {
+		exclude group: "com.google.template", module: "soy"
+		exclude group: "org.codehaus.plexus"
+		exclude group: "org.sonatype.plexus"
+	}
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
 	compileInclude files("lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar")

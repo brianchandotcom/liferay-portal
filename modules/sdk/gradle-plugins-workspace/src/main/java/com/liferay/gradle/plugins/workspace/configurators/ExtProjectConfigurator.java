@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.liferay.gradle.plugins.LiferayExtPlugin;
-import com.liferay.gradle.plugins.LiferayOSGiExtPlugin;
+import com.liferay.gradle.plugins.workspace.LiferayExtPlugin;
+import com.liferay.gradle.plugins.workspace.LiferayOSGiExtPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;

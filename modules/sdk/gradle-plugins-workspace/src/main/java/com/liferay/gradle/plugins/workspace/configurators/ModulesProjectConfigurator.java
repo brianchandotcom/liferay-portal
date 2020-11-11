@@ -19,7 +19,13 @@ import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.soy.SoyPlugin;
+import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
@@ -27,6 +33,7 @@ import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.internal.JSModuleConfigGeneratorDefaultsPlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
@@ -130,6 +137,22 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 					project, UpgradeTableBuilderPlugin.class);
 				GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 			}
+
+			GradleUtil.applyPlugin(project, SoyPlugin.class);
+			GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);
+
+			if (GradleUtil.hasTask(
+					project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
+
+				GradleUtil.applyPlugin(project, JSTranspilerBasePlugin.class);
+			}
+			else {
+				GradleUtil.applyPlugin(
+					project, JSModuleConfigGeneratorPlugin.class);
+				GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
+			}
+
+			JSModuleConfigGeneratorDefaultsPlugin.INSTANCE.apply(project);
 
 			Jar jar = (Jar)GradleUtil.getTask(
 				project, JavaPlugin.JAR_TASK_NAME);

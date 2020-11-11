@@ -55,7 +55,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 				name="name"
 			>
 				<clay:sticker
-					cssClass="bg-light mr-2"
+					cssClass="bg-light mr-3"
 					displayType="light"
 					icon="page"
 				/>

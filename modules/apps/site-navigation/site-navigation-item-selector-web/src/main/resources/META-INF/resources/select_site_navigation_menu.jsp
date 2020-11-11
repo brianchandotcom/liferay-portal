@@ -30,9 +30,19 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 				<liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" />
 			</div>
 
-			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
-			/>
+			<div class="align-items-center d-flex justify-content-between">
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= selectSiteNavigationMenuDisplayContext.getBreadcrumbEntries() %>"
+				/>
+
+				<clay:button
+					cssClass="site-navigation-menu-selector"
+					disabled="<%= true %>"
+					displayType="primary"
+					label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'
+					small="<%= true %>"
+				/>
+			</div>
 
 			<liferay-ui:search-container
 				cssClass="table-hover"
@@ -59,7 +69,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 						name="name"
 					>
 						<clay:sticker
-							cssClass="bg-light mr-2"
+							cssClass="bg-light mr-3"
 							displayType="light"
 							icon="sites"
 						/>

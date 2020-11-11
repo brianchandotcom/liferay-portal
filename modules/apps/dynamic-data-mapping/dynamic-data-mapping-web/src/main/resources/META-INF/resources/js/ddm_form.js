@@ -1048,26 +1048,28 @@ AUI.add(
 							selectorInput.attr('disabled', readOnly);
 						}
 
-						var checkboxInput = container.one(
-							'input[type="checkbox"][name*="' +
-								instance.getFieldDefinition().name +
-								'"]'
-						);
+						if (instance.getFieldDefinition().type === 'checkbox') {
+							var checkboxInput = container.one(
+								'input[type="checkbox"][name*="' +
+									instance.getFieldDefinition().name +
+									'"]'
+							);
 
-						if (checkboxInput) {
-							checkboxInput.attr('disabled', readOnly);
-						}
+							if (checkboxInput) {
+								checkboxInput.attr('disabled', readOnly);
+							}
 
-						var disableCheckboxInput = container.one(
-							'input[type="checkbox"][name$="disable"]'
-						);
+							var disableCheckboxInput = container.one(
+								'input[type="checkbox"][name$="disable"]'
+							);
 
-						if (
-							inputNode &&
-							disableCheckboxInput &&
-							disableCheckboxInput.get('checked')
-						) {
-							inputNode.attr('disabled', true);
+							if (
+								inputNode &&
+								disableCheckboxInput &&
+								disableCheckboxInput.get('checked')
+							) {
+								inputNode.attr('disabled', true);
+							}
 						}
 					}
 				},

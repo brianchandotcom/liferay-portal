@@ -49,21 +49,29 @@ definition {
 
 			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${uploadFileName}");
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					customImage = "${customImage}",
+					depotName = "${depotName}",
+					imageFileName = "${uploadFileName}");
+			}
+			else {
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					locator1 = "TextInput#FILE",
+					value1 = "${uploadFileName}");
 
-			Pause(locator1 = "2000");
+				Pause(locator1 = "2000");
 
-			AssertElementPresent.pauseAssertVisible(
-				locator1 = "ItemSelector#ADD_BUTTON",
-				value1 = "Add");
+				AssertElementPresent.pauseAssertVisible(
+					locator1 = "ItemSelector#ADD_BUTTON",
+					value1 = "Add");
 
-			AssertClick(
-				locator1 = "ItemSelector#ADD_BUTTON",
-				value1 = "Add");
+				AssertClick(
+					locator1 = "ItemSelector#ADD_BUTTON",
+					value1 = "Add");
 
-			SelectFrameTop(value1 = "relative=top");
+				SelectFrameTop(value1 = "relative=top");
+			}
 
 			if (isSet(altDescription)) {
 				Type(

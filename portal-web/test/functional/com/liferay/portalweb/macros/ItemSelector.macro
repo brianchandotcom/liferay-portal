@@ -55,7 +55,9 @@ definition {
 	}
 
 	macro changeWorkspaces {
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+		if (!(isSet(customImage))) {
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+		}
 
 		if (isSet(navTab)) {
 			AssertClick(
@@ -261,6 +263,7 @@ definition {
 		var key_imageFileName = "${imageFileName}";
 
 		ItemSelector.changeWorkspaces(
+			customImage = "${customImage}",
 			navTab = "${navTab}",
 			workspacesType = "Asset Library");
 

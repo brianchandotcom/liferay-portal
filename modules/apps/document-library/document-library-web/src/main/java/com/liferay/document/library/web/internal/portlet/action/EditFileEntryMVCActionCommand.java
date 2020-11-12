@@ -420,11 +420,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				TempFileEntryUtil.getOriginalTempFileName(
 					tempFileEntry.getFileName());
 
-			String extension = FileUtil.getExtension(originalSelectedFileName);
-
-			String uniqueTitle = DLUtil.getUniqueFileName(
-				tempFileEntry.getGroupId(), folderId,
-				FileUtil.stripExtension(originalSelectedFileName));
+			String uniqueFileName = DLUtil.getUniqueFileName(
+				tempFileEntry.getGroupId(), folderId, originalSelectedFileName);
 
 			String mimeType = tempFileEntry.getMimeType();
 			InputStream inputStream = tempFileEntry.getContentStream();
@@ -433,8 +430,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
-			String uniqueFileName = DLUtil.getSanitizedFileName(
-				uniqueTitle, extension);
+			String uniqueTitle = FileUtil.stripExtension(uniqueFileName);
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				repositoryId, folderId, uniqueFileName, mimeType, uniqueTitle,
@@ -1095,19 +1091,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				// Add file entry
 
-				String extension = FileUtil.getExtension(sourceFileName);
-
-				String uniqueTitle = DLUtil.getUniqueFileName(
-					themeDisplay.getScopeGroupId(), folderId,
-					FileUtil.stripExtension(sourceFileName));
-
-				String uniqueFileName = DLUtil.getSanitizedFileName(
-					uniqueTitle, extension);
+				String uniqueFileName = DLUtil.getUniqueFileName(
+					themeDisplay.getScopeGroupId(), folderId, sourceFileName);
 
 				fileEntry = _dlAppService.addFileEntry(
 					repositoryId, folderId, uniqueFileName, contentType,
-					uniqueTitle, description, changeLog, inputStream, size,
-					serviceContext);
+					FileUtil.stripExtension(uniqueFileName), description,
+					changeLog, inputStream, size, serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(
 					"fileEntryId", fileEntry.getFileEntryId());

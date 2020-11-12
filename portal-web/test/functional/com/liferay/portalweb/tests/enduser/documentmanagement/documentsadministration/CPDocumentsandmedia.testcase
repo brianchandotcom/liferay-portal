@@ -312,18 +312,22 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
+			dmDocumentFileName = "Document_1.txt",
 			dmDocumentSize = "259 B",
 			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescription = "DM Document Description",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileName = "Document_1.txt",
+			dmDocumentFileNameEdit = "Document_1_Edit.txt",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit");
 
 		DMDocument.viewEditCP(
+			dmDocumentFileName = "Document_1_Edit.txt",
 			dmDocumentTitleEdit = "DM Document Title Edit",
 			dmDocumentVersionNumber = "1.1");
 	}

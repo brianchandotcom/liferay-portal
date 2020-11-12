@@ -148,13 +148,8 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 	protected Criteria getCriteriaFromSession() {
 		PortletSession portletSession = _renderRequest.getPortletSession();
 
-		Criteria criteria = (Criteria)portletSession.getAttribute(
+		return (Criteria)portletSession.getAttribute(
 			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
-
-		portletSession.removeAttribute(
-			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
-
-		return criteria;
 	}
 
 	protected PortletURL getPortletURL() {

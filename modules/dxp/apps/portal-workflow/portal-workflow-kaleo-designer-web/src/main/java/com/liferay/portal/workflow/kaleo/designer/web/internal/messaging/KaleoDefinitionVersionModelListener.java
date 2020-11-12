@@ -19,15 +19,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,13 +39,11 @@ public class KaleoDefinitionVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			_checkResourceActions();
-
 			_resourceLocalService.addModelResources(
 				kaleoDefinitionVersion, getServiceContext());
 		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -80,29 +73,6 @@ public class KaleoDefinitionVersionModelListener
 
 		return serviceContext;
 	}
-
-	private void _checkResourceActions() throws Exception {
-		_resourceActions.read(
-			KaleoDefinitionVersionModelListener.class.getClassLoader(),
-			"/resource-actions/default.xml");
-
-		List<String> modelNames = _resourceActions.getPortletModelResources(
-			KaleoDesignerPortletKeys.KALEO_DESIGNER);
-
-		for (String modelName : modelNames) {
-			List<String> modelActions =
-				_resourceActions.getModelResourceActions(modelName);
-
-			_resourceActionLocalService.checkResourceActions(
-				modelName, modelActions);
-		}
-	}
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

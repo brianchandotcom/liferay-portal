@@ -96,14 +96,14 @@ public class RegionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", countryId=");
 		sb.append(countryId);
-		sb.append(", regionCode=");
-		sb.append(regionCode);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", position=");
 		sb.append(position);
+		sb.append(", regionCode=");
+		sb.append(regionCode);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -150,13 +150,7 @@ public class RegionCacheModel
 		}
 
 		regionImpl.setCountryId(countryId);
-
-		if (regionCode == null) {
-			regionImpl.setRegionCode("");
-		}
-		else {
-			regionImpl.setRegionCode(regionCode);
-		}
+		regionImpl.setActive(active);
 
 		if (name == null) {
 			regionImpl.setName("");
@@ -165,8 +159,14 @@ public class RegionCacheModel
 			regionImpl.setName(name);
 		}
 
-		regionImpl.setActive(active);
 		regionImpl.setPosition(position);
+
+		if (regionCode == null) {
+			regionImpl.setRegionCode("");
+		}
+		else {
+			regionImpl.setRegionCode(regionCode);
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			regionImpl.setLastPublishDate(null);
@@ -195,12 +195,12 @@ public class RegionCacheModel
 		modifiedDate = objectInput.readLong();
 
 		countryId = objectInput.readLong();
-		regionCode = objectInput.readUTF();
-		name = objectInput.readUTF();
 
 		active = objectInput.readBoolean();
+		name = objectInput.readUTF();
 
 		position = objectInput.readDouble();
+		regionCode = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -233,12 +233,7 @@ public class RegionCacheModel
 
 		objectOutput.writeLong(countryId);
 
-		if (regionCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(regionCode);
-		}
+		objectOutput.writeBoolean(active);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -247,9 +242,15 @@ public class RegionCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeBoolean(active);
-
 		objectOutput.writeDouble(position);
+
+		if (regionCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(regionCode);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -262,10 +263,10 @@ public class RegionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long countryId;
-	public String regionCode;
-	public String name;
 	public boolean active;
+	public String name;
 	public double position;
+	public String regionCode;
 	public long lastPublishDate;
 
 }

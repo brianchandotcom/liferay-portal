@@ -42,10 +42,10 @@ public class RegionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCountryId(model.getCountryId());
-		soapModel.setRegionCode(model.getRegionCode());
-		soapModel.setName(model.getName());
 		soapModel.setActive(model.isActive());
+		soapModel.setName(model.getName());
 		soapModel.setPosition(model.getPosition());
+		soapModel.setRegionCode(model.getRegionCode());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -171,22 +171,6 @@ public class RegionSoap implements Serializable {
 		_countryId = countryId;
 	}
 
-	public String getRegionCode() {
-		return _regionCode;
-	}
-
-	public void setRegionCode(String regionCode) {
-		_regionCode = regionCode;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	public boolean getActive() {
 		return _active;
 	}
@@ -199,12 +183,28 @@ public class RegionSoap implements Serializable {
 		_active = active;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public double getPosition() {
 		return _position;
 	}
 
 	public void setPosition(double position) {
 		_position = position;
+	}
+
+	public String getRegionCode() {
+		return _regionCode;
+	}
+
+	public void setRegionCode(String regionCode) {
+		_regionCode = regionCode;
 	}
 
 	public Date getLastPublishDate() {
@@ -224,10 +224,10 @@ public class RegionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _countryId;
-	private String _regionCode;
-	private String _name;
 	private boolean _active;
+	private String _name;
 	private double _position;
+	private String _regionCode;
 	private Date _lastPublishDate;
 
 }

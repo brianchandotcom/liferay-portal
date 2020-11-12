@@ -50,14 +50,14 @@ public class RegionTable extends BaseTable<RegionTable> {
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Long> countryId = createColumn(
 		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<RegionTable, String> regionCode = createColumn(
-		"regionCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<RegionTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Double> position = createColumn(
 		"position", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, String> regionCode = createColumn(
+		"regionCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 

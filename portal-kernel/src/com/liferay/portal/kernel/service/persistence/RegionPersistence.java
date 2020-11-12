@@ -622,56 +622,6 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	public int countByActive(boolean active);
 
 	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	public Region findByC_R(long countryId, String regionCode)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByC_R(long countryId, String regionCode);
-
-	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching region, or <code>null</code> if a matching region could not be found
-	 */
-	public Region fetchByC_R(
-		long countryId, String regionCode, boolean useFinderCache);
-
-	/**
-	 * Removes the region where countryId = &#63; and regionCode = &#63; from the database.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the region that was removed
-	 */
-	public Region removeByC_R(long countryId, String regionCode)
-		throws NoSuchRegionException;
-
-	/**
-	 * Returns the number of regions where countryId = &#63; and regionCode = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the number of matching regions
-	 */
-	public int countByC_R(long countryId, String regionCode);
-
-	/**
 	 * Returns all the regions where countryId = &#63; and active = &#63;.
 	 *
 	 * @param countryId the country ID
@@ -824,6 +774,56 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 * @return the number of matching regions
 	 */
 	public int countByC_A(long countryId, boolean active);
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the matching region
+	 * @throws NoSuchRegionException if a matching region could not be found
+	 */
+	public Region findByC_R(long countryId, String regionCode)
+		throws NoSuchRegionException;
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 */
+	public Region fetchByC_R(long countryId, String regionCode);
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 */
+	public Region fetchByC_R(
+		long countryId, String regionCode, boolean useFinderCache);
+
+	/**
+	 * Removes the region where countryId = &#63; and regionCode = &#63; from the database.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the region that was removed
+	 */
+	public Region removeByC_R(long countryId, String regionCode)
+		throws NoSuchRegionException;
+
+	/**
+	 * Returns the number of regions where countryId = &#63; and regionCode = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the number of matching regions
+	 */
+	public int countByC_R(long countryId, String regionCode);
 
 	/**
 	 * Caches the region in the entity cache if it is enabled.

@@ -183,7 +183,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -563,8 +563,7 @@ public class RegionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -721,7 +720,7 @@ public class RegionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Region region : list) {
@@ -1131,8 +1130,7 @@ public class RegionPersistenceImpl
 
 		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2170,254 +2168,6 @@ public class RegionPersistenceImpl
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 =
 		"region.active = ?";
 
-	private FinderPath _finderPathFetchByC_R;
-	private FinderPath _finderPathCountByC_R;
-
-	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the matching region
-	 * @throws NoSuchRegionException if a matching region could not be found
-	 */
-	@Override
-	public Region findByC_R(long countryId, String regionCode)
-		throws NoSuchRegionException {
-
-		Region region = fetchByC_R(countryId, regionCode);
-
-		if (region == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("countryId=");
-			sb.append(countryId);
-
-			sb.append(", regionCode=");
-			sb.append(regionCode);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchRegionException(sb.toString());
-		}
-
-		return region;
-	}
-
-	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByC_R(long countryId, String regionCode) {
-		return fetchByC_R(countryId, regionCode, true);
-	}
-
-	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching region, or <code>null</code> if a matching region could not be found
-	 */
-	@Override
-	public Region fetchByC_R(
-		long countryId, String regionCode, boolean useFinderCache) {
-
-		regionCode = Objects.toString(regionCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {countryId, regionCode};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_R, finderArgs);
-		}
-
-		if (result instanceof Region) {
-			Region region = (Region)result;
-
-			if ((countryId != region.getCountryId()) ||
-				!Objects.equals(regionCode, region.getRegionCode())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_REGION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
-
-			boolean bindRegionCode = false;
-
-			if (regionCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
-			}
-			else {
-				bindRegionCode = true;
-
-				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(countryId);
-
-				if (bindRegionCode) {
-					queryPos.add(regionCode);
-				}
-
-				List<Region> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_R, finderArgs, list);
-					}
-				}
-				else {
-					Region region = list.get(0);
-
-					result = region;
-
-					cacheResult(region);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Region)result;
-		}
-	}
-
-	/**
-	 * Removes the region where countryId = &#63; and regionCode = &#63; from the database.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the region that was removed
-	 */
-	@Override
-	public Region removeByC_R(long countryId, String regionCode)
-		throws NoSuchRegionException {
-
-		Region region = findByC_R(countryId, regionCode);
-
-		return remove(region);
-	}
-
-	/**
-	 * Returns the number of regions where countryId = &#63; and regionCode = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @param regionCode the region code
-	 * @return the number of matching regions
-	 */
-	@Override
-	public int countByC_R(long countryId, String regionCode) {
-		regionCode = Objects.toString(regionCode, "");
-
-		FinderPath finderPath = _finderPathCountByC_R;
-
-		Object[] finderArgs = new Object[] {countryId, regionCode};
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_REGION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
-
-			boolean bindRegionCode = false;
-
-			if (regionCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
-			}
-			else {
-				bindRegionCode = true;
-
-				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(countryId);
-
-				if (bindRegionCode) {
-					queryPos.add(regionCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 =
-		"region.countryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_R_REGIONCODE_2 =
-		"region.regionCode = ?";
-
-	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 =
-		"(region.regionCode IS NULL OR region.regionCode = '')";
-
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
 	private FinderPath _finderPathCountByC_A;
@@ -2950,6 +2700,254 @@ public class RegionPersistenceImpl
 
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 =
 		"region.active = ?";
+
+	private FinderPath _finderPathFetchByC_R;
+	private FinderPath _finderPathCountByC_R;
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the matching region
+	 * @throws NoSuchRegionException if a matching region could not be found
+	 */
+	@Override
+	public Region findByC_R(long countryId, String regionCode)
+		throws NoSuchRegionException {
+
+		Region region = fetchByC_R(countryId, regionCode);
+
+		if (region == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("countryId=");
+			sb.append(countryId);
+
+			sb.append(", regionCode=");
+			sb.append(regionCode);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchRegionException(sb.toString());
+		}
+
+		return region;
+	}
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 */
+	@Override
+	public Region fetchByC_R(long countryId, String regionCode) {
+		return fetchByC_R(countryId, regionCode, true);
+	}
+
+	/**
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 */
+	@Override
+	public Region fetchByC_R(
+		long countryId, String regionCode, boolean useFinderCache) {
+
+		regionCode = Objects.toString(regionCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {countryId, regionCode};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_R, finderArgs);
+		}
+
+		if (result instanceof Region) {
+			Region region = (Region)result;
+
+			if ((countryId != region.getCountryId()) ||
+				!Objects.equals(regionCode, region.getRegionCode())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_REGION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
+
+			boolean bindRegionCode = false;
+
+			if (regionCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
+			}
+			else {
+				bindRegionCode = true;
+
+				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(countryId);
+
+				if (bindRegionCode) {
+					queryPos.add(regionCode);
+				}
+
+				List<Region> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_R, finderArgs, list);
+					}
+				}
+				else {
+					Region region = list.get(0);
+
+					result = region;
+
+					cacheResult(region);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Region)result;
+		}
+	}
+
+	/**
+	 * Removes the region where countryId = &#63; and regionCode = &#63; from the database.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the region that was removed
+	 */
+	@Override
+	public Region removeByC_R(long countryId, String regionCode)
+		throws NoSuchRegionException {
+
+		Region region = findByC_R(countryId, regionCode);
+
+		return remove(region);
+	}
+
+	/**
+	 * Returns the number of regions where countryId = &#63; and regionCode = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param regionCode the region code
+	 * @return the number of matching regions
+	 */
+	@Override
+	public int countByC_R(long countryId, String regionCode) {
+		regionCode = Objects.toString(regionCode, "");
+
+		FinderPath finderPath = _finderPathCountByC_R;
+
+		Object[] finderArgs = new Object[] {countryId, regionCode};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_REGION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
+
+			boolean bindRegionCode = false;
+
+			if (regionCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
+			}
+			else {
+				bindRegionCode = true;
+
+				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(countryId);
+
+				if (bindRegionCode) {
+					queryPos.add(regionCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 =
+		"region.countryId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_R_REGIONCODE_2 =
+		"region.regionCode = ?";
+
+	private static final String _FINDER_COLUMN_C_R_REGIONCODE_3 =
+		"(region.regionCode IS NULL OR region.regionCode = '')";
 
 	public RegionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3582,16 +3580,6 @@ public class RegionPersistenceImpl
 			new String[] {Boolean.class.getName()}, new String[] {"active_"},
 			false);
 
-		_finderPathFetchByC_R = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "regionCode"}, true);
-
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "regionCode"}, false);
-
 		_finderPathWithPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
 			new String[] {
@@ -3610,6 +3598,16 @@ public class RegionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"countryId", "active_"}, false);
+
+		_finderPathFetchByC_R = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"countryId", "regionCode"}, true);
+
+		_finderPathCountByC_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"countryId", "regionCode"}, false);
 	}
 
 	public void destroy() {

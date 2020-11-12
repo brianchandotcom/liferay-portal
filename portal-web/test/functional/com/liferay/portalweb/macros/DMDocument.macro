@@ -845,6 +845,12 @@ definition {
 		if (!(contains("${dmDocumentDescriptionEdit}", "{dmDocumentDescriptionEdit}"))) {
 			PortletEntry.inputDescription(description = "${dmDocumentDescriptionEdit}");
 		}
+
+		if (!(contains("${dmDocumentFileNameEdit}", "{dmDocumentFileNameEdit}"))) {
+			PortletEntry.inputText(
+				fieldLabel = "File Name",
+				text = "${dmDocumentFileNameEdit}");
+		}
 	}
 
 	macro editCmdPG {
@@ -913,6 +919,7 @@ definition {
 		DMDocument.editCmd(
 			dmDocumentDescriptionEdit = "${dmDocumentDescriptionEdit}",
 			dmDocumentFileEdit = "${dmDocumentFileEdit}",
+			dmDocumentFileNameEdit = "${dmDocumentFileNameEdit}",
 			dmDocumentTitleEdit = "${dmDocumentTitleEdit}");
 
 		if (isSet(versioning)) {
@@ -1661,6 +1668,12 @@ definition {
 		if (isSet(locationFieldName)) {
 			DMDocument.viewLocation(dmFolderName = "${dmFolderName}");
 		}
+
+		if (isSet(dmDocumentFileName)) {
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_FILE_NAME",
+				value1 = "${dmDocumentFileName}");
+		}
 	}
 
 	macro viewCPStatus {
@@ -1942,6 +1955,12 @@ definition {
 
 		if (isSet(dmDocumentVersionNumber)) {
 			DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "${dmDocumentVersionNumber}");
+		}
+
+		if (isSet(dmDocumentFileName)) {
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_FILE_NAME",
+				value1 = "${dmDocumentFileName}");
 		}
 	}
 

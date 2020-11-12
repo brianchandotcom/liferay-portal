@@ -30,7 +30,13 @@ import {useId} from '../../../../app/utils/useId';
 import {ImageSelector} from '../../../../common/components/ImageSelector';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
-const DEFAULT_IMAGE_CONFIGURATION = 'auto';
+const DEFAULT_IMAGE_CONFIGURATION_ID = 'auto';
+
+const DEFAULT_IMAGE_CONFIGURATION = {
+	size: null,
+	value: DEFAULT_IMAGE_CONFIGURATION_ID,
+	width: null,
+};
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
@@ -45,11 +51,12 @@ export function ImagePropertiesPanel({item}) {
 		(state) => state.selectedViewportSize
 	);
 	const editables = useSelector((state) => state.editables);
-	const [imageConfiguration, setImageConfiguration] = useState(
-		DEFAULT_IMAGE_CONFIGURATION
-	);
 	const [imageConfigurations, setImageConfigurations] = useState([]);
-	const [imageSize, setImageSize] = useState({fileSize: null, width: null});
+	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_CONFIGURATION);
+	const [
+		selectedImageConfigurationId,
+		setSelectedImageConfigurationId,
+	] = useState(DEFAULT_IMAGE_CONFIGURATION_ID);
 
 	const canUpdateImage = selectedViewportSize === VIEWPORT_SIZES.desktop;
 
@@ -110,10 +117,7 @@ export function ImagePropertiesPanel({item}) {
 						width: editableElement.naturalWidth,
 					};
 
-					setImageSize({
-						fileSize: autoImageConfiguration.size || null,
-						width: autoImageConfiguration.width,
-					});
+					setImageSize(autoImageConfiguration);
 				}
 				else {
 					const viewportImageConfiguration = imageConfigurations.find(
@@ -125,10 +129,7 @@ export function ImagePropertiesPanel({item}) {
 									editableElement.naturalWidth)
 					) || {width: editableElement.naturalWidth};
 
-					setImageSize({
-						fileSize: viewportImageConfiguration.size || null,
-						width: viewportImageConfiguration.width,
-					});
+					setImageSize(viewportImageConfiguration);
 				}
 			};
 
@@ -146,6 +147,7 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.naturalHeight,
 		editableElement,
 		imageConfigurations,
+		selectedImageConfigurationId,
 		selectedViewportSize,
 	]);
 
@@ -163,18 +165,10 @@ export function ImagePropertiesPanel({item}) {
 	}, [dispatch, editableContent.fileEntryId]);
 
 	useEffect(() => {
-		const selectedImageConfigurationValue =
+		setSelectedImageConfigurationId(
 			editableConfig.imageConfiguration?.[selectedViewportSize] ??
-			DEFAULT_IMAGE_CONFIGURATION;
-
-		const selectedImageConfiguration = imageConfigurations.find(
-			(imageConfiguration) =>
-				imageConfiguration.value === selectedImageConfigurationValue
+				DEFAULT_IMAGE_CONFIGURATION_ID
 		);
-
-		if (selectedImageConfiguration) {
-			setImageConfiguration(selectedImageConfiguration.value);
-		}
 
 		setImageDescription((imageDescription) => {
 			if (imageDescription !== editableConfig.alt) {
@@ -236,10 +230,10 @@ export function ImagePropertiesPanel({item}) {
 
 		let nextEditableValue = {};
 
-		setImageConfiguration(DEFAULT_IMAGE_CONFIGURATION);
+		setSelectedImageConfigurationId(DEFAULT_IMAGE_CONFIGURATION_ID);
 		setImageConfigurations([]);
 		setImageDescription('');
-		setImageSize({fileSize: null, width: null});
+		setImageSize(DEFAULT_IMAGE_CONFIGURATION);
 
 		const nextEditableValueConfig = {
 			...editableValue.config,
@@ -320,7 +314,7 @@ export function ImagePropertiesPanel({item}) {
 							);
 						}}
 						options={imageConfigurations}
-						value={imageConfiguration}
+						value={selectedImageConfigurationId}
 					/>
 				</ClayForm.Group>
 			)}
@@ -332,11 +326,11 @@ export function ImagePropertiesPanel({item}) {
 				</div>
 			)}
 
-			{config.adaptiveMediaEnabled && imageTitle && imageSize.fileSize && (
+			{config.adaptiveMediaEnabled && imageTitle && imageSize.size && (
 				<div className="mb-3 page-editor__image-properties-panel__resolution-label">
 					<b>{Liferay.Language.get('file-size')}:</b>
 					<span className="ml-1">
-						{Number(imageSize.fileSize).toFixed(2)}kB
+						{Number(imageSize.size).toFixed(2)}kB
 					</span>
 				</div>
 			)}

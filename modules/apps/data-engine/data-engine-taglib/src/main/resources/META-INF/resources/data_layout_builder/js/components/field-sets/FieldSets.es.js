@@ -150,37 +150,16 @@ export default function FieldSets({keywords}) {
 
 					<div className="mt-3">
 						{filteredFieldSets.map((fieldSet) => {
-							const fieldSetLanguageId =
-								fieldSet.defaultLanguageId;
-
 							const fieldSetName = getLocalizedValue(
-								fieldSetLanguageId,
+								fieldSet.defaultLanguageId,
 								fieldSet.name
 							);
 
-							let editAction = {
-								action: () => toggleFieldSet(fieldSet),
-								name: Liferay.Language.get('edit'),
-							};
-
-							if (defaultLanguageId !== fieldSetLanguageId) {
-								editAction = {
-									...editAction,
-									className: 'disabled',
-									popover: {
-										alignPosition: 'left',
-										body: Liferay.Language.get(
-											'the-fieldset-cannot-be-edited-because-the-instance-language-does-not-match-the-current-language-of-the-fieldset-recreate-the-fieldset-if-changes-are-required'
-										),
-										header: Liferay.Language.get(
-											'edit-not-allowed'
-										),
-									},
-								};
-							}
-
 							const dropDownActions = [
-								editAction,
+								{
+									action: () => toggleFieldSet(fieldSet),
+									name: Liferay.Language.get('edit'),
+								},
 								{
 									action: () =>
 										propagateFieldSet({

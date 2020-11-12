@@ -14,14 +14,12 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayPopover from '@clayui/popover';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 const {Item, ItemList} = ClayDropDown;
 
 export default ({actions, disabled}) => {
 	const [active, setActive] = useState(false);
-	const [showPopover, setShowPopover] = useState(false);
 
 	const DropdownButton = (
 		<ClayButtonWithIcon
@@ -46,12 +44,6 @@ export default ({actions, disabled}) => {
 		setActive(false);
 	};
 
-	useEffect(() => {
-		if (showPopover && !active) {
-			setShowPopover(false);
-		}
-	}, [active, showPopover]);
-
 	return (
 		<ClayDropDown
 			active={active}
@@ -61,43 +53,14 @@ export default ({actions, disabled}) => {
 			trigger={DropdownButton}
 		>
 			<ItemList>
-				{actions.map((action, index) => {
-					const ItemWrapper = () => (
-						<Item
-							className={action.className}
-							key={index}
-							onClick={(event) => onSelectItem(event, action)}
-						>
-							{action.name}
-						</Item>
-					);
-
-					if (action.popover) {
-						const {alignPosition, body, header} = action.popover;
-
-						return (
-							<ClayPopover
-								alignPosition={alignPosition}
-								disableScroll
-								header={header}
-								show={showPopover}
-								style={{zIndex: 1420}}
-								trigger={
-									<div
-										onMouseOut={() => setShowPopover(false)}
-										onMouseOver={() => setShowPopover(true)}
-									>
-										<ItemWrapper />
-									</div>
-								}
-							>
-								{body}
-							</ClayPopover>
-						);
-					}
-
-					return <ItemWrapper key={index} />;
-				})}
+				{actions.map((action, index) => (
+					<Item
+						key={index}
+						onClick={(event) => onSelectItem(event, action)}
+					>
+						{action.name}
+					</Item>
+				))}
 			</ItemList>
 		</ClayDropDown>
 	);

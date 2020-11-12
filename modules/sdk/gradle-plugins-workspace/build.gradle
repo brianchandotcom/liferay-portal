@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import de.undercouch.gradle.tasks.download.Download
@@ -5,10 +6,12 @@ import de.undercouch.gradle.tasks.download.Download
 apply plugin: "de.undercouch.download"
 apply plugin: "org.ysb33r.gradletest"
 
+task copyBundle(type: Copy)
 task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
 task copyHotFixZip(type: Copy)
 task copyRepo(type: Copy)
+task downloadBundle(type: Download)
 task downloadHotFixZip(type: Download)
 task downloadPluginsSdk(type: Download)
 
@@ -29,6 +32,18 @@ tasks.eclipse {
 
 cleanCopyLibs {
 	enabled = false
+}
+
+copyBundle {
+	dependsOn downloadBundle
+	eachFile new StripPathSegmentsAction(1)
+
+	from {
+		tarTree(downloadBundle.dest)
+	}
+
+	includeEmptyDirs = false
+	into new File(buildDir, "bundle")
 }
 
 copyDistBundleZipPluginsSdk {
@@ -104,6 +119,12 @@ dependencies {
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
 
+downloadBundle {
+	dest new File(buildDir, "bundle.tar.gz")
+	onlyIfModified true
+	src bundleUrl
+}
+
 downloadHotFixZip {
 	dest new File(buildDir, "liferay-hotfix-1072-7210.zip")
 	src hotFixZipUrl
@@ -125,6 +146,7 @@ eclipse.classpath.file {
 }
 
 gradleTest {
+	dependsOn copyBundle
 	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
 	dependsOn copyHotFixZip
@@ -133,6 +155,7 @@ gradleTest {
 
 	deprecationMessagesAreFailures = false
 
+	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=${bundleUrl}"
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
 

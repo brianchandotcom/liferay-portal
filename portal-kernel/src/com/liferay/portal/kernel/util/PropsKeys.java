@@ -2650,6 +2650,9 @@ public interface PropsKeys {
 	public static final String RECENT_CONTENT_MAX_DISPLAY_ITEMS =
 		"recent.content.max.display.items";
 
+	public static final String RECENT_GROUPS_MAX_ELEMENTS =
+		"recent.groups.max.elements";
+
 	public static final String REDIRECT_URL_DOMAINS_ALLOWED =
 		"redirect.url.domains.allowed";
 

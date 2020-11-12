@@ -273,7 +273,8 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			sitesJSONObject.put(
 				"recentSites",
 				_getSitesJSONArray(
-					recentGroups, resourceRequest, themeDisplay));
+					ListUtil.subList(recentGroups, 0, max), resourceRequest,
+					themeDisplay));
 
 			max -= recentGroups.size();
 		}

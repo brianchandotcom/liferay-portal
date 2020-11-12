@@ -2391,6 +2391,9 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.RECENT_CONTENT_MAX_DISPLAY_ITEMS));
 
+	public static final int RECENT_GROUPS_MAX_ELEMENTS = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.RECENT_GROUPS_MAX_ELEMENTS));
+
 	public static final String[] REDIRECT_URL_DOMAINS_ALLOWED =
 		PropsUtil.getArray(PropsKeys.REDIRECT_URL_DOMAINS_ALLOWED);
 

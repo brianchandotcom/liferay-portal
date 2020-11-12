@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +81,8 @@ public class RecentGroupManager {
 
 		groupIds.add(0, liveGroupId);
 
-		groupIds = ListUtil.subList(groupIds, 0, 8);
+		groupIds = ListUtil.subList(
+			groupIds, 0, PropsValues.RECENT_GROUPS_MAX_ELEMENTS);
 
 		_setRecentGroupsValue(httpServletRequest, StringUtil.merge(groupIds));
 	}

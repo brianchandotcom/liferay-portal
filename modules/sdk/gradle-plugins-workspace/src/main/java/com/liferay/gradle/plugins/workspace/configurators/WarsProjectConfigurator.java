@@ -15,7 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
-import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
+import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -36,6 +36,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
@@ -176,30 +177,36 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskProcessResources(Project project) {
-		TaskContainer taskContainer = project.getTasks();
+		project.afterEvaluate(
+			p -> {
+				TaskContainer taskContainer = p.getTasks();
 
-		taskContainer.withType(
-			BuildCSSTask.class,
-			buildCSS -> taskContainer.named(
-				JavaPlugin.PROCESS_RESOURCES_TASK_NAME,
-				processResources -> {
-					processResources.dependsOn(buildCSS);
+				Task buildCSSTask = taskContainer.findByName(
+					CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
-					Copy copy = (Copy)processResources;
+				if (buildCSSTask != null) {
+					Copy copy = (Copy)GradleUtil.getTask(
+						project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
-					copy.exclude("**/*.css");
-					copy.exclude("**/*.scss");
+					if (copy != null) {
+						copy.dependsOn(buildCSSTask);
 
-					copy.filesMatching(
-						"**/.sass-cache/",
-						details -> {
-							String path = details.getPath();
+						copy.exclude("**/*.css");
+						copy.exclude("**/*.scss");
 
-							details.setPath(path.replace(".sass-cache/", ""));
-						});
+						copy.filesMatching(
+							"**/.sass-cache/",
+							details -> {
+								String path = details.getPath();
 
-					copy.setIncludeEmptyDirs(false);
-				}));
+								details.setPath(
+									path.replace(".sass-cache/", ""));
+							});
+
+						copy.setIncludeEmptyDirs(false);
+					}
+				}
+			});
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

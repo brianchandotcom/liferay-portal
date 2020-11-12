@@ -1,0 +1,262 @@
+[
+	{
+		"active": true,
+		"name": "Alabama",
+		"regionCode": "AL"
+	},
+	{
+		"active": true,
+		"name": "Alaska",
+		"regionCode": "AK"
+	},
+	{
+		"active": true,
+		"name": "Arizona",
+		"regionCode": "AZ"
+	},
+	{
+		"active": true,
+		"name": "Arkansas",
+		"regionCode": "AR"
+	},
+	{
+		"active": true,
+		"name": "California",
+		"regionCode": "CA"
+	},
+	{
+		"active": true,
+		"name": "Colorado",
+		"regionCode": "CO"
+	},
+	{
+		"active": true,
+		"name": "Connecticut",
+		"regionCode": "CT"
+	},
+	{
+		"active": true,
+		"name": "District of Columbia",
+		"regionCode": "DC"
+	},
+	{
+		"active": true,
+		"name": "Delaware",
+		"regionCode": "DE"
+	},
+	{
+		"active": true,
+		"name": "Florida",
+		"regionCode": "FL"
+	},
+	{
+		"active": true,
+		"name": "Georgia",
+		"regionCode": "GA"
+	},
+	{
+		"active": true,
+		"name": "Hawaii",
+		"regionCode": "HI"
+	},
+	{
+		"active": true,
+		"name": "Idaho",
+		"regionCode": "ID"
+	},
+	{
+		"active": true,
+		"name": "Illinois",
+		"regionCode": "IL"
+	},
+	{
+		"active": true,
+		"name": "Indiana",
+		"regionCode": "IN"
+	},
+	{
+		"active": true,
+		"name": "Iowa",
+		"regionCode": "IA"
+	},
+	{
+		"active": true,
+		"name": "Kansas",
+		"regionCode": "KS"
+	},
+	{
+		"active": true,
+		"name": "Kentucky ",
+		"regionCode": "KY"
+	},
+	{
+		"active": true,
+		"name": "Louisiana ",
+		"regionCode": "LA"
+	},
+	{
+		"active": true,
+		"name": "Maine",
+		"regionCode": "ME"
+	},
+	{
+		"active": true,
+		"name": "Maryland",
+		"regionCode": "MD"
+	},
+	{
+		"active": true,
+		"name": "Massachusetts",
+		"regionCode": "MA"
+	},
+	{
+		"active": true,
+		"name": "Michigan",
+		"regionCode": "MI"
+	},
+	{
+		"active": true,
+		"name": "Minnesota",
+		"regionCode": "MN"
+	},
+	{
+		"active": true,
+		"name": "Mississippi",
+		"regionCode": "MS"
+	},
+	{
+		"active": true,
+		"name": "Missouri",
+		"regionCode": "MO"
+	},
+	{
+		"active": true,
+		"name": "Montana",
+		"regionCode": "MT"
+	},
+	{
+		"active": true,
+		"name": "Nebraska",
+		"regionCode": "NE"
+	},
+	{
+		"active": true,
+		"name": "Nevada",
+		"regionCode": "NV"
+	},
+	{
+		"active": true,
+		"name": "New Hampshire",
+		"regionCode": "NH"
+	},
+	{
+		"active": true,
+		"name": "New Jersey",
+		"regionCode": "NJ"
+	},
+	{
+		"active": true,
+		"name": "New Mexico",
+		"regionCode": "NM"
+	},
+	{
+		"active": true,
+		"name": "New York",
+		"regionCode": "NY"
+	},
+	{
+		"active": true,
+		"name": "North Carolina",
+		"regionCode": "NC"
+	},
+	{
+		"active": true,
+		"name": "North Dakota",
+		"regionCode": "ND"
+	},
+	{
+		"active": true,
+		"name": "Ohio",
+		"regionCode": "OH"
+	},
+	{
+		"active": true,
+		"name": "Oklahoma ",
+		"regionCode": "OK"
+	},
+	{
+		"active": true,
+		"name": "Oregon",
+		"regionCode": "OR"
+	},
+	{
+		"active": true,
+		"name": "Pennsylvania",
+		"regionCode": "PA"
+	},
+	{
+		"active": true,
+		"name": "Puerto Rico",
+		"regionCode": "PR"
+	},
+	{
+		"active": true,
+		"name": "Rhode Island",
+		"regionCode": "RI"
+	},
+	{
+		"active": true,
+		"name": "South Carolina",
+		"regionCode": "SC"
+	},
+	{
+		"active": true,
+		"name": "South Dakota",
+		"regionCode": "SD"
+	},
+	{
+		"active": true,
+		"name": "Tennessee",
+		"regionCode": "TN"
+	},
+	{
+		"active": true,
+		"name": "Texas",
+		"regionCode": "TX"
+	},
+	{
+		"active": true,
+		"name": "Utah",
+		"regionCode": "UT"
+	},
+	{
+		"active": true,
+		"name": "Vermont",
+		"regionCode": "VT"
+	},
+	{
+		"active": true,
+		"name": "Virginia",
+		"regionCode": "VA"
+	},
+	{
+		"active": true,
+		"name": "Washington",
+		"regionCode": "WA"
+	},
+	{
+		"active": true,
+		"name": "West Virginia",
+		"regionCode": "WV"
+	},
+	{
+		"active": true,
+		"name": "Wisconsin",
+		"regionCode": "WI"
+	},
+	{
+		"active": true,
+		"name": "Wyoming",
+		"regionCode": "WY"
+	}
+]

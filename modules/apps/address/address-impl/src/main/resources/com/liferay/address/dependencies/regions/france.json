@@ -1,0 +1,132 @@
+[
+	{
+		"active": true,
+		"name": "Alsace",
+		"regionCode": "A"
+	},
+	{
+		"active": true,
+		"name": "Aquitaine",
+		"regionCode": "B"
+	},
+	{
+		"active": true,
+		"name": "Auvergne",
+		"regionCode": "C"
+	},
+	{
+		"active": true,
+		"name": "Basse-Normandie",
+		"regionCode": "P"
+	},
+	{
+		"active": true,
+		"name": "Bourgogne",
+		"regionCode": "D"
+	},
+	{
+		"active": true,
+		"name": "Bretagne",
+		"regionCode": "E"
+	},
+	{
+		"active": true,
+		"name": "Centre",
+		"regionCode": "F"
+	},
+	{
+		"active": true,
+		"name": "Champagne-Ardenne",
+		"regionCode": "G"
+	},
+	{
+		"active": true,
+		"name": "Corse",
+		"regionCode": "H"
+	},
+	{
+		"active": true,
+		"name": "Guyane",
+		"regionCode": "GF"
+	},
+	{
+		"active": true,
+		"name": "Franche Comté",
+		"regionCode": "I"
+	},
+	{
+		"active": true,
+		"name": "Guadeloupe",
+		"regionCode": "GP"
+	},
+	{
+		"active": true,
+		"name": "Haute-Normandie",
+		"regionCode": "Q"
+	},
+	{
+		"active": true,
+		"name": "Île-de-France",
+		"regionCode": "J"
+	},
+	{
+		"active": true,
+		"name": "Languedoc-Roussillon",
+		"regionCode": "K"
+	},
+	{
+		"active": true,
+		"name": "Limousin",
+		"regionCode": "L"
+	},
+	{
+		"active": true,
+		"name": "Lorraine",
+		"regionCode": "M"
+	},
+	{
+		"active": true,
+		"name": "Martinique",
+		"regionCode": "MQ"
+	},
+	{
+		"active": true,
+		"name": "Midi-Pyrénées",
+		"regionCode": "N"
+	},
+	{
+		"active": true,
+		"name": "Nord Pas de Calais",
+		"regionCode": "O"
+	},
+	{
+		"active": true,
+		"name": "Pays de la Loire",
+		"regionCode": "R"
+	},
+	{
+		"active": true,
+		"name": "Picardie",
+		"regionCode": "S"
+	},
+	{
+		"active": true,
+		"name": "Poitou-Charentes",
+		"regionCode": "T"
+	},
+	{
+		"active": true,
+		"name": "Provence-Alpes-Côte-d'Azur",
+		"regionCode": "U"
+	},
+	{
+		"active": true,
+		"name": "Réunion",
+		"regionCode": "RE"
+	},
+	{
+		"active": true,
+		"name": "Rhône-Alpes",
+		"regionCode": "V"
+	}
+]

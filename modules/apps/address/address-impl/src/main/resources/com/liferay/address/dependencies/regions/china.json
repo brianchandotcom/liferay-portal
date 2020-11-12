@@ -1,0 +1,172 @@
+[
+	{
+		"active": true,
+		"name": "Anhui",
+		"regionCode": "CN-34"
+	},
+	{
+		"active": true,
+		"name": "Aomen",
+		"regionCode": "CN-92"
+	},
+	{
+		"active": true,
+		"name": "Beijing",
+		"regionCode": "CN-11"
+	},
+	{
+		"active": true,
+		"name": "Chongqing",
+		"regionCode": "CN-50"
+	},
+	{
+		"active": true,
+		"name": "Fujian",
+		"regionCode": "CN-35"
+	},
+	{
+		"active": true,
+		"name": "Gansu",
+		"regionCode": "CN-62"
+	},
+	{
+		"active": true,
+		"name": "Guangdong",
+		"regionCode": "CN-44"
+	},
+	{
+		"active": true,
+		"name": "Guangxi",
+		"regionCode": "CN-45"
+	},
+	{
+		"active": true,
+		"name": "Guizhou",
+		"regionCode": "CN-52"
+	},
+	{
+		"active": true,
+		"name": "Hainan",
+		"regionCode": "CN-46"
+	},
+	{
+		"active": true,
+		"name": "Hebei",
+		"regionCode": "CN-13"
+	},
+	{
+		"active": true,
+		"name": "Heilongjiang",
+		"regionCode": "CN-23"
+	},
+	{
+		"active": true,
+		"name": "Henan",
+		"regionCode": "CN-41"
+	},
+	{
+		"active": true,
+		"name": "Hubei",
+		"regionCode": "CN-42"
+	},
+	{
+		"active": true,
+		"name": "Hunan",
+		"regionCode": "CN-43"
+	},
+	{
+		"active": true,
+		"name": "Jiangsu",
+		"regionCode": "CN-32"
+	},
+	{
+		"active": true,
+		"name": "Jiangxi",
+		"regionCode": "CN-36"
+	},
+	{
+		"active": true,
+		"name": "Jilin",
+		"regionCode": "CN-22"
+	},
+	{
+		"active": true,
+		"name": "Liaoning",
+		"regionCode": "CN-21"
+	},
+	{
+		"active": true,
+		"name": "Nei Mongol",
+		"regionCode": "CN-15"
+	},
+	{
+		"active": true,
+		"name": "Ningxia",
+		"regionCode": "CN-64"
+	},
+	{
+		"active": true,
+		"name": "Qinghai",
+		"regionCode": "CN-63"
+	},
+	{
+		"active": true,
+		"name": "Shaanxi",
+		"regionCode": "CN-61"
+	},
+	{
+		"active": true,
+		"name": "Shandong",
+		"regionCode": "CN-37"
+	},
+	{
+		"active": true,
+		"name": "Shanghai",
+		"regionCode": "CN-31"
+	},
+	{
+		"active": true,
+		"name": "Shanxi",
+		"regionCode": "CN-14"
+	},
+	{
+		"active": true,
+		"name": "Sichuan",
+		"regionCode": "CN-51"
+	},
+	{
+		"active": true,
+		"name": "Taiwan",
+		"regionCode": "CN-71"
+	},
+	{
+		"active": true,
+		"name": "Tianjin",
+		"regionCode": "CN-12"
+	},
+	{
+		"active": true,
+		"name": "Xianggang",
+		"regionCode": "CN-91"
+	},
+	{
+		"active": true,
+		"name": "Xinjiang",
+		"regionCode": "CN-65"
+	},
+	{
+		"active": true,
+		"name": "Xizang",
+		"regionCode": "CN-54"
+	},
+	{
+		"active": true,
+		"name": "Yunnan",
+		"regionCode": "CN-53"
+	},
+	{
+		"active": true,
+		"name": "Zhejiang",
+		"regionCode": "CN-33"
+	}
+]

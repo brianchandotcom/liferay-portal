@@ -1,0 +1,157 @@
+[
+	{
+		"active": true,
+		"name": "Aguascalientes",
+		"regionCode": "MX-AGS"
+	},
+	{
+		"active": true,
+		"name": "Baja California",
+		"regionCode": "MX-BCN"
+	},
+	{
+		"active": true,
+		"name": "Baja California Sur",
+		"regionCode": "MX-BCS"
+	},
+	{
+		"active": true,
+		"name": "Campeche",
+		"regionCode": "MX-CAM"
+	},
+	{
+		"active": true,
+		"name": "Chiapas",
+		"regionCode": "MX-CHP"
+	},
+	{
+		"active": true,
+		"name": "Chihuahua",
+		"regionCode": "MX-CHI"
+	},
+	{
+		"active": true,
+		"name": "Coahuila",
+		"regionCode": "MX-COA"
+	},
+	{
+		"active": true,
+		"name": "Colima",
+		"regionCode": "MX-COL"
+	},
+	{
+		"active": true,
+		"name": "Durango",
+		"regionCode": "MX-DUR"
+	},
+	{
+		"active": true,
+		"name": "Guanajuato",
+		"regionCode": "MX-GTO"
+	},
+	{
+		"active": true,
+		"name": "Guerrero",
+		"regionCode": "MX-GRO"
+	},
+	{
+		"active": true,
+		"name": "Hidalgo",
+		"regionCode": "MX-HGO"
+	},
+	{
+		"active": true,
+		"name": "Jalisco",
+		"regionCode": "MX-JAL"
+	},
+	{
+		"active": true,
+		"name": "Mexico",
+		"regionCode": "MX-MEX"
+	},
+	{
+		"active": true,
+		"name": "Michoacan",
+		"regionCode": "MX-MIC"
+	},
+	{
+		"active": true,
+		"name": "Morelos",
+		"regionCode": "MX-MOR"
+	},
+	{
+		"active": true,
+		"name": "Nayarit",
+		"regionCode": "MX-NAY"
+	},
+	{
+		"active": true,
+		"name": "Nuevo Leon",
+		"regionCode": "MX-NLE"
+	},
+	{
+		"active": true,
+		"name": "Oaxaca",
+		"regionCode": "MX-OAX"
+	},
+	{
+		"active": true,
+		"name": "Puebla",
+		"regionCode": "MX-PUE"
+	},
+	{
+		"active": true,
+		"name": "Queretaro",
+		"regionCode": "MX-QRO"
+	},
+	{
+		"active": true,
+		"name": "Quintana Roo",
+		"regionCode": "MX-ROO"
+	},
+	{
+		"active": true,
+		"name": "San Luis Potosí",
+		"regionCode": "MX-SLP"
+	},
+	{
+		"active": true,
+		"name": "Sinaloa",
+		"regionCode": "MX-SIN"
+	},
+	{
+		"active": true,
+		"name": "Sonora",
+		"regionCode": "MX-SON"
+	},
+	{
+		"active": true,
+		"name": "Tabasco",
+		"regionCode": "MX-TAB"
+	},
+	{
+		"active": true,
+		"name": "Tamaulipas",
+		"regionCode": "MX-TAM"
+	},
+	{
+		"active": true,
+		"name": "Tlaxcala",
+		"regionCode": "MX-TLX"
+	},
+	{
+		"active": true,
+		"name": "Veracruz",
+		"regionCode": "MX-VER"
+	},
+	{
+		"active": true,
+		"name": "Yucatan",
+		"regionCode": "MX-YUC"
+	},
+	{
+		"active": true,
+		"name": "Zacatecas",
+		"regionCode": "MX-ZAC"
+	}
+]

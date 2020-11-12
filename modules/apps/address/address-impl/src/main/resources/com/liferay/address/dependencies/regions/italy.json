@@ -1,0 +1,552 @@
+[
+	{
+		"active": true,
+		"name": "Agrigento",
+		"regionCode": "AG"
+	},
+	{
+		"active": true,
+		"name": "Alessandria",
+		"regionCode": "AL"
+	},
+	{
+		"active": true,
+		"name": "Ancona",
+		"regionCode": "AN"
+	},
+	{
+		"active": true,
+		"name": "Aosta",
+		"regionCode": "AO"
+	},
+	{
+		"active": true,
+		"name": "Arezzo",
+		"regionCode": "AR"
+	},
+	{
+		"active": true,
+		"name": "Ascoli Piceno",
+		"regionCode": "AP"
+	},
+	{
+		"active": true,
+		"name": "Asti",
+		"regionCode": "AT"
+	},
+	{
+		"active": true,
+		"name": "Avellino",
+		"regionCode": "AV"
+	},
+	{
+		"active": true,
+		"name": "Bari",
+		"regionCode": "BA"
+	},
+	{
+		"active": true,
+		"name": "Barletta-Andria-Trani",
+		"regionCode": "BT"
+	},
+	{
+		"active": true,
+		"name": "Belluno",
+		"regionCode": "BL"
+	},
+	{
+		"active": true,
+		"name": "Benevento",
+		"regionCode": "BN"
+	},
+	{
+		"active": true,
+		"name": "Bergamo",
+		"regionCode": "BG"
+	},
+	{
+		"active": true,
+		"name": "Biella",
+		"regionCode": "BI"
+	},
+	{
+		"active": true,
+		"name": "Bologna",
+		"regionCode": "BO"
+	},
+	{
+		"active": true,
+		"name": "Bolzano",
+		"regionCode": "BZ"
+	},
+	{
+		"active": true,
+		"name": "Brescia",
+		"regionCode": "BS"
+	},
+	{
+		"active": true,
+		"name": "Brindisi",
+		"regionCode": "BR"
+	},
+	{
+		"active": true,
+		"name": "Cagliari",
+		"regionCode": "CA"
+	},
+	{
+		"active": true,
+		"name": "Caltanissetta",
+		"regionCode": "CL"
+	},
+	{
+		"active": true,
+		"name": "Campobasso",
+		"regionCode": "CB"
+	},
+	{
+		"active": true,
+		"name": "Carbonia-Iglesias",
+		"regionCode": "CI"
+	},
+	{
+		"active": true,
+		"name": "Caserta",
+		"regionCode": "CE"
+	},
+	{
+		"active": true,
+		"name": "Catania",
+		"regionCode": "CT"
+	},
+	{
+		"active": true,
+		"name": "Catanzaro",
+		"regionCode": "CZ"
+	},
+	{
+		"active": true,
+		"name": "Chieti",
+		"regionCode": "CH"
+	},
+	{
+		"active": true,
+		"name": "Como",
+		"regionCode": "CO"
+	},
+	{
+		"active": true,
+		"name": "Cosenza",
+		"regionCode": "CS"
+	},
+	{
+		"active": true,
+		"name": "Cremona",
+		"regionCode": "CR"
+	},
+	{
+		"active": true,
+		"name": "Crotone",
+		"regionCode": "KR"
+	},
+	{
+		"active": true,
+		"name": "Cuneo",
+		"regionCode": "CN"
+	},
+	{
+		"active": true,
+		"name": "Enna",
+		"regionCode": "EN"
+	},
+	{
+		"active": true,
+		"name": "Fermo",
+		"regionCode": "FM"
+	},
+	{
+		"active": true,
+		"name": "Ferrara",
+		"regionCode": "FE"
+	},
+	{
+		"active": true,
+		"name": "Firenze",
+		"regionCode": "FI"
+	},
+	{
+		"active": true,
+		"name": "Foggia",
+		"regionCode": "FG"
+	},
+	{
+		"active": true,
+		"name": "Forli-Cesena",
+		"regionCode": "FC"
+	},
+	{
+		"active": true,
+		"name": "Frosinone",
+		"regionCode": "FR"
+	},
+	{
+		"active": true,
+		"name": "Genova",
+		"regionCode": "GE"
+	},
+	{
+		"active": true,
+		"name": "Gorizia",
+		"regionCode": "GO"
+	},
+	{
+		"active": true,
+		"name": "Grosseto",
+		"regionCode": "GR"
+	},
+	{
+		"active": true,
+		"name": "Imperia",
+		"regionCode": "IM"
+	},
+	{
+		"active": true,
+		"name": "Isernia",
+		"regionCode": "IS"
+	},
+	{
+		"active": true,
+		"name": "L'Aquila",
+		"regionCode": "AQ"
+	},
+	{
+		"active": true,
+		"name": "La Spezia",
+		"regionCode": "SP"
+	},
+	{
+		"active": true,
+		"name": "Latina",
+		"regionCode": "LT"
+	},
+	{
+		"active": true,
+		"name": "Lecce",
+		"regionCode": "LE"
+	},
+	{
+		"active": true,
+		"name": "Lecco",
+		"regionCode": "LC"
+	},
+	{
+		"active": true,
+		"name": "Livorno",
+		"regionCode": "LI"
+	},
+	{
+		"active": true,
+		"name": "Lodi",
+		"regionCode": "LO"
+	},
+	{
+		"active": true,
+		"name": "Lucca",
+		"regionCode": "LU"
+	},
+	{
+		"active": true,
+		"name": "Macerata",
+		"regionCode": "MC"
+	},
+	{
+		"active": true,
+		"name": "Mantova",
+		"regionCode": "MN"
+	},
+	{
+		"active": true,
+		"name": "Massa-Carrara",
+		"regionCode": "MS"
+	},
+	{
+		"active": true,
+		"name": "Matera",
+		"regionCode": "MT"
+	},
+	{
+		"active": true,
+		"name": "Medio Campidano",
+		"regionCode": "MA"
+	},
+	{
+		"active": true,
+		"name": "Messina",
+		"regionCode": "ME"
+	},
+	{
+		"active": true,
+		"name": "Milano",
+		"regionCode": "MI"
+	},
+	{
+		"active": true,
+		"name": "Modena",
+		"regionCode": "MO"
+	},
+	{
+		"active": true,
+		"name": "Monza e Brianza",
+		"regionCode": "MB"
+	},
+	{
+		"active": true,
+		"name": "Napoli",
+		"regionCode": null
+	},
+	{
+		"active": true,
+		"name": "Novara",
+		"regionCode": "NO"
+	},
+	{
+		"active": true,
+		"name": "Nuoro",
+		"regionCode": "NU"
+	},
+	{
+		"active": true,
+		"name": "Ogliastra",
+		"regionCode": "OG"
+	},
+	{
+		"active": true,
+		"name": "Olbia-Tempio",
+		"regionCode": "OT"
+	},
+	{
+		"active": true,
+		"name": "Oristano",
+		"regionCode": "OR"
+	},
+	{
+		"active": true,
+		"name": "Padova",
+		"regionCode": "PD"
+	},
+	{
+		"active": true,
+		"name": "Palermo",
+		"regionCode": "PA"
+	},
+	{
+		"active": true,
+		"name": "Parma",
+		"regionCode": "PR"
+	},
+	{
+		"active": true,
+		"name": "Pavia",
+		"regionCode": "PV"
+	},
+	{
+		"active": true,
+		"name": "Perugia",
+		"regionCode": "PG"
+	},
+	{
+		"active": true,
+		"name": "Pesaro e Urbino",
+		"regionCode": "PU"
+	},
+	{
+		"active": true,
+		"name": "Pescara",
+		"regionCode": "PE"
+	},
+	{
+		"active": true,
+		"name": "Piacenza",
+		"regionCode": "PC"
+	},
+	{
+		"active": true,
+		"name": "Pisa",
+		"regionCode": "PI"
+	},
+	{
+		"active": true,
+		"name": "Pistoia",
+		"regionCode": "PT"
+	},
+	{
+		"active": true,
+		"name": "Pordenone",
+		"regionCode": "PN"
+	},
+	{
+		"active": true,
+		"name": "Potenza",
+		"regionCode": "PZ"
+	},
+	{
+		"active": true,
+		"name": "Prato",
+		"regionCode": "PO"
+	},
+	{
+		"active": true,
+		"name": "Ragusa",
+		"regionCode": "RG"
+	},
+	{
+		"active": true,
+		"name": "Ravenna",
+		"regionCode": "RA"
+	},
+	{
+		"active": true,
+		"name": "Reggio Calabria",
+		"regionCode": "RC"
+	},
+	{
+		"active": true,
+		"name": "Reggio Emilia",
+		"regionCode": "RE"
+	},
+	{
+		"active": true,
+		"name": "Rieti",
+		"regionCode": "RI"
+	},
+	{
+		"active": true,
+		"name": "Rimini",
+		"regionCode": "RN"
+	},
+	{
+		"active": true,
+		"name": "Roma",
+		"regionCode": "RM"
+	},
+	{
+		"active": true,
+		"name": "Rovigo",
+		"regionCode": "RO"
+	},
+	{
+		"active": true,
+		"name": "Salerno",
+		"regionCode": "SA"
+	},
+	{
+		"active": true,
+		"name": "Sassari",
+		"regionCode": "SS"
+	},
+	{
+		"active": true,
+		"name": "Savona",
+		"regionCode": "SV"
+	},
+	{
+		"active": true,
+		"name": "Siena",
+		"regionCode": "SI"
+	},
+	{
+		"active": true,
+		"name": "Siracusa",
+		"regionCode": "SR"
+	},
+	{
+		"active": true,
+		"name": "Sondrio",
+		"regionCode": "SO"
+	},
+	{
+		"active": true,
+		"name": "Taranto",
+		"regionCode": "TA"
+	},
+	{
+		"active": true,
+		"name": "Teramo",
+		"regionCode": "TE"
+	},
+	{
+		"active": true,
+		"name": "Terni",
+		"regionCode": "TR"
+	},
+	{
+		"active": true,
+		"name": "Torino",
+		"regionCode": "TO"
+	},
+	{
+		"active": true,
+		"name": "Trapani",
+		"regionCode": "TP"
+	},
+	{
+		"active": true,
+		"name": "Trento",
+		"regionCode": "TN"
+	},
+	{
+		"active": true,
+		"name": "Treviso",
+		"regionCode": "TV"
+	},
+	{
+		"active": true,
+		"name": "Trieste",
+		"regionCode": "TS"
+	},
+	{
+		"active": true,
+		"name": "Udine",
+		"regionCode": "UD"
+	},
+	{
+		"active": true,
+		"name": "Varese",
+		"regionCode": "VA"
+	},
+	{
+		"active": true,
+		"name": "Venezia",
+		"regionCode": "VE"
+	},
+	{
+		"active": true,
+		"name": "Verbano-Cusio-Ossola",
+		"regionCode": "VB"
+	},
+	{
+		"active": true,
+		"name": "Vercelli",
+		"regionCode": "VC"
+	},
+	{
+		"active": true,
+		"name": "Verona",
+		"regionCode": "VR"
+	},
+	{
+		"active": true,
+		"name": "Vibo Valentia",
+		"regionCode": "VV"
+	},
+	{
+		"active": true,
+		"name": "Vicenza",
+		"regionCode": "VI"
+	},
+	{
+		"active": true,
+		"name": "Viterbo",
+		"regionCode": "VT"
+	}
+]

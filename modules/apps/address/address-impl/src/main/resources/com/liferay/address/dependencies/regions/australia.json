@@ -1,0 +1,42 @@
+[
+	{
+		"active": true,
+		"name": "Australian Capital Territory",
+		"regionCode": "ACT"
+	},
+	{
+		"active": true,
+		"name": "New South Wales",
+		"regionCode": "NSW"
+	},
+	{
+		"active": true,
+		"name": "Northern Territory",
+		"regionCode": "NT"
+	},
+	{
+		"active": true,
+		"name": "Queensland",
+		"regionCode": "QLD"
+	},
+	{
+		"active": true,
+		"name": "South Australia",
+		"regionCode": "SA"
+	},
+	{
+		"active": true,
+		"name": "Tasmania",
+		"regionCode": "TAS"
+	},
+	{
+		"active": true,
+		"name": "Victoria",
+		"regionCode": "VIC"
+	},
+	{
+		"active": true,
+		"name": "Western Australia",
+		"regionCode": "WA"
+	}
+]

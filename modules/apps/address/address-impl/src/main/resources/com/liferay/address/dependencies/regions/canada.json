@@ -1,0 +1,67 @@
+[
+	{
+		"active": true,
+		"name": "Alberta",
+		"regionCode": "AB"
+	},
+	{
+		"active": true,
+		"name": "British Columbia",
+		"regionCode": "BC"
+	},
+	{
+		"active": true,
+		"name": "Manitoba",
+		"regionCode": "MB"
+	},
+	{
+		"active": true,
+		"name": "New Brunswick",
+		"regionCode": "NB"
+	},
+	{
+		"active": true,
+		"name": "Newfoundland and Labrador",
+		"regionCode": "NL"
+	},
+	{
+		"active": true,
+		"name": "Northwest Territories",
+		"regionCode": "NT"
+	},
+	{
+		"active": true,
+		"name": "Nova Scotia",
+		"regionCode": "NS"
+	},
+	{
+		"active": true,
+		"name": "Nunavut",
+		"regionCode": "NU"
+	},
+	{
+		"active": true,
+		"name": "Ontario",
+		"regionCode": "ON"
+	},
+	{
+		"active": true,
+		"name": "Prince Edward Island",
+		"regionCode": "PE"
+	},
+	{
+		"active": true,
+		"name": "Quebec",
+		"regionCode": "QC"
+	},
+	{
+		"active": true,
+		"name": "Saskatchewan",
+		"regionCode": "SK"
+	},
+	{
+		"active": true,
+		"name": "Yukon",
+		"regionCode": "YT"
+	}
+]

@@ -1,0 +1,237 @@
+[
+	{
+		"active": true,
+		"name": "北海道",
+		"regionCode": "JP-01"
+	},
+	{
+		"active": true,
+		"name": "青森県",
+		"regionCode": "JP-02"
+	},
+	{
+		"active": true,
+		"name": "岩手県",
+		"regionCode": "JP-03"
+	},
+	{
+		"active": true,
+		"name": "宮城県",
+		"regionCode": "JP-04"
+	},
+	{
+		"active": true,
+		"name": "秋田県",
+		"regionCode": "JP-05"
+	},
+	{
+		"active": true,
+		"name": "山形県",
+		"regionCode": "JP-06"
+	},
+	{
+		"active": true,
+		"name": "福島県",
+		"regionCode": "JP-07"
+	},
+	{
+		"active": true,
+		"name": "茨城県",
+		"regionCode": "JP-08"
+	},
+	{
+		"active": true,
+		"name": "栃木県",
+		"regionCode": "JP-09"
+	},
+	{
+		"active": true,
+		"name": "群馬県",
+		"regionCode": "JP-10"
+	},
+	{
+		"active": true,
+		"name": "埼玉県",
+		"regionCode": "JP-11"
+	},
+	{
+		"active": true,
+		"name": "千葉県",
+		"regionCode": "JP-12"
+	},
+	{
+		"active": true,
+		"name": "東京都",
+		"regionCode": "JP-13"
+	},
+	{
+		"active": true,
+		"name": "神奈川県",
+		"regionCode": "JP-14"
+	},
+	{
+		"active": true,
+		"name": "新潟県",
+		"regionCode": "JP-15"
+	},
+	{
+		"active": true,
+		"name": "富山県",
+		"regionCode": "JP-16"
+	},
+	{
+		"active": true,
+		"name": "石川県",
+		"regionCode": "JP-17"
+	},
+	{
+		"active": true,
+		"name": "福井県",
+		"regionCode": "JP-18"
+	},
+	{
+		"active": true,
+		"name": "山梨県",
+		"regionCode": "JP-19"
+	},
+	{
+		"active": true,
+		"name": "長野県",
+		"regionCode": "JP-20"
+	},
+	{
+		"active": true,
+		"name": "岐阜県",
+		"regionCode": "JP-21"
+	},
+	{
+		"active": true,
+		"name": "静岡県",
+		"regionCode": "JP-22"
+	},
+	{
+		"active": true,
+		"name": "愛知県",
+		"regionCode": "JP-23"
+	},
+	{
+		"active": true,
+		"name": "三重県",
+		"regionCode": "JP-24"
+	},
+	{
+		"active": true,
+		"name": "滋賀県",
+		"regionCode": "JP-25"
+	},
+	{
+		"active": true,
+		"name": "京都府",
+		"regionCode": "JP-26"
+	},
+	{
+		"active": true,
+		"name": "大阪府",
+		"regionCode": "JP-27"
+	},
+	{
+		"active": true,
+		"name": "兵庫県",
+		"regionCode": "JP-28"
+	},
+	{
+		"active": true,
+		"name": "奈良県",
+		"regionCode": "JP-29"
+	},
+	{
+		"active": true,
+		"name": "和歌山県",
+		"regionCode": "JP-30"
+	},
+	{
+		"active": true,
+		"name": "鳥取県",
+		"regionCode": "JP-31"
+	},
+	{
+		"active": true,
+		"name": "島根県",
+		"regionCode": "JP-32"
+	},
+	{
+		"active": true,
+		"name": "岡山県",
+		"regionCode": "JP-33"
+	},
+	{
+		"active": true,
+		"name": "広島県",
+		"regionCode": "JP-34"
+	},
+	{
+		"active": true,
+		"name": "山口県",
+		"regionCode": "JP-35"
+	},
+	{
+		"active": true,
+		"name": "徳島県",
+		"regionCode": "JP-36"
+	},
+	{
+		"active": true,
+		"name": "香川県",
+		"regionCode": "JP-37"
+	},
+	{
+		"active": true,
+		"name": "愛媛県",
+		"regionCode": "JP-38"
+	},
+	{
+		"active": true,
+		"name": "高知県",
+		"regionCode": "JP-39"
+	},
+	{
+		"active": true,
+		"name": "福岡県",
+		"regionCode": "JP-40"
+	},
+	{
+		"active": true,
+		"name": "佐賀県",
+		"regionCode": "JP-41"
+	},
+	{
+		"active": true,
+		"name": "長崎県",
+		"regionCode": "JP-42"
+	},
+	{
+		"active": true,
+		"name": "熊本県",
+		"regionCode": "JP-43"
+	},
+	{
+		"active": true,
+		"name": "大分県",
+		"regionCode": "JP-44"
+	},
+	{
+		"active": true,
+		"name": "宮崎県",
+		"regionCode": "JP-45"
+	},
+	{
+		"active": true,
+		"name": "鹿児島県",
+		"regionCode": "JP-46"
+	},
+	{
+		"active": true,
+		"name": "沖縄県",
+		"regionCode": "JP-47"
+	}
+]

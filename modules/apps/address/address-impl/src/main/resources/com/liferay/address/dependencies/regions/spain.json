@@ -1,0 +1,97 @@
+[
+	{
+		"active": true,
+		"name": "Andalusia",
+		"regionCode": "AN"
+	},
+	{
+		"active": true,
+		"name": "Aragon",
+		"regionCode": "AR"
+	},
+	{
+		"active": true,
+		"name": "Asturias",
+		"regionCode": "AS"
+	},
+	{
+		"active": true,
+		"name": "Balearic Islands",
+		"regionCode": "IB"
+	},
+	{
+		"active": true,
+		"name": "Basque Country",
+		"regionCode": "PV"
+	},
+	{
+		"active": true,
+		"name": "Canary Islands",
+		"regionCode": "CN"
+	},
+	{
+		"active": true,
+		"name": "Cantabria",
+		"regionCode": "CB"
+	},
+	{
+		"active": true,
+		"name": "Castile and Leon",
+		"regionCode": "CL"
+	},
+	{
+		"active": true,
+		"name": "Castile-La Mancha",
+		"regionCode": "CM"
+	},
+	{
+		"active": true,
+		"name": "Catalonia",
+		"regionCode": "CT"
+	},
+	{
+		"active": true,
+		"name": "Ceuta",
+		"regionCode": "CE"
+	},
+	{
+		"active": true,
+		"name": "Extremadura",
+		"regionCode": "EX"
+	},
+	{
+		"active": true,
+		"name": "Galicia",
+		"regionCode": "GA"
+	},
+	{
+		"active": true,
+		"name": "La Rioja",
+		"regionCode": "LO"
+	},
+	{
+		"active": true,
+		"name": "Madrid",
+		"regionCode": "M"
+	},
+	{
+		"active": true,
+		"name": "Melilla",
+		"regionCode": "ML"
+	},
+	{
+		"active": true,
+		"name": "Murcia",
+		"regionCode": "MU"
+	},
+	{
+		"active": true,
+		"name": "Navarra",
+		"regionCode": null
+	},
+	{
+		"active": true,
+		"name": "Valencia",
+		"regionCode": "VC"
+	}
+]

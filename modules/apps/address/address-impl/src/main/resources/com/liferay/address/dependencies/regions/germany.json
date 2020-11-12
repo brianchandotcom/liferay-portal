@@ -1,0 +1,82 @@
+[
+	{
+		"active": true,
+		"name": "Baden-Württemberg",
+		"regionCode": "BW"
+	},
+	{
+		"active": true,
+		"name": "Bayern",
+		"regionCode": "BY"
+	},
+	{
+		"active": true,
+		"name": "Berlin",
+		"regionCode": "BE"
+	},
+	{
+		"active": true,
+		"name": "Brandenburg",
+		"regionCode": "BB"
+	},
+	{
+		"active": true,
+		"name": "Bremen",
+		"regionCode": "HB"
+	},
+	{
+		"active": true,
+		"name": "Hamburg",
+		"regionCode": "HH"
+	},
+	{
+		"active": true,
+		"name": "Hessen",
+		"regionCode": "HE"
+	},
+	{
+		"active": true,
+		"name": "Mecklenburg-Vorpommern",
+		"regionCode": "MV"
+	},
+	{
+		"active": true,
+		"name": "Niedersachsen",
+		"regionCode": "NI"
+	},
+	{
+		"active": true,
+		"name": "Nordrhein-Westfalen",
+		"regionCode": "NW"
+	},
+	{
+		"active": true,
+		"name": "Rheinland-Pfalz",
+		"regionCode": "RP"
+	},
+	{
+		"active": true,
+		"name": "Saarland",
+		"regionCode": "SL"
+	},
+	{
+		"active": true,
+		"name": "Sachsen",
+		"regionCode": "SN"
+	},
+	{
+		"active": true,
+		"name": "Sachsen-Anhalt",
+		"regionCode": "ST"
+	},
+	{
+		"active": true,
+		"name": "Schleswig-Holstein",
+		"regionCode": "SH"
+	},
+	{
+		"active": true,
+		"name": "Thüringen",
+		"regionCode": "TH"
+	}
+]

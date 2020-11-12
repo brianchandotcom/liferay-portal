@@ -1,0 +1,132 @@
+[
+	{
+		"active": true,
+		"name": "Aargau",
+		"regionCode": "AG"
+	},
+	{
+		"active": true,
+		"name": "Appenzell Ausserrhoden",
+		"regionCode": "AR"
+	},
+	{
+		"active": true,
+		"name": "Appenzell Innerrhoden",
+		"regionCode": "AI"
+	},
+	{
+		"active": true,
+		"name": "Basel-Landschaft",
+		"regionCode": "BL"
+	},
+	{
+		"active": true,
+		"name": "Basel-Stadt",
+		"regionCode": "BS"
+	},
+	{
+		"active": true,
+		"name": "Bern",
+		"regionCode": "BE"
+	},
+	{
+		"active": true,
+		"name": "Fribourg",
+		"regionCode": "FR"
+	},
+	{
+		"active": true,
+		"name": "Geneva",
+		"regionCode": "GE"
+	},
+	{
+		"active": true,
+		"name": "Glarus",
+		"regionCode": "GL"
+	},
+	{
+		"active": true,
+		"name": "Graubünden",
+		"regionCode": "GR"
+	},
+	{
+		"active": true,
+		"name": "Jura",
+		"regionCode": "JU"
+	},
+	{
+		"active": true,
+		"name": "Lucerne",
+		"regionCode": "LU"
+	},
+	{
+		"active": true,
+		"name": "Neuchâtel",
+		"regionCode": "NE"
+	},
+	{
+		"active": true,
+		"name": "Nidwalden",
+		"regionCode": "NW"
+	},
+	{
+		"active": true,
+		"name": "Obwalden",
+		"regionCode": "OW"
+	},
+	{
+		"active": true,
+		"name": "Schaffhausen",
+		"regionCode": "SH"
+	},
+	{
+		"active": true,
+		"name": "Schwyz",
+		"regionCode": "SZ"
+	},
+	{
+		"active": true,
+		"name": "Solothurn",
+		"regionCode": "SO"
+	},
+	{
+		"active": true,
+		"name": "St. Gallen",
+		"regionCode": "SG"
+	},
+	{
+		"active": true,
+		"name": "Thurgau",
+		"regionCode": "TG"
+	},
+	{
+		"active": true,
+		"name": "Ticino",
+		"regionCode": "TI"
+	},
+	{
+		"active": true,
+		"name": "Uri",
+		"regionCode": "UR"
+	},
+	{
+		"active": true,
+		"name": "Valais",
+		"regionCode": "VS"
+	},
+	{
+		"active": true,
+		"name": "Vaud",
+		"regionCode": "VD"
+	},
+	{
+		"active": true,
+		"name": "Zug",
+		"regionCode": "ZG"
+	},
+	{
+		"active": true,
+		"name": "Zürich",
+		"regionCode": "ZH"
+	}
+]

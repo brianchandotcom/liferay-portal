@@ -36,7 +36,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
@@ -44,7 +43,6 @@ import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.War;
 
 /**
@@ -178,28 +176,25 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
 	private void _configureTaskProcessResources(Project project) {
 		project.afterEvaluate(
-			p -> {
-				TaskContainer taskContainer = p.getTasks();
+			curProject -> {
+				if (GradleUtil.hasTask(
+						curProject, CSSBuilderPlugin.BUILD_CSS_TASK_NAME)) {
 
-				Task buildCSSTask = taskContainer.findByName(
-					CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
-
-				if (buildCSSTask != null) {
 					Copy copy = (Copy)GradleUtil.getTask(
 						project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
 					if (copy != null) {
-						copy.dependsOn(buildCSSTask);
+						copy.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 						copy.exclude("**/*.css");
 						copy.exclude("**/*.scss");
 
 						copy.filesMatching(
 							"**/.sass-cache/",
-							details -> {
-								String path = details.getPath();
+							fileCopyDetails -> {
+								String path = fileCopyDetails.getPath();
 
-								details.setPath(
+								fileCopyDetails.setPath(
 									path.replace(".sass-cache/", ""));
 							});
 

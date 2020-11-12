@@ -110,9 +110,11 @@ downloadPluginsSdk {
 }
 
 eclipse.classpath.file {
-	whenMerged { classpath ->
+	whenMerged {
+		classpath ->
+
 		classpath.entries.removeAll {
-			entry -> entry.kind == 'src' && entry.path == 'build/gradleTest/src/groovy'
+			entry -> (entry.kind == "src") && (entry.path == "build/gradleTest/src/groovy")
 		}
 	}
 }

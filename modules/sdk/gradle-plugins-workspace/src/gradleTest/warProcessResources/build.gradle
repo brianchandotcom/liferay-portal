@@ -5,8 +5,8 @@ runGradleTest {
 
 	doLast {
 		Set<File> files = zipTree(project(":war-mvc-portlet").war.archiveFile).asFileTree.matching {
-			include "**/.sass-cache/*.css"
 			include "**/*.scss"
+			include "**/.sass-cache/*.css"
 		}.files
 
 		assert files.size() == 0

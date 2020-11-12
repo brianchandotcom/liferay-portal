@@ -37,11 +37,6 @@ public class MultiListSpiraCustomPropertyValue
 	}
 
 	@Override
-	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
-		return SpiraCustomProperty.Type.MULTILIST;
-	}
-
-	@Override
 	public List<SpiraCustomListValue> getValue() {
 		List<SpiraCustomListValue> spiraCustomListValues = new ArrayList<>();
 
@@ -102,19 +97,8 @@ public class MultiListSpiraCustomPropertyValue
 	}
 
 	@Override
-	protected JSONObject getCustomPropertyJSONObject() {
-		JSONObject customPropertyJSONObject = new JSONObject();
-
-		customPropertyJSONObject.put(
-			"IntegerListValue", _getIntegerListValueJSONArray());
-		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
-
-		return customPropertyJSONObject;
-	}
-
-	@Override
 	protected JSONObject getFilterJSONObject() {
-		JSONObject filterJSONObject = new JSONObject();
+		JSONObject filterJSONObject = super.getFilterJSONObject();
 
 		filterJSONObject.put(
 			"IntegerListValue", _getIntegerListValueJSONArray());

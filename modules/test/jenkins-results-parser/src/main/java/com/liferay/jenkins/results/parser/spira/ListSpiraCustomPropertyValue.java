@@ -37,11 +37,6 @@ public class ListSpiraCustomPropertyValue
 	}
 
 	@Override
-	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
-		return SpiraCustomProperty.Type.LIST;
-	}
-
-	@Override
 	public SpiraCustomListValue getValue() {
 		Integer integerValue = _getIntegerValue();
 
@@ -84,18 +79,8 @@ public class ListSpiraCustomPropertyValue
 	}
 
 	@Override
-	protected JSONObject getCustomPropertyJSONObject() {
-		JSONObject customPropertyJSONObject = new JSONObject();
-
-		customPropertyJSONObject.put("IntegerValue", _getIntegerValue());
-		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
-
-		return customPropertyJSONObject;
-	}
-
-	@Override
 	protected JSONObject getFilterJSONObject() {
-		JSONObject filterJSONObject = new JSONObject();
+		JSONObject filterJSONObject = super.getFilterJSONObject();
 
 		filterJSONObject.put("IntegerValue", _getIntegerValue());
 

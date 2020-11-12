@@ -23,11 +23,6 @@ public class TextSpiraCustomPropertyValue
 	extends SpiraCustomPropertyValue<String> {
 
 	@Override
-	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
-		return SpiraCustomProperty.Type.TEXT;
-	}
-
-	@Override
 	public String getValue() {
 		return jsonObject.optString("StringValue");
 	}
@@ -48,18 +43,8 @@ public class TextSpiraCustomPropertyValue
 	}
 
 	@Override
-	protected JSONObject getCustomPropertyJSONObject() {
-		JSONObject customPropertyJSONObject = new JSONObject();
-
-		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
-		customPropertyJSONObject.put("StringValue", getValue());
-
-		return customPropertyJSONObject;
-	}
-
-	@Override
 	protected JSONObject getFilterJSONObject() {
-		JSONObject filterJSONObject = new JSONObject();
+		JSONObject filterJSONObject = super.getFilterJSONObject();
 
 		filterJSONObject.put("StringValue", getValue());
 

@@ -64,7 +64,7 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 			"Unsupported custom property type " + spiraCustomPropertyType);
 	}
 
-	public static SpiraCustomPropertyValue getSpiraCustomPropertyValue(
+	public static SpiraCustomPropertyValue<?> getSpiraCustomPropertyValue(
 		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
 
 		SpiraCustomProperty.Type spiraCustomPropertyType =
@@ -103,7 +103,9 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 		return _spiraCustomProperty;
 	}
 
-	public abstract SpiraCustomProperty.Type getSpiraCustomPropertyType();
+	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
+		return _spiraCustomProperty.getType();
+	}
 
 	@Override
 	public SpiraProject getSpiraProject() {
@@ -133,7 +135,13 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 		_spiraCustomProperty = spiraCustomProperty;
 	}
 
-	protected abstract JSONObject getCustomPropertyJSONObject();
+	protected JSONObject getCustomPropertyJSONObject() {
+		JSONObject customPropertyJSONObject = getFilterJSONObject();
+
+		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
+
+		return customPropertyJSONObject;
+	}
 
 	protected JSONObject getDefinitionJSONObject() {
 		SpiraProject spiraProject = getSpiraProject();
@@ -162,7 +170,9 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 		return definitionJSONObject;
 	}
 
-	protected abstract JSONObject getFilterJSONObject();
+	protected JSONObject getFilterJSONObject() {
+		return new JSONObject();
+	}
 
 	protected abstract boolean matchesJSONObject(
 		JSONObject customPropertyJSONObject);

@@ -68,6 +68,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -253,6 +254,10 @@ public class OrderResourceImpl
 	private Map<String, Map<String, String>> _getActions(
 			CommerceOrder commerceOrder)
 		throws NoSuchMethodException, PortalException {
+
+		if (contextUriInfo == null) {
+			return Collections.emptyMap();
+		}
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",

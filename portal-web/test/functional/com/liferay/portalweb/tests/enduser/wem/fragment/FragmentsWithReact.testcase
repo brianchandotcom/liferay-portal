@@ -72,4 +72,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122082. Can not export react fragment with collection."
+	@priority = "4"
+	test CannotExportReactFragmentWithCollection {
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Import the react fragment") {
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "react-fragment-example.zip");
+		}
+
+		task ("Assert react fragment is imported") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.viewEntryPresent(entry = "React Fragment Example");
+		}
+
+		task ("Export the fragment collection") {
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Navigate to the fragment collection in the new site") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Assert react fragment is not shown") {
+			FragmentsAdmin.viewEntryNotPresent(entry = "React Fragment Example");
+		}
+	}
+
 }

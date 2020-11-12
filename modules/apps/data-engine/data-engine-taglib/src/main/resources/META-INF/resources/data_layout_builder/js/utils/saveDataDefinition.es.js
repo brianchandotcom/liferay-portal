@@ -168,8 +168,15 @@ export default ({
 	dataLayout,
 	dataLayoutId,
 }) => {
-	const normalizedDataDefinition = normalizeDataDefinition(dataDefinition);
-	const normalizedDataLayout = normalizeDataLayout(dataLayout);
+	const {defaultLanguageId} = dataDefinition;
+	const normalizedDataDefinition = normalizeDataDefinition(
+		dataDefinition,
+		defaultLanguageId
+	);
+	const normalizedDataLayout = normalizeDataLayout(
+		dataLayout,
+		defaultLanguageId
+	);
 
 	const updateDefinition = () =>
 		updateItem(

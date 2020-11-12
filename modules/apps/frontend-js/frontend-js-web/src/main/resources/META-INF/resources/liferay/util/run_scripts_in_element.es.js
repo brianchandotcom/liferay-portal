@@ -62,10 +62,11 @@ function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
 	}
 
 	const runNextScript = () => {
-		defaultFn();
-
 		if (i < scripts.length - 1) {
 			runScriptsInOrder(scripts, i + 1, defaultFn, appendFn);
+		}
+		else if (defaultFn) {
+			defaultFn();
 		}
 	};
 
@@ -79,10 +80,10 @@ function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
 	}
 }
 
-export default function (element, defaultFn = () => {}, appendFn) {
+export default function (element, defaultFn, appendFn) {
 	const scripts = element.querySelectorAll('script');
 
-	if (!scripts.length) {
+	if (!scripts.length && defaultFn) {
 		defaultFn();
 
 		return;

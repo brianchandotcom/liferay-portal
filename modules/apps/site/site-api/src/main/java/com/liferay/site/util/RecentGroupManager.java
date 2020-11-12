@@ -80,6 +80,8 @@ public class RecentGroupManager {
 
 		groupIds.add(0, liveGroupId);
 
+		groupIds = ListUtil.subList(groupIds, 0, 8);
+
 		_setRecentGroupsValue(httpServletRequest, StringUtil.merge(groupIds));
 	}
 

@@ -433,7 +433,6 @@ export default withRouter(
 								</div>
 
 								{question &&
-									!question.locked &&
 									question.actions &&
 									question.actions['reply-to-thread'] && (
 										<div className="c-mt-5">
@@ -450,10 +449,29 @@ export default withRouter(
 													</label>
 
 													<div className="c-mt-2">
+														{question.locked && (
+															<div className="question-locked-text">
+																<ClayIcon symbol="lock" />
+																This question is
+																closed, new
+																answers and
+																comments are
+																disabled.
+															</div>
+														)}
 														<QuestionsEditor
 															contents={
 																articleBody
 															}
+															cssClass={
+																question.locked
+																	? 'question-locked'
+																	: ''
+															}
+															editorConfig={{
+																readOnly:
+																	question.locked,
+															}}
 															onChange={(
 																event
 															) => {

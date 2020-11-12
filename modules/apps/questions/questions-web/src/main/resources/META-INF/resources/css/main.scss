@@ -295,6 +295,15 @@
 			box-shadow: none;
 		}
 	}
+
+	.question-locked-text {
+		font-size: large;
+		font-weight: 600;
+		left: 50%;
+		position: absolute;
+		top: 55%;
+		transform: translate(-50%, -50%);
+	}
 }
 
 .empty-state-icon {

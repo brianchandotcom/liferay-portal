@@ -31,11 +31,9 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 		(state) => state.selectedViewportSize
 	);
 
-	const [setRef, itemElement] = useSetRef(ref);
-
 	const getPortals = useCallback((element) => getAllPortals(element), []);
-
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
+	const [setRef, itemElement] = useSetRef(ref);
 
 	const {
 		marginLeft,

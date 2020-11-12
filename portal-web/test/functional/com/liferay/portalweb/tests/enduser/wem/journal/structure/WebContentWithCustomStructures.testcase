@@ -298,6 +298,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69560."
+
+	// Ignore for LPS-123091
+
+	@ignore = "true"
 	@priority = "5"
 	test AddStructureWithWebContentAndGeolocationFields {
 		property portal.acceptance = "true";
@@ -1554,6 +1558,10 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61632. Add web content with repeatable HTML field."
+
+	// Ignore for LPS-123072
+
+	@ignore = "true"
 	@priority = "4"
 	test AddWebContentWithRepeatableHTMLField {
 		property environment.acceptance = "true";

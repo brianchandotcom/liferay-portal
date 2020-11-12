@@ -294,6 +294,26 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
+	@description = "This ensures that the document file name will be applied to the downloaded file name."
+	@priority = "5"
+	test DownloadDocumentWithCustomFileName {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentFileName = "document_1_Edit.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.downloadCP(dmDocumentTitle = "DM Document Title");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "document_1_Edit.jpg");
+	}
+
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
 	@priority = "5"
 	test EditDocument {

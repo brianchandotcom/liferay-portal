@@ -119,15 +119,9 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			SpiraCustomProperty spiraCustomProperty = spiraCustomProperties.get(
 				customPropertyJSONObject.getInt("PropertyNumber") - 1);
 
-			List<SpiraCustomPropertyValue> values =
-				SpiraCustomPropertyValue.getSpiraCustomPropertyValues(
-					spiraCustomProperty, customPropertyJSONObject);
-
-			if (values == null) {
-				continue;
-			}
-
-			spiraCustomPropertyValues.addAll(values);
+			spiraCustomPropertyValues.add(
+				SpiraCustomPropertyValue.getSpiraCustomPropertyValue(
+					spiraCustomProperty, customPropertyJSONObject));
 		}
 
 		return spiraCustomPropertyValues;

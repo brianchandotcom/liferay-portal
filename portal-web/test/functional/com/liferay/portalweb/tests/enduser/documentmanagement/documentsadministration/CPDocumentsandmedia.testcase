@@ -810,4 +810,35 @@ definition {
 		DMDocument.viewDefaultCP();
 	}
 
+	@description = "This ensures that the document title can be displayed correctly in the different views."
+	@priority = "5"
+	test ViewDocumentInDifferentViews {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			useCurrentTitle = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		LexiconCard.viewCardTitle(card = "Document_1");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconTable.viewTableEntryTitle(tableEntry = "Document_1");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		LexiconList.viewListEntryTitleLink(listEntry = "Document_1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewCP(
+			dmDocumentFileName = "Document_1.txt",
+			dmDocumentTitle = "Document_1");
+	}
+
 }

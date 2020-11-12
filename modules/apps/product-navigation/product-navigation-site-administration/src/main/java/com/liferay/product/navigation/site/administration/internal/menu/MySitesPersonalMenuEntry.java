@@ -116,14 +116,18 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 			},
 			PropsValues.MY_SITES_MAX_ELEMENTS);
 
+		if (!mySiteGroups.isEmpty()) {
+			return true;
+		}
+
 		List<Group> recentGroups = _recentGroupManager.getRecentGroups(
 			_portal.getHttpServletRequest(portletRequest));
 
-		if (mySiteGroups.isEmpty() && recentGroups.isEmpty()) {
-			return false;
+		if (!recentGroups.isEmpty()) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Reference(unbind = "-")

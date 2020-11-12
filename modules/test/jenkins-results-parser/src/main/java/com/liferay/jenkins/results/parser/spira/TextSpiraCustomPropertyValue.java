@@ -19,15 +19,17 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class TextSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
+public class TextSpiraCustomPropertyValue
+	extends SpiraCustomPropertyValue<String> {
 
-	public String getStringValue() {
-		return jsonObject.optString("StringValue");
+	@Override
+	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
+		return SpiraCustomProperty.Type.TEXT;
 	}
 
 	@Override
 	public String getValue() {
-		return getStringValue();
+		return jsonObject.optString("StringValue");
 	}
 
 	protected TextSpiraCustomPropertyValue(
@@ -50,7 +52,7 @@ public class TextSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		JSONObject customPropertyJSONObject = new JSONObject();
 
 		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
-		customPropertyJSONObject.put("StringValue", getStringValue());
+		customPropertyJSONObject.put("StringValue", getValue());
 
 		return customPropertyJSONObject;
 	}
@@ -59,7 +61,7 @@ public class TextSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = new JSONObject();
 
-		filterJSONObject.put("StringValue", getStringValue());
+		filterJSONObject.put("StringValue", getValue());
 
 		return filterJSONObject;
 	}
@@ -72,7 +74,7 @@ public class TextSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 			return false;
 		}
 
-		if (stringValue.equals(getStringValue())) {
+		if (stringValue.equals(getValue())) {
 			return true;
 		}
 

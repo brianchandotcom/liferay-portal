@@ -24,7 +24,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class MultiListSpiraCustomPropertyValue
-	extends SpiraCustomPropertyValue {
+	extends SpiraCustomPropertyValue<List<SpiraCustomListValue>> {
 
 	public SpiraCustomList getSpiraCustomList() {
 		if (_spiraCustomList != null) {
@@ -36,7 +36,13 @@ public class MultiListSpiraCustomPropertyValue
 		return spiraCustomProperty.getSpiraCustomList();
 	}
 
-	public List<SpiraCustomListValue> getSpiraCustomListValues() {
+	@Override
+	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
+		return SpiraCustomProperty.Type.MULTILIST;
+	}
+
+	@Override
+	public List<SpiraCustomListValue> getValue() {
 		List<SpiraCustomListValue> spiraCustomListValues = new ArrayList<>();
 
 		JSONArray integerListValueJSONArray = _getIntegerListValueJSONArray();
@@ -57,12 +63,10 @@ public class MultiListSpiraCustomPropertyValue
 	}
 
 	@Override
-	public String getValue() {
+	public String getValueString() {
 		StringBuilder sb = new StringBuilder();
 
-		for (SpiraCustomListValue spiraCustomListValue :
-				getSpiraCustomListValues()) {
-
+		for (SpiraCustomListValue spiraCustomListValue : getValue()) {
 			sb.append(spiraCustomListValue.getName());
 			sb.append(",");
 		}
@@ -129,8 +133,7 @@ public class MultiListSpiraCustomPropertyValue
 			return false;
 		}
 
-		List<SpiraCustomListValue> spiraCustomListValues =
-			getSpiraCustomListValues();
+		List<SpiraCustomListValue> spiraCustomListValues = getValue();
 
 		if (spiraCustomListValues.isEmpty()) {
 			return false;

@@ -420,8 +420,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			}
 
 			for (SpiraCustomListValue spiraCustomListValue :
-					multiListSpiraCustomPropertyValue.
-						getSpiraCustomListValues()) {
+					multiListSpiraCustomPropertyValue.getValue()) {
 
 				integerListValueJSONArray.put(spiraCustomListValue.getID());
 			}

@@ -19,7 +19,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
+public class ListSpiraCustomPropertyValue
+	extends SpiraCustomPropertyValue<SpiraCustomListValue> {
 
 	public SpiraCustomList getSpiraCustomList() {
 		if (_spiraCustomList != null) {
@@ -35,7 +36,13 @@ public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		return _spiraCustomList;
 	}
 
-	public SpiraCustomListValue getSpiraCustomListValue() {
+	@Override
+	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
+		return SpiraCustomProperty.Type.LIST;
+	}
+
+	@Override
+	public SpiraCustomListValue getValue() {
 		Integer integerValue = _getIntegerValue();
 
 		if ((integerValue == null) || (integerValue == JSONObject.NULL)) {
@@ -48,8 +55,8 @@ public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 	}
 
 	@Override
-	public String getValue() {
-		SpiraCustomListValue spiraCustomListValue = getSpiraCustomListValue();
+	public String getValueString() {
+		SpiraCustomListValue spiraCustomListValue = getValue();
 
 		if (spiraCustomListValue == null) {
 			return "";
@@ -103,7 +110,7 @@ public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 			return false;
 		}
 
-		SpiraCustomListValue spiraCustomListValue = getSpiraCustomListValue();
+		SpiraCustomListValue spiraCustomListValue = getValue();
 
 		if (spiraCustomListValue == null) {
 			return false;

@@ -19,9 +19,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class SpiraCustomPropertyValue extends BaseSpiraArtifact {
+public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 
-	public static SpiraCustomPropertyValue createSpiraCustomPropertyValue(
+	public static SpiraCustomPropertyValue<?> createSpiraCustomPropertyValue(
 		SpiraCustomProperty spiraCustomProperty, String value) {
 
 		if (value == null) {
@@ -103,6 +103,8 @@ public abstract class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		return _spiraCustomProperty;
 	}
 
+	public abstract SpiraCustomProperty.Type getSpiraCustomPropertyType();
+
 	@Override
 	public SpiraProject getSpiraProject() {
 		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
@@ -117,7 +119,11 @@ public abstract class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		return spiraCustomProperty.getURL();
 	}
 
-	public abstract String getValue();
+	public abstract T getValue();
+
+	public String getValueString() {
+		return String.valueOf(getValue());
+	}
 
 	protected SpiraCustomPropertyValue(
 		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {

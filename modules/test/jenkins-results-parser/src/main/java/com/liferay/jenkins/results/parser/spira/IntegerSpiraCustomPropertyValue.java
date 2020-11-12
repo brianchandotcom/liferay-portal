@@ -19,15 +19,17 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class IntegerSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
+public class IntegerSpiraCustomPropertyValue
+	extends SpiraCustomPropertyValue<Integer> {
 
-	public int getIntegerValue() {
-		return jsonObject.optInt("IntegerValue");
+	@Override
+	public SpiraCustomProperty.Type getSpiraCustomPropertyType() {
+		return SpiraCustomProperty.Type.INTEGER;
 	}
 
 	@Override
-	public String getValue() {
-		return String.valueOf(getIntegerValue());
+	public Integer getValue() {
+		return jsonObject.optInt("IntegerValue");
 	}
 
 	protected IntegerSpiraCustomPropertyValue(
@@ -49,7 +51,7 @@ public class IntegerSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 	protected JSONObject getCustomPropertyJSONObject() {
 		JSONObject customPropertyJSONObject = new JSONObject();
 
-		customPropertyJSONObject.put("IntegerValue", getIntegerValue());
+		customPropertyJSONObject.put("IntegerValue", getValue());
 		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
 
 		return customPropertyJSONObject;
@@ -59,16 +61,14 @@ public class IntegerSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = new JSONObject();
 
-		filterJSONObject.put("IntegerValue", getIntegerValue());
+		filterJSONObject.put("IntegerValue", getValue());
 
 		return filterJSONObject;
 	}
 
 	@Override
 	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
-		if (customPropertyJSONObject.optInt("IntegerValue") ==
-				getIntegerValue()) {
-
+		if (customPropertyJSONObject.optInt("IntegerValue") == getValue()) {
 			return true;
 		}
 

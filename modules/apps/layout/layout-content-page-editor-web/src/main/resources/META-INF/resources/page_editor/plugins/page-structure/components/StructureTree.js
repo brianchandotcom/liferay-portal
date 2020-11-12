@@ -180,11 +180,11 @@ function visit(
 		icon = fragmentEntryLink.icon || icon;
 
 		const documentFragment = getDocumentFragment(fragmentEntryLink.content);
-		const elements = [
+
+		const sortedElements = [
 			...getAllEditables(documentFragment),
 			...getAllPortals(documentFragment),
-		];
-		const sortedElements = elements.sort((a, b) => a.priority - b.priority);
+		].sort((a, b) => a.priority - b.priority);
 
 		const editableTypes = fragmentEntryLink.editableTypes;
 

@@ -52,6 +52,14 @@ definition {
 		Navigator.gotoNavNested(navNested = "Password");
 	}
 
+	macro gotoPermissions {
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = "${rowEntry}",
+			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Permissions");
+	}
+
 	macro gotoPreferences {
 		Navigator.gotoNavUnderline(navUnderline = "Preferences");
 	}

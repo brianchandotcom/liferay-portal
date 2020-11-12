@@ -175,12 +175,18 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	}
 
 	public SpiraCustomList getSpiraCustomList() {
-		if (!_hasCustomList()) {
+		if ((getType() != Type.LIST) && (getType() != Type.MULTILIST)) {
 			return null;
 		}
 
-		JSONObject customListJSONObject = jsonObject.getJSONObject(
+		JSONObject customListJSONObject = jsonObject.optJSONObject(
 			"CustomList");
+
+		if ((customListJSONObject == null) ||
+			(customListJSONObject == JSONObject.NULL)) {
+
+			return null;
+		}
 
 		return SpiraCustomList.createSpiraCustomListByName(
 			getSpiraProject(), _spiraArtifactClass,

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/rss",
+		"mvc.command.name=rss",
 		"portlet.add.default.resource.check.whitelist.mvc.action=true"
 	},
 	service = MVCResourceCommand.class

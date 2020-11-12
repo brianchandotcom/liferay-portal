@@ -30,7 +30,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 %>
 
-<portlet:actionURL name="/journal/copy_article" var="copyArticleURL">
+<portlet:actionURL name="copyArticle" var="copyArticleURL">
 	<portlet:param name="mvcPath" value="/copy_article.jsp" />
 </portlet:actionURL>
 

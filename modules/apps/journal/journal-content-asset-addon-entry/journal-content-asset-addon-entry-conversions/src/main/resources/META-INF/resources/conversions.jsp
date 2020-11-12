@@ -27,7 +27,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 	<clay:content-col
 		cssClass="export-action user-tool-asset-addon-entry"
 	>
-		<portlet:resourceURL id="/journal/export_article" var="exportArticleURL">
+		<portlet:resourceURL id="exportArticle" var="exportArticleURL">
 			<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
 			<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
 			<portlet:param name="targetExtension" value="<%= extension %>" />

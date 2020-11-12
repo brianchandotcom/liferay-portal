@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/copy_article"
+		"mvc.command.name=copyArticle"
 	},
 	service = MVCActionCommand.class
 )

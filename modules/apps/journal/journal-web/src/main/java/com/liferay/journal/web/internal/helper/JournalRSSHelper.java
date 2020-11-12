@@ -467,7 +467,7 @@ public class JournalRSSHelper {
 		feedURL.setCacheability(ResourceURL.FULL);
 		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
-		feedURL.setResourceID("/journal/rss");
+		feedURL.setResourceID("rss");
 
 		selfSyndLink.setHref(feedURL.toString());
 

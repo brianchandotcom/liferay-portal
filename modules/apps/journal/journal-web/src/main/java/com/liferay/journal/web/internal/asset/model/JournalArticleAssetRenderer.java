@@ -326,7 +326,7 @@ public class JournalArticleAssetRenderer
 		liferayPortletURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		liferayPortletURL.setParameter("articleId", _article.getArticleId());
-		liferayPortletURL.setResourceID("/journal/export_article");
+		liferayPortletURL.setResourceID("exportArticle");
 
 		return liferayPortletURL;
 	}

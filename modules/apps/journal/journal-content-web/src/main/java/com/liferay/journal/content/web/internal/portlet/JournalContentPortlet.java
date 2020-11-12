@@ -215,7 +215,7 @@ public class JournalContentPortlet extends MVCPortlet {
 		String resourceID = GetterUtil.getString(
 			resourceRequest.getResourceID());
 
-		if (resourceID.equals("/journal/export_article")) {
+		if (resourceID.equals("exportArticle")) {
 			String targetExtension = ParamUtil.getString(
 				resourceRequest, "targetExtension");
 

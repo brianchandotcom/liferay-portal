@@ -1069,7 +1069,7 @@ public class ServiceRegistry {
 			}
 
 			if (filter == null) {
-				return result;
+				return new ArrayList<>(result);
 			}
 
 			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */

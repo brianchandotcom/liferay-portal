@@ -288,7 +288,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			"selectedItemColor",
 			() -> {
 				Optional<String> selectedItemColorOptional =
-					menuDisplayFragmentConfiguration.getSelectedItemColor();
+					menuDisplayFragmentConfiguration.
+						getSelectedItemColorOptional();
 
 				return selectedItemColorOptional.orElse("inherit");
 			}

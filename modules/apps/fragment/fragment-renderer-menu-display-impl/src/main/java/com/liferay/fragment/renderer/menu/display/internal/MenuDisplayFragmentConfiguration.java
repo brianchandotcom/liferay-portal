@@ -41,7 +41,7 @@ public class MenuDisplayFragmentConfiguration {
 		return Optional.ofNullable(_hoveredItemColor);
 	}
 
-	public Optional<String> getSelectedItemColor() {
+	public Optional<String> getSelectedItemColorOptional() {
 		return Optional.ofNullable(_selectedItemColor);
 	}
 

@@ -24,6 +24,7 @@ import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -47,6 +48,11 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
+
+		PortletSession portletSession = renderRequest.getPortletSession();
+
+		portletSession.removeAttribute(
+			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
 
 		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
 			new EditSegmentsEntryDisplayContext(

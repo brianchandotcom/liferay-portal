@@ -475,6 +475,19 @@ definition {
 		DMDocument.viewCardTitle(dmDocumentTitle = "${dmDocumentTitle}");
 	}
 
+	macro assertFileNameFromTempFolder {
+		var documentFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFileName}");
+
+		echo("## downloadedFileName: ${documentFileName}");
+
+		if ("${downloadedFileName}" == "${documentFileName}") {
+			echo("This is a correct file name.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
 	macro cancelCheckoutCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

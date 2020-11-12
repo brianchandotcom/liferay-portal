@@ -257,58 +257,6 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 	let currentAlignment = null;
 	let currentElement = null;
 	let resizer = null;
-	const EMBED_VIDEO_WIDTH = 560;
-	const EMBED_VIDEO_HEIGHT = 315;
-
-	const embedProviders = [
-		{
-			id: 'facebook',
-			tpl: `<iframe allowFullScreen="true" allowTransparency="true"
-				 frameborder="0" height="${EMBED_VIDEO_HEIGHT}"
-				 src="https://www.facebook.com/plugins/video.php?href={embedId}'
-				 &show_text=0&width=${EMBED_VIDEO_WIDTH}&height=${EMBED_VIDEO_HEIGHT}" scrolling="no"
-				 style="border:none;overflow:hidden" width="${EMBED_VIDEO_WIDTH}}"></iframe>`,
-			type: 'video',
-			urlSchemes: [
-				'(https?:\\/\\/(?:www\\.)?facebook.com\\/\\S*\\/videos\\/\\S*)',
-			],
-		},
-		{
-			id: 'twitch',
-			tpl: `<iframe allowfullscreen="true" frameborder="0"
-				 height="${EMBED_VIDEO_HEIGHT}"
-				 src="https://player.twitch.tv/?autoplay=false&video={embedId}"
-				 scrolling="no" width="${EMBED_VIDEO_WIDTH}"></iframe>`,
-			type: 'video',
-			urlSchemes: [
-				'https?:\\/\\/(?:www\\.)?twitch.tv\\/videos\\/(\\S*)$',
-			],
-		},
-		{
-			id: 'vimeo',
-			tpl: `<iframe allowfullscreen frameborder="0" height="${EMBED_VIDEO_HEIGHT}"
-				 mozallowfullscreen src="https://player.vimeo.com/video/{embedId}"
-				 webkitallowfullscreen width="${EMBED_VIDEO_WIDTH}"></iframe>`,
-			type: 'video',
-			urlSchemes: [
-				'https?:\\/\\/(?:www\\.)?vimeo\\.com\\/album\\/.*\\/video\\/(\\S*)',
-				'https?:\\/\\/(?:www\\.)?vimeo\\.com\\/channels\\/.*\\/(\\S*)',
-				'https?:\\/\\/(?:www\\.)?vimeo\\.com\\/groups\\/.*\\/videos\\/(\\S*)',
-				'https?:\\/\\/(?:www\\.)?vimeo\\.com\\/(\\S*)$',
-			],
-		},
-		{
-			id: 'youtube',
-			tpl: `<iframe allow="autoplay; encrypted-media" allowfullscreen
-				 height="${EMBED_VIDEO_HEIGHT}" frameborder="0"
-				 src="https://www.youtube.com/embed/{embedId}?rel=0"
-				 width="${EMBED_VIDEO_WIDTH}"></iframe>`,
-			type: 'video',
-			urlSchemes: [
-				'https?:\\/\\/(?:www\\.)?youtube.com\\/watch\\?v=(\\S*)$',
-			],
-		},
-	];
 
 	// CSS is added in a compressed form
 
@@ -382,7 +330,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		},
 
 		_getProviders(editor) {
-			const providers = editor.config.embedProviders || embedProviders;
+			const providers = editor.config.embedProviders || [];
 
 			return providers.map((provider) => {
 				return {

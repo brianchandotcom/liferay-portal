@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Commerce Admin Shipment Client
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.shipment.client
+Bundle-Version: 1.0.0
+Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

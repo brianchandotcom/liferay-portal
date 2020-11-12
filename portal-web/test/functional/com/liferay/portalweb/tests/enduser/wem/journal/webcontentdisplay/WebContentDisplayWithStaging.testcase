@@ -192,9 +192,11 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		FormFields.editTextAlt(
-			fieldName = "Image",
-			fieldValue = "Web Content Image Description");
+		Type(
+			key_fieldName = "Image",
+			key_index = "2",
+			locator1 = "TextInput#ANY_DE_DDM",
+			value1 = "Web Content Image Description");
 
 		PortletEntry.publish();
 

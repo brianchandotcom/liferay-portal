@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_FILE_NAME</td>
+	<td>//h3[contains(@class,'sidebar-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_LOCATION</td>
 	<td>//dd[contains(@class,'sidebar-dd')]//a[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>

@@ -2225,6 +2225,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	public boolean ocularImageValidation(String locator) {
 		ocularConfig();
+
 		WebElement webElement = getWebElement(locator);
 
 		SnapshotBuilder snapshotBuilder = Ocular.snapshot();

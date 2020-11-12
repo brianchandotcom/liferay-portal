@@ -98,6 +98,16 @@ public class MultiListSpiraCustomPropertyValue
 	}
 
 	@Override
+	protected JSONObject getFilterJSONObject() {
+		JSONObject filterJSONObject = new JSONObject();
+
+		filterJSONObject.put(
+			"IntegerListValue", _getIntegerListValueJSONArray());
+
+		return filterJSONObject;
+	}
+
+	@Override
 	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
 		JSONArray customPropertyJSONArray =
 			customPropertyJSONObject.optJSONArray("IntegerListValue");

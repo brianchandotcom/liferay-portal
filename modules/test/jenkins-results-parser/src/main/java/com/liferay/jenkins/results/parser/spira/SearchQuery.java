@@ -84,7 +84,8 @@ public class SearchQuery<T extends SpiraArtifact> {
 				SpiraCustomPropertyValue spiraCustomPropertyValue =
 					(SpiraCustomPropertyValue)_value;
 
-				int propertyNumber = spiraCustomPropertyValue.getPropertyNumber();
+				int propertyNumber =
+					spiraCustomPropertyValue.getPropertyNumber();
 
 				JSONArray customPropertiesJSONArray = jsonObject.getJSONArray(
 					"CustomProperties");
@@ -117,45 +118,43 @@ public class SearchQuery<T extends SpiraArtifact> {
 		}
 
 		public JSONObject toFilterJSONObject() {
-			JSONObject filterJSONObject = new JSONObject();
-
-			filterJSONObject.put("PropertyName", _name);
-
 			if (_value instanceof Integer) {
 				Integer intValue = (Integer)_value;
 
+				JSONObject filterJSONObject = new JSONObject();
+
 				filterJSONObject.put("IntValue", intValue);
+				filterJSONObject.put("PropertyName", _name);
+
+				return filterJSONObject;
 			}
-			else if (_value instanceof SpiraCustomPropertyValue) {
+
+			if (_value instanceof SpiraCustomPropertyValue) {
 				SpiraCustomPropertyValue spiraCustomPropertyValue =
 					(SpiraCustomPropertyValue)_value;
 
-				SpiraCustomProperty spiraCustomProperty =
-					spiraCustomPropertyValue.getSpiraCustomProperty();
+				JSONObject filterJSONObject =
+					spiraCustomPropertyValue.getFilterJSONObject();
 
-				if (spiraCustomProperty.getType() ==
-						SpiraCustomProperty.Type.TEXT) {
+				filterJSONObject.put("PropertyName", _name);
 
-					filterJSONObject.put(
-						"StringValue", spiraCustomPropertyValue.getName());
-				}
-				else {
-					filterJSONObject.put(
-						"IntValue", spiraCustomPropertyValue.getID());
-				}
+				return filterJSONObject;
 			}
-			else if (_value instanceof String) {
+
+			if (_value instanceof String) {
+				JSONObject filterJSONObject = new JSONObject();
+
 				String stringValue = (String)_value;
 
 				stringValue = stringValue.replaceAll("\\[", "[[]");
 
+				filterJSONObject.put("PropertyName", _name);
 				filterJSONObject.put("StringValue", stringValue);
-			}
-			else {
-				throw new RuntimeException("Invalid value type");
+
+				return filterJSONObject;
 			}
 
-			return filterJSONObject;
+			throw new RuntimeException("Invalid value type");
 		}
 
 		private final String _name;

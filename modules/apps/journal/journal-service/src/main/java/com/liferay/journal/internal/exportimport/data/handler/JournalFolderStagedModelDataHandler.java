@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -143,6 +144,25 @@ public class JournalFolderStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			folderElement, ExportImportPathUtil.getModelPath(folder), folder);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+		PortletDataContext portletDataContext, String uuid, long groupId,
+		long folderId) {
+
+		JournalFolder existingJournalFolder = fetchMissingReference(
+			uuid, groupId);
+
+		if (existingJournalFolder == null) {
+			return;
+		}
+
+		Map<Long, Long> journalFolderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Folder.class);
+
+		journalFolderIds.put(folderId, existingJournalFolder.getFolderId());
 	}
 
 	@Override

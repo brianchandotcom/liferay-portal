@@ -14,6 +14,8 @@
 
 package com.liferay.product.navigation.applications.menu.web.internal.util;
 
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -34,7 +36,8 @@ import java.util.List;
  */
 public class ApplicationsMenuUtil {
 
-	public static boolean hasChildPanelCategories(
+	public static boolean hasChildPanelApps(
+		PanelAppRegistry panelAppRegistry,
 		PanelCategoryRegistry panelCategoryRegistry,
 		ThemeDisplay themeDisplay) {
 
@@ -50,8 +53,15 @@ public class ApplicationsMenuUtil {
 					panelCategory.getKey(), themeDisplay.getPermissionChecker(),
 					themeDisplay.getScopeGroup());
 
-			if (!childPanelCategories.isEmpty()) {
-				return true;
+			for (PanelCategory childPanelCategory : childPanelCategories) {
+				List<PanelApp> panelApps = panelAppRegistry.getPanelApps(
+					childPanelCategory.getKey(),
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup());
+
+				if (!panelApps.isEmpty()) {
+					return true;
+				}
 			}
 		}
 

@@ -85,8 +85,8 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (ApplicationsMenuUtil.hasChildPanelCategories(
-				_panelCategoryRegistry, themeDisplay)) {
+		if (ApplicationsMenuUtil.hasChildPanelApps(
+				_panelAppRegistry, _panelCategoryRegistry, themeDisplay)) {
 
 			return true;
 		}

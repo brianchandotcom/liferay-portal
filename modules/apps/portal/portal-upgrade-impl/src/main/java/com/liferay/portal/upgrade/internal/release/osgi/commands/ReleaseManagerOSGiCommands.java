@@ -14,10 +14,13 @@
 
 package com.liferay.portal.upgrade.internal.release.osgi.commands;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
@@ -49,7 +52,12 @@ import org.osgi.service.component.annotations.Reference;
 public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List pending or running upgrades")
+	@Override
 	public String check() {
+		return check(false);
+	}
+
+	public String check(boolean listAllUpgrades) {
 		StringBundler sb = new StringBundler(0);
 
 		Set<String> bundleSymbolicNames =
@@ -93,11 +101,55 @@ public class ReleaseManagerOSGiCommands {
 			sb.append(lastUpgradeInfo.getToSchemaVersionString());
 
 			sb.append(StringPool.NEW_LINE);
+
+			if (listAllUpgrades) {
+				for (UpgradeInfo upgradeInfo : upgradeInfos) {
+					StringBundler sb2 = new StringBundler(
+						7 * upgradeInfos.size());
+
+					sb2.append(StringPool.TAB);
+
+					String fromSchemaString =
+						upgradeInfo.getFromSchemaVersionString();
+					String toSchemaString =
+						upgradeInfo.getToSchemaVersionString();
+
+					List<String> fromSchemaVersions = StringUtil.split(
+						fromSchemaString, CharPool.PERIOD);
+					List<String> toSchemaVersions = StringUtil.split(
+						toSchemaString, CharPool.PERIOD);
+
+					if (!toSchemaVersions.get(
+							0
+						).equals(
+							fromSchemaVersions.get(0)
+						) ||
+						!toSchemaVersions.get(
+							1
+						).equals(
+							fromSchemaVersions.get(1)
+						)) {
+
+						sb2.append("**REQUIRED** ");
+					}
+
+					UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+
+					Class<?> clazz = upgradeStep.getClass();
+
+					sb2.append(clazz.getName());
+					sb2.append(" from ");
+					sb2.append(fromSchemaString);
+					sb2.append(" to ");
+					sb2.append(toSchemaString);
+					sb2.append(StringPool.NEW_LINE);
+
+					sb.append(sb2.toString());
+				}
+			}
 		}
 
 		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-
 			return sb.toString();
 		}
 

@@ -30,11 +30,11 @@ import {useId} from '../../../../app/utils/useId';
 import {ImageSelector} from '../../../../common/components/ImageSelector';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
-const DEFAULT_IMAGE_CONFIGURATION_ID = 'auto';
+const DEFAULT_IMAGE_SIZE_ID = 'auto';
 
-const DEFAULT_IMAGE_CONFIGURATION = {
+const DEFAULT_IMAGE_SIZE = {
 	size: null,
-	value: DEFAULT_IMAGE_CONFIGURATION_ID,
+	value: DEFAULT_IMAGE_SIZE_ID,
 	width: null,
 };
 
@@ -42,21 +42,17 @@ export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
 
 	const dispatch = useDispatch();
-	const imageConfigurationSelectId = useId();
-	const imageDescriptionInputId = useId();
+	const editables = useSelector((state) => state.editables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const imageDescriptionInputId = useId();
+	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
+	const [imageSizes, setImageSizes] = useState([]);
+	const imageSizeSelectId = useId();
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const editables = useSelector((state) => state.editables);
-	const [imageConfigurations, setImageConfigurations] = useState([]);
-	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_CONFIGURATION);
-	const [
-		selectedImageConfigurationId,
-		setSelectedImageConfigurationId,
-	] = useState(DEFAULT_IMAGE_CONFIGURATION_ID);
 
 	const canUpdateImage = selectedViewportSize === VIEWPORT_SIZES.desktop;
 
@@ -97,57 +93,50 @@ export function ImagePropertiesPanel({item}) {
 	);
 
 	useEffect(() => {
-		if (editableElement !== null) {
-			const {maxWidth, minWidth} = config.availableViewportSizes[
-				selectedViewportSize
-			];
+		const {maxWidth, minWidth} = config.availableViewportSizes[
+			selectedViewportSize
+		];
 
-			const setSize = () => {
-				if (
-					(!imageConfigurations.length ||
-						selectedViewportSize === VIEWPORT_SIZES.desktop) &&
-					editableElement.naturalWidth
-				) {
-					const autoImageConfiguration = {
-						...(imageConfigurations.find(
-							(imageConfiguration) =>
-								imageConfiguration.value === 'auto'
-						) || {}),
+		const configSize =
+			editableConfig.imageProperties?.[selectedViewportSize] ||
+			DEFAULT_IMAGE_SIZE;
 
-						width: editableElement.naturalWidth,
-					};
+		setImageSize(configSize);
 
-					setImageSize(autoImageConfiguration);
-				}
-				else {
-					const viewportImageConfiguration = imageConfigurations.find(
-						(imageConfiguration) =>
-							imageConfiguration.width &&
-							((imageConfiguration.width <= maxWidth &&
-								imageConfiguration.width > minWidth) ||
-								imageConfiguration.width ===
-									editableElement.naturalWidth)
-					) || {width: editableElement.naturalWidth};
+		if (editableElement && configSize.value === DEFAULT_IMAGE_SIZE_ID) {
+			const setAutoSize = () => {
+				const autoSize =
+					imageSizes.find(
+						({width}) =>
+							(width <= maxWidth && width > minWidth) ||
+							width === editableElement.naturalWidth
+					) ||
+					imageSizes.find(
+						({value}) => value === DEFAULT_IMAGE_SIZE_ID
+					) ||
+					DEFAULT_IMAGE_SIZE;
 
-					setImageSize(viewportImageConfiguration);
-				}
+				setImageSize({
+					...autoSize,
+					width: autoSize.width || editableElement.naturalWidth,
+				});
 			};
 
-			if (editableElement && editableElement.complete) {
-				setSize();
+			if (editableElement.complete) {
+				setAutoSize();
 			}
-			else if (editableElement && !editableElement.complete) {
-				editableElement.addEventListener('load', setSize);
+			else {
+				editableElement.addEventListener('load', setAutoSize);
 
-				return () =>
-					editableElement.removeEventListener('load', setSize);
+				return () => {
+					editableElement.removeEventListener('load', setAutoSize);
+				};
 			}
 		}
 	}, [
-		editableConfig.naturalHeight,
+		editableConfig.imageProperties,
 		editableElement,
-		imageConfigurations,
-		selectedImageConfigurationId,
+		imageSizes,
 		selectedViewportSize,
 	]);
 
@@ -158,18 +147,13 @@ export function ImagePropertiesPanel({item}) {
 			ImageService.getAvailableImageConfigurations({
 				fileEntryId,
 				onNetworkStatus: dispatch,
-			}).then((availableImageConfigurations) =>
-				setImageConfigurations(availableImageConfigurations)
-			);
+			}).then((availableImageSizes) => {
+				setImageSizes(availableImageSizes);
+			});
 		}
 	}, [dispatch, editableContent.fileEntryId]);
 
 	useEffect(() => {
-		setSelectedImageConfigurationId(
-			editableConfig.imageConfiguration?.[selectedViewportSize] ??
-				DEFAULT_IMAGE_CONFIGURATION_ID
-		);
-
 		setImageDescription((imageDescription) => {
 			if (imageDescription !== editableConfig.alt) {
 				return editableConfig.alt || '';
@@ -177,14 +161,7 @@ export function ImagePropertiesPanel({item}) {
 
 			return imageDescription;
 		});
-	}, [
-		editableConfig.alt,
-		editableConfig.imageConfiguration,
-		editableValue,
-		imageConfigurations,
-		selectedViewportSize,
-		languageId,
-	]);
+	}, [editableConfig.alt]);
 
 	const updateEditableConfig = (
 		newConfig = {},
@@ -230,10 +207,9 @@ export function ImagePropertiesPanel({item}) {
 
 		let nextEditableValue = {};
 
-		setSelectedImageConfigurationId(DEFAULT_IMAGE_CONFIGURATION_ID);
-		setImageConfigurations([]);
 		setImageDescription('');
-		setImageSize(DEFAULT_IMAGE_CONFIGURATION);
+		setImageSize(DEFAULT_IMAGE_SIZE);
+		setImageSizes([]);
 
 		const nextEditableValueConfig = {
 			...editableValue.config,
@@ -288,33 +264,36 @@ export function ImagePropertiesPanel({item}) {
 				/>
 			)}
 
-			{config.adaptiveMediaEnabled && imageConfigurations?.length > 0 && (
+			{config.adaptiveMediaEnabled && imageSizes?.length > 0 && (
 				<ClayForm.Group className="mb-2">
-					<label htmlFor={imageConfigurationSelectId}>
+					<label htmlFor={imageSizeSelectId}>
 						{Liferay.Language.get('resolution')}
 					</label>
 					<ClaySelectWithOption
 						className={'form-control form-control-sm'}
-						id={imageConfigurationSelectId}
-						name={imageConfigurationSelectId}
-						onChange={(event) => {
-							const imageConfiguration =
-								editableConfig.imageConfiguration || {};
-
-							const nextImageConfiguration = {
-								...imageConfiguration,
-								[selectedViewportSize]: event.target.value,
-							};
-
+						id={imageSizeSelectId}
+						name={imageSizeSelectId}
+						onChange={(event) =>
 							updateEditableConfig(
-								{imageConfiguration: nextImageConfiguration},
+								{
+									imageConfiguration: {
+										...(editableConfig.imageConfiguration ||
+											{}),
+										[selectedViewportSize]:
+											event.target.value,
+									},
+								},
 								editableValues,
 								editableId,
 								processorKey
-							);
-						}}
-						options={imageConfigurations}
-						value={selectedImageConfigurationId}
+							)
+						}
+						options={imageSizes}
+						value={
+							editableConfig.imageConfiguration?.[
+								selectedViewportSize
+							] || DEFAULT_IMAGE_SIZE_ID
+						}
 					/>
 				</ClayForm.Group>
 			)}

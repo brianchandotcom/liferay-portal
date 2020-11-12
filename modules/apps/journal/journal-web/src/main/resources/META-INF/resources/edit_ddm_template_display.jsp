@@ -22,7 +22,11 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 
 <aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
 
-<div>
+<div id="<portlet:namespace />ddmTemplateEditor">
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
 	<react:component
 		componentId="ddmTemplateEditor"
 		module="ddm_template_editor/components/App"

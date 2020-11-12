@@ -409,7 +409,6 @@ definition {
 			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME");
 	}
 
-	@ignore
 	@priority = "4"
 	test RolesOrganizationSearch {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

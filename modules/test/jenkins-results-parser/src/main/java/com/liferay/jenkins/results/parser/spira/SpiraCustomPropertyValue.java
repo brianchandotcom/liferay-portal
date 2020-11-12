@@ -127,6 +127,8 @@ public abstract class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		_spiraCustomProperty = spiraCustomProperty;
 	}
 
+	protected abstract JSONObject getCustomPropertyJSONObject();
+
 	protected JSONObject getDefinitionJSONObject() {
 		SpiraProject spiraProject = getSpiraProject();
 

@@ -77,6 +77,16 @@ public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 	}
 
 	@Override
+	protected JSONObject getCustomPropertyJSONObject() {
+		JSONObject customPropertyJSONObject = new JSONObject();
+
+		customPropertyJSONObject.put("IntegerValue", _getIntegerValue());
+		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
+
+		return customPropertyJSONObject;
+	}
+
+	@Override
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = new JSONObject();
 

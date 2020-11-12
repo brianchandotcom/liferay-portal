@@ -188,8 +188,8 @@ const Calculator = forwardRef(
 				setExpression(newMaskedExpression);
 
 				onEditExpression({
+					expression: newMaskedExpression,
 					index,
-					newMaskedExpression,
 				});
 			},
 			[onEditExpression, setExpression]

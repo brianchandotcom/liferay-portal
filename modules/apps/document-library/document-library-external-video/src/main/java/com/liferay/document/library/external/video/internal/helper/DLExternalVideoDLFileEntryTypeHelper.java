@@ -56,7 +56,7 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 	public void addDLExternalVideoDLFileEntryType() throws Exception {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
-			DLExternalVideoConstants.DDM_STRUCTURE_KEY_EXTERNAL_VIDEO);
+			DLExternalVideoConstants.DDM_STRUCTURE_KEY_DL_EXTERNAL_VIDEO);
 
 		if (ddmStructure == null) {
 			ddmStructure = _addExternalVideoDDMStructure();
@@ -115,7 +115,7 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 			defaultUserId, _company.getGroupId(),
 			_dlFileEntryMetadataClassNameId, clazz.getClassLoader(),
 			"com/liferay/document/library/external/video/internal/util" +
-				"/dependencies/external-video-metadata-structure.xml",
+				"/dependencies/dl-external-video-metadata-structure.xml",
 			serviceContext);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -135,7 +135,7 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
 			updatedNameMap.put(
 				entry.getKey(),
-				LanguageUtil.get(entry.getKey(), "external-video-metadata"));
+				LanguageUtil.get(entry.getKey(), "dl-external-video-metadata"));
 		}
 
 		return updatedNameMap;

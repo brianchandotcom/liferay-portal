@@ -28,10 +28,10 @@ public class DLExternalVideoConstants {
 
 	public static final String DDM_FIELD_NAME_URL = "URL";
 
-	public static final String DDM_STRUCTURE_KEY_EXTERNAL_VIDEO =
-		"EXTERNAL_VIDEO";
+	public static final String DDM_STRUCTURE_KEY_DL_EXTERNAL_VIDEO =
+		"DL_EXTERNAL_VIDEO";
 
-	public static final String DL_FILE_ENTRY_TYPE_KEY = "EXTERNAL_VIDEO";
+	public static final String DL_FILE_ENTRY_TYPE_KEY = "DL_EXTERNAL_VIDEO";
 
 	public static final String DL_FILE_ENTRY_TYPE_NAME =
 		"External Video Shortcut";

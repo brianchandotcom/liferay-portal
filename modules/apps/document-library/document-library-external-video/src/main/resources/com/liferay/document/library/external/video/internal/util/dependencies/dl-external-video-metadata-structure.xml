@@ -2,8 +2,8 @@
 
 <root>
 	<structure>
-		<name>EXTERNAL_VIDEO</name>
-		<description>external-video-metadata</description>
+		<name>DL_EXTERNAL_VIDEO</name>
+		<description>dl-external-video-metadata</description>
 		<definition>
 			<![CDATA[
 				{

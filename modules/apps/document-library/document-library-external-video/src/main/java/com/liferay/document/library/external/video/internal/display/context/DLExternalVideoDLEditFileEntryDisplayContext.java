@@ -93,7 +93,7 @@ public class DLExternalVideoDLEditFileEntryDisplayContext
 		String ddmStructureKey = ddmStructure.getStructureKey();
 
 		if (ddmStructureKey.equals(
-				DLExternalVideoConstants.DDM_STRUCTURE_KEY_EXTERNAL_VIDEO)) {
+				DLExternalVideoConstants.DDM_STRUCTURE_KEY_DL_EXTERNAL_VIDEO)) {
 
 			return false;
 		}

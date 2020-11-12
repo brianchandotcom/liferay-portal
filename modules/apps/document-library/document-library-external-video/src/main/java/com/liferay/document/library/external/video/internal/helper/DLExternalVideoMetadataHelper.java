@@ -59,7 +59,7 @@ public class DLExternalVideoMetadataHelper {
 
 			if (structureKey.equals(
 					DLExternalVideoConstants.
-						DDM_STRUCTURE_KEY_EXTERNAL_VIDEO)) {
+						DDM_STRUCTURE_KEY_DL_EXTERNAL_VIDEO)) {
 
 				return ddmStructure;
 			}

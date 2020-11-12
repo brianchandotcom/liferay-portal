@@ -451,12 +451,12 @@ export default withRouter(
 													<div className="c-mt-2">
 														{question.locked && (
 															<div className="question-locked-text">
-																<ClayIcon symbol="lock" />
-																This question is
-																closed, new
-																answers and
-																comments are
-																disabled.
+																<span>
+																	<ClayIcon symbol="lock" />
+																</span>
+																{Liferay.Language.get(
+																	'this-question-is-closed-new-answers-and-comments-are-disabled'
+																)}
 															</div>
 														)}
 														<QuestionsEditor

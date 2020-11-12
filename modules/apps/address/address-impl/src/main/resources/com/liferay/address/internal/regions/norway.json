@@ -1,0 +1,97 @@
+[
+	{
+		"regionCode": 1.0,
+		"name": "Østfold",
+		"active_": true
+	},
+	{
+		"regionCode": 2.0,
+		"name": "Akershus",
+		"active_": true
+	},
+	{
+		"regionCode": 3.0,
+		"name": "Oslo",
+		"active_": true
+	},
+	{
+		"regionCode": 4.0,
+		"name": "Hedmark",
+		"active_": true
+	},
+	{
+		"regionCode": 5.0,
+		"name": "Oppland",
+		"active_": true
+	},
+	{
+		"regionCode": 6.0,
+		"name": "Buskerud",
+		"active_": true
+	},
+	{
+		"regionCode": 7.0,
+		"name": "Vestfold",
+		"active_": true
+	},
+	{
+		"regionCode": 8.0,
+		"name": "Telemark",
+		"active_": true
+	},
+	{
+		"regionCode": 9.0,
+		"name": "Aust-Agder",
+		"active_": true
+	},
+	{
+		"regionCode": 10.0,
+		"name": "Vest-Agder",
+		"active_": true
+	},
+	{
+		"regionCode": 11.0,
+		"name": "Rogaland",
+		"active_": true
+	},
+	{
+		"regionCode": 12.0,
+		"name": "Hordaland",
+		"active_": true
+	},
+	{
+		"regionCode": 14.0,
+		"name": "Sogn og Fjordane",
+		"active_": true
+	},
+	{
+		"regionCode": 15.0,
+		"name": "Møre of Romsdal",
+		"active_": true
+	},
+	{
+		"regionCode": 16.0,
+		"name": "Sør-Trøndelag",
+		"active_": true
+	},
+	{
+		"regionCode": 17.0,
+		"name": "Nord-Trøndelag",
+		"active_": true
+	},
+	{
+		"regionCode": 18.0,
+		"name": "Nordland",
+		"active_": true
+	},
+	{
+		"regionCode": 19.0,
+		"name": "Troms",
+		"active_": true
+	},
+	{
+		"regionCode": 20.0,
+		"name": "Finnmark",
+		"active_": true
+	}
+]

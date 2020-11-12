@@ -1,0 +1,2225 @@
+[
+    {
+        "name": "canada",
+        "a2": "CA",
+        "a3": "CAN",
+        "number_": 124.0,
+        "idd_": 1.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "china",
+        "a2": "CN",
+        "a3": "CHN",
+        "number_": 156.0,
+        "idd_": 86.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "france",
+        "a2": "FR",
+        "a3": "FRA",
+        "number_": 250.0,
+        "idd_": 33.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "germany",
+        "a2": "DE",
+        "a3": "DEU",
+        "number_": 276.0,
+        "idd_": 49.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "hungary",
+        "a2": "HU",
+        "a3": "HUN",
+        "number_": 348.0,
+        "idd_": 36.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "israel",
+        "a2": "IL",
+        "a3": "ISR",
+        "number_": 376.0,
+        "idd_": 972.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "italy",
+        "a2": "IT",
+        "a3": "ITA",
+        "number_": 380.0,
+        "idd_": 39.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "japan",
+        "a2": "JP",
+        "a3": "JPN",
+        "number_": 392.0,
+        "idd_": 81.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "south-korea",
+        "a2": "KR",
+        "a3": "KOR",
+        "number_": 410.0,
+        "idd_": 82.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "netherlands",
+        "a2": "NL",
+        "a3": "NLD",
+        "number_": 528.0,
+        "idd_": 31.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "portugal",
+        "a2": "PT",
+        "a3": "PRT",
+        "number_": 620.0,
+        "idd_": 351.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "russia",
+        "a2": "RU",
+        "a3": "RUS",
+        "number_": 643.0,
+        "idd_": 7.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "singapore",
+        "a2": "SG",
+        "a3": "SGP",
+        "number_": 702.0,
+        "idd_": 65.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "spain",
+        "a2": "ES",
+        "a3": "ESP",
+        "number_": 724.0,
+        "idd_": 34.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "turkey",
+        "a2": "TR",
+        "a3": "TUR",
+        "number_": 792.0,
+        "idd_": 90.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "vietnam",
+        "a2": "VN",
+        "a3": "VNM",
+        "number_": 704.0,
+        "idd_": 84.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "united-kingdom",
+        "a2": "GB",
+        "a3": "GBR",
+        "number_": 826.0,
+        "idd_": 44.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "united-states",
+        "a2": "US",
+        "a3": "USA",
+        "number_": 840.0,
+        "idd_": 1.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "afghanistan",
+        "a2": "AF",
+        "a3": "AFG",
+        "number_": 4.0,
+        "idd_": 93.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "albania",
+        "a2": "AL",
+        "a3": "ALB",
+        "number_": 8.0,
+        "idd_": 355.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "algeria",
+        "a2": "DZ",
+        "a3": "DZA",
+        "number_": 12.0,
+        "idd_": 213.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "american-samoa",
+        "a2": "AS",
+        "a3": "ASM",
+        "number_": 16.0,
+        "idd_": 684.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "andorra",
+        "a2": "AD",
+        "a3": "AND",
+        "number_": 20.0,
+        "idd_": 376.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "angola",
+        "a2": "AO",
+        "a3": "AGO",
+        "number_": 24.0,
+        "idd_": 244.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "anguilla",
+        "a2": "AI",
+        "a3": "AIA",
+        "number_": 660.0,
+        "idd_": 264.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "antarctica",
+        "a2": "AQ",
+        "a3": "ATA",
+        "number_": 10.0,
+        "idd_": 672.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "antigua-barbuda",
+        "a2": "AG",
+        "a3": "ATG",
+        "number_": 28.0,
+        "idd_": 268.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "argentina",
+        "a2": "AR",
+        "a3": "ARG",
+        "number_": 32.0,
+        "idd_": 54.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "armenia",
+        "a2": "AM",
+        "a3": "ARM",
+        "number_": 51.0,
+        "idd_": 374.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "aruba",
+        "a2": "AW",
+        "a3": "ABW",
+        "number_": 533.0,
+        "idd_": 297.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "australia",
+        "a2": "AU",
+        "a3": "AUS",
+        "number_": 36.0,
+        "idd_": 61.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "austria",
+        "a2": "AT",
+        "a3": "AUT",
+        "number_": 40.0,
+        "idd_": 43.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "azerbaijan",
+        "a2": "AZ",
+        "a3": "AZE",
+        "number_": 31.0,
+        "idd_": 994.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bahamas",
+        "a2": "BS",
+        "a3": "BHS",
+        "number_": 44.0,
+        "idd_": 242.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "bahrain",
+        "a2": "BH",
+        "a3": "BHR",
+        "number_": 48.0,
+        "idd_": 973.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bangladesh",
+        "a2": "BD",
+        "a3": "BGD",
+        "number_": 50.0,
+        "idd_": 880.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "barbados",
+        "a2": "BB",
+        "a3": "BRB",
+        "number_": 52.0,
+        "idd_": 246.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "belarus",
+        "a2": "BY",
+        "a3": "BLR",
+        "number_": 112.0,
+        "idd_": 375.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "belgium",
+        "a2": "BE",
+        "a3": "BEL",
+        "number_": 56.0,
+        "idd_": 32.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "belize",
+        "a2": "BZ",
+        "a3": "BLZ",
+        "number_": 84.0,
+        "idd_": 501.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "benin",
+        "a2": "BJ",
+        "a3": "BEN",
+        "number_": 204.0,
+        "idd_": 229.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "bermuda",
+        "a2": "BM",
+        "a3": "BMU",
+        "number_": 60.0,
+        "idd_": 441.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bhutan",
+        "a2": "BT",
+        "a3": "BTN",
+        "number_": 64.0,
+        "idd_": 975.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bolivia",
+        "a2": "BO",
+        "a3": "BOL",
+        "number_": 68.0,
+        "idd_": 591.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bosnia-herzegovina",
+        "a2": "BA",
+        "a3": "BIH",
+        "number_": 70.0,
+        "idd_": 387.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "botswana",
+        "a2": "BW",
+        "a3": "BWA",
+        "number_": 72.0,
+        "idd_": 267.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "brazil",
+        "a2": "BR",
+        "a3": "BRA",
+        "number_": 76.0,
+        "idd_": 55.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "british-virgin-islands",
+        "a2": "VG",
+        "a3": "VGB",
+        "number_": 92.0,
+        "idd_": 284.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "brunei",
+        "a2": "BN",
+        "a3": "BRN",
+        "number_": 96.0,
+        "idd_": 673.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bulgaria",
+        "a2": "BG",
+        "a3": "BGR",
+        "number_": 100.0,
+        "idd_": 359.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "burkina-faso",
+        "a2": "BF",
+        "a3": "BFA",
+        "number_": 854.0,
+        "idd_": 226.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "burma-myanmar",
+        "a2": "MM",
+        "a3": "MMR",
+        "number_": 104.0,
+        "idd_": 95.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "burundi",
+        "a2": "BI",
+        "a3": "BDI",
+        "number_": 108.0,
+        "idd_": 257.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "cambodia",
+        "a2": "KH",
+        "a3": "KHM",
+        "number_": 116.0,
+        "idd_": 855.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "cameroon",
+        "a2": "CM",
+        "a3": "CMR",
+        "number_": 120.0,
+        "idd_": 237.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "cape-verde-island",
+        "a2": "CV",
+        "a3": "CPV",
+        "number_": 132.0,
+        "idd_": 238.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "cayman-islands",
+        "a2": "KY",
+        "a3": "CYM",
+        "number_": 136.0,
+        "idd_": 345.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "central-african-republic",
+        "a2": "CF",
+        "a3": "CAF",
+        "number_": 140.0,
+        "idd_": 236.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "chad",
+        "a2": "TD",
+        "a3": "TCD",
+        "number_": 148.0,
+        "idd_": 235.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "chile",
+        "a2": "CL",
+        "a3": "CHL",
+        "number_": 152.0,
+        "idd_": 56.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "christmas-island",
+        "a2": "CX",
+        "a3": "CXR",
+        "number_": 162.0,
+        "idd_": 61.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "cocos-islands",
+        "a2": "CC",
+        "a3": "CCK",
+        "number_": 166.0,
+        "idd_": 61.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "colombia",
+        "a2": "CO",
+        "a3": "COL",
+        "number_": 170.0,
+        "idd_": 57.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "comoros",
+        "a2": "KM",
+        "a3": "COM",
+        "number_": 174.0,
+        "idd_": 269.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "republic-of-congo",
+        "a2": "CD",
+        "a3": "COD",
+        "number_": 180.0,
+        "idd_": 242.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "democratic-republic-of-congo",
+        "a2": "CG",
+        "a3": "COG",
+        "number_": 178.0,
+        "idd_": 243.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "cook-islands",
+        "a2": "CK",
+        "a3": "COK",
+        "number_": 184.0,
+        "idd_": 682.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "costa-rica",
+        "a2": "CR",
+        "a3": "CRI",
+        "number_": 188.0,
+        "idd_": 506.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "croatia",
+        "a2": "HR",
+        "a3": "HRV",
+        "number_": 191.0,
+        "idd_": 385.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "cuba",
+        "a2": "CU",
+        "a3": "CUB",
+        "number_": 192.0,
+        "idd_": 53.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "cyprus",
+        "a2": "CY",
+        "a3": "CYP",
+        "number_": 196.0,
+        "idd_": 357.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "czech-republic",
+        "a2": "CZ",
+        "a3": "CZE",
+        "number_": 203.0,
+        "idd_": 420.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "denmark",
+        "a2": "DK",
+        "a3": "DNK",
+        "number_": 208.0,
+        "idd_": 45.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "djibouti",
+        "a2": "DJ",
+        "a3": "DJI",
+        "number_": 262.0,
+        "idd_": 253.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "dominica",
+        "a2": "DM",
+        "a3": "DMA",
+        "number_": 212.0,
+        "idd_": 767.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "dominican-republic",
+        "a2": "DO",
+        "a3": "DOM",
+        "number_": 214.0,
+        "idd_": 809.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "ecuador",
+        "a2": "EC",
+        "a3": "ECU",
+        "number_": 218.0,
+        "idd_": 593.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "egypt",
+        "a2": "EG",
+        "a3": "EGY",
+        "number_": 818.0,
+        "idd_": 20.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "el-salvador",
+        "a2": "SV",
+        "a3": "SLV",
+        "number_": 222.0,
+        "idd_": 503.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "equatorial-guinea",
+        "a2": "GQ",
+        "a3": "GNQ",
+        "number_": 226.0,
+        "idd_": 240.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "eritrea",
+        "a2": "ER",
+        "a3": "ERI",
+        "number_": 232.0,
+        "idd_": 291.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "estonia",
+        "a2": "EE",
+        "a3": "EST",
+        "number_": 233.0,
+        "idd_": 372.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "ethiopia",
+        "a2": "ET",
+        "a3": "ETH",
+        "number_": 231.0,
+        "idd_": 251.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "faeroe-islands",
+        "a2": "FO",
+        "a3": "FRO",
+        "number_": 234.0,
+        "idd_": 298.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "falkland-islands",
+        "a2": "FK",
+        "a3": "FLK",
+        "number_": 238.0,
+        "idd_": 500.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "fiji-islands",
+        "a2": "FJ",
+        "a3": "FJI",
+        "number_": 242.0,
+        "idd_": 679.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "finland",
+        "a2": "FI",
+        "a3": "FIN",
+        "number_": 246.0,
+        "idd_": 358.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "french-guiana",
+        "a2": "GF",
+        "a3": "GUF",
+        "number_": 254.0,
+        "idd_": 594.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "french-polynesia",
+        "a2": "PF",
+        "a3": "PYF",
+        "number_": 258.0,
+        "idd_": 689.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "gabon",
+        "a2": "GA",
+        "a3": "GAB",
+        "number_": 266.0,
+        "idd_": 241.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "gambia",
+        "a2": "GM",
+        "a3": "GMB",
+        "number_": 270.0,
+        "idd_": 220.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "georgia",
+        "a2": "GE",
+        "a3": "GEO",
+        "number_": 268.0,
+        "idd_": 995.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "ghana",
+        "a2": "GH",
+        "a3": "GHA",
+        "number_": 288.0,
+        "idd_": 233.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "gibraltar",
+        "a2": "GI",
+        "a3": "GIB",
+        "number_": 292.0,
+        "idd_": 350.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "greece",
+        "a2": "GR",
+        "a3": "GRC",
+        "number_": 300.0,
+        "idd_": 30.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "greenland",
+        "a2": "GL",
+        "a3": "GRL",
+        "number_": 304.0,
+        "idd_": 299.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "grenada",
+        "a2": "GD",
+        "a3": "GRD",
+        "number_": 308.0,
+        "idd_": 473.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "guadeloupe",
+        "a2": "GP",
+        "a3": "GLP",
+        "number_": 312.0,
+        "idd_": 590.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "guam",
+        "a2": "GU",
+        "a3": "GUM",
+        "number_": 316.0,
+        "idd_": 671.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "guatemala",
+        "a2": "GT",
+        "a3": "GTM",
+        "number_": 320.0,
+        "idd_": 502.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "guinea",
+        "a2": "GN",
+        "a3": "GIN",
+        "number_": 324.0,
+        "idd_": 224.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "guinea-bissau",
+        "a2": "GW",
+        "a3": "GNB",
+        "number_": 624.0,
+        "idd_": 245.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "guyana",
+        "a2": "GY",
+        "a3": "GUY",
+        "number_": 328.0,
+        "idd_": 592.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "haiti",
+        "a2": "HT",
+        "a3": "HTI",
+        "number_": 332.0,
+        "idd_": 509.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "honduras",
+        "a2": "HN",
+        "a3": "HND",
+        "number_": 340.0,
+        "idd_": 504.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "iceland",
+        "a2": "IS",
+        "a3": "ISL",
+        "number_": 352.0,
+        "idd_": 354.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "india",
+        "a2": "IN",
+        "a3": "IND",
+        "number_": 356.0,
+        "idd_": 91.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "indonesia",
+        "a2": "ID",
+        "a3": "IDN",
+        "number_": 360.0,
+        "idd_": 62.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "iran",
+        "a2": "IR",
+        "a3": "IRN",
+        "number_": 364.0,
+        "idd_": 98.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "iraq",
+        "a2": "IQ",
+        "a3": "IRQ",
+        "number_": 368.0,
+        "idd_": 964.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "ireland",
+        "a2": "IE",
+        "a3": "IRL",
+        "number_": 372.0,
+        "idd_": 353.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "ivory-coast",
+        "a2": "CI",
+        "a3": "CIV",
+        "number_": 384.0,
+        "idd_": 225.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "jamaica",
+        "a2": "JM",
+        "a3": "JAM",
+        "number_": 388.0,
+        "idd_": 876.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "jordan",
+        "a2": "JO",
+        "a3": "JOR",
+        "number_": 400.0,
+        "idd_": 962.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "kazakhstan",
+        "a2": "KZ",
+        "a3": "KAZ",
+        "number_": 398.0,
+        "idd_": 7.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "kenya",
+        "a2": "KE",
+        "a3": "KEN",
+        "number_": 404.0,
+        "idd_": 254.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "kiribati",
+        "a2": "KI",
+        "a3": "KIR",
+        "number_": 408.0,
+        "idd_": 686.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "kuwait",
+        "a2": "KW",
+        "a3": "KWT",
+        "number_": 414.0,
+        "idd_": 965.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "north-korea",
+        "a2": "KP",
+        "a3": "PRK",
+        "number_": 408.0,
+        "idd_": 850.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "kyrgyzstan",
+        "a2": "KG",
+        "a3": "KGZ",
+        "number_": 471.0,
+        "idd_": 996.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "laos",
+        "a2": "LA",
+        "a3": "LAO",
+        "number_": 418.0,
+        "idd_": 856.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "latvia",
+        "a2": "LV",
+        "a3": "LVA",
+        "number_": 428.0,
+        "idd_": 371.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "lebanon",
+        "a2": "LB",
+        "a3": "LBN",
+        "number_": 422.0,
+        "idd_": 961.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "lesotho",
+        "a2": "LS",
+        "a3": "LSO",
+        "number_": 426.0,
+        "idd_": 266.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "liberia",
+        "a2": "LR",
+        "a3": "LBR",
+        "number_": 430.0,
+        "idd_": 231.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "libya",
+        "a2": "LY",
+        "a3": "LBY",
+        "number_": 434.0,
+        "idd_": 218.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "liechtenstein",
+        "a2": "LI",
+        "a3": "LIE",
+        "number_": 438.0,
+        "idd_": 423.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "lithuania",
+        "a2": "LT",
+        "a3": "LTU",
+        "number_": 440.0,
+        "idd_": 370.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "luxembourg",
+        "a2": "LU",
+        "a3": "LUX",
+        "number_": 442.0,
+        "idd_": 352.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "macedonia",
+        "a2": "MK",
+        "a3": "MKD",
+        "number_": 807.0,
+        "idd_": 389.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "madagascar",
+        "a2": "MG",
+        "a3": "MDG",
+        "number_": 450.0,
+        "idd_": 261.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "malawi",
+        "a2": "MW",
+        "a3": "MWI",
+        "number_": 454.0,
+        "idd_": 265.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "malaysia",
+        "a2": "MY",
+        "a3": "MYS",
+        "number_": 458.0,
+        "idd_": 60.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "maldives",
+        "a2": "MV",
+        "a3": "MDV",
+        "number_": 462.0,
+        "idd_": 960.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "mali",
+        "a2": "ML",
+        "a3": "MLI",
+        "number_": 466.0,
+        "idd_": 223.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "malta",
+        "a2": "MT",
+        "a3": "MLT",
+        "number_": 470.0,
+        "idd_": 356.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "marshall-islands",
+        "a2": "MH",
+        "a3": "MHL",
+        "number_": 584.0,
+        "idd_": 692.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "martinique",
+        "a2": "MQ",
+        "a3": "MTQ",
+        "number_": 474.0,
+        "idd_": 596.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "mauritania",
+        "a2": "MR",
+        "a3": "MRT",
+        "number_": 478.0,
+        "idd_": 222.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "mauritius",
+        "a2": "MU",
+        "a3": "MUS",
+        "number_": 480.0,
+        "idd_": 230.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "mayotte-island",
+        "a2": "YT",
+        "a3": "MYT",
+        "number_": 175.0,
+        "idd_": 269.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "mexico",
+        "a2": "MX",
+        "a3": "MEX",
+        "number_": 484.0,
+        "idd_": 52.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "micronesia",
+        "a2": "FM",
+        "a3": "FSM",
+        "number_": 583.0,
+        "idd_": 691.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "moldova",
+        "a2": "MD",
+        "a3": "MDA",
+        "number_": 498.0,
+        "idd_": 373.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "monaco",
+        "a2": "MC",
+        "a3": "MCO",
+        "number_": 492.0,
+        "idd_": 377.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "mongolia",
+        "a2": "MN",
+        "a3": "MNG",
+        "number_": 496.0,
+        "idd_": 976.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "montenegro",
+        "a2": "ME",
+        "a3": "MNE",
+        "number_": 499.0,
+        "idd_": 382.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "montserrat",
+        "a2": "MS",
+        "a3": "MSR",
+        "number_": 500.0,
+        "idd_": 664.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "morocco",
+        "a2": "MA",
+        "a3": "MAR",
+        "number_": 504.0,
+        "idd_": 212.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "mozambique",
+        "a2": "MZ",
+        "a3": "MOZ",
+        "number_": 508.0,
+        "idd_": 258.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "namibia",
+        "a2": null,
+        "a3": "NAM",
+        "number_": 516.0,
+        "idd_": 264.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "nauru",
+        "a2": "NR",
+        "a3": "NRU",
+        "number_": 520.0,
+        "idd_": 674.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "nepal",
+        "a2": "NP",
+        "a3": "NPL",
+        "number_": 524.0,
+        "idd_": 977.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "netherlands-antilles",
+        "a2": "AN",
+        "a3": "ANT",
+        "number_": 530.0,
+        "idd_": 599.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "new-caledonia",
+        "a2": "NC",
+        "a3": "NCL",
+        "number_": 540.0,
+        "idd_": 687.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "new-zealand",
+        "a2": "NZ",
+        "a3": "NZL",
+        "number_": 554.0,
+        "idd_": 64.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "nicaragua",
+        "a2": "NI",
+        "a3": "NIC",
+        "number_": 558.0,
+        "idd_": 505.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "niger",
+        "a2": "NE",
+        "a3": "NER",
+        "number_": 562.0,
+        "idd_": 227.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "nigeria",
+        "a2": "NG",
+        "a3": "NGA",
+        "number_": 566.0,
+        "idd_": 234.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "niue",
+        "a2": "NU",
+        "a3": "NIU",
+        "number_": 570.0,
+        "idd_": 683.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "norfolk-island",
+        "a2": "NF",
+        "a3": "NFK",
+        "number_": 574.0,
+        "idd_": 672.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "norway",
+        "a2": "NO",
+        "a3": "NOR",
+        "number_": 578.0,
+        "idd_": 47.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "oman",
+        "a2": "OM",
+        "a3": "OMN",
+        "number_": 512.0,
+        "idd_": 968.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "pakistan",
+        "a2": "PK",
+        "a3": "PAK",
+        "number_": 586.0,
+        "idd_": 92.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "palau",
+        "a2": "PW",
+        "a3": "PLW",
+        "number_": 585.0,
+        "idd_": 680.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "palestine",
+        "a2": "PS",
+        "a3": "PSE",
+        "number_": 275.0,
+        "idd_": 970.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "panama",
+        "a2": "PA",
+        "a3": "PAN",
+        "number_": 591.0,
+        "idd_": 507.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "papua-new-guinea",
+        "a2": "PG",
+        "a3": "PNG",
+        "number_": 598.0,
+        "idd_": 675.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "paraguay",
+        "a2": "PY",
+        "a3": "PRY",
+        "number_": 600.0,
+        "idd_": 595.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "peru",
+        "a2": "PE",
+        "a3": "PER",
+        "number_": 604.0,
+        "idd_": 51.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "philippines",
+        "a2": "PH",
+        "a3": "PHL",
+        "number_": 608.0,
+        "idd_": 63.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "poland",
+        "a2": "PL",
+        "a3": "POL",
+        "number_": 616.0,
+        "idd_": 48.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "puerto-rico",
+        "a2": "PR",
+        "a3": "PRI",
+        "number_": 630.0,
+        "idd_": 787.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "qatar",
+        "a2": "QA",
+        "a3": "QAT",
+        "number_": 634.0,
+        "idd_": 974.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "reunion-island",
+        "a2": "RE",
+        "a3": "REU",
+        "number_": 638.0,
+        "idd_": 262.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "romania",
+        "a2": "RO",
+        "a3": "ROU",
+        "number_": 642.0,
+        "idd_": 40.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "rwanda",
+        "a2": "RW",
+        "a3": "RWA",
+        "number_": 646.0,
+        "idd_": 250.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "st-helena",
+        "a2": "SH",
+        "a3": "SHN",
+        "number_": 654.0,
+        "idd_": 290.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "st-kitts",
+        "a2": "KN",
+        "a3": "KNA",
+        "number_": 659.0,
+        "idd_": 869.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "st-lucia",
+        "a2": "LC",
+        "a3": "LCA",
+        "number_": 662.0,
+        "idd_": 758.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "st-pierre-miquelon",
+        "a2": "PM",
+        "a3": "SPM",
+        "number_": 666.0,
+        "idd_": 508.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "st-vincent",
+        "a2": "VC",
+        "a3": "VCT",
+        "number_": 670.0,
+        "idd_": 784.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "san-marino",
+        "a2": "SM",
+        "a3": "SMR",
+        "number_": 674.0,
+        "idd_": 378.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "sao-tome-principe",
+        "a2": "ST",
+        "a3": "STP",
+        "number_": 678.0,
+        "idd_": 239.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "saudi-arabia",
+        "a2": "SA",
+        "a3": "SAU",
+        "number_": 682.0,
+        "idd_": 966.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "senegal",
+        "a2": "SN",
+        "a3": "SEN",
+        "number_": 686.0,
+        "idd_": 221.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "serbia",
+        "a2": "RS",
+        "a3": "SRB",
+        "number_": 688.0,
+        "idd_": 381.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "seychelles",
+        "a2": "SC",
+        "a3": "SYC",
+        "number_": 690.0,
+        "idd_": 248.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "sierra-leone",
+        "a2": "SL",
+        "a3": "SLE",
+        "number_": 694.0,
+        "idd_": 249.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "slovakia",
+        "a2": "SK",
+        "a3": "SVK",
+        "number_": 703.0,
+        "idd_": 421.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "slovenia",
+        "a2": "SI",
+        "a3": "SVN",
+        "number_": 705.0,
+        "idd_": 386.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "solomon-islands",
+        "a2": "SB",
+        "a3": "SLB",
+        "number_": 90.0,
+        "idd_": 677.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "somalia",
+        "a2": "SO",
+        "a3": "SOM",
+        "number_": 706.0,
+        "idd_": 252.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "south-africa",
+        "a2": "ZA",
+        "a3": "ZAF",
+        "number_": 710.0,
+        "idd_": 27.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "sri-lanka",
+        "a2": "LK",
+        "a3": "LKA",
+        "number_": 144.0,
+        "idd_": 94.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "sudan",
+        "a2": "SD",
+        "a3": "SDN",
+        "number_": 736.0,
+        "idd_": 95.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "suriname",
+        "a2": "SR",
+        "a3": "SUR",
+        "number_": 740.0,
+        "idd_": 597.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "swaziland",
+        "a2": "SZ",
+        "a3": "SWZ",
+        "number_": 748.0,
+        "idd_": 268.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "sweden",
+        "a2": "SE",
+        "a3": "SWE",
+        "number_": 752.0,
+        "idd_": 46.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "switzerland",
+        "a2": "CH",
+        "a3": "CHE",
+        "number_": 756.0,
+        "idd_": 41.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "syria",
+        "a2": "SY",
+        "a3": "SYR",
+        "number_": 760.0,
+        "idd_": 963.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "taiwan",
+        "a2": "TW",
+        "a3": "TWN",
+        "number_": 158.0,
+        "idd_": 886.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "tajikistan",
+        "a2": "TJ",
+        "a3": "TJK",
+        "number_": 762.0,
+        "idd_": 992.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "tanzania",
+        "a2": "TZ",
+        "a3": "TZA",
+        "number_": 834.0,
+        "idd_": 255.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "thailand",
+        "a2": "TH",
+        "a3": "THA",
+        "number_": 764.0,
+        "idd_": 66.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "togo",
+        "a2": "TG",
+        "a3": "TGO",
+        "number_": 768.0,
+        "idd_": 228.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "tonga",
+        "a2": "TO",
+        "a3": "TON",
+        "number_": 776.0,
+        "idd_": 676.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "trinidad-tobago",
+        "a2": "TT",
+        "a3": "TTO",
+        "number_": 780.0,
+        "idd_": 868.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "tunisia",
+        "a2": "TN",
+        "a3": "TUN",
+        "number_": 788.0,
+        "idd_": 216.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "turkmenistan",
+        "a2": "TM",
+        "a3": "TKM",
+        "number_": 795.0,
+        "idd_": 993.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "turks-caicos",
+        "a2": "TC",
+        "a3": "TCA",
+        "number_": 796.0,
+        "idd_": 649.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "tuvalu",
+        "a2": "TV",
+        "a3": "TUV",
+        "number_": 798.0,
+        "idd_": 688.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "uganda",
+        "a2": "UG",
+        "a3": "UGA",
+        "number_": 800.0,
+        "idd_": 256.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "ukraine",
+        "a2": "UA",
+        "a3": "UKR",
+        "number_": 804.0,
+        "idd_": 380.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "united-arab-emirates",
+        "a2": "AE",
+        "a3": "ARE",
+        "number_": 784.0,
+        "idd_": 971.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "uruguay",
+        "a2": "UY",
+        "a3": "URY",
+        "number_": 858.0,
+        "idd_": 598.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "uzbekistan",
+        "a2": "UZ",
+        "a3": "UZB",
+        "number_": 860.0,
+        "idd_": 998.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "vanuatu",
+        "a2": "VU",
+        "a3": "VUT",
+        "number_": 548.0,
+        "idd_": 678.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "vatican-city",
+        "a2": "VA",
+        "a3": "VAT",
+        "number_": 336.0,
+        "idd_": 39.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "venezuela",
+        "a2": "VE",
+        "a3": "VEN",
+        "number_": 862.0,
+        "idd_": 58.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "wallis-futuna",
+        "a2": "WF",
+        "a3": "WLF",
+        "number_": 876.0,
+        "idd_": 681.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "western-samoa",
+        "a2": "WS",
+        "a3": "WSM",
+        "number_": 882.0,
+        "idd_": 685.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "yemen",
+        "a2": "YE",
+        "a3": "YEM",
+        "number_": 887.0,
+        "idd_": 967.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "zambia",
+        "a2": "ZM",
+        "a3": "ZMB",
+        "number_": 894.0,
+        "idd_": 260.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "zimbabwe",
+        "a2": "ZW",
+        "a3": "ZWE",
+        "number_": 716.0,
+        "idd_": 263.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "aland-islands",
+        "a2": "AX",
+        "a3": "ALA",
+        "number_": 248.0,
+        "idd_": 359.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bonaire-st-eustatius-saba",
+        "a2": "BQ",
+        "a3": "BES",
+        "number_": 535.0,
+        "idd_": 599.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "bouvet-island",
+        "a2": "BV",
+        "a3": "BVT",
+        "number_": 74.0,
+        "idd_": 47.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "british-indian-ocean-territory",
+        "a2": "IO",
+        "a3": "IOT",
+        "number_": 86.0,
+        "idd_": 246.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "curacao",
+        "a2": "CW",
+        "a3": "CUW",
+        "number_": 531.0,
+        "idd_": 599.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "french-southern-territories",
+        "a2": "TF",
+        "a3": "ATF",
+        "number_": 260.0,
+        "idd_": 33.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "guernsey",
+        "a2": "GG",
+        "a3": "GGY",
+        "number_": 831.0,
+        "idd_": 44.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "heard-island-mcdonald-islands",
+        "a2": "HM",
+        "a3": "HMD",
+        "number_": 334.0,
+        "idd_": 61.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "isle-of-man",
+        "a2": "IM",
+        "a3": "IMN",
+        "number_": 833.0,
+        "idd_": 44.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "jersey",
+        "a2": "JE",
+        "a3": "JEY",
+        "number_": 832.0,
+        "idd_": 44.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "northern-mariana-islands",
+        "a2": "MP",
+        "a3": "MNP",
+        "number_": 580.0,
+        "idd_": 670.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "pitcairn",
+        "a2": "PN",
+        "a3": "PCN",
+        "number_": 612.0,
+        "idd_": 649.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "south-georgia-south-sandwich-islands",
+        "a2": "GS",
+        "a3": "SGS",
+        "number_": 239.0,
+        "idd_": 44.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "south-sudan",
+        "a2": "SS",
+        "a3": "SSD",
+        "number_": 728.0,
+        "idd_": 211.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "sint-maarten",
+        "a2": "SX",
+        "a3": "SXM",
+        "number_": 534.0,
+        "idd_": 721.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "st-barthelemy",
+        "a2": "BL",
+        "a3": "BLM",
+        "number_": 652.0,
+        "idd_": 590.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "st-martin",
+        "a2": "MF",
+        "a3": "MAF",
+        "number_": 663.0,
+        "idd_": 590.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "tokelau",
+        "a2": "TK",
+        "a3": "TKL",
+        "number_": 772.0,
+        "idd_": 690.0,
+        "zipRequired": false,
+        "active_": true
+    },
+    {
+        "name": "timor-leste",
+        "a2": "TL",
+        "a3": "TLS",
+        "number_": 626.0,
+        "idd_": 670.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "united-states-minor-outlying-islands",
+        "a2": "UM",
+        "a3": "UMI",
+        "number_": 581.0,
+        "idd_": 699.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "united-states-virgin-islands",
+        "a2": "VI",
+        "a3": "VIR",
+        "number_": 850.0,
+        "idd_": 340.0,
+        "zipRequired": true,
+        "active_": true
+    },
+    {
+        "name": "western-sahara",
+        "a2": "EH",
+        "a3": "ESH",
+        "number_": 732.0,
+        "idd_": 212.0,
+        "zipRequired": true,
+        "active_": true
+    }
+]

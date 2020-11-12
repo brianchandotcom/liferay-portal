@@ -1,0 +1,62 @@
+[
+	{
+		"regionCode": "DR",
+		"name": "Drenthe",
+		"active_": true
+	},
+	{
+		"regionCode": "FL",
+		"name": "Flevoland",
+		"active_": true
+	},
+	{
+		"regionCode": "FR",
+		"name": "Friesland",
+		"active_": true
+	},
+	{
+		"regionCode": "GE",
+		"name": "Gelderland",
+		"active_": true
+	},
+	{
+		"regionCode": "GR",
+		"name": "Groningen",
+		"active_": true
+	},
+	{
+		"regionCode": "LI",
+		"name": "Limburg",
+		"active_": true
+	},
+	{
+		"regionCode": "NB",
+		"name": "Noord-Brabant",
+		"active_": true
+	},
+	{
+		"regionCode": "NH",
+		"name": "Noord-Holland",
+		"active_": true
+	},
+	{
+		"regionCode": "OV",
+		"name": "Overijssel",
+		"active_": true
+	},
+	{
+		"regionCode": "UT",
+		"name": "Utrecht",
+		"active_": true
+	},
+	{
+		"regionCode": "ZE",
+		"name": "Zeeland",
+		"active_": true
+	},
+	{
+		"regionCode": "ZH",
+		"name": "Zuid-Holland",
+		"active_": true
+	}
+]

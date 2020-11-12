@@ -59,13 +59,11 @@ import org.osgi.service.component.annotations.Reference;
 public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List modules pending to upgrade")
-	@Override
 	public String check() {
 		return _getPendingUpgradeInfo(false);
 	}
 
 	@Descriptor("List all modules' pending upgrade steps")
-	@Override
 	public String checkAll() {
 		return _getPendingUpgradeInfo(true);
 	}

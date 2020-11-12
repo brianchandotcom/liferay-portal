@@ -81,8 +81,6 @@ definition {
 			actionRowNumber = "1",
 			actionTarget = "Text Field 2");
 
-		FormsAdminNavigator.gotoRules();
-
 		FormRules.save();
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -96,6 +94,87 @@ definition {
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
 			fieldName = "${fieldNameTextField}");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.viewBrokenRule(ruleNumber = "1");
+	}
+
+	@description = "This is a use case for LPS-80771."
+	@priority = "5"
+	test ChangeFieldTypeThatBelongsToCalculatorExpression {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		var fieldNameNumericField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric Field 2");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "3",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Total");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.selectConditionField(
+			conditionField = "Numeric Field",
+			conditionRowNumber = "1");
+
+		FormRules.selectConditionOperator(
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.selectAction(
+			action = "Calculate",
+			actionRowNumber = "1");
+
+		FormRules.selectCalculateResultField(calculateResultField = "Total");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field 2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameNumericField}");
+
+		Form.changeFieldTypeModalConfirmation(selectOption = "Select from List");
 
 		FormsAdminNavigator.gotoRules();
 

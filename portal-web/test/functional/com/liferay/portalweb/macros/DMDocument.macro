@@ -64,7 +64,12 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
-		PortletEntry.inputTitle(title = "${dmDocumentTitle}");
+		if (isSet(useCurrentTitle)) {
+			echo("Use the title automatically added after uploading a file.");
+		}
+		else {
+			PortletEntry.inputTitle(title = "${dmDocumentTitle}");
+		}
 
 		if (isSet(dmDocumentDescription)) {
 			PortletEntry.inputDescription(description = "${dmDocumentDescription}");

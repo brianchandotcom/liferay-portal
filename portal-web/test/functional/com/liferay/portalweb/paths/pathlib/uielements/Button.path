@@ -479,11 +479,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PLUS_IE</td>
-	<td>//a[contains(@class,'nav-btn-monospaced')] | //button[contains(@class,'nav-btn-monospaced')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>POST</td>
 	<td>//div[@class='button-holder']/button[contains(@id,'MicroblogsPortlet') and not (contains(@class,'disabled'))]/span[contains(.,'Post')]</td>
 	<td></td>

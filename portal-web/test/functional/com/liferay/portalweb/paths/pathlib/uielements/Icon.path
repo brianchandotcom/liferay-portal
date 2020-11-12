@@ -209,11 +209,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_IE</td>
-	<td>//button[contains(@aria-label,'info-circle-open') or contains(@id,'OpenContextualSidebar')] | //*[@data-qa-id='infoButton']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO_ACTIVE</td>
 	<td>//*[contains(@class,'active') and contains(@class,'open') and @data-qa-id='infoButton']</td>
 	<td></td>
@@ -330,11 +325,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_VERTICAL_ELLIPSIS_IE</td>
-	<td>//div[contains(@class,'portlet') and contains(@class,'container')]//a[contains(@class,'icon-monospaced')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEPOT_LANGUAGES_ELLIPSIS</td>
 	<td>//tr[contains(.,'${key_language}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
@@ -347,11 +337,6 @@
 <tr>
 	<td>HEADER_VERTICAL_ELLIPSIS</td>
 	<td>//*[@data-qa-id='header']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HEADER_VERTICAL_ELLIPSIS_IE</td>
-	<td>//*[@data-qa-id='header']//a[@title='Options']</td>
 	<td></td>
 </tr>
 <tr>
@@ -392,11 +377,6 @@
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS_2</td>
 	<td>xPath=(//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROW_VERTICAL_ELLIPSIS_IE</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//a[contains(@class,'icon-monospaced')]/span</td>
 	<td></td>
 </tr>
 <tr>

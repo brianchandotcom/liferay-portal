@@ -55,11 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON_IE</td>
-	<td>xpath=(//li[contains(.,'${key_pageName}')]//button[contains(@class,'dropdown-toggle')])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LIST_GROUP_ITEM_ENTRY_TITLE</td>
 	<td>//li[contains(@class,'list-group-item')][contains(.,'${key_pageName}')]</td>
 	<td></td>

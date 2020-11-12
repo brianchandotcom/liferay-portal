@@ -103,7 +103,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addMemberCP(
+		Organization.assignUser(
 			orgName = "Space Program Academy of Continuing Education",
 			userFirstName = "userfn",
 			userLastName = "userln",

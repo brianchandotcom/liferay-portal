@@ -45,4 +45,15 @@ public class IntegerSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		super(jsonObject, spiraCustomProperty);
 	}
 
+	@Override
+	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
+		if (customPropertyJSONObject.optInt("IntegerValue") ==
+				getIntegerValue()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

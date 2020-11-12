@@ -76,6 +76,27 @@ public class ListSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		_spiraCustomList = spiraCustomListValue.getSpiraCustomList();
 	}
 
+	@Override
+	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
+		Integer spiraCustomListValueID = _getIntegerValue();
+
+		if (spiraCustomListValueID == JSONObject.NULL) {
+			return false;
+		}
+
+		SpiraCustomListValue spiraCustomListValue = getSpiraCustomListValue();
+
+		if (spiraCustomListValue == null) {
+			return false;
+		}
+
+		if (spiraCustomListValueID == spiraCustomListValue.getID()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private int _getIntegerValue() {
 		return jsonObject.optInt("IntegerValue");
 	}

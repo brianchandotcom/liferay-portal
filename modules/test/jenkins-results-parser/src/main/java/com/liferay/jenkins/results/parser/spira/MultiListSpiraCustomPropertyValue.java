@@ -97,6 +97,39 @@ public class MultiListSpiraCustomPropertyValue
 		_spiraCustomList = spiraCustomListValue.getSpiraCustomList();
 	}
 
+	@Override
+	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
+		JSONArray customPropertyJSONArray =
+			customPropertyJSONObject.optJSONArray("IntegerListValue");
+
+		if ((customPropertyJSONArray == null) ||
+			customPropertyJSONArray.isEmpty()) {
+
+			return false;
+		}
+
+		List<SpiraCustomListValue> spiraCustomListValues =
+			getSpiraCustomListValues();
+
+		if (spiraCustomListValues.isEmpty()) {
+			return false;
+		}
+
+		for (int i = 0; i < customPropertyJSONArray.length(); i++) {
+			int spiraCustomListValueID = customPropertyJSONArray.getInt(i);
+
+			for (SpiraCustomListValue spiraCustomListValue :
+					spiraCustomListValues) {
+
+				if (spiraCustomListValueID == spiraCustomListValue.getID()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private JSONArray _getIntegerListValueJSONArray() {
 		return jsonObject.optJSONArray("IntegerListValue");
 	}

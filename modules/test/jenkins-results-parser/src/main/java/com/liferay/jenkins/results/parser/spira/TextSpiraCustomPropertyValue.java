@@ -45,4 +45,19 @@ public class TextSpiraCustomPropertyValue extends SpiraCustomPropertyValue {
 		jsonObject.put("StringValue", stringValue);
 	}
 
+	@Override
+	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
+		String stringValue = customPropertyJSONObject.optString("StringValue");
+
+		if ((stringValue == null) || (stringValue == JSONObject.NULL)) {
+			return false;
+		}
+
+		if (stringValue.equals(getStringValue())) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

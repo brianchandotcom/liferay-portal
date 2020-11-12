@@ -154,6 +154,9 @@ public abstract class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		return definitionJSONObject;
 	}
 
+	protected abstract boolean matchesJSONObject(
+		JSONObject customPropertyJSONObject);
+
 	protected static final String KEY_ID = "CustomPropertyValueId";
 
 	private final SpiraCustomProperty _spiraCustomProperty;

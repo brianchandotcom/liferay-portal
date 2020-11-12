@@ -84,13 +84,23 @@ public class SearchQuery<T extends SpiraArtifact> {
 				SpiraCustomPropertyValue spiraCustomPropertyValue =
 					(SpiraCustomPropertyValue)_value;
 
+				int propertyNumber = spiraCustomPropertyValue.getPropertyNumber();
+
 				JSONArray customPropertiesJSONArray = jsonObject.getJSONArray(
 					"CustomProperties");
 
 				for (int i = 0; i < customPropertiesJSONArray.length(); i++) {
-					if (_matchesCustomProperty(
-							customPropertiesJSONArray.getJSONObject(i),
-							spiraCustomPropertyValue)) {
+					JSONObject customPropertyJSONObject =
+						customPropertiesJSONArray.getJSONObject(i);
+
+					if (propertyNumber != customPropertyJSONObject.getInt(
+							"PropertyNumber")) {
+
+						continue;
+					}
+
+					if (spiraCustomPropertyValue.matchesJSONObject(
+							customPropertyJSONObject)) {
 
 						return true;
 					}
@@ -146,56 +156,6 @@ public class SearchQuery<T extends SpiraArtifact> {
 			}
 
 			return filterJSONObject;
-		}
-
-		private boolean _matchesCustomProperty(
-			JSONObject jsonObject,
-			SpiraCustomPropertyValue spiraCustomPropertyValue) {
-
-			SpiraCustomProperty spiraCustomProperty =
-				spiraCustomPropertyValue.getSpiraCustomProperty();
-
-			SpiraCustomProperty.Type type = spiraCustomProperty.getType();
-
-			if (type == SpiraCustomProperty.Type.LIST) {
-				if (spiraCustomPropertyValue.getID() == jsonObject.optInt(
-						"IntegerValue")) {
-
-					return true;
-				}
-
-				return false;
-			}
-
-			if (type == SpiraCustomProperty.Type.MULTILIST) {
-				JSONArray jsonArray = jsonObject.optJSONArray(
-					"IntegerListValue");
-
-				if (jsonArray == null) {
-					return false;
-				}
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					if (jsonArray.getInt(i) ==
-							spiraCustomPropertyValue.getID()) {
-
-						return true;
-					}
-				}
-			}
-
-			if (type == SpiraCustomProperty.Type.TEXT) {
-				String stringValue = jsonObject.optString("StringValue");
-
-				if (stringValue.contains(spiraCustomPropertyValue.getName())) {
-					return true;
-				}
-
-				return false;
-			}
-
-			throw new UnsupportedOperationException(
-				"Invalid custom property type " + type);
 		}
 
 		private final String _name;

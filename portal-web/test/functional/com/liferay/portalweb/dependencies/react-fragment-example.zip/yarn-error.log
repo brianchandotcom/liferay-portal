@@ -1,0 +1,56 @@
+Arguments: 
+  E:\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Java\jdk1.8.0_221\bin;$JAVA_HOME%\jre\bin;E:\apache-ant-1.10.7\bin;E:\Git\cmd;E:\Git\mingw64\bin;E:\Git\usr\bin;C:\Program Files (x86)\Yarn\bin\;E:\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\Tim\.windows-build-tools\python27\;E:\Python38\Scripts\;E:\Python38\;C:\Users\Tim\AppData\Local\Microsoft\WindowsApps;C:\Users\Tim\AppData\Local\Yarn\bin;C:\Users\Tim\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  10.22.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EBUSY: resource busy or locked, copyfile 'C:\Users\Tim\AppData\Local\Yarn\Cache\v6\npm-@liferay-npm-bundler-3.0.1-pre.1-466bd2c0395cdb2af032e9c807fbba15033d088d-integrity\node_modules\@liferay\npm-bundler\lib\adapt\index.js' -> 'C:\Users\Tim\new\node_modules\@liferay\npm-bundler\lib\adapt\index.js'
+
+npm manifest: 
+  {
+    "name": "new",
+    "description": "Liferay Fragments project",
+    "version": "1.0.0",
+  
+    "keywords": [
+      "liferay",
+      "liferay-fragments"
+    ],
+  
+    "scripts": {
+      "add-collection": "yo liferay-fragments:collection",
+      "add-fragment": "yo liferay-fragments:fragment",
+      "add-fragment-composition": "yo liferay-fragments:fragment-composition",
+      "add-page-template": "yo liferay-fragments:page-template",
+      "compress": "yo liferay-fragments:compress",
+      "export": "yo liferay-fragments:export",
+      "import": "yo liferay-fragments:import",
+      "import:watch": "yo liferay-fragments:import --watch",
+      "preview": "yo liferay-fragments:preview"
+    },
+  
+    "dependencies": {
+      "react": "16.8.6",
+      "react-dom": "16.8.6"
+    },
+  
+    "devDependencies": {
+      "generator-liferay-fragments": "1.8.0-rc8"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

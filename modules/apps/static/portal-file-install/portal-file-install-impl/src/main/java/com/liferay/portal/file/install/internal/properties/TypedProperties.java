@@ -148,10 +148,6 @@ public class TypedProperties {
 		writer.write(sb.toString());
 	}
 
-	protected String getEnv(String propertyValue) {
-		return System.getenv(propertyValue);
-	}
-
 	private boolean _isCommentLine(String line) {
 		String string = line.trim();
 
@@ -215,7 +211,7 @@ public class TypedProperties {
 
 			if (value.startsWith("LIFERAY_")) {
 				value = InterpolationUtil.substVars(
-					GetterUtil.getString(getEnv(value)));
+					GetterUtil.getString(System.getenv(value)));
 
 				matcher = _propertyValuePattern.matcher(value);
 

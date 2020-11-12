@@ -19,25 +19,38 @@ import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,8 +106,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 				DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 		}
 
-		long userId = _userLocalService.getDefaultUserId(
-			themeDisplay.getCompanyId());
+		long userId = _getDDMFormGuestUserId(themeDisplay.getCompanyId());
 
 		Folder folder = addFolder(groupId, userId);
 
@@ -124,6 +136,77 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 			DDMFormConstants.DDM_FORM_UPLOADED_FILES_FOLDER_NAME,
 			serviceContext);
 	}
+
+	private User _createDDMFormGuestUser(long companyId)
+		throws PortalException {
+
+		long creatorUserId = 0;
+		boolean autoPassword = true;
+		String password1 = StringPool.BLANK;
+		String password2 = StringPool.BLANK;
+		boolean autoScreenName = false;
+		String screenName = DDMFormConstants.DDM_FORM_GUEST_USER_SCREEN_NAME;
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		String emailAddress = StringBundler.concat(
+			screenName, StringPool.AT, company.getMx());
+
+		Locale locale = LocaleUtil.getDefault();
+		String firstName = DDMFormConstants.DDM_FORM_GUEST_USER_FIRST_NAME;
+		String middleName = StringPool.BLANK;
+		String lastName = DDMFormConstants.DDM_FORM_GUEST_USER_LAST_NAME;
+		long prefixId = 0;
+		long suffixId = 0;
+		boolean male = true;
+		int birthdayMonth = Calendar.JANUARY;
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = StringPool.BLANK;
+		long[] groupIds = null;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendEmail = false;
+		ServiceContext serviceContext = null;
+
+		User user = _userLocalService.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
+
+		_userLocalService.updateStatus(
+			user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
+
+		return user;
+	}
+
+	private long _getDDMFormGuestUserId(long companyId) throws PortalException {
+		User user = null;
+
+		try {
+			user = _userLocalService.getUserByScreenName(
+				companyId, DDMFormConstants.DDM_FORM_GUEST_USER_SCREEN_NAME);
+		}
+		catch (NoSuchUserException noSuchUserException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchUserException, noSuchUserException);
+			}
+
+			user = _createDDMFormGuestUser(companyId);
+		}
+
+		return user.getUserId();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormUploadFileEntryHandler.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -19,6 +19,15 @@ package com.liferay.dynamic.data.mapping.form.web.internal.constants;
  */
 public class DDMFormConstants {
 
+	public static final String DDM_FORM_GUEST_USER_FIRST_NAME =
+		"DDM_FORM_GUEST_USER_FIRST_NAME";
+
+	public static final String DDM_FORM_GUEST_USER_LAST_NAME =
+		"DDM_FORM_GUEST_USER_LAST_NAME";
+
+	public static final String DDM_FORM_GUEST_USER_SCREEN_NAME =
+		"DDM_FORM_GUEST_USER_SCREEN_NAME";
+
 	public static final String DDM_FORM_UPLOADED_FILES_FOLDER_NAME = "Forms";
 
 	public static final String SERVICE_NAME =

@@ -1,0 +1,75 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-122082. Can not edit and export react fragment."
+	@priority = "5"
+	test CannotEditAndExportReactFragment {
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Import the react fragment") {
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "react-fragment-example.zip");
+		}
+
+		task ("Assert react fragment is imported") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.viewEntryPresent(entry = "React Fragment Example");
+		}
+
+		task ("Assert the react fragment is not editable") {
+			AssertElementNotPresent(
+				key_card = "React Fragment Example",
+				locator1 = "Card#CARD_TITLE_LINK");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "React Fragment Example",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Edit");
+		}
+
+		task ("Assert the react fragment is not exported") {
+			PortletEntry.selectAll();
+
+			AssertElementNotPresent(
+				key_text = "import-export",
+				locator1 = "Icon#ANY");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "React Fragment Example",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Export");
+		}
+	}
+
+}

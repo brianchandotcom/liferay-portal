@@ -864,22 +864,23 @@ public class DLImpl implements DL {
 	public String getUniqueFileName(
 		long groupId, long folderId, String fileName) {
 
-		String uniqueFileName = fileName;
+		String uniqueFileTitle = FileUtil.stripExtension(fileName);
+
+		String extension = FileUtil.getExtension(fileName);
 
 		for (int i = 1;; i++) {
-			try {
-				DLAppLocalServiceUtil.getFileEntry(
-					groupId, folderId, uniqueFileName);
+			if (!_existsFileEntryByTitle(groupId, folderId, uniqueFileTitle) &&
+				!_existsFileEntryByFileName(
+					groupId, extension, folderId, uniqueFileTitle)) {
 
-				uniqueFileName = FileUtil.appendParentheticalSuffix(
-					fileName, String.valueOf(i));
-			}
-			catch (Exception exception) {
 				break;
 			}
+
+			uniqueFileTitle = FileUtil.appendParentheticalSuffix(
+				FileUtil.stripExtension(fileName), String.valueOf(i));
 		}
 
-		return uniqueFileName;
+		return getTitleWithExtension(uniqueFileTitle, extension);
 	}
 
 	/**
@@ -1181,6 +1182,34 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
+	}
+
+	private boolean _existsFileEntryByFileName(
+		long groupId, String extension, long folderId, String title) {
+
+		try {
+			DLAppLocalServiceUtil.getFileEntryByFileName(
+				groupId, folderId, getTitleWithExtension(title, extension));
+		}
+		catch (Exception exception) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _existsFileEntryByTitle(
+		long groupId, long folderId, String uniqueFileTitle) {
+
+		try {
+			DLAppLocalServiceUtil.getFileEntry(
+				groupId, folderId, uniqueFileTitle);
+		}
+		catch (Exception exception) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";

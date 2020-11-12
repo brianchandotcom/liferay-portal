@@ -21,14 +21,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -39,8 +36,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import java.util.List;
-
 /**
  * @author Inácio Nery
  */
@@ -50,15 +45,12 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		CounterLocalService counterLocalService,
 		KaleoDefinitionLocalService kaleoDefinitionLocalService,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
-		ResourceActionLocalService resourceActionLocalService,
-		ResourceActions resourceActions, UserLocalService userLocalService) {
+		UserLocalService userLocalService) {
 
 		_counterLocalService = counterLocalService;
 		_kaleoDefinitionLocalService = kaleoDefinitionLocalService;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
-		_resourceActionLocalService = resourceActionLocalService;
-		_resourceActions = resourceActions;
 		_userLocalService = userLocalService;
 	}
 
@@ -136,8 +128,6 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		initKaleoDesignerModelsResourceActions();
-
 		if (hasTable("KaleoDraftDefinition")) {
 			upgradeKaleoDefinitionVersion();
 		}
@@ -169,23 +159,6 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		}
 
 		return false;
-	}
-
-	protected void initKaleoDesignerModelsResourceActions() throws Exception {
-		_resourceActions.read(
-			UpgradeKaleoDefinitionVersion.class.getClassLoader(),
-			"/resource-actions/default.xml");
-
-		List<String> modelNames = _resourceActions.getPortletModelResources(
-			KaleoDesignerPortletKeys.KALEO_DESIGNER);
-
-		for (String modelName : modelNames) {
-			List<String> modelActions =
-				_resourceActions.getModelResourceActions(modelName);
-
-			_resourceActionLocalService.checkResourceActions(
-				modelName, modelActions);
-		}
 	}
 
 	protected void removeDuplicatesKaleoDefinitionVersion(
@@ -258,8 +231,6 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 	private final KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-	private final ResourceActionLocalService _resourceActionLocalService;
-	private final ResourceActions _resourceActions;
 	private final UserLocalService _userLocalService;
 
 }

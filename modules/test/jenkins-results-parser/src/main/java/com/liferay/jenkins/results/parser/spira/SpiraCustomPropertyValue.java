@@ -14,17 +14,12 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
+public abstract class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 
 	public static SpiraCustomPropertyValue createSpiraCustomPropertyValue(
 		SpiraCustomProperty spiraCustomProperty, String value) {
@@ -98,8 +93,21 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		return null;
 	}
 
+	public int getPropertyNumber() {
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		return spiraCustomProperty.getPropertyNumber();
+	}
+
 	public SpiraCustomProperty getSpiraCustomProperty() {
 		return _spiraCustomProperty;
+	}
+
+	@Override
+	public SpiraProject getSpiraProject() {
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		return spiraCustomProperty.getSpiraProject();
 	}
 
 	@Override
@@ -109,33 +117,12 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 		return spiraCustomProperty.getURL();
 	}
 
-	public String getValue() {
-		return null;
-	}
+	public abstract String getValue();
 
 	protected SpiraCustomPropertyValue(
 		JSONObject jsonObject, SpiraCustomProperty spiraCustomProperty) {
 
 		super(jsonObject);
-
-		_spiraCustomProperty = spiraCustomProperty;
-	}
-
-	protected SpiraCustomPropertyValue(
-		SpiraCustomListValue spiraCustomListValue,
-		SpiraCustomProperty spiraCustomProperty) {
-
-		super(spiraCustomListValue.toJSONObject());
-
-		_spiraCustomProperty = spiraCustomProperty;
-	}
-
-	protected SpiraCustomPropertyValue(
-		String propertyValue, SpiraCustomProperty spiraCustomProperty) {
-
-		super(new JSONObject());
-
-		jsonObject.put("Name", propertyValue);
 
 		_spiraCustomProperty = spiraCustomProperty;
 	}
@@ -168,22 +155,6 @@ public class SpiraCustomPropertyValue extends BaseSpiraArtifact {
 	}
 
 	protected static final String KEY_ID = "CustomPropertyValueId";
-
-	private static SpiraCustomList _getSpiraCustomList(
-		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
-
-		JSONObject definitionJSONObject = valueJSONObject.getJSONObject(
-			"Definition");
-
-		List<SpiraCustomList> spiraCustomLists =
-			SpiraCustomList.getSpiraCustomLists(
-				spiraCustomProperty.getSpiraProject(),
-				spiraCustomProperty.getSpiraArtifactClass(),
-				new SearchQuery.SearchParameter(
-					"Name", definitionJSONObject.getString("Name")));
-
-		return spiraCustomLists.get(0);
-	}
 
 	private final SpiraCustomProperty _spiraCustomProperty;
 

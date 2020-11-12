@@ -90,6 +90,82 @@ definition {
 	}
 
 	@priority = "4"
+	test ConflictingPublicationsNeedManualResolution {
+		property test.name.skip.portal.instance = "PublicationsDM#ConflictingPublicationsNeedManualResolution";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		Publications.createNewPublication(publicationsName = "Publication Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+
+		Publications.createNewPublication(publicationsName = "Publication Name 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescriptionEdit = "DM Document 2 Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document 2 Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document 2 Title Edit",
+			dmDocumentVersionNumber = "1.1");
+
+		Publications.gotoPublish(publicationsName = "Publication Name 2");
+
+		Publications.publishPublication(publicationsName = "Publication Name 2");
+
+		Publications.selectPublication(publicationsName = "Publication Name");
+
+		Publications.gotoPublish(publicationsName = "Publication Name");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "DM Document Title Edit",
+			warningMessage = "The conflict cannot be automatically resolved.");
+
+		Publications.gotoViewDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
+
+		Publications.viewPublicationsDiff(
+			columnName = "Title",
+			columnValueInPublication = "WC WebContent Title Edit",
+			entryTitle = "WC WebContent Title Edit",
+			publicationsName = "Publication Name");
+
+		IFrame.closeFrame();
+
+		Pause(locator1 = "3000");
+
+		Publications.discardPublications(
+			conflictingPublications = "true",
+			entryTitle = "DM Document Title Edit",
+			publicationsCategory = "Asset",
+			publicationsTitle = "DM Document Title Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document 2 Title Edit",
+			dmDocumentVersionNumber = "1.1");
+	}
+
+	@priority = "4"
 	test PublishDocumentFolderWithEditedDocument {
 		property test.name.skip.portal.instance = "PublicationsDM#PublishDocumentFolderWithEditedDocument";
 

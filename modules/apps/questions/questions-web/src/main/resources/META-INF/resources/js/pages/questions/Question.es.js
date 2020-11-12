@@ -494,27 +494,29 @@ export default withRouter(
 												</ClayForm.Group>
 											</ClayForm>
 
-											<ClayButton
-												disabled={
-													!articleBody ||
-													stripHTML(articleBody)
-														.length < 15
-												}
-												displayType="primary"
-												onClick={() => {
-													createAnswer({
-														variables: {
-															articleBody,
-															messageBoardThreadId:
-																question.id,
-														},
-													});
-												}}
-											>
-												{Liferay.Language.get(
-													'post-answer'
-												)}
-											</ClayButton>
+											{!question.locked && (
+												<ClayButton
+													disabled={
+														!articleBody ||
+														stripHTML(articleBody)
+															.length < 15
+													}
+													displayType="primary"
+													onClick={() => {
+														createAnswer({
+															variables: {
+																articleBody,
+																messageBoardThreadId:
+																	question.id,
+															},
+														});
+													}}
+												>
+													{Liferay.Language.get(
+														'post-answer'
+													)}
+												</ClayButton>
+											)}
 										</div>
 									)}
 							</div>

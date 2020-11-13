@@ -583,8 +583,8 @@ public class StagingImpl implements Staging {
 				errorMessageJSONObject.put(
 					"site",
 					LanguageUtil.format(
-						locale, "in-site-x", missingReference.getGroupId(),
-						false));
+						locale, "in-environment-x",
+						missingReference.getGroupId(), false));
 			}
 
 			errorMessageJSONObject.put(
@@ -1323,13 +1323,13 @@ public class StagingImpl implements Staging {
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
 						"the-live-environment-the-following-elements-are-" +
-							"published-from-their-own-site");
+							"published-from-their-own-environment");
 			}
 			else {
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
-						"the-current-site");
+						"the-current-environment");
 			}
 
 			MissingReferences missingReferences =

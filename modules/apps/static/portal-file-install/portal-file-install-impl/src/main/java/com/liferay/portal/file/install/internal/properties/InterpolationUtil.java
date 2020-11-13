@@ -82,6 +82,10 @@ public class InterpolationUtil {
 
 		if ((substValue == null) && (variable.length() > 0)) {
 			substValue = System.getProperty(variable);
+
+			if ((substValue == null) && variable.startsWith(_LIFERAY_PREFIX)) {
+				substValue = System.getenv(variable);
+			}
 		}
 
 		if (substValue == null) {
@@ -110,5 +114,7 @@ public class InterpolationUtil {
 	private static final String _DELIM_STOP = "}";
 
 	private static final char _ESCAPE_CHAR = '\\';
+
+	private static final String _LIFERAY_PREFIX = "LIFERAY_";
 
 }

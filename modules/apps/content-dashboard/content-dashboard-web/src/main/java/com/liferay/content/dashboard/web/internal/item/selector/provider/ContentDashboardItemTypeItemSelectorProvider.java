@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -42,6 +43,7 @@ import com.liferay.portal.search.searcher.Searcher;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -87,21 +89,31 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		return searchContainer;
 	}
 
-	private BooleanClause[] _getBooleanClauses() {
+	private BooleanClause[] _getBooleanClauses(String keywords, Locale locale) {
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		TermsFilter termsFilter = new TermsFilter(Field.CLASS_NAME_ID);
+		TermsFilter classNameIdTermsFilter = new TermsFilter(
+			Field.CLASS_NAME_ID);
 
 		Collection<Long> classIds =
 			_contentDashboardItemFactoryTracker.getClassIds();
 
 		for (Long classId : classIds) {
-			termsFilter.addValue(String.valueOf(classId));
+			classNameIdTermsFilter.addValue(String.valueOf(classId));
 		}
 
-		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(classNameIdTermsFilter, BooleanClauseOccur.MUST);
+
+		if (Validator.isNotNull(keywords)) {
+			TermsFilter keywordsTermsFilter = new TermsFilter(
+				"localized_name_".concat(LocaleUtil.toLanguageId(locale)));
+
+			keywordsTermsFilter.addValue(keywords);
+
+			booleanFilter.add(keywordsTermsFilter, BooleanClauseOccur.MUST);
+		}
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
@@ -174,11 +186,13 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 				false
 			).withSearchContext(
 				searchContext -> {
-					searchContext.setBooleanClauses(_getBooleanClauses());
+					searchContext.setBooleanClauses(
+						_getBooleanClauses(
+							_getKeywords(portletRequest),
+							_portal.getLocale(portletRequest)));
 					searchContext.setCompanyId(
 						_portal.getCompanyId(portletRequest));
 					searchContext.setEnd(end);
-					searchContext.setKeywords(_getKeywords(portletRequest));
 					searchContext.setSorts(_getSort(portletRequest));
 					searchContext.setStart(start);
 				}

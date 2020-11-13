@@ -213,7 +213,12 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			commerceOrder.getShippingWithTaxAmountMoney();
 
 		BigDecimal commerceOrderPriceShippingValueWithTaxAmountPrice =
-			commerceOrderShippingValueWithTaxAmountCommerceMoney.getPrice();
+			commerceOrderPriceShippingValuePrice;
+
+		if (!commerceOrderShippingValueWithTaxAmountCommerceMoney.isEmpty()) {
+			commerceOrderPriceShippingValueWithTaxAmountPrice =
+				commerceOrderShippingValueWithTaxAmountCommerceMoney.getPrice();
+		}
 
 		CommerceMoney commerceOrderPriceSubtotalCommerceMoney =
 			commerceOrder.getSubtotalMoney();
@@ -239,6 +244,8 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			orderPriceTotalPrice = commerceOrder.getTotalWithTaxAmount();
 		}
 
+		BigDecimal finalOrderPriceShippingValueWithTaxAmountPrice =
+			commerceOrderPriceShippingValueWithTaxAmountPrice;
 		BigDecimal finalOrderPriceSubtotalPrice = orderPriceSubtotalPrice;
 		BigDecimal finalOrderPriceTotalPrice = orderPriceTotalPrice;
 
@@ -253,7 +260,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				shippingValueFormatted =
 					commerceOrderPriceShippingValueCommerceMoney.format(locale);
 				shippingValueWithTaxAmount =
-					commerceOrderPriceShippingValueWithTaxAmountPrice.
+					finalOrderPriceShippingValueWithTaxAmountPrice.
 						doubleValue();
 				shippingValueWithTaxAmountFormatted =
 					commerceOrderShippingValueWithTaxAmountCommerceMoney.format(

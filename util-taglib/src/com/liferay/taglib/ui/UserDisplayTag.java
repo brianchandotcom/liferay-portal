@@ -59,7 +59,7 @@ public class UserDisplayTag extends TagSupport {
 				String.valueOf(_displayStyle));
 
 			if (Validator.isNull(_imageCssClass)) {
-				_imageCssClass = "img-circle";
+				_imageCssClass = "circle";
 			}
 
 			httpServletRequest.setAttribute(

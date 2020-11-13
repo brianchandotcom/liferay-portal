@@ -5650,6 +5650,11 @@ public class JournalArticleLocalServiceImpl
 			article.setVersion(version);
 			article.setSmallImageId(latestArticle.getSmallImageId());
 
+			article.setModifiedDate(serviceContext.getModifiedDate(now));
+			article.setStatusByUserId(user.getUserId());
+			article.setStatusByUserName(user.getFullName());
+			article.setStatusDate(serviceContext.getModifiedDate(now));
+
 			serviceContext.setAttribute("version", version);
 
 			_addArticleLocalizedFields(

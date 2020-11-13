@@ -382,9 +382,17 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Libraries");
 
-			SiteSelector.selectSite(site = "${depotName}");
+			if (isSet(noConnectedDepot)) {
+				AssertTextEquals(
+					locator1 = "Message#EMPTY_INFO",
+					value1 = "No asset libraries were found.");
+			}
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			else {
+				SiteSelector.selectSite(site = "${depotName}");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			}
 		}
 
 		if (isSet(assetTitle)) {

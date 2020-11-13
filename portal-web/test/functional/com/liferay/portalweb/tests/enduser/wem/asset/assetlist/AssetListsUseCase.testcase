@@ -27,7 +27,7 @@ definition {
 	@description = "This is a test for LPS-115236. Configure Filter by Field."
 	@priority = "5"
 	test ConfigureFilterByField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Add a web content structure with a Select field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

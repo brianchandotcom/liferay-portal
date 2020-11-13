@@ -31,6 +31,7 @@ List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntry
 						"pkccOptions", request.getAttribute(MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS)
 					).build()
 				%>'
+				class="btn btn-primary"
 				label="register-a-fido2-authenticator"
 				propsTransformer="js/RegistrationTransformer"
 			/>
@@ -41,9 +42,13 @@ List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntry
 
 		<aui:input name="removeExistingSetup" type="hidden" value="<%= true %>" />
 
-		<button class="btn btn-danger" type="submit">
-			<liferay-ui:message key="remove-all-registered-fido2-authenticators" />
-		</button>
+		<aui:button-row>
+			<clay:button
+				class="btn btn-danger"
+				label="remove-all-registered-fido2-authenticators"
+				type="submit"
+			/>
+		</aui:button-row>
 	</c:otherwise>
 </c:choose>
 

@@ -177,6 +177,29 @@ public class AssetListAssetEntryProviderImpl
 
 	@Override
 	public int getAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[] assetCategoryIds, String userId) {
+
+		if (Objects.equals(
+				assetListEntry.getType(),
+				AssetListEntryTypeConstants.TYPE_MANUAL)) {
+
+			return _assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					assetListEntry.getAssetListEntryId(),
+					new long[] {
+						_getFirstSegmentsEntryId(
+							assetListEntry, segmentsEntryIds)
+					},
+					assetCategoryIds);
+		}
+
+		return _assetEntryLocalService.getEntriesCount(
+			getAssetEntryQuery(assetListEntry, segmentsEntryIds, userId));
+	}
+
+	@Override
+	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
 
 		if (Objects.equals(

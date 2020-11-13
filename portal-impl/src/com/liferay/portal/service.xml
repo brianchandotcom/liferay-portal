@@ -305,9 +305,9 @@
 
 		<!-- Other fields -->
 
-		<column name="active" type="boolean" />
 		<column name="a2" type="String" />
 		<column name="a3" type="String" />
+		<column name="active" type="boolean" />
 		<column name="billingAllowed" type="boolean" />
 		<column name="groupFilterEnabled" type="boolean" />
 		<column name="idd" type="String" />
@@ -333,14 +333,14 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Active" return-type="Collection">
-			<finder-column name="active" />
-		</finder>
 		<finder name="A2" return-type="Country" unique="true">
 			<finder-column name="a2" />
 		</finder>
 		<finder name="A3" return-type="Country" unique="true">
 			<finder-column name="a3" />
+		</finder>
+		<finder name="Active" return-type="Collection">
+			<finder-column name="active" />
 		</finder>
 		<finder name="Name" return-type="Country" unique="true">
 			<finder-column name="name" />

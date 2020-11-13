@@ -2,131 +2,131 @@
 	{
 		"regionCode": "A",
 		"name": "Alsace",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "B",
 		"name": "Aquitaine",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "C",
 		"name": "Auvergne",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "P",
 		"name": "Basse-Normandie",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "D",
 		"name": "Bourgogne",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "E",
 		"name": "Bretagne",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "F",
 		"name": "Centre",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "G",
 		"name": "Champagne-Ardenne",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "H",
 		"name": "Corse",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GF",
 		"name": "Guyane",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "I",
 		"name": "Franche Comté",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GP",
 		"name": "Guadeloupe",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "Q",
 		"name": "Haute-Normandie",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "J",
 		"name": "Île-de-France",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "K",
 		"name": "Languedoc-Roussillon",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "L",
 		"name": "Limousin",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "M",
 		"name": "Lorraine",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MQ",
 		"name": "Martinique",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "N",
 		"name": "Midi-Pyrénées",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "O",
 		"name": "Nord Pas de Calais",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "R",
 		"name": "Pays de la Loire",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "S",
 		"name": "Picardie",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "T",
 		"name": "Poitou-Charentes",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "U",
 		"name": "Provence-Alpes-Côte-d'Azur",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RE",
 		"name": "Réunion",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "V",
 		"name": "Rhône-Alpes",
-		"active_": true
+		"active": true
 	}
 ]

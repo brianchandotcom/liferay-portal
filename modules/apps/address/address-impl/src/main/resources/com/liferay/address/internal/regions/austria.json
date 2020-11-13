@@ -2,46 +2,46 @@
 	{
 		"regionCode": "AT-1",
 		"name": "Burgenland",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-2",
 		"name": "Kärnten",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-3",
 		"name": "Niederösterreich",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-4",
 		"name": "Oberösterreich",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-5",
 		"name": "Salzburg",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-6",
 		"name": "Steiermark",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-7",
 		"name": "Tirol",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-8",
 		"name": "Vorarlberg",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT-9",
 		"name": "Vienna",
-		"active_": true
+		"active": true
 	}
 ]

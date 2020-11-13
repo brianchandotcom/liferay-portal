@@ -2,66 +2,66 @@
 	{
 		"regionCode": "AB",
 		"name": "Alberta",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BC",
 		"name": "British Columbia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MB",
 		"name": "Manitoba",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NB",
 		"name": "New Brunswick",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NL",
 		"name": "Newfoundland and Labrador",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NT",
 		"name": "Northwest Territories",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NS",
 		"name": "Nova Scotia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NU",
 		"name": "Nunavut",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "ON",
 		"name": "Ontario",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PE",
 		"name": "Prince Edward Island",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "QC",
 		"name": "Quebec",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SK",
 		"name": "Saskatchewan",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "YT",
 		"name": "Yukon",
-		"active_": true
+		"active": true
 	}
 ]

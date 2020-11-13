@@ -2,156 +2,156 @@
 	{
 		"regionCode": "MX-AGS",
 		"name": "Aguascalientes",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-BCN",
 		"name": "Baja California",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-BCS",
 		"name": "Baja California Sur",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-CAM",
 		"name": "Campeche",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-CHP",
 		"name": "Chiapas",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-CHI",
 		"name": "Chihuahua",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-COA",
 		"name": "Coahuila",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-COL",
 		"name": "Colima",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-DUR",
 		"name": "Durango",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-GTO",
 		"name": "Guanajuato",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-GRO",
 		"name": "Guerrero",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-HGO",
 		"name": "Hidalgo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-JAL",
 		"name": "Jalisco",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-MEX",
 		"name": "Mexico",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-MIC",
 		"name": "Michoacan",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-MOR",
 		"name": "Morelos",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-NAY",
 		"name": "Nayarit",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-NLE",
 		"name": "Nuevo Leon",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-OAX",
 		"name": "Oaxaca",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-PUE",
 		"name": "Puebla",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-QRO",
 		"name": "Queretaro",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-ROO",
 		"name": "Quintana Roo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-SLP",
 		"name": "San Luis Potosí",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-SIN",
 		"name": "Sinaloa",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-SON",
 		"name": "Sonora",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-TAB",
 		"name": "Tabasco",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-TAM",
 		"name": "Tamaulipas",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-TLX",
 		"name": "Tlaxcala",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-VER",
 		"name": "Veracruz",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-YUC",
 		"name": "Yucatan",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MX-ZAC",
 		"name": "Zacatecas",
-		"active_": true
+		"active": true
 	}
 ]

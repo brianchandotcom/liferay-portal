@@ -2,131 +2,131 @@
 	{
 		"regionCode": "AG",
 		"name": "Aargau",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AR",
 		"name": "Appenzell Ausserrhoden",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AI",
 		"name": "Appenzell Innerrhoden",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BL",
 		"name": "Basel-Landschaft",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BS",
 		"name": "Basel-Stadt",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BE",
 		"name": "Bern",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FR",
 		"name": "Fribourg",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GE",
 		"name": "Geneva",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GL",
 		"name": "Glarus",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GR",
 		"name": "Graubünden",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "JU",
 		"name": "Jura",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LU",
 		"name": "Lucerne",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NE",
 		"name": "Neuchâtel",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NW",
 		"name": "Nidwalden",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "OW",
 		"name": "Obwalden",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SH",
 		"name": "Schaffhausen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SZ",
 		"name": "Schwyz",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SO",
 		"name": "Solothurn",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SG",
 		"name": "St. Gallen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TG",
 		"name": "Thurgau",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TI",
 		"name": "Ticino",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "UR",
 		"name": "Uri",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VS",
 		"name": "Valais",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VD",
 		"name": "Vaud",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "ZG",
 		"name": "Zug",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "ZH",
 		"name": "Zürich",
-		"active_": true
+		"active": true
 	}
 ]

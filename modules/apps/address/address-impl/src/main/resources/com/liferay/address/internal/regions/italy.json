@@ -2,551 +2,551 @@
 	{
 		"regionCode": "AG",
 		"name": "Agrigento",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AL",
 		"name": "Alessandria",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AN",
 		"name": "Ancona",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AO",
 		"name": "Aosta",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AR",
 		"name": "Arezzo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AP",
 		"name": "Ascoli Piceno",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AT",
 		"name": "Asti",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AV",
 		"name": "Avellino",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BA",
 		"name": "Bari",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BT",
 		"name": "Barletta-Andria-Trani",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BL",
 		"name": "Belluno",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BN",
 		"name": "Benevento",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BG",
 		"name": "Bergamo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BI",
 		"name": "Biella",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BO",
 		"name": "Bologna",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BZ",
 		"name": "Bolzano",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BS",
 		"name": "Brescia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BR",
 		"name": "Brindisi",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CA",
 		"name": "Cagliari",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CL",
 		"name": "Caltanissetta",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CB",
 		"name": "Campobasso",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CI",
 		"name": "Carbonia-Iglesias",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CE",
 		"name": "Caserta",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CT",
 		"name": "Catania",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CZ",
 		"name": "Catanzaro",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CH",
 		"name": "Chieti",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CO",
 		"name": "Como",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CS",
 		"name": "Cosenza",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CR",
 		"name": "Cremona",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "KR",
 		"name": "Crotone",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CN",
 		"name": "Cuneo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "EN",
 		"name": "Enna",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FM",
 		"name": "Fermo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FE",
 		"name": "Ferrara",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FI",
 		"name": "Firenze",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FG",
 		"name": "Foggia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FC",
 		"name": "Forli-Cesena",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "FR",
 		"name": "Frosinone",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GE",
 		"name": "Genova",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GO",
 		"name": "Gorizia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GR",
 		"name": "Grosseto",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "IM",
 		"name": "Imperia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "IS",
 		"name": "Isernia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AQ",
 		"name": "L'Aquila",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SP",
 		"name": "La Spezia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LT",
 		"name": "Latina",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LE",
 		"name": "Lecce",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LC",
 		"name": "Lecco",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LI",
 		"name": "Livorno",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LO",
 		"name": "Lodi",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LU",
 		"name": "Lucca",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MC",
 		"name": "Macerata",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MN",
 		"name": "Mantova",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MS",
 		"name": "Massa-Carrara",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MT",
 		"name": "Matera",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MA",
 		"name": "Medio Campidano",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "ME",
 		"name": "Messina",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MI",
 		"name": "Milano",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MO",
 		"name": "Modena",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MB",
 		"name": "Monza e Brianza",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": null,
 		"name": "Napoli",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NO",
 		"name": "Novara",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NU",
 		"name": "Nuoro",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "OG",
 		"name": "Ogliastra",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "OT",
 		"name": "Olbia-Tempio",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "OR",
 		"name": "Oristano",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PD",
 		"name": "Padova",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PA",
 		"name": "Palermo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PR",
 		"name": "Parma",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PV",
 		"name": "Pavia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PG",
 		"name": "Perugia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PU",
 		"name": "Pesaro e Urbino",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PE",
 		"name": "Pescara",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PC",
 		"name": "Piacenza",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PI",
 		"name": "Pisa",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PT",
 		"name": "Pistoia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PN",
 		"name": "Pordenone",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PZ",
 		"name": "Potenza",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PO",
 		"name": "Prato",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RG",
 		"name": "Ragusa",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RA",
 		"name": "Ravenna",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RC",
 		"name": "Reggio Calabria",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RE",
 		"name": "Reggio Emilia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RI",
 		"name": "Rieti",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RN",
 		"name": "Rimini",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RM",
 		"name": "Roma",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RO",
 		"name": "Rovigo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SA",
 		"name": "Salerno",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SS",
 		"name": "Sassari",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SV",
 		"name": "Savona",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SI",
 		"name": "Siena",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SR",
 		"name": "Siracusa",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SO",
 		"name": "Sondrio",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TA",
 		"name": "Taranto",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TE",
 		"name": "Teramo",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TR",
 		"name": "Terni",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TO",
 		"name": "Torino",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TP",
 		"name": "Trapani",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TN",
 		"name": "Trento",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TV",
 		"name": "Treviso",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TS",
 		"name": "Trieste",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "UD",
 		"name": "Udine",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VA",
 		"name": "Varese",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VE",
 		"name": "Venezia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VB",
 		"name": "Verbano-Cusio-Ossola",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VC",
 		"name": "Vercelli",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VR",
 		"name": "Verona",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VV",
 		"name": "Vibo Valentia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VI",
 		"name": "Vicenza",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VT",
 		"name": "Viterbo",
-		"active_": true
+		"active": true
 	}
 ]

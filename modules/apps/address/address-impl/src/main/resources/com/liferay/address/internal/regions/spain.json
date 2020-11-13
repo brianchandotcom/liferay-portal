@@ -2,96 +2,96 @@
 	{
 		"regionCode": "AN",
 		"name": "Andalusia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AR",
 		"name": "Aragon",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "AS",
 		"name": "Asturias",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "IB",
 		"name": "Balearic Islands",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "PV",
 		"name": "Basque Country",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CN",
 		"name": "Canary Islands",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CB",
 		"name": "Cantabria",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CL",
 		"name": "Castile and Leon",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CM",
 		"name": "Castile-La Mancha",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CT",
 		"name": "Catalonia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "CE",
 		"name": "Ceuta",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "EX",
 		"name": "Extremadura",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "GA",
 		"name": "Galicia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "LO",
 		"name": "La Rioja",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "M",
 		"name": "Madrid",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "ML",
 		"name": "Melilla",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MU",
 		"name": "Murcia",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": null,
 		"name": "Navarra",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "VC",
 		"name": "Valencia",
-		"active_": true
+		"active": true
 	}
 ]

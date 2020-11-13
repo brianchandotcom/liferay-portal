@@ -2,81 +2,81 @@
 	{
 		"regionCode": "BW",
 		"name": "Baden-Württemberg",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BY",
 		"name": "Bayern",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BE",
 		"name": "Berlin",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "BB",
 		"name": "Brandenburg",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "HB",
 		"name": "Bremen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "HH",
 		"name": "Hamburg",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "HE",
 		"name": "Hessen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "MV",
 		"name": "Mecklenburg-Vorpommern",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NI",
 		"name": "Niedersachsen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "NW",
 		"name": "Nordrhein-Westfalen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "RP",
 		"name": "Rheinland-Pfalz",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SL",
 		"name": "Saarland",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SN",
 		"name": "Sachsen",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "ST",
 		"name": "Sachsen-Anhalt",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "SH",
 		"name": "Schleswig-Holstein",
-		"active_": true
+		"active": true
 	},
 	{
 		"regionCode": "TH",
 		"name": "Thüringen",
-		"active_": true
+		"active": true
 	}
 ]

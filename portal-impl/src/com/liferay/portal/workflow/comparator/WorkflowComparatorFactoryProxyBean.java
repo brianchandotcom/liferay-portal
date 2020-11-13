@@ -33,6 +33,13 @@ public class WorkflowComparatorFactoryProxyBean
 	extends BaseProxyBean implements WorkflowComparatorFactory {
 
 	@Override
+	public OrderByComparator<WorkflowDefinition>
+		getDefinitionModifiedDateComparator(boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public OrderByComparator<WorkflowDefinition> getDefinitionNameComparator(
 		boolean ascending) {
 

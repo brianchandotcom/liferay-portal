@@ -142,7 +142,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			"--context_param companyId=" + dispatchTrigger.getCompanyId());
 
 		Date lastRunStateDate =
-			_dispatchTriggerLocalService.getPreviousFireDate(
+			_dispatchTriggerLocalService.fetchPreviousFireDate(
 				dispatchTrigger.getDispatchTriggerId());
 
 		if (lastRunStateDate != null) {

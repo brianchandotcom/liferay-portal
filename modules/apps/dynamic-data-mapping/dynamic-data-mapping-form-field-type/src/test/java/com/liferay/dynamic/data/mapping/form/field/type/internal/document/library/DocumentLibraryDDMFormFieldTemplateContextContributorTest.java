@@ -15,15 +15,21 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.util.HtmlImpl;
@@ -34,6 +40,8 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hamcrest.CoreMatchers;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,10 +49,12 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.mockito.expectation.PowerMockitoStubber;
 import org.powermock.api.support.membermodification.MemberMatcher;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -52,21 +62,25 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Pedro Queiroz
  */
+@PrepareForTest(RequestBackedPortletURLFactoryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
 
 	public HttpServletRequest createHttpServletRequest() {
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest httpServletRequest =
+			new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPathContext("/my/path/context/");
 		themeDisplay.setPathThemeImages("/my/theme/images/");
 
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return request;
+		httpServletRequest.setParameter("formInstanceId", "12345");
+
+		return httpServletRequest;
 	}
 
 	@Before
@@ -78,6 +92,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		setUpFileEntry();
 		setUpJSONFactory();
 		setUpHtml();
+		setUpParamUtil();
+		setUpRequestBackedPortletURLFactoryUtil();
 	}
 
 	@Test
@@ -120,6 +136,37 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			ddmFormField, ddmFormFieldRenderingContext);
 
 		Assert.assertEquals("token", parameters.get("itemSelectorAuthToken"));
+	}
+
+	@Test
+	public void testGetParametersShouldContainUploadURL() {
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", "document_library");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(
+			createHttpServletRequest());
+		ddmFormFieldRenderingContext.setProperty("groupId", 23456);
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
+
+		Map<String, Object> parameters = spy.getParameters(
+			ddmFormField, ddmFormFieldRenderingContext);
+
+		String uploadURL = String.valueOf(parameters.get("uploadURL"));
+
+		Assert.assertThat(
+			uploadURL,
+			CoreMatchers.containsString(
+				"param_javax.portlet.action=/dynamic_data_mapping_form" +
+					"/upload_file_entry"));
+		Assert.assertThat(
+			uploadURL,
+			CoreMatchers.containsString("param_formInstanceId=12345"));
+		Assert.assertThat(
+			uploadURL, CoreMatchers.containsString("param_groupId=23456"));
 	}
 
 	@Test
@@ -185,6 +232,22 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		return spy;
 	}
 
+	protected RequestBackedPortletURLFactory
+		mockRequestBackedPortletURLFactory() {
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(
+			RequestBackedPortletURLFactory.class);
+
+		when(
+			requestBackedPortletURLFactory.createActionURL(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM)
+		).thenReturn(
+			new MockLiferayPortletURL()
+		);
+
+		return requestBackedPortletURLFactory;
+	}
+
 	protected void setUpDLAppService() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
@@ -227,6 +290,24 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			"jsonFactory"
 		).set(
 			_documentLibraryDDMFormFieldTemplateContextContributor, _jsonFactory
+		);
+	}
+
+	protected void setUpParamUtil() {
+		PropsUtil.setProps(Mockito.mock(Props.class));
+	}
+
+	protected void setUpRequestBackedPortletURLFactoryUtil() {
+		PowerMockito.mockStatic(RequestBackedPortletURLFactoryUtil.class);
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			mockRequestBackedPortletURLFactory();
+
+		PowerMockito.when(
+			RequestBackedPortletURLFactoryUtil.create(
+				Matchers.any(HttpServletRequest.class))
+		).thenReturn(
+			requestBackedPortletURLFactory
 		);
 	}
 

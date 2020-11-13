@@ -30,11 +30,11 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 
 <div class="mb-5 product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
 	<div class="row">
-		<div class="col-md-6 col-xs-12">
+		<div class="col-12 col-md-6">
 			<commerce-ui:gallery CPDefinitionId="<%= cpDefinitionId %>" />
 		</div>
 
-		<div class="col-md-6 col-xs-12">
+		<div class="col-12 col-md-6">
 			<header class="product-header">
 				<commerce-ui:compare-checkbox
 					componentId="compareCheckbox"

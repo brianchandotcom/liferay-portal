@@ -35,7 +35,7 @@ AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext 
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="categories-tree container-fluid-1280" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
+		<div class="categories-tree container-fluid container-fluid-max-xl" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
 			<react:component
 				module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"
 				props="<%= assetCategoriesNavigationDisplayContext.getData() %>"

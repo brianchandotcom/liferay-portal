@@ -33,7 +33,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteAssetListEntryURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteAssetListEntryURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:breadcrumb
 		showLayout="<%= false %>"
 	/>

@@ -28,7 +28,7 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteCategoryURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteCategoryURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 
 	<%
 	List<BreadcrumbEntry> breadcrumbEntries = AssetCategoryUtil.getAssetCategoriesBreadcrumbEntries(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse);

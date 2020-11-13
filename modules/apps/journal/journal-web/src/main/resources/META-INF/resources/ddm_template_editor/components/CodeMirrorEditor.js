@@ -116,6 +116,7 @@ export const CodeMirrorEditor = ({
 
 		const hint = (cm) => {
 			const {current, next, previous} = getWordContext(cm);
+			const currentLowerCase = current.toLowerCase();
 			const cursorPosition = cm.getCursor();
 
 			const closeVariable = next !== variableEnd;
@@ -139,7 +140,7 @@ export const CodeMirrorEditor = ({
 				},
 				list: wordList
 					.map(({lowerCaseWord, word}) => ({
-						index: lowerCaseWord.indexOf(current),
+						index: lowerCaseWord.indexOf(currentLowerCase),
 						lowerCaseWord,
 						word,
 					}))

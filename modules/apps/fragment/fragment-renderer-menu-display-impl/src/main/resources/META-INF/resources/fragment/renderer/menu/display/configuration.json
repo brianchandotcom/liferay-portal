@@ -26,16 +26,6 @@
 					}
 				},
 				{
-					"label": "hovered-item-color",
-					"name": "hoveredItemColor",
-					"type": "colorPicker"
-				},
-				{
-					"label": "selected-item-color",
-					"name": "selectedItemColor",
-					"type": "colorPicker"
-				},
-				{
 					"defaultValue": "-1",
 					"label": "sublevels",
 					"name": "sublevels",
@@ -128,6 +118,21 @@
 							}
 						]
 					}
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"label": "hovered-item-color",
+					"name": "hoveredItemColor",
+					"type": "colorPicker"
+				},
+				{
+					"label": "selected-item-color",
+					"name": "selectedItemColor",
+					"type": "colorPicker"
 				}
 			]
 		}

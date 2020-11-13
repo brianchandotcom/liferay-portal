@@ -34,6 +34,9 @@ public interface SpiraArtifact extends Serializable {
 
 	public List<SpiraCustomProperty> getSpiraCustomProperties();
 
+	public SpiraCustomPropertyValue getSpiraCustomPropertyValue(
+		String spiraCustomPropertyName);
+
 	public List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues();
 
 	public SpiraProject getSpiraProject();

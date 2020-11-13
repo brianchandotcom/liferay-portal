@@ -126,6 +126,23 @@ public class AssetListAssetEntryProviderImpl
 
 	@Override
 	public List<AssetEntry> getAssetEntries(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[] assetCategoryIds, String userId, int start, int end) {
+
+		if (Objects.equals(
+				assetListEntry.getType(),
+				AssetListEntryTypeConstants.TYPE_MANUAL)) {
+
+			return _getManualAssetEntries(
+				assetListEntry, segmentsEntryIds, assetCategoryIds, start, end);
+		}
+
+		return _getDynamicAssetEntries(
+			assetListEntry, segmentsEntryIds, userId, start, end);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
 
 		return getAssetEntries(

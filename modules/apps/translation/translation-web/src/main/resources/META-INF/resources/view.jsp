@@ -58,8 +58,12 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 				<liferay-ui:search-container-column-text
 					name="language"
-					property="languageId"
-				/>
+				>
+					<clay:icon
+						symbol='<%= StringUtil.toLowerCase(translationEntry.getLanguageId()).replace("_", "-") %>'
+					/>
+					<%= translationEntry.getLanguageId() %>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-status
 					cssClass="table-cell-expand-smallest"

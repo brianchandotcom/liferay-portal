@@ -95,7 +95,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 			<clay:row>
 				<clay:col
-					cssClass="col-md-offset-1 entry-navigation"
+					cssClass="entry-navigation mx-md-auto"
 					md="10"
 				>
 					<h2>

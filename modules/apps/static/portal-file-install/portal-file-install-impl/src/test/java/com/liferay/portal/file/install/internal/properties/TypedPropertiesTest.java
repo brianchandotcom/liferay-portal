@@ -18,7 +18,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -32,9 +35,8 @@ import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Matthew Tambara
@@ -42,8 +44,10 @@ import org.mockito.Mockito;
 public class TypedPropertiesTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor coverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@Test
 	public void testKeySet() throws IOException {
@@ -262,58 +266,22 @@ public class TypedPropertiesTest {
 		}
 	}
 
-	@Test
-	public void testLoadBadValueEnvVariable() throws IOException {
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					TypedProperties.class.getName(), Level.WARNING)) {
-
-			TypedProperties typedProperties = new TypedProperties();
-
-			typedProperties = Mockito.spy(typedProperties);
-
-			Mockito.when(
-				typedProperties.getEnv(Mockito.anyString())
-			).thenReturn(
-				"FOO_ENV_VALUE"
-			);
-
-			typedProperties.load(
-				new StringReader("testKey=LIFERAY_FOO_ENV_VALUE"));
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Unable to parse property value: FOO_ENV_VALUE",
-				logRecord.getMessage());
-		}
-	}
-
+	@NewEnv(type = NewEnv.Type.JVM)
+	@NewEnv.Environment(variables = "LIFERAY_FOO_ENV_VALUE=ENV_TEST_VALUE")
 	@Test
 	public void testLoadEnvVariable() throws IOException {
 		TypedProperties typedProperties = new TypedProperties();
 
-		typedProperties = Mockito.spy(typedProperties);
+		typedProperties.load(
+			new StringReader("testKey=\"${LIFERAY_FOO_ENV_VALUE}\""));
 
-		Mockito.when(
-			typedProperties.getEnv(Mockito.anyString())
-		).thenReturn(
-			"B\"true\""
-		);
-
-		typedProperties.load(new StringReader("testKey=LIFERAY_FOO_ENV_VALUE"));
-
-		Assert.assertEquals(true, typedProperties.get("testKey"));
+		Assert.assertEquals("ENV_TEST_VALUE", typedProperties.get("testKey"));
 	}
 
 	@Test
 	public void testLoadNonexistentEnvVariable() throws IOException {
 		TypedProperties typedProperties = _createTypedProperties(
-			"testKey=LIFERAY_FOO_ENV_VALUE");
+			"testKey=\"${LIFERAY_FOO_ENV_VALUE}\"");
 
 		Assert.assertNull(typedProperties.get("LIFERAY_FOO_ENV_VALUE"));
 	}

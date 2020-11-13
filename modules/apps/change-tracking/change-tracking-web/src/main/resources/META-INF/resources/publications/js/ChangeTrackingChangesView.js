@@ -29,6 +29,18 @@ class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.CHANGE_TYPE_ADDED = 'added';
+		this.CHANGE_TYPE_DELETED = 'deleted';
+		this.COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
+		this.COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
+		this.COLUMN_SITE = 'SITE';
+		this.COLUMN_TITLE = 'TITLE';
+		this.COLUMN_USER = 'USER';
+		this.FILTER_CLASS_EVERYTHING = 'everything';
+		this.GLOBAL_SITE_NAME = Liferay.Language.get('global');
+		this.VIEW_TYPE_CHANGES = 'changes';
+		this.VIEW_TYPE_CONTEXT = 'context';
+
 		const {
 			activeCTCollection,
 			basePath,
@@ -65,8 +77,6 @@ class ChangeTrackingChangesView extends React.Component {
 		this.spritemap = spritemap;
 		this.typeNames = typeNames;
 		this.userInfo = userInfo;
-
-		this.globalSiteName = Liferay.Language.get('global');
 
 		this._populateModelInfo();
 
@@ -117,7 +127,7 @@ class ChangeTrackingChangesView extends React.Component {
 			ascending: true,
 			breadcrumbItems,
 			children: this._filterHideableNodes(node.children, showHideable),
-			column: 'title',
+			column: this.COLUMN_TITLE,
 			delta: 20,
 			dropdown: '',
 			filterClass,
@@ -147,7 +157,10 @@ class ChangeTrackingChangesView extends React.Component {
 			const nodeId = pathState.nodeId;
 			const viewType = pathState.viewType;
 
-			if (viewType === 'context' && this.contextView.errorMessage) {
+			if (
+				viewType === this.VIEW_TYPE_CONTEXT &&
+				this.contextView.errorMessage
+			) {
 				this.setState({
 					renderInnerHTML: null,
 					viewType,
@@ -169,7 +182,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 			if (
 				node.hideable ||
-				(filterClass !== 'everything' &&
+				(filterClass !== this.FILTER_CLASS_EVERYTHING &&
 					this.contextView[filterClass].hideable)
 			) {
 				showHideable = true;
@@ -237,7 +250,7 @@ class ChangeTrackingChangesView extends React.Component {
 	_filterDisplayNodes(nodes) {
 		const ascending = this.state.ascending;
 
-		if (this._getColumn() === 'changeType') {
+		if (this._getColumn() === this.COLUMN_CHANGE_TYPE) {
 			nodes.sort((a, b) => {
 				if (a.changeType < b.changeType) {
 					if (ascending) {
@@ -277,12 +290,12 @@ class ChangeTrackingChangesView extends React.Component {
 				return 0;
 			});
 		}
-		else if (this._getColumn() === 'site') {
+		else if (this._getColumn() === this.COLUMN_SITE) {
 			nodes.sort((a, b) => {
 				if (
 					a.siteName < b.siteName ||
-					(a.siteName === this.globalSiteName &&
-						b.siteName !== this.globalSiteName)
+					(a.siteName === this.GLOBAL_SITE_NAME &&
+						b.siteName !== this.GLOBAL_SITE_NAME)
 				) {
 					if (ascending) {
 						return -1;
@@ -293,8 +306,8 @@ class ChangeTrackingChangesView extends React.Component {
 
 				if (
 					a.siteName > b.siteName ||
-					(a.siteName !== this.globalSiteName &&
-						b.siteName === this.globalSiteName)
+					(a.siteName !== this.GLOBAL_SITE_NAME &&
+						b.siteName === this.GLOBAL_SITE_NAME)
 				) {
 					if (ascending) {
 						return 1;
@@ -325,7 +338,7 @@ class ChangeTrackingChangesView extends React.Component {
 				return 0;
 			});
 		}
-		else if (this._getColumn() === 'title') {
+		else if (this._getColumn() === this.COLUMN_TITLE) {
 			nodes.sort((a, b) => {
 				const typeNameA = a.typeName.toUpperCase();
 				const typeNameB = b.typeName.toUpperCase();
@@ -357,7 +370,7 @@ class ChangeTrackingChangesView extends React.Component {
 				return 0;
 			});
 		}
-		else if (this._getColumn() === 'user') {
+		else if (this._getColumn() === this.COLUMN_USER) {
 			nodes.sort((a, b) => {
 				if (a.userName < b.userName) {
 					if (ascending) {
@@ -426,7 +439,7 @@ class ChangeTrackingChangesView extends React.Component {
 			);
 		}
 
-		if (this._getColumn() === 'modifiedDate') {
+		if (this._getColumn() === this.COLUMN_MODIFIED_DATE) {
 			nodes.sort((a, b) => {
 				const typeNameA = a.typeName.toUpperCase();
 				const typeNameB = b.typeName.toUpperCase();
@@ -505,7 +518,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getBreadcrumbItems(node, filterClass, nodeId, viewType) {
-		if (viewType === 'changes') {
+		if (viewType === this.VIEW_TYPE_CHANGES) {
 			if (nodeId === 0) {
 				return [
 					{
@@ -535,7 +548,7 @@ class ChangeTrackingChangesView extends React.Component {
 		const breadcrumbItems = [];
 		const homeBreadcrumbItem = {label: Liferay.Language.get('home')};
 
-		if (filterClass === 'everything' && nodeId === 0) {
+		if (filterClass === this.FILTER_CLASS_EVERYTHING && nodeId === 0) {
 			homeBreadcrumbItem.active = true;
 
 			breadcrumbItems.push(homeBreadcrumbItem);
@@ -545,7 +558,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		homeBreadcrumbItem.onClick = () =>
 			this._handleNavigationUpdate({
-				filterClass: 'everything',
+				filterClass: this.FILTER_CLASS_EVERYTHING,
 				nodeId: 0,
 			});
 
@@ -553,7 +566,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		let showParent = false;
 
-		if (filterClass === 'everything') {
+		if (filterClass === this.FILTER_CLASS_EVERYTHING) {
 			showParent = true;
 		}
 		else {
@@ -625,8 +638,8 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getColumn() {
-		if (this.state.viewType === 'context') {
-			return 'title';
+		if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
+			return this.COLUMN_TITLE;
 		}
 
 		return this.state.column;
@@ -711,14 +724,17 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getNode(filterClass, nodeId, viewType) {
-		if (viewType === 'changes') {
+		if (viewType === this.VIEW_TYPE_CHANGES) {
 			if (nodeId === 0) {
 				return {children: this._getModels(this.changes)};
 			}
 
 			return this._clone(this.models[nodeId.toString()]);
 		}
-		else if (filterClass !== 'everything' && nodeId === 0) {
+		else if (
+			filterClass !== this.FILTER_CLASS_EVERYTHING &&
+			nodeId === 0
+		) {
 			return {
 				children: this._getModels(
 					this.contextView[filterClass].children
@@ -838,7 +854,7 @@ class ChangeTrackingChangesView extends React.Component {
 		rootDisplayOptions.push(
 			<ClayRadio
 				label={Liferay.Language.get('everything')}
-				value="everything"
+				value={this.FILTER_CLASS_EVERYTHING}
 			/>
 		);
 
@@ -872,10 +888,10 @@ class ChangeTrackingChangesView extends React.Component {
 	_getPathState(pathParam) {
 		if (!pathParam) {
 			return {
-				filterClass: 'everything',
+				filterClass: this.FILTER_CLASS_EVERYTHING,
 				nodeId: 0,
 				showHideable: false,
-				viewType: 'changes',
+				viewType: this.VIEW_TYPE_CHANGES,
 			};
 		}
 
@@ -904,12 +920,15 @@ class ChangeTrackingChangesView extends React.Component {
 		};
 
 		if (
-			pathState.filterClass !== 'everything' &&
+			pathState.filterClass !== this.FILTER_CLASS_EVERYTHING &&
 			!this.contextView[pathState.filterClass]
 		) {
-			pathState.filterClass = 'everything';
+			pathState.filterClass = this.FILTER_CLASS_EVERYTHING;
 		}
-		else if (pathState.viewType === 'changes' && path.length > 0) {
+		else if (
+			pathState.viewType === this.VIEW_TYPE_CHANGES &&
+			path.length > 0
+		) {
 			const modelClassNameId = path[0].modelClassNameId;
 			const modelClassPK = path[0].modelClassPK;
 
@@ -926,10 +945,10 @@ class ChangeTrackingChangesView extends React.Component {
 				}
 			}
 		}
-		else if (pathState.viewType === 'context') {
+		else if (pathState.viewType === this.VIEW_TYPE_CONTEXT) {
 			let contextNode = this.contextView.everything;
 
-			if (pathState.filterClass !== 'everything') {
+			if (pathState.filterClass !== this.FILTER_CLASS_EVERYTHING) {
 				contextNode = this.contextView[pathState.filterClass];
 			}
 
@@ -950,7 +969,11 @@ class ChangeTrackingChangesView extends React.Component {
 							sessionNode.modelClassNameId &&
 						model.modelClassPK === sessionNode.modelClassPK
 					) {
-						if (pathState.filterClass !== 'everything' && i === 0) {
+						if (
+							pathState.filterClass !==
+								this.FILTER_CLASS_EVERYTHING &&
+							i === 0
+						) {
 							const stack = [this.contextView.everything];
 
 							while (stack.length > 0) {
@@ -990,7 +1013,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getTableHead() {
-		if (this.state.viewType === 'context') {
+		if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
 			return '';
 		}
 
@@ -1042,7 +1065,11 @@ class ChangeTrackingChangesView extends React.Component {
 				rows.push(
 					<ClayTable.Row divider>
 						<ClayTable.Cell
-							colSpan={this.state.viewType === 'changes' ? 5 : 1}
+							colSpan={
+								this.state.viewType === this.VIEW_TYPE_CHANGES
+									? 5
+									: 1
+							}
 						>
 							{node.typeName}
 						</ClayTable.Cell>
@@ -1052,7 +1079,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 			const cells = [];
 
-			if (this.state.viewType === 'context') {
+			if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
 				let descriptionMarkup = '';
 
 				if (node.description) {
@@ -1167,24 +1194,24 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const items = [
 			{
-				active: this.state.viewType === 'changes',
+				active: this.state.viewType === this.VIEW_TYPE_CHANGES,
 				label: Liferay.Language.get('changes'),
 				onClick: () =>
 					this._handleNavigationUpdate({
-						filterClass: 'everything',
+						filterClass: this.FILTER_CLASS_EVERYTHING,
 						nodeId: 0,
-						viewType: 'changes',
+						viewType: this.VIEW_TYPE_CHANGES,
 					}),
 				symbolLeft: 'list',
 			},
 			{
-				active: this.state.viewType === 'context',
+				active: this.state.viewType === this.VIEW_TYPE_CONTEXT,
 				label: Liferay.Language.get('context'),
 				onClick: () =>
 					this._handleNavigationUpdate({
-						filterClass: 'everything',
+						filterClass: this.FILTER_CLASS_EVERYTHING,
 						nodeId: 0,
-						viewType: 'context',
+						viewType: this.VIEW_TYPE_CONTEXT,
 					}),
 				symbolLeft: 'pages-tree',
 			},
@@ -1207,7 +1234,8 @@ class ChangeTrackingChangesView extends React.Component {
 							<ClayIcon
 								spritemap={this.spritemap}
 								symbol={
-									this.state.viewType === 'changes'
+									this.state.viewType ===
+									this.VIEW_TYPE_CHANGES
 										? 'list'
 										: 'pages-tree'
 								}
@@ -1247,7 +1275,10 @@ class ChangeTrackingChangesView extends React.Component {
 			viewType = this.state.viewType;
 		}
 
-		if (viewType === 'context' && this.contextView.errorMessage) {
+		if (
+			viewType === this.VIEW_TYPE_CONTEXT &&
+			this.contextView.errorMessage
+		) {
 			this.setState({
 				renderInnerHTML: null,
 				viewType,
@@ -1293,11 +1324,11 @@ class ChangeTrackingChangesView extends React.Component {
 	_handleShowHideableToggle(showHideable) {
 		if (!showHideable) {
 			if (
-				this.state.viewType === 'context' &&
+				this.state.viewType === this.VIEW_TYPE_CONTEXT &&
 				this.contextView[this.state.filterClass].hideable
 			) {
 				this._handleNavigationUpdate({
-					filterClass: 'everything',
+					filterClass: this.FILTER_CLASS_EVERYTHING,
 					nodeId: 0,
 					showHideable,
 				});
@@ -1384,7 +1415,7 @@ class ChangeTrackingChangesView extends React.Component {
 				model.siteName = this.siteNames[model.groupId.toString()];
 			}
 			else {
-				model.siteName = this.globalSiteName;
+				model.siteName = this.GLOBAL_SITE_NAME;
 			}
 
 			model.typeName = this.typeNames[model.modelClassNameId.toString()];
@@ -1392,10 +1423,10 @@ class ChangeTrackingChangesView extends React.Component {
 			if (model.ctEntryId) {
 				model.changeTypeLabel = Liferay.Language.get('modified');
 
-				if (model.changeType === 'added') {
+				if (model.changeType === this.CHANGE_TYPE_ADDED) {
 					model.changeTypeLabel = Liferay.Language.get('added');
 				}
-				else if (model.changeType === 'deleted') {
+				else if (model.changeType === this.CHANGE_TYPE_DELETED) {
 					model.changeTypeLabel = Liferay.Language.get('deleted');
 				}
 
@@ -1403,13 +1434,13 @@ class ChangeTrackingChangesView extends React.Component {
 					model.userId.toString()
 				].userName;
 
-				if (model.siteName === this.globalSiteName) {
+				if (model.siteName === this.GLOBAL_SITE_NAME) {
 					let key = Liferay.Language.get('x-modified-a-x-x-ago');
 
-					if (model.changeType === 'added') {
+					if (model.changeType === this.CHANGE_TYPE_ADDED) {
 						key = Liferay.Language.get('x-added-a-x-x-ago');
 					}
-					else if (model.changeType === 'deleted') {
+					else if (model.changeType === this.CHANGE_TYPE_DELETED) {
 						key = Liferay.Language.get('x-deleted-a-x-x-ago');
 					}
 
@@ -1422,10 +1453,10 @@ class ChangeTrackingChangesView extends React.Component {
 				else {
 					let key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
 
-					if (model.changeType === 'added') {
+					if (model.changeType === this.CHANGE_TYPE_ADDED) {
 						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
 					}
-					else if (model.changeType === 'deleted') {
+					else if (model.changeType === this.CHANGE_TYPE_DELETED) {
 						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
 					}
 
@@ -1522,35 +1553,38 @@ class ChangeTrackingChangesView extends React.Component {
 	_renderManagementToolbar() {
 		let items = [];
 
-		if (this.state.viewType === 'changes') {
+		if (this.state.viewType === this.VIEW_TYPE_CHANGES) {
 			items = [
 				{
-					active: this._getColumn() === 'changeType',
+					active: this._getColumn() === this.COLUMN_CHANGE_TYPE,
 					label: Liferay.Language.get('change-type'),
-					onClick: () => this._handleSortColumnChange('changeType'),
+					onClick: () =>
+						this._handleSortColumnChange(this.COLUMN_CHANGE_TYPE),
 				},
 				{
-					active: this._getColumn() === 'modifiedDate',
+					active: this._getColumn() === this.COLUMN_MODIFIED_DATE,
 					label: Liferay.Language.get('modified-date'),
-					onClick: () => this._handleSortColumnChange('modifiedDate'),
+					onClick: () =>
+						this._handleSortColumnChange(this.COLUMN_MODIFIED_DATE),
 				},
 				{
-					active: this._getColumn() === 'site',
+					active: this._getColumn() === this.COLUMN_SITE,
 					label: Liferay.Language.get('site'),
-					onClick: () => this._handleSortColumnChange('site'),
+					onClick: () =>
+						this._handleSortColumnChange(this.COLUMN_SITE),
 				},
 				{
-					active: this._getColumn() === 'user',
+					active: this._getColumn() === this.COLUMN_USER,
 					label: Liferay.Language.get('user'),
-					onClick: () => this._handleSortColumnChange('user'),
+					onClick: () => this._handleSortColumnChange(this.COLUMN_USER),
 				},
 			];
 		}
 
 		items.push({
-			active: this._getColumn() === 'title',
+			active: this._getColumn() === this.COLUMN_TITLE,
 			label: Liferay.Language.get('title'),
-			onClick: () => this._handleSortColumnChange('title'),
+			onClick: () => this._handleSortColumnChange(this.COLUMN_TITLE),
 		});
 
 		items.sort((a, b) => {
@@ -1660,7 +1694,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderPanel() {
-		if (this.state.viewType === 'changes') {
+		if (this.state.viewType === this.VIEW_TYPE_CHANGES) {
 			return '';
 		}
 
@@ -1690,7 +1724,7 @@ class ChangeTrackingChangesView extends React.Component {
 			if (
 				this.state.node.children &&
 				this.state.node.children.length > 0 &&
-				this.state.viewType === 'changes'
+				this.state.viewType === this.VIEW_TYPE_CHANGES
 			) {
 				return (
 					<div className="sheet taglib-empty-result-message">
@@ -1764,7 +1798,7 @@ class ChangeTrackingChangesView extends React.Component {
 		let content;
 
 		if (
-			this.state.viewType === 'context' &&
+			this.state.viewType === this.VIEW_TYPE_CONTEXT &&
 			this.contextView.errorMessage
 		) {
 			content = (
@@ -1787,7 +1821,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 						<div
 							className={
-								this.state.viewType === 'changes'
+								this.state.viewType === this.VIEW_TYPE_CHANGES
 									? 'col-md-12'
 									: 'col-md-9'
 							}

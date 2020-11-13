@@ -24,6 +24,7 @@ import com.liferay.portal.search.query.function.score.ScoreFunctionTranslator;
 import com.liferay.portal.search.query.function.score.ScriptScoreFunction;
 import com.liferay.portal.search.query.function.score.WeightScoreFunction;
 
+import org.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
 import org.elasticsearch.index.query.functionscore.ExponentialDecayFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.FieldValueFactorFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.GaussDecayFunctionBuilder;
@@ -63,8 +64,29 @@ public class ElasticsearchScoreFunctionTranslator
 	public ScoreFunctionBuilder<?> translate(
 		FieldValueFactorScoreFunction fieldValueFactorScoreFunction) {
 
-		return new FieldValueFactorFunctionBuilder(
-			fieldValueFactorScoreFunction.getField());
+		FieldValueFactorFunctionBuilder fieldValueFactorFunctionBuilder =
+			new FieldValueFactorFunctionBuilder(
+				fieldValueFactorScoreFunction.getField());
+
+		if (fieldValueFactorScoreFunction.getFactor() != null) {
+			fieldValueFactorFunctionBuilder.factor(
+				fieldValueFactorScoreFunction.getFactor());
+		}
+
+		if (fieldValueFactorScoreFunction.getMissing() != null) {
+			fieldValueFactorFunctionBuilder.missing(
+				fieldValueFactorScoreFunction.getMissing());
+		}
+
+		if (fieldValueFactorScoreFunction.getModifier() != null) {
+			String modifier = fieldValueFactorScoreFunction.getModifier(
+			).toString();
+
+			fieldValueFactorFunctionBuilder.modifier(
+				FieldValueFactorFunction.Modifier.fromString(modifier));
+		}
+
+		return fieldValueFactorFunctionBuilder;
 	}
 
 	@Override

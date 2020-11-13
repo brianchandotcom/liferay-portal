@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {useChannel} from '../hooks/useChannel';
 import {ClosableAlert} from './ClosableAlert';
@@ -22,25 +22,28 @@ import {Sidebar} from './Sidebar';
 
 export default function App({
 	editorAutocompleteData,
-	editorMode,
+	editorMode: initialEditorMode,
 	portletNamespace,
 	script: initialScript,
 	showCacheableWarning,
 	showLanguageChangeWarning,
 	templateVariableGroups,
 }) {
+	const [editorMode, setEditorMode] = useState(initialEditorMode);
 	const inputChannel = useChannel();
 
 	return (
 		<div className="ddm_template_editor__App">
-			<div className="ddm_template_editor__App-sidebar">
-				<Sidebar
-					onButtonClick={(item) =>
-						inputChannel.sendData(item.content)
-					}
-					templateVariableGroups={templateVariableGroups}
-				/>
-			</div>
+			{editorMode !== 'xml' && (
+				<div className="ddm_template_editor__App-sidebar">
+					<Sidebar
+						onButtonClick={(item) =>
+							inputChannel.sendData(item.content)
+						}
+						templateVariableGroups={templateVariableGroups}
+					/>
+				</div>
+			)}
 
 			<div className="ddm_template_editor__App-content">
 				<ClosableAlert

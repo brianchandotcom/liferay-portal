@@ -160,6 +160,7 @@ definition {
 
 	test AssertPriceListCanBeAssociatedWithAccountAndAccountGroup {
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListCanBeAssociatedWithAccountAndAccountGroup";
 
 		CommerceNavigator.gotoPortlet(

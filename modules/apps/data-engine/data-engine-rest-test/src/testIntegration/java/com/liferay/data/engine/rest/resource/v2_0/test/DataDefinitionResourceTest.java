@@ -824,7 +824,7 @@ public class DataDefinitionResourceTest
 		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 	}
 
-	private static final String _CONTENT_TYPE = "app-builder";
+	private static final String _CONTENT_TYPE = "app-builder-fieldset";
 
 	@Inject(type = DataEngineNativeObjectTracker.class)
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;

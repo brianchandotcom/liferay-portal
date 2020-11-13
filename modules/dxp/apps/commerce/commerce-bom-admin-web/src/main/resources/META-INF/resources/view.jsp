@@ -83,7 +83,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 
 <portlet:actionURL name="editCommerceBOMDefintion" var="editCommerceBOMDefintionActionURL" />
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceBOMDefinitionContainer">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceBOMDefinitionContainer">
 
 	<%
 	commerceBOMAdminDisplayContext.addPortletBreadcrumbEntries();

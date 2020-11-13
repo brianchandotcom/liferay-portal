@@ -24,7 +24,7 @@ CommerceApplicationBrand commerceApplicationBrand = commerceApplicationAdminDisp
 
 <portlet:actionURL name="editCommerceApplicationBrand" var="editCommerceApplicationBrandActionURL" />
 
-<div class="container-fluid-1280 entry-body">
+<div class="container-fluid container-fluid-max-xl entry-body">
 	<aui:form action="<%= editCommerceApplicationBrandActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceApplicationBrand == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

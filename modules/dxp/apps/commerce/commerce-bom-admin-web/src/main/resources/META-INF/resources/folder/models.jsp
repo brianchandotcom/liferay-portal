@@ -71,7 +71,7 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 
 <portlet:actionURL name="editCommerceBOMFolderApplicationRel" var="editCommerceBOMFolderApplicationRelActionURL" />
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceBOMFolderApplicationRelContainer">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceBOMFolderApplicationRelContainer">
 	<aui:form action="<%= editCommerceBOMFolderApplicationRelActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

@@ -74,7 +74,7 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 
 <portlet:actionURL name="editCommerceApplicationModel" var="editCommerceApplicationModelActionURL" />
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceApplicationModelContainer">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceApplicationModelContainer">
 	<aui:form action="<%= editCommerceApplicationModelActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

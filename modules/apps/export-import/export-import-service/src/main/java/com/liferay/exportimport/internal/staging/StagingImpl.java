@@ -583,8 +583,8 @@ public class StagingImpl implements Staging {
 				errorMessageJSONObject.put(
 					"site",
 					LanguageUtil.format(
-						locale, "in-environment-x",
-						missingReference.getGroupId(), false));
+						locale, "in-environment-x", group.getName(locale),
+						false));
 			}
 
 			errorMessageJSONObject.put(

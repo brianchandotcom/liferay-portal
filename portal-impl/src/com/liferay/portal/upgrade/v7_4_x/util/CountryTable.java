@@ -32,8 +32,8 @@ public class CountryTable {
 		{"defaultLanguageId", Types.VARCHAR}, {"countryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
-		{"a2", Types.VARCHAR}, {"a3", Types.VARCHAR},
+		{"modifiedDate", Types.TIMESTAMP}, {"a2", Types.VARCHAR},
+		{"a3", Types.VARCHAR}, {"active_", Types.BOOLEAN},
 		{"billingAllowed", Types.BOOLEAN},
 		{"groupFilterEnabled", Types.BOOLEAN}, {"idd_", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"number_", Types.VARCHAR},
@@ -64,11 +64,11 @@ TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 
 TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 
-TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
-
 TABLE_COLUMNS_MAP.put("a2", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("a3", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("billingAllowed", Types.BOOLEAN);
 
@@ -92,7 +92,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table Country (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,a2 VARCHAR(75) null,a3 VARCHAR(75) null,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null)";
+"create table Country (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,active_ BOOLEAN,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Country";
 

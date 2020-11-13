@@ -131,24 +131,11 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	public String getFilePath() {
-		SpiraCustomProperty spiraCustomProperty =
-			SpiraCustomProperty.createSpiraCustomProperty(
-				getSpiraProject(), SpiraTestCaseObject.class,
-				_CUSTOM_FIELD_FILE_PATH_KEY, SpiraCustomProperty.Type.TEXT);
+		SpiraCustomPropertyValue spiraCustomPropertyValue =
+			getSpiraCustomPropertyValue(_CUSTOM_FIELD_FILE_PATH_KEY);
 
-		JSONArray customPropertiesJSONArray = jsonObject.getJSONArray(
-			"CustomProperties");
-
-		for (int i = 0; i < customPropertiesJSONArray.length(); i++) {
-			JSONObject customPropertyJSONObject =
-				customPropertiesJSONArray.getJSONObject(i);
-
-			int propertyNumber = customPropertyJSONObject.getInt(
-				"PropertyNumber");
-
-			if (propertyNumber == spiraCustomProperty.getPropertyNumber()) {
-				return customPropertyJSONObject.optString("StringValue");
-			}
+		if (spiraCustomPropertyValue != null) {
+			return spiraCustomPropertyValue.getValueString();
 		}
 
 		return null;
@@ -182,17 +169,16 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			return _spiraTestCaseProductVersion;
 		}
 
-		for (SpiraCustomPropertyValue spiraCustomPropertyValue :
-				getSpiraCustomPropertyValues()) {
+		SpiraCustomPropertyValue spiraCustomPropertyValue =
+			getSpiraCustomPropertyValue(
+				SpiraTestCaseProductVersion.CUSTOM_PROPERTY_NAME);
 
-			if (spiraCustomPropertyValue instanceof
-					SpiraTestCaseProductVersion) {
+		if (spiraCustomPropertyValue == null) {
+			return null;
+		}
 
-				_spiraTestCaseProductVersion =
-					(SpiraTestCaseProductVersion)spiraCustomPropertyValue;
-
-				return _spiraTestCaseProductVersion;
-			}
+		if (spiraCustomPropertyValue instanceof SpiraTestCaseProductVersion) {
+			return (SpiraTestCaseProductVersion)spiraCustomPropertyValue;
 		}
 
 		return null;

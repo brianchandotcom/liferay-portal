@@ -103,7 +103,7 @@
 					"type": "string"
 				},
 				"defaultValue": {
-					"title": "The Defaultvalue Schema",
+					"title": "The DefaultValue Schema",
 					"type": [
 						"boolean",
 						"object",
@@ -230,7 +230,7 @@
 		"fieldColorPicker": {
 			"properties": {
 				"defaultValue": {
-					"title": "The defaultValue schema",
+					"title": "The DefaultValue schema",
 					"type": "string"
 				}
 			}

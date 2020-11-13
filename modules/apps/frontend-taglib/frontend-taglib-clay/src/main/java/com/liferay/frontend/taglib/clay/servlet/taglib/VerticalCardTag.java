@@ -14,9 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
-import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -33,195 +31,99 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Julien Castelain
  */
-public class VerticalCardTag extends BaseContainerTag {
+public class VerticalCardTag extends BaseCardTag {
 
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		if (getIcon() == null) {
+			setIcon("document-default");
+		}
+
 		return super.doStartTag();
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
-		if ((_actionDropdownItems == null) && (_verticalCard != null)) {
-			return _verticalCard.getActionDropdownItems();
-		}
-
-		return _actionDropdownItems;
-	}
-
 	@Override
-	public String getCssClass() {
-		if ((super.getCssClass() == null) && (_verticalCard != null)) {
-			if (_verticalCard.getCssClass() != null) {
-				return _verticalCard.getCssClass();
-			}
-
-			if (_verticalCard.getElementClasses() != null) {
-				return _verticalCard.getElementClasses();
-			}
-		}
-
-		return super.getCssClass();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Map<String, String> getData() {
-		if ((super.getData() == null) && (_verticalCard != null)) {
-			return _verticalCard.getData();
-		}
-
-		return super.getData();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getDefaultEventHandler() {
-		if ((super.getDefaultEventHandler() == null) &&
-			(_verticalCard != null)) {
-
-			return _verticalCard.getDefaultEventHandler();
-		}
-
-		return super.getDefaultEventHandler();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getCssClass()}
-	 */
-	@Deprecated
-	@Override
-	public String getElementClasses() {
-		if ((super.getCssClass() == null) && (_verticalCard != null)) {
-			return _verticalCard.getElementClasses();
-		}
-
-		return super.getCssClass();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getGroupName() {
-		return _groupName;
-	}
-
-	public String getHref() {
-		if ((_href == null) && (_verticalCard != null)) {
-			return _verticalCard.getHref();
-		}
-
-		return _href;
-	}
-
 	public String getIcon() {
-		if ((_icon == null) && (_verticalCard != null)) {
-			return _verticalCard.getIcon();
+		String icon = super.getIcon();
+
+		if ((icon == null) && (getVerticalCard() != null) &&
+			(getVerticalCard().getIcon() != null)) {
+
+			return getVerticalCard().getIcon();
 		}
 
-		return "documents-and-media";
-	}
-
-	@Override
-	public String getId() {
-		if ((super.getId() == null) && (_verticalCard != null)) {
-			return _verticalCard.getId();
-		}
-
-		return super.getId();
+		return icon;
 	}
 
 	public String getImageAlt() {
-		if ((_imageAlt == null) && (_verticalCard != null)) {
-			return _verticalCard.getImageAlt();
+		if ((_imageAlt == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getImageAlt();
 		}
 
 		return _imageAlt;
 	}
 
 	public String getImageSrc() {
-		if ((_imageSrc == null) && (_verticalCard != null)) {
-			return _verticalCard.getImageSrc();
+		if ((_imageSrc == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getImageSrc();
 		}
 
 		return _imageSrc;
 	}
 
-	public String getInputName() {
-		if ((_inputName == null) && (_verticalCard != null)) {
-			return _verticalCard.getInputName();
-		}
-
-		return _inputName;
-	}
-
-	public String getInputValue() {
-		if ((_inputValue == null) && (_verticalCard != null)) {
-			return _verticalCard.getInputValue();
-		}
-
-		return _inputValue;
-	}
-
 	public List<LabelItem> getLabels() {
-		if ((_labels == null) && (_verticalCard != null)) {
-			return _verticalCard.getLabels();
+		if ((_labels == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getLabels();
 		}
 
 		return _labels;
 	}
 
 	public Map<String, String> getLabelStylesMap() {
-		if ((_labelStylesMap == null) && (_verticalCard != null)) {
-			return _verticalCard.getLabelStylesMap();
+		if ((_labelStylesMap == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getLabelStylesMap();
 		}
 
 		return _labelStylesMap;
 	}
 
 	public String getStickerCssClass() {
-		if ((_stickerCssClass == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerCssClass();
+		if ((_stickerCssClass == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerCssClass();
 		}
 
 		return _stickerCssClass;
 	}
 
 	public String getStickerIcon() {
-		if ((_stickerIcon == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerIcon();
+		if ((_stickerIcon == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerIcon();
 		}
 
 		return _stickerIcon;
 	}
 
 	public String getStickerImageAlt() {
-		if ((_stickerImageAlt == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerImageAlt();
+		if ((_stickerImageAlt == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerImageAlt();
 		}
 
 		return _stickerImageAlt;
 	}
 
 	public String getStickerImageSrc() {
-		if ((_stickerImageSrc == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerImageSrc();
+		if ((_stickerImageSrc == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerImageSrc();
 		}
 
 		return _stickerImageSrc;
 	}
 
 	public String getStickerLabel() {
-		if ((_stickerLabel == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerLabel();
+		if ((_stickerLabel == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerLabel();
 		}
 
 		return LanguageUtil.get(
@@ -230,24 +132,24 @@ public class VerticalCardTag extends BaseContainerTag {
 	}
 
 	public String getStickerShape() {
-		if ((_stickerShape == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerShape();
+		if ((_stickerShape == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerShape();
 		}
 
 		return _stickerShape;
 	}
 
 	public String getStickerStyle() {
-		if ((_stickerStyle == null) && (_verticalCard != null)) {
-			return _verticalCard.getStickerStyle();
+		if ((_stickerStyle == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getStickerStyle();
 		}
 
 		return _stickerStyle;
 	}
 
 	public String getSubtitle() {
-		if ((_subtitle == null) && (_verticalCard != null)) {
-			return _verticalCard.getSubtitle();
+		if ((_subtitle == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getSubtitle();
 		}
 
 		return LanguageUtil.get(
@@ -255,8 +157,8 @@ public class VerticalCardTag extends BaseContainerTag {
 	}
 
 	public String getTitle() {
-		if ((_title == null) && (_verticalCard != null)) {
-			return _verticalCard.getTitle();
+		if ((_title == null) && (getVerticalCard() != null)) {
+			return getVerticalCard().getTitle();
 		}
 
 		return LanguageUtil.get(
@@ -264,25 +166,13 @@ public class VerticalCardTag extends BaseContainerTag {
 	}
 
 	public VerticalCard getVerticalCard() {
-		return _verticalCard;
-	}
-
-	public Boolean isDisabled() {
-		if (_disabled == null) {
-			if (_verticalCard != null) {
-				return _verticalCard.isDisabled();
-			}
-
-			return false;
-		}
-
-		return _disabled;
+		return (VerticalCard)getCardModel();
 	}
 
 	public Boolean isFlushHorizontal() {
 		if (_flushHorizontal == null) {
-			if (_verticalCard != null) {
-				return _verticalCard.isFlushHorizontal();
+			if (getVerticalCard() != null) {
+				return getVerticalCard().isFlushHorizontal();
 			}
 
 			return false;
@@ -293,46 +183,14 @@ public class VerticalCardTag extends BaseContainerTag {
 
 	public Boolean isFlushVertical() {
 		if (_flushVertical == null) {
-			if (_verticalCard != null) {
-				return _verticalCard.isFlushVertical();
+			if (getVerticalCard() != null) {
+				return getVerticalCard().isFlushVertical();
 			}
 
 			return false;
 		}
 
 		return _flushVertical;
-	}
-
-	public Boolean isSelectable() {
-		if (_selectable == null) {
-			if (_verticalCard != null) {
-				return _verticalCard.isSelectable();
-			}
-
-			return true;
-		}
-
-		return _selectable;
-	}
-
-	public Boolean isSelected() {
-		if (_selected == null) {
-			if (_verticalCard != null) {
-				return _verticalCard.isSelected();
-			}
-
-			return false;
-		}
-
-		return _selected;
-	}
-
-	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
-		_actionDropdownItems = actionDropdownItems;
-	}
-
-	public void setDisabled(Boolean disabled) {
-		_disabled = disabled;
 	}
 
 	public void setFlushHorizontal(boolean flushHorizontal) {
@@ -343,22 +201,6 @@ public class VerticalCardTag extends BaseContainerTag {
 		_flushVertical = flushVertical;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setGroupName(String groupName) {
-		_groupName = groupName;
-	}
-
-	public void setHref(String href) {
-		_href = href;
-	}
-
-	public void setIcon(String icon) {
-		_icon = icon;
-	}
-
 	public void setImageAlt(String imageAlt) {
 		_imageAlt = imageAlt;
 	}
@@ -367,36 +209,12 @@ public class VerticalCardTag extends BaseContainerTag {
 		_imageSrc = imageSrc;
 	}
 
-	public void setInputName(String inputName) {
-		_inputName = inputName;
-	}
-
-	public void setInputValue(String inputValue) {
-		_inputValue = inputValue;
-	}
-
 	public void setLabels(List<LabelItem> labels) {
 		_labels = labels;
 	}
 
 	public void setLabelStylesMap(Map<String, String> labelStylesMap) {
 		_labelStylesMap = labelStylesMap;
-	}
-
-	public void setSelectable(Boolean selectable) {
-		_selectable = selectable;
-	}
-
-	public void setSelected(Boolean selected) {
-		_selected = selected;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
 	}
 
 	public void setStickerCssClass(String stickerCssClass) {
@@ -436,29 +254,19 @@ public class VerticalCardTag extends BaseContainerTag {
 	}
 
 	public void setVerticalCard(VerticalCard verticalCard) {
-		_verticalCard = verticalCard;
+		setCardModel(verticalCard);
 	}
 
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_actionDropdownItems = null;
-		_disabled = null;
 		_flushHorizontal = null;
 		_flushVertical = null;
-		_groupName = null;
-		_href = null;
-		_icon = null;
 		_imageAlt = null;
 		_imageSrc = null;
-		_inputName = null;
-		_inputValue = null;
 		_labels = null;
 		_labelStylesMap = null;
-		_selectable = null;
-		_selected = null;
-		_spritemap = null;
 		_stickerCssClass = null;
 		_stickerIcon = null;
 		_stickerImageAlt = null;
@@ -468,7 +276,6 @@ public class VerticalCardTag extends BaseContainerTag {
 		_stickerStyle = null;
 		_subtitle = null;
 		_title = null;
-		_verticalCard = null;
 	}
 
 	@Override
@@ -478,22 +285,14 @@ public class VerticalCardTag extends BaseContainerTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
-		props.put("actions", getActionDropdownItems());
 		props.put("description", getSubtitle());
-		props.put("disabled", isDisabled());
 		props.put("displayType", _getDisplayType());
 		props.put("flushHorizontal", isFlushHorizontal());
 		props.put("flushVertical", isFlushVertical());
-		props.put("href", getHref());
-		props.put("id", getId());
 		props.put("imageAlt", getImageAlt());
 		props.put("imageSrc", getImageSrc());
-		props.put("inputName", getInputName());
-		props.put("inputValue", getInputValue());
 		props.put("labels", getLabels());
 		props.put("labelStylesMap", getLabelStylesMap());
-		props.put("selectable", isSelectable());
-		props.put("selected", isSelected());
 		props.put("stickerCssClass", getStickerCssClass());
 		props.put("stickerIcon", getStickerIcon());
 		props.put("stickerImageAlt", getStickerImageAlt());
@@ -501,7 +300,6 @@ public class VerticalCardTag extends BaseContainerTag {
 		props.put("stickerLabel", getStickerLabel());
 		props.put("stickerShape", getStickerShape());
 		props.put("stickerStyle", getStickerStyle());
-		props.put("symbol", getIcon());
 		props.put("title", getTitle());
 
 		return super.prepareProps(props);
@@ -771,7 +569,7 @@ public class VerticalCardTag extends BaseContainerTag {
 	}
 
 	private String _getDisplayType() {
-		if (Validator.isNotNull(_imageSrc)) {
+		if (Validator.isNotNull(getImageSrc())) {
 			return "image";
 		}
 
@@ -780,22 +578,12 @@ public class VerticalCardTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:verticalcard:";
 
-	private List<DropdownItem> _actionDropdownItems;
-	private Boolean _disabled;
 	private Boolean _flushHorizontal;
 	private Boolean _flushVertical;
-	private String _groupName;
-	private String _href;
-	private String _icon;
 	private String _imageAlt;
 	private String _imageSrc;
-	private String _inputName;
-	private String _inputValue;
 	private List<LabelItem> _labels;
 	private Map<String, String> _labelStylesMap;
-	private Boolean _selectable;
-	private Boolean _selected;
-	private String _spritemap;
 	private String _stickerCssClass;
 	private String _stickerIcon;
 	private String _stickerImageAlt;
@@ -805,6 +593,5 @@ public class VerticalCardTag extends BaseContainerTag {
 	private String _stickerStyle;
 	private String _subtitle;
 	private String _title;
-	private VerticalCard _verticalCard;
 
 }

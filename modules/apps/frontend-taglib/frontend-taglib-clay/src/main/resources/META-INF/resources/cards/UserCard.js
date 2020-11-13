@@ -29,6 +29,7 @@ export default function UserCard({
 	portletNamespace: _portletNamespace,
 	selected: initialSelected,
 	selectable,
+	symbol,
 	...otherProps
 }) {
 	const [selected, setSelected] = useState(initialSelected);
@@ -73,6 +74,7 @@ export default function UserCard({
 					: null
 			}
 			selected={selected}
+			userSymbol={symbol}
 			{...otherProps}
 		/>
 	);

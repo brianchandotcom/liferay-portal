@@ -14,15 +14,12 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
-import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,7 +29,7 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Marko Cikos
  */
-public class HorizontalCardTag extends BaseContainerTag {
+public class HorizontalCardTag extends BaseCardTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -51,185 +48,34 @@ public class HorizontalCardTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
-		if ((_actionDropdownItems == null) && (_horizontalCard != null)) {
-			return _horizontalCard.getActionDropdownItems();
-		}
-
-		return _actionDropdownItems;
+	public HorizontalCard getHorizontalCard() {
+		return (HorizontalCard)getCardModel();
 	}
 
 	@Override
-	public String getCssClass() {
-		if ((super.getCssClass() == null) && (_horizontalCard != null)) {
-			if (_horizontalCard.getCssClass() != null) {
-				return _horizontalCard.getCssClass();
-			}
-
-			if (_horizontalCard.getElementClasses() != null) {
-				return _horizontalCard.getElementClasses();
-			}
-		}
-
-		return super.getCssClass();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public Map<String, String> getData() {
-		if ((_data == null) && (_horizontalCard != null)) {
-			return _horizontalCard.getData();
-		}
-
-		return _data;
-	}
-
-	public String getHref() {
-		if ((_href == null) && (_horizontalCard != null)) {
-			return _horizontalCard.getHref();
-		}
-
-		return _href;
-	}
-
 	public String getIcon() {
-		if (_icon == null) {
-			if ((_horizontalCard != null) &&
-				(_horizontalCard.getIcon() != null)) {
+		String icon = super.getIcon();
 
-				return _horizontalCard.getIcon();
-			}
-
+		if (icon == null) {
 			return "folder";
 		}
 
-		return _icon;
-	}
-
-	@Override
-	public String getId() {
-		if ((super.getId() == null) && (_horizontalCard != null)) {
-			return _horizontalCard.getId();
-		}
-
-		return super.getId();
-	}
-
-	public String getInputName() {
-		if ((_inputName == null) && (_horizontalCard != null)) {
-			return _horizontalCard.getInputName();
-		}
-
-		return _inputName;
-	}
-
-	public String getInputValue() {
-		if ((_inputValue == null) && (_horizontalCard != null)) {
-			return _horizontalCard.getInputValue();
-		}
-
-		return _inputValue;
+		return icon;
 	}
 
 	public String getTitle() {
 		String title = _title;
 
-		if ((_title == null) && (_horizontalCard != null)) {
-			title = _horizontalCard.getTitle();
+		if ((_title == null) && (getHorizontalCard() != null)) {
+			title = getHorizontalCard().getTitle();
 		}
 
 		return LanguageUtil.get(
 			TagResourceBundleUtil.getResourceBundle(pageContext), title);
 	}
 
-	public Boolean isDisabled() {
-		if (_disabled == null) {
-			if (_horizontalCard != null) {
-				return _horizontalCard.isDisabled();
-			}
-
-			return false;
-		}
-
-		return _disabled;
-	}
-
-	public Boolean isSelectable() {
-		if (_selectable == null) {
-			if (_horizontalCard != null) {
-				return _horizontalCard.isSelectable();
-			}
-
-			return false;
-		}
-
-		return _selectable;
-	}
-
-	public Boolean isSelected() {
-		if (_selected == null) {
-			if (_horizontalCard != null) {
-				return _horizontalCard.isSelected();
-			}
-
-			return false;
-		}
-
-		return _selected;
-	}
-
-	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
-		_actionDropdownItems = actionDropdownItems;
-	}
-
-	public void setDisabled(Boolean disabled) {
-		_disabled = disabled;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setGroupName(String groupName) {
-		_groupName = groupName;
-	}
-
 	public void setHorizontalCard(HorizontalCard horizontalCard) {
-		_horizontalCard = horizontalCard;
-	}
-
-	public void setHref(String href) {
-		_href = href;
-	}
-
-	public void setIcon(String icon) {
-		_icon = icon;
-	}
-
-	public void setInputName(String inputName) {
-		_inputName = inputName;
-	}
-
-	public void setInputValue(String inputValue) {
-		_inputValue = inputValue;
-	}
-
-	public void setSelectable(Boolean selectable) {
-		_selectable = selectable;
-	}
-
-	public void setSelected(Boolean selected) {
-		_selected = selected;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
+		setCardModel(horizontalCard);
 	}
 
 	public void setTitle(String title) {
@@ -240,18 +86,6 @@ public class HorizontalCardTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_actionDropdownItems = null;
-		_data = null;
-		_disabled = null;
-		_groupName = null;
-		_horizontalCard = null;
-		_href = null;
-		_icon = null;
-		_inputName = null;
-		_inputValue = null;
-		_selectable = null;
-		_selected = null;
-		_spritemap = null;
 		_title = null;
 	}
 
@@ -262,14 +96,6 @@ public class HorizontalCardTag extends BaseContainerTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
-		props.put("actions", getActionDropdownItems());
-		props.put("disabled", isDisabled());
-		props.put("href", getHref());
-		props.put("inputName", getInputName());
-		props.put("inputValue", getInputValue());
-		props.put("selectable", isSelectable());
-		props.put("selected", isSelected());
-		props.put("symbol", getIcon());
 		props.put("title", getTitle());
 
 		return super.prepareProps(props);
@@ -415,18 +241,6 @@ public class HorizontalCardTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:horizontal-card:";
 
-	private List<DropdownItem> _actionDropdownItems;
-	private Map<String, String> _data;
-	private Boolean _disabled;
-	private String _groupName;
-	private HorizontalCard _horizontalCard;
-	private String _href;
-	private String _icon;
-	private String _inputName;
-	private String _inputValue;
-	private Boolean _selectable;
-	private Boolean _selected;
-	private String _spritemap;
 	private String _title;
 
 }

@@ -26,6 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutListRetrieverContext {
 
+	public Optional<long[]> getAssetCategoryIdsOptional();
+
 	public Optional<Pagination> getPaginationOptional();
 
 	public Optional<long[]> getSegmentsExperienceIdsOptional();

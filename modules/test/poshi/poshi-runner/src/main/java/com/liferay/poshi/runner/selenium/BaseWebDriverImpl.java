@@ -142,7 +142,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		initKeysSpecialChars();
 
 		setDefaultWindowHandle(webDriver.getWindowHandle());
-		setNavigationBarHeight(120);
 
 		System.setProperty("java.awt.headless", "false");
 
@@ -4702,7 +4701,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private String _defaultWindowHandle;
 	private Stack<WebElement> _frameWebElements = new Stack<>();
 	private final Map<String, String> _keysSpecialChars = new HashMap<>();
-	private int _navigationBarHeight;
+	private int _navigationBarHeight = 120;
 	private final String _ocularResultImageDirName;
 	private final String _ocularSnapImageDirName;
 	private final String _outputDirName;

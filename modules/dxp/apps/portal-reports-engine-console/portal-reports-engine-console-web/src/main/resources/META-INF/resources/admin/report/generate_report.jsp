@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 	<portlet:param name="redirect" value="<%= searchRequestsURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= generateReportURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= generateReportURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="definitionId" type="hidden" value="<%= definition.getDefinitionId() %>" />
 
 	<portlet:renderURL var="generatedReportsURL">

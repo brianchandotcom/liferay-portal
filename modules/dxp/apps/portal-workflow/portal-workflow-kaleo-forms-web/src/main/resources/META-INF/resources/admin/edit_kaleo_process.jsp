@@ -76,7 +76,7 @@ renderResponse.setTitle(title);
 	<portlet:param name="redirect" value="<%= backPortletURL.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editKaleoProcessURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editKaleoProcessURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="kaleoProcessId" type="hidden" value="<%= kaleoProcessId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="scope" type="hidden" value="1" />

@@ -62,7 +62,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 	Group group = GroupLocalServiceUtil.getGroup(segmentsEntry.getGroupId());
 	%>
 
-	<c:if test="<%= segmentsDisplayContext.isRoleSegmentationEnabled() && !group.isCompany() && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
+	<c:if test="<%= !group.isCompany() && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.ASSIGN_USER_ROLES) %>">
 
 		<%
 		ItemSelector itemSelector = (ItemSelector)request.getAttribute(SegmentsWebKeys.ITEM_SELECTOR);
@@ -77,6 +77,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		%>
 
 		<liferay-ui:icon
+			cssClass='<%= segmentsDisplayContext.isRoleSegmentationEnabled() ? "action disabled hide" : "action disabled" %>'
 			data='<%=
 				HashMapBuilder.<String, Object>put(
 					"itemSelectorURL", itemSelectorURL.toString()

@@ -101,7 +101,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 					<c:if test="<%= Validator.isNotNull(logoURL) %>">
 						<p>
-							<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="center-block img-responsive" src="<%= logoURL %>" />
+							<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="center-block img-fluid" src="<%= logoURL %>" />
 						</p>
 					</c:if>
 

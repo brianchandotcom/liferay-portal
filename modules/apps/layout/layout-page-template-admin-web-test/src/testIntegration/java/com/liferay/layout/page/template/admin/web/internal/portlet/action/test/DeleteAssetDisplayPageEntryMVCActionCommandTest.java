@@ -21,9 +21,7 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -38,10 +36,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -66,64 +60,48 @@ public class DeleteAssetDisplayPageEntryMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_classNameId = _portal.getClassNameId(AssetEntry.class.getName());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, TestPropsValues.getUserId());
-
-		_assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), _classNameId,
-				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-				AssetDisplayPageConstants.TYPE_SPECIFIC, _serviceContext);
-
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-	}
-
-	@After
-	public void tearDown() {
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
 	public void testDeleteAssetDisplayPageEntryMVCActionCommand()
 		throws Exception {
 
-		ActionRequest actionRequest = _getMockLiferayPortletActionRequest();
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
-		_mvcActionCommand.processAction(actionRequest, actionResponse);
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_portal.getClassNameId(AssetEntry.class.getName()),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(assetDisplayPageEntry),
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertNull(
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				_assetDisplayPageEntry.getAssetDisplayPageEntryId()));
+				assetDisplayPageEntry.getAssetDisplayPageEntryId()));
 	}
 
-	private MockLiferayPortletActionRequest
-		_getMockLiferayPortletActionRequest() {
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+		AssetDisplayPageEntry assetDisplayPageEntry) {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setParameter(
 			"assetDisplayPageEntryId",
-			String.valueOf(
-				_assetDisplayPageEntry.getAssetDisplayPageEntryId()));
+			String.valueOf(assetDisplayPageEntry.getAssetDisplayPageEntryId()));
 
 		return mockLiferayPortletActionRequest;
 	}
 
-	private AssetDisplayPageEntry _assetDisplayPageEntry;
-
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
-
-	private long _classNameId;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -135,7 +113,5 @@ public class DeleteAssetDisplayPageEntryMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
-
-	private ServiceContext _serviceContext;
 
 }

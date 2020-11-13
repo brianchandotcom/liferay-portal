@@ -20,5 +20,5 @@
 	cssClass="<%= cssClass %>"
 	position="bottom-left"
 >
-	<img alt="thumbnail" class="img-responsive" src="<%= src %>" />
+	<img alt="thumbnail" class="img-fluid" src="<%= src %>" />
 </clay:sticker>

@@ -154,7 +154,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 									<div class="list-group-item-field">
 										<div class="click-selector user-icon user-icon-square user-icon-xl">
-											<img alt="thumbnail" class="img-responsive img-rounded" src="<%= thumbnailSrc %>" />
+											<img alt="thumbnail" class="img-fluid rounded" src="<%= thumbnailSrc %>" />
 										</div>
 									</div>
 

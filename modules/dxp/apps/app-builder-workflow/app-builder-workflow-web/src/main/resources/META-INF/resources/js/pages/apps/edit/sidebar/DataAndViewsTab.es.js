@@ -14,24 +14,29 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {AppContext} from 'app-builder-web/js/AppContext.es';
 import SelectObjects from 'app-builder-web/js/components/select-objects/SelectObjects.es';
 import {
 	UPDATE_APP,
 	UPDATE_DATA_LAYOUT_ID,
 	UPDATE_DATA_LIST_VIEW_ID,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {sub} from 'app-builder-web/js/utils/lang.es';
+import {getLocalizedValue, sub} from 'app-builder-web/js/utils/lang.es';
+import {successToast} from 'app-builder-web/js/utils/toast.es';
 import {concatValues} from 'app-builder-web/js/utils/utils.es';
 import classNames from 'classnames';
 import {DataDefinitionUtils} from 'data-engine-taglib';
-import React from 'react';
+import {openModal} from 'frontend-js-web';
+import React, {useContext} from 'react';
 
 import SelectDropdown from '../../../../components/select-dropdown/SelectDropdown.es';
+import {getFormViews} from '../actions.es';
 import {
 	ADD_STEP_FORM_VIEW,
 	REMOVE_STEP_FORM_VIEW,
 	UPDATE_DATA_OBJECT,
 	UPDATE_FORM_VIEW,
+	UPDATE_LIST_ITEMS,
 	UPDATE_STEP_FORM_VIEW,
 	UPDATE_STEP_FORM_VIEW_READONLY,
 	UPDATE_TABLE_VIEW,
@@ -105,6 +110,7 @@ export default function DataAndViewsTab({
 	dispatch,
 	dispatchConfig,
 }) {
+	const {objectsPortletURL} = useContext(AppContext);
 	const {
 		appWorkflowDataLayoutLinks: stepFormViews = [],
 		errors: {
@@ -189,6 +195,57 @@ export default function DataAndViewsTab({
 			...tableView,
 			type: UPDATE_DATA_LIST_VIEW_ID,
 		});
+	};
+
+	const openFormViewModal = (dataDefinitionId, defaultLanguageId) => {
+		window.top?.Liferay.on('newFormViewCreated', ({newFormView}) => {
+			successToast(
+				Liferay.Language.get('the-form-view-was-saved-successfully')
+			);
+
+			getFormViews(dataDefinitionId, defaultLanguageId).then(
+				(formViews) => {
+					dispatchConfig({
+						listItems: {
+							fetching: false,
+							formViews,
+						},
+						type: UPDATE_LIST_ITEMS,
+					});
+				}
+			);
+
+			updateFormView({
+				...newFormView,
+				name: getLocalizedValue(defaultLanguageId, newFormView.name),
+			});
+		});
+
+		openModal({
+			title: Liferay.Language.get('new-form-view'),
+			url: Liferay.Util.PortletURL.createRenderURL(objectsPortletURL, {
+				dataDefinitionId,
+				mvcRenderCommandName: '/app_builder/edit_form_view',
+				newCustomObject: true,
+				p_p_state: 'pop_up',
+			}),
+		});
+	};
+
+	const onCreateObject = (newObject) => {
+		const {defaultLanguageId, id, name} = newObject;
+
+		successToast(
+			Liferay.Language.get('the-object-was-created-successfully')
+		);
+
+		updateDataObject({
+			...newObject,
+			name: getLocalizedValue(defaultLanguageId, name),
+			type: 'custom',
+		});
+
+		openFormViewModal(id, defaultLanguageId);
 	};
 
 	const duplicatedFieldsMessage =
@@ -351,6 +408,7 @@ export default function DataAndViewsTab({
 
 						<SelectObjects
 							label={Liferay.Language.get('select-object')}
+							onCreateObject={onCreateObject}
 							onSelect={updateDataObject}
 							selectedValue={dataObject}
 						/>

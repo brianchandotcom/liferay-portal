@@ -14,7 +14,7 @@
 							</#if>
 
 							<#if entry.isThumbnailVisible()>
-								<img alt="${languageUtil.get(locale, "thumbnail")}" class="img-rounded search-result-thumbnail-img" src="${entry.getThumbnailURLString()}" />
+								<img alt="${languageUtil.get(locale, "thumbnail")}" class="rounded search-result-thumbnail-img" src="${entry.getThumbnailURLString()}" />
 							</#if>
 
 							<#if entry.isIconVisible()>

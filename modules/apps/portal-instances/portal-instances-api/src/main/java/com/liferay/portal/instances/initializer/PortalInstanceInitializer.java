@@ -26,8 +26,7 @@ public interface PortalInstanceInitializer {
 
 	public String getKey();
 
-	public void initialize(String webId, String virtualHostname, String mx)
-		throws InitializationException;
+	public void initialize(long companyId) throws InitializationException;
 
 	public boolean isActive();
 

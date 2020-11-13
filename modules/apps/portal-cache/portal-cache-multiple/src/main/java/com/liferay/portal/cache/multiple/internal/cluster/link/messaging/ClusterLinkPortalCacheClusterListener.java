@@ -14,9 +14,10 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link.messaging;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEventType;
-import com.liferay.portal.cache.multiple.internal.PortalCacheManagerUtil;
 import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -31,7 +32,10 @@ import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,6 +47,27 @@ import org.osgi.service.component.annotations.Reference;
 	service = MessageListener.class
 )
 public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<PortalCacheManager<? extends Serializable, ?>>)
+				(Class<?>)PortalCacheManager.class,
+			null,
+			(serviceReference, emitter) -> {
+				PortalCacheManager<? extends Serializable, ?>
+					portalCacheManager = bundleContext.getService(
+						serviceReference);
+
+				emitter.emit(portalCacheManager.getPortalCacheManagerName());
+			});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -66,7 +91,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		PortalCacheClusterEvent portalCacheClusterEvent) {
 
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
-			PortalCacheManagerUtil.getPortalCacheManager(
+			_serviceTrackerMap.getService(
 				portalCacheClusterEvent.getPortalCacheManagerName());
 
 		if (portalCacheManager == null) {
@@ -122,5 +147,9 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
+
+	private ServiceTrackerMap
+		<String, PortalCacheManager<? extends Serializable, ?>>
+			_serviceTrackerMap;
 
 }

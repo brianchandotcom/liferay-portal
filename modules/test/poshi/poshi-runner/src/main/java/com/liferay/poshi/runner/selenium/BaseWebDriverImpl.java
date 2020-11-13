@@ -166,6 +166,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				sikuliImagesDirName, "//", "\\");
 			sikuliImagesDirName = StringUtil.replace(
 				sikuliImagesDirName, "linux", "windows");
+
 			testDependenciesDirName = StringUtil.replace(
 				testDependenciesDirName, "//", "\\");
 		}

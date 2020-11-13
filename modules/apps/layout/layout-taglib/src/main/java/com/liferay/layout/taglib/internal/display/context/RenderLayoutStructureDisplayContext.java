@@ -155,6 +155,8 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
+		defaultLayoutListRetrieverContext.setAssetCategoryIdsOptional(
+			_getAssetCategoryIds());
 		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
 			_getSegmentsExperienceIds());
 		defaultLayoutListRetrieverContext.setPagination(
@@ -729,6 +731,17 @@ public class RenderLayoutStructureDisplayContext {
 		return "var(--" + cssVariable + ")";
 	}
 
+	private long[] _getAssetCategoryIds() {
+		if (_assetCategoryIds != null) {
+			return _assetCategoryIds;
+		}
+
+		_assetCategoryIds = GetterUtil.getLongValues(
+			_httpServletRequest.getAttribute("ASSET_CATEGORY_IDS"));
+
+		return _assetCategoryIds;
+	}
+
 	private String _getBackgroundImage(JSONObject rowConfigJSONObject)
 		throws Exception {
 
@@ -1117,6 +1130,7 @@ public class RenderLayoutStructureDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderLayoutStructureDisplayContext.class);
 
+	private long[] _assetCategoryIds;
 	private final Map<String, Object> _fieldValues;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;

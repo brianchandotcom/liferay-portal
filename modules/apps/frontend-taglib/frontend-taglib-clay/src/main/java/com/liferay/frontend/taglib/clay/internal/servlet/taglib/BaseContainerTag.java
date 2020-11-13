@@ -344,7 +344,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 			jspWriter.write(">");
 		}
 
-		return EVAL_BODY_INCLUDE;
+		return EVAL_PAGE;
 	}
 
 	protected int processStartTag() throws Exception {

@@ -1,157 +1,157 @@
 [
 	{
-		"regionCode": "MX-AGS",
+		"active": true,
 		"name": "Aguascalientes",
-		"active": true
+		"regionCode": "MX-AGS"
 	},
 	{
-		"regionCode": "MX-BCN",
+		"active": true,
 		"name": "Baja California",
-		"active": true
+		"regionCode": "MX-BCN"
 	},
 	{
-		"regionCode": "MX-BCS",
+		"active": true,
 		"name": "Baja California Sur",
-		"active": true
+		"regionCode": "MX-BCS"
 	},
 	{
-		"regionCode": "MX-CAM",
+		"active": true,
 		"name": "Campeche",
-		"active": true
+		"regionCode": "MX-CAM"
 	},
 	{
-		"regionCode": "MX-CHP",
+		"active": true,
 		"name": "Chiapas",
-		"active": true
+		"regionCode": "MX-CHP"
 	},
 	{
-		"regionCode": "MX-CHI",
+		"active": true,
 		"name": "Chihuahua",
-		"active": true
+		"regionCode": "MX-CHI"
 	},
 	{
-		"regionCode": "MX-COA",
+		"active": true,
 		"name": "Coahuila",
-		"active": true
+		"regionCode": "MX-COA"
 	},
 	{
-		"regionCode": "MX-COL",
+		"active": true,
 		"name": "Colima",
-		"active": true
+		"regionCode": "MX-COL"
 	},
 	{
-		"regionCode": "MX-DUR",
+		"active": true,
 		"name": "Durango",
-		"active": true
+		"regionCode": "MX-DUR"
 	},
 	{
-		"regionCode": "MX-GTO",
+		"active": true,
 		"name": "Guanajuato",
-		"active": true
+		"regionCode": "MX-GTO"
 	},
 	{
-		"regionCode": "MX-GRO",
+		"active": true,
 		"name": "Guerrero",
-		"active": true
+		"regionCode": "MX-GRO"
 	},
 	{
-		"regionCode": "MX-HGO",
+		"active": true,
 		"name": "Hidalgo",
-		"active": true
+		"regionCode": "MX-HGO"
 	},
 	{
-		"regionCode": "MX-JAL",
+		"active": true,
 		"name": "Jalisco",
-		"active": true
+		"regionCode": "MX-JAL"
 	},
 	{
-		"regionCode": "MX-MEX",
+		"active": true,
 		"name": "Mexico",
-		"active": true
+		"regionCode": "MX-MEX"
 	},
 	{
-		"regionCode": "MX-MIC",
+		"active": true,
 		"name": "Michoacan",
-		"active": true
+		"regionCode": "MX-MIC"
 	},
 	{
-		"regionCode": "MX-MOR",
+		"active": true,
 		"name": "Morelos",
-		"active": true
+		"regionCode": "MX-MOR"
 	},
 	{
-		"regionCode": "MX-NAY",
+		"active": true,
 		"name": "Nayarit",
-		"active": true
+		"regionCode": "MX-NAY"
 	},
 	{
-		"regionCode": "MX-NLE",
+		"active": true,
 		"name": "Nuevo Leon",
-		"active": true
+		"regionCode": "MX-NLE"
 	},
 	{
-		"regionCode": "MX-OAX",
+		"active": true,
 		"name": "Oaxaca",
-		"active": true
+		"regionCode": "MX-OAX"
 	},
 	{
-		"regionCode": "MX-PUE",
+		"active": true,
 		"name": "Puebla",
-		"active": true
+		"regionCode": "MX-PUE"
 	},
 	{
-		"regionCode": "MX-QRO",
+		"active": true,
 		"name": "Queretaro",
-		"active": true
+		"regionCode": "MX-QRO"
 	},
 	{
-		"regionCode": "MX-ROO",
+		"active": true,
 		"name": "Quintana Roo",
-		"active": true
+		"regionCode": "MX-ROO"
 	},
 	{
-		"regionCode": "MX-SLP",
+		"active": true,
 		"name": "San Luis Potosí",
-		"active": true
+		"regionCode": "MX-SLP"
 	},
 	{
-		"regionCode": "MX-SIN",
+		"active": true,
 		"name": "Sinaloa",
-		"active": true
+		"regionCode": "MX-SIN"
 	},
 	{
-		"regionCode": "MX-SON",
+		"active": true,
 		"name": "Sonora",
-		"active": true
+		"regionCode": "MX-SON"
 	},
 	{
-		"regionCode": "MX-TAB",
+		"active": true,
 		"name": "Tabasco",
-		"active": true
+		"regionCode": "MX-TAB"
 	},
 	{
-		"regionCode": "MX-TAM",
+		"active": true,
 		"name": "Tamaulipas",
-		"active": true
+		"regionCode": "MX-TAM"
 	},
 	{
-		"regionCode": "MX-TLX",
+		"active": true,
 		"name": "Tlaxcala",
-		"active": true
+		"regionCode": "MX-TLX"
 	},
 	{
-		"regionCode": "MX-VER",
+		"active": true,
 		"name": "Veracruz",
-		"active": true
+		"regionCode": "MX-VER"
 	},
 	{
-		"regionCode": "MX-YUC",
+		"active": true,
 		"name": "Yucatan",
-		"active": true
+		"regionCode": "MX-YUC"
 	},
 	{
-		"regionCode": "MX-ZAC",
+		"active": true,
 		"name": "Zacatecas",
-		"active": true
+		"regionCode": "MX-ZAC"
 	}
 ]

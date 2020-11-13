@@ -1,132 +1,132 @@
 [
 	{
-		"regionCode": "A",
+		"active": true,
 		"name": "Alsace",
-		"active": true
+		"regionCode": "A"
 	},
 	{
-		"regionCode": "B",
+		"active": true,
 		"name": "Aquitaine",
-		"active": true
+		"regionCode": "B"
 	},
 	{
-		"regionCode": "C",
+		"active": true,
 		"name": "Auvergne",
-		"active": true
+		"regionCode": "C"
 	},
 	{
-		"regionCode": "P",
+		"active": true,
 		"name": "Basse-Normandie",
-		"active": true
+		"regionCode": "P"
 	},
 	{
-		"regionCode": "D",
+		"active": true,
 		"name": "Bourgogne",
-		"active": true
+		"regionCode": "D"
 	},
 	{
-		"regionCode": "E",
+		"active": true,
 		"name": "Bretagne",
-		"active": true
+		"regionCode": "E"
 	},
 	{
-		"regionCode": "F",
+		"active": true,
 		"name": "Centre",
-		"active": true
+		"regionCode": "F"
 	},
 	{
-		"regionCode": "G",
+		"active": true,
 		"name": "Champagne-Ardenne",
-		"active": true
+		"regionCode": "G"
 	},
 	{
-		"regionCode": "H",
+		"active": true,
 		"name": "Corse",
-		"active": true
+		"regionCode": "H"
 	},
 	{
-		"regionCode": "GF",
+		"active": true,
 		"name": "Guyane",
-		"active": true
+		"regionCode": "GF"
 	},
 	{
-		"regionCode": "I",
+		"active": true,
 		"name": "Franche Comté",
-		"active": true
+		"regionCode": "I"
 	},
 	{
-		"regionCode": "GP",
+		"active": true,
 		"name": "Guadeloupe",
-		"active": true
+		"regionCode": "GP"
 	},
 	{
-		"regionCode": "Q",
+		"active": true,
 		"name": "Haute-Normandie",
-		"active": true
+		"regionCode": "Q"
 	},
 	{
-		"regionCode": "J",
+		"active": true,
 		"name": "Île-de-France",
-		"active": true
+		"regionCode": "J"
 	},
 	{
-		"regionCode": "K",
+		"active": true,
 		"name": "Languedoc-Roussillon",
-		"active": true
+		"regionCode": "K"
 	},
 	{
-		"regionCode": "L",
+		"active": true,
 		"name": "Limousin",
-		"active": true
+		"regionCode": "L"
 	},
 	{
-		"regionCode": "M",
+		"active": true,
 		"name": "Lorraine",
-		"active": true
+		"regionCode": "M"
 	},
 	{
-		"regionCode": "MQ",
+		"active": true,
 		"name": "Martinique",
-		"active": true
+		"regionCode": "MQ"
 	},
 	{
-		"regionCode": "N",
+		"active": true,
 		"name": "Midi-Pyrénées",
-		"active": true
+		"regionCode": "N"
 	},
 	{
-		"regionCode": "O",
+		"active": true,
 		"name": "Nord Pas de Calais",
-		"active": true
+		"regionCode": "O"
 	},
 	{
-		"regionCode": "R",
+		"active": true,
 		"name": "Pays de la Loire",
-		"active": true
+		"regionCode": "R"
 	},
 	{
-		"regionCode": "S",
+		"active": true,
 		"name": "Picardie",
-		"active": true
+		"regionCode": "S"
 	},
 	{
-		"regionCode": "T",
+		"active": true,
 		"name": "Poitou-Charentes",
-		"active": true
+		"regionCode": "T"
 	},
 	{
-		"regionCode": "U",
+		"active": true,
 		"name": "Provence-Alpes-Côte-d'Azur",
-		"active": true
+		"regionCode": "U"
 	},
 	{
-		"regionCode": "RE",
+		"active": true,
 		"name": "Réunion",
-		"active": true
+		"regionCode": "RE"
 	},
 	{
-		"regionCode": "V",
+		"active": true,
 		"name": "Rhône-Alpes",
-		"active": true
+		"regionCode": "V"
 	}
 ]

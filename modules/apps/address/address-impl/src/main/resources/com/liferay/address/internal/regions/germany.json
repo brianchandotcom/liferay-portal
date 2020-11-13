@@ -1,82 +1,82 @@
 [
 	{
-		"regionCode": "BW",
+		"active": true,
 		"name": "Baden-Württemberg",
-		"active": true
+		"regionCode": "BW"
 	},
 	{
-		"regionCode": "BY",
+		"active": true,
 		"name": "Bayern",
-		"active": true
+		"regionCode": "BY"
 	},
 	{
-		"regionCode": "BE",
+		"active": true,
 		"name": "Berlin",
-		"active": true
+		"regionCode": "BE"
 	},
 	{
-		"regionCode": "BB",
+		"active": true,
 		"name": "Brandenburg",
-		"active": true
+		"regionCode": "BB"
 	},
 	{
-		"regionCode": "HB",
+		"active": true,
 		"name": "Bremen",
-		"active": true
+		"regionCode": "HB"
 	},
 	{
-		"regionCode": "HH",
+		"active": true,
 		"name": "Hamburg",
-		"active": true
+		"regionCode": "HH"
 	},
 	{
-		"regionCode": "HE",
+		"active": true,
 		"name": "Hessen",
-		"active": true
+		"regionCode": "HE"
 	},
 	{
-		"regionCode": "MV",
+		"active": true,
 		"name": "Mecklenburg-Vorpommern",
-		"active": true
+		"regionCode": "MV"
 	},
 	{
-		"regionCode": "NI",
+		"active": true,
 		"name": "Niedersachsen",
-		"active": true
+		"regionCode": "NI"
 	},
 	{
-		"regionCode": "NW",
+		"active": true,
 		"name": "Nordrhein-Westfalen",
-		"active": true
+		"regionCode": "NW"
 	},
 	{
-		"regionCode": "RP",
+		"active": true,
 		"name": "Rheinland-Pfalz",
-		"active": true
+		"regionCode": "RP"
 	},
 	{
-		"regionCode": "SL",
+		"active": true,
 		"name": "Saarland",
-		"active": true
+		"regionCode": "SL"
 	},
 	{
-		"regionCode": "SN",
+		"active": true,
 		"name": "Sachsen",
-		"active": true
+		"regionCode": "SN"
 	},
 	{
-		"regionCode": "ST",
+		"active": true,
 		"name": "Sachsen-Anhalt",
-		"active": true
+		"regionCode": "ST"
 	},
 	{
-		"regionCode": "SH",
+		"active": true,
 		"name": "Schleswig-Holstein",
-		"active": true
+		"regionCode": "SH"
 	},
 	{
-		"regionCode": "TH",
+		"active": true,
 		"name": "Thüringen",
-		"active": true
+		"regionCode": "TH"
 	}
 ]

@@ -1,97 +1,97 @@
 [
 	{
-		"regionCode": 1.0,
+		"active": true,
 		"name": "Østfold",
-		"active": true
+		"regionCode": 1.0
 	},
 	{
-		"regionCode": 2.0,
+		"active": true,
 		"name": "Akershus",
-		"active": true
+		"regionCode": 2.0
 	},
 	{
-		"regionCode": 3.0,
+		"active": true,
 		"name": "Oslo",
-		"active": true
+		"regionCode": 3.0
 	},
 	{
-		"regionCode": 4.0,
+		"active": true,
 		"name": "Hedmark",
-		"active": true
+		"regionCode": 4.0
 	},
 	{
-		"regionCode": 5.0,
+		"active": true,
 		"name": "Oppland",
-		"active": true
+		"regionCode": 5.0
 	},
 	{
-		"regionCode": 6.0,
+		"active": true,
 		"name": "Buskerud",
-		"active": true
+		"regionCode": 6.0
 	},
 	{
-		"regionCode": 7.0,
+		"active": true,
 		"name": "Vestfold",
-		"active": true
+		"regionCode": 7.0
 	},
 	{
-		"regionCode": 8.0,
+		"active": true,
 		"name": "Telemark",
-		"active": true
+		"regionCode": 8.0
 	},
 	{
-		"regionCode": 9.0,
+		"active": true,
 		"name": "Aust-Agder",
-		"active": true
+		"regionCode": 9.0
 	},
 	{
-		"regionCode": 10.0,
+		"active": true,
 		"name": "Vest-Agder",
-		"active": true
+		"regionCode": 10.0
 	},
 	{
-		"regionCode": 11.0,
+		"active": true,
 		"name": "Rogaland",
-		"active": true
+		"regionCode": 11.0
 	},
 	{
-		"regionCode": 12.0,
+		"active": true,
 		"name": "Hordaland",
-		"active": true
+		"regionCode": 12.0
 	},
 	{
-		"regionCode": 14.0,
+		"active": true,
 		"name": "Sogn og Fjordane",
-		"active": true
+		"regionCode": 14.0
 	},
 	{
-		"regionCode": 15.0,
+		"active": true,
 		"name": "Møre of Romsdal",
-		"active": true
+		"regionCode": 15.0
 	},
 	{
-		"regionCode": 16.0,
+		"active": true,
 		"name": "Sør-Trøndelag",
-		"active": true
+		"regionCode": 16.0
 	},
 	{
-		"regionCode": 17.0,
+		"active": true,
 		"name": "Nord-Trøndelag",
-		"active": true
+		"regionCode": 17.0
 	},
 	{
-		"regionCode": 18.0,
+		"active": true,
 		"name": "Nordland",
-		"active": true
+		"regionCode": 18.0
 	},
 	{
-		"regionCode": 19.0,
+		"active": true,
 		"name": "Troms",
-		"active": true
+		"regionCode": 19.0
 	},
 	{
-		"regionCode": 20.0,
+		"active": true,
 		"name": "Finnmark",
-		"active": true
+		"regionCode": 20.0
 	}
 ]

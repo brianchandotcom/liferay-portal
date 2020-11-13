@@ -1,62 +1,62 @@
 [
 	{
-		"regionCode": "DR",
+		"active": true,
 		"name": "Drenthe",
-		"active": true
+		"regionCode": "DR"
 	},
 	{
-		"regionCode": "FL",
+		"active": true,
 		"name": "Flevoland",
-		"active": true
+		"regionCode": "FL"
 	},
 	{
-		"regionCode": "FR",
+		"active": true,
 		"name": "Friesland",
-		"active": true
+		"regionCode": "FR"
 	},
 	{
-		"regionCode": "GE",
+		"active": true,
 		"name": "Gelderland",
-		"active": true
+		"regionCode": "GE"
 	},
 	{
-		"regionCode": "GR",
+		"active": true,
 		"name": "Groningen",
-		"active": true
+		"regionCode": "GR"
 	},
 	{
-		"regionCode": "LI",
+		"active": true,
 		"name": "Limburg",
-		"active": true
+		"regionCode": "LI"
 	},
 	{
-		"regionCode": "NB",
+		"active": true,
 		"name": "Noord-Brabant",
-		"active": true
+		"regionCode": "NB"
 	},
 	{
-		"regionCode": "NH",
+		"active": true,
 		"name": "Noord-Holland",
-		"active": true
+		"regionCode": "NH"
 	},
 	{
-		"regionCode": "OV",
+		"active": true,
 		"name": "Overijssel",
-		"active": true
+		"regionCode": "OV"
 	},
 	{
-		"regionCode": "UT",
+		"active": true,
 		"name": "Utrecht",
-		"active": true
+		"regionCode": "UT"
 	},
 	{
-		"regionCode": "ZE",
+		"active": true,
 		"name": "Zeeland",
-		"active": true
+		"regionCode": "ZE"
 	},
 	{
-		"regionCode": "ZH",
+		"active": true,
 		"name": "Zuid-Holland",
-		"active": true
+		"regionCode": "ZH"
 	}
 ]

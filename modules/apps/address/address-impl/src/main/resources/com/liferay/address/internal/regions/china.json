@@ -1,172 +1,172 @@
 [
 	{
-		"regionCode": "CN-34",
+		"active": true,
 		"name": "Anhui",
-		"active": true
+		"regionCode": "CN-34"
 	},
 	{
-		"regionCode": "CN-92",
+		"active": true,
 		"name": "Aomen",
-		"active": true
+		"regionCode": "CN-92"
 	},
 	{
-		"regionCode": "CN-11",
+		"active": true,
 		"name": "Beijing",
-		"active": true
+		"regionCode": "CN-11"
 	},
 	{
-		"regionCode": "CN-50",
+		"active": true,
 		"name": "Chongqing",
-		"active": true
+		"regionCode": "CN-50"
 	},
 	{
-		"regionCode": "CN-35",
+		"active": true,
 		"name": "Fujian",
-		"active": true
+		"regionCode": "CN-35"
 	},
 	{
-		"regionCode": "CN-62",
+		"active": true,
 		"name": "Gansu",
-		"active": true
+		"regionCode": "CN-62"
 	},
 	{
-		"regionCode": "CN-44",
+		"active": true,
 		"name": "Guangdong",
-		"active": true
+		"regionCode": "CN-44"
 	},
 	{
-		"regionCode": "CN-45",
+		"active": true,
 		"name": "Guangxi",
-		"active": true
+		"regionCode": "CN-45"
 	},
 	{
-		"regionCode": "CN-52",
+		"active": true,
 		"name": "Guizhou",
-		"active": true
+		"regionCode": "CN-52"
 	},
 	{
-		"regionCode": "CN-46",
+		"active": true,
 		"name": "Hainan",
-		"active": true
+		"regionCode": "CN-46"
 	},
 	{
-		"regionCode": "CN-13",
+		"active": true,
 		"name": "Hebei",
-		"active": true
+		"regionCode": "CN-13"
 	},
 	{
-		"regionCode": "CN-23",
+		"active": true,
 		"name": "Heilongjiang",
-		"active": true
+		"regionCode": "CN-23"
 	},
 	{
-		"regionCode": "CN-41",
+		"active": true,
 		"name": "Henan",
-		"active": true
+		"regionCode": "CN-41"
 	},
 	{
-		"regionCode": "CN-42",
+		"active": true,
 		"name": "Hubei",
-		"active": true
+		"regionCode": "CN-42"
 	},
 	{
-		"regionCode": "CN-43",
+		"active": true,
 		"name": "Hunan",
-		"active": true
+		"regionCode": "CN-43"
 	},
 	{
-		"regionCode": "CN-32",
+		"active": true,
 		"name": "Jiangsu",
-		"active": true
+		"regionCode": "CN-32"
 	},
 	{
-		"regionCode": "CN-36",
+		"active": true,
 		"name": "Jiangxi",
-		"active": true
+		"regionCode": "CN-36"
 	},
 	{
-		"regionCode": "CN-22",
+		"active": true,
 		"name": "Jilin",
-		"active": true
+		"regionCode": "CN-22"
 	},
 	{
-		"regionCode": "CN-21",
+		"active": true,
 		"name": "Liaoning",
-		"active": true
+		"regionCode": "CN-21"
 	},
 	{
-		"regionCode": "CN-15",
+		"active": true,
 		"name": "Nei Mongol",
-		"active": true
+		"regionCode": "CN-15"
 	},
 	{
-		"regionCode": "CN-64",
+		"active": true,
 		"name": "Ningxia",
-		"active": true
+		"regionCode": "CN-64"
 	},
 	{
-		"regionCode": "CN-63",
+		"active": true,
 		"name": "Qinghai",
-		"active": true
+		"regionCode": "CN-63"
 	},
 	{
-		"regionCode": "CN-61",
+		"active": true,
 		"name": "Shaanxi",
-		"active": true
+		"regionCode": "CN-61"
 	},
 	{
-		"regionCode": "CN-37",
+		"active": true,
 		"name": "Shandong",
-		"active": true
+		"regionCode": "CN-37"
 	},
 	{
-		"regionCode": "CN-31",
+		"active": true,
 		"name": "Shanghai",
-		"active": true
+		"regionCode": "CN-31"
 	},
 	{
-		"regionCode": "CN-14",
+		"active": true,
 		"name": "Shanxi",
-		"active": true
+		"regionCode": "CN-14"
 	},
 	{
-		"regionCode": "CN-51",
+		"active": true,
 		"name": "Sichuan",
-		"active": true
+		"regionCode": "CN-51"
 	},
 	{
-		"regionCode": "CN-71",
+		"active": true,
 		"name": "Taiwan",
-		"active": true
+		"regionCode": "CN-71"
 	},
 	{
-		"regionCode": "CN-12",
+		"active": true,
 		"name": "Tianjin",
-		"active": true
+		"regionCode": "CN-12"
 	},
 	{
-		"regionCode": "CN-91",
+		"active": true,
 		"name": "Xianggang",
-		"active": true
+		"regionCode": "CN-91"
 	},
 	{
-		"regionCode": "CN-65",
+		"active": true,
 		"name": "Xinjiang",
-		"active": true
+		"regionCode": "CN-65"
 	},
 	{
-		"regionCode": "CN-54",
+		"active": true,
 		"name": "Xizang",
-		"active": true
+		"regionCode": "CN-54"
 	},
 	{
-		"regionCode": "CN-53",
+		"active": true,
 		"name": "Yunnan",
-		"active": true
+		"regionCode": "CN-53"
 	},
 	{
-		"regionCode": "CN-33",
+		"active": true,
 		"name": "Zhejiang",
-		"active": true
+		"regionCode": "CN-33"
 	}
 ]

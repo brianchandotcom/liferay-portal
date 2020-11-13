@@ -1,67 +1,67 @@
 [
 	{
-		"regionCode": "AB",
+		"active": true,
 		"name": "Alberta",
-		"active": true
+		"regionCode": "AB"
 	},
 	{
-		"regionCode": "BC",
+		"active": true,
 		"name": "British Columbia",
-		"active": true
+		"regionCode": "BC"
 	},
 	{
-		"regionCode": "MB",
+		"active": true,
 		"name": "Manitoba",
-		"active": true
+		"regionCode": "MB"
 	},
 	{
-		"regionCode": "NB",
+		"active": true,
 		"name": "New Brunswick",
-		"active": true
+		"regionCode": "NB"
 	},
 	{
-		"regionCode": "NL",
+		"active": true,
 		"name": "Newfoundland and Labrador",
-		"active": true
+		"regionCode": "NL"
 	},
 	{
-		"regionCode": "NT",
+		"active": true,
 		"name": "Northwest Territories",
-		"active": true
+		"regionCode": "NT"
 	},
 	{
-		"regionCode": "NS",
+		"active": true,
 		"name": "Nova Scotia",
-		"active": true
+		"regionCode": "NS"
 	},
 	{
-		"regionCode": "NU",
+		"active": true,
 		"name": "Nunavut",
-		"active": true
+		"regionCode": "NU"
 	},
 	{
-		"regionCode": "ON",
+		"active": true,
 		"name": "Ontario",
-		"active": true
+		"regionCode": "ON"
 	},
 	{
-		"regionCode": "PE",
+		"active": true,
 		"name": "Prince Edward Island",
-		"active": true
+		"regionCode": "PE"
 	},
 	{
-		"regionCode": "QC",
+		"active": true,
 		"name": "Quebec",
-		"active": true
+		"regionCode": "QC"
 	},
 	{
-		"regionCode": "SK",
+		"active": true,
 		"name": "Saskatchewan",
-		"active": true
+		"regionCode": "SK"
 	},
 	{
-		"regionCode": "YT",
+		"active": true,
 		"name": "Yukon",
-		"active": true
+		"regionCode": "YT"
 	}
 ]

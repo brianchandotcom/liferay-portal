@@ -1,132 +1,132 @@
 [
 	{
-		"regionCode": "AG",
+		"active": true,
 		"name": "Aargau",
-		"active": true
+		"regionCode": "AG"
 	},
 	{
-		"regionCode": "AR",
+		"active": true,
 		"name": "Appenzell Ausserrhoden",
-		"active": true
+		"regionCode": "AR"
 	},
 	{
-		"regionCode": "AI",
+		"active": true,
 		"name": "Appenzell Innerrhoden",
-		"active": true
+		"regionCode": "AI"
 	},
 	{
-		"regionCode": "BL",
+		"active": true,
 		"name": "Basel-Landschaft",
-		"active": true
+		"regionCode": "BL"
 	},
 	{
-		"regionCode": "BS",
+		"active": true,
 		"name": "Basel-Stadt",
-		"active": true
+		"regionCode": "BS"
 	},
 	{
-		"regionCode": "BE",
+		"active": true,
 		"name": "Bern",
-		"active": true
+		"regionCode": "BE"
 	},
 	{
-		"regionCode": "FR",
+		"active": true,
 		"name": "Fribourg",
-		"active": true
+		"regionCode": "FR"
 	},
 	{
-		"regionCode": "GE",
+		"active": true,
 		"name": "Geneva",
-		"active": true
+		"regionCode": "GE"
 	},
 	{
-		"regionCode": "GL",
+		"active": true,
 		"name": "Glarus",
-		"active": true
+		"regionCode": "GL"
 	},
 	{
-		"regionCode": "GR",
+		"active": true,
 		"name": "Graubünden",
-		"active": true
+		"regionCode": "GR"
 	},
 	{
-		"regionCode": "JU",
+		"active": true,
 		"name": "Jura",
-		"active": true
+		"regionCode": "JU"
 	},
 	{
-		"regionCode": "LU",
+		"active": true,
 		"name": "Lucerne",
-		"active": true
+		"regionCode": "LU"
 	},
 	{
-		"regionCode": "NE",
+		"active": true,
 		"name": "Neuchâtel",
-		"active": true
+		"regionCode": "NE"
 	},
 	{
-		"regionCode": "NW",
+		"active": true,
 		"name": "Nidwalden",
-		"active": true
+		"regionCode": "NW"
 	},
 	{
-		"regionCode": "OW",
+		"active": true,
 		"name": "Obwalden",
-		"active": true
+		"regionCode": "OW"
 	},
 	{
-		"regionCode": "SH",
+		"active": true,
 		"name": "Schaffhausen",
-		"active": true
+		"regionCode": "SH"
 	},
 	{
-		"regionCode": "SZ",
+		"active": true,
 		"name": "Schwyz",
-		"active": true
+		"regionCode": "SZ"
 	},
 	{
-		"regionCode": "SO",
+		"active": true,
 		"name": "Solothurn",
-		"active": true
+		"regionCode": "SO"
 	},
 	{
-		"regionCode": "SG",
+		"active": true,
 		"name": "St. Gallen",
-		"active": true
+		"regionCode": "SG"
 	},
 	{
-		"regionCode": "TG",
+		"active": true,
 		"name": "Thurgau",
-		"active": true
+		"regionCode": "TG"
 	},
 	{
-		"regionCode": "TI",
+		"active": true,
 		"name": "Ticino",
-		"active": true
+		"regionCode": "TI"
 	},
 	{
-		"regionCode": "UR",
+		"active": true,
 		"name": "Uri",
-		"active": true
+		"regionCode": "UR"
 	},
 	{
-		"regionCode": "VS",
+		"active": true,
 		"name": "Valais",
-		"active": true
+		"regionCode": "VS"
 	},
 	{
-		"regionCode": "VD",
+		"active": true,
 		"name": "Vaud",
-		"active": true
+		"regionCode": "VD"
 	},
 	{
-		"regionCode": "ZG",
+		"active": true,
 		"name": "Zug",
-		"active": true
+		"regionCode": "ZG"
 	},
 	{
-		"regionCode": "ZH",
+		"active": true,
 		"name": "Zürich",
-		"active": true
+		"regionCode": "ZH"
 	}
 ]

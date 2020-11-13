@@ -1,97 +1,97 @@
 [
 	{
-		"regionCode": "AN",
+		"active": true,
 		"name": "Andalusia",
-		"active": true
+		"regionCode": "AN"
 	},
 	{
-		"regionCode": "AR",
+		"active": true,
 		"name": "Aragon",
-		"active": true
+		"regionCode": "AR"
 	},
 	{
-		"regionCode": "AS",
+		"active": true,
 		"name": "Asturias",
-		"active": true
+		"regionCode": "AS"
 	},
 	{
-		"regionCode": "IB",
+		"active": true,
 		"name": "Balearic Islands",
-		"active": true
+		"regionCode": "IB"
 	},
 	{
-		"regionCode": "PV",
+		"active": true,
 		"name": "Basque Country",
-		"active": true
+		"regionCode": "PV"
 	},
 	{
-		"regionCode": "CN",
+		"active": true,
 		"name": "Canary Islands",
-		"active": true
+		"regionCode": "CN"
 	},
 	{
-		"regionCode": "CB",
+		"active": true,
 		"name": "Cantabria",
-		"active": true
+		"regionCode": "CB"
 	},
 	{
-		"regionCode": "CL",
+		"active": true,
 		"name": "Castile and Leon",
-		"active": true
+		"regionCode": "CL"
 	},
 	{
-		"regionCode": "CM",
+		"active": true,
 		"name": "Castile-La Mancha",
-		"active": true
+		"regionCode": "CM"
 	},
 	{
-		"regionCode": "CT",
+		"active": true,
 		"name": "Catalonia",
-		"active": true
+		"regionCode": "CT"
 	},
 	{
-		"regionCode": "CE",
+		"active": true,
 		"name": "Ceuta",
-		"active": true
+		"regionCode": "CE"
 	},
 	{
-		"regionCode": "EX",
+		"active": true,
 		"name": "Extremadura",
-		"active": true
+		"regionCode": "EX"
 	},
 	{
-		"regionCode": "GA",
+		"active": true,
 		"name": "Galicia",
-		"active": true
+		"regionCode": "GA"
 	},
 	{
-		"regionCode": "LO",
+		"active": true,
 		"name": "La Rioja",
-		"active": true
+		"regionCode": "LO"
 	},
 	{
-		"regionCode": "M",
+		"active": true,
 		"name": "Madrid",
-		"active": true
+		"regionCode": "M"
 	},
 	{
-		"regionCode": "ML",
+		"active": true,
 		"name": "Melilla",
-		"active": true
+		"regionCode": "ML"
 	},
 	{
-		"regionCode": "MU",
+		"active": true,
 		"name": "Murcia",
-		"active": true
+		"regionCode": "MU"
 	},
 	{
-		"regionCode": null,
+		"active": true,
 		"name": "Navarra",
-		"active": true
+		"regionCode": null
 	},
 	{
-		"regionCode": "VC",
+		"active": true,
 		"name": "Valencia",
-		"active": true
+		"regionCode": "VC"
 	}
 ]

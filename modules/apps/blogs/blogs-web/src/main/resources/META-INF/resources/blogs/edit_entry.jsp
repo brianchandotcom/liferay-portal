@@ -132,7 +132,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<clay:col
-						cssClass="col-md-offset-2"
+						cssClass="mx-md-auto"
 						md="8"
 					>
 						<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
@@ -149,7 +149,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 					</clay:col>
 
 					<clay:col
-						cssClass="col-md-offset-2"
+						cssClass="mx-md-auto"
 						md="8"
 					>
 						<div class="entry-title form-group">

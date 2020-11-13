@@ -135,8 +135,11 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
-	public List<DispatchTrigger> getDispatchTriggers(boolean active, int mode) {
-		return dispatchTriggerPersistence.findByA_TCM(active, mode);
+	public List<DispatchTrigger> getDispatchTriggers(
+		boolean active, DispatchTaskClusterMode dispatchTaskClusterMode) {
+
+		return dispatchTriggerPersistence.findByA_TCM(
+			active, dispatchTaskClusterMode.getMode());
 	}
 
 	@Override

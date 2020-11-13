@@ -37,19 +37,11 @@ public class PortalCacheManagerUtil {
 		ServiceTrackerMap<String, PortalCacheManager<? extends Serializable, ?>>
 			serviceTrackerMap = _serviceTrackerMap;
 
-		PortalCacheManager<? extends Serializable, ?> portalCacheManager = null;
-
 		if (serviceTrackerMap != null) {
-			portalCacheManager = serviceTrackerMap.getService(
-				portalCacheManagerName);
+			return serviceTrackerMap.getService(portalCacheManagerName);
 		}
 
-		if (portalCacheManager != null) {
-			return portalCacheManager;
-		}
-
-		throw new IllegalStateException(
-			"Unable to get portal cache manager " + portalCacheManagerName);
+		return null;
 	}
 
 	@Activate

@@ -12,13 +12,13 @@
 
 	<div class="container-fluid">
 		<div class="row" id="<@portlet.namespace />feedsTab">
-			<ul class="col-xs-4">
+			<ul class="col-4">
 				<#list entries as curEntry>
 					<li><a href="#tab-${curEntry_index}">${htmlUtil.escape(curEntry.getTitle())}</a></li>
 				</#list>
 			</ul>
 
-			<div class="col-xs-8 tab-content">
+			<div class="col-8 tab-content">
 				<#list entries as curEntry>
 					<#assign rssFeedEntries = curEntry.getRSSFeedEntries(themeDisplay) />
 

@@ -97,7 +97,7 @@ public class ClaySampleFileCard implements FileCard {
 			return _icon;
 		}
 
-		return "documents-and-media";
+		return "document-default";
 	}
 
 	public String getId() {

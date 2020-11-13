@@ -303,6 +303,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 		<clay:file-card
 			actionDropdownItems="<%= claySampleFileCard.getActionDropdownItems() %>"
 			disabled="<%= true %>"
+			icon="user"
 			labels="<%= claySampleFileCard.getLabels() %>"
 			stickerLabel="PDF"
 			stickerStyle="<%= claySampleFileCard.getStickerStyle() %>"
@@ -370,6 +371,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 		<%
 		ClaySampleFileCard sampleFileCard = new ClaySampleFileCard();
 
+		sampleFileCard.setIcon("list");
 		sampleFileCard.setSelectable(true);
 		sampleFileCard.setSelected(true);
 		sampleFileCard.setStickerLabel("MP3");

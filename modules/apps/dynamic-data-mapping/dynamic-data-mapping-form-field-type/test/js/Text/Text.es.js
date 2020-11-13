@@ -253,4 +253,31 @@ describe('Field Text', () => {
 
 		expect(onChange).toHaveBeenCalled();
 	});
+
+	it('normalizes the field reference if it contains invalid characters', () => {
+		const onChange = jest.fn();
+
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				fieldName="fieldReference"
+				key="input"
+				onChange={onChange}
+			/>
+		);
+
+		const input = container.querySelector('input');
+
+		fireEvent.change(input, {
+			target: {
+				value: 'Field¿êReference',
+			},
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(input.value).toEqual('FieldReference');
+	});
 });

@@ -2013,7 +2013,7 @@ public class DataFactory {
 
 		ddmStructureVersionModel.setDefinition(
 			ddmStructureModel.getDefinition());
-		ddmStructureVersionModel.setStorageType(StorageType.JSON.toString());
+		ddmStructureVersionModel.setStorageType(StorageType.DEFAULT.toString());
 		ddmStructureVersionModel.setStatusByUserId(
 			ddmStructureModel.getUserId());
 		ddmStructureVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
@@ -4232,7 +4232,7 @@ public class DataFactory {
 		ddmStructureModel.setName(sb.toString());
 
 		ddmStructureModel.setDefinition(definition);
-		ddmStructureModel.setStorageType(StorageType.JSON.toString());
+		ddmStructureModel.setStorageType(StorageType.DEFAULT.toString());
 		ddmStructureModel.setLastPublishDate(nextFutureDate());
 
 		return ddmStructureModel;

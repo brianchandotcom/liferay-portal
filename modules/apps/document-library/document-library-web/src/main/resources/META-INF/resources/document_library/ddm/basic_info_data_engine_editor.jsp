@@ -31,7 +31,7 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStru
 <clay:row
 	cssClass="lfr-ddm-types-form-column"
 >
-	<aui:input name="storageType" type="hidden" value="<%= StorageType.JSON.getValue() %>" />
+	<aui:input name="storageType" type="hidden" value="<%= StorageType.DEFAULT.getValue() %>" />
 </clay:row>
 
 <aui:input name="description" />

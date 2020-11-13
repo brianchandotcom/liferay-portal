@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -138,7 +139,8 @@ public class UpgradeDDMFormInstanceSettingsTest {
 		).put(
 			getFieldValueJSONObject("redirectURL", "")
 		).put(
-			getFieldValueJSONObject("storageType", "json")
+			getFieldValueJSONObject(
+				"storageType", StorageType.DEFAULT.getValue())
 		).put(
 			getFieldValueJSONObject("workflowDefinition", "")
 		).put(

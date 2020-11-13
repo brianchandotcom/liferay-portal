@@ -62,7 +62,7 @@ public class DDMStructureTestHelper {
 		return addStructure(
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, _classNameId,
 			null, "Test Structure", StringPool.BLANK, ddmForm, ddmFormLayout,
-			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT);
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	public DDMStructure addStructure(DDMForm ddmForm, String storageType)

@@ -540,7 +540,7 @@ public class StructuredContentResourceTest
 		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_deserialize(_read(fileName)), StorageType.JSON.getValue(),
+			_deserialize(_read(fileName)), StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 

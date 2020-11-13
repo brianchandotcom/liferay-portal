@@ -319,7 +319,7 @@ public abstract class BaseAppBuilderPortletTestCase {
 			PortalUtil.getClassNameId(AppBuilderApp.class.getName()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_read("test-structured-content-structure.json"),
-			StorageType.JSON.getValue());
+			StorageType.DEFAULT.getValue());
 	}
 
 	private DDMStructureLayout _addDDMStructureLayout(long ddmStructureId)

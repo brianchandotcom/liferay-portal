@@ -64,7 +64,7 @@ public class DDMStructureDemoDataCreatorImpl
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "Test Structure"
 			).build(),
-			null, ddmForm, ddmFormLayout, StorageType.JSON.getValue(),
+			null, ddmForm, ddmFormLayout, StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, new ServiceContext());
 
 		_ddmStructureIds.add(ddmStructure.getStructureId());

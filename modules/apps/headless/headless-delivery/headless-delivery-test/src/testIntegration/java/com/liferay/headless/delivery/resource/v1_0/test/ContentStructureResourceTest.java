@@ -98,7 +98,7 @@ public class ContentStructureResourceTest
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), name,
 			_deserialize(_read("test-structured-content-structure.json")),
-			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	private DDMForm _deserialize(String content) {

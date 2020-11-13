@@ -459,7 +459,7 @@ public class DDLRecordServiceTest {
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
-		return addRecordSet(ddmForm, StorageType.JSON.toString());
+		return addRecordSet(ddmForm, StorageType.DEFAULT.toString());
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm, String storageType)

@@ -47,7 +47,7 @@ public class DDLRecordSetTestHelper {
 				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		return addRecordSet(ddmStructure);
 	}

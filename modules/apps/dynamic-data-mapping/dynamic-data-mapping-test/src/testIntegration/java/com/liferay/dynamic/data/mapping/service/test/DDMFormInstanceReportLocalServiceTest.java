@@ -86,8 +86,8 @@ public class DDMFormInstanceReportLocalServiceTest
 	public void testAddFormInstanceReport() throws Exception {
 		DDMStructure ddmStructure = addStructure(
 			0, _classNameId, null, "Test Structure", null,
-			read("ddm-structure-radio-field.xsd"), StorageType.JSON.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT);
+			read("ddm-structure-radio-field.xsd"),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("radio");
 
@@ -318,8 +318,8 @@ public class DDMFormInstanceReportLocalServiceTest
 
 		DDMStructure ddmStructure = addStructure(
 			0, _classNameId, null, "Test Structure", null,
-			read("ddm-structure-radio-field.xsd"), StorageType.JSON.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT);
+			read("ddm-structure-radio-field.xsd"),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("radio");
 

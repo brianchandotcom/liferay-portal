@@ -72,7 +72,7 @@ public class DDLRecordRatingsTest extends BaseRatingsTestCase {
 				PortalUtil.getClassNameId(DDLRecordSet.class), group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
 			group);

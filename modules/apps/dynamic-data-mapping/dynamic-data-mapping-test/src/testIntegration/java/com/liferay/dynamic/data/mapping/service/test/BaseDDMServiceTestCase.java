@@ -136,7 +136,7 @@ public abstract class BaseDDMServiceTestCase {
 		return ddmStructureTestHelper.addStructure(
 			group, 0, classNameId, null, name, StringPool.BLANK, ddmForm,
 			DDMUtil.getDefaultDDMFormLayout(ddmForm),
-			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT,
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
@@ -188,7 +188,7 @@ public abstract class BaseDDMServiceTestCase {
 
 		return addStructure(
 			0, classNameId, null, name, description, read("test-structure.xsd"),
-			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	protected DDMStructure addStructure(

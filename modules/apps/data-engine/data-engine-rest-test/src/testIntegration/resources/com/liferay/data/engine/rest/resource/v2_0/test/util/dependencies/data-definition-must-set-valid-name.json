@@ -47,5 +47,5 @@
 		"en_US": "Data Definition Description",
 		"pt_BR": "Descrição do Data Definition"
 	},
-	"storageType": "json"
+	"storageType": "default"
 }

@@ -131,7 +131,7 @@ public class DefaultDDMStructureHelperImpl
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 				ddmStructureKey, nameMap, descriptionMap, ddmForm,
-				ddmFormLayout, StorageType.JSON.toString(),
+				ddmFormLayout, StorageType.DEFAULT.toString(),
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 
 			Element templateElement = structureElement.element("template");

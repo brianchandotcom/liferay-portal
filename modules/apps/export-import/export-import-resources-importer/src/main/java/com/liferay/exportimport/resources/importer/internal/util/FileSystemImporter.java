@@ -418,7 +418,7 @@ public class FileSystemImporter extends BaseImporter {
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					portal.getClassNameId(DDLRecordSet.class), getKey(fileName),
 					getMap(name), null, ddmForm, ddmFormLayout,
-					StorageType.JSON.toString(),
+					StorageType.DEFAULT.toString(),
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 			else {

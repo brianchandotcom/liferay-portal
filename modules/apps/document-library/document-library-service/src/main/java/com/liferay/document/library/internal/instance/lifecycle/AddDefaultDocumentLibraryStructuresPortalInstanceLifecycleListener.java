@@ -140,7 +140,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					_portal.getClassNameId(RawMetadataProcessor.class), name,
 					nameMap, descriptionMap, ddmForm, ddmFormLayout,
-					StorageType.JSON.toString(),
+					StorageType.DEFAULT.toString(),
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}

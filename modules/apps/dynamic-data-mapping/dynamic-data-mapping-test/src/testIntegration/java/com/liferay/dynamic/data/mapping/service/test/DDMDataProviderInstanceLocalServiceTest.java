@@ -81,7 +81,7 @@ public class DDMDataProviderInstanceLocalServiceTest
 		ddmForm.addDDMFormField(ddmFormField);
 
 		ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.getValue());
+			ddmForm, StorageType.DEFAULT.getValue());
 
 		DDMDataProviderInstanceLocalServiceUtil.deleteDataProviderInstance(
 			dataProviderInstance);
@@ -114,7 +114,7 @@ public class DDMDataProviderInstanceLocalServiceTest
 		ddmForm.addDDMFormField(ddmFormField);
 
 		ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.getValue());
+			ddmForm, StorageType.DEFAULT.getValue());
 
 		DDMDataProviderInstanceLocalServiceUtil.deleteDataProviderInstance(
 			dataProviderInstance);
@@ -141,7 +141,7 @@ public class DDMDataProviderInstanceLocalServiceTest
 		ddmForm.addDDMFormRule(ddmFormRule);
 
 		ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.getValue());
+			ddmForm, StorageType.DEFAULT.getValue());
 
 		DDMDataProviderInstanceLocalServiceUtil.deleteDataProviderInstance(
 			dataProviderInstance);

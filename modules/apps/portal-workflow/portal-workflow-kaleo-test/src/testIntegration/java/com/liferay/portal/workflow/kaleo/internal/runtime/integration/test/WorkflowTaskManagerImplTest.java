@@ -1323,7 +1323,7 @@ public class WorkflowTaskManagerImplTest {
 				_portal.getClassNameId(DDLRecordSet.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		return _ddlRecordSetLocalService.addRecordSet(
 			_adminUser.getUserId(), _group.getGroupId(),

@@ -390,7 +390,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				"com.liferay.app.builder.model.AppBuilderApp"),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_read("test-structured-content-structure.json"),
-			StorageType.JSON.getValue());
+			StorageType.DEFAULT.getValue());
 	}
 
 	private DDMStructureLayout _addDDMStructureLayout(long ddmStructureId)

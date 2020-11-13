@@ -53,5 +53,5 @@
 		"en_US": "Structure",
 		"es_ES": "Estructura"
 	},
-	"storageType": "json"
+	"storageType": "default"
 }

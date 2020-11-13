@@ -107,7 +107,7 @@ public class JournalConverterUtilTest {
 
 		_ddmStructure = _ddmStructureTestHelper.addStructure(
 			_classNameId, null, "Test Structure", ddmForm,
-			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Registry registry = RegistryUtil.getRegistry();
 

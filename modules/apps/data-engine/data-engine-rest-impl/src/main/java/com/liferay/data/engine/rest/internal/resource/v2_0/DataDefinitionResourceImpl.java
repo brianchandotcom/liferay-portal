@@ -72,6 +72,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
@@ -431,7 +432,9 @@ public class DataDefinitionResourceImpl
 			LocalizedValueUtil.toLocaleStringMap(
 				dataDefinition.getDescription()),
 			ddmFormSerializerSerializeResponse.getContent(),
-			GetterUtil.getString(dataDefinition.getStorageType(), "json"),
+			GetterUtil.getString(
+				dataDefinition.getStorageType(),
+				StorageType.DEFAULT.getValue()),
 			new ServiceContext());
 
 		_addDataDefinitionFieldLinks(

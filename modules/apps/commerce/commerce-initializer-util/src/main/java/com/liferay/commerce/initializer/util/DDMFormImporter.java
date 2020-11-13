@@ -264,7 +264,7 @@ public class DDMFormImporter {
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			classNameId, StringPool.BLANK, nameMap, descriptionMap, ddmForm,
-			defaultDDMFormLayout, StorageType.JSON.toString(),
+			defaultDDMFormLayout, StorageType.DEFAULT.toString(),
 			DDMStructureConstants.TYPE_AUTO, serviceContext);
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.addRecordSet(

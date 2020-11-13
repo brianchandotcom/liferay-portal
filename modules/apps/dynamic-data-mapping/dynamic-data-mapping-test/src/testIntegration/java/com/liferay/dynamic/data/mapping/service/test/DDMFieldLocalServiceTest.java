@@ -116,7 +116,7 @@ public class DDMFieldLocalServiceTest {
 				ddmFormFieldOptions));
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -170,7 +170,7 @@ public class DDMFieldLocalServiceTest {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field1");
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -245,7 +245,7 @@ public class DDMFieldLocalServiceTest {
 				locale, ddmForm, "grandChild", "text", "string", null, null));
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -310,7 +310,7 @@ public class DDMFieldLocalServiceTest {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field1");
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -344,7 +344,7 @@ public class DDMFieldLocalServiceTest {
 			"field1", "field2", "field3");
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+			ddmForm, StorageType.DEFAULT.toString());
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 

@@ -139,7 +139,7 @@ public interface DDMFormInstanceSettings {
 	public boolean sendEmailNotification();
 
 	@DDMFormField(
-		label = "%select-a-storage-type", predefinedValue = "[\"json\"]",
+		label = "%select-a-storage-type", predefinedValue = "[\"default\"]",
 		properties = {
 			"dataSourceType=data-provider",
 			"ddmDataProviderInstanceId=ddm-storage-types"

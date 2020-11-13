@@ -14,20 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.verify;
 
-import com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
-import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -66,8 +62,6 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 		verifyStructures();
 		verifyStructureLinks();
 		verifyTemplateLinks();
-
-		verifyContents();
 	}
 
 	protected DDMFormValues getDDMFormValues(
@@ -89,13 +83,6 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 		throws PortalException {
 
 		return getDDMFormValues(ddmStructure.getDDMForm(), ddmContent);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMContentLocalService(
-		DDMContentLocalService ddmContentLocalService) {
-
-		_ddmContentLocalService = ddmContentLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -157,63 +144,6 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
 		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	protected void verifyContent(DDMContent ddmContent) throws PortalException {
-		DDMStorageLink ddmStorageLink = null;
-
-		try {
-			ddmStorageLink = _ddmStorageLinkLocalService.getClassStorageLink(
-				ddmContent.getContentId());
-		}
-		catch (NoSuchStorageLinkException noSuchStorageLinkException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Skip verification for orphaned DDM content " +
-						ddmContent.getContentId());
-			}
-
-			return;
-		}
-
-		DDMStructureVersion ddmStructureVersion =
-			_ddmStructureVersionLocalService.getStructureVersion(
-				ddmStorageLink.getStructureVersionId());
-
-		try {
-			DDMFormValues ddmFormValues = getDDMFormValues(
-				ddmStructureVersion.getDDMForm(), ddmContent);
-
-			_ddmFormValuesValidator.validate(ddmFormValues);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					String.format(
-						"Stale or invalid data for DDM content %d  and " +
-							"structure version %d causes: {%s}",
-						ddmContent.getContentId(),
-						ddmStructureVersion.getStructureId(),
-						exception.getMessage()),
-					exception);
-			}
-		}
-	}
-
-	protected void verifyContents() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_ddmContentLocalService.getActionableDynamicQuery();
-
-			actionableDynamicQuery.setPerformActionMethod(
-				(Object object) -> {
-					DDMContent ddmContent = (DDMContent)object;
-
-					verifyContent(ddmContent);
-				});
-
-			actionableDynamicQuery.performActions();
-		}
 	}
 
 	protected void verifyDDMForm(DDMForm ddmForm) throws PortalException {
@@ -316,7 +246,6 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMServiceVerifyProcess.class);
 
-	private DDMContentLocalService _ddmContentLocalService;
 	private DDMFormLayoutValidator _ddmFormLayoutValidator;
 	private DDMFormValidator _ddmFormValidator;
 	private DDMFormValuesValidator _ddmFormValuesValidator;

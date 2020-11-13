@@ -95,37 +95,23 @@ class ChangeTrackingChangesView extends React.Component {
 			viewType
 		);
 
-		if (pathParam) {
-			const updatedPathParam = this._getPathParam(
-				breadcrumbItems,
-				filterClass,
-				showHideable,
-				viewType
-			);
+		const pathname = window.location.pathname;
+		const search = window.location.search;
 
-			if (pathParam !== updatedPathParam) {
-				AUI().use('liferay-portlet-url', () => {
-					const path = this._getPath(updatedPathParam);
+		if (this._isWithinApp(new URLSearchParams(search))) {
+			const state = {
+				path: pathname + search,
+				senna: true,
+			};
 
-					window.history.replaceState(
-						{
-							path,
-							senna: true,
-						},
-						document.title,
-						path
-					);
-				});
+			if (node.modelClassNameId) {
+				state.modelClassNameId = node.modelClassNameId;
+				state.modelClassPK = node.modelClassPK;
+
+				this.initialNode = node;
 			}
-		}
-		else {
-			window.history.replaceState(
-				{
-					path: window.location.pathname + window.location.search,
-					senna: true,
-				},
-				document.title
-			);
+
+			window.history.replaceState(state, document.title);
 		}
 
 		let loading = false;
@@ -161,21 +147,69 @@ class ChangeTrackingChangesView extends React.Component {
 			Liferay.SPA.app.skipLoadPopstate = true;
 		}
 
-		if (this.state.node.modelClassNameId) {
-			AUI().use('liferay-portlet-url', () => {
-				fetch(this._getRenderURL(this.state.node))
-					.then((response) => response.text())
-					.then((text) => {
+		if (
+			!this.initialNode ||
+			!this.state.node.modelClassNameId ||
+			this.state.node.modelClassNameId !==
+				this.initialNode.modelClassNameId ||
+			this.state.node.modelClassPK !== this.initialNode.modelClassPK
+		) {
+			return;
+		}
+
+		AUI().use('liferay-portlet-url', () => {
+			fetch(this._getRenderURL(this.state.node))
+				.then((response) => response.text())
+				.then((text) => {
+					if (
+						!this._isWithinApp(
+							new URLSearchParams(window.location.search)
+						)
+					) {
+						return;
+					}
+
+					const dropdownItems = this._getDropdownItems(
+						this.state.node
+					);
+
+					if (
+						window.history.state &&
+						window.history.state.modelClassNameId &&
+						window.history.state.modelClassNameId ===
+							this.initialNode.modelClassNameId &&
+						window.history.state.modelClassPK ===
+							this.initialNode.modelClassPK
+					) {
+						window.history.replaceState(
+							{
+								dropdownItems,
+								modelClassNameId:
+									window.history.state.modelClassNameId,
+								modelClassPK: window.history.state.modelClassPK,
+								path: window.history.state.path,
+								renderInnerHTML: {__html: text},
+								senna: true,
+							},
+							document.title
+						);
+					}
+
+					if (
+						this.state.node.modelClassNameId &&
+						this.state.node.modelClassNameId ===
+							this.initialNode.modelClassNameId &&
+						this.state.node.modelClassPK ===
+							this.initialNode.modelClassPK
+					) {
 						this.setState({
-							dropdownItems: this._getDropdownItems(
-								this.state.node
-							),
+							dropdownItems,
 							loading: false,
 							renderInnerHTML: {__html: text},
 						});
-					});
-			});
-		}
+					}
+				});
+		});
 	}
 
 	componentWillUnmount() {
@@ -1240,14 +1274,17 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const path = this._getPath(pathParam);
 
-		window.history.pushState(
-			{
-				path,
-				senna: true,
-			},
-			document.title,
-			path
-		);
+		const state = {
+			path,
+			senna: true,
+		};
+
+		if (node.modelClassNameId) {
+			state.modelClassNameId = node.modelClassNameId;
+			state.modelClassPK = node.modelClassPK;
+		}
+
+		window.history.pushState(state, document.title, path);
 
 		this.setState(
 			{
@@ -1272,24 +1309,32 @@ class ChangeTrackingChangesView extends React.Component {
 		});
 	}
 
-	_handlePopState() {
-		const params = new URLSearchParams(window.location.search);
+	_handlePopState(event) {
+		const state = event.state;
 
-		const ctCollectionId = params.get(this.namespace + 'ctCollectionId');
-		const mvcRenderCommandName = params.get(
-			this.namespace + 'mvcRenderCommandName'
-		);
+		let pathname = window.location.pathname;
+		let search = window.location.search;
 
-		if (
-			!ctCollectionId ||
-			!mvcRenderCommandName ||
-			ctCollectionId !== this.ctCollectionId.toString() ||
-			mvcRenderCommandName !== this.MVC_RENDER_COMMAND_NAME
-		) {
+		if (state) {
+			const index = state.path.indexOf('?');
+
+			pathname = state.path.substring(0, index);
+
+			if (index > 0) {
+				search = state.path.substring(index, state.path.length);
+			}
+			else {
+				search = '';
+			}
+		}
+
+		const params = new URLSearchParams(search);
+
+		if (!this._isWithinApp(params)) {
 			if (Liferay.SPA && Liferay.SPA.app) {
 				Liferay.SPA.app.skipLoadPopstate = false;
 
-				Liferay.SPA.app.navigate(window.location.href, true);
+				Liferay.SPA.app.navigate(event.target.location.href, true);
 			}
 
 			return;
@@ -1348,39 +1393,23 @@ class ChangeTrackingChangesView extends React.Component {
 				viewType,
 			},
 			() => {
-				const path = this._getPath(
-					this._getPathParam(
-						breadcrumbItems,
-						filterClass,
-						showHideable,
-						viewType
-					)
-				);
-
-				const currentState = window.history.state;
-
-				window.history.replaceState(
-					{
-						path,
-						senna: true,
-					},
-					document.title,
-					path
-				);
-
-				if (!currentState || !currentState.renderInnerHTML) {
-					this._updateRenderContent(true, node, path);
+				if (!state || !state.renderInnerHTML) {
+					this._updateRenderContent(true, node, pathname + search);
 
 					return;
 				}
 
 				this.setState(
 					{
-						dropdownItems: currentState.dropdownItems,
-						renderInnerHTML: currentState.renderInnerHTML,
+						dropdownItems: state.dropdownItems,
+						renderInnerHTML: state.renderInnerHTML,
 					},
 					() => {
-						this._updateRenderContent(false, node, path);
+						this._updateRenderContent(
+							false,
+							node,
+							pathname + search
+						);
 					}
 				);
 			}
@@ -1429,14 +1458,6 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 		}
 
-		this.setState({
-			children: this._filterHideableNodes(
-				this.state.node.children,
-				showHideable
-			),
-			showHideable,
-		});
-
 		const pathParam = this._getPathParam(
 			this.state.breadcrumbItems,
 			this.state.filterClass,
@@ -1454,6 +1475,14 @@ class ChangeTrackingChangesView extends React.Component {
 			document.title,
 			path
 		);
+
+		this.setState({
+			children: this._filterHideableNodes(
+				this.state.node.children,
+				showHideable
+			),
+			showHideable,
+		});
 	}
 
 	_handleSortColumnChange(column) {
@@ -1476,6 +1505,24 @@ class ChangeTrackingChangesView extends React.Component {
 			ascending: true,
 			sortDirectionClass: 'order-arrow-down-active',
 		});
+	}
+
+	_isWithinApp(params) {
+		const ctCollectionId = params.get(this.namespace + 'ctCollectionId');
+		const mvcRenderCommandName = params.get(
+			this.namespace + 'mvcRenderCommandName'
+		);
+
+		if (
+			ctCollectionId &&
+			ctCollectionId === this.ctCollectionId.toString() &&
+			mvcRenderCommandName &&
+			mvcRenderCommandName === this.MVC_RENDER_COMMAND_NAME
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	_populateModelInfo() {
@@ -1861,40 +1908,56 @@ class ChangeTrackingChangesView extends React.Component {
 					fetch(this._getRenderURL(node))
 						.then((response) => response.text())
 						.then((text) => {
-							const dropdownItems = this._getDropdownItems(node);
-
 							if (
-								!this.state.node.modelClassNameId ||
-								this.state.node.modelClassNameId !==
-									node.modelClassNameId ||
-								this.state.node.modelClassPK !==
-									node.modelClassPK
+								!this._isWithinApp(
+									new URLSearchParams(window.location.search)
+								)
 							) {
 								return;
 							}
 
-							this.setState({
-								dropdownItems,
-								loading: false,
-								renderInnerHTML: {__html: text},
-							});
+							const dropdownItems = this._getDropdownItems(
+								this.state.node
+							);
 
 							if (
 								window.history.state &&
-								window.history.state.path !== path
+								window.history.state.modelClassNameId &&
+								window.history.state.modelClassNameId ===
+									node.modelClassNameId &&
+								window.history.state.modelClassPK ===
+									node.modelClassPK &&
+								window.history.state.path === path
 							) {
-								return;
+								window.history.replaceState(
+									{
+										dropdownItems,
+										modelClassNameId:
+											window.history.state
+												.modelClassNameId,
+										modelClassPK:
+											window.history.state.modelClassPK,
+										path,
+										renderInnerHTML: {__html: text},
+										senna: true,
+									},
+									document.title
+								);
 							}
 
-							window.history.replaceState(
-								{
+							if (
+								this.state.node.modelClassNameId &&
+								this.state.node.modelClassNameId ===
+									node.modelClassNameId &&
+								this.state.node.modelClassPK ===
+									node.modelClassPK
+							) {
+								this.setState({
 									dropdownItems,
-									path,
+									loading: false,
 									renderInnerHTML: {__html: text},
-									senna: true,
-								},
-								document.title
-							);
+								});
+							}
 						});
 				});
 			}

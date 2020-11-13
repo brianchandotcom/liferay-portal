@@ -415,25 +415,15 @@ definition {
 
 		JSONRole.addOrganizationRole(roleTitle = "Roles Orgrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
 			roleTitle = "Roles Orgrole Name",
-			roleType = "Organization");
+			roleType = "organization");
 
-		JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addSiteCP(orgName = "Organization Name");
+		JSONOrganization.addOrganization(
+			organizationName = "Organization Name",
+			organizationSite = "true");
 
 		for (var userNum : list "1,2") {
 			JSONUser.addUser(
@@ -463,12 +453,12 @@ definition {
 
 		JSONLayout.addPublicLayoutByGroupName(
 			groupName = "Organization Name",
-			layoutName = "Documents and Media Page");
+			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Organization Name LFR_ORGANIZATION",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		Navigator.openSiteURL(siteName = "Organization Name");
 
@@ -481,19 +471,18 @@ definition {
 			pageTemplateName = "Search");
 
 		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
+			pageName = "Blogs Page",
 			siteName = "Organization Name");
 
-		DMDocument.addPG(
-			dmDocumentDescription = "This is a test document.",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document");
+		Blogs.addEntry(
+			entryContent = "Blog Entry Content.",
+			entryTitle = "Test Blog");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+			portlet = "Blogs");
 
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Test Document");
+		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Test Blog");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
@@ -503,24 +492,28 @@ definition {
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Test Document");
+		SearchPortlets.searchWidget(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Document",
-			searchAssetType = "Document");
+			searchAssetSummary = "Blog Entry Content.",
+			searchAssetTitle = "Test Blog",
+			searchAssetType = "Blogs Entry");
 
-		// LRCI-276
+		Search.gotoResultAssetViaTitle(searchAssetTitle = "Test Blog");
 
-		/*var key_searchAssetTitle = "Test Document";
+		BlogsEntry.viewPG(
+			entryContent = "Blog Entry Content.",
+			entryTitle = "Test Blog");
 
-		AssertClick(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "Test Document");
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
+			voteCount = "0");
 
-		DMDocument.viewPGViaSearch(
-			dmDocumentDescription = "This is a test document.",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document"); */
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as bad",
+			voteCount = "0");
+
+		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutPG();
 
@@ -529,20 +522,18 @@ definition {
 			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
+			pageName = "Blogs Page",
 			siteName = "Organization Name");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder.");
+		Blogs.viewNoEntryCP();
 
 		Navigator.gotoSitePage(
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Test Document");
+		SearchPortlets.searchWidget(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Test Document");
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "Test Blog");
 
 		User.logoutPG();
 
@@ -551,35 +542,39 @@ definition {
 			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
+			pageName = "Blogs Page",
 			siteName = "Organization Name");
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "This is a test document.",
-			dmDocumentTitle = "Test Document");
+		BlogsEntry.viewPG(
+			entryContent = "Blog Entry Content.",
+			entryTitle = "Test Blog");
 
 		Navigator.gotoSitePage(
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Test Document");
+		SearchPortlets.searchWidget(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "Test Document",
-			searchAssetType = "Document");
+			searchAssetSummary = "Blog Entry Content.",
+			searchAssetTitle = "Test Blog",
+			searchAssetType = "Blogs Entry");
 
-		// LRCI-276
+		Search.gotoResultAssetViaTitle(searchAssetTitle = "Test Blog");
 
-		/* var key_searchAssetTitle = "Test Document";
+		BlogsEntry.viewPG(
+			entryContent = "Blog Entry Content.",
+			entryTitle = "Test Blog");
 
-		AssertClick(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "Test Document");
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
+			voteCount = "0");
 
-		DMDocument.viewPGViaSearch(
-			dmDocumentDescription = "This is a test document.",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Test Document");*/
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as bad",
+			voteCount = "0");
+
+		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutPG();
 

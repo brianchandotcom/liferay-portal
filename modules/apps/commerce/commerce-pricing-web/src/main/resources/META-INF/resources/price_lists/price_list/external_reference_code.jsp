@@ -25,7 +25,7 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 <portlet:actionURL name="editCommercePriceListExternalReferenceCode" var="editCommercePriceListExternalReferenceCodeURL" />
 
 <commerce-ui:modal-content>
-	<aui:form action="<%= editCommercePriceListExternalReferenceCodeURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCommercePriceListExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceList.getCommercePriceListId() %>" />
 

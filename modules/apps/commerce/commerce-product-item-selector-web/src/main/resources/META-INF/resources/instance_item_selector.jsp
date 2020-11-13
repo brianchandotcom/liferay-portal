@@ -62,7 +62,7 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />cpInstanceSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />cpInstanceSelectorWrapper">
 	<liferay-ui:search-container
 		id="cpInstances"
 		searchContainer="<%= cpInstanceSearchContainer %>"

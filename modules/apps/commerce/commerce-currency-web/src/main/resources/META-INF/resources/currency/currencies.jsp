@@ -76,7 +76,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<portlet:actionURL name="editCommerceCurrency" var="editCommerceCurrencyActionURL" />
 
 		<aui:form action="<%= editCommerceCurrencyActionURL %>" method="post" name="fm">

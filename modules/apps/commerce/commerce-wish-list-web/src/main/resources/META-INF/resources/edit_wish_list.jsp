@@ -24,7 +24,7 @@ CommerceWishList commerceWishList = commerceWishListDisplayContext.getCommerceWi
 
 <portlet:actionURL name="editCommerceWishList" var="editCommerceWishListActionURL" />
 
-<aui:form action="<%= editCommerceWishListActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommerceWishListActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceWishList == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commerceWishListId" type="hidden" value="<%= commerceWishListDisplayContext.getCommerceWishListId() %>" />

@@ -29,7 +29,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <%@ include file="/navbar_definitions.jspf" %>
 
 <div class="pt-4" id="<portlet:namespace />productDefinitionsContainer">
-	<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />

@@ -103,7 +103,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />cpDefinitionGroupedEntriesContainer">
-	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpDefinitionGroupedEntriesDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpDefinitionGroupedEntryInfoPanel" var="sidebarPanelURL" />
 
@@ -116,7 +116,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 		</c:if>
 
 		<div class="sidenav-content">
-			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="deleteCPDefinitionGroupedEntryIds" type="hidden" />

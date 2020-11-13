@@ -43,7 +43,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()) + " -
 	<portlet:param name="mvcRenderCommandName" value="editCPDefinitionGroupedEntry" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCPDefinitionGroupedEntryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCPDefinitionGroupedEntry();" %>'>
+<aui:form action="<%= editCPDefinitionGroupedEntryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCPDefinitionGroupedEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= groupedProductsURL %>" />
 	<aui:input name="cpDefinitionGroupedEntryId" type="hidden" value="<%= cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId() %>" />

@@ -25,7 +25,7 @@ CProduct cProduct = cpDefinitionsDisplayContext.getCProduct();
 <portlet:actionURL name="editCProductExternalReferenceCode" var="editCProductExternalReferenceCodeURL" />
 
 <commerce-ui:modal-content>
-	<aui:form action="<%= editCProductExternalReferenceCodeURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCProductExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="cProductId" type="hidden" value="<%= cProduct.getCProductId() %>" />
 

@@ -70,7 +70,7 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<portlet:actionURL name="editCPTaxCategory" var="editCPTaxCategoryActionURL" />
 
 		<aui:form action="<%= editCPTaxCategoryActionURL %>" method="post" name="fm">

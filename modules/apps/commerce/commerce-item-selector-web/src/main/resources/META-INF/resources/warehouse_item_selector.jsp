@@ -62,7 +62,7 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceInventoryWarehouseSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceInventoryWarehouseSelectorWrapper">
 	<liferay-ui:search-container
 		id="commerceInventoryWarehouses"
 		searchContainer="<%= commerceInventoryWarehouseItemSelectorViewDisplayContext.getSearchContainer() %>"

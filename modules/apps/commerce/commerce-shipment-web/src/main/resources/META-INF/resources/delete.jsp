@@ -39,7 +39,7 @@ String title = "shipment";
 >
 	<liferay-ui:error exception="<%= CommerceShipmentShippingDateException.class %>" />
 
-	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

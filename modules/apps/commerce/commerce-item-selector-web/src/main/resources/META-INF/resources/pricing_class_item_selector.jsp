@@ -58,7 +58,7 @@ PortletURL portletURL = commercePricingClassItemSelectorViewDisplayContext.getPo
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commercePricingClassSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commercePricingClassSelectorWrapper">
 	<liferay-ui:search-container
 		id="commercePricingClasses"
 		searchContainer="<%= commercePricingClassItemSelectorViewDisplayContext.getSearchContainer() %>"

@@ -27,7 +27,7 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 	title='<%= LanguageUtil.get(request, "add-discount-rule") %>'
 >
 	<div class="col-12 lfr-form-content">
-		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
+		<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 			<aui:input bean="<%= commerceDiscountDisplayContext.getCommerceDiscountRule() %>" model="<%= CommerceDiscountRule.class %>" name="name" required="<%= true %>" />
 
 			<aui:select label="rule-type" name="type" required="<%= true %>">

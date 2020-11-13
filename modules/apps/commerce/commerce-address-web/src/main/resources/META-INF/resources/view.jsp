@@ -77,7 +77,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<portlet:actionURL name="editCommerceCountry" var="editCommerceCountryActionURL" />
 
 		<aui:form action="<%= editCommerceCountryActionURL %>" method="post" name="fm">

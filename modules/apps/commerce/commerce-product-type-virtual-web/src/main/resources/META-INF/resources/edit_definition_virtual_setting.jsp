@@ -24,7 +24,7 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSetti
 
 <portlet:actionURL name="editProductDefinitionVirtualSetting" var="editProductDefinitionVirtualSettingActionURL" />
 
-<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
+<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="className" type="hidden" value="<%= CPDefinition.class.getName() %>" />

@@ -25,7 +25,7 @@
 		<img src="${image}">
 	</div>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<h1>${title}</h1>
 
 		<p>${description}</p>

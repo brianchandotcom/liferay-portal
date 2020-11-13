@@ -29,7 +29,7 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 	title="<%= commercePriceListDisplayContext.getModalContextTitle(portletName) %>"
 >
 	<div class="col-12 lfr-form-content">
-		<aui:form action="<%= editCommercePriceListActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+		<aui:form action="<%= editCommercePriceListActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="type" type="hidden" value="<%= commercePriceListDisplayContext.getCommercePriceListType(portletName) %>" />

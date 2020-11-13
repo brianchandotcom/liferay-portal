@@ -33,7 +33,7 @@ if (Validator.isNotNull(backURL)) {
 
 <portlet:actionURL name="editCommerceInventoryWarehouse" var="editCommerceInventoryWarehouseActionURL" />
 
-<aui:form action="<%= editCommerceInventoryWarehouseActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceInventoryWarehouse();" %>'>
+<aui:form action="<%= editCommerceInventoryWarehouseActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceInventoryWarehouse();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceInventoryWarehouse == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commerceInventoryWarehouseId" type="hidden" value="<%= (commerceInventoryWarehouse == null) ? 0 : commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" />

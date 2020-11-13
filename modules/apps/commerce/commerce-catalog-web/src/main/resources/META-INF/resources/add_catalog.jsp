@@ -30,7 +30,7 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 	title='<%= LanguageUtil.get(request, "add-catalog") %>'
 >
 	<div class="col-12 lfr-form-content">
-		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
+		<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 			<aui:input bean="<%= commerceCatalog %>" model="<%= CommerceCatalog.class %>" name="name" required="<%= true %>" />
 
 			<aui:select helpMessage="the-default-language-for-the-content-within-this-catalog" label="default-catalog-language" name="defaultLanguageId" required="<%= true %>" title="language">

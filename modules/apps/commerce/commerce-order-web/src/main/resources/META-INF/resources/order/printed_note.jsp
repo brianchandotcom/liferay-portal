@@ -25,7 +25,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderPrintedNoteActionURL" />
 
 <commerce-ui:modal-content>
-	<aui:form action="<%= editCommerceOrderPrintedNoteActionURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCommerceOrderPrintedNoteActionURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="printedNote" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />

@@ -70,7 +70,7 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<portlet:actionURL name="editCommerceAvailabilityEstimate" var="editCommerceAvailabilityEstimateActionURL" />
 
 		<aui:form action="<%= editCommerceAvailabilityEstimateActionURL %>" method="post" name="fm">

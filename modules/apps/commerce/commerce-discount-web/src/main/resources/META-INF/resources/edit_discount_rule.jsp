@@ -47,7 +47,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 <portlet:actionURL name="editCommerceDiscountRule" var="editCommerceDiscountRuleActionURL" />
 
-<aui:form action="<%= editCommerceDiscountRuleActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceDiscountRule();" %>'>
+<aui:form action="<%= editCommerceDiscountRuleActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceDiscountRule();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceDiscountRule == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="addTypeSettings" type="hidden" />

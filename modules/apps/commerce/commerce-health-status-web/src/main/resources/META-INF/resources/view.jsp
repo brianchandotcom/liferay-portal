@@ -21,7 +21,7 @@ CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext = (Commerc
 %>
 
 <c:if test="<%= commerceHealthStatusDisplayContext.hasManageCommerceHealthStatusPermission() %>">
-	<div class="container-fluid-1280 pt-4">
+	<div class="container-fluid container-fluid-max-xl pt-4">
 		<liferay-ui:search-container
 			id="commerceHealthStatuses"
 			searchContainer="<%= commerceHealthStatusDisplayContext.getSearchContainer() %>"

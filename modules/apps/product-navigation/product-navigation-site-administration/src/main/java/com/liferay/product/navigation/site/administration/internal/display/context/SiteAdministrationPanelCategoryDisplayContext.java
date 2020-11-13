@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -176,9 +177,21 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		if (group.isStagedRemotely()) {
 			Layout layout = _themeDisplay.getLayout();
 
+			boolean privateLayout = layout.isPrivateLayout();
+
+			if (layout instanceof VirtualLayout) {
+				VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+				Group targetGroup = virtualLayout.getGroup();
+
+				if (!targetGroup.hasPrivateLayouts()) {
+					privateLayout = false;
+				}
+			}
+
 			try {
 				_liveGroupURL = StagingUtil.getRemoteSiteURL(
-					group, layout.isPrivateLayout());
+					group, privateLayout);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {

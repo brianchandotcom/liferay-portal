@@ -402,7 +402,7 @@ definition {
 					key_message = "No Collection Selected Yet",
 					locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
 			}
-			else if ("${fragmentName}" == "Content") {
+			else if ("${fragmentName}" == "Content Display") {
 				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					key_messageIfo = "The selected content will be shown here.",

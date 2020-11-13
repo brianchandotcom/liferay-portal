@@ -410,7 +410,17 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		JSONArray requestJSONArray = new JSONArray();
 
+		List<String> searchParameterNames = new ArrayList<>();
+
 		for (SearchQuery.SearchParameter searchParameter : searchParameters) {
+			String searchParameterName = searchParameter.getName();
+
+			if (searchParameterNames.contains(searchParameterName)) {
+				continue;
+			}
+
+			searchParameterNames.add(searchParameterName);
+
 			requestJSONArray.put(searchParameter.toFilterJSONObject());
 		}
 

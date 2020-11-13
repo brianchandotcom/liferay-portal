@@ -165,6 +165,10 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		return jsonObject.getInt("ArtifactTypeId");
 	}
 
+	public String getFieldName() {
+		return jsonObject.getString("CustomPropertyFieldName");
+	}
+
 	public int getPropertyNumber() {
 		return jsonObject.getInt("PropertyNumber");
 	}

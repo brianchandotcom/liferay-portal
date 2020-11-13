@@ -46,7 +46,7 @@ public class IntegerSpiraCustomPropertyValue
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = super.getFilterJSONObject();
 
-		filterJSONObject.put("IntegerValue", getValue());
+		filterJSONObject.put("IntValue", getValue());
 
 		return filterJSONObject;
 	}

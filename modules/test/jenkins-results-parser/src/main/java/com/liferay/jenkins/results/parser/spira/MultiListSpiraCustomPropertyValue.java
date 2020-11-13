@@ -100,8 +100,12 @@ public class MultiListSpiraCustomPropertyValue
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = super.getFilterJSONObject();
 
-		filterJSONObject.put(
-			"IntegerListValue", _getIntegerListValueJSONArray());
+		List<SpiraCustomListValue> spiraCustomListValues = getValue();
+
+		SpiraCustomListValue spiraCustomListValue = spiraCustomListValues.get(
+			0);
+
+		filterJSONObject.put("IntValue", spiraCustomListValue.getID());
 
 		return filterJSONObject;
 	}

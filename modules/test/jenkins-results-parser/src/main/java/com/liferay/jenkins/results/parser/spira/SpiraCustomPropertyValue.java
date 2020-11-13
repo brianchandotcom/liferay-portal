@@ -156,6 +156,8 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 		definitionJSONObject.put(
 			"ArtifactTypeId", spiraCustomProperty.getArtifactTypeId());
 		definitionJSONObject.put(
+			"CustomPropertyFieldName", spiraCustomProperty.getFieldName());
+		definitionJSONObject.put(
 			"CustomPropertyId", spiraCustomProperty.getID());
 		definitionJSONObject.put(
 			"CustomPropertyTypeId", spiraCustomPropertyType.getID());
@@ -171,7 +173,14 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 	}
 
 	protected JSONObject getFilterJSONObject() {
-		return new JSONObject();
+		JSONObject filterJSONObject = new JSONObject();
+
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		filterJSONObject.put(
+			"PropertyName", spiraCustomProperty.getFieldName());
+
+		return filterJSONObject;
 	}
 
 	protected abstract boolean matchesJSONObject(

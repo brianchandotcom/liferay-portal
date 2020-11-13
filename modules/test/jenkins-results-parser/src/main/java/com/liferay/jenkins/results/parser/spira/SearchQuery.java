@@ -133,12 +133,7 @@ public class SearchQuery<T extends SpiraArtifact> {
 				SpiraCustomPropertyValue spiraCustomPropertyValue =
 					(SpiraCustomPropertyValue)_value;
 
-				JSONObject filterJSONObject =
-					spiraCustomPropertyValue.getFilterJSONObject();
-
-				filterJSONObject.put("PropertyName", _name);
-
-				return filterJSONObject;
+				return spiraCustomPropertyValue.getFilterJSONObject();
 			}
 
 			if (_value instanceof String) {

@@ -82,26 +82,16 @@ public class ListSpiraCustomPropertyValue
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = super.getFilterJSONObject();
 
-		filterJSONObject.put("IntegerValue", _getIntegerValue());
+		filterJSONObject.put("IntValue", _getIntegerValue());
 
 		return filterJSONObject;
 	}
 
 	@Override
 	protected boolean matchesJSONObject(JSONObject customPropertyJSONObject) {
-		Integer spiraCustomListValueID = _getIntegerValue();
+		if (customPropertyJSONObject.optInt("IntegerValue") ==
+				_getIntegerValue()) {
 
-		if (spiraCustomListValueID == JSONObject.NULL) {
-			return false;
-		}
-
-		SpiraCustomListValue spiraCustomListValue = getValue();
-
-		if (spiraCustomListValue == null) {
-			return false;
-		}
-
-		if (spiraCustomListValueID == spiraCustomListValue.getID()) {
 			return true;
 		}
 

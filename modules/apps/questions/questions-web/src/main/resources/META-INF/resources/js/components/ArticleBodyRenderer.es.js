@@ -27,7 +27,9 @@ export default ({
 	return (
 		<>
 			{encodingFormat === 'bbcode' && (
-				<p>{parser.toReact(articleBody)}</p>
+				<div className={`questions-article-body-${id}`}>
+					<p>{parser.toReact(articleBody)}</p>
+				</div>
 			)}
 			{encodingFormat !== 'bbcode' && compactMode && (
 				<div

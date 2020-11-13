@@ -42,7 +42,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "deliver-report"));
 	<portlet:param name="mvcPath" value="/admin/data_source/edit_data_source.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= actionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= actionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 
 	<liferay-ui:error exception="<%= EntryEmailDeliveryException.class %>" message="please-enter-a-valid-email-address" />

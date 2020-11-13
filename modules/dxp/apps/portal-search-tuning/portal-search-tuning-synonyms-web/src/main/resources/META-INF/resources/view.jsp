@@ -50,7 +50,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteSynonymSetActionURL %>" cssClass="container-fluid-1280" method="post" name="SynonymSetsEntriesFm">
+<aui:form action="<%= deleteSynonymSetActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="SynonymSetsEntriesFm">
 	<aui:input name="deletedSynonymSetsString" type="hidden" value="" />
 
 	<liferay-ui:search-container

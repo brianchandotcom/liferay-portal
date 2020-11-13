@@ -334,6 +334,22 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return SpiraTestCaseObject.getSpiraTestCaseObjects(this, numberOfRows);
 	}
 
+	public List<SpiraTestCaseObject> getSpiraTestCaseObjects(
+		SpiraTestCaseProductVersion spiraTestCaseProductVersion) {
+
+		return SpiraTestCaseObject.getSpiraTestCaseObjects(
+			this, new SearchQuery.SearchParameter(spiraTestCaseProductVersion));
+	}
+
+	public List<SpiraTestCaseObject> getSpiraTestCaseObjects(
+		SpiraTestCaseProductVersion spiraTestCaseProductVersion,
+		long numberOfRows) {
+
+		return SpiraTestCaseObject.getSpiraTestCaseObjects(
+			this, numberOfRows,
+			new SearchQuery.SearchParameter(spiraTestCaseProductVersion));
+	}
+
 	public List<SpiraTestCaseObject> getSpiraTestCaseObjectsByPath(
 		String testCasePath) {
 

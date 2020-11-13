@@ -17,24 +17,8 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.service.base.CountryLocalServiceBaseImpl;
 
 /**
- * The implementation of the country local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.kernel.service.CountryLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
  * @see CountryLocalServiceBaseImpl
  */
 public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.kernel.service.CountryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.CountryLocalServiceUtil</code>.
-	 */
-
 }

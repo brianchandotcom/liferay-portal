@@ -363,19 +363,35 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private static Object _getClassField(
 		Class<? extends SpiraArtifact> spiraArtifactClass, String fieldName) {
 
-		try {
-			Field field = spiraArtifactClass.getDeclaredField(fieldName);
+		Class<?> clazz = spiraArtifactClass;
 
-			return field.get(fieldName);
-		}
-		catch (IllegalAccessException | IllegalArgumentException |
-			   NoSuchFieldException exception) {
+		RuntimeException runtimeException = null;
 
-			throw new RuntimeException(
-				"Missing field " + fieldName + " in " +
-					spiraArtifactClass.getName(),
-				exception);
+		while (true) {
+			try {
+				Field field = clazz.getDeclaredField(fieldName);
+
+				return field.get(fieldName);
+			}
+			catch (IllegalAccessException | IllegalArgumentException |
+				   NoSuchFieldException exception) {
+
+				if (runtimeException == null) {
+					runtimeException = new RuntimeException(
+						"Missing field " + fieldName + " in " +
+							spiraArtifactClass.getName(),
+						exception);
+				}
+			}
+
+			if (clazz == Object.class) {
+				break;
+			}
+
+			clazz = clazz.getSuperclass();
 		}
+
+		throw runtimeException;
 	}
 
 	private static Map<Integer, SpiraArtifact> _getIDSpiraArtifactsMap(

@@ -21,7 +21,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.servlet.DynamicServletRequestUtil;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -36,12 +41,15 @@ public class EditJournalArticleContentDashboardItemAction
 	public EditJournalArticleContentDashboardItemAction(
 		InfoEditURLProvider<JournalArticle> infoEditURLProvider,
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
-		Language language) {
+		Language language, Portal portal,
+		PortletLocalService portletLocalService) {
 
 		_infoEditURLProvider = infoEditURLProvider;
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
 		_language = language;
+		_portal = portal;
+		_portletLocalService = portletLocalService;
 	}
 
 	@Override
@@ -66,10 +74,20 @@ public class EditJournalArticleContentDashboardItemAction
 
 	@Override
 	public String getURL() {
+		Portlet portlet = _portletLocalService.getPortletById(
+			_portal.getPortletId(_httpServletRequest));
+
+		HttpServletRequest httpServletRequest =
+			DynamicServletRequestUtil.createDynamicServletRequest(
+				_httpServletRequest, portlet,
+				Collections.singletonMap(
+					"redirect",
+					new String[] {_portal.getCurrentURL(_httpServletRequest)}),
+				true);
+
 		try {
 			return Optional.ofNullable(
-				_infoEditURLProvider.getURL(
-					_journalArticle, _httpServletRequest)
+				_infoEditURLProvider.getURL(_journalArticle, httpServletRequest)
 			).orElse(
 				StringPool.BLANK
 			);
@@ -93,5 +111,7 @@ public class EditJournalArticleContentDashboardItemAction
 	private final InfoEditURLProvider<JournalArticle> _infoEditURLProvider;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
+	private final Portal _portal;
+	private final PortletLocalService _portletLocalService;
 
 }

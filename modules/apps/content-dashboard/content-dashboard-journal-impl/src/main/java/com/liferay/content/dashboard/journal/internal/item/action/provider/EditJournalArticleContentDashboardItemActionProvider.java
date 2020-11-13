@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +53,8 @@ public class EditJournalArticleContentDashboardItemActionProvider
 		return new EditJournalArticleContentDashboardItemAction(
 			_infoEditURLProviderTracker.getInfoEditURLProvider(
 				JournalArticle.class.getName()),
-			httpServletRequest, journalArticle, _language);
+			httpServletRequest, journalArticle, _language, _portal,
+			_portletLocalService);
 	}
 
 	@Override
@@ -97,5 +100,11 @@ public class EditJournalArticleContentDashboardItemActionProvider
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private ModelResourcePermission<JournalArticle> _modelResourcePermission;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

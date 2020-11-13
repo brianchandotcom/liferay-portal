@@ -25,7 +25,7 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 	navigationItems='<%= assetListDisplayContext.getNavigationItems("collection-providers") %>'
 />
 
-<div class="container-fluid-1280 lfr-search-container-wrapper" id="<portlet:namespace />collectionProviders">
+<div class="container-fluid container-fluid-max-xl lfr-search-container-wrapper" id="<portlet:namespace />collectionProviders">
 	<liferay-ui:breadcrumb
 		showLayout="<%= false %>"
 	/>

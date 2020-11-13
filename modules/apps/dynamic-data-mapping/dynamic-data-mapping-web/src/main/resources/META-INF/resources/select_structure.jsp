@@ -41,7 +41,7 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />
 
-<aui:form action="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>" cssClass="container-fluid-1280" method="post" name="selectStructureFm">
+<aui:form action="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectStructureFm">
 	<liferay-ui:search-container
 		searchContainer="<%= structureSearch %>"
 	>

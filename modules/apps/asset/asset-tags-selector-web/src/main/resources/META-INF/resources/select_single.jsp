@@ -24,7 +24,7 @@ assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(request, r
 	displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsSelectorDisplayContext) %>"
 />
 
-<aui:form action="<%= assetTagsSelectorDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetTagFm">
+<aui:form action="<%= assetTagsSelectorDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectAssetTagFm">
 	<liferay-ui:search-container
 		searchContainer="<%= assetTagsSelectorDisplayContext.getTagsSearchContainer() %>"
 	>

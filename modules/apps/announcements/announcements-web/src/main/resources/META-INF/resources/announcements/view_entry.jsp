@@ -49,7 +49,7 @@ if (portletTitleBasedNavigation) {
 	</liferay-frontend:info-bar>
 </c:if>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
 	<div class="main-content-card panel" id="<portlet:namespace /><%= entry.getEntryId() %>">
 		<div class="panel-heading">
 			<div class="card-row">

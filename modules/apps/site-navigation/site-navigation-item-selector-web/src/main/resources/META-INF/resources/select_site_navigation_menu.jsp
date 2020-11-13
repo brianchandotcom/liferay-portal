@@ -25,7 +25,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 		<liferay-util:include page="/select_site_navigation_menu_level.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<div class="container-fluid-1280 p-4">
+		<div class="container-fluid container-fluid-max-xl p-4">
 			<div class="alert alert-info">
 				<liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" />
 			</div>

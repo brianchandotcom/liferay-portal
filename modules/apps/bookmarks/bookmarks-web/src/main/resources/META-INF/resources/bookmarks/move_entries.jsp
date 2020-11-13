@@ -74,7 +74,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/bookmarks/move_entry" var="moveEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
 	</portlet:actionURL>

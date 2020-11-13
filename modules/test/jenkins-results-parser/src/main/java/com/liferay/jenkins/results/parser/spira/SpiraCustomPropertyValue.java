@@ -154,7 +154,7 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 	}
 
 	protected JSONObject getCustomPropertyJSONObject() {
-		JSONObject customPropertyJSONObject = getFilterJSONObject();
+		JSONObject customPropertyJSONObject = new JSONObject();
 
 		customPropertyJSONObject.put("PropertyNumber", getPropertyNumber());
 

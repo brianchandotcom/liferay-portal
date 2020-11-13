@@ -79,6 +79,16 @@ public class ListSpiraCustomPropertyValue
 	}
 
 	@Override
+	protected JSONObject getCustomPropertyJSONObject() {
+		JSONObject customPropertyJSONObject =
+			super.getCustomPropertyJSONObject();
+
+		customPropertyJSONObject.put("IntegerValue", _getIntegerValue());
+
+		return customPropertyJSONObject;
+	}
+
+	@Override
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = super.getFilterJSONObject();
 

@@ -43,6 +43,16 @@ public class TextSpiraCustomPropertyValue
 	}
 
 	@Override
+	protected JSONObject getCustomPropertyJSONObject() {
+		JSONObject customPropertyJSONObject =
+			super.getCustomPropertyJSONObject();
+
+		customPropertyJSONObject.put("StringValue", getValue());
+
+		return customPropertyJSONObject;
+	}
+
+	@Override
 	protected JSONObject getFilterJSONObject() {
 		JSONObject filterJSONObject = super.getFilterJSONObject();
 

@@ -37,6 +37,7 @@ class ChangeTrackingChangesView extends React.Component {
 		this.COLUMN_USER = 'USER';
 		this.FILTER_CLASS_EVERYTHING = 'everything';
 		this.GLOBAL_SITE_NAME = Liferay.Language.get('global');
+		this.MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
 		this.POP_STATE = 'popstate';
 		this.VIEW_TYPE_CHANGES = 'changes';
 		this.VIEW_TYPE_CONTEXT = 'context';
@@ -111,11 +112,20 @@ class ChangeTrackingChangesView extends React.Component {
 							path,
 							senna: true,
 						},
-						null,
+						document.title,
 						path
 					);
 				});
 			}
+		}
+		else {
+			window.history.replaceState(
+				{
+					path: window.location.pathname + window.location.search,
+					senna: true,
+				},
+				document.title
+			);
 		}
 
 		let loading = false;
@@ -130,7 +140,7 @@ class ChangeTrackingChangesView extends React.Component {
 			children: this._filterHideableNodes(node.children, showHideable),
 			column: this.COLUMN_TITLE,
 			delta: 20,
-			dropdown: '',
+			dropdownItems: null,
 			filterClass,
 			loading,
 			node,
@@ -157,7 +167,9 @@ class ChangeTrackingChangesView extends React.Component {
 					.then((response) => response.text())
 					.then((text) => {
 						this.setState({
-							dropdown: this._getDropdown(this.state.node),
+							dropdownItems: this._getDropdownItems(
+								this.state.node
+							),
 							loading: false,
 							renderInnerHTML: {__html: text},
 						});
@@ -593,7 +605,7 @@ class ChangeTrackingChangesView extends React.Component {
 		return portletURL.toString();
 	}
 
-	_getDropdown(node) {
+	_getDropdownItems(node) {
 		let dropdownItems = node.dropdownItems;
 
 		if (!dropdownItems) {
@@ -611,27 +623,7 @@ class ChangeTrackingChangesView extends React.Component {
 			});
 		}
 
-		if (dropdownItems.length === 0) {
-			return;
-		}
-
-		return (
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={dropdownItems}
-					spritemap={this.spritemap}
-					trigger={
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							small
-							spritemap={this.spritemap}
-							symbol="ellipsis-v"
-						/>
-					}
-				/>
-			</div>
-		);
+		return dropdownItems;
 	}
 
 	_getModels(nodes) {
@@ -1239,6 +1231,24 @@ class ChangeTrackingChangesView extends React.Component {
 			viewType
 		);
 
+		const pathParam = this._getPathParam(
+			breadcrumbItems,
+			filterClass,
+			showHideable,
+			viewType
+		);
+
+		const path = this._getPath(pathParam);
+
+		window.history.pushState(
+			{
+				path,
+				senna: true,
+			},
+			document.title,
+			path
+		);
+
 		this.setState(
 			{
 				breadcrumbItems,
@@ -1252,10 +1262,8 @@ class ChangeTrackingChangesView extends React.Component {
 				showHideable,
 				viewType,
 			},
-			() => this._updateRenderContent(node)
+			() => this._updateRenderContent(true, node, path)
 		);
-
-		this._pushState(breadcrumbItems, filterClass, showHideable, viewType);
 	}
 
 	_handlePageChange(page) {
@@ -1265,19 +1273,27 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_handlePopState() {
-		const path = window.location.pathname + window.location.search;
+		const params = new URLSearchParams(window.location.search);
 
-		if (!path.startsWith(this.basePath)) {
+		const ctCollectionId = params.get(this.namespace + 'ctCollectionId');
+		const mvcRenderCommandName = params.get(
+			this.namespace + 'mvcRenderCommandName'
+		);
+
+		if (
+			!ctCollectionId ||
+			!mvcRenderCommandName ||
+			ctCollectionId !== this.ctCollectionId.toString() ||
+			mvcRenderCommandName !== this.MVC_RENDER_COMMAND_NAME
+		) {
 			if (Liferay.SPA && Liferay.SPA.app) {
-				Liferay.SPA.app.skipLoadPopstate = true;
+				Liferay.SPA.app.skipLoadPopstate = false;
 
 				Liferay.SPA.app.navigate(window.location.href, true);
 			}
 
 			return;
 		}
-
-		const params = new URLSearchParams(window.location.search);
 
 		const pathState = this._getPathState(
 			params.get(this.namespace + 'path')
@@ -1341,16 +1357,32 @@ class ChangeTrackingChangesView extends React.Component {
 					)
 				);
 
+				const currentState = window.history.state;
+
 				window.history.replaceState(
 					{
 						path,
 						senna: true,
 					},
-					null,
+					document.title,
 					path
 				);
 
-				this._updateRenderContent(node);
+				if (!currentState || !currentState.renderInnerHTML) {
+					this._updateRenderContent(true, node, path);
+
+					return;
+				}
+
+				this.setState(
+					{
+						dropdownItems: currentState.dropdownItems,
+						renderInnerHTML: currentState.renderInnerHTML,
+					},
+					() => {
+						this._updateRenderContent(false, node, path);
+					}
+				);
 			}
 		);
 	}
@@ -1419,7 +1451,7 @@ class ChangeTrackingChangesView extends React.Component {
 				path,
 				senna: true,
 			},
-			null,
+			document.title,
 			path
 		);
 	}
@@ -1532,26 +1564,6 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 	}
 
-	_pushState(breadcrumbItems, filterClass, showHideable, viewType) {
-		const pathParam = this._getPathParam(
-			breadcrumbItems,
-			filterClass,
-			showHideable,
-			viewType
-		);
-
-		const path = this._getPath(pathParam);
-
-		window.history.pushState(
-			{
-				path,
-				senna: true,
-			},
-			null,
-			path
-		);
-	}
-
 	_renderEntry() {
 		if (this.state.renderInnerHTML === null) {
 			if (this.state.loading) {
@@ -1580,7 +1592,24 @@ class ChangeTrackingChangesView extends React.Component {
 						</span>
 					</div>
 
-					{this.state.dropdown}
+					{this.state.dropdownItems &&
+						this.state.dropdownItems.length > 0 && (
+							<div className="autofit-col">
+								<ClayDropDownWithItems
+									alignmentPosition={Align.BottomLeft}
+									items={this.state.dropdownItems}
+									spritemap={this.spritemap}
+									trigger={
+										<ClayButtonWithIcon
+											displayType="unstyled"
+											small
+											spritemap={this.spritemap}
+											symbol="ellipsis-v"
+										/>
+									}
+								/>
+							</div>
+						)}
 				</h2>
 				<div className="sheet-section">
 					{this.state.loading && (
@@ -1812,10 +1841,10 @@ class ChangeTrackingChangesView extends React.Component {
 		);
 	}
 
-	_updateRenderContent(node) {
+	_updateRenderContent(loading, node, path) {
 		if (!node.modelClassNameId) {
 			this.setState({
-				dropdown: '',
+				dropdownItems: null,
 				loading: false,
 				renderInnerHTML: null,
 			});
@@ -1825,18 +1854,47 @@ class ChangeTrackingChangesView extends React.Component {
 
 		this.setState(
 			{
-				loading: true,
+				loading,
 			},
 			() => {
 				AUI().use('liferay-portlet-url', () => {
 					fetch(this._getRenderURL(node))
 						.then((response) => response.text())
 						.then((text) => {
+							const dropdownItems = this._getDropdownItems(node);
+
+							if (
+								!this.state.node.modelClassNameId ||
+								this.state.node.modelClassNameId !==
+									node.modelClassNameId ||
+								this.state.node.modelClassPK !==
+									node.modelClassPK
+							) {
+								return;
+							}
+
 							this.setState({
-								dropdown: this._getDropdown(node),
+								dropdownItems,
 								loading: false,
 								renderInnerHTML: {__html: text},
 							});
+
+							if (
+								window.history.state &&
+								window.history.state.path !== path
+							) {
+								return;
+							}
+
+							window.history.replaceState(
+								{
+									dropdownItems,
+									path,
+									renderInnerHTML: {__html: text},
+									senna: true,
+								},
+								document.title
+							);
 						});
 				});
 			}

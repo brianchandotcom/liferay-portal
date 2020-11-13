@@ -358,8 +358,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			ServiceReferenceServiceTuple<Object, Object>
 				objectObjectServiceReferenceServiceTuple) {
 
-			//nothing to do here since servicereference is mutable and has
-
+			// Do nothing since servicereference is mutable and has it has
 			// already been mutated by the framework
 
 		}

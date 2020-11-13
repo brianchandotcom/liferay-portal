@@ -17,12 +17,12 @@ package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.dynamic.data.mapping.model.DDMContentTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionTable;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -67,7 +67,7 @@ public class DDMFormInstanceRecordTableReferenceDefinition
 			)
 		).singleColumnReference(
 			DDMFormInstanceRecordTable.INSTANCE.storageId,
-			DDMContentTable.INSTANCE.contentId
+			DDMStorageLinkTable.INSTANCE.classPK
 		).assetEntryReference(
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecord.class

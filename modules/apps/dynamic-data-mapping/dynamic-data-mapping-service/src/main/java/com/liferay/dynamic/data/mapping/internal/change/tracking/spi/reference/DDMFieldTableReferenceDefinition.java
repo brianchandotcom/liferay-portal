@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.document.library.internal.change.tracking.spi.reference;
+package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
-import com.liferay.document.library.kernel.model.DLFileVersionTable;
-import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttributeTable;
+import com.liferay.dynamic.data.mapping.model.DDMFieldTable;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
-import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldPersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -31,54 +29,51 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Samuel Trong Tran
+ * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class DLFileEntryMetadataTableReferenceDefinition
-	implements TableReferenceDefinition<DLFileEntryMetadataTable> {
+public class DDMFieldTableReferenceDefinition
+	implements TableReferenceDefinition<DDMFieldTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<DLFileEntryMetadataTable>
+		ChildTableReferenceInfoBuilder<DDMFieldTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.classNameReference(
-			DLFileEntryMetadataTable.INSTANCE.fileEntryMetadataId,
-			DDMStructureLinkTable.INSTANCE.classPK, DLFileEntryMetadata.class
+		childTableReferenceInfoBuilder.singleColumnReference(
+			DDMFieldTable.INSTANCE.fieldId,
+			DDMFieldAttributeTable.INSTANCE.fieldId);
+	}
+
+	@Override
+	public void defineParentTableReferences(
+		ParentTableReferenceInfoBuilder<DDMFieldTable>
+			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			DDMFieldTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
-			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
+			DDMFieldTable.INSTANCE.structureVersionId,
+			DDMStructureVersionTable.INSTANCE.structureVersionId
+		).parentColumnReference(
+			DDMFieldTable.INSTANCE.fieldId, DDMFieldTable.INSTANCE.parentFieldId
+		).singleColumnReference(
+			DDMFieldTable.INSTANCE.storageId,
 			DDMStorageLinkTable.INSTANCE.classPK
 		);
 	}
 
 	@Override
-	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<DLFileEntryMetadataTable>
-			parentTableReferenceInfoBuilder) {
-
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			DLFileEntryMetadataTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
-			DDMStructureTable.INSTANCE.structureId
-		).singleColumnReference(
-			DLFileEntryMetadataTable.INSTANCE.fileVersionId,
-			DLFileVersionTable.INSTANCE.fileVersionId
-		);
-	}
-
-	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _dlFileEntryMetadataPersistence;
+		return _ddmFieldPersistence;
 	}
 
 	@Override
-	public DLFileEntryMetadataTable getTable() {
-		return DLFileEntryMetadataTable.INSTANCE;
+	public DDMFieldTable getTable() {
+		return DDMFieldTable.INSTANCE;
 	}
 
 	@Reference
-	private DLFileEntryMetadataPersistence _dlFileEntryMetadataPersistence;
+	private DDMFieldPersistence _ddmFieldPersistence;
 
 }

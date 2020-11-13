@@ -91,9 +91,9 @@ public class JournalArticleTableReferenceDefinition
 		).classNameReference(
 			JournalArticleTable.INSTANCE.id,
 			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
-		).classNameReference(
+		).singleColumnReference(
 			JournalArticleTable.INSTANCE.id,
-			DDMStorageLinkTable.INSTANCE.classPK, JournalArticle.class
+			DDMStorageLinkTable.INSTANCE.classPK
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ImageTable.INSTANCE

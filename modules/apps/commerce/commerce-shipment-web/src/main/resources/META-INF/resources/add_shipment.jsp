@@ -25,7 +25,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "create-new-shipment") %>'
 >
-	<aui:form action="<%= editCommerceShipmentActionURL %>" cssClass="container-fluid-1280" method="post" name="form">
+	<aui:form action="<%= editCommerceShipmentActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="form">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 
 		<aui:select id="commerceChannelGroupId" label="channel" name="commerceChannelGroupId" required="<%= true %>" showEmptyOption="<%= true %>">

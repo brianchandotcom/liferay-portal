@@ -20,7 +20,7 @@
 CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceOrderConstants.COMMERCE_ORDER);
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl">
 	<h4><liferay-ui:message key="order-details" /></h4>
 
 	<liferay-ui:search-container

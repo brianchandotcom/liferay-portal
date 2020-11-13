@@ -25,7 +25,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.format(request, "edit-x", "carrier-details") %>'
 >
-	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="carrierDetails" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

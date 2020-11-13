@@ -25,7 +25,7 @@ CommercePricingClass commercePricingClass = commercePricingClassDisplayContext.g
 <portlet:actionURL name="editCommercePricingClassExternalReferenceCode" var="editCommercePricingClassExternalReferenceCodeURL" />
 
 <commerce-ui:modal-content>
-	<aui:form action="<%= editCommercePricingClassExternalReferenceCodeURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCommercePricingClassExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commercePricingClassId" type="hidden" value="<%= commercePricingClass.getCommercePricingClassId() %>" />
 

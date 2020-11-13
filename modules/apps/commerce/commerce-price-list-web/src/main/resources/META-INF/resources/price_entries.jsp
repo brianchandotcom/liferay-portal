@@ -100,7 +100,7 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar>
 
 	<div id="<portlet:namespace />priceEntriesContainer">
-		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 			<c:if test="<%= commercePriceEntryDisplayContext.isShowInfoPanel() %>">
 				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="commercePriceEntryInfoPanel" var="sidebarPanelURL" />
 

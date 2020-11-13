@@ -68,7 +68,7 @@ SearchContainer<CommerceDiscountRule> commerceDiscountRuleSearchContainer = comm
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl">
 	<portlet:actionURL name="editCommerceDiscountRule" var="editCommerceDiscountRuleActionURL" />
 
 	<aui:form action="<%= editCommerceDiscountRuleActionURL %>" method="post" name="fm">

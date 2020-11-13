@@ -45,7 +45,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 <portlet:actionURL name="editCommerceVirtualOrderItem" var="editCommerceVirtualOrderItemActionURL" />
 
-<aui:form action="<%= editCommerceVirtualOrderItemActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommerceVirtualOrderItemActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />

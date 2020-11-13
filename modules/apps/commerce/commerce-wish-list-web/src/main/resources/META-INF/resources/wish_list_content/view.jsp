@@ -31,7 +31,7 @@ long commerceWishListId = commerceWishListDisplayContext.getCommerceWishListId()
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= !commerceWishList.isGuestWishList() %>">
-			<div class="container-fluid-1280">
+			<div class="container-fluid container-fluid-max-xl">
 				<h3 class="d-inline"><%= HtmlUtil.escape(commerceWishList.getName()) %></h3>
 
 				<portlet:renderURL var="editCommerceWishListURL">
@@ -46,7 +46,7 @@ long commerceWishListId = commerceWishListDisplayContext.getCommerceWishListId()
 
 		<portlet:actionURL name="editCommerceWishListItem" var="editCommerceWishListItemActionURL" />
 
-		<div class="container-fluid-1280">
+		<div class="container-fluid container-fluid-max-xl">
 			<aui:form action="<%= editCommerceWishListItemActionURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

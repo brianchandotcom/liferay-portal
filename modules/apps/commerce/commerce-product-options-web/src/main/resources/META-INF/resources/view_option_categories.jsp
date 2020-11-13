@@ -100,7 +100,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productOptionCategoriesContainer">
-	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpOptionCategoryDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="cpOptionCategoryInfoPanel" var="sidebarPanelURL" />
 

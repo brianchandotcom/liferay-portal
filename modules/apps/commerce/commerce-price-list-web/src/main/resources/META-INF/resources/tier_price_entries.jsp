@@ -134,7 +134,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 	</liferay-frontend:management-bar>
 
 	<div id="<portlet:namespace />tierPriceEntriesContainer">
-		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 			<c:if test="<%= commerceTierPriceEntryDisplayContext.isShowInfoPanel() %>">
 				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="commerceTierPriceEntryInfoPanel" var="sidebarPanelURL" />
 

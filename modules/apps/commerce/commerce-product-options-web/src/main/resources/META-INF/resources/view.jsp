@@ -33,7 +33,7 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 	navigationItems="<%= Collections.singletonList(navigationItem) %>"
 />
 
-<div class="container-fluid-1280" id="<portlet:namespace />CPOptionsEditor">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />CPOptionsEditor">
 
 </div>
 

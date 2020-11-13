@@ -74,7 +74,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl">
 	<portlet:actionURL name="editCommerceDiscountRel" var="editCommerceDiscountRelActionURL" />
 
 	<aui:form action="<%= editCommerceDiscountRelActionURL %>" method="post" name="fm">

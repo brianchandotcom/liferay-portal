@@ -58,7 +58,7 @@ PortletURL portletURL = commerceAccountGroupItemSelectorViewDisplayContext.getPo
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceAccountGroupSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceAccountGroupSelectorWrapper">
 	<liferay-ui:search-container
 		id="commerceAccountGroups"
 		searchContainer="<%= commerceAccountGroupSearchContainer %>"

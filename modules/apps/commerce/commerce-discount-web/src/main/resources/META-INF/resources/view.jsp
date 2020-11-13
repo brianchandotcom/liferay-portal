@@ -80,7 +80,7 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<portlet:actionURL name="editCommerceDiscount" var="editCommerceDiscountActionURL" />
 
 		<aui:form action="<%= editCommerceDiscountActionURL %>" method="post" name="fm">

@@ -29,7 +29,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.format(request, "edit-x", "shipping-address") %>'
 >
-	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">
+	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="address" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />

@@ -21,7 +21,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 %>
 
 <div class="pt-4">
-	<aui:form action="<%= currentURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:form action="<%= currentURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="deletePriceLists" type="hidden" />

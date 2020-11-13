@@ -35,7 +35,7 @@ else {
 
 <portlet:actionURL name="editCPTaxCategory" var="editCPTaxCategoryActionURL" />
 
-<aui:form action="<%= editCPTaxCategoryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCPTaxCategoryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpTaxCategory == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="cpTaxCategoryId" type="hidden" value="<%= (cpTaxCategory == null) ? 0 : cpTaxCategory.getCPTaxCategoryId() %>" />

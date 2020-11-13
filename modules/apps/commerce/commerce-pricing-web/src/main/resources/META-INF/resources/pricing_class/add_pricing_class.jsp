@@ -32,7 +32,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 	title='<%= LanguageUtil.get(request, "add-product-group") %>'
 >
 	<div class="col-12 lfr-form-content">
-		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
+		<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 			<aui:input label="name" name="title" required="<%= true %>" />
 
 			<aui:input name="description" type="textarea" />

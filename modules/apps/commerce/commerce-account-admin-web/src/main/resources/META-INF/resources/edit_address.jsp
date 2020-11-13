@@ -33,7 +33,7 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 
 <portlet:actionURL name="editCommerceAddress" var="editCommerceAddressActionURL" />
 
-<div class="container-fluid-1280 mt-4 sheet">
+<div class="container-fluid container-fluid-max-xl mt-4 sheet">
 	<aui:form action="<%= editCommerceAddressActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceAddress == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

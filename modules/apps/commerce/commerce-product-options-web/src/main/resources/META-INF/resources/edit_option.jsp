@@ -26,7 +26,7 @@ long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 
 <portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />
 
-<aui:form action="<%= editProductOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editProductOptionActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= String.valueOf(cpOptionId) %>" />

@@ -27,7 +27,7 @@ CommerceSubscriptionContentDisplayContext commerceSubscriptionContentDisplayCont
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="container-fluid-1280" id="<portlet:namespace />subscriptionEntriesContainer">
+		<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />subscriptionEntriesContainer">
 			<div class="commerce-product-subscription-entries-container" id="<portlet:namespace />entriesContainer">
 				<liferay-ui:search-container
 					id="commerceSubscriptionEntries"

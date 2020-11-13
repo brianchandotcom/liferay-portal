@@ -44,7 +44,7 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />siteSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />siteSelectorWrapper">
 	<liferay-ui:search-container
 		id="sites"
 		searchContainer="<%= simpleSiteItemSelectorViewDisplayContext.getSearchContainer() %>"

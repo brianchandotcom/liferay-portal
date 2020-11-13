@@ -51,7 +51,7 @@ PortletURL portletURL = commerceCountryItemSelectorViewDisplayContext.getPortlet
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceCountrySelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceCountrySelectorWrapper">
 	<liferay-ui:search-container
 		id="commerceCountries"
 		searchContainer="<%= commerceCountryItemSelectorViewDisplayContext.getSearchContainer() %>"

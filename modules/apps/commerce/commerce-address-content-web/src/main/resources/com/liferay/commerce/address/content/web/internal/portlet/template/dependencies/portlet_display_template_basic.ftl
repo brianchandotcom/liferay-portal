@@ -1,6 +1,6 @@
 <#assign count = 0 />
 
-<div class="container-fluid-1280" style="text-align:center">
+<div class="container-fluid container-fluid-max-xl" style="text-align:center">
 	<div class="row" style="padding:15px">
 		<#if entries?has_content>
 			<#list entries as curCommerceAddress>

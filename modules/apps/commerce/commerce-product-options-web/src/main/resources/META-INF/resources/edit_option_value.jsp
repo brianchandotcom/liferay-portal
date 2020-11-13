@@ -38,7 +38,7 @@ if (cpOptionValue != null) {
 
 <portlet:actionURL name="editProductOptionValue" var="editProductOptionValueActionURL" />
 
-<aui:form action="<%= editProductOptionValueActionURL %>" cssClass="container-fluid-1280" method="post" name="optionValueFm">
+<aui:form action="<%= editProductOptionValueActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="optionValueFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionValue == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= cpOptionId %>" />
 	<aui:input name="cpOptionValueId" type="hidden" value="<%= cpOptionValueId %>" />

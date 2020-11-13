@@ -20,7 +20,7 @@
 CommerceWishListDisplayContext commerceWishListDisplayContext = (CommerceWishListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div class="container-fluid-1280 py-3">
+<div class="container-fluid container-fluid-max-xl py-3">
 	<h3 class="align-middle d-inline"><liferay-ui:message key="wish-lists" /></h3>
 
 	<div class="d-inline float-right">
@@ -40,7 +40,7 @@ CommerceWishListDisplayContext commerceWishListDisplayContext = (CommerceWishLis
 	</div>
 </div>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl">
 	<portlet:actionURL name="editCommerceWishList" var="editCommerceWishListActionURL" />
 
 	<aui:form action="<%= editCommerceWishListActionURL %>" method="post" name="fm">

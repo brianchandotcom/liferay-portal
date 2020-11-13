@@ -4,6 +4,10 @@ package ${configYAML.apiPackagePath}.internal.graphql.servlet.${escapedVersion};
 	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 </#list>
 
+<#list allExternalSchemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
+</#list>
+
 import ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}.Mutation;
 import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Query;
 

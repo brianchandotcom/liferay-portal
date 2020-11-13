@@ -29,6 +29,8 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
@@ -159,26 +161,17 @@ public class OpenAPIParserUtil {
 			for (Operation operation : operations) {
 				RequestBody requestBody = operation.getRequestBody();
 
-				if (requestBody == null) {
-					continue;
+				if (requestBody != null) {
+					_getExternalReferencesFromContents(
+						requestBody.getContent(), externalReferences);
 				}
 
-				Map<String, Content> contentMap = requestBody.getContent();
+				Map<ResponseCode, Response> responses =
+					operation.getResponses();
 
-				for (Map.Entry<String, Content> entry2 :
-						contentMap.entrySet()) {
-
-					Content content = entry2.getValue();
-
-					Schema schema = content.getSchema();
-
-					String reference = schema.getReference();
-
-					if ((reference != null) &&
-						!reference.contains("#/components/schemas/")) {
-
-						externalReferences.add(reference);
-					}
+				for (Response response : responses.values()) {
+					_getExternalReferencesFromContents(
+						response.getContent(), externalReferences);
 				}
 			}
 		}
@@ -396,7 +389,8 @@ public class OpenAPIParserUtil {
 		String parameterType = javaMethodParameter.getParameterType();
 
 		if (parameterType.startsWith("[")) {
-			sb.append(getElementClassName(parameterType) + "[]");
+			sb.append(getElementClassName(parameterType));
+			sb.append("[]");
 		}
 		else {
 			sb.append(parameterType);
@@ -454,6 +448,30 @@ public class OpenAPIParserUtil {
 		return false;
 	}
 
+	private static void _getExternalReferencesFromContents(
+		Map<String, Content> contents, Set<String> externalReferences) {
+
+		if (contents == null) {
+			return;
+		}
+
+		for (Content content : contents.values()) {
+			Schema schema = content.getSchema();
+
+			if (schema == null) {
+				continue;
+			}
+
+			String reference = _getReference(schema);
+
+			if ((reference != null) &&
+				!reference.contains("#/components/schemas/")) {
+
+				externalReferences.add(reference);
+			}
+		}
+	}
+
 	private static String _getMapType(
 		Map<String, String> javaDataTypeMap, Schema schema) {
 
@@ -478,6 +496,20 @@ public class OpenAPIParserUtil {
 		}
 
 		return Object.class.getName();
+	}
+
+	private static String _getReference(Schema schema) {
+		if (schema.getReference() != null) {
+			return schema.getReference();
+		}
+
+		Items items = schema.getItems();
+
+		if (items != null) {
+			return items.getReference();
+		}
+
+		return null;
 	}
 
 	private static final Map<Map.Entry<String, String>, String>

@@ -16,17 +16,15 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
-import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
-import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +32,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,6 +73,90 @@ public class OpenAPIUtil {
 		}
 
 		return s;
+	}
+
+	public static Map<String, Schema> getAllExternalSchemas(
+			Map<String, Schema> allSchemas, OpenAPIYAML openAPIYAML)
+		throws Exception {
+
+		List<String> externalReferences =
+			OpenAPIParserUtil.getExternalReferences(openAPIYAML);
+
+		Map<String, Schema> allExternalSchemas = new HashMap<>();
+
+		Map<String, Schema> externalSchemas =
+			OpenAPIParserUtil.getExternalSchemas(openAPIYAML);
+
+		for (String externalReference : externalReferences) {
+			String referenceName = OpenAPIParserUtil.getReferenceName(
+				externalReference);
+
+			allExternalSchemas.put(
+				referenceName, externalSchemas.get(referenceName));
+		}
+
+		Queue<Map<String, Schema>> queue = new LinkedList<>();
+
+		queue.add(allExternalSchemas);
+
+		Map<String, Schema> map = null;
+
+		while ((map = queue.poll()) != null) {
+			for (Map.Entry<String, Schema> entry : map.entrySet()) {
+				Schema schema = entry.getValue();
+
+				Map<String, Schema> propertySchemas = null;
+
+				Items items = schema.getItems();
+
+				if (items != null) {
+					propertySchemas = items.getPropertySchemas();
+				}
+				else if (schema.getReference() != null) {
+					String referenceName = OpenAPIParserUtil.getReferenceName(
+						schema.getReference());
+
+					if (allSchemas.get(referenceName) == null) {
+						Schema externalSchema = externalSchemas.get(
+							referenceName);
+
+						Map<String, Schema> externalSchemaMap =
+							Collections.singletonMap(
+								referenceName, externalSchema);
+
+						allExternalSchemas.putAll(externalSchemaMap);
+						queue.add(externalSchemaMap);
+					}
+				}
+				else {
+					propertySchemas = schema.getPropertySchemas();
+				}
+
+				if (propertySchemas == null) {
+					continue;
+				}
+
+				String schemaName = StringUtil.upperCaseFirstLetter(
+					entry.getKey());
+
+				if (items != null) {
+					schemaName = formatSingular(schemaName);
+				}
+
+				allExternalSchemas.put(schemaName, schema);
+
+				queue.add(propertySchemas);
+			}
+		}
+
+		return allExternalSchemas;
+	}
+
+	public static Map<String, Schema> getAllExternalSchemas(
+			OpenAPIYAML openAPIYAML)
+		throws Exception {
+
+		return getAllExternalSchemas(getAllSchemas(openAPIYAML), openAPIYAML);
 	}
 
 	public static Map<String, Schema> getAllSchemas(OpenAPIYAML openAPIYAML) {
@@ -196,14 +277,6 @@ public class OpenAPIUtil {
 		}
 
 		return globalEnumSchemas;
-	}
-
-	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
-		Predicate<Operation> predicate) {
-
-		return GraphQLOpenAPIParser.getJavaMethodSignatures(
-			configYAML, openAPIYAML, predicate);
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

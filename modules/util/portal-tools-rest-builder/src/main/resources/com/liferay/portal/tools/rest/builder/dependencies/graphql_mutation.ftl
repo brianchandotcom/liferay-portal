@@ -5,6 +5,10 @@ package ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}
 	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 </#list>
 
+<#list allExternalSchemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
+</#list>
+
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;

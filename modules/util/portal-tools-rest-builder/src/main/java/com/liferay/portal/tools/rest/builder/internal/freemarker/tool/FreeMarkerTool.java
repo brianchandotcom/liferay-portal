@@ -269,7 +269,8 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
+			ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML)
+		throws Exception {
 
 		return GraphQLOpenAPIParser.getJavaMethodSignatures(
 			configYAML, openAPIYAML,
@@ -373,7 +374,8 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getGraphQLRelationJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
+			ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML)
+		throws Exception {
 
 		List<JavaMethodSignature> javaMethodSignatures =
 			_getSortedJavaMethodSignatures(
@@ -490,9 +492,10 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature>
-		getParentGraphQLRelationJavaMethodSignatures(
-			ConfigYAML configYAML, String graphQLType,
-			OpenAPIYAML openAPIYAML) {
+			getParentGraphQLRelationJavaMethodSignatures(
+				ConfigYAML configYAML, String graphQLType,
+				OpenAPIYAML openAPIYAML)
+		throws Exception {
 
 		Map<String, Schema> schemas = getSchemas(openAPIYAML);
 
@@ -1107,7 +1110,8 @@ public class FreeMarkerTool {
 	}
 
 	private List<JavaMethodSignature> _getSortedJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
+			ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML)
+		throws Exception {
 
 		List<JavaMethodSignature> javaMethodSignatures =
 			getGraphQLJavaMethodSignatures(

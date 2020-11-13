@@ -4534,10 +4534,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
 		ocularConfiguration = ocularConfiguration.snapshotPath(
-			Paths.get(".", _ocularSnapImageDirName));
+			Paths.get(".", getOcularSnapImageDirName()));
 
 		ocularConfiguration.resultPath(
-			Paths.get(".", _ocularResultImageDirName));
+			Paths.get(".", getOcularResultImageDirName()));
 
 		ocularConfiguration.globalSimilarity(99);
 

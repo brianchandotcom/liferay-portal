@@ -14,12 +14,15 @@
 
 package com.liferay.headless.admin.content.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.admin.content.resource.v1_0.PageDefinitionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import java.util.function.BiFunction;
 
@@ -28,6 +31,9 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -38,6 +44,32 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void setPageDefinitionResourceComponentServiceObjects(
+		ComponentServiceObjects<PageDefinitionResource>
+			pageDefinitionResourceComponentServiceObjects) {
+
+		_pageDefinitionResourceComponentServiceObjects =
+			pageDefinitionResourceComponentServiceObjects;
+	}
+
+	@GraphQLField(
+		description = "Renders and retrieves HTML for the page definition using the theme of specified site."
+	)
+	public Response createSitePageDefinitionPreview(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("pageDefinition")
+				com.liferay.headless.delivery.dto.v1_0.PageDefinition
+					pageDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pageDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			pageDefinitionResource ->
+				pageDefinitionResource.postSitePageDefinitionPreview(
+					Long.valueOf(siteKey), pageDefinition));
+	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
@@ -76,6 +108,25 @@ public class Mutation {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	private void _populateResourceContext(
+			PageDefinitionResource pageDefinitionResource)
+		throws Exception {
+
+		pageDefinitionResource.setContextAcceptLanguage(_acceptLanguage);
+		pageDefinitionResource.setContextCompany(_company);
+		pageDefinitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		pageDefinitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		pageDefinitionResource.setContextUriInfo(_uriInfo);
+		pageDefinitionResource.setContextUser(_user);
+		pageDefinitionResource.setGroupLocalService(_groupLocalService);
+		pageDefinitionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private static ComponentServiceObjects<PageDefinitionResource>
+		_pageDefinitionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

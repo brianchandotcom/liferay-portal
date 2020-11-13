@@ -49,6 +49,18 @@ import CodeMirror from 'codemirror';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+const VARIABLE_MARKERS = {
+	ftl: {
+		variableEnd: '}',
+		variableStart: '${',
+	},
+
+	velocity: {
+		variableEnd: '',
+		variableStart: '$',
+	},
+};
+
 export const CodeMirrorEditor = ({
 	autocompleteData,
 	content,
@@ -64,6 +76,8 @@ export const CodeMirrorEditor = ({
 		if (!editorWrapper) {
 			return;
 		}
+
+		const {variableEnd, variableStart} = VARIABLE_MARKERS[mode] || {};
 
 		let wordList = [];
 
@@ -104,8 +118,9 @@ export const CodeMirrorEditor = ({
 			const {current, next, previous} = getWordContext(cm);
 			const cursorPosition = cm.getCursor();
 
-			const closeVariable = next !== '}';
-			const openVariable = current !== '${' && previous !== '${';
+			const closeVariable = next !== variableEnd;
+			const openVariable =
+				current !== variableStart && previous !== variableStart;
 
 			return {
 				from: {
@@ -122,8 +137,8 @@ export const CodeMirrorEditor = ({
 					.sort(({index: indexA}, {index: indexB}) => indexA - indexB)
 					.map(({word}) => ({
 						displayText: word,
-						text: `${openVariable ? '${' : ''}${word}${
-							closeVariable ? '}' : ''
+						text: `${openVariable ? variableStart : ''}${word}${
+							closeVariable ? variableEnd : ''
 						}`,
 					})),
 				to: cursorPosition,
@@ -140,7 +155,7 @@ export const CodeMirrorEditor = ({
 			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
 			hintOptions: {
 				completeSingle: false,
-				hint,
+				hint: variableStart || variableEnd ? hint : null,
 			},
 			indentWithTabs: true,
 			inputStyle: 'contenteditable',
@@ -159,7 +174,7 @@ export const CodeMirrorEditor = ({
 		codeMirror.on('change', (cm) => {
 			const {current} = getWordContext(cm);
 
-			if (current === '${') {
+			if (current === variableStart) {
 				codeMirror.showHint();
 			}
 		});

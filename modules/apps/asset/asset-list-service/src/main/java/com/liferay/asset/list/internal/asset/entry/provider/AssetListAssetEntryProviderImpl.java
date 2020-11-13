@@ -155,16 +155,8 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
 		int start, int end) {
 
-		if (Objects.equals(
-				assetListEntry.getType(),
-				AssetListEntryTypeConstants.TYPE_MANUAL)) {
-
-			return _getManualAssetEntries(
-				assetListEntry, segmentsEntryIds, start, end);
-		}
-
-		return _getDynamicAssetEntries(
-			assetListEntry, segmentsEntryIds, userId, start, end);
+		return getAssetEntries(
+			assetListEntry, segmentsEntryIds, new long[0], userId, start, end);
 	}
 
 	@Override

@@ -12,8 +12,8 @@
  * details.
  */
 
-export const checkInvalidFieldNameCharacter = (character) => {
-	return /[\\~`!@#$%^&*(){}[\];:"'<,.>?/\-+=|]/g.test(character);
+export const checkValidFieldNameCharacter = (character) => {
+	return /[A-Za-z0-9_]/g.test(character);
 };
 
 export function normalizeFieldName(fieldName) {
@@ -30,7 +30,7 @@ export function normalizeFieldName(fieldName) {
 
 			continue;
 		}
-		else if (checkInvalidFieldNameCharacter(item)) {
+		else if (!checkValidFieldNameCharacter(item)) {
 			continue;
 		}
 

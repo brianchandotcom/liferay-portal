@@ -46,11 +46,11 @@ definition {
 
 	@description = "This ensures that OG image tag can be viewed on the remote live site when enabling remote staging."
 	@priority = "4"
-	test ViewOGImageTagOnLivingSite {
+	test ViewOGImageTagOnLiveSite {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property test.name.skip.portal.instance = "DepotStaging#ViewOGImageTagOnLivingSite";
+		property test.name.skip.portal.instance = "DepotStaging#ViewOGImageTagOnLiveSite";
 
 		Depot.remoteStagingSetUp(
 			depotName = "Test Depot Name",

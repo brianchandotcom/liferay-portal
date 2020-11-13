@@ -20,7 +20,7 @@
 CommerceMLForecastAlertEntryListDisplayContext commerceMLForecastAlertEntryListDisplayContext = (CommerceMLForecastAlertEntryListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceMLForecastAlertEntryWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceMLForecastAlertEntryWrapper">
 	<liferay-ui:error key="principalException" message="you-do-not-have-permission-to-update-forecast-alert-statuses" />
 
 	<c:choose>

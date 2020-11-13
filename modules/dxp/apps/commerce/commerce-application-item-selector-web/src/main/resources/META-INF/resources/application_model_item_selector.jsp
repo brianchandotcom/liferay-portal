@@ -51,7 +51,7 @@ PortletURL portletURL = commerceApplicationModelItemSelectorViewDisplayContext.g
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceApplicationModelSelectorWrapper">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceApplicationModelSelectorWrapper">
 	<liferay-ui:search-container
 		id="commerceApplicationModels"
 		searchContainer="<%= commerceApplicationModelItemSelectorViewDisplayContext.getSearchContainer() %>"

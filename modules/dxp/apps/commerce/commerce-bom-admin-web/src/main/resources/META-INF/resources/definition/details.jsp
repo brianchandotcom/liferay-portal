@@ -26,7 +26,7 @@ CPAttachmentFileEntry cpAttachmentFileEntry = commerceBOMAdminDisplayContext.get
 
 <portlet:actionURL name="editCommerceBOMDefinition" var="editCommerceBOMDefinitionActionURL" />
 
-<div class="container-fluid-1280 entry-body">
+<div class="container-fluid container-fluid-max-xl entry-body">
 	<aui:form action="<%= editCommerceBOMDefinitionActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceBOMDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

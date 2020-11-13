@@ -23,9 +23,9 @@ TalendProcessTypeHelper talendProcessTypeHelper = (TalendProcessTypeHelper)reque
 
 <liferay-portlet:actionURL name="editTalendCommerceDataIntegrationProcess" portletName="<%= CommerceDataIntegrationPortletKeys.COMMERCE_DATA_INTEGRATION %>" var="editTalendCommerceDataIntegrationProcessActionURL" />
 
-<div class="closed container-fluid-1280" id="<portlet:namespace />editCommerceDataIntegrationProcessId">
+<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />editCommerceDataIntegrationProcessId">
 	<div class="container main-content-body sheet">
-		<aui:form action="<%= editTalendCommerceDataIntegrationProcessActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+		<aui:form action="<%= editTalendCommerceDataIntegrationProcessActionURL %>" cssClass="container-fluid container-fluid-max-xl" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="commerceDataIntegrationProcessId" type="hidden" value="<%= String.valueOf(commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId()) %>" />
 

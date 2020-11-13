@@ -71,7 +71,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 
 <portlet:actionURL name="editCommerceApplicationBrand" var="editCommerceApplicationBrandActionURL" />
 
-<div class="container-fluid-1280" id="<portlet:namespace />commerceApplicationBrandContainer">
+<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />commerceApplicationBrandContainer">
 	<aui:form action="<%= editCommerceApplicationBrandActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

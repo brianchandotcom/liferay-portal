@@ -239,7 +239,8 @@ public class ViewDisplayContext {
 		translatePortletURL.setParameter(
 			"classPK", String.valueOf(translationEntry.getClassPK()));
 		translatePortletURL.setParameter(
-			"sourceLanguageId", String.valueOf(translationEntry.getLanguageId()));
+			"sourceLanguageId",
+			String.valueOf(translationEntry.getLanguageId()));
 
 		return translatePortletURL;
 	}

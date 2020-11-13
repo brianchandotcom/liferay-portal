@@ -73,6 +73,12 @@ public class UpgradeCountry extends UpgradeProcess {
 				new AlterTableAddColumn("groupFilterEnabled", "BOOLEAN"));
 		}
 
+		if (!hasColumn("Country", "position")) {
+			alter(
+				CountryTable.class,
+				new AlterTableAddColumn("position", "DOUBLE"));
+		}
+
 		if (hasColumn("Country", "shippingAllowed")) {
 			alter(
 				CountryTable.class,
@@ -83,12 +89,6 @@ public class UpgradeCountry extends UpgradeProcess {
 			alter(
 				CountryTable.class,
 				new AlterTableAddColumn("subjectToVAT", "BOOLEAN"));
-		}
-
-		if (!hasColumn("Country", "position")) {
-			alter(
-				CountryTable.class,
-				new AlterTableAddColumn("position", "DOUBLE"));
 		}
 
 		if (!hasColumn("Country", "lastPublishDate")) {

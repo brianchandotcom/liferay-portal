@@ -42,6 +42,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
+import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
 import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -489,6 +491,10 @@ public class DocumentResourceImpl
 				SearchRequestBuilder searchRequestBuilder =
 					_searchRequestBuilderFactory.builder(searchContext);
 
+				AggregationUtil.processVulcanAggregation(
+					_aggregations, _ddmIndexer, _queries, searchRequestBuilder,
+					aggregation);
+
 				SortUtil.processSorts(
 					_ddmIndexer, searchRequestBuilder, searchContext.getSorts(),
 					_queries, _sorts);
@@ -687,6 +693,9 @@ public class DocumentResourceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentResourceImpl.class);
+
+	@Reference
+	private Aggregations _aggregations;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

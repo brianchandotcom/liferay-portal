@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredConte
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
+import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
 import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -315,6 +317,10 @@ public class StructuredContentFolderResourceImpl
 				SearchRequestBuilder searchRequestBuilder =
 					_searchRequestBuilderFactory.builder(searchContext);
 
+				AggregationUtil.processVulcanAggregation(
+					_aggregations, _ddmIndexer, _queries, searchRequestBuilder,
+					aggregation);
+
 				SortUtil.processSorts(
 					_ddmIndexer, searchRequestBuilder, searchContext.getSorts(),
 					_queries, _sorts);
@@ -365,6 +371,9 @@ public class StructuredContentFolderResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
+
+	@Reference
+	private Aggregations _aggregations;
 
 	@Reference
 	private DDMIndexer _ddmIndexer;

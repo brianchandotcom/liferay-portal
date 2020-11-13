@@ -43,7 +43,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 		<div class="row">
 			<div class="col-lg-6 col-md-7">
 				<div class="row">
-					<div class="col-lg-2 col-md-3 col-xs-2">
+					<div class="col-2 col-lg-2 col-md-3">
 						<div id="<portlet:namespace />thumbs-container">
 
 							<%
@@ -52,7 +52,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 							%>
 
 								<div class="card thumb" data-url="<%= url %>">
-									<img class="center-block img-responsive" src="<%= url %>" />
+									<img class="center-block img-fluid" src="<%= url %>" />
 								</div>
 
 							<%
@@ -62,9 +62,9 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 						</div>
 					</div>
 
-					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
+					<div class="col-10 col-lg-10 col-md-9 full-image">
 						<c:if test="<%= Validator.isNotNull(cpCatalogEntry.getDefaultImageFileUrl()) %>">
-							<img class="center-block img-responsive" id="<portlet:namespace />full-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" />
+							<img class="center-block img-fluid" id="<portlet:namespace />full-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>" />
 						</c:if>
 					</div>
 				</div>

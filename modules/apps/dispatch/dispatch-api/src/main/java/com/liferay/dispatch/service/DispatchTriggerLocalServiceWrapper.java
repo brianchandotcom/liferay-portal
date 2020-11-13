@@ -252,6 +252,12 @@ public class DispatchTriggerLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Date fetchPreviousFireDate(long dispatchTriggerId) {
+		return _dispatchTriggerLocalService.fetchPreviousFireDate(
+			dispatchTriggerId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -276,9 +282,13 @@ public class DispatchTriggerLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(boolean active, int mode) {
+		getDispatchTriggers(
+			boolean active,
+			com.liferay.dispatch.executor.DispatchTaskClusterMode
+				dispatchTaskClusterMode) {
 
-		return _dispatchTriggerLocalService.getDispatchTriggers(active, mode);
+		return _dispatchTriggerLocalService.getDispatchTriggers(
+			active, dispatchTaskClusterMode);
 	}
 
 	/**

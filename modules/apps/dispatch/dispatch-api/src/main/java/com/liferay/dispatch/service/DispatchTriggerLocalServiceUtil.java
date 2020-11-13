@@ -238,6 +238,10 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().fetchDispatchTrigger(companyId, name);
 	}
 
+	public static java.util.Date fetchPreviousFireDate(long dispatchTriggerId) {
+		return getService().fetchPreviousFireDate(dispatchTriggerId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -259,9 +263,13 @@ public class DispatchTriggerLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(boolean active, int mode) {
+		getDispatchTriggers(
+			boolean active,
+			com.liferay.dispatch.executor.DispatchTaskClusterMode
+				dispatchTaskClusterMode) {
 
-		return getService().getDispatchTriggers(active, mode);
+		return getService().getDispatchTriggers(
+			active, dispatchTaskClusterMode);
 	}
 
 	/**

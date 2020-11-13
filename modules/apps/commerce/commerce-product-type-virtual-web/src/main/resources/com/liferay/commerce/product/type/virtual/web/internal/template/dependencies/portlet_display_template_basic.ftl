@@ -9,7 +9,7 @@
 		<div class="product-detail-header">
 			<div class="col-lg-6 col-md-7">
 				<div class="row">
-					<div class="col-lg-2 col-md-3 col-xs-2">
+					<div class="col-2 col-lg-2 col-md-3">
 						<#assign images = virtualCPTypeDisplayContext.getImages() />
 
 						<#if images?has_content>
@@ -17,17 +17,17 @@
 								<#assign url = virtualCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay) />
 
 								<div class="card thumb" data-url="${url}">
-									<img class="center-block img-responsive" src="${url}">
+									<img class="center-block img-fluid" src="${url}">
 								</div>
 							</#list>
 						</#if>
 					</div>
 
-					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
+					<div class="col-10 col-lg-10 col-md-9 full-image">
 						<#assign cpAttachmentFileEntry = virtualCPTypeDisplayContext.getDefaultImage() />
 
 						<#if cpAttachmentFileEntry??>
-							<img class="center-block img-responsive" id="<@portlet.namespace />full-image" src="${virtualCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay)}">
+							<img class="center-block img-fluid" id="<@portlet.namespace />full-image" src="${virtualCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay)}">
 						</#if>
 					</div>
 				</div>

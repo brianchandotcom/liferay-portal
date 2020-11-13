@@ -44,7 +44,7 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 		%>
 
 		<c:if test="<%= Validator.isNotNull(img) %>">
-			<img class="img-responsive product-image" src="<%= img %>" />
+			<img class="img-fluid product-image" src="<%= img %>" />
 		</c:if>
 	</a>
 

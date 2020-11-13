@@ -32,9 +32,9 @@ public class RegionTable {
 		{"regionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"countryId", Types.BIGINT}, {"regionCode", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"active_", Types.BOOLEAN},
-		{"position", Types.DOUBLE}, {"lastPublishDate", Types.TIMESTAMP}
+		{"countryId", Types.BIGINT}, {"active_", Types.BOOLEAN},
+		{"name", Types.VARCHAR}, {"position", Types.DOUBLE},
+		{"regionCode", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -59,19 +59,19 @@ TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 
 TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("regionCode", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
-
 TABLE_COLUMNS_MAP.put("position", Types.DOUBLE);
+
+TABLE_COLUMNS_MAP.put("regionCode", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN,position DOUBLE,lastPublishDate DATE null)";
+"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,active_ BOOLEAN,name VARCHAR(75) null,position DOUBLE,regionCode VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Region";
 

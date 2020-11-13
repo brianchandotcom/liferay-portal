@@ -28,6 +28,15 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 			throw new RuntimeException("Invalid value " + value);
 		}
 
+		String spiraCustomPropertyName = spiraCustomProperty.getName();
+
+		if (spiraCustomPropertyName.equals(
+				SpiraTestCaseProductVersion.CUSTOM_PROPERTY_NAME)) {
+
+			return new SpiraTestCaseProductVersion(
+				spiraCustomProperty.getSpiraProject(), value);
+		}
+
 		SpiraCustomProperty.Type spiraCustomPropertyType =
 			spiraCustomProperty.getType();
 
@@ -66,6 +75,15 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 
 	public static SpiraCustomPropertyValue<?> getSpiraCustomPropertyValue(
 		SpiraCustomProperty spiraCustomProperty, JSONObject valueJSONObject) {
+
+		String spiraCustomPropertyName = spiraCustomProperty.getName();
+
+		if (spiraCustomPropertyName.equals(
+				SpiraTestCaseProductVersion.CUSTOM_PROPERTY_NAME)) {
+
+			return new SpiraTestCaseProductVersion(
+				valueJSONObject, spiraCustomProperty);
+		}
 
 		SpiraCustomProperty.Type spiraCustomPropertyType =
 			spiraCustomProperty.getType();

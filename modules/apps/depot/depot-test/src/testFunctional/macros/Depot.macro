@@ -21,7 +21,7 @@ definition {
 					value1 = "8080");
 			}
 
-			Paste(
+			Type(
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
 				value1 = "${depotID}");
 		}
@@ -514,6 +514,21 @@ definition {
 		}
 	}
 
+	macro getDepotID {
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Asset Libraries");
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "${depotName}",
+			portlet = "Settings");
+
+		var depotID = selenium.getElementValue("//input[contains(@id,'assetLibraryId')]");
+
+		return "${depotID}";
+	}
+
 	macro moveLanguage {
 		Click(
 			key_language = "${depotLanguage}",
@@ -543,8 +558,6 @@ definition {
 			Navigator.openURL();
 		}
 
-		var depotID = "${depotID}";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
@@ -552,20 +565,7 @@ definition {
 
 		Depot.addDepot(depotName = "Remote Depot");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Asset Libraries");
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Remote Depot",
-			portlet = "Settings");
-
-		var depotID = "depotID";
-
-		Copy(
-			locator1 = "TextInput#DEPOT_ID",
-			value1 = "depotID");
+		var depotID = Depot.getDepotID(depotName = "Remote Depot");
 
 		if (isSet(remotePort)) {
 			User.loginPG(

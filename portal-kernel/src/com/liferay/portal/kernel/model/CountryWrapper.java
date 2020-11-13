@@ -51,9 +51,9 @@ public class CountryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("active", isActive());
 		attributes.put("a2", getA2());
 		attributes.put("a3", getA3());
+		attributes.put("active", isActive());
 		attributes.put("billingAllowed", isBillingAllowed());
 		attributes.put("groupFilterEnabled", isGroupFilterEnabled());
 		attributes.put("idd", getIdd());
@@ -124,12 +124,6 @@ public class CountryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
-
 		String a2 = (String)attributes.get("a2");
 
 		if (a2 != null) {
@@ -140,6 +134,12 @@ public class CountryWrapper
 
 		if (a3 != null) {
 			setA3(a3);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 
 		Boolean billingAllowed = (Boolean)attributes.get("billingAllowed");

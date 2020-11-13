@@ -216,27 +216,6 @@ public interface CountryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the active of this country.
-	 *
-	 * @return the active of this country
-	 */
-	public boolean getActive();
-
-	/**
-	 * Returns <code>true</code> if this country is active.
-	 *
-	 * @return <code>true</code> if this country is active; <code>false</code> otherwise
-	 */
-	public boolean isActive();
-
-	/**
-	 * Sets whether this country is active.
-	 *
-	 * @param active the active of this country
-	 */
-	public void setActive(boolean active);
-
-	/**
 	 * Returns the a2 of this country.
 	 *
 	 * @return the a2 of this country
@@ -265,6 +244,27 @@ public interface CountryModel
 	 * @param a3 the a3 of this country
 	 */
 	public void setA3(String a3);
+
+	/**
+	 * Returns the active of this country.
+	 *
+	 * @return the active of this country
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this country is active.
+	 *
+	 * @return <code>true</code> if this country is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this country is active.
+	 *
+	 * @param active the active of this country
+	 */
+	public void setActive(boolean active);
 
 	/**
 	 * Returns the billing allowed of this country.

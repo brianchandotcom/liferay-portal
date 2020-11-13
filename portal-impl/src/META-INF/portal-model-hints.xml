@@ -629,9 +629,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="active" type="boolean" />
 		<field name="a2" type="String" />
 		<field name="a3" type="String" />
+		<field name="active" type="boolean" />
 		<field name="billingAllowed" type="boolean" />
 		<field name="groupFilterEnabled" type="boolean" />
 		<field name="idd" type="String" />

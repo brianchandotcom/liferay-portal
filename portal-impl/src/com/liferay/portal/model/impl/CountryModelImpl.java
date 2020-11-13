@@ -81,8 +81,8 @@ public class CountryModelImpl
 		{"defaultLanguageId", Types.VARCHAR}, {"countryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
-		{"a2", Types.VARCHAR}, {"a3", Types.VARCHAR},
+		{"modifiedDate", Types.TIMESTAMP}, {"a2", Types.VARCHAR},
+		{"a3", Types.VARCHAR}, {"active_", Types.BOOLEAN},
 		{"billingAllowed", Types.BOOLEAN},
 		{"groupFilterEnabled", Types.BOOLEAN}, {"idd_", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"number_", Types.VARCHAR},
@@ -104,9 +104,9 @@ public class CountryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("a2", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("a3", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("billingAllowed", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("groupFilterEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("idd_", Types.VARCHAR);
@@ -120,7 +120,7 @@ public class CountryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Country (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,a2 VARCHAR(75) null,a3 VARCHAR(75) null,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null)";
+		"create table Country (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,active_ BOOLEAN,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Country";
 
@@ -212,9 +212,9 @@ public class CountryModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setActive(soapModel.isActive());
 		model.setA2(soapModel.getA2());
 		model.setA3(soapModel.getA3());
+		model.setActive(soapModel.isActive());
 		model.setBillingAllowed(soapModel.isBillingAllowed());
 		model.setGroupFilterEnabled(soapModel.isGroupFilterEnabled());
 		model.setIdd(soapModel.getIdd());
@@ -407,15 +407,15 @@ public class CountryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<Country, Date>)Country::setModifiedDate);
-		attributeGetterFunctions.put("active", Country::getActive);
-		attributeSetterBiConsumers.put(
-			"active", (BiConsumer<Country, Boolean>)Country::setActive);
 		attributeGetterFunctions.put("a2", Country::getA2);
 		attributeSetterBiConsumers.put(
 			"a2", (BiConsumer<Country, String>)Country::setA2);
 		attributeGetterFunctions.put("a3", Country::getA3);
 		attributeSetterBiConsumers.put(
 			"a3", (BiConsumer<Country, String>)Country::setA3);
+		attributeGetterFunctions.put("active", Country::getActive);
+		attributeSetterBiConsumers.put(
+			"active", (BiConsumer<Country, Boolean>)Country::setActive);
 		attributeGetterFunctions.put(
 			"billingAllowed", Country::getBillingAllowed);
 		attributeSetterBiConsumers.put(
@@ -736,37 +736,6 @@ public class CountryModelImpl
 
 	@JSON
 	@Override
-	public boolean getActive() {
-		return _active;
-	}
-
-	@JSON
-	@Override
-	public boolean isActive() {
-		return _active;
-	}
-
-	@Override
-	public void setActive(boolean active) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_active = active;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("active_"));
-	}
-
-	@JSON
-	@Override
 	public String getA2() {
 		if (_a2 == null) {
 			return "";
@@ -821,6 +790,37 @@ public class CountryModelImpl
 	@Deprecated
 	public String getOriginalA3() {
 		return getColumnOriginalValue("a3");
+	}
+
+	@JSON
+	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@JSON
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_active = active;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalActive() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON
@@ -1096,9 +1096,9 @@ public class CountryModelImpl
 		countryImpl.setUserName(getUserName());
 		countryImpl.setCreateDate(getCreateDate());
 		countryImpl.setModifiedDate(getModifiedDate());
-		countryImpl.setActive(isActive());
 		countryImpl.setA2(getA2());
 		countryImpl.setA3(getA3());
+		countryImpl.setActive(isActive());
 		countryImpl.setBillingAllowed(isBillingAllowed());
 		countryImpl.setGroupFilterEnabled(isGroupFilterEnabled());
 		countryImpl.setIdd(getIdd());
@@ -1236,8 +1236,6 @@ public class CountryModelImpl
 			countryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		countryCacheModel.active = isActive();
-
 		countryCacheModel.a2 = getA2();
 
 		String a2 = countryCacheModel.a2;
@@ -1253,6 +1251,8 @@ public class CountryModelImpl
 		if ((a3 != null) && (a3.length() == 0)) {
 			countryCacheModel.a3 = null;
 		}
+
+		countryCacheModel.active = isActive();
 
 		countryCacheModel.billingAllowed = isBillingAllowed();
 
@@ -1382,9 +1382,9 @@ public class CountryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private boolean _active;
 	private String _a2;
 	private String _a3;
+	private boolean _active;
 	private boolean _billingAllowed;
 	private boolean _groupFilterEnabled;
 	private String _idd;
@@ -1434,9 +1434,9 @@ public class CountryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("a2", _a2);
 		_columnOriginalValues.put("a3", _a3);
+		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("billingAllowed", _billingAllowed);
 		_columnOriginalValues.put("groupFilterEnabled", _groupFilterEnabled);
 		_columnOriginalValues.put("idd_", _idd);
@@ -1491,11 +1491,11 @@ public class CountryModelImpl
 
 		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("active_", 512L);
+		columnBitmasks.put("a2", 512L);
 
-		columnBitmasks.put("a2", 1024L);
+		columnBitmasks.put("a3", 1024L);
 
-		columnBitmasks.put("a3", 2048L);
+		columnBitmasks.put("active_", 2048L);
 
 		columnBitmasks.put("billingAllowed", 4096L);
 

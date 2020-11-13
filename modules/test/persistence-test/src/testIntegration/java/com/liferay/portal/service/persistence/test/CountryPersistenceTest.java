@@ -140,11 +140,11 @@ public class CountryPersistenceTest {
 
 		newCountry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCountry.setActive(RandomTestUtil.randomBoolean());
-
 		newCountry.setA2(RandomTestUtil.randomString());
 
 		newCountry.setA3(RandomTestUtil.randomString());
+
+		newCountry.setActive(RandomTestUtil.randomBoolean());
 
 		newCountry.setBillingAllowed(RandomTestUtil.randomBoolean());
 
@@ -191,9 +191,9 @@ public class CountryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCountry.getModifiedDate()),
 			Time.getShortTimestamp(newCountry.getModifiedDate()));
-		Assert.assertEquals(existingCountry.isActive(), newCountry.isActive());
 		Assert.assertEquals(existingCountry.getA2(), newCountry.getA2());
 		Assert.assertEquals(existingCountry.getA3(), newCountry.getA3());
+		Assert.assertEquals(existingCountry.isActive(), newCountry.isActive());
 		Assert.assertEquals(
 			existingCountry.isBillingAllowed(), newCountry.isBillingAllowed());
 		Assert.assertEquals(
@@ -236,13 +236,6 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByActive() throws Exception {
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
-
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByA2() throws Exception {
 		_persistence.countByA2("");
 
@@ -258,6 +251,13 @@ public class CountryPersistenceTest {
 		_persistence.countByA3("null");
 
 		_persistence.countByA3((String)null);
+	}
+
+	@Test
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -296,8 +296,8 @@ public class CountryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"Country", "mvccVersion", true, "uuid", true, "defaultLanguageId",
 			true, "countryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"active", true, "a2", true, "a3", true, "billingAllowed", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "a2",
+			true, "a3", true, "active", true, "billingAllowed", true,
 			"groupFilterEnabled", true, "idd", true, "name", true, "number",
 			true, "position", true, "shippingAllowed", true, "subjectToVAT",
 			true, "zipRequired", true, "lastPublishDate", true);
@@ -595,11 +595,11 @@ public class CountryPersistenceTest {
 
 		country.setModifiedDate(RandomTestUtil.nextDate());
 
-		country.setActive(RandomTestUtil.randomBoolean());
-
 		country.setA2(RandomTestUtil.randomString());
 
 		country.setA3(RandomTestUtil.randomString());
+
+		country.setActive(RandomTestUtil.randomBoolean());
 
 		country.setBillingAllowed(RandomTestUtil.randomBoolean());
 

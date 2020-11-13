@@ -50,12 +50,12 @@ public class CountryTable extends BaseTable<CountryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CountryTable, Boolean> active = createColumn(
-		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, String> a2 = createColumn(
 		"a2", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, String> a3 = createColumn(
 		"a3", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CountryTable, Boolean> active = createColumn(
+		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, Boolean> billingAllowed = createColumn(
 		"billingAllowed", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, Boolean> groupFilterEnabled =

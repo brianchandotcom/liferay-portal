@@ -96,12 +96,12 @@ public class CountryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", active=");
-		sb.append(active);
 		sb.append(", a2=");
 		sb.append(a2);
 		sb.append(", a3=");
 		sb.append(a3);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append(", billingAllowed=");
 		sb.append(billingAllowed);
 		sb.append(", groupFilterEnabled=");
@@ -172,8 +172,6 @@ public class CountryCacheModel
 			countryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		countryImpl.setActive(active);
-
 		if (a2 == null) {
 			countryImpl.setA2("");
 		}
@@ -188,6 +186,7 @@ public class CountryCacheModel
 			countryImpl.setA3(a3);
 		}
 
+		countryImpl.setActive(active);
 		countryImpl.setBillingAllowed(billingAllowed);
 		countryImpl.setGroupFilterEnabled(groupFilterEnabled);
 
@@ -243,10 +242,10 @@ public class CountryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		active = objectInput.readBoolean();
 		a2 = objectInput.readUTF();
 		a3 = objectInput.readUTF();
+
+		active = objectInput.readBoolean();
 
 		billingAllowed = objectInput.readBoolean();
 
@@ -299,8 +298,6 @@ public class CountryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeBoolean(active);
-
 		if (a2 == null) {
 			objectOutput.writeUTF("");
 		}
@@ -314,6 +311,8 @@ public class CountryCacheModel
 		else {
 			objectOutput.writeUTF(a3);
 		}
+
+		objectOutput.writeBoolean(active);
 
 		objectOutput.writeBoolean(billingAllowed);
 
@@ -359,9 +358,9 @@ public class CountryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public boolean active;
 	public String a2;
 	public String a3;
+	public boolean active;
 	public boolean billingAllowed;
 	public boolean groupFilterEnabled;
 	public String idd;

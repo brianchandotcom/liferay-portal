@@ -42,9 +42,9 @@ public class CountrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setActive(model.isActive());
 		soapModel.setA2(model.getA2());
 		soapModel.setA3(model.getA3());
+		soapModel.setActive(model.isActive());
 		soapModel.setBillingAllowed(model.isBillingAllowed());
 		soapModel.setGroupFilterEnabled(model.isGroupFilterEnabled());
 		soapModel.setIdd(model.getIdd());
@@ -180,18 +180,6 @@ public class CountrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public boolean getActive() {
-		return _active;
-	}
-
-	public boolean isActive() {
-		return _active;
-	}
-
-	public void setActive(boolean active) {
-		_active = active;
-	}
-
 	public String getA2() {
 		return _a2;
 	}
@@ -206,6 +194,18 @@ public class CountrySoap implements Serializable {
 
 	public void setA3(String a3) {
 		_a3 = a3;
+	}
+
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
 	}
 
 	public boolean getBillingAllowed() {
@@ -317,9 +317,9 @@ public class CountrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private boolean _active;
 	private String _a2;
 	private String _a3;
+	private boolean _active;
 	private boolean _billingAllowed;
 	private boolean _groupFilterEnabled;
 	private String _idd;

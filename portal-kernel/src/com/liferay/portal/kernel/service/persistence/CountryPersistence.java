@@ -336,6 +336,90 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns the country where a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param a2 the a2
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByA2(String a2) throws NoSuchCountryException;
+
+	/**
+	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param a2 the a2
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByA2(String a2);
+
+	/**
+	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param a2 the a2
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByA2(String a2, boolean useFinderCache);
+
+	/**
+	 * Removes the country where a2 = &#63; from the database.
+	 *
+	 * @param a2 the a2
+	 * @return the country that was removed
+	 */
+	public Country removeByA2(String a2) throws NoSuchCountryException;
+
+	/**
+	 * Returns the number of countries where a2 = &#63;.
+	 *
+	 * @param a2 the a2
+	 * @return the number of matching countries
+	 */
+	public int countByA2(String a2);
+
+	/**
+	 * Returns the country where a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param a3 the a3
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByA3(String a3) throws NoSuchCountryException;
+
+	/**
+	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param a3 the a3
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByA3(String a3);
+
+	/**
+	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param a3 the a3
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByA3(String a3, boolean useFinderCache);
+
+	/**
+	 * Removes the country where a3 = &#63; from the database.
+	 *
+	 * @param a3 the a3
+	 * @return the country that was removed
+	 */
+	public Country removeByA3(String a3) throws NoSuchCountryException;
+
+	/**
+	 * Returns the number of countries where a3 = &#63;.
+	 *
+	 * @param a3 the a3
+	 * @return the number of matching countries
+	 */
+	public int countByA3(String a3);
+
+	/**
 	 * Returns all the countries where active = &#63;.
 	 *
 	 * @param active the active
@@ -477,90 +561,6 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 * @return the number of matching countries
 	 */
 	public int countByActive(boolean active);
-
-	/**
-	 * Returns the country where a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
-	 *
-	 * @param a2 the a2
-	 * @return the matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByA2(String a2) throws NoSuchCountryException;
-
-	/**
-	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param a2 the a2
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByA2(String a2);
-
-	/**
-	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param a2 the a2
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByA2(String a2, boolean useFinderCache);
-
-	/**
-	 * Removes the country where a2 = &#63; from the database.
-	 *
-	 * @param a2 the a2
-	 * @return the country that was removed
-	 */
-	public Country removeByA2(String a2) throws NoSuchCountryException;
-
-	/**
-	 * Returns the number of countries where a2 = &#63;.
-	 *
-	 * @param a2 the a2
-	 * @return the number of matching countries
-	 */
-	public int countByA2(String a2);
-
-	/**
-	 * Returns the country where a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
-	 *
-	 * @param a3 the a3
-	 * @return the matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	public Country findByA3(String a3) throws NoSuchCountryException;
-
-	/**
-	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param a3 the a3
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByA3(String a3);
-
-	/**
-	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param a3 the a3
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
-	 */
-	public Country fetchByA3(String a3, boolean useFinderCache);
-
-	/**
-	 * Removes the country where a3 = &#63; from the database.
-	 *
-	 * @param a3 the a3
-	 * @return the country that was removed
-	 */
-	public Country removeByA3(String a3) throws NoSuchCountryException;
-
-	/**
-	 * Returns the number of countries where a3 = &#63;.
-	 *
-	 * @param a3 the a3
-	 * @return the number of matching countries
-	 */
-	public int countByA3(String a3);
 
 	/**
 	 * Returns the country where name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.

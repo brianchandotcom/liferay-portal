@@ -128,6 +128,43 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
+	public Date fetchPreviousFireDate(long dispatchTriggerId) {
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.fetchByPrimaryKey(dispatchTriggerId);
+
+		if (dispatchTrigger == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fetch dispatch trigger ID " + dispatchTriggerId);
+			}
+
+			return null;
+		}
+
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getTaskClusterMode());
+
+		try {
+			return _dispatchTriggerHelper.getPreviousFireDate(
+				dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
+		}
+		catch (SchedulerException schedulerException) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("Unable to fetch previous fire date for dispatch ");
+				sb.append("trigger ID ");
+				sb.append(dispatchTriggerId);
+
+				_log.warn(sb.toString(), schedulerException);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public DispatchTrigger getDispatchTrigger(long dispatchTriggerId)
 		throws PortalException {
 
@@ -186,15 +223,8 @@ public class DispatchTriggerLocalServiceImpl
 			DispatchTaskClusterMode.valueOf(
 				dispatchTrigger.getTaskClusterMode());
 
-		try {
-			return _dispatchTriggerHelper.getPreviousFireDate(
-				dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
-		}
-		catch (SchedulerException schedulerException) {
-			_log.error(schedulerException, schedulerException);
-		}
-
-		return null;
+		return _dispatchTriggerHelper.getPreviousFireDate(
+			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
 	}
 
 	@Override

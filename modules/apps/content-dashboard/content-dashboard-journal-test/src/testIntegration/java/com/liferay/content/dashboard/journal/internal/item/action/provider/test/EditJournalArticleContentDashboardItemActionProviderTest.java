@@ -18,15 +18,20 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -34,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,6 +88,9 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
+		mockHttpServletRequest.setAttribute(WebKeys.CURRENT_URL, "currentURL");
+		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(
 				mockHttpServletRequest, LocaleUtil.US,
@@ -95,6 +104,7 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 
 		Assert.assertTrue(
 			url.contains("articleId=" + journalArticle.getArticleId()));
+		Assert.assertTrue(url.contains("redirect=currentURL"));
 	}
 
 	@Test
@@ -153,6 +163,14 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 		}
 	}
 
+	private LiferayPortletConfig _getLiferayPortletConfig() {
+		Portlet portlet = _portletLocalService.getPortletById(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+
+		return (LiferayPortletConfig)PortletConfigFactoryUtil.create(
+			portlet, null);
+	}
+
 	private ThemeDisplay _getThemeDisplay(
 			HttpServletRequest httpServletRequest, Locale locale, User user)
 		throws Exception {
@@ -199,6 +217,9 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

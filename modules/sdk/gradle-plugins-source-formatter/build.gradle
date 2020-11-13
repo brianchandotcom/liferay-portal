@@ -1,6 +1,9 @@
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask
 
+import com.pswidersk.gradle.python.VenvTask
+
 apply plugin: "com.gradle.plugin-publish"
+apply plugin: "com.pswidersk.python-plugin"
 apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
@@ -19,6 +22,7 @@ copyGradleTestDependencies {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.44"
+	compile group: "com.pswidersk", name: "python-gradle-plugin", version: "1.2.1"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.1070"

@@ -17,6 +17,14 @@ package com.liferay.gradle.plugins.source.formatter;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import com.pswidersk.gradle.python.PythonPlugin;
+import com.pswidersk.gradle.python.VenvTask;
+
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -43,15 +51,25 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
 
+	public static final String PYTHON_BLACK_INSTALL_TASK_NAME =
+		"pythonBlackInstallTask";
+
+	public static final String PYTHON_BLACK_TASK_NAME = "pythonBlackTask";
+
 	@Override
 	public void apply(Project project) {
 		Configuration sourceFormatterConfiguration =
 			_addConfigurationSourceFormatter(project);
 
+		GradleUtil.applyPlugin(project, PythonPlugin.class);
+
 		_addTaskCheckSourceFormatting(project);
-		_addTaskFormatSource(project);
+
+		FormatSourceTask formatSourceTask = _addTaskFormatSource(project);
 
 		_configureTasksFormatSource(project, sourceFormatterConfiguration);
+
+		_configurePythonBlack(project, formatSourceTask);
 	}
 
 	private Configuration _addConfigurationSourceFormatter(
@@ -111,6 +129,42 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		formatSourceTask.setShowStatusUpdates(true);
 
 		return formatSourceTask;
+	}
+
+	private void _configurePythonBlack(
+		Project project, FormatSourceTask formatSourceTask) {
+
+		VenvTask pythonBlackInstallTask = GradleUtil.addTask(
+			project, PYTHON_BLACK_INSTALL_TASK_NAME, VenvTask.class);
+
+		List<String> pythonBlackInstallTaskArgs = new ArrayList<>();
+
+		pythonBlackInstallTaskArgs.add("install");
+
+		pythonBlackInstallTaskArgs.add("black");
+
+		pythonBlackInstallTask.setArgs(pythonBlackInstallTaskArgs);
+
+		pythonBlackInstallTask.setVenvExec("pip");
+
+		List<String> pythonBlackTaskArgs = new ArrayList<>();
+
+		VenvTask pythonBlackTask = GradleUtil.addTask(
+			project, PYTHON_BLACK_TASK_NAME, VenvTask.class);
+
+		File baseDir = formatSourceTask.getBaseDir();
+
+		pythonBlackTaskArgs.add("--fast");
+
+		pythonBlackTaskArgs.add(baseDir.getAbsolutePath());
+
+		pythonBlackTask.setArgs(pythonBlackTaskArgs);
+
+		pythonBlackTask.setVenvExec("black");
+
+		pythonBlackTask.dependsOn(pythonBlackInstallTask);
+
+		formatSourceTask.finalizedBy(pythonBlackTask);
 	}
 
 	private void _configureTaskFormatSource(

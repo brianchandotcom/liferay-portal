@@ -172,7 +172,13 @@ public class Query {
 			</#if>
 
 			@GraphQLField
-			protected java.util.Collection<${schemaName}> items;
+			protected java.util.Collection<
+					<#if !stringUtil.startsWith(javaDataTypeMap[schemaName], configYAML.apiPackagePath)>
+						${javaDataTypeMap[schemaName]}
+					<#else>
+						${schemaName}
+					</#if>
+				> items;
 
 			@GraphQLField
 			protected long lastPage;

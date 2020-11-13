@@ -229,6 +229,10 @@ public class RESTBuilder {
 
 			context.put("globalEnumSchemas", globalEnumSchemas);
 
+			context.put(
+				"javaDataTypeMap",
+				OpenAPIParserUtil.getJavaDataTypeMap(_configYAML, openAPIYAML));
+
 			context.put("openAPIYAML", openAPIYAML);
 
 			if (_configYAML.isGenerateGraphQL()) {

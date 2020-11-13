@@ -216,9 +216,7 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 				dropdownItem.putData(
 					"title",
-					LanguageUtil.format(
-						httpServletRequest, "add-x",
-						FragmentConstants.TYPE_COMPONENT_LABEL, true));
+					LanguageUtil.get(httpServletRequest, "add-fragment"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add"));
 			}

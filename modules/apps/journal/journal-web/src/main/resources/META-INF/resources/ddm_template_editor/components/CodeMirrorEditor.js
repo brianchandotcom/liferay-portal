@@ -122,6 +122,16 @@ export const CodeMirrorEditor = ({
 			const openVariable =
 				current !== variableStart && previous !== variableStart;
 
+			if (current === variableStart) {
+				return {
+					from: cursorPosition,
+					list: wordList.map(({word}) => ({
+						displayText: word,
+						text: `${word}${closeVariable ? variableEnd : ''}`,
+					})),
+				};
+			}
+
 			return {
 				from: {
 					...cursorPosition,

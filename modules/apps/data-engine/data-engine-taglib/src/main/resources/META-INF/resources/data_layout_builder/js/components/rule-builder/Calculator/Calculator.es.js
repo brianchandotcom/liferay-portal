@@ -67,49 +67,45 @@ function getStateBasedOnExpression(expression) {
 		showOnlyRepeatableFields,
 	};
 }
+
+/**
+ * A Token can be have one of the following types:
+ *
+ * Token.FUNCTION = 'Function';
+ * Token.LEFT_PARENTHESIS = 'Left Parenthesis';
+ * Token.LITERAL = 'Literal';
+ * Token.OPERATOR = 'Operator';
+ * Token.RIGHT_PARENTHESIS = 'Right Parenthesis';
+ * Token.VARIABLE = 'Variable';
+ *
+ * See https://github.com/liferay/liferay-portal/blob/e066954b019e5fcf42ca45b69fd4da595ad58029/modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/js/expressions/Token.es.js#L26
+ * for more details.
+ *
+ * Each key in the following dictionary represents the type of a token in which the
+ * value is matched with the possible tokens that can add an implicit multiplication.
+ */
+const TOKEN_TYPE_ACCEPTS_IMPLICIT_MULTIPLICATION = {
+	[Token.LEFT_PARENTHESIS]: [
+		Token.LEFT_PARENTHESIS,
+		Token.LITERAL,
+		Token.RIGHT_PARENTHESIS,
+		Token.VARIABLE,
+	],
+	[Token.FUNCTION]: [
+		Token.FUNCTION,
+		Token.LITERAL,
+		Token.RIGHT_PARENTHESIS,
+		Token.VARIABLE,
+	],
+	[Token.VARIABLE]: [Token.VARIABLE, Token.LITERAL],
+	[Token.LITERAL]: [Token.VARIABLE, Token.FUNCTION],
+	[Token.OPERATOR]: [],
+	[Token.RIGHT_PARENTHESIS]: [],
+};
+
 function isImplicitMultiplication(lastToken, newToken) {
-	switch (newToken.type) {
-		case Token.LEFT_PARENTHESIS:
-			isImplicitMultiplicationByLeftParenthesis(lastToken);
-			break;
-		case Token.FUNCTION:
-			isImplicitMultiplicationByFunction(lastToken);
-			break;
-		case Token.VARIABLE:
-			isImplicitMultiplicationByVariable(lastToken);
-			break;
-		case Token.LITERAL:
-			isImplicitMultiplicationByLiteral(lastToken);
-			break;
-		default:
-			return false;
-	}
-}
-
-function isImplicitMultiplicationByLeftParenthesis(lastToken) {
-	return (
-		lastToken.type !== Token.OPERATOR &&
-		lastToken.type !== Token.FUNCTION &&
-		lastToken.type !== Token.LEFT_PARENTHESIS
-	);
-}
-
-function isImplicitMultiplicationByFunction(lastToken) {
-	return (
-		lastToken.type !== Token.OPERATOR &&
-		lastToken.type !== Token.LEFT_PARENTHESIS
-	);
-}
-
-function isImplicitMultiplicationByVariable(lastToken) {
-	return (
-		lastToken.type === Token.VARIABLE || lastToken.type === Token.LITERAL
-	);
-}
-
-function isImplicitMultiplicationByLiteral(lastToken) {
-	return (
-		lastToken.type === Token.VARIABLE || lastToken.type === Token.FUNCTION
+	return TOKEN_TYPE_ACCEPTS_IMPLICIT_MULTIPLICATION[newToken.type].includes(
+		lastToken.type
 	);
 }
 

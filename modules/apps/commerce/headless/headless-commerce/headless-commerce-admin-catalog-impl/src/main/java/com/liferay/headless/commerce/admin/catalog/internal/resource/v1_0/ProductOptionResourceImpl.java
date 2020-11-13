@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -50,9 +51,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/product-option.properties",
-	scope = ServiceScope.PROTOTYPE, service = ProductOptionResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, ProductOptionResource.class}
 )
-public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
+public class ProductOptionResourceImpl
+	extends BaseProductOptionResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Response deleteProductOption(Long id) throws Exception {

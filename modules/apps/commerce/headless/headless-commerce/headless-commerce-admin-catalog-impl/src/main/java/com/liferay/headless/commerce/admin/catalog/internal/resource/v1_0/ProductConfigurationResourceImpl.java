@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigur
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import javax.ws.rs.core.Response;
 
@@ -39,10 +40,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/product-configuration.properties",
-	scope = ServiceScope.PROTOTYPE, service = ProductConfigurationResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, ProductConfigurationResource.class}
 )
 public class ProductConfigurationResourceImpl
-	extends BaseProductConfigurationResourceImpl {
+	extends BaseProductConfigurationResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(

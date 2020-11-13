@@ -41,6 +41,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -62,9 +63,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	enabled = false, properties = "OSGI-INF/liferay/rest/v1_0/sku.properties",
-	scope = ServiceScope.PROTOTYPE, service = SkuResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, SkuResource.class}
 )
-public class SkuResourceImpl extends BaseSkuResourceImpl {
+public class SkuResourceImpl
+	extends BaseSkuResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Response deleteSku(Long id) throws Exception {

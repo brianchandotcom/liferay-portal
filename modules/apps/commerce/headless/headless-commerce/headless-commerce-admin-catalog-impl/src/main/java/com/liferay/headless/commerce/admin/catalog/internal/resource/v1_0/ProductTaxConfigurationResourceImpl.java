@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductTaxConfi
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import javax.ws.rs.core.Response;
 
@@ -39,10 +40,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/product-tax-configuration.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = ProductTaxConfigurationResource.class
+	service = {NestedFieldSupport.class, ProductTaxConfigurationResource.class}
 )
 public class ProductTaxConfigurationResourceImpl
-	extends BaseProductTaxConfigurationResourceImpl {
+	extends BaseProductTaxConfigurationResourceImpl
+	implements NestedFieldSupport {
 
 	@Override
 	public ProductTaxConfiguration

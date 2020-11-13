@@ -27,6 +27,7 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.ShippingAddressRe
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import javax.ws.rs.core.Response;
 
@@ -40,10 +41,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/shipping-address.properties",
-	scope = ServiceScope.PROTOTYPE, service = ShippingAddressResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, ShippingAddressResource.class}
 )
 public class ShippingAddressResourceImpl
-	extends BaseShippingAddressResourceImpl {
+	extends BaseShippingAddressResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public ShippingAddress getOrderByExternalReferenceCodeShippingAddress(

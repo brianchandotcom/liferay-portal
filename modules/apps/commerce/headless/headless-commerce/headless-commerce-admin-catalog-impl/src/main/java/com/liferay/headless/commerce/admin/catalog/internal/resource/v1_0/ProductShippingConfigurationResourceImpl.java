@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import javax.ws.rs.core.Response;
 
@@ -40,10 +41,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/product-shipping-configuration.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = ProductShippingConfigurationResource.class
+	service = {
+		NestedFieldSupport.class, ProductShippingConfigurationResource.class
+	}
 )
 public class ProductShippingConfigurationResourceImpl
-	extends BaseProductShippingConfigurationResourceImpl {
+	extends BaseProductShippingConfigurationResourceImpl
+	implements NestedFieldSupport {
 
 	@Override
 	public ProductShippingConfiguration

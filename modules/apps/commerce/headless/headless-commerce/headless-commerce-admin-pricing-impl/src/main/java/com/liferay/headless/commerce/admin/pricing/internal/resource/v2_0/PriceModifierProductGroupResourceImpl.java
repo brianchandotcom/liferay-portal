@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -51,10 +52,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v2_0/price-modifier-product-group.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = PriceModifierProductGroupResource.class
+	service = {
+		NestedFieldSupport.class, PriceModifierProductGroupResource.class
+	}
 )
 public class PriceModifierProductGroupResourceImpl
-	extends BasePriceModifierProductGroupResourceImpl {
+	extends BasePriceModifierProductGroupResourceImpl
+	implements NestedFieldSupport {
 
 	@Override
 	public void deletePriceModifierProductGroup(Long id) throws Exception {

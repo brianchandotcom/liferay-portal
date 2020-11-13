@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -56,9 +57,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/order-item.properties",
-	scope = ServiceScope.PROTOTYPE, service = OrderItemResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, OrderItemResource.class}
 )
-public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
+public class OrderItemResourceImpl
+	extends BaseOrderItemResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Response deleteOrderItem(Long id) throws Exception {

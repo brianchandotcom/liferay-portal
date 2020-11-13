@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.PriceListA
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceListAccountGroupResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -48,7 +49,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	service = PriceListAccountGroupResource.class
 )
 public class PriceListAccountGroupResourceImpl
-	extends BasePriceListAccountGroupResourceImpl {
+	extends BasePriceListAccountGroupResourceImpl
+	implements NestedFieldSupport {
 
 	@Override
 	public Response deletePriceListAccountGroup(Long id) throws Exception {

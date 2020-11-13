@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -53,9 +54,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/attachment.properties",
-	scope = ServiceScope.PROTOTYPE, service = AttachmentResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {AttachmentResource.class, NestedFieldSupport.class}
 )
-public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
+public class AttachmentResourceImpl
+	extends BaseAttachmentResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Page<Attachment> getProductByExternalReferenceCodeAttachmentsPage(

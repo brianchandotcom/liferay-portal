@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -44,9 +45,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/option-value.properties",
-	scope = ServiceScope.PROTOTYPE, service = OptionValueResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, OptionValueResource.class}
 )
-public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
+public class OptionValueResourceImpl
+	extends BaseOptionValueResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(

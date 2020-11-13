@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -47,9 +48,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/category.properties",
-	scope = ServiceScope.PROTOTYPE, service = CategoryResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {CategoryResource.class, NestedFieldSupport.class}
 )
-public class CategoryResourceImpl extends BaseCategoryResourceImpl {
+public class CategoryResourceImpl
+	extends BaseCategoryResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public Page<Category> getProductByExternalReferenceCodeCategoriesPage(

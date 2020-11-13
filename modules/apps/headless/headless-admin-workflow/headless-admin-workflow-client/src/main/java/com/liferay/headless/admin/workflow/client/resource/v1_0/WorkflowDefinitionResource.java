@@ -41,11 +41,11 @@ public interface WorkflowDefinitionResource {
 	}
 
 	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-			Boolean active, Pagination pagination)
+			Boolean active, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
-			Boolean active, Pagination pagination)
+			Boolean active, Pagination pagination, String sortString)
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(String name)
@@ -145,11 +145,12 @@ public interface WorkflowDefinitionResource {
 		implements WorkflowDefinitionResource {
 
 		public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-				Boolean active, Pagination pagination)
+				Boolean active, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowDefinitionsPageHttpResponse(active, pagination);
+				getWorkflowDefinitionsPageHttpResponse(
+					active, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -172,7 +173,7 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
-				Boolean active, Pagination pagination)
+				Boolean active, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -205,6 +206,10 @@ public interface WorkflowDefinitionResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

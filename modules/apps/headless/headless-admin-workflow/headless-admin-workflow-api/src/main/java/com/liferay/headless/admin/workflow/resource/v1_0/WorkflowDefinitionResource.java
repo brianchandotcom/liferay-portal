@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.workflow.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -49,7 +50,7 @@ public interface WorkflowDefinitionResource {
 	}
 
 	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-			Boolean active, Pagination pagination)
+			Boolean active, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(String name)

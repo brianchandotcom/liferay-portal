@@ -170,13 +170,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowDefinitions(active: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowDefinitions(active: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowDefinitionPage workflowDefinitions(
 			@GraphQLName("active") Boolean active,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -184,7 +185,9 @@ public class Query {
 			this::_populateResourceContext,
 			workflowDefinitionResource -> new WorkflowDefinitionPage(
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					active, Pagination.of(page, pageSize))));
+					active, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						workflowDefinitionResource, sortsString))));
 	}
 
 	/**

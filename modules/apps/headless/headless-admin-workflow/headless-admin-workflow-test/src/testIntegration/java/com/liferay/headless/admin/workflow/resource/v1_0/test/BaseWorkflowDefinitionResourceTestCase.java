@@ -28,6 +28,7 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinitionSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -52,11 +53,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +72,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -206,7 +211,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	public void testGetWorkflowDefinitionsPage() throws Exception {
 		Page<WorkflowDefinition> page =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 2));
+				null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -219,7 +224,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				randomWorkflowDefinition());
 
 		page = workflowDefinitionResource.getWorkflowDefinitionsPage(
-			null, Pagination.of(1, 2));
+			null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -247,7 +252,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page1 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 2));
+				null, Pagination.of(1, 2), null);
 
 		List<WorkflowDefinition> workflowDefinitions1 =
 			(List<WorkflowDefinition>)page1.getItems();
@@ -257,7 +262,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page2 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(2, 2));
+				null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -269,12 +274,140 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page3 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 3));
+				null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				workflowDefinition1, workflowDefinition2, workflowDefinition3),
 			(List<WorkflowDefinition>)page3.getItems());
+	}
+
+	@Test
+	public void testGetWorkflowDefinitionsPageWithSortDateTime()
+		throws Exception {
+
+		testGetWorkflowDefinitionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, workflowDefinition1, workflowDefinition2) -> {
+				BeanUtils.setProperty(
+					workflowDefinition1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetWorkflowDefinitionsPageWithSortInteger()
+		throws Exception {
+
+		testGetWorkflowDefinitionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, workflowDefinition1, workflowDefinition2) -> {
+				BeanUtils.setProperty(
+					workflowDefinition1, entityField.getName(), 0);
+				BeanUtils.setProperty(
+					workflowDefinition2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetWorkflowDefinitionsPageWithSortString()
+		throws Exception {
+
+		testGetWorkflowDefinitionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, workflowDefinition1, workflowDefinition2) -> {
+				Class<?> clazz = workflowDefinition1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						workflowDefinition1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						workflowDefinition2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						workflowDefinition1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						workflowDefinition2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						workflowDefinition1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						workflowDefinition2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetWorkflowDefinitionsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, WorkflowDefinition, WorkflowDefinition, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		WorkflowDefinition workflowDefinition1 = randomWorkflowDefinition();
+		WorkflowDefinition workflowDefinition2 = randomWorkflowDefinition();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, workflowDefinition1, workflowDefinition2);
+		}
+
+		workflowDefinition1 =
+			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
+				workflowDefinition1);
+
+		workflowDefinition2 =
+			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
+				workflowDefinition2);
+
+		for (EntityField entityField : entityFields) {
+			Page<WorkflowDefinition> ascPage =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(workflowDefinition1, workflowDefinition2),
+				(List<WorkflowDefinition>)ascPage.getItems());
+
+			Page<WorkflowDefinition> descPage =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(workflowDefinition2, workflowDefinition1),
+				(List<WorkflowDefinition>)descPage.getItems());
+		}
 	}
 
 	protected WorkflowDefinition

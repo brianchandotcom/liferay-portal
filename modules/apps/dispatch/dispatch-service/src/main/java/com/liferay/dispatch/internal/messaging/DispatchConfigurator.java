@@ -97,9 +97,12 @@ public class DispatchConfigurator {
 	}
 
 	private void _scheduleMemorySchedulerJobs() {
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.ALL_NODES;
+
 		List<DispatchTrigger> dispatchTriggers =
 			_dispatchTriggerLocalService.getDispatchTriggers(
-				true, DispatchTaskClusterMode.ALL_NODES.getMode());
+				true, dispatchTaskClusterMode);
 
 		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
 			try {
@@ -108,7 +111,7 @@ public class DispatchConfigurator {
 					dispatchTrigger.getCronExpression(),
 					dispatchTrigger.getStartDate(),
 					dispatchTrigger.getEndDate(),
-					DispatchTaskClusterMode.ALL_NODES.getStorageType());
+					dispatchTaskClusterMode.getStorageType());
 			}
 			catch (DispatchTriggerSchedulerException
 						dispatchTriggerSchedulerException) {
@@ -121,15 +124,18 @@ public class DispatchConfigurator {
 	}
 
 	private void _unscheduleMemorySchedulerJobs() {
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.ALL_NODES;
+
 		List<DispatchTrigger> dispatchTriggers =
 			_dispatchTriggerLocalService.getDispatchTriggers(
-				true, DispatchTaskClusterMode.ALL_NODES.getMode());
+				true, dispatchTaskClusterMode);
 
 		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
 			try {
 				_dispatchTriggerHelper.unscheduleSchedulerJob(
 					dispatchTrigger.getDispatchTriggerId(),
-					DispatchTaskClusterMode.ALL_NODES.getStorageType());
+					dispatchTaskClusterMode.getStorageType());
 			}
 			catch (DispatchTriggerSchedulerException
 						dispatchTriggerSchedulerException) {

@@ -139,8 +139,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public BaseWebDriverImpl(String browserURL, WebDriver webDriver) {
 		_webDriver = webDriver;
 
-		initKeysSpecialChars();
-
 		setDefaultWindowHandle(webDriver.getWindowHandle());
 
 		System.setProperty("java.awt.headless", "false");
@@ -4467,18 +4465,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return point.getY();
 	}
 
-	protected void initKeysSpecialChars() {
-		_keysSpecialChars.put("!", "1");
-		_keysSpecialChars.put("#", "3");
-		_keysSpecialChars.put("$", "4");
-		_keysSpecialChars.put("%", "5");
-		_keysSpecialChars.put("&", "7");
-		_keysSpecialChars.put("(", "9");
-		_keysSpecialChars.put(")", "0");
-		_keysSpecialChars.put("<", ",");
-		_keysSpecialChars.put(">", ".");
-	}
-
 	protected boolean isObscured(WebElement webElement) {
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -4696,11 +4682,24 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
 			}
 		};
+	private static final Map<String, String> _keysSpecialChars =
+		new HashMap<String, String>() {
+			{
+				put("!", "1");
+				put("#", "3");
+				put("$", "4");
+				put("%", "5");
+				put("&", "7");
+				put("(", "9");
+				put(")", "0");
+				put("<", ",");
+				put(">", ".");
+			}
+		};
 
 	private String _clipBoard = "";
 	private String _defaultWindowHandle;
 	private Stack<WebElement> _frameWebElements = new Stack<>();
-	private final Map<String, String> _keysSpecialChars = new HashMap<>();
 	private int _navigationBarHeight = 120;
 	private final String _ocularResultImageDirName;
 	private final String _ocularSnapImageDirName;

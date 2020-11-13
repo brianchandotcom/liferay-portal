@@ -25,6 +25,11 @@ public class DefaultLayoutListRetrieverContext
 	implements LayoutListRetrieverContext {
 
 	@Override
+	public Optional<long[]> getAssetCategoryIdsOptional() {
+		return Optional.ofNullable(_assetCategoryIdsOptional);
+	}
+
+	@Override
 	public Optional<Pagination> getPaginationOptional() {
 		return Optional.ofNullable(_pagination);
 	}
@@ -32,6 +37,10 @@ public class DefaultLayoutListRetrieverContext
 	@Override
 	public Optional<long[]> getSegmentsExperienceIdsOptional() {
 		return Optional.ofNullable(_segmentsExperienceIds);
+	}
+
+	public void setAssetCategoryIdsOptional(long[] assetCategoryIdsOptional) {
+		_assetCategoryIdsOptional = assetCategoryIdsOptional;
 	}
 
 	public void setPagination(Pagination pagination) {
@@ -44,6 +53,7 @@ public class DefaultLayoutListRetrieverContext
 		_segmentsExperienceIds = segmentsExperienceIdsOptional;
 	}
 
+	private long[] _assetCategoryIdsOptional;
 	private Pagination _pagination;
 	private long[] _segmentsExperienceIds;
 

@@ -200,9 +200,13 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				PortletIdCodec.decodeUserId(portletName), instanceId);
 		}
 
+		boolean resetLifecycleRender = false;
+
 		if (!Objects.equals(
 				portletInstanceKey,
 				httpServletRequest.getParameter("p_p_id"))) {
+
+			resetLifecycleRender = true;
 
 			Set<String> keySet = parameterMap.keySet();
 
@@ -335,8 +339,21 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			embeddedPortletIds.push(portletInstanceKey);
 
-			PortletContainerUtil.render(
-				httpServletRequest, httpServletResponse, portlet);
+			boolean lifecycleRender = themeDisplay.isLifecycleRender();
+
+			try {
+				if (resetLifecycleRender) {
+					themeDisplay.setLifecycleRender(true);
+				}
+
+				PortletContainerUtil.render(
+					httpServletRequest, httpServletResponse, portlet);
+			}
+			finally {
+				if (resetLifecycleRender) {
+					themeDisplay.setLifecycleRender(lifecycleRender);
+				}
+			}
 
 			embeddedPortletIds.pop();
 

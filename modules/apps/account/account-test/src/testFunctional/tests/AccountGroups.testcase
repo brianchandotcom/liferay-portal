@@ -1,0 +1,66 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Accounts";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Accounts.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AssignAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account added for Account Group.",
+			accountName = "Account for Account Group");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group.",
+			accountGroupName = "Test Account Group");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
+
+		AccountGroups.viewAccountDefault();
+
+		AccountGroups.addAssignee(
+			accountGroupName = "Test Account Group",
+			assigneeName = "Account for Account Group",
+			assigneeType = "Accounts");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
+
+		AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
+	}
+
+}

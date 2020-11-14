@@ -178,7 +178,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		}
 
 		if (spiraCustomPropertyValue instanceof SpiraTestCaseProductVersion) {
-			return (SpiraTestCaseProductVersion)spiraCustomPropertyValue;
+			_spiraTestCaseProductVersion =
+				(SpiraTestCaseProductVersion)spiraCustomPropertyValue;
+
+			return _spiraTestCaseProductVersion;
 		}
 
 		return null;

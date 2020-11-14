@@ -3176,7 +3176,7 @@ definition {
 
 		FormViewBuilder.setUpTwoFieldSets(
 			fieldSetName = "Field Sets",
-			fieldType = "Text",
+			fieldType1 = "Text",
 			fieldType2 = "Numeric");
 
 		FormViewBuilder.goToFieldsetsTab();

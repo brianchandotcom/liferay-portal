@@ -455,7 +455,6 @@ definition {
 	}
 
 	macro setUpTwoFieldSets {
-		var key_fieldType = "${fieldType}";
 		var key_fieldSetName = "${fieldSetName}";
 
 		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");

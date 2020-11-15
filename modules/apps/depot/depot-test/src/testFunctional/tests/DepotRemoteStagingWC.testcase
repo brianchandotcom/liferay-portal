@@ -579,4 +579,66 @@ definition {
 			webContentTitle = "Web Content Title Edit");
 	}
 
+	@description = "This test covers LPS-122790. It ensures that web content with a category in depot can be published in remote staging site."
+	@priority = "4"
+	test PublishWCWithCategory {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWCWithCategory";
+
+		DepotNavigator.openDepotCategoriesAdmin(depotName = "Test Depot Name");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name",
+			webContentContent = "Depot web content with a category",
+			webContentTitle = "WC WebContent Title");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Test Page",
+			siteName = "Remote Site");
+
+		AssertTextEquals(
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
+			value1 = "Depot web content with a category");
+	}
 }

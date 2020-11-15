@@ -212,6 +212,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage/-/categories_admin/vocabularies");
 	}
 
+	macro openDepotCategoriesAdminStaging {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage/-/categories_admin/vocabularies");
+	}
+
 	macro openDepotDocumentsAndMediaAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 

@@ -169,16 +169,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_DE_DDM</td>
-	<td>xpath=(//label[contains(.,'${key_fieldName}')]/..//input[not(contains(@type,'hidden'))])[${key_index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DE_DDM</td>
-	<td>//label[contains(.,'${key_fieldName}')]/..//input[not(contains(@type,'hidden'))]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EMAIL</td>
 	<td>//div[label[contains(.,'Email')]]/input[@type='text']</td>
 	<td></td>

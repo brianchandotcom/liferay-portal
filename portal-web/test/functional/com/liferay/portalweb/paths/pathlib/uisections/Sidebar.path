@@ -19,8 +19,8 @@
     <td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_TYPE</td>
-    <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldType}']</td>
+    <td>ADD_FIELD_NAME</td>
+    <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldName}']</td>
     <td></td>
 </tr>
 <tr>

@@ -3214,7 +3214,7 @@ definition {
 			entry = "Web Content Title",
 			workflowStatus = "Approved");
 
-		WebContent.viewWithStructureCP(
+		WebContentUpgrade.viewWithStructureCP(
 			webContentBoolean = "true",
 			webContentDate = "10/10/2020",
 			webContentDecimal = "0.5",
@@ -3249,7 +3249,7 @@ definition {
 				workflowStatus = "Approved");
 		}
 
-		WebContent.viewWithStructureCP(
+		WebContentUpgrade.viewWithStructureCP(
 			webContentTitle = "Web Content With Predefined Value",
 			webContentWebContent = "Web Content Title",
 			webContentWebContentFieldName = "WebContent");

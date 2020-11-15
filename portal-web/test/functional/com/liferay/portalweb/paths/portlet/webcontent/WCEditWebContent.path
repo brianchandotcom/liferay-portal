@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_BUTTON</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_INPUT_FIELD</td>
 	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]//input[@type='text']</td>
 	<td></td>

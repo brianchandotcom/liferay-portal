@@ -26,7 +26,7 @@ portletDisplay.setURLBack(assetDisplayPageUsagesDisplayContext.getRedirect());
 
 LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(assetDisplayPageUsagesDisplayContext.getLayoutPageTemplateEntryId());
 
-renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTemplateEntry.getName()));
+renderResponse.setTitle(layoutPageTemplateEntry.getName());
 %>
 
 <clay:management-toolbar-v2

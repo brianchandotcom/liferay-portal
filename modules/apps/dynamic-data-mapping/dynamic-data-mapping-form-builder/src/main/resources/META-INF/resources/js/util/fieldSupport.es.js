@@ -292,7 +292,12 @@ export const isFieldSetChild = (pages, fieldName) => {
 	return !!getParentFieldSet(pages, fieldName);
 };
 
-export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
+export const localizeField = (
+	field,
+	defaultLanguageId,
+	editingLanguageId,
+	localizationMap
+) => {
 	let value = field.value;
 
 	if (field.dataType === 'json' && typeof value === 'object') {
@@ -300,9 +305,28 @@ export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 	}
 
 	if (field.localizable && field.localizedValue) {
+		let edited = false;
+
+		if (localizationMap && localizationMap[field.fieldName]) {
+			if (
+				localizationMap[field.fieldName][editingLanguageId] ===
+				undefined
+			) {
+				localizationMap[field.fieldName][editingLanguageId] = {
+					edited: false,
+				};
+			}
+
+			edited =
+				localizationMap[field.fieldName]?.[editingLanguageId].edited;
+		}
+		else {
+			edited = true;
+		}
+
 		let localizedValue = field.localizedValue[editingLanguageId];
 
-		if (localizedValue === undefined) {
+		if (localizedValue === undefined || !edited) {
 			localizedValue = field.localizedValue[defaultLanguageId];
 		}
 

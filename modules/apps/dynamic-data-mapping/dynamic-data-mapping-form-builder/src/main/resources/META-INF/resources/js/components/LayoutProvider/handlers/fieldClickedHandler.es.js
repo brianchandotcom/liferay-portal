@@ -31,6 +31,8 @@ const handleFieldClicked = (props, state, event) => {
 	const {settingsContext} = fieldProperties;
 	const visitor = new PagesVisitor(settingsContext.pages);
 
+	const {localizationMap} = props;
+
 	const focusedField = {
 		...fieldProperties,
 		settingsContext: {
@@ -53,7 +55,9 @@ const handleFieldClicked = (props, state, event) => {
 				return localizeField(
 					field,
 					defaultLanguageId,
-					editingLanguageId
+					editingLanguageId,
+					localizationMap[fieldProperties.fieldName]
+						?.settingsContextLocalizationMap
 				);
 			}),
 		},

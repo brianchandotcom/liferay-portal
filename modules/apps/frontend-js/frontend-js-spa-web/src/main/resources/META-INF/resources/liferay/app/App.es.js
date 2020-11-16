@@ -216,6 +216,12 @@ class LiferayApp extends App {
 		if (Liferay.Layout) {
 			Liferay.Layout.init(Liferay.Data.layoutConfig);
 		}
+		else {
+			this.dataLayoutConfigReadyHandle_ = Liferay.once(
+				'dataLayoutConfigReady',
+				this.onDataLayoutConfigReady_
+			);
+		}
 	}
 
 	/**
@@ -273,10 +279,7 @@ class LiferayApp extends App {
 		}
 
 		if (!event.error) {
-			this.dataLayoutConfigReadyHandle_ = Liferay.once(
-				'dataLayoutConfigReady',
-				this.onDataLayoutConfigReady_
-			);
+			this.onDataLayoutConfigReady_();
 		}
 
 		AUI().Get._insertCache = {};

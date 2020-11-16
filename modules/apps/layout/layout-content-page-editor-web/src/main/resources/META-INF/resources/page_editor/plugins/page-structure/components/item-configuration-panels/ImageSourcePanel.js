@@ -17,6 +17,7 @@ import React, {useState} from 'react';
 
 import {useSelector} from '../../../../app/store/index';
 import isMapped from '../../../../app/utils/isMapped';
+import {useId} from '../../../../app/utils/useId';
 import getEditableItemPropTypes from '../../../../prop-types/getEditableItemPropTypes';
 import {ImagePropertiesPanel} from './ImagePropertiesPanel';
 import {MappingPanel} from './MappingPanel';
@@ -34,6 +35,7 @@ const SOURCE_OPTIONS = {
 
 export default function ImageSourcePanel({item}) {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const sourceSelectionInputId = useId();
 
 	const editableValue =
 		fragmentEntryLinks[item.fragmentEntryLinkId].editableValues[
@@ -54,13 +56,19 @@ export default function ImageSourcePanel({item}) {
 	return (
 		<>
 			<ClayForm>
-				<ClaySelectWithOption
-					aria-label={Liferay.Language.get('source-selection')}
-					className="form-control form-control-sm mb-3"
-					onChange={(event) => setSource(event.target.value)}
-					options={Object.values(SOURCE_OPTIONS)}
-					value={source}
-				/>
+				<ClayForm.Group>
+					<label htmlFor={sourceSelectionInputId}>
+						{Liferay.Language.get('source-selection')}
+					</label>
+
+					<ClaySelectWithOption
+						className="form-control form-control-sm mb-3"
+						id={sourceSelectionInputId}
+						onChange={(event) => setSource(event.target.value)}
+						options={Object.values(SOURCE_OPTIONS)}
+						value={source}
+					/>
+				</ClayForm.Group>
 			</ClayForm>
 
 			<ConfigurationPanel item={item} />

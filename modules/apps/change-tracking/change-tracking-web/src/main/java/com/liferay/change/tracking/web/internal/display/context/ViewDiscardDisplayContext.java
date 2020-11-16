@@ -144,6 +144,11 @@ public class ViewDiscardDisplayContext {
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/change_tracking/view_changes");
+		portletURL.setParameter(
+			"ctCollectionId", String.valueOf(_ctCollectionId));
+
 		return portletURL.toString();
 	}
 

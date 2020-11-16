@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -311,12 +310,8 @@ public class ViewChangesDisplayContext {
 
 				discardURL.setParameter(
 					"mvcRenderCommandName", "/change_tracking/view_discard");
-
-				PortletURL redirect = PortletURLUtil.getCurrent(
-					_renderRequest, _renderResponse);
-
-				discardURL.setParameter("redirect", redirect.toString());
-
+				discardURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
 				discardURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(_ctCollection.getCtCollectionId()));

@@ -228,7 +228,7 @@ public abstract class BaseURLPatternMapperTestCase {
 		"/url/some/random/pattern/two/*",
 		"/url/some/random/pattern/two/two/*",
 		"/url/some/random/pattern/two/two/two/*",
-		"/url/some/random/pattern/two/two/two/two/*/long/pattern"
+		"/url/some/random/pattern/two/two/two/two/*/long/pattern/*"
 	};
 
 }

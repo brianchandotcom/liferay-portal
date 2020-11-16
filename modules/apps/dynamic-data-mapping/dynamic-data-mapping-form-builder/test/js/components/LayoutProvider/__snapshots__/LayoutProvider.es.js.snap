@@ -28,7 +28,7 @@ Object {
               Object {
                 "fields": Array [
                   Object {
-                    "defaultLanguageId": undefined,
+                    "defaultLanguageId": "en_US",
                     "editingLanguageId": "en_US",
                     "fieldName": "label",
                     "localizable": true,
@@ -49,7 +49,7 @@ Object {
                     "value": "Radio Field",
                   },
                   Object {
-                    "defaultLanguageId": undefined,
+                    "defaultLanguageId": "en_US",
                     "editingLanguageId": "en_US",
                     "fieldName": "name",
                     "localizedValue": Object {
@@ -58,7 +58,7 @@ Object {
                     "value": undefined,
                   },
                   Object {
-                    "defaultLanguageId": undefined,
+                    "defaultLanguageId": "en_US",
                     "editingLanguageId": "en_US",
                     "fieldName": "required",
                     "localizedValue": Object {
@@ -67,7 +67,7 @@ Object {
                     "value": undefined,
                   },
                   Object {
-                    "defaultLanguageId": undefined,
+                    "defaultLanguageId": "en_US",
                     "editingLanguageId": "en_US",
                     "fieldName": "type",
                     "localizedValue": Object {
@@ -76,7 +76,7 @@ Object {
                     "value": undefined,
                   },
                   Object {
-                    "defaultLanguageId": undefined,
+                    "defaultLanguageId": "en_US",
                     "editingLanguageId": "en_US",
                     "fieldName": "validation",
                     "localizedValue": Object {

@@ -334,14 +334,36 @@ export const localizeField = (
 			value = localizedValue;
 		}
 	}
-	else if (
-		field.dataType === 'ddm-options' &&
-		value[editingLanguageId] === undefined
-	) {
-		value = {
-			...value,
-			[editingLanguageId]: value[defaultLanguageId],
-		};
+	else if (field.dataType === 'ddm-options') {
+		if (value[editingLanguageId] === undefined) {
+			value = {
+				...value,
+				[editingLanguageId]: [
+					...value[defaultLanguageId].map((option) => {
+						return {...option, edited: false};
+					}),
+				],
+			};
+		}
+		else {
+			value = {
+				...value,
+				[editingLanguageId]: [
+					...value[editingLanguageId].map((option) => {
+						if (option.edited) {
+							return option;
+						}
+
+						const {label} = value[defaultLanguageId].find(
+							(defaultOption) =>
+								defaultOption.value === option.value
+						);
+
+						return {...option, edited: false, label};
+					}),
+				],
+			};
+		}
 	}
 
 	return {

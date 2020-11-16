@@ -112,24 +112,13 @@
 	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />ordering').delegate(
-		'click',
-		function (event) {
-			var currentTarget = event.currentTarget;
-
-			var orderByTypeContainer = currentTarget.ancestor(
-				'.order-by-type-container'
-			);
-
-			orderByTypeContainer.all('.icon').toggleClass('hide');
-
-			var orderByTypeField = orderByTypeContainer.one('.order-by-type-field');
-
-			var newVal = orderByTypeField.val() === 'ASC' ? 'DESC' : 'ASC';
-
-			orderByTypeField.val(newVal);
-		},
-		'.icon'
-	);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"iconCssClass", ".icon"
+		).put(
+			"orderingContainerId", liferayPortletResponse.getNamespace() + "ordering"
+		).build()
+	%>'
+	module="js/Ordering"
+/>

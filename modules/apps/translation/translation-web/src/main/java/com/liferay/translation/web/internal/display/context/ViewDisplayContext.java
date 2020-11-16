@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -151,11 +150,6 @@ public class ViewDisplayContext {
 
 	public String getDefaultEventHandler() {
 		return "translationManagementToolbarDefaultEventHandler";
-	}
-
-	public String getModelName(TranslationEntry translationEntry) {
-		return ResourceActionsUtil.getModelResource(
-			_themeDisplay.getLocale(), translationEntry.getClassName());
 	}
 
 	public SearchContainer<TranslationEntry> getSearchContainer()

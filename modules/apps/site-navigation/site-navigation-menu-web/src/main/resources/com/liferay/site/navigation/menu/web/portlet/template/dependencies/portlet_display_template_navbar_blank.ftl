@@ -51,7 +51,7 @@
 						<#assign nav_item_href_link = "href='${navItem.getURL()}'" />
 					</#if>
 
-					<#if navItem.isChildSelected() || navItem.isSelected()>
+					<#if !navItem.isChildSelected() && navItem.isSelected()>
 						<#assign
 							nav_item_css_class = "${nav_item_css_class} selected active"
 						/>

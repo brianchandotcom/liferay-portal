@@ -56,9 +56,11 @@ public class MenuDisplayFragmentConfiguration {
 	public static class SiteNavigationMenuSource implements Source {
 
 		public SiteNavigationMenuSource(
-			long parentSiteNavigationMenuItemId, long siteNavigationMenuId) {
+			long parentSiteNavigationMenuItemId, boolean privateLayout,
+			long siteNavigationMenuId) {
 
 			_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
+			_privateLayout = privateLayout;
 			_siteNavigationMenuId = siteNavigationMenuId;
 		}
 
@@ -70,7 +72,12 @@ public class MenuDisplayFragmentConfiguration {
 			return _siteNavigationMenuId;
 		}
 
+		public boolean isPrivateLayout() {
+			return _privateLayout;
+		}
+
 		private final long _parentSiteNavigationMenuItemId;
+		private final boolean _privateLayout;
 		private final long _siteNavigationMenuId;
 
 	}

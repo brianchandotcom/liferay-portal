@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -138,8 +139,8 @@ public class NavItemUtil {
 	}
 
 	public static List<NavItem> getNavItems(
-			HttpServletRequest httpServletRequest, String rootLayoutType,
-			int rootLayoutLevel, String rootLayoutUuid,
+			HttpServletRequest httpServletRequest, Boolean privateLayout,
+			String rootLayoutType, int rootLayoutLevel, String rootLayoutUuid,
 			List<NavItem> branchNavItems)
 		throws Exception {
 
@@ -152,8 +153,8 @@ public class NavItemUtil {
 
 		if (rootLayoutType.equals("absolute")) {
 			if (rootLayoutLevel == 0) {
-				navItems = NavItem.fromLayouts(
-					httpServletRequest, themeDisplay, null);
+				navItems = _fromLayouts(
+					httpServletRequest, privateLayout, themeDisplay);
 			}
 			else if (branchNavItems.size() >= rootLayoutLevel) {
 				rootNavItem = branchNavItems.get(rootLayoutLevel - 1);
@@ -166,8 +167,8 @@ public class NavItemUtil {
 				int absoluteLevel = branchNavItems.size() - 1 - rootLayoutLevel;
 
 				if (absoluteLevel == -1) {
-					navItems = NavItem.fromLayouts(
-						httpServletRequest, themeDisplay, null);
+					navItems = _fromLayouts(
+						httpServletRequest, privateLayout, themeDisplay);
 				}
 				else if ((absoluteLevel >= 0) &&
 						 (absoluteLevel < branchNavItems.size())) {
@@ -194,8 +195,8 @@ public class NavItemUtil {
 					httpServletRequest, themeDisplay, rootLayout, null);
 			}
 			else {
-				navItems = NavItem.fromLayouts(
-					httpServletRequest, themeDisplay, null);
+				navItems = _fromLayouts(
+					httpServletRequest, privateLayout, themeDisplay);
 			}
 		}
 
@@ -230,6 +231,23 @@ public class NavItemUtil {
 
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
+	}
+
+	private static List<NavItem> _fromLayouts(
+			HttpServletRequest httpServletRequest, Boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (privateLayout == null) {
+			return NavItem.fromLayouts(httpServletRequest, themeDisplay, null);
+		}
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			themeDisplay.getScopeGroupId(), privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		return NavItem.fromLayouts(
+			layouts, httpServletRequest, themeDisplay, null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NavItemUtil.class);

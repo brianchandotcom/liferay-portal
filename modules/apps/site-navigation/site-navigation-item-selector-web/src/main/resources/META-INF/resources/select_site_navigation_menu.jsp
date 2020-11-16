@@ -74,7 +74,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 							icon="sites"
 						/>
 
-						<a href="<%= selectSiteNavigationMenuDisplayContext.getSelectSiteNavigationMenuLevelURL(siteNavigationMenu.getSiteNavigationMenuId()) %>">
+						<a href="<%= selectSiteNavigationMenuDisplayContext.getSelectSiteNavigationMenuLevelURL(siteNavigationMenu.getSiteNavigationMenuId(), siteNavigationMenu.getType()) %>">
 							<b><%= HtmlUtil.escape(name) %></b>
 						</a>
 					</liferay-ui:search-container-column-text>

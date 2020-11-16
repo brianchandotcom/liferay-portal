@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -43,6 +44,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -119,12 +121,17 @@ public class SelectSiteNavigationMenuDisplayContext {
 				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					_themeDisplay.getLocale(), getClass());
 
-				return LanguageUtil.get(
-					resourceBundle, "public-pages-hierarchy");
+				String key = "public-pages-hierarchy";
+
+				if (isPrivateLayout()) {
+					key = "private-pages-hierarchy";
+				}
+
+				return LanguageUtil.get(resourceBundle, key);
 			}
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_themeDisplay.getScopeGroupId(), false,
+				_themeDisplay.getScopeGroupId(), isPrivateLayout(),
 				getParentSiteNavigationMenuItemId());
 
 			return layout.getName(_themeDisplay.getLocale());
@@ -160,10 +167,17 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return _parentSiteNavigationMenuItemId;
 	}
 
-	public String getSelectSiteNavigationMenuLevelURL(long siteNavigationMenuId)
+	public String getSelectSiteNavigationMenuLevelURL(
+			long siteNavigationMenuId, int type)
 		throws PortletException {
 
-		return _getSelectSiteNavigationMenuLevelURL(siteNavigationMenuId, -1);
+		PortletURL portletURL = _getBaseURL(siteNavigationMenuId);
+
+		if (type == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+			portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
+		}
+
+		return portletURL.toString();
 	}
 
 	public long getSiteNavigationMenuId() {
@@ -240,6 +254,17 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return searchContainer;
 	}
 
+	public boolean isPrivateLayout() {
+		if (_privateLayout != null) {
+			return _privateLayout;
+		}
+
+		_privateLayout = ParamUtil.getBoolean(
+			_httpServletRequest, "privateLayout");
+
+		return _privateLayout;
+	}
+
 	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
 		return new BreadcrumbEntry() {
 			{
@@ -263,7 +288,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 			_createBreadcrumbEntry(
 				_getSiteNavigationMenuItemName(siteNavigationMenuItem),
 				getSelectSiteNavigationMenuLevelURL(
-					getSiteNavigationMenuId())));
+					getSiteNavigationMenuId(),
+					SiteNavigationConstants.TYPE_DEFAULT)));
 
 		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
 					0) {
@@ -286,6 +312,27 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return breadcrumbEntries;
 	}
 
+	private PortletURL _getBaseURL(long siteNavigationMenuId)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		portletURL.setParameter(
+			"backURL",
+			ParamUtil.getString(
+				_httpServletRequest, "backURL",
+				PortalUtil.getCurrentURL(_httpServletRequest)));
+		portletURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+
+		return portletURL;
+	}
+
 	private List<BreadcrumbEntry> _getLayoutBreadcrumbEntries()
 		throws Exception {
 
@@ -294,15 +341,21 @@ public class SelectSiteNavigationMenuDisplayContext {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_themeDisplay.getLocale(), getClass());
 
+		String key = "public-pages-hierarchy";
+
+		if (isPrivateLayout()) {
+			key = "private-pages-hierarchy";
+		}
+
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(
-				LanguageUtil.get(resourceBundle, "public-pages-hierarchy"),
-				getSelectSiteNavigationMenuLevelURL(
-					getSiteNavigationMenuId())));
+				LanguageUtil.get(resourceBundle, key),
+				_getSelectSiteNavigationMenuLevelURL(
+					getSiteNavigationMenuId(), 0)));
 
 		if (getParentSiteNavigationMenuItemId() != 0) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_themeDisplay.getScopeGroupId(), false,
+				_themeDisplay.getScopeGroupId(), isPrivateLayout(),
 				getParentSiteNavigationMenuItemId());
 
 			List<Layout> ancestors = layout.getAncestors();
@@ -345,6 +398,22 @@ public class SelectSiteNavigationMenuDisplayContext {
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
+	private SiteNavigationMenu _getPrivatePagesHierarchySiteNavigationMenu() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.createSiteNavigationMenu(0);
+
+		siteNavigationMenu.setGroupId(_themeDisplay.getScopeGroupId());
+		siteNavigationMenu.setName(
+			LanguageUtil.get(resourceBundle, "private-pages-hierarchy"));
+		siteNavigationMenu.setType(
+			SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY);
+
+		return siteNavigationMenu;
+	}
+
 	private SiteNavigationMenu _getPublicPagesHierarchySiteNavigationMenu() {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_themeDisplay.getLocale(), getClass());
@@ -355,6 +424,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 		siteNavigationMenu.setGroupId(_themeDisplay.getScopeGroupId());
 		siteNavigationMenu.setName(
 			LanguageUtil.get(resourceBundle, "public-pages-hierarchy"));
+		siteNavigationMenu.setType(
+			SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY);
 
 		return siteNavigationMenu;
 	}
@@ -363,25 +434,16 @@ public class SelectSiteNavigationMenuDisplayContext {
 			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws PortletException {
 
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
-			"backURL",
-			ParamUtil.getString(
-				_httpServletRequest, "backURL",
-				PortalUtil.getCurrentURL(_httpServletRequest)));
-		portletURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+		PortletURL portletURL = _getBaseURL(siteNavigationMenuId);
 
 		if (parentSiteNavigationMenuItemId >= 0) {
 			portletURL.setParameter(
 				"parentSiteNavigationMenuItemId",
 				String.valueOf(parentSiteNavigationMenuItemId));
+		}
+
+		if (isPrivateLayout()) {
+			portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
 		}
 
 		return portletURL.toString();
@@ -399,8 +461,8 @@ public class SelectSiteNavigationMenuDisplayContext {
 		breadcrumbEntries.add(
 			_createBreadcrumbEntry(
 				siteNavigationMenu.getName(),
-				getSelectSiteNavigationMenuLevelURL(
-					getSiteNavigationMenuId())));
+				_getSelectSiteNavigationMenuLevelURL(
+					getSiteNavigationMenuId(), 0)));
 
 		if (getParentSiteNavigationMenuItemId() != 0) {
 			breadcrumbEntries.addAll(_getAncestorsBreadcrumbEntries());
@@ -447,7 +509,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 		}
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_themeDisplay.getScopeGroupId(), false,
+			_themeDisplay.getScopeGroupId(), isPrivateLayout(),
 			getParentSiteNavigationMenuItemId());
 
 		for (Layout layout : layouts) {
@@ -462,14 +524,16 @@ public class SelectSiteNavigationMenuDisplayContext {
 	}
 
 	private List<SiteNavigationMenu> _getStaticSiteNavigationMenus() {
-		return Collections.singletonList(
-			_getPublicPagesHierarchySiteNavigationMenu());
+		return Arrays.asList(
+			_getPublicPagesHierarchySiteNavigationMenu(),
+			_getPrivatePagesHierarchySiteNavigationMenu());
 	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private Long _parentSiteNavigationMenuItemId;
 	private final PortletURL _portletURL;
+	private Boolean _privateLayout;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;

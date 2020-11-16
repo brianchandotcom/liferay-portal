@@ -159,7 +159,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER_LABEL</td>
-	<td>//div[contains(@class,'ddm-field')]//label[.='${key_fieldFieldLabel}']</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}'] | //legend[normalize-space(text())='${key_fieldFieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

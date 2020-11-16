@@ -309,9 +309,11 @@ public class ViewChangesDisplayContext {
 					JSONFactoryUtil.createJSONObject();
 
 				for (ModelInfo modelInfo : modelInfoMap.values()) {
-					modelsJSONObject.put(
-						String.valueOf(modelInfo._modelKey),
-						modelInfo._jsonObject);
+					if (modelInfo._jsonObject != null) {
+						modelsJSONObject.put(
+							String.valueOf(modelInfo._modelKey),
+							modelInfo._jsonObject);
+					}
 				}
 
 				return modelsJSONObject;
@@ -389,6 +391,10 @@ public class ViewChangesDisplayContext {
 					JSONFactoryUtil.createJSONObject();
 
 				for (ModelInfo modelInfo : modelInfoMap.values()) {
+					if (modelInfo._jsonObject == null) {
+						continue;
+					}
+
 					long groupId = modelInfo._jsonObject.getLong("groupId");
 
 					String groupIdString = String.valueOf(groupId);
@@ -486,7 +492,7 @@ public class ViewChangesDisplayContext {
 	}
 
 	private JSONObject _getContextViewJSONObject(
-		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> entryMap,
+		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> modelInfoMap,
 		Set<Long> rootClassNameIds, JSONObject defaultContextViewJSONObject) {
 
 		if (ctClosure == null) {
@@ -508,6 +514,10 @@ public class ViewChangesDisplayContext {
 		ParentModel parentModel = null;
 
 		while ((parentModel = queue.poll()) != null) {
+			if (parentModel._jsonObject == null) {
+				continue;
+			}
+
 			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (Map.Entry<Long, List<Long>> entry :
@@ -516,7 +526,7 @@ public class ViewChangesDisplayContext {
 				long modelClassNameId = entry.getKey();
 
 				for (long modelClassPK : entry.getValue()) {
-					ModelInfo modelInfo = entryMap.get(
+					ModelInfo modelInfo = modelInfoMap.get(
 						new ModelInfoKey(modelClassNameId, modelClassPK));
 
 					int modelKey = modelInfo._modelKey;
@@ -726,6 +736,18 @@ public class ViewChangesDisplayContext {
 
 				T model = baseModelMap.get(classPK);
 
+				if (model == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Missing model from production: ",
+								"{modelClassNameId=", modelClassNameId,
+								", classPK=", classPK, "}"));
+					}
+
+					continue;
+				}
+
 				modelInfo._jsonObject = JSONUtil.put(
 					"hideable",
 					_ctDisplayRendererRegistry.isHideable(
@@ -778,6 +800,23 @@ public class ViewChangesDisplayContext {
 
 				T model = _ctDisplayRendererRegistry.fetchCTModel(
 					ctCollectionId, ctSQLMode, modelClassNameId, classPK);
+
+				if (model == null) {
+					if ((ctEntry.getChangeType() !=
+							CTConstants.CT_CHANGE_TYPE_DELETION) &&
+						_log.isWarnEnabled()) {
+
+						_log.warn(
+							StringBundler.concat(
+								"Missing model from ", _ctCollection.getName(),
+								": {ctCollectionId=",
+								_ctCollection.getCtCollectionId(),
+								", modelClassNameId=", modelClassNameId,
+								", classPK=", classPK, "}"));
+					}
+
+					continue;
+				}
 
 				Date modifiedDate = ctEntry.getModifiedDate();
 
@@ -884,7 +923,9 @@ public class ViewChangesDisplayContext {
 				ModelInfo modelInfo = modelInfoMap.get(
 					new ModelInfoKey(classNameId, classPK));
 
-				modelInfo._jsonObject.put("groupId", groupId);
+				if (modelInfo._jsonObject != null) {
+					modelInfo._jsonObject.put("groupId", groupId);
+				}
 
 				Map<Long, ? extends Collection<Long>> childPKsMap =
 					ctClosure.getChildPKsMap(classNameId, classPK);

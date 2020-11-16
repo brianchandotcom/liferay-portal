@@ -5,4 +5,8 @@
 	<category name="com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry">
 		<priority value="WARN" />
 	</category>
+
+	<category name="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext">
+		<priority value="WARN" />
+	</category>
 </log4j:configuration>

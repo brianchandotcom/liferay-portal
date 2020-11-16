@@ -55,6 +55,7 @@ class ChangeTrackingChangesView extends React.Component {
 			renderCTEntryURL,
 			renderDiffURL,
 			rootDisplayClasses,
+			showHideableParam,
 			siteNames,
 			spritemap,
 			typeNames,
@@ -83,7 +84,6 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const filterClass = pathState.filterClass;
 		const nodeId = pathState.nodeId;
-		const showHideable = pathState.showHideable;
 		const viewType = pathState.viewType;
 
 		const node = this._getNode(filterClass, nodeId, viewType);
@@ -118,6 +118,16 @@ class ChangeTrackingChangesView extends React.Component {
 
 		if (node.modelClassNameId) {
 			loading = true;
+		}
+
+		let showHideable = showHideableParam;
+
+		if (
+			node.hideable ||
+			(filterClass !== this.FILTER_CLASS_EVERYTHING &&
+				this.contextView[filterClass].hideable)
+		) {
+			showHideable = true;
 		}
 
 		this.state = {
@@ -768,12 +778,22 @@ class ChangeTrackingChangesView extends React.Component {
 		return null;
 	}
 
-	_getPath(pathParam) {
-		return this.basePath + '&' + this.namespace + 'path=' + pathParam;
+	_getPath(pathParam, showHideable) {
+		return (
+			this.basePath +
+			'&' +
+			this.namespace +
+			'path=' +
+			pathParam +
+			'&' +
+			this.namespace +
+			'showHideable=' +
+			showHideable.toString()
+		);
 	}
 
-	_getPathParam(breadcrumbItems, filterClass, showHideable, viewType) {
-		let path = showHideable.toString() + '/' + viewType + '/' + filterClass;
+	_getPathParam(breadcrumbItems, filterClass, viewType) {
+		let path = viewType + '/' + filterClass;
 
 		if (breadcrumbItems && breadcrumbItems.length > 0) {
 			let tree = '';
@@ -859,7 +879,6 @@ class ChangeTrackingChangesView extends React.Component {
 			return {
 				filterClass: this.FILTER_CLASS_EVERYTHING,
 				nodeId: 0,
-				showHideable: false,
 				viewType: this.VIEW_TYPE_CHANGES,
 			};
 		}
@@ -868,8 +887,8 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const path = [];
 
-		if (parts.length > 3) {
-			for (let i = 3; i < parts.length; i++) {
+		if (parts.length > 2) {
+			for (let i = 2; i < parts.length; i++) {
 				const part = parts[i];
 
 				const keys = part.split('-');
@@ -882,10 +901,9 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		const pathState = {
-			filterClass: parts[2],
+			filterClass: parts[1],
 			nodeId: 0,
-			showHideable: parts[0] === 'true',
-			viewType: parts[1],
+			viewType: parts[0],
 		};
 
 		if (
@@ -1268,11 +1286,10 @@ class ChangeTrackingChangesView extends React.Component {
 		const pathParam = this._getPathParam(
 			breadcrumbItems,
 			filterClass,
-			showHideable,
 			viewType
 		);
 
-		const path = this._getPath(pathParam);
+		const path = this._getPath(pathParam, showHideable);
 
 		const state = {
 			path,
@@ -1458,23 +1475,42 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 		}
 
-		const pathParam = this._getPathParam(
+		const newPathParam = this._getPathParam(
 			this.state.breadcrumbItems,
 			this.state.filterClass,
-			showHideable,
 			this.state.viewType
 		);
 
-		const path = this._getPath(pathParam);
+		const oldState = window.history.state;
+		const params = new URLSearchParams(window.location.search);
 
-		window.history.replaceState(
-			{
+		const oldPathParam = params.get(this.namespace + 'path');
+
+		if (
+			this._isWithinApp(params) &&
+			(!oldPathParam || oldPathParam === newPathParam)
+		) {
+			const path = this._getPath(newPathParam, showHideable);
+
+			const newState = {
 				path,
 				senna: true,
-			},
-			document.title,
-			path
-		);
+			};
+
+			if (oldState) {
+				if (oldState.modelClassNameId) {
+					newState.modelClassNameId = oldState.modelClassNameId;
+					newState.modelClassPK = oldState.modelClassPK;
+				}
+
+				if (oldState.renderInnerHTML) {
+					newState.dropdownItems = oldState.dropdownItems;
+					newState.renderInnerHTML = oldState.renderInnerHTML;
+				}
+			}
+
+			window.history.replaceState(newState, document.title, path);
+		}
 
 		this.setState({
 			children: this._filterHideableNodes(

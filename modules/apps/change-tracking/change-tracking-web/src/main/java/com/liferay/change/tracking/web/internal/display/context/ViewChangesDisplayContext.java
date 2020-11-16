@@ -384,6 +384,9 @@ public class ViewChangesDisplayContext {
 				return rootDisplayClassesJSONArray;
 			}
 		).put(
+			"showHideableParam",
+			ParamUtil.getBoolean(_renderRequest, "showHideable")
+		).put(
 			"siteNames",
 			() -> {
 				JSONObject siteNamesJSONObject =

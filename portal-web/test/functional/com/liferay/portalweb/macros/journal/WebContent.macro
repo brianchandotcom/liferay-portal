@@ -332,19 +332,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro addTextToRichText {
-		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "${fieldName}",
-			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-		Type(
-			key_fieldName = "${fieldName}",
-			locator1 = "CKEditor#BODY",
-			value1 = "${webContentRichText}");
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro addViaCKEditor {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
@@ -533,12 +520,12 @@ definition {
 
 		if (isSet(webContentColor)) {
 			Click(
-				key_fieldName = "Color",
-				locator1 = "Button#COLOR_SELECT");
+				key_fieldFieldLabel = "${webContentColorFieldLabel}",
+				locator1 = "WCEditWebContent#COLOR_PICKER");
 
 			Click(
-				key_colorCode = "${webContentColor}",
-				locator1 = "DDMField#COLOR_PICKER_COLOR");
+				key_colorSwatchItem = "${webContentColor}",
+				locator1 = "Button#COLOR_SWATCH_ITEM");
 		}
 
 		if (isSet(webContentDate)) {
@@ -634,15 +621,15 @@ definition {
 				value1 = "${webContentInteger}");
 		}
 
-		if (isSet(linkedPageName)) {
-			var key_pageName = "${linkedPageName}";
+		if (isSet(webContentLinkToPage)) {
+			var key_pageName = "${webContentLinkToPage}";
 
 			AssertClick(
-				key_fieldName = "${linkFieldName}",
-				locator1 = "WCEditWebContent#LINK_TO_PAGE_SELECT",
+				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
-			LexiconCard.clickCard(card = "${linkedPageName}");
+			LexiconCard.clickCard(card = "${webContentLinkToPage}");
 		}
 
 		if (isSet(webContentNumber)) {
@@ -658,21 +645,23 @@ definition {
 				value1 = "${webContentRadio}");
 		}
 
-		if (isSet(webContentSelect)) {
+		if (isSet(webContentSelectFromList)) {
 			Select(
-				locator1 = "DDMField#SELECT",
-				value1 = "${webContentSelect}");
+				key_fieldFieldLabel = "${webContentSelectFromListFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "${webContentSelectFromList}");
 		}
 
-		if (isSet(webContentSelectWCFile)) {
+		if (isSet(webContentWebContent)) {
 			AssertClick(
-				locator1 = "WCEditWebContent#WC_FIELD_SELECT",
+				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
 			if (isSet(depotName)) {
 				WebContent.selectRepositoryWC(
 					available = "${available}",
-					contentName = "${webContentSelectWCFile}",
+					contentName = "${webContentWebContent}",
 					depotName = "${depotName}",
 					folderName = "${folderName}");
 			}
@@ -681,9 +670,9 @@ definition {
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				AssertClick.assertPartialTextClickAt(
-					key_listEntry = "${webContentSelectWCFile}",
+					key_listEntry = "${webContentWebContent}",
 					locator1 = "LexiconList#LIST_ENTRY",
-					value1 = "${webContentSelectWCFile}");
+					value1 = "${webContentWebContent}");
 
 				SelectFrame(value1 = "relative=top");
 			}
@@ -691,8 +680,8 @@ definition {
 
 		if (isSet(webContentText)) {
 			Type(
-				key_fieldName = "Text",
-				locator1 = "TextInput#DE_DDM",
+				key_fieldFieldLabel = "Text",
+				locator1 = "DDMField#TEXT_INPUT",
 				value1 = "${webContentText}");
 		}
 

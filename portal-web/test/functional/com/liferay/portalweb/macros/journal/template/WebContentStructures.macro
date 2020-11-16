@@ -135,54 +135,6 @@ definition {
 			rowEntry = "${structureName}");
 	}
 
-	macro editSubstructureDefaultValuesCP {
-		var key_ddlDataDefinitionName = "${substructureName}";
-
-		Search.searchCP(searchTerm = "${substructureName}");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
-			rowEntry = "${substructureName}");
-
-		for (var structureFieldName : list "${editSubstructureFieldNames}") {
-			var key_fieldDefaultValue = "${structureFieldName}";
-			var structureFieldName = StringUtil.replace("${structureFieldName}", " ", "");
-
-			Type(
-				locator1 = "DDMField#DDM_INPUT",
-				value1 = "Edited ${structureFieldName} Field");
-		}
-
-		Button.clickSave();
-
-		if (isSet(depotName)) {
-			DepotNavigator.openDepotWebContentAdmin(depotName = "${depotName}");
-		}
-		else {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Web Content");
-		}
-
-		Navigator.gotoNavItem(navItem = "Structures");
-
-		Search.searchCP(searchTerm = "${substructureName}");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
-			rowEntry = "${substructureName}");
-
-		for (var structureFieldName : list "${editSubstructureFieldNames}") {
-			var key_fieldDefaultValue = "${structureFieldName}";
-
-			AssertTextEquals(
-				locator1 = "DDMField#DDM_INPUT",
-				value1 = "Edited ${structureFieldName} Field");
-		}
-
-		SelectFrameTop();
-	}
-
 	macro openWebContentStructuresAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp");
 	}

@@ -42,7 +42,7 @@ public class StaticSizeTrieURLPatternMapper<T>
 			}
 		}
 
-		_maxURLPatternLength = maxURLPatternLength + 1;
+		_maxURLPatternLength = maxURLPatternLength + 2;
 
 		_extensionTrieMatrix =
 			new long[2][_maxURLPatternLength][ASCII_CHARACTER_RANGE];

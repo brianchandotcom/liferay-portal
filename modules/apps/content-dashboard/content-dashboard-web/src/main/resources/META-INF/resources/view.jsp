@@ -118,15 +118,28 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 
 							row.setData(Collections.singletonMap("rowId", rowId));
 							row.setRowId(rowId);
+
+							ContentDashboardItemAction contentDashboardItemAction = contentDashboardItem.getDefaultContentDashboardItemAction(request);
 							%>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-title"
 								name="title"
 							>
-								<span class="lfr-portal-tooltip text-truncate-inline" title="<%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %>">
-									<span class="text-truncate"><%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %></span>
-								</span>
+								<c:choose>
+									<c:when test="<%= contentDashboardItemAction != null %>">
+										<a class="lfr-portal-tooltip" href="<%= contentDashboardItemAction.getURL() %>" title="<%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %>">
+											<span class="text-truncate-inline">
+												<span class="text-truncate"><%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %></span>
+											</span>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<span class="lfr-portal-tooltip text-truncate-inline" title="<%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %>">
+											<span class="text-truncate"><%= HtmlUtil.escape(contentDashboardItem.getTitle(locale)) %></span>
+										</span>
+									</c:otherwise>
+								</c:choose>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text

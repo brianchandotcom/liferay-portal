@@ -59,6 +59,15 @@ public class NavItem implements Serializable {
 
 		List<Layout> parentLayouts = themeDisplay.getLayouts();
 
+		return fromLayouts(
+			parentLayouts, httpServletRequest, themeDisplay, contextObjects);
+	}
+
+	public static List<NavItem> fromLayouts(
+			List<Layout> parentLayouts, HttpServletRequest httpServletRequest,
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects)
+		throws PortalException {
+
 		if (parentLayouts == null) {
 			return Collections.emptyList();
 		}

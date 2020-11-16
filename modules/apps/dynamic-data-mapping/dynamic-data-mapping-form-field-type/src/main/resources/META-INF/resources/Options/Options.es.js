@@ -282,6 +282,7 @@ const Options = ({
 			return {
 				...field,
 				copyFrom: editingLanguageId,
+				edited: field.edited,
 				label: field.label,
 			};
 		});
@@ -369,7 +370,9 @@ const Options = ({
 
 		fields[index][property] = value;
 		fields[index]['edited'] =
-			edited || (value && value !== label && property === 'value');
+			edited ||
+			(value && value !== label && property === 'value') ||
+			property === 'label';
 
 		if (property === 'label') {
 			fields[index]['copyFrom'] = undefined;

@@ -152,7 +152,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			() -> LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.DELETE),
-			_getDeleteLayoutPrototypeActionUnsafeConsumer()
+			_getDeleteDisplayPageActionUnsafeConsumer()
 		).build();
 	}
 
@@ -174,6 +174,43 @@ public class DisplayPageActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteDisplayPageActionUnsafeConsumer() {
+
+		PortletURL deleteDisplayPageURL = _renderResponse.createActionURL();
+
+		deleteDisplayPageURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template_admin/delete_layout_page_template_entry");
+
+		deleteDisplayPageURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteDisplayPageURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteDisplayPage");
+
+			String key = "are-you-sure-you-want-to-delete-this";
+
+			if (_layoutPageTemplateEntry.isDefaultTemplate()) {
+				key =
+					"are-you-sure-you-want-to-delete-the-default-display-" +
+						"page-template";
+			}
+
+			dropdownItem.putData(
+				"deleteDisplayPageMessage",
+				LanguageUtil.get(_httpServletRequest, key));
+			dropdownItem.putData(
+				"deleteDisplayPageURL", deleteDisplayPageURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
@@ -207,31 +244,6 @@ public class DisplayPageActionDropdownItemsProvider {
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getDeleteLayoutPrototypeActionUnsafeConsumer() {
-
-		PortletURL deleteDisplayPageURL = _renderResponse.createActionURL();
-
-		deleteDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template_admin/delete_layout_page_template_entry");
-
-		deleteDisplayPageURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		deleteDisplayPageURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteDisplayPage");
-			dropdownItem.putData(
-				"deleteDisplayPageURL", deleteDisplayPageURL.toString());
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 

@@ -19,12 +19,15 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,9 +111,25 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 			SessionErrors.add(actionRequest, PortalException.class);
 
 			hideDefaultErrorMessage(actionRequest);
-
-			sendRedirect(actionRequest, actionResponse);
 		}
+		else {
+			int total =
+				deleteLayoutPageTemplateEntryIds.length -
+					deleteLayoutPageTemplateIdsList.size();
+
+			if (total > 0) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				MultiSessionMessages.add(
+					actionRequest, "displayPageTemplateDeleted",
+					LanguageUtil.format(
+						_portal.getHttpServletRequest(actionRequest),
+						"you-successfully-deleted-x-display-page-templates",
+						new Object[] {total}));
+			}
+		}
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -122,5 +141,8 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

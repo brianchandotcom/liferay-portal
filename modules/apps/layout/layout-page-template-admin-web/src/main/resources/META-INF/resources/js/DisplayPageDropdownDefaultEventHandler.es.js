@@ -22,11 +22,7 @@ import {Config} from 'metal-state';
 
 class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteDisplayPage(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
+		if (confirm(itemData.deleteDisplayPageMessage)) {
 			this._send(itemData.deleteDisplayPageURL);
 		}
 	}

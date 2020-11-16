@@ -28,14 +28,26 @@ import {
 	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
 
-export const getLabel = (originalField, editingLanguageId) => {
-	return sub(Liferay.Language.get('copy-of-x'), [
-		getFieldLocalizedValue(
+export const getLabel = (
+	originalField,
+	defaultLanguageId,
+	editingLanguageId
+) => {
+	let labelFieldLocalizedValue = getFieldLocalizedValue(
+		originalField.settingsContext.pages,
+		'label',
+		editingLanguageId
+	);
+
+	if (!labelFieldLocalizedValue) {
+		labelFieldLocalizedValue = getFieldLocalizedValue(
 			originalField.settingsContext.pages,
 			'label',
-			editingLanguageId
-		),
-	]);
+			defaultLanguageId
+		);
+	}
+
+	return sub(Liferay.Language.get('copy-of-x'), [labelFieldLocalizedValue]);
 };
 
 export const getValidation = (originalField) => {

@@ -65,7 +65,7 @@ export const Editor = ({
 };
 
 Editor.propTypes = {
-	autocompleteData: PropTypes.string.isRequired,
+	autocompleteData: PropTypes.object.isRequired,
 	editorMode: PropTypes.oneOf(['ftl', 'xml', 'velocity']).isRequired,
 	initialScript: PropTypes.string.isRequired,
 	inputChannel: PropTypes.object.isRequired,

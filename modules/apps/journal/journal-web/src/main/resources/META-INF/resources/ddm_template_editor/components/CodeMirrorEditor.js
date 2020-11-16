@@ -105,7 +105,7 @@ export const CodeMirrorEditor = ({
 			let wordList = [];
 
 			try {
-				wordList = Object.keys(JSON.parse(autocompleteData).variables)
+				wordList = Object.keys(autocompleteData.variables)
 					.sort()
 					.map((word) => ({lowerCaseWord: word.toLowerCase(), word}));
 			}
@@ -254,7 +254,7 @@ export const CodeMirrorEditor = ({
 };
 
 CodeMirrorEditor.propTypes = {
-	autocompleteData: PropTypes.string.isRequired,
+	autocompleteData: PropTypes.object.isRequired,
 	content: PropTypes.string.isRequired,
 	inputChannel: PropTypes.shape({
 		onData: PropTypes.func.isRequired,

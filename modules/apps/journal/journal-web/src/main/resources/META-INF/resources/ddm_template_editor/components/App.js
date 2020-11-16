@@ -99,7 +99,7 @@ export default function App({
 }
 
 App.propTypes = {
-	editorAutocompleteData: PropTypes.string.isRequired,
+	editorAutocompleteData: PropTypes.object.isRequired,
 	editorMode: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	script: PropTypes.string.isRequired,

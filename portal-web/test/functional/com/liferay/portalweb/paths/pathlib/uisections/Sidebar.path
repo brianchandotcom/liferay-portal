@@ -10,7 +10,7 @@
 <tbody>
 <tr>
     <td>ADD_FIELD_TARGET</td>
-    <td>//div[contains(@class,'col-empty')]/div</td>
+    <td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
     <td></td>
 </tr>
 <tr>

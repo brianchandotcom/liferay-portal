@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_DESCRPTION</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div[contains(@class,'form-group')]//input[contains(@name,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_BUTTON</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-group')]//button[normalize-space(text())='Select']</td>
 	<td></td>

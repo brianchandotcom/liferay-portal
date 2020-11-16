@@ -133,32 +133,6 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Default Values",
 			rowEntry = "${structureName}");
-
-		for (var structureFieldName : list "${editStructureFieldNames}") {
-			var key_fieldDefaultValue = "${editStructureFieldNames}";
-			var key_fieldName = "${structureFieldName}";
-			Type(
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${fieldPredefinedValue}");
-		}
-
-		Button.clickSave();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		Navigator.gotoNavItem(navItem = "Structures");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
-			rowEntry = "${structureName}");
-
-		for (var structureFieldName : list "${editStructureFieldNames}") {
-			AssertTextEquals(
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${fieldPredefinedValue}");
-		}
 	}
 
 	macro editSubstructureDefaultValuesCP {

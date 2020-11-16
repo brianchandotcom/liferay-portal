@@ -2370,6 +2370,43 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the structured content by its external reference code and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteSiteStructuredContent(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteSiteStructuredContent(
+					Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates, or creates if it not exists, the structured content with the given external reference code."
+	)
+	public StructuredContent updateSiteStructuredContent(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putSiteStructuredContent(
+					Long.valueOf(siteKey), externalReferenceCode,
+					structuredContent));
+	}
+
+	@GraphQLField(
 		description = "Creates a new structured content in the folder."
 	)
 	public StructuredContent createStructuredContentFolderStructuredContent(

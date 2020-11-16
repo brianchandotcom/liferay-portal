@@ -43,8 +43,10 @@ public class UserCardTag extends BaseCardTag {
 		String icon = super.getIcon();
 
 		if (icon == null) {
-			if ((getUserCard() != null) && (getUserCard().getIcon() != null)) {
-				return getUserCard().getIcon();
+			UserCard userCard = getUserCard();
+
+			if ((userCard != null) && (userCard.getIcon() != null)) {
+				return userCard.getIcon();
 			}
 
 			return "user";
@@ -54,40 +56,50 @@ public class UserCardTag extends BaseCardTag {
 	}
 
 	public String getImageAlt() {
-		if ((_imageAlt == null) && (getUserCard() != null)) {
-			return getUserCard().getImageAlt();
+		UserCard userCard = getUserCard();
+
+		if ((_imageAlt == null) && (userCard != null)) {
+			return userCard.getImageAlt();
 		}
 
 		return _imageAlt;
 	}
 
 	public String getImageSrc() {
-		if ((_imageSrc == null) && (getUserCard() != null)) {
-			return getUserCard().getImageSrc();
+		UserCard userCard = getUserCard();
+
+		if ((_imageSrc == null) && (userCard != null)) {
+			return userCard.getImageSrc();
 		}
 
 		return _imageSrc;
 	}
 
 	public List<LabelItem> getLabels() {
-		if ((_labels == null) && (getUserCard() != null)) {
-			return getUserCard().getLabels();
+		UserCard userCard = getUserCard();
+
+		if ((_labels == null) && (userCard != null)) {
+			return userCard.getLabels();
 		}
 
 		return _labels;
 	}
 
 	public String getName() {
-		if ((_name == null) && (getUserCard() != null)) {
-			return getUserCard().getName();
+		UserCard userCard = getUserCard();
+
+		if ((_name == null) && (userCard != null)) {
+			return userCard.getName();
 		}
 
 		return _name;
 	}
 
 	public String getSubtitle() {
-		if ((_subtitle == null) && (getUserCard() != null)) {
-			return getUserCard().getSubtitle();
+		UserCard userCard = getUserCard();
+
+		if ((_subtitle == null) && (userCard != null)) {
+			return userCard.getSubtitle();
 		}
 
 		return _subtitle;
@@ -98,8 +110,10 @@ public class UserCardTag extends BaseCardTag {
 	}
 
 	public String getUserColorClass() {
-		if ((_userColorClass == null) && (getUserCard() != null)) {
-			return getUserCard().getUserColorClass();
+		UserCard userCard = getUserCard();
+
+		if ((_userColorClass == null) && (userCard != null)) {
+			return userCard.getUserColorClass();
 		}
 
 		return _userColorClass;

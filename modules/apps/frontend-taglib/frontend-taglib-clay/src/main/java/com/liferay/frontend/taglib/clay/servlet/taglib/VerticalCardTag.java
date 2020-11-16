@@ -48,82 +48,102 @@ public class VerticalCardTag extends BaseCardTag {
 	public String getIcon() {
 		String icon = super.getIcon();
 
-		if ((icon == null) && (getVerticalCard() != null) &&
-			(getVerticalCard().getIcon() != null)) {
+		VerticalCard verticalCard = getVerticalCard();
 
-			return getVerticalCard().getIcon();
+		if ((icon == null) && (verticalCard != null) &&
+			(verticalCard.getIcon() != null)) {
+
+			return verticalCard.getIcon();
 		}
 
 		return icon;
 	}
 
 	public String getImageAlt() {
-		if ((_imageAlt == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getImageAlt();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_imageAlt == null) && (verticalCard != null)) {
+			return verticalCard.getImageAlt();
 		}
 
 		return _imageAlt;
 	}
 
 	public String getImageSrc() {
-		if ((_imageSrc == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getImageSrc();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_imageSrc == null) && (verticalCard != null)) {
+			return verticalCard.getImageSrc();
 		}
 
 		return _imageSrc;
 	}
 
 	public List<LabelItem> getLabels() {
-		if ((_labels == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getLabels();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_labels == null) && (verticalCard != null)) {
+			return verticalCard.getLabels();
 		}
 
 		return _labels;
 	}
 
 	public Map<String, String> getLabelStylesMap() {
-		if ((_labelStylesMap == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getLabelStylesMap();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_labelStylesMap == null) && (verticalCard != null)) {
+			return verticalCard.getLabelStylesMap();
 		}
 
 		return _labelStylesMap;
 	}
 
 	public String getStickerCssClass() {
-		if ((_stickerCssClass == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerCssClass();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerCssClass == null) && (verticalCard != null)) {
+			return verticalCard.getStickerCssClass();
 		}
 
 		return _stickerCssClass;
 	}
 
 	public String getStickerIcon() {
-		if ((_stickerIcon == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerIcon();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerIcon == null) && (verticalCard != null)) {
+			return verticalCard.getStickerIcon();
 		}
 
 		return _stickerIcon;
 	}
 
 	public String getStickerImageAlt() {
-		if ((_stickerImageAlt == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerImageAlt();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerImageAlt == null) && (verticalCard != null)) {
+			return verticalCard.getStickerImageAlt();
 		}
 
 		return _stickerImageAlt;
 	}
 
 	public String getStickerImageSrc() {
-		if ((_stickerImageSrc == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerImageSrc();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerImageSrc == null) && (verticalCard != null)) {
+			return verticalCard.getStickerImageSrc();
 		}
 
 		return _stickerImageSrc;
 	}
 
 	public String getStickerLabel() {
-		if ((_stickerLabel == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerLabel();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerLabel == null) && (verticalCard != null)) {
+			return verticalCard.getStickerLabel();
 		}
 
 		return LanguageUtil.get(
@@ -132,24 +152,30 @@ public class VerticalCardTag extends BaseCardTag {
 	}
 
 	public String getStickerShape() {
-		if ((_stickerShape == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerShape();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerShape == null) && (verticalCard != null)) {
+			return verticalCard.getStickerShape();
 		}
 
 		return _stickerShape;
 	}
 
 	public String getStickerStyle() {
-		if ((_stickerStyle == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getStickerStyle();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerStyle == null) && (verticalCard != null)) {
+			return verticalCard.getStickerStyle();
 		}
 
 		return _stickerStyle;
 	}
 
 	public String getSubtitle() {
-		if ((_subtitle == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getSubtitle();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_subtitle == null) && (verticalCard != null)) {
+			return verticalCard.getSubtitle();
 		}
 
 		return LanguageUtil.get(
@@ -157,8 +183,10 @@ public class VerticalCardTag extends BaseCardTag {
 	}
 
 	public String getTitle() {
-		if ((_title == null) && (getVerticalCard() != null)) {
-			return getVerticalCard().getTitle();
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_title == null) && (verticalCard != null)) {
+			return verticalCard.getTitle();
 		}
 
 		return LanguageUtil.get(
@@ -171,8 +199,10 @@ public class VerticalCardTag extends BaseCardTag {
 
 	public Boolean isFlushHorizontal() {
 		if (_flushHorizontal == null) {
-			if (getVerticalCard() != null) {
-				return getVerticalCard().isFlushHorizontal();
+			VerticalCard verticalCard = getVerticalCard();
+
+			if (verticalCard != null) {
+				return verticalCard.isFlushHorizontal();
 			}
 
 			return false;
@@ -183,8 +213,10 @@ public class VerticalCardTag extends BaseCardTag {
 
 	public Boolean isFlushVertical() {
 		if (_flushVertical == null) {
-			if (getVerticalCard() != null) {
-				return getVerticalCard().isFlushVertical();
+			VerticalCard verticalCard = getVerticalCard();
+
+			if (verticalCard != null) {
+				return verticalCard.isFlushVertical();
 			}
 
 			return false;

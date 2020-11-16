@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER</td>
+	<td>//a[contains(@class,'order-arrow-up-active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATE</td>
 	<td>//div/span[contains(.,'State')]/..//div[@class='panel-body']</td>
 	<td></td>

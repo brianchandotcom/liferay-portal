@@ -277,23 +277,15 @@ definition {
 
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
-		if (isSet(webContentText)) {
-			Type(
-				key_fieldName = "${structureFieldName}",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${webContentText}");
-		}
-
-		if (isSet(webContentRichText)) {
-			SelectFrame.selectFrameNoLoading(
-				key_fieldName = "${textBoxFieldName}",
-				locator1 = "DDMField#RICH_TEXT");
-
-			Type(
-				locator1 = "CKEditor#BODY",
-				value1 = "${webContentRichText}");
-
-			SelectFrame(value1 = "relative=top");
+		for (var fieldLabel : list "${fieldLabelList}") {
+			if ("${fieldLabel}" == "Text Box") {
+				WebContent.addWithStructureCP(
+					webContentText = "${textBox}",
+					webContentTextFieldLabel = "Text Box");
+			}
+			else {
+				WebContent.addWithStructureCP(webContentText = "${text}");
+			}
 		}
 
 		if (isSet(templateName)) {
@@ -421,8 +413,8 @@ definition {
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
 		Type(
-			key_fieldName = "${fieldName}",
-			locator1 = "TextInput#DE_DDM",
+			key_fieldFieldLabel = "${fieldName}",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "${webContentContent}");
 
 		if (isSet(templateName)) {
@@ -512,13 +504,15 @@ definition {
 	macro addWithStructureCP {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-		PortletEntry.inputTitle(title = "${webContentTitle}");
-
-		if (isSet(webContentBoolean)) {
-			Check(locator1 = "DDMField#BOOLEAN");
+		if (isSet(webContentTitle)) {
+			PortletEntry.inputTitle(title = "${webContentTitle}");
 		}
 
 		if (isSet(webContentColor)) {
+			if (!(isSet(webContentColorFieldLabel))) {
+				var webContentColorFieldLabel = "Color";
+			}
+
 			Click(
 				key_fieldFieldLabel = "${webContentColorFieldLabel}",
 				locator1 = "WCEditWebContent#COLOR_PICKER");
@@ -529,99 +523,63 @@ definition {
 		}
 
 		if (isSet(webContentDate)) {
+			if (!(isSet(webContentDateFieldLabel))) {
+				var webContentDateFieldLabel = "Date";
+			}
+
 			Type(
-				locator1 = "TextInput#DE_DDM",
+				key_fieldFieldLabel = "${webContentDateFieldLabel}",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentDate}");
 		}
 
-		if (isSet(webContentDecimal)) {
-			Type(
-				key_fieldName = "Decimal",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${webContentDecimal}");
-		}
+		if (isSet(webContentImage)) {
+			if (!(isSet(webContentImageFieldLabel))) {
+				var webContentImageFieldLabel = "Image";
+			}
 
-		if (isSet(webContentDocumentsAndMedia)) {
 			AssertClick(
-				key_fieldName = "${fieldName}",
-				locator1 = "Button#SELECT_CONTENT",
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
-			if (isSet(depotName)) {
-				ItemSelector.selectRepositoryImage(
-					available = "${available}",
-					contentName = "${webContentSelectWCFile}",
-					depotName = "${depotName}",
-					folderName = "${folderName}",
-					imageFileName = "${webContentDocumentsAndMedia}");
+			if ("${navTab}" == "Documents and Media") {
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						imageFileName = "${webContentImage}",
+						navTab = "${navTab}");
+				}
+				else if (isSet(imageFileName)) {
+					ItemSelector.selectDMImage(
+						imageFileName = "${webContentImage}",
+						navTab = "${navTab}");
+				}
+				else {
+					ItemSelector.uploadFile(
+						navTab = "${navTab}",
+						uploadFileName = "${webContentImage}");
+				}
 			}
-
-			else {
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				AssertClick(
-					key_dmDocumentTitle = "${webContentDocumentsAndMedia}",
-					locator1 = "WC#ICON_DOCUMENT_TITLE",
-					value1 = "${webContentDocumentsAndMedia}");
-			}
-		}
-
-		if (isSet(webContentHTML)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "HTML",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentHTML}");
-		}
-
-		if (isSet(webContentSourceHTML)) {
-			CKEditor.addSourceContent(content = "${webContentSourceHTML}");
-		}
-
-		if (isSet(webContentImage)) {
-			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
-
-			if (isSet(depotName)) {
-				ItemSelector.selectRepositoryImage(
-					depotName = "${depotName}",
-					imageFileName = "${webContentImage}",
-					navTab = "Documents and Media");
-			}
-			else {
+			else if ("${navTab}" == "Web Content Images") {
 				ItemSelector.uploadFile(
-					navTab = "Web Content Images",
+					navTab = "${navTab}",
 					uploadFileName = "${webContentImage}");
 			}
-		}
 
-		if (isSet(webContentImageDescription)) {
-			FormFields.editTextAlt(
-				fieldName = "Image",
-				fieldValue = "${webContentImageDescription}");
-		}
-
-		if (isSet(webContentImageUnderDocumentsAndMedia)) {
-			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
-
-			if (isSet(imageFileName)) {
-				ItemSelector.selectDMImage(
-					imageFileName = "${imageFileName}",
-					navTab = "Documents and Media");
+			if (isSet(webContentImageDescription)) {
+				Type(
+					key_fieldFieldLabel = "${webContentImageFieldLabel}",
+					locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+					value1 = "${webContentImageDescription}");
 			}
-			else {
-				ItemSelector.uploadFile(
-					navTab = "Documents and Media",
-					uploadFileName = "${webContentImageUnderDocumentsAndMedia}");
-			}
-		}
-
-		if (isSet(webContentInteger)) {
-			Type(
-				key_fieldName = "Integer",
-				locator1 = "TextInput#DDM",
-				value1 = "${webContentInteger}");
 		}
 
 		if (isSet(webContentLinkToPage)) {
+			if (!(isSet(webContentLinkToPageFieldLabel))) {
+				var webContentLinkToPageFieldLabel = "Link to Page";
+			}
+
 			var key_pageName = "${webContentLinkToPage}";
 
 			AssertClick(
@@ -629,30 +587,142 @@ definition {
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
-			LexiconCard.clickCard(card = "${webContentLinkToPage}");
+			while (IsElementNotPresent(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO")) {
+				Click(locator1 = "WC#LINK_TO_PAGE_NEXT_PAGE");
+			}
+
+			Click(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
+
+			ClickNoError(locator1 = "Button#SELECT");
 		}
 
-		if (isSet(webContentNumber)) {
-			Type(
-				key_fieldName = "Numeric",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${webContentNumber}");
+		if (isSet(webContentMultipleSelection)) {
+			if (!(isSet(webContentMultipleSelectionFieldLabel))) {
+				var webContentMultipleSelectionFieldLabel = "Multiple Selection";
+			}
+
+			Check(
+				key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
+				key_optionValue = "${webContentMultipleSelection}",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
 		}
 
-		if (isSet(webContentRadio)) {
-			Select(
-				locator1 = "DDMField#RADIO",
-				value1 = "${webContentRadio}");
+		if (isSet(webContentNumeric)) {
+			if (!(isSet(webContentNumericFieldLabel))) {
+				var webContentNumericFieldLabel = "Numeric";
+			}
+
+			if ("${numericType}" == "Decimal") {
+				Type(
+					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentNumeric}");
+			}
+			else {
+				Type(
+					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentNumeric}");
+			}
+		}
+
+		if (isSet(webContentRichText)) {
+			if (!(isSet(webContentRichTextFieldLabel))) {
+				var webContentRichTextFieldLabel = "Rich Text";
+			}
+
+			if (isSet(source)) {
+				Click(
+					key_fieldFieldLabel = "${webContentRichTextFieldLabel}",
+					locator1 = "WCEditWebContent#SOURCE_BUTTON");
+
+				Type.typeCodeMirrorEditorNoError(
+					locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+					value1 = "${content}");
+			}
+
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "${webContentRichTextFieldLabel}",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "${webContentRichText}");
 		}
 
 		if (isSet(webContentSelectFromList)) {
+			if (!(isSet(webContentSelectFromListFieldLabel))) {
+				var webContentSelectFromListFieldLabel = "Select from List";
+			}
+
 			Select(
 				key_fieldFieldLabel = "${webContentSelectFromListFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				locator1 = "DDMField#SELECT_FROM_LIST",
 				value1 = "${webContentSelectFromList}");
 		}
 
+		if (isSet(webContentSingleSelection)) {
+			if (!(isSet(webContentSingleSelectionFieldLabel))) {
+				var webContentSingleSelectionFieldLabel = "Single Selection";
+			}
+
+			Check(
+				key_fieldFieldLabel = "${webContentSingleSelectionFieldLabel}",
+				key_optionValue = "${webContentSingleSelection}",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
+		}
+
+		if (isSet(webContentText)) {
+			if (!(isSet(webContentTextFieldLabel))) {
+				var webContentTextFieldLabel = "Text";
+			}
+
+			if ("${fieldType}" == "Multiple Lines") {
+				Type(
+					key_fieldFieldLabel = "${webContentTextFieldLabel}",
+					locator1 = "DDMField#MULTIPLE_LINES",
+					value1 = "${webContentText}");
+			}
+			else {
+				Type(
+					key_fieldFieldLabel = "${webContentTextFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentText}");
+			}
+		}
+
+		if (isSet(webContentUpload)) {
+			if (!(isSet(webContentUploadFieldLabel))) {
+				var webContentUploadFieldLabel = "Upload";
+			}
+
+			AssertClick(
+				key_fieldFieldLabel = "${webContentUploadFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					available = "${available}",
+					depotName = "${depotName}",
+					folderName = "${folderName}",
+					imageFileName = "${webContentUpload}");
+			}
+			else if (isSet(dmDocumentTitle)) {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				AssertClick(
+					key_dmDocumentTitle = "${webContentUpload}",
+					locator1 = "WC#ICON_DOCUMENT_TITLE",
+					value1 = "${dmDocumentTitle}");
+			}
+			else {
+				ItemSelector.uploadFile(uploadFileName = "${webContentUpload}");
+			}
+		}
+
 		if (isSet(webContentWebContent)) {
+			if (!(isSet(webContentWebContentFieldLabel))) {
+				var webContentWebContentFieldLabel = "Web Content";
+			}
+
 			AssertClick(
 				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
@@ -665,7 +735,6 @@ definition {
 					depotName = "${depotName}",
 					folderName = "${folderName}");
 			}
-
 			else {
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -675,43 +744,6 @@ definition {
 					value1 = "${webContentWebContent}");
 
 				SelectFrame(value1 = "relative=top");
-			}
-		}
-
-		if (isSet(webContentText)) {
-			Type(
-				key_fieldFieldLabel = "Text",
-				locator1 = "DDMField#TEXT_INPUT",
-				value1 = "${webContentText}");
-		}
-
-		if (isSet(webContentRichText)) {
-			if (!(isSet(fieldName))) {
-				fieldName = "Rich Text";
-			}
-
-			WebContent.addTextToRichText(
-				fieldName = "${fieldName}",
-				webContentRichText = "${webContentRichText}");
-		}
-
-		if (isSet(webContentTextBox2)) {
-			Type(
-				key_fieldName = "${fieldName2}",
-				locator1 = "DDMField#RICH_TEXT",
-				value1 = "${webContentTextBox2}");
-		}
-
-		if (isSet(webContentRichTextList)) {
-			var count = "1";
-
-			for (var webContentRichText : list "${webContentRichTextList}") {
-				Type(
-					key_fieldName = "heading${count}",
-					locator1 = "DDMField#RICH_TEXT",
-					value1 = "${webContentRichText}");
-
-				var count = ${count} + 1;
 			}
 		}
 
@@ -909,20 +941,33 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		if (isSet(webContentSelectWCFile)) {
+		if (isSet(webContentWebContent)) {
+			if (!(isSet(webContentWebContentFieldLabel))) {
+				var webContentWebContentFieldLabel = "Web Content";
+			}
+
 			AssertClick(
-				key_fieldName = "${fieldName}",
-				locator1 = "Button#SELECT_CONTENT",
+				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			if (isSet(depotName)) {
+				WebContent.selectRepositoryWC(
+					available = "${available}",
+					contentName = "${webContentWebContent}",
+					depotName = "${depotName}",
+					folderName = "${folderName}");
+			}
+			else {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertClick.assertPartialTextClickAt(
-				key_listEntry = "${webContentSelectWCFile}",
-				locator1 = "LexiconList#LIST_ENTRY",
-				value1 = "${webContentSelectWCFile}");
+				AssertClick.assertPartialTextClickAt(
+					key_listEntry = "${webContentWebContent}",
+					locator1 = "LexiconList#LIST_ENTRY",
+					value1 = "${webContentWebContent}");
 
-			SelectFrame(value1 = "relative=top");
+				SelectFrame(value1 = "relative=top");
+			}
 		}
 
 		if ("${saveAsDraft}" == "true") {
@@ -1650,66 +1695,15 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${webContentTitle}");
 
-		if (isSet(webContentText)) {
-			AssertTextEquals(
-				key_fieldName = "Text",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${webContentText}");
-		}
-		else {
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
-			AssertTextEquals(
-				locator1 = "CKEditor#BODY",
-				value1 = "${webContentContent}");
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "${webContentContent}");
 
-			SelectFrame(value1 = "relative=top");
-		}
-
-		if (isSet(webContentDecimal)) {
-			AssertTextEquals(
-				key_fieldName = "Decimal",
-				locator1 = "TextInput#DDM",
-				value1 = "${webContentDecimal}");
-		}
-
-		if (isSet(webContentInteger)) {
-			AssertTextEquals(
-				key_fieldName = "Integer",
-				locator1 = "TextInput#DDM",
-				value1 = "${webContentInteger}");
-		}
-
-		if (isSet(webContentNumber)) {
-			AssertTextEquals(
-				key_fieldName = "Number",
-				locator1 = "TextInput#DDM",
-				value1 = "${webContentNumber}");
-		}
-
-		if (isSet(webContentRichText)) {
-			if (isSet(fieldName)) {
-				AssertTextEquals(
-					key_fieldName = "${fieldName}",
-					locator1 = "DDMField#RICH_TEXT",
-					value1 = "${webContentRichText}");
-			}
-			else {
-				AssertTextEquals(
-					key_fieldName = "TextBox",
-					locator1 = "DDMField#RICH_TEXT",
-					value1 = "${webContentRichText}");
-			}
-		}
-
-		if (isSet(webContentDocumentsAndMedia)) {
-			AssertTextEquals(
-				key_fieldName = "DocumentsAndMedia",
-				locator1 = "TextInput#DDM",
-				value1 = "${webContentDocumentsAndMedia}");
-		}
+		SelectFrame(value1 = "relative=top");
 
 		if (isSet(webContentDescription)) {
 			if (isSet(otherLocaleSummary)) {
@@ -1728,18 +1722,6 @@ definition {
 				value1 = "${webContentDescription}");
 
 			SelectFrameTop(value1 = "relative=top");
-		}
-
-		if (isSet(webContentHTML)) {
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "HTML",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			AssertTextEquals(
-				locator1 = "CKEditor#BODY",
-				value1 = "${webContentHTML}");
-
-			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(displayPageTemplateDisabled)) {
@@ -1765,8 +1747,8 @@ definition {
 		if ("${field}" == "Web Content") {
 			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "TextInput#DE_DDM",
+			AssertTextEquals(
+				locator1 = "TextInput#SELECTOR_INPUT",
 				value1 = "${fieldData}");
 		}
 
@@ -1776,7 +1758,7 @@ definition {
 
 		if ("${field}" == "Image") {
 			AssertTextEquals(
-				locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT",
+				locator1 = "TextInput#SELECTOR_INPUT",
 				value1 = "${webContentImage}");
 		}
 	}
@@ -2299,156 +2281,171 @@ definition {
 			}
 		}
 
-		if (isSet(webContentBoolean)) {
-			if ("${webContentBoolean}" == "true") {
-				FormFields.viewCheckboxChecked(fieldName = "Boolean");
-			}
-			else if ("${webContentBoolean}" == "false") {
-				FormFields.viewCheckboxNotChecked(fieldName = "Boolean");
-			}
-		}
-
 		if (isSet(webContentColor)) {
-			AssertAttributeValue(
-				attribute1 = "style",
-				key_fieldName = "Color",
-				locator1 = "TextInput#SELECTOR_INPUT",
+			if (!(isSet(webContentColorFieldLabel))) {
+				var webContentColorFieldLabel = "Color";
+			}
+
+			AssertTextEquals(
+				key_fieldFieldLabel = "${webContentColorFieldLabel}",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentColor}");
 		}
 
 		if (isSet(webContentDate)) {
+			if (!(isSet(webContentDateFieldLabel))) {
+				var webContentDateFieldLabel = "Date";
+			}
+
 			AssertAttributeValue(
 				attribute1 = "value",
-				key_fieldLabel = "Date",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				key_fieldFieldLabel = "${webContentDateFieldLabel}",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentDate}");
 		}
 
-		if (isSet(webContentDecimal)) {
+		if (isSet(webContentImage)) {
+			if (!(isSet(webContentImageFieldLabel))) {
+				var webContentImageFieldLabel = "Image";
+			}
+
 			AssertTextEquals(
-				key_fieldLabel = "Decimal",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "${webContentDecimal}");
-		}
-
-		if (isSet(webContentDocumentsAndMedia)) {
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldName = "${webContentDocumentsAndMediaFieldName}",
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentDocumentsAndMedia}");
+				value1 = "${webContentImage}");
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				key_image = "${webContentImage}",
+				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 		}
 
-		if (isSet(webContentHTML)) {
+		if (isSet(webContentLinkToPage)) {
+			if (!(isSet(webContentLinkToPageFieldLabel))) {
+				var webContentLinkToPageFieldLabel = "Link to Page";
+			}
+
+			AssertTextEquals(
+				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentLinkToPage}");
+		}
+
+		if (isSet(webContentMultipleSelection)) {
+			if (!(isSet(webContentMultipleSelectionFieldLabel))) {
+				var webContentMultipleSelectionFieldLabel = "Multiple Selection";
+			}
+
+			AssertChecked(
+				key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
+				key_optionValue = "${webContentMultipleSelection}",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
+		}
+
+		if (isSet(webContentNumeric)) {
+			if (!(isSet(webContentNumericFieldLabel))) {
+				var webContentNumericFieldLabel = "Numeric";
+			}
+
+			if ("${numericType}" == "Decimal") {
+				AssertTextEquals(
+					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentNumber}");
+			}
+			else {
+				AssertTextEquals(
+					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentNumber}");
+			}
+		}
+
+		if (isSet(webContentRichText)) {
+			if (!(isSet(webContentRichTextFieldLabel))) {
+				var webContentRichTextFieldLabel = "Rich Text";
+			}
+
 			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "HTML",
+				key_fieldLabel = "${webContentRichTextFieldLabel}",
 				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",
-				value1 = "${webContentHTML}");
+				value1 = "${webContentRichText}");
 
 			SelectFrameTop();
 		}
 
-		if (isSet(webContentImage)) {
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldName = "Image",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentImage}");
+		if (isSet(webContentSelectFromList)) {
+			if (!(isSet(webContentSeparatorFieldLabel))) {
+				var webContentSeparatorFieldLabel = "Select from List";
+			}
 
-			AssertVisible(locator1 = "Button#PREVIEW");
-		}
-
-		if (isSet(webContentInteger)) {
-			AssertTextEquals(
-				key_fieldLabel = "Integer",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "${webContentInteger}");
-		}
-
-		if (isSet(webContentLinkToPage)) {
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldName = "${webContentLinkToPageFieldName}",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentLinkToPage}");
-		}
-		if (isSet(webContentNumber)) {
-			AssertTextEquals(
-				key_fieldLabel = "Number",
-				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = "${webContentNumber}");
-		}
-
-		if (isSet(webContentRadio)) {
-			FormFields.viewRadioValue(
-				fieldName = "Radio",
-				fieldValue = "${webContentRadio}");
+			AssertSelectedLabel(
+				key_fieldFieldLabel = "${webContentSelectFromListFieldLabel}",
+				locator1 = "DDMField#SELECT_FROM_LIST",
+				value1 = "${webContentSelectFromList}");
 		}
 
 		if (isSet(webContentSeparator)) {
+			if (!(isSet(webContentSeparatorFieldLabel))) {
+				var webContentSeparatorFieldLabel = "Separator";
+			}
+
 			AssertVisible(
-				key_fieldName = "Separator",
+				key_fieldFieldLabel = "${webContentSeparatorFieldLabel}",
 				locator1 = "DDMField#SEPARATOR");
 		}
 
-		if (isSet(webContentSelect)) {
-			AssertSelectedLabel(
-				key_fieldLabel = "Select",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${webContentSelect}");
+		if (isSet(webContentSingleSelection)) {
+			if (!(isSet(webContentSingleSelectionFieldLabel))) {
+				var webContentSingleSelectionFieldLabel = "Single Selection";
+			}
+
+			AssertChecked(
+				key_fieldFieldLabel = "${webContentSingleSelectionFieldLabel}",
+				key_optionValue = "${webContentSingleSelection}",
+				locator1 = "WCEditWebContent#SELECTION_OPTION");
 		}
 
 		if (isSet(webContentText)) {
-			AssertTextEquals(
-				key_fieldName = "Text",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "${webContentText}");
-		}
-
-		if (isSet(webContentRichText)) {
-			if (isSet(fieldName)) {
-				AssertTextEquals(
-					key_fieldName = "${fieldName}",
-					locator1 = "DDMField#RICH_TEXT",
-					value1 = "${webContentRichText}");
+			if (!(isSet(webContentTextFieldLabel))) {
+				var webContentTextFieldLabel = "Text";
 			}
 
+			if ("${fieldType}" == "Multiple Lines") {
+				AssertTextEquals(
+					key_fieldFieldLabel = "${webContentTextFieldLabel}",
+					locator1 = "DDMField#MULTIPLE_LINES",
+					value1 = "${webContentText}");
+			}
 			else {
 				AssertTextEquals(
-					key_fieldName = "TextBox",
-					locator1 = "DDMField#RICH_TEXT",
-					value1 = "${webContentRichText}");
+					key_fieldFieldLabel = "${webContentTextFieldLabel}",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "${webContentText}");
 			}
 		}
 
-		if (isSet(webContentTextBox2)) {
-			var key_fieldName = "${fieldName2}";
+		if (isSet(webContentUpload)) {
+			if (!(isSet(webContentUploadFieldLabel))) {
+				var webContentUploadFieldLabel = "Upload";
+			}
 
 			AssertTextEquals(
-				locator1 = "DDMField#RICH_TEXT",
-				value1 = "${webContentTextBox2}");
-		}
-
-		if (isSet(webContentRichTextList)) {
-			var count = "1";
-
-			for (var webContentRichText : list "${webContentRichTextList}") {
-				AssertTextEquals(
-					key_fieldName = "heading${count}",
-					locator1 = "DDMField#RICH_TEXT",
-					value1 = "${webContentRichText}");
-
-				var count = ${count} + 1;
-			}
+				key_fieldName = "${webContentUploadFieldLabel}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentUpload}");
 		}
 
 		if (isSet(webContentWebContent)) {
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldName = "${webContentWebContentFieldName}",
+			if (!(isSet(webContentWebContentFieldLabel))) {
+				var webContentWebContentFieldLabel = "Web Content";
+			}
+
+			AssertTextEquals(
+				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
 				locator1 = "TextInput#SELECTOR_INPUT",
 				value1 = "${webContentWebContent}");
 		}

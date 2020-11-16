@@ -44,6 +44,9 @@ public abstract class BaseURLPatternMapperTestCase {
 				put("/", new Integer[] {23, 20});
 				put("/*", new Integer[] {21, 20});
 				put("/*/", new Integer[] {22, 21, 20});
+				put(
+					"/c/portal/j_login/make/this/the/longest/exact/url/pattern",
+					new Integer[] {1, 20});
 				put("/do/test.mp3", new Integer[] {25, 20, 17});
 				put("/do/test.mp3/", new Integer[] {25, 20});
 				put("/do/test.mp3/do/test", new Integer[] {25, 20});
@@ -178,7 +181,7 @@ public abstract class BaseURLPatternMapperTestCase {
 		// Exact
 
 		"/b/c",
-		"/c/portal/j_login",
+		"/c/portal/j_login/make/this/the/longest/exact/url/pattern",
 		"/url/some/random/pattern/do/test.mp3/",
 		"/url/some/random/pattern/one",
 		"/url/some/random/pattern/one*",

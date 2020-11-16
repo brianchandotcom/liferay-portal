@@ -93,7 +93,8 @@ class Parent extends JSXComponent {
 	render() {
 		return (
 			<LayoutProvider
-				defaultLanguageIdd="en_US"
+				availableLanguageIds={['en_US']}
+				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				initialPages={[...mockPages]}
 				pages={[...mockPages]}

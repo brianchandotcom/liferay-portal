@@ -33,11 +33,13 @@ const OptionsWithProvider = (props) => (
 const optionsValue = {
 	[themeDisplay.getLanguageId()]: [
 		{
+			id: 'option1',
 			label: 'Option 1',
 			reference: 'Option1',
 			value: 'Option1',
 		},
 		{
+			id: 'option2',
 			label: 'Option 2',
 			reference: 'Option2',
 			value: 'Option2',
@@ -138,6 +140,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option1',
 							label: 'Option 1',
 							value: 'Option1',
 						},
@@ -171,6 +174,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option1',
 							label: 'Option 1',
 							value: 'Option1',
 						},
@@ -205,6 +209,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
@@ -245,12 +250,14 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
 					],
 					pt_BR: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
@@ -280,6 +287,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option1',
 							label: 'Option 1',
 							value: 'Option1',
 						},
@@ -313,6 +321,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
@@ -352,6 +361,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
@@ -393,12 +403,14 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
 					],
 					pt_BR: [
 						{
+							id: 'option',
 							label: 'Option',
 							value: 'Option',
 						},
@@ -436,6 +448,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'foo',
 							label: 'Foo',
 							value: 'Foo',
 						},
@@ -475,10 +488,12 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'bar',
 							label: 'Bar',
 							value: 'Bar',
 						},
 						{
+							id: 'foo',
 							label: 'Foo',
 							value: 'Foo',
 						},
@@ -514,6 +529,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'bar',
 							label: 'Bar',
 							value: 'Bar',
 						},
@@ -604,6 +620,7 @@ describe('Options', () => {
 				value={{
 					[themeDisplay.getLanguageId()]: [
 						{
+							id: 'bar',
 							label: 'Bar',
 							reference: 'Bar',
 							value: 'Bar',

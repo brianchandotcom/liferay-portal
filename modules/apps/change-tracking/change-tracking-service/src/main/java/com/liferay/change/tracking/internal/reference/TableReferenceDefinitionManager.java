@@ -205,10 +205,6 @@ public class TableReferenceDefinitionManager {
 		for (TableReferenceInfo<?> currentTableReferenceInfo :
 				_tableReferenceInfos.values()) {
 
-			if (tableReferenceInfo == currentTableReferenceInfo) {
-				continue;
-			}
-
 			TableReferenceDefinition<?> currentTableReferenceDefinition =
 				currentTableReferenceInfo.getTableReferenceDefinition();
 

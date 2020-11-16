@@ -198,6 +198,36 @@ const Options = ({
 	});
 
 	useEffect(() => {
+		const localizedOptions = value[editingLanguageId];
+
+		if (localizedOptions && localizedOptions.length > 0) {
+			const firstOption = localizedOptions[0];
+
+			if (firstOption.value) {
+				const availableLanguageIds = Object.getOwnPropertyNames(value);
+
+				availableLanguageIds.forEach((languageId) => {
+					normalizedValue[languageId] = value[languageId].map(
+						(option) => {
+							if (option.edited) {
+								return option;
+							}
+
+							const {label} = value[defaultLanguageId].find(
+								(defaultOption) =>
+									defaultOption.value === option.value
+							);
+
+							return {
+								...option,
+								label,
+							};
+						}
+					);
+				});
+			}
+		}
+
 		const options =
 			normalizedValue[editingLanguageId] ||
 			normalizedValue[defaultLanguageId] ||
@@ -217,6 +247,7 @@ const Options = ({
 		editingLanguageId,
 		generateOptionValueUsingOptionLabel,
 		normalizedValue,
+		value,
 	]);
 
 	const defaultOptionRef = useRef(

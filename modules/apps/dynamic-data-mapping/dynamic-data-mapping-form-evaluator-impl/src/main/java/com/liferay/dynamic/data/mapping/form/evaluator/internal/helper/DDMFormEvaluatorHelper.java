@@ -140,14 +140,7 @@ public class DDMFormEvaluatorHelper {
 			rule -> {
 				evaluateDDMFormRule(rule);
 
-				_ddmFormFieldsPropertyChanges.forEach(
-					(key, value) -> {
-						if (_ddmFormEvaluatorEvaluateRequest.isViewMode() &&
-							!isFieldVisible(key)) {
-
-							value.put("value", StringPool.BLANK);
-						}
-					});
+				_resetInvisibleFieldValue();
 			}
 		);
 
@@ -737,6 +730,17 @@ public class DDMFormEvaluatorHelper {
 		).forEach(
 			this::_localizeDDMFormFieldValue
 		);
+	}
+
+	private void _resetInvisibleFieldValue() {
+		_ddmFormFieldsPropertyChanges.forEach(
+			(fieldName, fieldProperty) -> {
+				if (_ddmFormEvaluatorEvaluateRequest.isViewMode() &&
+					!isFieldVisible(fieldName)) {
+
+					fieldProperty.put("value", StringPool.BLANK);
+				}
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

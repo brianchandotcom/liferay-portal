@@ -500,7 +500,7 @@
 </tr>
 <tr>
 	<td>SELECTOR_INPUT</td>
-	<td>//input[contains(@id,'${key_fieldName}')][contains(@readonly,'readonly')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div//div[contains(@class,'input-group')]//input[contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>

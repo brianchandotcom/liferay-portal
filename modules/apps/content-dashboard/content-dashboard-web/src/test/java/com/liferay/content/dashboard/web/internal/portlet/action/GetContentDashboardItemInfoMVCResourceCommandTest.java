@@ -247,6 +247,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public ContentDashboardItemAction
+				getDefaultContentDashboardItemAction(
+					HttpServletRequest httpServletRequest) {
+
+				return null;
+			}
+
+			@Override
 			public Locale getDefaultLocale() {
 				return LocaleUtil.US;
 			}

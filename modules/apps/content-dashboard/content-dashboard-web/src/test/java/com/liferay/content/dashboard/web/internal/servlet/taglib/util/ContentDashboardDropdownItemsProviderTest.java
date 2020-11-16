@@ -370,6 +370,20 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public ContentDashboardItemAction
+				getDefaultContentDashboardItemAction(
+					HttpServletRequest httpServletRequest) {
+
+				Stream<ContentDashboardItemAction> stream =
+					contentDashboardItemActions.stream();
+
+				return stream.findFirst(
+				).orElse(
+					null
+				);
+			}
+
+			@Override
 			public Locale getDefaultLocale() {
 				return null;
 			}

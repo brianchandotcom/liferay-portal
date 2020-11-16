@@ -4731,8 +4731,6 @@ definition {
 
 	@priority = "4"
 	test ViewProcessWithComments {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4854,6 +4852,7 @@ definition {
 			workflowActivityComment = "Process is approved.",
 			workflowAssetTitle = "Kaleo Forms Process",
 			workflowAssetType = "${workflowAssetType}",
+			workflowOrder = "true",
 			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -4872,6 +4871,10 @@ definition {
 			fieldValue = "Test");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Click(locator1 = "MyWorkflowTasksTask#ORDER");
+
+		Pause(locator1 = "1000");
 
 		Workflow._viewActivities(
 			workflowActivityComment = "Test Test completed the task review.",

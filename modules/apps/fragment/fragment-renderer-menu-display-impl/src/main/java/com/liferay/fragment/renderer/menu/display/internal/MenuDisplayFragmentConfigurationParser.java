@@ -159,6 +159,7 @@ public class MenuDisplayFragmentConfigurationParser {
 				return new MenuDisplayFragmentConfiguration.
 					SiteNavigationMenuSource(
 						jsonObject.getLong("parentSiteNavigationMenuItemId"),
+						jsonObject.getBoolean("privateLayout"),
 						jsonObject.getLong("siteNavigationMenuId"));
 			}
 		}

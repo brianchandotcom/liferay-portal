@@ -183,6 +183,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			navigationMenuTag.setRootItemType("select");
 
+			navigationMenuTag.setPrivateLayout(
+				siteNavigationMenuSource.isPrivateLayout());
+
 			long siteNavigationMenuId =
 				siteNavigationMenuSource.getSiteNavigationMenuId();
 

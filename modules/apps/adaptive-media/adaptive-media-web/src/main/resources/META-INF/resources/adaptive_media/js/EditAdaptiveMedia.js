@@ -82,14 +82,14 @@ const EditAdaptiveMedia = ({
 	if (amImageConfigurationEntry) {
 		const properties = amImageConfigurationEntry.properties;
 
-		const currrentMaxWidth = properties['max-width'];
-		const currrentMaxHeight = properties['max-height'];
+		const currentMaxWidth = properties['max-width'];
+		const currentMaxHeight = properties['max-height'];
 
-		if (currrentMaxWidth !== 0) {
-			maxWidth = currrentMaxWidth;
+		if (currentMaxWidth !== 0) {
+			maxWidth = currentMaxWidth;
 		}
-		if (currrentMaxHeight !== 0) {
-			maxHeight = currrentMaxHeight;
+		if (currentMaxHeight !== 0) {
+			maxHeight = currentMaxHeight;
 		}
 	}
 

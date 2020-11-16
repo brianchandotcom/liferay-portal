@@ -462,16 +462,14 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
-			field = "Text Box",
-			fieldFieldLabel = "Text Box",
-			fieldName = "TextBox");
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldType = "Rich Text");
 
 		for (var fieldName : list "Text,HTML,Integer,Number,Decimal,") {
-			DynamicDataMapping.addField(
-				field = "${fieldName}",
+			DataEngine.addField(
 				fieldFieldLabel = "${fieldName}",
-				fieldName = "${fieldName}");
+				fieldType = "${fieldName}");
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -836,10 +834,9 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
-			field = "Text",
+		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldType = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

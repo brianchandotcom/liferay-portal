@@ -16,13 +16,7 @@ import {DefaultEventHandler} from 'frontend-js-web';
 
 class AssetDisplayPageUsagesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteAssetDisplayPageEntry(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-use-the-default-display-page-template-for-this'
-				)
-			)
-		) {
+		if (confirm(itemData.deleteAssetDisplayPageEntryMessage)) {
 			submitForm(
 				this.one('#fm'),
 				itemData.deleteAssetDisplayPageEntryURL

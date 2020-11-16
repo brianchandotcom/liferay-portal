@@ -18,11 +18,15 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -58,12 +62,15 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteAssetDisplayPageEntry");
 				dropdownItem.putData(
+					"deleteAssetDisplayPageEntryMessage",
+					_getDeleteAssetDisplayPageEntryMessage());
+				dropdownItem.putData(
 					"deleteAssetDisplayPageEntryURL",
 					_getPortletURL(
 						"/layout_page_template_admin" +
 							"/delete_asset_display_page_entry"));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "assign-to-default"));
+					_getDeleteAssetDisplayPageEntryDropdownItemLabel());
 			}
 		).add(
 			dropdownItem -> {
@@ -89,6 +96,20 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 		return "assetDisplayPageUsagesManagementToolbarDefaultEventHandler";
 	}
 
+	public LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry() {
+		if (_defaultLayoutPageTemplateEntry != null) {
+			return _defaultLayoutPageTemplateEntry;
+		}
+
+		_defaultLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					_themeDisplay.getScopeGroupId(), _getClassNameId(),
+					_getClassTypeId());
+
+		return _defaultLayoutPageTemplateEntry;
+	}
+
 	@Override
 	public String getSearchContainerId() {
 		return "assetDisplayPageEntries";
@@ -97,6 +118,57 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date"};
+	}
+
+	private long _getClassNameId() {
+		if (Validator.isNotNull(_classNameId)) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+
+		return _classNameId;
+	}
+
+	private long _getClassTypeId() {
+		if (Validator.isNotNull(_classTypeId)) {
+			return _classTypeId;
+		}
+
+		_classTypeId = ParamUtil.getLong(httpServletRequest, "classTypeId");
+
+		return _classTypeId;
+	}
+
+	private String _getDeleteAssetDisplayPageEntryDropdownItemLabel() {
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			getDefaultLayoutPageTemplateEntry();
+
+		if (defaultLayoutPageTemplateEntry == null) {
+			return LanguageUtil.get(httpServletRequest, "assign-to-default");
+		}
+
+		return LanguageUtil.format(
+			httpServletRequest, "assign-to-default-(x)",
+			defaultLayoutPageTemplateEntry.getName(), false);
+	}
+
+	private String _getDeleteAssetDisplayPageEntryMessage() {
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			getDefaultLayoutPageTemplateEntry();
+
+		if (defaultLayoutPageTemplateEntry == null) {
+			return LanguageUtil.get(
+				httpServletRequest,
+				"are-you-sure-you-want-to-use-the-default-display-page-" +
+					"template-for-this");
+		}
+
+		return LanguageUtil.format(
+			httpServletRequest,
+			"are-you-sure-you-want-to-use-the-default-display-page-template-" +
+				"(x)-for-this",
+			defaultLayoutPageTemplateEntry.getName(), false);
 	}
 
 	private String _getPortletURL(String actionName) {
@@ -108,6 +180,9 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 		return portletURL.toString();
 	}
 
+	private Long _classNameId;
+	private Long _classTypeId;
+	private LayoutPageTemplateEntry _defaultLayoutPageTemplateEntry;
 	private final ThemeDisplay _themeDisplay;
 
 }

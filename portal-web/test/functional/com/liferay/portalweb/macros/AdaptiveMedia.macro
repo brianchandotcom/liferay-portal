@@ -94,8 +94,8 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
-		AssertTextEquals(
-			locator1 = "Message#REQUIRED_INFO",
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
 			value1 = "At least one value is required.");
 	}
 

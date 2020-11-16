@@ -12,6 +12,7 @@
  * details.
  */
 
+import {runScriptsInElement} from 'frontend-js-web';
 import {buildFragment, globalEvalStyles, match} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';

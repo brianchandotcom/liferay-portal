@@ -12,10 +12,7 @@
  * details.
  */
 
-'use strict';
-
 import {runScriptsInElement} from 'frontend-js-web';
-import {getUid} from 'metal';
 import CancellablePromise from 'metal-promise';
 
 import Cacheable from '../cacheable/Cacheable';

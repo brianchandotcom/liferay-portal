@@ -15,7 +15,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Modal#HEADER",
-			value1 = "Add Component");
+			value1 = "Add Fragment");
 
 		PortletEntry.inputName(name = "${fragmentName}");
 

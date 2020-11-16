@@ -5,18 +5,9 @@ definition {
 	 */
 
 	macro _clickAddPortlet {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click.javaScriptClick(
-				key_portletName = "${portletName}",
-				locator1 = "Search#ADD_PORTLET_LINK");
-		}
-		else {
-			Click.clickNoWaitForVisible(
-				key_portletName = "${portletName}",
-				locator1 = "Search#ADD_PORTLET_LINK");
-		}
+		Click.clickNoWaitForVisible(
+			key_portletName = "${portletName}",
+			locator1 = "Search#ADD_PORTLET_LINK");
 	}
 
 	macro addWidgets {

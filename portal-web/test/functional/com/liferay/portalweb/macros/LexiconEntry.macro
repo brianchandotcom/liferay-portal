@@ -57,13 +57,7 @@ definition {
 		if ("${browserType}" == "chrome") {
 			MetalComponent.waitForManagementBar();
 		}
-
-		if ("${browserType}" == "internetexplorer") {
-			Click(locator1 = "Button#PLUS_IE");
-		}
-		else {
-			Click(locator1 = "Button#PLUS");
-		}
+		Click(locator1 = "Button#PLUS");
 	}
 
 	macro gotoAddDropdownMenuItem {
@@ -89,14 +83,7 @@ definition {
 	}
 
 	macro gotoEllipsisMenuItem {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS_IE");
-		}
-		else {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-		}
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -159,14 +146,7 @@ definition {
 	}
 
 	macro gotoHeaderMenuItem {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click.clickNoMouseOver(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS_IE");
-		}
-		else {
-			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-		}
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "${menuItem}");
 	}
@@ -180,13 +160,7 @@ definition {
 	macro openEntryMenu {
 		var browserType = PropsUtil.get("browser.type");
 
-		if ("${browserType}" == "internetexplorer") {
-			Click.waitForMenuToggleJSClick(
-				key_rowEntry = "${rowEntry}",
-				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_IE");
-		}
-
-		else if ("${browserType}" == "safari") {
+		if ("${browserType}" == "safari") {
 			Click.waitForMenuToggleJSClick(
 				key_rowEntry = "${rowEntry}",
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_SAFARI");

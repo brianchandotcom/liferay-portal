@@ -1,18 +1,9 @@
 definition {
 
 	macro _clickAddPortlet {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click.javaScriptClick(
-				key_portletName = "${portletName}",
-				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
-		}
-		else {
-			Click.clickNoWaitForVisible(
-				key_portletName = "${portletName}",
-				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
-		}
+		Click.clickNoWaitForVisible(
+			key_portletName = "${portletName}",
+			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
 	}
 
 	macro addDuplicatePG {
@@ -154,14 +145,7 @@ definition {
 	macro clickPortletPlusIconPG {
 		var browserType = PropsUtil.get("browser.type");
 		var key_portletName = "${portletName}";
-
-		if ("${browserType}" == "internetexplorer") {
-			Click.javaScriptClick(locator1 = "Portlet#ICON_PLUS_SIGN");
-
-			AssertVisible(locator1 = "Portlet#ICON_PLUS_SIGN");
-		}
-
-		else if ("${browserType}" == "safari") {
+		if ("${browserType}" == "safari") {
 			Click.javaScriptClick(locator1 = "Portlet#ICON_PLUS_SIGN");
 
 			AssertVisible(locator1 = "Portlet#ICON_PLUS_SIGN");
@@ -273,13 +257,7 @@ definition {
 			var key_portletName = "${portletName}";
 			var browserType = PropsUtil.get("browser.type");
 
-			if ("${browserType}" == "internetexplorer") {
-				Click.javaScriptClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-
-				AssertVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-			}
-
-			else if ("${browserType}" == "safari") {
+			if ("${browserType}" == "safari") {
 				Click.javaScriptClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 				AssertVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");

@@ -1014,16 +1014,7 @@ definition {
 
 		AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_VIEWS");
 
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			AssertElementPresent(
-				key_rowEntry = "${threadSubject}",
-				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_IE");
-		}
-		else {
-			AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_ACTIONS");
-		}
+		AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_ACTIONS");
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",

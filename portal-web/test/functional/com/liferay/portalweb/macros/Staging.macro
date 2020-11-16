@@ -150,12 +150,7 @@ definition {
 
 		var browserType = PropsUtil.get("browser.type");
 
-		if ("${browserType}" == "internetexplorer") {
-			AssertElementPresent(locator1 = "Button#PLUS_IE");
-		}
-		else {
-			AssertElementPresent(locator1 = "Button#PLUS");
-		}
+		AssertElementPresent(locator1 = "Button#PLUS");
 
 		AssertConsoleTextNotPresent(value1 = "Please configure tunneling.servlet.shared.secret");
 

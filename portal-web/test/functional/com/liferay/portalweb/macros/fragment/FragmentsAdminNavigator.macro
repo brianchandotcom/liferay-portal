@@ -1,20 +1,13 @@
 definition {
 
 	macro gotoAddCollection {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click(locator1 = "NavNested#NAV_NESTED_PLUS_IE");
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
+			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
 		}
 		else {
-			if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
-				Click(locator1 = "NavNested#NAV_NESTED_PLUS");
-			}
-			else {
-				Button.click(button = "New");
+			Button.click(button = "New");
 
-				MenuItem.click(menuItem = "Collection");
-			}
+			MenuItem.click(menuItem = "Collection");
 		}
 	}
 
@@ -35,14 +28,7 @@ definition {
 	}
 
 	macro gotoExportCollection {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS_IE");
-		}
-		else {
-			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
-		}
+		Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 
 		DropdownMenuItem.click(menuItem = "Export");
 
@@ -52,18 +38,11 @@ definition {
 	}
 
 	macro gotoImportCollection {
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS_IE");
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 		}
 		else {
-			if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
-				Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
-			}
-			else {
-				Button.click(button = "New");
-			}
+			Button.click(button = "New");
 		}
 
 		DropdownMenuItem.click(menuItem = "Import");

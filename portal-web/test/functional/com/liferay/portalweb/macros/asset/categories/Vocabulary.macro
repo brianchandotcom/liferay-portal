@@ -236,14 +236,7 @@ definition {
 			Button.click(button = "Add Vocabulary");
 		}
 		else {
-			var browserType = PropsUtil.get("browser.type");
-
-			if ("${browserType}" == "internetexplorer") {
-				Click(locator1 = "NavNested#NAV_NESTED_PLUS_IE");
-			}
-			else {
-				Click(locator1 = "NavNested#NAV_NESTED_PLUS");
-			}
+			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
 		}
 	}
 

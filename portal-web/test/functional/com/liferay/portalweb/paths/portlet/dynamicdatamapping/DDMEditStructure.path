@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER</td>
-	<td>//div[contains(@class,'ddm-field-container')]//*[.='${key_fieldFieldLabel}']/../../div</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/parent::div[contains(@class,'form-group')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']/parent::fieldset/parent::div[contains(@class,'form-group')]</td>
 	<td></td>
 </tr>
 <tr>

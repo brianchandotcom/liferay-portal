@@ -77,14 +77,6 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 						<a href="<%= selectSiteNavigationMenuDisplayContext.getSelectSiteNavigationMenuLevelURL(siteNavigationMenu.getSiteNavigationMenuId()) %>">
 							<b><%= HtmlUtil.escape(name) %></b>
 						</a>
-
-						<c:if test="<%= siteNavigationMenu.getSiteNavigationMenuId() == 0 %>">
-							<clay:label
-								cssClass="ml-1"
-								displayType="primary"
-								label="default"
-							/>
-						</c:if>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

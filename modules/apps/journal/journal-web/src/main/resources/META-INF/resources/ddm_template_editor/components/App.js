@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useChannel} from '../hooks/useChannel';
 import {ClosableAlert} from './ClosableAlert';
@@ -31,6 +31,30 @@ export default function App({
 }) {
 	const [editorMode, setEditorMode] = useState(initialEditorMode);
 	const inputChannel = useChannel();
+
+	useEffect(() => {
+		const modeSelect = document.getElementById(
+			`${portletNamespace}language`
+		);
+
+		const onModeChange = (event) => {
+			setEditorMode(
+				{
+					ftl: 'ftl',
+					vm: 'velocity',
+					xsl: 'xml',
+				}[event.target.value]
+			);
+		};
+
+		if (modeSelect) {
+			modeSelect.addEventListener('change', onModeChange);
+
+			return () => {
+				modeSelect.removeEventListener('change', onModeChange);
+			};
+		}
+	}, [portletNamespace]);
 
 	return (
 		<div className="ddm_template_editor__App">

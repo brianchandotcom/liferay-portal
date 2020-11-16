@@ -77,122 +77,141 @@ export const CodeMirrorEditor = ({
 			return;
 		}
 
-		const {variableEnd, variableStart} = VARIABLE_MARKERS[mode] || {};
-
-		let wordList = [];
-
-		try {
-			wordList = Object.keys(JSON.parse(autocompleteData).variables)
-				.sort()
-				.map((word) => ({lowerCaseWord: word.toLowerCase(), word}));
-		}
-		catch (error) {
-			if (process.env.NODE_ENV === 'development') {
-				console.error('Error loading editor autocomplete data', error);
-			}
-		}
-
-		const getWordContext = (cm) => {
-			const currentRange = cm.findWordAt({
-				...cm.getCursor(),
-				sticky: 'before',
-				xRel: 0,
-			});
-
-			const getRange = (range) => {
-				return cm.getRange(range.anchor, range.head);
-			};
-
-			return {
-				current: getRange(currentRange),
-				next: getRange(
-					cm.findWordAt(cm.findPosH(currentRange.head, 1, 'char'))
-				),
-				previous: getRange(
-					cm.findWordAt(cm.findPosH(currentRange.anchor, -1, 'char'))
-				),
-			};
-		};
-
-		const hint = (cm) => {
-			const {current, next, previous} = getWordContext(cm);
-			const currentLowerCase = current.toLowerCase();
-			const cursorPosition = cm.getCursor();
-
-			const closeVariable = next !== variableEnd;
-			const openVariable =
-				current !== variableStart && previous !== variableStart;
-
-			if (current === variableStart) {
-				return {
-					from: cursorPosition,
-					list: wordList.map(({word}) => ({
-						displayText: word,
-						text: `${word}${closeVariable ? variableEnd : ''}`,
-					})),
-				};
-			}
-
-			return {
-				from: {
-					...cursorPosition,
-					ch: cursorPosition.ch - current.length,
+		setEditor(
+			CodeMirror(editorWrapper, {
+				autoCloseTags: true,
+				autoRefresh: true,
+				extraKeys: {
+					'Ctrl-Space': 'autocomplete',
 				},
-				list: wordList
-					.map(({lowerCaseWord, word}) => ({
-						index: lowerCaseWord.indexOf(currentLowerCase),
-						lowerCaseWord,
-						word,
-					}))
-					.filter(({index}) => index >= 0)
-					.sort(({index: indexA}, {index: indexB}) => indexA - indexB)
-					.map(({word}) => ({
-						displayText: word,
-						text: `${openVariable ? variableStart : ''}${word}${
-							closeVariable ? variableEnd : ''
-						}`,
-					})),
-				to: cursorPosition,
-			};
-		};
+				foldGutter: true,
+				gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+				indentWithTabs: true,
+				inputStyle: 'contenteditable',
+				lineNumbers: true,
+				matchBrackets: true,
+				showHint: true,
+				tabSize: 2,
+				value: initialContentRef.current,
+				viewportMargin: Infinity,
+			})
+		);
+	}, [editorWrapper]);
 
-		const codeMirror = CodeMirror(editorWrapper, {
-			autoCloseTags: true,
-			autoRefresh: true,
-			extraKeys: {
-				'Ctrl-Space': 'autocomplete',
-			},
-			foldGutter: true,
-			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-			hintOptions: {
+	useEffect(() => {
+		if (editor) {
+			const {variableEnd, variableStart} = VARIABLE_MARKERS[mode] || {};
+
+			let wordList = [];
+
+			try {
+				wordList = Object.keys(JSON.parse(autocompleteData).variables)
+					.sort()
+					.map((word) => ({lowerCaseWord: word.toLowerCase(), word}));
+			}
+			catch (error) {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(
+						'Error loading editor autocomplete data',
+						error
+					);
+				}
+			}
+
+			const getWordContext = (cm) => {
+				const currentRange = cm.findWordAt({
+					...cm.getCursor(),
+					sticky: 'before',
+					xRel: 0,
+				});
+
+				const getRange = (range) => {
+					return cm.getRange(range.anchor, range.head);
+				};
+
+				return {
+					current: getRange(currentRange),
+					next: getRange(
+						cm.findWordAt(cm.findPosH(currentRange.head, 1, 'char'))
+					),
+					previous: getRange(
+						cm.findWordAt(
+							cm.findPosH(currentRange.anchor, -1, 'char')
+						)
+					),
+				};
+			};
+
+			const hint = (cm) => {
+				const {current, next, previous} = getWordContext(cm);
+				const currentLowerCase = current.toLowerCase();
+				const cursorPosition = cm.getCursor();
+
+				const closeVariable = next !== variableEnd;
+				const openVariable =
+					current !== variableStart && previous !== variableStart;
+
+				if (current === variableStart) {
+					return {
+						from: cursorPosition,
+						list: wordList.map(({word}) => ({
+							displayText: word,
+							text: `${word}${closeVariable ? variableEnd : ''}`,
+						})),
+					};
+				}
+
+				return {
+					from: {
+						...cursorPosition,
+						ch: cursorPosition.ch - current.length,
+					},
+					list: wordList
+						.map(({lowerCaseWord, word}) => ({
+							index: lowerCaseWord.indexOf(currentLowerCase),
+							lowerCaseWord,
+							word,
+						}))
+						.filter(({index}) => index >= 0)
+						.sort(
+							({index: indexA}, {index: indexB}) =>
+								indexA - indexB
+						)
+						.map(({word}) => ({
+							displayText: word,
+							text: `${openVariable ? variableStart : ''}${word}${
+								closeVariable ? variableEnd : ''
+							}`,
+						})),
+					to: cursorPosition,
+				};
+			};
+
+			editor.setOption('hintOptions', {
 				completeSingle: false,
 				hint: variableStart || variableEnd ? hint : null,
-			},
-			indentWithTabs: true,
-			inputStyle: 'contenteditable',
-			lineNumbers: true,
-			matchBrackets: true,
-			mode: {
+			});
+
+			editor.setOption('mode', {
 				globalVars: true,
 				name: mode,
-			},
-			showHint: true,
-			tabSize: 2,
-			value: initialContentRef.current,
-			viewportMargin: Infinity,
-		});
+			});
 
-		codeMirror.on('change', (cm) => {
-			const {current} = getWordContext(cm);
+			const handleEditorChange = (cm) => {
+				const {current} = getWordContext(cm);
 
-			if (current === variableStart) {
-				codeMirror.showHint();
-			}
-		});
+				if (current === variableStart) {
+					cm.showHint();
+				}
+			};
 
-		window.codeMirror = codeMirror;
-		setEditor(codeMirror);
-	}, [autocompleteData, editorWrapper, mode]);
+			editor.on('change', handleEditorChange);
+
+			return () => {
+				editor.off('change', handleEditorChange);
+			};
+		}
+	}, [autocompleteData, editor, mode]);
 
 	useEffect(() => {
 		if (!editor) {

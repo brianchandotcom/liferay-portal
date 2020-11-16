@@ -798,7 +798,28 @@ definition {
 	@description = "This is a use case for LPS-123120."
 	@priority = "3"
 	test ClearSearchResults {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoPermissions(rowEntry = "usersn");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Search.searchCP(searchTerm = "User");
+
+		Search.clearSearchResult();
+
+		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

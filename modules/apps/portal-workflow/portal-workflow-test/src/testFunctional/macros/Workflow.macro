@@ -118,6 +118,12 @@ definition {
 		if (isSet(workflowActivityComment)) {
 			Workflow.gotoCompletedFilter();
 
+			if (isSet(workflowOrder)) {
+				Click(locator1 = "MyWorkflowTasksTask#ORDER");
+
+				Pause(locator1 = "1000");
+			}
+
 			Workflow._viewActivities(
 				workflowActivityComment = "${workflowActivityComment}",
 				workflowAssetTitle = "${workflowAssetTitle}");

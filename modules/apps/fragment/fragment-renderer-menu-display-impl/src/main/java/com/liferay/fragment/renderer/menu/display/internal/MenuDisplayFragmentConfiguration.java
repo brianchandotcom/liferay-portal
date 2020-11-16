@@ -22,6 +22,9 @@ import java.util.Optional;
  */
 public class MenuDisplayFragmentConfiguration {
 
+	public static final Source DEFAULT_SOURCE = new SiteNavigationMenuSource(
+		0, false, 0);
+
 	public MenuDisplayFragmentConfiguration(
 		DisplayStyle displayStyle, String hoveredItemColor,
 		String selectedItemColor, Source source, int sublevels) {

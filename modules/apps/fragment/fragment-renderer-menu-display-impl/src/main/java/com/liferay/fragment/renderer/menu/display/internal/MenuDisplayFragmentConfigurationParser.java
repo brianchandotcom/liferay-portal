@@ -164,7 +164,7 @@ public class MenuDisplayFragmentConfigurationParser {
 			}
 		}
 
-		return ContextualMenu.SELF_AND_SIBLINGS;
+		return MenuDisplayFragmentConfiguration.DEFAULT_SOURCE;
 	}
 
 	private int _getSublevels(String configuration, String editableValues) {

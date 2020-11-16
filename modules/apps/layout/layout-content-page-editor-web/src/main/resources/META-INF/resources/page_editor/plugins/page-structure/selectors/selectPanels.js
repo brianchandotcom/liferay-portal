@@ -137,7 +137,8 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 					activeItem.type === EDITABLE_TYPES.backgroundImage),
 			[PANEL_IDS.editableMapping]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				activeItem.type !== EDITABLE_TYPES.image,
+				activeItem.type !== EDITABLE_TYPES.image &&
+				activeItem.type !== EDITABLE_TYPES.backgroundImage,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {

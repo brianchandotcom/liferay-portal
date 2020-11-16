@@ -816,16 +816,32 @@ definition {
 
 	@priority = "5"
 	test EditDocument {
-		JSONDocument.addFile(
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest");
+			dmDocumentFile = "Document_1.doc",
+			useCurrentTitle = "true");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.editPG(
-			dmDocumentTitle = "DM Document Title",
+		DMDocument.editCmdPG(
+			checkFileNameText = "true",
+			checkTitleText = "true",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileNameEdit = "DM Document File Name Edit.doc",
+			dmDocumentTitle = "Document_1",
 			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentFileName = "DM Document File Name Edit.doc",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
 	}
 
 	@priority = "5"

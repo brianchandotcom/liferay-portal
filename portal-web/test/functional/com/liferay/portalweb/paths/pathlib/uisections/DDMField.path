@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>SEPARATOR</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'separator')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//div[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
 <tr>

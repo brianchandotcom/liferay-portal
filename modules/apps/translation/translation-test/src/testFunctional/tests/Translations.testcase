@@ -246,7 +246,7 @@ definition {
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
 	@priority = "5"
 	test ImportWebContent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
@@ -289,7 +289,7 @@ definition {
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
 	@priority = "5"
 	test ImportWebContentWithXliffFile {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
@@ -738,7 +738,7 @@ definition {
 	@description = "This ensures that the translator can select which base language she wants to translate."
 	@priority = "5"
 	test TranslateWebContent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

@@ -112,7 +112,7 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 		String url = contentDashboardItemAction.getURL();
 
 		Assert.assertTrue(
-			url.endsWith(
+			url.contains(
 				StringUtil.toLowerCase(
 					journalArticle.getTitle(LocaleUtil.US))));
 

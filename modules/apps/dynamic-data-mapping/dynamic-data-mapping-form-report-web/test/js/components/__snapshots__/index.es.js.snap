@@ -19,7 +19,7 @@ exports[`index renders 1`] = `
             class="col"
           >
             <div
-              class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+              class="card card-type-asset image-card"
             >
               <div
                 class="card-header card-item-first aspect-ratio"
@@ -104,7 +104,7 @@ exports[`index renders 1`] = `
             class="col"
           >
             <div
-              class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+              class="card card-type-asset image-card"
             >
               <div
                 class="card-header card-item-first aspect-ratio"
@@ -189,7 +189,7 @@ exports[`index renders 1`] = `
             class="col"
           >
             <div
-              class="card card-type-asset form-check form-check-card form-check-top-left image-card"
+              class="card card-type-asset image-card"
             >
               <div
                 class="card-header card-item-first aspect-ratio"

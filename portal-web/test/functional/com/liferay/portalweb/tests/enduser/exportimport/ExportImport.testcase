@@ -1714,8 +1714,16 @@ definition {
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.viewCP(
+			dmDocumentTypeName = "External Video Shortcut",
+			dmDocumentTypeScope = "Global");
+
+		DMDocumentType.viewCP(
 			dmDocumentTypeName = "Google Drive Shortcut",
 			dmDocumentTypeScope = "Global");
+
+		DMDocumentType.viewCP(
+			dmDocumentTypeName = "External Video Shortcut",
+			dmDocumentTypeScope = "Current Site");
 
 		DMDocumentType.viewCP(
 			dmDocumentTypeName = "Google Drive Shortcut",
@@ -1725,7 +1733,9 @@ definition {
 
 		DMNavigator.gotoDocumentType();
 
-		DMDocumentType.deletePG(dmDocumentTypeName = "Google Drive Shortcut");
+		for (var dmDocumentTypeName : list "External Video Shortcut,Google Drive Shortcut") {
+			DMDocumentType.deletePG(dmDocumentTypeName = "${dmDocumentTypeName}");
+		}
 
 		Portlet.viewEmptyMessage(message = "There are no results.");
 

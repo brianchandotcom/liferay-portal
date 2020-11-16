@@ -181,10 +181,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		AssertClick(
-			key_fieldName = "WebContent",
-			locator1 = "Button#SELECT_CONTENT",
-			value1 = "Select");
+		Click(locator1 = "Button#SELECT_FIELD_LAST");
 
 		ItemSelector.viewWCEverywhereFilterResults(webContentTitle = "Web Content From Depot,WC WebContent From Site");
 

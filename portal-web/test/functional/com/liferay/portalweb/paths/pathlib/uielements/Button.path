@@ -659,6 +659,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FIELD_LAST</td>
+	<td>xpath=(//*[contains(@class,'btn btn-secondary') and contains(text(),'Select')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FILE</td>
 	<td>//button[contains(.,'Select File')] | //label[contains(.,'Select File')]</td>
 	<td></td>

@@ -1159,11 +1159,12 @@
     "@clayui/icon" "^3.1.0"
     classnames "^2.2.6"
 
-"@clayui/card@3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.5.0.tgz#d9e528e05680da226ab4d51d2414a2ce5da63a30"
-  integrity sha512-GNnvoDQhwS2d+jN9DQC040RFq96kUpRGYrL/owH3sau1cERs7HLHjRo92oT7XiYoFFeacNnNTw9VIWnDC6vJvw==
+"@clayui/card@3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.5.1.tgz#219c2f44f0c74a4c7c0d938bba12bd61fb8984f1"
+  integrity sha512-KWnj2mCh4LH6LSfM5mnXLSWK5svzESH8p7o5bQS8gNWmygrn47Gcepm8UeWmVfjPuNO6mXMhYlRmpFbMdSScOQ==
   dependencies:
+    "@clayui/button" "^3.5.0"
     "@clayui/drop-down" "^3.8.0"
     "@clayui/form" "^3.12.0"
     "@clayui/icon" "^3.1.0"
@@ -1195,10 +1196,10 @@
     classnames "^2.2.6"
     tinycolor2 "^1.4.1"
 
-"@clayui/css@3.19.0":
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.19.0.tgz#c9f809db1c04aea785a139d47beaf7eb23f5d531"
-  integrity sha512-OdtJytArdgu7yrR2lV20TvgOAMcsvIuj9cJ5pP/wxaaVQdKxVAKFF6Y3hcROvFPpG5OkzagHD1FdF1av+myATQ==
+"@clayui/css@3.20.0":
+  version "3.20.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.20.0.tgz#35f86bcf2ccbf2bdc25e0f863249d2c4c7f132c1"
+  integrity sha512-mDREhwkEt2CUSrzJzeXXr3il0tRH9KZ19R4rRmDXW2XR93krolgDZt8zQSPS0kKbBfE4egKJMbRLzNa1UAd6mQ==
 
 "@clayui/data-provider@3.3.5":
   version "3.3.5"

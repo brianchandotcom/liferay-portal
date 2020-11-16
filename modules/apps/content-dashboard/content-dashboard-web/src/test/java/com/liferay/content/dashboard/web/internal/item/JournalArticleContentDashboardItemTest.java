@@ -26,12 +26,18 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageImpl;
+import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.util.PortalImpl;
 
 import java.util.Collections;
 import java.util.Date;
@@ -59,6 +65,16 @@ public class JournalArticleContentDashboardItemTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		LanguageResources languageResources = new LanguageResources();
+
+		languageResources.setConfig(StringPool.BLANK);
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
 	@Test
@@ -158,6 +174,181 @@ public class JournalArticleContentDashboardItemTest {
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
 			journalArticleContentDashboardItem.getAssetTags());
+	}
+
+	@Test
+	public void testGetDefaultContentDashboardItemAction() throws Exception {
+		JournalArticle journalArticle = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null,
+				_getContentDashboardItemActionProviderTracker(
+					_getContentDashboardItemActionProvider(
+						ContentDashboardItemAction.Type.VIEW,
+						"http://localhost:8080/view")),
+				null, null, null, journalArticle, new LanguageImpl(), null,
+				new PortalImpl());
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			journalArticleContentDashboardItem.
+				getDefaultContentDashboardItemAction(
+					_getHttpServletRequest(RandomTestUtil.randomLong()));
+
+		Assert.assertEquals(
+			"http://localhost:8080/view", contentDashboardItemAction.getURL());
+	}
+
+	@Test
+	public void testGetDefaultContentDashboardItemActionWithApprovedAndDraftStatusAndNotOwnerUser()
+		throws Exception {
+
+		JournalArticle journalArticle1 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle1.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		JournalArticle journalArticle2 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle2.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_DRAFT
+		);
+
+		Mockito.when(
+			journalArticle2.getVersion()
+		).thenReturn(
+			1.1
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null,
+				_getContentDashboardItemActionProviderTracker(
+					_getContentDashboardItemActionProvider(
+						ContentDashboardItemAction.Type.VIEW,
+						"http://localhost:8080/view"),
+					_getContentDashboardItemActionProvider(
+						ContentDashboardItemAction.Type.EDIT,
+						"http://localhost:8080/edit")),
+				null, null, null, journalArticle1, new LanguageImpl(),
+				journalArticle2, new PortalImpl());
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			journalArticleContentDashboardItem.
+				getDefaultContentDashboardItemAction(
+					_getHttpServletRequest(RandomTestUtil.randomLong()));
+
+		Assert.assertEquals("viewURL", contentDashboardItemAction.getURL());
+	}
+
+	@Test
+	public void testGetDefaultContentDashboardItemActionWithApprovedAndDraftStatusAndOwnerUser()
+		throws Exception {
+
+		JournalArticle journalArticle1 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle1.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		Mockito.when(
+			journalArticle1.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		JournalArticle journalArticle2 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle2.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_DRAFT
+		);
+
+		Mockito.when(
+			journalArticle2.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			journalArticle2.getVersion()
+		).thenReturn(
+			1.1
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null,
+				_getContentDashboardItemActionProviderTracker(
+					_getContentDashboardItemActionProvider(
+						ContentDashboardItemAction.Type.VIEW,
+						"http://localhost:8080/view"),
+					_getContentDashboardItemActionProvider(
+						ContentDashboardItemAction.Type.EDIT,
+						"http://localhost:8080/edit")),
+				null, null, null, journalArticle1, new LanguageImpl(),
+				journalArticle2, new PortalImpl());
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			journalArticleContentDashboardItem.
+				getDefaultContentDashboardItemAction(
+					_getHttpServletRequest(journalArticle2.getUserId()));
+
+		Assert.assertEquals("editURL", contentDashboardItemAction.getURL());
+	}
+
+	@Test
+	public void testGetDefaultContentDashboardItemActionWithApprovedAndDraftStatusAnWithoutContentDashboardItemActionProviders()
+		throws Exception {
+
+		JournalArticle journalArticle1 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle1.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_APPROVED
+		);
+
+		JournalArticle journalArticle2 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle2.getStatus()
+		).thenReturn(
+			WorkflowConstants.STATUS_DRAFT
+		);
+
+		Mockito.when(
+			journalArticle2.getVersion()
+		).thenReturn(
+			1.1
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, _getContentDashboardItemActionProviderTracker(null),
+				null, null, null, journalArticle1, new LanguageImpl(),
+				journalArticle2, new PortalImpl());
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			journalArticleContentDashboardItem.
+				getDefaultContentDashboardItemAction(
+					_getHttpServletRequest(RandomTestUtil.randomLong()));
+
+		Assert.assertNull(contentDashboardItemAction);
 	}
 
 	@Test
@@ -345,20 +536,19 @@ public class JournalArticleContentDashboardItemTest {
 		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
 			new JournalArticleContentDashboardItem(
 				null, null,
-				_getContentDashboardItemActionProviderTracker("validURL"), null,
-				null, null, journalArticle, _getLanguage(), null);
+				_getContentDashboardItemActionProviderTracker(
+					_getContentDashboardItemActionProvider(
+						ContentDashboardItemAction.Type.VIEW,
+						"http://localhost:8080/view")),
+				null, null, null, journalArticle, _getLanguage(), null, null);
 
 		Assert.assertTrue(
 			journalArticleContentDashboardItem.isViewable(
-				_getHttpServletRequest()));
+				_getHttpServletRequest(RandomTestUtil.randomLong())));
 	}
 
-	private ContentDashboardItemActionProviderTracker
-			_getContentDashboardItemActionProviderTracker(String url)
-		throws Exception {
-
-		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
-			Mockito.mock(ContentDashboardItemActionProvider.class);
+	private ContentDashboardItemAction _getContentDashboardItemAction(
+		String url) {
 
 		ContentDashboardItemAction contentDashboardItemAction = Mockito.mock(
 			ContentDashboardItemAction.class);
@@ -374,6 +564,20 @@ public class JournalArticleContentDashboardItemTest {
 			url
 		);
 
+		return contentDashboardItemAction;
+	}
+
+	private ContentDashboardItemActionProvider
+			_getContentDashboardItemActionProvider(
+				ContentDashboardItemAction.Type type, String url)
+		throws Exception {
+
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider =
+			Mockito.mock(ContentDashboardItemActionProvider.class);
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			_getContentDashboardItemAction(url);
+
 		Mockito.when(
 			contentDashboardItemActionProvider.getContentDashboardItemAction(
 				Mockito.any(JournalArticle.class),
@@ -385,7 +589,7 @@ public class JournalArticleContentDashboardItemTest {
 		Mockito.when(
 			contentDashboardItemActionProvider.getType()
 		).thenReturn(
-			ContentDashboardItemAction.Type.VIEW
+			type
 		);
 
 		Mockito.when(
@@ -396,25 +600,54 @@ public class JournalArticleContentDashboardItemTest {
 			true
 		);
 
+		return contentDashboardItemActionProvider;
+	}
+
+	private ContentDashboardItemActionProviderTracker
+		_getContentDashboardItemActionProviderTracker(
+			ContentDashboardItemActionProvider...
+				contentDashboardItemActionProviders) {
+
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker = Mockito.mock(
 				ContentDashboardItemActionProviderTracker.class);
 
-		Mockito.when(
-			contentDashboardItemActionProviderTracker.
-				getContentDashboardItemActionProviderOptional(
-					JournalArticle.class.getName(),
-					ContentDashboardItemAction.Type.VIEW)
-		).thenReturn(
-			Optional.of(contentDashboardItemActionProvider)
-		);
+		if (contentDashboardItemActionProviders == null) {
+			Mockito.when(
+				contentDashboardItemActionProviderTracker.
+					getContentDashboardItemActionProviderOptional(
+						Mockito.anyString(), Mockito.anyObject())
+			).thenReturn(
+				Optional.empty()
+			);
+
+			return contentDashboardItemActionProviderTracker;
+		}
+
+		for (ContentDashboardItemActionProvider
+				contentDashboardItemActionProvider :
+					contentDashboardItemActionProviders) {
+
+			Mockito.when(
+				contentDashboardItemActionProviderTracker.
+					getContentDashboardItemActionProviderOptional(
+						JournalArticle.class.getName(),
+						contentDashboardItemActionProvider.getType())
+			).thenReturn(
+				Optional.of(contentDashboardItemActionProvider)
+			);
+		}
 
 		return contentDashboardItemActionProviderTracker;
 	}
 
-	private HttpServletRequest _getHttpServletRequest() throws Exception {
+	private HttpServletRequest _getHttpServletRequest(long userId)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, userId);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 

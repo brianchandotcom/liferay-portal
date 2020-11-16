@@ -24,6 +24,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>ADD_FIELD_POSITION</td>
+    <td>xpath=(//div[contains(@class,'col-empty')]/div[contains(@class,'target')])[${key_fieldLocation}]</td>
+    <td></td>
+</tr>
+<tr>
     <td>BACK</td>
     <td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
     <td></td>
@@ -36,11 +41,6 @@
 <tr>
     <td>DDM_LABEL</td>
     <td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::input</td>
-    <td></td>
-</tr>
-<tr>
-    <td>FIELD_BOTTOM_DROP_TARGET</td>
-    <td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
     <td></td>
 </tr>
 <tr>

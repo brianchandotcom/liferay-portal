@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -42,6 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,7 +63,7 @@ public class JournalArticleContentDashboardItem
 		ContentDashboardItemType contentDashboardItemType, Group group,
 		InfoItemFieldValuesProvider<JournalArticle> infoItemFieldValuesProvider,
 		JournalArticle journalArticle, Language language,
-		JournalArticle latestApprovedJournalArticle) {
+		JournalArticle latestApprovedJournalArticle, Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();
@@ -91,6 +93,8 @@ public class JournalArticleContentDashboardItem
 		else {
 			_latestApprovedJournalArticle = null;
 		}
+
+		_portal = portal;
 	}
 
 	@Override
@@ -186,6 +190,71 @@ public class JournalArticleContentDashboardItem
 		).put(
 			"review-date", _journalArticle.getReviewDate()
 		).build();
+	}
+
+	@Override
+	public ContentDashboardItemAction getDefaultContentDashboardItemAction(
+		HttpServletRequest httpServletRequest) {
+
+		long userId = _portal.getUserId(httpServletRequest);
+
+		Locale locale = _portal.getLocale(httpServletRequest);
+
+		Version version = _getLastVersion(locale);
+
+		if ((getUserId() == userId) &&
+			Objects.equals(
+				version.getLabel(),
+				_language.get(
+					locale,
+					WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_DRAFT)))) {
+
+			Optional<ContentDashboardItemActionProvider>
+				contentDashboardItemActionProviderOptional =
+					_contentDashboardItemActionProviderTracker.
+						getContentDashboardItemActionProviderOptional(
+							JournalArticle.class.getName(),
+							ContentDashboardItemAction.Type.EDIT);
+
+			return contentDashboardItemActionProviderOptional.map(
+				contentDashboardItemActionProvider ->
+					_toContentDashboardItemAction(
+						contentDashboardItemActionProvider, httpServletRequest)
+			).orElse(
+				null
+			);
+		}
+
+		Optional<ContentDashboardItemActionProvider>
+			viewContentDashboardItemActionProviderOptional =
+				_contentDashboardItemActionProviderTracker.
+					getContentDashboardItemActionProviderOptional(
+						JournalArticle.class.getName(),
+						ContentDashboardItemAction.Type.VIEW);
+
+		return viewContentDashboardItemActionProviderOptional.map(
+			contentDashboardItemActionProvider -> _toContentDashboardItemAction(
+				contentDashboardItemActionProvider, httpServletRequest)
+		).orElseGet(
+			() -> {
+				Optional<ContentDashboardItemActionProvider>
+					editContentDashboardItemActionProviderOptional =
+						_contentDashboardItemActionProviderTracker.
+							getContentDashboardItemActionProviderOptional(
+								JournalArticle.class.getName(),
+								ContentDashboardItemAction.Type.EDIT);
+
+				return editContentDashboardItemActionProviderOptional.map(
+					contentDashboardItemActionProvider ->
+						_toContentDashboardItemAction(
+							contentDashboardItemActionProvider,
+							httpServletRequest)
+				).orElse(
+					null
+				);
+			}
+		);
 	}
 
 	@Override
@@ -291,6 +360,32 @@ public class JournalArticleContentDashboardItem
 		);
 	}
 
+	private Version _getLastVersion(Locale locale) {
+		List<Version> versions = getVersions(locale);
+
+		return versions.get(versions.size() - 1);
+	}
+
+	private ContentDashboardItemAction _toContentDashboardItemAction(
+		ContentDashboardItemActionProvider contentDashboardItemActionProvider,
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			return contentDashboardItemActionProvider.
+				getContentDashboardItemAction(
+					_journalArticle, httpServletRequest);
+		}
+		catch (ContentDashboardItemActionException
+					contentDashboardItemActionException) {
+
+			_log.error(
+				contentDashboardItemActionException,
+				contentDashboardItemActionException);
+
+			return null;
+		}
+	}
+
 	private Optional<Version> _toVersionOptional(
 		JournalArticle journalArticle, Locale locale) {
 
@@ -321,5 +416,6 @@ public class JournalArticleContentDashboardItem
 	private final JournalArticle _journalArticle;
 	private final Language _language;
 	private final JournalArticle _latestApprovedJournalArticle;
+	private final Portal _portal;
 
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Optional;
@@ -96,7 +97,7 @@ public class JournalArticleContentDashboardItemFactory
 				ddmStructure.getStructureId()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
 			infoItemFieldValuesProvider, journalArticle, _language,
-			latestApprovedJournalArticle);
+			latestApprovedJournalArticle, _portal);
 	}
 
 	@Reference
@@ -121,6 +122,9 @@ public class JournalArticleContentDashboardItemFactory
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

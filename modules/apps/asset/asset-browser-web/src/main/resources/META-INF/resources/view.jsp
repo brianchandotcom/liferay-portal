@@ -140,7 +140,7 @@
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card-v2
+								<clay:vertical-card
 									verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
 								/>
 							</liferay-ui:search-container-column-text>

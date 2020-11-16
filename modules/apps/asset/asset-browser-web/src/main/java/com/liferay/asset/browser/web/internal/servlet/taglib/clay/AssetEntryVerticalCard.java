@@ -58,6 +58,18 @@ public class AssetEntryVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getCssClass() {
+		if (_assetEntry.getEntryId() !=
+				_assetBrowserDisplayContext.getRefererAssetEntryId()) {
+
+			return "card-interactive card-interactive-secondary " +
+				"selector-button";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public Map<String, String> getData() {
 		if (_assetBrowserDisplayContext.isMultipleSelection()) {
 			return null;
@@ -100,18 +112,6 @@ public class AssetEntryVerticalCard implements VerticalCard {
 		}
 
 		return data;
-	}
-
-	@Override
-	public String getElementClasses() {
-		if (_assetEntry.getEntryId() !=
-				_assetBrowserDisplayContext.getRefererAssetEntryId()) {
-
-			return "card-interactive card-interactive-secondary " +
-				"selector-button";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Override

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -285,18 +284,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			).toArray());
 	}
 
-	private String _getViewURL(
-		HttpServletRequest httpServletRequest, String url) {
-
-		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			return _http.setParameter(url, "p_l_back_url", backURL);
-		}
-
-		return url;
-	}
-
 	private JSONArray _getViewURLsJSONArray(
 		ContentDashboardItem contentDashboardItem,
 		HttpServletRequest httpServletRequest) {
@@ -334,10 +321,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"languageId", LocaleUtil.toBCP47LanguageId(locale)
 				).put(
-					"viewURL",
-					_getViewURL(
-						httpServletRequest,
-						contentDashboardItemAction.getURL(locale))
+					"viewURL", contentDashboardItemAction.getURL(locale)
 				)
 			).toArray());
 	}

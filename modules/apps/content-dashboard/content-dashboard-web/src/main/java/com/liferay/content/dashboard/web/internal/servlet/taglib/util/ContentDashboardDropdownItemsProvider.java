@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
@@ -131,16 +129,6 @@ public class ContentDashboardDropdownItemsProvider {
 		return dropdownItemList;
 	}
 
-	private String _getURLWithBackURL(String url) {
-		String backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			return _http.setParameter(url, "p_l_back_url", backURL);
-		}
-
-		return _http.setParameter(url, "p_l_back_url", _currentURL);
-	}
-
 	private DropdownItem _toDropdownItem(
 		ContentDashboardItemAction contentDashboardItemAction, Locale locale) {
 
@@ -150,8 +138,7 @@ public class ContentDashboardDropdownItemsProvider {
 
 		DropdownItem dropdownItem = new DropdownItem();
 
-		dropdownItem.setHref(
-			_getURLWithBackURL(contentDashboardItemAction.getURL(locale)));
+		dropdownItem.setHref(contentDashboardItemAction.getURL(locale));
 		dropdownItem.setIcon(contentDashboardItemAction.getIcon());
 		dropdownItem.setLabel(contentDashboardItemAction.getLabel(locale));
 		dropdownItem.setQuickAction(true);

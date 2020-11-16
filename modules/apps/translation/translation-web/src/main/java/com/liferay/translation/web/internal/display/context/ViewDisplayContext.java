@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
@@ -150,6 +152,16 @@ public class ViewDisplayContext {
 
 	public String getDefaultEventHandler() {
 		return "translationManagementToolbarDefaultEventHandler";
+	}
+
+	public String getLanguageIcon(TranslationEntry translationEntry) {
+		return StringUtil.lowerCase(getLanguageLabel(translationEntry));
+	}
+
+	public String getLanguageLabel(TranslationEntry translationEntry) {
+		return StringUtil.replace(
+			translationEntry.getLanguageId(), CharPool.UNDERLINE,
+			CharPool.DASH);
 	}
 
 	public SearchContainer<TranslationEntry> getSearchContainer()

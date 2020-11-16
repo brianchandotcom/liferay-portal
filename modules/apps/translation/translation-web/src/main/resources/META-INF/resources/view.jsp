@@ -54,9 +54,10 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 					name="language"
 				>
 					<clay:icon
-						symbol='<%= StringUtil.replace(StringUtil.toLowerCase(translationEntry.getLanguageId()), "_", "-") %>'
+						symbol="<%= viewDisplayContext.getLanguageIcon(translationEntry) %>"
 					/>
-					<%= translationEntry.getLanguageId() %>
+
+					<%= viewDisplayContext.getLanguageLabel(translationEntry) %>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-status

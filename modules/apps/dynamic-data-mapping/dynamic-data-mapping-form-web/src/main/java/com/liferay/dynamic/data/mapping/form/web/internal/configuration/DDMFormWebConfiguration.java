@@ -51,4 +51,17 @@ public interface DDMFormWebConfiguration {
 	)
 	public String defaultDisplayView();
 
+	@Meta.AD(
+		deflt = "doc, docx, jpeg, jpg, pdf, png, ppt, pptx, tiff, txt, xls, xlsx",
+		description = "guest-upload-file-extensions-help",
+		name = "guest-upload-file-extensions", required = false
+	)
+	public String guestUploadFileExtensions();
+
+	@Meta.AD(
+		deflt = "25", description = "guest-upload-maximum-file-size-help",
+		name = "guest-upload-maximum-file-size", required = false
+	)
+	public long guestUploadMaximumFileSize();
+
 }

@@ -124,8 +124,8 @@ public class NavigationMenuTag extends IncludeTag {
 				branchNavItems = getBranchNavItems(request);
 
 				navItems = NavItemUtil.getNavItems(
-					request, _rootItemType, _rootItemLevel, _rootItemId,
-					branchNavItems);
+					request, _privateLayout, _rootItemType, _rootItemLevel,
+					_rootItemId, branchNavItems);
 			}
 		}
 		catch (Exception exception) {

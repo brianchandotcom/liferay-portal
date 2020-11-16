@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -69,14 +70,18 @@ public class DeleteAssetDisplayPageEntryMVCActionCommand
 				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
 					deleteAssetDisplayPageEntryId);
 			}
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			MultiSessionMessages.add(actionRequest, "displayPageAssigned");
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, portalException.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
-
-			sendRedirect(actionRequest, actionResponse);
 		}
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

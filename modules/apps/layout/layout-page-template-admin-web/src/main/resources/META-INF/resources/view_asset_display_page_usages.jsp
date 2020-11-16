@@ -34,6 +34,21 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-x", layoutPageTempl
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
+
+	<%
+	LayoutPageTemplateEntry defaultLayoutPageTemplateEntry = assetDisplayPageUsagesManagementToolbarDisplayContext.getDefaultLayoutPageTemplateEntry();
+
+	String displayPageAssignedMessage = LanguageUtil.get(resourceBundle, "successfully-assigned-to-default-display-page-template");
+
+	if (defaultLayoutPageTemplateEntry != null) {
+		displayPageAssignedMessage = LanguageUtil.format(resourceBundle, "successfully-assigned-to-default-display-page-template-x", "<strong>" + defaultLayoutPageTemplateEntry.getName() + "</strong>");
+	}
+	%>
+
+	<liferay-ui:success key="displayPageAssigned" message="<%= displayPageAssignedMessage %>" />
+
+	<liferay-ui:success key="displayPageUnassigned" message="successfully-unassigned-display-page-template" />
+
 	<liferay-ui:search-container
 		id="assetDisplayPageEntries"
 		searchContainer="<%= assetDisplayPageUsagesDisplayContext.getSearchContainer() %>"

@@ -24,6 +24,7 @@ import {getFieldLocalizedValue} from '../util/fields.es';
 import {
 	getSettingsContextProperty,
 	updateField,
+	updateFieldLabel,
 	updateSettingsContextInstanceId,
 	updateSettingsContextProperty,
 } from '../util/settingsContext.es';
@@ -60,7 +61,12 @@ export const getValidation = (originalField) => {
 };
 
 export const createDuplicatedField = (originalField, props, blacklist = []) => {
-	const {editingLanguageId, fieldNameGenerator} = props;
+	const {
+		availableLanguageIds,
+		defaultLanguageId,
+		fieldNameGenerator,
+		generateFieldNameUsingFieldLabel,
+	} = props;
 	const newFieldName = fieldNameGenerator(
 		getDefaultFieldName(),
 		null,
@@ -83,9 +89,22 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 
 	duplicatedField.instanceId = generateInstanceId(8);
 
-	const label = getLabel(originalField, editingLanguageId);
+	availableLanguageIds.forEach((availableLanguageId) => {
+		const label = getLabel(
+			originalField,
+			defaultLanguageId,
+			availableLanguageId
+		);
 
-	duplicatedField = updateField(props, duplicatedField, 'label', label);
+		duplicatedField = updateFieldLabel(
+			defaultLanguageId,
+			availableLanguageId,
+			fieldNameGenerator,
+			duplicatedField,
+			generateFieldNameUsingFieldLabel,
+			label
+		);
+	});
 
 	if (duplicatedField.nestedFields?.length > 0) {
 		duplicatedField.nestedFields = duplicatedField.nestedFields.map(

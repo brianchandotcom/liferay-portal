@@ -26,9 +26,9 @@ export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 	const title = value
 		? value.parentSiteNavigationMenuItemId &&
 		  value.parentSiteNavigationMenuItemId !== '0'
-			? `.../ ${value.title}`
+			? `... / ${value.title}`
 			: value.title
-		: null;
+		: Liferay.Language.get('public-pages-hierarchy');
 
 	return (
 		<ClayForm.Group small>

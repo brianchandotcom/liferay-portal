@@ -1,110 +1,144 @@
 definition {
 
 	macro addField {
-		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Fields")) {
+		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Fields");
 		}
 
-		Type(
-			locator1 = "TextInput#SEARCH",
-			value1 = "${fieldType}");
-
-		var key_fieldType = "${fieldType}";
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
+		var key_fieldName = "${fieldName}";
 
-		if (isSet(rowNum)) {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_rowNum = "${rowNum}",
-				locator1 = "Sidebar#ADD_FIELD_TYPE",
-				locator2 = "Sidebar#FIELD_BOTTOM_DROP_TARGET",
-				value1 = "${fieldType}");
+		if (isSet(fieldLocation)) {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldLocation = "${fieldLocation}",
+				locator1 = "Sidebar#ADD_FIELD_NAME",
+				locator2 = "Sidebar#ADD_FIELD_POSITION",
+				value1 = "${fieldName}");
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "Sidebar#ADD_FIELD_TYPE",
+				locator1 = "Sidebar#ADD_FIELD_NAME",
 				locator2 = "Sidebar#ADD_FIELD_TARGET",
-				value1 = "${fieldType}");
+				value1 = "${fieldName}");
 		}
 
-		if ("${fieldFieldLabel}" != "${fieldType}") {
-			Click(locator1 = "Sidebar#DDM_LABEL");
+		Pause(locator1 = "3000");
 
-			Type(
-				locator1 = "Sidebar#DDM_LABEL",
-				value1 = "${fieldFieldLabel}");
+		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Basic");
 		}
 
-		AssertTextEquals.assertValue(
-			locator1 = "Sidebar#DDM_LABEL",
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabel}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "${fieldFieldLabel}");
 
 		AssertElementPresent(
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${fieldFieldLabel}");
+
+		if ("${fieldName}" == "Text") {
+			if (isSet(fieldType)) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "${fieldType}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+		else if ("${fieldName}" == "Numeric") {
+			if (isSet(numericType)) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "${numericType}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
 
 		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addFieldNested {
-		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Fields")) {
+		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Fields");
 		}
 
-		Type(
-			locator1 = "TextInput#SEARCH",
-			value1 = "${fieldType}");
-
-		var key_fieldName = "${fieldName}";
-		var key_fieldType = "${fieldType}";
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
+		var key_fieldName = "${fieldName}";
 
-		DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
-			locator1 = "Sidebar#ADD_FIELD_TYPE",
-			locator2 = "Sidebar#ADD_FIELD_NESTED_TARGET",
-			value1 = "${fieldType}");
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldName}");
+
+		Pause(locator1 = "3000");
+
+		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Basic");
+		}
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabel}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabel}");
 
 		AssertElementPresent(
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldType}");
-
-		if ("${fieldFieldLabel}" != "${fieldType}") {
-			Type.sendKeys(
-				locator1 = "Sidebar#DDM_LABEL",
-				value1 = "${fieldFieldLabel}");
-		}
-
-		AssertTextEquals.assertValue(
-			locator1 = "Sidebar#DDM_LABEL",
 			value1 = "${fieldFieldLabel}");
+
+		if ("${fieldName}" == "Text") {
+			if (isSet(fieldType)) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "${fieldType}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+		else if ("${fieldName}" == "Numeric") {
+			if (isSet(numericType)) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "${numericType}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
 
 		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addFields {
-		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Builder")) {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Fields")) {
+		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Fields");
 		}
 
-		for (var fieldType : list "${fieldTypeList}") {
-			var key_fieldType = "${fieldType}";
+		for (var fieldName : list "${fieldNameList}") {
+			var key_fieldName = "${fieldName}";
 
-			DoubleClick(locator1 = "Sidebar#ADD_FIELD_TYPE");
+			DoubleClick(locator1 = "Sidebar#ADD_FIELD_NAME");
+
+			Pause(locator1 = "3000");
 
 			AssertElementPresent(
-				key_tab = "Basic",
-				locator1 = "NavTab#ACTIVE_TAB_LINK");
+				key_fieldFieldLabel = "${fieldName}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "${fieldName}");
 
 			Click(locator1 = "Sidebar#BACK");
 		}

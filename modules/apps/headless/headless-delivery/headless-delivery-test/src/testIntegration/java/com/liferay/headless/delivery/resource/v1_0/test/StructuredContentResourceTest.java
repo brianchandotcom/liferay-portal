@@ -382,6 +382,52 @@ public class StructuredContentResourceTest
 		assertValid(postStructuredContent);
 	}
 
+	@Override
+	@Test
+	public void testPutSiteStructuredContent() throws Exception {
+		StructuredContent insertStructuredContent = randomStructuredContent();
+
+		String randomExternalReferenceCode =
+			insertStructuredContent.getExternalReferenceCode();
+
+		StructuredContent putSiteStructuredContent =
+			structuredContentResource.putSiteStructuredContent(
+				insertStructuredContent.getSiteId(),
+				randomExternalReferenceCode, insertStructuredContent);
+
+		assertEquals(insertStructuredContent, putSiteStructuredContent);
+		assertValid(putSiteStructuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getSiteStructuredContent(
+				putSiteStructuredContent.getSiteId(),
+				randomExternalReferenceCode);
+
+		assertEquals(insertStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+
+		StructuredContent updateStructuredContent = randomStructuredContent();
+
+		updateStructuredContent.setExternalReferenceCode(
+			randomExternalReferenceCode);
+
+		putSiteStructuredContent =
+			structuredContentResource.putSiteStructuredContent(
+				insertStructuredContent.getSiteId(),
+				randomExternalReferenceCode, updateStructuredContent);
+
+		assertEquals(updateStructuredContent, putSiteStructuredContent);
+		assertValid(putSiteStructuredContent);
+
+		getStructuredContent =
+			structuredContentResource.getSiteStructuredContent(
+				putSiteStructuredContent.getSiteId(),
+				randomExternalReferenceCode);
+
+		assertEquals(updateStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
 	public static class ExtensionContextResolver
 		implements ContextResolver<ExtensionContext> {
 
@@ -460,6 +506,7 @@ public class StructuredContentResourceTest
 				}
 			});
 		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+		structuredContent.setKey(structuredContent.getExternalReferenceCode());
 
 		return structuredContent;
 	}

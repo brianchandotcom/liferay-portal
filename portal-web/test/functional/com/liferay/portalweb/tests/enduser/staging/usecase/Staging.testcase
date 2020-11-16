@@ -2605,6 +2605,8 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");

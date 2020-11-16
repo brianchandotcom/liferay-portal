@@ -68,6 +68,10 @@ public class NavigationMenuTag extends IncludeTag {
 		return _expandedLevels;
 	}
 
+	public Boolean getPrivateLayout() {
+		return _privateLayout;
+	}
+
 	public String getRootItemId() {
 		return _rootItemId;
 	}
@@ -181,6 +185,10 @@ public class NavigationMenuTag extends IncludeTag {
 		_preview = preview;
 	}
 
+	public void setPrivateLayout(Boolean privateLayout) {
+		_privateLayout = privateLayout;
+	}
+
 	public void setRootItemId(String rootItemId) {
 		_rootItemId = rootItemId;
 	}
@@ -206,6 +214,7 @@ public class NavigationMenuTag extends IncludeTag {
 		_displayDepth = 0;
 		_expandedLevels = "auto";
 		_preview = false;
+		_privateLayout = null;
 		_rootItemId = null;
 		_rootItemLevel = 1;
 		_rootItemType = "absolute";
@@ -374,6 +383,7 @@ public class NavigationMenuTag extends IncludeTag {
 	private int _displayDepth;
 	private String _expandedLevels = "auto";
 	private boolean _preview;
+	private Boolean _privateLayout;
 	private String _rootItemId;
 	private int _rootItemLevel = 1;
 	private String _rootItemType = "absolute";

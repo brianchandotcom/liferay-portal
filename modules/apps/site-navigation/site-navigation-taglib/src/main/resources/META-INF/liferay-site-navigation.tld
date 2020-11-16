@@ -107,6 +107,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>privateLayout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
 			<description>Whether to display help messages intended for page administrators.</description>
 			<name>preview</name>
 			<required>false</required>

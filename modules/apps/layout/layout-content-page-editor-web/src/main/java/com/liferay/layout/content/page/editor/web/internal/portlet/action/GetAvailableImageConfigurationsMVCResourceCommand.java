@@ -18,9 +18,11 @@ import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -65,6 +67,8 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
+		Image image = ImageToolUtil.getImage(fileEntry.getContentStream());
+
 		JSONArray jsonArray = JSONUtil.put(
 			JSONUtil.put(
 				"label", LanguageUtil.get(httpServletRequest, "auto")
@@ -72,6 +76,8 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 				"size", fileEntry.getSize() / 1000
 			).put(
 				"value", "auto"
+			).put(
+				"width", image.getWidth()
 			));
 
 		FileVersion fileVersion = fileEntry.getFileVersion();

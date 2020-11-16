@@ -54,7 +54,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 			<%
 			PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "/document_library/edit_file_entry_type_data_definition");
+			rowURL.setParameter("mvcRenderCommandName", "/document_library/edit_file_entry_type");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryType.getFileEntryTypeId()));
 			%>
@@ -84,7 +84,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/document_library/file_entry_type_action_data_definition.jsp"
+				path="/document_library/file_entry_type_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

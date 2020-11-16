@@ -554,9 +554,9 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			AssertVisible(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'${baseURL}/en/web/test-site-name/w/web-content-title')]");
+			AssertVisible(locator1 = "//*[@id='main-content']//a[contains(@href,'${baseURL}/en/web/test-site-name/w/web-content-title')]/img");
 
-			Click(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'${baseURL}/en/web/test-site-name/w/web-content-title')]");
+			Click(locator1 = "//*[@id='main-content'MapManualURLToContainerElement]//a[contains(@href,'${baseURL}/en/web/test-site-name/w/web-content-title')]/img");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
@@ -604,9 +604,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'https://liferay.com')]");
+			AssertVisible(locator1 = "//*[@id='main-content']//a[contains(@href,'https://liferay.com')]/img");
 
-			Click(locator1 = "//div[contains(@class,'layout-content')]/a[contains(@href,'https://liferay.com')]");
+			Click(locator1 = "//*[@id='main-content']//a[contains(@href,'https://liferay.com')]/img");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}

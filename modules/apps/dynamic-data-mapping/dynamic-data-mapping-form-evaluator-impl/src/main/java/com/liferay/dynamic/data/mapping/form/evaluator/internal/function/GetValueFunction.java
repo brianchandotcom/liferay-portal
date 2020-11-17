@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Leonardo Barros
@@ -33,6 +34,10 @@ public class GetValueFunction
 	@Override
 	public Object apply(String field) {
 		if (_ddmExpressionFieldAccessor == null) {
+			return StringPool.BLANK;
+		}
+
+		if (!_isFieldVisible(field)) {
 			return StringPool.BLANK;
 		}
 
@@ -55,6 +60,16 @@ public class GetValueFunction
 		DDMExpressionFieldAccessor ddmExpressionFieldAccessor) {
 
 		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
+	}
+
+	private boolean _isFieldVisible(String field) {
+		GetFieldPropertyRequest.Builder builder =
+			GetFieldPropertyRequest.Builder.newBuilder(field, "visible");
+
+		GetFieldPropertyResponse getFieldPropertyResponse =
+			_ddmExpressionFieldAccessor.getFieldProperty(builder.build());
+
+		return GetterUtil.getBoolean(getFieldPropertyResponse.getValue(), true);
 	}
 
 	private DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;

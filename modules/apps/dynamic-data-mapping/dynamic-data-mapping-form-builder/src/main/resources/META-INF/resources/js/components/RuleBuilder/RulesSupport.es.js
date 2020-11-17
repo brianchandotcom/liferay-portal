@@ -325,6 +325,10 @@ const findInvalidRule = (rule) => {
 const replaceFieldNameByFieldLabel = (expression, fields) => {
 	const operands = expression.match(DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION);
 
+	if (!operands) {
+		return expression;
+	}
+
 	let newExpression = expression;
 
 	operands.map((operand) => {

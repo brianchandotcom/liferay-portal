@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import {Token, Tokenizer} from 'dynamic-data-mapping-form-builder';
-import React, {forwardRef, useCallback, useMemo, useState} from 'react';
+import React, {forwardRef, useMemo, useState} from 'react';
 
 import CalculatorButtonArea from './CalculatorButtonArea.es';
 import CalculatorDisplay from './CalculatorDisplay.es';
@@ -213,19 +213,16 @@ const Calculator = forwardRef(
 			? repeatableFields
 			: fields;
 
-		const updateExpression = useCallback(
-			({index, newExpression}) => {
-				const newMaskedExpression = newExpression.replace(/[[\]]/g, '');
+		const updateExpression = ({index, newExpression}) => {
+			const newMaskedExpression = newExpression.replace(/[[\]]/g, '');
 
-				setExpression(newMaskedExpression);
+			setExpression(newMaskedExpression);
 
-				onEditExpression({
-					expression: newMaskedExpression,
-					index,
-				});
-			},
-			[onEditExpression, setExpression]
-		);
+			onEditExpression({
+				expression: newMaskedExpression,
+				index,
+			});
+		};
 
 		const handleButtonClick = ({tokenType, tokenValue}) => {
 			if (tokenValue === 'backspace') {
@@ -306,7 +303,10 @@ const Calculator = forwardRef(
 							className="calculate-container-fields"
 							md="9"
 						>
-							<CalculatorDisplay expression={expression} />
+							<CalculatorDisplay
+								expression={expression}
+								fields={fields}
+							/>
 						</ClayLayout.Col>
 					</div>
 				</ClayLayout.Col>

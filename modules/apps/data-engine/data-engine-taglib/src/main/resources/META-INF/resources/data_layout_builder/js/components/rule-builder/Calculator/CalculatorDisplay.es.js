@@ -13,15 +13,23 @@
  */
 
 import ClayForm from '@clayui/form';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {
 	Field,
 	PageProvider,
 	useFieldTypesResource,
 } from 'dynamic-data-mapping-form-renderer';
-import React from 'react';
+import React, {useMemo} from 'react';
 
-function CalculatorDisplay({expression}) {
+function CalculatorDisplay({expression, fields}) {
 	const {resource: fieldTypes} = useFieldTypesResource();
+
+	const value = useMemo(() => {
+		return (
+			RulesSupport.replaceFieldNameByFieldLabel(expression, fields) ??
+			expression
+		);
+	}, [expression, fields]);
 
 	return (
 		<ClayForm.Group>
@@ -36,7 +44,7 @@ function CalculatorDisplay({expression}) {
 						readOnly: true,
 						showLabel: false,
 						type: 'text',
-						value: expression,
+						value,
 					}}
 				/>
 			</PageProvider>

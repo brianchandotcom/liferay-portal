@@ -54,6 +54,7 @@ export const Container = ({
 				{!pages.length && showSubmitButton && (
 					<ClayButton
 						className="float-right lfr-ddm-form-submit"
+						id="ddm-form-submit"
 						type="submit"
 					>
 						{submitLabel}

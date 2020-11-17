@@ -221,6 +221,25 @@ body .ddm-user-view-content {
 	a {
 		display: inline-block;
 	}
+
+	.clear-button-upload {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+	}
+
+	.clear-button-upload-on {
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.input-file {
+		height: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		width: 0.1px;
+		z-index: -1;
+	}
 }
 
 .liferay-ddm-form-field-paragraph,

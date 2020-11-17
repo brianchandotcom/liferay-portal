@@ -90,6 +90,7 @@ export const PaginationControls = ({
 			{activePage === total - 1 && !readOnly && showSubmitButton && (
 				<ClayButton
 					className="float-right lfr-ddm-form-submit"
+					id="ddm-form-submit"
 					type="submit"
 				>
 					{submitLabel}

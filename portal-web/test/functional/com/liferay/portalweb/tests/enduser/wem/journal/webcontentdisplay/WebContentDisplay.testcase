@@ -494,12 +494,13 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldType = "Rich Text",
-			rowNum = "1");
+			fieldFieldLabel = "Text Box",
+			fieldLocation = "2",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -517,12 +518,10 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContent.addStructuredPGViaWCD(
-			structureFieldName = "Text",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			textBoxFieldName = "Rich Text",
-			webContentRichText = "WC WebContent TextBox",
-			webContentText = "WC WebContent Text",
+			text = "WC WebContent TextBox",
+			textBox = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
 		AssertElementPresent(locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')][contains(.,'WC WebContent Text')]");

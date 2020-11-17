@@ -181,10 +181,22 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.editSubstructureDefaultValuesCP(
-			depotName = "Test Depot Name",
-			editSubstructureFieldNames = "Text",
-			substructureName = "WC Structure Name");
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentText = "Edited Text Field");
+
+		PortletEntry.save();
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Edited Text Field");
 	}
 
 	@description = "This ensures that a web content can be edited in a depot."

@@ -37,7 +37,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 1");
 
-		DataEngine.addFields(fieldTypeList = "Date,Image,Upload");
+		DataEngine.addFields(fieldNameList = "Date,Image,Upload");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
 
@@ -49,7 +49,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 2");
 
-		DataEngine.addFields(fieldTypeList = "Grid,Link to Page");
+		DataEngine.addFields(fieldNameList = "Grid,Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
 
@@ -61,7 +61,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name 3");
 
-		DataEngine.addFields(fieldTypeList = "Numeric,Single Selection,Select from List,Separator,Text,Rich Text");
+		DataEngine.addFields(fieldNameList = "Numeric,Single Selection,Select from List,Separator,Text,Rich Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
 
@@ -143,7 +143,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -168,7 +168,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name1");
 
-		DataEngine.addFields(fieldTypeList = "Text,Rich Text,Image,Upload");
+		DataEngine.addFields(fieldNameList = "Text,Rich Text,Image,Upload");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
@@ -188,9 +188,9 @@ definition {
 			parentStructureName = "WC Structure Name1",
 			structureName = "2");
 
-		DynamicDataMapping.addField(
+		DataEngine.addField(
 			fieldFieldLabel = "Numeric",
-			fieldType = "Numeric");
+			fieldName = "Numeric");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
@@ -198,9 +198,11 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.editSubstructureDefaultValuesCP(
-			editSubstructureFieldNames = "Text",
-			substructureName = "2");
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "2");
+
+		WebContent.addWithStructureCP(webContentText = "Edited Text Field");
+
+		PortletEntry.save();
 	}
 
 	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
@@ -294,10 +296,9 @@ definition {
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Page Set,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
-				DynamicDataMapping.addField(
-					field = "Link to Page",
+				DataEngine.addField(
 					fieldFieldLabel = "${fieldLabel}",
-					fieldName = StringUtil.replace("${fieldLabel}", " ", ""));
+					fieldName = "Link to Page");
 			}
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -316,8 +317,8 @@ definition {
 
 			for (var partialPageName : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
 				AssertClick(
-					key_fieldName = StringUtil.replace("${partialPageName}", " ", ""),
-					locator1 = "Button#SELECT_CONTENT",
+					key_fieldFieldLabel = "${partialPageName}",
+					locator1 = "WCEditWebContent#SELECT_BUTTON",
 					value1 = "Select");
 
 				Click(
@@ -440,10 +441,9 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DynamicDataMapping.addField(
-				field = "Link to Page",
+			DataEngine.addField(
 				fieldFieldLabel = "Link to Page",
-				fieldName = "LinktoPage");
+				fieldName = "Link to Page");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -460,8 +460,8 @@ definition {
 			PortletEntry.inputTitle(title = "Web Content Title");
 
 			AssertClick(
-				key_fieldName = "LinktoPage",
-				locator1 = "Button#SELECT_CONTENT",
+				key_fieldFieldLabel = "Link to Page",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
 			for (var pageName : list "Test Parent Page,Test Child Page") {
@@ -537,8 +537,7 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DynamicDataMapping.addField(
-				field = "Image",
+			DataEngine.addField(
 				fieldFieldLabel = "Image",
 				fieldName = "Image");
 
@@ -551,10 +550,10 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				fieldName = "Image",
 				imageFileName = "Document Title",
+				navTab = "Documents and Media",
 				structureName = "WC Structure Name",
-				webContentImageUnderDocumentsAndMedia = "true",
+				webContentImage = "Document Title",
 				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
@@ -656,7 +655,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "${structureName}");
 

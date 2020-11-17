@@ -21,9 +21,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldType = "Image");
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

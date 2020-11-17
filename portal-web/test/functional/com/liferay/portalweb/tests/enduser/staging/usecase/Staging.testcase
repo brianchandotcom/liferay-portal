@@ -65,7 +65,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -258,7 +258,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -505,7 +505,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -1448,7 +1448,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DynamicDataMapping.editFieldPredefinedValue(
 			field = "Text",
@@ -2426,7 +2426,14 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DataEngine.addFields(fieldTypeList = "Text,Rich Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text Box",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -2437,7 +2444,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "Structure Name",
 			templateDescription = "Template Description",
-			templateFieldNames = "Text,Rich Text",
+			templateFieldNames = "Text,Text Box",
 			templateName = "Template Name");
 
 		Navigator.openURL();
@@ -2449,9 +2456,12 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "Structure Name",
 			templateName = "Template Name",
-			webContentRichText = "Staging Web Content Body",
 			webContentText = "Staging Web Content Text",
 			webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "Staging Web Content Body",
+			webContentTextFieldLabel = "Text Box");
 
 		PortletEntry.publish();
 
@@ -3750,7 +3760,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Documents and Media",
-			fieldType = "Documents and Media");
+			fieldName = "Documents and Media");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -3841,7 +3851,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
-			fieldType = "Image");
+			fieldName = "Image");
 
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 

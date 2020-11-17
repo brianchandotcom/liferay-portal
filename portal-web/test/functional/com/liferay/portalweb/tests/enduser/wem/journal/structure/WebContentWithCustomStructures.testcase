@@ -45,7 +45,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -100,7 +100,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Separator",
-			fieldType = "Separator");
+			fieldName = "Separator");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -145,12 +145,11 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Text",
-			fieldType = "Numeric");
+			fieldFieldLabel = "Text",
+			fieldName = "Numeric");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -216,7 +215,15 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldTypeList = "Text,Rich Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFields(
+			fieldFieldLabel = "Text Box",
+			fieldLocation = "2",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -226,7 +233,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		for (var structureFieldName : list "Text,Rich Text") {
+		for (var structureFieldName : list "Text Box") {
 			DynamicDataMapping.editFieldLocalizable(fieldFieldLabel = "${structureFieldName}");
 		}
 
@@ -239,7 +246,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Text,Rich Text",
+			templateFieldNames = "Text,Text Box",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -249,9 +256,12 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentRichText = "Rich Text",
 			webContentText = "Text",
 			webContentTitle = "WC WebContent Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "Text Box",
+			webContentTextFieldLabel = "Text Box");
 
 		PortletEntry.publish();
 
@@ -263,13 +273,15 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "WC WebContent Title");
 
-		FormFields.viewTextValue(
-			fieldName = "Text",
-			fieldValue = "Text");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Text");
 
-		FormFields.viewRichTextValue(
-			fieldName = "Rich Text",
-			fieldValue = "Rich Text");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text Box",
+			locator1 = "DDMField#MULTIPLE_LINES",
+			value1 = "Text Box");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
@@ -280,21 +292,23 @@ definition {
 			value1 = "Title Spanish");
 
 		Type(
-			key_fieldName = "Text",
-			locator1 = "TextInput#DE_DDM",
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Text Spanish");
 
-		FormFields.viewTextValue(
-			fieldName = "Text",
-			fieldValue = "Text Spanish");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Text Spanish");
 
-		FormFields.viewRichTextValue(
-			fieldName = "Rich Text",
-			fieldValue = "Rich Text");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text Box",
+			locator1 = "DDMField#MULTIPLE_LINES",
+			value1 = "Text Box");
 
-		AssertEditable(
-			key_fieldName = "Rich Text",
-			locator1 = "DDMField#RICH_TEXT");
+		AssertNotEditable(
+			key_fieldFieldLabel = "Text Box",
+			locator1 = "DDMField#MULTIPLE_LINES");
 	}
 
 	@description = "This is a use case for LPS-69560."
@@ -322,12 +336,12 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Content");
+			fieldName = "Web Content");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Geolocation",
-			fieldType = "Geolocation",
-			rowNum = "1");
+			fieldLocation = "1",
+			fieldName = "Geolocation");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -345,9 +359,8 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "WebContent",
-			webContentSelectWCFile = "WC WebContent 1 Title",
-			webContentTitle = "WC WebContent 2 Title");
+			webContentTitle = "WC WebContent 2 Title",
+			webContentWebContent = "WC WebContent 1 Title");
 
 		PortletEntry.publish();
 
@@ -419,17 +432,19 @@ definition {
 				templateName = "WC Template Name",
 				webContentTitle = "Web Content Complex Title 2");
 
-			Click(
-				key_filedName = "ImagemAba01",
-				locator1 = "WCEditWebContent#SELECT_ANY");
+			AssertClick(
+				key_fieldFieldLabel = "ImagemAba01",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
 
 			ItemSelector.uploadFile(
 				navTab = "Web Content Images",
 				uploadFileName = "Document_3.png");
 
-			Click(
-				key_filedName = "Logo",
-				locator1 = "WCEditWebContent#SELECT_ANY");
+			AssertClick(
+				key_fieldFieldLabel = "Logo",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
 
 			LexiconCard.viewCardNotPresent(card = "Document_3.png");
 
@@ -1252,7 +1267,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -1301,7 +1316,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color",
-			fieldType = "Color");
+			fieldName = "Color");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1357,7 +1372,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(
 			addRoleViewPermissions = "Power User",
@@ -1380,9 +1395,11 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.editSubstructureDefaultValuesCP(
-			editSubstructureFieldNames = "Text",
-			substructureName = "Global Structure");
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "Global Structure");
+
+		WebContent.addWithStructureCP(webContentText = "Edited Text Field");
+
+		PortletEntry.save();
 
 		JSONUser.addUser(
 			userEmailAddress = "test1@liferay.com",
@@ -1438,7 +1455,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
-			fieldType = "Image");
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1502,7 +1519,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -1563,10 +1580,10 @@ definition {
 
 	@ignore = "true"
 	@priority = "4"
-	test AddWebContentWithRepeatableHTMLField {
+	test AddWebContentWithRepeatableRichTextField {
 		property environment.acceptance = "true";
 
-		task ("Add a web content structure with a repeatable HTML field") {
+		task ("Add a web content structure with a repeatable Rich Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
@@ -1574,10 +1591,10 @@ definition {
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addField(
-				fieldFieldLabel = "HTML",
-				fieldType = "Text");
+				fieldFieldLabel = "Rich Text",
+				fieldName = "Rich Text");
 
-			DataEngine.editFieldRepeatable(fieldFieldLabel = "HTML");
+			DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -1588,26 +1605,26 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 		}
 
-		task ("Repeat HTML field") {
+		task ("Repeat Rich Text field") {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			PortletEntry.inputTitle(title = "Web Content Title");
 
-			DataEngine.addRepeatableField(fieldName = "HTML");
+			DataEngine.addRepeatableField(fieldName = "Rich Text");
 		}
 
-		task ("Type content to the first HTML field") {
-			Type(
-				key_fieldName = "HTML",
-				locator1 = "TextInput#DE_DDM",
+		task ("Type content to the first Rich Text field") {
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "Rich Text",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
 				value1 = "This is the first HTML field");
 		}
 
 		task ("Type content to the second HTML field") {
-			Type(
-				key_fieldName = "HTML",
-				key_index = "2",
-				locator1 = "TextInput#ANY_DE_DDM",
+			Type.typeCKEditorWaitForCKEditor(
+				index = "2",
+				key_fieldLabel = "Rich Text",
+				locator1 = "CKEditor#ANY_BODY_FIELD_WEB_CONTENT_ARTICLE",
 				value1 = "This is the second HTML field");
 
 			PortletEntry.publish();
@@ -1645,20 +1662,19 @@ definition {
 
 	@description = "This is a use case for LRQA-61632. Add web content with required HTML field."
 	@priority = "4"
-	test AddWebContentWithRequiredHTMLField {
-		task ("Add a web content structure with a required HTML field") {
+	test AddWebContentWithRequiredRichTextField {
+		task ("Add a web content structure with a required Rich Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DynamicDataMapping.addField(
-				field = "HTML",
-				fieldFieldLabel = "HTML",
-				fieldName = "HTML");
+			DataEngine.addField(
+				fieldFieldLabel = "Rich Text",
+				fieldName = "Rich Text");
 
-			DynamicDataMapping.editFieldRequired(fieldFieldLabel = "HTML");
+			DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -1669,7 +1685,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 		}
 
-		task ("Assert the alert message when publish without content in HTML field") {
+		task ("Assert the alert message when publish without content in Rich Text field") {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			PortletEntry.inputTitle(title = "Web Content Title");
@@ -1681,7 +1697,7 @@ definition {
 				value1 = "This field is required.");
 		}
 
-		task ("Assert the alert message is still shown after click the outside of HTML field") {
+		task ("Assert the alert message is still shown after click the outside of Rich Text field") {
 			WebContent.clickMarginOfContentContainer();
 
 			AssertTextEquals(
@@ -1689,14 +1705,14 @@ definition {
 				value1 = "This field is required.");
 		}
 
-		task ("Assert the alert message is still shown after clear content of HTML field") {
+		task ("Assert the alert message is still shown after clear content of Rich Text field") {
 			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "HTML",
+				key_fieldLabel = "Rich Text",
 				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
 				value1 = "Web Content Content");
 
 			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "HTML",
+				key_fieldLabel = "Rich Text",
 				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
 				value1 = "");
 
@@ -1705,9 +1721,9 @@ definition {
 				value1 = "This field is required.");
 		}
 
-		task ("Type content in HTML field then Publish") {
+		task ("Type content in Rich Text field then Publish") {
 			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "HTML",
+				key_fieldLabel = "Rich Text",
 				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
 				value1 = "Web Content Content");
 
@@ -1731,7 +1747,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1774,7 +1790,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1837,7 +1853,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -1900,7 +1916,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldTypeList = "Date,Numeric,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
+		DataEngine.addFields(fieldNameList = "Date,Numeric,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1950,7 +1966,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -2018,7 +2034,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -2093,7 +2109,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DynamicDataMapping.editFieldPredefinedValue(
 			field = "Text",
@@ -2181,7 +2197,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -2248,182 +2264,52 @@ definition {
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 		}
 
-		task ("Add a Boolean field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Boolean",
-				fieldFieldLabel = "Boolean",
-				fieldName = "Boolean");
+		task ("Add the following fields") {
+			DataEngine.addFields(fieldNameList = "Multiple Selection,Color,Date,Upload,Numeric,Rich Text,Single Selection,Select from List,Text,Web Content");
 
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Boolean",
-				fieldFieldLabel = "Boolean",
-				fieldName = "Boolean",
-				fieldPredefinedValue = "Yes");
-		}
-
-		task ("Add a Color field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Color",
-				fieldFieldLabel = "Color",
-				fieldName = "Color");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Color",
-				fieldFieldLabel = "Color",
-				fieldName = "Color",
-				fieldPredefinedValue = "#FF0000");
-		}
-
-		task ("Add a Date field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Date",
-				fieldFieldLabel = "Date",
-				fieldName = "Date");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Date",
-				fieldFieldLabel = "Date",
-				fieldName = "Date",
-				fieldPredefinedValue = "10/10/2020",
-				fieldPredefinedValueDay = "10",
-				fieldPredefinedValueMonth = "October",
-				fieldPredefinedValueYear = "2020");
-		}
-
-		task ("Add a Decimal field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Decimal",
-				fieldFieldLabel = "Decimal",
-				fieldName = "Decimal");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Decimal",
-				fieldFieldLabel = "Decimal",
-				fieldName = "Decimal",
-				fieldPredefinedValue = "0.5");
-		}
-
-		task ("Add a Documents and Media field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Documents and Media",
-				fieldFieldLabel = "Documents and Media",
-				fieldName = "DocumentsAndMedia");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Documents and Media",
-				fieldFieldLabel = "Documents and Media",
-				fieldName = "DocumentsAndMedia",
-				fieldPredefinedValue = "Document_1.jpg",
-				uploadFileName = "Document_1.jpg");
-		}
-
-		task ("Add a HTML field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "HTML",
-				fieldFieldLabel = "HTML",
-				fieldName = "HTML");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "HTML",
-				fieldFieldLabel = "HTML",
-				fieldName = "HTML",
-				fieldPredefinedValue = "This is a HTML field");
-		}
-
-		task ("Add an Integer field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Integer",
-				fieldFieldLabel = "Integer",
-				fieldName = "Integer");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Integer",
-				fieldFieldLabel = "Integer",
-				fieldName = "Integer",
-				fieldPredefinedValue = "9");
-		}
-
-		task ("Add a Number field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Number",
-				fieldFieldLabel = "Number",
-				fieldName = "Number");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Number",
-				fieldFieldLabel = "Number",
-				fieldName = "Number",
-				fieldPredefinedValue = "-1");
-		}
-
-		task ("Add a Radio field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Radio",
-				fieldFieldLabel = "Radio",
-				fieldName = "Radio");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Radio",
-				fieldFieldLabel = "Radio",
-				fieldName = "Radio",
-				fieldPredefinedValue = "option 1");
-		}
-
-		task ("Add a Select field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Select",
-				fieldFieldLabel = "Select",
-				fieldName = "Select");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Select",
-				fieldFieldLabel = "Select",
-				fieldName = "Select",
-				fieldPredefinedValue = "option 2");
-		}
-
-		task ("Add a Text field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Text",
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Text",
-				fieldFieldLabel = "Text",
+			DataEngine.addField(
+				fieldFieldLabel = "Text Box",
+				fieldLocation = "11",
 				fieldName = "Text",
-				fieldPredefinedValue = "This is a Text field");
-		}
+				fieldType = "Multiple Lines");
 
-		task ("Add a Text Box field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Text Box",
-				fieldFieldLabel = "Text Box",
-				fieldName = "TextBox");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Text Box",
-				fieldFieldLabel = "Text Box",
-				fieldName = "TextBox",
-				fieldPredefinedValue = "This is a Text Box field");
-		}
-
-		task ("Add a Web Content field with predefined value") {
-			DynamicDataMapping.addField(
-				field = "Web Content",
-				fieldFieldLabel = "Web Content",
-				fieldName = "WebContent");
-
-			DynamicDataMapping.editFieldPredefinedValue(
-				field = "Web Content",
-				fieldFieldLabel = "Web Content",
-				fieldName = "WebContent",
-				fieldPredefinedValue = "Web Content Title",
-				groupName = "Test Site Name");
+			DataEngine.addField(
+				fieldFieldLabel = "Decimal",
+				fieldLocation = "12",
+				fieldName = "Numeric",
+				numericType = "Decimal");
 		}
 
 		task ("Save the new structure") {
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Edit Structure Default Values") {
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentColor = "FF0000",
+				webContentDate = "10/10/2020",
+				webContentMultipleSelection = "Boolean",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "value 2",
+				webContentSingleSelection = "value 1",
+				webContentText = "This is a Text field",
+				webContentUpload = "Document_1.jpg",
+				webContentWebContent = "Web Content Title");
+
+			WebContent.addWithStructureCP(
+				numericType = "Decimal",
+				webContentNumeric = "0.5",
+				webContentNumericFieldLabel = "Decimal");
+
+			WebContent.addWithStructureCP(
+				fieldType = "Multiple Lines",
+				webContentText = "This is a Text Box field",
+				webContentTextFieldLabel = "Text Box");
+
+			PortletEntry.save();
 		}
 
 		task ("Add a web content article based on new structure") {
@@ -2437,23 +2323,42 @@ definition {
 
 			PortletEntry.inputTitle(title = "Web Content With Predefined Value");
 
+			WebContent.addWithStructureCP(
+				webContentColor = "FF0000",
+				webContentDate = "10/10/2020",
+				webContentMultipleSelection = "Boolean",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "value 2",
+				webContentSingleSelection = "value 1",
+				webContentText = "This is a Text field",
+				webContentUpload = "Document_1.jpg",
+				webContentWebContent = "Web Content Title");
+
 			WebContent.viewWithStructureCP(
 				predefinedValue = "true",
-				webContentBoolean = "true",
-				webContentColor = "background-color: rgb(255, 0, 0);",
+				webContentColor = "FF0000",
 				webContentDate = "10/10/2020",
-				webContentDecimal = "0.5",
-				webContentDocumentsAndMedia = "Document_1.jpg",
-				webContentDocumentsAndMediaFieldName = "DocumentsAndMedia",
-				webContentHTML = "This is a HTML field",
-				webContentInteger = "9",
-				webContentNumber = "-1",
-				webContentRadio = "option 1",
-				webContentSelect = "option 2",
+				webContentMultipleSelection = "Boolean",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "value 2",
+				webContentSingleSelection = "value 1",
 				webContentText = "This is a Text field",
-				webContentTextBox = "This is a Text Box field",
-				webContentWebContent = "Web Content Title",
-				webContentWebContentFieldName = "WebContent");
+				webContentUpload = "Document_1.jpg",
+				webContentWebContent = "Web Content Title");
+
+			WebContent.viewWithStructureCP(
+				numericType = "Decimal",
+				predefinedValue = "true",
+				webContentNumeric = "0.5",
+				webContentNumericFieldLabel = "Decimal");
+
+			WebContent.viewWithStructureCP(
+				fieldType = "Multiple Lines",
+				predefinedValue = "true",
+				webContentText = "This is a Text Box field",
+				webContentTextFieldLabel = "Text Box");
 		}
 	}
 
@@ -2471,7 +2376,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -2494,12 +2399,12 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
-			fieldType = "Image",
-			rowNum = "1");
+			fieldLocation = "2",
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

@@ -662,7 +662,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Link to Page",
-			fieldType = "Link to Page");
+			fieldName = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -681,10 +681,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			linkedPageName = "Site Child Page",
-			linkFieldName = "LinkToPage",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
+			webContentLinkToPage = "Site Child Page",
 			webContentTitle = "WC WebContent Title 1");
 
 		PortletEntry.publish();
@@ -694,10 +693,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			linkedPageName = "Site Child Child Page",
-			linkFieldName = "LinkToPage",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
+			webContentLinkToPage = "Site Child Child Page",
 			webContentTitle = "WC WebContent Title 2");
 
 		PortletEntry.publish();
@@ -950,7 +948,7 @@ definition {
 
 	@description = "This is a use case for LPS-88331."
 	@priority = "3"
-	test ExportImportSiteWithNestedDocumentsAndMediaField {
+	test ExportImportSiteWithNestedUploadField {
 		JSONGroup.addGroup(groupName = "Site A");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
@@ -970,12 +968,11 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
-		DynamicDataMapping.addFieldNested(
-			field = "Documents and Media",
-			fieldFieldLabel = "Documents and Media",
-			fieldName = "DocumentsAndMedia");
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text",
+			fieldName = "Upload");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -994,12 +991,12 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "DocumentsAndMedia",
+			dmDocumentTitle = "DM Document Title",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDocumentsAndMedia = "DM Document Title",
 			webContentText = "Web Content Text",
-			webContentTitle = "Web Content Title");
+			webContentTitle = "Web Content Title",
+			webContentUpload = "DM Document Title");
 
 		PortletEntry.publish();
 
@@ -1318,7 +1315,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Content");
+			fieldName = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1348,21 +1345,19 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "WebContent",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentSelectWCFile = "WC WebContent Title 1",
-			webContentTitle = "WC WebContent Title 2");
+			webContentTitle = "WC WebContent Title 2",
+			webContentWebContent = "WC WebContent Title 1");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 1");
 
 		WebContent.editCP(
-			fieldName = "WebContent",
-			webContentSelectWCFile = "WC WebContent Title 2",
 			webContentTitle = "WC WebContent Title 1",
-			webContentTitleEdit = "WC WebContent Title 1");
+			webContentTitleEdit = "WC WebContent Title 1",
+			webContentWebContent = "WC WebContent Title 2");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 
@@ -1428,14 +1423,13 @@ definition {
 			structureName = "Exported Structure");
 
 		DataEngine.addField(
-			fieldFieldLabel = "SeparatorField",
-			fieldType = "Separator");
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator");
 
-		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "SeparatorField");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
 
-		DynamicDataMapping.addFieldNested(
-			field = "Text",
-			fieldFieldLabel = "Text",
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Separator",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Exported Structure");
@@ -1461,13 +1455,20 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		DDLRecord.addRepeatableField(fieldName = "Separator");
+		DataEngine.addRepeatableField(fieldName = "Separator");
 
 		takeScreenshot();
 
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Liferay",
-			fieldName = "Separator");
+		Type(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Liferay");
+
+		Type(
+			index = "2",
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+			value1 = "Liferay 1");
 
 		PortletEntry.publish();
 
@@ -1487,9 +1488,16 @@ definition {
 
 		WebContent.viewWithStructureCP(webContentTitle = "Exported Article");
 
-		WebContent.viewFieldRepeated(
-			ddlRecordFieldData = "Liferay",
-			fieldName = "Separator");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Liferay");
+
+		AssertTextEquals(
+			index = "2",
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+			value1 = "Liferay 1");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
 
@@ -1501,15 +1509,13 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Exported Structure");
 
-		DynamicDataMapping.viewField(
-			field = "Separator",
-			fieldFieldLabel = "SeparatorField",
-			fieldName = "Separator");
+		AssertVisible(
+			key_fieldFieldLabel = "Separator",
+			locator1 = "DDMField#SEPARATOR");
 
-		DynamicDataMapping.viewField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
 
@@ -1615,7 +1621,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldTypeList = "Documents and Media,Link to Page,Image");
+		DataEngine.addFields(fieldNameList = "Upload,Link to Page,Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1833,7 +1839,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Link to Page",
-			fieldType = "Link to Page");
+			fieldName = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "Structure Name A");
 
@@ -1857,7 +1863,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Content");
+			fieldName = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Structure Name B");
 

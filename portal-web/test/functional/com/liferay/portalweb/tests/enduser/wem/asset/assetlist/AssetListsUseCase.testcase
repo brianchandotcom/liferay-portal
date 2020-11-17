@@ -36,10 +36,9 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DynamicDataMapping.addField(
-				field = "Select",
-				fieldFieldLabel = "Select",
-				fieldName = "Select");
+			DataEngine.addField(
+				fieldFieldLabel = "Select from List",
+				fieldName = "Select from List");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -64,19 +63,19 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
-		task ("Enable Filter by Field and Choose Select field") {
-			AssetListsAdmin.configureFilterByField(fieldName = "Select");
+		task ("Enable Filter by Field and Choose Select from List field") {
+			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
 
 			Select(
-				key_fieldLabel = "Select",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
+				key_fieldLabel = "Select from List",
+				locator1 = "DDMField#SELECT_FROM_LIST",
 				value1 = "option 2");
 
 			Pause(locator1 = "3000");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Select",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
+				key_fieldLabel = "Select from List",
+				locator1 = "DDMField#SELECT_FROM_LIST",
 				value1 = "option 2");
 
 			Button.click(button = "Apply");
@@ -86,18 +85,18 @@ definition {
 
 		task ("Assert the selected info is shown above the Select button") {
 			AssertTextEquals.assertPartialText(
-				key_text = "Select: value 2",
+				key_text = "Select from List: value 2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "Select: value 2");
+				value1 = "Select from List: value 2");
 		}
 
 		task ("Assert the selected info is still shown above the Select button") {
 			PortletEntry.save();
 
 			AssertTextEquals.assertPartialText(
-				key_text = "Select: value 2",
+				key_text = "Select from List: value 2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "Select: value 2");
+				value1 = "Select from List: value 2");
 		}
 	}
 

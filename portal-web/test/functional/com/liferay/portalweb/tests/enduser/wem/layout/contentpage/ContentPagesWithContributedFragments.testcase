@@ -1353,8 +1353,7 @@ definition {
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name");
 
-			DynamicDataMapping.addField(
-				field = "Image",
+			DataEngine.addField(
 				fieldFieldLabel = "Image",
 				fieldName = "Image");
 
@@ -1367,6 +1366,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
 				structureName = "WC Structure Name",
 				webContentImage = "Document_1.jpg",
 				webContentTitle = "Web Content Title");
@@ -1626,7 +1626,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -3792,7 +3792,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

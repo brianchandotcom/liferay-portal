@@ -136,7 +136,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
-			fieldType = "Image");
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -193,9 +193,8 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		Type(
-			key_fieldName = "Image",
-			key_index = "2",
-			locator1 = "TextInput#ANY_DE_DDM",
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
 			value1 = "Web Content Image Description");
 
 		PortletEntry.publish();

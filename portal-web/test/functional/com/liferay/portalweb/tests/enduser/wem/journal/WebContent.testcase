@@ -216,7 +216,7 @@ definition {
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");
 
-		DataEngine.addFields(fieldTypeList = "Date,Image");
+		DataEngine.addFields(fieldNameList = "Date,Image");
 
 		WebContentStructures.saveCP(structureName = "Basic Web Content Edit");
 

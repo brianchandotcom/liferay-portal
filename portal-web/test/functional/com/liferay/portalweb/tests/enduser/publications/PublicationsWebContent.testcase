@@ -182,12 +182,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		for (var structureFieldName : list "Documents and Media,Image,Text") {
-			DynamicDataMapping.addField(
-				field = "${structureFieldName}",
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
-		}
+		DataEngine.addFields(fieldNameList = "Upload,Image,Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -202,7 +197,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Documents and Media,Image,Text",
+			templateFieldNames = "Upload,Image,Text",
 			templateName = "WC Template Name");
 
 		Navigator.openURL();
@@ -214,13 +209,14 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "DocumentsandMedia",
+			dmDocumentTitle = "DM Document Title",
+			navTab = "Web Content Images",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDocumentsAndMedia = "DM Document Title",
 			webContentImage = "Document_1.jpg",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
+			webContentTitle = "WC WebContent Title",
+			webContentUpload = "DM Document Title");
 
 		PortletEntry.publish();
 

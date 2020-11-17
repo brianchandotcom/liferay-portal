@@ -110,7 +110,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Link to Page",
-			fieldType = "Link to Page");
+			fieldName = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1202,7 +1202,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Contentt");
+			fieldName = "Web Contentt");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 

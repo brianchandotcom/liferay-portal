@@ -65,7 +65,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Content");
+			fieldName = "Web Content");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Web Content",
@@ -119,12 +119,11 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Web Content",
-			fieldName = "Text",
-			fieldType = "Web Content");
+			fieldFieldLabel = "Text",
+			fieldName = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -185,7 +184,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -214,7 +213,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Content");
+			fieldName = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -240,20 +239,23 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Title",
-			fieldType = "Rich Text");
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
 
 		for (var count : list "1,2,3") {
 			DataEngine.addField(
 				fieldFieldLabel = "Image ${count}",
-				fieldType = "Image");
+				fieldName = "Image");
 
 			DataEngine.addField(
-				fieldFieldLabel = "Heading ${count}1",
-				fieldType = "Rich Text");
+				fieldFieldLabel = "Heading ${count}",
+				fieldName = "Text",
+				fieldType = "Multiple Lines");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Content ${count}",
-				fieldType = "Rich Text");
+				fieldName = "Text",
+				fieldType = "Multiple Lines");
 		}
 
 		WebContentStructures.saveCP();
@@ -282,20 +284,42 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "3 Column with Images");
 
 		WebContent.addWithStructureCP(
-			fieldName = "title",
-			webContentTextBox = "Green Waste",
-			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			fieldType = "Multiple Lines",
+			webContentText = "Green Waste",
+			webContentTextFieldLabel = "Title",
 			webContentTitle = "Agricultural Science Front Page");
+
+		var count = "1";
+
+		for (var webContentText : list "Mowed Lawns,Mulched Branches,Compost Bin") {
+			WebContent.addWithStructureCP(
+				fieldType = "Multiple Lines",
+				webContentText = "${webContentText}",
+				webContentTextFieldLabel = "Heading ${count}");
+
+			var count = ${count} + 1;
+		}
 
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "Agricultural Science Front Page");
 
 		WebContent.viewWithStructureCP(
-			fieldName = "title",
-			webContentTextBox = "Green Waste",
-			webContentTextBoxList = "Mowed Lawns,Mulched Branches,Compost Bin",
+			fieldType = "Multiple Lines",
+			webContentText = "Green Waste",
+			webContentTextFieldLabel = "Title",
 			webContentTitle = "Agricultural Science Front Page");
+
+		var count = "1";
+
+		for (var webContentText : list "Mowed Lawns,Mulched Branches,Compost Bin") {
+			AssertTextEquals(
+				key_fieldFieldLabel = "Heading ${count}",
+				locator1 = "DDMField#MULTIPLE_LINES",
+				value1 = "${webContentText}");
+
+			var count = ${count} + 1;
+		}
 	}
 
 	@priority = "4"
@@ -312,7 +336,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -399,7 +423,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Link to Page",
-			fieldType = "Link to Page");
+			fieldName = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "Test Structure");
 
@@ -487,11 +511,11 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Cover Image",
-			fieldType = "Image");
+			fieldName = "Image");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Content",
-			fieldType = "Rich Text");
+			fieldName = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -505,19 +529,19 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Cover Image",
-			fieldType = "Image");
+			fieldName = "Image");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Headline",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DataEngine.addField(
 			fieldFieldLabel = "EventDate",
-			fieldType = "Date");
+			fieldName = "Date");
 
 		DataEngine.addField(
 			fieldFieldLabel = "LeadText",
-			fieldType = "Rich Text");
+			fieldName = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -692,16 +716,17 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentStructures.editStructureDefaultValuesCP(
-			editStructureFieldNames = "Text",
-			fieldPredefinedValue = "(Enter Text Here)",
-			structureName = "WC Structure Name");
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentText = "(Enter Text Here)");
+
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

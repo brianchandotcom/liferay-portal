@@ -160,7 +160,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -182,14 +182,10 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			Type(
-				key_fieldName = "Text",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "Web Content Content");
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				webContentText = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}
@@ -311,7 +307,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -333,14 +329,10 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			Type(
-				key_fieldName = "Text",
-				locator1 = "TextInput#DE_DDM",
-				value1 = "Web Content Content");
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				webContentText = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}

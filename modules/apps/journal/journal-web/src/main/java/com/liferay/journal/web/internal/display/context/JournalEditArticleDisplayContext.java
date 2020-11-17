@@ -339,6 +339,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getDefaultArticleLanguageId() {
+		if (_defaultArticleLanguageId != null) {
+			return _defaultArticleLanguageId;
+		}
+
 		Locale siteDefaultLocale = null;
 
 		try {
@@ -351,11 +355,15 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		if (_article == null) {
-			return LocaleUtil.toLanguageId(siteDefaultLocale);
+			_defaultArticleLanguageId = LocaleUtil.toLanguageId(
+				siteDefaultLocale);
+		}
+		else {
+			_defaultArticleLanguageId = LocalizationUtil.getDefaultLanguageId(
+				_article.getContent(), siteDefaultLocale);
 		}
 
-		return LocalizationUtil.getDefaultLanguageId(
-			_article.getContent(), siteDefaultLocale);
+		return _defaultArticleLanguageId;
 	}
 
 	public String getEditArticleURL() {
@@ -783,6 +791,7 @@ public class JournalEditArticleDisplayContext {
 	private String _ddmStructureKey;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
+	private String _defaultArticleLanguageId;
 	private String _defaultLanguageId;
 	private Long _folderId;
 	private Long _groupId;

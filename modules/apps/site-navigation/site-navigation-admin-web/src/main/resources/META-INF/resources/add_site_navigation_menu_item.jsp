@@ -65,52 +65,17 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	var addButton = document.getElementById('<portlet:namespace />addButton');
+<%
+Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
 
-	if (addButton) {
-		addButton.addEventListener('click', function () {
-			var formValidator = Liferay.Form.get('<portlet:namespace />fm')
-				.formValidator;
-
-			formValidator.validate();
-
-			if (formValidator.hasErrors()) {
-				return;
-			}
-
-			var form = document.getElementById('<portlet:namespace />fm');
-			var formData = new FormData(form);
-
-			Liferay.Util.fetch(form.action, {
-				body: formData,
-				method: 'POST',
-			})
-				.then(function (response) {
-					return response.json();
-				})
-				.then(function (response) {
-					if (response.siteNavigationMenuItemId) {
-						Liferay.fire('closeWindow', {
-
-							<%
-							Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-							%>
-
-							id:
-								'_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
-							portletAjaxable: <%= selPortlet.isAjaxable() %>,
-							refresh:
-								'<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>',
-						});
-					}
-					else {
-						Liferay.Util.openToast({
-							message: response.errorMessage,
-							type: 'danger',
-						});
-					}
-				});
-		});
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"selPortletId", HtmlUtil.escapeJS(selPortlet.getPortletId())
+		).put(
+			"selPortletIsAjaxable", selPortlet.isAjaxable()
+		).build()
+	%>'
+	module="js/AddSiteNavigationMenuItem"
+/>

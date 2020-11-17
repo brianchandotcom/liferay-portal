@@ -26,6 +26,12 @@ public class UpgradeCountry extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-7.3.0-7.4.0-country.sql", false);
 
+		runSQL("drop index IX_717B97E1 on Country");
+
+		runSQL("drop index IX_717B9BA2 on Country");
+
+		runSQL("drop index IX_19DA007B on Country");
+
 		if (!hasColumn("Country", "uuid_")) {
 			alter(
 				CountryTable.class,

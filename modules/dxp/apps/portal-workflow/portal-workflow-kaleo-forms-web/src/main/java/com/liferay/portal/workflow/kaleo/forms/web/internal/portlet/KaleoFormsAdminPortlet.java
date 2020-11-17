@@ -247,36 +247,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Starts a <code>WorkflowInstance</code> (in
-	 * <code>com.liferay.portal.kernel</code>) if the user has the
-	 * <code>SUBMIT</code> permission. This method also updates the
-	 * <code>DDLRecord</code> (in the
-	 * <code>com.liferay.dynamic.data.lists.api</code> module).
-	 *
-	 * @param  actionRequest the request from which to get the request
-	 *         parameters
-	 * @param  actionResponse the response to receive the render parameters
-	 * @throws Exception if an exception occurred
-	 */
-	public void startWorkflowInstance(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(),
-			_portal.getUploadPortletRequest(actionRequest));
-
-		checkKaleoProcessPermission(serviceContext, ActionKeys.SUBMIT);
-
-		DDLRecord ddlRecord = updateDDLRecord(serviceContext);
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), KaleoProcess.class.getName(),
-			ddlRecord.getRecordId(), ddlRecord, serviceContext);
-	}
-
-	/**
 	 * Updates the <code>DDLRecord</code> (in the
 	 * <code>com.liferay.dynamic.data.lists.api</code> module), checking the
 	 * permission for the action ID

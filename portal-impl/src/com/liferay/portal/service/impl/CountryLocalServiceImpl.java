@@ -14,6 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.CountryA2Exception;
+import com.liferay.portal.kernel.exception.CountryA3Exception;
+import com.liferay.portal.kernel.exception.CountryIddException;
+import com.liferay.portal.kernel.exception.CountryNameException;
+import com.liferay.portal.kernel.exception.CountryNumberException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.CountryLocalServiceBaseImpl;
 
 /**
@@ -21,4 +29,45 @@ import com.liferay.portal.service.base.CountryLocalServiceBaseImpl;
  * @see CountryLocalServiceBaseImpl
  */
 public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
+
+	@Override
+	public Country addCountry(
+			String name, String a2, String a3, String number, String idd,
+			boolean active)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new CountryNameException();
+		}
+
+		if (Validator.isNull(a2)) {
+			throw new CountryA2Exception();
+		}
+
+		if (Validator.isNull(a3)) {
+			throw new CountryA3Exception();
+		}
+
+		if (Validator.isNull(number)) {
+			throw new CountryNumberException();
+		}
+
+		if (Validator.isNull(idd)) {
+			throw new CountryIddException();
+		}
+
+		long countryId = counterLocalService.increment();
+
+		Country country = countryPersistence.create(countryId);
+
+		country.setName(name);
+		country.setA2(a2);
+		country.setA3(a3);
+		country.setNumber(number);
+		country.setIdd(idd);
+		country.setActive(active);
+
+		return countryPersistence.update(country);
+	}
+
 }

@@ -14,10 +14,43 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RegionCodeException;
+import com.liferay.portal.kernel.exception.RegionNameException;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.RegionLocalServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
+
+	@Override
+	public Region addRegion(
+			long countryId, String regionCode, String name, boolean active)
+		throws PortalException {
+
+		countryPersistence.findByPrimaryKey(countryId);
+
+		if (Validator.isNull(regionCode)) {
+			throw new RegionCodeException();
+		}
+
+		if (Validator.isNull(name)) {
+			throw new RegionNameException();
+		}
+
+		long regionId = counterLocalService.increment();
+
+		Region region = regionPersistence.create(regionId);
+
+		region.setCountryId(countryId);
+		region.setActive(active);
+		region.setName(name);
+		region.setRegionCode(regionCode);
+
+		return regionPersistence.update(region);
+	}
+
 }

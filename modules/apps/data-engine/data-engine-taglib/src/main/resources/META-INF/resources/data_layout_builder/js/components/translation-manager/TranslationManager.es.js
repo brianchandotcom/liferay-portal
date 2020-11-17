@@ -50,8 +50,8 @@ export const TranslationManagerLabel = ({
 
 export default ({
 	availableLanguageIds,
-	defaultLanguageId,
-	editingLanguageId,
+	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	editingLanguageId = themeDisplay.getDefaultLanguageId(),
 	onActiveChange = () => {},
 	onEditingLanguageIdChange,
 	showUserView = false,

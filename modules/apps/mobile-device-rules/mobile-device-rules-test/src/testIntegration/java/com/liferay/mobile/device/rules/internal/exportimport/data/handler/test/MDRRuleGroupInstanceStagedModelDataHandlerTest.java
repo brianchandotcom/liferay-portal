@@ -56,7 +56,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		layout = LayoutTestUtil.addLayout(stagingGroup);
+		_layout = LayoutTestUtil.addLayout(stagingGroup);
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
 
 		return MDRTestUtil.addRuleGroupInstance(
-			group.getGroupId(), Layout.class.getName(), layout.getPlid(),
+			group.getGroupId(), Layout.class.getName(), _layout.getPlid(),
 			ruleGroup.getRuleGroupId());
 	}
 
@@ -139,6 +139,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 			importedRuleGroupInstance.getPriority());
 	}
 
-	protected Layout layout;
+	private Layout _layout;
 
 }

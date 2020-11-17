@@ -912,6 +912,8 @@ definition {
 
 		Button.clickPublish();
 
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Second Page",
 			siteName = "Site Name");

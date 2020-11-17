@@ -44,8 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NESTED_DE</td>
-	<td>//div[contains(@class,'nested')]//div[@data-field-name='${key_fieldName}']/../../../..//div[@data-field-name='${key_nestedFieldName}']//input</td>
+	<td>NESTED_INPUT</td>
+	<td>//div[contains(@class,'nested-separator')][//following-sibling::div[1][//label[normalize-space(text())='${key_fieldName}']]]//following-sibling::div[2]//label[normalize-space(text())='${key_nestedFieldName}']//following-sibling::input</td>
 	<td></td>
 </tr>
 <tr>

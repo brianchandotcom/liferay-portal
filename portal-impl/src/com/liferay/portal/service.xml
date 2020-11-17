@@ -333,18 +333,32 @@
 
 		<!-- Finder methods -->
 
-		<finder name="A2" return-type="Country" unique="true">
-			<finder-column name="a2" />
-		</finder>
-		<finder name="A3" return-type="Country" unique="true">
-			<finder-column name="a3" />
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="Active" return-type="Collection">
 			<finder-column name="active" />
 		</finder>
-		<finder name="Name" return-type="Country" unique="true">
+		<finder name="C_A2" return-type="Country" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="a2" />
+		</finder>
+		<finder name="C_A3" return-type="Country" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="a3" />
+		</finder>
+		<finder name="C_Active" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_N" return-type="Country" unique="true">
+			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="EmailAddress" remote-service="true" uuid="true">
 
@@ -2073,6 +2087,7 @@
 		<!-- References -->
 
 		<reference entity="Country" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="Release" remote-service="false">
 
@@ -3471,6 +3486,7 @@
 		<exception>CountryIdd</exception>
 		<exception>CountryName</exception>
 		<exception>CountryNumber</exception>
+		<exception>DuplicateCountry</exception>
 		<exception>DuplicateGoogleUserId</exception>
 		<exception>DuplicateGroup</exception>
 		<exception>DuplicateOpenId</exception>

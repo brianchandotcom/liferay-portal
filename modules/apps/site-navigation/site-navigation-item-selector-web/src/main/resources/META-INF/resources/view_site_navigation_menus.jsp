@@ -108,10 +108,3 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectSiteNavigationMenuFm',
-		'<%= HtmlUtil.escapeJS(siteNavigationMenuItemSelectorViewDisplayContext.getItemSelectedEventName()) %>'
-	);
-</aui:script>

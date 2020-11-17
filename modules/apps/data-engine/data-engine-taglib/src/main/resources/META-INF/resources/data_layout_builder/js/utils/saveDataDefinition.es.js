@@ -93,16 +93,23 @@ const normalizeField = (
 
 export const normalizeDataDefinition = (
 	dataDefinition,
+	normalizeFieldSet = true,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId()
 ) => {
 	return {
 		...dataDefinition,
-		dataDefinitionFields: dataDefinition.dataDefinitionFields.map((field) =>
-			normalizeField(
-				dataDefinition.availableLanguageIds,
-				field,
-				defaultLanguageId
-			)
+		dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
+			(field) => {
+				if (field.fieldType === 'fieldset' && !normalizeFieldSet) {
+					return field;
+				}
+
+				return normalizeField(
+					dataDefinition.availableLanguageIds,
+					field,
+					defaultLanguageId
+				);
+			}
 		),
 		name: dataDefinition.availableLanguageIds.reduce(
 			(accumulator, currentValue) => {
@@ -171,6 +178,7 @@ export default ({
 	const {defaultLanguageId} = dataDefinition;
 	const normalizedDataDefinition = normalizeDataDefinition(
 		dataDefinition,
+		false,
 		defaultLanguageId
 	);
 	const normalizedDataLayout = normalizeDataLayout(

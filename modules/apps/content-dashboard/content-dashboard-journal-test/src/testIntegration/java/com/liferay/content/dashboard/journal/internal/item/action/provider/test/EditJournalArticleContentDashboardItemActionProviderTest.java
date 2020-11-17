@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,7 +90,8 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
-		mockHttpServletRequest.setAttribute(WebKeys.CURRENT_URL, "currentURL");
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://www.liferay.com");
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(
@@ -104,7 +106,9 @@ public class EditJournalArticleContentDashboardItemActionProviderTest {
 
 		Assert.assertTrue(
 			url.contains("articleId=" + journalArticle.getArticleId()));
-		Assert.assertTrue(url.contains("redirect=currentURL"));
+		Assert.assertTrue(
+			url.contains(
+				"redirect=" + HtmlUtil.escapeURL("http://www.liferay.com")));
 	}
 
 	@Test

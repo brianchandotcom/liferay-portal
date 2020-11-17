@@ -29,6 +29,21 @@ import org.json.JSONObject;
  */
 public class SearchQuery<T extends SpiraArtifact> {
 
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof SearchQuery)) {
+			return false;
+		}
+
+		SearchQuery searchQuery = (SearchQuery)object;
+
+		return matches(searchQuery.getSearchParameters());
+	}
+
+	public SearchParameter[] getSearchParameters() {
+		return _searchParameters;
+	}
+
 	public boolean matches(SearchParameter[] searchParameters) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -63,19 +78,19 @@ public class SearchQuery<T extends SpiraArtifact> {
 
 		@Override
 		public boolean equals(Object object) {
-			if (object instanceof SearchParameter) {
-				SearchParameter otherSearchParameter = (SearchParameter)object;
-
-				if (_name.equals(otherSearchParameter.getName()) &&
-					_value.equals(otherSearchParameter.getValue())) {
-
-					return true;
-				}
-
+			if (!(object instanceof SearchParameter)) {
 				return false;
 			}
 
-			return super.equals(object);
+			SearchParameter searchParameter = (SearchParameter)object;
+
+			JSONObject jsonObject = searchParameter.toJSONObject();
+
+			if (jsonObject.similar(toJSONObject())) {
+				return true;
+			}
+
+			return false;
 		}
 
 		public String getName() {

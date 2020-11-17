@@ -103,6 +103,8 @@ public class NotificationTemplateContextFactory {
 
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
+				"calendarBookingId", calendarBooking.getCalendarBookingId()
+			).put(
 				"calendarName", calendar.getName(user.getLocale(), true)
 			).put(
 				"endTime",

@@ -21,9 +21,19 @@ import com.liferay.calendar.notification.NotificationRecipient;
 import com.liferay.calendar.notification.NotificationSender;
 import com.liferay.calendar.notification.NotificationSenderException;
 import com.liferay.calendar.notification.NotificationTemplateContext;
+import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationUtil;
+import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
+import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 
@@ -73,10 +83,26 @@ public class EmailNotificationSender implements NotificationSender {
 				notificationTemplateContext, NotificationField.BODY,
 				NotificationTemplateRenderer.MODE_HTML);
 
+			String calendarBookingString = null;
+
+			if (notificationTemplateContext.getNotificationTemplateType() ==
+					NotificationTemplateType.INVITE) {
+
+				Map<String, Serializable> attributes =
+					notificationTemplateContext.getAttributes();
+
+				long calendarBookingId = GetterUtil.getLong(
+					attributes.get("calendarBookingId"));
+
+				calendarBookingString =
+					CalendarBookingLocalServiceUtil.exportCalendarBooking(
+						calendarBookingId, CalendarUtil.ICAL_EXTENSION);
+			}
+
 			sendNotification(
 				notificationTemplateContext.getFromAddress(),
 				notificationTemplateContext.getFromName(),
-				notificationRecipient, subject, body);
+				notificationRecipient, subject, body, calendarBookingString);
 		}
 		catch (Exception exception) {
 			throw new NotificationSenderException(exception);
@@ -87,7 +113,7 @@ public class EmailNotificationSender implements NotificationSender {
 	public void sendNotification(
 			String fromAddress, String fromName,
 			NotificationRecipient notificationRecipient, String subject,
-			String notificationMessage)
+			String notificationMessage, String calendarBookingString)
 		throws NotificationSenderException {
 
 		try {
@@ -103,6 +129,12 @@ public class EmailNotificationSender implements NotificationSender {
 				notificationRecipient.getEmailAddress());
 
 			mailMessage.setTo(toInternetAddress);
+
+			if (Validator.isNotNull(calendarBookingString)) {
+				mailMessage.addFileAttachment(
+					FileUtil.createTempFile(calendarBookingString.getBytes()),
+					"invite.ics");
+			}
 
 			_mailService.sendEmail(mailMessage);
 		}

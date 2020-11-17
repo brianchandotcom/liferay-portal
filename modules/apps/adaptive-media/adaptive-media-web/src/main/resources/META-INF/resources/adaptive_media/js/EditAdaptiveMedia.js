@@ -147,12 +147,15 @@ const EditAdaptiveMedia = ({
 				values
 			);
 
-			if (!values[maxWidthId] && !values[maxHeightId]) {
+			if (values[maxWidthId] === 0 && values[maxHeightId] === 0) {
+				errorsList[maxWidthId] = Liferay.Language.get(
+					'please-enter-a-max-width-or-max-height-value-larger-than-0'
+				);
+			}
+			else if (!values[maxWidthId] && !values[maxHeightId]) {
 				errorsList[maxWidthId] = Liferay.Language.get(
 					'at-least-one-value-is-required'
 				);
-
-				errorsList[maxHeightId] = true;
 			}
 
 			return errorsList;
@@ -266,7 +269,7 @@ const EditAdaptiveMedia = ({
 							error={
 								touched[maxWidthId] &&
 								touched[maxHeightId] &&
-								errors[maxHeightId]
+								Boolean(errors[maxWidthId])
 							}
 							label={Liferay.Language.get('max-height-px')}
 							min="0"

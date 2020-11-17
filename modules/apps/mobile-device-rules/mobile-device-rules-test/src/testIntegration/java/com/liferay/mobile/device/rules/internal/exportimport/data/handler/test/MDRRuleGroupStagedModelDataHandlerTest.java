@@ -17,12 +17,13 @@ package com.liferay.mobile.device.rules.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
+		return _mdrRuleGroupLocalService.getMDRRuleGroupByUuidAndGroupId(
 			uuid, group.getGroupId());
 	}
 
@@ -81,5 +82,8 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 		Assert.assertEquals(
 			ruleGroup.getDescription(), importedRuleGroup.getDescription());
 	}
+
+	@Inject
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

@@ -18,13 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalService;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -82,7 +83,7 @@ public class MDRRuleStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return MDRRuleLocalServiceUtil.getMDRRuleByUuidAndGroupId(
+		return _mdrRuleLocalService.getMDRRuleByUuidAndGroupId(
 			uuid, group.getGroupId());
 	}
 
@@ -105,7 +106,7 @@ public class MDRRuleStagedModelDataHandlerTest
 
 		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
 
-		MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
+		_mdrRuleGroupLocalService.getMDRRuleGroupByUuidAndGroupId(
 			ruleGroup.getUuid(), group.getGroupId());
 	}
 
@@ -124,5 +125,11 @@ public class MDRRuleStagedModelDataHandlerTest
 			rule.getDescription(), importedRule.getDescription());
 		Assert.assertEquals(rule.getType(), importedRule.getType());
 	}
+
+	@Inject
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+
+	@Inject
+	private MDRRuleLocalService _mdrRuleLocalService;
 
 }

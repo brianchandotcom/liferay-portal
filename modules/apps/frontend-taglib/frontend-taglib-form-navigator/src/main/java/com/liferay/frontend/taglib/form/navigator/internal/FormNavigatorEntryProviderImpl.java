@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants;
 import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.frontend.taglib.form.navigator.internal.configuration.FormNavigatorEntryConfigurationRetriever;
+import com.liferay.frontend.taglib.form.navigator.internal.servlet.taglib.ui.WrapperFormNavigatorEntry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -186,7 +187,7 @@ public class FormNavigatorEntryProviderImpl
 						formNavigatorEntry.getCategoryKey()))),
 			new PropertyServiceReferenceComparator<>(
 				"form.navigator.entry.order"));
-		_serviceTracker = ServiceTrackerFactory.open(
+		_serviceTracker = ServiceTrackerFactory.openWrapperRegistrator(
 			bundleContext,
 			(Class
 				<com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry
@@ -194,7 +195,8 @@ public class FormNavigatorEntryProviderImpl
 						(Class<?>)
 							com.liferay.portal.kernel.servlet.taglib.ui.
 								FormNavigatorEntry.class,
-			new FormNavigatorEntryServiceTrackerCustomizer(bundleContext));
+			FormNavigatorEntry.class, WrapperFormNavigatorEntry::new,
+			"form.navigator.entry.order");
 	}
 
 	@Deactivate

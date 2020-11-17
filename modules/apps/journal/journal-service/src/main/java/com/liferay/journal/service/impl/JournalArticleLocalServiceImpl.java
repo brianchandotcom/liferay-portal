@@ -85,9 +85,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -1851,45 +1849,24 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchDisplayArticle(long groupId, String articleId) {
-		Date now = new Date();
-
-		DynamicQuery dynamicQuery = dynamicQuery();
-
-		Property displayDateProperty = PropertyFactoryUtil.forName(
-			"displayDate");
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				displayDateProperty.isNull(), displayDateProperty.lt(now)));
-
-		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
-
-		dynamicQuery.add(groupIdProperty.eq(groupId));
-
-		Property articleIdProperty = PropertyFactoryUtil.forName("articleId");
-
-		dynamicQuery.add(articleIdProperty.eq(articleId));
-
-		Property statusProperty = PropertyFactoryUtil.forName("status");
-
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-
-		Property expirationDateProperty = PropertyFactoryUtil.forName(
-			"expirationDate");
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				expirationDateProperty.isNull(),
-				expirationDateProperty.gt(now)));
-
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("version"));
-
-		dynamicQuery.setLimit(0, 1);
-
-		List<JournalArticle> articles = dynamicQuery(dynamicQuery);
+		List<JournalArticle> articles = journalArticlePersistence.findByG_A_ST(
+			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
 		if (articles.isEmpty()) {
 			return null;
+		}
+
+		Date now = new Date();
+
+		for (JournalArticle article : articles) {
+			Date displayDate = article.getDisplayDate();
+			Date expirationDate = article.getExpirationDate();
+
+			if (((displayDate == null) || displayDate.before(now)) &&
+				((expirationDate == null) || expirationDate.after(now))) {
+
+				return article;
+			}
 		}
 
 		return articles.get(0);

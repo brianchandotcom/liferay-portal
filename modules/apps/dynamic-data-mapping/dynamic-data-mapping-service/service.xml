@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" change-tracking-enabled="true" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.dynamic.data.mapping">
 	<namespace>DDM</namespace>
-	<entity local-service="true" name="DDMContent" remote-service="false" uuid="true">
+	<entity deprecated="true" local-service="true" name="DDMContent" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

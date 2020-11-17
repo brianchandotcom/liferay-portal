@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_THE_ENTERED_TIME_BUTTON</td>
+	<td>//button[contains(@aria-label,'Delete the entered time')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISABLED_PUBLISH_BUTTON</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='Publish']</td>
 	<td></td>

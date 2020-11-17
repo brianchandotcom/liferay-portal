@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,30 +41,33 @@ public class DLExternalVideoDLEditFileEntryDisplayContext
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		DLFileEntryType dlFileEntryType) {
+		DLFileEntryType dlFileEntryType, ServletContext servletContext) {
 
 		super(
 			_UUID, parentDLEditFileEntryDisplayContext, httpServletRequest,
 			httpServletResponse, dlFileEntryType);
+
+		_servletContext = servletContext;
 	}
 
 	public DLExternalVideoDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileEntry fileEntry,
-		DLExternalVideo dlExternalVideo) {
+		DLExternalVideo dlExternalVideo, ServletContext servletContext) {
 
 		super(
 			_UUID, parentDLEditFileEntryDisplayContext, httpServletRequest,
 			httpServletResponse, fileEntry);
 
 		_dlExternalVideo = dlExternalVideo;
+		_servletContext = servletContext;
 	}
 
 	@Override
 	public DLFilePicker getDLFilePicker(String onFilePickCallback) {
 		return new DLExternalVideoDLFilePicker(
-			_dlExternalVideo, request, onFilePickCallback);
+			_dlExternalVideo, request, onFilePickCallback, _servletContext);
 	}
 
 	@Override
@@ -115,5 +119,6 @@ public class DLExternalVideoDLEditFileEntryDisplayContext
 		"f3dad960-a5ea-4499-badd-0d1a06ee1c93");
 
 	private DLExternalVideo _dlExternalVideo;
+	private final ServletContext _servletContext;
 
 }

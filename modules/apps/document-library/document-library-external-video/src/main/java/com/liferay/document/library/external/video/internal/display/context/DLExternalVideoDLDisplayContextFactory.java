@@ -70,7 +70,7 @@ public class DLExternalVideoDLDisplayContextFactory
 		if (dlExternalVideoDDMStructure != null) {
 			return new DLExternalVideoDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, httpServletRequest,
-				httpServletResponse, dlFileEntryType);
+				httpServletResponse, dlFileEntryType, _servletContext);
 		}
 
 		return parentDLEditFileEntryDisplayContext;
@@ -98,7 +98,8 @@ public class DLExternalVideoDLDisplayContextFactory
 			return new DLExternalVideoDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, httpServletRequest,
 				httpServletResponse, fileEntry,
-				_getDLExternalVideo(dlExternalVideoMetadataHelper));
+				_getDLExternalVideo(dlExternalVideoMetadataHelper),
+				_servletContext);
 		}
 
 		return parentDLEditFileEntryDisplayContext;

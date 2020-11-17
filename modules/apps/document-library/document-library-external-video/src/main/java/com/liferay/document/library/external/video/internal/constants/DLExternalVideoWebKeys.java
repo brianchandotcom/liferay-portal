@@ -21,4 +21,11 @@ public class DLExternalVideoWebKeys {
 
 	public static final String EMBEDDABLE_HTML = "EMBEDDABLE_HTML";
 
+	public static final String GET_EXTERNAL_VIDEO_FIELDS_URL =
+		"GET_EXTERNAL_VIDEO_FIELDS_URL";
+
+	public static final String NAMESPACE = "NAMESPACE";
+
+	public static final String ON_FILE_PICK_CALLBACK = "ON_FILE_PICK_CALLBACK";
+
 }

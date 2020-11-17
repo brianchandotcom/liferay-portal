@@ -18,21 +18,22 @@ import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.io.IOException;
+
 import javax.portlet.ResourceURL;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -43,11 +44,12 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 
 	public DLExternalVideoDLFilePicker(
 		DLExternalVideo dlExternalVideo, HttpServletRequest httpServletRequest,
-		String onFilePickCallback) {
+		String onFilePickCallback, ServletContext servletContext) {
 
 		_dlExternalVideo = dlExternalVideo;
 		_httpServletRequest = httpServletRequest;
 		_onFilePickCallback = onFilePickCallback;
+		_servletContext = servletContext;
 	}
 
 	@Override
@@ -80,42 +82,18 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 	}
 
 	@Override
-	public String getJavaScript() throws PortalException {
-		String templateId =
-			"/com/liferay/document/library/external/video/internal/display" +
-				"/context/dependencies/dl_external_video_file_picker.ftl";
-
-		Class<?> clazz = getClass();
-
-		URLTemplateResource templateResource = new URLTemplateResource(
-			templateId, clazz.getResource(templateId));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
-
-		template.put(
-			"getDLExternalVideoFieldsURL", _getDLExternalVideoFieldsURL());
-		template.put(
-			"namespace",
-			PortalUtil.getPortletNamespace(
-				DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO));
-		template.put("onFilePickCallback", _onFilePickCallback);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-
-		return unsyncStringWriter.toString();
+	public String getJavaScript() {
+		return null;
 	}
 
 	@Override
 	public String getJavaScriptModuleName() {
-		return "DLExternalVideoPicker";
+		return null;
 	}
 
 	@Override
 	public String getOnClickCallback() {
-		return "openPicker";
+		return null;
 	}
 
 	@Override
@@ -126,6 +104,30 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 	@Override
 	public boolean isCustomizedFileButtonVisible() {
 		return false;
+	}
+
+	@Override
+	public void renderFilePicker(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher("/file_picker.jsp");
+
+		httpServletRequest.setAttribute(
+			DLExternalVideo.class.getName(), _dlExternalVideo);
+		httpServletRequest.setAttribute(
+			DLExternalVideoWebKeys.GET_EXTERNAL_VIDEO_FIELDS_URL,
+			_getDLExternalVideoFieldsURL());
+		httpServletRequest.setAttribute(
+			DLExternalVideoWebKeys.NAMESPACE,
+			PortalUtil.getPortletNamespace(
+				DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO));
+		httpServletRequest.setAttribute(
+			DLExternalVideoWebKeys.ON_FILE_PICK_CALLBACK, _onFilePickCallback);
+
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
 	private String _getDLExternalVideoFieldsURL() {
@@ -145,5 +147,6 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 	private final DLExternalVideo _dlExternalVideo;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _onFilePickCallback;
+	private final ServletContext _servletContext;
 
 }

@@ -171,7 +171,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 			long siteNavigationMenuId, int type)
 		throws PortletException {
 
-		PortletURL portletURL = _getBaseURL(siteNavigationMenuId);
+		PortletURL portletURL = _getBasePortletURL(siteNavigationMenuId);
 
 		if (type == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
 			portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
@@ -312,7 +312,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 		return breadcrumbEntries;
 	}
 
-	private PortletURL _getBaseURL(long siteNavigationMenuId)
+	private PortletURL _getBasePortletURL(long siteNavigationMenuId)
 		throws PortletException {
 
 		PortletResponse portletResponse =
@@ -434,7 +434,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 			long siteNavigationMenuId, long parentSiteNavigationMenuItemId)
 		throws PortletException {
 
-		PortletURL portletURL = _getBaseURL(siteNavigationMenuId);
+		PortletURL portletURL = _getBasePortletURL(siteNavigationMenuId);
 
 		if (parentSiteNavigationMenuItemId >= 0) {
 			portletURL.setParameter(

@@ -256,11 +256,11 @@ const Calculator = forwardRef(
 			updateExpression({index, newExpression});
 		};
 
-		const handleFieldSelected = ({fieldReference}) => {
+		const handleFieldSelected = ({fieldName}) => {
 			const newExpression = addTokenToExpression({
 				expression,
 				tokenType: Token.VARIABLE,
-				tokenValue: fieldReference,
+				tokenValue: fieldName,
 			});
 
 			updateExpression({index, newExpression});

@@ -371,14 +371,9 @@ definition {
 		}
 
 		task ("Edit the web content article") {
-			Click(locator1 = "TextInput#TITLE");
-
-			PortletEntry.inputTitle(title = "Webcontent Title Edit");
-
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "Webcontent Content Edit");
+			WebContent.addCP(
+				webContentContent = "Webcontent Content Edit",
+				webContentTitle = "Webcontent Title Edit");
 
 			Button.clickPublish();
 		}

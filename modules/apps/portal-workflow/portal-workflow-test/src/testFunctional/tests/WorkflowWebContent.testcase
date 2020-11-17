@@ -75,8 +75,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DynamicDataMapping.addField(
-			field = "Image",
+		DataEngine.addField(
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
@@ -153,10 +152,7 @@ definition {
 
 		WebContent.viewApprovedStatus(webContentTitle = "WC WebContent Title Edit");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
-
-		WebContent.viewCPWithoutContentField(
-			field = "Image",
+		WebContent.viewWithStructureCP(
 			webContentImage = "Document_2.jpeg",
 			webContentTitle = "WC WebContent Title Edit");
 

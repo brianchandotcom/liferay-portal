@@ -319,7 +319,7 @@ definition {
 		}
 
 		if (isSet(webContentColor)) {
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "Color",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentColor}");
@@ -334,7 +334,7 @@ definition {
 		}
 
 		if (isSet(webContentDecimal)) {
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "Decimal",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentDecimal}");
@@ -373,7 +373,7 @@ definition {
 		}
 
 		if (isSet(webContentInteger)) {
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "Integer",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentInteger}");
@@ -386,7 +386,7 @@ definition {
 				value1 = "${webContentLinkToPage}");
 		}
 		if (isSet(webContentNumber)) {
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "Number",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentNumber}");
@@ -412,7 +412,7 @@ definition {
 		}
 
 		if (isSet(webContentText)) {
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "Text",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentText}");

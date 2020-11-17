@@ -107,7 +107,7 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			key_fieldName = "Image",
+			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
@@ -123,7 +123,7 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			key_fieldName = "Image",
+			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 
@@ -139,7 +139,7 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			key_fieldName = "Image",
+			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
 			value1 = "Document_3.png");
 

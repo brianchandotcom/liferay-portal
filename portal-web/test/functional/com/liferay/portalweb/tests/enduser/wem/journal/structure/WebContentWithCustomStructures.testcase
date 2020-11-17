@@ -274,7 +274,7 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "WC WebContent Title");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Text");
@@ -367,19 +367,10 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent 2 Title");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent 2 Title");
-
-		WebContent.viewCPWithoutContentField(
-			field = "Web Content",
-			fieldData = "WC WebContent 1 Title",
-			fieldFieldLabel = "Web Content",
-			fieldName = "WebContent",
-			webContentTitle = "WC WebContent 2 Title");
-
-		WebContent.viewCPWithoutContentField(
-			field = "Geolocation",
-			fieldFieldLabel = "Geolocation",
-			webContentTitle = "WC WebContent 2 Title");
+		WebContent.viewWithStructureCP(
+			webContentGeolocation = "true",
+			webContentTitle = "WC WebContent 1 Title",
+			webContentWebContent = "WC WebContent 2 Title");
 	}
 
 	@description = "This is a use case for LRQA-61632."

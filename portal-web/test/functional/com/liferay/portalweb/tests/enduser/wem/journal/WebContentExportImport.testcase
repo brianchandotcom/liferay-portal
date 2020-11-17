@@ -156,7 +156,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentText = "WC WebContent Text"
+			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title",
 			webContentWebContent = "Basic WebContent Title");
 

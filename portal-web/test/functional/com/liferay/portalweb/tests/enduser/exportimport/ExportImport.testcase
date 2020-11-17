@@ -1488,12 +1488,12 @@ definition {
 
 		WebContent.viewWithStructureCP(webContentTitle = "Exported Article");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Liferay");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			index = "2",
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",

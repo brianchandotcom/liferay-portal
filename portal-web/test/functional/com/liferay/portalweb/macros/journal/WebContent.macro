@@ -2286,7 +2286,7 @@ definition {
 				var webContentColorFieldLabel = "Color";
 			}
 
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "${webContentColorFieldLabel}",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentColor}");
@@ -2302,6 +2302,16 @@ definition {
 				key_fieldFieldLabel = "${webContentDateFieldLabel}",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentDate}");
+		}
+
+		if (isSet(webContentGeolocation)) {
+			if (!(isSet(webContentGeolocationFieldLabel))) {
+				var webContentGeolocationFieldLabel = "Geolocation";
+			}
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "${webContentGeolocationFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
 		if (isSet(webContentImage)) {
@@ -2348,13 +2358,13 @@ definition {
 			}
 
 			if ("${numericType}" == "Decimal") {
-				AssertTextEquals(
+				AssertTextEquals.assertValue(
 					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
 					locator1 = "WCEditWebContent#TEXT_INPUT",
 					value1 = "${webContentNumber}");
 			}
 			else {
-				AssertTextEquals(
+				AssertTextEquals.assertValue(
 					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
 					locator1 = "WCEditWebContent#TEXT_INPUT",
 					value1 = "${webContentNumber}");
@@ -2421,7 +2431,7 @@ definition {
 					value1 = "${webContentText}");
 			}
 			else {
-				AssertTextEquals(
+				AssertTextEquals.assertValue(
 					key_fieldFieldLabel = "${webContentTextFieldLabel}",
 					locator1 = "WCEditWebContent#TEXT_INPUT",
 					value1 = "${webContentText}");
@@ -2434,7 +2444,7 @@ definition {
 			}
 
 			AssertTextEquals(
-				key_fieldName = "${webContentUploadFieldLabel}",
+				key_fieldFieldLabel = "${webContentUploadFieldLabel}",
 				locator1 = "TextInput#SELECTOR_INPUT",
 				value1 = "${webContentUpload}");
 		}

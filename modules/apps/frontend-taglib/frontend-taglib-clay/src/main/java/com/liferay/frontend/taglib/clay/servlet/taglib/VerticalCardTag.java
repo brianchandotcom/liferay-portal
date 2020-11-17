@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -578,17 +579,17 @@ public class VerticalCardTag extends BaseCardTag {
 
 		jspWriter.write("</div>");
 
-		if (!ListUtil.isEmpty(getActionDropdownItems())) {
-			jspWriter.write(
-				"<div class=\"autofit-col\"><div class=\"dropdown\">");
-			jspWriter.write("<div class=\"component-action dropdown-toggle\">");
+		List<DropdownItem> actionDropdownItems = getActionDropdownItems();
 
-			IconTag iconTag = new IconTag();
+		if (!ListUtil.isEmpty(actionDropdownItems)) {
+			jspWriter.write("<div class=\"autofit-col\">");
 
-			iconTag.setSymbol("ellipsis-v");
-			iconTag.doTag(pageContext);
+			DropdownActionsTag dropdownActionsTag = new DropdownActionsTag();
 
-			jspWriter.write("</div></div></div>");
+			dropdownActionsTag.setDropdownItems(actionDropdownItems);
+			dropdownActionsTag.doTag(pageContext);
+
+			jspWriter.write("</div>");
 		}
 
 		jspWriter.write("</div></div>");

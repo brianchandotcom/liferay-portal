@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -328,18 +329,17 @@ public class UserCardTag extends BaseCardTag {
 
 		jspWriter.write("</div>");
 
-		if (!ListUtil.isEmpty(getActionDropdownItems())) {
-			jspWriter.write("<div class=\"autofit-col\"><div class=\"dropdown");
-			jspWriter.write("\"><div class=\"component-action dropdown-toggle");
-			jspWriter.write("\">");
+		List<DropdownItem> actionDropdownItems = getActionDropdownItems();
 
-			IconTag iconTag = new IconTag();
+		if (!ListUtil.isEmpty(actionDropdownItems)) {
+			jspWriter.write("<div class=\"autofit-col\">");
 
-			iconTag.setSymbol("ellipsis-v");
+			DropdownActionsTag dropdownActionsTag = new DropdownActionsTag();
 
-			iconTag.doTag(pageContext);
+			dropdownActionsTag.setDropdownItems(actionDropdownItems);
+			dropdownActionsTag.doTag(pageContext);
 
-			jspWriter.write("</div></div></div>");
+			jspWriter.write("</div>");
 		}
 
 		jspWriter.write("</div></div></div>");

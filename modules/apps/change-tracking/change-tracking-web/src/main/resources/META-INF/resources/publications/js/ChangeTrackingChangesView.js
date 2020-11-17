@@ -189,21 +189,21 @@ class ChangeTrackingChangesView extends React.Component {
 						this.state.node
 					);
 
+					const oldState = window.history.state;
+
 					if (
-						window.history.state &&
-						window.history.state.modelClassNameId &&
-						window.history.state.modelClassNameId ===
+						oldState &&
+						oldState.modelClassNameId &&
+						oldState.modelClassNameId ===
 							this.initialNode.modelClassNameId &&
-						window.history.state.modelClassPK ===
-							this.initialNode.modelClassPK
+						oldState.modelClassPK === this.initialNode.modelClassPK
 					) {
 						window.history.replaceState(
 							{
 								dropdownItems,
-								modelClassNameId:
-									window.history.state.modelClassNameId,
-								modelClassPK: window.history.state.modelClassPK,
-								path: window.history.state.path,
+								modelClassNameId: oldState.modelClassNameId,
+								modelClassPK: oldState.modelClassPK,
+								path: oldState.path,
 								renderInnerHTML: {__html: text},
 								senna: true,
 							},
@@ -1343,12 +1343,17 @@ class ChangeTrackingChangesView extends React.Component {
 
 			pathname = state.path.substring(0, index);
 
-			if (index > 0) {
-				search = state.path.substring(index, state.path.length);
+			if (index < 0) {
+				if (Liferay.SPA && Liferay.SPA.app) {
+					Liferay.SPA.app.skipLoadPopstate = false;
+
+					Liferay.SPA.app.navigate(window.location.href, true);
+				}
+
+				return;
 			}
-			else {
-				search = '';
-			}
+
+			search = state.path.substring(index, state.path.length);
 		}
 
 		const params = new URLSearchParams(search);
@@ -1357,7 +1362,7 @@ class ChangeTrackingChangesView extends React.Component {
 			if (Liferay.SPA && Liferay.SPA.app) {
 				Liferay.SPA.app.skipLoadPopstate = false;
 
-				Liferay.SPA.app.navigate(event.target.location.href, true);
+				Liferay.SPA.app.navigate(window.location.href, true);
 			}
 
 			return;
@@ -1479,13 +1484,14 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 		}
 
+		const oldState = window.history.state;
+
 		const newPathParam = this._getPathParam(
 			this.state.breadcrumbItems,
 			this.state.filterClass,
 			this.state.viewType
 		);
 
-		const oldState = window.history.state;
 		const params = new URLSearchParams(window.location.search);
 
 		const oldPathParam = params.get(this.PARAM_PATH);
@@ -1496,21 +1502,15 @@ class ChangeTrackingChangesView extends React.Component {
 		) {
 			const path = this._getPath(newPathParam, showHideable);
 
-			const newState = {
+			let newState = {
 				path,
 				senna: true,
 			};
 
 			if (oldState) {
-				if (oldState.modelClassNameId) {
-					newState.modelClassNameId = oldState.modelClassNameId;
-					newState.modelClassPK = oldState.modelClassPK;
-				}
+				newState = this._clone(oldState);
 
-				if (oldState.renderInnerHTML) {
-					newState.dropdownItems = oldState.dropdownItems;
-					newState.renderInnerHTML = oldState.renderInnerHTML;
-				}
+				newState.path = path;
 			}
 
 			window.history.replaceState(newState, document.title, path);
@@ -1960,24 +1960,23 @@ class ChangeTrackingChangesView extends React.Component {
 								this.state.node
 							);
 
+							const oldState = window.history.state;
+
 							if (
-								window.history.state &&
-								window.history.state.modelClassNameId &&
-								window.history.state.modelClassNameId ===
+								oldState &&
+								oldState.modelClassNameId &&
+								oldState.modelClassNameId ===
 									node.modelClassNameId &&
-								window.history.state.modelClassPK ===
-									node.modelClassPK &&
-								window.history.state.path === path
+								oldState.modelClassPK === node.modelClassPK &&
+								oldState.path === path
 							) {
 								window.history.replaceState(
 									{
 										dropdownItems,
 										modelClassNameId:
-											window.history.state
-												.modelClassNameId,
-										modelClassPK:
-											window.history.state.modelClassPK,
-										path,
+											oldState.modelClassNameId,
+										modelClassPK: oldState.modelClassPK,
+										path: oldState.path,
 										renderInnerHTML: {__html: text},
 										senna: true,
 									},

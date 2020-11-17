@@ -6,6 +6,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.dynamic.data.mapping.verify.DDMServiceVerifyProcess">
 		<priority value="WARN" />
 	</category>

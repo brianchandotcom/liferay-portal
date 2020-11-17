@@ -16,16 +16,17 @@ package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -40,35 +41,30 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 
 	@Override
 	public StorageAdapter getStorageAdapter(String storageType) {
-		return _storageAdaptersMap.get(storageType);
+		return _serviceTrackerMap.getService(storageType);
 	}
 
 	@Override
 	public Set<String> getStorageTypes() {
-		return _storageAdaptersMap.keySet();
+		return _serviceTrackerMap.keySet();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		service = StorageAdapter.class
-	)
-	public void setStorageAdapter(StorageAdapter storageAdapter) {
-		_storageAdaptersMap.put(
-			storageAdapter.getStorageType(), storageAdapter);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, StorageAdapter.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, StorageAdapter::getStorageType));
 	}
 
-	public void unsetStorageAdapter(StorageAdapter storageAdapter) {
-		_storageAdaptersMap.remove(storageAdapter);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	@Reference(
-		target = "(component.name=com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter)"
-	)
-	private StorageAdapter _defaultStorageAdapter;
+	@Reference
+	private DefaultStorageAdapter _defaultStorageAdapter;
 
-	private final Map<String, StorageAdapter> _storageAdaptersMap =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, StorageAdapter> _serviceTrackerMap;
 
 }

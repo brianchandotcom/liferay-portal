@@ -14,31 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.internal.storage;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.model.DDMContent;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
-import com.liferay.dynamic.data.mapping.storage.BaseStorageAdapter;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,57 +29,59 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pablo Carvalho
  */
 @Component(service = StorageAdapter.class)
-public class JSONStorageAdapter extends BaseStorageAdapter {
+public class JSONStorageAdapter implements StorageAdapter {
 
 	@Override
-	public long doCreate(
+	public long create(
 			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws Exception {
+		throws StorageException {
 
-		validate(ddmFormValues, serviceContext);
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"JSON storage adapter is deprecated, using default storage " +
+					"adapter");
+		}
 
-		long classNameId = _portal.getClassNameId(DDMContent.class.getName());
-
-		String serializedDDMFormValues = serialize(ddmFormValues);
-
-		DDMContent ddmContent = _ddmContentLocalService.addContent(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			DDMStorageLink.class.getName(), null, serializedDDMFormValues,
-			serviceContext);
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			ddmStructureId);
-
-		DDMStructureVersion ddmStructureVersion =
-			ddmStructure.getLatestStructureVersion();
-
-		_ddmStorageLinkLocalService.addStorageLink(
-			classNameId, ddmContent.getPrimaryKey(),
-			ddmStructureVersion.getStructureVersionId(), serviceContext);
-
-		return ddmContent.getPrimaryKey();
+		return _defaultStorageAdapter.create(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	@Override
-	public void doUpdate(
-			long classPK, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
-		throws Exception {
+	public void deleteByClass(long classPK) throws StorageException {
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"JSON storage adapter is deprecated, using default storage " +
+					"adapter");
+		}
 
-		validate(ddmFormValues, serviceContext);
+		_defaultStorageAdapter.deleteByClass(classPK);
+	}
 
-		DDMContent ddmContent = _ddmContentLocalService.getContent(classPK);
+	@Override
+	public void deleteByDDMStructure(long ddmStructureId)
+		throws StorageException {
 
-		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"JSON storage adapter is deprecated, using default storage " +
+					"adapter");
+		}
 
-		String serializedDDMFormValues = serialize(ddmFormValues);
+		_defaultStorageAdapter.deleteByDDMStructure(ddmStructureId);
+	}
 
-		ddmContent.setData(serializedDDMFormValues);
+	@Override
+	public DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
 
-		_ddmContentLocalService.updateContent(
-			ddmContent.getPrimaryKey(), ddmContent.getName(),
-			ddmContent.getDescription(), ddmContent.getData(), serviceContext);
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"JSON storage adapter is deprecated, using default storage " +
+					"adapter");
+		}
+
+		return _defaultStorageAdapter.getDDMFormValues(classPK);
 	}
 
 	@Override
@@ -105,132 +89,25 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		return StorageType.JSON.toString();
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				content, ddmForm);
-
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
-
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
-	}
-
 	@Override
-	protected void doDeleteByClass(long classPK) throws Exception {
-		if (_ddmContentLocalService.fetchDDMContent(classPK) != null) {
-			_ddmContentLocalService.deleteDDMContent(classPK);
+	public void update(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"JSON storage adapter is deprecated, using default storage " +
+					"adapter");
 		}
 
-		_ddmStorageLinkLocalService.deleteClassStorageLink(classPK);
+		_defaultStorageAdapter.update(classPK, ddmFormValues, serviceContext);
 	}
 
-	@Override
-	protected void doDeleteByDDMStructure(long ddmStructureId)
-		throws Exception {
-
-		List<DDMStorageLink> ddmStorageLinks =
-			_ddmStorageLinkLocalService.getStructureStorageLinks(
-				ddmStructureId);
-
-		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
-			doDeleteByClass(ddmStorageLink.getClassPK());
-		}
-	}
-
-	@Override
-	protected DDMFormValues doGetDDMFormValues(long classPK) throws Exception {
-		DDMContent ddmContent = _ddmContentLocalService.getContent(classPK);
-
-		DDMStorageLink ddmStorageLink =
-			_ddmStorageLinkLocalService.getClassStorageLink(
-				ddmContent.getPrimaryKey());
-
-		DDMStructureVersion ddmStructureVersion =
-			_ddmStructureVersionLocalService.getDDMStructureVersion(
-				ddmStorageLink.getStructureVersionId());
-
-		DDMStructure ddmStructure = ddmStructureVersion.getStructure();
-
-		return deserialize(
-			ddmContent.getData(), ddmStructure.createFullHierarchyDDMForm());
-	}
-
-	protected String serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializerSerializeRequest.Builder builder =
-			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
-				ddmFormValues);
-
-		DDMFormValuesSerializerSerializeResponse
-			ddmFormValuesSerializerSerializeResponse =
-				_jsonDDMFormValuesSerializer.serialize(builder.build());
-
-		return ddmFormValuesSerializerSerializeResponse.getContent();
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMContentLocalService(
-		DDMContentLocalService ddmContentLocalService) {
-
-		_ddmContentLocalService = ddmContentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesValidator(
-		DDMFormValuesValidator ddmFormValuesValidator) {
-
-		_ddmFormValuesValidator = ddmFormValuesValidator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-
-		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
-	protected void validate(
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
-		throws Exception {
-
-		boolean validateDDMFormValues = GetterUtil.getBoolean(
-			serviceContext.getAttribute("validateDDMFormValues"), true);
-
-		if (!validateDDMFormValues) {
-			return;
-		}
-
-		_ddmFormValuesValidator.validate(ddmFormValues);
-	}
-
-	private DDMContentLocalService _ddmContentLocalService;
-	private DDMFormValuesValidator _ddmFormValuesValidator;
-	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
-
-	@Reference(target = "(ddm.form.values.deserializer.type=json)")
-	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
-
-	@Reference(target = "(ddm.form.values.serializer.type=json)")
-	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSONStorageAdapter.class);
 
 	@Reference
-	private Portal _portal;
+	private DefaultStorageAdapter _defaultStorageAdapter;
 
 }

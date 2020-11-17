@@ -971,8 +971,9 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text",
-			fieldName = "Upload");
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload",
+			targetFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -983,7 +984,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Text,Documents and Media",
+			templateFieldNames = "Text,Upload",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
@@ -1020,12 +1021,10 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.viewCP(
-			webContentDocumentsAndMedia = "DM Document Title",
+		WebContent.viewWithStructureCP(
 			webContentText = "Web Content Text",
-			webContentTitle = "Web Content Title");
+			webContentTitle = "Web Content Title",
+			webContentUpload = "DM Document Title");
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.repository.InvalidRepositoryIdException");
 	}
@@ -1429,8 +1428,9 @@ definition {
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Separator",
-			fieldName = "Text");
+			fieldFieldLabel = "Text",
+			fieldName = "Text",
+			targetFieldLabel = "Separator");
 
 		WebContentStructures.saveCP(structureName = "Exported Structure");
 

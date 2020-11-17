@@ -148,8 +148,9 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text",
-			fieldName = "Numeric");
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -169,7 +170,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentNumber = "123",
+			webContentNumeric = "123",
 			webContentText = "Text",
 			webContentTitle = "WC WebContent Title");
 
@@ -2334,6 +2335,8 @@ definition {
 				webContentText = "This is a Text field",
 				webContentUpload = "Document_1.jpg",
 				webContentWebContent = "Web Content Title");
+
+			WebContentAdmin.gotoEntry(entry = "Web Content With Predefined Value");
 
 			WebContent.viewWithStructureCP(
 				predefinedValue = "true",

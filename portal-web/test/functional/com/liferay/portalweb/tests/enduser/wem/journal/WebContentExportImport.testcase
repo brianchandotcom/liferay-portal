@@ -122,8 +122,9 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text",
-			fieldName = "Web Content");
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content",
+			targetFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -155,12 +156,9 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentSelectWCFile = "Basic WebContent Title",
-			webContentTitle = "WC WebContent Title");
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "WC WebContent Text");
+			webContentText = "WC WebContent Text"
+			webContentTitle = "WC WebContent Title",
+			webContentWebContent = "Basic WebContent Title");
 
 		PortletEntry.publish();
 

@@ -14,13 +14,13 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
 

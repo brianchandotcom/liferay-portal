@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
 

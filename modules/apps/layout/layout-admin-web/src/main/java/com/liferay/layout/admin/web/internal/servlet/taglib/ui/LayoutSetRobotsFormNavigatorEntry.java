@@ -14,8 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 
 import javax.servlet.ServletContext;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.configuration.css.web.internal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants;
 
 import javax.servlet.ServletContext;

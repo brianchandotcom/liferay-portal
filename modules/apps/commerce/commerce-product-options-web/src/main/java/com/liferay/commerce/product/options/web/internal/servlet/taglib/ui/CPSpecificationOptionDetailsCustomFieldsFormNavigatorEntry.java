@@ -15,12 +15,12 @@
 package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Locale;

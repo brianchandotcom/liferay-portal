@@ -14,9 +14,9 @@
 
 package com.liferay.site.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.util.Locale;
 

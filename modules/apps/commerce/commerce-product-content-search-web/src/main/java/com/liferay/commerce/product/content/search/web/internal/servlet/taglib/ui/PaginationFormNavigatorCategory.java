@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.content.search.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConstants;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;

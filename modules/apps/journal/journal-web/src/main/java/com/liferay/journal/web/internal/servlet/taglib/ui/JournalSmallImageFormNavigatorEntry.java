@@ -14,9 +14,9 @@
 
 package com.liferay.journal.web.internal.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.io.IOException;
 

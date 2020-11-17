@@ -14,7 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.internal.storage;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteResponse;
@@ -22,49 +24,40 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Preston Crary
  */
 @Component(
-	immediate = true, property = "ddm.storage.adapter.type=json",
+	immediate = true, property = "ddm.storage.adapter.type=default",
 	service = DDMStorageAdapter.class
 )
-public class JSONDDMStorageAdapter implements DDMStorageAdapter {
+public class DefaultDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Override
 	public DDMStorageAdapterDeleteResponse delete(
-			DDMStorageAdapterDeleteRequest ddmStorageAdapterDeleteRequest)
-		throws StorageException {
+		DDMStorageAdapterDeleteRequest ddmStorageAdapterDeleteRequest) {
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"JSON dynamic data mapping storage adapter is deprecated, " +
-					"using default dynamic data mapping storage storage " +
-						"adapter");
-		}
+		_ddmFieldLocalService.deleteDDMFormValues(
+			ddmStorageAdapterDeleteRequest.getPrimaryKey());
 
-		return _ddmStorageAdapter.delete(ddmStorageAdapterDeleteRequest);
+		return DDMStorageAdapterDeleteResponse.Builder.newBuilder(
+		).build();
 	}
 
 	@Override
 	public DDMStorageAdapterGetResponse get(
-			DDMStorageAdapterGetRequest ddmStorageAdapterGetRequest)
-		throws StorageException {
+		DDMStorageAdapterGetRequest ddmStorageAdapterGetRequest) {
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"JSON dynamic data mapping storage adapter is deprecated, " +
-					"using default dynamic data mapping storage storage " +
-						"adapter");
-		}
-
-		return _ddmStorageAdapter.get(ddmStorageAdapterGetRequest);
+		return DDMStorageAdapterGetResponse.Builder.newBuilder(
+			_ddmFieldLocalService.getDDMFormValues(
+				ddmStorageAdapterGetRequest.getDDMForm(),
+				ddmStorageAdapterGetRequest.getPrimaryKey())
+		).build();
 	}
 
 	@Override
@@ -72,20 +65,30 @@ public class JSONDDMStorageAdapter implements DDMStorageAdapter {
 			DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest)
 		throws StorageException {
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"JSON dynamic data mapping storage adapter is deprecated, " +
-					"using default dynamic data mapping storage storage " +
-						"adapter");
+		long primaryKey = ddmStorageAdapterSaveRequest.getPrimaryKey();
+
+		if (ddmStorageAdapterSaveRequest.isInsert()) {
+			primaryKey = _counterLocalService.increment();
 		}
 
-		return _ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
+		try {
+			_ddmFieldLocalService.updateDDMFormValues(
+				ddmStorageAdapterSaveRequest.getStructureId(), primaryKey,
+				ddmStorageAdapterSaveRequest.getDDMFormValues());
+		}
+		catch (PortalException portalException) {
+			throw new StorageException(portalException);
+		}
+
+		return DDMStorageAdapterSaveResponse.Builder.newBuilder(
+			primaryKey
+		).build();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JSONDDMStorageAdapter.class);
+	@Reference
+	private CounterLocalService _counterLocalService;
 
-	@Reference(target = "(ddm.storage.adapter.type=default)")
-	private DDMStorageAdapter _ddmStorageAdapter;
+	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
 
 }

@@ -41,6 +41,12 @@ definition {
 		}
 	}
 
+	macro enableAssingRolesBySegmentsCheckbox {
+		Check(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+
+		PortletEntry.save();
+	}
+
 	macro fillProperty {
 		Click(locator1 = "Segmentation#PROPERTY_FIELD");
 

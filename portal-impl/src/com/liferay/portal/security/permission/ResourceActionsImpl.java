@@ -1093,12 +1093,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 				if (!portletName.equals(PortletKeys.PORTAL)) {
 					_checkPortletLayoutManagerActions(portletActions);
-
-					if ((portlet != null) &&
-						(portlet.getControlPanelEntryCategory() != null)) {
-
-						portletActions.add(ActionKeys.ACCESS_IN_CONTROL_PANEL);
-					}
 				}
 
 				_readResource(

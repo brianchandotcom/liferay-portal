@@ -98,7 +98,7 @@ if (feed != null) {
 	feedURL.setCacheability(ResourceURL.FULL);
 	feedURL.setParameter("groupId", String.valueOf(groupId));
 	feedURL.setParameter("feedId", String.valueOf(feedId));
-	feedURL.setResourceID("rss");
+	feedURL.setResourceID("/journal/rss");
 }
 
 portletDisplay.setShowBackIcon(true);

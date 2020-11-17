@@ -308,7 +308,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				_liferayPortletResponse.createActionURL();
 
 			copyArticleURL.setParameter(
-				ActionRequest.ACTION_NAME, "copyArticle");
+				ActionRequest.ACTION_NAME, "/journal/copy_article");
 
 			copyArticleURL.setParameter("redirect", _getRedirect());
 			copyArticleURL.setParameter(

@@ -424,7 +424,7 @@ definition {
 
 	@priority = "5"
 	test AssetPublisherFilterAndOrderByFieldType {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

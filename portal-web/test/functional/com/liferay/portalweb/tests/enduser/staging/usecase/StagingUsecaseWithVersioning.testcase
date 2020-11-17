@@ -718,6 +718,8 @@ definition {
 
 	@priority = "5"
 	test StagingSiteVariationIncompletePage {
+		property portal.acceptance = "true";
+
 		Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");

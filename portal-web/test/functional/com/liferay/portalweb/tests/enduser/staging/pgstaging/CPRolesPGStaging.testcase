@@ -39,6 +39,8 @@ definition {
 
 	@priority = "4"
 	test AccessStaging {
+		property portal.acceptance = "true";
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(

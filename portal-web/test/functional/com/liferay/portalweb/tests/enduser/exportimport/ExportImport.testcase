@@ -251,6 +251,8 @@ definition {
 	@description = "This is a use case for LPS-82752."
 	@priority = "5"
 	test ExportContentThenPublish {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
@@ -1386,6 +1388,8 @@ definition {
 	@description = "This is a use case for LPS-83326."
 	@priority = "5"
 	test ExportImportWebContentFolderWithWorkflow {
+		property portal.acceptance = "true";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentFolder.addCP(
@@ -1557,6 +1561,7 @@ definition {
 	@description = "This is a use case for LPS-88498."
 	@priority = "5"
 	test ExportViaGuest {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExportImport#ExportViaGuest";
 
 		JSONUser.addUser(

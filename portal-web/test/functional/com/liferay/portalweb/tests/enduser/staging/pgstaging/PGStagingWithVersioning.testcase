@@ -91,6 +91,8 @@ definition {
 
 	@priority = "5"
 	test AddPageWithPageVersioningEnabled {
+		property portal.acceptance = "true";
+
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPublicPage(pageName = "Staging Page Versioning");
@@ -118,6 +120,8 @@ definition {
 
 	@priority = "5"
 	test AddSitePagesVariation {
+		property portal.acceptance = "true";
+
 		Staging.addSitePagesVariationPG(sitePagesVariationName = "Site Pages Variation Name");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");

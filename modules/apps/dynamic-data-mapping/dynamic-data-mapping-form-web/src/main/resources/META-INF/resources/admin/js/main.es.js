@@ -112,6 +112,10 @@ class Form extends Component {
 						'defaultLocale'
 					);
 
+					this.props.availableLanguageIds = [
+						this.props.defaultLanguageId,
+					];
+
 					this.props.editingLanguageId = translationManager.get(
 						'editingLocale'
 					);
@@ -119,6 +123,15 @@ class Form extends Component {
 					this._translationManagerHandles = [
 						translationManager.on('editingLocale', ({newValue}) => {
 							this.props.editingLanguageId = newValue;
+
+							const {availableLanguageIds} = this.props;
+
+							if (!availableLanguageIds.includes(newValue)) {
+								this.props.availableLanguageIds = [
+									...availableLanguageIds,
+									newValue,
+								];
+							}
 						}),
 						translationManager.on(
 							'availableLocales',
@@ -355,8 +368,16 @@ class Form extends Component {
 		});
 
 		if (removedItems.size > 0) {
+			const {availableLanguageIds} = this.props;
+
+			const removedLanguageId = removedItems.keys().next().value;
+
+			this.props.availableLanguageIds = availableLanguageIds.filter(
+				(languageId) => languageId !== removedLanguageId
+			);
+
 			store.emit('languageIdDeleted', {
-				locale: removedItems.keys().next().value,
+				locale: removedLanguageId,
 			});
 		}
 	}
@@ -1106,6 +1127,15 @@ Form.PROPS = {
 	 */
 
 	autocompleteUserURL: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {!array}
+	 */
+
+	availableLanguageIds: Config.array().value([]),
 
 	/**
 	 * The context for rendering a layout that represents a form.

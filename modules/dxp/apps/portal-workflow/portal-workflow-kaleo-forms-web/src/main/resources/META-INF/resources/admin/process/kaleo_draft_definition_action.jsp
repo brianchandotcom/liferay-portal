@@ -44,7 +44,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="deleteKaleoDraftDefinitions" var="deleteURL">
+	<portlet:actionURL name="/kaleo_forms/delete_kaleo_definition_versions" var="deleteURL">
 		<portlet:param name="tabs1" value="unpublished" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="historyKey" value="workflow" />

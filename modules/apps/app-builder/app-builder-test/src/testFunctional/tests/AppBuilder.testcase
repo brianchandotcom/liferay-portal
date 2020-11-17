@@ -2967,6 +2967,96 @@ definition {
 		App.saveApp();
 	}
 
+	@description = "As an App Adm, I want to make my app's name available in different languages"
+	@priority = "5"
+	test ValidateAppLocalization {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.validateLocalization(symbolName = "en-US");
+
+		FormViewBuilder.setName(formViewName = "EN Form View");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "My EN Text");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.validateLocalization(symbolName = "pt-BR");
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "My PT Text");
+
+		FormViewBuilder.setName(formViewName = "PT Form View");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "My EN Text");
+
+		FormViewBuilder.validateLocalization(symbolName = "en-US");
+
+		TableViewBuilder.setName(tableViewName = "EN Table View");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.validateLocalization(symbolName = "pt-BR");
+
+		TableViewBuilder.setName(tableViewName = "PT Table View");
+
+		TableViewBuilder.save();
+
+		Navigator.openURL();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "pt-BR/");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Construtor",
+			panel = "Aplicativos",
+			portlet = "Objetos");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "PT Form View");
+
+		AppBuilderAdmin.switchTab(tabName = "Visualização de Tabela");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "PT Table View");
+
+		AppBuilderAdmin.openItem(itemName = "PT Table View");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "My PT Text");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "My PT Text");
+
+		Navigator.openURL();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "en-US/");
+	}
+
 	@description = "Make sure the search result show if the column is available to be added or already inserted in the table view"
 	@priority = "5"
 	test ValidateDisabledFieldInTableView {

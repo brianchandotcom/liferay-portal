@@ -476,15 +476,12 @@ definition {
 
 	macro switchLocalization {
 		Click(
-			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION",
-			key_symbolName = "${symbolName}"
-		);
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
 
 		Click(
-			locator1 = "FormViewBuilder#LOCALIZATION_LIST",
-			key_localizationList = "${localizationName}"
-		);
-
+			key_localizationList = "${localizationName}",
+			locator1 = "FormViewBuilder#LOCALIZATION_LIST");
 	}
 
 	macro switchToAdvancedTab {
@@ -539,8 +536,8 @@ definition {
 
 	macro validateLocalization {
 		AssertElementPresent(
-			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION",
-			key_symbolName = "${symbolName}");
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
 	}
 
 	macro validateNoFieldLabel {

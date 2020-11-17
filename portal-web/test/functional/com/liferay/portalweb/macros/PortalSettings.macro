@@ -838,7 +838,7 @@ definition {
 	macro uncheckStrangersVerifyEmailCheckbox {
 		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 
-        PortletEntry.save();
+		PortletEntry.save();
 	}
 
 	macro viewAuthenticationCASCP {

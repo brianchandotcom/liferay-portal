@@ -82,7 +82,7 @@ public class ViewDiscardDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"ctEntries",
+			"ctEntriesJSONArray",
 			() -> {
 				JSONArray ctEntriesJSONArray =
 					JSONFactoryUtil.createJSONArray();

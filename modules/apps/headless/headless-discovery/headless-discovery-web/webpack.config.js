@@ -12,11 +12,7 @@
  * details.
  */
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
 const buildName = 'headless-discovery-web-min.js';
 
 const config = {
@@ -25,7 +21,7 @@ const config = {
 		rules: [
 			{
 				test: /\.css$/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+				use: ['css-loader'],
 			},
 			{
 				exclude: /(node_modules)/,
@@ -47,22 +43,6 @@ const config = {
 		path: path.resolve('src/main/resources/META-INF/resources/dist'),
 		publicPath: '',
 	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			chunkFilename: '[id].css',
-			filename: '[name].css',
-		}),
-		new HtmlWebpackPlugin({
-			cache: false,
-			filename: 'index.html',
-			inject: true,
-			template: './src/index.html',
-		}),
-		new ScriptExtHtmlWebpackPlugin({
-			inline: /\.js$/,
-		}),
-		new StyleExtHtmlWebpackPlugin(),
-	],
 };
 
 module.exports = () => config;

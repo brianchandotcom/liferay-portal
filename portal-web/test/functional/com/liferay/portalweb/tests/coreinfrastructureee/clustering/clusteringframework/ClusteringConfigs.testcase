@@ -30,6 +30,7 @@ definition {
 
 	@priority = "5"
 	test StartupJDBCPING {
+		property app.server.types = "tomcat";
 		property cluster.jdbc.ping = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ClusteringConfigs#StartupJDBCPING";

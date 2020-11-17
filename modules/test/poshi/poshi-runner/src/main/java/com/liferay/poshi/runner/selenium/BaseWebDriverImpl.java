@@ -4673,10 +4673,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	static {
 		String testDependenciesDirName = PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
-		String ocularSnapImageDirName =
-			testDependenciesDirName + "//ocular//snap";
 		String ocularResultImageDirName =
 			testDependenciesDirName + "//ocular//result";
+		String ocularSnapImageDirName =
+			testDependenciesDirName + "//ocular//snap";
 		String sikuliImagesDirName =
 			testDependenciesDirName + "//sikuli//linux//";
 
@@ -4702,8 +4702,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		_OUTPUT_DIR_NAME = outputDirName;
-		_OCULAR_SNAP_IMAGE_DIR_NAME = ocularSnapImageDirName;
 		_OCULAR_RESULT_IMAGE_DIR_NAME = ocularResultImageDirName;
+		_OCULAR_SNAP_IMAGE_DIR_NAME = ocularSnapImageDirName;
 		_SIKULI_IMAGES_DIR_NAME = sikuliImagesDirName;
 		_TEST_DEPENDENCIES_DIR_NAME = testDependenciesDirName;
 	}

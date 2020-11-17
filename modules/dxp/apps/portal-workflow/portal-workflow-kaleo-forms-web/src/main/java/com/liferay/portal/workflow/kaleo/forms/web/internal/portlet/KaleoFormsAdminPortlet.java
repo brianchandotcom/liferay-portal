@@ -527,33 +527,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			KaleoFormsWebConfiguration.class, properties);
 	}
 
-	/**
-	 * Checks the permission for the action ID.
-	 *
-	 * @param  serviceContext the service context to be applied
-	 * @param  actionId the action ID
-	 * @throws Exception if an exception occurred
-	 */
-	protected void checkKaleoProcessPermission(
-			ServiceContext serviceContext, String actionId)
-		throws Exception {
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long kaleoProcessId = ParamUtil.getLong(
-			httpServletRequest, "kaleoProcessId");
-
-		KaleoProcessPermission.check(
-			permissionChecker, kaleoProcessId, actionId);
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -680,119 +653,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 		catch (DocumentException documentException) {
 			return defaultName;
-		}
-	}
-
-	protected DDMFormFieldValue getNameAndInstanceIdDDMFormFieldValue(
-		List<DDMFormFieldValue> ddmFormFieldValues, String name,
-		String instanceId) {
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			if (name.equals(ddmFormFieldValue.getName()) &&
-				instanceId.equals(ddmFormFieldValue.getInstanceId())) {
-
-				return ddmFormFieldValue;
-			}
-		}
-
-		return null;
-	}
-
-	protected List<DDMFormFieldValue> getRemovedByReviewerDDMFormFieldValues(
-		List<DDMFormFieldValue> reviewedDDMFormFieldValues,
-		List<DDMFormFieldValue> beforeReviewDDMFormFieldValues) {
-
-		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
-			new ArrayList<>();
-
-		for (DDMFormFieldValue beforeReviewDDMFormFieldValue :
-				beforeReviewDDMFormFieldValues) {
-
-			DDMFormFieldValue actualDDMFormFieldValue =
-				getNameAndInstanceIdDDMFormFieldValue(
-					reviewedDDMFormFieldValues,
-					beforeReviewDDMFormFieldValue.getName(),
-					beforeReviewDDMFormFieldValue.getInstanceId());
-
-			if (actualDDMFormFieldValue == null) {
-				removedByReviewerDDMFormFieldValues.add(
-					beforeReviewDDMFormFieldValue);
-			}
-			else {
-				List<DDMFormFieldValue>
-					nestedRemovedByReviewerDDMFormFieldValues =
-						getRemovedByReviewerDDMFormFieldValues(
-							actualDDMFormFieldValue.
-								getNestedDDMFormFieldValues(),
-							beforeReviewDDMFormFieldValue.
-								getNestedDDMFormFieldValues());
-
-				if (!nestedRemovedByReviewerDDMFormFieldValues.isEmpty()) {
-					beforeReviewDDMFormFieldValue.setNestedDDMFormFields(
-						nestedRemovedByReviewerDDMFormFieldValues);
-
-					removedByReviewerDDMFormFieldValues.add(
-						beforeReviewDDMFormFieldValue);
-				}
-			}
-		}
-
-		return removedByReviewerDDMFormFieldValues;
-	}
-
-	@Override
-	protected boolean isSessionErrorException(Throwable throwable) {
-		if (throwable instanceof DuplicateKaleoDefinitionNameException ||
-			throwable instanceof KaleoDefinitionContentException ||
-			throwable instanceof KaleoDefinitionNameException ||
-			throwable instanceof KaleoProcessDDMTemplateIdException ||
-			throwable instanceof NoSuchDefinitionException ||
-			throwable instanceof NoSuchDefinitionVersionException ||
-			throwable instanceof RecordSetDDMStructureIdException ||
-			throwable instanceof RecordSetNameException ||
-			throwable instanceof RequiredStructureException ||
-			throwable instanceof RequiredWorkflowDefinitionException ||
-			throwable instanceof StructureDefinitionException ||
-			throwable instanceof WorkflowException) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected void removeRemovedByReviewerDDMFormFieldValues(
-		List<DDMFormFieldValue> currentDDMFormFieldValues,
-		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues) {
-
-		List<DDMFormFieldValue> pendingRemovalDDMFormFieldValues =
-			new ArrayList<>();
-
-		for (DDMFormFieldValue currentDDMFormFieldValue :
-				currentDDMFormFieldValues) {
-
-			DDMFormFieldValue actualDDMFormFieldValue =
-				getNameAndInstanceIdDDMFormFieldValue(
-					removedByReviewerDDMFormFieldValues,
-					currentDDMFormFieldValue.getName(),
-					currentDDMFormFieldValue.getInstanceId());
-
-			if (actualDDMFormFieldValue != null) {
-				if (actualDDMFormFieldValue.equals(currentDDMFormFieldValue)) {
-					pendingRemovalDDMFormFieldValues.add(
-						currentDDMFormFieldValue);
-				}
-				else {
-					removeRemovedByReviewerDDMFormFieldValues(
-						currentDDMFormFieldValue.getNestedDDMFormFieldValues(),
-						actualDDMFormFieldValue.getNestedDDMFormFieldValues());
-				}
-			}
-		}
-
-		if (!pendingRemovalDDMFormFieldValues.isEmpty()) {
-			currentDDMFormFieldValues.removeAll(
-				pendingRemovalDDMFormFieldValues);
 		}
 	}
 
@@ -1009,134 +869,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
 	}
 
-	/**
-	 * Updates the Kaleo process's asset entry with new asset categories, tag
-	 * names, and link entries, removing and adding them as necessary.
-	 *
-	 * @param  userId the primary key of the user updating the record's asset
-	 *         entry
-	 * @param  ddlRecord the DDL record
-	 * @param  kaleoProcess the Kaleo process
-	 * @param  assetCategoryIds the primary keys of the new asset categories
-	 * @param  assetTagNames the new asset tag names
-	 * @param  locale the locale to apply to the asset
-	 * @param  priority the new priority
-	 * @throws PortalException if a portal exception occurred
-	 */
-	protected void updateAssetEntry(
-			long userId, DDLRecord ddlRecord, KaleoProcess kaleoProcess,
-			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
-			Double priority)
-		throws PortalException {
-
-		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
-
-		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
-
-		String ddmStructureName = ddmStructure.getName(locale);
-
-		String ddlRecordSetName = ddlRecordSet.getName(locale);
-
-		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, ddlRecordSetName}, false);
-
-		_assetEntryLocalService.updateEntry(
-			userId, kaleoProcess.getGroupId(), kaleoProcess.getCreateDate(),
-			kaleoProcess.getModifiedDate(), KaleoProcess.class.getName(),
-			ddlRecord.getRecordId(), kaleoProcess.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, true, null, null, null, null,
-			ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null, null,
-			0, 0, priority);
-	}
-
-	/**
-	 * Updates the DDL record by replacing its values, or creates a new DDL
-	 * record if one does not exist in the request. This method also updates the
-	 * Kaleo process's asset entry.
-	 *
-	 * @param  serviceContext the service context to be applied
-	 * @return the DDL record
-	 * @throws Exception if an exception occurred
-	 */
-	protected DDLRecord updateDDLRecord(ServiceContext serviceContext)
-		throws Exception {
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		long ddlRecordId = ParamUtil.getLong(httpServletRequest, "ddlRecordId");
-
-		long kaleoProcessId = ParamUtil.getLong(
-			httpServletRequest, "kaleoProcessId");
-
-		KaleoProcess kaleoProcess = _kaleoProcessService.getKaleoProcess(
-			kaleoProcessId);
-
-		DDLRecord ddlRecord = _ddlRecordLocalService.fetchDDLRecord(
-			ddlRecordId);
-
-		DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
-
-		DDMFormValues ddmFormValues = _ddm.getDDMFormValues(
-			ddlRecordSet.getDDMStructureId(), StringPool.BLANK, serviceContext);
-
-		if (ddlRecord == null) {
-			long ddlRecordSetId = ParamUtil.getLong(
-				httpServletRequest, "ddlRecordSetId");
-
-			ddlRecord = _ddlRecordLocalService.addRecord(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				ddlRecordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
-				ddmFormValues, serviceContext);
-		}
-		else {
-			boolean majorVersion = ParamUtil.getBoolean(
-				serviceContext, "majorVersion");
-
-			long ddmTemplateId = ParamUtil.getLong(
-				httpServletRequest, "ddmTemplateId");
-
-			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure(
-				ddmTemplateId);
-
-			long ddmStructureId = ddmStructure.getPrimaryKey();
-
-			DDMFormValues ddlRecordDDMFormValues = ddlRecord.getDDMFormValues();
-
-			Fields reviewFormFields = _ddm.getFields(
-				ddmStructureId, ddlRecordDDMFormValues);
-
-			DDMFormValues reviewFormDDMFormValues =
-				_fieldsToDDMFormValuesConverter.convert(
-					ddmStructure, reviewFormFields);
-
-			List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
-				getRemovedByReviewerDDMFormFieldValues(
-					ddmFormValues.getDDMFormFieldValues(),
-					reviewFormDDMFormValues.getDDMFormFieldValues());
-
-			removeRemovedByReviewerDDMFormFieldValues(
-				ddlRecordDDMFormValues.getDDMFormFieldValues(),
-				removedByReviewerDDMFormFieldValues);
-
-			ddmFormValues = _ddmFormValuesMerger.merge(
-				ddmFormValues, ddlRecordDDMFormValues);
-
-			ddlRecord = _ddlRecordLocalService.updateRecord(
-				serviceContext.getUserId(), ddlRecordId, majorVersion,
-				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
-				serviceContext);
-		}
-
-		updateAssetEntry(
-			serviceContext.getUserId(), ddlRecord, kaleoProcess,
-			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
-			serviceContext.getAssetPriority());
-
-		return ddlRecord;
-	}
-
 	@Reference
 	protected StorageEngine storageEngine;
 
@@ -1148,28 +880,16 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
 	private DDLExporterFactory _ddlExporterFactory;
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference
-	private DDM _ddm;
-
-	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 
 	@Reference
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
-
-	@Reference
-	private DDMFormValuesMerger _ddmFormValuesMerger;
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService
@@ -1179,9 +899,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private KaleoProcessService _kaleoProcessService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

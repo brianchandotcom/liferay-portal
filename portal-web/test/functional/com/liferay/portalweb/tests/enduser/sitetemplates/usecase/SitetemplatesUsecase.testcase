@@ -485,7 +485,7 @@ definition {
 	@description = "This is a use case for LPS-86487."
 	@priority = "4"
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
 
 		var portalURL = PropsUtil.get("portal.url");

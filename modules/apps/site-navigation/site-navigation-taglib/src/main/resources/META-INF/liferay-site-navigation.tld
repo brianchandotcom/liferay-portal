@@ -107,10 +107,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>privateLayout</name>
+			<name>navigationMenuMode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
+			<type>com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode</type>
 		</attribute>
 		<attribute>
 			<description>Whether to display help messages intended for page administrators.</description>

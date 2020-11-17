@@ -73,10 +73,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "Fields");
 		}
 
-		var key_fieldFieldLabel = "${fieldFieldLabel}";
-		var key_fieldName = "${fieldName}";
-
 		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldFieldLabel = "${targetFieldLabel}",
+			key_fieldName = "${fieldName}",
 			locator1 = "Sidebar#ADD_FIELD_NAME",
 			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${fieldName}");
@@ -98,6 +97,7 @@ definition {
 			value1 = "${fieldFieldLabel}");
 
 		AssertElementPresent(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${fieldFieldLabel}");
 

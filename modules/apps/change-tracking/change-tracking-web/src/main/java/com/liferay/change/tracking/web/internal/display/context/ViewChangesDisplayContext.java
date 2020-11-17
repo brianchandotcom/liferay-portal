@@ -60,8 +60,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.net.URL;
-
 import java.text.Format;
 
 import java.util.Collection;
@@ -267,22 +265,6 @@ public class ViewChangesDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"activeCTCollection",
 			_ctCollection.getCtCollectionId() == _activeCTCollectionId
-		).put(
-			"basePath",
-			() -> {
-				RenderURL baseURL = _renderResponse.createRenderURL();
-
-				baseURL.setParameter(
-					"mvcRenderCommandName", "/change_tracking/view_changes");
-				baseURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-
-				URL url = new URL(baseURL.toString());
-
-				return StringBundler.concat(
-					url.getPath(), StringPool.QUESTION, url.getQuery());
-			}
 		).put(
 			"changes",
 			() -> {

@@ -28,23 +28,8 @@ class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.CHANGE_TYPE_ADDED = 'added';
-		this.CHANGE_TYPE_DELETED = 'deleted';
-		this.COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
-		this.COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
-		this.COLUMN_SITE = 'SITE';
-		this.COLUMN_TITLE = 'TITLE';
-		this.COLUMN_USER = 'USER';
-		this.FILTER_CLASS_EVERYTHING = 'everything';
-		this.GLOBAL_SITE_NAME = Liferay.Language.get('global');
-		this.MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
-		this.POP_STATE = 'popstate';
-		this.VIEW_TYPE_CHANGES = 'changes';
-		this.VIEW_TYPE_CONTEXT = 'context';
-
 		const {
 			activeCTCollection,
-			basePath,
 			changes,
 			contextView,
 			ctCollectionId,
@@ -62,23 +47,37 @@ class ChangeTrackingChangesView extends React.Component {
 			userInfo,
 		} = props;
 
+		this.CHANGE_TYPE_ADDED = 'added';
+		this.CHANGE_TYPE_DELETED = 'deleted';
+		this.COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
+		this.COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
+		this.COLUMN_SITE = 'SITE';
+		this.COLUMN_TITLE = 'TITLE';
+		this.COLUMN_USER = 'USER';
+		this.FILTER_CLASS_EVERYTHING = 'everything';
+		this.GLOBAL_SITE_NAME = Liferay.Language.get('global');
+		this.MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
+		this.PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
+		this.PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
+		this.PARAM_PATH = namespace + 'path';
+		this.PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
+		this.POP_STATE = 'popstate';
+		this.VIEW_TYPE_CHANGES = 'changes';
+		this.VIEW_TYPE_CONTEXT = 'context';
+
 		this.activeCTCollection = activeCTCollection;
-		this.basePath = basePath;
 		this.changes = changes;
 		this.contextView = contextView;
 		this.ctCollectionId = ctCollectionId;
 		this.discardURL = discardURL;
 		this.models = models;
-		this.namespace = namespace;
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
 		this.rootDisplayClasses = rootDisplayClasses;
-		this.siteNames = siteNames;
 		this.spritemap = spritemap;
-		this.typeNames = typeNames;
 		this.userInfo = userInfo;
 
-		this._populateModelInfo();
+		this._populateModelInfo(siteNames, typeNames);
 
 		const pathState = this._getPathState(pathParam);
 
@@ -98,7 +97,9 @@ class ChangeTrackingChangesView extends React.Component {
 		const pathname = window.location.pathname;
 		const search = window.location.search;
 
-		if (this._isWithinApp(new URLSearchParams(search))) {
+		const params = new URLSearchParams(search);
+
+		if (this._isWithinApp(params)) {
 			const state = {
 				path: pathname + search,
 				senna: true,
@@ -113,6 +114,11 @@ class ChangeTrackingChangesView extends React.Component {
 
 			window.history.replaceState(state, document.title);
 		}
+
+		params.delete(this.PARAM_PATH);
+		params.delete(this.PARAM_SHOW_HIDEABLE);
+
+		this.basePath = pathname + '?' + params.toString();
 
 		let loading = false;
 
@@ -782,12 +788,12 @@ class ChangeTrackingChangesView extends React.Component {
 		return (
 			this.basePath +
 			'&' +
-			this.namespace +
-			'path=' +
+			this.PARAM_PATH +
+			'=' +
 			pathParam +
 			'&' +
-			this.namespace +
-			'showHideable=' +
+			this.PARAM_SHOW_HIDEABLE +
+			'=' +
 			showHideable.toString()
 		);
 	}
@@ -1357,9 +1363,7 @@ class ChangeTrackingChangesView extends React.Component {
 			return;
 		}
 
-		const pathState = this._getPathState(
-			params.get(this.namespace + 'path')
-		);
+		const pathState = this._getPathState(params.get(this.PARAM_PATH));
 
 		const filterClass = pathState.filterClass;
 		const nodeId = pathState.nodeId;
@@ -1484,7 +1488,7 @@ class ChangeTrackingChangesView extends React.Component {
 		const oldState = window.history.state;
 		const params = new URLSearchParams(window.location.search);
 
-		const oldPathParam = params.get(this.namespace + 'path');
+		const oldPathParam = params.get(this.PARAM_PATH);
 
 		if (
 			this._isWithinApp(params) &&
@@ -1544,9 +1548,9 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_isWithinApp(params) {
-		const ctCollectionId = params.get(this.namespace + 'ctCollectionId');
+		const ctCollectionId = params.get(this.PARAM_CT_COLLECTION_ID);
 		const mvcRenderCommandName = params.get(
-			this.namespace + 'mvcRenderCommandName'
+			this.PARAM_MVC_RENDER_COMMAND_NAME
 		);
 
 		if (
@@ -1561,20 +1565,20 @@ class ChangeTrackingChangesView extends React.Component {
 		return false;
 	}
 
-	_populateModelInfo() {
+	_populateModelInfo(siteNames, typeNames) {
 		const keys = Object.keys(this.models);
 
 		for (let i = 0; i < keys.length; i++) {
 			const model = this.models[keys[i]];
 
 			if (model.groupId) {
-				model.siteName = this.siteNames[model.groupId.toString()];
+				model.siteName = siteNames[model.groupId.toString()];
 			}
 			else {
 				model.siteName = this.GLOBAL_SITE_NAME;
 			}
 
-			model.typeName = this.typeNames[model.modelClassNameId.toString()];
+			model.typeName = typeNames[model.modelClassNameId.toString()];
 
 			if (model.ctEntryId) {
 				model.changeTypeLabel = Liferay.Language.get('modified');

@@ -333,16 +333,26 @@
 
 		<!-- Finder methods -->
 
-		<finder name="A2" return-type="Country" unique="true">
-			<finder-column name="a2" />
-		</finder>
-		<finder name="A3" return-type="Country" unique="true">
-			<finder-column name="a3" />
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="Active" return-type="Collection">
 			<finder-column name="active" />
 		</finder>
-		<finder name="Name" return-type="Country" unique="true">
+		<finder name="C_A2" return-type="Country" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="a2" />
+		</finder>
+		<finder name="C_A3" return-type="Country" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="a3" />
+		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_N" return-type="Country" unique="true">
+			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
 	</entity>

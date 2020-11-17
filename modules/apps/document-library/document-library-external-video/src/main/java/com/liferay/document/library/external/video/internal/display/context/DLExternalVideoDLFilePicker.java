@@ -123,6 +123,11 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 		return DLExternalVideoConstants.DDM_FIELD_NAME_TITLE;
 	}
 
+	@Override
+	public boolean isCustomizedFileButtonVisible() {
+		return false;
+	}
+
 	private String _getDLExternalVideoFieldsURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);

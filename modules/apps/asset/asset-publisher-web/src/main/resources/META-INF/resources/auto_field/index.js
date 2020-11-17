@@ -309,7 +309,7 @@ function AutoField({
 			<ul className="timeline">
 				<li className="timeline-item">
 					<div className="panel panel-default">
-						<div className="flex-container mb-0 panel-body py-2">
+						<div className="d-flex flex-wrap mb-0 panel-body py-2">
 							<div className="h4 panel-title">
 								{Liferay.Language.get('rules')}
 							</div>

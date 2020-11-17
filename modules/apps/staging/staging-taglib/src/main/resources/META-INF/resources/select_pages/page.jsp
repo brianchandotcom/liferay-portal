@@ -22,7 +22,7 @@
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
 
-		<ul class="flex-container layout-selector" id="<portlet:namespace />pages">
+		<ul class="d-flex flex-wrap layout-selector" id="<portlet:namespace />pages">
 			<c:if test="<%= !disableInputs || LayoutStagingUtil.isBranchingLayoutSet(selectPagesGroup, selectPagesPrivateLayout) %>">
 				<li class="layout-selector-options">
 					<aui:fieldset label="pages-options">
@@ -178,7 +178,7 @@
 		</ul>
 
 		<c:if test="<%= action.equals(Constants.PUBLISH) %>">
-			<ul class="deletions flex-container layout-selector" id="<portlet:namespace />pagedeletions">
+			<ul class="d-flex deletions flex-wrap layout-selector" id="<portlet:namespace />pagedeletions">
 				<li class="layout-selector-options">
 					<aui:fieldset label="page-deletions">
 

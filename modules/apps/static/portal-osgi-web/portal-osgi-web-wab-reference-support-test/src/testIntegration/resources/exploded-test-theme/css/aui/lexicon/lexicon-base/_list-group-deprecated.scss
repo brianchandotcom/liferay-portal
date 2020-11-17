@@ -316,12 +316,6 @@
 	.checkbox-bottom-left,
 	.checkbox-middle-left,
 	.checkbox-top-left {
-		.card.flex-container {
-			@media (max-width: $grid-float-breakpoint-max) {
-				padding-left: 20px;
-			}
-		}
-
 		.card-row {
 			@media (max-width: $grid-float-breakpoint-max) {
 				padding-left: 20px;
@@ -332,12 +326,6 @@
 	.checkbox-bottom-right,
 	.checkbox-middle-right,
 	.checkbox-top-right {
-		.card.flex-container {
-			@media (max-width: $grid-float-breakpoint-max) {
-				padding-right: 20px;
-			}
-		}
-
 		.card-row {
 			@media (max-width: $grid-float-breakpoint-max) {
 				padding-right: 20px;

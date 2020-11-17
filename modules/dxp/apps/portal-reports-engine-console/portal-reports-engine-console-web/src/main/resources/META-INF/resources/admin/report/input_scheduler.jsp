@@ -22,7 +22,7 @@ Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 <aui:fieldset>
 	<aui:field-wrapper label="start-date">
-		<div class="flex-container">
+		<div class="d-flex flex-wrap">
 			<liferay-ui:input-date
 				cssClass="form-group form-group-inline"
 				dayParam="schedulerStartDateDay"
@@ -59,7 +59,7 @@ Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
 		<aui:input checked="<%= true %>" id="schedulerNoEndDate" label="no-end-date" name="endDateType" type="radio" value="0" />
 		<aui:input first="<%= true %>" id="schedulerEndBy" label="end-by" name="endDateType" type="radio" value="1" />
 
-		<div class="flex-container hide" id="<portlet:namespace />schedulerEndDateType">
+		<div class="d-flex flex-wrap hide" id="<portlet:namespace />schedulerEndDateType">
 			<liferay-ui:input-date
 				cssClass="form-group form-group-inline"
 				dayParam="schedulerEndDateDay"

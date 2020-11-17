@@ -308,7 +308,7 @@ function AutoField({
 
 			<ul className="timeline">
 				<li className="timeline-item">
-					<div className="flex-container panel-body">
+					<div className="d-flex flex-wrap panel-body">
 						<div className="timeline-increment">
 							<span className="timeline-icon"></span>
 						</div>

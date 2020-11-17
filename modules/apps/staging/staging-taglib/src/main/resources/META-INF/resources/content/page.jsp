@@ -32,7 +32,7 @@
 								<ul class="list-unstyled">
 									<li class="tree-item">
 										<aui:fieldset cssClass="portlet-data-section" label="date-range">
-											<div class="flex-container">
+											<div class="c-mb-3 d-flex flex-wrap">
 
 												<%
 												String selectedRange = MapUtil.getString(parameterMap, "range", defaultRange);
@@ -114,7 +114,7 @@
 											%>
 
 											<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
-												<li class="flex-container">
+												<li class="d-flex flex-wrap">
 													<liferay-ui:input-date
 														cssClass="form-group form-group-inline"
 														dayParam="startDateDay"

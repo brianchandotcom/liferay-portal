@@ -17,7 +17,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <div class="list-group-panel" id="<portlet:namespace />simulationOptionsContainer">
 	<p class="text-center"><liferay-ui:message key="simulation-description" /></p>
 
-	<div class="container-fluid default-devices flex-container">
+	<div class="container-fluid default-devices d-flex flex-wrap">
 		<div class="flex-item-expand d-none d-md-block lfr-device-item selected text-center" data-option="option-1">
 			<aui:icon cssClass="icon icon-monospaced" image="calendar" markupView="lexicon" />
 

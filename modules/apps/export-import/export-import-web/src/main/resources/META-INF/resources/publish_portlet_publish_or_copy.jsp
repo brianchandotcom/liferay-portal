@@ -167,7 +167,7 @@ else {
 						<ul class="lfr-tree list-unstyled select-options">
 							<li class="tree-item">
 								<div id="<portlet:namespace />range">
-									<div class="flex-container">
+									<div class="d-flex flex-wrap">
 										<div class="flex-item-center range-options">
 											<aui:input checked="<%= !newPublication %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 										</div>
@@ -216,7 +216,7 @@ else {
 									%>
 
 									<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
-										<li class="flex-container">
+										<li class="d-flex flex-wrap">
 											<aui:fieldset label="start-date">
 												<liferay-ui:input-date
 													cssClass="form-group form-group-inline"

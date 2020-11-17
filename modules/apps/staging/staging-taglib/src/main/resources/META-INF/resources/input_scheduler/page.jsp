@@ -85,7 +85,7 @@
 						<liferay-ui:message key="start-date" />:
 					</th>
 					<td class="staging-scheduler-content">
-						<div class="flex-container">
+						<div class="d-flex flex-wrap">
 							<liferay-ui:input-date
 								cssClass="form-group form-group-inline"
 								dayParam="schedulerStartDateDay"
@@ -141,7 +141,7 @@
 						<aui:input checked="<%= true %>" id="schedulerNoEndDate" inlineField="<%= true %>" label="no-end-date" name="endDateType" type="radio" value="0" />
 						<aui:input first="<%= true %>" id="schedulerEndBy" inlineField="<%= true %>" label="end-by" name="endDateType" type="radio" value="1" />
 
-						<div class="flex-container hide" id="<portlet:namespace />schedulerEndDateType">
+						<div class="d-flex flex-wrap hide" id="<portlet:namespace />schedulerEndDateType">
 							<liferay-ui:input-date
 								cssClass="form-group form-group-inline"
 								dayParam="schedulerEndDateDay"

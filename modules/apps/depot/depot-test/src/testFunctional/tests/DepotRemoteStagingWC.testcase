@@ -640,4 +640,73 @@ definition {
 			value1 = "Depot web content with a category");
 	}
 
+	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling remote staging."
+	@priority = "5"
+	test PublishWebContentFolder {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWebContentFolder";
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertTextEquals(
+			key_assetTitle = "WC Folder Name",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC Folder Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Test Page",
+			siteName = "Remote Site");
+
+		AssertTextEquals(
+			key_assetTitle = "WC Folder Name",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC Folder Name");
+	}
+
 }

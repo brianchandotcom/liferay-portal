@@ -27,45 +27,54 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
+<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="tabs1" value="supported-clients" />
+</liferay-util:include>
+
 <div class="portlet-configuration-edit-supported-clients">
-	<aui:form action="<%= editSupportedClientsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<liferay-frontend:edit-form
+		action="<%= editSupportedClientsURL %>"
+		cssClass="form"
+		method="post"
+		name="fm"
+	>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
-		<div class="portlet-configuration-body-content">
-			<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="tabs1" value="supported-clients" />
-			</liferay-util:include>
+		<liferay-frontend:edit-form-body>
+			<liferay-frontend:fieldset-group>
 
-			<clay:container-fluid>
-				<aui:fieldset-group markupView="lexicon">
+				<%
+				boolean first = true;
 
-					<%
-					boolean first = true;
+				for (String curPortletMode : allPortletModes) {
+					String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
+					boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
+				%>
 
-					for (String curPortletMode : allPortletModes) {
-						String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
-						boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
-					%>
+					<liferay-frontend:fieldset
+						collapsed="<%= !first %>"
+						collapsible="<%= true %>"
+						label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'
+					>
+						<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
 
-						<aui:fieldset collapsed="<%= !first %>" collapsible="<%= true %>" label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'>
-							<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
+						<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault))) %>" />
+					</liferay-frontend:fieldset>
 
-							<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault))) %>" />
-						</aui:fieldset>
+				<%
+					first = false;
+				}
+				%>
 
-					<%
-						first = false;
-					}
-					%>
+			</liferay-frontend:fieldset-group>
+		</liferay-frontend:edit-form-body>
 
-				</aui:fieldset-group>
-			</clay:container-fluid>
-		</div>
-
-		<aui:button-row>
+		<liferay-frontend:edit-form-footer>
 			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:form>
+
+			<aui:button type="cancel" />
+		</liferay-frontend:edit-form-footer>
+	</liferay-frontend:edit-form>
 </div>

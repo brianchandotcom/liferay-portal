@@ -182,8 +182,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			SiteNavigationMenuSource siteNavigationMenuSource =
 				(SiteNavigationMenuSource)source;
 
-			navigationMenuTag.setRootItemType("select");
-
 			navigationMenuTag.setNavigationMenuMode(
 				NavigationMenuMode.PUBLIC_PAGES);
 
@@ -191,6 +189,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 				navigationMenuTag.setNavigationMenuMode(
 					NavigationMenuMode.PRIVATE_PAGES);
 			}
+
+			navigationMenuTag.setRootItemType("select");
 
 			long siteNavigationMenuId =
 				siteNavigationMenuSource.getSiteNavigationMenuId();

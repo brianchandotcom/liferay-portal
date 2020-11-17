@@ -142,13 +142,17 @@ public class JournalEditArticleDisplayContext {
 			() -> {
 				Map<String, Object> strings = new HashMap<>();
 
-				for (Locale availableLocale : getAvailableLocales()) {
+				Set<Locale> locales = getAvailableLocales();
+
+				locales.add(
+					LocaleUtil.fromLanguageId(getDefaultArticleLanguageId()));
+
+				for (Locale locale : locales) {
 					strings.put(
-						LocaleUtil.toLanguageId(availableLocale),
+						LocaleUtil.toLanguageId(locale),
 						StringBundler.concat(
-							availableLocale.getDisplayLanguage(),
-							StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-							availableLocale.getCountry(),
+							locale.getDisplayLanguage(), StringPool.SPACE,
+							StringPool.OPEN_PARENTHESIS, locale.getCountry(),
 							StringPool.CLOSE_PARENTHESIS));
 				}
 

@@ -55,8 +55,8 @@ const PAGE_HEADER_COMPONENT_TYPE = {
 	[PAGE_HEADER_TYPES.EDITABLE]: EditablePageHeader.PageHeader,
 };
 
-const ADMIN_PORTLET_NAMESPACE =
-	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_';
+const EDIT_PORTLET_NAMESPACE =
+	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_';
 
 const isEmptyPage = ({rows}) => {
 	let empty = false;
@@ -192,7 +192,7 @@ const Renderer = ({
 
 	let hasFieldRequired = false;
 
-	const visitor = new PagesVisitor(pages);
+	const visitor = new PagesVisitor([pages[activePage]]);
 
 	visitor.mapFields((field) => {
 		if (field.required) {
@@ -200,8 +200,7 @@ const Renderer = ({
 		}
 	});
 
-	const isAdminPortletNamespace =
-		ADMIN_PORTLET_NAMESPACE === portletNamespace;
+	const isEditPortletNamespace = EDIT_PORTLET_NAMESPACE === portletNamespace;
 
 	return (
 		<Components.Container
@@ -234,7 +233,7 @@ const Renderer = ({
 				page={page}
 				pageIndex={pageIndex}
 			>
-				{hasFieldRequired && !isAdminPortletNamespace && (
+				{hasFieldRequired && isEditPortletNamespace && (
 					<p aria-hidden="true" className="text-secondary">
 						<span className="c-mr-1 reference-mark">
 							<ClayIcon symbol="asterisk" />

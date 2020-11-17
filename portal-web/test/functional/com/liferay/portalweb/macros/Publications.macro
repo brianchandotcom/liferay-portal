@@ -317,6 +317,12 @@ definition {
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Reschedule");
+
+			// Workaround LPS-123416
+
+			Pause(locator1 = "1000");
+
+			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}
 		else {
 			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");

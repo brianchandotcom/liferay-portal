@@ -320,7 +320,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 		SpiraTestCaseProductVersion spiraTestCaseProductVersion) {
 
 		if (spiraTestCaseProductVersion == null) {
-			throw new RuntimeException("Please set a product version");
+			return SpiraTestCaseObject.getSpiraTestCaseObjects(
+				this, numberOfRows);
 		}
 
 		return SpiraTestCaseObject.getSpiraTestCaseObjects(

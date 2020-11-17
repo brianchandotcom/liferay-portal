@@ -96,7 +96,7 @@ KaleoProcess kaleoProcess = (KaleoProcess)row.getObject();
 	</c:if>
 
 	<c:if test="<%= KaleoProcessPermission.contains(permissionChecker, kaleoProcess, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteKaleoProcess" var="deleteURL">
+		<portlet:actionURL name="/kaleo_forms/delete_kaleo_process" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcess.getKaleoProcessId()) %>" />
 		</portlet:actionURL>

@@ -54,7 +54,7 @@
 
 			submitForm(
 				form,
-				'<portlet:actionURL name="deleteKaleoProcess"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>'
+				'<portlet:actionURL name="/kaleo_forms/delete_kaleo_process"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>'
 			);
 		}
 	};

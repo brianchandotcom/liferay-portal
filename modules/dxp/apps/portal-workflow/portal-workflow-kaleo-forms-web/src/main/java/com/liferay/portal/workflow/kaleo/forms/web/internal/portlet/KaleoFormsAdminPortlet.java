@@ -192,28 +192,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			serviceContext.getCompanyId(), name, version);
 	}
 
-
-	/**
-	 * Deletes the <code>KaleoProcess</code> (in the
-	 * <code>com.liferay.portal.workflow.kaleo.forms.api</code> module)
-	 * associated with the Kaleo process IDs from the action request.
-	 *
-	 * @param  actionRequest the request from which to get the request
-	 *         parameters
-	 * @param  actionResponse the response to receive the render parameters
-	 * @throws Exception if an exception occurred
-	 */
-	public void deleteKaleoProcess(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] kaleoProcessIds = getKaleoProcessIds(actionRequest);
-
-		for (final long kaleoProcessId : kaleoProcessIds) {
-			_kaleoProcessService.deleteKaleoProcess(kaleoProcessId);
-		}
-	}
-
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -462,25 +440,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				ddmFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
-	}
-
-	/**
-	 * Returns an array of the Kaleo process IDs in the action request.
-	 *
-	 * @param  actionRequest the request from which to get the request
-	 *         parameters
-	 * @return an array of the Kaleo process IDs
-	 */
-	protected long[] getKaleoProcessIds(ActionRequest actionRequest) {
-		long kaleoProcessId = ParamUtil.getLong(
-			actionRequest, "kaleoProcessId");
-
-		if (kaleoProcessId > 0) {
-			return new long[] {kaleoProcessId};
-		}
-
-		return StringUtil.split(
-			ParamUtil.getString(actionRequest, "kaleoProcessIds"), 0L);
 	}
 
 	/**

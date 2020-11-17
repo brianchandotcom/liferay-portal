@@ -12,12 +12,8 @@
  * details.
  */
 
-import {EDITABLE_TYPES} from '../config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 
-export default function canActivateEditable(selectedViewportSize, itemType) {
-	return (
-		selectedViewportSize === VIEWPORT_SIZES.desktop ||
-		itemType === EDITABLE_TYPES.image
-	);
+export default function canActivateEditable(selectedViewportSize) {
+	return selectedViewportSize === VIEWPORT_SIZES.desktop;
 }

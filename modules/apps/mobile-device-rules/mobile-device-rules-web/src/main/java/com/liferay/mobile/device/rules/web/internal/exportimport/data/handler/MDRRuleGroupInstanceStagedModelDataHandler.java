@@ -114,6 +114,10 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			Layout layout = _layoutLocalService.getLayout(
 				ruleGroupInstance.getClassPK());
 
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, ruleGroupInstance, layout,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+
 			ruleGroupInstanceElement.addAttribute(
 				"layout-uuid", layout.getUuid());
 		}

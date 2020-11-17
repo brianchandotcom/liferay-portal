@@ -182,7 +182,9 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		SpiraProject spiraProject, String testCasePath) {
 
 		List<SpiraTestCaseObject> spiraTestCaseObjects =
-			spiraProject.getSpiraTestCaseObjectsByPath(testCasePath);
+			getSpiraTestCaseObjects(
+				spiraProject,
+				new SearchQuery.SearchParameter("Path", testCasePath));
 
 		for (SpiraTestCaseObject spiraTestCaseObject : spiraTestCaseObjects) {
 			deleteSpiraTestCaseObjectByID(

@@ -247,7 +247,7 @@ public class NavItemUtil {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		return NavItem.fromLayouts(
-			layouts, httpServletRequest, themeDisplay, null);
+			httpServletRequest, layouts, themeDisplay, null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NavItemUtil.class);

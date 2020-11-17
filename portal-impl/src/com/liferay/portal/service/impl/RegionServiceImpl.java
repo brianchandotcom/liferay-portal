@@ -16,16 +16,15 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.RegionCodeException;
-import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.RegionModelImpl;
 import com.liferay.portal.service.base.RegionServiceBaseImpl;
 
@@ -39,7 +38,8 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 	@Override
 	public Region addRegion(
-			long countryId, String regionCode, String name, boolean active)
+			long countryId, boolean active, String name, double position,
+			String regionCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!getPermissionChecker().isOmniadmin()) {
@@ -47,26 +47,28 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 				getPermissionChecker());
 		}
 
-		countryPersistence.findByPrimaryKey(countryId);
+		return regionLocalService.addRegion(
+			countryId, active, name, position, regionCode, serviceContext);
+	}
 
-		if (Validator.isNull(regionCode)) {
-			throw new RegionCodeException();
-		}
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public Region addRegion(
+			long countryId, String regionCode, String name, boolean active)
+		throws PortalException {
 
-		if (Validator.isNull(name)) {
-			throw new RegionNameException();
-		}
+		ServiceContext serviceContext = new ServiceContext();
 
-		long regionId = counterLocalService.increment();
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		Region region = regionPersistence.create(regionId);
+		serviceContext.setCompanyId(permissionChecker.getCompanyId());
+		serviceContext.setUserId(permissionChecker.getUserId());
 
-		region.setCountryId(countryId);
-		region.setActive(active);
-		region.setName(name);
-		region.setRegionCode(regionCode);
-
-		return regionPersistence.update(region);
+		return addRegion(
+			countryId, active, name, 0, regionCode, serviceContext);
 	}
 
 	@Override

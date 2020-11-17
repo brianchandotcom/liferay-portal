@@ -318,6 +318,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			}
 
 			customPropertyValuesJSONArray.put(_getDurationJSONObject());
+			customPropertyValuesJSONArray.put(_getDurationStringJSONObject());
 
 			return customPropertyValuesJSONArray;
 		}
@@ -363,18 +364,36 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 
 		private JSONObject _getDurationJSONObject() {
-			JSONObject durationJSONObject = new JSONObject();
-
 			SpiraCustomProperty spiraCustomProperty =
 				SpiraCustomProperty.createSpiraCustomProperty(
 					getSpiraProject(), SpiraTestCaseRun.class, "Duration",
 					SpiraCustomProperty.Type.INTEGER);
 
-			durationJSONObject.put("IntegerValue", _duration);
-			durationJSONObject.put(
-				"PropertyNumber", spiraCustomProperty.getPropertyNumber());
+			Integer duration = _duration.intValue();
 
-			return durationJSONObject;
+			if (_duration > Integer.MAX_VALUE) {
+				duration = Integer.MAX_VALUE;
+			}
+
+			SpiraCustomPropertyValue spiraCustomPropertyValue =
+				SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty, String.valueOf(duration));
+
+			return spiraCustomPropertyValue.getCustomPropertyJSONObject();
+		}
+
+		private JSONObject _getDurationStringJSONObject() {
+			SpiraCustomProperty spiraCustomProperty =
+				SpiraCustomProperty.createSpiraCustomProperty(
+					getSpiraProject(), SpiraTestCaseRun.class,
+					"Duration String", SpiraCustomProperty.Type.TEXT);
+
+			SpiraCustomPropertyValue spiraCustomPropertyValue =
+				SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty,
+					JenkinsResultsParserUtil.toDurationString(_duration));
+
+			return spiraCustomPropertyValue.getCustomPropertyJSONObject();
 		}
 
 		private void _putMultiListSpiraCustomPropertyValue(
@@ -430,7 +449,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 
 		private final String _description;
-		private final long _duration;
+		private final Long _duration;
 		private final RunnerFormat _runnerFormat;
 		private final SpiraAutomationHost _spiraAutomationHost;
 		private final List<SpiraCustomPropertyValue> _spiraCustomPropertyValues;

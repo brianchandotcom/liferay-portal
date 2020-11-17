@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
 import java.io.IOException;
@@ -183,8 +184,13 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			navigationMenuTag.setRootItemType("select");
 
-			navigationMenuTag.setPrivateLayout(
-				siteNavigationMenuSource.isPrivateLayout());
+			navigationMenuTag.setNavigationMenuMode(
+				NavigationMenuMode.PUBLIC_PAGES);
+
+			if (siteNavigationMenuSource.isPrivateLayout()) {
+				navigationMenuTag.setNavigationMenuMode(
+					NavigationMenuMode.PRIVATE_PAGES);
+			}
 
 			long siteNavigationMenuId =
 				siteNavigationMenuSource.getSiteNavigationMenuId();

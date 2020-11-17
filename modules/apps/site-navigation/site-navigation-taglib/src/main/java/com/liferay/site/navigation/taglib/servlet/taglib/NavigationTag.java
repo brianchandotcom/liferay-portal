@@ -104,8 +104,8 @@ public class NavigationTag extends IncludeTag {
 			branchNavItems = getBranchNavItems(request);
 
 			navItems = NavItemUtil.getNavItems(
-				request, null, _rootLayoutType, _rootLayoutLevel,
-				_rootLayoutUuid, branchNavItems);
+				NavigationMenuMode.DEFAULT, request, _rootLayoutType,
+				_rootLayoutLevel, _rootLayoutUuid, branchNavItems);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

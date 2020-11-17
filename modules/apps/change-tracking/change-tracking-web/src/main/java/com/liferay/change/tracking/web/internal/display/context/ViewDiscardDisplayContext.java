@@ -18,9 +18,11 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -38,7 +40,8 @@ import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
+import javax.portlet.RenderURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,6 +91,20 @@ public class ViewDiscardDisplayContext {
 					JSONFactoryUtil.createJSONArray();
 
 				for (CTEntry ctEntry : ctEntries) {
+					RenderURL viewURL = _renderResponse.createRenderURL();
+
+					viewURL.setParameter(
+						"mvcRenderCommandName", "/change_tracking/view_diff");
+					viewURL.setParameter(
+						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+					try {
+						viewURL.setWindowState(LiferayWindowState.POP_UP);
+					}
+					catch (WindowStateException windowStateException) {
+						ReflectionUtil.throwException(windowStateException);
+					}
+
 					ctEntriesJSONArray.put(
 						JSONUtil.put(
 							"ctEntryId", ctEntry.getCtEntryId()
@@ -106,19 +123,12 @@ public class ViewDiscardDisplayContext {
 								_themeDisplay.getLocale())
 						).put(
 							"userId", ctEntry.getUserId()
+						).put(
+							"viewURL", viewURL.toString()
 						));
 				}
 
 				return ctEntriesJSONArray;
-			}
-		).put(
-			"renderURL",
-			() -> {
-				ResourceURL renderURL = _renderResponse.createResourceURL();
-
-				renderURL.setResourceID("/change_tracking/render_diff");
-
-				return renderURL.toString();
 			}
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"

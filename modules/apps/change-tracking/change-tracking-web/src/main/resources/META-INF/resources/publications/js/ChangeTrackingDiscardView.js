@@ -12,19 +12,25 @@
  * details.
  */
 
+import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import React, {useState} from 'react';
 
 const ChangeTrackingDiscardView = ({
 	ctEntriesJSONArray,
-	renderURL,
 	spritemap,
 	typeNames,
 	userInfo,
 }) => {
 	const [delta, setDelta] = useState(20);
 	const [page, setPage] = useState(1);
+	const [viewEntry, setViewEntry] = useState(null);
+
+	/* eslint-disable no-unused-vars */
+	const {observer, onClose} = useModal({
+		onClose: () => setViewEntry(null),
+	});
 
 	const ctEntries = ctEntriesJSONArray.slice(0);
 
@@ -72,12 +78,39 @@ const ChangeTrackingDiscardView = ({
 		return entries;
 	};
 
-	const getRenderURL = (entry) => {
-		const portletURL = Liferay.PortletURL.createURL(renderURL);
+	const getUserPortrait = (entry) => {
+		if (entry.portraitURL) {
+			return (
+				<span className="lfr-portal-tooltip" title={entry.userName}>
+					<span className="rounded-circle sticker sticker-primary">
+						<span className="sticker-overlay">
+							<img
+								alt="thumbnail"
+								className="img-fluid"
+								src={entry.portraitURL}
+							/>
+						</span>
+					</span>
+				</span>
+			);
+		}
 
-		portletURL.setParameter('ctEntryId', entry.ctEntryId);
+		let userPortraitCss =
+			'sticker sticker-circle sticker-light user-icon-color-';
 
-		return portletURL.toString();
+		userPortraitCss += entry.userId % 10;
+
+		return (
+			<span className="lfr-portal-tooltip" title={entry.userName}>
+				<span className={userPortraitCss}>
+					<span className="inline-item">
+						<svg className="lexicon-icon">
+							<use href={spritemap + '#user'} />
+						</svg>
+					</span>
+				</span>
+			</span>
+		);
 	};
 
 	const getTableRows = () => {
@@ -102,64 +135,20 @@ const ChangeTrackingDiscardView = ({
 				);
 			}
 
-			const cells = [];
-
-			if (entry.portraitURL) {
-				cells.push(
+			rows.push(
+				<ClayTable.Row
+					className="cursor-pointer"
+					onClick={() => setViewEntry(entry)}
+				>
+					<ClayTable.Cell>{getUserPortrait(entry)}</ClayTable.Cell>
 					<ClayTable.Cell>
-						<span
-							className="lfr-portal-tooltip"
-							title={entry.userName}
-						>
-							<span className="rounded-circle sticker sticker-primary">
-								<span className="sticker-overlay">
-									<img
-										alt="thumbnail"
-										className="img-fluid"
-										src={entry.portraitURL}
-									/>
-								</span>
-							</span>
-						</span>
-					</ClayTable.Cell>
-				);
-			}
-			else {
-				let userPortraitCss =
-					'sticker sticker-circle sticker-light user-icon-color-';
-
-				userPortraitCss += entry.userId % 10;
-
-				cells.push(
-					<ClayTable.Cell>
-						<span
-							className="lfr-portal-tooltip"
-							title={entry.userName}
-						>
-							<span className={userPortraitCss}>
-								<span className="inline-item">
-									<svg className="lexicon-icon">
-										<use href={spritemap + '#user'} />
-									</svg>
-								</span>
-							</span>
-						</span>
-					</ClayTable.Cell>
-				);
-			}
-
-			cells.push(
-				<ClayTable.Cell>
-					<button className="change-row-button">
 						<div className="publication-name">{entry.title}</div>
 						<div className="publication-description">
 							{entry.description}
 						</div>
-					</button>
-				</ClayTable.Cell>
+					</ClayTable.Cell>
+				</ClayTable.Row>
 			);
-
-			rows.push(<ClayTable.Row>{cells}</ClayTable.Row>);
 		}
 
 		return rows;
@@ -188,9 +177,41 @@ const ChangeTrackingDiscardView = ({
 		);
 	};
 
+	const renderViewModal = () => {
+		if (!viewEntry) {
+			return '';
+		}
+
+		return (
+			<ClayModal
+				className="publications-modal"
+				observer={observer}
+				size="full-screen"
+				spritemap={spritemap}
+			>
+				<ClayModal.Header>
+					<div className="autofit-row">
+						<div className="autofit-col publications-discard-user-portrait">
+							{getUserPortrait(viewEntry)}
+						</div>
+						<div className="autofit-col">
+							<div className="modal-title">{viewEntry.title}</div>
+							<div className="modal-description">
+								{viewEntry.description}
+							</div>
+						</div>
+					</div>
+				</ClayModal.Header>
+				<ClayModal.Body url={viewEntry.viewURL}></ClayModal.Body>
+			</ClayModal>
+		);
+	};
+
 	return (
 		<>
-			<ClayTable className="publications-table" hover={false}>
+			{renderViewModal()}
+
+			<ClayTable className="publications-table" hover>
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell headingCell style={{width: '5%'}}>

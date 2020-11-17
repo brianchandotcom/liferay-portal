@@ -375,12 +375,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		String parentTestCaseFolderPath = getParentPath(testCasePath);
 
-		SpiraTestCaseFolder parentSpiraTestCaseFolder = null;
-
 		if ((parentTestCaseFolderPath != null) &&
 			!parentTestCaseFolderPath.isEmpty()) {
 
-			parentSpiraTestCaseFolder =
+			SpiraTestCaseFolder parentSpiraTestCaseFolder =
 				SpiraTestCaseFolder.createSpiraTestCaseFolderByPath(
 					spiraProject, parentTestCaseFolderPath);
 

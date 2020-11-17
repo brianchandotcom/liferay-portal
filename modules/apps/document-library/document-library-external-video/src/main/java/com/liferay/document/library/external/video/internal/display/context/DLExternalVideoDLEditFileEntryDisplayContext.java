@@ -102,6 +102,11 @@ public class DLExternalVideoDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isFileNameVisible() {
+		return false;
+	}
+
+	@Override
 	public boolean isVersionInfoVisible() {
 		return false;
 	}

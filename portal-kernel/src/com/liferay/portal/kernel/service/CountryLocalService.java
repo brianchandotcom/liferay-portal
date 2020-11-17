@@ -77,6 +77,11 @@ public interface CountryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Country addCountry(Country country);
 
+	public Country addCountry(
+			String name, String a2, String a3, String number, String idd,
+			boolean active)
+		throws PortalException;
+
 	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *

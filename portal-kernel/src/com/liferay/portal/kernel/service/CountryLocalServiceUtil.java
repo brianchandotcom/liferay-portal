@@ -52,6 +52,14 @@ public class CountryLocalServiceUtil {
 		return getService().addCountry(country);
 	}
 
+	public static com.liferay.portal.kernel.model.Country addCountry(
+			String name, String a2, String a3, String number, String idd,
+			boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCountry(name, a2, a3, number, idd, active);
+	}
+
 	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *

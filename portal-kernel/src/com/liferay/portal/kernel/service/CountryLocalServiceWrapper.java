@@ -45,6 +45,16 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.addCountry(country);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Country addCountry(
+			java.lang.String name, java.lang.String a2, java.lang.String a3,
+			java.lang.String number, java.lang.String idd, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.addCountry(
+			name, a2, a3, number, idd, active);
+	}
+
 	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *

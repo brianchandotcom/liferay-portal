@@ -28,6 +28,16 @@ public class RegionLocalServiceWrapper
 		_regionLocalService = regionLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Region addRegion(
+			long countryId, java.lang.String regionCode, java.lang.String name,
+			boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.addRegion(
+			countryId, regionCode, name, active);
+	}
+
 	/**
 	 * Adds the region to the database. Also notifies the appropriate model listeners.
 	 *

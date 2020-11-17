@@ -12,23 +12,48 @@
  * details.
  */
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 const ImageSelector = ({
+    draggableImage,
+    cropRegion,
     fileEntryId = 0,
+    imageURL,
+    portletNamespace,
+    paramName
 }) => {
-    console.log('Image Selector con fileEntryId: ' + fileEntryId);
-
     return (
-        <div className="drop-zone">
-            test
+        <div className={classNames(
+            'drop-zone',
+            {'draggable-image': draggableImage !== 'none'},
+            {'drop-enabled': fileEntryId == 0},
+            'taglib-image-selector',
+        )}>
+            <input name={`${portletNamespace}${paramName}Id`} type="hidden" value={fileEntryId} />
+	        <input name={`${portletNamespace}${paramName}CropRegion`} type="hidden" value={cropRegion} />
+
+            {imageURL && (
+                <div class="image-wrapper">
+                    <img 
+                        alt={Liferay.Language.get('current-image')}
+                        className="current-image"
+                        id={`${portletNamespace}image`} src={Liferay.Util.escapeHTML(imageURL)}
+                    />
+                </div>
+            )}
         </div>
     );
 };
 
 ImageSelector.propTypes = {
-	fileEntryId: PropTypes.string.isRequired,
+    cropRegion: PropTypes.string,
+    draggableImage: PropTypes.string,
+    fileEntryId: PropTypes.string.isRequired,
+    imageURL: PropTypes.string,
+    paramName: PropTypes.string.isRequired,
+    portletNamespace: PropTypes.string.isRequired,
 };
 
 export default ImageSelector;

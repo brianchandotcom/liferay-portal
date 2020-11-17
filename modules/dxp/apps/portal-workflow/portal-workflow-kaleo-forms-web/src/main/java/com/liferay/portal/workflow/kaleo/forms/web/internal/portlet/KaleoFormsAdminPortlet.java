@@ -246,73 +246,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	/**
-	 * Updates the <code>KaleoProcess</code> (in the
-	 * <code>com.liferay.portal.workflow.kaleo.forms.api</code> module), or adds
-	 * a new process if the Kaleo process ID from the action request is not
-	 * greater than <code>0</code>. This method also updates the process's
-	 * <code>WorkflowDefinitionLink</code> (in
-	 * <code>com.liferay.portal.kernel</code>).
-	 *
-	 * @param  actionRequest the request from which to get the request
-	 *         parameters
-	 * @param  actionResponse the response to receive the render parameters
-	 * @throws Exception if an exception occurred
-	 */
-	public void updateKaleoProcess(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long kaleoProcessId = ParamUtil.getLong(
-			actionRequest, "kaleoProcessId");
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long ddmStructureId = ParamUtil.getLong(
-			actionRequest, "ddmStructureId");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
-		String workflowDefinitionName = ParamUtil.getString(
-			actionRequest, "workflowDefinitionName");
-		int workflowDefinitionVersion = ParamUtil.getInteger(
-			actionRequest, "workflowDefinitionVersion");
-
-		String kaleoTaskFormPairsData = ParamUtil.getString(
-			actionRequest, "kaleoTaskFormPairsData");
-
-		KaleoTaskFormPairs kaleoKaleoTaskFormPairs = KaleoTaskFormPairs.parse(
-			kaleoTaskFormPairsData);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KaleoProcess.class.getName(), actionRequest);
-
-		KaleoProcess kaleoProcess = null;
-
-		if (kaleoProcessId <= 0) {
-			kaleoProcess = _kaleoProcessService.addKaleoProcess(
-				groupId, ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
-				workflowDefinitionName, workflowDefinitionVersion,
-				kaleoKaleoTaskFormPairs, serviceContext);
-		}
-		else {
-			kaleoProcess = _kaleoProcessService.updateKaleoProcess(
-				kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
-				ddmTemplateId, workflowDefinitionName,
-				workflowDefinitionVersion, kaleoKaleoTaskFormPairs,
-				serviceContext);
-		}
-
-		String workflowDefinition = ParamUtil.getString(
-			actionRequest, "workflowDefinition");
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			serviceContext.getUserId(), serviceContext.getCompanyId(), groupId,
-			KaleoProcess.class.getName(), kaleoProcess.getKaleoProcessId(), 0,
-			workflowDefinition);
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -648,10 +581,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private KaleoProcessService _kaleoProcessService;
-
-	@Reference
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

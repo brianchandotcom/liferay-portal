@@ -13,13 +13,50 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
 import {Token, Tokenizer} from 'dynamic-data-mapping-form-builder';
 import React, {forwardRef, useCallback, useMemo, useState} from 'react';
 
 import CalculatorButtonArea from './CalculatorButtonArea.es';
 import CalculatorDisplay from './CalculatorDisplay.es';
+
+function FieldsDropdown({items, onFieldSelected = () => {}, ...otherProps}) {
+	const [active, setActive] = useState(false);
+
+	return (
+		<ClayDropDown
+			active={active}
+			onActiveChange={setActive}
+			{...otherProps}
+		>
+			<ClayDropDown.ItemList>
+				{items.map((item, i) => {
+					if (!item.separator) {
+						return (
+							<ClayDropDown.Item
+								aria-label={item.label}
+								key={item.fieldName}
+								onClick={() => onFieldSelected(item)}
+							>
+								{item.label}
+								{item.fieldName && (
+									<span className="calculate-fieldname">
+										{` ${Liferay.Language.get(
+											'field-name'
+										)}: ${item.fieldName}`}
+									</span>
+								)}
+							</ClayDropDown.Item>
+						);
+					}
+
+					return <ClayDropDown.Divider key={i} />;
+				})}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
+	);
+}
 
 function getRepeatableFields(fields) {
 	return fields.filter(({repeatable}) => repeatable === true);
@@ -155,7 +192,6 @@ const Calculator = forwardRef(
 			functions,
 			index,
 			onEditExpression,
-			resultSelected,
 		},
 		ref
 	) => {
@@ -242,13 +278,10 @@ const Calculator = forwardRef(
 							md={3}
 						>
 							<div className="liferay-ddm-form-builder-calculator">
-								<ClayDropDownWithItems
+								<FieldsDropdown
 									className="calculator-add-field-button-container"
-									items={dropdownItems.map((item) => ({
-										label: item.label,
-										onClick: () =>
-											handleFieldSelected(item),
-									}))}
+									items={dropdownItems}
+									onFieldSelected={handleFieldSelected}
 									trigger={
 										<ClayButton
 											className="btn-lg calculator-add-field-button ddm-button"
@@ -266,7 +299,6 @@ const Calculator = forwardRef(
 									functions={functions}
 									onClick={handleButtonClick}
 									onFunctionSelected={handleFunctionSelected}
-									resultSelected={resultSelected}
 								/>
 							</div>
 						</ClayLayout.Col>

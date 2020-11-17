@@ -13,51 +13,8 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
-import React, {useState} from 'react';
-
-function Dropdown({
-	items,
-	onItemSelected = () => {},
-	resultSelected,
-	...otherProps
-}) {
-	const [active, setActive] = useState(false);
-
-	return (
-		<ClayDropDown
-			active={active}
-			onActiveChange={setActive}
-			{...otherProps}
-		>
-			<ClayDropDown.ItemList>
-				{items.map((item, i) => {
-					if (!item.separator) {
-						return (
-							<ClayDropDown.Item
-								aria-label={item.label}
-								key={item.label}
-								onClick={() => onItemSelected(item)}
-								title={item.tooltip}
-							>
-								{item.label}
-								{resultSelected && (
-									<span className="calculate-fieldname">
-										{` ${Liferay.Language.get(
-											'field-name'
-										)}: ${resultSelected}`}
-									</span>
-								)}
-							</ClayDropDown.Item>
-						);
-					}
-
-					return <ClayDropDown.Divider key={i} />;
-				})}
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
-	);
-}
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import React from 'react';
 
 const ONE_TO_NINE = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
@@ -84,7 +41,6 @@ function CalculatorButtonArea({
 	functions,
 	onClick,
 	onFunctionSelected,
-	resultSelected,
 }) {
 	return (
 		<div className="calculator-button-area">
@@ -186,11 +142,12 @@ function CalculatorButtonArea({
 
 			<div className="calculator-buttons calculator-buttons-operators">
 				<div className="btn-group-vertical" role="group">
-					<Dropdown
+					<ClayDropDownWithItems
 						className="dropdown-action"
-						items={functions}
-						onItemSelected={onFunctionSelected}
-						resultSelected={resultSelected}
+						items={functions.map((item) => ({
+							label: item.label,
+							onClick: () => onFunctionSelected(item),
+						}))}
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('actions')}

@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>SELECT_BUTTON</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-group')]//button[normalize-space(text())='Select']</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='Select']</td>
 	<td></td>
 </tr>
 <tr>

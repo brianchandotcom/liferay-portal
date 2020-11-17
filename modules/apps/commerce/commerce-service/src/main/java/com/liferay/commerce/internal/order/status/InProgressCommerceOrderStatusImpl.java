@@ -83,7 +83,6 @@ public class InProgressCommerceOrderStatusImpl implements CommerceOrderStatus {
 			return commerceOrder;
 		}
 
-		commerceOrder.setOrderDate(new Date());
 		commerceOrder.setOrderStatus(KEY);
 
 		return _commerceOrderService.updateCommerceOrder(commerceOrder);

@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -389,6 +390,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 		commerceOrder = _commerceOrderLocalService.recalculatePrice(
 			commerceOrderId, commerceContext);
+
+		commerceOrder.setOrderDate(new Date());
 
 		_updateCommerceDiscountUsageEntry(
 			commerceOrder.getCompanyId(), commerceOrder.getCommerceAccountId(),

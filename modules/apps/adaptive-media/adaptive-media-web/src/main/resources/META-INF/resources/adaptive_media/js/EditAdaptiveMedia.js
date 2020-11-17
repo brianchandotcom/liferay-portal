@@ -65,7 +65,6 @@ const EditAdaptiveMedia = ({
 	redirect,
 }) => {
 	const [automaticId, setAutomaticId] = useState(automaticUuid);
-	const [addHighResolution, setAddHighResolution] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
 
 	const nameId = `${namespace}name`;
@@ -98,7 +97,7 @@ const EditAdaptiveMedia = ({
 			[descriptionId]: amImageConfigurationEntry
 				? amImageConfigurationEntry.description
 				: '',
-			[highResolutionId]: addHighResolution,
+			[highResolutionId]: false,
 			[maxHeightId]: maxHeight,
 			[maxWidthId]: maxWidth,
 			[nameId]: amImageConfigurationEntry
@@ -285,15 +284,17 @@ const EditAdaptiveMedia = ({
 
 				{!amImageConfigurationEntry && (
 					<ClayCheckbox
-						checked={addHighResolution}
+						checked={values[highResolutionId]}
 						id={highResolutionId}
 						label={Liferay.Language.get(
 							'add-a-resolution-for-high-density-displays'
 						)}
 						name={highResolutionId}
-						onChange={() => {
-							setAddHighResolution(!addHighResolution);
-							setFieldValue(highResolutionId, !addHighResolution);
+						onChange={(event) => {
+							setFieldValue(
+								highResolutionId,
+								event.target.checked
+							);
 						}}
 					/>
 				)}

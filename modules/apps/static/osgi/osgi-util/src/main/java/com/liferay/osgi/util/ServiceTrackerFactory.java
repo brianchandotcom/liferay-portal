@@ -15,6 +15,10 @@
 package com.liferay.osgi.util;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
+import java.util.function.Function;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -23,9 +27,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
-
-import java.util.Dictionary;
-import java.util.function.Function;
 
 /**
  * @author Adolfo Pérez

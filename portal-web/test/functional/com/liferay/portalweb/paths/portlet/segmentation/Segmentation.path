@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX</td>
-	<td>//*[contains(@name, 'roleSegmentation') and contains(@type, 'checkbox')]</td>
+	<td>//*[contains(@class, 'custom-control custom-checkbox')]//*[contains(@class, 'custom-control-label') and contains(text(), 'Enable Assign Roles by Segment')]</td>
 	<td></td>
 </tr>
 <tr>

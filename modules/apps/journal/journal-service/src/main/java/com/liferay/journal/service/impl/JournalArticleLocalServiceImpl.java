@@ -1850,21 +1850,15 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchDisplayArticle(long groupId, String articleId) {
+		Date now = new Date();
+
 		DynamicQuery dynamicQuery = dynamicQuery();
-
-		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
-
-		dynamicQuery.add(groupIdProperty.eq(groupId));
-
-		Property articleIdProperty = PropertyFactoryUtil.forName("articleId");
-
-		dynamicQuery.add(articleIdProperty.eq(articleId));
 
 		Property displayDateProperty = PropertyFactoryUtil.forName(
 			"displayDate");
+
 		Property expirationDateProperty = PropertyFactoryUtil.forName(
 			"expirationDate");
-		Date now = new Date();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.and(
@@ -1873,6 +1867,14 @@ public class JournalArticleLocalServiceImpl
 				RestrictionsFactoryUtil.or(
 					expirationDateProperty.isNull(),
 					expirationDateProperty.gt(now))));
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.eq(groupId));
+
+		Property articleIdProperty = PropertyFactoryUtil.forName("articleId");
+
+		dynamicQuery.add(articleIdProperty.eq(articleId));
 
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 

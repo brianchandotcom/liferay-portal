@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NESTED</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/div[@data-fieldname='${key_nestedFieldName}']//input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RADIO</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//label[contains(.,'${key_radioValue}')]</td>
 	<td></td>

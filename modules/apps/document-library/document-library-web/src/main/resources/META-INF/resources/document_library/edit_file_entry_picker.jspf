@@ -29,13 +29,15 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 		</aui:input>
 	</c:when>
 	<c:otherwise>
-		<aui:field-wrapper label="file">
-			<aui:button cssClass="customized-file-button disabled" disabled="<%= true %>" name="file" value="select-file" />
+		<c:if test="<%= dlFilePicker.isCustomizedFileButtonVisible() %>">
+			<aui:field-wrapper label="file">
+				<aui:button cssClass="customized-file-button disabled" disabled="<%= true %>" name="file" value="select-file" />
 
-			<img class="pick-button-icon" id="<portlet:namespace />pickButtonIcon" src="<%= GetterUtil.getString(dlFilePicker.getCurrentIconURL()) %>" />
+				<img class="pick-button-icon" id="<portlet:namespace />pickButtonIcon" src="<%= GetterUtil.getString(dlFilePicker.getCurrentIconURL()) %>" />
 
-			<span id="<portlet:namespace />pickButtonTitle"><%= GetterUtil.getString(dlFilePicker.getCurrentTitle()) %></span>
-		</aui:field-wrapper>
+				<span id="<portlet:namespace />pickButtonTitle"><%= GetterUtil.getString(dlFilePicker.getCurrentTitle()) %></span>
+			</aui:field-wrapper>
+		</c:if>
 
 		<aui:script sandbox="<%= true %>">
 			var onFilePick = function (fields) {

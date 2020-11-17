@@ -41,4 +41,8 @@ public interface DLFilePicker {
 
 	public String getTitleFieldName();
 
+	public default boolean isCustomizedFileButtonVisible() {
+		return true;
+	}
+
 }

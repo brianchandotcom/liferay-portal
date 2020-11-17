@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -126,6 +127,12 @@ public class SingleLogoutProfileImpl
 			SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 
 			if (samlSpSession == null) {
+				return false;
+			}
+
+			User user = _userLocalService.getUser(samlSpSession.getUserId());
+
+			if (!user.isSetupComplete()) {
 				return false;
 			}
 

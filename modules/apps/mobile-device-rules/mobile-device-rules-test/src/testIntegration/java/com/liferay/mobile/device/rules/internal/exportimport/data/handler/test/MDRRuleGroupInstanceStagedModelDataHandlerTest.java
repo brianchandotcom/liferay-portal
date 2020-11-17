@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -60,17 +57,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 		super.setUp();
 
 		layout = LayoutTestUtil.addLayout(stagingGroup);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setUuid(layout.getUuid());
-
-		LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), liveGroup.getGroupId(),
-			layout.isPrivateLayout(), layout.getParentLayoutId(),
-			layout.getName(), layout.getTitle(), layout.getDescription(),
-			layout.getType(), layout.isHidden(), layout.getFriendlyURL(),
-			serviceContext);
 	}
 
 	@Override

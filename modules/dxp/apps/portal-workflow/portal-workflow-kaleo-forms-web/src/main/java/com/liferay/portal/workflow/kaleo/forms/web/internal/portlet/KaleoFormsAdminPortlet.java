@@ -247,32 +247,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * Updates the <code>DDLRecord</code> (in the
-	 * <code>com.liferay.dynamic.data.lists.api</code> module), checking the
-	 * permission for the action ID
-	 * <code>KaleoFormsActionKeys.COMPLETE_FORM</code> (in the
-	 * <code>com.liferay.portal.workflow.kaleo.forms.api</code> module).
-	 *
-	 * @param  actionRequest the request from which to get the request
-	 *         parameters
-	 * @param  actionResponse the response to receive the render parameters
-	 * @throws Exception if an exception occurred
-	 */
-	public void updateDDLRecord(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(),
-			_portal.getUploadPortletRequest(actionRequest));
-
-		checkKaleoProcessPermission(
-			serviceContext, KaleoFormsActionKeys.COMPLETE_FORM);
-
-		updateDDLRecord(serviceContext);
-	}
-
-	/**
 	 * Updates the <code>KaleoProcess</code> (in the
 	 * <code>com.liferay.portal.workflow.kaleo.forms.api</code> module), or adds
 	 * a new process if the Kaleo process ID from the action request is not

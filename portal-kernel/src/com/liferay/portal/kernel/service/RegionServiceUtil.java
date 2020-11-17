@@ -36,6 +36,19 @@ public class RegionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.Region addRegion(
+			long countryId, boolean active, String name, double position,
+			String regionCode, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addRegion(
+			countryId, active, name, position, regionCode, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.model.Region addRegion(
 			long countryId, String regionCode, String name, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

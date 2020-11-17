@@ -236,21 +236,10 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByA2() throws Exception {
-		_persistence.countByA2("");
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByA2("null");
-
-		_persistence.countByA2((String)null);
-	}
-
-	@Test
-	public void testCountByA3() throws Exception {
-		_persistence.countByA3("");
-
-		_persistence.countByA3("null");
-
-		_persistence.countByA3((String)null);
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -261,12 +250,38 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByName() throws Exception {
-		_persistence.countByName("");
+	public void testCountByC_A2() throws Exception {
+		_persistence.countByC_A2(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByName("null");
+		_persistence.countByC_A2(0L, "null");
 
-		_persistence.countByName((String)null);
+		_persistence.countByC_A2(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_A3() throws Exception {
+		_persistence.countByC_A3(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_A3(0L, "null");
+
+		_persistence.countByC_A3(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_Active() throws Exception {
+		_persistence.countByC_Active(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_Active(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByC_N() throws Exception {
+		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_N(0L, "null");
+
+		_persistence.countByC_N(0L, (String)null);
 	}
 
 	@Test
@@ -556,17 +571,32 @@ public class CountryPersistenceTest {
 
 	private void _assertOriginalValues(Country country) {
 		Assert.assertEquals(
+			Long.valueOf(country.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
 			country.getA2(),
 			ReflectionTestUtil.invoke(
 				country, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "a2"));
 
 		Assert.assertEquals(
+			Long.valueOf(country.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
 			country.getA3(),
 			ReflectionTestUtil.invoke(
 				country, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "a3"));
 
+		Assert.assertEquals(
+			Long.valueOf(country.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			country.getName(),
 			ReflectionTestUtil.invoke(

@@ -30,6 +30,26 @@ public class CountryServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country addCountry(
+			java.lang.String a2, java.lang.String a3, boolean active,
+			boolean billingAllowed, java.lang.String idd, java.lang.String name,
+			java.lang.String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT, boolean zipRequired,
+			java.util.Map<java.lang.String, java.lang.String> titleMap,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryService.addCountry(
+			a2, a3, active, billingAllowed, idd, name, number, position,
+			shippingAllowed, subjectToVAT, zipRequired, titleMap,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.model.Country addCountry(
 			java.lang.String name, java.lang.String a2, java.lang.String a3,
 			java.lang.String number, java.lang.String idd, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

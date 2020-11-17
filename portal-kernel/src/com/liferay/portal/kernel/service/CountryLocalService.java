@@ -77,6 +77,13 @@ public interface CountryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Country addCountry(Country country);
 
+	public Country addCountry(
+			String a2, String a3, boolean active, boolean billingAllowed,
+			String idd, String name, String number, double position,
+			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
+			Map<String, String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *
@@ -229,6 +236,9 @@ public interface CountryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Country> getCountries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCountriesByCompanyId(long companyId);
+
 	/**
 	 * Returns the number of countries.
 	 *
@@ -236,6 +246,9 @@ public interface CountryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCountriesCountByCompanyId(long companyId);
 
 	/**
 	 * Returns the country with the primary key.

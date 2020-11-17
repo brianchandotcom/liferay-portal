@@ -63,6 +63,10 @@ import java.rmi.RemoteException;
 @Deprecated
 public class CountryServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.CountrySoap addCountry(
 			String name, String a2, String a3, String number, String idd,
 			boolean active)

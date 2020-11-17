@@ -30,6 +30,21 @@ public class RegionServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Region addRegion(
+			long countryId, boolean active, java.lang.String name,
+			double position, java.lang.String regionCode,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionService.addRegion(
+			countryId, active, name, position, regionCode, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.model.Region addRegion(
 			long countryId, java.lang.String regionCode, java.lang.String name,
 			boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

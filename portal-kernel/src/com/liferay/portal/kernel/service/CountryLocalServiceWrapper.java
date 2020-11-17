@@ -45,6 +45,22 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.addCountry(country);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Country addCountry(
+			java.lang.String a2, java.lang.String a3, boolean active,
+			boolean billingAllowed, java.lang.String idd, java.lang.String name,
+			java.lang.String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT, boolean zipRequired,
+			java.util.Map<java.lang.String, java.lang.String> titleMap,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.addCountry(
+			a2, a3, active, billingAllowed, idd, name, number, position,
+			shippingAllowed, subjectToVAT, zipRequired, titleMap,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *
@@ -264,6 +280,13 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.getCountries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country>
+		getCountriesByCompanyId(long companyId) {
+
+		return _countryLocalService.getCountriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of countries.
 	 *
@@ -272,6 +295,11 @@ public class CountryLocalServiceWrapper
 	@Override
 	public int getCountriesCount() {
 		return _countryLocalService.getCountriesCount();
+	}
+
+	@Override
+	public int getCountriesCountByCompanyId(long companyId) {
+		return _countryLocalService.getCountriesCountByCompanyId(companyId);
 	}
 
 	/**

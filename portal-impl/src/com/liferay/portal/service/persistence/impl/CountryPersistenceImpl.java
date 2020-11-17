@@ -1193,97 +1193,135 @@ public class CountryPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"country.companyId = ?";
 
-	private FinderPath _finderPathFetchByA2;
-	private FinderPath _finderPathCountByA2;
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 
 	/**
-	 * Returns the country where a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 * Returns all the countries where companyId = &#63;.
 	 *
-	 * @param a2 the a2
-	 * @return the matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
+	 * @param companyId the company ID
+	 * @return the matching countries
 	 */
 	@Override
-	public Country findByA2(String a2) throws NoSuchCountryException {
-		Country country = fetchByA2(a2);
-
-		if (country == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("a2=");
-			sb.append(a2);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCountryException(sb.toString());
-		}
-
-		return country;
+	public List<Country> findByCompanyId(long companyId) {
+		return findByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the countries where companyId = &#63;.
 	 *
-	 * @param a2 the a2
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries
 	 */
 	@Override
-	public Country fetchByA2(String a2) {
-		return fetchByA2(a2, true);
+	public List<Country> findByCompanyId(long companyId, int start, int end) {
+		return findByCompanyId(companyId, start, end, null);
 	}
 
 	/**
-	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the countries where companyId = &#63;.
 	 *
-	 * @param a2 the a2
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries
+	 */
+	@Override
+	public List<Country> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 * @return the ordered range of matching countries
 	 */
 	@Override
-	public Country fetchByA2(String a2, boolean useFinderCache) {
-		a2 = Objects.toString(a2, "");
+	public List<Country> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
+		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {a2};
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByCompanyId;
+			finderArgs = new Object[] {
+				companyId, start, end, orderByComparator
+			};
 		}
 
-		Object result = null;
+		List<Country> list = null;
 
 		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByA2, finderArgs);
-		}
+			list = (List<Country>)FinderCacheUtil.getResult(
+				finderPath, finderArgs);
 
-		if (result instanceof Country) {
-			Country country = (Country)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (Country country : list) {
+					if (companyId != country.getCompanyId()) {
+						list = null;
 
-			if (!Objects.equals(a2, country.getA2())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
 
 			sb.append(_SQL_SELECT_COUNTRY_WHERE);
 
-			boolean bindA2 = false;
+			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-			if (a2.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A2_A2_3);
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				bindA2 = true;
-
-				sb.append(_FINDER_COLUMN_A2_A2_2);
+				sb.append(CountryModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = sb.toString();
@@ -1297,24 +1335,15 @@ public class CountryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				if (bindA2) {
-					queryPos.add(a2);
-				}
+				queryPos.add(companyId);
 
-				List<Country> list = query.list();
+				list = (List<Country>)QueryUtil.list(
+					query, getDialect(), start, end);
 
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByA2, finderArgs, list);
-					}
-				}
-				else {
-					Country country = list.get(0);
+				cacheResult(list);
 
-					result = country;
-
-					cacheResult(country);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -1325,40 +1354,295 @@ public class CountryPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Country)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the country where a2 = &#63; from the database.
+	 * Returns the first country in the ordered set where companyId = &#63;.
 	 *
-	 * @param a2 the a2
-	 * @return the country that was removed
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
 	 */
 	@Override
-	public Country removeByA2(String a2) throws NoSuchCountryException {
-		Country country = findByA2(a2);
+	public Country findByCompanyId_First(
+			long companyId, OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
 
-		return remove(country);
+		Country country = fetchByCompanyId_First(companyId, orderByComparator);
+
+		if (country != null) {
+			return country;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append("}");
+
+		throw new NoSuchCountryException(sb.toString());
 	}
 
 	/**
-	 * Returns the number of countries where a2 = &#63;.
+	 * Returns the first country in the ordered set where companyId = &#63;.
 	 *
-	 * @param a2 the a2
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByCompanyId_First(
+		long companyId, OrderByComparator<Country> orderByComparator) {
+
+		List<Country> list = findByCompanyId(
+			companyId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	@Override
+	public Country findByCompanyId_Last(
+			long companyId, OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
+
+		Country country = fetchByCompanyId_Last(companyId, orderByComparator);
+
+		if (country != null) {
+			return country;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append("}");
+
+		throw new NoSuchCountryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByCompanyId_Last(
+		long companyId, OrderByComparator<Country> orderByComparator) {
+
+		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Country> list = findByCompanyId(
+			companyId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set where companyId = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	@Override
+	public Country[] findByCompanyId_PrevAndNext(
+			long countryId, long companyId,
+			OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
+
+		Country country = findByPrimaryKey(countryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Country[] array = new CountryImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(
+				session, country, companyId, orderByComparator, true);
+
+			array[1] = country;
+
+			array[2] = getByCompanyId_PrevAndNext(
+				session, country, companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Country getByCompanyId_PrevAndNext(
+		Session session, Country country, long companyId,
+		OrderByComparator<Country> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_COUNTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CountryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(country)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Country> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the countries where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByCompanyId(long companyId) {
+		for (Country country :
+				findByCompanyId(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(country);
+		}
+	}
+
+	/**
+	 * Returns the number of countries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
 	 * @return the number of matching countries
 	 */
 	@Override
-	public int countByA2(String a2) {
-		a2 = Objects.toString(a2, "");
+	public int countByCompanyId(long companyId) {
+		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		FinderPath finderPath = _finderPathCountByA2;
-
-		Object[] finderArgs = new Object[] {a2};
+		Object[] finderArgs = new Object[] {companyId};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
@@ -1367,16 +1651,7 @@ public class CountryPersistenceImpl
 
 			sb.append(_SQL_COUNT_COUNTRY_WHERE);
 
-			boolean bindA2 = false;
-
-			if (a2.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A2_A2_3);
-			}
-			else {
-				bindA2 = true;
-
-				sb.append(_FINDER_COLUMN_A2_A2_2);
-			}
+			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -1389,9 +1664,7 @@ public class CountryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				if (bindA2) {
-					queryPos.add(a2);
-				}
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -1408,230 +1681,8 @@ public class CountryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_A2_A2_2 = "country.a2 = ?";
-
-	private static final String _FINDER_COLUMN_A2_A2_3 =
-		"(country.a2 IS NULL OR country.a2 = '')";
-
-	private FinderPath _finderPathFetchByA3;
-	private FinderPath _finderPathCountByA3;
-
-	/**
-	 * Returns the country where a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
-	 *
-	 * @param a3 the a3
-	 * @return the matching country
-	 * @throws NoSuchCountryException if a matching country could not be found
-	 */
-	@Override
-	public Country findByA3(String a3) throws NoSuchCountryException {
-		Country country = fetchByA3(a3);
-
-		if (country == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("a3=");
-			sb.append(a3);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCountryException(sb.toString());
-		}
-
-		return country;
-	}
-
-	/**
-	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param a3 the a3
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
-	 */
-	@Override
-	public Country fetchByA3(String a3) {
-		return fetchByA3(a3, true);
-	}
-
-	/**
-	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param a3 the a3
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching country, or <code>null</code> if a matching country could not be found
-	 */
-	@Override
-	public Country fetchByA3(String a3, boolean useFinderCache) {
-		a3 = Objects.toString(a3, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {a3};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByA3, finderArgs);
-		}
-
-		if (result instanceof Country) {
-			Country country = (Country)result;
-
-			if (!Objects.equals(a3, country.getA3())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_COUNTRY_WHERE);
-
-			boolean bindA3 = false;
-
-			if (a3.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A3_A3_3);
-			}
-			else {
-				bindA3 = true;
-
-				sb.append(_FINDER_COLUMN_A3_A3_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindA3) {
-					queryPos.add(a3);
-				}
-
-				List<Country> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByA3, finderArgs, list);
-					}
-				}
-				else {
-					Country country = list.get(0);
-
-					result = country;
-
-					cacheResult(country);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Country)result;
-		}
-	}
-
-	/**
-	 * Removes the country where a3 = &#63; from the database.
-	 *
-	 * @param a3 the a3
-	 * @return the country that was removed
-	 */
-	@Override
-	public Country removeByA3(String a3) throws NoSuchCountryException {
-		Country country = findByA3(a3);
-
-		return remove(country);
-	}
-
-	/**
-	 * Returns the number of countries where a3 = &#63;.
-	 *
-	 * @param a3 the a3
-	 * @return the number of matching countries
-	 */
-	@Override
-	public int countByA3(String a3) {
-		a3 = Objects.toString(a3, "");
-
-		FinderPath finderPath = _finderPathCountByA3;
-
-		Object[] finderArgs = new Object[] {a3};
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COUNTRY_WHERE);
-
-			boolean bindA3 = false;
-
-			if (a3.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A3_A3_3);
-			}
-			else {
-				bindA3 = true;
-
-				sb.append(_FINDER_COLUMN_A3_A3_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindA3) {
-					queryPos.add(a3);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_A3_A3_2 = "country.a3 = ?";
-
-	private static final String _FINDER_COLUMN_A3_A3_3 =
-		"(country.a3 IS NULL OR country.a3 = '')";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
+		"country.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByActive;
 	private FinderPath _finderPathWithoutPaginationFindByActive;
@@ -2120,27 +2171,33 @@ public class CountryPersistenceImpl
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 =
 		"country.active = ?";
 
-	private FinderPath _finderPathFetchByName;
-	private FinderPath _finderPathCountByName;
+	private FinderPath _finderPathFetchByC_A2;
+	private FinderPath _finderPathCountByC_A2;
 
 	/**
-	 * Returns the country where name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 * Returns the country where companyId = &#63; and a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
 	 *
-	 * @param name the name
+	 * @param companyId the company ID
+	 * @param a2 the a2
 	 * @return the matching country
 	 * @throws NoSuchCountryException if a matching country could not be found
 	 */
 	@Override
-	public Country findByName(String name) throws NoSuchCountryException {
-		Country country = fetchByName(name);
+	public Country findByC_A2(long companyId, String a2)
+		throws NoSuchCountryException {
+
+		Country country = fetchByC_A2(companyId, a2);
 
 		if (country == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("name=");
-			sb.append(name);
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", a2=");
+			sb.append(a2);
 
 			sb.append("}");
 
@@ -2155,62 +2212,70 @@ public class CountryPersistenceImpl
 	}
 
 	/**
-	 * Returns the country where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the country where companyId = &#63; and a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param name the name
+	 * @param companyId the company ID
+	 * @param a2 the a2
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
 	@Override
-	public Country fetchByName(String name) {
-		return fetchByName(name, true);
+	public Country fetchByC_A2(long companyId, String a2) {
+		return fetchByC_A2(companyId, a2, true);
 	}
 
 	/**
-	 * Returns the country where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the country where companyId = &#63; and a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param name the name
+	 * @param companyId the company ID
+	 * @param a2 the a2
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
 	@Override
-	public Country fetchByName(String name, boolean useFinderCache) {
-		name = Objects.toString(name, "");
+	public Country fetchByC_A2(
+		long companyId, String a2, boolean useFinderCache) {
+
+		a2 = Objects.toString(a2, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {name};
+			finderArgs = new Object[] {companyId, a2};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
-				_finderPathFetchByName, finderArgs);
+				_finderPathFetchByC_A2, finderArgs);
 		}
 
 		if (result instanceof Country) {
 			Country country = (Country)result;
 
-			if (!Objects.equals(name, country.getName())) {
+			if ((companyId != country.getCompanyId()) ||
+				!Objects.equals(a2, country.getA2())) {
+
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_SELECT_COUNTRY_WHERE);
 
-			boolean bindName = false;
+			sb.append(_FINDER_COLUMN_C_A2_COMPANYID_2);
 
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
+			boolean bindA2 = false;
+
+			if (a2.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A2_A2_3);
 			}
 			else {
-				bindName = true;
+				bindA2 = true;
 
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
+				sb.append(_FINDER_COLUMN_C_A2_A2_2);
 			}
 
 			String sql = sb.toString();
@@ -2224,8 +2289,10 @@ public class CountryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				if (bindName) {
-					queryPos.add(name);
+				queryPos.add(companyId);
+
+				if (bindA2) {
+					queryPos.add(a2);
 				}
 
 				List<Country> list = query.list();
@@ -2233,7 +2300,7 @@ public class CountryPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						FinderCacheUtil.putResult(
-							_finderPathFetchByName, finderArgs, list);
+							_finderPathFetchByC_A2, finderArgs, list);
 					}
 				}
 				else {
@@ -2261,48 +2328,54 @@ public class CountryPersistenceImpl
 	}
 
 	/**
-	 * Removes the country where name = &#63; from the database.
+	 * Removes the country where companyId = &#63; and a2 = &#63; from the database.
 	 *
-	 * @param name the name
+	 * @param companyId the company ID
+	 * @param a2 the a2
 	 * @return the country that was removed
 	 */
 	@Override
-	public Country removeByName(String name) throws NoSuchCountryException {
-		Country country = findByName(name);
+	public Country removeByC_A2(long companyId, String a2)
+		throws NoSuchCountryException {
+
+		Country country = findByC_A2(companyId, a2);
 
 		return remove(country);
 	}
 
 	/**
-	 * Returns the number of countries where name = &#63;.
+	 * Returns the number of countries where companyId = &#63; and a2 = &#63;.
 	 *
-	 * @param name the name
+	 * @param companyId the company ID
+	 * @param a2 the a2
 	 * @return the number of matching countries
 	 */
 	@Override
-	public int countByName(String name) {
-		name = Objects.toString(name, "");
+	public int countByC_A2(long companyId, String a2) {
+		a2 = Objects.toString(a2, "");
 
-		FinderPath finderPath = _finderPathCountByName;
+		FinderPath finderPath = _finderPathCountByC_A2;
 
-		Object[] finderArgs = new Object[] {name};
+		Object[] finderArgs = new Object[] {companyId, a2};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_COUNTRY_WHERE);
 
-			boolean bindName = false;
+			sb.append(_FINDER_COLUMN_C_A2_COMPANYID_2);
 
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
+			boolean bindA2 = false;
+
+			if (a2.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A2_A2_3);
 			}
 			else {
-				bindName = true;
+				bindA2 = true;
 
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
+				sb.append(_FINDER_COLUMN_C_A2_A2_2);
 			}
 
 			String sql = sb.toString();
@@ -2315,6 +2388,1037 @@ public class CountryPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindA2) {
+					queryPos.add(a2);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_A2_COMPANYID_2 =
+		"country.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_A2_A2_2 = "country.a2 = ?";
+
+	private static final String _FINDER_COLUMN_C_A2_A2_3 =
+		"(country.a2 IS NULL OR country.a2 = '')";
+
+	private FinderPath _finderPathFetchByC_A3;
+	private FinderPath _finderPathCountByC_A3;
+
+	/**
+	 * Returns the country where companyId = &#63; and a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param a3 the a3
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	@Override
+	public Country findByC_A3(long companyId, String a3)
+		throws NoSuchCountryException {
+
+		Country country = fetchByC_A3(companyId, a3);
+
+		if (country == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", a3=");
+			sb.append(a3);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCountryException(sb.toString());
+		}
+
+		return country;
+	}
+
+	/**
+	 * Returns the country where companyId = &#63; and a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param a3 the a3
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByC_A3(long companyId, String a3) {
+		return fetchByC_A3(companyId, a3, true);
+	}
+
+	/**
+	 * Returns the country where companyId = &#63; and a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param a3 the a3
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByC_A3(
+		long companyId, String a3, boolean useFinderCache) {
+
+		a3 = Objects.toString(a3, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, a3};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_A3, finderArgs);
+		}
+
+		if (result instanceof Country) {
+			Country country = (Country)result;
+
+			if ((companyId != country.getCompanyId()) ||
+				!Objects.equals(a3, country.getA3())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_COUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_A3_COMPANYID_2);
+
+			boolean bindA3 = false;
+
+			if (a3.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A3_A3_3);
+			}
+			else {
+				bindA3 = true;
+
+				sb.append(_FINDER_COLUMN_C_A3_A3_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindA3) {
+					queryPos.add(a3);
+				}
+
+				List<Country> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_A3, finderArgs, list);
+					}
+				}
+				else {
+					Country country = list.get(0);
+
+					result = country;
+
+					cacheResult(country);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Country)result;
+		}
+	}
+
+	/**
+	 * Removes the country where companyId = &#63; and a3 = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param a3 the a3
+	 * @return the country that was removed
+	 */
+	@Override
+	public Country removeByC_A3(long companyId, String a3)
+		throws NoSuchCountryException {
+
+		Country country = findByC_A3(companyId, a3);
+
+		return remove(country);
+	}
+
+	/**
+	 * Returns the number of countries where companyId = &#63; and a3 = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param a3 the a3
+	 * @return the number of matching countries
+	 */
+	@Override
+	public int countByC_A3(long companyId, String a3) {
+		a3 = Objects.toString(a3, "");
+
+		FinderPath finderPath = _finderPathCountByC_A3;
+
+		Object[] finderArgs = new Object[] {companyId, a3};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_A3_COMPANYID_2);
+
+			boolean bindA3 = false;
+
+			if (a3.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_A3_A3_3);
+			}
+			else {
+				bindA3 = true;
+
+				sb.append(_FINDER_COLUMN_C_A3_A3_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindA3) {
+					queryPos.add(a3);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_A3_COMPANYID_2 =
+		"country.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_A3_A3_2 = "country.a3 = ?";
+
+	private static final String _FINDER_COLUMN_C_A3_A3_3 =
+		"(country.a3 IS NULL OR country.a3 = '')";
+
+	private FinderPath _finderPathWithPaginationFindByC_Active;
+	private FinderPath _finderPathWithoutPaginationFindByC_Active;
+	private FinderPath _finderPathCountByC_Active;
+
+	/**
+	 * Returns all the countries where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching countries
+	 */
+	@Override
+	public List<Country> findByC_Active(long companyId, boolean active) {
+		return findByC_Active(
+			companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the countries where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries
+	 */
+	@Override
+	public List<Country> findByC_Active(
+		long companyId, boolean active, int start, int end) {
+
+		return findByC_Active(companyId, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries
+	 */
+	@Override
+	public List<Country> findByC_Active(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return findByC_Active(
+			companyId, active, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching countries
+	 */
+	@Override
+	public List<Country> findByC_Active(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_Active;
+				finderArgs = new Object[] {companyId, active};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_Active;
+			finderArgs = new Object[] {
+				companyId, active, start, end, orderByComparator
+			};
+		}
+
+		List<Country> list = null;
+
+		if (useFinderCache) {
+			list = (List<Country>)FinderCacheUtil.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Country country : list) {
+					if ((companyId != country.getCompanyId()) ||
+						(active != country.isActive())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ACTIVE_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_ACTIVE_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CountryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(active);
+
+				list = (List<Country>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first country in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	@Override
+	public Country findByC_Active_First(
+			long companyId, boolean active,
+			OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
+
+		Country country = fetchByC_Active_First(
+			companyId, active, orderByComparator);
+
+		if (country != null) {
+			return country;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", active=");
+		sb.append(active);
+
+		sb.append("}");
+
+		throw new NoSuchCountryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first country in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByC_Active_First(
+		long companyId, boolean active,
+		OrderByComparator<Country> orderByComparator) {
+
+		List<Country> list = findByC_Active(
+			companyId, active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	@Override
+	public Country findByC_Active_Last(
+			long companyId, boolean active,
+			OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
+
+		Country country = fetchByC_Active_Last(
+			companyId, active, orderByComparator);
+
+		if (country != null) {
+			return country;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", active=");
+		sb.append(active);
+
+		sb.append("}");
+
+		throw new NoSuchCountryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByC_Active_Last(
+		long companyId, boolean active,
+		OrderByComparator<Country> orderByComparator) {
+
+		int count = countByC_Active(companyId, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Country> list = findByC_Active(
+			companyId, active, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set where companyId = &#63; and active = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	@Override
+	public Country[] findByC_Active_PrevAndNext(
+			long countryId, long companyId, boolean active,
+			OrderByComparator<Country> orderByComparator)
+		throws NoSuchCountryException {
+
+		Country country = findByPrimaryKey(countryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Country[] array = new CountryImpl[3];
+
+			array[0] = getByC_Active_PrevAndNext(
+				session, country, companyId, active, orderByComparator, true);
+
+			array[1] = country;
+
+			array[2] = getByC_Active_PrevAndNext(
+				session, country, companyId, active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Country getByC_Active_PrevAndNext(
+		Session session, Country country, long companyId, boolean active,
+		OrderByComparator<Country> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COUNTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_ACTIVE_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_ACTIVE_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CountryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(active);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(country)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Country> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the countries where companyId = &#63; and active = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 */
+	@Override
+	public void removeByC_Active(long companyId, boolean active) {
+		for (Country country :
+				findByC_Active(
+					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(country);
+		}
+	}
+
+	/**
+	 * Returns the number of countries where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching countries
+	 */
+	@Override
+	public int countByC_Active(long companyId, boolean active) {
+		FinderPath finderPath = _finderPathCountByC_Active;
+
+		Object[] finderArgs = new Object[] {companyId, active};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ACTIVE_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_ACTIVE_ACTIVE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(active);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_ACTIVE_COMPANYID_2 =
+		"country.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_ACTIVE_ACTIVE_2 =
+		"country.active = ?";
+
+	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
+
+	/**
+	 * Returns the country where companyId = &#63; and name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	@Override
+	public Country findByC_N(long companyId, String name)
+		throws NoSuchCountryException {
+
+		Country country = fetchByC_N(companyId, name);
+
+		if (country == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCountryException(sb.toString());
+		}
+
+		return country;
+	}
+
+	/**
+	 * Returns the country where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByC_N(long companyId, String name) {
+		return fetchByC_N(companyId, name, true);
+	}
+
+	/**
+	 * Returns the country where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByC_N(
+		long companyId, String name, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_N, finderArgs);
+		}
+
+		if (result instanceof Country) {
+			Country country = (Country)result;
+
+			if ((companyId != country.getCompanyId()) ||
+				!Objects.equals(name, country.getName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_COUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				List<Country> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_N, finderArgs, list);
+					}
+				}
+				else {
+					Country country = list.get(0);
+
+					result = country;
+
+					cacheResult(country);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Country)result;
+		}
+	}
+
+	/**
+	 * Removes the country where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the country that was removed
+	 */
+	@Override
+	public Country removeByC_N(long companyId, String name)
+		throws NoSuchCountryException {
+
+		Country country = findByC_N(companyId, name);
+
+		return remove(country);
+	}
+
+	/**
+	 * Returns the number of countries where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching countries
+	 */
+	@Override
+	public int countByC_N(long companyId, String name) {
+		name = Objects.toString(name, "");
+
+		FinderPath finderPath = _finderPathCountByC_N;
+
+		Object[] finderArgs = new Object[] {companyId, name};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
 
 				if (bindName) {
 					queryPos.add(name);
@@ -2335,9 +3439,12 @@ public class CountryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_NAME_NAME_2 = "country.name = ?";
+	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
+		"country.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_NAME_NAME_3 =
+	private static final String _FINDER_COLUMN_C_N_NAME_2 = "country.name = ?";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_3 =
 		"(country.name IS NULL OR country.name = '')";
 
 	public CountryPersistenceImpl() {
@@ -2369,13 +3476,16 @@ public class CountryPersistenceImpl
 			CountryImpl.class, country.getPrimaryKey(), country);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByA2, new Object[] {country.getA2()}, country);
+			_finderPathFetchByC_A2,
+			new Object[] {country.getCompanyId(), country.getA2()}, country);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByA3, new Object[] {country.getA3()}, country);
+			_finderPathFetchByC_A3,
+			new Object[] {country.getCompanyId(), country.getA3()}, country);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByName, new Object[] {country.getName()}, country);
+			_finderPathFetchByC_N,
+			new Object[] {country.getCompanyId(), country.getName()}, country);
 	}
 
 	/**
@@ -2437,22 +3547,31 @@ public class CountryPersistenceImpl
 	}
 
 	protected void cacheUniqueFindersCache(CountryModelImpl countryModelImpl) {
-		Object[] args = new Object[] {countryModelImpl.getA2()};
-
-		FinderCacheUtil.putResult(_finderPathCountByA2, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(_finderPathFetchByA2, args, countryModelImpl);
-
-		args = new Object[] {countryModelImpl.getA3()};
-
-		FinderCacheUtil.putResult(_finderPathCountByA3, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(_finderPathFetchByA3, args, countryModelImpl);
-
-		args = new Object[] {countryModelImpl.getName()};
+		Object[] args = new Object[] {
+			countryModelImpl.getCompanyId(), countryModelImpl.getA2()
+		};
 
 		FinderCacheUtil.putResult(
-			_finderPathCountByName, args, Long.valueOf(1));
+			_finderPathCountByC_A2, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(
-			_finderPathFetchByName, args, countryModelImpl);
+			_finderPathFetchByC_A2, args, countryModelImpl);
+
+		args = new Object[] {
+			countryModelImpl.getCompanyId(), countryModelImpl.getA3()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_A3, args, Long.valueOf(1));
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_A3, args, countryModelImpl);
+
+		args = new Object[] {
+			countryModelImpl.getCompanyId(), countryModelImpl.getName()
+		};
+
+		FinderCacheUtil.putResult(_finderPathCountByC_N, args, Long.valueOf(1));
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_N, args, countryModelImpl);
 	}
 
 	/**
@@ -2956,21 +4075,23 @@ public class CountryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathFetchByA2 = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA2",
-			new String[] {String.class.getName()}, new String[] {"a2"}, true);
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId"}, true);
 
-		_finderPathCountByA2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA2",
-			new String[] {String.class.getName()}, new String[] {"a2"}, false);
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
 
-		_finderPathFetchByA3 = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA3",
-			new String[] {String.class.getName()}, new String[] {"a3"}, true);
-
-		_finderPathCountByA3 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA3",
-			new String[] {String.class.getName()}, new String[] {"a3"}, false);
+		_finderPathCountByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
 
 		_finderPathWithPaginationFindByActive = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
@@ -2990,14 +4111,54 @@ public class CountryPersistenceImpl
 			new String[] {Boolean.class.getName()}, new String[] {"active_"},
 			false);
 
-		_finderPathFetchByName = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+		_finderPathFetchByC_A2 = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_A2",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "a2"}, true);
 
-		_finderPathCountByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()}, new String[] {"name"},
-			false);
+		_finderPathCountByC_A2 = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A2",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "a2"}, false);
+
+		_finderPathFetchByC_A3 = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "a3"}, true);
+
+		_finderPathCountByC_A3 = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A3",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "a3"}, false);
+
+		_finderPathWithPaginationFindByC_Active = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_Active",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "active_"}, true);
+
+		_finderPathWithoutPaginationFindByC_Active = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_Active",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "active_"}, true);
+
+		_finderPathCountByC_Active = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Active",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "active_"}, false);
+
+		_finderPathFetchByC_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, true);
+
+		_finderPathCountByC_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, false);
 	}
 
 	public void destroy() {

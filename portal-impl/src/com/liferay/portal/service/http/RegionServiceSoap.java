@@ -64,6 +64,32 @@ import java.rmi.RemoteException;
 public class RegionServiceSoap {
 
 	public static com.liferay.portal.kernel.model.RegionSoap addRegion(
+			long countryId, boolean active, String name, double position,
+			String regionCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Region returnValue =
+				RegionServiceUtil.addRegion(
+					countryId, active, name, position, regionCode,
+					serviceContext);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.model.RegionSoap addRegion(
 			long countryId, String regionCode, String name, boolean active)
 		throws RemoteException {
 

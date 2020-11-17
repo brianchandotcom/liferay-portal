@@ -51,6 +51,15 @@ public interface RegionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the region remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RegionServiceUtil} if injection and service tracking are not available.
 	 */
 	public Region addRegion(
+			long countryId, boolean active, String name, double position,
+			String regionCode, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public Region addRegion(
 			long countryId, String regionCode, String name, boolean active)
 		throws PortalException;
 

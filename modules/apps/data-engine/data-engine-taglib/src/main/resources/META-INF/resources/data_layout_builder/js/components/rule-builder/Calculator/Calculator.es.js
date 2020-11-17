@@ -36,15 +36,15 @@ function FieldsDropdown({items, onFieldSelected = () => {}, ...otherProps}) {
 						return (
 							<ClayDropDown.Item
 								aria-label={item.label}
-								key={item.fieldName}
+								key={item.fieldReference}
 								onClick={() => onFieldSelected(item)}
 							>
 								{item.label}
-								{item.fieldName && (
-									<span className="calculate-fieldname">
+								{item.fieldReference && (
+									<span className="calculate-field-reference">
 										{` ${Liferay.Language.get(
-											'field-name'
-										)}: ${item.fieldName}`}
+											'field-reference'
+										)}: ${item.fieldReference}`}
 									</span>
 								)}
 							</ClayDropDown.Item>
@@ -259,11 +259,11 @@ const Calculator = forwardRef(
 			updateExpression({index, newExpression});
 		};
 
-		const handleFieldSelected = ({fieldName}) => {
+		const handleFieldSelected = ({fieldReference}) => {
 			const newExpression = addTokenToExpression({
 				expression,
 				tokenType: Token.VARIABLE,
-				tokenValue: fieldName,
+				tokenValue: fieldReference,
 			});
 
 			updateExpression({index, newExpression});

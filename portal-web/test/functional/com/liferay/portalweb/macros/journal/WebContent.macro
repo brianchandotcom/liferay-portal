@@ -1073,7 +1073,10 @@ definition {
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 
 		if (isSet(webContentImage)) {
-			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
+			AssertClick(
+				key_fieldFieldLabel = "Image",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
 
 			SelectFrameTop(value1 = "relative=top");
 

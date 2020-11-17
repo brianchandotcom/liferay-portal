@@ -14,8 +14,18 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.upgrade.v7_4_x.util.CountryTable;
+import com.liferay.portal.util.PropsValues;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Albert Lee
@@ -26,10 +36,31 @@ public class UpgradeCountry extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-7.3.0-7.4.0-country.sql", false);
 
-		if (!hasColumn("Country", "uuid_")) {
-			alter(
-				CountryTable.class,
-				new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
+		runSQL("drop index IX_717B97E1 on Country");
+
+		runSQL("drop index IX_717B9BA2 on Country");
+
+		runSQL("drop index IX_19DA007B on Country");
+
+		long defaultCompanyId = 0;
+		long defaultUserId = 0;
+
+		String sql = StringBundler.concat(
+			"SELECT User_.companyId, User_.userId FROM User_ JOIN Company ON ",
+			"User_.companyId = Company.companyId WHERE User_.defaultUser = ",
+			"true AND Company.webId = ",
+			StringUtil.quote(
+				PropsValues.COMPANY_DEFAULT_WEB_ID, StringPool.QUOTE));
+
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				defaultCompanyId = rs.getLong(1);
+				defaultUserId = rs.getLong(2);
+
+				break;
+			}
 		}
 
 		if (!hasColumn("Country", "companyId")) {
@@ -38,9 +69,21 @@ public class UpgradeCountry extends UpgradeProcess {
 				new AlterTableAddColumn("companyId", "LONG"));
 		}
 
+		if (defaultCompanyId > 0) {
+			runSQL(
+				"update Country set companyId = " + defaultCompanyId +
+					" where companyId is null");
+		}
+
 		if (!hasColumn("Country", "userId")) {
 			alter(
 				CountryTable.class, new AlterTableAddColumn("userId", "LONG"));
+		}
+
+		if (defaultUserId > 0) {
+			runSQL(
+				"update Country set userId = " + defaultUserId +
+					" where userId is null");
 		}
 
 		if (!hasColumn("Country", "userName")) {
@@ -67,11 +110,19 @@ public class UpgradeCountry extends UpgradeProcess {
 				new AlterTableAddColumn("billingAllowed", "BOOLEAN"));
 		}
 
+		runSQL(
+			"update Country set billingAllowed = true where billingAllowed " +
+				"is null");
+
 		if (!hasColumn("Country", "groupFilterEnabled")) {
 			alter(
 				CountryTable.class,
 				new AlterTableAddColumn("groupFilterEnabled", "BOOLEAN"));
 		}
+
+		runSQL(
+			"update Country set groupFilterEnabled = false where " +
+				"groupFilterEnabled is null");
 
 		if (!hasColumn("Country", "position")) {
 			alter(
@@ -85,16 +136,51 @@ public class UpgradeCountry extends UpgradeProcess {
 				new AlterTableAddColumn("shippingAllowed", "BOOLEAN"));
 		}
 
+		runSQL(
+			"update Country set shippingAllowed = true where shippingAllowed " +
+				"is null");
+
 		if (!hasColumn("Country", "subjectToVAT")) {
 			alter(
 				CountryTable.class,
 				new AlterTableAddColumn("subjectToVAT", "BOOLEAN"));
 		}
 
+		runSQL(
+			"update Country set subjectToVAT = false where subjectToVAT is " +
+				"null");
+
 		if (!hasColumn("Country", "lastPublishDate")) {
 			alter(
 				CountryTable.class,
 				new AlterTableAddColumn("lastPublishDate", "DATE null"));
+		}
+
+		if (!hasColumn("Country", "uuid_")) {
+			alter(
+				CountryTable.class,
+				new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try (PreparedStatement ps1 = connection.prepareStatement(
+					"select countryId from Country where uuid_ is null");
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update Country set uuid_ = ? where countryId = " +
+								"?"));
+				ResultSet rs = ps1.executeQuery()) {
+
+				while (rs.next()) {
+					ps2.setString(1, PortalUUIDUtil.generate());
+					ps2.setLong(2, rs.getLong(1));
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
 		}
 	}
 

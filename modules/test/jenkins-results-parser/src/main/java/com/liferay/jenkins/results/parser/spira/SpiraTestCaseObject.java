@@ -47,15 +47,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		SpiraTestCaseType spiraTestCaseType,
 		List<SpiraCustomPropertyValue> spiraCustomPropertyValues) {
 
-		List<SpiraTestCaseObject> spiraTestCaseObjects =
-			_getSpiraTestCaseObjects(
-				spiraProject, testCasePath, spiraTestCaseType,
-				spiraCustomPropertyValues);
-
-		if (!spiraTestCaseObjects.isEmpty()) {
-			return spiraTestCaseObjects.get(0);
-		}
-
 		Set<SpiraCustomPropertyValue> spiraCustomPropertyValueSet =
 			new HashSet<>();
 
@@ -65,6 +56,15 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		spiraCustomPropertyValueSet.add(
 			_getExecutionTypeSpiraCustomPropertyValue(spiraProject));
+
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			_getSpiraTestCaseObjects(
+				spiraProject, testCasePath, spiraTestCaseType,
+				new ArrayList<>(spiraCustomPropertyValueSet));
+
+		if (!spiraTestCaseObjects.isEmpty()) {
+			return spiraTestCaseObjects.get(0);
+		}
 
 		String urlPath = "projects/{project_id}/test-cases";
 

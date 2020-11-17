@@ -52,7 +52,7 @@ String backURL = (String)row.getParameter("backURL");
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/portal_workflow/deactivate_workflow_definition" var="deactivateWorkflowDefinition">
+	<portlet:actionURL name="/kaleo_forms/deactivate_workflow_definition" var="deactivateWorkflowDefinition">
 		<portlet:param name="tabs1" value="published" />
 		<portlet:param name="redirect" value="<%= backURL %>" />
 		<portlet:param name="historyKey" value="workflow" />

@@ -39,6 +39,10 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 			</aui:field-wrapper>
 		</c:if>
 
+		<%
+		PortalIncludeUtil.include(pageContext, dlFilePicker::renderFilePicker);
+		%>
+
 		<aui:script sandbox="<%= true %>">
 			var onFilePick = function (fields) {
 				var documentIconURL = fields['<%= dlFilePicker.getIconFieldName() %>'];

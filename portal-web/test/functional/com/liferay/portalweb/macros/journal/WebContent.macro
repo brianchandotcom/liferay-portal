@@ -1735,34 +1735,6 @@ definition {
 		}
 	}
 
-	macro viewCPWithoutContentField {
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
-
-		var key_fieldData = "${fieldData}";
-		var key_fieldName = "${fieldName}";
-		var key_fieldFieldLabel = "${fieldFieldLabel}";
-
-		if ("${field}" == "Web Content") {
-			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-			AssertTextEquals(
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${fieldData}");
-		}
-
-		if ("${field}" == "Geolocation") {
-			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		}
-
-		if ("${field}" == "Image") {
-			AssertTextEquals(
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentImage}");
-		}
-	}
-
 	macro viewDefaultCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

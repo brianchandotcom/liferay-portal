@@ -375,20 +375,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Deprecated
 	@Override
 	public List<String> getPortletResourceActions(Portlet portlet) {
-		Set<String> actions = new LinkedHashSet<>(
-			getPortletResourceActions(portlet.getPortletId()));
-
-		synchronized (this) {
-			_checkPortletLayoutManagerActions(actions);
-
-			if ((portlet != null) &&
-				(portlet.getControlPanelEntryCategory() != null)) {
-
-				actions.add(ActionKeys.ACCESS_IN_CONTROL_PANEL);
-			}
-		}
-
-		return new ArrayList<>(actions);
+		return getPortletResourceActions(portlet.getPortletId());
 	}
 
 	@Override

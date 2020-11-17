@@ -111,6 +111,7 @@ for (int i = 0; i < 8; i++) {
 %>
 
 <clay:select
+	containerCssClass="custom-container-css-class"
 	cssClass="custom-css-class"
 	id="customId"
 	label="Regular Select Element"

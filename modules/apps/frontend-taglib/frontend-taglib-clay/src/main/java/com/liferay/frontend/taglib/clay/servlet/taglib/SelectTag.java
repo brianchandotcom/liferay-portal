@@ -43,6 +43,10 @@ public class SelectTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
+	public String getContainerCssClass() {
+		return _containerCssClass;
+	}
+
 	public String getLabel() {
 		return LanguageUtil.get(
 			TagResourceBundleUtil.getResourceBundle(pageContext), _label);
@@ -62,6 +66,10 @@ public class SelectTag extends BaseContainerTag {
 
 	public boolean isMultiple() {
 		return _multiple;
+	}
+
+	public void setContainerCssClass(String containerCssClass) {
+		_containerCssClass = containerCssClass;
 	}
 
 	public void setDisabled(boolean disabled) {
@@ -88,6 +96,7 @@ public class SelectTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_containerCssClass = null;
 		_disabled = false;
 		_label = null;
 		_multiple = false;
@@ -163,7 +172,13 @@ public class SelectTag extends BaseContainerTag {
 	protected void writeCssClassAttribute() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write(" class=\"form-group\"");
+		jspWriter.write(" class=\"form-group ");
+
+		if (Validator.isNotNull(_containerCssClass)) {
+			jspWriter.write(_containerCssClass);
+		}
+
+		jspWriter.write("\"");
 	}
 
 	@Override
@@ -176,6 +191,7 @@ public class SelectTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:select:";
 
+	private String _containerCssClass;
 	private boolean _disabled;
 	private String _label;
 	private boolean _multiple;

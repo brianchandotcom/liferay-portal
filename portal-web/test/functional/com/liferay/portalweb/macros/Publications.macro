@@ -373,6 +373,8 @@ definition {
 		else {
 			Click(locator1 = "Publications#SCHEDULE_BUTTON");
 		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro search {

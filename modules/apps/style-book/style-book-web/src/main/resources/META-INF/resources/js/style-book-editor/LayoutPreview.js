@@ -86,6 +86,7 @@ export default function LayoutPreview() {
 function urlWithPreviewParameter(url) {
 	const nextURL = new URL(url);
 
+	nextURL.searchParams.set('p_l_mode', 'preview');
 	nextURL.searchParams.set('styleBookEntryPreview', true);
 
 	return nextURL.href;

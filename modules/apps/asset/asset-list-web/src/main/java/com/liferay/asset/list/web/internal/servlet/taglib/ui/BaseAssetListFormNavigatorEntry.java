@@ -16,9 +16,9 @@ package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 
 import java.util.Locale;
 

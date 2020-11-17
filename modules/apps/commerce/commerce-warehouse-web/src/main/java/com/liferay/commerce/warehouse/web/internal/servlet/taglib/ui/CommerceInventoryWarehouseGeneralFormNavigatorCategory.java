@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 
 import java.util.Locale;
 

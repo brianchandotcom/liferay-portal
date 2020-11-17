@@ -15,8 +15,8 @@
 package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListFormNavigatorConstants;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 
 import java.util.Locale;
 

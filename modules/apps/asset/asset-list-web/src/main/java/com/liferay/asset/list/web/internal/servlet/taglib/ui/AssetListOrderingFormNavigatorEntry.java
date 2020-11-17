@@ -17,9 +17,9 @@ package com.liferay.asset.list.web.internal.servlet.taglib.ui;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
 

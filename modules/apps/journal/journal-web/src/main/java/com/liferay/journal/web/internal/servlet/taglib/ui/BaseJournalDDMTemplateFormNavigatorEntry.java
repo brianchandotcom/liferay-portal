@@ -15,10 +15,10 @@
 package com.liferay.journal.web.internal.servlet.taglib.ui;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 
 import java.util.Locale;
 

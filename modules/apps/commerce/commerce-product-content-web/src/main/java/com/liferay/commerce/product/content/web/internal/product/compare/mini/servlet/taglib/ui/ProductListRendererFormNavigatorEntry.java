@@ -16,6 +16,8 @@ package com.liferay.commerce.product.content.web.internal.product.compare.mini.s
 
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentMiniPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.web.internal.constants.CPCompareContentMiniConstants;
+import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

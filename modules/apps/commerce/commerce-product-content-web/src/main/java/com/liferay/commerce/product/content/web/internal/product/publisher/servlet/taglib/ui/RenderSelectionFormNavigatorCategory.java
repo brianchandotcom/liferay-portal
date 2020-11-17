@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.content.web.internal.product.publisher.servlet.taglib.ui;
 
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 
 import java.util.Locale;
 

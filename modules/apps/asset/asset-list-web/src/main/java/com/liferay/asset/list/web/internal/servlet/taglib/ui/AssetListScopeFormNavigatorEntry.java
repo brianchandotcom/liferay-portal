@@ -18,9 +18,9 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListFormConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.io.IOException;
 

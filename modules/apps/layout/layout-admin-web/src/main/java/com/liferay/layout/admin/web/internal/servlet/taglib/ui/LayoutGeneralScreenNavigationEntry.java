@@ -14,16 +14,16 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryProvider;
+import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,7 +73,7 @@ public class LayoutGeneralScreenNavigationEntry
 	@Override
 	public boolean isVisible(User user, Layout layout) {
 		List<FormNavigatorCategory> formNavigatorCategories =
-			FormNavigatorCategoryUtil.getFormNavigatorCategories(
+			_formNavigatorCategoryProvider.getFormNavigatorCategories(
 				FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT);
 
 		Stream<FormNavigatorCategory> formNavigatorCategoryStream =
@@ -81,7 +81,7 @@ public class LayoutGeneralScreenNavigationEntry
 
 		return formNavigatorCategoryStream.anyMatch(
 			category -> ListUtil.isNotEmpty(
-				FormNavigatorEntryUtil.getFormNavigatorEntries(
+				_formNavigatorEntryProvider.getFormNavigatorEntries(
 					FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
 					category.getKey(), user, layout)));
 	}
@@ -104,6 +104,12 @@ public class LayoutGeneralScreenNavigationEntry
 		return new AggregateResourceBundle(
 			resourceBundle, _portal.getResourceBundle(locale));
 	}
+
+	@Reference
+	private FormNavigatorCategoryProvider _formNavigatorCategoryProvider;
+
+	@Reference
+	private FormNavigatorEntryProvider _formNavigatorEntryProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

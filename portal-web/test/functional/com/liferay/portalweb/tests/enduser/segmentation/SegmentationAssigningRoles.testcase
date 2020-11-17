@@ -12,11 +12,23 @@ definition {
 
 		Navigator.openURL();
 
-        JSONUser.addUser(
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+		
+		JSONUser.addUser(
 			userEmailAddress = "u1@liferay.com",
 			userFirstName = "User",
 			userLastName = "1",
-			userScreenName = "User1");
+			userScreenName = "user1");
 
         ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -25,7 +37,7 @@ definition {
 
 		User.editPasswordCP(
 			userEmailAddress = "u1@liferay.com",
-			userScreenName = "User1");
+			userScreenName = "user1");
 
         ApplicationsMenu.gotoSite(site = "Global");
 
@@ -71,11 +83,27 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+					
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+			
+			ApplicationsMenu.gotoSite(site = "Global");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
             User.deactivateCP(userFirstName = "User");
 
 		    User.deleteCP();
 
             JSONRole.deleteRole(roleTitle = "Role User Segments");
+
+			Navigator.gotoPage(pageName = "Home");
 
 			ProductMenu.gotoPortlet(
 				category = "People",
@@ -94,15 +122,42 @@ definition {
 
         User.logoutPG();
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "u1@liferay.com");
+		User.loginPG(
+				password = "password",
+				userEmailAddress = "u1@liferay.com");
+
+        AssertElementNotPresent(
+            locator1 = "ApplicationsMenu#PORTLET");
+	}
+
+	@description = "Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user"
+	@priority = "5"
+	test EnableAssignRolesBySegment {
+        property portal.acceptance = "true";
+
+        ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
+
+		Segmentation.enableAssingRolesBySegmentsCheckbox();
+		
+		User.logoutPG();
+
+		User.loginPG(
+				password = "password",
+				userEmailAddress = "u1@liferay.com");
 
         ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Applications");
 
-        AssertElementNotPresent(
+        AssertElementPresent(
             locator1 = "ApplicationsMenu#PORTLET",
             key_category = "Content",
 			key_portlet = "Content Dashboard");

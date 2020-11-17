@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX</td>
+	<td>//*[contains(@name, 'roleSegmentation') and contains(@type, 'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTY_FIELD</td>
 	<td>//div[@class='criterion'][1]//*[@data-testid='simple-string']</td>
 	<td></td>

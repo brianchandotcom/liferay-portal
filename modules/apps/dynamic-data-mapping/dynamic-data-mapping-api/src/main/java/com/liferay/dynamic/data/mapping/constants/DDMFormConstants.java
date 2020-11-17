@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.constants;
+package com.liferay.dynamic.data.mapping.constants;
 
 /**
  * @author Lino Alves

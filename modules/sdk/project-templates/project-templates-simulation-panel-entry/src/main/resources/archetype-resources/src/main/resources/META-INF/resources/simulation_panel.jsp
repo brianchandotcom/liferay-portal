@@ -18,25 +18,25 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	<p class="text-center"><liferay-ui:message key="simulation-description" /></p>
 
 	<div class="container-fluid default-devices d-flex flex-wrap">
-		<div class="flex-item-expand d-none d-md-block lfr-device-item selected text-center" data-option="option-1">
+		<div class="flex-fill d-none d-md-block lfr-device-item selected text-center" data-option="option-1">
 			<aui:icon cssClass="icon icon-monospaced" image="calendar" markupView="lexicon" />
 
 			<small><%= LanguageUtil.get(resourceBundle, "option-1") %></small>
 		</div>
 
-		<div class="flex-item-expand d-none d-md-block lfr-device-item selected text-center" data-option="option-2">
+		<div class="flex-fill d-none d-md-block lfr-device-item selected text-center" data-option="option-2">
 			<aui:icon cssClass="icon icon-monospaced" image="heart" markupView="lexicon" />
 
 			<small><%= LanguageUtil.get(resourceBundle, "option-2") %></small>
 		</div>
 
-		<div class="flex-item-expand d-none d-md-block lfr-device-item selected text-center" data-option="option-3">
+		<div class="flex-fill d-none d-md-block lfr-device-item selected text-center" data-option="option-3">
 			<aui:icon cssClass="icon icon-monospaced" image="star" markupView="lexicon" />
 
 			<small><%= LanguageUtil.get(resourceBundle, "option-3") %></small>
 		</div>
 
-		<div class="flex-item-expand d-none d-md-block lfr-device-item selected text-center" data-option="option-4">
+		<div class="flex-fill d-none d-md-block lfr-device-item selected text-center" data-option="option-4">
 			<aui:icon cssClass="icon icon-monospaced" image="camera" markupView="lexicon" />
 
 			<small><%= LanguageUtil.get(resourceBundle, "option-4") %></small>

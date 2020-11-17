@@ -167,26 +167,26 @@ else {
 						<ul class="lfr-tree list-unstyled select-options">
 							<li class="tree-item">
 								<div id="<portlet:namespace />range">
-									<div class="d-flex flex-wrap">
-										<div class="flex-item-center range-options">
+									<div class="align-items-center d-flex flex-wrap">
+										<div class="range-options">
 											<aui:input checked="<%= !newPublication %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 										</div>
 
 										<c:if test="<%= newPublication %>">
-											<div class="flex-item-center range-options">
+											<div class="range-options">
 												<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "from-last-publish-date") %>' id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
 											</div>
 										</c:if>
 
-										<div class="flex-item-center range-options">
+										<div class="range-options">
 											<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 										</div>
 
-										<div class="flex-item-center range-options">
+										<div class="range-options">
 											<aui:input id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
 										</div>
 
-										<div class="flex-item-center range-options">
+										<div class="range-options">
 											<liferay-ui:icon
 												icon="reload"
 												markupView="lexicon"

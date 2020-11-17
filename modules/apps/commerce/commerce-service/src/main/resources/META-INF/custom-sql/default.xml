@@ -238,7 +238,8 @@
 			FROM
 				CommerceOrderItem
 			WHERE
-				CommerceOrderItem.commerceOrderId = ?
+				(CommerceOrderItem.commerceOrderId = ?) AND
+				(CommerceOrderItem.parentCommerceOrderItemId = 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.getCPInstanceQuantity">

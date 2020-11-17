@@ -328,10 +328,13 @@ public class UserCardTag extends BaseContainerTag {
 			cssClasses.add("card");
 		}
 
+		if (selectable) {
+			cssClasses.add("form-check");
+			cssClasses.add("form-check-card");
+			cssClasses.add("form-check-top-left");
+		}
+
 		cssClasses.add("card-type-asset");
-		cssClasses.add("form-check");
-		cssClasses.add("form-check-card");
-		cssClasses.add("form-check-top-left");
 		cssClasses.add("user-card");
 
 		return super.processCssClasses(cssClasses);

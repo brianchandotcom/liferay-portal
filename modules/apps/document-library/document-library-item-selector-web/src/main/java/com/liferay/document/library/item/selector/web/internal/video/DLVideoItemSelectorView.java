@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.item.selector.web.internal.video;
 
+import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -51,7 +52,7 @@ public class DLVideoItemSelectorView
 
 	@Override
 	public String[] getMimeTypes() {
-		String[] mimeTypes = {"application/vnd+liferay.external.video+html"};
+		String[] mimeTypes = {DLContentTypes.EXTERNAL_VIDEO};
 
 		if (XugglerUtil.isEnabled()) {
 			ArrayUtil.append(

@@ -20,17 +20,18 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Iván Zaera
@@ -133,9 +134,15 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 		Map<Locale, String> updatedNameMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			Locale locale = entry.getKey();
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, getClass());
+
 			updatedNameMap.put(
-				entry.getKey(),
-				LanguageUtil.get(entry.getKey(), "dl-external-video-metadata"));
+				locale,
+				ResourceBundleUtil.getString(
+					resourceBundle, "dl-external-video-metadata"));
 		}
 
 		return updatedNameMap;

@@ -28,6 +28,36 @@ import FieldSetModal from './FieldSetModal.es';
 import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 
+function getSortedFieldsets(fieldsets) {
+	return fieldsets.sort((a, b) => {
+		const localizedValueA = getLocalizedValue(a.defaultLanguageId, a.name);
+		const localizedValueB = getLocalizedValue(b.defaultLanguageId, b.name);
+
+		return localizedValueA.localeCompare(localizedValueB);
+	});
+}
+
+function getFielteredFieldsets(fieldsets, keywords) {
+	const filteredFieldsets = fieldsets.filter(({defaultLanguageId, name}) => {
+		return new RegExp(keywords, 'ig').test(
+			getLocalizedValue(defaultLanguageId, name)
+		);
+	});
+
+	return getSortedFieldsets(filteredFieldsets);
+}
+
+const CreateNewFieldsetButton = ({onClick}) => (
+	<ClayButton
+		block
+		className="add-fieldset"
+		displayType="secondary"
+		onClick={onClick}
+	>
+		{Liferay.Language.get('create-new-fieldset')}
+	</ClayButton>
+);
+
 export default function FieldSets({keywords}) {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [{appProps, dataDefinition, fieldSets}] = useContext(AppContext);
@@ -38,6 +68,8 @@ export default function FieldSets({keywords}) {
 		fieldSet: null,
 		isVisible: false,
 	});
+
+	const fielteredFieldsets = getFielteredFieldsets(fieldSets, keywords);
 
 	let defaultLanguageId = dataDefinition.defaultLanguageId;
 
@@ -113,89 +145,72 @@ export default function FieldSets({keywords}) {
 		);
 	};
 
-	const filteredFieldSets = fieldSets
-		.filter(({defaultLanguageId, name}) =>
-			new RegExp(keywords, 'ig').test(
-				getLocalizedValue(defaultLanguageId, name)
-			)
-		)
-		.sort((a, b) => {
-			const localizedValueA = getLocalizedValue(
-				a.defaultLanguageId,
-				a.name
-			);
-			const localizedValueB = getLocalizedValue(
-				b.defaultLanguageId,
-				b.name
-			);
-
-			return localizedValueA.localeCompare(localizedValueB);
-		});
-
-	const AddButton = () => (
-		<ClayButton
-			block
-			className="add-fieldset"
-			displayType="secondary"
-			onClick={() => toggleFieldSet(null, dataDefinition)}
-		>
-			{Liferay.Language.get('create-new-fieldset')}
-		</ClayButton>
-	);
+	const onClickCreateNewFieldset = () => toggleFieldSet(null, dataDefinition);
 
 	return (
 		<>
-			{filteredFieldSets.length ? (
+			{fielteredFieldsets.length ? (
 				<>
-					<AddButton />
+					<CreateNewFieldsetButton
+						onClick={onClickCreateNewFieldset}
+					/>
 
 					<div className="mt-3">
-						{filteredFieldSets.map((fieldSet) => {
+						{fielteredFieldsets.map((fieldSet) => {
 							const fieldSetName = getLocalizedValue(
 								fieldSet.defaultLanguageId,
 								fieldSet.name
 							);
 
-							const dropDownActions = [
-								{
-									action: () => toggleFieldSet(fieldSet),
-									name: Liferay.Language.get('edit'),
-								},
-								{
-									action: () =>
-										propagateFieldSet({
-											fieldSet,
-											isDeleteAction: true,
-											modal: {
-												actionMessage: Liferay.Language.get(
-													'delete'
-												),
-												fieldSetMessage: Liferay.Language.get(
-													'the-fieldset-will-be-deleted-permanently-from'
-												),
-												headerMessage: Liferay.Language.get(
-													'delete'
-												),
-												status: 'danger',
-												warningMessage: Liferay.Language.get(
-													'this-action-may-erase-data-permanently'
-												),
-											},
-											onPropagate: deleteFieldSet,
-										}),
-									name: Liferay.Language.get('delete'),
-								},
-							];
-
 							return (
 								<FieldType
-									actions={dropDownActions}
-									description={`${
+									actions={[
+										{
+											action: () =>
+												toggleFieldSet(fieldSet),
+											name: Liferay.Language.get('edit'),
+										},
+										{
+											action: () =>
+												propagateFieldSet({
+													fieldSet,
+													isDeleteAction: true,
+													modal: {
+														actionMessage: Liferay.Language.get(
+															'delete'
+														),
+														fieldSetMessage: Liferay.Language.get(
+															'the-fieldset-will-be-deleted-permanently-from'
+														),
+														headerMessage: Liferay.Language.get(
+															'delete'
+														),
+														status: 'danger',
+														warningMessage: Liferay.Language.get(
+															'this-action-may-erase-data-permanently'
+														),
+													},
+													onPropagate: deleteFieldSet,
+												}),
+											name: Liferay.Language.get(
+												'delete'
+											),
+										},
+									]}
 									description={getPluralMessage(
 										Liferay.Language.get('x-field'),
 										Liferay.Language.get('x-fields'),
 										fieldSet.dataDefinitionFields.length
 									)}
+									disabled={
+										dataDefinition.name[
+											defaultLanguageId
+										] === fieldSetName ||
+										containsFieldSet(
+											dataDefinition,
+											fieldSet.id
+										)
+									}
 									dragType={DRAG_FIELDSET}
 									fieldSet={fieldSet}
 									icon="forms"
@@ -211,7 +226,11 @@ export default function FieldSets({keywords}) {
 				<div className="mt-2">
 					<EmptyState
 						emptyState={{
-							button: AddButton,
+							button: () => (
+								<CreateNewFieldsetButton
+									onClick={onClickCreateNewFieldset}
+								/>
+							),
 							description: Liferay.Language.get(
 								'there-are-no-fieldsets-description'
 							),

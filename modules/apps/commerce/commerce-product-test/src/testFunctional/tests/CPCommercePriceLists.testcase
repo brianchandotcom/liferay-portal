@@ -295,16 +295,6 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent.assertVisible(
-			key_fieldFieldLabel = "Name",
-			locator1 = "Icon#ASTERISK_DATE_FIELD");
-
-		AssertElementPresent.assertVisible(
-			key_fieldFieldLabel = "Currency",
-			locator1 = "Icon#ASTERISK_DATE_FIELD");
-
-		Pause(locator1 = "3000");
-
 		Select(
 			key_fieldLabel = "Catalog",
 			locator1 = "Select#GENERIC_SELECT_FIELD",

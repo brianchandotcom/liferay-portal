@@ -12,7 +12,7 @@
  * details.
  */
 
-const getLocalizedValue = (defaultLanguageId, localizedValues) => {
+export const getLocalizedValue = (defaultLanguageId, localizedValues) => {
 	const languageId = themeDisplay.getLanguageId();
 
 	if (localizedValues[languageId]) {
@@ -22,7 +22,7 @@ const getLocalizedValue = (defaultLanguageId, localizedValues) => {
 	return localizedValues[defaultLanguageId];
 };
 
-const sub = (langKey, args) => {
+export const sub = (langKey, args) => {
 	const SPLIT_REGEX = /({\d+})/g;
 
 	const keyArray = langKey
@@ -46,8 +46,4 @@ const sub = (langKey, args) => {
 	return keyArray.join('');
 };
 
-export {getLocalizedValue};
-
-export default {
-	sub,
 };

@@ -15,7 +15,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import lang from '../../utils/lang.es';
+import {sub} from '../../utils/lang.es';
 
 const EmptyState = ({emptyState, keywords = '', small = false}) => {
 	const defaultEmpty = {
@@ -24,10 +24,9 @@ const EmptyState = ({emptyState, keywords = '', small = false}) => {
 	};
 
 	const defaultSearch = {
-		description: lang.sub(
-			Liferay.Language.get('there-are-no-results-for-x'),
-			[keywords]
-		),
+		description: sub(Liferay.Language.get('there-are-no-results-for-x'), [
+			keywords,
+		]),
 		title: Liferay.Language.get('no-results-were-found'),
 	};
 

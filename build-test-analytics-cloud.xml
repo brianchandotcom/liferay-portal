@@ -16,13 +16,13 @@
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				match="container_name: com-liferay-osb-faro-private"
+				match="container_name: faro"
 				replace="container_name: ${analytics.cloud.faro.container.name}"
 			/>
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				match="image: liferay\/com-liferay-osb-faro\:asah-local-latest"
+				match="image: liferay\/com-liferay-osb-faro\:latest"
 				replace="image: ${analytics.cloud.faro.image.name}"
 			/>
 
@@ -91,7 +91,7 @@ networks:
 			/>
 
 			<replaceregexp
-				file="${analytics.cloud.faro.dir}/osb-faro-docker/asah-local/Dockerfile"
+				file="${analytics.cloud.faro.dir}/osb-faro-docker/local/Dockerfile"
 				match="FARO_URL=http://localhost:8080"
 				replace="FARO_URL=${analytics.cloud.faro.frontend.url}"
 			/>
@@ -116,7 +116,7 @@ OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
 					<execute dir="${analytics.cloud.faro.dir}">
-						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local -Dliferay.ci=true
+						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
 
 						docker rm ${analytics.cloud.faro.container.name}
 					</execute>

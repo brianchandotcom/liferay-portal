@@ -622,6 +622,14 @@ public class CTCollectionLocalServiceImpl
 					" because it is not published");
 		}
 
+		if (!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+				undoCTCollection.getSchemaVersionId())) {
+
+			throw new IllegalArgumentException(
+				"Unable to undo " + undoCTCollection +
+					" because it is out of date with the current release");
+		}
+
 		CTCollection newCTCollection = addCTCollection(
 			undoCTCollection.getCompanyId(), userId, name, description);
 

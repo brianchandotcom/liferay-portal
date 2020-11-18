@@ -52,7 +52,9 @@ definition {
 			folderDescription = "${folderDescription}",
 			folderName = "${folderName}",
 			groupId = "${groupId}",
-			parentFolderId = "${parentFolderId}");
+			parentFolderId = "${parentFolderId}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"

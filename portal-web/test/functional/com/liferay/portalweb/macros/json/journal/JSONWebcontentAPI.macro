@@ -13,9 +13,17 @@ definition {
 			var description = "";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:${userPassword} \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${folderName} \

@@ -59,3 +59,26 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 		});
 	}
 </aui:script>
+
+<div>
+	<aui:input label="video-url" name="externalVideoURLReact" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" />
+
+	<div>
+		<c:if test="<%= dlExternalVideo != null %>">
+			<%= dlExternalVideo.getEmbeddableHTML() %>
+		</c:if>
+	</div>
+
+	<react:component
+		module="js/ExternalVideoPreview"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"externalVideoURL", (dlExternalVideo != null) ? dlExternalVideo.getURL() : ""
+			).put(
+				"HTML", (dlExternalVideo != null) ? dlExternalVideo.getEmbeddableHTML() : ""
+			).put(
+				"onFilePickCallback", onFilePickCallback
+			).build()
+		%>'
+	/>
+</div>

@@ -171,6 +171,8 @@ definition {
 
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 	}
+
+	macro deleteFromObjectViaX {
 		MouseOver(
 			key_fieldLabel = "${fieldName}",
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");

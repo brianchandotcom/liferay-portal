@@ -1140,10 +1140,6 @@ AUI.add(
 					var fields = instance.get('fields');
 
 					if (dataType || fields.length) {
-						instance.updateLocalizationMap(
-							instance.get('displayLocale')
-						);
-
 						fieldJSON.value = instance.get('localizationMap');
 
 						if (instance.get('localizable')) {
@@ -4517,6 +4513,10 @@ AUI.add(
 					var instance = this;
 
 					instance.toJSON();
+
+					instance.get('fields').forEach((field) => {
+						field.updateLocalizationMap(field.get('displayLocale'));
+					});
 
 					instance.fillEmptyLocales(
 						instance,

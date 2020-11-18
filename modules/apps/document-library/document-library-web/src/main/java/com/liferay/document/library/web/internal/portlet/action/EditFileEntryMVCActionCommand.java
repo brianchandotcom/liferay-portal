@@ -1044,6 +1044,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
+			contentType = ParamUtil.getString(
+				uploadPortletRequest, "contentType", contentType);
+
 			if (cmd.equals(Constants.ADD) ||
 				cmd.equals(Constants.ADD_DYNAMIC) || (size > 0)) {
 

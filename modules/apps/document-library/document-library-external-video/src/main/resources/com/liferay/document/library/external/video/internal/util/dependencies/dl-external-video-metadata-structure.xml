@@ -101,37 +101,7 @@
 									"columns": [
 										{
 											"fieldNames": [
-												"EMBEDDABLE_URL"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fieldNames": [
-												"ICON_URL"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fieldNames": [
-												"ID"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fieldNames": [
-												"NAME"
+												"TITLE"
 											],
 											"size": 12
 										}
@@ -142,6 +112,16 @@
 										{
 											"fieldNames": [
 												"URL"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"HTML"
 											],
 											"size": 12
 										}

@@ -372,6 +372,9 @@
 
 		<!-- References -->
 
+		<reference entity="Address" package-path="com.liferay.portal" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="Region" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="EmailAddress" remote-service="true" uuid="true">

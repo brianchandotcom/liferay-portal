@@ -17,114 +17,20 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES);
+LayoutInformationMessagesDisplayContext layoutInformationMessagesDisplayContext = new LayoutInformationMessagesDisplayContext(request);
 %>
 
 <li class="control-menu-nav-item">
 	<liferay-ui:icon
-		data='<%=
-			HashMapBuilder.<String, Object>put(
-				"qa-id", "info"
-			).build()
-		%>'
+		cssClass="control-menu-icon icon-monospaced"
 		icon="information-live"
-		id='<%= portletNamespace + "infoButton" %>'
 		label="<%= false %>"
-		linkCssClass="control-menu-icon"
 		markupView="lexicon"
 		message="additional-information"
-		url="javascript:;"
 	/>
 
-	<div class="hide">
-		<div id="<%= portletNamespace %>infoContainer">
-			<c:if test="<%= GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT)) %>">
-				<div class="modified-layout">
-					<span class="message-info">
-						<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
-					</span>
-
-					<%
-					PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE);
-
-					resetPrototypeURL.setParameter(ActionRequest.ACTION_NAME, "/layout_admin/reset_prototype");
-					resetPrototypeURL.setParameter("redirect", PortalUtil.getLayoutURL(themeDisplay));
-					resetPrototypeURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
-
-					String taglibURL = "submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetPrototypeURL.toString()) + "');";
-					%>
-
-					<span class="button-info">
-						<aui:button cssClass="btn-sm mt-3" name="submit" onClick="<%= taglibURL %>" type="submit" value='<%= LanguageUtil.get(resourceBundle, "reset-changes") %>' />
-					</span>
-				</div>
-			</c:if>
-
-			<c:if test="<%= GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_LINKED_LAYOUT)) %>">
-				<div class="linked-layout">
-					<aui:icon image="information-live" markupView="lexicon" />
-
-					<span class="message-info">
-
-						<%
-						Group group = themeDisplay.getScopeGroup();
-						%>
-
-						<c:choose>
-							<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
-								<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
-							</c:when>
-							<c:when test="<%= SitesUtil.isUserGroupLayout(layout) %>">
-								<liferay-ui:message key="this-page-belongs-to-a-user-group" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
-							</c:otherwise>
-						</c:choose>
-					</span>
-				</div>
-			</c:if>
-		</div>
-	</div>
+	<react:component
+		data="<%= layoutInformationMessagesDisplayContext.getData() %>"
+		module="js/dynamic_include/InformationMessages"
+	/>
 </li>
-
-<aui:script position="auto" use="aui-popover,event-outside">
-	var trigger = A.one('#<%= portletNamespace %>infoButton');
-
-	var DOC = A.getDoc();
-
-	var popover = new A.Popover({
-		align: {
-			node: trigger,
-			points: [A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC],
-		},
-		bodyContent: A.one('#<%= portletNamespace %>infoContainer'),
-		constrain: true,
-		hideOn: [
-			{
-				eventName: 'key',
-				keyCode: 'esc',
-				node: DOC,
-			},
-			{
-				eventName: 'clickoutside',
-				node: DOC,
-			},
-		],
-		position: 'bottom',
-		trigger: trigger,
-		visible: false,
-		width: 300,
-		zIndex: Liferay.zIndex.POPOVER,
-	});
-
-	popover.render();
-
-	function removeListener() {
-		popover.destroy();
-
-		Liferay.detach('beforeScreenFlip', removeListener);
-	}
-
-	Liferay.on('beforeScreenFlip', removeListener);
-</aui:script>

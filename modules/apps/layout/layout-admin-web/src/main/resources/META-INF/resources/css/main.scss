@@ -1,8 +1,13 @@
 @import './miller_columns/DragPreview';
 @import './miller_columns/MillerColumns';
+@import 'atlas-variables';
 
 .portlet-layouts-admin {
 	@import './FriendlyURLHistory';
+
+	.active > .card {
+		box-shadow: 0 0 0 2px $primary-l1;
+	}
 
 	.customization-settings #main-content {
 		.portlet-column {

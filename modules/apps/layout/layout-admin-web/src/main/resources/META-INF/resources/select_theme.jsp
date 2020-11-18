@@ -18,6 +18,8 @@
 
 <%
 SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
+String themeId = ParamUtil.getString(request, "themeId");
 %>
 
 <clay:management-toolbar-v2
@@ -53,6 +55,10 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"themeid", theme.getThemeId()
 			).build();
+
+			if (themeId.equals(theme.getThemeId())) {
+				row.setCssClass("active");
+			}
 			%>
 
 			<c:choose>
@@ -80,7 +86,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
-					row.setCssClass("entry-card lfr-asset-item");
+					row.setCssClass(row.getCssClass() + " entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>

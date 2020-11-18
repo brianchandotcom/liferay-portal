@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.CountryServiceBaseImpl;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 
@@ -85,12 +86,14 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country fetchCountryByA2(String a2) {
-		return countryPersistence.fetchByA2(a2);
+		return countryPersistence.fetchByC_A2(
+			PortalInstances.getDefaultCompanyId(), a2);
 	}
 
 	@Override
 	public Country fetchCountryByA3(String a3) {
-		return countryPersistence.fetchByA3(a3);
+		return countryPersistence.fetchByC_A3(
+			PortalInstances.getDefaultCompanyId(), a3);
 	}
 
 	@Override
@@ -111,17 +114,20 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country getCountryByA2(String a2) throws PortalException {
-		return countryPersistence.findByA2(a2);
+		return countryPersistence.findByC_A2(
+			PortalInstances.getDefaultCompanyId(), a2);
 	}
 
 	@Override
 	public Country getCountryByA3(String a3) throws PortalException {
-		return countryPersistence.findByA3(a3);
+		return countryPersistence.findByC_A3(
+			PortalInstances.getDefaultCompanyId(), a3);
 	}
 
 	@Override
 	public Country getCountryByName(String name) throws PortalException {
-		return countryPersistence.findByName(name);
+		return countryPersistence.findByC_N(
+			PortalInstances.getDefaultCompanyId(), name);
 	}
 
 }

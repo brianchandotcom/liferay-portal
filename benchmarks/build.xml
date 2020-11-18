@@ -117,27 +117,32 @@
 		</for>
 
 		<if>
-			<equals arg1="${sample.sql.output.merge}" arg2="false" />
+			<isfalse value="${benchmark.usage}" />
 			<then>
-				<for param="sql-file-filename">
-					<path>
-						<fileset
-							dir="${sample.sql.output.dir}/output"
-							includes="*.sql"
-						/>
-					</path>
-					<sequential>
+				<if>
+					<equals arg1="${sample.sql.output.merge}" arg2="false" />
+					<then>
+						<for param="sql-file-filename">
+							<path>
+								<fileset
+									dir="${sample.sql.output.dir}/output"
+									includes="*.sql"
+								/>
+							</path>
+							<sequential>
+								<concat append="true" destfile="${sample-data-sql}">
+									<filelist dir="${sample.sql.output.dir}/output" files="@{sql-file-filename}" />
+								</concat>
+							</sequential>
+						</for>
+					</then>
+					<else>
 						<concat append="true" destfile="${sample-data-sql}">
-							<filelist dir="${sample.sql.output.dir}/output" files="@{sql-file-filename}" />
+							<filelist dir="${sample.sql.output.dir}" files="sample-${sample.sql.db.type}.sql" />
 						</concat>
-					</sequential>
-				</for>
+					</else>
+				</if>
 			</then>
-			<else>
-				<concat append="true" destfile="${sample-data-sql}">
-					<filelist dir="${sample.sql.output.dir}" files="sample-${sample.sql.db.type}.sql" />
-				</concat>
-			</else>
 		</if>
 	</target>
 

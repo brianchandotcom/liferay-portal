@@ -33,8 +33,7 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 		if (spiraCustomPropertyName.equals(
 				SpiraTestCaseProductVersion.CUSTOM_PROPERTY_NAME)) {
 
-			return new SpiraTestCaseProductVersion(
-				spiraCustomProperty.getSpiraProject(), value);
+			return new SpiraTestCaseProductVersion(spiraCustomProperty, value);
 		}
 
 		SpiraCustomProperty.Type spiraCustomPropertyType =

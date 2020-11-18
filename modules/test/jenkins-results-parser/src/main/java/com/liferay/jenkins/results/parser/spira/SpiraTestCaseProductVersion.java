@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +27,13 @@ import org.json.JSONObject;
 public class SpiraTestCaseProductVersion extends ListSpiraCustomPropertyValue {
 
 	public static SpiraTestCaseProductVersion createSpiraTestCaseProductVersion(
-		SpiraProject spiraProject, String productVersion) {
+		SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		String productVersion) {
 
-		String key = spiraProject.getID() + "_" + productVersion;
+		String key = JenkinsResultsParserUtil.combine(
+			String.valueOf(spiraProject.getID()), "_",
+			getArtifactTypeName(spiraArtifactClass), "_", productVersion);
 
 		SpiraTestCaseProductVersion spiraTestCaseProductVersion =
 			_spiraTestCaseProductVersions.get(key);
@@ -37,7 +43,7 @@ public class SpiraTestCaseProductVersion extends ListSpiraCustomPropertyValue {
 		}
 
 		spiraTestCaseProductVersion = new SpiraTestCaseProductVersion(
-			spiraProject, productVersion);
+			spiraProject, spiraArtifactClass, productVersion);
 
 		_spiraTestCaseProductVersions.put(key, spiraTestCaseProductVersion);
 
@@ -55,31 +61,39 @@ public class SpiraTestCaseProductVersion extends ListSpiraCustomPropertyValue {
 	}
 
 	protected SpiraTestCaseProductVersion(
-		SpiraProject spiraProject, String productVersion) {
+		SpiraCustomProperty spiraCustomProperty, String productVersion) {
 
 		super(
-			_getSpiraCustomListValue(spiraProject, productVersion),
-			_getSpiraCustomProperty(spiraProject));
+			_getSpiraCustomListValue(spiraCustomProperty, productVersion),
+			spiraCustomProperty);
+	}
+
+	protected SpiraTestCaseProductVersion(
+		SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		String productVersion) {
+
+		this(
+			_getSpiraCustomProperty(spiraProject, spiraArtifactClass),
+			productVersion);
 	}
 
 	protected static final String CUSTOM_PROPERTY_NAME = "Product Version";
 
 	private static SpiraCustomListValue _getSpiraCustomListValue(
-		SpiraProject spiraProject, String productVersion) {
-
-		SpiraCustomProperty spiraCustomProperty = _getSpiraCustomProperty(
-			spiraProject);
+		SpiraCustomProperty spiraCustomProperty, String productVersion) {
 
 		return SpiraCustomListValue.createSpiraCustomListValue(
-			spiraProject, spiraCustomProperty.getSpiraCustomList(),
-			productVersion);
+			spiraCustomProperty.getSpiraProject(),
+			spiraCustomProperty.getSpiraCustomList(), productVersion);
 	}
 
 	private static SpiraCustomProperty _getSpiraCustomProperty(
-		SpiraProject spiraProject) {
+		SpiraProject spiraProject,
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
 		return SpiraCustomProperty.createSpiraCustomProperty(
-			spiraProject, SpiraTestCaseObject.class, CUSTOM_PROPERTY_NAME,
+			spiraProject, spiraArtifactClass, CUSTOM_PROPERTY_NAME,
 			SpiraCustomProperty.Type.LIST);
 	}
 

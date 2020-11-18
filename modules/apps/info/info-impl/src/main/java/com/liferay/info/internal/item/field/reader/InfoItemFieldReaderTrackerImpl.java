@@ -42,12 +42,11 @@ public class InfoItemFieldReaderTrackerImpl
 	public List<InfoItemFieldReader> getInfoItemFieldReaders(
 		String itemClassName) {
 
-		List<InfoItemFieldReader> infoItemRenderers =
-			_itemClassNameInfoItemFieldReaderServiceTrackerMap.getService(
-				itemClassName);
+		List<InfoItemFieldReader> infoItemFieldReaders =
+			_itemInfoItemFieldReaderServiceTrackerMap.getService(itemClassName);
 
-		if (infoItemRenderers != null) {
-			return new ArrayList<>(infoItemRenderers);
+		if (infoItemFieldReaders != null) {
+			return new ArrayList<>(infoItemFieldReaders);
 		}
 
 		return Collections.emptyList();
@@ -55,7 +54,7 @@ public class InfoItemFieldReaderTrackerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_itemClassNameInfoItemFieldReaderServiceTrackerMap =
+		_itemInfoItemFieldReaderServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, InfoItemFieldReader.class, null,
 				ServiceReferenceMapperFactory.create(
@@ -68,6 +67,6 @@ public class InfoItemFieldReaderTrackerImpl
 	}
 
 	private ServiceTrackerMap<String, List<InfoItemFieldReader>>
-		_itemClassNameInfoItemFieldReaderServiceTrackerMap;
+		_itemInfoItemFieldReaderServiceTrackerMap;
 
 }

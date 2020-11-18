@@ -140,7 +140,8 @@ definition {
 	@description = "Validate if the user can edit a segment with Properties Session URL"
 	@priority = "5"
 	test EditSegmentUserBySessionURL {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();

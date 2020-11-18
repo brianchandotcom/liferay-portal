@@ -291,7 +291,8 @@ definition {
 	@description = "This is a test for LPS-107833. Can select Global Navigation Menu via Navigation Menu widget in normal site."
 	@priority = "5"
 	test SelectGlobalNavigationMenuInNormalSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		task ("Select Global Navigation Menu in normal site") {
 			JSONLayout.addPublicLayout(

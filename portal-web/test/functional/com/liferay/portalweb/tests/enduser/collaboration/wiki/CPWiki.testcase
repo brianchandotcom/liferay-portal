@@ -132,7 +132,8 @@ definition {
 
 	@priority = "5"
 	test CKEditorSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPWiki#CKEditorSmoke";
 
 		ApplicationsMenu.gotoPortlet(

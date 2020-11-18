@@ -163,7 +163,8 @@ definition {
 	@description = "This is a use case for LPS-95964"
 	@priority = "5"
 	test AddRulesViaFormView {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AppBuilder#AddRulesViaFormView";
 
 		var myFormViewName = "My Registration form";
@@ -1269,7 +1270,8 @@ definition {
 	@description = "Place a widget in my page with only a Form View of my App"
 	@priority = "5"
 	test PlaceFormViewWidget {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -1571,7 +1573,8 @@ definition {
 	@description = "Publish my app in one or more sites"
 	@priority = "5"
 	test PublishAppsInOneOrMoreSites {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "App Builder Site 1",
@@ -1758,7 +1761,8 @@ definition {
 	@description = "Publish apps in the product menu and reuse its views"
 	@priority = "5"
 	test PublishAppsInProductMenuAndReuseItsViews {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var myFormViewName_1 = "My Form View 1";
 		var myFormViewName_2 = "My Form View 2";
@@ -1871,7 +1875,8 @@ definition {
 	@description = "Publish apps in standalone mode and reuse its views"
 	@priority = "4"
 	test PublishAppsInStandaloneAndReuseItsViews {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var myFormViewName_1 = "My Form View 1";
 		var myFormViewName_2 = "My Form View 2";
@@ -2006,7 +2011,8 @@ definition {
 	@description = "Search for a column(field) in the columns list in Table View Builder"
 	@priority = "5"
 	test SearchColumnListInTableViewBuilder {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AppBuilder#SearchColumnListInTableViewBuilder";
 
 		AppBuilderAdmin.addCustomObject(
@@ -2375,7 +2381,8 @@ definition {
 	@description = "Set permissions for User and Portal Content Reviewer and perform CRUD operations in a deployed widget App"
 	@priority = "5"
 	test SetPermissionsFor2RolesAndPerformCRUD {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -3063,7 +3070,8 @@ definition {
 	@description = "View details of an entry in an App"
 	@priority = "5"
 	test ViewEntryDetails {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -3221,7 +3229,8 @@ definition {
 	@description = "Saved form view rules run during new entry submissions"
 	@priority = "5"
 	test ViewFormViewRules {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

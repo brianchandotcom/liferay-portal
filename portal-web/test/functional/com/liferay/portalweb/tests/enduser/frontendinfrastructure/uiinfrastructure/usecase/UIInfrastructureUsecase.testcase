@@ -67,8 +67,9 @@ definition {
 	test RefreshHomePage {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.gotoPage(pageName = "Home");
 
@@ -110,8 +111,9 @@ definition {
 	test RefreshWebContent {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -187,8 +189,9 @@ definition {
 	test Smoke {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

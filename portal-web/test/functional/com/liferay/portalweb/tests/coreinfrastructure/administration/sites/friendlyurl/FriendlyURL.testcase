@@ -65,7 +65,8 @@ definition {
 
 	@priority = "5"
 	test ViewCanonicalURLWithLocalizedFriendlyURL {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

@@ -184,8 +184,8 @@ definition {
 	@description = "This is a use case for LPS-70446."
 	@priority = "5"
 	test ConfigureAutofillRule {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -305,7 +305,8 @@ definition {
 	@description = "This is a use case for LPS-71592."
 	@priority = "5"
 	test ConfigureCalculateRule {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ConfigureCalculateRule";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -504,7 +505,8 @@ definition {
 
 	@priority = "5"
 	test ConfigureRequireRule {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ConfigureRequireRule";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -716,7 +718,8 @@ definition {
 
 	@priority = "4"
 	test ConfigureUserBelongsToRule {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ConfigureUserBelongsToRule";
 
 		Navigator.openURL();
@@ -949,7 +952,8 @@ definition {
 	@description = "This is a use case for LPS-79095."
 	@priority = "5"
 	test EditRule {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#EditRule";
 
 		Navigator.openURL();
@@ -1030,7 +1034,8 @@ definition {
 	@description = "This is a use case for LPS-71399."
 	@priority = "4"
 	test UseIsNotEmptyRuleToShowField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
 
 		Navigator.openURL();
@@ -1131,7 +1136,8 @@ definition {
 	@description = "This is a use case for LPS-73332."
 	@priority = "2"
 	test ViewExistingFormRuleIsNotCopiedToNewForm {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -1191,7 +1197,8 @@ definition {
 	@description = "This is a use case for LPS-71466."
 	@priority = "2"
 	test ViewPredefinedValueCanBeUsedToRequireAnotherField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ViewPredefinedValueCanBeUsedToRequireAnotherField";
 
 		Navigator.openURL();
@@ -1282,7 +1289,8 @@ definition {
 	@description = "This is a use case for LPS-73332."
 	@priority = "2"
 	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ViewPreviousFormRuleIsCopiedToNewDuplicatedForm";
 
 		Navigator.openURL();
@@ -1353,7 +1361,8 @@ definition {
 	@description = "This is a use case for LPS-69733."
 	@priority = "2"
 	test ViewRuleConditionOperatorFieldOptions {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ViewRuleConditionOperatorFieldOptions";
 
 		Navigator.openURL();
@@ -1388,7 +1397,8 @@ definition {
 	@description = "This is a use case for LPS-75495."
 	@priority = "3"
 	test ViewShowRuleActivationAfterInputtingUnrelatedField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ViewShowRuleActivationAfterInputtingUnrelatedField";
 
 		Navigator.openURL();

@@ -34,7 +34,8 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewFormRulesSummary {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewFormRulesSummary";
 
 		Navigator.openURL();
@@ -163,7 +164,8 @@ definition {
 	@description = "This is a use case for LPS-69372."
 	@priority = "5"
 	test ViewPagesAfterJump {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewPagesAfterJump";
 
 		Navigator.openURL();
@@ -475,7 +477,8 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "3"
 	test ViewRuleAfterOptionValueEdit {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterOptionValueEdit";
 
 		Navigator.openURL();
@@ -614,7 +617,8 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewRuleAfterPageNameChange {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
 
 		Navigator.openURL();

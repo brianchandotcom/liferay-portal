@@ -40,7 +40,8 @@ definition {
 	@description = "This is a use case for LPS-62371"
 	@priority = "3"
 	test SubmitPublishedFormWithTextField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

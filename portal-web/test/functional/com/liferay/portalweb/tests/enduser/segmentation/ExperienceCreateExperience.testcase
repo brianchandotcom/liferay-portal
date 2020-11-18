@@ -55,7 +55,8 @@ definition {
 	@description = "Validate if the user can create a Experience"
 	@priority = "5"
 	test AddDefaultExperienceWithBannerCenter {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -77,7 +78,8 @@ definition {
 	@description = "Display correct experience for the logged user"
 	@priority = "5"
 	test DisplayUserExperience {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -138,7 +140,8 @@ definition {
 	@description = "Validate experience edition and deletion"
 	@priority = "5"
 	test EditAndDeleteExperience {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
@@ -158,7 +161,8 @@ definition {
 	@description = "Validate inline text changes between experiences"
 	@priority = "5"
 	test EditInlineTextExperience {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 

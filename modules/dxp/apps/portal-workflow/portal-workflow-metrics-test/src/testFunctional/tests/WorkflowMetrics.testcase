@@ -491,7 +491,8 @@ definition {
 	@description = "LRQA-55606 Automate LPS-106225: [Dashboard] Apply pagination on bulk reassign workflow instances"
 	@priority = "5"
 	test ApplyPaginationOnBulkReassign {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyPaginationOnBulkReassign";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -584,7 +585,8 @@ definition {
 	@description = "LRQA-53633 Automate LPS-103368: [Dashboard] Apply searches in the workload distribution for all assignees"
 	@priority = "5"
 	test ApplySearchesForAllAssignees {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplySearchesForAllAssignees";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -680,7 +682,8 @@ definition {
 	@description = "Automate LPS-102664: [Dashboard] Bulk reassign workflow instances"
 	@priority = "5"
 	test BulkReassignWorkflowInstances {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowInstances";
 
 		WorkflowMetrics.bulkReassignSetup();
@@ -774,7 +777,8 @@ definition {
 	@description = "LRQA-57939 - Automate LPS-105498: As a Operation Manager, I want to bulk update the due date my workflow instances while analyzing my process metrics"
 	@priority = "5"
 	test BulkUpdateDueDate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 		var currentYear = DateUtil.getCurrentYear();
@@ -2014,7 +2018,8 @@ definition {
 	@description = "LRQA-57666 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
 	@priority = "5"
 	test UpdateDueDate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 		var currentYear = DateUtil.getCurrentYear();
@@ -2377,7 +2382,8 @@ definition {
 	@description = "LRQA-53661 Automate LPS-89119: [SLA] Define the SLA timer calendar"
 	@priority = "5"
 	test VerifySLACustomCalendar {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifySLACustomCalendar";
 
 		var appName = "com.liferay.portal.workflow.metrics.calendar.sample_1.0.0";
@@ -2837,7 +2843,8 @@ definition {
 	@description = "LRQA-53634 - LPS-99441: [Performance] View performance for all assignees"
 	@priority = "5"
 	test ViewPerformanceByAssigneePage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -3197,7 +3204,8 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssigneeCard {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -3275,7 +3283,8 @@ definition {
 	@description = "LRQA-53630 Automate LPS-98518: [Dashboard] View workload distribution for all assignees"
 	@priority = "5"
 	test ViewWorkloadByAssigneePage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

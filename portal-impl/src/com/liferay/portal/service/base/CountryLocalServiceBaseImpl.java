@@ -43,9 +43,13 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
+import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
+import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
+import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -662,6 +666,47 @@ public abstract class CountryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the address local service.
+	 *
+	 * @return the address local service
+	 */
+	public com.liferay.portal.kernel.service.AddressLocalService
+		getAddressLocalService() {
+
+		return addressLocalService;
+	}
+
+	/**
+	 * Sets the address local service.
+	 *
+	 * @param addressLocalService the address local service
+	 */
+	public void setAddressLocalService(
+		com.liferay.portal.kernel.service.AddressLocalService
+			addressLocalService) {
+
+		this.addressLocalService = addressLocalService;
+	}
+
+	/**
+	 * Returns the address persistence.
+	 *
+	 * @return the address persistence
+	 */
+	public AddressPersistence getAddressPersistence() {
+		return addressPersistence;
+	}
+
+	/**
+	 * Sets the address persistence.
+	 *
+	 * @param addressPersistence the address persistence
+	 */
+	public void setAddressPersistence(AddressPersistence addressPersistence) {
+		this.addressPersistence = addressPersistence;
+	}
+
+	/**
 	 * Returns the country localization persistence.
 	 *
 	 * @return the country localization persistence
@@ -679,6 +724,108 @@ public abstract class CountryLocalServiceBaseImpl
 		CountryLocalizationPersistence countryLocalizationPersistence) {
 
 		this.countryLocalizationPersistence = countryLocalizationPersistence;
+	}
+
+	/**
+	 * Returns the organization local service.
+	 *
+	 * @return the organization local service
+	 */
+	public com.liferay.portal.kernel.service.OrganizationLocalService
+		getOrganizationLocalService() {
+
+		return organizationLocalService;
+	}
+
+	/**
+	 * Sets the organization local service.
+	 *
+	 * @param organizationLocalService the organization local service
+	 */
+	public void setOrganizationLocalService(
+		com.liferay.portal.kernel.service.OrganizationLocalService
+			organizationLocalService) {
+
+		this.organizationLocalService = organizationLocalService;
+	}
+
+	/**
+	 * Returns the organization persistence.
+	 *
+	 * @return the organization persistence
+	 */
+	public OrganizationPersistence getOrganizationPersistence() {
+		return organizationPersistence;
+	}
+
+	/**
+	 * Sets the organization persistence.
+	 *
+	 * @param organizationPersistence the organization persistence
+	 */
+	public void setOrganizationPersistence(
+		OrganizationPersistence organizationPersistence) {
+
+		this.organizationPersistence = organizationPersistence;
+	}
+
+	/**
+	 * Returns the organization finder.
+	 *
+	 * @return the organization finder
+	 */
+	public OrganizationFinder getOrganizationFinder() {
+		return organizationFinder;
+	}
+
+	/**
+	 * Sets the organization finder.
+	 *
+	 * @param organizationFinder the organization finder
+	 */
+	public void setOrganizationFinder(OrganizationFinder organizationFinder) {
+		this.organizationFinder = organizationFinder;
+	}
+
+	/**
+	 * Returns the region local service.
+	 *
+	 * @return the region local service
+	 */
+	public com.liferay.portal.kernel.service.RegionLocalService
+		getRegionLocalService() {
+
+		return regionLocalService;
+	}
+
+	/**
+	 * Sets the region local service.
+	 *
+	 * @param regionLocalService the region local service
+	 */
+	public void setRegionLocalService(
+		com.liferay.portal.kernel.service.RegionLocalService
+			regionLocalService) {
+
+		this.regionLocalService = regionLocalService;
+	}
+
+	/**
+	 * Returns the region persistence.
+	 *
+	 * @return the region persistence
+	 */
+	public RegionPersistence getRegionPersistence() {
+		return regionPersistence;
+	}
+
+	/**
+	 * Sets the region persistence.
+	 *
+	 * @param regionPersistence the region persistence
+	 */
+	public void setRegionPersistence(RegionPersistence regionPersistence) {
+		this.regionPersistence = regionPersistence;
 	}
 
 	/**
@@ -803,8 +950,38 @@ public abstract class CountryLocalServiceBaseImpl
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.AddressLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.AddressLocalService
+		addressLocalService;
+
+	@BeanReference(type = AddressPersistence.class)
+	protected AddressPersistence addressPersistence;
+
 	@BeanReference(type = CountryLocalizationPersistence.class)
 	protected CountryLocalizationPersistence countryLocalizationPersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.OrganizationLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@BeanReference(type = OrganizationPersistence.class)
+	protected OrganizationPersistence organizationPersistence;
+
+	@BeanReference(type = OrganizationFinder.class)
+	protected OrganizationFinder organizationFinder;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.RegionLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.RegionLocalService
+		regionLocalService;
+
+	@BeanReference(type = RegionPersistence.class)
+	protected RegionPersistence regionPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.UserLocalService.class

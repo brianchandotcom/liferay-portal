@@ -276,12 +276,41 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_N() throws Exception {
-		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
+	public void testCountByC_Name() throws Exception {
+		_persistence.countByC_Name(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_N(0L, "null");
+		_persistence.countByC_Name(0L, "null");
 
-		_persistence.countByC_N(0L, (String)null);
+		_persistence.countByC_Name(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_Number() throws Exception {
+		_persistence.countByC_Number(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_Number(0L, "null");
+
+		_persistence.countByC_Number(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_A_B() throws Exception {
+		_persistence.countByC_A_B(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_A_B(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByC_A_S() throws Exception {
+		_persistence.countByC_A_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_A_S(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -602,6 +631,17 @@ public class CountryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				country, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "name"));
+
+		Assert.assertEquals(
+			Long.valueOf(country.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			country.getNumber(),
+			ReflectionTestUtil.invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "number_"));
 	}
 
 	protected Country addCountry() throws Exception {

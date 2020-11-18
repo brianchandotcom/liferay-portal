@@ -262,7 +262,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 	@Override
 	public Country updateCountryGroupFilterEnabled(
-			long countryId, boolean groupFilterEnabled) {
+			long countryId, boolean groupFilterEnabled)
 		throws PortalException {
 
 		Country country = countryLocalService.getCountry(countryId);

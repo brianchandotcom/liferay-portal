@@ -884,7 +884,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 * @return the matching country
 	 * @throws NoSuchCountryException if a matching country could not be found
 	 */
-	public Country findByC_N(long companyId, String name)
+	public Country findByC_Name(long companyId, String name)
 		throws NoSuchCountryException;
 
 	/**
@@ -894,7 +894,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 * @param name the name
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	public Country fetchByC_N(long companyId, String name);
+	public Country fetchByC_Name(long companyId, String name);
 
 	/**
 	 * Returns the country where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -904,7 +904,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	public Country fetchByC_N(
+	public Country fetchByC_Name(
 		long companyId, String name, boolean useFinderCache);
 
 	/**
@@ -914,7 +914,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 * @param name the name
 	 * @return the country that was removed
 	 */
-	public Country removeByC_N(long companyId, String name)
+	public Country removeByC_Name(long companyId, String name)
 		throws NoSuchCountryException;
 
 	/**
@@ -924,7 +924,401 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	 * @param name the name
 	 * @return the number of matching countries
 	 */
-	public int countByC_N(long companyId, String name);
+	public int countByC_Name(long companyId, String name);
+
+	/**
+	 * Returns the country where companyId = &#63; and number = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param number the number
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByC_Number(long companyId, String number)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the country where companyId = &#63; and number = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param number the number
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByC_Number(long companyId, String number);
+
+	/**
+	 * Returns the country where companyId = &#63; and number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param number the number
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByC_Number(
+		long companyId, String number, boolean useFinderCache);
+
+	/**
+	 * Removes the country where companyId = &#63; and number = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param number the number
+	 * @return the country that was removed
+	 */
+	public Country removeByC_Number(long companyId, String number)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the number of countries where companyId = &#63; and number = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param number the number
+	 * @return the number of matching countries
+	 */
+	public int countByC_Number(long companyId, String number);
+
+	/**
+	 * Returns all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @return the matching countries
+	 */
+	public java.util.List<Country> findByC_A_B(
+		long companyId, boolean active, boolean billingAllowed);
+
+	/**
+	 * Returns a range of all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries
+	 */
+	public java.util.List<Country> findByC_A_B(
+		long companyId, boolean active, boolean billingAllowed, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries
+	 */
+	public java.util.List<Country> findByC_A_B(
+		long companyId, boolean active, boolean billingAllowed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching countries
+	 */
+	public java.util.List<Country> findByC_A_B(
+		long companyId, boolean active, boolean billingAllowed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByC_A_B_First(
+			long companyId, boolean active, boolean billingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the first country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByC_A_B_First(
+		long companyId, boolean active, boolean billingAllowed,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByC_A_B_Last(
+			long companyId, boolean active, boolean billingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByC_A_B_Last(
+		long companyId, boolean active, boolean billingAllowed,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] findByC_A_B_PrevAndNext(
+			long countryId, long companyId, boolean active,
+			boolean billingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	 * Removes all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 */
+	public void removeByC_A_B(
+		long companyId, boolean active, boolean billingAllowed);
+
+	/**
+	 * Returns the number of countries where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @return the number of matching countries
+	 */
+	public int countByC_A_B(
+		long companyId, boolean active, boolean billingAllowed);
+
+	/**
+	 * Returns all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @return the matching countries
+	 */
+	public java.util.List<Country> findByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed);
+
+	/**
+	 * Returns a range of all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries
+	 */
+	public java.util.List<Country> findByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries
+	 */
+	public java.util.List<Country> findByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching countries
+	 */
+	public java.util.List<Country> findByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByC_A_S_First(
+			long companyId, boolean active, boolean shippingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the first country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByC_A_S_First(
+		long companyId, boolean active, boolean shippingAllowed,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByC_A_S_Last(
+			long companyId, boolean active, boolean shippingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the last country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByC_A_S_Last(
+		long companyId, boolean active, boolean shippingAllowed,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] findByC_A_S_PrevAndNext(
+			long countryId, long companyId, boolean active,
+			boolean shippingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	 * Removes all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 */
+	public void removeByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed);
+
+	/**
+	 * Returns the number of countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @return the number of matching countries
+	 */
+	public int countByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed);
 
 	/**
 	 * Caches the country in the entity cache if it is enabled.

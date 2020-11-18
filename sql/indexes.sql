@@ -95,8 +95,10 @@ create index IX_66D496A3 on Contact_ (companyId);
 create index IX_25D734CD on Country (active_);
 create unique index IX_742FFB11 on Country (companyId, a2[$COLUMN_LENGTH:75$]);
 create unique index IX_742FFED2 on Country (companyId, a3[$COLUMN_LENGTH:75$]);
-create index IX_F5514F9D on Country (companyId, active_);
+create index IX_F9CD867E on Country (companyId, active_, billingAllowed);
+create index IX_54E98CCD on Country (companyId, active_, shippingAllowed);
 create unique index IX_410257AB on Country (companyId, name[$COLUMN_LENGTH:75$]);
+create unique index IX_4B78E87A on Country (companyId, number_[$COLUMN_LENGTH:75$]);
 create index IX_BEAF8B0 on Country (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_518948B3 on CountryLocalization (countryId, languageId[$COLUMN_LENGTH:75$]);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 import java.util.Map;
@@ -67,19 +69,62 @@ public interface CountryService extends BaseService {
 			boolean active)
 		throws PortalException;
 
+	public void deleteCountry(long countryId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountry(long countryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country fetchCountryByA2(long companyId, String a2);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountryByA2(String a2);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country fetchCountryByA3(long companyId, String a3);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountryByA3(String a3);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Country> getCountries();
+	public List<Country> getCompanyCountries(long companyId);
 
 	@AccessControlled(guestAccessEnabled = true)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCompanyCountries(long companyId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCompanyCountries(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Country> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCompanyCountries(
+		long companyId, int start, int end,
+		OrderByComparator<Country> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyCountriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyCountriesCount(long companyId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCountries();
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@AccessControlled(guestAccessEnabled = true)
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Country> getCountries(boolean active);
 
@@ -87,11 +132,35 @@ public interface CountryService extends BaseService {
 	public Country getCountry(long countryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByA2(long companyId, String a2)
+		throws NoSuchCountryException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByA2(String a2) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByA3(long companyId, String a3)
+		throws NoSuchCountryException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByA3(String a3) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByName(long companyId, String name)
+		throws NoSuchCountryException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByName(String name) throws PortalException;
 
@@ -101,5 +170,19 @@ public interface CountryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public Country setActive(long countryId, boolean active)
+		throws PortalException;
+
+	public Country updateCountry(
+			long countryId, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			Map<String, String> titleMap)
+		throws PortalException;
+
+	public Country updateCountryGroupFilterEnabled(
+			long countryId, boolean groupFilterEnabled)
+		throws PortalException;
 
 }

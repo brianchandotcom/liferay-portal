@@ -237,6 +237,34 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.fetchCountry(countryId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Country fetchCountryByA2(
+		long companyId, java.lang.String a2) {
+
+		return _countryLocalService.fetchCountryByA2(companyId, a2);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country fetchCountryByA3(
+		long companyId, java.lang.String a3) {
+
+		return _countryLocalService.fetchCountryByA3(companyId, a3);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country fetchCountryByName(
+		long companyId, java.lang.String name) {
+
+		return _countryLocalService.fetchCountryByName(companyId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country fetchCountryByNumber(
+		long companyId, java.lang.String number) {
+
+		return _countryLocalService.fetchCountryByNumber(companyId, number);
+	}
+
 	/**
 	 * Returns the country with the matching UUID and company.
 	 *
@@ -275,8 +303,42 @@ public class CountryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country>
+		getCompanyCountries(long companyId, boolean active) {
+
+		return _countryLocalService.getCompanyCountries(companyId, active);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country>
+		getCompanyCountries(
+			long companyId, boolean active, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.Country> orderByComparator) {
+
+		return _countryLocalService.getCompanyCountries(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country>
+		getCompanyCountries(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.Country> orderByComparator) {
+
+		return _countryLocalService.getCompanyCountries(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCompanyCountriesCount(long companyId) {
 		return _countryLocalService.getCompanyCountriesCount(companyId);
+	}
+
+	@Override
+	public int getCompanyCountriesCount(long companyId, boolean active) {
+		return _countryLocalService.getCompanyCountriesCount(companyId, active);
 	}
 
 	/**
@@ -319,6 +381,38 @@ public class CountryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountry(countryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountryByA2(
+			long companyId, java.lang.String a2)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.getCountryByA2(companyId, a2);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountryByA3(
+			long companyId, java.lang.String a3)
+		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+
+		return _countryLocalService.getCountryByA3(companyId, a3);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountryByName(
+			long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+
+		return _countryLocalService.getCountryByName(companyId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountryByNumber(
+			long companyId, java.lang.String number)
+		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+
+		return _countryLocalService.getCountryByNumber(companyId, number);
 	}
 
 	/**
@@ -392,6 +486,14 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Country setActive(
+			long countryId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.setActive(countryId, active);
+	}
+
 	/**
 	 * Updates the country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -407,6 +509,30 @@ public class CountryLocalServiceWrapper
 		com.liferay.portal.kernel.model.Country country) {
 
 		return _countryLocalService.updateCountry(country);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country updateCountry(
+			long countryId, java.lang.String a2, java.lang.String a3,
+			boolean active, boolean billingAllowed, java.lang.String idd,
+			java.lang.String name, java.lang.String number, double position,
+			boolean shippingAllowed, boolean subjectToVAT,
+			java.util.Map<java.lang.String, java.lang.String> titleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.updateCountry(
+			countryId, a2, a3, active, billingAllowed, idd, name, number,
+			position, shippingAllowed, subjectToVAT, titleMap);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country
+			updateCountryGroupFilterEnabled(
+				long countryId, boolean groupFilterEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.updateCountryGroupFilterEnabled(
+			countryId, groupFilterEnabled);
 	}
 
 	@Override

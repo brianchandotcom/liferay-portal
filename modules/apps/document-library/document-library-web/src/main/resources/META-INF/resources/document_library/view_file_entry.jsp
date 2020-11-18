@@ -156,7 +156,11 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" /><portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" /></portlet:renderURL>
+<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
+	<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+	<portlet:param name="originFolderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+</portlet:renderURL>
 
 <portlet:actionURL name="/document_library/edit_entry" var="editEntryURL" />
 

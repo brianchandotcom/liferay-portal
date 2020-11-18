@@ -35,9 +35,11 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
@@ -108,6 +110,9 @@ public class CTCollectionLocalServiceImpl
 
 		_validate(name, description);
 
+		CTSchemaVersion ctSchemaVersion =
+			_ctSchemaVersionLocalService.getLatestSchemaVersion(companyId);
+
 		long ctCollectionId = counterLocalService.increment(
 			CTCollection.class.getName());
 
@@ -118,6 +123,7 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setUserId(userId);
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
+		ctCollection.setSchemaVersionId(ctSchemaVersion.getSchemaVersionId());
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);
@@ -409,6 +415,23 @@ public class CTCollectionLocalServiceImpl
 			ctCollection.getCompanyId(), CTCollection.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			ctCollection.getCtCollectionId());
+
+		int schemaVersionCount = ctCollectionPersistence.countBySchemaVersionId(
+			ctCollection.getSchemaVersionId());
+
+		if (schemaVersionCount == 1) {
+			CTSchemaVersion ctSchemaVersion =
+				_ctSchemaVersionLocalService.fetchCTSchemaVersion(
+					ctCollection.getSchemaVersionId());
+
+			if ((ctSchemaVersion != null) &&
+				!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+					ctSchemaVersion, true)) {
+
+				_ctSchemaVersionLocalService.deleteCTSchemaVersion(
+					ctSchemaVersion);
+			}
+		}
 
 		return ctCollectionPersistence.remove(ctCollection);
 	}
@@ -801,6 +824,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
+	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;

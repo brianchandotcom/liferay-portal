@@ -14,23 +14,24 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.service.base.CTSchemaVersionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.version.Version;
+
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the ct schema version local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.change.tracking.service.CTSchemaVersionLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see CTSchemaVersionLocalServiceBaseImpl
+ * @author Preston Crary
  */
 @Component(
 	property = "model.class.name=com.liferay.change.tracking.model.CTSchemaVersion",
@@ -39,10 +40,96 @@ import org.osgi.service.component.annotations.Component;
 public class CTSchemaVersionLocalServiceImpl
 	extends CTSchemaVersionLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.change.tracking.service.CTSchemaVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTSchemaVersionLocalServiceUtil</code>.
-	 */
+	@Override
+	public CTSchemaVersion createLatestSchemaVersion(long companyId) {
+		CTSchemaVersion ctSchemaVersion = ctSchemaVersionPersistence.create(
+			counterLocalService.increment(CTSchemaVersion.class.getName()));
+
+		ctSchemaVersion.setCompanyId(companyId);
+
+		Map<String, Serializable> schemaContext = new HashMap<>();
+
+		for (Release release :
+				releaseLocalService.getReleases(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			schemaContext.put(
+				release.getServletContextName(), release.getSchemaVersion());
+		}
+
+		ctSchemaVersion.setSchemaContext(schemaContext);
+
+		return ctSchemaVersionPersistence.update(ctSchemaVersion);
+	}
+
+	@Override
+	public CTSchemaVersion getLatestSchemaVersion(long companyId) {
+		CTSchemaVersion ctSchemaVersion =
+			ctSchemaVersionPersistence.fetchByCompanyId_First(companyId, null);
+
+		if ((ctSchemaVersion == null) ||
+			!isLatestSchemaVersion(ctSchemaVersion, true)) {
+
+			ctSchemaVersion =
+				ctSchemaVersionLocalService.createLatestSchemaVersion(
+					companyId);
+		}
+
+		return ctSchemaVersion;
+	}
+
+	@Override
+	public boolean isLatestSchemaVersion(
+		CTSchemaVersion ctSchemaVersion, boolean strict) {
+
+		Map<String, Serializable> schemaContext =
+			ctSchemaVersion.getSchemaContext();
+
+		List<Release> releases = releaseLocalService.getReleases(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (releases.size() != schemaContext.size()) {
+			return false;
+		}
+
+		for (Release release : releases) {
+			String ctReleaseSchemaVersion = (String)schemaContext.get(
+				release.getServletContextName());
+
+			if (Objects.equals(
+					ctReleaseSchemaVersion, release.getSchemaVersion())) {
+
+				continue;
+			}
+
+			if (strict) {
+				return false;
+			}
+
+			Version version1 = Version.parseVersion(ctReleaseSchemaVersion);
+
+			Version version2 = Version.parseVersion(release.getSchemaVersion());
+
+			if ((version1.getMajor() != version2.getMajor()) ||
+				(version1.getMinor() != version2.getMinor())) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isLatestSchemaVersion(long ctSchemaVersionId) {
+		CTSchemaVersion ctSchemaVersion =
+			ctSchemaVersionPersistence.fetchByPrimaryKey(ctSchemaVersionId);
+
+		if (ctSchemaVersion == null) {
+			return false;
+		}
+
+		return isLatestSchemaVersion(ctSchemaVersion, false);
+	}
 
 }

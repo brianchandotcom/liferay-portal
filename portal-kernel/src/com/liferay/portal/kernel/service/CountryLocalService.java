@@ -234,6 +234,9 @@ public interface CountryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Country> getCountries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Country> getCountriesByCompanyId(long companyId);
+
 	/**
 	 * Returns the number of countries.
 	 *
@@ -241,6 +244,9 @@ public interface CountryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCountriesCountByCompanyId(long companyId);
 
 	/**
 	 * Returns the country with the primary key.

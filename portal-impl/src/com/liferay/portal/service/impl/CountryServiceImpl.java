@@ -45,38 +45,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 				getPermissionChecker());
 		}
 
-		if (Validator.isNull(name)) {
-			throw new CountryNameException();
-		}
-
-		if (Validator.isNull(a2)) {
-			throw new CountryA2Exception();
-		}
-
-		if (Validator.isNull(a3)) {
-			throw new CountryA3Exception();
-		}
-
-		if (Validator.isNull(number)) {
-			throw new CountryNumberException();
-		}
-
-		if (Validator.isNull(idd)) {
-			throw new CountryIddException();
-		}
-
-		long countryId = counterLocalService.increment();
-
-		Country country = countryPersistence.create(countryId);
-
-		country.setA2(a2);
-		country.setA3(a3);
-		country.setActive(active);
-		country.setIdd(idd);
-		country.setName(name);
-		country.setNumber(number);
-
-		return countryPersistence.update(country);
+		return countryLocalService.addCountry(
+			name, a2, a3, number, idd, active);
 	}
 
 	@Override

@@ -274,6 +274,13 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.getCountries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country>
+		getCountriesByCompanyId(long companyId) {
+
+		return _countryLocalService.getCountriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of countries.
 	 *
@@ -282,6 +289,11 @@ public class CountryLocalServiceWrapper
 	@Override
 	public int getCountriesCount() {
 		return _countryLocalService.getCountriesCount();
+	}
+
+	@Override
+	public int getCountriesCountByCompanyId(long companyId) {
+		return _countryLocalService.getCountriesCountByCompanyId(companyId);
 	}
 
 	/**

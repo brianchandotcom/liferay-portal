@@ -266,6 +266,12 @@ public class CountryLocalServiceUtil {
 		return getService().getCountries(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Country>
+		getCountriesByCompanyId(long companyId) {
+
+		return getService().getCountriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of countries.
 	 *
@@ -273,6 +279,10 @@ public class CountryLocalServiceUtil {
 	 */
 	public static int getCountriesCount() {
 		return getService().getCountriesCount();
+	}
+
+	public static int getCountriesCountByCompanyId(long companyId) {
+		return getService().getCountriesCountByCompanyId(companyId);
 	}
 
 	/**

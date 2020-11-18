@@ -503,6 +503,27 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
+		JSONWebcontent.addFolder(
+			folderName = "WC GDPR Export Folder",
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		JSONWebcontent.addWebContent(
+			content = "This is a WC Content for GDPR Export testing.",
+			folderName = "WC GDPR Export Folder",
+			groupName = "Guest",
+			title = "GDPR Export Article in Folder",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		JSONWebcontent.addWebContent(
+			content = "This is a WC Content for GDPR Export testing.",
+			groupName = "Guest",
+			title = "GDPR Export Article",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
 		Navigator.openURL();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -545,11 +566,11 @@ definition {
 			userLastName = "userln");
 
 		GDPR.addExportProcessCP(
-			applications = "Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media",
+			applications = "Web Content,Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media",
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.downloadExportedPersonalData(applications = "Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media");
+		GDPR.downloadExportedPersonalData(applications = "Web Content,Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}

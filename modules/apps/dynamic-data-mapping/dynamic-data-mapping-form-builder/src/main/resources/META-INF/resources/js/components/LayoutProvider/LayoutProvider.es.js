@@ -903,6 +903,14 @@ LayoutProvider.PROPS = {
 	 * @default undefined
 	 * @instance
 	 * @memberof LayoutProvider
+	 * @type {!object}
+	 */
+	localizationMap: Config.object().value({}),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
 	 * @type {?(array|undefined)}
 	 */
 

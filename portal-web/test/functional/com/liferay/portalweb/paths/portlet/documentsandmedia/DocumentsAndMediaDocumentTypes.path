@@ -25,7 +25,7 @@
 </tr>
 <tr>
     <td>FIELD_NAME</td>
-    <td>//div[contains(@class,'ddm-field')]//div[@data-field-name='${key_fieldName}']</td>
+    <td>//div[contains(@class,'ddm-field')]//label[normalize-space(text())='${key_fieldName}']</td>
     <td></td>
 </tr>
 <tr>

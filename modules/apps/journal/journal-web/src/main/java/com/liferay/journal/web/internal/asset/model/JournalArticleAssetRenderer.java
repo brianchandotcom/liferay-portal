@@ -126,7 +126,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public long getClassPK() {
-		return _article.getResourcePrimKey();
+		return getClassPK(_article);
 	}
 
 	@Override
@@ -421,7 +421,8 @@ public class JournalArticleAssetRenderer
 		if (_assetDisplayPageFriendlyURLProvider != null) {
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					getClassName(), getClassPK(), themeDisplay);
+					getClassName(), _article.getResourcePrimKey(),
+					themeDisplay);
 
 			if (Validator.isNotNull(friendlyURL)) {
 				if (!_article.isApproved()) {
@@ -656,7 +657,7 @@ public class JournalArticleAssetRenderer
 			getAssetRendererFactory();
 
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(), getClassPK());
+			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		boolean hasDisplayPage = AssetDisplayPageUtil.hasAssetDisplayPage(
 			groupId, assetEntry);

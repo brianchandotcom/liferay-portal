@@ -84,6 +84,8 @@ public interface CTSchemaVersionLocalService
 	@Transactional(enabled = false)
 	public CTSchemaVersion createCTSchemaVersion(long schemaVersionId);
 
+	public CTSchemaVersion createLatestSchemaVersion(long companyId);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -237,6 +239,9 @@ public interface CTSchemaVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTSchemaVersion getLatestSchemaVersion(long companyId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -251,6 +256,13 @@ public interface CTSchemaVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isLatestSchemaVersion(
+		CTSchemaVersion ctSchemaVersion, boolean strict);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isLatestSchemaVersion(long ctSchemaVersionId);
 
 	/**
 	 * Updates the ct schema version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

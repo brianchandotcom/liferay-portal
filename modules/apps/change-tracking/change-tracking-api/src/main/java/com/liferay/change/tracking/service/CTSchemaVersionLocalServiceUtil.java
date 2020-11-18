@@ -67,6 +67,12 @@ public class CTSchemaVersionLocalServiceUtil {
 		return getService().createCTSchemaVersion(schemaVersionId);
 	}
 
+	public static com.liferay.change.tracking.model.CTSchemaVersion
+		createLatestSchemaVersion(long companyId) {
+
+		return getService().createLatestSchemaVersion(companyId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -274,6 +280,12 @@ public class CTSchemaVersionLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static com.liferay.change.tracking.model.CTSchemaVersion
+		getLatestSchemaVersion(long companyId) {
+
+		return getService().getLatestSchemaVersion(companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -291,6 +303,17 @@ public class CTSchemaVersionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static boolean isLatestSchemaVersion(
+		com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion,
+		boolean strict) {
+
+		return getService().isLatestSchemaVersion(ctSchemaVersion, strict);
+	}
+
+	public static boolean isLatestSchemaVersion(long ctSchemaVersionId) {
+		return getService().isLatestSchemaVersion(ctSchemaVersionId);
 	}
 
 	/**

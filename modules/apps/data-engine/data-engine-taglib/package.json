@@ -49,6 +49,7 @@
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/mock",
+			"<rootDir>/test/utils/constants.es.js",
 			"<rootDir>/jest-setup.config.js"
 		]
 	},

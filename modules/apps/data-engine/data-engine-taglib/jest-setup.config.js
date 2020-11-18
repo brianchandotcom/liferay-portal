@@ -29,13 +29,15 @@ window.Liferay.PortletKeys = {
 
 window.Liferay.after = () => ({detach: () => {}});
 
-window.themeDisplay = {
+const themeDisplay = {
 	...window.themeDisplay,
 	getDefaultLanguageId: () => 'en_US',
 	getLayoutRelativeControlPanelURL: () => 'layoutRelativeControlPanelURL',
 	getLayoutRelativeURL: () => 'getLayoutRelativeURL',
 	getScopeGroupId: () => 'scopeGroupId',
 };
+
+window.themeDisplay = themeDisplay;
 
 window.util = {
 	...window.util,
@@ -83,5 +85,7 @@ window.Liferay = {
 			return key;
 		},
 	},
+	ThemeDisplay: themeDisplay,
 	Util: window.util,
+	component: () => {},
 };

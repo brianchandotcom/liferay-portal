@@ -27,9 +27,7 @@ definition {
 	@description = "This is a use case for LPS-92222."
 	@priority = "5"
 	test AddFormWithSpanishAsOnlyLocale {
-		property custom.properties = "company.default.locale=es_ES";
-		property custom.properties = "locales.enabled=es_ES";
-		property custom.properties = "locales=es_ES";
+		property custom.properties = "company.default.locale=es_ES${line.separator}locales.enabled=es_ES${line.separator}locales=es_ES";
 		property test.name.skip.portal.instance = "Locale#AddFormWithSpanishAsOnlyLocale";
 
 		User.firstLoginPG(

@@ -21,9 +21,19 @@ const ImageSelector = ({
     cropRegion,
     fileEntryId = 0,
     imageURL,
+    itemSelectorEventName,
+	itemSelectorURL,
+	maxFileSize = 0,
     portletNamespace,
-    paramName
+	paramName,
+	validExtensions
 }) => {
+	const selectFileLink = ({namespace}) => {
+		return '<a class=\'browse-image btn btn-secondary\' href=\'javascript:;\' id=\'' + `${namespace}browseImage` +'\'>' +
+			Liferay.Language.get('select-file') +
+		'</a>';
+	};
+
     return (
         <div className={classNames(
             'drop-zone',
@@ -39,8 +49,48 @@ const ImageSelector = ({
                     <img 
                         alt={Liferay.Language.get('current-image')}
                         className="current-image"
-                        id={`${portletNamespace}image`} src={Liferay.Util.escapeHTML(imageURL)}
+                        id={`${portletNamespace}image`} src={imageURL}
                     />
+                </div>
+            )}
+
+            {fileEntryId == 0 && (
+                <div className="browse-image-controls">
+                    <div class="drag-drop-label"
+						dangerouslySetInnerHTML={{
+							__html:
+								(itemSelectorEventName && itemSelectorURL) ? (
+									Liferay.Browser.isMobile() ? (
+										selectFileLink(portletNamespace)
+									): (
+										Liferay.Util.sub(
+											Liferay.Language.get('drag-and-drop-to-upload-or-x'),
+											selectFileLink(portletNamespace)
+										)
+									)
+								): (
+									Liferay.Language.get('drag-and-drop-to-upload')
+								)
+						}}
+					></div>
+					<div class="file-validation-info">
+						{validExtensions && (
+							<strong>{validExtensions}</strong>
+						)}
+
+						{maxFileSize !== 0 && (
+							<span
+								className="pl-1"
+								dangerouslySetInnerHTML={{
+									__html:
+										Liferay.Util.sub(
+											Liferay.Language.get('maximum-size-x'),
+											maxFileSize,
+										)
+									}}
+							></span>
+						)}
+					</div>
                 </div>
             )}
         </div>
@@ -52,8 +102,12 @@ ImageSelector.propTypes = {
     draggableImage: PropTypes.string,
     fileEntryId: PropTypes.string.isRequired,
     imageURL: PropTypes.string,
+    itemSelectorEventName: PropTypes.string,
+	itemSelectorURL: PropTypes.string,
+	maxFileSize: PropTypes.number,
     paramName: PropTypes.string.isRequired,
-    portletNamespace: PropTypes.string.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
+	validExtensions: PropTypes.string,
 };
 
 export default ImageSelector;

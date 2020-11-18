@@ -123,6 +123,8 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
 			DLExternalVideoConstants.DL_FILE_ENTRY_TYPE_KEY);
 
+		ddmStructure.setDescriptionMap(
+			_updateNameMap(ddmStructure.getDescriptionMap()));
 		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
 
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);

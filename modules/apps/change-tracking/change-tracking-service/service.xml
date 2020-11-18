@@ -56,6 +56,7 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="schemaVersionId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusDate" type="Date" />
@@ -70,6 +71,9 @@
 
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="SchemaVersionId" return-type="Collection">
+			<finder-column name="schemaVersionId" />
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
@@ -215,6 +219,36 @@
 
 		<reference entity="CTCollection" package-path="com.liferay.change.tracking" />
 		<reference entity="Company" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="CTSchemaVersion" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="schemaVersionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="schemaContext" type="Map" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="schemaVersionId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Release" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>CTCollectionDescription</exception>

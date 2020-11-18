@@ -43,40 +43,57 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				keyProperty="addressId"
 				modelVar="addressDisplay"
 			>
+				<portlet:renderURL var="rowURL">
+					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry_address" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="accountEntryAddressId" value="<%= String.valueOf(addressDisplay.getAddressId()) %>" />
+					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+				</portlet:renderURL>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="name"
 					value="<%= addressDisplay.getName() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="street"
 					value="<%= addressDisplay.getStreet() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="city"
 					value="<%= addressDisplay.getCity() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="region"
 					value="<%= addressDisplay.getRegionName() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="zip"
 					value="<%= addressDisplay.getZip() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="type"
 					value="<%= addressDisplay.getType() %>"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/account_entries_admin/account_entry_address_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

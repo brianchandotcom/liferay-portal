@@ -69,12 +69,12 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 		Country country = countryPersistence.create(countryId);
 
-		country.setName(name);
 		country.setA2(a2);
 		country.setA3(a3);
-		country.setNumber(number);
-		country.setIdd(idd);
 		country.setActive(active);
+		country.setIdd(idd);
+		country.setName(name);
+		country.setNumber(number);
 
 		return countryPersistence.update(country);
 	}

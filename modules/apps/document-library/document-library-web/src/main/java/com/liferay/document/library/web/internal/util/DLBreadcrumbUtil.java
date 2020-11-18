@@ -235,6 +235,13 @@ public class DLBreadcrumbUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
+		long originFolderId = ParamUtil.getLong(
+			httpServletRequest, "originFolderId",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		portletURL.setParameter(
+			"originFolderId", String.valueOf(originFolderId));
+
 		if (mvcRenderCommandName.equals("/document_library/select_folder")) {
 			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 			boolean ignoreRootFolder = ParamUtil.getBoolean(

@@ -48,7 +48,7 @@ definition {
 		}
 
 		if (isSet(customID)) {
-			Click(locator1 = "Radio#CUSTOM_URL");
+			Click.clickAtNotVisible(locator1 = "Radio#CUSTOM_URL");
 
 			Type(
 				locator1 = "TextInput#IMAGE_ID",

@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -1025,16 +1023,9 @@ public class CTSQLTransformerTest {
 		}
 
 		if (ctCollection == null) {
-			long ctCollectionId = _counterLocalService.increment();
-
-			ctCollection = _ctCollectionLocalService.createCTCollection(
-				ctCollectionId);
-
-			ctCollection.setName(String.valueOf(ctCollectionId));
-			ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-			ctCollection = _ctCollectionLocalService.updateCTCollection(
-				ctCollection);
+			ctCollection = _ctCollectionLocalService.addCTCollection(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				CTSQLTransformerTest.class.getName(), null);
 
 			_ctCollections.add(ctCollection);
 		}
@@ -1259,9 +1250,6 @@ public class CTSQLTransformerTest {
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CounterLocalService _counterLocalService;
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

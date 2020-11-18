@@ -23,7 +23,6 @@ import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -50,7 +49,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -78,18 +76,9 @@ public class CTCollectionLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		long ctCollectionId = _counterLocalService.increment(
-			CTCollection.class.getName());
-
-		_ctCollection1 = _ctCollectionLocalService.createCTCollection(
-			ctCollectionId);
-
-		_ctCollection1.setUserId(TestPropsValues.getUserId());
-		_ctCollection1.setName(String.valueOf(ctCollectionId));
-		_ctCollection1.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		_ctCollection1 = _ctCollectionLocalService.updateCTCollection(
-			_ctCollection1);
+		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			CTCollectionLocalServiceTest.class.getSimpleName(), null);
 
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
@@ -557,9 +546,6 @@ public class CTCollectionLocalServiceTest {
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CounterLocalService _counterLocalService;
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

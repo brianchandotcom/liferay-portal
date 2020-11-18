@@ -24,7 +24,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 %>
 
 <aui:input helpMessage="video-url-help" label="video-url" name="externalVideoURL" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" />
-<aui:input name="contentType" type="hidden" value='<%= "application/vnd+liferay.external.video+html" %>' />
+<aui:input name="contentType" type="hidden" value="<%= DLContentTypes.EXTERNAL_VIDEO %>" />
 
 <div id="<portlet:namespace />externalVideoPreview">
 	<c:if test="<%= dlExternalVideo != null %>">

@@ -554,9 +554,13 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			AssertVisible(locator1 = "//*[@id='main-content']//a[contains(@href,'${baseURL}/en/web/test-site-name/w/web-content-title')]/img");
+			AssertVisible(
+				baseURL = "${baseURL}/en/web/test-site-name/w/web-content-title",
+				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
 
-			Click(locator1 = "//*[@id='main-content'MapManualURLToContainerElement]//a[contains(@href,'${baseURL}/en/web/test-site-name/w/web-content-title')]/img");
+			Click(
+				baseURL = "${baseURL}/en/web/test-site-name/w/web-content-title",
+				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
@@ -604,9 +608,13 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//*[@id='main-content']//a[contains(@href,'https://liferay.com')]/img");
+			AssertVisible(
+				baseURL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
 
-			Click(locator1 = "//*[@id='main-content']//a[contains(@href,'https://liferay.com')]/img");
+			Click(
+				baseURL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_IMAGE_LINK</td>
+	<td>//*[@id='main-content']//a[contains(@href,'${baseURL}')]/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SECTION_BACKGROUND_IMAGE</td>
 	<td>//section[contains(@id,'content')]//div[contains(@style,'${key_imageName}')]</td>
 	<td></td>

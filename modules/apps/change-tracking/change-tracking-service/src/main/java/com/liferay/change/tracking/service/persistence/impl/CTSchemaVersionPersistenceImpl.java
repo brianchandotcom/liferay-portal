@@ -1191,15 +1191,6 @@ public class CTSchemaVersionPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTSchemaVersionPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(CTPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

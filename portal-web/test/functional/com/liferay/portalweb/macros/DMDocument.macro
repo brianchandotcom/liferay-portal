@@ -103,18 +103,18 @@ definition {
 		}
 
 		if (isSet(textField)) {
-			var key_fieldName = "Text";
+			var key_fieldLabel = "Text";
 
 			Type(
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${textField}");
 		}
 
 		if (isSet(numberField)) {
-			var key_fieldName = "Numeric";
+			var key_fieldLabel = "Numeric";
 
 			Type(
-				locator1 = "TextInput#NUMERIC",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${numberField}");
 		}
 

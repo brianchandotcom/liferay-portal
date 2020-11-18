@@ -46,4 +46,14 @@ export const sub = (langKey, args) => {
 	return keyArray.join('');
 };
 
+export const getPluralMessage = (
+	singular,
+	plural,
+	count = 0,
+	toString,
+	subArray
+) => {
+	const message = count === 1 ? singular : plural;
+
+	return sub(message, subArray || [count.toLocaleString()], toString);
 };

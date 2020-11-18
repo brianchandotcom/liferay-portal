@@ -23,6 +23,7 @@ import {containsFieldSet} from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from '../field-types/FieldType.es';
+import {getPluralMessage} from './../../utils/lang.es';
 import FieldSetModal from './FieldSetModal.es';
 import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
@@ -190,11 +191,10 @@ export default function FieldSets({keywords}) {
 								<FieldType
 									actions={dropDownActions}
 									description={`${
+									description={getPluralMessage(
+										Liferay.Language.get('x-field'),
+										Liferay.Language.get('x-fields'),
 										fieldSet.dataDefinitionFields.length
-									} ${Liferay.Language.get('fields')}`}
-									disabled={containsFieldSet(
-										dataDefinition,
-										fieldSet.id
 									)}
 									dragType={DRAG_FIELDSET}
 									fieldSet={fieldSet}

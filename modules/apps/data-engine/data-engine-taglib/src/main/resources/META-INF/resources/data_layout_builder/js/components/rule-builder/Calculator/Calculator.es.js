@@ -15,7 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
-import {Token, Tokenizer} from 'dynamic-data-mapping-form-builder';
+import Token from 'dynamic-data-mapping-form-builder/js/expressions/Token.es';
+import Tokenizer from 'dynamic-data-mapping-form-builder/js/expressions/Tokenizer.es';
 import React, {forwardRef, useMemo, useState} from 'react';
 
 import CalculatorButtonArea from './CalculatorButtonArea.es';

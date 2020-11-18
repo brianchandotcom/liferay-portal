@@ -131,6 +131,8 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
+		Pause(locator1 = "3000");
+
 		Navigator.gotoSpecificURLPage(
 			pageName = "Web Content Page",
 			url = "http://www.able.com:8080");
@@ -168,6 +170,8 @@ definition {
 			webContentTitle = "WC WebContent Title Edit");
 
 		Button.clickPublish();
+
+		Pause(locator1 = "3000");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Web Content Page",

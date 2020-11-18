@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AssetCategoriesCompanyConfiguration {
 
 	@Meta.AD(
-		deflt = "https://learn.liferay.com/dxp/7.x/en/content-authoring-and-management/tags_and_categories/user-guide/defining-categories-and-vocabularies-for-content.html",
+		deflt = "https://learn.liferay.com/dxp/7.x/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html",
 		description = "link-to-documentation-url-description",
 		name = "link-to-documentation-url", required = false
 	)

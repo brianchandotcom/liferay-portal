@@ -20,7 +20,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -51,7 +51,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -340,12 +339,8 @@ public class ViewConflictsDisplayContext {
 		viewURL.setParameter(
 			"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 
-		try {
-			viewURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			ReflectionUtil.throwException(windowStateException);
-		}
+		PublicationsPortletURLUtil.setWindowState(
+			viewURL, LiferayWindowState.POP_UP);
 
 		return viewURL.toString();
 	}
@@ -362,12 +357,8 @@ public class ViewConflictsDisplayContext {
 			"modelClassNameId", String.valueOf(modelClassNameId));
 		viewURL.setParameter("modelClassPK", String.valueOf(modelClassPK));
 
-		try {
-			viewURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			ReflectionUtil.throwException(windowStateException);
-		}
+		PublicationsPortletURLUtil.setWindowState(
+			viewURL, LiferayWindowState.POP_UP);
 
 		return viewURL.toString();
 	}

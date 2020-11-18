@@ -18,7 +18,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,7 +41,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -98,12 +97,8 @@ public class ViewDiscardDisplayContext {
 					viewURL.setParameter(
 						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 
-					try {
-						viewURL.setWindowState(LiferayWindowState.POP_UP);
-					}
-					catch (WindowStateException windowStateException) {
-						ReflectionUtil.throwException(windowStateException);
-					}
+					PublicationsPortletURLUtil.setWindowState(
+						viewURL, LiferayWindowState.POP_UP);
 
 					ctEntriesJSONArray.put(
 						JSONUtil.put(

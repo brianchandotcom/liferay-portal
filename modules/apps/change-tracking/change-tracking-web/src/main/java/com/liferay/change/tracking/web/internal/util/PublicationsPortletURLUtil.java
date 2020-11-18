@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.util;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -25,6 +26,8 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,6 +87,17 @@ public class PublicationsPortletURLUtil {
 				String.valueOf(ctCollection.getCtCollectionId()),
 				LiferayWindowState.POP_UP.toString(), null, httpServletRequest),
 			"',});");
+	}
+
+	public static void setWindowState(
+		PortletURL portletURL, WindowState windowState) {
+
+		try {
+			portletURL.setWindowState(windowState);
+		}
+		catch (WindowStateException windowStateException) {
+			ReflectionUtil.throwException(windowStateException);
+		}
 	}
 
 	private PublicationsPortletURLUtil() {

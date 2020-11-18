@@ -37,7 +37,7 @@ function getSortedFieldsets(fieldsets) {
 	});
 }
 
-function getFielteredFieldsets(fieldsets, keywords) {
+function getFilteredFieldsets(fieldsets, keywords) {
 	const filteredFieldsets = fieldsets.filter(({defaultLanguageId, name}) => {
 		return new RegExp(keywords, 'ig').test(
 			getLocalizedValue(defaultLanguageId, name)
@@ -69,7 +69,7 @@ export default function FieldSets({keywords}) {
 		isVisible: false,
 	});
 
-	const fielteredFieldsets = getFielteredFieldsets(fieldSets, keywords);
+	const filteredFieldsets = getFilteredFieldsets(fieldSets, keywords);
 
 	let defaultLanguageId = dataDefinition.defaultLanguageId;
 
@@ -149,14 +149,14 @@ export default function FieldSets({keywords}) {
 
 	return (
 		<>
-			{fielteredFieldsets.length ? (
+			{filteredFieldsets.length ? (
 				<>
 					<CreateNewFieldsetButton
 						onClick={onClickCreateNewFieldset}
 					/>
 
 					<div className="mt-3">
-						{fielteredFieldsets.map((fieldSet) => {
+						{filteredFieldsets.map((fieldSet) => {
 							const fieldSetName = getLocalizedValue(
 								fieldSet.defaultLanguageId,
 								fieldSet.name

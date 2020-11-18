@@ -53,7 +53,7 @@ export const getPluralMessage = (
 	toString,
 	subArray
 ) => {
-	const message = count === 1 ? singular : plural;
+	const message = count > 1 ? plural : singular;
 
 	return sub(message, subArray || [count.toLocaleString()], toString);
 };

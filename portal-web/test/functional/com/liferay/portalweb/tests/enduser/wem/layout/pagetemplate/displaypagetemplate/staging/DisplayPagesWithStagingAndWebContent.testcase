@@ -292,7 +292,7 @@ definition {
 				webContentContent = "Webcontent Content",
 				webContentTitle = "Webcontent Title");
 
-			Button.clickPublish();
+			PortletEntry.publish();
 		}
 
 		task ("Publish the site to live") {
@@ -320,7 +320,7 @@ definition {
 				id = "content",
 				source = "Basic Web Content (Default)");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Assert the web content article displays with the additional Content fragment in the staging site") {

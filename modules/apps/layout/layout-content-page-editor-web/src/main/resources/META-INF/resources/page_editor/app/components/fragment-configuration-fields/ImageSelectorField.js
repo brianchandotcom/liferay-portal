@@ -27,14 +27,14 @@ import {useDispatch, useSelector} from '../../store/index';
 import {useId} from '../../utils/useId';
 
 const IMAGE_SOURCES = {
-	mapping: {
-		label: Liferay.Language.get('content-mapping'),
-		value: 'content_mapping',
+	direct: {
+		label: Liferay.Language.get('direct'),
+		value: 'direct',
 	},
 
-	selection: {
-		label: Liferay.Language.get('manual-selection'),
-		value: 'manual_selection',
+	mapping: {
+		label: Liferay.Language.get('mapping'),
+		value: 'mapping',
 	},
 };
 
@@ -49,7 +49,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 	const [imageSource, setImageSource] = useState(() =>
 		value.fieldId || value.mappedField
 			? IMAGE_SOURCES.mapping.value
-			: IMAGE_SOURCES.selection.value
+			: IMAGE_SOURCES.direct.value
 	);
 
 	const [imageWidth, setImageWidth] = useState('');
@@ -118,7 +118,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 				/>
 			</ClayForm.Group>
 
-			{imageSource === IMAGE_SOURCES.selection.value ? (
+			{imageSource === IMAGE_SOURCES.direct.value ? (
 				<ImageSelector
 					imageTitle={value.title}
 					label={field.label}

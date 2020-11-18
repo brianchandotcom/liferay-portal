@@ -2300,7 +2300,12 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "App Admin");
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Admin",
+			panel = "Applications",
+			portlet = "App Admin");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "App Admin");
 

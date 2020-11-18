@@ -83,7 +83,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -154,7 +154,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -322,7 +322,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

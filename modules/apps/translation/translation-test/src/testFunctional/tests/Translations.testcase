@@ -464,7 +464,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Rich Text",
-			fieldType = "Rich Text");
+			fieldName = "Rich Text");
 
 		for (var fieldName : list "Text,HTML,Integer,Number,Decimal,") {
 			DataEngine.addField(
@@ -836,7 +836,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

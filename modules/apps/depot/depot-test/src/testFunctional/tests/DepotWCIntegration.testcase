@@ -174,7 +174,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -336,7 +336,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldType = "Web Content");
+			fieldName = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -663,7 +663,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name${count}");
 
@@ -745,7 +745,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -832,7 +832,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
-				fieldType = "Text");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name${i}");
 

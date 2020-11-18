@@ -142,6 +142,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 					"/upload_file_entry"));
 		Assert.assertThat(
 			uploadURL,
+			CoreMatchers.containsString("param_folderId=" + _FOLDER_ID));
+		Assert.assertThat(
+			uploadURL,
 			CoreMatchers.containsString(
 				"param_formInstanceId=" + _FORM_INSTANCE_ID));
 		Assert.assertThat(

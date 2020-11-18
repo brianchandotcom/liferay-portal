@@ -21,7 +21,9 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
@@ -49,7 +51,14 @@ public class DLVideoItemSelectorView
 
 	@Override
 	public String[] getMimeTypes() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES;
+		String[] mimeTypes = {"application/vnd+liferay.external.video+html"};
+
+		if (XugglerUtil.isEnabled()) {
+			ArrayUtil.append(
+				mimeTypes, PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
+		}
+
+		return mimeTypes;
 	}
 
 	@Override

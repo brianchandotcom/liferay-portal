@@ -96,8 +96,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 
 	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
 		"checkbox", "ddm-date", "ddm-decimal", "ddm-image", "ddm-integer",
-		"ddm-number", "ddm-text-html", "radio", "rich_text", "select", "text",
-		"textarea"
+		"ddm-number", "ddm-text-html", "image", "radio", "rich_text", "select",
+		"text", "textarea"
 	};
 
 	@Reference

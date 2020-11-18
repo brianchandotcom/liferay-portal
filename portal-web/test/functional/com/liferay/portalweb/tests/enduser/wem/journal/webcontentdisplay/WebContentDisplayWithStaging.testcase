@@ -155,6 +155,7 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentImage = "Document_2.jpeg",

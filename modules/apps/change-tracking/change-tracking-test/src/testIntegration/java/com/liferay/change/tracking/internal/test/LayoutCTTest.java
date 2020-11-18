@@ -25,7 +25,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -79,18 +77,9 @@ public class LayoutCTTest {
 
 	@Before
 	public void setUp() throws Exception {
-		long ctCollectionId = _counterLocalService.increment(
-			CTCollection.class.getName());
-
-		_ctCollection = _ctCollectionLocalService.createCTCollection(
-			ctCollectionId);
-
-		_ctCollection.setUserId(TestPropsValues.getUserId());
-		_ctCollection.setName(String.valueOf(ctCollectionId));
-		_ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		_ctCollection = _ctCollectionLocalService.updateCTCollection(
-			_ctCollection);
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			LayoutCTTest.class.getName(), null);
 
 		_layoutClassNameId = _classNameLocalService.getClassNameId(
 			Layout.class);
@@ -1051,9 +1040,6 @@ public class LayoutCTTest {
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static CounterLocalService _counterLocalService;
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

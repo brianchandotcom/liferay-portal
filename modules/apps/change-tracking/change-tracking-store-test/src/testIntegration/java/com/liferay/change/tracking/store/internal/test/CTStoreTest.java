@@ -21,7 +21,6 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.store.exception.NoSuchContentException;
 import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.change.tracking.store.service.CTSContentLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -1019,17 +1017,9 @@ public class CTStoreTest {
 	}
 
 	private CTCollection _createCTCollection() throws PortalException {
-		long ctCollectionId = _counterLocalService.increment(
-			CTCollection.class.getName());
-
-		CTCollection ctCollection =
-			_ctCollectionLocalService.createCTCollection(ctCollectionId);
-
-		ctCollection.setUserId(TestPropsValues.getUserId());
-		ctCollection.setName(String.valueOf(ctCollectionId));
-		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		return _ctCollectionLocalService.updateCTCollection(ctCollection);
+		return _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			CTStoreTest.class.getName(), null);
 	}
 
 	private void _deleteCTDirectory(String dirName) {
@@ -1289,9 +1279,6 @@ public class CTStoreTest {
 	private static final String _VERSION_3 = "3.0";
 
 	private static long _companyId;
-
-	@Inject
-	private static CounterLocalService _counterLocalService;
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

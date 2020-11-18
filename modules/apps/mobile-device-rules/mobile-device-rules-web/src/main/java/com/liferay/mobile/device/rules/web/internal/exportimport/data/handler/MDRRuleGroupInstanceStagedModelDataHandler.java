@@ -24,10 +24,7 @@ import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -153,36 +150,19 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		String layoutUuid = ruleGroupInstanceElement.attributeValue(
 			"layout-uuid");
 
-		try {
-			if (Validator.isNotNull(layoutUuid)) {
-				Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
-					layoutUuid, portletDataContext.getScopeGroupId(),
-					portletDataContext.isPrivateLayout());
+		if (Validator.isNotNull(layoutUuid)) {
+			Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+				layoutUuid, portletDataContext.getScopeGroupId(),
+				portletDataContext.isPrivateLayout());
 
-				classPK = layout.getPrimaryKey();
-			}
-			else {
-				LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-					portletDataContext.getScopeGroupId(),
-					portletDataContext.isPrivateLayout());
-
-				classPK = layoutSet.getLayoutSetId();
-			}
+			classPK = layout.getPrimaryKey();
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
+		else {
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+				portletDataContext.getScopeGroupId(),
+				portletDataContext.isPrivateLayout());
 
-				sb.append("Layout ");
-				sb.append(layoutUuid);
-				sb.append(" is missing for rule group instance ");
-				sb.append(ruleGroupInstance.getRuleGroupInstanceId());
-				sb.append(", skipping this rule group instance.");
-
-				_log.warn(sb.toString());
-			}
-
-			return;
+			classPK = layoutSet.getLayoutSetId();
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
@@ -253,9 +233,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 
 		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MDRRuleGroupInstanceStagedModelDataHandler.class);
 
 	private LayoutLocalService _layoutLocalService;
 	private LayoutSetLocalService _layoutSetLocalService;

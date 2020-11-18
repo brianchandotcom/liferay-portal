@@ -27,10 +27,14 @@ definition {
 	}
 
 	macro assignSingleRelationToProductsEntry {
+		var searchTerm = '''"${entryName}"''';
+
 		Type(
 			key_title = "${title}",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "${entryName}");
+			value1 = "${searchTerm}");
+
+		Pause(locator1 = "3000");
 
 		ClickNoError(
 			key_entryName = "${entryName}",

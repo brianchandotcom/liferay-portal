@@ -73,9 +73,13 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 		module="js/ExternalVideoPreview"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"externalVideoHTML", (dlExternalVideo != null) ? dlExternalVideo.getEmbeddableHTML() : ""
+			).put(
 				"externalVideoURL", (dlExternalVideo != null) ? dlExternalVideo.getURL() : ""
 			).put(
-				"HTML", (dlExternalVideo != null) ? dlExternalVideo.getEmbeddableHTML() : ""
+				"getDLExternalVideoFieldsURL", getDLExternalVideoFieldsURL
+			).put(
+				"namespace", namespace
 			).put(
 				"onFilePickCallback", onFilePickCallback
 			).build()

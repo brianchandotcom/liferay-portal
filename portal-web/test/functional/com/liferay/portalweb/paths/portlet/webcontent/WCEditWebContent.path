@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATE_INPUT</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_PICKER_PREVIEW</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>

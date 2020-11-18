@@ -3,7 +3,24 @@
 <project basedir="." default="run" name="benchmarks">
 	<import file="../build-common.xml" />
 
-	<target name="build-sample-sql">
+	<property name="sample-data-sql" value="sample-data-${sample.sql.db.type}.sql" />
+	<property name="build-db-file" value="../sql/build.xml" />
+
+	<macrodef name="build-sql">
+		<attribute name="dir" />
+		<sequential>
+			<ant antfile="${build-db-file}" inheritall="false" target="build-db">
+				<property name="db.sql.dir" value="@{dir}" />
+			</ant>
+
+			<concat append="true" destfile="${sample-data-sql}">
+				<filelist dir="@{dir}/tables/" files="tables-${sample.sql.db.type}.sql" />
+				<filelist dir="@{dir}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
+			</concat>
+		</sequential>
+	</macrodef>
+
+	<target depends="clean" name="build-sample-sql">
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
 		<path id="sample.sql.builder.classpath">
@@ -87,6 +104,41 @@
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<sysproperty key="sample-sql-properties" value="${sample.sql.properties.file}" />
 		</java>
+
+		<concat append="true" destfile="${sample-data-sql}">
+			<filelist dir="../sql/portal/" files="portal-${sample.sql.db.type}.sql" />
+			<filelist dir="../sql/indexes/" files="indexes-${sample.sql.db.type}.sql" />
+		</concat>
+
+		<for list="${portal.module.dir.list}" param="module">
+			<sequential>
+				<build-sql dir="@{module}" />
+			</sequential>
+		</for>
+
+		<if>
+			<equals arg1="${sample.sql.output.merge}" arg2="false" />
+			<then>
+				<for param="sql-file-filename">
+					<path>
+						<fileset
+							dir="${sample.sql.output.dir}/output"
+							includes="*.sql"
+						/>
+					</path>
+					<sequential>
+						<concat append="true" destfile="${sample-data-sql}">
+							<filelist dir="${sample.sql.output.dir}/output" files="@{sql-file-filename}" />
+						</concat>
+					</sequential>
+				</for>
+			</then>
+			<else>
+				<concat append="true" destfile="${sample-data-sql}">
+					<filelist dir="${sample.sql.output.dir}" files="sample-${sample.sql.db.type}.sql" />
+				</concat>
+			</else>
+		</if>
 	</target>
 
 	<target name="clean">

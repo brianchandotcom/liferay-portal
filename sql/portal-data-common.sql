@@ -670,6 +670,14 @@ insert into Region (regionId, countryId, regionCode, name, active_) values (2020
 insert into Region (regionId, countryId, regionCode, name, active_) values (202026, 202, 'ZH', 'Zürich', TRUE);
 
 ##
+## List types for account entries
+##
+
+insert into ListType (listTypeId, name, type_) values (14000, 'billing', 'com.liferay.account.model.AccountEntry.address');
+insert into ListType (listTypeId, name, type_) values (14001, 'billing-and-shipping', 'com.liferay.account.model.AccountEntry.address');
+insert into ListType (listTypeId, name, type_) values (14002, 'shipping', 'com.liferay.account.model.AccountEntry.address');
+
+##
 ## List types for accounts
 ##
 

@@ -77,7 +77,7 @@ public class CTCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,6 +95,8 @@ public class CTCollectionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", schemaVersionId=");
+		sb.append(schemaVersionId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -143,6 +145,7 @@ public class CTCollectionCacheModel
 			ctCollectionImpl.setDescription(description);
 		}
 
+		ctCollectionImpl.setSchemaVersionId(schemaVersionId);
 		ctCollectionImpl.setStatus(status);
 		ctCollectionImpl.setStatusByUserId(statusByUserId);
 
@@ -171,6 +174,8 @@ public class CTCollectionCacheModel
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		schemaVersionId = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -204,6 +209,8 @@ public class CTCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(schemaVersionId);
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -218,6 +225,7 @@ public class CTCollectionCacheModel
 	public long modifiedDate;
 	public String name;
 	public String description;
+	public long schemaVersionId;
 	public int status;
 	public long statusByUserId;
 	public long statusDate;

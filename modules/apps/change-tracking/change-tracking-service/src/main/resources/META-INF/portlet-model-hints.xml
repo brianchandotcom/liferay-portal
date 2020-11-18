@@ -26,6 +26,7 @@
 			<hint-collection name="TEXTAREA" />
 			<hint name="max-length">200</hint>
 		</field>
+		<field name="schemaVersionId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusDate" type="Date" />
@@ -69,5 +70,11 @@
 		<field name="createDate" type="Date" />
 		<field name="ctCollectionId" type="long" />
 		<field name="backgroundTaskId" type="long" />
+	</model>
+	<model name="com.liferay.change.tracking.model.CTSchemaVersion">
+		<field name="mvccVersion" type="long" />
+		<field name="schemaVersionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="schemaContext" type="Map" />
 	</model>
 </model-hints>

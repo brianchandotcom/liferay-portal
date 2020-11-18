@@ -191,6 +191,20 @@ public interface CTCollectionModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the schema version ID of this ct collection.
+	 *
+	 * @return the schema version ID of this ct collection
+	 */
+	public long getSchemaVersionId();
+
+	/**
+	 * Sets the schema version ID of this ct collection.
+	 *
+	 * @param schemaVersionId the schema version ID of this ct collection
+	 */
+	public void setSchemaVersionId(long schemaVersionId);
+
+	/**
 	 * Returns the status of this ct collection.
 	 *
 	 * @return the status of this ct collection

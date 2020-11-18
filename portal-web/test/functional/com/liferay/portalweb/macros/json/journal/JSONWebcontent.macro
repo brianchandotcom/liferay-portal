@@ -33,7 +33,9 @@ definition {
 			folderId = "${folderId}",
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}");
+			titleMap = "${titleMap}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	@summary = "Add a WC Folder with Folder Name '${folderName}' to the Site '${groupName}'"
@@ -81,7 +83,9 @@ definition {
 			folderId = "${folderId}",
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}");
+			titleMap = "${titleMap}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	@summary = "Delete a WC Article under an existing site via article title"

@@ -31,9 +31,17 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:${userPassword} \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \
 				-d titleMap=${titleMap} \

@@ -136,6 +136,8 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setDescription(RandomTestUtil.randomString());
 
+		newCTCollection.setSchemaVersionId(RandomTestUtil.nextLong());
+
 		newCTCollection.setStatus(RandomTestUtil.nextInt());
 
 		newCTCollection.setStatusByUserId(RandomTestUtil.nextLong());
@@ -170,6 +172,9 @@ public class CTCollectionPersistenceTest {
 			existingCTCollection.getDescription(),
 			newCTCollection.getDescription());
 		Assert.assertEquals(
+			existingCTCollection.getSchemaVersionId(),
+			newCTCollection.getSchemaVersionId());
+		Assert.assertEquals(
 			existingCTCollection.getStatus(), newCTCollection.getStatus());
 		Assert.assertEquals(
 			existingCTCollection.getStatusByUserId(),
@@ -184,6 +189,13 @@ public class CTCollectionPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountBySchemaVersionId() throws Exception {
+		_persistence.countBySchemaVersionId(RandomTestUtil.nextLong());
+
+		_persistence.countBySchemaVersionId(0L);
 	}
 
 	@Test
@@ -221,8 +233,9 @@ public class CTCollectionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTCollection", "mvccVersion", true, "ctCollectionId", true,
 			"companyId", true, "userId", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true, "status",
-			true, "statusByUserId", true, "statusDate", true);
+			"modifiedDate", true, "name", true, "description", true,
+			"schemaVersionId", true, "status", true, "statusByUserId", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -456,6 +469,8 @@ public class CTCollectionPersistenceTest {
 		ctCollection.setName(RandomTestUtil.randomString());
 
 		ctCollection.setDescription(RandomTestUtil.randomString());
+
+		ctCollection.setSchemaVersionId(RandomTestUtil.nextLong());
 
 		ctCollection.setStatus(RandomTestUtil.nextInt());
 

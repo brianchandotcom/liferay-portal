@@ -8,6 +8,7 @@
 	<import class="com.liferay.change.tracking.model.CTMessage" />
 	<import class="com.liferay.change.tracking.model.CTPreferences" />
 	<import class="com.liferay.change.tracking.model.CTProcess" />
+	<import class="com.liferay.change.tracking.model.CTSchemaVersion" />
 	<class dynamic-update="true" name="com.liferay.change.tracking.model.impl.CTAutoResolutionInfoImpl" table="CTAutoResolutionInfo">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctAutoResolutionInfoId" type="long">
 			<generator class="assigned" />
@@ -32,6 +33,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="schemaVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
@@ -81,5 +83,13 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="backgroundTaskId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.change.tracking.model.impl.CTSchemaVersionImpl" table="CTSchemaVersion">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="schemaVersionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="schemaContext" type="com.liferay.portal.dao.orm.hibernate.MapType" />
 	</class>
 </hibernate-mapping>

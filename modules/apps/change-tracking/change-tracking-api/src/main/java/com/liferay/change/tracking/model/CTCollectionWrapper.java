@@ -50,6 +50,7 @@ public class CTCollectionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("schemaVersionId", getSchemaVersionId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusDate", getStatusDate());
@@ -105,6 +106,12 @@ public class CTCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long schemaVersionId = (Long)attributes.get("schemaVersionId");
+
+		if (schemaVersionId != null) {
+			setSchemaVersionId(schemaVersionId);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -204,6 +211,16 @@ public class CTCollectionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the schema version ID of this ct collection.
+	 *
+	 * @return the schema version ID of this ct collection
+	 */
+	@Override
+	public long getSchemaVersionId() {
+		return model.getSchemaVersionId();
 	}
 
 	/**
@@ -359,6 +376,16 @@ public class CTCollectionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the schema version ID of this ct collection.
+	 *
+	 * @param schemaVersionId the schema version ID of this ct collection
+	 */
+	@Override
+	public void setSchemaVersionId(long schemaVersionId) {
+		model.setSchemaVersionId(schemaVersionId);
 	}
 
 	/**

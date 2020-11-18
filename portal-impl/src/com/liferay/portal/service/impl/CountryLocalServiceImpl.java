@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.CountryLocalServiceBaseImpl;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @see CountryLocalServiceBaseImpl
@@ -60,14 +62,24 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		Country country = countryPersistence.create(countryId);
 
-		country.setName(name);
 		country.setA2(a2);
 		country.setA3(a3);
-		country.setNumber(number);
-		country.setIdd(idd);
 		country.setActive(active);
+		country.setIdd(idd);
+		country.setName(name);
+		country.setNumber(number);
 
 		return countryPersistence.update(country);
+	}
+
+	@Override
+	public List<Country> getCountriesByCompanyId(long companyId) {
+		return countryPersistence.findByCompanyId(companyId);
+	}
+
+	@Override
+	public int getCountriesCountByCompanyId(long companyId) {
+		return countryPersistence.countByCompanyId(companyId);
 	}
 
 }

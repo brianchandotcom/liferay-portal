@@ -29,6 +29,22 @@
 							"type": "text"
 						},
 						{
+							"dataType": "html",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "HTML"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "HTML",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text"
+						},
+						{
 							"dataType": "string",
 							"fieldNamespace": "",
 							"indexType": "keyword",
@@ -54,22 +70,6 @@
 							"localizable": true,
 							"multiple": false,
 							"name": "URL",
-							"readOnly": false,
-							"repeatable": false,
-							"required": false,
-							"showLabel": true,
-							"type": "text"
-						},
-						{
-							"dataType": "html",
-							"fieldNamespace": "",
-							"indexType": "keyword",
-							"label": {
-								"[$LOCALE_DEFAULT$]": "HTML"
-							},
-							"localizable": true,
-							"multiple": false,
-							"name": "HTML",
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
@@ -101,6 +101,16 @@
 									"columns": [
 										{
 											"fieldNames": [
+												"HTML"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
 												"TITLE"
 											],
 											"size": 12
@@ -112,16 +122,6 @@
 										{
 											"fieldNames": [
 												"URL"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fieldNames": [
-												"HTML"
 											],
 											"size": 12
 										}

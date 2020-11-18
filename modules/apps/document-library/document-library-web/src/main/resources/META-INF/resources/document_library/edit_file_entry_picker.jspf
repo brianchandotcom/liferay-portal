@@ -83,11 +83,11 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 				}
 
 				var ddmFieldWrappers = document.querySelectorAll(
-					'#<portlet:namespace />fm .lfr-ddm-container .field-wrapper'
+					'#<portlet:namespace />fm .lfr-ddm-form-container .ddm-field'
 				);
 
 				Array.prototype.forEach.call(ddmFieldWrappers, function (ddmFieldWrapper) {
-					var fieldName = ddmFieldWrapper.dataset.fieldname;
+					var fieldName = ddmFieldWrapper.dataset.fieldName;
 
 					var input = ddmFieldWrapper.querySelector('input');
 

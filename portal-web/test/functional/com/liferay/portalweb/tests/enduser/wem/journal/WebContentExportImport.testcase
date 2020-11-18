@@ -513,7 +513,8 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Content",
-			fieldName = "Rich Text");
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
 
 		WebContentStructures.saveCP();
 
@@ -539,39 +540,20 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "LeadText",
-			fieldName = "Rich Text");
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
 
 		WebContentStructures.saveCP();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
-
-		NavItem.gotoTemplates();
-
-		WebContentTemplates.addCP(
-			structureName = "News",
-			templateDescription = "News Template Description",
-			templateFile = "news-template.txt",
-			templateName = "News");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
-
-		NavItem.gotoTemplates();
-
-		WebContentTemplates.addCP(
-			structureName = "Events",
-			templateDescription = "Events Template Description",
-			templateFile = "events-template.txt",
-			templateName = "Events");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
 
 		WebContent.addWithStructureCP(
-			fieldName = "Content",
+			fieldType = "Multiple Lines",
 			structureName = "News",
-			templateName = "News",
-			webContentTextBox = "As the 96th anniversary of Apollo 11’s historic landing on the moon approaches, Dr. Peter Vance and Dr. Alessandro Mancelli of the Astronautics Department discuss the profound impact the vision of Apollo 11 and NASA had on both the world and on the foundation of The Space Program itself.",
+			webContentText = "As the 96th anniversary of Apollo 11’s historic landing on the moon approaches, Dr. Peter Vance and Dr. Alessandro Mancelli of the Astronautics Department discuss the profound impact the vision of Apollo 11 and NASA had on both the world and on the foundation of The Space Program itself.",
+			webContentTextFieldLabel = "Content",
 			webContentTitle = "When It All Began...");
 
 		PortletEntry.publish();
@@ -581,10 +563,10 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
 
 		WebContent.addWithStructureCP(
-			fieldName = "Content",
+			fieldType = "Multiple Lines",
 			structureName = "News",
-			templateName = "News",
-			webContentTextBox = "A new study shows a correlation between the mathematics of music and planetary rings. “It’s possible,” says lead researcher Dr. Agatha Saylor, “that this evidence could help us understand some of space’s greatest mysteries.”",
+			webContentText = "A new study shows a correlation between the mathematics of music and planetary rings. “It’s possible,” says lead researcher Dr. Agatha Saylor, “that this evidence could help us understand some of space’s greatest mysteries.”",
+			webContentTextFieldLabel = "Content",
 			webContentTitle = "Stravinksy in Space?");
 
 		PortletEntry.publish();
@@ -594,10 +576,10 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
 
 		WebContent.addWithStructureCP(
-			fieldName = "Content",
+			fieldType = "Multiple Lines",
 			structureName = "News",
-			templateName = "News",
-			webContentTextBox = "Omar Qasim, ’68, dishes on what it was like to grow up as the son of an astronaut, how a Chemistry class saved his life, and the one weird thing he does to keep himself focused.",
+			webContentText = "Omar Qasim, ’68, dishes on what it was like to grow up as the son of an astronaut, how a Chemistry class saved his life, and the one weird thing he does to keep himself focused.",
+			webContentTextFieldLabel = "Content",
 			webContentTitle = "Student Spotlight");
 
 		PortletEntry.publish();
@@ -607,12 +589,12 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
 
 		WebContent.addWithStructureCP(
-			fieldName = "LeadText",
-			key_fieldName = "EventDate",
+			fieldType = "Multiple Lines",
 			structureName = "Events",
-			templateName = "Events",
 			webContentDate = "05/12/2065",
-			webContentTextBox = "S.P.A.C.E. Board of Governors member Antony Carelli and president Dr. Asmund Grey will hold a press conference Tuesday, July 9th to address recent security questions and put to rest faculty hiring rumors.",
+			webContentDateFieldLabel = "EventDate",
+			webContentText = "S.P.A.C.E. Board of Governors member Antony Carelli and president Dr. Asmund Grey will hold a press conference Tuesday, July 9th to address recent security questions and put to rest faculty hiring rumors.",
+			webContentTextFieldLabel = "LeadText",
 			webContentTitle = "Upcoming Press Conference");
 
 		PortletEntry.publish();
@@ -622,12 +604,12 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
 
 		WebContent.addWithStructureCP(
-			fieldName = "LeadText",
-			key_fieldName = "EventDate",
+			fieldType = "Multiple Lines",
 			structureName = "Events",
-			templateName = "Events",
 			webContentDate = "05/31/2065",
-			webContentTextBox = "Attention, incoming students: New Student Orientation begins at 2:00 P.M. Monday, August 17th in the Carelli Auditorium on South Campus. Please check your emails for more information.",
+			webContentDateFieldLabel = "EventDate",
+			webContentText = "Attention, incoming students: New Student Orientation begins at 2:00 P.M. Monday, August 17th in the Carelli Auditorium on South Campus. Please check your emails for more information.",
+			webContentTextFieldLabel = "LeadText",
 			webContentTitle = "New Student Orientation");
 
 		PortletEntry.publish();
@@ -637,12 +619,12 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
 
 		WebContent.addWithStructureCP(
-			fieldName = "LeadText",
-			key_fieldName = "EventDate",
+			fieldType = "Multiple Lines",
 			structureName = "Events",
-			templateName = "Events",
 			webContentDate = "05/31/2065",
-			webContentTextBox = "Dr. Josiah Andrews, retired former director of ISRI, will be speaking in Allen Hall as part of our Special Speakers lineup. At 7:00 P.M. from Wednesday, August 26-Friday, August 28, Dr. Andrews will discuss the current landscape of planet-discovering technology.",
+			webContentDateFieldLabel = "EventDate",
+			webContentText = "Dr. Josiah Andrews, retired former director of ISRI, will be speaking in Allen Hall as part of our Special Speakers lineup. At 7:00 P.M. from Wednesday, August 26-Friday, August 28, Dr. Andrews will discuss the current landscape of planet-discovering technology.",
+			webContentTextFieldLabel = "LeadText",
 			webContentTitle = "Fall Special Speaker Series");
 
 		PortletEntry.publish();

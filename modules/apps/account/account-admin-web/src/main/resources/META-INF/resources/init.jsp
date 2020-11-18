@@ -30,6 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants" %><%@
 page import="com.liferay.account.admin.web.internal.constants.AccountWebKeys" %><%@
+page import="com.liferay.account.admin.web.internal.dao.search.AccountEntryAddressDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountEntryDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountGroupAccountEntryRowChecker" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountGroupDisplaySearchContainerFactory" %><%@
@@ -42,12 +43,14 @@ page import="com.liferay.account.admin.web.internal.display.AccountEntryDisplay"
 page import="com.liferay.account.admin.web.internal.display.AccountGroupDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountRoleDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountUserDisplay" %><%@
+page import="com.liferay.account.admin.web.internal.display.AddressDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.AccountUsersAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntryManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountOrganizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountEntriesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.account.admin.web.internal.display.context.ViewAccountEntryAddressesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountGroupAccountEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountOrganizationsManagementToolbarDisplayContext" %><%@

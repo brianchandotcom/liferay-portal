@@ -42,4 +42,13 @@ AddressDisplay addressDisplay = (AddressDisplay)row.getObject();
 		message="edit"
 		url="<%= editAccountEntryAddressURL %>"
 	/>
+
+	<portlet:actionURL name="/account_admin/delete_account_entry_addresses" var="deleteAccounEntryAddressURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="accountEntryAddressIds" value="<%= String.valueOf(addressDisplay.getAddressId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon-delete
+		url="<%= deleteAccounEntryAddressURL %>"
+	/>
 </liferay-ui:icon-menu>

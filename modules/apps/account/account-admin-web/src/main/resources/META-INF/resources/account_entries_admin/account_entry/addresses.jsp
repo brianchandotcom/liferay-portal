@@ -35,6 +35,8 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
+		<aui:input name="accountEntryAddressIds" type="hidden" />
+
 		<liferay-ui:search-container
 			searchContainer="<%= accountEntryAddressDisplaySearchContainer %>"
 		>
@@ -103,3 +105,8 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	componentId="<%= viewAccountEntryAddressesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="account_entries_admin/js/AccountEntryAddressesManagementToolbarDefaultEventHandler.es"
+/>

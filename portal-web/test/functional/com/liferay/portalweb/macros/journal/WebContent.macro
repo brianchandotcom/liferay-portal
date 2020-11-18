@@ -529,7 +529,7 @@ definition {
 
 			Type(
 				key_fieldFieldLabel = "${webContentDateFieldLabel}",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
+				locator1 = "WCEditWebContent#DATE_INPUT",
 				value1 = "${webContentDate}");
 		}
 
@@ -2267,7 +2267,7 @@ definition {
 			AssertAttributeValue(
 				attribute1 = "value",
 				key_fieldFieldLabel = "${webContentDateFieldLabel}",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
+				locator1 = "WCEditWebContent#DATE_INPUT",
 				value1 = "${webContentDate}");
 		}
 

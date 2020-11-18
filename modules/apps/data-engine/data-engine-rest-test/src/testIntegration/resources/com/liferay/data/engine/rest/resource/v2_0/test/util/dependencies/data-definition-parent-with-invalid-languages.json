@@ -1,0 +1,67 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "fieldset1",
+				"rows": "[{\"columns\":[{\"fields\":[\"Text\"],\"size\":12}]}]",
+				"upgradedStructure": false
+			},
+			"fieldType": "fieldset",
+			"label": {
+				"en_US": "Fieldset1",
+				"pt_BR": "Fieldset1"
+			},
+			"name": "fieldset1",
+			"nestedDataDefinitionFields": [
+				{
+					"fieldType": "text",
+					"label": {
+						"en_US": "Text",
+						"pt_BR": "Texto"
+					},
+					"localizable": true,
+					"name": "Text"
+				}
+			]
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"fieldset1"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": "Page Description"
+				},
+				"title": {
+					"en_US": "Page Title"
+				}
+			}
+		],
+		"name": {
+			"en_US": "Fieldset Structure"
+		},
+		"paginationMode": "wizard"
+	},
+	"defaultLanguageId": "en_US",
+	"name": {
+		"en_US": "Fieldset Structure"
+	},
+	"storageType": "json"
+}

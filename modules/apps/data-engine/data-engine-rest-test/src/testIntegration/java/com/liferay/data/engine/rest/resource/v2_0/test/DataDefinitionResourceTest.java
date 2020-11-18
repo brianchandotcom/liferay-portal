@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -525,6 +526,33 @@ public class DataDefinitionResourceTest
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
 		Assert.assertEquals(dataDefinition.getName(), dataLayout.getName());
+
+		// Allows fields with language keys that are not included in the
+		// available languages for app-builder content type
+
+		DataDefinition fieldsetDataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE,
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition-basic.json")));
+
+		dataDefinition = DataDefinition.toDTO(
+			DataDefinitionTestUtil.read(
+				"data-definition-parent-with-invalid-languages.json"));
+
+		for (DataDefinitionField dataDefinitionField :
+				dataDefinition.getDataDefinitionFields()) {
+
+			Map<String, Object> customProperties =
+				dataDefinitionField.getCustomProperties();
+
+			customProperties.put(
+				"ddmStructureId", fieldsetDataDefinition.getId());
+		}
+
+		assertValid(
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), "app-builder", dataDefinition));
 	}
 
 	@Override

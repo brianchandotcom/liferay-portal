@@ -283,7 +283,7 @@ definition {
 
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-			Click(locator1 = "Button#BACK");
+			Navigator.gotoBack();
 		}
 	}
 

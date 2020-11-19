@@ -84,23 +84,36 @@
 			});
 		},
 
-		_commitMediaValue(value, editor, type) {
+		_commitMediaValue(value, editor, type, isExternalMedia) {
 			var instance = this;
 
-			var mediaPlugin = editor.plugins.media;
+			if (type === 'video' && isExternalMedia) {
+				var videoembedPlugin = editor.plugins.videoembed;
 
-			if (mediaPlugin) {
-				mediaPlugin.onOkCallback(
-					{
-						commitContent: instance._getCommitMediaValueFn(
-							value,
-							editor,
-							type
-						),
-					},
-					editor,
-					type
-				);
+				if (videoembedPlugin) {
+					const data = {
+						type,
+						url: value,
+					};
+
+					editor.plugins.videoembed.onOkVideo(editor, data);
+				}
+			} else {
+				var mediaPlugin = editor.plugins.media;
+
+				if (mediaPlugin) {
+					mediaPlugin.onOkCallback(
+						{
+							commitContent: instance._getCommitMediaValueFn(
+								value,
+								editor,
+								type
+							),
+						},
+						editor,
+						type
+					);
+				}
 			}
 		},
 
@@ -197,6 +210,21 @@
 			return itemSrc;
 		},
 
+		_isExternalVideo(selectedItem) {
+			var externalVideo = true;
+
+			if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
+				try {
+					var itemValue = JSON.parse(selectedItem.value);
+
+					externalVideo = itemValue.hasOwnProperty('html');
+				}
+				catch (e) {}
+			}
+
+			return externalVideo;
+		},
+
 		_isEmptySelection(editor) {
 			var selection = editor.getSelection();
 
@@ -291,7 +319,8 @@
 						callback(videoSrc);
 					}
 					else {
-						instance._commitMediaValue(videoSrc, editor, 'video');
+						var isExternal = instance._isExternalVideo(selectedItem);
+						instance._commitMediaValue(videoSrc, editor, 'video', isExternal);
 					}
 				}
 			}

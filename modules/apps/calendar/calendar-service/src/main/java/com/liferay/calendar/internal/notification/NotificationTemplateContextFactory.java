@@ -22,6 +22,7 @@ import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -36,7 +37,9 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -48,6 +51,7 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.portlet.WindowState;
@@ -111,6 +115,25 @@ public class NotificationTemplateContextFactory {
 				StringBundler.concat(
 					userDateTimeFormat.format(calendarBooking.getEndTime()),
 					StringPool.SPACE, userTimezoneDisplayName)
+			).put(
+				"icsFile",
+				() -> {
+					if (Objects.equals(
+							notificationTemplateContext.
+								getNotificationTemplateType(),
+							NotificationTemplateType.INVITE)) {
+
+						String calendarBookingString =
+							_calendarBookingLocalService.exportCalendarBooking(
+								calendarBooking.getCalendarBookingId(),
+								CalendarUtil.ICAL_EXTENSION);
+
+						return FileUtil.createTempFile(
+							calendarBookingString.getBytes());
+					}
+
+					return null;
+				}
 			).put(
 				"location", calendarBooking.getLocation()
 			).put(
@@ -189,6 +212,13 @@ public class NotificationTemplateContextFactory {
 		}
 
 		return notificationTemplateContext;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -272,6 +302,7 @@ public class NotificationTemplateContextFactory {
 			false, TimeZone.SHORT, user.getLocale());
 	}
 
+	private static CalendarBookingLocalService _calendarBookingLocalService;
 	private static CompanyLocalService _companyLocalService;
 	private static GroupLocalService _groupLocalService;
 	private static LayoutLocalService _layoutLocalService;

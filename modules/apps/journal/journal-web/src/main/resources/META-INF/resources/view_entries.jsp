@@ -331,7 +331,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-							<clay:horizontal-card-v2
+							<clay:horizontal-card
 								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
 							/>
 						</liferay-ui:search-container-column-text>

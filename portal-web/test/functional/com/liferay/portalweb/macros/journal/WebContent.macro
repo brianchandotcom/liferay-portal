@@ -122,10 +122,9 @@ definition {
 	macro addFailWithoutRequiredCategoryAssetTypeCP {
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		Type.typeCKEditorWaitForCKEditor(
-			key_fieldLabel = "content",
-			locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-			value1 = "Web Content Content");
+		CKEditor.addContentInWebContent(
+			content = "Web Content Content",
+			fieldLabel = "content");
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -185,10 +184,9 @@ definition {
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
 		if (isSet(webContentContent)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentContent}");
+			CKEditor.addContentInWebContent(
+				content = "${webContentContent}",
+				fieldLabel = "content");
 		}
 
 		AssertClick(
@@ -330,10 +328,9 @@ definition {
 
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
-		Type.typeCKEditorWaitForCKEditor(
-			key_fieldLabel = "content",
-			locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-			value1 = "${webContentContent}");
+		CKEditor.addContentInWebContent(
+			content = "${webContentContent}",
+			fieldLabel = "content");
 	}
 
 	macro addWithCategoryCP {
@@ -642,10 +639,9 @@ definition {
 					value1 = "${content}");
 			}
 
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "${webContentRichTextFieldLabel}",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentRichText}");
+			CKEditor.addContentInWebContent(
+				content = "${webContentRichText}",
+				fieldLabel = "${webContentRichTextFieldLabel}");
 		}
 
 		if (isSet(webContentSelectFromList)) {
@@ -749,10 +745,9 @@ definition {
 		}
 
 		if (isSet(description)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "Summary",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${description}");
+			CKEditor.addContentInWebContent(
+				content = "${description}",
+				fieldLabel = "Summary");
 		}
 
 		if (isSet(templateName)) {
@@ -1104,10 +1099,9 @@ definition {
 		WebContent.addCP(webContentTitle = "");
 
 		if (isSet(webContentContent)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentContent}");
+			CKEditor.addContentInWebContent(
+				content = "${webContentContent}",
+				fieldLabel = "content");
 		}
 
 		AssertClick(
@@ -1127,10 +1121,9 @@ definition {
 				value1 = "${webContentText}");
 		}
 		else {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentContentEdit}");
+			CKEditor.addContentInWebContent(
+				content = "${webContentContentEdit}",
+				fieldLabel = "content");
 		}
 
 		Click(
@@ -1167,10 +1160,9 @@ definition {
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 
 		if (isSet(webContentContentEdit)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "content",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentContentEdit}");
+			CKEditor.addContentInWebContent(
+				content = "${webContentContentEdit}",
+				fieldLabel = "content");
 		}
 
 		if (isSet(webContentSelectWCFile)) {

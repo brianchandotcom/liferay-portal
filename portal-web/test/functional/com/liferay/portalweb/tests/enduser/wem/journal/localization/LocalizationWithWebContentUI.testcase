@@ -76,10 +76,9 @@ definition {
 
 		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner (Japanese Translation)");
 
-		Type.typeCKEditorWaitForCKEditor(
-			key_fieldLabel = "Summary",
-			locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-			value1 = "A Japanese translation of the basic front page banner");
+		CKEditor.addContentInWebContent(
+			content = "A Japanese translation of the basic front page banner",
+			fieldLabel = "Summary");
 
 		CKEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>

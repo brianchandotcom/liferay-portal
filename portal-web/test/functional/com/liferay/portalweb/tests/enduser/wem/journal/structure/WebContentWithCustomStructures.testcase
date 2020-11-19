@@ -1607,18 +1607,22 @@ definition {
 		}
 
 		task ("Type content to the first Rich Text field") {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "Rich Text",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "This is the first HTML field");
+			CKEditor.addContentInWebContent(
+				content = "This is the first HTML field",
+				fieldLabel = "Rich Text");
 		}
 
-		task ("Type content to the second HTML field") {
-			Type.typeCKEditorWaitForCKEditor(
+		task ("Type content to the second Rich Text field") {
+			SelectFrame.selectFrameNoLoading(
 				index = "2",
 				key_fieldLabel = "Rich Text",
-				locator1 = "CKEditor#ANY_BODY_FIELD_WEB_CONTENT_ARTICLE",
+				locator1 = "CKEditor#ANY_BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			Type(
+				locator1 = "CKEditor#BODY",
 				value1 = "This is the second HTML field");
+
+			SelectFrame(value1 = "relative=top");
 
 			PortletEntry.publish();
 		}
@@ -1699,15 +1703,13 @@ definition {
 		}
 
 		task ("Assert the alert message is still shown after clear content of Rich Text field") {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "Rich Text",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "Web Content Content");
+			CKEditor.addContentInWebContent(
+				content = "Web Content Content",
+				fieldLabel = "Rich Text");
 
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "Rich Text",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "");
+			CKEditor.addContentInWebContent(
+				content = "",
+				fieldLabel = "Rich Text");
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_FORM_VALIDATION",
@@ -1715,10 +1717,9 @@ definition {
 		}
 
 		task ("Type content in Rich Text field then Publish") {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "Rich Text",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "Web Content Content");
+			CKEditor.addContentInWebContent(
+				content = "Web Content Content",
+				fieldLabel = "Rich Text");
 
 			PortletEntry.publish();
 

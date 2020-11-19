@@ -69,10 +69,9 @@ definition {
 		}
 
 		if (isSet(webContentHTML)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldFieldLabel = "HTML",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${webContentHTML}");
+			CKEditor.addContentInWebContent(
+				content = "${webContentHTML}",
+				fieldLabel = "HTML");
 		}
 
 		if (isSet(webContentSourceHTML)) {
@@ -260,10 +259,9 @@ definition {
 		}
 
 		if (isSet(description)) {
-			Type.typeCKEditorWaitForCKEditor(
-				key_fieldLabel = "Summary",
-				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-				value1 = "${description}");
+			CKEditor.addContentInWebContent(
+				content = "${description}",
+				fieldLabel = "Summary");
 		}
 
 		if (isSet(templateName)) {

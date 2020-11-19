@@ -393,4 +393,69 @@ definition {
 			value1 = "DM Document Type Depot");
 	}
 
+	@description = "This ensures that the depot assets can be used through Related Assets on a connected site."
+	@priority = "4"
+	test ViewRelatedAssets {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Depot 1",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addRelatedAsset(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			depotName = "Test Depot Name");
+
+		BlogsEntry.addRelatedAsset(
+			assetTitle = "Document_1.doc",
+			assetType = "Basic Document",
+			depotName = "Test Depot Name");
+
+		Button.clickPublish();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "Blogs Entry Content",
+			assetTitle = "Blogs Entry Title",
+			relatedAssetTitle = "WC WebContent Title,Document_1.doc");
+	}
+
 }

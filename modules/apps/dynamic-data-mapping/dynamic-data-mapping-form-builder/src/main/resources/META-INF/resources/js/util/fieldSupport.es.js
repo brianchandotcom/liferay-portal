@@ -300,7 +300,11 @@ export const localizeField = (
 ) => {
 	let value = field.value;
 
-	if (field.dataType === 'json' && typeof value === 'object') {
+	if (
+		field.dataType === 'json' &&
+		field.fieldName !== 'rows' &&
+		typeof value === 'object'
+	) {
 		value = JSON.stringify(value);
 	}
 

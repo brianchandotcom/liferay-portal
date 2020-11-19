@@ -20,10 +20,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.security.RandomUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Julien Castelain
@@ -157,18 +155,6 @@ public class ClaySampleVerticalCard implements VerticalCard {
 		).build();
 	}
 
-	public Map<String, String> getLabelStylesMap() {
-		if (_labelStylesMap != null) {
-			return _labelStylesMap;
-		}
-
-		_labelStylesMap = HashMapBuilder.put(
-			"Pending", "info"
-		).build();
-
-		return _labelStylesMap;
-	}
-
 	public String getStickerCssClass() {
 		return _stickerCssClass;
 	}
@@ -280,10 +266,6 @@ public class ClaySampleVerticalCard implements VerticalCard {
 		_labels = labels;
 	}
 
-	public void setLabelStylesMap(Map<String, String> labelStylesMap) {
-		_labelStylesMap = labelStylesMap;
-	}
-
 	public void setSelectable(boolean selectable) {
 		_selectable = selectable;
 	}
@@ -340,7 +322,6 @@ public class ClaySampleVerticalCard implements VerticalCard {
 	private String _inputName;
 	private String _inputValue;
 	private List<LabelItem> _labels;
-	private Map<String, String> _labelStylesMap;
 	private boolean _selectable = true;
 	private boolean _selected;
 	private String _stickerCssClass;

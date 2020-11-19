@@ -21,7 +21,7 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 %>
 
 <div class="sidebar-header">
-	<h1 class="sidebar-title">
+	<h1 class="component-title">
 		<liferay-ui:message key="info" />
 	</h1>
 </div>

@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <div class="sidebar-header">
-	<h1 class="sidebar-title">
+	<h1 class="component-title">
 		<liferay-ui:message key="selection" />
 	</h1>
 </div>

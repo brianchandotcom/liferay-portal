@@ -36,12 +36,12 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 		</ul>
 	</c:if>
 
-	<h1 class="sidebar-title">
+	<h1 class="component-title">
 		<%= HtmlUtil.escape(fileVersion.getTitle()) %>
 	</h1>
 
 	<c:if test="<%= !Objects.equals(fileVersion.getTitle(), fileVersion.getFileName()) %>">
-		<h3 class="sidebar-title">
+		<h3 class="component-title">
 			<%= HtmlUtil.escape(fileVersion.getFileName()) %>
 		</h3>
 	</c:if>

@@ -58,7 +58,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<h1 class="sidebar-title">
+			<h1 class="component-title">
 				<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>
 			</h1>
 
@@ -145,7 +145,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				</li>
 			</ul>
 
-			<h1 class="sidebar-title">
+			<h1 class="component-title">
 				<%= HtmlUtil.escape(fileShortcut.getToTitle()) %>
 			</h1>
 
@@ -254,7 +254,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h1 class="sidebar-title">
+			<h1 class="component-title">
 				<liferay-ui:message key="selection" />
 			</h1>
 		</div>

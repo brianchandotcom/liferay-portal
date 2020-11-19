@@ -44,7 +44,7 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 				</li>
 			</ul>
 
-			<h4 class="sidebar-title">
+			<h4 class="component-title">
 				<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>
 			</h4>
 
@@ -53,10 +53,10 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 			</h5>
 		</c:when>
 		<c:when test="<%= selectedConfigurationEntriesSize > 1 %>">
-			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= selectedConfigurationEntriesSize %>" key="x-items-are-selected" /></h4>
+			<h4 class="component-title"><liferay-ui:message arguments="<%= selectedConfigurationEntriesSize %>" key="x-items-are-selected" /></h4>
 		</c:when>
 		<c:otherwise>
-			<h4 class="sidebar-title"><liferay-ui:message key="adaptive-media" /></h4>
+			<h4 class="component-title"><liferay-ui:message key="adaptive-media" /></h4>
 		</c:otherwise>
 	</c:choose>
 </div>

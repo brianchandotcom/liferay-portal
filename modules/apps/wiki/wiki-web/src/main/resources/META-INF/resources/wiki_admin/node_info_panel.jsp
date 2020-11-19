@@ -41,7 +41,7 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 			WikiNode node = wikiNodeInfoPanelDisplayContext.getFirstNode();
 			%>
 
-			<h4 class="sidebar-title">
+			<h4 class="component-title">
 				<%= HtmlUtil.escape(node.getName()) %>
 			</h4>
 
@@ -50,10 +50,10 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 			</h5>
 		</c:when>
 		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">
-			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
+			<h4 class="component-title"><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
 		</c:when>
 		<c:otherwise>
-			<h4 class="sidebar-title"><liferay-ui:message key="wikis" /></h4>
+			<h4 class="component-title"><liferay-ui:message key="wikis" /></h4>
 		</c:otherwise>
 	</c:choose>
 </div>

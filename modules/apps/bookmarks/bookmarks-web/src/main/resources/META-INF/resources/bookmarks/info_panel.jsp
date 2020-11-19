@@ -58,7 +58,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				</li>
 			</ul>
 
-			<h4 class="sidebar-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+			<h4 class="component-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
 			<h5 class="sidebar-subtitle">
 				<liferay-ui:message key="folder" />
@@ -126,7 +126,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				</li>
 			</ul>
 
-			<h4 class="sidebar-title"><%= HtmlUtil.escape(entry.getName()) %></h4>
+			<h4 class="component-title"><%= HtmlUtil.escape(entry.getName()) %></h4>
 
 			<h5>
 				<liferay-ui:message key="entry" />
@@ -227,7 +227,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h4>
+			<h4 class="component-title"><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<clay:navigation-bar

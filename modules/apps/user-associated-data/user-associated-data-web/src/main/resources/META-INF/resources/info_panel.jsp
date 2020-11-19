@@ -25,7 +25,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() == 0 %>">
 			<div class="sidebar-header">
 				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
-					<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+					<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
 				</c:if>
 
 				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
@@ -51,7 +51,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 					</li>
 				</ul>
 
-				<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+				<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
 
 				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
 			</div>
@@ -83,7 +83,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() > 1 %>">
 			<div class="sidebar-header">
 				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
-					<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+					<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
 				</c:if>
 
 				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>

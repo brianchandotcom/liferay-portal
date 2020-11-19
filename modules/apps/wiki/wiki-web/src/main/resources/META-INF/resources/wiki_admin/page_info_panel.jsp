@@ -42,7 +42,7 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 					WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 					%>
 
-					<h4 class="sidebar-title">
+					<h4 class="component-title">
 						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
 					</h4>
 
@@ -51,10 +51,10 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 					</h5>
 				</c:when>
 				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
-					<h4 class="sidebar-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
+					<h4 class="component-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
 				</c:when>
 				<c:otherwise>
-					<h4 class="sidebar-title"><liferay-ui:message key="pages" /></h4>
+					<h4 class="component-title"><liferay-ui:message key="pages" /></h4>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -66,7 +66,7 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 			WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 			%>
 
-			<h4 class="sidebar-title">
+			<h4 class="component-title">
 				<%= HtmlUtil.escape(wikiPage.getTitle()) %>
 			</h4>
 		</div>

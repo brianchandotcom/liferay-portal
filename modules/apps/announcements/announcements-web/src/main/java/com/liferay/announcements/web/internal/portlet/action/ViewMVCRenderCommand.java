@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.portlet.action;
+package com.liferay.announcements.web.internal.portlet.action;
 
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
-import com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext;
+import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.TrashHelper;
 
 import java.util.Objects;
 
@@ -30,40 +26,35 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Thiago Moreira
+ * @author Raymond Augé
  */
 @Component(
-	immediate = true,
 	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"mvc.command.name=/", "mvc.command.name=/blogs/view"
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/alerts/view",
+		"mvc.command.name=/announcements/view"
 	},
 	service = MVCRenderCommand.class
 )
-public class BlogsViewMVCRenderCommand implements MVCRenderCommand {
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		if (Objects.equals(
-				_getPortletId(renderRequest), BlogsPortletKeys.BLOGS)) {
+				_getPortletId(renderRequest),
+				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {
 
-			return "/blogs/view.jsp";
+			return "/announcements_admin/view.jsp";
 		}
 
-		renderRequest.setAttribute(
-			BlogsWebKeys.BLOG_ENTRIES_DISPLAY_CONTEXT,
-			new BlogEntriesDisplayContext(
-				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse),
-				_trashHelper));
-
-		return "/blogs_admin/view.jsp";
+		return "/announcements/view.jsp";
 	}
 
 	private String _getPortletId(RenderRequest renderRequest) {
@@ -74,11 +65,5 @@ public class BlogsViewMVCRenderCommand implements MVCRenderCommand {
 
 		return portletDisplay.getPortletName();
 	}
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 }

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class BlogsViewNotPublishedEntriesMVCRenderCommand
+public class ViewNotPublishedEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override

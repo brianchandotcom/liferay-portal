@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ASTERISK_DATE_FIELD</td>
-	<td>//p[contains(.,'${key_fieldFieldLabel}')]//span[*[name()='svg'][contains(@class,'icon-asterisk')]]</td>
+	<td>//label[contains(.,'${key_fieldFieldLabel}')]//span[*[name()='svg'][contains(@class,'icon-asterisk')]]</td>
 	<td></td>
 </tr>
 <tr>

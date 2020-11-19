@@ -390,7 +390,7 @@
 </tr>
 <tr>
 	<td>NUMERIC</td>
-	<td>//div[@data-field-name='Numeric']//input</td>
+	<td>//label[contains(.,'Numeric')]/following-sibling::input[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -611,6 +611,11 @@
 <tr>
 	<td>TEXT</td>
 	<td>//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_SPECIFIC</td>
+	<td>//label[contains(.,'Text')]/following-sibling::input[1]</td>
 	<td></td>
 </tr>
 <tr>

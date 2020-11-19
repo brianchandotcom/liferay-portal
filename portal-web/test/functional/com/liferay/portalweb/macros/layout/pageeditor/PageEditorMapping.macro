@@ -14,10 +14,32 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Selection");
 
-		AssertClick(
-			key_navItem = "Mapping",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Mapping");
+		if ((contains("${id}", "image")) || (contains("${id}", "img"))) {
+			AssertClick(
+				key_navItem = "Image Source",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Image Source");
+
+			Pause(locator1 = "3000");
+
+			if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Mapping"))) {
+				Select(
+					key_fieldLabel = "Source Selection",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapping");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Source Selection",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapping");
+			}
+		}
+		else {
+			AssertClick(
+				key_navItem = "Mapping",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Mapping");
+		}
 	}
 
 	macro mapEditableFieldToAsset {
@@ -94,10 +116,32 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Selection");
 
-		AssertClick(
-			key_navItem = "Mapping",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Mapping");
+		if ((contains("${id}", "image")) || (contains("${id}", "img"))) {
+			AssertClick(
+				key_navItem = "Image Source",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Image Source");
+
+			Pause(locator1 = "3000");
+
+			if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Mapping"))) {
+				Select(
+					key_fieldLabel = "Source Selection",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapping");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Source Selection",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapping");
+			}
+		}
+		else {
+			AssertClick(
+				key_navItem = "Mapping",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Mapping");
+		}
 
 		Pause(locator1 = "3000");
 

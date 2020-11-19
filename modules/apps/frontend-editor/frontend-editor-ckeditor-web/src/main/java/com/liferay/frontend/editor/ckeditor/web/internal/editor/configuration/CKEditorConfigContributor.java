@@ -206,10 +206,10 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
 			toJSONArray("['NumberedList', 'BulletedList']"),
 			toJSONArray("['Link', Unlink]"),
-			toJSONArray("['Table', 'ImageSelector', 'VideoEmbed']"));
+			toJSONArray("['Table', 'ImageSelector', 'VideoSelector']"));
 
 		if (XugglerUtil.isEnabled()) {
-			jsonArray.put(toJSONArray("['AudioSelector', 'VideoSelector']"));
+			jsonArray.put(toJSONArray("['AudioSelector']"));
 		}
 
 		if (isShowSource(inputEditorTaglibAttributes)) {

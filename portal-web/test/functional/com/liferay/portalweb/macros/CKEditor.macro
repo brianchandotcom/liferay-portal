@@ -17,6 +17,18 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addContentInWebContent {
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${content}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro addEntryExternalURL {
 		Click(
 			key_fieldLabel = "${fieldLabel}",

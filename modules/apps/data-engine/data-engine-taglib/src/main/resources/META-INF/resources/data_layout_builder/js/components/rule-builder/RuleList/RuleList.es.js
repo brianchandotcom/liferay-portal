@@ -547,17 +547,7 @@ const Action = ({action, dataProviderName, expression, label, outputLabel}) => {
 	return null;
 };
 
-const List = ({
-
-	// dropdownExpandedIndex,
-
-	onDropdownClicked,
-
-	// onRuleCardClicked,
-
-	rules,
-	spritemap,
-}) => {
+const List = ({onDropdownClicked, rules, spritemap}) => {
 	if (typeof rules === 'undefined' || !rules.length) {
 		return (
 			<EmptyList
@@ -674,13 +664,6 @@ const List = ({
 										className="ddm-rule-list-settings"
 										data-card-id={ruleIndex}
 									>
-										{/* <ClayActionsDropdown 
-                                                items={rule.rulesCardOptions}
-                                                expanded={dropdownExpandedIndex === ruleIndex} 
-                                                itemClicked={onRuleCardClicked}
-                                                spritemap={spritemap}
-                                            /> */}
-
 										<button
 											className="component-action cursor-pointer dropdown-toggle"
 											data-rule-index={ruleIndex}

@@ -17,6 +17,7 @@ package com.liferay.headless.admin.content.internal.resource.v1_0;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.admin.content.internal.dto.v1_0.extension.ExtendedStructuredContent;
 import com.liferay.headless.admin.content.internal.dto.v1_0.util.VersionUtil;
+import com.liferay.headless.admin.content.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.content.common.search.aggregation.AggregationUtil;
 import com.liferay.headless.content.common.search.sort.SortUtil;
@@ -33,12 +34,14 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.EntityExtensionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -47,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.MultivaluedMap;
 import java.util.Collections;
 
 /**
@@ -57,7 +61,14 @@ import java.util.Collections;
 	scope = ServiceScope.PROTOTYPE, service = StructuredContentResource.class
 )
 public class StructuredContentResourceImpl
-	extends BaseStructuredContentResourceImpl {
+	extends BaseStructuredContentResourceImpl implements EntityModelResource {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return new StructuredContentEntityModel();
+	}
 
 	@Override
 	public Page<StructuredContent>

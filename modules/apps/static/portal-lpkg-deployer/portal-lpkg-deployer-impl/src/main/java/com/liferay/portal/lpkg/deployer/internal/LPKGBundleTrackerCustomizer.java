@@ -527,7 +527,15 @@ public class LPKGBundleTrackerCustomizer
 	}
 
 	private String _extractFileName(String string) {
-		int endIndex = string.lastIndexOf(CharPool.DASH);
+		int hotfixLastIndex = string.lastIndexOf(".hotfix");
+
+		String ignoreHotfixName = string;
+
+		if (hotfixLastIndex != -1) {
+			ignoreHotfixName = string.substring(0, hotfixLastIndex);
+		}
+
+		int endIndex = ignoreHotfixName.lastIndexOf(CharPool.DASH);
 
 		int beginIndex = string.lastIndexOf(CharPool.SLASH, endIndex) + 1;
 

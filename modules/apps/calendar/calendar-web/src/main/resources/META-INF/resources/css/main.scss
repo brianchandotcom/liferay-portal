@@ -132,6 +132,10 @@
 		display: none;
 	}
 
+	.button-holder.dialog-footer {
+		position: relative;
+	}
+
 	.calendar-create-event-btn-row {
 		margin: 0 0 1em;
 		text-align: center;
@@ -177,16 +181,19 @@
 		}
 	}
 
-	.lfr-discussion-editor {
+	.lfr-discussion-reply-container {
 		.button-holder.dialog-footer {
 			bottom: 0;
 			display: block;
 			left: unset;
 			padding: 10px 0;
-			position: relative;
 
 			.btn {
 				margin-left: 0;
+			}
+
+			.btn-cancel {
+				margin-left: 1rem;
 			}
 		}
 	}
@@ -196,6 +203,7 @@
 	}
 
 	.portlet-body .panel {
+		margin-top: 1rem;
 		padding: 1rem;
 	}
 

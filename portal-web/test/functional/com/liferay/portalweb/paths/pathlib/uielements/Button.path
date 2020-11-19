@@ -565,7 +565,7 @@
 </tr>
 <tr>
 	<td>RESET_CHANGES</td>
-	<td>//button[contains(.,'Reset Changes')]</td>
+	<td>//a[contains(@class,'btn')][contains(.,'Reset Changes')]</td>
 	<td></td>
 </tr>
 <tr>

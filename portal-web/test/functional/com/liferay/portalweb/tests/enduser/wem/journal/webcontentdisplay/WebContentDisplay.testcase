@@ -474,10 +474,6 @@ definition {
 	}
 
 	@description = "Add a web content article with a custom DDM structure and template and display it in the web content display widget."
-
-	// Ignore for LPS-123181
-
-	@ignore = "true"
 	@priority = "5"
 	test AddWithStructure {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

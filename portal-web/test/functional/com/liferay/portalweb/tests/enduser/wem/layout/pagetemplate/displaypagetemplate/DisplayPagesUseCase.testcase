@@ -258,7 +258,7 @@ definition {
 			fragmentName = "Container");
 
 		PageEditor.editLayoutContainer(
-			backgroundImage = "Content Mapping",
+			backgroundImage = "Mapping",
 			entryTitle = "Document_1.jpg",
 			fieldName = "File URL",
 			navItem = "Documents and Media",
@@ -500,7 +500,7 @@ definition {
 			fragmentName = "Container");
 
 		PageEditor.editLayoutContainer(
-			backgroundImage = "Content Mapping",
+			backgroundImage = "Mapping",
 			entryTitle = "WC WebContent Title",
 			navItem = "Web Content",
 			panel = "Styles");

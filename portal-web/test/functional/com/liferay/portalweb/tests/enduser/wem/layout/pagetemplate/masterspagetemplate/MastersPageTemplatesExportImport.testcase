@@ -188,7 +188,7 @@ definition {
 				scope = "Master");
 
 			PageEditor.editLayoutContainer(
-				backgroundImage = "Manual Selection",
+				backgroundImage = "Direct",
 				panel = "Styles",
 				uploadFileName = "Document_1.png");
 

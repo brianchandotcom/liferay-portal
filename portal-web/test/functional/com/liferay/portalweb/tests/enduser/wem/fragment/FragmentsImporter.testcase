@@ -369,7 +369,7 @@ definition {
 
 		task ("Configure the section") {
 			PageEditor.editLayoutContainer(
-				backgroundImage = "Manual Selection",
+				backgroundImage = "Direct",
 				entryTitle = "Document_1.jpg",
 				navItem = "Documents and Media",
 				panel = "Styles");

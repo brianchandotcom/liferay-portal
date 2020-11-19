@@ -112,7 +112,7 @@ definition {
 			fragmentName = "Container");
 
 		PageEditor.editLayoutContainer(
-			backgroundImage = "Manual Selection",
+			backgroundImage = "Direct",
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpeg",
 			paddingTop = "2",

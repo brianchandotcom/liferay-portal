@@ -93,7 +93,7 @@ definition {
 			fragmentName = "Container");
 
 		PageEditor.editLayoutContainer(
-			backgroundImage = "Manual Selection",
+			backgroundImage = "Direct",
 			entryTitle = "Document_1.svg",
 			navItem = "Documents and Media",
 			paddingTop = "2",
@@ -315,7 +315,7 @@ definition {
 			fragmentName = "Container");
 
 		PageEditor.editLayoutContainer(
-			backgroundImage = "Manual Selection",
+			backgroundImage = "Direct",
 			entryTitle = "Document_1.jpeg",
 			navItem = "Documents and Media",
 			paddingTop = "2",

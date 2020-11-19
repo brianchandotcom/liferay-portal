@@ -321,11 +321,11 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 		if (spiraTestCaseProductVersion == null) {
 			return SpiraTestCaseObject.getSpiraTestCaseObjects(
-				this, numberOfRows);
+				this, numberOfRows, false);
 		}
 
 		return SpiraTestCaseObject.getSpiraTestCaseObjects(
-			this, numberOfRows,
+			this, numberOfRows, false,
 			new SearchQuery.SearchParameter(spiraTestCaseProductVersion));
 	}
 

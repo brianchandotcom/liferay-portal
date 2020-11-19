@@ -308,6 +308,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	protected static List<SpiraTestCaseObject> getSpiraTestCaseObjects(
 		final SpiraProject spiraProject, final long numberOfRows,
+		boolean checkCache,
 		final SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
@@ -329,14 +330,15 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				}
 
 			},
-			searchParameters);
+			checkCache, searchParameters);
 	}
 
 	protected static List<SpiraTestCaseObject> getSpiraTestCaseObjects(
 		final SpiraProject spiraProject,
 		final SearchQuery.SearchParameter... searchParameters) {
 
-		return getSpiraTestCaseObjects(spiraProject, 35000, searchParameters);
+		return getSpiraTestCaseObjects(
+			spiraProject, 35000, true, searchParameters);
 	}
 
 	@Override

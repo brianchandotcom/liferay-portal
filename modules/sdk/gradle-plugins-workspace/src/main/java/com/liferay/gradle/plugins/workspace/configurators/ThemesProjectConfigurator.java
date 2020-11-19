@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.internal.LiferayThemeGulpPlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.json.JsonSlurper;
@@ -86,6 +87,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		}
 		else {
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
+
+			LiferayThemeGulpPlugin.INSTANCE.apply(project);
 
 			configureLiferay(project, workspaceExtension);
 

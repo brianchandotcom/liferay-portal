@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SMALL_IMAGE_BROWSE_IMAGE</td>
+	<td>//div[contains(@class,'blogs-small-image')]//button[contains(@class,'browse-image')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIDEO_EMBED_HELP_MESSAGE</td>
 	<td>//div[@class='embed-help-message']//span</td>
 	<td></td>

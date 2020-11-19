@@ -112,7 +112,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 											/>
 										</c:when>
 										<c:otherwise>
-											<clay:horizontal-card-v2
+											<clay:horizontal-card
 												horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
 											/>
 										</c:otherwise>

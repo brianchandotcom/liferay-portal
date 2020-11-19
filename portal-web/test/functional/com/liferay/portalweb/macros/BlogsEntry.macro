@@ -82,6 +82,8 @@ definition {
 	}
 
 	macro addRelatedAsset {
+		Panel.expandPanel(panel = "Related Assets");
+
 		AssertClick(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
 			value1 = "Select");
@@ -96,11 +98,27 @@ definition {
 
 		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
 
-		AssertClick(
-			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHOOSE",
-			value1 = "${assetTitle}");
+		if (isSet(depotName)) {
+			AssertClick(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites and Libraries");
+
+			AssertClick(
+				key_groupTab = "Asset Library",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+
+		Click(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX");
 
 		SelectFrame(value1 = "relative=top");
+
+		Button.clickDone();
 	}
 
 	macro addSmallImage {

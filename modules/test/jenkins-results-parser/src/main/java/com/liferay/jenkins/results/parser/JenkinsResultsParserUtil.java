@@ -2767,7 +2767,9 @@ public class JenkinsResultsParserUtil {
 					}
 
 					if (postContent != null) {
-						httpURLConnection.setRequestMethod("POST");
+						if (method == null) {
+							httpURLConnection.setRequestMethod("POST");
+						}
 
 						httpURLConnection.setDoOutput(true);
 

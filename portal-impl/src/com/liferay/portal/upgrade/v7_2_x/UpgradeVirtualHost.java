@@ -23,11 +23,15 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table VirtualHost add defaultVirtualHost BOOLEAN;");
+		if (!hasColumn("VirtualHost", "defaultVirtualHost")) {
+			runSQL("alter table VirtualHost add defaultVirtualHost BOOLEAN;");
 
-		runSQL("alter table VirtualHost add languageId VARCHAR(75) null;");
+			runSQL("update VirtualHost set defaultVirtualHost = TRUE;");
+		}
 
-		runSQL("update VirtualHost set defaultVirtualHost = TRUE;");
+		if (!hasColumn("VirtualHost", "languageId")) {
+			runSQL("alter table VirtualHost add languageId VARCHAR(75) null;");
+		}
 	}
 
 }

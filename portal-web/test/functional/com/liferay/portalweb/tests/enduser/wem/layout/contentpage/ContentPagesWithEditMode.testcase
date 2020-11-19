@@ -239,10 +239,9 @@ definition {
 				if ("${title}" == "Web Content Title") {
 					WebContent.addCP(webContentTitle = "Web Content Title Edit");
 
-					Type.typeCKEditorWaitForCKEditor(
-						key_fieldLabel = "content",
-						locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
-						value1 = "Web Content Content Edit");
+					CKEditor.addContentInWebContent(
+						content = "Web Content Content Edit",
+						fieldLabel = "content");
 
 					PortletEntry.publish();
 				}

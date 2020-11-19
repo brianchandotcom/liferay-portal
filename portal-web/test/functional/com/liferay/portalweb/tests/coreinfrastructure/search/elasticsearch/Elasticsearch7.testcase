@@ -131,10 +131,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
+		var clientVersion = Elasticsearch.getClientVersion();
+		var serverVersion = Elasticsearch.getServerVersion();
+
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "7.9.0",
+			clientVersion = "${clientVersion}",
 			engineVendor = "Elasticsearch",
-			serverVersion = "7.9.0");
+			serverVersion = "${serverVersion}");
 
 		Navigator.gotoNavItem(navItem = "Field Mappings");
 
@@ -633,10 +636,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
+		var clientVersion = Elasticsearch.getClientVersion();
+		var serverVersion = Elasticsearch.getServerVersion();
+
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "7.9.0",
+			clientVersion = "${clientVersion}",
 			engineVendor = "Elasticsearch",
-			serverVersion = "7.9.0");
+			serverVersion = "${serverVersion}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#CONNECTION_ID",

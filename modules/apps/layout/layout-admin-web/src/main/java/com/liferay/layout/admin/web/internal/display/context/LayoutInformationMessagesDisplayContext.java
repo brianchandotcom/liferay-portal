@@ -68,27 +68,24 @@ public class LayoutInformationMessagesDisplayContext {
 
 				Group group = themeDisplay.getScopeGroup();
 
-				String languageKey = null;
+				String message =
+					"this-page-is-linked-to-a-site-template-which-does-not-" +
+						"allow-modifications-to-it";
 
 				if (layout.isLayoutPrototypeLinkActive() &&
 					!group.hasStagingGroup()) {
 
-					languageKey = "this-page-is-linked-to-a-page-template";
+					message = "this-page-is-linked-to-a-page-template";
 				}
 				else if (SitesUtil.isUserGroupLayout(layout)) {
-					languageKey = "this-page-belongs-to-a-user-group";
-				}
-				else {
-					languageKey =
-						"this-page-is-linked-to-a-site-template-which-does-" +
-							"not-allow-modifications-to-it";
+					message = "this-page-belongs-to-a-user-group";
 				}
 
 				return LanguageUtil.get(
 					ResourceBundleUtil.getBundle(
 						"content.Language", themeDisplay.getLocale(),
 						getClass()),
-					languageKey);
+					message);
 			}
 		).put(
 			"portletNamespace",

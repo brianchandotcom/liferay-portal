@@ -12,73 +12,12 @@
  * details.
  */
 
-import {filter as oDataFilterFn} from 'odata-v4-parser';
-
 import {
-	CONJUNCTIONS,
 	FUNCTIONAL_OPERATORS,
-	GROUP,
 	NOT_OPERATORS,
 	PROPERTY_TYPES,
 	RELATIONAL_OPERATORS,
 } from './constants.es';
-import {generateGroupId} from './utils.es';
-
-const EXPRESSION_TYPES = {
-	AND: 'AndExpression',
-	BOOL_PAREN: 'BoolParenExpression',
-	COMMON: 'CommonExpression',
-	EQUALS: 'EqualsExpression',
-	FIRST_MEMBER: 'FirstMemberExpression',
-	GREATER_OR_EQUALS: 'GreaterOrEqualsExpression',
-	GREATER_THAN: 'GreaterThanExpression',
-	LESSER_OR_EQUALS: 'LesserOrEqualsExpression',
-	LESSER_THAN: 'LesserThanExpression',
-	MEMBER: 'MemberExpression',
-	METHOD_CALL: 'MethodCallExpression',
-	NOT: 'NotExpression',
-	OR: 'OrExpression',
-	PAREN: 'ParenExpression',
-	PROPERTY_PATH: 'PropertyPathExpression',
-};
-
-const OPERATORS = {
-	...FUNCTIONAL_OPERATORS,
-	...RELATIONAL_OPERATORS,
-};
-
-/**
- * Maps Odata-v4-parser generated AST expression names to internally used
- * constants.
- */
-const oDataV4ParserNameMap = {
-	[EXPRESSION_TYPES.AND]: CONJUNCTIONS.AND,
-	[EXPRESSION_TYPES.BOOL_PAREN]: GROUP,
-	contains: OPERATORS.CONTAINS,
-	[EXPRESSION_TYPES.EQUALS]: OPERATORS.EQ,
-	[EXPRESSION_TYPES.GREATER_OR_EQUALS]: OPERATORS.GE,
-	[EXPRESSION_TYPES.GREATER_THAN]: OPERATORS.GT,
-	[EXPRESSION_TYPES.LESSER_OR_EQUALS]: OPERATORS.LE,
-	[EXPRESSION_TYPES.LESSER_THAN]: OPERATORS.LT,
-	[EXPRESSION_TYPES.OR]: CONJUNCTIONS.OR,
-};
-
-/**
- * Wraps a node in a grouping node.
- * @param {object} oDataASTNode
- * @param {string} prevConjunction
- * @returns Object representing the grouping
- */
-function addNewGroup({oDataASTNode, prevConjunction}) {
-	return {
-		lastNodeWasGroup: false,
-		oDataASTNode: {
-			type: EXPRESSION_TYPES.BOOL_PAREN,
-			value: oDataASTNode,
-		},
-		prevConjunction,
-	};
-}
 
 /**
  * Gets the type of the property from the property name.

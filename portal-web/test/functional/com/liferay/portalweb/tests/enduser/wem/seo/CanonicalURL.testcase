@@ -107,6 +107,58 @@ definition {
 		Page.assertCanonicalURL(portalURL = "http://mycustomizedurl.com/mydesiredurl");
 	}
 
+	@description = "This ensures that canonical URLs can be set for each active language during page creation."
+	@priority = "5"
+	test SetCustomURLAtPageLevelForEachActiveLanguage {
+		property test.name.skip.portal.instance = "CanonicalURL#SetCustomURLAtPageLevelForEachActiveLanguage";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),Spanish (Spain),Chinese (China)",
+			defaultSiteLanguage = "English (United States)");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Page.configureCanonicalURL(customCanonicalURL = "localhost:8080/english-canonical-url");
+
+		Page.configureCanonicalURL(
+			customCanonicalURL = "localhost:8080/spain-canonical-url",
+			locale = "es-ES");
+
+		Page.configureCanonicalURL(
+			customCanonicalURL = "localhost:8080/chinese-canonical-url",
+			locale = "zh-CN");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/en/web/site-name/test-page");
+
+		Page.assertCanonicalURL(portalURL = "localhost:8080/english-canonical-url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/site-name/test-page");
+
+		Page.assertCanonicalURL(portalURL = "localhost:8080/spain-canonical-url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/zh/web/site-name/test-page");
+
+		Page.assertCanonicalURL(portalURL = "localhost:8080/chinese-canonical-url");
+	}
+
 	@priority = "5"
 	test SetDefaultURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetDefaultURLAtSystemLevel";

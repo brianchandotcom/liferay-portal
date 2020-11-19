@@ -1305,7 +1305,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${backgroundImage}");
 
-				if ("${backgroundImage}" == "Content Mapping") {
+				if ("${backgroundImage}" == "Mapping") {
 					PageEditorMapping.mapEditableFieldToAsset(
 						entryTitle = "${entryTitle}",
 						navItem = "${navItem}");
@@ -1324,7 +1324,7 @@ definition {
 					SelectFrame(value1 = "relative=top");
 				}
 
-				if ("${backgroundImage}" == "Manual Selection") {
+				if ("${backgroundImage}" == "Direct") {
 					AssertClick(
 						locator1 = "Button#SELECT",
 						value1 = "Select");

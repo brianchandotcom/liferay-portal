@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -64,13 +65,16 @@ public class LayoutInformationMessagesDisplayContext {
 					return null;
 				}
 
-				Layout layout = themeDisplay.getLayout();
-
-				Group group = themeDisplay.getScopeGroup();
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					"content.Language", themeDisplay.getLocale(), getClass());
 
 				String message =
 					"this-page-is-linked-to-a-site-template-which-does-not-" +
 						"allow-modifications-to-it";
+
+				Layout layout = themeDisplay.getLayout();
+
+				Group group = themeDisplay.getScopeGroup();
 
 				if (layout.isLayoutPrototypeLinkActive() &&
 					!group.hasStagingGroup()) {
@@ -81,11 +85,7 @@ public class LayoutInformationMessagesDisplayContext {
 					message = "this-page-belongs-to-a-user-group";
 				}
 
-				return LanguageUtil.get(
-					ResourceBundleUtil.getBundle(
-						"content.Language", themeDisplay.getLocale(),
-						getClass()),
-					message);
+				return LanguageUtil.get(resourceBundle, message);
 			}
 		).put(
 			"portletNamespace",

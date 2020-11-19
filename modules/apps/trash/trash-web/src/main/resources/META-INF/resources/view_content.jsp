@@ -107,7 +107,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 								<liferay-ui:search-container-column-text>
 									<c:choose>
 										<c:when test="<%= !curTrashHandler.isContainerModel() %>">
-											<clay:vertical-card-v2
+											<clay:vertical-card
 												verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
 											/>
 										</c:when>

@@ -192,7 +192,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card-v2
+								<clay:vertical-card
 									verticalCard="<%= new TrashEntryVerticalCard(trashEntry, trashRenderer, liferayPortletResponse, renderRequest, searchContainer.getRowChecker(), viewContentURLString) %>"
 								/>
 							</liferay-ui:search-container-column-text>

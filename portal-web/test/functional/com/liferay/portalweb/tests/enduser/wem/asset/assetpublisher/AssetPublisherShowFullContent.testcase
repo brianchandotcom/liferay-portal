@@ -108,6 +108,9 @@ definition {
 	test AddAssetTypesViaAPAndAddRespectivePortletsToSamePage {
 		property plugins.deployment.type = "osgi";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
+
+		// Quarantine for LPS-123708
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

@@ -1116,8 +1116,8 @@ definition {
 
 		if (isSet(webContentText)) {
 			Type(
-				key_fieldName = "Text",
-				locator1 = "TextInput#DDM",
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentText}");
 		}
 		else {

@@ -12,7 +12,7 @@
 import * as webauthn from './webauthn';
 
 export default function RegistrationTransformer({
-	pkccOptions,
+	additionalProps: {pkccOptions},
 	portletNamespace,
 	...otherProps
 }) {

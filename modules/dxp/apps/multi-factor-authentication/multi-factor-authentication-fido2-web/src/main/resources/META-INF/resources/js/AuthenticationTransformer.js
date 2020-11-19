@@ -12,7 +12,7 @@
 import * as webauthn from './webauthn';
 
 export default function AuthenticationTransformer({
-	assertionRequest,
+	additionalProps: {assertionRequest},
 	portletNamespace,
 	...otherProps
 }) {

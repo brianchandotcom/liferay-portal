@@ -21,6 +21,7 @@ import React from 'react';
 
 export default function DropdownMenu({
 	actionsDropdown = false,
+	additionalProps: _additionalProps,
 	componentId: _componentId,
 	cssClass,
 	icon,

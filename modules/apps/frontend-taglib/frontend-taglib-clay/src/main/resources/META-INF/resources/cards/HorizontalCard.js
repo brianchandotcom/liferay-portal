@@ -19,6 +19,7 @@ import getDataAttributes from './get_data_attributes';
 
 export default function HorizontalCard({
 	actions = [],
+	additionalProps: _additionalProps,
 	componentId: _componentId,
 	cssClass,
 	disabled,

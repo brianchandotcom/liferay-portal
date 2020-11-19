@@ -16,6 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import React, {useState} from 'react';
 
 export default function Checkbox({
+	additionalProps: _additionalProps,
 	checked,
 	componentId: _componentId,
 	cssClass,

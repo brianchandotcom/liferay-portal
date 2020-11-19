@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 export default function Button({
+	additionalProps: _additionalProps,
 	componentId: _componentId,
 	cssClass,
 	icon,

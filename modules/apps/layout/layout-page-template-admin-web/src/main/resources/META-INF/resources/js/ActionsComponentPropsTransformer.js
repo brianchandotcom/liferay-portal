@@ -59,10 +59,12 @@ const ACTIONS = {
 };
 
 export default function propsTransformer({
-	deleteLayoutPageTemplateCollectionURL,
+	additionalProps: {
+		deleteLayoutPageTemplateCollectionURL,
+		viewLayoutPageTemplateCollectionURL,
+	},
 	items,
 	portletNamespace,
-	viewLayoutPageTemplateCollectionURL,
 	...otherProps
 }) {
 	return {

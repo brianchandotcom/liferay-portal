@@ -15,10 +15,17 @@
 package com.liferay.account.admin.web.internal.display;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Pei-Jung Lan
@@ -57,8 +64,14 @@ public class AddressDisplay {
 		return _street;
 	}
 
-	public String getType() {
-		return _type;
+	public String getType(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(
+			new AggregateResourceBundle(
+				resourceBundle, PortalUtil.getResourceBundle(locale)),
+			_type);
 	}
 
 	public String getZip() {

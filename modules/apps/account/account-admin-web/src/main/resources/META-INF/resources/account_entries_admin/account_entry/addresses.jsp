@@ -91,7 +91,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="type"
-					value="<%= addressDisplay.getType() %>"
+					value="<%= addressDisplay.getType(themeDisplay.getLocale()) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

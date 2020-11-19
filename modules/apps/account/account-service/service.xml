@@ -20,11 +20,11 @@
 		<!-- Other fields -->
 
 		<column name="parentAccountEntryId" type="long" />
-		<column name="name" type="String" />
 		<column name="defaultBillingAddressId" type="long" />
 		<column name="defaultShippingAddressId" type="long" />
 		<column name="description" type="String" />
 		<column name="domains" type="String" />
+		<column name="name" type="String" />
 		<column name="logoId" type="long" />
 		<column name="taxIdNumber" type="String" />
 		<column name="type" type="String" />

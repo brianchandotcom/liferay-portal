@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
+import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -58,6 +60,46 @@ public class ServiceTrackerCustomizerFactory {
 				ServiceReference<S> serviceReference, T t) {
 
 				b.ungetService(serviceReference);
+			}
+
+		};
+	}
+
+	public static <S>
+		ServiceTrackerCustomizer<S, ServiceReferenceServiceTuple<S, S>>
+			serviceReferenceServiceTuple(final BundleContext bundleContext) {
+
+		return new ServiceTrackerCustomizer
+			<S, ServiceReferenceServiceTuple<S, S>>() {
+
+			@Override
+			public ServiceReferenceServiceTuple<S, S> addingService(
+				ServiceReference<S> serviceReference) {
+
+				S service = bundleContext.getService(serviceReference);
+
+				if (service == null) {
+					return null;
+				}
+
+				return new ServiceReferenceServiceTuple<>(
+					serviceReference, service);
+			}
+
+			@Override
+			public void modifiedService(
+				ServiceReference<S> serviceReference,
+				ServiceReferenceServiceTuple<S, S>
+					serviceReferenceServiceTuple) {
+			}
+
+			@Override
+			public void removedService(
+				ServiceReference<S> serviceReference,
+				ServiceReferenceServiceTuple<S, S>
+					serviceReferenceServiceTuple) {
+
+				bundleContext.ungetService(serviceReference);
 			}
 
 		};

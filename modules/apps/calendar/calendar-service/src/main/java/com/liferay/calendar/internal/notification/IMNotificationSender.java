@@ -36,11 +36,4 @@ public class IMNotificationSender implements NotificationSender {
 		NotificationTemplateContext notificationTemplateContext) {
 	}
 
-	@Override
-	public void sendNotification(
-		String fromAddress, String fromName,
-		NotificationRecipient notificationRecipient, String subject,
-		String notificationMessage, String calendarBookingString) {
-	}
-
 }

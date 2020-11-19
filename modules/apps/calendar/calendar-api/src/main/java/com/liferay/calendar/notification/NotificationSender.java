@@ -25,10 +25,17 @@ public interface NotificationSender {
 			NotificationTemplateContext notificationTemplateContext)
 		throws NotificationSenderException;
 
-	public void sendNotification(
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public default void sendNotification(
 			String fromAddress, String fromName,
 			NotificationRecipient notificationRecipient, String subject,
-			String notificationMessage, String calendarBookingString)
-		throws NotificationSenderException;
+			String notificationMessage)
+		throws NotificationSenderException {
+
+		throw new UnsupportedOperationException();
+	}
 
 }

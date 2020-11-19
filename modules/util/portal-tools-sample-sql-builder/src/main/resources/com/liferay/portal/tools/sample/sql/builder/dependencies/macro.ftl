@@ -55,14 +55,28 @@
 	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
-		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry)>
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, _entry, _ddmStructureId)>
+
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(ddmStorageLinkModel, _entry)>
+
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(ddmStorageLinkModel, _entry, ddmFieldModels)>
 	<#else>
-		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry, _currentIndex)>
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, _entry, _ddmStructureId)>
+
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(ddmStorageLinkModel, _entry, _currentIndex)>
+
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(ddmStorageLinkModel, _entry, _currentIndex, ddmFieldModels)>
 	</#if>
 
-	${dataFactory.toInsertSQL(ddmContentModel)}
+	<#list ddmFieldModels as ddmFieldModel>
+		${dataFactory.toInsertSQL(ddmFieldModel)}
+	</#list>
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId))}
+	<#list ddmFieldAttributeModels as ddmFieldAttributeModel>
+		${dataFactory.toInsertSQL(ddmFieldAttributeModel)}
+	</#list>
+
+	${dataFactory.toInsertSQL(ddmStorageLinkModel)}
 </#macro>
 
 <#macro insertDDMStructure

@@ -168,6 +168,10 @@ public interface ResourceActions {
 
 	public boolean isRootModelResource(String modelResource);
 
+	public void populatePortletResource(
+			Portlet portlet, ClassLoader classLoader, String... sources)
+		throws ResourceActionsException;
+
 	public void read(ClassLoader classLoader, String source)
 		throws ResourceActionsException;
 

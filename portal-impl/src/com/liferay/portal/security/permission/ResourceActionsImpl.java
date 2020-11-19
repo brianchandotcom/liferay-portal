@@ -579,13 +579,31 @@ public class ResourceActionsImpl implements ResourceActions {
 		return false;
 	}
 
+	public void populatePortletResource(
+			Portlet portlet, ClassLoader classLoader, String... sources)
+		throws ResourceActionsException {
+
+		String portletResourceName = PortletIdCodec.decodePortletName(
+			portlet.getPortletId());
+
+		if (sources != null) {
+			for (String source : sources) {
+				_read(
+					classLoader, source,
+					rootElement -> _readPortletResource(rootElement, portlet));
+			}
+		}
+
+		resourceActionLocalService.checkResourceActions(
+			portletResourceName,
+			_getPortletResourceActions(portletResourceName, portlet));
+	}
+
 	@Override
 	public void read(ClassLoader classLoader, String source)
 		throws ResourceActionsException {
 
-		_read(
-			classLoader, source,
-			rootElement -> _read(rootElement, null));
+		_read(classLoader, source, rootElement -> _read(rootElement, null));
 	}
 
 	@Override
@@ -1177,6 +1195,41 @@ public class ResourceActionsImpl implements ResourceActions {
 			}
 
 			actions.add(actionKey);
+		}
+	}
+
+	private void _readPortletResource(Element rootElement, Portlet portlet)
+		throws ResourceActionsException {
+
+		if (portlet == null) {
+			throw new IllegalArgumentException("Portlet must not be null");
+		}
+
+		if (!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
+			return;
+		}
+
+		String deployPortletName = PortletIdCodec.decodePortletName(
+			portlet.getPortletId());
+
+		for (Element portletResourceElement :
+				rootElement.elements("portlet-resource")) {
+
+			String portletName = portletResourceElement.elementTextTrim(
+				"portlet-name");
+
+			if (!portletName.equals(deployPortletName)) {
+				continue;
+			}
+
+			Set<String> portletActions = _getPortletMimeTypeActions(
+				portletName, portlet);
+
+			if (!portletName.equals(PortletKeys.PORTAL)) {
+				_checkPortletLayoutManagerActions(portletActions);
+			}
+
+			_readResource(portletResourceElement, portletName, portletActions);
 		}
 	}
 

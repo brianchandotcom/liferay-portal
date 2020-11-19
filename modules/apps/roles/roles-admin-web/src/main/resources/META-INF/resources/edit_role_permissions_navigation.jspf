@@ -543,70 +543,86 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 				</li>
 			</c:if>
 
-			<li class="nav-item permission-navigation-section">
-				<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
-					<liferay-ui:message key="other" />
+			<%
+			boolean empty = true;
 
-					<span class="collapse-icon-closed">
-						<aui:icon image="caret-right" markupView="lexicon" />
-					</span>
-					<span class="collapse-icon-open">
-						<aui:icon image="caret-bottom" markupView="lexicon" />
-					</span>
-				</a>
+			for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+				List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
 
-				<div class="permission-navigation-item-content toggler-content toggler-content-collapsed">
+				if (!panelApps.isEmpty()) {
+					empty = false;
 
-					<%
-					for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
-						List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
-					%>
+					break;
+				}
+			}
+			%>
 
-						<c:if test="<%= !panelApps.isEmpty() %>">
-							<div class="permission-navigation-section">
-								<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
-									<%= panelCategory.getLabel(locale) %>
-									<span class="collapse-icon-closed">
-										<aui:icon image="caret-right" markupView="lexicon" />
-									</span>
-									<span class="collapse-icon-open">
-										<aui:icon image="caret-bottom" markupView="lexicon" />
-									</span>
-								</a>
+			<c:if test="<%= !empty %>">
+				<li class="nav-item permission-navigation-section">
+					<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+						<liferay-ui:message key="other" />
 
-								<ul class="nav nav-stacked permission-navigation-item-content toggler-content toggler-content-collapsed">
+						<span class="collapse-icon-closed">
+							<aui:icon image="caret-right" markupView="lexicon" />
+						</span>
+						<span class="collapse-icon-open">
+							<aui:icon image="caret-bottom" markupView="lexicon" />
+						</span>
+					</a>
 
-									<%
-									for (PanelApp panelApp : panelApps) {
-										Portlet panelAppPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), panelApp.getPortletId());
+					<div class="permission-navigation-item-content toggler-content toggler-content-collapsed">
 
-										editPermissionsResourceURL.setParameter("portletResource", panelAppPortlet.getPortletId());
+						<%
+						for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+							List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
+						%>
 
-										editPermissionsURL.setParameter("portletResource", panelAppPortlet.getPortletId());
+							<c:if test="<%= !panelApps.isEmpty() %>">
+								<div class="permission-navigation-section">
+									<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+										<%= panelCategory.getLabel(locale) %>
+										<span class="collapse-icon-closed">
+											<aui:icon image="caret-right" markupView="lexicon" />
+										</span>
+										<span class="collapse-icon-open">
+											<aui:icon image="caret-bottom" markupView="lexicon" />
+										</span>
+									</a>
 
-										data.put("resource-href", editPermissionsResourceURL.toString());
-									%>
+									<ul class="nav nav-stacked permission-navigation-item-content toggler-content toggler-content-collapsed">
 
-										<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
-											<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
-												<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
-											</aui:a>
-										</li>
+										<%
+										for (PanelApp panelApp : panelApps) {
+											Portlet panelAppPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), panelApp.getPortletId());
 
-									<%
-									}
-									%>
+											editPermissionsResourceURL.setParameter("portletResource", panelAppPortlet.getPortletId());
 
-								</ul>
-							</div>
-						</c:if>
+											editPermissionsURL.setParameter("portletResource", panelAppPortlet.getPortletId());
 
-					<%
-					}
-					%>
+											data.put("resource-href", editPermissionsResourceURL.toString());
+										%>
 
-				</div>
-			</li>
+											<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
+												<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+													<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
+												</aui:a>
+											</li>
+
+										<%
+										}
+										%>
+
+									</ul>
+								</div>
+							</c:if>
+
+						<%
+						}
+						%>
+
+					</div>
+				</li>
+			</c:if>
 		</ul>
 	</div>
 </div>

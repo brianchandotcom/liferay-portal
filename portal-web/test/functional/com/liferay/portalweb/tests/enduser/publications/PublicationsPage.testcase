@@ -35,6 +35,91 @@ definition {
 	}
 
 	@priority = "4"
+	test ConflictingPublicationsNeedManualResolution {
+		property test.name.skip.portal.instance = "PublicationsPage#ConflictingPublicationsNeedManualResolution";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
+
+		Publications.createNewPublication(publicationsName = "Publication Name");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Refresh();
+
+		PageEditor.clickPublish();
+
+		Publications.createNewPublication(publicationsName = "Publication Name 2");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content");
+
+		Refresh();
+
+		PageEditor.clickPublish();
+
+		Publications.gotoReviewPublications();
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Widget",
+			publicationsSite = "Site Name",
+			publicationsTitle = "Asset Publisher",
+			publicationsType = "Added",
+			publicationsUser = "Test Test",
+			showAllItems = "true");
+
+		Publications.gotoPublish(publicationsName = "Publication Name 2");
+
+		Publications.publishPublication(publicationsName = "Publication Name 2");
+
+		Publications.selectPublication(publicationsName = "Publication Name");
+
+		Publications.gotoReviewPublications();
+
+		Publications.workOnProduction();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		AssertElementNotPresent(
+			key_portletName = "WC WebContent Content",
+			locator1 = "Portlet#BODY");
+
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC WebContent Title");
+
+		AssertTextEquals.assertPartialText(
+			key_assetTitle = "WC WebContent Title",
+			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "Web Content Content");
+	}
+
+	@priority = "4"
 	test PublishDeletedPageWithTag {
 		property test.name.skip.portal.instance = "PublicationsPage#PublishDeletedPageWithTag";
 

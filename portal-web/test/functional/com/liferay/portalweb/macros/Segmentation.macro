@@ -50,7 +50,7 @@ definition {
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Button#UPDATE");
-		}		
+		}
 	}
 
 	macro fillProperty {

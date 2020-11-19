@@ -13,29 +13,33 @@
  */
 
 export default function propsTransformer({
+	actions,
 	defaultEventHandler,
 	items,
 	...otherProps
 }) {
+	const itemsMap = (item) => {
+		return {
+			...item,
+			onClick(event) {
+				const action = item.data?.action;
+
+				if (action) {
+					event.preventDefault();
+
+					Liferay.componentReady(defaultEventHandler).then(
+						(eventHandler) => {
+							eventHandler[action](item.data);
+						}
+					);
+				}
+			},
+		};
+	};
+
 	return {
 		...otherProps,
-		items: items.map((item) => {
-			return {
-				...item,
-				onClick(event) {
-					const action = item.data?.action;
-
-					if (action) {
-						event.preventDefault();
-
-						Liferay.componentReady(defaultEventHandler).then(
-							(eventHandler) => {
-								eventHandler[action](item.data);
-							}
-						);
-					}
-				},
-			};
-		}),
+		actions: actions?.map(itemsMap),
+		items: items?.map(itemsMap),
 	};
 }

@@ -136,6 +136,13 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 		return true;
 	}
 
+	@Override
+	public String getName() {
+		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+		return spiraCustomProperty.getName();
+	}
+
 	public int getPropertyNumber() {
 		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
 

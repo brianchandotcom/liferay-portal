@@ -280,6 +280,7 @@ definition {
 		for (var fieldLabel : list "${fieldLabelList}") {
 			if ("${fieldLabel}" == "Text Box") {
 				WebContent.addWithStructureCP(
+					fieldType = "Multiple Lines",
 					webContentText = "${textBox}",
 					webContentTextFieldLabel = "Text Box");
 			}

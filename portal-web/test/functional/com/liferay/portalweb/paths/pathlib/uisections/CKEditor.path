@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_FIELD_WEB_CONTENT_ARTICLE</td>
-	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')][contains(@class,'cke_editor')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY</td>
 	<td>//body[contains(@class,'cke_editable')]</td>
 	<td></td>

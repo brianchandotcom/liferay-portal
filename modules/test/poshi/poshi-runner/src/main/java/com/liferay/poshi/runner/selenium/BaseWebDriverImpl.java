@@ -2906,6 +2906,24 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void tripleClick(String locator) {
+		WebElement webElement = getWebElement(locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		int count = 3;
+
+		while (count > 0) {
+			actions.click();
+			count -= 1;
+		}
+	}
+
+	@Override
 	public void type(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
 

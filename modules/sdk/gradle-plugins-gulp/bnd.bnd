@@ -1,5 +1,0 @@
-Bundle-Description: The Gulp Gradle plugin lets you run Gulp tasks as part of your build.
-Bundle-Name: Liferay Gradle Plugins Gulp
-Bundle-SymbolicName: com.liferay.gradle.plugins.gulp
-Bundle-Version: 2.0.82
-Export-Package: com.liferay.gradle.plugins.gulp

@@ -1,7 +1,0 @@
-2.0.2:description
-
-- [LPS-68618] All `ExecuteGulpTask` instances now depend on `npmInstall`.
-
-2.0.0:description
-
-- [LPS-67573] Make most methods private in order to reduce API surface.

@@ -73,7 +73,9 @@ definition {
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DMMetadataSet.addField(FieldType = "Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		DDLDataDefinition.save();
 

@@ -65,7 +65,9 @@ definition {
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DMMetadataSet.addField(fieldType = "Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		DDLDataDefinition.save();
 
@@ -73,7 +75,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Number",
+			dmDocumentTypeFieldNames = "Numeric",
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 

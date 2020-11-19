@@ -15,9 +15,14 @@
 package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.engine.WikiEngineRenderer;
+
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -48,16 +53,26 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
 
+		if (Objects.equals(
+				_getPortletId(renderRequest), WikiPortletKeys.WIKI_ADMIN)) {
+
+			return ActionUtil.viewNode(
+				renderRequest, "/wiki_admin/view_pages.jsp");
+		}
+
 		return ActionUtil.viewNode(renderRequest, "/wiki/search.jsp");
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
+	private String _getPortletId(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		_wikiEngineRenderer = wikiEngineRenderer;
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getPortletName();
 	}
 
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

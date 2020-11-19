@@ -15,10 +15,15 @@
 package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor;
+
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -33,7 +38,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/wiki/view_pages"
 	},
 	service = MVCRenderCommand.class
@@ -45,30 +52,35 @@ public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
-		renderRequest.setAttribute(
-			WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_wikiPortletToolbarContributor);
+		if (Objects.equals(
+				_getPortletId(renderRequest), WikiPortletKeys.WIKI_ADMIN)) {
 
-		return ActionUtil.viewNode(renderRequest, "/wiki_admin/view_pages.jsp");
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
+				_wikiPortletToolbarContributor);
+
+			return ActionUtil.viewNode(
+				renderRequest, "/wiki_admin/view_pages.jsp");
+		}
+
+		return ActionUtil.viewNode(renderRequest, "/wiki/view_all_pages.jsp");
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
+	private String _getPortletId(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		_wikiEngineRenderer = wikiEngineRenderer;
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getPortletName();
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPortletToolbarContributor(
-		WikiPortletToolbarContributor wikiPortletToolbarContributor) {
-
-		_wikiPortletToolbarContributor = wikiPortletToolbarContributor;
-	}
-
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
 	private WikiPortletToolbarContributor _wikiPortletToolbarContributor;
 
 }

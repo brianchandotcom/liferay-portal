@@ -15,12 +15,22 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
+import com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
+
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -28,8 +38,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS, "mvc.command.name=/",
-		"mvc.command.name=/blogs/view"
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/blogs/view"
 	},
 	service = MVCRenderCommand.class
 )
@@ -39,7 +50,35 @@ public class BlogsViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/blogs/view.jsp";
+		if (Objects.equals(
+				_getPortletId(renderRequest), BlogsPortletKeys.BLOGS)) {
+
+			return "/blogs/view.jsp";
+		}
+
+		renderRequest.setAttribute(
+			BlogsWebKeys.BLOG_ENTRIES_DISPLAY_CONTEXT,
+			new BlogEntriesDisplayContext(
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse),
+				_trashHelper));
+
+		return "/blogs_admin/view.jsp";
 	}
+
+	private String _getPortletId(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getPortletName();
+	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

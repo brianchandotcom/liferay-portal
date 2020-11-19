@@ -49,20 +49,26 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-actions">
-				<li>
-					<liferay-util:include page="/bookmarks/subscribe.jsp" servletContext="<%= application %>" />
-				</li>
-				<li>
-					<liferay-util:include page="/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
-			<h4 class="component-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
+					<h5 class="component-subtitle">
+						<liferay-ui:message key="folder" />
+					</h5>
+				</div>
 
-			<h5 class="component-subtitle">
-				<liferay-ui:message key="folder" />
-			</h5>
+				<div class="autofit-col">
+					<ul class="autofit-padded-no-gutters autofit-row">
+						<li class="autofit-col">
+							<liferay-util:include page="/bookmarks/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li class="autofit-col">
+							<liferay-util:include page="/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<clay:navigation-bar
@@ -117,20 +123,26 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-actions">
-				<li>
-					<liferay-util:include page="/bookmarks/subscribe.jsp" servletContext="<%= application %>" />
-				</li>
-				<li>
-					<liferay-util:include page="/bookmarks/entry_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><%= HtmlUtil.escape(entry.getName()) %></h4>
 
-			<h4 class="component-title"><%= HtmlUtil.escape(entry.getName()) %></h4>
+					<h5>
+						<liferay-ui:message key="entry" />
+					</h5>
+				</div>
 
-			<h5>
-				<liferay-ui:message key="entry" />
-			</h5>
+				<div class="autofit-col">
+					<ul class="autofit-padded-no-gutters autofit-row">
+						<li class="autofit-col">
+							<liferay-util:include page="/bookmarks/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li class="autofit-col">
+							<liferay-util:include page="/bookmarks/entry_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<clay:navigation-bar
@@ -227,7 +239,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4 class="component-title"><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h4>
+				</div>
+			</div>
 		</div>
 
 		<clay:navigation-bar

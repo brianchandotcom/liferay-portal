@@ -54,17 +54,23 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-actions">
-				<li>
-					<liferay-util:include page="/admin/folder_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
-			<h4 class="component-title"><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></h4>
+					<h5 class="component-subtitle">
+						<liferay-ui:message key="folder" />
+					</h5>
+				</div>
 
-			<h5 class="component-subtitle">
-				<liferay-ui:message key="folder" />
-			</h5>
+				<div class="autofit-col">
+					<ul class="autofit-padded-no-gutters autofit-row">
+						<li class="autofit-col">
+							<liferay-util:include page="/admin/folder_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<%
@@ -113,22 +119,28 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		%>
 
 		<div class="sidebar-header">
-			<c:if test='<%= ParamUtil.getBoolean(request, "showSidebarHeader", GetterUtil.getBoolean(request.getAttribute(KBWebKeys.SHOW_SIDEBAR_HEADER))) %>'>
-				<ul class="sidebar-actions">
-					<li>
-						<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
-					</li>
-					<li>
-						<liferay-util:include page="/admin/article_action.jsp" servletContext="<%= application %>" />
-					</li>
-				</ul>
-			</c:if>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
 
-			<h4 class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
+					<h5>
+						<liferay-ui:message key="entry" />
+					</h5>
+				</div>
 
-			<h5>
-				<liferay-ui:message key="entry" />
-			</h5>
+				<div class="autofit-col">
+					<c:if test='<%= ParamUtil.getBoolean(request, "showSidebarHeader", GetterUtil.getBoolean(request.getAttribute(KBWebKeys.SHOW_SIDEBAR_HEADER))) %>'>
+						<ul class="autofit-padded-no-gutters autofit-row">
+							<li class="autofit-col">
+								<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
+							</li>
+							<li class="autofit-col">
+								<liferay-util:include page="/admin/article_action.jsp" servletContext="<%= application %>" />
+							</li>
+						</ul>
+					</c:if>
+				</div>
+			</div>
 		</div>
 
 		<liferay-ui:tabs
@@ -195,7 +207,11 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4 class="component-title"><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h4>
+				</div>
+			</div>
 		</div>
 
 		<%

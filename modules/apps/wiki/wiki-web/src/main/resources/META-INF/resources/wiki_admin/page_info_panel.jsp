@@ -29,32 +29,47 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 		<div class="sidebar-header">
 			<c:choose>
 				<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
-					<ul class="sidebar-actions">
-						<li>
-							<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
-						</li>
-						<li>
-							<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
-						</li>
-					</ul>
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
 
-					<%
-					WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
-					%>
+							<%
+							WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
+							%>
 
-					<h4 class="component-title">
-						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
-					</h4>
+							<h4 class="component-title">
+								<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+							</h4>
 
-					<h5 class="component-subtitle">
-						<liferay-ui:message key="page" />
-					</h5>
+							<h5 class="component-subtitle">
+								<liferay-ui:message key="page" />
+							</h5>
+						</div>
+
+						<div class="autofit-col">
+							<ul class="autofit-padded-no-gutters autofit-row">
+								<li class="autofit-col">
+									<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
+								</li>
+								<li class="autofit-col">
+									<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
+								</li>
+							</ul>
+						</div>
+					</div>
 				</c:when>
 				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
-					<h4 class="component-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="component-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
+						</div>
+					</div>
 				</c:when>
 				<c:otherwise>
-					<h4 class="component-title"><liferay-ui:message key="pages" /></h4>
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="component-title"><liferay-ui:message key="pages" /></h4>
+						</div>
+					</div>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -66,9 +81,13 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 			WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 			%>
 
-			<h4 class="component-title">
-				<%= HtmlUtil.escape(wikiPage.getTitle()) %>
-			</h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title">
+						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+					</h4>
+				</div>
+			</div>
 		</div>
 	</c:otherwise>
 </c:choose>

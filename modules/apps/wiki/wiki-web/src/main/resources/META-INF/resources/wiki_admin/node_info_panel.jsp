@@ -23,37 +23,52 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 <div class="sidebar-header">
 	<c:choose>
 		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isSingleNodeSelection() %>">
-			<ul class="sidebar-actions">
-
-				<%
-				request.setAttribute("node_info_panel.jsp-wikiNode", wikiNodeInfoPanelDisplayContext.getFirstNode());
-				%>
-
-				<li>
-					<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
-				</li>
-				<li>
-					<liferay-util:include page="/wiki/node_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
 
 			<%
 			WikiNode node = wikiNodeInfoPanelDisplayContext.getFirstNode();
 			%>
 
-			<h4 class="component-title">
-				<%= HtmlUtil.escape(node.getName()) %>
-			</h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title">
+						<%= HtmlUtil.escape(node.getName()) %>
+					</h4>
 
-			<h5 class="component-subtitle">
-				<liferay-ui:message key="wiki" />
-			</h5>
+					<h5 class="component-subtitle">
+						<liferay-ui:message key="wiki" />
+					</h5>
+				</div>
+
+				<div class="autofit-col">
+					<ul class="autofit-padded-no-gutters autofit-row">
+
+						<%
+						request.setAttribute("node_info_panel.jsp-wikiNode", wikiNodeInfoPanelDisplayContext.getFirstNode());
+						%>
+
+						<li class="autofit-col">
+							<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li class="autofit-col">
+							<liferay-util:include page="/wiki/node_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</c:when>
 		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">
-			<h4 class="component-title"><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
+				</div>
+			</div>
 		</c:when>
 		<c:otherwise>
-			<h4 class="component-title"><liferay-ui:message key="wikis" /></h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><liferay-ui:message key="wikis" /></h4>
+				</div>
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>

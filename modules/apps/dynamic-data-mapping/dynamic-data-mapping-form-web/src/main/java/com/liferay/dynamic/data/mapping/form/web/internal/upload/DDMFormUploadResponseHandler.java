@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -58,6 +59,10 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 				"please-enter-a-file-with-a-valid-extension-x",
 				StringUtil.merge(
 					_ddmFormUploadValidator.getGuestUploadFileExtensions()));
+		}
+		else if (portalException instanceof FileNameException) {
+			errorMessage = themeDisplay.translate(
+				"please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (portalException instanceof FileSizeException) {
 			errorMessage = themeDisplay.translate(

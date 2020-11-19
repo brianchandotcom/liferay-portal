@@ -16,6 +16,8 @@ package com.liferay.item.selector.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +76,11 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	@Override
+	protected List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
+		return Arrays.asList(new VideoURLItemSelectorReturnType());
 	}
 
 	@Override

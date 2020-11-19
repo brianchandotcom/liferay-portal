@@ -251,7 +251,7 @@ public class AuthVerifierTest {
 
 		properties.put(
 			"urls.includes",
-			"/o/*/authVerifierMatched,/attemptMatchRelativeToContextPath");
+			"/authVerifierMatched,/attemptMatchRelativeToContextPath");
 
 		_registerAuthVerifier(new TestAuthVerifier(), properties);
 	}
@@ -337,20 +337,6 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o" +
 				"/auth-verifier-filter-override-matched-test" +
 					"/authVerifierNotMatched");
-
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("matched", StringUtil.read(inputStream));
-		}
-	}
-
-	@Test
-	public void testAuthVerifierMatchedWithoutAuthVerifierFilterProperties()
-		throws Exception {
-
-		URL url = new URL(
-			"http://localhost:8080/o" +
-				"/auth-verifier-filter-override-missing-test" +
-					"/authVerifierMatched");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("matched", StringUtil.read(inputStream));

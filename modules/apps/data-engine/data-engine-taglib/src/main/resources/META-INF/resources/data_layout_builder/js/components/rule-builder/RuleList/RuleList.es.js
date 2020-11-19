@@ -32,6 +32,7 @@ class RuleList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			dataProvider: props.dataProvider,
 			pages: props.pages,
 			rules: props.rules,
 		};
@@ -141,7 +142,7 @@ class RuleList extends React.Component {
 		);
 	}
 
-	render(props) {
+	render() {
 		return (
 			<div className="form-builder-rule-builder-container">
 				<h1 className="form-builder-section-title text-default">
@@ -149,7 +150,7 @@ class RuleList extends React.Component {
 				</h1>
 
 				<div className="liferay-ddm-form-rule-rules-list-container">
-					<RuleList.List {...props} />
+					<RuleList.List {...this.state} />
 				</div>
 			</div>
 		);
@@ -407,23 +408,6 @@ const EmptyList = ({message}) => {
 };
 
 /**
- * Prints the DDM form card rule.
- */
-const Label = ({content}) => {
-	return (
-		<span
-			className="label label-lg label-secondary"
-			data-original-title={content}
-			title={content}
-		>
-			<span className="text-truncate-inline">
-				<span className="text-truncate">{content}</span>
-			</span>
-		</span>
-	);
-};
-
-/**
  * Prints Rules Conditions.
  */
 const Condition = ({
@@ -463,7 +447,9 @@ const Condition = ({
 		<div className="ddm-condition-container">
 			<SubCondition operandType={operandType} />
 
-			<Label content={operandLabel || operandValue} />
+			<ClayLabel displayType="secondary">
+				{operandLabel || operandValue}
+			</ClayLabel>
 		</div>
 	);
 };
@@ -476,7 +462,7 @@ const Action = ({action, dataProviderName, expression, label, outputLabel}) => {
 		const dataProviderOutputFields = outputLabel.map(
 			(output, outputIndex) => {
 				<>
-					<Label content={output} />
+					<ClayLabel displayType="secondary">{output}</ClayLabel>
 					{outputIndex > outputLabel.length - 1 ? ',' : ''}
 				</>;
 			}
@@ -486,7 +472,7 @@ const Action = ({action, dataProviderName, expression, label, outputLabel}) => {
 			<>
 				{outputLabel.map((output, outputIndex) => {
 					<>
-						<Label content={output} />
+						<ClayLabel displayType="secondary">{output}</ClayLabel>
 						{outputIndex > outputLabel.length - 1 ? ',' : ''}
 					</>;
 				})}
@@ -506,8 +492,12 @@ const Action = ({action, dataProviderName, expression, label, outputLabel}) => {
 	}
 
 	if (action === 'calculate') {
-		const expressionLabel = () => <Label content={expression} />;
-		const targetLabel = () => <Label content={label} />;
+		const expressionLabel = () => (
+			<ClayLabel displayType="secondary">{expression}</ClayLabel>
+		);
+		const targetLabel = () => (
+			<ClayLabel displayType="secondary">{label}</ClayLabel>
+		);
 
 		return (
 			<span>
@@ -521,25 +511,25 @@ const Action = ({action, dataProviderName, expression, label, outputLabel}) => {
 		);
 	}
 
-	const SubLabel = ({label, text}) => {
+	const Wrapper = ({label, text}) => {
 		return (
 			<>
 				<span>
 					<b>{text}</b>
 				</span>
 
-				<Label content={label} />
+				<ClayLabel displayType="secondary">{label}</ClayLabel>
 			</>
 		);
 	};
 
 	if (action === 'enable') {
-		return <SubLabel label={label} text={Liferay.Language.get(`enable`)} />;
+		return <Wrapper label={label} text={Liferay.Language.get(`enable`)} />;
 	}
 
 	if (action === 'jump-to-page') {
 		return (
-			<SubLabel
+			<Wrapper
 				label={label}
 				text={Liferay.Language.get(`jump-to-page`)}
 			/>
@@ -547,13 +537,11 @@ const Action = ({action, dataProviderName, expression, label, outputLabel}) => {
 	}
 
 	if (action === 'require') {
-		return (
-			<SubLabel label={label} text={Liferay.Language.get(`require`)} />
-		);
+		return <Wrapper label={label} text={Liferay.Language.get(`require`)} />;
 	}
 
 	if (action === 'show') {
-		return <SubLabel label={label} text={Liferay.Language.get(`show`)} />;
+		return <Wrapper label={label} text={Liferay.Language.get(`show`)} />;
 	}
 
 	return null;
@@ -569,7 +557,6 @@ const List = ({
 
 	rules,
 	spritemap,
-	strings,
 }) => {
 	if (typeof rules === 'undefined' || !rules.length) {
 		return (
@@ -597,6 +584,24 @@ const List = ({
 
 	const andStr = Liferay.Language.get('and');
 	const orStr = Liferay.Language.get('or');
+
+	const strings = {
+		'belongs-to': Liferay.Language.get('belongs-to'),
+		'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
+		contains: Liferay.Language.get('contains'),
+		'due-to-missing-fields': Liferay.Language.get('due-to-missing-fields'),
+		'equals-to': Liferay.Language.get('is-equal-to'),
+		'greater-than': Liferay.Language.get('is-greater-than'),
+		'greater-than-equals': Liferay.Language.get(
+			'is-greater-than-or-equal-to'
+		),
+		'is-empty': Liferay.Language.get('is-empty'),
+		'less-than': Liferay.Language.get('is-less-than'),
+		'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
+		'not-contains': Liferay.Language.get('does-not-contain'),
+		'not-equals-to': Liferay.Language.get('is-not-equal-to'),
+		'not-is-empty': Liferay.Language.get('is-not-empty'),
+	};
 
 	return (
 		<div className="ddm-rule-list-container form-builder-rule-list">

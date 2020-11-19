@@ -17,6 +17,7 @@ package com.liferay.item.selector.url.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.item.selector.url.web.internal.display.context.ItemSelectorURLViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -100,7 +101,9 @@ public class ItemSelectorURLView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(new URLItemSelectorReturnType()));
+			ListUtil.fromArray(
+				new URLItemSelectorReturnType(),
+				new VideoURLItemSelectorReturnType()));
 
 	private ServletContext _servletContext;
 

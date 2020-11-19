@@ -21,6 +21,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -71,6 +72,7 @@ public class DLVideoItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new FileEntryItemSelectorReturnType(),
-				new URLItemSelectorReturnType()));
+				new URLItemSelectorReturnType(),
+				new VideoURLItemSelectorReturnType()));
 
 }

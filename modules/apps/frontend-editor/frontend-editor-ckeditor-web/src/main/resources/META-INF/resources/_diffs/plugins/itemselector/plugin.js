@@ -98,7 +98,8 @@
 
 					editor.plugins.videoembed.onOkVideo(editor, data);
 				}
-			} else {
+			}
+			else {
 				var mediaPlugin = editor.plugins.media;
 
 				if (mediaPlugin) {
@@ -210,21 +211,6 @@
 			return itemSrc;
 		},
 
-		_isExternalVideo(selectedItem) {
-			var externalVideo = true;
-
-			if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
-				try {
-					var itemValue = JSON.parse(selectedItem.value);
-
-					externalVideo = itemValue.hasOwnProperty('html');
-				}
-				catch (e) {}
-			}
-
-			return externalVideo;
-		},
-
 		_isEmptySelection(editor) {
 			var selection = editor.getSelection();
 
@@ -234,6 +220,21 @@
 				selection.getType() === CKEDITOR.SELECTION_NONE ||
 				(ranges.length === 1 && (ranges[0].collapsed || IE9AndLater))
 			);
+		},
+
+		_isExternalVideo(selectedItem) {
+			var externalVideo = true;
+
+			if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
+				try {
+					var itemValue = JSON.parse(selectedItem.value);
+
+					externalVideo = itemValue.html != null;
+				}
+				catch (e) {}
+			}
+
+			return externalVideo;
 		},
 
 		_onSelectedAudioChange(editor, callback, selectedItem) {
@@ -319,8 +320,15 @@
 						callback(videoSrc);
 					}
 					else {
-						var isExternal = instance._isExternalVideo(selectedItem);
-						instance._commitMediaValue(videoSrc, editor, 'video', isExternal);
+						var isExternal = instance._isExternalVideo(
+							selectedItem
+						);
+						instance._commitMediaValue(
+							videoSrc,
+							editor,
+							'video',
+							isExternal
+						);
 					}
 				}
 			}

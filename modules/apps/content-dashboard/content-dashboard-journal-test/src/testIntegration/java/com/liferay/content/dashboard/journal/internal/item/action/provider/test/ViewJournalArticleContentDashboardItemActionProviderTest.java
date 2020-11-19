@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -97,8 +98,12 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay(LocaleUtil.US);
+
+		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ContentDashboardItemAction contentDashboardItemAction =
 			_contentDashboardItemActionProvider.getContentDashboardItemAction(
@@ -110,6 +115,11 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 			url.endsWith(
 				StringUtil.toLowerCase(
 					journalArticle.getTitle(LocaleUtil.US))));
+
+		Assert.assertTrue(
+			url.contains(
+				"p_l_back_url=" +
+					HtmlUtil.escapeURL("http://localhost:8080/currentURL")));
 	}
 
 	@Test

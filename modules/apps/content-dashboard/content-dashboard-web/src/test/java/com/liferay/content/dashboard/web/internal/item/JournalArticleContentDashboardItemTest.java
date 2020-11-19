@@ -249,7 +249,8 @@ public class JournalArticleContentDashboardItemTest {
 				getDefaultContentDashboardItemAction(
 					_getHttpServletRequest(RandomTestUtil.randomLong()));
 
-		Assert.assertEquals("viewURL", contentDashboardItemAction.getURL());
+		Assert.assertEquals(
+			"http://localhost:8080/view", contentDashboardItemAction.getURL());
 	}
 
 	@Test
@@ -308,7 +309,8 @@ public class JournalArticleContentDashboardItemTest {
 				getDefaultContentDashboardItemAction(
 					_getHttpServletRequest(journalArticle2.getUserId()));
 
-		Assert.assertEquals("editURL", contentDashboardItemAction.getURL());
+		Assert.assertEquals(
+			"http://localhost:8080/edit", contentDashboardItemAction.getURL());
 	}
 
 	@Test

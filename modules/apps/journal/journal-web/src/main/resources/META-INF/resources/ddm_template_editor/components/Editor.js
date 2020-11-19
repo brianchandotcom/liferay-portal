@@ -49,6 +49,36 @@ export const Editor = ({
 		};
 	}, [portletNamespace]);
 
+	useEffect(() => {
+		const refreshHandler = Liferay.on(
+			`${portletNamespace}refreshEditor`,
+			() => {
+				const formElement = document.getElementById(
+					`${portletNamespace}fm`
+				);
+
+				if (!formElement) {
+					return;
+				}
+
+				if (scriptRef.current === initialScript) {
+					setScript('');
+				}
+
+				Liferay.fire(`${portletNamespace}saveTemplate`);
+
+				requestAnimationFrame(() => {
+					formElement.action = window.location.href;
+					formElement.submit();
+				});
+			}
+		);
+
+		return () => {
+			refreshHandler.detach();
+		};
+	}, [initialScript, portletNamespace]);
+
 	return (
 		<>
 			<CodeMirrorEditor

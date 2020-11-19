@@ -27,7 +27,6 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
-import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
@@ -69,9 +68,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		"frontendCSSCommon";
 
 	public static final String PLUGIN_NAME = "liferayThemeDefaults";
-
-	public static final String PUBLISH_NODE_MODULE_TASK_NAME =
-		"publishNodeModule";
 
 	public static final String WRITE_PARENT_THEMES_DIGEST_TASK_NAME =
 		"writeParentThemesDigest";
@@ -122,9 +118,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			resourcesImporterExpandedArchivesDir, resourcesImporterArchivesDir,
 			"lar");
 
-		final PublishNodeModuleTask publishNodeModuleTask =
-			_addTaskPublishNodeModule(zipResourcesImporterArchivesTask);
-
 		_configureDeployDir(project);
 		_configureProject(project);
 		_configureTasksPackageRunBuild(
@@ -157,8 +150,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					// configureTaskUploadArchives, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskUploadArchives(
-						project, publishNodeModuleTask, updateVersionTask);
+					_configureTaskUploadArchives(project, updateVersionTask);
 				}
 
 			});
@@ -254,21 +246,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				"' artifacts into the local Maven repository.");
 
 		return upload;
-	}
-
-	private PublishNodeModuleTask _addTaskPublishNodeModule(
-		Task zipResourcesImporterArchivesTask) {
-
-		PublishNodeModuleTask publishNodeModuleTask = GradleUtil.addTask(
-			zipResourcesImporterArchivesTask.getProject(),
-			PUBLISH_NODE_MODULE_TASK_NAME, PublishNodeModuleTask.class);
-
-		publishNodeModuleTask.dependsOn(zipResourcesImporterArchivesTask);
-		publishNodeModuleTask.setDescription(
-			"Publishes this project to the NPM registry.");
-		publishNodeModuleTask.setGroup(BasePlugin.UPLOAD_GROUP);
-
-		return publishNodeModuleTask;
 	}
 
 	private ReplaceRegexTask _addTaskUpdateVersion(
@@ -538,8 +515,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskUploadArchives(
-		final Project project, PublishNodeModuleTask publishNodeModuleTask,
-		Task updateVersionTask) {
+		final Project project, Task updateVersionTask) {
 
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
@@ -556,11 +532,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			};
 
-			publishNodeModuleTask.doFirst(action);
 			uploadArchivesTask.doFirst(action);
 		}
-
-		uploadArchivesTask.dependsOn(publishNodeModuleTask);
 
 		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			uploadArchivesTask.finalizedBy(updateVersionTask);

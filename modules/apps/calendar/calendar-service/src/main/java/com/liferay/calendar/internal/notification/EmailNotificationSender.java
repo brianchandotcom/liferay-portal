@@ -68,18 +68,17 @@ public class EmailNotificationSender implements NotificationSender {
 			notificationTemplateContext.setToName(
 				notificationRecipient.getName());
 
-			String subject = NotificationTemplateRenderer.render(
-				notificationTemplateContext, NotificationField.SUBJECT,
-				NotificationTemplateRenderer.MODE_PLAIN);
-			String body = NotificationTemplateRenderer.render(
-				notificationTemplateContext, NotificationField.BODY,
-				NotificationTemplateRenderer.MODE_HTML);
-
 			_sendNotification(
 				notificationTemplateContext.getFromAddress(),
 				notificationTemplateContext.getFromName(),
-				(File)notificationTemplateContext.getAttribute("icsFile"), body,
-				notificationRecipient, subject);
+				(File)notificationTemplateContext.getAttribute("icsFile"),
+				NotificationTemplateRenderer.render(
+					notificationTemplateContext, NotificationField.BODY,
+					NotificationTemplateRenderer.MODE_HTML),
+				notificationRecipient,
+				NotificationTemplateRenderer.render(
+					notificationTemplateContext, NotificationField.SUBJECT,
+					NotificationTemplateRenderer.MODE_PLAIN));
 		}
 		catch (Exception exception) {
 			throw new NotificationSenderException(exception);

@@ -48,7 +48,11 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 
 		<aui:input name="description" type="textarea" />
 
-		<aui:select label="type" listType="<%= AccountEntry.class.getName() + ListTypeConstants.ADDRESS %>" name="addressTypeId" />
+		<%
+		AddressDisplay addressDisplay = AddressDisplay.of(address);
+		%>
+
+		<aui:select label="type" listType="<%= AccountEntry.class.getName() + ListTypeConstants.ADDRESS %>" name="addressTypeId" value="<%= addressDisplay.getTypeId() %>" />
 
 		<aui:input name="street1" required="<%= true %>" />
 

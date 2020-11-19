@@ -14,12 +14,15 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -74,6 +77,10 @@ public class AddressDisplay {
 			_type);
 	}
 
+	public long getTypeId() {
+		return _typeId;
+	}
+
 	public String getZip() {
 		return _zip;
 	}
@@ -85,6 +92,13 @@ public class AddressDisplay {
 		_region = null;
 		_street = StringPool.BLANK;
 		_type = StringPool.BLANK;
+
+		ListType listType = ListTypeLocalServiceUtil.getListType(
+			"billing-and-shipping",
+			AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
+
+		_typeId = listType.getListTypeId();
+
 		_zip = StringPool.BLANK;
 	}
 
@@ -95,6 +109,7 @@ public class AddressDisplay {
 		_region = address.getRegion();
 		_street = address.getStreet1();
 		_type = _getType(address);
+		_typeId = address.getTypeId();
 		_zip = address.getZip();
 	}
 
@@ -112,6 +127,7 @@ public class AddressDisplay {
 	private final Region _region;
 	private final String _street;
 	private final String _type;
+	private final long _typeId;
 	private final String _zip;
 
 }

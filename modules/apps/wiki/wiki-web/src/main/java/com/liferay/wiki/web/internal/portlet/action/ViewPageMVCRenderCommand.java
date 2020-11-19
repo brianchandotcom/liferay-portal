@@ -57,13 +57,7 @@ public class ViewPageMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 		return "/wiki_display/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

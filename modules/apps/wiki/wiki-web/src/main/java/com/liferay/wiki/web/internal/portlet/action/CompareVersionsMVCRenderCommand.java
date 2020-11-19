@@ -72,13 +72,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		return "/wiki/compare_versions.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

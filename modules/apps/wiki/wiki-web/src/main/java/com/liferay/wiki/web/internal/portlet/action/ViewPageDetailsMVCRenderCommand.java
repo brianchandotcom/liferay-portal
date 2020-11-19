@@ -58,13 +58,7 @@ public class ViewPageDetailsMVCRenderCommand
 		return "/wiki/view_page_details.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

@@ -128,17 +128,13 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		progressTracker.finish(actionRequest);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportPagesMVCActionCommand.class);
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private WikiNodeService _wikiNodeService;
 
 }

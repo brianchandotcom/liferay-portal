@@ -59,16 +59,10 @@ public class PageInfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			"/wiki_admin/page_info_panel.jsp");
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

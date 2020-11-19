@@ -181,25 +181,7 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageTitleValidator(
-		WikiPageTitleValidator wikiPageTitleValidator) {
-
-		_wikiPageTitleValidator = wikiPageTitleValidator;
-	}
-
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
@@ -210,7 +192,10 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 	private volatile ModelResourcePermission<WikiPage>
 		_wikiPageModelResourcePermission;
 
+	@Reference
 	private WikiPageService _wikiPageService;
+
+	@Reference
 	private WikiPageTitleValidator _wikiPageTitleValidator;
 
 }

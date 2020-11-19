@@ -69,13 +69,7 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 		return "/wiki_admin/import_pages.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiImporterTracker(
-		WikiImporterTracker wikiImporterTracker) {
-
-		_wikiImporterTracker = wikiImporterTracker;
-	}
-
+	@Reference
 	private WikiImporterTracker _wikiImporterTracker;
 
 }

@@ -117,11 +117,7 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 		_wikiPageService.renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
+	@Reference
 	private WikiPageService _wikiPageService;
 
 }

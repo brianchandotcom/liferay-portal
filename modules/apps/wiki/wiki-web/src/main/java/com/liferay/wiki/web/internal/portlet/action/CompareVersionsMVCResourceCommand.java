@@ -64,13 +64,7 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 			"/wiki/compare_versions_diff_html.jsp");
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
 }

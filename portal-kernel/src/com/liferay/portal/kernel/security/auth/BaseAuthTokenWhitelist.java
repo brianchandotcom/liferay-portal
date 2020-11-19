@@ -92,18 +92,21 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	protected void registerPortalProperty(String key) {
-		Registry registry = RegistryUtil.getRegistry();
-
 		String[] values = PropsUtil.getArray(key);
 
-		ServiceRegistration<Object> serviceRegistration =
-			registry.registerService(
-				Object.class, new Object(),
-				HashMapBuilder.<String, Object>put(
-					key, values
-				).build());
+		if (values.length > 0) {
+			Registry registry = RegistryUtil.getRegistry();
 
-		serviceRegistrations.put(StringUtil.merge(values), serviceRegistration);
+			ServiceRegistration<Object> serviceRegistration =
+				registry.registerService(
+					Object.class, new Object(),
+					HashMapBuilder.<String, Object>put(
+						key, values
+					).build());
+
+			serviceRegistrations.put(
+				StringUtil.merge(values), serviceRegistration);
+		}
 	}
 
 	protected ServiceTracker<Object, Object> trackWhitelistServices(

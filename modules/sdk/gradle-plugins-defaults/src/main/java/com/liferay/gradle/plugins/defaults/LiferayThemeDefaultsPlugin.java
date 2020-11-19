@@ -24,9 +24,9 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -127,7 +127,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		_configureDeployDir(project);
 		_configureProject(project);
-		_configureTasksExecuteGulp(project, zipResourcesImporterArchivesTask);
+		_configureTasksPackageRunBuild(
+			project, zipResourcesImporterArchivesTask);
 
 		GradleUtil.excludeTasksWithProperty(
 			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
@@ -142,7 +143,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					if (liferayThemeDefaultsExtension.
 							isUseLocalDependencies()) {
 
-						_configureTasksExecuteGulpLocalDependencies(
+						_configureTasksPackageRunBuildLocalDependencies(
 							project, expandFrontendCSSCommonTask);
 					}
 					else {
@@ -451,25 +452,20 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(GradleUtil.getProjectGroup(project, _GROUP));
 	}
 
-	private void _configureTaskExecuteGulp(
-		ExecuteGulpTask executeGulpTask,
+	private void _configureTaskPackageRunBuild(
+		PackageRunBuildTask packageRunBuildTask,
 		Task zipResourcesImporterArchivesTask) {
 
-		executeGulpTask.args("--skip-update-check=true");
-		executeGulpTask.dependsOn(zipResourcesImporterArchivesTask);
+		packageRunBuildTask.dependsOn(zipResourcesImporterArchivesTask);
 	}
 
-	private void _configureTaskExecuteGulpLocalDependencies(
-		ExecuteGulpTask executeGulpTask, Copy expandFrontendCSSCommonTask) {
+	private void _configureTaskPackageRunBuildLocalDependencies(
+		PackageRunBuildTask packageRunBuildTask,
+		Copy expandFrontendCSSCommonTask) {
 
-		File cssCommonDir = expandFrontendCSSCommonTask.getDestinationDir();
+		packageRunBuildTask.dependsOn(expandFrontendCSSCommonTask);
 
-		executeGulpTask.args(
-			"--css-common-path=" + FileUtil.getAbsolutePath(cssCommonDir));
-
-		executeGulpTask.dependsOn(expandFrontendCSSCommonTask);
-
-		Project project = executeGulpTask.getProject();
+		Project project = packageRunBuildTask.getProject();
 
 		if (!GradlePluginsDefaultsUtil.isSubrepository(project)) {
 			for (String themeProjectName :
@@ -477,19 +473,20 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 				int index = themeProjectName.lastIndexOf("-");
 
-				_configureTaskExecuteGulpLocalDependenciesTheme(
-					executeGulpTask,
+				_configureTaskPackageRunBuildLocalDependenciesTheme(
+					packageRunBuildTask,
 					_getThemeProject(project, themeProjectName),
 					themeProjectName.substring(index + 1));
 			}
 		}
 	}
 
-	private void _configureTaskExecuteGulpLocalDependenciesTheme(
-		ExecuteGulpTask executeGulpTask, Project themeProject, String name) {
+	private void _configureTaskPackageRunBuildLocalDependenciesTheme(
+		PackageRunBuildTask packageRunBuildTask, Project themeProject,
+		String name) {
 
 		if (themeProject == null) {
-			Project project = executeGulpTask.getProject();
+			Project project = packageRunBuildTask.getProject();
 
 			Logger logger = project.getLogger();
 
@@ -500,47 +497,41 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		File dir = themeProject.file(
-			"src/main/resources/META-INF/resources/_" + name);
-
-		executeGulpTask.args(
-			"--" + name + "-path=" + FileUtil.getAbsolutePath(dir));
-
-		executeGulpTask.dependsOn(
+		packageRunBuildTask.dependsOn(
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
 	}
 
-	private void _configureTasksExecuteGulp(
+	private void _configureTasksPackageRunBuild(
 		Project project, final Task zipResourcesImporterArchivesTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteGulpTask.class,
-			new Action<ExecuteGulpTask>() {
+			PackageRunBuildTask.class,
+			new Action<PackageRunBuildTask>() {
 
 				@Override
-				public void execute(ExecuteGulpTask executeGulpTask) {
-					_configureTaskExecuteGulp(
-						executeGulpTask, zipResourcesImporterArchivesTask);
+				public void execute(PackageRunBuildTask packageRunBuildTask) {
+					_configureTaskPackageRunBuild(
+						packageRunBuildTask, zipResourcesImporterArchivesTask);
 				}
 
 			});
 	}
 
-	private void _configureTasksExecuteGulpLocalDependencies(
+	private void _configureTasksPackageRunBuildLocalDependencies(
 		Project project, final Copy expandFrontendCSSCommonTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteGulpTask.class,
-			new Action<ExecuteGulpTask>() {
+			PackageRunBuildTask.class,
+			new Action<PackageRunBuildTask>() {
 
 				@Override
-				public void execute(ExecuteGulpTask executeGulpTask) {
-					_configureTaskExecuteGulpLocalDependencies(
-						executeGulpTask, expandFrontendCSSCommonTask);
+				public void execute(PackageRunBuildTask packageRunBuildTask) {
+					_configureTaskPackageRunBuildLocalDependencies(
+						packageRunBuildTask, expandFrontendCSSCommonTask);
 				}
 
 			});

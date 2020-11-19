@@ -15,13 +15,12 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
-import com.liferay.gradle.plugins.gulp.GulpPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.util.Validator;
 
@@ -73,9 +72,9 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		// Plugins
 
 		GradleUtil.applyPlugin(project, BasePlugin.class);
-		GradleUtil.applyPlugin(project, GulpPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 
 		// Extensions
@@ -113,7 +112,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		TaskProvider<Delete> cleanTaskProvider = GradleUtil.getTaskProvider(
 			project, BasePlugin.CLEAN_TASK_NAME, Delete.class);
-		TaskProvider<Task> createLiferayThemeJsonTaskProvider =
+		final TaskProvider<Task> createLiferayThemeJsonTaskProvider =
 			GradleUtil.addTaskProvider(
 				project, CREATE_LIFERAY_THEME_JSON_TASK_NAME, Task.class);
 		TaskProvider<BuildLangTask> buildLangTaskProvider =
@@ -122,8 +121,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 				BuildLangTask.class);
 		TaskProvider<Copy> deployTaskProvider = GradleUtil.getTaskProvider(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
-		final TaskProvider<Task> gulpBuildTaskProvider =
-			GradleUtil.getTaskProvider(project, _GULP_BUILD_TASK_NAME);
 
 		_configureTaskBuildLangProvider(buildLangTaskProvider);
 		_configureTaskCleanProvider(cleanTaskProvider);
@@ -136,13 +133,14 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		final TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteGulpTask.class,
-			new Action<ExecuteGulpTask>() {
+			PackageRunBuildTask.class,
+			new Action<PackageRunBuildTask>() {
 
 				@Override
-				public void execute(ExecuteGulpTask executeGulpTask) {
-					_configureTaskExecuteGulp(
-						createLiferayThemeJsonTaskProvider, executeGulpTask);
+				public void execute(PackageRunBuildTask packageRunBuildTask) {
+					_configureTaskPackageRunBuild(
+						createLiferayThemeJsonTaskProvider,
+						packageRunBuildTask);
 				}
 
 			});
@@ -165,19 +163,9 @@ public class LiferayThemePlugin implements Plugin<Project> {
 						NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
 
 					if (packageRunBuildTask != null) {
-						gulpBuildTaskProvider.configure(
-							new Action<Task>() {
-
-								@Override
-								public void execute(Task gulpBuildTask) {
-									gulpBuildTask.finalizedBy(
-										NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
-								}
-
-							});
+						configurablePublishArtifact.builtBy(
+							packageRunBuildTask);
 					}
-
-					configurablePublishArtifact.builtBy(gulpBuildTaskProvider);
 				}
 
 			});
@@ -338,11 +326,11 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskExecuteGulp(
+	private void _configureTaskPackageRunBuild(
 		TaskProvider<Task> createLiferayThemeJsonTaskProvider,
-		ExecuteGulpTask executeGulpTask) {
+		PackageRunBuildTask packageRunBuildTask) {
 
-		executeGulpTask.dependsOn(createLiferayThemeJsonTaskProvider);
+		packageRunBuildTask.dependsOn(createLiferayThemeJsonTaskProvider);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -362,7 +350,5 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		return project.file(
 			"dist/" + GradleUtil.getArchivesBaseName(project) + ".war");
 	}
-
-	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";
 
 }

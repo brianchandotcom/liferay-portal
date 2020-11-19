@@ -1,29 +1,5 @@
 definition {
 
-	macro addField {
-		DMMetadataSet.gotoFieldsTab();
-
-		var key_fieldType = "${fieldType}";
-
-		if (isSet(rowNum)) {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_rowNum = "${rowNum}",
-				locator1 = "DocumentsAndMediaMetadataSets#ADD_FIELD_TYPE",
-				locator2 = "DocumentsAndMediaMetadataSets#FIELD_BOTTOM_DROP_TARGET",
-				value1 = "${fieldType}");
-		}
-		else {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "DocumentsAndMediaMetadataSets#ADD_FIELD_TYPE",
-				locator2 = "DocumentsAndMediaMetadataSets#ADD_FIELD_TARGET",
-				value1 = "${fieldType}");
-		}
-
-		AssertElementPresent(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_ACTIVE_BASIC_TAB");
-
-		DMMetadataSet.editFieldLabel(fieldType = "${fieldType}");
-	}
-
 	macro addMultipleFields {
 		DMMetadataSet.gotoFieldsTab();
 

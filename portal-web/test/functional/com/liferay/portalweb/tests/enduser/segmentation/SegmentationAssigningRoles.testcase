@@ -16,21 +16,21 @@ definition {
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
-		
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "User Authentication",
 			configurationName = "General",
 			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-		
+
 		JSONUser.addUser(
 			userEmailAddress = "u1@liferay.com",
 			userFirstName = "User",
 			userLastName = "1",
 			userScreenName = "user1");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -39,13 +39,13 @@ definition {
 			userEmailAddress = "u1@liferay.com",
 			userScreenName = "user1");
 
-        ApplicationsMenu.gotoSite(site = "Global");
+		ApplicationsMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			portlet = "Segments");
 
-    	LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAdd();
 
 		Segmentation.addProperties(propertyOption = "Screen Name");
 
@@ -55,10 +55,10 @@ definition {
 
 		Button.clickSave();
 
-        JSONRole.addRegularRole(
+		JSONRole.addRegularRole(
 			roleKey = "Role User Segments",
 			roleTitle = "Role User Segments");
-		
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
@@ -69,7 +69,7 @@ definition {
 			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
 			roleTitle = "Role User Segments");
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -88,13 +88,12 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-					
 			User.logoutPG();
 
 			User.loginPG(
 				password = "test",
 				userEmailAddress = "test@liferay.com");
-			
+
 			ApplicationsMenu.gotoSite(site = "Global");
 
 			ApplicationsMenu.gotoPortlet(
@@ -102,11 +101,11 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-            User.deactivateCP(userFirstName = "User");
+			User.deactivateCP(userFirstName = "User");
 
-		    User.deleteCP();
+			User.deleteCP();
 
-            JSONRole.deleteRole(roleTitle = "Role User Segments");
+			JSONRole.deleteRole(roleTitle = "Role User Segments");
 
 			Navigator.gotoPage(pageName = "Home");
 
@@ -123,49 +122,48 @@ definition {
 	@description = "Validate if, with the option Enable Assign roles by segments disabled, the role is not working for the user"
 	@priority = "5"
 	test DisableAssignRolesBySegment {
-        property portal.acceptance = "true";
+		property portal.acceptance = "true";
 
-        User.logoutPG();
+		User.logoutPG();
 
 		User.loginPG(
-				password = "password",
-				userEmailAddress = "u1@liferay.com");
+			password = "password",
+			userEmailAddress = "u1@liferay.com");
 
-        AssertElementNotPresent(
-            locator1 = "ApplicationsMenu#PORTLET");
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	@description = "Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user"
 	@priority = "5"
 	test EnableAssignRolesBySegment {
-        property portal.acceptance = "true";
+		property portal.acceptance = "true";
 
-        ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
-		
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Segments",
 			configurationName = "Segments Service",
 			configurationScope = "System Scope");
 
 		Segmentation.enableAssingRolesBySegmentsCheckbox();
-		
+
 		User.logoutPG();
 
 		User.loginPG(
-				password = "password",
-				userEmailAddress = "u1@liferay.com");
+			password = "password",
+			userEmailAddress = "u1@liferay.com");
 
-        ApplicationsMenuHelper.openApplicationsMenu();
+		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Applications");
 
-        AssertElementPresent(
-            locator1 = "ApplicationsMenu#PORTLET",
-            key_category = "Content",
-			key_portlet = "Content Dashboard");
+		AssertElementPresent(
+			key_category = "Content",
+			key_portlet = "Content Dashboard",
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 }

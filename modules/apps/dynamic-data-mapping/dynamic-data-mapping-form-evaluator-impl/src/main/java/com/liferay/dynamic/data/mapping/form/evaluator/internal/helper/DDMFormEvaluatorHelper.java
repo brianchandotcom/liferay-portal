@@ -734,12 +734,12 @@ public class DDMFormEvaluatorHelper {
 
 	private void _resetInvisibleFieldValue() {
 		_ddmFormFieldsPropertyChanges.forEach(
-			(fieldContextKey, fieldProperties) -> {
+			(ddmFormFieldContextKey, ddmFormFieldProperties) -> {
 				if (_ddmFormEvaluatorEvaluateRequest.isViewMode() &&
 					_ddmFormEvaluatorEvaluateRequest.isEditingFieldValue() &&
-					!isFieldVisible(fieldContextKey)) {
+					!isFieldVisible(ddmFormFieldContextKey)) {
 
-					fieldProperties.put("value", StringPool.BLANK);
+					ddmFormFieldProperties.put("value", StringPool.BLANK);
 				}
 			});
 	}

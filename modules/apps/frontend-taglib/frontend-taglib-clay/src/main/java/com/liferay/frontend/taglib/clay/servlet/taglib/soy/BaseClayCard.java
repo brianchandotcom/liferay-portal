@@ -48,6 +48,10 @@ public interface BaseClayCard {
 		return null;
 	}
 
+	public default Map<String, String> getDynamicAttributes() {
+		return null;
+	}
+
 	public default String getElementClasses() {
 		return null;
 	}

@@ -17,14 +17,34 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.string.StringPool;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Carlos Lancha
  */
 public class BaseCardTag extends BaseContainerTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		if (_cardModel != null) {
+			Map<String, String> dynamicAttributes =
+				_cardModel.getDynamicAttributes();
+
+			for (Map.Entry<String, String> entry :
+					dynamicAttributes.entrySet()) {
+
+				setDynamicAttribute(
+					StringPool.BLANK, entry.getKey(), entry.getValue());
+			}
+		}
+
+		return super.doStartTag();
+	}
 
 	public List<DropdownItem> getActionDropdownItems() {
 		if ((_actionDropdownItems == null) && (_cardModel != null)) {

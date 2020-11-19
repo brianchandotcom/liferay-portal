@@ -1182,9 +1182,23 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Image",
+			key_navItem = "Image Source",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Image");
+			value1 = "Image Source");
+
+		Pause(locator1 = "3000");
+
+		if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Direct"))) {
+			Select(
+				key_fieldLabel = "Source Selection",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Direct");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Source Selection",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Direct");
+		}
 
 		Button.clickSelect();
 

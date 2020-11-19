@@ -23,7 +23,6 @@ export default function UserCard({
 	cssClass,
 	inputName = '',
 	inputValue = '',
-	labels = [],
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
@@ -49,23 +48,6 @@ export default function UserCard({
 				value: inputValue ?? '',
 			}}
 			className={cssClass}
-			labels={labels?.map(
-				({
-					closeable: _closeable,
-					data,
-					label,
-					style: _style,
-					...rest
-				}) => {
-					const dataAttributes = getDataAttributes(data);
-
-					return {
-						value: label,
-						...dataAttributes,
-						...rest,
-					};
-				}
-			)}
 			onSelectChange={
 				selectable
 					? () => {

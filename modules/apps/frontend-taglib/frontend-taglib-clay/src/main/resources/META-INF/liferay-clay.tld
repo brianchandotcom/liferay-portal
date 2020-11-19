@@ -4077,12 +4077,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>labels</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

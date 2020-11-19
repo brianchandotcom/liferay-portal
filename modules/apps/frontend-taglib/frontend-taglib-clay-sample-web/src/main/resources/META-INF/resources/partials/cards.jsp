@@ -412,7 +412,6 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 		<clay:user-card
 			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
 			icon="picture"
-			labels="<%= claySampleUserCard.getLabels() %>"
 			name="<%= claySampleUserCard.getName() %>"
 			selectable="<%= false %>"
 			subtitle="<%= claySampleUserCard.getSubtitle() %>"
@@ -429,7 +428,6 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 			disabled="<%= true %>"
 			imageAlt="<%= claySampleUserCard.getImageAlt() %>"
 			imageSrc="https://images.unsplash.com/photo-1502290822284-9538ef1f1291"
-			labels="<%= claySampleUserCard.getLabels() %>"
 			name="<%= claySampleUserCard.getName() %>"
 			selectable="<%= false %>"
 			subtitle="<%= claySampleUserCard.getSubtitle() %>"
@@ -459,7 +457,6 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 		<clay:user-card
 			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
 			icon="picture"
-			labels="<%= claySampleUserCard.getLabels() %>"
 			name="<%= claySampleUserCard.getName() %>"
 			selected="<%= true %>"
 			subtitle="<%= claySampleUserCard.getSubtitle() %>"
@@ -475,7 +472,6 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 			actionDropdownItems="<%= claySampleUserCard.getActionDropdownItems() %>"
 			imageAlt="<%= claySampleUserCard.getImageAlt() %>"
 			imageSrc="https://images.unsplash.com/photo-1502290822284-9538ef1f1291"
-			labels="<%= claySampleUserCard.getLabels() %>"
 			name="<%= claySampleUserCard.getName() %>"
 			subtitle="<%= claySampleUserCard.getSubtitle() %>"
 		/>

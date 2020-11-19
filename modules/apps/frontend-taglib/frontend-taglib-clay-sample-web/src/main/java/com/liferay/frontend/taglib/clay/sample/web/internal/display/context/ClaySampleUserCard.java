@@ -17,9 +17,6 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.util.List;
 
@@ -104,29 +101,6 @@ public class ClaySampleUserCard implements UserCard {
 		return "user-card-input-value";
 	}
 
-	public List<LabelItem> getLabels() {
-		if (_labels != null) {
-			return _labels;
-		}
-
-		int numItems = 1 + RandomUtil.nextInt(3);
-
-		return LabelItemListBuilder.add(
-			labelItem -> {
-				labelItem.setLabel("Approved");
-				labelItem.setStyle("success");
-			}
-		).add(
-			() -> numItems > 1, labelItem -> labelItem.setLabel("Pending")
-		).add(
-			() -> numItems > 2,
-			labelItem -> {
-				labelItem.setLabel("Canceled");
-				labelItem.setStyle("danger");
-			}
-		).build();
-	}
-
 	public String getName() {
 		if (_name != null) {
 			return _name;
@@ -203,10 +177,6 @@ public class ClaySampleUserCard implements UserCard {
 		_inputValue = inputValue;
 	}
 
-	public void setLabels(List<LabelItem> labels) {
-		_labels = labels;
-	}
-
 	public void setName(String name) {
 		_name = name;
 	}
@@ -238,7 +208,6 @@ public class ClaySampleUserCard implements UserCard {
 	private String _imageSrc;
 	private String _inputName;
 	private String _inputValue;
-	private List<LabelItem> _labels;
 	private String _name;
 	private boolean _selectable = true;
 	private boolean _selected;

@@ -14,10 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-
-import java.util.List;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -32,10 +28,6 @@ public interface UserCard extends BaseClayCard {
 	}
 
 	public default String getImageSrc() {
-		return null;
-	}
-
-	public default List<LabelItem> getLabels() {
 		return null;
 	}
 

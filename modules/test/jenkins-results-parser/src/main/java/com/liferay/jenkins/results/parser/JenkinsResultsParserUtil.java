@@ -899,7 +899,10 @@ public class JenkinsResultsParserUtil {
 
 			for (String url : _buildPropertiesURLs) {
 				properties.load(
-					new StringReader(toString(getLocalURL(url), false)));
+					new StringReader(
+						toString(
+							getLocalURL(url), false, 0, null, null, 0,
+							_MILLIS_TIMEOUT_DEFAULT, null)));
 			}
 
 			_buildProperties.clear();
@@ -4041,12 +4044,16 @@ public class JenkinsResultsParserUtil {
 		System.getProperty("user.home"));
 
 	static {
-		_initializeRedactTokens();
+		try {
+			_initializeRedactTokens();
 
-		System.out.println("Securing standard error and out");
+			System.setErr(new SecurePrintStream(System.err));
+			System.setOut(new SecurePrintStream(System.out));
 
-		System.setErr(new SecurePrintStream(System.err));
-		System.setOut(new SecurePrintStream(System.out));
+			System.out.println("Securing standard error and out");
+		}
+		catch (Exception exception) {
+		}
 	}
 
 }

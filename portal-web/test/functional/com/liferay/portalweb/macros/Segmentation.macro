@@ -44,7 +44,13 @@ definition {
 	macro enableAssingRolesBySegmentsCheckbox {
 		Click(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
 
-		Click(locator1 = "Button#UPDATE");
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}		
 	}
 
 	macro fillProperty {

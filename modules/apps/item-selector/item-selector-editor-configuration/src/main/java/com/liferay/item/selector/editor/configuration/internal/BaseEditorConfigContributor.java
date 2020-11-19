@@ -16,10 +16,13 @@ package com.liferay.item.selector.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -57,12 +60,16 @@ public abstract class BaseEditorConfigContributor
 				itemSelectorCriteria) {
 
 			itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				new URLItemSelectorReturnType());
+				getDesiredItemSelectorReturnTypes());
 		}
 
 		return itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, name + "selectItem",
 			itemSelectorCriteria);
+	}
+
+	protected List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
+		return Arrays.asList(new URLItemSelectorReturnType());
 	}
 
 	protected abstract ItemSelector getItemSelector();

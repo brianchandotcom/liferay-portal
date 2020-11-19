@@ -62,7 +62,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				<%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %>
 			</h1>
 
-			<h2 class="sidebar-subtitle">
+			<h2 class="component-subtitle">
 				<liferay-ui:message key="folder" />
 			</h2>
 		</div>
@@ -149,7 +149,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				<%= HtmlUtil.escape(fileShortcut.getToTitle()) %>
 			</h1>
 
-			<h2 class="sidebar-subtitle">
+			<h2 class="component-subtitle">
 				<liferay-ui:message key="shortcut" />
 			</h2>
 		</div>

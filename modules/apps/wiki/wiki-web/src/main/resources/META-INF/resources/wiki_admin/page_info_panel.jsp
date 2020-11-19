@@ -46,7 +46,7 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
 					</h4>
 
-					<h5 class="sidebar-subtitle">
+					<h5 class="component-subtitle">
 						<liferay-ui:message key="page" />
 					</h5>
 				</c:when>

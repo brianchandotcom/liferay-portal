@@ -48,7 +48,7 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 				<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>
 			</h4>
 
-			<h5 class="sidebar-subtitle">
+			<h5 class="component-subtitle">
 				<liferay-ui:message key="image-resolution" />
 			</h5>
 		</c:when>

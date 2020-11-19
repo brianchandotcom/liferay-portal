@@ -62,7 +62,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 
 			<h4 class="component-title"><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
-			<h5 class="sidebar-subtitle">
+			<h5 class="component-subtitle">
 				<liferay-ui:message key="folder" />
 			</h5>
 		</div>

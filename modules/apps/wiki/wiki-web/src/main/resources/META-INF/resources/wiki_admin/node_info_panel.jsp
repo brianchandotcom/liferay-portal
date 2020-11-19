@@ -45,7 +45,7 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 				<%= HtmlUtil.escape(node.getName()) %>
 			</h4>
 
-			<h5 class="sidebar-subtitle">
+			<h5 class="component-subtitle">
 				<liferay-ui:message key="wiki" />
 			</h5>
 		</c:when>

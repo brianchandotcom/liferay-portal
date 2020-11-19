@@ -60,7 +60,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 			<h4 class="component-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
-			<h5 class="sidebar-subtitle">
+			<h5 class="component-subtitle">
 				<liferay-ui:message key="folder" />
 			</h5>
 		</div>

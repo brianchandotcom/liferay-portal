@@ -223,7 +223,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	protected static <S extends SpiraArtifact> List<S> getSpiraArtifacts(
 		Class<S> spiraArtifactClass,
 		Supplier<List<JSONObject>> spiraArtifactSupplier,
-		Function<JSONObject, S> spiraArtifactCreator,
+		Function<JSONObject, S> spiraArtifactCreator, boolean checkCache,
 		SearchQuery.SearchParameter... searchParameters) {
 
 		SearchQuery<S> cachedSearchQuery =
@@ -296,6 +296,23 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			return searchQuery.getSpiraArtifacts();
 		}
 
+		if (checkCache) {
+			List<S> spiraArtifacts = (List<S>)_getSpiraArtifacts(
+				spiraArtifactClass);
+
+			for (S spiraArtifact : spiraArtifacts) {
+				if (searchQuery.matches(spiraArtifact)) {
+					searchQuery.addSpiraArtifact(spiraArtifact);
+				}
+			}
+
+			if (!searchQuery.isEmpty()) {
+				SearchQuery.cacheSearchQuery(searchQuery);
+
+				return searchQuery.getSpiraArtifacts();
+			}
+		}
+
 		for (JSONObject responseJSONObject : spiraArtifactSupplier.get()) {
 			S spiraArtifact = spiraArtifactCreator.apply(responseJSONObject);
 
@@ -309,6 +326,17 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 
 		return searchQuery.getSpiraArtifacts();
+	}
+
+	protected static <S extends SpiraArtifact> List<S> getSpiraArtifacts(
+		Class<S> spiraArtifactClass,
+		Supplier<List<JSONObject>> spiraArtifactSupplier,
+		Function<JSONObject, S> spiraArtifactCreator,
+		SearchQuery.SearchParameter... searchParameters) {
+
+		return getSpiraArtifacts(
+			spiraArtifactClass, spiraArtifactSupplier, spiraArtifactCreator,
+			false, searchParameters);
 	}
 
 	protected static <S extends SpiraArtifact> void removeCachedSpiraArtifacts(
@@ -406,6 +434,15 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 			return spiraArtifactsMap;
 		}
+	}
+
+	private static List<SpiraArtifact> _getSpiraArtifacts(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		Map<Integer, SpiraArtifact> spiraArtifactsMap = _getIDSpiraArtifactsMap(
+			spiraArtifactClass);
+
+		return new ArrayList<>(spiraArtifactsMap.values());
 	}
 
 	private static void _putIDSpiraArtifact(

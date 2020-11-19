@@ -254,7 +254,7 @@ renderResponse.setTitle(title);
 <aui:script>
 	function <portlet:namespace />saveAndAddNew() {
 		document.querySelector('#<portlet:namespace />redirect').value =
-			'<%= currentURL %>';
+			'<%= assetCategoriesDisplayContext.getAddCategoryRedirect() %>';
 
 		submitForm(document.querySelector('#<portlet:namespace />fm'));
 	}

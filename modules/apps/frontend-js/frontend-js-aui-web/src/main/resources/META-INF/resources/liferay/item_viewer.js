@@ -654,7 +654,7 @@ AUI.add(
 
 				TPL_SIDENAV:
 					'<div class="closed image-viewer-sidenav sidenav-fixed sidenav-menu-slider sidenav-right">' +
-					'<div class="image-viewer-sidenav-menu sidebar sidebar-default sidenav-menu">' +
+					'<div class="image-viewer-sidenav-menu sidebar sidebar-light sidenav-menu">' +
 					'<div class="sidebar-header">' +
 					'<a class="' +
 					CSS_ICON_MONOSPACED +

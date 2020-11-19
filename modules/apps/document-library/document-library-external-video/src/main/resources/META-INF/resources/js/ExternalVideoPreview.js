@@ -16,7 +16,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import {addParams, fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -38,7 +38,12 @@ const ExternalVideoPreview = ({
 
 	const [getFields] = useDebounceCallback((dlExternalVideoURL) => {
 		fetch(
-			`${getDLExternalVideoFieldsURL}&${namespace}dlExternalVideoURL=${dlExternalVideoURL}`
+			addParams(
+				{
+					[`${namespace}dlExternalVideoURL`]: dlExternalVideoURL,
+				},
+				getDLExternalVideoFieldsURL
+			)
 		)
 			.then((res) => res.json())
 			.then((fields) => {

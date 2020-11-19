@@ -21,37 +21,46 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const ExternalVideoPreview = ({
-	externalVideoHTML,
-	externalVideoURL,
+	externalVideoHTML = '',
+	externalVideoURL = '',
 	getDLExternalVideoFieldsURL,
 	namespace,
 	onFilePickCallback,
 }) => {
 	const inputName = 'externalVideoURLInput';
 	const [url, setUrl] = useState(externalVideoURL);
-	const [loaded, setLoaded] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [HTML, setHTML] = useState(externalVideoHTML);
 	const isMounted = useIsMounted();
-
-	const isLoading = url && !loaded;
 
 	const handleUrlChange = (event) => {
 		const value = event.target.value.trim();
 		setUrl(value);
-		setLoaded(false);
 
 		if (value) {
+			setLoading(true);
+
 			fetch(
 				`${getDLExternalVideoFieldsURL}&${namespace}dlExternalVideoURL=${value}`
 			)
 				.then((res) => res.json())
 				.then((fields) => {
 					if (isMounted()) {
-						setLoaded(true);
+						setLoading(false);
 						setHTML(fields.HTML);
 						window[onFilePickCallback](fields);
 					}
+				})
+				.catch(() => {
+					if (isMounted()) {
+						setLoading(false);
+						setHTML(externalVideoURL);
+					}
 				});
+		}
+		else {
+			setLoading(false);
+			setHTML(externalVideoURL);
 		}
 	};
 
@@ -80,7 +89,7 @@ const ExternalVideoPreview = ({
 				) : (
 					<div className="file-picker-preview-video">
 						<div className="file-picker-preview-video-placeholder">
-							{isLoading ? (
+							{loading ? (
 								<ClayLoadingIndicator />
 							) : (
 								<ClayIcon symbol="video" />

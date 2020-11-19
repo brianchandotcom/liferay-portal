@@ -891,11 +891,13 @@ public class SitesImpl implements Sites {
 
 			for (String uuid : StringUtil.split(uuids)) {
 				Layout layout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 						uuid, layoutSet.getGroupId(),
 						layoutSet.isPrivateLayout());
 
-				layouts.add(layout);
+				if (layout != null) {
+					layouts.add(layout);
+				}
 			}
 
 			return layouts;
@@ -1129,7 +1131,9 @@ public class SitesImpl implements Sites {
 
 		if ((lastMergeTime >= modifiedDate.getTime()) &&
 			((lastMergeVersion == 0) ||
-			 (lastMergeVersion == layoutSetPrototype.getMvccVersion()))) {
+			 (lastMergeVersion == layoutSetPrototype.getMvccVersion())) &&
+			!_isAnyFailedLayoutModifiedSinceLastMerge(
+				layoutSet, lastMergeTime)) {
 
 			return false;
 		}
@@ -2333,6 +2337,36 @@ public class SitesImpl implements Sites {
 		}
 
 		return owner;
+	}
+
+	private boolean _isAnyFailedLayoutModifiedSinceLastMerge(
+		LayoutSet layoutSet, long lastMergeTime) {
+
+		UnicodeProperties unicodeProperties = layoutSet.getSettingsProperties();
+
+		String uuids = unicodeProperties.getProperty(
+			MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+
+		if (Validator.isNotNull(uuids)) {
+			for (String uuid : StringUtil.split(uuids)) {
+				Layout layout =
+					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+						uuid, layoutSet.getGroupId(),
+						layoutSet.isPrivateLayout());
+
+				if (layout == null) {
+					return true;
+				}
+
+				Date modifiedDate = layout.getModifiedDate();
+
+				if (modifiedDate.getTime() > lastMergeTime) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private void _releaseLock(String className, long classPK, String owner) {

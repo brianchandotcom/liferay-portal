@@ -78,8 +78,8 @@ public class EmailNotificationSender implements NotificationSender {
 			_sendNotification(
 				notificationTemplateContext.getFromAddress(),
 				notificationTemplateContext.getFromName(),
-				notificationRecipient, subject, body,
-				(File)notificationTemplateContext.getAttribute("icsFile"));
+				(File)notificationTemplateContext.getAttribute("icsFile"), body,
+				notificationRecipient, subject);
 		}
 		catch (Exception exception) {
 			throw new NotificationSenderException(exception);
@@ -87,9 +87,9 @@ public class EmailNotificationSender implements NotificationSender {
 	}
 
 	private void _sendNotification(
-			String fromAddress, String fromName,
-			NotificationRecipient notificationRecipient, String subject,
-			String notificationMessage, File icsFile)
+			String fromAddress, String fromName, File icsFile,
+			String notificationMessage,
+			NotificationRecipient notificationRecipient, String subject)
 		throws NotificationSenderException {
 
 		try {

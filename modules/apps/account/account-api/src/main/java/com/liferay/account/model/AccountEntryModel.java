@@ -216,19 +216,32 @@ public interface AccountEntryModel
 	public void setParentAccountEntryId(long parentAccountEntryId);
 
 	/**
-	 * Returns the name of this account entry.
+	 * Returns the default billing address ID of this account entry.
 	 *
-	 * @return the name of this account entry
+	 * @return the default billing address ID of this account entry
 	 */
-	@AutoEscape
-	public String getName();
+	public long getDefaultBillingAddressId();
 
 	/**
-	 * Sets the name of this account entry.
+	 * Sets the default billing address ID of this account entry.
 	 *
-	 * @param name the name of this account entry
+	 * @param defaultBillingAddressId the default billing address ID of this account entry
 	 */
-	public void setName(String name);
+	public void setDefaultBillingAddressId(long defaultBillingAddressId);
+
+	/**
+	 * Returns the default shipping address ID of this account entry.
+	 *
+	 * @return the default shipping address ID of this account entry
+	 */
+	public long getDefaultShippingAddressId();
+
+	/**
+	 * Sets the default shipping address ID of this account entry.
+	 *
+	 * @param defaultShippingAddressId the default shipping address ID of this account entry
+	 */
+	public void setDefaultShippingAddressId(long defaultShippingAddressId);
 
 	/**
 	 * Returns the description of this account entry.
@@ -259,6 +272,21 @@ public interface AccountEntryModel
 	 * @param domains the domains of this account entry
 	 */
 	public void setDomains(String domains);
+
+	/**
+	 * Returns the name of this account entry.
+	 *
+	 * @return the name of this account entry
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this account entry.
+	 *
+	 * @param name the name of this account entry
+	 */
+	public void setName(String name);
 
 	/**
 	 * Returns the logo ID of this account entry.

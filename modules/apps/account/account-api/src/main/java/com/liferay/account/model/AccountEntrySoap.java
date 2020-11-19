@@ -42,9 +42,13 @@ public class AccountEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setParentAccountEntryId(model.getParentAccountEntryId());
-		soapModel.setName(model.getName());
+		soapModel.setDefaultBillingAddressId(
+			model.getDefaultBillingAddressId());
+		soapModel.setDefaultShippingAddressId(
+			model.getDefaultShippingAddressId());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDomains(model.getDomains());
+		soapModel.setName(model.getName());
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setTaxIdNumber(model.getTaxIdNumber());
 		soapModel.setType(model.getType());
@@ -174,12 +178,20 @@ public class AccountEntrySoap implements Serializable {
 		_parentAccountEntryId = parentAccountEntryId;
 	}
 
-	public String getName() {
-		return _name;
+	public long getDefaultBillingAddressId() {
+		return _defaultBillingAddressId;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setDefaultBillingAddressId(long defaultBillingAddressId) {
+		_defaultBillingAddressId = defaultBillingAddressId;
+	}
+
+	public long getDefaultShippingAddressId() {
+		return _defaultShippingAddressId;
+	}
+
+	public void setDefaultShippingAddressId(long defaultShippingAddressId) {
+		_defaultShippingAddressId = defaultShippingAddressId;
 	}
 
 	public String getDescription() {
@@ -196,6 +208,14 @@ public class AccountEntrySoap implements Serializable {
 
 	public void setDomains(String domains) {
 		_domains = domains;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public long getLogoId() {
@@ -239,9 +259,11 @@ public class AccountEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentAccountEntryId;
-	private String _name;
+	private long _defaultBillingAddressId;
+	private long _defaultShippingAddressId;
 	private String _description;
 	private String _domains;
+	private String _name;
 	private long _logoId;
 	private String _taxIdNumber;
 	private String _type;

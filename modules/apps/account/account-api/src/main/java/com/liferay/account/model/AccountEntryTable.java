@@ -54,12 +54,20 @@ public class AccountEntryTable extends BaseTable<AccountEntryTable> {
 		createColumn(
 			"parentAccountEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<AccountEntryTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, Long> defaultBillingAddressId =
+		createColumn(
+			"defaultBillingAddressId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, Long> defaultShippingAddressId =
+		createColumn(
+			"defaultShippingAddressId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> domains = createColumn(
 		"domains", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, Long> logoId = createColumn(
 		"logoId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> taxIdNumber = createColumn(

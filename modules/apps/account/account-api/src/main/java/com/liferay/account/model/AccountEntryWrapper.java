@@ -51,9 +51,12 @@ public class AccountEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentAccountEntryId", getParentAccountEntryId());
-		attributes.put("name", getName());
+		attributes.put("defaultBillingAddressId", getDefaultBillingAddressId());
+		attributes.put(
+			"defaultShippingAddressId", getDefaultShippingAddressId());
 		attributes.put("description", getDescription());
 		attributes.put("domains", getDomains());
+		attributes.put("name", getName());
 		attributes.put("logoId", getLogoId());
 		attributes.put("taxIdNumber", getTaxIdNumber());
 		attributes.put("type", getType());
@@ -120,10 +123,18 @@ public class AccountEntryWrapper
 			setParentAccountEntryId(parentAccountEntryId);
 		}
 
-		String name = (String)attributes.get("name");
+		Long defaultBillingAddressId = (Long)attributes.get(
+			"defaultBillingAddressId");
 
-		if (name != null) {
-			setName(name);
+		if (defaultBillingAddressId != null) {
+			setDefaultBillingAddressId(defaultBillingAddressId);
+		}
+
+		Long defaultShippingAddressId = (Long)attributes.get(
+			"defaultShippingAddressId");
+
+		if (defaultShippingAddressId != null) {
+			setDefaultShippingAddressId(defaultShippingAddressId);
 		}
 
 		String description = (String)attributes.get("description");
@@ -136,6 +147,12 @@ public class AccountEntryWrapper
 
 		if (domains != null) {
 			setDomains(domains);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Long logoId = (Long)attributes.get("logoId");
@@ -201,6 +218,26 @@ public class AccountEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the default billing address ID of this account entry.
+	 *
+	 * @return the default billing address ID of this account entry
+	 */
+	@Override
+	public long getDefaultBillingAddressId() {
+		return model.getDefaultBillingAddressId();
+	}
+
+	/**
+	 * Returns the default shipping address ID of this account entry.
+	 *
+	 * @return the default shipping address ID of this account entry
+	 */
+	@Override
+	public long getDefaultShippingAddressId() {
+		return model.getDefaultShippingAddressId();
 	}
 
 	/**
@@ -386,6 +423,26 @@ public class AccountEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the default billing address ID of this account entry.
+	 *
+	 * @param defaultBillingAddressId the default billing address ID of this account entry
+	 */
+	@Override
+	public void setDefaultBillingAddressId(long defaultBillingAddressId) {
+		model.setDefaultBillingAddressId(defaultBillingAddressId);
+	}
+
+	/**
+	 * Sets the default shipping address ID of this account entry.
+	 *
+	 * @param defaultShippingAddressId the default shipping address ID of this account entry
+	 */
+	@Override
+	public void setDefaultShippingAddressId(long defaultShippingAddressId) {
+		model.setDefaultShippingAddressId(defaultShippingAddressId);
 	}
 
 	/**

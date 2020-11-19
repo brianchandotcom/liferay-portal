@@ -20,6 +20,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {useDebounceCallback} from './utils/hooks';
 import validateUrl from './utils/validateUrl';
 
 const ExternalVideoPreview = ({
@@ -35,30 +36,33 @@ const ExternalVideoPreview = ({
 	const [HTML, setHTML] = useState(externalVideoHTML);
 	const isMounted = useIsMounted();
 
+	const [getFields] = useDebounceCallback((dlExternalVideoURL) => {
+		fetch(
+			`${getDLExternalVideoFieldsURL}&${namespace}dlExternalVideoURL=${dlExternalVideoURL}`
+		)
+			.then((res) => res.json())
+			.then((fields) => {
+				if (isMounted()) {
+					setLoading(false);
+					setHTML(fields.HTML);
+					window[onFilePickCallback](fields);
+				}
+			})
+			.catch(() => {
+				if (isMounted()) {
+					setLoading(false);
+					setHTML(externalVideoURL);
+				}
+			});
+	}, 500);
+
 	const handleUrlChange = (event) => {
 		const value = event.target.value.trim();
 		setUrl(value);
 
 		if (value && validateUrl(value)) {
 			setLoading(true);
-
-			fetch(
-				`${getDLExternalVideoFieldsURL}&${namespace}dlExternalVideoURL=${value}`
-			)
-				.then((res) => res.json())
-				.then((fields) => {
-					if (isMounted()) {
-						setLoading(false);
-						setHTML(fields.HTML);
-						window[onFilePickCallback](fields);
-					}
-				})
-				.catch(() => {
-					if (isMounted()) {
-						setLoading(false);
-						setHTML(externalVideoURL);
-					}
-				});
+			getFields(value);
 		}
 		else {
 			setLoading(false);

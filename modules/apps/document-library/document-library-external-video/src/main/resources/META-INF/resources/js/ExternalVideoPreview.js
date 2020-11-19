@@ -20,6 +20,8 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import validateUrl from './utils/validateUrl';
+
 const ExternalVideoPreview = ({
 	externalVideoHTML = '',
 	externalVideoURL = '',
@@ -37,7 +39,7 @@ const ExternalVideoPreview = ({
 		const value = event.target.value.trim();
 		setUrl(value);
 
-		if (value) {
+		if (value && validateUrl(value)) {
 			setLoading(true);
 
 			fetch(

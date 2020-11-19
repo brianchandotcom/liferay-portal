@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
@@ -73,12 +74,18 @@ const ExternalVideoPreview = ({
 
 				{HTML ? (
 					<div
-						className="bg-light mt-4"
+						className="file-picker-preview-video"
 						dangerouslySetInnerHTML={{__html: HTML}}
 					/>
 				) : (
-					<div className="bg-light mt-4">
-						{isLoading && <ClayLoadingIndicator />}
+					<div className="file-picker-preview-video">
+						<div className="file-picker-preview-video-placeholder">
+							{isLoading ? (
+								<ClayLoadingIndicator />
+							) : (
+								<ClayIcon symbol="video" />
+							)}
+						</div>
 					</div>
 				)}
 			</ClayForm.Group>

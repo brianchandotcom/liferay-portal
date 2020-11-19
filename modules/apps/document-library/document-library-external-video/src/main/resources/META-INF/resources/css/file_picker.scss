@@ -1,0 +1,25 @@
+@import 'atlas-variables';
+
+.file-picker-preview-video {
+	background-color: $white;
+	border: 1px solid $secondary-l3;
+	border-radius: 0.25rem;
+	display: flex;
+	font-size: 0.875rem;
+	max-width: 594px;
+	padding: 1rem;
+
+	&-placeholder {
+		align-items: center;
+		background-color: $gray-200;
+		display: flex;
+		height: 315px;
+		justify-content: center;
+		width: 560px;
+
+		.lexicon-icon {
+			color: $gray-400;
+			font-size: 2rem;
+		}
+	}
+}

@@ -60,6 +60,12 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 	}
 </aui:script>
 
+<liferay-util:html-top
+	outputKey="document_library_external_video_file_picker_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/file_picker.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div>
 	<aui:input label="video-url" name="externalVideoURLReact" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" />
 

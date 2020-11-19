@@ -153,7 +153,46 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 			DDMFormFieldOptionsTestUtil.createDDMFormFieldOptions();
 
 		List<Map<String, String>> actualOptions = _getActualOptions(
-			ddmFormFieldOptions, LocaleUtil.US);
+			new DDMFormField("field", "select"), ddmFormFieldOptions,
+			LocaleUtil.US);
+
+		Assert.assertEquals(expectedOptions, actualOptions);
+	}
+
+	@Test
+	public void testGetOptionsAlphabeticallyOrdered() {
+		List<Object> expectedOptions = new ArrayList<>();
+
+		expectedOptions.add(
+			DDMFormFieldOptionsTestUtil.createOption(
+				"Label 1", "Reference 1", "value 1"));
+		expectedOptions.add(
+			DDMFormFieldOptionsTestUtil.createOption(
+				"Label 2", "Reference 2", "value 2"));
+		expectedOptions.add(
+			DDMFormFieldOptionsTestUtil.createOption(
+				"Label 3", "Reference 3", "value 3"));
+
+		DDMFormField ddmFormField = new DDMFormField("field", "select");
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		for (int i = 3; i > 0; i--) {
+			ddmFormFieldOptions.addOptionLabel(
+				"value " + i, LocaleUtil.US, "Label " + i);
+			ddmFormFieldOptions.addOptionReference(
+				"value " + i, "Reference " + i);
+		}
+
+		List<Map<String, String>> actualOptions = _getActualOptions(
+			ddmFormField, ddmFormFieldOptions, LocaleUtil.US);
+
+		Assert.assertNotEquals(expectedOptions, actualOptions);
+
+		ddmFormField.setProperty("alphabeticalOrder", "true");
+
+		actualOptions = _getActualOptions(
+			ddmFormField, ddmFormFieldOptions, LocaleUtil.US);
 
 		Assert.assertEquals(expectedOptions, actualOptions);
 	}
@@ -315,13 +354,14 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	}
 
 	private List<Map<String, String>> _getActualOptions(
-		DDMFormFieldOptions ddmFormFieldOptions, Locale locale) {
+		DDMFormField ddmFormField, DDMFormFieldOptions ddmFormFieldOptions,
+		Locale locale) {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		return _selectDDMFormFieldTemplateContextContributor.getOptions(
-			new DDMFormField("field", "select"), ddmFormFieldOptions, locale,
+			ddmFormField, ddmFormFieldOptions, locale,
 			ddmFormFieldRenderingContext);
 	}
 

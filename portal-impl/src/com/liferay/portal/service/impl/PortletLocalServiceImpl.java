@@ -319,8 +319,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		_portletsMap.put(portlet.getRootPortletId(), portlet);
 
-		ResourceActionsUtil.check(portlet.getPortletId());
-
 		if (eagerDestroy) {
 			PortletInstanceFactoryUtil.clear(portlet, false);
 

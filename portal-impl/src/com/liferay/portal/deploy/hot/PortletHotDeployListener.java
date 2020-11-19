@@ -261,10 +261,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 		}
 
-		_processPortletProperties(classLoader);
+		String[] sources = _processPortletProperties(classLoader);
 
 		for (Portlet portlet : portlets) {
-			ResourceActionsUtil.check(portlet.getPortletId());
+			ResourceActionsUtil.populatePortletResource(
+				portlet, classLoader, sources);
 
 			checkResourceBundles(classLoader, portlet);
 
@@ -532,7 +533,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private void _processPortletProperties(ClassLoader classLoader)
+	private String[] _processPortletProperties(ClassLoader classLoader)
 		throws Exception {
 
 		Configuration portletPropertiesConfiguration = null;
@@ -547,21 +548,14 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				_log.debug("Unable to read portlet.properties");
 			}
 
-			return;
+			return new String[0];
 		}
 
 		Properties portletProperties =
 			portletPropertiesConfiguration.getProperties();
 
-		if (portletProperties.isEmpty()) {
-			return;
-		}
-
-		ResourceActionsUtil.read(
-			classLoader,
-			StringUtil.split(
-				portletProperties.getProperty(
-					PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+		return StringUtil.split(
+			portletProperties.getProperty(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
 	}
 
 	private static final String _JNDI_JDBC = "java_liferay:jdbc";

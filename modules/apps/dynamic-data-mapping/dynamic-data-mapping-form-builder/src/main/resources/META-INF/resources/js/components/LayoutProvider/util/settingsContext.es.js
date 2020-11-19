@@ -98,6 +98,7 @@ export const updateSettingsContextProperty = (
 							...propertyValue,
 						};
 					}
+
 					field.localizedValue = {
 						...field.localizedValue,
 						[editingLanguageId]: value,

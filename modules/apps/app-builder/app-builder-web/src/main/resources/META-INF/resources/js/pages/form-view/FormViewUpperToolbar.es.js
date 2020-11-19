@@ -14,10 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import {
+	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	TranslationManager,
-	saveDataDefinition,
 } from 'data-engine-taglib';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
@@ -139,7 +139,7 @@ export default function FormViewUpperToolbar({
 
 		setLoading(true);
 
-		saveDataDefinition(state)
+		DataDefinitionUtils.saveDataDefinition(state)
 			.then(onSuccess)
 			.catch((error) => {
 				onError(error);

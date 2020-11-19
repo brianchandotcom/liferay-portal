@@ -29,7 +29,6 @@ import * as DragTypes from './drag-and-drop/dragTypes.es';
 import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
 import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
-import saveDataDefinition from './utils/saveDataDefinition.es';
 
 export {
 	DataDefinitionUtils,
@@ -43,7 +42,6 @@ export {
 	FieldType,
 	FieldTypeList,
 	SearchInput,
-	saveDataDefinition,
 	SearchInputWithForm,
 	Sidebar,
 	TranslationManager,

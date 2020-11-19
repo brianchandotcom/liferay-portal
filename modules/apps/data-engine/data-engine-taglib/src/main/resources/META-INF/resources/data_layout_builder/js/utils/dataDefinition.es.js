@@ -12,12 +12,14 @@
  * details.
  */
 
+import {addItem, updateItem} from './client.es';
 import {getLocalizedValue} from './lang.es';
+import {normalizeDataDefinition, normalizeDataLayout} from './normalizers.es';
 
-export const forEachDataDefinitionField = (
+export function forEachDataDefinitionField(
 	dataDefinition = {dataDefinitionFields: []},
 	fn
-) => {
+) {
 	const {dataDefinitionFields = []} = dataDefinition;
 
 	for (let i = 0; i < dataDefinitionFields.length; i++) {
@@ -41,9 +43,9 @@ export const forEachDataDefinitionField = (
 	}
 
 	return false;
-};
+}
 
-export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
+export function containsFieldSet(dataDefinition, dataDefinitionId) {
 	let hasFieldSet = false;
 
 	forEachDataDefinitionField(dataDefinition, (dataDefinitionField) => {
@@ -61,12 +63,12 @@ export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
 	});
 
 	return hasFieldSet;
-};
+}
 
-export const getDataDefinitionField = (
+export function getDataDefinitionField(
 	dataDefinition = {dataDefinitionFields: []},
 	fieldName
-) => {
+) {
 	let field = null;
 
 	forEachDataDefinitionField(dataDefinition, (currentField) => {
@@ -80,14 +82,15 @@ export const getDataDefinitionField = (
 	});
 
 	return field;
-};
+}
 
-export const getDataDefinitionFieldSet = (dataDefinitionFields, fieldSetId) =>
-	dataDefinitionFields.find(
+export function getDataDefinitionFieldSet(dataDefinitionFields, fieldSetId) {
+	return dataDefinitionFields.find(
 		({customProperties: {ddmStructureId}}) => ddmStructureId == fieldSetId
 	);
+}
 
-export const getFieldLabel = (dataDefinition, fieldName) => {
+export function getFieldLabel(dataDefinition, fieldName) {
 	const field = getDataDefinitionField(dataDefinition, fieldName);
 
 	if (field) {
@@ -95,14 +98,14 @@ export const getFieldLabel = (dataDefinition, fieldName) => {
 	}
 
 	return fieldName;
-};
+}
 
-export const getOptionLabel = (
+export function getOptionLabel(
 	options = {},
 	value,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 	languageId = themeDisplay.getLanguageId()
-) => {
+) {
 	const getLabel = (languageId) => {
 		if (options[languageId]) {
 			return options[languageId].find((option) => option.value === value)
@@ -111,4 +114,44 @@ export const getOptionLabel = (
 	};
 
 	return getLabel(languageId) || getLabel(defaultLanguageId) || value;
-};
+}
+
+export function saveDataDefinition({
+	dataDefinition,
+	dataDefinitionId,
+	dataLayout,
+	dataLayoutId,
+}) {
+	const {defaultLanguageId} = dataDefinition;
+	const normalizedDataDefinition = normalizeDataDefinition(
+		dataDefinition,
+		defaultLanguageId,
+		false
+	);
+	const normalizedDataLayout = normalizeDataLayout(
+		dataLayout,
+		defaultLanguageId
+	);
+
+	const updateDefinition = () =>
+		updateItem(
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
+			normalizedDataDefinition
+		);
+
+	if (dataLayoutId) {
+		return updateDefinition().then(() =>
+			updateItem(
+				`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`,
+				normalizedDataLayout
+			)
+		);
+	}
+
+	return updateDefinition().then(() =>
+		addItem(
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`,
+			normalizedDataLayout
+		)
+	);
+}

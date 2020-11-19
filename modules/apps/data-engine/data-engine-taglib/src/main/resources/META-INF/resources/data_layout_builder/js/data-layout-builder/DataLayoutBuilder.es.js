@@ -483,7 +483,6 @@ class DataLayoutBuilder extends React.Component {
 					]),
 				],
 			},
-			true,
 			defaultLanguageId
 		);
 		const fieldSetDataLayout = normalizeDataLayout(

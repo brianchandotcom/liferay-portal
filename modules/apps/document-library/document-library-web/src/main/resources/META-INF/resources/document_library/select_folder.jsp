@@ -20,7 +20,7 @@
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-long originFolderId = ParamUtil.getLong(request, "originFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+long originFolderId = ParamUtil.getLong(request, "originFolderId", folderId);
 
 long repositoryId = scopeGroupId;
 String folderName = LanguageUtil.get(request, "home");

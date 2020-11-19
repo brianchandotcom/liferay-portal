@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOW_ALL_ITEMS_TOGGLE_SWITCH</td>
+	<td>//input[contains(@class,'toggle-switch-check')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUPPORTED_CONTENT_TYPES</td>
 	<td>//span[contains(@data-title,'${key_publicationsContentType}')]</td>
 	<td></td>

@@ -16,6 +16,10 @@ definition {
 			PublicationsChanges.changeDisplayStyle(displayStyle = "Changes");
 		}
 
+		if ("${showAllItems}" == "true") {
+			Check.checkToggleSwitch(locator1 = "PublicationsSettings#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
+		}
+
 		Pause(locator1 = "3000");
 
 		var key_publicationsCategory = "${publicationsCategory}";

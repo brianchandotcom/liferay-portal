@@ -56,6 +56,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 	<aui:input name="dataDefinition" type="hidden" />
 	<aui:input name="dataLayout" type="hidden" />
 	<aui:input name="dataDefinitionId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getDDMStructureId() %>" />
+	<aui:input name="languageId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getDefaultLanguageId() %>" />
 
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 

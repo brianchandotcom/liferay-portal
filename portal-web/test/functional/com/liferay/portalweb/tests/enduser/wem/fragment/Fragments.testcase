@@ -662,7 +662,7 @@ definition {
 		}
 	}
 
-	// Ignored until LPS-117067 implement
+	// Ignored until LPS-120693 implement
 
 	@description = "This is a test for LPS-106776, LPS-102959 and LPS-111657. Configure the Container and Grid elements."
 	@ignore = "true"

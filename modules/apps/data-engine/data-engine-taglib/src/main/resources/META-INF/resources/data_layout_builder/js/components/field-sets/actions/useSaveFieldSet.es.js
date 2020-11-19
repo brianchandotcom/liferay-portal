@@ -19,14 +19,12 @@ import {UPDATE_DATA_DEFINITION, UPDATE_FIELDSETS} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {updateItem} from '../../../utils/client.es';
 import {getDataDefinitionFieldSet} from '../../../utils/dataDefinition.es';
-import {
-	containsField,
-	normalizeDataLayoutRows,
-} from '../../../utils/dataLayoutVisitor.es';
+import {containsField} from '../../../utils/dataLayoutVisitor.es';
 import {
 	normalizeDataDefinition,
 	normalizeDataLayout,
-} from '../../../utils/saveDataDefinition.es';
+	normalizeDataLayoutRows,
+} from '../../../utils/normalizers.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({availableLanguageIds, childrenContext, fieldSet}) => {

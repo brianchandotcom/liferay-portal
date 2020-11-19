@@ -31,7 +31,7 @@ import generateDataDefinitionFieldName from '../utils/generateDataDefinitionFiel
 import {
 	normalizeDataDefinition,
 	normalizeDataLayout,
-} from '../utils/saveDataDefinition.es';
+} from '../utils/normalizers.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
 

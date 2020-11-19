@@ -42,6 +42,7 @@ import {
 } from './actions.es';
 import {getDataDefinitionField} from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
+import {normalizeRule} from './utils/normalizers.es';
 
 const AppContext = createContext();
 
@@ -240,7 +241,7 @@ const createReducer = (dataLayoutBuilder) => {
 					dataLayout: {dataRules},
 				} = state;
 
-				dataRule = DataLayoutVisitor.normalizeRule(dataRule);
+				dataRule = normalizeRule(dataRule);
 
 				return {
 					...state,
@@ -392,7 +393,7 @@ const createReducer = (dataLayoutBuilder) => {
 					dataLayout: {dataRules},
 				} = state;
 
-				dataRule = DataLayoutVisitor.normalizeRule(dataRule);
+				dataRule = normalizeRule(dataRule);
 
 				return {
 					...state,

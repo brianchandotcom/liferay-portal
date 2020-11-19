@@ -100,22 +100,6 @@ export function getIndexesFromFieldName({dataLayoutPages}, fieldName) {
 	return indexes;
 }
 
-export function normalizeRule(dataRule) {
-	if (Object.prototype.hasOwnProperty.call(dataRule, 'logical-operator')) {
-		dataRule['logicalOperator'] = dataRule['logical-operator'];
-		delete dataRule['logical-operator'];
-	}
-
-	dataRule = {
-		...dataRule,
-		name: {
-			en_US: dataRule.name,
-		},
-	};
-
-	return dataRule;
-}
-
 export function isDataLayoutEmpty(dataLayoutPages) {
 	return dataLayoutPages.every(({dataLayoutRows}) => {
 		return dataLayoutRows.every(({dataLayoutColumns}) => {
@@ -123,18 +107,5 @@ export function isDataLayoutEmpty(dataLayoutPages) {
 				return !fieldNames.length;
 			});
 		});
-	});
-}
-
-export function normalizeDataLayoutRows(dataLayoutPages) {
-	return dataLayoutPages[0].dataLayoutRows.map(({dataLayoutColumns}) => {
-		return {
-			columns: dataLayoutColumns.map(
-				({columnSize: size, fieldNames: fields}) => ({
-					fields,
-					size,
-				})
-			),
-		};
 	});
 }

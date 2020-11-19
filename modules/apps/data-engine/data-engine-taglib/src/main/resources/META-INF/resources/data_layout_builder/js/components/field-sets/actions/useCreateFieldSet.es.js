@@ -18,7 +18,7 @@ import AppContext from '../../../AppContext.es';
 import {UPDATE_FIELDSETS} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {addItem} from '../../../utils/client.es';
-import {normalizeDataDefinition} from '../../../utils/saveDataDefinition.es';
+import {normalizeDataDefinition} from '../../../utils/normalizers.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({availableLanguageIds, childrenContext, defaultLanguageId}) => {

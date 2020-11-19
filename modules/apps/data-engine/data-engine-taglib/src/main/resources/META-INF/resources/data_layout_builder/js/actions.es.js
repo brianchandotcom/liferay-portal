@@ -13,7 +13,7 @@
  */
 
 import {getDataDefinitionField} from './utils/dataDefinition.es';
-import {normalizeDataLayoutRows} from './utils/dataLayoutVisitor.es';
+import {normalizeDataLayoutRows} from './utils/normalizers.es';
 
 export const ADD_CUSTOM_OBJECT_FIELD = 'ADD_CUSTOM_OBJECT_FIELD';
 export const ADD_DATA_LAYOUT_RULE = 'ADD_DATA_LAYOUT_RULE';

@@ -32,12 +32,6 @@ public class UpgradeCountry extends UpgradeProcess {
 
 		runSQL("drop index IX_19DA007B on Country");
 
-		if (!hasColumn("Country", "uuid_")) {
-			alter(
-				CountryTable.class,
-				new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
-		}
-
 		if (!hasColumn("Country", "companyId")) {
 			alter(
 				CountryTable.class,
@@ -101,6 +95,12 @@ public class UpgradeCountry extends UpgradeProcess {
 			alter(
 				CountryTable.class,
 				new AlterTableAddColumn("lastPublishDate", "DATE null"));
+		}
+
+		if (!hasColumn("Country", "uuid_")) {
+			alter(
+				CountryTable.class,
+				new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
 		}
 	}
 

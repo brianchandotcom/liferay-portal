@@ -206,9 +206,6 @@ public class DLViewDisplayContext {
 		renderURL.setParameter(
 			"mvcRenderCommandName", "/document_library/select_folder");
 		renderURL.setParameter(
-			"originFolderId",
-			String.valueOf(_dlAdminDisplayContext.getFolderId()));
-		renderURL.setParameter(
 			"folderId", String.valueOf(_dlAdminDisplayContext.getFolderId()));
 		renderURL.setWindowState(LiferayWindowState.POP_UP);
 

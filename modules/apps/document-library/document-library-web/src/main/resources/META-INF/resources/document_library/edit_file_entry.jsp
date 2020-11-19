@@ -302,7 +302,7 @@ renderResponse.setTitle(headerTitle);
 
 											<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 												<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-												<portlet:param name="originFolderId" value="<%= String.valueOf(folderId) %>" />
+												<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 											</liferay-portlet:renderURL>
 
 											url: '<%= selectFolderURL.toString() %>',

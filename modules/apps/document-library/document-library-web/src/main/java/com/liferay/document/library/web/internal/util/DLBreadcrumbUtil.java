@@ -237,7 +237,9 @@ public class DLBreadcrumbUtil {
 
 		long originFolderId = ParamUtil.getLong(
 			httpServletRequest, "originFolderId",
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			ParamUtil.getLong(
+				httpServletRequest, "folderId",
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
 		portletURL.setParameter(
 			"originFolderId", String.valueOf(originFolderId));

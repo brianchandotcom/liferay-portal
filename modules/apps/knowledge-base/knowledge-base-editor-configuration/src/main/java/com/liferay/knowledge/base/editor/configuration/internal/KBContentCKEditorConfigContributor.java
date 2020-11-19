@@ -81,7 +81,7 @@ public class KBContentCKEditorConfigContributor
 			super.toJSONArray("['Styles']"),
 			super.toJSONArray("['Link', 'Unlink']"),
 			super.toJSONArray(
-				"['Table','ImageSelector','VideoEmbed', 'HorizontalRule']"));
+				"['Table','ImageSelector','VideoSelector', 'HorizontalRule']"));
 
 		if (_isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));

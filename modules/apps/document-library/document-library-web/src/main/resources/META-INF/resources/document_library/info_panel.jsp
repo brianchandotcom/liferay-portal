@@ -74,7 +74,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				refresh="<%= false %>"
 			>
 				<liferay-ui:section>
-					<dl class="sidebar-block">
+					<dl class="sidebar-dl sidebar-section">
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="num-of-items" />
 						</dt>
@@ -166,7 +166,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 					FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 					%>
 
-					<dl class="sidebar-block">
+					<dl class="sidebar-dl sidebar-section">
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="description" />
 						</dt>

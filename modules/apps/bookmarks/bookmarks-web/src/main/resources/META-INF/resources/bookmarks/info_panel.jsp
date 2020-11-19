@@ -80,7 +80,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		/>
 
 		<div class="sidebar-body">
-			<dl class="sidebar-block">
+			<dl class="sidebar-dl sidebar-section">
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="num-of-items" />
 				</dt>
@@ -148,7 +148,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		/>
 
 		<div class="sidebar-body">
-			<dl class="sidebar-block">
+			<dl class="sidebar-dl sidebar-section">
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="created" />
 				</dt>
@@ -179,14 +179,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				</dd>
 			</dl>
 
-			<div class="lfr-asset-categories sidebar-block">
+			<div class="lfr-asset-categories sidebar-section">
 				<liferay-asset:asset-categories-summary
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
 				/>
 			</div>
 
-			<div class="lfr-asset-tags sidebar-block">
+			<div class="lfr-asset-tags sidebar-section">
 				<liferay-asset:asset-tags-summary
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"

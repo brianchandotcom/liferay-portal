@@ -69,7 +69,7 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 >
 	<liferay-ui:section>
 		<div class="sidebar-body">
-			<dl class="sidebar-block">
+			<dl class="sidebar-dl sidebar-section">
 				<c:choose>
 					<c:when test="<%= selectedConfigurationEntriesSize == 1 %>">
 						<dt class="sidebar-dt">

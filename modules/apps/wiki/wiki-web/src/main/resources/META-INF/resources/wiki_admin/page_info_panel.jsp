@@ -96,7 +96,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 					%>
 
-					<dl class="sidebar-block">
+					<dl class="sidebar-dl sidebar-section">
 						<c:if test="<%= Validator.isNotNull(wikiPage.getSummary()) %>">
 							<dt class="sidebar-dt">
 								<liferay-ui:message key="summary" />
@@ -150,7 +150,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						</dd>
 					</dl>
 
-					<div class="lfr-asset-categories sidebar-block">
+					<div class="lfr-asset-categories sidebar-section">
 						<liferay-asset:asset-categories-summary
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
@@ -158,7 +158,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						/>
 					</div>
 
-					<div class="lfr-asset-tags sidebar-block">
+					<div class="lfr-asset-tags sidebar-section">
 						<liferay-asset:asset-tags-summary
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
@@ -201,7 +201,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					<h5><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h5>
 				</c:when>
 				<c:otherwise>
-					<dl class="sidebar-block">
+					<dl class="sidebar-dl sidebar-section">
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="num-of-items" />
 						</dt>
@@ -222,7 +222,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 		<liferay-ui:section>
 			<div class="sidebar-body">
-				<ul class="sidebar-block tabular-list-group-unstyled">
+				<ul class="sidebar-section tabular-list-group-unstyled">
 
 					<%
 					List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
@@ -261,7 +261,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 		<liferay-ui:section>
 			<div class="sidebar-body">
-				<ul class="sidebar-block tabular-list-group-unstyled">
+				<ul class="sidebar-section tabular-list-group-unstyled">
 
 					<%
 					WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);

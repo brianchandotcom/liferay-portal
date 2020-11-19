@@ -58,7 +58,7 @@
 	}
 
 	.navigation-bar-light,
-	.sidebar-block > .list-group-item,
+	.sidebar-section > .list-group-item,
 	.panel {
 		@include media-breakpoint-up(sm) {
 			background-color: transparent;

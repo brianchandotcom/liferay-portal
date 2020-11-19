@@ -66,7 +66,7 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 >
 	<liferay-ui:section>
 		<div class="sidebar-body">
-			<dl class="sidebar-block">
+			<dl class="sidebar-dl sidebar-section">
 				<c:choose>
 					<c:when test="<%= wikiNodeInfoPanelDisplayContext.isSingleNodeSelection() %>">
 

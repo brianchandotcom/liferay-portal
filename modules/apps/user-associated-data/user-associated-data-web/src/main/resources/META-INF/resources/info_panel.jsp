@@ -57,7 +57,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 			</div>
 
 			<div class="sidebar-body">
-				<dl class="sidebar-block sidebar-dl sidebar-section">
+				<dl class="sidebar-dl sidebar-section">
 					<dt class="sidebar-dt"><%= LanguageUtil.get(request, "primary-key") %></dt>
 					<dd class="sidebar-dd"><%= primaryKey %></dd>
 

@@ -31,7 +31,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 
 <clay:row>
 	<clay:col>
-		<ul class="sidebar-block tabular-list-group-unstyled">
+		<ul class="sidebar-section tabular-list-group-unstyled">
 
 			<%
 			for (KBArticle curKBArticle : kbArticles) {

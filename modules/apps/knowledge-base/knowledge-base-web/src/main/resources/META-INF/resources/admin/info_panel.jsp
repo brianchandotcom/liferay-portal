@@ -76,7 +76,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		/>
 
 		<div class="sidebar-body">
-			<dl class="sidebar-block">
+			<dl class="sidebar-dl sidebar-section">
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="num-of-items" />
 				</dt>
@@ -139,7 +139,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		>
 			<liferay-ui:section>
 				<div class="sidebar-body">
-					<dl class="sidebar-block">
+					<dl class="sidebar-dl sidebar-section">
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="title" />
 						</dt>

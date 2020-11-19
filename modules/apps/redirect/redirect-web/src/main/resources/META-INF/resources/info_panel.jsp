@@ -57,7 +57,7 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 			RedirectEntry redirectEntry = redirectEntries.get(0);
 			%>
 
-			<dl class="sidebar-block">
+			<dl class="sidebar-dl sidebar-section">
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="created-by" />
 				</dt>

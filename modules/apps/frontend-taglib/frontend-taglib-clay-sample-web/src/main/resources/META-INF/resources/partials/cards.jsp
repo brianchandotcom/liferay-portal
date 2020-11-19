@@ -177,7 +177,6 @@ ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 			actionDropdownItems="<%= claySampleImageCard.getActionDropdownItems() %>"
 			icon="camera"
 			labels="<%= claySampleImageCard.getLabels() %>"
-			labelStylesMap="<%= claySampleImageCard.getLabelStylesMap() %>"
 			stickerLabel="SVG"
 			stickerStyle="warning"
 			subtitle="<%= claySampleImageCard.getSubtitle() %>"
@@ -318,7 +317,6 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 		<clay:file-card
 			actionDropdownItems="<%= claySampleFileCard.getActionDropdownItems() %>"
 			labels="<%= claySampleFileCard.getLabels() %>"
-			labelStylesMap="<%= claySampleFileCard.getLabelStylesMap() %>"
 			selectable="<%= false %>"
 			stickerLabel="MP3"
 			stickerStyle="warning"

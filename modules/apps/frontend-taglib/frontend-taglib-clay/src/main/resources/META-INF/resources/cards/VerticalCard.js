@@ -32,7 +32,6 @@ export default function VerticalCard({
 	inputName = '',
 	inputValue = '',
 	labels = [],
-	labelStylesMap: _labelStylesMap,
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,

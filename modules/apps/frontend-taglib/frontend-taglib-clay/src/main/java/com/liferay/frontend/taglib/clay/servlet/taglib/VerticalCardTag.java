@@ -89,6 +89,10 @@ public class VerticalCardTag extends BaseCardTag {
 		return _labels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public Map<String, String> getLabelStylesMap() {
 		VerticalCard verticalCard = getVerticalCard();
 
@@ -245,6 +249,10 @@ public class VerticalCardTag extends BaseCardTag {
 		_labels = labels;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setLabelStylesMap(Map<String, String> labelStylesMap) {
 		_labelStylesMap = labelStylesMap;
 	}
@@ -324,7 +332,6 @@ public class VerticalCardTag extends BaseCardTag {
 		props.put("imageAlt", getImageAlt());
 		props.put("imageSrc", getImageSrc());
 		props.put("labels", getLabels());
-		props.put("labelStylesMap", getLabelStylesMap());
 		props.put("stickerCssClass", getStickerCssClass());
 		props.put("stickerIcon", getStickerIcon());
 		props.put("stickerImageAlt", getStickerImageAlt());

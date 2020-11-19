@@ -289,6 +289,101 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			String.valueOf(getID()), ".aspx");
 	}
 
+	public void updateSpiraCustomPropertyValues(
+		List<SpiraCustomPropertyValue> spiraCustomPropertyValues) {
+
+		List<SpiraCustomPropertyValue> updatedSpiraCustomPropertyValues =
+			new ArrayList<>();
+
+		boolean updated = false;
+
+		for (SpiraCustomPropertyValue currentSpiraCustomPropertyValue :
+				getSpiraCustomPropertyValues()) {
+
+			SpiraCustomPropertyValue newSpiraCustomPropertyValue = null;
+
+			String currentSpiraCustomPropertyName =
+				currentSpiraCustomPropertyValue.getName();
+
+			for (SpiraCustomPropertyValue spiraCustomPropertyValue :
+					spiraCustomPropertyValues) {
+
+				if (!currentSpiraCustomPropertyName.equals(
+						spiraCustomPropertyValue.getName())) {
+
+					continue;
+				}
+
+				if (currentSpiraCustomPropertyValue.equals(
+						spiraCustomPropertyValue)) {
+
+					break;
+				}
+
+				newSpiraCustomPropertyValue = spiraCustomPropertyValue;
+
+				break;
+			}
+
+			if (newSpiraCustomPropertyValue != null) {
+				updated = true;
+
+				updatedSpiraCustomPropertyValues.add(
+					newSpiraCustomPropertyValue);
+
+				continue;
+			}
+
+			updatedSpiraCustomPropertyValues.add(
+				currentSpiraCustomPropertyValue);
+		}
+
+		if (!updated) {
+			return;
+		}
+
+		String urlPath = "projects/{project_id}/test-cases";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		JSONObject requestJSONObject = toJSONObject();
+
+		JSONArray customPropertiesJSONArray = new JSONArray();
+
+		for (SpiraCustomPropertyValue spiraCustomPropertyValue :
+				updatedSpiraCustomPropertyValues) {
+
+			customPropertiesJSONArray.put(
+				spiraCustomPropertyValue.getCustomPropertyJSONObject());
+		}
+
+		requestJSONObject.remove("CustomProperties");
+
+		requestJSONObject.put("CustomProperties", customPropertiesJSONArray);
+
+		try {
+			SpiraRestAPIUtil.request(
+				urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
+				requestJSONObject.toString());
+
+			urlPathReplacements.put("test_case_id", String.valueOf(getID()));
+
+			jsonObject = SpiraRestAPIUtil.requestJSONObject(
+				"projects/{project_id}/test-cases/{test_case_id}", null,
+				urlPathReplacements, HttpRequestMethod.GET, null);
+
+			jsonObject.put("Path", getPath());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public static enum Status {
 
 		APPROVED(4), DRAFT(1), OBSOLETE(9), READY_FOR_REVIEW(2),

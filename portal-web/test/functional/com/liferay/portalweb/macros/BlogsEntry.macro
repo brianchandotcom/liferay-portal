@@ -104,11 +104,31 @@ definition {
 	}
 
 	macro addSmallImage {
-		Click(locator1 = "Button#SELECT_FILE_SMALL_IMAGE");
+		if (isSet(browseImage)) {
+			Click(locator1 = "BlogsEntry#SMALL_IMAGE_BROWSE_IMAGE");
+		}
+		else {
+			Click(locator1 = "Button#SELECT_FILE_SMALL_IMAGE");
+		}
 
-		ItemSelector.uploadFile(
-			navTab = "${navTab}",
-			uploadFileName = "${uploadFileName}");
+		if ("${navTab}" == "Documents and Media") {
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					depotName = "${depotName}",
+					imageFileName = "${imageFileName}",
+					navTab = "${navTab}");
+			}
+			else {
+				ItemSelector.selectDMImage(
+					imageFileName = "${webContentImage}",
+					navTab = "${navTab}");
+			}
+		}
+		else {
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
 	}
 
 	macro addSubtitle {

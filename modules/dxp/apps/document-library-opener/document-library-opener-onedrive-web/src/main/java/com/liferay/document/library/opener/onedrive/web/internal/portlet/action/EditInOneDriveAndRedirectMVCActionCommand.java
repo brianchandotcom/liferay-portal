@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"mvc.command.name=/document_library/edit_in_office365_and_redirect"
+		"mvc.command.name=/document_library/edit_in_one_drive_and_redirect"
 	},
 	service = MVCActionCommand.class
 )

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"mvc.command.name=/document_library/check_in_in_office365"
+		"mvc.command.name=/document_library/check_in_in_one_drive"
 	},
 	service = MVCActionCommand.class
 )

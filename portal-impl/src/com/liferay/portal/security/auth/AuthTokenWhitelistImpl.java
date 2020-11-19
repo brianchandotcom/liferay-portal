@@ -35,28 +35,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
-	public AuthTokenWhitelistImpl() {
-		trackWhitelistServices(
-			PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS, _originCSRFWhitelist);
-
-		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS);
-
-		trackWhitelistServices(
-			PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, _portletCSRFWhitelist);
-
-		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
-
-		trackWhitelistServices(
-			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
-			_portletInvocationWhitelist);
-
-		registerPortalProperty(
-			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
-	}
-
 	@Override
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
-		for (String whitelistedOrigin : _originCSRFWhitelist) {
+		for (String whitelistedOrigin : _getOriginCSRFWhitelist()) {
 			if (origin.startsWith(whitelistedOrigin)) {
 				return true;
 			}
@@ -69,14 +50,19 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 	public boolean isPortletCSRFWhitelisted(
 		HttpServletRequest httpServletRequest, Portlet portlet) {
 
-		return _portletCSRFWhitelist.contains(portlet.getRootPortletId());
+		Set<String> portletCSRFWhitelist = _getPortletCSRFWhitelist();
+
+		return portletCSRFWhitelist.contains(portlet.getRootPortletId());
 	}
 
 	@Override
 	public boolean isPortletInvocationWhitelisted(
 		HttpServletRequest httpServletRequest, Portlet portlet) {
 
-		return _portletInvocationWhitelist.contains(portlet.getPortletId());
+		Set<String> portletInvocationWhitelist =
+			_getPortletInvocationWhitelist();
+
+		return portletInvocationWhitelist.contains(portlet.getPortletId());
 	}
 
 	@Override
@@ -86,14 +72,19 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		String rootPortletId = PortletIdCodec.decodePortletName(
 			liferayPortletURL.getPortletId());
 
-		return _portletCSRFWhitelist.contains(rootPortletId);
+		Set<String> portletCSRFWhitelist = _getPortletCSRFWhitelist();
+
+		return portletCSRFWhitelist.contains(rootPortletId);
 	}
 
 	@Override
 	public boolean isPortletURLPortletInvocationWhitelisted(
 		LiferayPortletURL liferayPortletURL) {
 
-		return _portletInvocationWhitelist.contains(
+		Set<String> portletInvocationWhitelist =
+			_getPortletInvocationWhitelist();
+
+		return portletInvocationWhitelist.contains(
 			liferayPortletURL.getPortletId());
 	}
 
@@ -111,11 +102,91 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 			DigesterUtil.digest(PropsValues.AUTH_TOKEN_SHARED_SECRET));
 	}
 
-	private final Set<String> _originCSRFWhitelist = Collections.newSetFromMap(
-		new ConcurrentHashMap<>());
-	private final Set<String> _portletCSRFWhitelist = Collections.newSetFromMap(
-		new ConcurrentHashMap<>());
-	private final Set<String> _portletInvocationWhitelist =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private Set<String> _getOriginCSRFWhitelist() {
+		Set<String> originCSRFWhitelist = _originCSRFWhitelist;
+
+		if (originCSRFWhitelist != null) {
+			return originCSRFWhitelist;
+		}
+
+		synchronized (this) {
+			if (_originCSRFWhitelist == null) {
+				originCSRFWhitelist = Collections.newSetFromMap(
+					new ConcurrentHashMap<>());
+
+				registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS);
+
+				trackWhitelistServices(
+					PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS, originCSRFWhitelist);
+
+				_originCSRFWhitelist = originCSRFWhitelist;
+			}
+			else {
+				originCSRFWhitelist = _originCSRFWhitelist;
+			}
+		}
+
+		return originCSRFWhitelist;
+	}
+
+	private Set<String> _getPortletCSRFWhitelist() {
+		Set<String> portletCSRFWhitelist = _portletCSRFWhitelist;
+
+		if (portletCSRFWhitelist != null) {
+			return portletCSRFWhitelist;
+		}
+
+		synchronized (this) {
+			if (_portletCSRFWhitelist == null) {
+				portletCSRFWhitelist = Collections.newSetFromMap(
+					new ConcurrentHashMap<>());
+
+				registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
+
+				trackWhitelistServices(
+					PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, portletCSRFWhitelist);
+
+				_portletCSRFWhitelist = portletCSRFWhitelist;
+			}
+			else {
+				portletCSRFWhitelist = _portletCSRFWhitelist;
+			}
+		}
+
+		return portletCSRFWhitelist;
+	}
+
+	private Set<String> _getPortletInvocationWhitelist() {
+		Set<String> portletInvocationWhitelist = _portletInvocationWhitelist;
+
+		if (portletInvocationWhitelist != null) {
+			return portletInvocationWhitelist;
+		}
+
+		synchronized (this) {
+			if (_portletInvocationWhitelist == null) {
+				portletInvocationWhitelist = Collections.newSetFromMap(
+					new ConcurrentHashMap<>());
+
+				registerPortalProperty(
+					PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
+
+				trackWhitelistServices(
+					PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
+					portletInvocationWhitelist);
+
+				_portletInvocationWhitelist = portletInvocationWhitelist;
+			}
+			else {
+				portletInvocationWhitelist = _portletInvocationWhitelist;
+			}
+		}
+
+		return portletInvocationWhitelist;
+	}
+
+	private volatile Set<String> _originCSRFWhitelist;
+	private volatile Set<String> _portletCSRFWhitelist;
+	private volatile Set<String> _portletInvocationWhitelist;
 
 }

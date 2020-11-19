@@ -222,7 +222,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 		<liferay-ui:section>
 			<div class="sidebar-body">
-				<ul class="sidebar-section tabular-list-group-unstyled">
+				<ul class="list-group sidebar-list-group">
 
 					<%
 					List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
@@ -230,8 +230,8 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					for (WikiPage curPage : pages) {
 					%>
 
-						<li class="list-group-item">
-							<div class="list-group-item-content">
+						<li class="list-group-item list-group-item-flex">
+							<div class="autofit-col autofit-col-expand">
 								<div class="h5">
 									<liferay-ui:message arguments="<%= curPage.getVersion() %>" key="version-x" />
 								</div>
@@ -241,7 +241,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								</div>
 							</div>
 
-							<div class="list-group-item-field">
+							<div class="autofit-col">
 
 								<%
 								request.setAttribute("page_info_panel.jsp-wikiPage", curPage);
@@ -261,7 +261,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 		<liferay-ui:section>
 			<div class="sidebar-body">
-				<ul class="sidebar-section tabular-list-group-unstyled">
+				<ul class="list-group sidebar-list-group">
 
 					<%
 					WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
@@ -274,8 +274,8 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						String path = wikiSocialActivityHelper.getSocialActivityActionJSP(socialActivity, extraDataJSONObject);
 					%>
 
-						<li class="list-group-item">
-							<div class="list-group-item-content">
+						<li class="list-group-item list-group-item-flex">
+							<div class="autofit-col autofit-col-expand">
 								<div class="h5">
 									<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>
 								</div>
@@ -286,7 +286,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 							</div>
 
 							<c:if test="<%= Validator.isNotNull(path) %>">
-								<div class="list-group-item-field">
+								<div class="autofit-col">
 
 									<%
 									request.setAttribute(WikiWebKeys.WIKI_PAGE, wikiPage);

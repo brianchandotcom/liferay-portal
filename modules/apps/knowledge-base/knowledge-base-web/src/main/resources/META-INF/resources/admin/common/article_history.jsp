@@ -31,14 +31,14 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 
 <clay:row>
 	<clay:col>
-		<ul class="sidebar-section tabular-list-group-unstyled">
+		<ul class="list-group sidebar-list-group">
 
 			<%
 			for (KBArticle curKBArticle : kbArticles) {
 			%>
 
-				<li class="list-group-item">
-					<div class="list-group-item-content">
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col autofit-col-expand">
 						<div class="h5">
 							<liferay-ui:message arguments="<%= curKBArticle.getVersion() %>" key="version-x" />
 						</div>
@@ -48,7 +48,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 						</div>
 					</div>
 
-					<div class="list-group-item-field">
+					<div class="autofit-col">
 						<liferay-ui:icon-menu
 							direction="left-side"
 							icon="<%= StringPool.BLANK %>"

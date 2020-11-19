@@ -161,7 +161,7 @@ definition {
 	@priority = "5"
 	test JoinSiteRestricted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create a restricted site") {
@@ -251,7 +251,7 @@ definition {
 	@priority = "5"
 	test LeaveSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create a generic site") {

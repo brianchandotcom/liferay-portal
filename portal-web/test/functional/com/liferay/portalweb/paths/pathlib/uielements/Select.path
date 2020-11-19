@@ -110,17 +110,17 @@
 </tr>
 <tr>
 	<td>GENERIC_SELECT_FIELD</td>
-	<td>//div[label[contains(.,'${key_fieldLabel}')]]/select</td>
+	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]/select</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GENERIC_SELECT_VALUE</td>
-	<td>//div[label[contains(.,'${key_fieldLabel}')]]/select//option[normalize-space(text())='${key_value}']</td>
+	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]/select//option[normalize-space(text())='${key_value}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GROUPED_SELECT_VALUE</td>
-	<td>//div[label[contains(.,'${key_fieldLabel}')]]/select/optgroup[@label='${key_groupLabel}']/option[normalize-space(text())='${key_value}']</td>
+	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]/select/optgroup[@label='${key_groupLabel}']/option[normalize-space(text())='${key_value}']</td>
 	<td></td>
 </tr>
 <tr>

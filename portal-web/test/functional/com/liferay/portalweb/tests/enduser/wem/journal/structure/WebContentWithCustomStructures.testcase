@@ -1690,7 +1690,7 @@ definition {
 			Button.clickPublish();
 
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_VALIDATION",
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "This field is required.");
 		}
 
@@ -1698,7 +1698,7 @@ definition {
 			WebContent.clickMarginOfContentContainer();
 
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_VALIDATION",
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "This field is required.");
 		}
 
@@ -1708,11 +1708,11 @@ definition {
 				fieldLabel = "Rich Text");
 
 			CKEditor.addContentInWebContent(
-				content = "",
+				content = " ",
 				fieldLabel = "Rich Text");
 
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_VALIDATION",
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "This field is required.");
 		}
 

@@ -42,6 +42,7 @@ const FormsRuleBuilder = React.forwardRef(
 			pages,
 			rolesURL,
 			rules,
+			visible,
 			spritemap,
 			...otherProps
 		},
@@ -63,20 +64,6 @@ const FormsRuleBuilder = React.forwardRef(
 			fetch,
 			link: location.origin + rolesURL,
 		});
-
-		const dataProvider = resourceDataProvider?.map((data) => ({
-			...data,
-			label: data.name,
-			value: data.id,
-		}));
-
-		const roles = resourceRoles?.map((role) => ({
-			...role,
-			label: role.name,
-			value: role.name,
-		}));
-
-		const dispatch = (name, event) => metal.context.dispatch(name, event);
 
 		useImperativeHandle(
 			ref,
@@ -122,6 +109,28 @@ const FormsRuleBuilder = React.forwardRef(
 				value: index.toString(),
 			}));
 		}, [pages]);
+
+		// This visible behavior is only for compatibility with the
+		// Forms application using Metal.js, the visibility conditional
+		// must be controlled by the parent component.
+
+		if (!visible) {
+			return null;
+		}
+
+		const dataProvider = resourceDataProvider?.map((data) => ({
+			...data,
+			label: data.name,
+			value: data.id,
+		}));
+
+		const roles = resourceRoles?.map((role) => ({
+			...role,
+			label: role.name,
+			value: role.name,
+		}));
+
+		const dispatch = (name, event) => metal.context.dispatch(name, event);
 
 		return (
 			<ClayIconSpriteContext.Provider value={spritemap}>

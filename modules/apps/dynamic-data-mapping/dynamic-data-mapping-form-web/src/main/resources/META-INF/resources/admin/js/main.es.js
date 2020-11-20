@@ -613,7 +613,7 @@ class Form extends Component {
 
 	_handleAddFieldButtonClicked() {
 		if (this.isShowRuleBuilder()) {
-			this.refs.ruleBuilder.showRuleCreation();
+			this.refs.ruleBuilder?.reactComponentRef.current.showRuleCreation();
 
 			this.hideAddButton();
 		}
@@ -1091,7 +1091,7 @@ class Form extends Component {
 			managementToolbar.classList.add('hide');
 		}
 
-		if (this.refs.ruleBuilder.isViewMode()) {
+		if (this.refs.ruleBuilder?.reactComponentRef.current.isViewMode()) {
 			this.showAddButton();
 		}
 		else {

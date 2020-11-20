@@ -366,6 +366,8 @@ export default {
 	clearOperatorValue,
 	clearSecondOperandValue,
 	clearTargetValue,
+	fieldNameBelongsToAction,
+	fieldNameBelongsToCondition,
 	findInvalidRule,
 	findRuleByFieldName,
 	formatRules,

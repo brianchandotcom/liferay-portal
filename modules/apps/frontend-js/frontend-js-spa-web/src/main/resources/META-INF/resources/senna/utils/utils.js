@@ -227,6 +227,82 @@ export function removePathTrailingSlash(path) {
 }
 
 /**
+ * Evaluates the code referenced by the given style/link element.
+ * @param {!Element} style
+ * @param {function()=} defaultFn Optional function to be called
+ *   when the script has been run.
+ * @param {function()=} appendFn Optional function to append the node
+ *   into document.
+ *  @return {Element} style
+ */
+export function runStyle(style, defaultFn, appendFn) {
+	const callback = function () {
+		if (defaultFn) {
+			defaultFn();
+		}
+	};
+
+	if (
+		style.rel &&
+		style.rel !== 'stylesheet' &&
+		style.rel !== 'canonical' &&
+		style.rel !== 'alternate'
+	) {
+		setTimeout(callback);
+
+		return;
+	}
+
+	if (
+		style.tagName === 'STYLE' ||
+		style.rel === 'canonical' ||
+		style.rel === 'alternate'
+	) {
+		setTimeout(callback);
+	}
+	else {
+		style.addEventListener('load', callback, {once: true});
+		style.addEventListener('error', callback, {once: true});
+	}
+
+	if (appendFn) {
+		appendFn(style);
+	}
+	else {
+		document.head.appendChild(style);
+	}
+
+	return style;
+}
+
+/**
+ * Evaluates any style present in the given element.
+ * @param {!Element} element
+ * @param {function()=} defaultFn Optional function to be called when the
+ *   style has been run.
+ * @param {function()=} appendFn Optional function to append the node
+ *   into document.
+ */
+export function runStylesInElement(element, defaultFn, appendFn) {
+	const styles = element.querySelectorAll('style,link');
+	if (styles.length === 0 && defaultFn) {
+		setTimeout(defaultFn);
+
+		return;
+	}
+
+	let loadCount = 0;
+	const callback = function () {
+		if (defaultFn && ++loadCount === styles.length) {
+			setTimeout(defaultFn);
+		}
+	};
+	for (let i = 0; i < styles.length; i++) {
+		runStyle(styles[i], callback, appendFn);
+	}
+}
+
+/**
  * Overrides document referrer
  * @param {string} referrer
  * @static

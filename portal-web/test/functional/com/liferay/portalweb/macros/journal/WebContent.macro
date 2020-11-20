@@ -1824,6 +1824,18 @@ definition {
 			value1 = "${webContentContent}");
 	}
 
+	macro viewEntryListAuthor {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Pause(locator1 = "3000");
+
+		AssertTextEquals.assertPartialText(
+			key_entryAuthor = "${author}",
+			key_entryTitle = "${entryTitle}",
+			locator1 = "WCEditWebContent#ENTRY_LIST_AUTHOR",
+			value1 = "${author}");
+	}
+
 	macro viewExpirationDateCP {
 		Panel.expandPanel(panel = "Schedule");
 

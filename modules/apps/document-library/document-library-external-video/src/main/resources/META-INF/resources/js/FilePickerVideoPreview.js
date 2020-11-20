@@ -94,11 +94,11 @@ const FilePickerVideoPreview = ({
 			<div className="file-picker-preview-video">
 				{videoHtml ? (
 					<div
-						className="file-picker-preview-video-container"
+						className="file-picker-preview-video-aspect-ratio"
 						dangerouslySetInnerHTML={{__html: videoHtml}}
 					/>
 				) : (
-					<div className="file-picker-preview-video-container">
+					<div className="file-picker-preview-video-aspect-ratio">
 						<div className="file-picker-preview-video-placeholder">
 							{loading ? (
 								<ClayLoadingIndicator />

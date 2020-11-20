@@ -14,9 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormConstants;
+import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.petra.string.StringBundler;
@@ -26,11 +25,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,6 +67,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				"file")) {
 
+			long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 			long formInstanceId = ParamUtil.getLong(
 				uploadPortletRequest, "formInstanceId");
 			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
@@ -88,7 +86,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 					WebKeys.THEME_DISPLAY);
 
 			return addFileEntry(
-				formInstanceId, groupId, file, fileName,
+				folderId, formInstanceId, groupId, file, fileName,
 				MimeTypesUtil.getContentType(file, fileName), themeDisplay);
 		}
 		finally {
@@ -97,8 +95,8 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 	}
 
 	protected FileEntry addFileEntry(
-			long formInstanceId, long groupId, File file, String fileName,
-			String mimeType, ThemeDisplay themeDisplay)
+			long folderId, long formInstanceId, long groupId, File file,
+			String fileName, String mimeType, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (!DDMFormInstancePermission.contains(
@@ -113,33 +111,13 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		long userId = _getDDMFormGuestUserId(themeDisplay.getCompanyId());
 
-		Folder folder = addFolder(groupId, userId);
-
 		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
-			groupId, folder.getFolderId(), fileName);
+			groupId, folderId, fileName);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, DDMFormInstance.class.getName(), 0,
-			DDMFormConstants.SERVICE_NAME, folder.getFolderId(), file,
-			uniqueFileName, mimeType, true);
-	}
-
-	protected Folder addFolder(long groupId, long userId)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, DDMFormConstants.SERVICE_NAME, serviceContext);
-
-		return PortletFileRepositoryUtil.addPortletFolder(
-			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			DDMFormConstants.DDM_FORM_UPLOADED_FILES_FOLDER_NAME,
-			serviceContext);
+			DDMFormConstants.SERVICE_NAME, folderId, file, uniqueFileName,
+			mimeType, true);
 	}
 
 	private User _createDDMFormGuestUser(long companyId)

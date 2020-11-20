@@ -107,6 +107,11 @@
 </tr>
 <!--WEB_CONTENT-->
 <tr>
+	<td>WEB_CONTENT_SCRIPT_FILE_FIELD</td>
+	<td>//div[contains(@class,'input-text-wrapper')]/input[contains(@id,'Script')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_SCRIPT_VARIABLE</td>
 	<td>//div[contains(@class,'ButtonList')][button[span[normalize-space(text())='${key_panelTitle}']]]//button[normalize-space(text())='${key_variableName}']</td>
 	<td></td>

@@ -236,22 +236,20 @@ public class DLBreadcrumbUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (mvcRenderCommandName.equals("/document_library/select_folder")) {
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+			boolean ignoreRootFolder = ParamUtil.getBoolean(
+				httpServletRequest, "ignoreRootFolder");
+
 			long selectedFolderId = ParamUtil.getLong(
 				httpServletRequest, "selectedFolderId",
 				ParamUtil.getLong(
 					httpServletRequest, "folderId",
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
-			portletURL.setParameter(
-				"selectedFolderId", String.valueOf(selectedFolderId));
-
-			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-			boolean ignoreRootFolder = ParamUtil.getBoolean(
-				httpServletRequest, "ignoreRootFolder");
-
 			_addPortletBreadcrumbEntry(
 				httpServletRequest, "mvcRenderCommandName",
-				mvcRenderCommandName, groupId, ignoreRootFolder, portletURL);
+				mvcRenderCommandName, groupId, ignoreRootFolder,
+				selectedFolderId, portletURL);
 		}
 		else {
 			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -293,7 +291,7 @@ public class DLBreadcrumbUtil {
 	private static void _addPortletBreadcrumbEntry(
 			HttpServletRequest httpServletRequest, String parameterName,
 			String parameterValue, long groupId, boolean ignoreRootFolder,
-			PortletURL portletURL)
+			long selectedFolderId, PortletURL portletURL)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -304,6 +302,8 @@ public class DLBreadcrumbUtil {
 		portletURL.setParameter("groupId", String.valueOf(groupId));
 		portletURL.setParameter(
 			"ignoreRootFolder", String.valueOf(ignoreRootFolder));
+		portletURL.setParameter(
+			"selectedFolderId", String.valueOf(selectedFolderId));
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		PortalUtil.addPortletBreadcrumbEntry(

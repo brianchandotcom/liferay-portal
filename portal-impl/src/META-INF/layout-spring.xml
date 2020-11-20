@@ -7,11 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.layouts.admin.kernel.util.SitemapUtil" id="com.liferay.layouts.admin.kernel.util.SitemapUtil">
-		<property name="sitemap">
-			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.service.permission.LayoutBranchPermissionImpl" id="com.liferay.portal.kernel.service.permission.LayoutBranchPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.LayoutBranchPermissionUtil" id="com.liferay.portal.kernel.service.permission.LayoutBranchPermissionUtil">
 		<property name="layoutBranchPermission" ref="com.liferay.portal.kernel.service.permission.LayoutBranchPermission" />
@@ -38,5 +33,4 @@
 	</bean>
 	<bean class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" id="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />
 	<bean class="com.liferay.portal.service.permission.LayoutPermissionImpl" id="com.liferay.portal.service.permission.LayoutPermissionImpl" />
-	<bean class="com.liferay.portal.util.LayoutSitemapURLProvider" id="com.liferay.portal.util.LayoutSitemapURLProvider" />
 </beans>

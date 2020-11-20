@@ -14,12 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
+import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,12 +41,42 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service = DDMFormUploadValidator.class)
 public class DDMFormUploadValidator {
 
+	public String[] getGuestUploadFileExtensions() {
+		DDMFormWebConfiguration ddmFormWebConfiguration =
+			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
+
+		return StringUtil.split(
+			ddmFormWebConfiguration.guestUploadFileExtensions());
+	}
+
 	public long getGuestUploadMaximumFileSize() {
 		DDMFormWebConfiguration ddmFormWebConfiguration =
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
 
 		return ddmFormWebConfiguration.guestUploadMaximumFileSize() *
 			_FILE_LENGTH_MB;
+	}
+
+	public void validateFileExtension(String fileName)
+		throws FileExtensionException {
+
+		List<String> guestUploadFileExtensions = Arrays.asList(
+			getGuestUploadFileExtensions());
+
+		Stream<String> guestUploadFileExtensionStream =
+			guestUploadFileExtensions.stream();
+
+		Optional<String> guestUploadFileExtensionOptional =
+			guestUploadFileExtensionStream.filter(
+				guestUploadFileExtension -> StringUtil.equalsIgnoreCase(
+					FileUtil.getExtension(fileName),
+					StringUtil.trim(guestUploadFileExtension))
+			).findFirst();
+
+		if (!guestUploadFileExtensionOptional.isPresent()) {
+			throw new FileExtensionException(
+				"Invalid file extension for " + fileName);
+		}
 	}
 
 	public void validateFileSize(File file, String fileName)

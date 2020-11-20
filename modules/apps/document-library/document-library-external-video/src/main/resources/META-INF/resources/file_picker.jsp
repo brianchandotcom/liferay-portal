@@ -23,43 +23,6 @@ String namespace = (String)request.getAttribute(DLExternalVideoWebKeys.NAMESPACE
 String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.ON_FILE_PICK_CALLBACK);
 %>
 
-<aui:input helpMessage="video-url-help" label="video-url" name="externalVideoURL" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" />
-
-<div id="<portlet:namespace />externalVideoPreview">
-	<c:if test="<%= dlExternalVideo != null %>">
-		<%= dlExternalVideo.getEmbeddableHTML() %>
-	</c:if>
-</div>
-
-<aui:script sandbox="<%= true %>">
-	var externalVideoURLInput = document.getElementById(
-		'<portlet:namespace />externalVideoURL'
-	);
-	var externalVideoPreview = document.getElementById(
-		'<portlet:namespace />externalVideoPreview'
-	);
-
-	if (externalVideoURLInput) {
-		externalVideoURLInput.addEventListener('input', function () {
-			var url = externalVideoURLInput.value;
-
-			if (url) {
-				fetch(
-					'<%= getDLExternalVideoFieldsURL %>&<%= namespace %>dlExternalVideoURL=' +
-						url
-				)
-					.then(function (res) {
-						return res.json();
-					})
-					.then(function (fields) {
-						externalVideoPreview.innerHTML = fields['HTML'];
-						<%= onFilePickCallback %>(fields);
-					});
-			}
-		});
-	}
-</aui:script>
-
 <liferay-util:html-top
 	outputKey="document_library_external_video_file_picker_css"
 >
@@ -67,7 +30,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 </liferay-util:html-top>
 
 <div class="form-group">
-	<aui:input label="video-url" name="externalVideoURLReact" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" wrapperCssClass="mb-0" />
+	<aui:input label="video-url" name="externalVideoURL" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" wrapperCssClass="mb-0" />
 
 	<p class="form-text"><liferay-ui:message key="video-url-help" /></p>
 

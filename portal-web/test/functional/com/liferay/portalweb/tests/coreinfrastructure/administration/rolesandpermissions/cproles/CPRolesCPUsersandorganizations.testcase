@@ -162,6 +162,8 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		JSONUser.addUser(
+			creatorEmailAddress = "userea@liferay.com",
+			creatorPassword = "test",
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",

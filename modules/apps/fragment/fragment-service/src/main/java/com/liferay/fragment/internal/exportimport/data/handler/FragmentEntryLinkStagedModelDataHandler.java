@@ -91,9 +91,11 @@ public class FragmentEntryLinkStagedModelDataHandler
 		String html = fragmentEntryLink.getHtml();
 
 		if (Validator.isNotNull(html)) {
-			_dlReferencesExportImportContentProcessor.
-				replaceExportContentReferences(
-					portletDataContext, fragmentEntryLink, html, true, false);
+			html =
+				_dlReferencesExportImportContentProcessor.
+					replaceExportContentReferences(
+						portletDataContext, fragmentEntryLink, html, true,
+						false);
 		}
 
 		fragmentEntryLink.setHtml(html);

@@ -308,6 +308,14 @@ export const localizeField = (
 		value = JSON.stringify(value);
 	}
 
+	if (
+		field.dataType === 'json' &&
+		field.fieldName === 'rows' &&
+		typeof value === 'string'
+	) {
+		value = JSON.parse(value);
+	}
+
 	if (field.localizable && field.localizedValue) {
 		let edited = false;
 

@@ -100,10 +100,6 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 	}
 
 	public List<SpiraCustomListValue> getSpiraCustomListValues() {
-		if (!_spiraCustomListValues.isEmpty()) {
-			return _spiraCustomListValues;
-		}
-
 		SpiraProject spiraProject = getSpiraProject();
 
 		List<SpiraCustomProperty> spiraCustomProperties =
@@ -112,8 +108,10 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 				new SearchQuery.SearchParameter("Name", getName()));
 
 		if (spiraCustomProperties.isEmpty()) {
-			return _spiraCustomListValues;
+			return new ArrayList<>();
 		}
+
+		List<SpiraCustomListValue> spiraCustomListValues = new ArrayList<>();
 
 		SpiraCustomProperty spiraCustomProperty = spiraCustomProperties.get(0);
 
@@ -130,13 +128,13 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 			for (int i = 0; i < valuesJSONArray.length(); i++) {
 				JSONObject valueJSONObject = valuesJSONArray.getJSONObject(i);
 
-				_spiraCustomListValues.add(
+				spiraCustomListValues.add(
 					new SpiraCustomListValue(
 						valueJSONObject, spiraProject, this));
 			}
 		}
 
-		return _spiraCustomListValues;
+		return spiraCustomListValues;
 	}
 
 	@Override
@@ -247,7 +245,5 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 	}
 
 	private final Class<? extends SpiraArtifact> _spiraArtifactClass;
-	private final List<SpiraCustomListValue> _spiraCustomListValues =
-		Collections.synchronizedList(new ArrayList<SpiraCustomListValue>());
 
 }

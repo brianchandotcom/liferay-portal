@@ -90,6 +90,25 @@ public class AnalyticsSettingsUtil {
 		}
 	}
 
+	public static HttpResponse doPost(
+			String asahFaroBackendURL, JSONObject bodyJSONObject,
+			long companyId, String path)
+		throws PortalException {
+
+		if (Validator.isNull(asahFaroBackendURL)) {
+			return doPost(bodyJSONObject, companyId, path);
+		}
+
+		try {
+			return _request(
+				bodyJSONObject, companyId,
+				new HttpPost(String.format("%s/%s", asahFaroBackendURL, path)));
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
+	}
+
 	public static HttpResponse doPut(
 			JSONObject bodyJSONObject, long companyId, String path)
 		throws PortalException {

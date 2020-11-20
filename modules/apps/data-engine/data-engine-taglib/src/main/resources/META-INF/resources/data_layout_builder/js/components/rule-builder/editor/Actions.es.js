@@ -13,12 +13,14 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {Context as ModalContext} from '@clayui/modal';
 import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import Timeline from './Timeline.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
@@ -292,6 +294,8 @@ export function Actions({
 	pages,
 	state: {ifStatement},
 }) {
+	const [modal, openModal] = useContext(ModalContext);
+
 	return (
 		<Timeline.List>
 			<Timeline.Header title={name} />
@@ -363,12 +367,54 @@ export function Actions({
 					</Timeline.Panel>
 					{actions.length > 1 && (
 						<Timeline.ActionTrash
-							onClick={() =>
-								dispatch({
-									payload: {loc: index},
-									type: ACTIONS_TYPES.DELETE_ACTION,
-								})
-							}
+							onClick={() => {
+								openModal({
+									payload: {
+										body: (
+											<h4>
+												{Liferay.Language.get(
+													'are-you-sure-you-want-to-delete-this-action'
+												)}
+											</h4>
+										),
+										footer: [
+											null,
+											null,
+											<ClayButton.Group key={3} spaced>
+												<ClayButton
+													displayType="secondary"
+													onClick={modal.onClose}
+												>
+													{Liferay.Language.get(
+														'dismiss'
+													)}
+												</ClayButton>
+												<ClayButton
+													onClick={() => {
+														dispatch({
+															payload: {
+																loc: index,
+															},
+															type:
+																ACTIONS_TYPES.DELETE_ACTION,
+														});
+														modal.onClose();
+													}}
+												>
+													{Liferay.Language.get(
+														'delete'
+													)}
+												</ClayButton>
+											</ClayButton.Group>,
+										],
+										header: Liferay.Language.get(
+											'delete-action'
+										),
+										size: 'sm',
+									},
+									type: 1,
+								});
+							}}
 						/>
 					)}
 				</Timeline.Item>

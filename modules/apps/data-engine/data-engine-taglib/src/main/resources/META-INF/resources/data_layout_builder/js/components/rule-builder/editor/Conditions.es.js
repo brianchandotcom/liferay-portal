@@ -12,8 +12,10 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import {Context as ModalContext} from '@clayui/modal';
 import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import Timeline from './Timeline.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
@@ -183,6 +185,8 @@ export function Conditions({
 	roles,
 	state: {logicalOperator},
 }) {
+	const [modal, openModal] = useContext(ModalContext);
+
 	const onChangeLogicalOperator = (value) =>
 		dispatch({
 			payload: {value},
@@ -258,12 +262,54 @@ export function Conditions({
 					)}
 					{conditions.length > 1 && (
 						<Timeline.ActionTrash
-							onClick={() =>
-								dispatch({
-									payload: {loc: index},
-									type: ACTIONS_TYPES.DELETE_CONDITION,
-								})
-							}
+							onClick={() => {
+								openModal({
+									payload: {
+										body: (
+											<h4>
+												{Liferay.Language.get(
+													'are-you-sure-you-want-to-delete-this-condition'
+												)}
+											</h4>
+										),
+										footer: [
+											null,
+											null,
+											<ClayButton.Group key={3} spaced>
+												<ClayButton
+													displayType="secondary"
+													onClick={modal.onClose}
+												>
+													{Liferay.Language.get(
+														'dismiss'
+													)}
+												</ClayButton>
+												<ClayButton
+													onClick={() => {
+														dispatch({
+															payload: {
+																loc: index,
+															},
+															type:
+																ACTIONS_TYPES.DELETE_CONDITION,
+														});
+														modal.onClose();
+													}}
+												>
+													{Liferay.Language.get(
+														'delete'
+													)}
+												</ClayButton>
+											</ClayButton.Group>,
+										],
+										header: Liferay.Language.get(
+											'delete-condition'
+										),
+										size: 'sm',
+									},
+									type: 1,
+								});
+							}}
 						/>
 					)}
 				</Timeline.Item>

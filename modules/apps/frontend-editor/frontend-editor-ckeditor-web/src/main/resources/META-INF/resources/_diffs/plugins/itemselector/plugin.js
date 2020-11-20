@@ -84,38 +84,31 @@
 			});
 		},
 
-		_commitMediaValue(value, editor, type, isExternalMedia) {
+		_commitMediaValue(value, editor, type) {
 			var instance = this;
 
-			if (type === 'video' && isExternalMedia) {
-				var videoembedPlugin = editor.plugins.videoembed;
+			var mediaPlugin = editor.plugins.media;
 
-				if (videoembedPlugin) {
-					const data = {
-						type,
-						url: value,
-					};
-
-					editor.plugins.videoembed.onOkVideo(editor, data);
-				}
+			if (mediaPlugin) {
+				mediaPlugin.onOkCallback(
+					{
+						commitContent: instance._getCommitMediaValueFn(
+							value,
+							editor,
+							type
+						),
+					},
+					editor,
+					type
+				);
 			}
-			else {
-				var mediaPlugin = editor.plugins.media;
+		},
 
-				if (mediaPlugin) {
-					mediaPlugin.onOkCallback(
-						{
-							commitContent: instance._getCommitMediaValueFn(
-								value,
-								editor,
-								type
-							),
-						},
-						editor,
-						type
-					);
-				}
-			}
+		_commitVideoEmbedValue(value, editor) {
+			editor.plugins.videoembed.onOkVideo(editor, {
+				type: 'video',
+				url: value,
+			});
 		},
 
 		_commitVideoValue(value, node, extraStyles) {
@@ -222,21 +215,6 @@
 			);
 		},
 
-		_isExternalVideo(selectedItem) {
-			var externalVideo = true;
-
-			if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
-				try {
-					var itemValue = JSON.parse(selectedItem.value);
-
-					externalVideo = itemValue.html != null;
-				}
-				catch (e) {}
-			}
-
-			return externalVideo;
-		},
-
 		_onSelectedAudioChange(editor, callback, selectedItem) {
 			var instance = this;
 
@@ -320,15 +298,28 @@
 						callback(videoSrc);
 					}
 					else {
-						var isExternal = instance._isExternalVideo(
-							selectedItem
-						);
-						instance._commitMediaValue(
-							videoSrc,
-							editor,
-							'video',
-							isExternal
-						);
+						var videoProvider;
+
+						var videoembedPlugin = editor.plugins.videoembed;
+
+						if (videoembedPlugin) {
+							videoProvider = videoembedPlugin.getValidProvider(
+								editor,
+								videoSrc,
+								'video'
+							);
+						}
+
+						if (videoProvider) {
+							instance._commitVideoEmbedValue(videoSrc, editor);
+						}
+						else {
+							instance._commitMediaValue(
+								videoSrc,
+								editor,
+								'video'
+							);
+						}
 					}
 				}
 			}

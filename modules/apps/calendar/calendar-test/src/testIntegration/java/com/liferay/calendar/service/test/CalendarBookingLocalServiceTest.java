@@ -3216,8 +3216,9 @@ public class CalendarBookingLocalServiceTest {
 
 		MailMessage mailMessage = mailMessages.get(0);
 
-		Assert.assertEquals(
-			mailMessages.toString(), mailMessage.getBody(), expectedBody);
+		String body = mailMessage.getBody();
+
+		Assert.assertTrue(body.contains(expectedBody));
 	}
 
 	protected void assertMailSubjectCount(String messageSubject, int count) {

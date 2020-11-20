@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="<portlet:namespace />messageContainer"></div>
+<div class="portlet-msg-info">
+	<liferay-ui:message key="verify-identity-using-a-registered-fido2-authenticator" />
+</div>
 
 <aui:button-row>
 	<clay:button
@@ -28,8 +30,8 @@
 		label="verify"
 		propsTransformer="js/AuthenticationTransformer"
 	/>
-
-	<liferay-ui:message key="verify-identity-using-a-registered-fido2-authenticator" />
 </aui:button-row>
+
+<div id="<portlet:namespace />messageContainer"></div>
 
 <aui:input name="responseJSON" showRequiredLabel="yes" type="hidden" />

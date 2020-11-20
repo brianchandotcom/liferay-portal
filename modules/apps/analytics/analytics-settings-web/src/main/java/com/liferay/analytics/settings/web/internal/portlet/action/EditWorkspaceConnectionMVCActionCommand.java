@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -196,16 +197,36 @@ public class EditWorkspaceConnectionMVCActionCommand
 			long companyId, Dictionary<String, Object> configurationProperties)
 		throws Exception {
 
+		String dataSourceId = null;
+		String liferayAnalyticsFaroBackendURL = null;
+
 		if (!AnalyticsSettingsUtil.isAnalyticsEnabled(companyId)) {
-			return false;
+			if (Validator.isNotNull(
+					GetterUtil.getString(
+						configurationProperties.get("token"), null))) {
+
+				dataSourceId = GetterUtil.getString(
+					configurationProperties.get("osbAsahDataSourceId"), null);
+				liferayAnalyticsFaroBackendURL = GetterUtil.getString(
+					configurationProperties.get(
+						"liferayAnalyticsFaroBackendURL"),
+					null);
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			dataSourceId = AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
+				companyId);
 		}
 
 		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
-			null, companyId,
+			liferayAnalyticsFaroBackendURL, null, companyId,
 			String.format(
 				"api/1.0/data-sources/%s/disconnect",
-				AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
-					companyId)));
+				dataSourceId));
+
 
 		StatusLine statusLine = httpResponse.getStatusLine();
 

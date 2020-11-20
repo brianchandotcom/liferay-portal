@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Iván Zaera
@@ -133,9 +135,12 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 		Map<Locale, String> updatedNameMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				entry.getKey(), DLExternalVideoDLFileEntryTypeHelper.class);
+
 			updatedNameMap.put(
 				entry.getKey(),
-				LanguageUtil.get(entry.getKey(), "dl-external-video-metadata"));
+				LanguageUtil.get(resourceBundle, "dl-external-video-metadata"));
 		}
 
 		return updatedNameMap;

@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -32,7 +31,7 @@ public class UpgradeListType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addListType("phone-number", _ADDRESS_PHONE_LIST_TYPE_NAME);
+		_addListType("phone-number", ListTypeConstants.ADDRESS_PHONE);
 	}
 
 	private void _addListType(String name, String type) {
@@ -61,9 +60,6 @@ public class UpgradeListType extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final String _ADDRESS_PHONE_LIST_TYPE_NAME =
-		Address.class.getName() + ListTypeConstants.PHONE;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeListType.class);

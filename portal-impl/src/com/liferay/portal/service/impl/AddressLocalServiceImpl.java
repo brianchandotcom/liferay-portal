@@ -490,7 +490,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		throws PortalException {
 
 		ListType listType = listTypeLocalService.getListType(
-			"phone-number", Address.class.getName() + ListTypeConstants.PHONE);
+			"phone-number", ListTypeConstants.ADDRESS_PHONE);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

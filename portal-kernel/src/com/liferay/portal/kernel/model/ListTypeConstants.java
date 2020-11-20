@@ -57,6 +57,10 @@ public class ListTypeConstants {
 	public static final String ACCOUNT_WEBSITE =
 		Account.class.getName() + WEBSITE;
 
+	// Address
+
+	public static final String ADDRESS_PHONE = Address.class.getName() + PHONE;
+
 	// Contact
 
 	public static final String CONTACT_ADDRESS =

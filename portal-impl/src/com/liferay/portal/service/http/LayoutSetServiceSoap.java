@@ -154,31 +154,6 @@ public class LayoutSetServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #updateVirtualHosts(long, boolean, TreeMap)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutSetSoap
-			updateVirtualHost(
-				long groupId, boolean privateLayout, String virtualHostname)
-		throws RemoteException {
-
-		try {
-			com.liferay.portal.kernel.model.LayoutSet returnValue =
-				LayoutSetServiceUtil.updateVirtualHost(
-					groupId, privateLayout, virtualHostname);
-
-			return com.liferay.portal.kernel.model.LayoutSetSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.portal.kernel.model.LayoutSetSoap
 			updateVirtualHosts(
 				long groupId, boolean privateLayout,

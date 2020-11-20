@@ -1,0 +1,423 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {
+	PageProvider as FieldProvider,
+	useFieldTypesResource,
+} from 'dynamic-data-mapping-form-renderer';
+import React, {useEffect, useReducer} from 'react';
+
+import {Actions} from './Actions.es';
+import {Conditions} from './Conditions.es';
+import {ACTIONS_TYPES} from './actionsTypes.es';
+import {BINARY_OPERATOR, RIGHT_TYPES} from './config.es';
+
+const CONFIG_DATA = {
+	actions: {
+		component: Actions,
+		expression: Liferay.Language.get('do'),
+		name: Liferay.Language.get('actions'),
+	},
+	conditions: {
+		component: Conditions,
+		expression: Liferay.Language.get('if'),
+		name: Liferay.Language.get('condition'),
+	},
+};
+
+const normalizeValue = (value, right) => {
+	switch (right.type) {
+		case 'json':
+			return JSON.stringify(value);
+		case 'field':
+		case 'list':
+		case 'option':
+			return value[0];
+		default:
+			return value;
+	}
+};
+
+const reducer = (state, action) => {
+	switch (action.type) {
+		case ACTIONS_TYPES.ADD_ACTION: {
+			const {actions, conditions} = state.ifStatement;
+
+			actions.push({
+				action: '',
+				target: '',
+			});
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.ADD_CONDITION: {
+			const {actions, conditions} = state.ifStatement;
+
+			conditions.push({
+				operands: [{type: '', value: ''}],
+				operator: '',
+			});
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_ACTION_AUTOFILL_PARAMETER: {
+			const {actions, conditions} = state.ifStatement;
+			const {id, loc, type, value} = action.payload;
+
+			const parameters = actions[loc][type];
+
+			actions[loc] = {
+				...actions[loc],
+				[type]: parameters ? {...parameters} : {},
+			};
+
+			actions[loc][type][id] = value;
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_ACTION_TARGET: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc, value} = action.payload;
+
+			actions[loc] = {
+				...actions[loc],
+				label: value,
+				target: value,
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_ACTION: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc, value} = action.payload;
+
+			actions[loc] = {
+				...actions[loc],
+				action: value,
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_BINARY_OPERATOR: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc, value} = action.payload;
+
+			const {
+				operands: [left],
+			} = conditions[loc];
+
+			conditions[loc] = {
+				...conditions[loc],
+				operands: [
+					left,
+					{
+						type:
+							value === 'value'
+								? RIGHT_TYPES[left.field.type] ?? 'string'
+								: 'field',
+						value: '',
+					},
+				],
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_IDENTIFIER_LEFT: {
+			const {actions, conditions} = state.ifStatement;
+			const {fields, loc, value} = action.payload;
+
+			let left = {
+				label: 'user',
+				repeatable: false,
+				type: 'user',
+				value: 'user',
+			};
+
+			if (value !== 'user') {
+				const field = fields.find(({fieldName}) => fieldName === value);
+
+				left = {
+					field,
+					label: field.label,
+					repeatable: field.repeatable,
+					type: 'field',
+					value,
+				};
+			}
+
+			conditions[loc] = {
+				operands: [left],
+				operator: '',
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_IDENTIFIER_RIGHT: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc, value} = action.payload;
+
+			const {
+				operands: [left, right],
+			} = conditions[loc];
+
+			const newValue = normalizeValue(value, right);
+
+			const otherProps = left.type === 'user' ? {label: newValue} : {};
+
+			conditions[loc] = {
+				...conditions[loc],
+				operands: [
+					left,
+					{
+						...right,
+						...otherProps,
+						value: newValue,
+					},
+				],
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_LOGICAL_OPERATOR: {
+			const {value} = action.payload;
+
+			return {
+				...state,
+				logicalOperator: value,
+			};
+		}
+		case ACTIONS_TYPES.CHANGE_OPERATOR: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc, value} = action.payload;
+
+			const {
+				operands: [left, right],
+			} = conditions[loc];
+
+			const newRight =
+				left.type === 'user'
+					? {
+							type: 'list',
+							value: '',
+					  }
+					: right;
+
+			conditions[loc] = {
+				operands: [
+					left,
+					BINARY_OPERATOR.includes(value) ? newRight : undefined,
+				],
+				operator: value,
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
+		case ACTIONS_TYPES.DELETE_CONDITION: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc} = action.payload;
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions: conditions.filter(
+						(condition, index) => index !== loc
+					),
+				},
+			};
+		}
+		case ACTIONS_TYPES.DELETE_ACTION: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc} = action.payload;
+
+			return {
+				...state,
+				ifStatement: {
+					actions: actions.filter((action, index) => index !== loc),
+					conditions,
+				},
+			};
+		}
+		default:
+			return state;
+	}
+};
+
+const transformConditions = ({operator, operands: [left, right]}, fields) => {
+	const operands = [
+		{
+			...left,
+			field: fields.find(({fieldName}) => fieldName === left.value),
+		},
+		right,
+	];
+
+	return {
+		operands,
+		operator,
+	};
+};
+
+const transformActions = (
+	{ddmDataProviderInstanceUUID, target, ...otherProps},
+	dataProvider
+) => {
+	if (ddmDataProviderInstanceUUID) {
+		target = dataProvider.find(
+			({uuid}) => uuid === ddmDataProviderInstanceUUID
+		).id;
+	}
+
+	return {
+		ddmDataProviderInstanceUUID,
+		target,
+		...otherProps,
+	};
+};
+
+const init = ({
+	dataProvider,
+	fields,
+	rule: {actions, conditions, logicalOperator, name, ...otherRule},
+}) => {
+
+	// Maintains the naming compatibility of Forms but uses the new
+	// Data Engine nomenclature.
+
+	if (otherRule['logical-operator']) {
+		logicalOperator = otherRule['logical-operator'];
+	}
+
+	return {
+		ifStatement: {
+			actions: actions.map((action) =>
+				transformActions(action, dataProvider)
+			),
+			conditions: conditions.map((condition) =>
+				transformConditions(condition, fields)
+			),
+		},
+		logicalOperator,
+		name,
+		panels: ['conditions', 'actions'],
+	};
+};
+
+export function Editor({dataProvider, fields, onChange, rule, ...otherProps}) {
+	const [state, dispatch] = useReducer(
+		reducer,
+		{dataProvider, fields, rule},
+		init
+	);
+
+	const {resource: fieldTypes} = useFieldTypesResource();
+
+	useEffect(() => {
+		const {ifStatement, logicalOperator, name} = state;
+		const {actions, conditions} = ifStatement;
+
+		onChange({
+			actions,
+			conditions: conditions.map(
+				({operands: [left, ...otherOperands], ...otherProps}) => {
+					const newLeft = {...left};
+
+					delete newLeft.field;
+
+					return {
+						...otherProps,
+						operands: [newLeft, ...otherOperands],
+					};
+				}
+			),
+			logicalOperator,
+			name,
+		});
+	}, [state]);
+
+	return (
+		<FieldProvider value={{fieldTypes}}>
+			{state.panels.map((key) => {
+				const {component: Component, ...otherData} = CONFIG_DATA[key];
+
+				return (
+					<Component
+						{...otherProps}
+						{...otherData}
+						{...{[key]: state.ifStatement[key]}}
+						dataProvider={dataProvider}
+						dispatch={dispatch}
+						fields={fields}
+						key={key}
+						state={state}
+					/>
+				);
+			})}
+		</FieldProvider>
+	);
+}

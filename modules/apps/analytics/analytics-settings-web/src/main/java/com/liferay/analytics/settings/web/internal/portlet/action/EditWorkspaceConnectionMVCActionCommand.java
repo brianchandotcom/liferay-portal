@@ -184,16 +184,11 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_disconnectDataSource(
-				themeDisplay.getCompanyId(), configurationProperties)) {
-
-			configurationProperties.remove("token");
-
-			clearConfiguration(themeDisplay.getCompanyId());
-		}
+		_disconnectDataSource(
+			themeDisplay.getCompanyId(), configurationProperties));
 	}
 
-	private boolean _disconnectDataSource(
+	private void _disconnectDataSource(
 			long companyId, Dictionary<String, Object> configurationProperties)
 		throws Exception {
 
@@ -212,39 +207,21 @@ public class EditWorkspaceConnectionMVCActionCommand
 						"liferayAnalyticsFaroBackendURL"),
 					null);
 			}
-			else {
-				return false;
-			}
 		}
 		else {
 			dataSourceId = AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
 				companyId);
 		}
 
-		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
+		AnalyticsSettingsUtil.doPost(
 			liferayAnalyticsFaroBackendURL, null, companyId,
 			String.format(
 				"api/1.0/data-sources/%s/disconnect",
 				dataSourceId));
 
+		configurationProperties.remove("token");
 
-		StatusLine statusLine = httpResponse.getStatusLine();
-
-		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
-			checkResponse(companyId, httpResponse);
-
-			configurationProperties.remove("token");
-
-			return false;
-		}
-
-		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-			_log.error("Unable to disconnect data source");
-
-			throw new PortalException("Unable to disconnect data source");
-		}
-
-		return true;
+		clearConfiguration(themeDisplay.getCompanyId());
 	}
 
 	private void _updateCompanyPreferences(

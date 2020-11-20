@@ -157,6 +157,18 @@ export const normalizeSettingsContextPages = (
 				};
 			}
 
+			if (field.dataType === 'ddm-options') {
+				field = {
+					...field,
+					value: {
+						...field.value,
+						[editingLanguageId]:
+							field.value[editingLanguageId] ??
+							field.value[defaultLanguageId],
+					},
+				};
+			}
+
 			const newInstanceId = generateInstanceId(8);
 
 			return {

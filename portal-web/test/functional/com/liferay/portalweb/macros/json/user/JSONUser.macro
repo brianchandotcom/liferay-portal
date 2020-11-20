@@ -25,10 +25,20 @@ definition {
 			var jobTitle = "";
 		}
 
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
 		JSONUserAPI._addUser(
 			birthdayDay = "${birthdayDay}",
 			birthdayMonth = "${birthdayMonth}",
 			birthdayYear = "${birthdayYear}",
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
 			jobTitle = "${jobTitle}",
 			locale = "${locale}",
 			userEmailAddress = "${userEmailAddress}",

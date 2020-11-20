@@ -9,7 +9,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-user \
-				-u test@liferay.com:test \
+				-u ${creatorEmailAddress}:${creatorPassword} \
 				-d companyId=${companyId} \
 				-d autoPassword=false \
 				-d password1=initPassword \

@@ -112,6 +112,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CODE_MIRROR_EDITOR_CONTENT</td>
+	<td>//div[contains(@class,'CodeMirrorEditor')]//div[contains(@class,'CodeMirror-code')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_SCRIPT_FILE_FIELD</td>
 	<td>//div[contains(@class,'input-text-wrapper')]/input[contains(@id,'Script')]</td>
 	<td></td>

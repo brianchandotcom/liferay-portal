@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- * <p>
+ *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- * <p>
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -22,19 +22,24 @@ import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResourc
 import com.liferay.headless.content.common.search.aggregation.AggregationUtil;
 import com.liferay.headless.content.common.search.sort.SortUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -45,13 +50,16 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.EntityExtensionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Collections;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.core.MultivaluedMap;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.MultivaluedMap;
-import java.util.Collections;
 
 /**
  * @author Javier Gamarra
@@ -71,16 +79,32 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent>
-		getSiteStructuredContentsPage(
-				@NotNull Long siteId, Boolean flatten, String search,
-				Aggregation aggregation, Filter filter, Pagination pagination,
-				Sort[] sorts)
+	public Page<StructuredContent> getSiteStructuredContentsPage(
+			@NotNull Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
-			null,
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					"VIEW", "getSiteStructuredContentsPage",
+					"com.liferay.journal", siteId)
+			).build(),
 			booleanQuery -> {
+				if (!GetterUtil.getBoolean(flatten)) {
+					BooleanFilter booleanFilter =
+						booleanQuery.getPreBooleanFilter();
+
+					booleanFilter.add(
+						new TermFilter(
+							Field.FOLDER_ID,
+							String.valueOf(
+								JournalFolderConstants.
+									DEFAULT_PARENT_FOLDER_ID)),
+						BooleanClauseOccur.MUST);
+				}
 			},
 			filter, JournalArticle.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -95,6 +119,7 @@ public class StructuredContentResourceImpl
 				if (siteId != null) {
 					searchContext.setGroupIds(new long[] {siteId});
 				}
+
 				SearchRequestBuilder searchRequestBuilder =
 					_searchRequestBuilderFactory.builder(searchContext);
 
@@ -108,16 +133,18 @@ public class StructuredContentResourceImpl
 			},
 			sorts,
 			document -> {
-				JournalArticle journalArticle = _journalArticleService.getLatestArticle(
-					GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
-					document.get(Field.ARTICLE_ID),
-					WorkflowConstants.STATUS_ANY);
+				JournalArticle journalArticle =
+					_journalArticleService.getLatestArticle(
+						GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
+						document.get(Field.ARTICLE_ID),
+						WorkflowConstants.STATUS_ANY);
+
 				return _toExtendedStructuredContent(journalArticle);
 			});
 	}
 
 	private StructuredContent _toExtendedStructuredContent(
-		JournalArticle journalArticle)
+			JournalArticle journalArticle)
 		throws Exception {
 
 		ContentLanguageUtil.addContentLanguageHeader(
@@ -143,14 +170,13 @@ public class StructuredContentResourceImpl
 				contextUser),
 			journalArticle);
 
-		return EntityExtensionUtil.extend(structuredContent, StructuredContent.class,
+		return EntityExtensionUtil.extend(
+			structuredContent, StructuredContent.class,
 			ExtendedStructuredContent.class,
-			extendedStructuredContent ->
-				extendedStructuredContent.setVersion(
-					VersionUtil.toVersion(
-						journalArticle.getGroupId(), journalArticle.getStatus(),
-						journalArticle.getVersion()
-					)));
+			extendedStructuredContent -> extendedStructuredContent.setVersion(
+				VersionUtil.toVersion(
+					journalArticle.getGroupId(), journalArticle.getStatus(),
+					journalArticle.getVersion())));
 	}
 
 	@Reference

@@ -111,7 +111,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
 	}
 
 	@priority = "4"

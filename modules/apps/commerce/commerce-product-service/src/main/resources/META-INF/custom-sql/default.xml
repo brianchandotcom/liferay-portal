@@ -132,7 +132,7 @@
 	<sql id="com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder.countCPTaxCategoriesByCompanyId">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT CPTaxCategory.CPTaxCategoryId) AS COUNT_VALUE
 			FROM
 				CPTaxCategory
 			WHERE

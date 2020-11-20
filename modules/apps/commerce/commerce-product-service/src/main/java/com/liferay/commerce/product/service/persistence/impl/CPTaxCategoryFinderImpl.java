@@ -23,12 +23,11 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-
-import java.math.BigInteger;
 
 import java.util.Iterator;
 import java.util.List;
@@ -77,16 +76,18 @@ public class CPTaxCategoryFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
 			if (Validator.isNotNull(keyword)) {
 				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 				queryPos.add(keywords, 2);
 			}
 
-			Iterator<BigInteger> iterator = sqlQuery.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
 			if (iterator.hasNext()) {
-				BigInteger count = iterator.next();
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();

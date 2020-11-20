@@ -17,6 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useMemo} from 'react';
 
 import Lang from '../../utils/lang.es';
@@ -270,7 +271,7 @@ const transformConditions = ({operator, operands: [left, right]}, fields) => {
 };
 
 const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
-	const {actions, invalidRule} = rule;
+	const {actions} = rule;
 
 	const conditions = useMemo(
 		() =>
@@ -278,6 +279,13 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 				transformConditions(condition, fields)
 			),
 		[rule.conditions, fields]
+	);
+
+	const invalidRule = useMemo(
+		() =>
+			RulesSupport.fieldNameBelongsToAction('', actions) ||
+			RulesSupport.fieldNameBelongsToCondition('', conditions),
+		[actions, conditions]
 	);
 
 	const isNestedCondition = useMemo(

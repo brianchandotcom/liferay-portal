@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Constants;
@@ -213,15 +214,26 @@ public class EditWorkspaceConnectionMVCActionCommand
 				companyId);
 		}
 
-		AnalyticsSettingsUtil.doPost(
-			liferayAnalyticsFaroBackendURL, null, companyId,
-			String.format(
-				"api/1.0/data-sources/%s/disconnect",
-				dataSourceId));
+		try {
+			HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
+				liferayAnalyticsFaroBackendURL, null, companyId,
+				String.format(
+					"api/1.0/data-sources/%s/disconnect", dataSourceId));
+
+			StatusLine statusLine = httpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				SessionErrors.add(
+					actionRequest, "unableToNotifyAnalyticsCloud");
+			}
+		}
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, "unableToNotifyAnalyticsCloud");
+		}
 
 		configurationProperties.remove("token");
 
-		clearConfiguration(themeDisplay.getCompanyId());
+		clearConfiguration(companyId);
 	}
 
 	private void _updateCompanyPreferences(

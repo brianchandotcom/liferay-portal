@@ -1,3 +1,4 @@
+.timeline-item,
 .timeline-item .panel-body {
 	position: relative;
 
@@ -13,6 +14,18 @@
 
 	.dropdown-toggle-operator {
 		padding: 4px 12px;
+	}
+}
+
+.timeline-increment-action-button {
+	&:after {
+		content: '';
+		display: block;
+		height: 22px;
+	}
+
+	.timeline-increment {
+		left: 1px;
 	}
 }
 
@@ -299,7 +312,7 @@
 			margin: 0;
 		}
 
-		.form-group-item {
+		.form-group-item:not(.form-group-item-shrink) {
 			max-width: 200px;
 		}
 

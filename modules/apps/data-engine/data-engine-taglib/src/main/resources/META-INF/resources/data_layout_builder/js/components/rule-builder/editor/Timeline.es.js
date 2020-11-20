@@ -19,8 +19,6 @@ import ClayPanel from '@clayui/panel';
 import classnames from 'classnames';
 import React from 'react';
 
-import './Timeline.scss';
-
 const TimelineIncrement = ({children, className, ...otherProps}) => (
 	<div
 		{...otherProps}
@@ -37,7 +35,7 @@ const TimelineIncrementIcon = (props) => (
 );
 
 const TimelineIncrementButton = (props) => (
-	<TimelineIncrement className="timeline-increment-action-button">
+	<TimelineIncrement>
 		<ClayButtonWithIcon
 			className="rounded-circle"
 			small
@@ -47,23 +45,26 @@ const TimelineIncrementButton = (props) => (
 	</TimelineIncrement>
 );
 
-const Condition = ({children, expression}) => (
+const FormGroupItem = ({children, className, ...otherProps}) => (
+	<div {...otherProps} className={classnames('form-group-item', className)}>
+		{children}
+	</div>
+);
+
+const Panel = ({bottomContent, children, expression}) => (
 	<ClayPanel displayTitle={<></>} displayType="secondary">
 		<ClayPanel.Body>
 			<div className="form-group-autofit">
-				<div className="form-group-item form-group-item-label form-group-item-shrink">
+				<FormGroupItem className="form-group-item-label form-group-item-shrink">
 					<h4>
 						<span className="text-truncate-inline">
 							<span className="text-truncate">{expression}</span>
 						</span>
 					</h4>
-				</div>
-				{React.Children.map(children, (Child) => (
-					<div className="form-group-item">
-						<Child />
-					</div>
-				))}
+				</FormGroupItem>
+				{children}
 			</div>
+			{bottomContent}
 			<TimelineIncrementIcon />
 		</ClayPanel.Body>
 	</ClayPanel>
@@ -81,7 +82,7 @@ const ActionTrash = (props) => (
 );
 
 const Operator = ({operator}) => (
-	<ClayPanel className="inline-item" displayType="secondary">
+	<ClayPanel className="inline-item operator" displayType="secondary">
 		<ClayPanel.Body>
 			<span className="text-uppercase">{operator}</span>
 		</ClayPanel.Body>
@@ -92,7 +93,7 @@ const List = ({children, className, ...otherProps}) => (
 	<ul
 		{...otherProps}
 		className={classnames(
-			'liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline can-remove-item',
+			'liferay-ddm-form-rule-builder-timeline timeline can-remove-item',
 			className
 		)}
 	>
@@ -102,6 +103,18 @@ const List = ({children, className, ...otherProps}) => (
 
 const ListItem = ({children, className, ...otherProps}) => (
 	<li {...otherProps} className={classnames(className, 'timeline-item')}>
+		{children}
+	</li>
+);
+
+const ListItemAction = ({children, className, ...otherProps}) => (
+	<li
+		{...otherProps}
+		className={classnames(
+			className,
+			'timeline-item timeline-increment-action-button'
+		)}
+	>
 		{children}
 	</li>
 );
@@ -146,12 +159,14 @@ const Timeline = ({children, className, ...otherProps}) => (
 );
 
 Timeline.ActionTrash = ActionTrash;
-Timeline.Condition = Condition;
+Timeline.FormGroupItem = FormGroupItem;
 Timeline.Header = ListHeader;
 Timeline.IncrementButton = TimelineIncrementButton;
 Timeline.IncrementIcon = TimelineIncrementIcon;
 Timeline.Item = ListItem;
+Timeline.ItemAction = ListItemAction;
 Timeline.List = List;
 Timeline.Operator = Operator;
+Timeline.Panel = Panel;
 
 export default Timeline;

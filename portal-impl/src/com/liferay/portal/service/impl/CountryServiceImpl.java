@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.CountryServiceBaseImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
@@ -77,16 +78,23 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCountry(long countryId) throws PortalException {
+		if (!getPermissionChecker().isOmniadmin()) {
+			throw new PrincipalException.MustBeOmniadmin(
+				getPermissionChecker());
+		}
+
+		countryLocalService.deleteCountry(countryId);
+	}
+
+	@Override
 	public Country fetchCountry(long countryId) {
 		return countryPersistence.fetchByPrimaryKey(countryId);
 	}
 
-	@AccessControlled(guestAccessEnabled = true)
 	@Override
-	public List<Country> getCompanyCountries(
-		long companyId, boolean active) {
-
-		return countryPersistence.findByC_Active(companyId, active);
+	public Country fetchCountryByA2(long companyId, String a2) {
+		return countryPersistence.fetchByC_A2(companyId, a2);
 	}
 
 	/**
@@ -100,8 +108,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
-	public Country fetchCountryByA2(long companyId, String a2) {
-		return countryPersistence.fetchByC_A2(companyId, a2);
+	public Country fetchCountryByA3(long companyId, String a3) {
+		return countryPersistence.fetchByC_A3(companyId, a3);
 	}
 
 	/**
@@ -115,8 +123,42 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
-	public Country fetchCountryByA3(long companyId, String a3) {
-		return countryPersistence.fetchByC_A3(companyId, a3);
+	public List<Country> getCompanyCountries(long companyId) {
+		return countryPersistence.findByCompanyId(companyId);
+	}
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Override
+	public List<Country> getCompanyCountries(long companyId, boolean active) {
+		return countryPersistence.findByC_Active(companyId, active);
+	}
+
+	@Override
+	public List<Country> getCompanyCountries(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return countryLocalService.getCompanyCountries(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<Country> getCompanyCountries(
+		long companyId, int start, int end,
+		OrderByComparator<Country> orderByComparator) {
+
+		return countryLocalService.getCompanyCountries(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCompanyCountriesCount(long companyId) {
+		return countryLocalService.getCompanyCountriesCount(companyId);
+	}
+
+	@Override
+	public int getCompanyCountriesCount(long companyId, boolean active) {
+		return countryLocalService.getCompanyCountriesCount(companyId, active);
 	}
 
 	@Override
@@ -139,6 +181,13 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryPersistence.findByPrimaryKey(countryId);
 	}
 
+	@Override
+	public Country getCountryByA2(long companyId, String a2)
+		throws NoSuchCountryException {
+
+		return countryPersistence.findByC_A2(companyId, a2);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
@@ -147,6 +196,13 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country getCountryByA2(String a2) throws PortalException {
 		return countryPersistence.findByC_A2(
 			PortalInstances.getDefaultCompanyId(), a2);
+	}
+
+	@Override
+	public Country getCountryByA3(long companyId, String a3)
+		throws NoSuchCountryException {
+
+		return countryPersistence.findByC_A3(companyId, a3);
 	}
 
 	/**
@@ -160,21 +216,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
-	public Country getCountryByCompanyIdAndA2(long companyId, String a2)
-		throws NoSuchCountryException {
-
-		return countryPersistence.findByC_A2(companyId, a2);
-	}
-
-	@Override
-	public Country getCountryByCompanyIdAndA3(long companyId, String a3)
-		throws NoSuchCountryException {
-
-		return countryPersistence.findByC_A3(companyId, a3);
-	}
-
-	@Override
-	public Country getCountryByCompanyIdAndName(long companyId, String name)
+	public Country getCountryByName(long companyId, String name)
 		throws NoSuchCountryException {
 
 		return countryPersistence.findByC_Name(companyId, name);
@@ -186,8 +228,52 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Country getCountryByName(String name) throws PortalException {
-		return countryPersistence.findByC_N(
+		return countryPersistence.findByC_Name(
 			PortalInstances.getDefaultCompanyId(), name);
+	}
+
+	@Override
+	public Country setActive(long countryId, boolean active)
+		throws PortalException {
+
+		if (!getPermissionChecker().isOmniadmin()) {
+			throw new PrincipalException.MustBeOmniadmin(
+				getPermissionChecker());
+		}
+
+		return countryLocalService.setActive(countryId, active);
+	}
+
+	@Override
+	public Country updateCountry(
+			long countryId, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			Map<String, String> titleMap)
+		throws PortalException {
+
+		if (!getPermissionChecker().isOmniadmin()) {
+			throw new PrincipalException.MustBeOmniadmin(
+				getPermissionChecker());
+		}
+
+		return countryLocalService.updateCountry(
+			countryId, a2, a3, active, billingAllowed, idd, name, number,
+			position, shippingAllowed, subjectToVAT, titleMap);
+	}
+
+	@Override
+	public Country updateCountryGroupFilterEnabled(
+			long countryId, boolean groupFilterEnabled)
+		throws PortalException {
+
+		if (!getPermissionChecker().isOmniadmin()) {
+			throw new PrincipalException.MustBeOmniadmin(
+				getPermissionChecker());
+		}
+
+		return countryLocalService.updateCountryGroupFilter(
+			countryId, groupFilterEnabled);
 	}
 
 }

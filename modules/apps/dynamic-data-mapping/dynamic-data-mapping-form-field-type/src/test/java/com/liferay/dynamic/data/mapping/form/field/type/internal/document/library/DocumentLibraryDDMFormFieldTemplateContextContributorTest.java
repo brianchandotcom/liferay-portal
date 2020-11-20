@@ -113,6 +113,18 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersShouldContainFormsFolderId() {
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
+
+		Map<String, Object> parameters = spy.getParameters(
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(_FORMS_FOLDER_ID, parameters.get("folderId"));
+	}
+
+	@Test
 	public void testGetParametersShouldContainItemSelectorAuthToken() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
 			mockThemeDisplay());
@@ -122,6 +134,26 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals("token", parameters.get("itemSelectorAuthToken"));
+	}
+
+	@Test
+	public void testGetParametersShouldContainPrivateFolderId() {
+		ThemeDisplay themeDisplay = mockThemeDisplay();
+
+		when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			Boolean.TRUE
+		);
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			themeDisplay);
+
+		Map<String, Object> parameters = spy.getParameters(
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(_PRIVATE_FOLDER_ID, parameters.get("folderId"));
 	}
 
 	@Test
@@ -142,7 +174,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 					"/upload_file_entry"));
 		Assert.assertThat(
 			uploadURL,
-			CoreMatchers.containsString("param_folderId=" + _FOLDER_ID));
+			CoreMatchers.containsString("param_folderId=" + _FORMS_FOLDER_ID));
 		Assert.assertThat(
 			uploadURL,
 			CoreMatchers.containsString(
@@ -219,13 +251,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		return spy;
 	}
 
-	protected Folder mockFolder() {
+	protected Folder mockFolder(long folderId) {
 		Folder folder = mock(Folder.class);
 
 		PowerMockito.when(
 			folder.getFolderId()
 		).thenReturn(
-			_FOLDER_ID
+			folderId
 		);
 
 		return folder;
@@ -295,6 +327,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		User user = mock(User.class);
 
 		when(
+			user.getScreenName()
+		).thenReturn(
+			"Test"
+		);
+
+		when(
 			user.getUserId()
 		).thenReturn(
 			0L
@@ -317,6 +355,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 				_FILE_ENTRY_UUID, _GROUP_ID)
 		).thenReturn(
 			_fileEntry
+		);
+
+		Folder folder = mockFolder(_PRIVATE_FOLDER_ID);
+
+		PowerMockito.when(
+			_dlAppService.getFolder(_REPOSITORY_ID, _FORMS_FOLDER_ID, "Test")
+		).thenReturn(
+			folder
 		);
 	}
 
@@ -376,7 +422,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			repository
 		);
 
-		Folder folder = mockFolder();
+		Folder folder = mockFolder(_FORMS_FOLDER_ID);
 
 		PowerMockito.when(
 			_portletFileRepository.getPortletFolder(
@@ -425,11 +471,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	private static final String _FILE_ENTRY_UUID =
 		RandomTestUtil.randomString();
 
-	private static final long _FOLDER_ID = RandomTestUtil.randomLong();
-
 	private static final long _FORM_INSTANCE_ID = RandomTestUtil.randomLong();
 
+	private static final long _FORMS_FOLDER_ID = RandomTestUtil.randomLong();
+
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
+
+	private static final long _PRIVATE_FOLDER_ID = RandomTestUtil.randomLong();
 
 	private static final long _REPOSITORY_ID = RandomTestUtil.randomLong();
 

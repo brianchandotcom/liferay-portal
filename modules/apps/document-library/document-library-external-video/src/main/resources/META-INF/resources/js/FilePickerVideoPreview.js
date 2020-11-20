@@ -33,7 +33,7 @@ const FilePickerVideoPreview = ({
 	const inputName = 'externalVideoURLInput';
 	const [url, setUrl] = useState(externalVideoURL);
 	const [loading, setLoading] = useState(false);
-	const [HTML, setHTML] = useState(externalVideoHTML);
+	const [videoHtml, setVideoHtml] = useState(externalVideoHTML);
 	const isMounted = useIsMounted();
 
 	const [getFields] = useDebounceCallback((dlExternalVideoURL) => {
@@ -49,14 +49,14 @@ const FilePickerVideoPreview = ({
 			.then((fields) => {
 				if (isMounted()) {
 					setLoading(false);
-					setHTML(fields.HTML);
+					setVideoHtml(fields.HTML);
 					window[onFilePickCallback](fields);
 				}
 			})
 			.catch(() => {
 				if (isMounted()) {
 					setLoading(false);
-					setHTML(externalVideoURL);
+					setVideoHtml(externalVideoURL);
 				}
 			});
 	}, 500);
@@ -71,7 +71,7 @@ const FilePickerVideoPreview = ({
 		}
 		else {
 			setLoading(false);
-			setHTML(externalVideoURL);
+			setVideoHtml(externalVideoURL);
 		}
 	};
 
@@ -92,10 +92,10 @@ const FilePickerVideoPreview = ({
 			</p>
 
 			<div className="file-picker-preview-video">
-				{HTML ? (
+				{videoHtml ? (
 					<div
 						className="file-picker-preview-video-container"
-						dangerouslySetInnerHTML={{__html: HTML}}
+						dangerouslySetInnerHTML={{__html: videoHtml}}
 					/>
 				) : (
 					<div className="file-picker-preview-video-container">

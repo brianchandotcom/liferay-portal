@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -441,6 +442,10 @@ public class MainServlet extends HttpServlet {
 		StartupHelperUtil.setStartupFinished(true);
 
 		_registerPortalInitialized();
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(_releaseManager.getStatusMessage(true));
+		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
@@ -1332,6 +1337,9 @@ public class MainServlet extends HttpServlet {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, MainServlet.class,
 			"_inactiveRequestHandler", false);
+	private static volatile ReleaseManager _releaseManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ReleaseManager.class, MainServlet.class, "_releaseManager", false);
 
 	private ServiceRegistration<ModuleServiceLifecycle>
 		_licenseInstallModuleServiceLifecycleServiceRegistration;

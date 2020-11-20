@@ -4,10 +4,11 @@ definition {
 	macro _addFields {
 		if (isSet(templateFieldNames)) {
 			for (var fieldName : list "${templateFieldNames}") {
-				var key_fieldName = "${fieldName}";
+				var key_panelTitle = "Fields";
+				var key_variableName = "${fieldName}";
 
 				AssertClick(
-					locator1 = "DDMEditTemplate#SCRIPT_FIELD",
+					locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE",
 					value1 = "${fieldName}");
 			}
 		}
@@ -16,10 +17,11 @@ definition {
 	macro _addGeneralVariables {
 		if (isSet(generalVariables)) {
 			for (var generalVariable : list "${generalVariables}") {
-				var key_generalVariable = "${generalVariable}";
+				var key_panelTitle = "General Variables";
+				var key_variableName = "${generalVariable}";
 
 				AssertClick(
-					locator1 = "DDMEditTemplate#SCRIPT_GENERAL_VARIABLE",
+					locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE",
 					value1 = "${generalVariable}");
 			}
 		}
@@ -64,7 +66,7 @@ definition {
 	macro _inputTemplateFile {
 		if (isSet(templateFile)) {
 			UploadCommonFile(
-				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+				locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_FILE_FIELD",
 				value1 = "${templateFile}");
 		}
 	}
@@ -147,8 +149,8 @@ definition {
 	@summary = "Type '${templateScript}' into the template ACE editor field"
 	macro inputScript {
 		if (isSet(templateScript)) {
-			Type.typeAceEditor(
-				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD",
+			Type.typeCodeMirrorEditorNoError(
+				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR",
 				value1 = "${templateScript}");
 		}
 	}
@@ -357,8 +359,8 @@ definition {
 			}
 
 			if (isSet(templateScript)) {
-				AssertTextEquals.assertPartialTextAceEditor(
-					locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD",
+				AssertTextEquals.assertPartialText(
+					locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 					value1 = "${templateScript}");
 			}
 		}

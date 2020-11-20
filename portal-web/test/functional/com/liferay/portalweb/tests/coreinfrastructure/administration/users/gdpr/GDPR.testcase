@@ -60,6 +60,27 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
+		JSONWebcontent.addFolder(
+			folderName = "WC GDPR Folder",
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		JSONWebcontent.addWebContent(
+			content = "This is a WC Content for GDPR Anonymize testing.",
+			folderName = "WC GDPR Folder",
+			groupName = "Guest",
+			title = "GDPR Anonymize Article in Folder",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		JSONWebcontent.addWebContent(
+			content = "This is a WC Content for GDPR Anonymize testing.",
+			groupName = "Guest",
+			title = "GDPR Anonymize Article",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -110,6 +131,22 @@ definition {
 		BlogsEntry.viewEntryAuthorCP(
 			entryAuthorFullName = "Anonymous Anonymous",
 			entryTitle = "Blogs Entry Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		for (var entryTitle : list "WC GDPR Folder,GDPR Anonymize Article") {
+			WebContent.viewEntryListAuthor(
+				author = "Anonymous Anonymous",
+				entryTitle = "${entryTitle}");
+		}
+
+		WebContentFolder.gotoCP(
+			folderName = "WC GDPR Folder",
+			webContentTitle = "WC GDPR Folder");
+
+		WebContent.viewEntryListAuthor(
+			author = "Anonymous Anonymous",
+			entryTitle = "GDPR Anonymize Article in Folder");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

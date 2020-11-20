@@ -58,6 +58,19 @@ if (analyticsConfiguration != null) {
 }
 %>
 
+<c:if test='<%= SessionErrors.contains(renderRequest, "unableToNotifyAnalyticsCloud") %>'>
+	<aui:script>
+		Liferay.Util.openToast({
+			message: '<liferay-ui:message key="unable-to-notify-analytics-cloud" />',
+			title: Liferay.Language.get('warning'),
+			toastProps: {
+				autoClose: 5000,
+			},
+			type: 'warning',
+		});
+	</aui:script>
+</c:if>
+
 <portlet:actionURL name="/analytics_settings/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
 <clay:sheet>

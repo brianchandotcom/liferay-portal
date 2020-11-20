@@ -6626,6 +6626,9 @@ public class JournalArticleLocalServiceImpl
 					article.getResourcePrimKey(), article.getDisplayDate(),
 					article.getExpirationDate(), isListable(article), true);
 
+				expireMaxVersionArticles(
+					article, user.getUserId(), serviceContext, articleURL);
+
 				// Social
 
 				JSONObject extraDataJSONObject = JSONUtil.put("title", title);
@@ -7398,6 +7401,35 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	protected void expireMaxVersionArticles(
+			JournalArticle article, long userId, ServiceContext serviceContext,
+			String articleURL)
+		throws PortalException {
+
+		int maxVersionCount = getArticleMaxVersionCount();
+
+		if (maxVersionCount <= 0) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Expiring oldest articles past the maximum version limit");
+		}
+
+		List<JournalArticle> articles = journalArticlePersistence.findByG_A_ST(
+			article.getGroupId(), article.getArticleId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		for (int i = maxVersionCount; i < articles.size(); i++) {
+			JournalArticle curArticle = articles.get(i);
+
+			expireArticle(
+				userId, curArticle.getGroupId(), curArticle.getArticleId(),
+				curArticle.getVersion(), articleURL, serviceContext);
+		}
+	}
+
 	protected JournalArticle fetchLatestLiveArticle(JournalArticle article)
 		throws PortalException {
 
@@ -7744,6 +7776,20 @@ public class JournalArticleLocalServiceImpl
 			article.isSmallImage(), article.getSmallImageId(),
 			article.getSmallImageURL(), numberOfPages, page, paginate,
 			cacheable);
+	}
+
+	protected int getArticleMaxVersionCount() {
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return journalServiceConfiguration.maxVersionCount();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	protected List<ObjectValuePair<Long, Integer>> getArticleVersionStatuses(

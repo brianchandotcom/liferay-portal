@@ -412,7 +412,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, true, true,
-				layout.getMasterLayoutPlid(), Collections.emptyMap(),
+				Collections.emptyMap(), layout.getMasterLayoutPlid(),
 				serviceContext);
 		}
 
@@ -480,7 +480,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return addLayout(
 			userId, groupId, privateLayout, parentLayoutId, 0, 0, nameMap,
 			titleMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, system, friendlyURLMap, serviceContext);
+			typeSettings, hidden, system, friendlyURLMap, 0, serviceContext);
 	}
 
 	/**

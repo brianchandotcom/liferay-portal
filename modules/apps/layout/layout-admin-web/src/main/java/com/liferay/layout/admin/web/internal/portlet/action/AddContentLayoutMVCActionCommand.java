@@ -144,7 +144,7 @@ public class AddContentLayoutMVCActionCommand
 					layoutPageTemplateEntryId, nameMap, new HashMap<>(),
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
 					LayoutConstants.TYPE_CONTENT, null, false, false,
-					masterLayoutPlid, new HashMap<>(), serviceContext);
+					new HashMap<>(), masterLayoutPlid, serviceContext);
 			}
 
 			String redirectURL = getRedirectURL(

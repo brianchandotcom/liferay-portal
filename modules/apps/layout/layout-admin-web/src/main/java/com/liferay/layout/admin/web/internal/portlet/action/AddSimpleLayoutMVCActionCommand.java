@@ -117,7 +117,7 @@ public class AddSimpleLayoutMVCActionCommand
 				groupId, privateLayout, parentLayoutId, nameMap,
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
 				new HashMap<>(), type, typeSettingsUnicodeProperties.toString(),
-				false, masterLayoutPlid, new HashMap<>(), serviceContext);
+				false, new HashMap<>(), masterLayoutPlid, serviceContext);
 
 			if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 				LayoutTypePortlet layoutTypePortlet =

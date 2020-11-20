@@ -736,7 +736,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
 			draftLayout.getType(), draftLayout.isHidden(),
 			draftLayout.getFriendlyURLMap(), draftLayout.getIconImage(), null,
-			serviceContext);
+			0, 0, serviceContext);
 
 		return layoutPageTemplateEntry;
 	}
@@ -959,8 +959,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		Layout layout = layoutLocalService.addLayout(
 			userId, groupId, privateLayout, 0, 0, 0, titleMap, titleMap, null,
-			null, null, layoutType, typeSettings, true, true, masterLayoutPlid,
-			new HashMap<>(), serviceContext);
+			null, null, layoutType, typeSettings, true, true, new HashMap<>(),
+			masterLayoutPlid, serviceContext);
 
 		serviceContext.setModifiedDate(layout.getModifiedDate());
 
@@ -970,7 +970,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layout.getPlid(), layout.getNameMap(), titleMap,
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			layout.getRobotsMap(), layoutType, layout.getTypeSettings(), true,
-			true, masterLayoutPlid, Collections.emptyMap(), serviceContext);
+			true, Collections.emptyMap(), masterLayoutPlid, serviceContext);
 
 		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
 			(masterLayoutPlid > 0)) {

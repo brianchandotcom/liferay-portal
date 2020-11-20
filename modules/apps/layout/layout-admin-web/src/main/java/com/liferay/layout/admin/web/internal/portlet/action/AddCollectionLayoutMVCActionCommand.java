@@ -147,8 +147,8 @@ public class AddCollectionLayoutMVCActionCommand
 			groupId, privateLayout, parentLayoutId, nameMap, new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(),
 			LayoutConstants.TYPE_COLLECTION,
-			typeSettingsUnicodeProperties.toString(), false, masterLayoutPlid,
-			new HashMap<>(), serviceContext);
+			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
+			masterLayoutPlid, serviceContext);
 
 		ActionUtil.updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,

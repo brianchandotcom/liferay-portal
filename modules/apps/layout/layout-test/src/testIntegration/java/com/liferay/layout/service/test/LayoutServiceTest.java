@@ -150,8 +150,8 @@ public class LayoutServiceTest {
 			layout.getParentLayoutId(), layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
-			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
-			serviceContext);
+			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null, 0,
+			0, serviceContext);
 	}
 
 	@Test
@@ -190,7 +190,7 @@ public class LayoutServiceTest {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
-			layout.getIconImage(), null, serviceContext);
+			layout.getIconImage(), null, 0, 0, serviceContext);
 
 		Layout updatedLayout = LayoutLocalServiceUtil.getLayout(
 			layout.getPlid());

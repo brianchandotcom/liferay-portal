@@ -86,8 +86,8 @@ public class PublishLayoutMVCActionCommandTest {
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false, 0,
-			new HashMap<>(), _serviceContext);
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
+			new HashMap<>(), 0, _serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

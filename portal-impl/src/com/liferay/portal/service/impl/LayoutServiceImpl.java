@@ -153,7 +153,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), groupId, privateLayout, parentLayoutId, classNameId,
 			classPK, localeNamesMap, localeTitlesMap, descriptionMap,
 			keywordsMap, robotsMap, type, typeSettings, hidden, system,
-			masterLayoutPlid, friendlyURLMap, serviceContext);
+			friendlyURLMap, masterLayoutPlid, serviceContext);
 
 		checkLayoutTypeSettings(layout, StringPool.BLANK, typeSettings);
 
@@ -271,7 +271,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return addLayout(
 			groupId, privateLayout, parentLayoutId, 0, 0, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, false, 0, friendlyURLMap, serviceContext);
+			typeSettings, hidden, false, friendlyURLMap, 0, serviceContext);
 	}
 
 	/**

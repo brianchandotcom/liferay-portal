@@ -182,7 +182,7 @@ public class UpgradeLayout extends UpgradeProcess {
 			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			layout.getRobotsMap(), layout.getType(), StringPool.BLANK, true,
-			true, Collections.emptyMap(), serviceContext);
+			true, Collections.emptyMap(), 0, serviceContext);
 
 		return layout.getPlid();
 	}

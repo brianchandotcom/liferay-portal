@@ -152,7 +152,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		parameters.put(
 			"uploadURL",
-			getUploadURL(ddmFormFieldRenderingContext, httpServletRequest));
+			getUploadURL(
+				folderId, ddmFormFieldRenderingContext, httpServletRequest));
 
 		String value = ddmFormFieldRenderingContext.getValue();
 
@@ -290,6 +291,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	protected String getUploadURL(
+		long folderId,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		HttpServletRequest httpServletRequest) {
 
@@ -302,6 +304,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/dynamic_data_mapping_form/upload_file_entry");
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter(
 			"formInstanceId",
 			ParamUtil.getString(httpServletRequest, "formInstanceId"));

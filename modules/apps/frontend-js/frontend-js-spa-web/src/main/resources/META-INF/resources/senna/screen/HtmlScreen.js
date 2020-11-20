@@ -13,13 +13,18 @@
  */
 
 import {runScriptsInElement} from 'frontend-js-web';
-import {buildFragment, globalEvalStyles, match} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
 import globals from '../globals/globals';
 import Surface from '../surface/Surface';
-import {clearNodeAttributes, copyNodeAttributes, getUid} from '../utils/utils';
+import {
+	buildFragment,
+	clearNodeAttributes,
+	copyNodeAttributes,
+	getUid,
+	runStylesInElement,
+} from '../utils/utils';
 import RequestScreen from './RequestScreen';
 
 class HtmlScreen extends RequestScreen {
@@ -81,8 +86,7 @@ class HtmlScreen extends RequestScreen {
 	 * @param {Element} newStyle
 	 */
 	appendStyleIntoDocument_(newStyle) {
-		var isTemporaryStyle = match(
-			newStyle,
+		var isTemporaryStyle = newStyle.matches(
 			HtmlScreen.selectors.stylesTemporary
 		);
 		if (isTemporaryStyle) {
@@ -172,7 +176,7 @@ class HtmlScreen extends RequestScreen {
 	evaluateStyles(surfaces) {
 		this.pendingStyles = [];
 		var evaluateTrackedStyles = this.evaluateTrackedResources_(
-			globalEvalStyles.runStylesInElement,
+			runStylesInElement,
 			HtmlScreen.selectors.styles,
 			HtmlScreen.selectors.stylesTemporary,
 			HtmlScreen.selectors.stylesPermanent,
@@ -247,7 +251,7 @@ class HtmlScreen extends RequestScreen {
 
 			// If resource has key and is permanent add to cache.
 
-			if (resourceKey && match(resource, selectorPermanent)) {
+			if (resourceKey && resource.matches(selectorPermanent)) {
 				HtmlScreen.permanentResourcesInDoc[resourceKey] = true;
 			}
 		});

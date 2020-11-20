@@ -12,11 +12,11 @@
  * details.
  */
 
-import {append, exitDocument, removeChildren} from 'metal-dom';
 import CancellablePromise from 'metal-promise';
 
 import Disposable from '../Disposable';
 import globals from '../globals/globals';
+import {buildFragment} from '../utils/utils';
 
 class Surface extends Disposable {
 
@@ -96,19 +96,25 @@ class Surface extends Disposable {
 		if (opt_content) {
 			child = this.getChild(screenId);
 			if (child) {
-				removeChildren(child);
+				while (child.firstChild) {
+					child.removeChild(child.firstChild);
+				}
 			}
 			else {
 				child = this.createChild(screenId);
 				this.transition(child, null);
 			}
-			append(child, opt_content);
+			child.appendChild(
+				typeof opt_content === 'string'
+					? buildFragment(opt_content)
+					: opt_content
+			);
 		}
 
 		var element = this.getElement();
 
 		if (element && child) {
-			append(element, child);
+			element.appendChild(child);
 		}
 
 		return child;
@@ -227,7 +233,7 @@ class Surface extends Disposable {
 
 		return this.transition(from, to).thenAlways(() => {
 			if (from && from !== to) {
-				exitDocument(from);
+				from.remove();
 			}
 		});
 	}
@@ -239,7 +245,7 @@ class Surface extends Disposable {
 	remove(screenId) {
 		var child = this.getChild(screenId);
 		if (child) {
-			exitDocument(child);
+			child.remove();
 		}
 	}
 

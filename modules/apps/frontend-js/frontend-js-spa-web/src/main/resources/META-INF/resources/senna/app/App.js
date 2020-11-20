@@ -12,8 +12,7 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
-import {addClasses, delegate, match, on, removeClasses} from 'metal-dom';
+import {debounce, delegate} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
@@ -259,13 +258,21 @@ class App extends EventEmitter {
 		this.appEventHandlers_ = new EventHandler();
 
 		this.appEventHandlers_.add(
-			on(
+			this.addDOMEventListener(
 				globals.window,
 				'scroll',
 				debounce(this.onScroll_.bind(this), 100)
 			),
-			on(globals.window, 'load', this.onLoad_.bind(this)),
-			on(globals.window, 'popstate', this.onPopstate_.bind(this))
+			this.addDOMEventListener(
+				globals.window,
+				'load',
+				this.onLoad_.bind(this)
+			),
+			this.addDOMEventListener(
+				globals.window,
+				'popstate',
+				this.onPopstate_.bind(this)
+			)
 		);
 
 		this.on('startNavigate', this.onStartNavigate_);
@@ -277,6 +284,16 @@ class App extends EventEmitter {
 		this.setFormSelector(this.formSelector);
 
 		this.maybeOverloadBeforeUnload_();
+	}
+
+	addDOMEventListener(element, eventName, callback) {
+		element.addEventListener(eventName, callback);
+
+		return {
+			removeListener() {
+				element.removeEventListener(eventName, callback);
+			},
+		};
 	}
 
 	/**
@@ -432,8 +449,8 @@ class App extends EventEmitter {
 			this.removeScreen(this.activePath);
 		}
 		this.clearScreensCache();
-		this.formEventHandler_.removeListener();
-		this.linkEventHandler_.removeListener();
+		this.formEventHandler_.dispose();
+		this.linkEventHandler_.dispose();
 		this.appEventHandlers_.removeAllListeners();
 		super.disposeInternal();
 	}
@@ -1070,7 +1087,10 @@ class App extends EventEmitter {
 
 			return;
 		}
-		this.maybeNavigate_(event.delegateTarget.href, event);
+		this.maybeNavigate_(
+			event.target.closest(this.getLinkSelector()).href,
+			event
+		);
 	}
 
 	/**
@@ -1080,7 +1100,7 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	onDocSubmitDelegate_(event) {
-		var form = event.delegateTarget;
+		var form = event.target.closest(this.getFormSelector());
 		if (form.method === 'get') {
 			log('GET method not supported');
 
@@ -1089,7 +1109,7 @@ class App extends EventEmitter {
 		event.capturedFormElement = form;
 		const buttonSelector =
 			'button:not([type]),button[type=submit],input[type=submit]';
-		if (match(globals.document.activeElement, buttonSelector)) {
+		if (globals.document.activeElement.matches(buttonSelector)) {
 			event.capturedFormButtonElement = globals.document.activeElement;
 		}
 		else {
@@ -1221,7 +1241,7 @@ class App extends EventEmitter {
 	onStartNavigate_(event) {
 		this.maybeDisableNativeScrollRestoration();
 		this.captureScrollPositionFromScrollEvent = false;
-		addClasses(globals.document.documentElement, this.loadingCssClass);
+		globals.document.documentElement.classList.add(this.loadingCssClass);
 
 		var endNavigatePayload = {
 			form: event.form,
@@ -1241,8 +1261,7 @@ class App extends EventEmitter {
 					!this.pendingNavigate &&
 					!this.scheduledNavigationQueue.length
 				) {
-					removeClasses(
-						globals.document.documentElement,
+					globals.document.documentElement.classList.remove(
 						this.loadingCssClass
 					);
 					this.maybeRestoreNativeScrollRestoration();
@@ -1425,7 +1444,7 @@ class App extends EventEmitter {
 	setFormSelector(formSelector) {
 		this.formSelector = formSelector;
 		if (this.formEventHandler_) {
-			this.formEventHandler_.removeListener();
+			this.formEventHandler_.dispose();
 		}
 		this.formEventHandler_ = delegate(
 			document,
@@ -1451,7 +1470,7 @@ class App extends EventEmitter {
 	setLinkSelector(linkSelector) {
 		this.linkSelector = linkSelector;
 		if (this.linkEventHandler_) {
-			this.linkEventHandler_.removeListener();
+			this.linkEventHandler_.dispose();
 		}
 		this.linkEventHandler_ = delegate(
 			document,

@@ -12,10 +12,9 @@
  * details.
  */
 
-import dom from 'metal-dom';
-
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
+import {buildFragment} from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('Screen', () => {
 	it('exposes lifecycle activate', () => {
@@ -150,19 +149,21 @@ describe('Screen', () => {
 });
 
 function enterDocumentSurfaceElement(surfaceId, opt_content) {
-	dom.enterDocument(
-		'<div id="' +
-			surfaceId +
-			'">' +
-			(opt_content ? opt_content : '') +
-			'</div>'
+	document.body.appendChild(
+		buildFragment(
+			'<div id="' +
+				surfaceId +
+				'">' +
+				(opt_content ? opt_content : '') +
+				'</div>'
+		)
 	);
 
 	return document.getElementById(surfaceId);
 }
 
 function exitDocumentSurfaceElement(surfaceId) {
-	return dom.exitDocument(document.getElementById(surfaceId));
+	return document.getElementById(surfaceId).remove();
 }
 
 function assertComputedStyle(property, value) {

@@ -13,10 +13,9 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import dom from 'metal-dom';
 
 import {App} from '../../senna/senna';
-import {getUid} from '../../senna/utils/utils';
+import {buildFragment, getUid} from '../../senna/utils/utils';
 import LiferaySurface from '../surface/Surface.es';
 import {getPortletBoundaryId, resetAllPortlets} from '../util/Utils.es';
 
@@ -78,7 +77,9 @@ class LiferayApp extends App {
 
 		this.addSurfaces(new LiferaySurface(body.id));
 
-		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
+		body.appendChild(
+			buildFragment('<div class="lfr-spa-loading-bar"></div>')
+		);
 	}
 
 	/**
@@ -213,7 +214,7 @@ class LiferayApp extends App {
 	 */
 
 	onDataLayoutConfigReady_() {
-		if (Liferay.Layout) {
+		if (Liferay.Layout && Liferay.Data.layoutConfig) {
 			Liferay.Layout.init(Liferay.Data.layoutConfig);
 		}
 		else {
@@ -235,7 +236,9 @@ class LiferayApp extends App {
 
 	onDocClickDelegate_(event) {
 		if (
-			this.isInPortletBlacklist(event.delegateTarget) ||
+			this.isInPortletBlacklist(
+				event.target.closest(this.getLinkSelector())
+			) ||
 			event.detail > 1
 		) {
 			return;
@@ -253,7 +256,11 @@ class LiferayApp extends App {
 	 */
 
 	onDocSubmitDelegate_(event) {
-		if (this.isInPortletBlacklist(event.delegateTarget)) {
+		if (
+			this.isInPortletBlacklist(
+				event.target.closest(this.getFormSelector())
+			)
+		) {
 			return;
 		}
 

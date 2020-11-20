@@ -12,12 +12,12 @@
  * details.
  */
 
-import dom from 'metal-dom';
 import Uri from 'metal-uri';
 
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
+import {buildFragment} from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('HtmlScreen', () => {
 	beforeEach(() => {
@@ -294,7 +294,7 @@ describe('HtmlScreen', () => {
 		);
 		screen.evaluateStyles({}).then(() => {
 			document.head.appendChild(
-				dom.buildFragment(
+				buildFragment(
 					'<style id="mainStyle">body{background-color:rgb(255, 255, 255);}</style>'
 				)
 			);
@@ -351,7 +351,7 @@ describe('HtmlScreen', () => {
 	it('removes from document tracked pending styles on screen dispose', (done) => {
 		var screen = new HtmlScreen();
 		document.head.appendChild(
-			dom.buildFragment(
+			buildFragment(
 				'<style id="mainStyle">body{background-color:rgb(255, 255, 255);}</style>'
 			)
 		);
@@ -404,19 +404,21 @@ describe('HtmlScreen', () => {
 });
 
 function enterDocumentSurfaceElement(surfaceId, opt_content) {
-	dom.enterDocument(
-		'<div id="' +
-			surfaceId +
-			'">' +
-			(opt_content ? opt_content : '') +
-			'</div>'
+	document.body.appendChild(
+		buildFragment(
+			'<div id="' +
+				surfaceId +
+				'">' +
+				(opt_content ? opt_content : '') +
+				'</div>'
+		)
 	);
 
 	return document.getElementById(surfaceId);
 }
 
 function exitDocumentElement(surfaceId) {
-	return dom.exitDocument(document.getElementById(surfaceId));
+	return document.getElementById(surfaceId).remove();
 }
 
 function assertComputedStyle(property, value) {

@@ -14,7 +14,6 @@
 
 import {fireEvent} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import {dom, exitDocument} from 'metal-dom';
 
 import App from '../../../src/main/resources/META-INF/resources/senna/app/App';
 import EventEmitter from '../../../src/main/resources/META-INF/resources/senna/events/EventEmitter';
@@ -24,6 +23,7 @@ import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/scr
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 import utils, {
+	buildFragment,
 	getCurrentBrowserPath,
 	getNodeOffset,
 	getUrlPathWithoutHash,
@@ -762,10 +762,14 @@ describe('App', function () {
 			.then(() => {
 				var startNavigate = jest.fn();
 				this.app.on('startNavigate', startNavigate);
-				dom.once(globals.window, 'popstate', () => {
-					expect(startNavigate).not.toHaveBeenCalled();
-					done();
-				});
+				globals.window.addEventListener(
+					'popstate',
+					() => {
+						expect(startNavigate).not.toHaveBeenCalled();
+						done();
+					},
+					{once: true}
+				);
 				globals.window.history.back();
 			});
 	});
@@ -1176,7 +1180,7 @@ describe('App', function () {
 		var link = enterDocumentLinkElement('http://sennajs.com');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
-		dom.on(link, 'click', preventDefault);
+		link.addEventListener('click', preventDefault);
 		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
@@ -1187,7 +1191,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
-		dom.on(link, 'click', preventDefault);
+		link.addEventListener('click', preventDefault);
 		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
@@ -1197,7 +1201,7 @@ describe('App', function () {
 		var link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
-		dom.on(link, 'click', preventDefault);
+		link.addEventListener('click', preventDefault);
 		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
@@ -1209,7 +1213,7 @@ describe('App', function () {
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
 
-		dom.on(link, 'click', preventDefault);
+		link.addEventListener('click', preventDefault);
 
 		userEvent.click(link, {altKey: false});
 		userEvent.click(link, {ctrlKey: false});
@@ -1230,7 +1234,7 @@ describe('App', function () {
 		this.app.navigate = () => {
 			throw new Error();
 		};
-		dom.on(link, 'click', preventDefault);
+		link.addEventListener('click', preventDefault);
 		userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
@@ -1244,10 +1248,14 @@ describe('App', function () {
 		this.app.navigate('/path1').then(() => {
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path2').then(() => {
-				dom.once(globals.window, 'popstate', () => {
-					expect(this.app.reloadPage).toHaveBeenCalled();
-					done();
-				});
+				globals.window.addEventListener(
+					'popstate',
+					() => {
+						expect(this.app.reloadPage).toHaveBeenCalled();
+						done();
+					},
+					{once: true}
+				);
 				globals.window.history.back();
 			});
 		});
@@ -1263,12 +1271,16 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path1', NullStateScreen));
 		this.app.navigate('/path1').then(() => {
 			this.app.navigate('/path1#hash').then(() => {
-				dom.once(globals.window, 'popstate', () => {
-					expect(getCurrentBrowserPath(document.referrer)).toBe(
-						'/path1'
-					);
-					done();
-				});
+				globals.window.addEventListener(
+					'popstate',
+					() => {
+						expect(getCurrentBrowserPath(document.referrer)).toBe(
+							'/path1'
+						);
+						done();
+					},
+					{once: true}
+				);
 				globals.window.history.back();
 			});
 		});
@@ -1282,10 +1294,14 @@ describe('App', function () {
 			globals.window.location.hash = 'hash1';
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path').then(() => {
-				dom.once(globals.window, 'popstate', () => {
-					expect(this.app.reloadPage).not.toHaveBeenCalled();
-					done();
-				});
+				globals.window.addEventListener(
+					'popstate',
+					() => {
+						expect(this.app.reloadPage).not.toHaveBeenCalled();
+						done();
+					},
+					{once: true}
+				);
 				globals.window.history.back();
 			});
 		});
@@ -1300,10 +1316,14 @@ describe('App', function () {
 			globals.window.location.hash = 'hash1';
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path2').then(() => {
-				dom.once(globals.window, 'popstate', () => {
-					expect(this.app.reloadPage).toHaveBeenCalled();
-					done();
-				});
+				globals.window.addEventListener(
+					'popstate',
+					() => {
+						expect(this.app.reloadPage).toHaveBeenCalled();
+						done();
+					},
+					{once: true}
+				);
 				globals.window.history.back();
 			});
 		});
@@ -1314,10 +1334,14 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.reloadPage = jest.fn();
 		window.history.replaceState(null, null, '/path#hash1');
-		dom.once(globals.window, 'popstate', () => {
-			expect(this.app.reloadPage).not.toHaveBeenCalled();
-			done();
-		});
+		globals.window.addEventListener(
+			'popstate',
+			() => {
+				expect(this.app.reloadPage).not.toHaveBeenCalled();
+				done();
+			},
+			{once: true}
+		);
 		fireEvent(globals.window, new PopStateEvent('popstate'));
 	});
 
@@ -1374,16 +1398,24 @@ describe('App', function () {
 			window.history.replaceState(null, null, null);
 			globals.window.location.hash = 'other';
 			window.history.replaceState(null, null, null);
-			dom.once(globals.window, 'popstate', () => {
-				expect(window.pageXOffset).toBe(1000);
-				expect(window.pageYOffset).toBe(1000);
-				exitDocumentLinkElement();
+			globals.window.addEventListener(
+				'popstate',
+				() => {
+					expect(window.pageXOffset).toBe(1000);
+					expect(window.pageYOffset).toBe(1000);
+					exitDocumentLinkElement();
 
-				dom.once(globals.window, 'popstate', () => {
-					done();
-				});
-				globals.window.history.back();
-			});
+					globals.window.addEventListener(
+						'popstate',
+						() => {
+							done();
+						},
+						{once: true}
+					);
+					globals.window.history.back();
+				},
+				{once: true}
+			);
 			globals.window.history.back();
 		});
 	});
@@ -1407,7 +1439,7 @@ describe('App', function () {
 		expect(this.app.pendingNavigate).toBeTruthy();
 
 		this.app.on('endNavigate', () => {
-			exitDocument(form);
+			form.remove();
 			done();
 		});
 	});
@@ -1417,12 +1449,16 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', Screen));
 		var form = enterDocumentFormElement('/path', 'post');
 
-		dom.once(form, 'submit', (event) => {
-			event.preventDefault();
-			expect(this.app.pendingNavigate).toBeFalsy();
-			exitDocument(form);
-			done();
-		});
+		form.addEventListener(
+			'submit',
+			(event) => {
+				event.preventDefault();
+				expect(this.app.pendingNavigate).toBeFalsy();
+				form.remove();
+				done();
+			},
+			{once: true}
+		);
 		fireEvent.submit(form);
 	});
 
@@ -1431,12 +1467,16 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', Screen));
 		var form = enterDocumentFormElement('/path', 'post');
 
-		dom.once(form, 'submit', (event) => {
-			event.preventDefault();
-			expect(globals.capturedFormElement).toBeFalsy();
-			exitDocument(form);
-			done();
-		});
+		form.addEventListener(
+			'submit',
+			(event) => {
+				event.preventDefault();
+				expect(globals.capturedFormElement).toBeFalsy();
+				form.remove();
+				done();
+			},
+			{once: true}
+		);
 
 		fireEvent.submit(form);
 	});
@@ -1456,7 +1496,7 @@ describe('App', function () {
 		});
 		this.app.on('endNavigate', (data) => {
 			expect(data.form).toBeTruthy();
-			exitDocument(form);
+			form.remove();
 			done();
 		});
 	});
@@ -1466,20 +1506,20 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
-		dom.on(form, 'submit', preventDefault);
+		form.addEventListener('submit', preventDefault);
 		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
-		exitDocument(form);
+		form.remove();
 	});
 
 	it('does not navigate when submitting on external forms', () => {
 		var form = enterDocumentFormElement('http://sennajs.com', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
-		dom.on(form, 'submit', preventDefault);
+		form.addEventListener('submit', preventDefault);
 		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
-		exitDocument(form);
+		form.remove();
 	});
 
 	it('does not navigate when submitting on forms outside basepath', () => {
@@ -1487,30 +1527,30 @@ describe('App', function () {
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
-		dom.on(form, 'submit', preventDefault);
+		form.addEventListener('submit', preventDefault);
 		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
-		exitDocument(form);
+		form.remove();
 	});
 
 	it('does not navigate when submitting on unrouted forms', () => {
 		var form = enterDocumentFormElement('/path', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
-		dom.on(form, 'submit', preventDefault);
+		form.addEventListener('submit', preventDefault);
 		fireEvent.submit(form);
 		expect(this.app.pendingNavigate).toBeFalsy();
-		exitDocument(form);
+		form.remove();
 	});
 
 	it('does not capture form if navigate fails when submitting forms', () => {
 		var form = enterDocumentFormElement('/path', 'post');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
-		dom.on(form, 'submit', preventDefault);
+		form.addEventListener('submit', preventDefault);
 		fireEvent.submit(form);
 		expect(globals.capturedFormElement).toBeFalsy();
-		exitDocument(form);
+		form.remove();
 	});
 
 	it('captures form on beforeNavigate', (done) => {
@@ -1531,12 +1571,12 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('beforeNavigate', (event) => {
 			expect(event.form).toBeTruthy();
-			exitDocument(form);
+			form.remove();
 			expect(globals.capturedFormElement).toBeTruthy();
 			globals.capturedFormElement = null;
 			done();
 		});
-		dom.on(form, 'submit', jest.fn());
+		form.addEventListener('submit', jest.fn());
 		fireEvent.submit(form);
 	});
 
@@ -1561,7 +1601,7 @@ describe('App', function () {
 
 		this.app.on('beforeNavigate', () => {
 			expect(globals.capturedFormButtonElement).toBeTruthy();
-			exitDocument(form);
+			form.remove();
 			globals.capturedFormElement = null;
 			globals.capturedFormButtonElement = null;
 			done();
@@ -1593,7 +1633,7 @@ describe('App', function () {
 		button.click();
 		expect(globals.capturedFormButtonElement).toBeTruthy();
 		globals.capturedFormButtonElement = null;
-		exitDocument(form);
+		form.remove();
 	});
 
 	it('sets redirect path if history path was redirected', (done) => {
@@ -1830,11 +1870,15 @@ describe('App', function () {
 				return 'screenId2';
 			}
 		}
-		dom.enterDocument(
-			'<div id="surfaceId1"><div id="surfaceId1-default">default1</div></div>'
+		document.body.appendChild(
+			buildFragment(
+				'<div id="surfaceId1"><div id="surfaceId1-default">default1</div></div>'
+			)
 		);
-		dom.enterDocument(
-			'<div id="surfaceId2"><div id="surfaceId2-default">default2</div></div>'
+		document.body.appendChild(
+			buildFragment(
+				'<div id="surfaceId2"><div id="surfaceId2-default">default2</div></div>'
+			)
 		);
 		var surface1 = new Surface('surfaceId1');
 		var surface2 = new Surface('surfaceId2');
@@ -1868,8 +1912,8 @@ describe('App', function () {
 					'content2'
 				);
 
-				dom.exitDocument(surface1.getElement());
-				dom.exitDocument(surface2.getElement());
+				surface1.getElement().remove();
+				surface2.getElement().remove();
 				done();
 			});
 		});
@@ -2069,9 +2113,12 @@ describe('App', function () {
 	});
 
 	it('scrolls to anchor element on navigate', (done) => {
-		const parentNode = dom.enterDocument(
-			'<div style="position:absolute;top:400px;"><div id="surfaceId1" style="position:relative;top:400px"></div></div>'
+		document.body.appendChild(
+			buildFragment(
+				'<div id="element" style="position:absolute;top:400px;"><div id="surfaceId1" style="position:relative;top:400px"></div></div>'
+			)
 		);
+
 		this.app = new App();
 		this.app.addRoutes(new Route('/path1', Screen));
 		this.app.addSurfaces(['surfaceId1']);
@@ -2080,7 +2127,7 @@ describe('App', function () {
 			const {offsetLeft, offsetTop} = getNodeOffset(surfaceNode);
 			expect(window.pageYOffset).toBe(offsetTop);
 			expect(window.pageXOffset).toBe(offsetLeft);
-			dom.exitDocument(parentNode);
+			document.getElementById('element').remove();
 			done();
 		});
 	});
@@ -2132,10 +2179,14 @@ describe('App', function () {
 
 			return this.app.navigate('/path2').then(() => {
 				return new Promise((resolve) => {
-					dom.once(globals.window, 'popstate', () => {
-						expect(this.app.reloadPage).not.toHaveBeenCalled();
-						resolve();
-					});
+					globals.window.addEventListener(
+						'popstate',
+						() => {
+							expect(this.app.reloadPage).not.toHaveBeenCalled();
+							resolve();
+						},
+						{once: true}
+					);
 					this.app.skipLoadPopstate = true;
 					globals.window.history.back();
 				});
@@ -2145,22 +2196,26 @@ describe('App', function () {
 });
 
 function enterDocumentLinkElement(href) {
-	dom.enterDocument('<a id="link" href="' + href + '">link</a>');
+	document.body.appendChild(
+		buildFragment('<a id="link" href="' + href + '">link</a>')
+	);
 
 	return document.getElementById('link');
 }
 
 function enterDocumentFormElement(action, method) {
 	const random = Math.floor(Math.random() * 10000);
-	dom.enterDocument(
-		`<form id="form_${random}" action="${action}" method="${method}" enctype="multipart/form-data"></form>`
+	document.body.appendChild(
+		buildFragment(
+			`<form id="form_${random}" action="${action}" method="${method}" enctype="multipart/form-data"></form>`
+		)
 	);
 
 	return document.getElementById(`form_${random}`);
 }
 
 function exitDocumentLinkElement() {
-	dom.exitDocument(document.getElementById('link'));
+	document.getElementById('link').remove();
 }
 
 function preventDefault(event) {

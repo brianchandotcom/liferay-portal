@@ -46,6 +46,27 @@ export const BINARY_OPERATOR = [
 	'not-equals-to',
 ];
 
+export const DEFAULT_RULE = {
+	actions: [
+		{
+			target: '',
+			type: '',
+		},
+	],
+	conditions: [
+		{
+			operands: [
+				{
+					type: '',
+					value: '',
+				},
+			],
+			operator: '',
+		},
+	],
+	logicalOperator: 'OR',
+};
+
 export const ACTIONS_OPTIONS = [
 	{
 		label: Liferay.Language.get('show'),

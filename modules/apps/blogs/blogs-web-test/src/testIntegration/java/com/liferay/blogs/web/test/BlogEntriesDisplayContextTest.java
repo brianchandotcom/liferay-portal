@@ -94,7 +94,7 @@ public class BlogEntriesDisplayContextTest {
 
 		sb.append("(component.name=");
 		sb.append("com.liferay.blogs.web.internal.portlet.action.");
-		sb.append("BlogsAdminViewMVCRenderCommand)");
+		sb.append("ViewMVCRenderCommand)");
 
 		_serviceTracker = registry.trackServices(
 			registry.getFilter(sb.toString()));

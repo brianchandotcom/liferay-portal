@@ -185,13 +185,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_disconnectDataSource(
-			themeDisplay.getCompanyId(), configurationProperties));
-	}
-
-	private void _disconnectDataSource(
-			long companyId, Dictionary<String, Object> configurationProperties)
-		throws Exception {
+		long companyId = themeDisplay.getCompanyId();
 
 		String dataSourceId = null;
 		String liferayAnalyticsFaroBackendURL = null;

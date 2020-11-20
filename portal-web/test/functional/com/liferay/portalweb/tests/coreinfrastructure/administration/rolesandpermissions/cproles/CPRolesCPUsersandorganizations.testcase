@@ -167,6 +167,17 @@ definition {
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_USER",
 			resourceName = "90",

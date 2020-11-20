@@ -153,20 +153,33 @@ public class AppResourceImpl
 		}
 
 		if (Objects.isNull(active) && ArrayUtil.isEmpty(deploymentTypes) &&
-			Validator.isNull(keywords) && Validator.isNull(scope) &&
-			ArrayUtil.isEmpty(userIds)) {
+			Validator.isNull(keywords) && ArrayUtil.isEmpty(userIds)) {
+
+			if (Validator.isNull(scope)) {
+				return Page.of(
+					transform(
+						_appBuilderAppLocalService.getCompanyAppBuilderApps(
+							contextCompany.getCompanyId(),
+							pagination.getStartPosition(),
+							pagination.getEndPosition(),
+							_toOrderByComparator(sorts[0])),
+						this::_toApp),
+					pagination,
+					_appBuilderAppLocalService.getCompanyAppBuilderAppsCount(
+						contextCompany.getCompanyId()));
+			}
 
 			return Page.of(
 				transform(
 					_appBuilderAppLocalService.getCompanyAppBuilderApps(
-						contextCompany.getCompanyId(),
+						contextCompany.getCompanyId(), scope,
 						pagination.getStartPosition(),
 						pagination.getEndPosition(),
 						_toOrderByComparator(sorts[0])),
 					this::_toApp),
 				pagination,
 				_appBuilderAppLocalService.getCompanyAppBuilderAppsCount(
-					contextCompany.getCompanyId()));
+					contextCompany.getCompanyId(), scope));
 		}
 
 		return SearchUtil.search(

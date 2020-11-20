@@ -17,9 +17,7 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import RuleEditor from '../../components/RuleEditor/RuleEditor.es';
-// import RuleList from '../../components/RuleList/RuleList.es';
-import {RuleListReactAdapter} from 'data-engine-taglib';
-
+import RuleList from '../../components/RuleList/RuleList.es';
 
 /**
  * Builder.
@@ -99,7 +97,7 @@ class RuleBuilder extends Component {
 					/>
 				)}
 				{mode === 'view' && (
-					<RuleListReactAdapter
+					<RuleList
 						dataProvider={dataProvider}
 						events={{
 							ruleAdded: this._handleRuleAdded.bind(this),

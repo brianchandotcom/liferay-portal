@@ -15,11 +15,15 @@
 import {useResource} from '@clayui/data-provider';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {getConnectedReactComponentAdapter} from 'dynamic-data-mapping-form-renderer';
+import {
+	PagesVisitor,
+	getConnectedReactComponentAdapter,
+} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
-import React, {useImperativeHandle, useState} from 'react';
+import React, {useImperativeHandle, useMemo, useState} from 'react';
 
 import {FormsRuleEditor} from './FormsRuleEditor.es';
+import {FormsRuleList} from './FormsRuleList.es';
 
 const Route = ({children, location, path}) => {
 	if (path !== location) {
@@ -35,6 +39,7 @@ const FormsRuleBuilder = React.forwardRef(
 			dataProviderInstancesURL,
 			functionsMetadata,
 			instance: metal,
+			pages,
 			rolesURL,
 			rules,
 			spritemap,
@@ -42,7 +47,7 @@ const FormsRuleBuilder = React.forwardRef(
 		},
 		ref
 	) => {
-		const [location, setLocation] = useState('list');
+		const [path, setPath] = useState('list');
 		const [rule, setRule] = useState(null);
 
 		const {resource: resourceDataProvider} = useResource({
@@ -71,50 +76,100 @@ const FormsRuleBuilder = React.forwardRef(
 			value: role.name,
 		}));
 
-		const dispatch = (name, event) => metal.emit(name, event);
+		const dispatch = (name, event) => metal.context.dispatch(name, event);
 
 		useImperativeHandle(
 			ref,
 			() => ({
-				showRuleCreation: () => setLocation('editor'),
-				showRuleList: () => setLocation('list'),
+				isViewMode: () => path === 'list',
+				showRuleCreation: () => {
+					setRule(null);
+					setPath('editor');
+				},
+				showRuleList: () => {
+					setRule(null);
+					setPath('list');
+				},
 			}),
-			[setLocation]
+			[path, setPath, setRule]
 		);
+
+		const fields = useMemo(() => {
+			const fields = [];
+			const visitor = new PagesVisitor(pages);
+
+			visitor.mapFields(
+				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+					if (field.type != 'fieldset') {
+						fields.push({
+							...field,
+							pageIndex,
+							value: field.fieldName,
+						});
+					}
+				}
+			);
+
+			return fields;
+		}, [pages]);
+
+		const pageOptions = useMemo(() => {
+			return pages.map(({title}, index) => ({
+				label: `${index + 1} ${
+					title || Liferay.Language.get('page-title')
+				}`,
+				name: index.toString(),
+				value: index.toString(),
+			}));
+		}, [pages]);
 
 		return (
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<ClayLayout.Container>
-					<Route location={location} path="editor">
+					<Route location={path} path="editor">
 						<FormsRuleEditor
 							{...otherProps}
 							dataProvider={dataProvider}
+							fields={fields}
 							onCancel={() => {
-								setLocation('list');
+								setPath('list');
 								setRule(null);
 								dispatch('ruleCancelled');
 							}}
 							onSave={(event) => {
-								if (rule) {
+								if (rule !== null) {
 									dispatch('ruleSaved', {
 										...event,
 										ruleEditedIndex: rule,
 									});
 								}
 								else {
-									dispatch('ruleAdded', rule);
+									dispatch('ruleAdded', event);
 								}
 
-								setLocation('list');
+								setPath('list');
 								setRule(null);
 							}}
 							operatorsByType={functionsMetadata}
+							pages={pageOptions}
 							roles={roles}
 							rule={rules[rule]}
 						/>
 					</Route>
-					<Route location={location} path="list">
-						<div />
+					<Route location={path} path="list">
+						<FormsRuleList
+							dataProvider={dataProvider}
+							fields={fields}
+							onDelete={(ruleId) => {
+								dispatch('ruleDeleted', {ruleId});
+							}}
+							onEdit={(index) => {
+								setRule(index);
+								setPath('editor');
+							}}
+							pages={pageOptions}
+							rules={rules}
+						/>
 					</Route>
 				</ClayLayout.Container>
 			</ClayIconSpriteContext.Provider>

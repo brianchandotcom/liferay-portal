@@ -14,3 +14,13 @@ $c: '.ddm-rule-list-container';
 		display: inline-block;
 	}
 }
+
+.form-builder-rule-list {
+	.inline-item-after {
+		margin-left: 0.3rem;
+	}
+
+	.inline-item-before {
+		margin-right: 0.3rem;
+	}
+}

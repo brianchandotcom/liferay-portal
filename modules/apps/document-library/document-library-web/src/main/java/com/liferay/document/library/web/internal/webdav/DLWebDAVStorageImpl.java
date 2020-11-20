@@ -86,6 +86,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -700,7 +701,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 						destFileEntry.getFileEntryId(),
 						destFileEntry.getFileName(),
 						destFileEntry.getMimeType(),
-						destFileEntry.getFileName(),
+						_getTitle(
+							destFileEntry.getFileName(),
+							fileEntry.getFileName(), destFileEntry.getTitle()),
 						destFileEntry.getDescription(), StringPool.BLANK,
 						DLVersionNumberIncrease.MINOR, file, serviceContext);
 
@@ -720,7 +723,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			_dlAppService.updateFileEntry(
 				fileEntry.getFileEntryId(), fileName, fileEntry.getMimeType(),
-				fileName, fileEntry.getDescription(), StringPool.BLANK,
+				_getTitle(
+					fileName, fileEntry.getFileName(), fileEntry.getTitle()),
+				fileEntry.getDescription(), StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, file, serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
@@ -801,7 +806,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				serviceContext.setCommand(Constants.UPDATE_WEBDAV);
 
 				_dlAppService.updateFileEntry(
-					fileEntry.getFileEntryId(), fileName, contentType, fileName,
+					fileEntry.getFileEntryId(), fileName, contentType,
+					_getTitle(
+						fileName, fileEntry.getFileName(),
+						fileEntry.getTitle()),
 					fileEntry.getDescription(), StringPool.BLANK,
 					DLVersionNumberIncrease.MINOR, file, serviceContext);
 			}
@@ -1256,6 +1264,16 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			webDAVRequest.getGroupId(), className);
 
 		return serviceContext;
+	}
+
+	private String _getTitle(
+		String newFileName, String originalFileName, String title) {
+
+		if (Objects.equals(originalFileName, newFileName)) {
+			return title;
+		}
+
+		return newFileName;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

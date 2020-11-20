@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"mvc.command.name=/document_library/onedrive_background_task_status"
+		"mvc.command.name=/document_library/one_drive_background_task_status"
 	},
 	service = MVCResourceCommand.class
 )

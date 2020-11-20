@@ -43,7 +43,7 @@ public class OneDriveURLUtil {
 			"fileEntryId",
 			String.valueOf(dlOpenerOneDriveFileReference.getFileEntryId()));
 		resourceURL.setResourceID(
-			"/document_library/onedrive_background_task_status");
+			"/document_library/one_drive_background_task_status");
 
 		return resourceURL.toString();
 	}

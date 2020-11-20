@@ -18,6 +18,23 @@
 
 <div class="info-panel sidenav-menu-slider">
 	<div class="sidebar sidebar-light sidenav-menu">
-		<aui:icon cssClass="d-block d-sm-none icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+		<c:if test="<%= closeButton %>">
+			<clay:button
+				borderless="<%= true %>"
+				cssClass="d-flex d-sm-none sidenav-close"
+				displayType="secondary"
+				monospaced="<%= true %>"
+				outline="<%= true %>"
+				small="<%= true %>"
+			>
+				<span class="c-inner" tabindex="-1">
+					<span class="inline-item">
+						<clay:icon
+							symbol="times"
+						/>
+					</span>
+				</span>
+			</clay:button>
+		</c:if>
 
-		<div id="<%= namespace %>sidebarPanel">
+		<div class="info-panel-content" id="<%= namespace %>sidebarPanel">

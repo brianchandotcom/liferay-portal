@@ -40,9 +40,15 @@ public class SidebarPanelTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		setNamespacedAttribute(request, "closeButton", _closeButton);
+
 		super.doStartTag();
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	public boolean getCloseButton() {
+		return _closeButton;
 	}
 
 	public String getResourceURL() {
@@ -51,6 +57,10 @@ public class SidebarPanelTag extends IncludeTag {
 
 	public String getSearchContainerId() {
 		return _searchContainerId;
+	}
+
+	public void setCloseButton(boolean closeButton) {
+		_closeButton = closeButton;
 	}
 
 	@Override
@@ -72,6 +82,7 @@ public class SidebarPanelTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_closeButton = true;
 		_resourceURL = null;
 		_searchContainerId = null;
 	}
@@ -93,6 +104,7 @@ public class SidebarPanelTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/sidebar_panel/start.jsp";
 
+	private boolean _closeButton = true;
 	private String _resourceURL;
 	private String _searchContainerId;
 

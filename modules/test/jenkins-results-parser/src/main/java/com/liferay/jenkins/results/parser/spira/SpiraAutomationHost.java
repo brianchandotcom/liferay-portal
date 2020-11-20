@@ -68,8 +68,6 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 
 		JSONArray customPropertiesJSONArray = new JSONArray();
 
-		JSONObject jenkinsMasterJSONObject = new JSONObject();
-
 		JenkinsMaster jenkinsMaster = jenkinsNode.getJenkinsMaster();
 
 		SpiraCustomProperty jenkinsMasterSpiraCustomProperty =
@@ -81,14 +79,9 @@ public class SpiraAutomationHost extends BaseSpiraArtifact {
 			SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
 				jenkinsMasterSpiraCustomProperty, jenkinsMaster.getName());
 
-		jenkinsMasterJSONObject.put(
-			"IntegerValue", jenkinsMasterSpiraCustomPropertyValue.getID());
-
-		jenkinsMasterJSONObject.put(
-			"PropertyNumber",
-			jenkinsMasterSpiraCustomProperty.getPropertyNumber());
-
-		customPropertiesJSONArray.put(jenkinsMasterJSONObject);
+		customPropertiesJSONArray.put(
+			jenkinsMasterSpiraCustomPropertyValue.
+				getCustomPropertyJSONObject());
 
 		requestJSONObject.put("CustomProperties", customPropertiesJSONArray);
 

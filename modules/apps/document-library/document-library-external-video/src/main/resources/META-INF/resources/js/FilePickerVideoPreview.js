@@ -23,7 +23,7 @@ import React, {useState} from 'react';
 import {useDebounceCallback} from './utils/hooks';
 import validateUrl from './utils/validateUrl';
 
-const ExternalVideoPreview = ({
+const FilePickerVideoPreview = ({
 	externalVideoHTML = '',
 	externalVideoURL = '',
 	getDLExternalVideoFieldsURL,
@@ -113,7 +113,7 @@ const ExternalVideoPreview = ({
 	);
 };
 
-ExternalVideoPreview.propTypes = {
+FilePickerVideoPreview.propTypes = {
 	externalVideoHTML: PropTypes.string,
 	externalVideoURL: PropTypes.string,
 	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
@@ -121,4 +121,4 @@ ExternalVideoPreview.propTypes = {
 	onFilePickCallback: PropTypes.string.isRequired,
 };
 
-export default ExternalVideoPreview;
+export default FilePickerVideoPreview;

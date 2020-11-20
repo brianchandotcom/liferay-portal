@@ -52,7 +52,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 	</div>
 
 	<react:component
-		module="js/ExternalVideoPreview"
+		module="js/FilePickerVideoPreview"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"externalVideoHTML", (dlExternalVideo != null) ? dlExternalVideo.getEmbeddableHTML() : ""

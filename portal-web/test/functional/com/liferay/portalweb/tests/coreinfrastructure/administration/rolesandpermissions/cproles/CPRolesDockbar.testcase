@@ -37,7 +37,6 @@ definition {
 		property testray.component.names = "Mobile Web,User Interface";
 
 		Permissions.setUpRegRoleLoginUserCP(
-			portletName = "${portletName1}",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

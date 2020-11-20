@@ -44,7 +44,6 @@ definition {
 		property test.name.skip.portal.instance = "CPRolesCPBlogs#ViewBlogsEntryRegRoleInline";
 
 		Permissions.setUpRegRoleLoginUserCP(
-			portletName = "Blogs",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -135,7 +134,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
-			portletName = "Blogs",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

@@ -42,7 +42,6 @@ definition {
 		property test.name.skip.portal.instance = "CPRolesCPDocumentsandmedia#ViewDocumentsAndMediaPortletRegRole";
 
 		Permissions.setUpRegRoleLoginUserCP(
-			portletName = "Documents and Media",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

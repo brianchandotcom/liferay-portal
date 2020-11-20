@@ -38,8 +38,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
-			page = "Public Pages",
-			portletName = "Sites",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -466,7 +464,6 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Permissions.setUpRegRoleLoginUserCP(
-			portletName = "Sites",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

@@ -40,7 +40,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
-			portletName = "Wiki",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

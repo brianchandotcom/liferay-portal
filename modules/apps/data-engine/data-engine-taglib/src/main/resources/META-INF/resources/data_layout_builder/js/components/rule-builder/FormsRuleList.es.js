@@ -23,12 +23,7 @@ import {
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
-/**
- * RuleList.
- * @extends React.Component
- */
-
-class RuleList extends React.Component {
+class FormsRuleList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -150,7 +145,7 @@ class RuleList extends React.Component {
 				</h1>
 
 				<div className="liferay-ddm-form-rule-rules-list-container">
-					<RuleList.List {...this.state} />
+					<FormsRuleList.List {...this.state} />
 				</div>
 			</div>
 		);
@@ -685,8 +680,8 @@ const List = ({onDropdownClicked, rules, spritemap}) => {
 	);
 };
 
-RuleList.List = List;
+FormsRuleList.List = List;
 
-RuleList.displayName = 'RuleList';
+FormsRuleList.displayName = 'FormsRuleList';
 
-export default RuleList;
+export default FormsRuleList;

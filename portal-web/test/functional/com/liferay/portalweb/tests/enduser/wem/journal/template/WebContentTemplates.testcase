@@ -61,7 +61,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name",
-			templateScript = '''${Text.getData()}''');
+			templateScript = "Text.getData()");
 	}
 
 	@description = "This is a use case for LPS-116515. The Add FreeMarker button should be hidden when disable template creation in Dynamic Data Mapping."

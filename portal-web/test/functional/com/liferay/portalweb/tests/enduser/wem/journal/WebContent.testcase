@@ -258,7 +258,7 @@ definition {
 			structureName = "Basic Web Content Edit",
 			templateDescription = "Basic Web Content Description",
 			templateName = "Basic Web Content Edit",
-			templateScript = '''${Image.getData()}''');
+			templateScript = "Image.getData()");
 	}
 
 	@priority = "5"

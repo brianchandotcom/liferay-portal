@@ -1432,7 +1432,7 @@ definition {
 	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in content page."
 	@priority = "5"
 	test ViewMappableFieldsAreGroupedByFieldset {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Add a web content article based on Basic Web Content") {
 			JSONWebcontent.addWebContent(

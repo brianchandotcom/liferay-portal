@@ -150,6 +150,11 @@
 	<td>//div[contains(@title,'App Version') and contains(text(),'${key_versionNumber}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_INFO_ON_TABLE_VIEW</td>
+	<td>//a//span[contains(text(),'${key_entryName}')]/ancestor::tr//span[contains(text(),'${key_info}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

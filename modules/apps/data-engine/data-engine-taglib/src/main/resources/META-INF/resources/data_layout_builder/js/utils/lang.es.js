@@ -22,7 +22,7 @@ export const getLocalizedValue = (defaultLanguageId, localizedValues) => {
 	return localizedValues[defaultLanguageId];
 };
 
-export const sub = (langKey, args) => {
+const replaceString = (langKey, args) => {
 	const SPLIT_REGEX = /({\d+})/g;
 
 	const keyArray = langKey
@@ -43,8 +43,12 @@ export const sub = (langKey, args) => {
 		}
 	}
 
-	return keyArray.join('');
+	return keyArray;
 };
+
+export const sub = (langKey, args) => replaceString(langKey, args).join('');
+
+export const subComp = (langKey, args) => replaceString(langKey, args);
 
 export const getPluralMessage = (
 	singular,

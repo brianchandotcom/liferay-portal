@@ -21,17 +21,18 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
@@ -71,14 +72,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		MockHttpServletRequest httpServletRequest =
 			new MockHttpServletRequest();
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPathContext("/my/path/context/");
-		themeDisplay.setPathThemeImages("/my/theme/images/");
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		httpServletRequest.setParameter("formInstanceId", "12345");
+		httpServletRequest.setParameter(
+			"formInstanceId", String.valueOf(_FORM_INSTANCE_ID));
 
 		return httpServletRequest;
 	}
@@ -90,70 +85,45 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		setUpDLAppService();
 		setUpFileEntry();
-		setUpJSONFactory();
 		setUpHtml();
+		setUpJSONFactory();
+		setUpJSONFactoryUtil();
 		setUpParamUtil();
 		setUpRequestBackedPortletURLFactoryUtil();
 	}
 
 	@Test
 	public void testGetParametersShouldContainFileEntryURL() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(
-			createHttpServletRequest());
-		ddmFormFieldRenderingContext.setProperty("groupId", 12345);
-		ddmFormFieldRenderingContext.setReadOnly(true);
-		ddmFormFieldRenderingContext.setValue(
-			"{\"uuid\": \"0000-1111\", \"title\": \"File Title\"}");
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
 
 		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, ddmFormFieldRenderingContext);
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("fileEntryURL"));
 	}
 
 	@Test
 	public void testGetParametersShouldContainItemSelectorAuthToken() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(
-			createHttpServletRequest());
-		ddmFormFieldRenderingContext.setValue(
-			"{\"uuid\": \"0000-1111\", \"title\": \"Title\"}");
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
 
 		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, ddmFormFieldRenderingContext);
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals("token", parameters.get("itemSelectorAuthToken"));
 	}
 
 	@Test
 	public void testGetParametersShouldContainUploadURL() {
-		DDMFormField ddmFormField = new DDMFormField(
-			"field", "document_library");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(
-			createHttpServletRequest());
-		ddmFormFieldRenderingContext.setProperty("groupId", 23456);
-
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
 
 		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, ddmFormFieldRenderingContext);
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
 
 		String uploadURL = String.valueOf(parameters.get("uploadURL"));
 
@@ -164,34 +134,48 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 					"/upload_file_entry"));
 		Assert.assertThat(
 			uploadURL,
-			CoreMatchers.containsString("param_formInstanceId=12345"));
+			CoreMatchers.containsString(
+				"param_formInstanceId=" + _FORM_INSTANCE_ID));
 		Assert.assertThat(
-			uploadURL, CoreMatchers.containsString("param_groupId=23456"));
+			uploadURL,
+			CoreMatchers.containsString("param_groupId=" + _GROUP_ID));
 	}
 
 	@Test
 	public void testGetParametersShouldUseFileEntryTitle() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
 
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
+		Map<String, Object> parameters = spy.getParameters(
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals("New Title", parameters.get("fileEntryTitle"));
+	}
+
+	protected DDMFormFieldRenderingContext
+		createDDMFormFieldRenderingContext() {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(
 			createHttpServletRequest());
-		ddmFormFieldRenderingContext.setReadOnly(true);
+		ddmFormFieldRenderingContext.setProperty("groupId", _GROUP_ID);
 		ddmFormFieldRenderingContext.setValue(
-			"{\"uuid\": \"0000-1111\", \"title\": \"Old Title\"}");
+			JSONUtil.put(
+				"groupId", _GROUP_ID
+			).put(
+				"title", "File Title"
+			).put(
+				"uuid", _FILE_ENTRY_UUID
+			).toString());
 
-		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, ddmFormFieldRenderingContext);
-
-		Assert.assertEquals("New Title", parameters.get("fileEntryTitle"));
+		return ddmFormFieldRenderingContext;
 	}
 
-	protected DocumentLibraryDDMFormFieldTemplateContextContributor
-		createSpy() {
+	protected DocumentLibraryDDMFormFieldTemplateContextContributor createSpy(
+		ThemeDisplay themeDisplay) {
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy =
 			PowerMockito.spy(
@@ -212,14 +196,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).getItemSelectorAuthToken(
 			Matchers.any(HttpServletRequest.class)
 		);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		User user = new UserImpl();
-
-		user.setDefaultUser(true);
-
-		themeDisplay.setUser(user);
 
 		stubber = PowerMockito.doReturn(themeDisplay);
 
@@ -248,6 +224,50 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		return requestBackedPortletURLFactory;
 	}
 
+	protected ThemeDisplay mockThemeDisplay() {
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			themeDisplay.getCompanyId()
+		).thenReturn(
+			_COMPANY_ID
+		);
+
+		when(
+			themeDisplay.getPathContext()
+		).thenReturn(
+			"/my/path/context/"
+		);
+
+		when(
+			themeDisplay.getPathThemeImages()
+		).thenReturn(
+			"/my/theme/images/"
+		);
+
+		User user = mockUser();
+
+		when(
+			themeDisplay.getUser()
+		).thenReturn(
+			user
+		);
+
+		return themeDisplay;
+	}
+
+	protected User mockUser() {
+		User user = mock(User.class);
+
+		when(
+			user.getUserId()
+		).thenReturn(
+			0L
+		);
+
+		return user;
+	}
+
 	protected void setUpDLAppService() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
@@ -259,15 +279,15 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		PowerMockito.when(
 			_dlAppService.getFileEntryByUuidAndGroupId(
-				Matchers.anyString(), Matchers.anyLong())
+				_FILE_ENTRY_UUID, _GROUP_ID)
 		).thenReturn(
 			_fileEntry
 		);
 	}
 
 	protected void setUpFileEntry() {
-		_fileEntry.setUuid("0000-1111");
-		_fileEntry.setGroupId(12345);
+		_fileEntry.setUuid(_FILE_ENTRY_UUID);
+		_fileEntry.setGroupId(_GROUP_ID);
 
 		PowerMockito.when(
 			_fileEntry.getTitle()
@@ -293,6 +313,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
+	protected void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
 	protected void setUpParamUtil() {
 		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
@@ -310,6 +336,15 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			requestBackedPortletURLFactory
 		);
 	}
+
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final String _FILE_ENTRY_UUID =
+		RandomTestUtil.randomString();
+
+	private static final long _FORM_INSTANCE_ID = RandomTestUtil.randomLong();
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	@Mock
 	private DLAppService _dlAppService;

@@ -45,7 +45,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:user-card-v2
+						<clay:user-card
 							userCard="<%= new SelectUserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
 							userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
 						/>

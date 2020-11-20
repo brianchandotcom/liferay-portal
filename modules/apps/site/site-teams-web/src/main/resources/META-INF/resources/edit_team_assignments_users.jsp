@@ -58,7 +58,7 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:user-card-v2
+						<clay:user-card
 							userCard="<%= new UserUserCard(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 							userColorClass='<%= "user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
 						/>

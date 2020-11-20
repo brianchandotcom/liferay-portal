@@ -154,7 +154,7 @@ definition {
 
 	@description = "This is a use case for LPS-109572."
 	@priority = "5"
-	test AssignNewUserToRegularRole {
+	test AssignUserToRegularRole {
 		property portal.acceptance = "true";
 
 		JSONRole.addRegularRole(

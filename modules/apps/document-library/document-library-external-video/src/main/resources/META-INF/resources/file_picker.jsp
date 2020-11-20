@@ -66,13 +66,26 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/file_picker.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div>
-	<aui:input label="video-url" name="externalVideoURLReact" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" />
+<div class="form-group">
+	<aui:input label="video-url" name="externalVideoURLReact" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" wrapperCssClass="mb-0" />
 
-	<div>
-		<c:if test="<%= dlExternalVideo != null %>">
-			<%= dlExternalVideo.getEmbeddableHTML() %>
-		</c:if>
+	<p class="form-text"><liferay-ui:message key="video-url-help" /></p>
+
+	<div class="file-picker-preview-video">
+		<div class="file-picker-preview-video-container">
+			<c:choose>
+				<c:when test="<%= dlExternalVideo != null %>">
+					<%= dlExternalVideo.getEmbeddableHTML() %>
+				</c:when>
+				<c:otherwise>
+					<div class="file-picker-preview-video-placeholder">
+						<clay:icon
+							symbol="video"
+						/>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 
 	<react:component

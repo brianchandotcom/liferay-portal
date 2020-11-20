@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
@@ -77,40 +77,38 @@ const ExternalVideoPreview = ({
 
 	return (
 		<>
-			<ClayForm.Group>
-				<label htmlFor={inputName}>
-					{Liferay.Language.get('video-url')}
-				</label>
-				<ClayInput
-					id={inputName}
-					onChange={handleUrlChange}
-					placeholder="http://"
-					type="text"
-					value={url}
-				/>
-				<p className="form-text">
-					{Liferay.Language.get('video-url-help')}
-				</p>
+			<label htmlFor={inputName}>
+				{Liferay.Language.get('video-url')}
+			</label>
+			<ClayInput
+				id={inputName}
+				onChange={handleUrlChange}
+				placeholder="http://"
+				type="text"
+				value={url}
+			/>
+			<p className="form-text">
+				{Liferay.Language.get('video-url-help')}
+			</p>
 
-				<div className="file-picker-preview-video">
-					{HTML ? (
-						<div
-							className="file-picker-preview-video-container"
-							dangerouslySetInnerHTML={{__html: HTML}}
-						/>
-					) : (
-						<div className="file-picker-preview-video-container">
-							<div className="file-picker-preview-video-placeholder">
-								{loading ? (
-									<ClayLoadingIndicator />
-								) : (
-									<ClayIcon symbol="video" />
-								)}
-							</div>
+			<div className="file-picker-preview-video">
+				{HTML ? (
+					<div
+						className="file-picker-preview-video-container"
+						dangerouslySetInnerHTML={{__html: HTML}}
+					/>
+				) : (
+					<div className="file-picker-preview-video-container">
+						<div className="file-picker-preview-video-placeholder">
+							{loading ? (
+								<ClayLoadingIndicator />
+							) : (
+								<ClayIcon symbol="video" />
+							)}
 						</div>
-					)}
-				</div>
-			</ClayForm.Group>
+					</div>
+				)}
+			</div>
 		</>
 	);
 };

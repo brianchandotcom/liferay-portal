@@ -107,6 +107,11 @@
 </tr>
 <!--WEB_CONTENT-->
 <tr>
+	<td>CODE_MIRROR_EDITOR</td>
+	<td>//div[contains(@class,'CodeMirrorEditor')]//div[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_SCRIPT_FILE_FIELD</td>
 	<td>//div[contains(@class,'input-text-wrapper')]/input[contains(@id,'Script')]</td>
 	<td></td>

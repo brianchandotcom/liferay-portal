@@ -3780,7 +3780,7 @@ definition {
 	@priority = "5"
 	test ViewWebContentWithCustomTemplateViaContentDisplayInCollectionDisplay {
 		property osgi.app.includes = "bookmarks,document-library-google-docs";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

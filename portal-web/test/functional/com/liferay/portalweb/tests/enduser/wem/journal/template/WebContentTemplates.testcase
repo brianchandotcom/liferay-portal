@@ -26,7 +26,7 @@ definition {
 
 	@priority = "5"
 	test AddTemplateWithStructure {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

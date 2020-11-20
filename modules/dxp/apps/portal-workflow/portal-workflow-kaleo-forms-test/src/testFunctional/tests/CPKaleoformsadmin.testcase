@@ -164,8 +164,9 @@ definition {
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 	}
 
-	@priority = "3"
+	@priority = "5"
 	test DeactivateAndActivateWorkflowDefinition {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndActivateWorkflowDefinition";
 
 		Navigator.openURL();
@@ -222,8 +223,9 @@ definition {
 		KaleoFormsAdmin.viewNoUnpublishedWorkflowDefinitions();
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test DeactivateAndDeleteWorkflowDefinition {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndDeleteWorkflowDefinition";
 
 		Navigator.openURL();

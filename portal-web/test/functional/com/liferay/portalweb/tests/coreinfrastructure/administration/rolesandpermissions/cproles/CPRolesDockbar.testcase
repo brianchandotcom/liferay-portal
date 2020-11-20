@@ -33,6 +33,7 @@ definition {
 
 	@priority = "4"
 	test PreviewDeviceRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Mobile Web,User Interface";
 
 		Permissions.setUpRegRoleLoginUserCP(
@@ -41,8 +42,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
 		Navigator.openURL();

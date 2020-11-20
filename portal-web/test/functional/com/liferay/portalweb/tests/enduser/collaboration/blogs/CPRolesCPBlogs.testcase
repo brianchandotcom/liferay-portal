@@ -39,6 +39,7 @@ definition {
 
 	@priority = "5"
 	test ViewBlogsEntryRegRoleInline {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPBlogs#ViewBlogsEntryRegRoleInline";
 
@@ -48,8 +49,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -133,14 +132,14 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsPortletRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			portletName = "Blogs",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
 		Navigator.openURL();

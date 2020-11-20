@@ -37,6 +37,7 @@ definition {
 
 	@priority = "5"
 	test ViewDocumentsAndMediaPortletRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPDocumentsandmedia#ViewDocumentsAndMediaPortletRegRole";
 
@@ -46,8 +47,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
 		Navigator.openURL();

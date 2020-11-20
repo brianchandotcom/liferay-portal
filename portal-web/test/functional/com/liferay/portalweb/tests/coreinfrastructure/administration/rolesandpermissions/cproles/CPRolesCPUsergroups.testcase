@@ -34,13 +34,13 @@ definition {
 
 	@priority = "4"
 	test AddUserGroupRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(

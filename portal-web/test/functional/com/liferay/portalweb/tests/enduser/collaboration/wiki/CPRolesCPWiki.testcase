@@ -37,14 +37,14 @@ definition {
 
 	@priority = "4"
 	test ViewWikiPortletRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			portletName = "Wiki",
 			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
 		Navigator.openURL();

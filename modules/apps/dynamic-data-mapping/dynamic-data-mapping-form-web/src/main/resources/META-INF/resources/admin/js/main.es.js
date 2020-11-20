@@ -13,6 +13,7 @@
  */
 
 import ClayModal from 'clay-modal';
+import {FormsRuleBuilder} from 'data-engine-taglib';
 import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import withActionableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withActionableFields.es';
 import withClickableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withClickableFields.es';
@@ -21,7 +22,6 @@ import withMoveableFields from 'dynamic-data-mapping-form-builder/js/components/
 import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
 import withResizeableColumns from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withResizeableColumns.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
-import RuleBuilder from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RuleBuilder.es';
 import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {
@@ -454,7 +454,7 @@ class Form extends Component {
 			<div class={'ddm-form-builder'}>
 				<LayoutProviderTag {...storeProps}>
 					{this.isFormBuilderView() && (
-						<RuleBuilder
+						<FormsRuleBuilder
 							dataProviderInstanceParameterSettingsURL={
 								dataProviderInstanceParameterSettingsURL
 							}

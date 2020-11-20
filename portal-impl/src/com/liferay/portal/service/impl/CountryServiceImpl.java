@@ -80,12 +80,20 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryPersistence.fetchByPrimaryKey(countryId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public Country fetchCountryByA2(String a2) {
 		return countryPersistence.fetchByC_A2(
 			PortalInstances.getDefaultCompanyId(), a2);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public Country fetchCountryByA3(String a3) {
 		return countryPersistence.fetchByC_A3(
@@ -97,7 +105,11 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryPersistence.findAll();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
 	@AccessControlled(guestAccessEnabled = true)
+	@Deprecated
 	@Override
 	public List<Country> getCountries(boolean active) {
 		return countryPersistence.findByActive(active);
@@ -108,18 +120,30 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryPersistence.findByPrimaryKey(countryId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public Country getCountryByA2(String a2) throws PortalException {
 		return countryPersistence.findByC_A2(
 			PortalInstances.getDefaultCompanyId(), a2);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public Country getCountryByA3(String a3) throws PortalException {
 		return countryPersistence.findByC_A3(
 			PortalInstances.getDefaultCompanyId(), a3);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public Country getCountryByName(String name) throws PortalException {
 		return countryPersistence.findByC_N(

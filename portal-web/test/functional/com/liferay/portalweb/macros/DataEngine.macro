@@ -176,6 +176,8 @@ definition {
 		Check.checkToggleSwitch(
 			checkboxName = "Repeatable",
 			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro editFieldRequired {
@@ -191,6 +193,8 @@ definition {
 		Check.checkToggleSwitch(
 			checkboxName = "Required Field",
 			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro editFieldTip {

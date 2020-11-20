@@ -14,21 +14,18 @@
 
 import React from 'react';
 
-import {PageProvider} from '../../hooks/usePage.es';
-import {useFieldTypesResource} from '../../hooks/useResource.es';
 import {Field} from './Field.es';
 
-export const FieldStateless = ({onBlur, onChange, onFocus, ...otherProps}) => {
-	const {resource: fieldTypes} = useFieldTypesResource();
-
-	return (
-		<PageProvider value={{fieldTypes}}>
-			<Field
-				field={otherProps}
-				onBlur={onBlur}
-				onChange={onChange}
-				onFocus={onFocus}
-			/>
-		</PageProvider>
-	);
-};
+export const FieldStateless = ({
+	onBlur = () => {},
+	onChange,
+	onFocus = () => {},
+	...otherProps
+}) => (
+	<Field
+		field={otherProps}
+		onBlur={onBlur}
+		onChange={onChange}
+		onFocus={onFocus}
+	/>
+);

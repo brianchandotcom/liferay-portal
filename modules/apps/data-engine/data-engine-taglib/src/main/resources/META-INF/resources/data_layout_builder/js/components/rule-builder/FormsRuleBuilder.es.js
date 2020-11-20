@@ -42,8 +42,8 @@ const FormsRuleBuilder = React.forwardRef(
 			pages,
 			rolesURL,
 			rules,
-			visible,
 			spritemap,
+			visible,
 			...otherProps
 		},
 		ref

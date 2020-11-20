@@ -16,8 +16,6 @@ import FormBuilderWithLayoutProvider from './components/FormBuilder/FormBuilderW
 import RulesSupport from './components/RuleBuilder/RulesSupport.es';
 import RuleEditor from './components/RuleEditor/RuleEditor.es';
 import * as FieldSupport from './util/fieldSupport.es';
-import {maxPageIndex, pageOptions} from './util/pageSupport.es';
-import {getFieldProperty} from './components/LayoutProvider/util/fields.es';
 
 export default FormBuilderWithLayoutProvider;
 export {Token} from '../js/expressions/Token.es';

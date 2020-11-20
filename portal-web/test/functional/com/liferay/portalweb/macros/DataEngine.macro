@@ -140,6 +140,28 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 				value1 = "${fieldName}");
 
+			if ("${fieldName}" == "Grid") {
+				for (var optionNumber : list "1,2") {
+					DataEngine.editGridOptions(
+						gridField = "Rows",
+						optionValue = "Row ${optionNumber}",
+						rowNumber = "${optionNumber}");
+
+					DataEngine.editGridOptions(
+						gridField = "Columns",
+						optionValue = "Column ${optionNumber}",
+						rowNumber = "${optionNumber}");
+				}
+			}
+
+			else if ("${fieldName}" == "Multiple Selection" ||
+				"${fieldName}" == "Select from List" ||
+				"${fieldName}" == "Single Selection") {
+				DataEngine.editOptionValue(
+					optionValue = "Option 1",
+					rowNumber = "1");
+			}
+
 			Click(locator1 = "Sidebar#BACK");
 		}
 	}
@@ -234,6 +256,23 @@ definition {
 		}
 
 		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro editGridOptions {
+		var key_gridField = "${gridField}";
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "DDMEditStructure#GRID_OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+	}
+
+	macro editOptionValue {
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "DDMEditStructure#OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
 	}
 
 	macro viewField {

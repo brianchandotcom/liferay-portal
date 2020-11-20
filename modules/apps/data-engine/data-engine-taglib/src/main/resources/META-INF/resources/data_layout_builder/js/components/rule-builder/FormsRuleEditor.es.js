@@ -13,42 +13,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import React, {useMemo, useRef} from 'react';
+import React, {useRef} from 'react';
 
 import {Editor} from './editor/Editor.es';
 
-export const FormsRuleEditor = ({onCancel, onSave, pages, ...otherProps}) => {
+export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
 	const ruleRef = useRef(null);
-
-	const fields = useMemo(() => {
-		const fields = [];
-		const visitor = new PagesVisitor(pages);
-
-		visitor.mapFields(
-			(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-				if (field.type != 'fieldset') {
-					fields.push({
-						...field,
-						pageIndex,
-						value: field.fieldName,
-					});
-				}
-			}
-		);
-
-		return fields;
-	}, [pages]);
-
-	const pageOptions = useMemo(() => {
-		return pages.map(({title}, index) => ({
-			label: `${index + 1} ${
-				title || Liferay.Language.get('page-title')
-			}`,
-			name: index.toString(),
-			value: index.toString(),
-		}));
-	}, [pages]);
 
 	return (
 		<div className="form-builder-rule-builder liferay-ddm-form-builder-rule-builder-content">
@@ -64,19 +34,20 @@ export const FormsRuleEditor = ({onCancel, onSave, pages, ...otherProps}) => {
 				</h4>
 			</div>
 			<Editor
-				fields={fields}
 				onChange={({logicalOperator, ...otherProps}) => {
 					ruleRef.current = {
 						...otherProps,
 						['logical-operator']: logicalOperator,
 					};
 				}}
-				pages={pageOptions}
 				{...otherProps}
 			/>
 			<div className="liferay-ddm-form-rule-builder-footer">
 				<ClayButton.Group spaced>
-					<ClayButton displayType="primary">
+					<ClayButton
+						displayType="primary"
+						onClick={() => onSave(ruleRef.current)}
+					>
 						{Liferay.Language.get('save')}
 					</ClayButton>
 					<ClayButton displayType="secondary" onClick={onCancel}>

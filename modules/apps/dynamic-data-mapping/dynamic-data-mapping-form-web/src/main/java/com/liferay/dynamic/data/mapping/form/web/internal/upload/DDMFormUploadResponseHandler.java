@@ -14,10 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
+import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadResponseHandler;
 
 import javax.portlet.PortletRequest;
@@ -36,8 +41,31 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
-		return _defaultUploadResponseHandler.onFailure(
+		JSONObject jsonObject = _defaultUploadResponseHandler.onFailure(
 			portletRequest, portalException);
+
+		JSONObject errorJSONObject = jsonObject.getJSONObject("error");
+
+		String errorMessage = errorJSONObject.getString("message");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (portalException instanceof FileSizeException) {
+			errorMessage = themeDisplay.translate(
+				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
+				LanguageUtil.formatStorageSize(
+					_ddmFormUploadValidator.getGuestUploadMaximumFileSize(),
+					themeDisplay.getLocale()));
+		}
+
+		return jsonObject.put(
+			"error",
+			JSONUtil.put(
+				"errorType", errorJSONObject.getInt("errorType")
+			).put(
+				"message", errorMessage
+			));
 	}
 
 	@Override
@@ -48,6 +76,9 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 		return _defaultUploadResponseHandler.onSuccess(
 			uploadPortletRequest, fileEntry);
 	}
+
+	@Reference
+	private DDMFormUploadValidator _ddmFormUploadValidator;
 
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;

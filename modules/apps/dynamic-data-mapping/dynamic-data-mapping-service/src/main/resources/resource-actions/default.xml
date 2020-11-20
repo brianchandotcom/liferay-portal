@@ -16,11 +16,7 @@
 				<action-key>ADD_FORM_INSTANCE</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
 			</supports>
-			<site-member-defaults>
-				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
-				<action-key>ADD_FORM_INSTANCE</action-key>
-				<action-key>ADD_STRUCTURE</action-key>
-			</site-member-defaults>
+			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>

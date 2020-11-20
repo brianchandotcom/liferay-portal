@@ -21,7 +21,7 @@ import React, {useEffect, useReducer} from 'react';
 import {Actions} from './Actions.es';
 import {Conditions} from './Conditions.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
-import {BINARY_OPERATOR, RIGHT_TYPES} from './config.es';
+import {BINARY_OPERATOR, DEFAULT_RULE, RIGHT_TYPES} from './config.es';
 
 const CONFIG_DATA = {
 	actions: {
@@ -309,6 +309,20 @@ const reducer = (state, action) => {
 };
 
 const transformConditions = ({operator, operands: [left, right]}, fields) => {
+
+	// When the left operator is a type `user` the backend does not return
+	// the two operators, only the right operator.
+
+	if (left?.type === 'list') {
+		right = left;
+		left = {
+			label: 'user',
+			repeatable: false,
+			type: 'user',
+			value: 'user',
+		};
+	}
+
 	const operands = [
 		{
 			...left,
@@ -323,18 +337,14 @@ const transformConditions = ({operator, operands: [left, right]}, fields) => {
 	};
 };
 
-const transformActions = (
-	{ddmDataProviderInstanceUUID, target, ...otherProps},
-	dataProvider
-) => {
-	if (ddmDataProviderInstanceUUID) {
+const transformActions = ({target, ...otherProps}, dataProvider) => {
+	if (otherProps.ddmDataProviderInstanceUUID) {
 		target = dataProvider.find(
-			({uuid}) => uuid === ddmDataProviderInstanceUUID
-		).id;
+			({uuid}) => uuid === otherProps.ddmDataProviderInstanceUUID
+		)?.id;
 	}
 
 	return {
-		ddmDataProviderInstanceUUID,
 		target,
 		...otherProps,
 	};
@@ -368,7 +378,13 @@ const init = ({
 	};
 };
 
-export function Editor({dataProvider, fields, onChange, rule, ...otherProps}) {
+export function Editor({
+	dataProvider,
+	fields,
+	onChange,
+	rule = DEFAULT_RULE,
+	...otherProps
+}) {
 	const [state, dispatch] = useReducer(
 		reducer,
 		{dataProvider, fields, rule},

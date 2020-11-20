@@ -4877,7 +4877,7 @@ definition {
 		Pause(locator1 = "1000");
 
 		Workflow._viewActivities(
-			workflowActivityComment = "Test Test completed the task review.",
+			workflowActivityComment = "Test Test completed the task Review.",
 			workflowAssetTitle = "Kaleo Forms Process");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");

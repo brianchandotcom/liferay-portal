@@ -105,6 +105,12 @@
 	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Text')]</td>
 	<td></td>
 </tr>
+<!--WEB_CONTENT-->
+<tr>
+	<td>WEB_CONTENT_SCRIPT_VARIABLE</td>
+	<td>//div[contains(@class,'ButtonList')][button[span[normalize-space(text())='${key_panelTitle}']]]//button[normalize-space(text())='${key_variableName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

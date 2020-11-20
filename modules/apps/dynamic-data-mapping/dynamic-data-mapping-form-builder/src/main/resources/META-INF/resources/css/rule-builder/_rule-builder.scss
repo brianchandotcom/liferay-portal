@@ -19,9 +19,14 @@
 	}
 }
 
+.liferay-ddm-form-rule-builder-header {
+    padding: 0 68px;
+    margin-bottom: 35px;
+}
+
 .liferay-ddm-form-rule-builder-footer {
 	margin: $baseline * 3 0;
-	padding: 12px 54px;
+	padding: 12px 68px;
 
 	.btn:not(:last-child) {
 		margin-right: 5px;

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayModalProvider} from '@clayui/modal';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {
 	PageProvider as FieldProvider,
@@ -427,23 +428,27 @@ export function Editor({
 	}, [state]);
 
 	return (
-		<FieldProvider value={{fieldTypes}}>
-			{state.panels.map((key) => {
-				const {component: Component, ...otherData} = CONFIG_DATA[key];
+		<ClayModalProvider>
+			<FieldProvider value={{fieldTypes}}>
+				{state.panels.map((key) => {
+					const {component: Component, ...otherData} = CONFIG_DATA[
+						key
+					];
 
-				return (
-					<Component
-						{...otherProps}
-						{...otherData}
-						{...{[key]: state.ifStatement[key]}}
-						dataProvider={dataProvider}
-						dispatch={dispatch}
-						fields={fields}
-						key={key}
-						state={state}
-					/>
-				);
-			})}
-		</FieldProvider>
+					return (
+						<Component
+							{...otherProps}
+							{...otherData}
+							{...{[key]: state.ifStatement[key]}}
+							dataProvider={dataProvider}
+							dispatch={dispatch}
+							fields={fields}
+							key={key}
+							state={state}
+						/>
+					);
+				})}
+			</FieldProvider>
+		</ClayModalProvider>
 	);
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -80,6 +81,14 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryPersistence.fetchByPrimaryKey(countryId);
 	}
 
+	@AccessControlled(guestAccessEnabled = true)
+	@Override
+	public List<Country> getCompanyCountries(
+		long companyId, boolean active) {
+
+		return countryPersistence.findByC_Active(companyId, active);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
@@ -90,6 +99,11 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 			PortalInstances.getDefaultCompanyId(), a2);
 	}
 
+	@Override
+	public Country fetchCountryByA2(long companyId, String a2) {
+		return countryPersistence.fetchByC_A2(companyId, a2);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
@@ -98,6 +112,11 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country fetchCountryByA3(String a3) {
 		return countryPersistence.fetchByC_A3(
 			PortalInstances.getDefaultCompanyId(), a3);
+	}
+
+	@Override
+	public Country fetchCountryByA3(long companyId, String a3) {
+		return countryPersistence.fetchByC_A3(companyId, a3);
 	}
 
 	@Override
@@ -138,6 +157,27 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country getCountryByA3(String a3) throws PortalException {
 		return countryPersistence.findByC_A3(
 			PortalInstances.getDefaultCompanyId(), a3);
+	}
+
+	@Override
+	public Country getCountryByCompanyIdAndA2(long companyId, String a2)
+		throws NoSuchCountryException {
+
+		return countryPersistence.findByC_A2(companyId, a2);
+	}
+
+	@Override
+	public Country getCountryByCompanyIdAndA3(long companyId, String a3)
+		throws NoSuchCountryException {
+
+		return countryPersistence.findByC_A3(companyId, a3);
+	}
+
+	@Override
+	public Country getCountryByCompanyIdAndName(long companyId, String name)
+		throws NoSuchCountryException {
+
+		return countryPersistence.findByC_Name(companyId, name);
 	}
 
 	/**

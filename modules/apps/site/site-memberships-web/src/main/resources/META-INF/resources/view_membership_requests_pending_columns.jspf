@@ -53,7 +53,7 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:user-card-v2
+			<clay:user-card
 				userCard="<%= new ViewMembershipRequestsPendingUserCard(membershipRequest, membershipRequestUser, renderRequest, renderResponse) %>"
 			/>
 		</liferay-ui:search-container-column-text>

@@ -72,7 +72,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<clay:vertical-card-v2
+			<clay:vertical-card
 				verticalCard="<%= new BlogsEntryVerticalCard(entry, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper, rowURL.toString(), permissionChecker, resourceBundle) %>"
 			/>
 		</liferay-ui:search-container-column-text>

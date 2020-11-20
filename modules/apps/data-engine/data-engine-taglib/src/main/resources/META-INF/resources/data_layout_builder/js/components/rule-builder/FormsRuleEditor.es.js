@@ -13,11 +13,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {Editor} from './editor/Editor.es';
 
 export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
+	const [disabled, setDisabled] = useState(true);
 	const ruleRef = useRef(null);
 
 	return (
@@ -40,11 +41,13 @@ export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
 						['logical-operator']: logicalOperator,
 					};
 				}}
+				onValidator={setDisabled}
 				{...otherProps}
 			/>
 			<div className="liferay-ddm-form-rule-builder-footer">
 				<ClayButton.Group spaced>
 					<ClayButton
+						disabled={disabled}
 						displayType="primary"
 						onClick={() => onSave(ruleRef.current)}
 					>

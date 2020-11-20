@@ -12,6 +12,7 @@
  * details.
  */
 
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {
 	PageProvider as FieldProvider,
 	useFieldTypesResource,
@@ -382,6 +383,7 @@ export function Editor({
 	dataProvider,
 	fields,
 	onChange,
+	onValidator,
 	rule = DEFAULT_RULE,
 	...otherProps
 }) {
@@ -397,7 +399,7 @@ export function Editor({
 		const {ifStatement, logicalOperator, name} = state;
 		const {actions, conditions} = ifStatement;
 
-		onChange({
+		const newRule = {
 			actions,
 			conditions: conditions.map(
 				({operands: [left, ...otherOperands], ...otherProps}) => {
@@ -413,7 +415,15 @@ export function Editor({
 			),
 			logicalOperator,
 			name,
-		});
+		};
+
+		onValidator(
+			RulesSupport.fieldNameBelongsToAction('', actions) ||
+				RulesSupport.fieldNameBelongsToCondition('', newRule.conditions)
+		);
+		onChange(newRule);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state]);
 
 	return (

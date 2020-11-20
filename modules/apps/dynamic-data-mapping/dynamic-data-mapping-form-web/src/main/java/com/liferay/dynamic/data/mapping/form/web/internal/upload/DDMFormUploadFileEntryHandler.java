@@ -77,6 +77,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 			String fileName = uploadPortletRequest.getFileName("file");
 
 			_ddmFormUploadValidator.validateFileExtension(fileName);
+			_ddmFormUploadValidator.validateFileName(fileName);
 
 			file = FileUtil.createTempFile(inputStream);
 

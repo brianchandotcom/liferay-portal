@@ -92,28 +92,32 @@ const ExternalVideoPreview = ({
 					{Liferay.Language.get('video-url-help')}
 				</p>
 
-				{HTML ? (
-					<div
-						className="file-picker-preview-video"
-						dangerouslySetInnerHTML={{__html: HTML}}
-					/>
-				) : (
-					<div className="file-picker-preview-video">
-						<div className="file-picker-preview-video-placeholder">
-							{loading ? (
-								<ClayLoadingIndicator />
-							) : (
-								<ClayIcon symbol="video" />
-							)}
+				<div className="file-picker-preview-video">
+					{HTML ? (
+						<div
+							className="file-picker-preview-video-container"
+							dangerouslySetInnerHTML={{__html: HTML}}
+						/>
+					) : (
+						<div className="file-picker-preview-video-container">
+							<div className="file-picker-preview-video-placeholder">
+								{loading ? (
+									<ClayLoadingIndicator />
+								) : (
+									<ClayIcon symbol="video" />
+								)}
+							</div>
 						</div>
-					</div>
-				)}
+					)}
+				</div>
 			</ClayForm.Group>
 		</>
 	);
 };
 
 ExternalVideoPreview.propTypes = {
+	externalVideoHTML: PropTypes.string,
+	externalVideoURL: PropTypes.string,
 	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,
 	onFilePickCallback: PropTypes.string.isRequired,

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SWITCH_TO_ADVANCED_PUBLICATION</td>
-	<td>//a[contains(.,'Switch to Advanced Publication')]</td>
+	<td>//a[contains(.,'Switch to Advanced Publish Process')]</td>
 	<td></td>
 </tr>
 <tr>

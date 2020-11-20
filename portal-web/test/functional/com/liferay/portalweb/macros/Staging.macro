@@ -383,7 +383,7 @@ definition {
 		if (IsElementPresent.isElementPresentAfterWait(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION")) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
-				value1 = "Switch to Advanced Publication");
+				value1 = "Switch to Advanced Publish Process");
 		}
 
 		SelectFrameTop();
@@ -871,7 +871,7 @@ definition {
 		if (IsElementPresent(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION")) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
-				value1 = "Switch to Advanced Publication");
+				value1 = "Switch to Advanced Publish Process");
 
 			AssertClick(
 				locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON",
@@ -1159,7 +1159,7 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
-			value1 = "Switch to Advanced Publication");
+			value1 = "Switch to Advanced Publish Process");
 
 		Click(locator1 = "Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE");
 

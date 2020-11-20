@@ -124,11 +124,30 @@ public class DLExternalVideoDLFileEntryTypeHelper {
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
 			DLExternalVideoConstants.DL_FILE_ENTRY_TYPE_KEY);
 
+		ddmStructure.setDescriptionMap(
+			_updateDescriptionMap(ddmStructure.getDescriptionMap()));
 		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
 
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 
 		return ddmStructure;
+	}
+
+	private Map<Locale, String> _updateDescriptionMap(
+		Map<Locale, String> descriptionMap) {
+
+		Map<Locale, String> updatedDescriptionMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				entry.getKey(), DLExternalVideoDLFileEntryTypeHelper.class);
+
+			updatedDescriptionMap.put(
+				entry.getKey(),
+				LanguageUtil.get(resourceBundle, entry.getValue()));
+		}
+
+		return updatedDescriptionMap;
 	}
 
 	private Map<Locale, String> _updateNameMap(Map<Locale, String> nameMap) {

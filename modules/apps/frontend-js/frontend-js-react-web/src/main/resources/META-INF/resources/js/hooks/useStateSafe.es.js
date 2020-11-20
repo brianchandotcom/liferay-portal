@@ -12,8 +12,9 @@
  * details.
  */
 
-import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
+
+import useIsMounted from './useIsMounted.es';
 
 const {useCallback, useState} = React;
 

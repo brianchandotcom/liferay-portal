@@ -18,8 +18,10 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
-import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
+
+import fetch from '../../util/fetch.es';
+import navigate from '../../util/navigate.es';
 
 /**
  * Manipulates small amounts of data with a form shown inside a modal.

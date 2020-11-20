@@ -48,6 +48,12 @@ definition {
 		}
 	}
 
+	macro assertEntryInfoOnTableView {
+		var key_entryName = "${entryName}";
+		var key_info = "${info}";
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_INFO_ON_TABLE_VIEW");
+	}
+
 	macro assertFieldDisabled {
 		AssertVisible(
 			key_fieldName = "${fieldName}",

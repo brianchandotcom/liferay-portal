@@ -475,6 +475,65 @@ definition {
 		AppBuilderWorkflow.assertStepNotPresent(step = "1");
 	}
 
+	@description = "LRQA-60707 - Automate LPS-110982: As an App Admin, I want to delete a step of my App's workflow"
+	@priority = "4"
+	test DeleteStepWhileRunning {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+			assignee = "Administrator",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 1");
+
+		AppBuilderWorkflow.submit();
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.deleteStep(step = "1");
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.assertStepNotPresent(step = "1");
+
+		Button.click(button = "Cancel");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 2");
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderWorkflow.assertEntryInfoOnTableView(
+			entryName = "Content 2",
+			info = "Completed");
+	}
+
 	@description = "Filter and order the apps created using App Builder"
 	@priority = "5"
 	test FilterAndOrderStandardApps {

@@ -201,8 +201,9 @@ public class FormNavigatorEntryProviderImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_formNavigatorContextProviderMap.close();
 		_serviceTracker.close();
+
+		_formNavigatorContextProviderMap.close();
 	}
 
 	private <T> Optional<List<FormNavigatorEntry<T>>>

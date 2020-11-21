@@ -49,23 +49,33 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
-				</li>
-				<li>
-					<clay:dropdown-actions
-						defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>"
-					/>
-				</li>
-			</ul>
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h1 class="component-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h1>
 
-			<p class="h4 pt-2"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></p>
+					<h2 class="component-subtitle">
+						<liferay-ui:message key="folder" />
+					</h2>
+				</clay:content-col>
 
-			<p class="h6 text-default">
-				<liferay-ui:message key="folder" />
-			</p>
+				<clay:content-col>
+					<ul class="autofit-padded-no-gutters autofit-row">
+						<li class="autofit-col">
+							<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li class="autofit-col">
+							<clay:dropdown-actions
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>"
+							/>
+						</li>
+					</ul>
+				</clay:content-col>
+			</clay:content-row>
 		</div>
 
 		<clay:navigation-bar
@@ -73,7 +83,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		/>
 
 		<div class="sidebar-body">
-			<p class="h5"><liferay-ui:message key="num-of-items" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="num-of-items" /></p>
 
 			<%
 			long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -83,14 +93,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			}
 			%>
 
-			<p>
+			<p class="sidebar-dd">
 				<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, journalDisplayContext.getStatus()) %>
 			</p>
 
 			<c:if test="<%= folder != null %>">
-				<p class="h5"><liferay-ui:message key="created" /></p>
+				<p class="sidebar-dt"><liferay-ui:message key="created" /></p>
 
-				<p>
+				<p class="sidebar-dd">
 					<%= HtmlUtil.escape(folder.getUserName()) %>
 				</p>
 			</c:if>
@@ -105,27 +115,37 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
-				</li>
-				<li>
-					<clay:dropdown-actions
-						defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>"
-					/>
-				</li>
-			</ul>
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h1 class="component-title"><%= HtmlUtil.escape(article.getTitle(locale)) %></h1>
 
-			<p class="h4 pt-2"><%= HtmlUtil.escape(article.getTitle(locale)) %></p>
+					<%
+					DDMStructure ddmStructure = article.getDDMStructure();
+					%>
 
-			<%
-			DDMStructure ddmStructure = article.getDDMStructure();
-			%>
+					<h2 class="component-subtitle">
+						<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
+					</h2>
+				</clay:content-col>
 
-			<p class="h6 text-default">
-				<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
-			</p>
+				<clay:content-col>
+					<ul class="autofit-padded-no-gutters autofit-row">
+						<li class="autofit-col">
+							<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li class="autofit-col">
+							<clay:dropdown-actions
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>"
+							/>
+						</li>
+					</ul>
+				</clay:content-col>
+			</clay:content-row>
 		</div>
 
 		<clay:navigation-bar
@@ -133,27 +153,27 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		/>
 
 		<div class="sidebar-body">
-			<p class="h5"><liferay-ui:message key="id" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="id" /></p>
 
-			<p>
+			<p class="sidebar-dd">
 				<%= HtmlUtil.escape(article.getArticleId()) %>
 			</p>
 
-			<p class="h5"><liferay-ui:message key="version" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="version" /></p>
 
-			<p>
+			<p class="sidebar-dd">
 				<%= article.getVersion() %>
 			</p>
 
-			<p class="h5"><liferay-ui:message key="status" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="status" /></p>
 
-			<p>
+			<p class="sidebar-dd">
 				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 			</p>
 
-			<p class="h5"><liferay-ui:message key="title" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="title" /></p>
 
-			<p>
+			<p class="sidebar-dd">
 				<%= HtmlUtil.escape(article.getTitle(locale)) %>
 			</p>
 
@@ -161,9 +181,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
 			%>
 
-			<p class="h5"><liferay-ui:message key="template" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="template" /></p>
 
-			<p>
+			<p class="sidebar-dd">
 				<c:choose>
 					<c:when test="<%= ddmTemplate != null %>">
 						<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
@@ -174,7 +194,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</c:choose>
 			</p>
 
-			<div class="lfr-asset-tags">
+			<div class="lfr-asset-tags sidebar-dd">
 				<liferay-asset:asset-tags-summary
 					className="<%= JournalArticle.class.getName() %>"
 					classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
@@ -182,37 +202,37 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				/>
 			</div>
 
-			<p class="h5"><liferay-ui:message key="original-author" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="original-author" /></p>
 
-			<p>
+			<p class="sidebar-dd">
 				<%= HtmlUtil.escape(journalDisplayContext.getOriginalAuthorUserName(article)) %>
 			</p>
 
-			<p class="h5"><liferay-ui:message key="priority" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="priority" /></p>
 
 			<%
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), JournalArticleAssetRenderer.getClassPK(article));
 			%>
 
-			<p>
+			<p class="sidebar-dd">
 				<%= assetEntry.getPriority() %>
 			</p>
 
 			<c:if test="<%= article.getDisplayDate() != null %>">
-				<p class="h5"><liferay-ui:message key="display-date" /></p>
+				<p class="sidebar-dt"><liferay-ui:message key="display-date" /></p>
 
-				<p>
+				<p class="sidebar-dd">
 					<%= dateFormatDateTime.format(article.getDisplayDate()) %>
 				</p>
 			</c:if>
 
-			<p class="h5"><liferay-ui:message key="expiration-date" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="expiration-date" /></p>
 
 			<%
 			Date expirationDate = article.getExpirationDate();
 			%>
 
-			<p>
+			<p class="sidebar-dd">
 				<c:choose>
 					<c:when test="<%= expirationDate != null %>">
 						<%= dateFormatDateTime.format(expirationDate) %>
@@ -223,13 +243,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</c:choose>
 			</p>
 
-			<p class="h5"><liferay-ui:message key="review-date" /></p>
+			<p class="sidebar-dt"><liferay-ui:message key="review-date" /></p>
 
 			<%
 			Date reviewDate = article.getReviewDate();
 			%>
 
-			<p>
+			<p class="sidebar-dd">
 				<c:choose>
 					<c:when test="<%= reviewDate != null %>">
 						<%= dateFormatDateTime.format(reviewDate) %>
@@ -243,7 +263,15 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<p class="h4 pt-2"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h1 class="component-title"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h1>
+				</clay:content-col>
+			</clay:content-row>
 		</div>
 
 		<clay:navigation-bar
@@ -251,7 +279,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		/>
 
 		<div class="sidebar-body">
-			<p class="h5"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
+			<p class="sidebar-dt"><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></p>
 		</div>
 	</c:otherwise>
 </c:choose>

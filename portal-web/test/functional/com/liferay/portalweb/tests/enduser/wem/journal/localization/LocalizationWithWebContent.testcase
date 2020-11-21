@@ -138,10 +138,6 @@ definition {
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
-		}
-
-		task ("Add the Spanish (Spain) translation to structure") {
-			Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -350,10 +346,6 @@ definition {
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
-		}
-
-		task ("Add the Spanish (Spain) translation to structure") {
-			Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}

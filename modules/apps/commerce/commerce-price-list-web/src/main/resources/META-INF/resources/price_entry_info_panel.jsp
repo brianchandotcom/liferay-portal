@@ -38,38 +38,48 @@ if (commercePriceEntries == null) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include page="/price_entry_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><%= HtmlUtil.escape(cpDefinition.getName(languageId)) %></h4>
+				</div>
 
-			<h4><%= HtmlUtil.escape(cpDefinition.getName(languageId)) %></h4>
+				<div class="autofit-col">
+					<ul class="autofit-padded-no-gutters autofit-row">
+						<li class="autofit-col">
+							<liferay-util:include page="/price_entry_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="id" /></h5>
+			<dl class="sidebar-dl sidebar-section">
+				<dt class="sidebar-dt"><liferay-ui:message key="id" /></dt>
 
-			<p>
-				<%= HtmlUtil.escape(String.valueOf(commercePriceEntry.getCommercePriceEntryId())) %>
-			</p>
+				<dd class="sidebar-dd">
+					<%= HtmlUtil.escape(String.valueOf(commercePriceEntry.getCommercePriceEntryId())) %>
+				</dd>
+				<dt class="sidebar-dt"><liferay-ui:message key="name" /></dt>
 
-			<h5><liferay-ui:message key="name" /></h5>
+				<dd class="sidebar-dd">
+					<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
+				</dd>
+				<dt class="sidebar-dt"><liferay-ui:message key="sku" /></dt>
 
-			<p>
-				<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
-			</p>
-
-			<h5><liferay-ui:message key="sku" /></h5>
-
-			<p>
-				<%= HtmlUtil.escape(cpInstance.getSku()) %>
-			</p>
+				<dd class="sidebar-dd">
+					<%= HtmlUtil.escape(cpInstance.getSku()) %>
+				</dd>
+			</dl>
 		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commercePriceEntries.size() %>" key="x-items-are-selected" /></h4>
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="component-title"><liferay-ui:message arguments="<%= commercePriceEntries.size() %>" key="x-items-are-selected" /></h4>
+				</div>
+			</div>
 		</div>
 	</c:otherwise>
 </c:choose>

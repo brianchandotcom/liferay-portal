@@ -37,6 +37,8 @@ definition {
 	@summary = "Helper function to link structure '${structureName}' to the template"
 	macro _inputStructure {
 		if (isSet(structureName)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			AssertClick(
 				locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
 				value1 = "Select");
@@ -141,6 +143,10 @@ definition {
 
 	@summary = "Click on '${templateName}' ellipsis > '${item}'"
 	macro gotoTemplateEllipsisItem {
+		if ("${item}" == "Permissions") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
+
 		LexiconCard.clickEllipsisItem(
 			card = "${templateName}",
 			item = "${item}");

@@ -177,6 +177,8 @@ public class ServiceTrackerFactory {
 					ServiceRegistration<W> serviceRegistration) {
 
 					serviceRegistration.unregister();
+
+					bundleContext.ungetService(serviceReference);
 				}
 
 				private Dictionary<String, Object> _buildProperties(

@@ -604,7 +604,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
 
-		DynamicDataMapping.viewField(
+		DataEngine.viewField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 

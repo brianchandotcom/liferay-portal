@@ -1209,7 +1209,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldName = "Web Contentt");
+			fieldName = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -1227,9 +1227,8 @@ definition {
 
 		WebContent.addWithStructureCP(
 			description = "WC WebContent 1 Description",
-			fieldName = "WebContent",
-			webContentSelectWCFile = "WC WebContent Title",
-			webContentTitle = "WC WebContent 1 Title");
+			webContentTitle = "WC WebContent 1 Title",
+			webContentWebContent = "WC WebContent Title");
 
 		PortletEntry.publish();
 

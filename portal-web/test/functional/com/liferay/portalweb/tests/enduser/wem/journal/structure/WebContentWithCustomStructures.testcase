@@ -2190,8 +2190,8 @@ definition {
 			structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -2202,7 +2202,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "HTML",
+			templateFieldNames = "Rich Text",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "child-sitename");
@@ -2231,9 +2231,9 @@ definition {
 
 		PortletEntry.inputTitle(title = "WC WebContent Title");
 
-		AlloyEditor.typeEditor(
+		CKEditor.addContentInWebContent(
 			content = "WC WebContent Content",
-			editor = "HTML");
+			fieldLabel = "Rich Text");
 
 		PortletEntry.publish();
 
@@ -2430,49 +2430,42 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		FormFields.editText(
-			fieldName = "title",
-			fieldValue = "English (United States) Title");
-
-		Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
-
-		ItemSelector.uploadFile(
+		WebContent.addWithStructureCP(
 			navTab = "Web Content Images",
-			uploadFileName = "Document_3.png");
-
-		FormFields.editTextAlt(
-			fieldName = "image",
-			fieldValue = "English (United States) Image Description");
+			webContentImage = "Document_3.png",
+			webContentImageDescription = "English (United States) Image Description",
+			webContentTitle = "English (United States) Title");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
-		FormFields.editText(
-			fieldName = "title",
-			fieldValue = "Spanish (Spain) Title");
+		PortletEntry.inputTitle(title = "Spanish (Spain) Title");
 
-		FormFields.editTextAlt(
-			fieldName = "image",
-			fieldValue = "Spanish (Spain) Image Description");
+		Type(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			value1 = "Spanish (Spain) Image Description");
 
 		PortletEntry.changeLocale(locale = "en-US");
 
-		FormFields.viewTextValue(
-			fieldName = "title",
-			fieldValue = "English (United States) Title");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "English (United States) Title");
 
-		FormFields.viewTextValueAlt(
-			fieldName = "image",
-			fieldValue = "English (United States) Image Description");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			value1 = "English (United States) Image Description");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
-		FormFields.viewTextValue(
-			fieldName = "title",
-			fieldValue = "Spanish (Spain) Title");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Spanish (Spain) Title");
 
-		FormFields.viewTextValueAlt(
-			fieldName = "image",
-			fieldValue = "Spanish (Spain) Image Description");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			value1 = "Spanish (Spain) Image Description");
 
 		PortletEntry.publish();
 

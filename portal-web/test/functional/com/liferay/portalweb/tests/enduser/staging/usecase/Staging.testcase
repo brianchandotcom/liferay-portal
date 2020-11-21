@@ -1452,13 +1452,13 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DynamicDataMapping.editFieldPredefinedValue(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text",
-			fieldPredefinedValue = "(Enter Text Here)");
-
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentText = "(Enter Text Here)");
+
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -3860,11 +3860,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
-		DynamicDataMapping.selectDynamicDataMappingFrame();
-
-		DynamicDataMapping.editFieldSettings(fieldFieldLabel = "Image");
-
-		DynamicDataMapping.makeFieldRequired();
+		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -3881,6 +3877,7 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
 		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
 			structureName = "Structure Name",
 			templateName = "Template Name",
 			webContentImage = "Document_2.jpeg",

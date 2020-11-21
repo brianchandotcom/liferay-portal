@@ -1637,7 +1637,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Documents and Media,Link to Page,Image",
+			templateFieldNames = "Upload,Link to Page,Image",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -1645,14 +1645,14 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "DocumentsandMedia",
-			linkedPageName = "Test Page",
-			linkFieldName = "LinktoPage",
+			dmDocumentTitle = "DM Document Title",
+			navTab = "Documents and Media",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDocumentsAndMedia = "DM Document Title",
-			webContentImageUnderDocumentsAndMedia = "Document_1.jpg",
-			webContentTitle = "WC WebContent Title");
+			webContentImage = "Document_1.jpg",
+			webContentLinkToPage = "Test Page",
+			webContentTitle = "WC WebContent Title",
+			webContentUpload = "DM Document Title");
 
 		PortletEntry.publish();
 

@@ -2300,6 +2300,13 @@ definition {
 				key_fieldFieldLabel = "${webContentImageFieldLabel}",
 				key_image = "${webContentImage}",
 				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
+
+			if (isSet(webContentImageDescription)) {
+				AssertTextEquals(
+					key_fieldFieldLabel = "${webContentImageFieldLabel}",
+					locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+					value1 = "${webContentImageDescription}");
+			}
 		}
 
 		if (isSet(webContentLinkToPage)) {

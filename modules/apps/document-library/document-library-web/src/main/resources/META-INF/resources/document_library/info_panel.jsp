@@ -65,9 +65,8 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<li class="autofit-col">
 							<liferay-util:include page="/document_library/subscribe.jsp" servletContext="<%= application %>" />
 						</li>
-						<li class="autofit-col">
-							<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
-						</li>
+
+						<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 					</ul>
 				</div>
 			</div>

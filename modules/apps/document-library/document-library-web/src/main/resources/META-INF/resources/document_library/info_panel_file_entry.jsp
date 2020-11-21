@@ -28,34 +28,44 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 %>
 
 <div class="sidebar-header">
-	<c:if test="<%= !hideActions %>">
-		<ul class="sidebar-header-actions">
-			<li>
-				<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
-			</li>
-		</ul>
-	</c:if>
+	<clay:content-row
+		cssClass="sidebar-section"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<h1 class="component-title">
+				<%= HtmlUtil.escape(fileVersion.getTitle()) %>
+			</h1>
 
-	<h1 class="component-title">
-		<%= HtmlUtil.escape(fileVersion.getTitle()) %>
-	</h1>
+			<c:if test="<%= !Objects.equals(fileVersion.getTitle(), fileVersion.getFileName()) %>">
+				<h3 class="component-title">
+					<%= HtmlUtil.escape(fileVersion.getFileName()) %>
+				</h3>
+			</c:if>
 
-	<c:if test="<%= !Objects.equals(fileVersion.getTitle(), fileVersion.getFileName()) %>">
-		<h3 class="component-title">
-			<%= HtmlUtil.escape(fileVersion.getFileName()) %>
-		</h3>
-	</c:if>
+			<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+				<clay:label
+					displayType="info"
+					label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
+				/>
+			</c:if>
 
-	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
-		<clay:label
-			displayType="info"
-			label='<%= LanguageUtil.get(request, "version") + StringPool.SPACE + fileVersion.getVersion() %>'
-		/>
-	</c:if>
+			<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
-	<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+			<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+		</clay:content-col>
 
-	<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
+		<c:if test="<%= !hideActions %>">
+			<clay:content-col>
+				<ul class="autofit-padded-no-gutters autofit-row">
+					<li class="autofit-col">
+						<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
+					</li>
+				</ul>
+			</clay:content-col>
+		</c:if>
+	</clay:content-row>
 </div>
 
 <div class="sidebar-body">

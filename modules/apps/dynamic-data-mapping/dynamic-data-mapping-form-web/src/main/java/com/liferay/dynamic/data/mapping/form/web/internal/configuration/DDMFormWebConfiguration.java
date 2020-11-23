@@ -64,4 +64,10 @@ public interface DDMFormWebConfiguration {
 	)
 	public long guestUploadMaximumFileSize();
 
+	@Meta.AD(
+		deflt = "5", description = "maximum-repetitions-for-upload-field-help",
+		name = "maximum-repetitions-for-upload-field", required = false
+	)
+	public int maximumRepetitionsUploadField();
+
 }

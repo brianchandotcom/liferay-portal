@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {ReactFieldBase} from 'dynamic-data-mapping-form-field-type';
-import {openSelectionDialog} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const LayoutSelector = ({
@@ -49,7 +49,7 @@ const LayoutSelector = ({
 	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
-		openSelectionDialog({
+		openSelectionModal({
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectLayout`,
 			title: Liferay.Language.get('page'),

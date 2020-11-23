@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.content.internal.resource.v1_0;
 
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.journal.model.JournalArticle;
@@ -23,12 +24,19 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.search.aggregation.AggregationUtil;
+import com.liferay.portal.vulcan.search.sort.SortUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -75,6 +83,17 @@ public class StructuredContentResourceImpl
 				if (siteId != null) {
 					searchContext.setGroupIds(new long[] {siteId});
 				}
+
+				SearchRequestBuilder searchRequestBuilder =
+					_searchRequestBuilderFactory.builder(searchContext);
+
+				AggregationUtil.processVulcanAggregation(
+					_aggregations, _ddmIndexer, _queries, searchRequestBuilder,
+					aggregation);
+
+				SortUtil.processSorts(
+					_ddmIndexer, searchRequestBuilder, searchContext.getSorts(),
+					_queries, _sorts);
 			},
 			sorts,
 			document -> _toStructuredContent(
@@ -113,9 +132,24 @@ public class StructuredContentResourceImpl
 	}
 
 	@Reference
+	private Aggregations _aggregations;
+
+	@Reference
+	private DDMIndexer _ddmIndexer;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private Sorts _sorts;
 
 }

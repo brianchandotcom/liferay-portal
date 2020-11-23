@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.search.sort;
+package com.liferay.portal.vulcan.search.sort;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -23,6 +22,7 @@ import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.NestedSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.vulcan.mapping.DDMStructureField;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.search.aggregation;
+package com.liferay.portal.vulcan.search.aggregation;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
@@ -23,6 +22,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.mapping.DDMStructureField;
 
 import java.util.Map;
 

@@ -98,11 +98,11 @@ public class DisplaySettingsDisplayContext {
 			if (!siteAvailableLocales.contains(availableLocale)) {
 				availableLanguages.add(
 					JSONUtil.put(
-						"label", LocaleUtil.toLanguageId(availableLocale)
-					).put(
-						"value",
+						"label",
 						availableLocale.getDisplayName(
 							_themeDisplay.getLocale())
+					).put(
+						"value", LocaleUtil.toLanguageId(availableLocale)
 					));
 			}
 		}
@@ -128,10 +128,10 @@ public class DisplaySettingsDisplayContext {
 
 				currentLanguages.add(
 					JSONUtil.put(
-						"label", LanguageUtil.getLanguageId(currentLocale)
-					).put(
-						"value",
+						"label",
 						currentLocale.getDisplayName(_themeDisplay.getLocale())
+					).put(
+						"value", LanguageUtil.getLanguageId(currentLocale)
 					));
 			}
 		}
@@ -141,11 +141,11 @@ public class DisplaySettingsDisplayContext {
 			for (Locale siteAvailableLocale : siteAvailableLocales) {
 				currentLanguages.add(
 					JSONUtil.put(
-						"label", LanguageUtil.getLanguageId(siteAvailableLocale)
-					).put(
-						"value",
+						"label",
 						siteAvailableLocale.getDisplayName(
 							_themeDisplay.getLocale())
+					).put(
+						"value", LanguageUtil.getLanguageId(siteAvailableLocale)
 					));
 			}
 		}

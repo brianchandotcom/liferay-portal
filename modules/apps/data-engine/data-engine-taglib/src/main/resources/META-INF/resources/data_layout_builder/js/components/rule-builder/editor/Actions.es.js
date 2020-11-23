@@ -155,7 +155,7 @@ const ActionContentAutoFill = ({
 		<div className="action-rule-data-provider">
 			<ClayLayout.Row>
 				<ClayLayout.Col className="no-padding" md={12}>
-					{resource?.outputs.length === 0 && (
+					{resourceOutputs?.length === 0 && (
 						<ClayAlert
 							displayType="danger"
 							title={Liferay.Language.get('error')}

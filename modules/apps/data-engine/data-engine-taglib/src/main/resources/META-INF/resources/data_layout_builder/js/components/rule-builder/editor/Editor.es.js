@@ -23,7 +23,12 @@ import React, {useEffect, useReducer} from 'react';
 import {Actions} from './Actions.es';
 import {Conditions} from './Conditions.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
-import {BINARY_OPERATOR, DEFAULT_RULE, RIGHT_TYPES} from './config.es';
+import {
+	ACTION_TARGET_SHAPE,
+	BINARY_OPERATOR,
+	DEFAULT_RULE,
+	RIGHT_TYPES,
+} from './config.es';
 
 const CONFIG_DATA = {
 	actions: {
@@ -128,7 +133,10 @@ const reducer = (state, action) => {
 			const {actions, conditions} = state.ifStatement;
 			const {loc, value} = action.payload;
 
+			const shape = ACTION_TARGET_SHAPE[value] ?? {};
+
 			actions[loc] = {
+				...shape,
 				...actions[loc],
 				action: value,
 			};
@@ -263,11 +271,14 @@ const reducer = (state, action) => {
 					  }
 					: right;
 
+			const operands = [left];
+
+			if (BINARY_OPERATOR.includes(value) && newRight) {
+				operands.push(newRight);
+			}
+
 			conditions[loc] = {
-				operands: [
-					left,
-					BINARY_OPERATOR.includes(value) ? newRight : undefined,
-				],
+				operands,
 				operator: value,
 			};
 
@@ -330,8 +341,11 @@ const transformConditions = ({operator, operands: [left, right]}, fields) => {
 			...left,
 			field: fields.find(({fieldName}) => fieldName === left.value),
 		},
-		right,
 	];
+
+	if (right) {
+		operands.push(right);
+	}
 
 	return {
 		operands,
@@ -419,8 +433,8 @@ export function Editor({
 		};
 
 		onValidator(
-			RulesSupport.fieldNameBelongsToAction('', actions) ||
-				RulesSupport.fieldNameBelongsToCondition('', newRule.conditions)
+			RulesSupport.fieldNameBelongsToAction(actions, '', fields) ||
+				RulesSupport.fieldNameBelongsToCondition(newRule.conditions, '')
 		);
 		onChange(newRule);
 

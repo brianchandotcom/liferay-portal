@@ -105,7 +105,6 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 				contentType="journal"
 				dataDefinitionId="<%= ddmStructureId %>"
 				groupId="<%= groupId %>"
-				localizable="<%= true %>"
 				namespace="<%= liferayPortletResponse.getNamespace() %>"
 				singlePage="<%= true %>"
 			/>

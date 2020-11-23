@@ -53,7 +53,6 @@ class DataLayoutBuilder extends React.Component {
 			config,
 			dataLayoutBuilderId,
 			fieldTypes,
-			localizable,
 			portletNamespace,
 		} = this.props;
 
@@ -96,12 +95,10 @@ class DataLayoutBuilder extends React.Component {
 			this.containerRef.current
 		);
 
-		if (localizable) {
-			this._localeChangedHandler = Liferay.after(
-				'inputLocalized:localeChanged',
-				this._onLocaleChange.bind(this)
-			);
-		}
+		this._localeChangedHandler = Liferay.after(
+			'inputLocalized:localeChanged',
+			this._onLocaleChange.bind(this)
+		);
 	}
 
 	componentWillUnmount() {

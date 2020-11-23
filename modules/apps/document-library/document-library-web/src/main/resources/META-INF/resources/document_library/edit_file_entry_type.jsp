@@ -97,7 +97,6 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				dataDefinitionId="<%= dataDefinitionId %>"
 				dataLayoutInputId="dataLayout"
 				groupId="<%= scopeGroupId %>"
-				localizable="<%= true %>"
 				namespace="<%= liferayPortletResponse.getNamespace() %>"
 			/>
 		</clay:container-fluid>

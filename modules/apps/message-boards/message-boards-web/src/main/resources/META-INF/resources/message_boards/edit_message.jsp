@@ -466,4 +466,5 @@ MBEditMessageDisplayContext mbEditMessageDisplayContext = new MBEditMessageDispl
 <liferay-frontend:component
 	context="<%= mbEditMessageDisplayContext.getMBPortletComponentContext() %>"
 	module="message_boards/js/MBPortlet.es"
+	servletContext="<%= application %>"
 />

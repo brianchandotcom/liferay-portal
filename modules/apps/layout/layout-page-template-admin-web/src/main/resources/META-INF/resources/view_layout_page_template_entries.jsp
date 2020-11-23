@@ -53,7 +53,8 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card-v2
+				<clay:vertical-card
+					propsTransformer="js/propsTransformers/LayoutPageTemplateEntryPropsTransformer"
 					verticalCard="<%= new LayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
@@ -74,11 +75,6 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 	<aui:input name="layoutPageTemplateEntryId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/LayoutPageTemplateEntryDropdownDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= layoutPageTemplateManagementToolbarDisplayContext.getDefaultEventHandler() %>"

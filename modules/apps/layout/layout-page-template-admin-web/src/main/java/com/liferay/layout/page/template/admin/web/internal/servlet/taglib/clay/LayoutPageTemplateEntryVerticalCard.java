@@ -80,12 +80,6 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return LayoutPageTemplateAdminWebKeys.
-			LAYOUT_PAGE_TEMPLATE_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
-	}
-
-	@Override
 	public String getHref() {
 		try {
 			if (!LayoutPageTemplateEntryPermission.contains(

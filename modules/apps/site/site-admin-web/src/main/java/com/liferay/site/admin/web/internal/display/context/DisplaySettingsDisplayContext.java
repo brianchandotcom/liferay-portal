@@ -71,7 +71,7 @@ public class DisplaySettingsDisplayContext {
 				Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
 					liveGroup.getGroupId());
 
-				return siteDefaultLocale.getLanguage();
+				return LocaleUtil.toLanguageId(siteDefaultLocale);
 			}
 		).put(
 			"inheritLocales",

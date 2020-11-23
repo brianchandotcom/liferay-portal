@@ -321,6 +321,7 @@ const ActionBottomContent = ({action, target, ...otherProps}) => {
 
 export function Actions({
 	actions,
+	allowActions,
 	dataProvider,
 	dataProviderInstanceParameterSettingsURL,
 	dispatch,
@@ -332,6 +333,18 @@ export function Actions({
 	state: {ifStatement},
 }) {
 	const [modal, openModal] = useContext(ModalContext);
+
+	const options = useMemo(
+		() =>
+			ACTIONS_OPTIONS.filter(({value}) => {
+				if (value === 'jump-to-page') {
+					return pages.length > 1;
+				}
+
+				return allowActions.includes(value);
+			}),
+		[allowActions, pages]
+	);
 
 	return (
 		<Timeline.List>
@@ -373,7 +386,7 @@ export function Actions({
 										type: ACTIONS_TYPES.CHANGE_ACTION,
 									})
 								}
-								options={ACTIONS_OPTIONS}
+								options={options}
 								placeholder={Liferay.Language.get(
 									'choose-an-option'
 								)}

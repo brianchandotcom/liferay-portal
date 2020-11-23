@@ -379,7 +379,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 
 				try {
-					FileEntry fileEntry = _getFileEntryByName(
+					FileEntry fileEntry = _getFileEntryByFileName(
 						webDAVRequest.getGroupId(), parentFolderId,
 						_getFileName(pathArray));
 
@@ -688,7 +688,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			if (webDAVRequest.isMac()) {
 				try {
-					FileEntry destFileEntry = _getFileEntryByName(
+					FileEntry destFileEntry = _getFileEntryByFileName(
 						groupId, newParentFolderId, fileName);
 
 					InputStream inputStream = fileEntry.getContentStream();
@@ -792,7 +792,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				httpServletRequest, file, fileName);
 
 			try {
-				FileEntry fileEntry = _getFileEntryByName(
+				FileEntry fileEntry = _getFileEntryByFileName(
 					webDAVRequest.getGroupId(), parentFolderId, fileName);
 
 				if (!hasLock(fileEntry, webDAVRequest.getLockUuid()) &&
@@ -963,7 +963,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			}
 
 			try {
-				FileEntry fileEntry = _getFileEntryByName(
+				FileEntry fileEntry = _getFileEntryByFileName(
 					groupId, parentFolderId, name);
 
 				if (!hasLock(fileEntry, lockUuid) &&
@@ -1229,20 +1229,21 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return resource;
 	}
 
-	private FileEntry _getFileEntryByName(
-			long groupId, long parentFolderId, String name)
+	private FileEntry _getFileEntryByFileName(
+			long groupId, long parentFolderId, String fileName)
 		throws PortalException {
 
 		try {
 			return _dlAppService.getFileEntryByFileName(
-				groupId, parentFolderId, name);
+				groupId, parentFolderId, fileName);
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
-			return _dlAppService.getFileEntry(groupId, parentFolderId, name);
+			return _dlAppService.getFileEntry(
+				groupId, parentFolderId, fileName);
 		}
 	}
 

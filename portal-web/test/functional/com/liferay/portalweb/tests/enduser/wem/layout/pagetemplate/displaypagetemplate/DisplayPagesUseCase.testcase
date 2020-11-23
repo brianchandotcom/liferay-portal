@@ -842,8 +842,8 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "Content",
 			webContentRichText = "Webcontent Content",
+			webContentRichTextFieldLabel = "Content",
 			webContentTitle = "Webcontent Title");
 
 		WebContent.addWithTagCP(tagNameList = "tag1,tag2,tag3");

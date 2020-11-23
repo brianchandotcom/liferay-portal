@@ -13,7 +13,6 @@
  */
 
 import {buildFragment, runScriptsInElement} from 'frontend-js-web';
-import CancellablePromise from 'metal-promise';
 
 import globals from '../globals/globals';
 import Surface from '../surface/Surface';
@@ -186,7 +185,7 @@ class HtmlScreen extends RequestScreen {
 
 	/**
 	 * Allows a screen to evaluate the favicon style before the screen becomes visible.
-	 * @return {CancellablePromise}
+	 * @return {Promise}
 	 */
 	evaluateFavicon_() {
 		const resourcesInVirtual = this.virtualQuerySelectorAll_(
@@ -196,7 +195,7 @@ class HtmlScreen extends RequestScreen {
 			HtmlScreen.selectors.favicon
 		);
 
-		return new CancellablePromise((resolve) => {
+		return new Promise((resolve) => {
 			resourcesInDocument.forEach((element) => element.remove());
 			this.runFaviconInElement_(resourcesInVirtual).then(() => resolve());
 		});
@@ -213,7 +212,7 @@ class HtmlScreen extends RequestScreen {
 	 *     resources to track.
 	 * @param {!function} opt_appendResourceFn Optional function used to
 	 *     evaluate fragment containing resources.
-	 * @return {CancellablePromise} Deferred that waits resources evaluation to
+	 * @return {Promise} Deferred that waits resources evaluation to
 	 *     complete.
 	 * @private
 	 */
@@ -254,7 +253,7 @@ class HtmlScreen extends RequestScreen {
 			}
 		});
 
-		return new CancellablePromise((resolve) => {
+		return new Promise((resolve) => {
 			evaluatorFn(
 				frag,
 				() => {
@@ -347,10 +346,10 @@ class HtmlScreen extends RequestScreen {
 	 * Adds the favicon elements to the document.
 	 * @param {!Array<Element>} elements
 	 * @private
-	 * @return {CancellablePromise}
+	 * @return {Promise}
 	 */
 	runFaviconInElement_(elements) {
-		return new CancellablePromise((resolve) => {
+		return new Promise((resolve) => {
 			elements.forEach((element) => {
 				element.href = element.href + '?q=' + Math.random();
 

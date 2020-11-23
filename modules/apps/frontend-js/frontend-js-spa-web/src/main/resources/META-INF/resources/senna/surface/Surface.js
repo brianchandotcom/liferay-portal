@@ -13,7 +13,6 @@
  */
 
 import {buildFragment} from 'frontend-js-web';
-import CancellablePromise from 'metal-promise';
 
 import Disposable from '../Disposable';
 import globals from '../globals/globals';
@@ -221,7 +220,7 @@ class Surface extends Disposable {
 	/**
 	 * Shows screen content from a surface.
 	 * @param {String} screenId The screen id to show.
-	 * @return {CancellablePromise} Pauses the navigation until it is resolved.
+	 * @return {Promise} Pauses the navigation until it is resolved.
 	 */
 	show(screenId) {
 		var from = this.activeChild;
@@ -231,7 +230,7 @@ class Surface extends Disposable {
 		}
 		this.activeChild = to;
 
-		return this.transition(from, to).thenAlways(() => {
+		return this.transition(from, to).finally(() => {
 			if (from && from !== to) {
 				from.remove();
 			}
@@ -260,13 +259,13 @@ class Surface extends Disposable {
 	 * Invokes the transition function specified on <code>transition</code> attribute.
 	 * @param {?Element=} from
 	 * @param {?Element=} to
-	 * @return {?CancellablePromise=} This can return a promise, which will pause the
+	 * @return {?Promise=} This can return a promise, which will pause the
 	 *     navigation until it is resolved.
 	 */
 	transition(from, to) {
 		var transitionFn = this.transitionFn || Surface.defaultTransition;
 
-		return CancellablePromise.resolve(transitionFn.call(this, from, to));
+		return Promise.resolve(transitionFn.call(this, from, to));
 	}
 }
 

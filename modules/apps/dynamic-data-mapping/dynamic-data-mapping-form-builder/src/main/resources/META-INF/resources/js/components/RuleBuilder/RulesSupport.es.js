@@ -264,13 +264,14 @@ const formatRules = (pages, rules) => {
 	return formattedRules;
 };
 
-const expressionHasNonNumericFields = (action, pages) => {
+const expressionHasNonNumericFields = (action, fields) => {
 	const expressionFields = getExpressionFields(action);
 	let hasNonNumericFields = false;
 
 	if (expressionFields && expressionFields.length > 0) {
-		expressionFields.forEach((field) => {
-			if (getFieldType(field, pages) !== 'numeric') {
+		expressionFields.forEach((value) => {
+			const field = fields.find(({fieldName}) => fieldName === value);
+			if (field?.type !== 'numeric') {
 				hasNonNumericFields = true;
 			}
 		});
@@ -279,7 +280,7 @@ const expressionHasNonNumericFields = (action, pages) => {
 	return hasNonNumericFields;
 };
 
-const fieldNameBelongsToAction = (actions, fieldName, pages) => {
+const fieldNameBelongsToAction = (actions, fieldName, fields) => {
 	const emptyField = '[]';
 
 	return actions
@@ -301,7 +302,7 @@ const fieldNameBelongsToAction = (actions, fieldName, pages) => {
 					return (
 						expression.indexOf(emptyField) !== -1 ||
 						target === fieldName ||
-						expressionHasNonNumericFields(action, pages)
+						expressionHasNonNumericFields(action, fields)
 					);
 				}
 				else {

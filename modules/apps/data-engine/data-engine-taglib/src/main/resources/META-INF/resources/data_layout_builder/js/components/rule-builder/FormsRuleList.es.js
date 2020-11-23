@@ -20,7 +20,7 @@ import ClayList from '@clayui/list';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useMemo} from 'react';
 
-import Lang from '../../utils/lang.es';
+import * as Lang from '../../utils/lang.es';
 
 const LOGICAL_OPERATOR = {
 	AND: Liferay.Language.get('and'),
@@ -283,9 +283,9 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 
 	const invalidRule = useMemo(
 		() =>
-			RulesSupport.fieldNameBelongsToAction('', actions) ||
-			RulesSupport.fieldNameBelongsToCondition('', conditions),
-		[actions, conditions]
+			RulesSupport.fieldNameBelongsToAction(actions, '', fields) ||
+			RulesSupport.fieldNameBelongsToCondition(conditions, ''),
+		[actions, conditions, fields]
 	);
 
 	const isNestedCondition = useMemo(

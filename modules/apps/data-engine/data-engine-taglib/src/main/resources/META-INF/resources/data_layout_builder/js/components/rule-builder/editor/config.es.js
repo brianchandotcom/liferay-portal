@@ -67,6 +67,16 @@ export const DEFAULT_RULE = {
 	logicalOperator: 'OR',
 };
 
+export const ACTION_TARGET_SHAPE = {
+	'auto-fill': {
+		inputs: {},
+		outputs: {},
+	},
+	calculate: {
+		expression: '',
+	},
+};
+
 export const ACTIONS_OPTIONS = [
 	{
 		label: Liferay.Language.get('show'),

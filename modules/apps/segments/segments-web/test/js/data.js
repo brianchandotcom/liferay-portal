@@ -18,16 +18,19 @@ import {
 } from '../../src/main/resources/META-INF/resources/js/utils/constants.es';
 
 const {AND, OR} = CONJUNCTIONS;
-const {EQ} = RELATIONAL_OPERATORS;
 
-function generateItems(times) {
+function generateItems(
+	times,
+	operatorName = RELATIONAL_OPERATORS.EQ,
+	value = 'test'
+) {
 	const items = [];
 
 	for (let i = 0; i < times; i++) {
 		items.push({
-			operatorName: EQ,
+			operatorName,
 			propertyName: 'firstName',
-			value: 'test',
+			value,
 		});
 	}
 

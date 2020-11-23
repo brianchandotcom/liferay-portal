@@ -9,12 +9,12 @@ exports[`BooleanInput renders type boolean 1`] = `
     <option
       value="true"
     >
-      TRUE
+      true
     </option>
     <option
       value="false"
     >
-      FALSE
+      false
     </option>
   </select>
 </DocumentFragment>

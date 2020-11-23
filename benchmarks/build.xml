@@ -3,21 +3,6 @@
 <project basedir="." default="run" name="benchmarks">
 	<import file="../build-common.xml" />
 
-	<macrodef name="build-sql">
-		<attribute name="sql.dir" />
-		<attribute name="output.sql.file" />
-		<sequential>
-			<ant antfile="../sql/build.xml" inheritall="false" target="build-db">
-				<property name="db.sql.dir" value="@{sql.dir}" />
-			</ant>
-
-			<concat append="true" destfile="@{output.sql.file}">
-				<filelist dir="@{sql.dir}/tables/" files="tables-${sample.sql.db.type}.sql" />
-				<filelist dir="@{sql.dir}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
-			</concat>
-		</sequential>
-	</macrodef>
-
 	<target depends="clean" name="build-sample-sql">
 		<property name="output.sql.file" value="sample-data-${sample.sql.db.type}.sql" />
 
@@ -94,7 +79,14 @@
 
 		<for list="${portal.module.dir.list}" param="module">
 			<sequential>
-				<build-sql sql.dir="@{module}" output.sql.file="${output.sql.file}"/>
+				<ant antfile="../sql/build.xml" inheritall="false" target="build-db">
+					<property name="db.sql.dir" value="@{module}" />
+				</ant>
+
+				<concat append="true" destfile="${output.sql.file}">
+					<filelist dir="@{module}/tables/" files="tables-${sample.sql.db.type}.sql" />
+					<filelist dir="@{module}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
+				</concat>
 			</sequential>
 		</for>
 

@@ -1,0 +1,31 @@
+.liferay-ddm-form-rule-builder-timeline {
+	margin-bottom: 0;
+
+	&.can-remove-item {
+		.timeline-item:hover > .container-trash {
+			display: block;
+		}
+	}
+
+	[class*=' target-message-'] {
+		max-width: max-content;
+	}
+
+	&.liferay-ddm-form-builder-rule-action-list
+		.timeline-item:last-child:before {
+		bottom: 0;
+	}
+
+	.container-trash {
+		cursor: pointer;
+		display: none;
+		padding: 10px;
+		position: absolute;
+		right: 10px;
+		top: 13px;
+
+		&:hover {
+			color: #65b6f0;
+		}
+	}
+}

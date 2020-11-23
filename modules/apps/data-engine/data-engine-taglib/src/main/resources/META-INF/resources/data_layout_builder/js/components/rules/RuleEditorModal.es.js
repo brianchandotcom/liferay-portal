@@ -13,135 +13,128 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import {RuleEditor} from 'dynamic-data-mapping-form-builder';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {fetch} from 'frontend-js-web';
+import React, {useContext, useMemo, useRef, useState} from 'react';
 
 import AppContext from '../../AppContext.es';
+import {ADD_DATA_LAYOUT_RULE, UPDATE_DATA_LAYOUT_RULE} from '../../actions.es';
 import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
-import {getItem} from '../../utils/client.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
+import {Editor} from '../rule-builder/editor/Editor.es';
 
-class RuleEditorWrapper extends RuleEditor {
-	getChildContext() {
-		return {
-			store: {
-				editingLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
-			},
-		};
-	}
+const INITIAL_RULE = {
+	actions: [
+		{
+			action: '',
+			target: '',
+		},
+	],
+	conditions: [
+		{
+			operands: [
+				{
+					type: '',
+					value: '',
+				},
+			],
+			operator: '',
+		},
+	],
+	logicalOperator: 'OR',
+	name: '',
+};
+
+function getTransformedPages(pages) {
+	return pages.map(({title}, index) => ({
+		label: `${index + 1} ${title || Liferay.Language.get('page-title')}`,
+		name: index.toString(),
+		value: index.toString(),
+	}));
 }
 
-const RuleEditorModalContent = ({onClose, rule}) => {
-	const ruleEditorRef = useRef();
-	const [invalidRule, setInvalidRule] = useState(true);
-	const [ruleEditor, setRuleEditor] = useState(null);
-	const [ruleName, setRuleName] = useState('');
+function getFields(pages) {
+	const fields = [];
+	const visitor = new PagesVisitor(pages);
 
-	const [
-		{
-			config: {ruleSettings},
-			spritemap,
-		},
-	] = useContext(AppContext);
+	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+		if (field.type != 'fieldset') {
+			fields.push({
+				...field,
+				pageIndex,
+				value: field.fieldName,
+			});
+		}
+	});
+
+	return fields;
+}
+
+function getFormattedRoles(roles) {
+	return roles.map(({id, name}) => ({
+		id: `${id}`,
+		label: name,
+		name,
+		value: name,
+	}));
+}
+
+const RuleEditorModalContent = ({onClose, rule = INITIAL_RULE}) => {
+	const [invalidRule, setInvalidRule] = useState(true);
+
+	/**
+	 * State flow: resourceNotAsked -> loading -> error/success
+	 * Success is implicit when all are false.
+	 */
+	const [resourceState, setResourceState] = useState(() => ({
+		error: false,
+		loading: false,
+	}));
+
+	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+	const [ruleName, setRuleName] = useState(rule?.name[defaultLanguageId]);
 
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {pages} = dataLayoutBuilder.getStore();
 
-	const [state, setState] = useState({
-		isLoading: true,
-		roles: [],
+	const [
+		{
+			config: {
+				ruleSettings: {functionsMetadata, functionsURL},
+			},
+		},
+		dispatch,
+	] = useContext(AppContext);
+
+	/**
+	 * This reference is used for updating rule value without causing a re-render
+	 */
+	const ruleRef = useRef(rule);
+
+	const rolesResource = useResource({
+		fetch,
+		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles`,
+		onNetworkStatusChange: (status) =>
+			setResourceState({
+				error: status === 5,
+				loading: status < 4,
+			}),
 	});
 
-	const onChangeRuleName = useCallback((value) => {
-		setRuleName(value);
-	}, []);
-
-	useEffect(() => {
-		if (rule) {
-			onChangeRuleName(rule.name.en_US);
-		}
-	}, [onChangeRuleName, rule]);
-
-	useEffect(() => {
-		const {isLoading, roles} = state;
-
-		if (isLoading || ruleEditor !== null) {
-			return;
+	const roles = useMemo(() => {
+		if (rolesResource?.items?.roles) {
+			return getFormattedRoles(rolesResource?.items?.roles);
 		}
 
-		const ruleEditorWrapper = new RuleEditorWrapper(
-			{
-				...ruleSettings,
-				actions: [],
-				conditions: [],
-				events: {
-					ruleAdded: (rule) => {
-						dataLayoutBuilder.dispatch('ruleAdded', rule);
-						onClose();
-					},
-					ruleCancelled: () => {},
-					ruleDeleted: () => {},
-					ruleEdited: (rule) => {
-						dataLayoutBuilder.dispatch('ruleEdited', rule);
-						onClose();
-					},
-					ruleValidatorChanged: (isInvalid) =>
-						setInvalidRule(isInvalid),
-				},
-				key: 'create',
-				pages,
-				ref: 'RuleEditor',
-				roles,
-				rule,
-				spritemap,
-				...(rule && {ruleEditedIndex: rule.ruleEditedIndex}),
-			},
-			ruleEditorRef.current
-		);
+		return [];
+	}, [rolesResource]);
 
-		setRuleEditor(ruleEditorWrapper);
-	}, [
-		dataLayoutBuilder,
-		onClose,
-		pages,
-		ruleEditor,
-		ruleEditorRef,
-		rule,
-		ruleSettings,
-		spritemap,
-		state,
-	]);
-
-	useEffect(() => {
-		return () => ruleEditor && ruleEditor.dispose();
-	}, [ruleEditor]);
-
-	useEffect(() => {
-		getItem('/o/headless-admin-user/v1.0/roles').then(
-			({items: roles = []}) => {
-				roles = roles.map(({id, name}) => ({
-					id: `${id}`,
-					label: name,
-					name,
-					value: name,
-				}));
-
-				setState((prevState) => ({
-					...prevState,
-					isLoading: false,
-					roles,
-				}));
-			}
-		);
-	}, []);
+	const transformedPages = useMemo(() => getTransformedPages(pages), [pages]);
+	const fields = useMemo(() => getFields(pages), [pages]);
 
 	return (
 		<>
@@ -154,11 +147,9 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 				<ClayInput.Group className="pl-4 pr-4">
 					<ClayInput.GroupItem>
 						<ClayInput
-							aria-label={Liferay.Language.get('untitled-rule')}
+							aria-label={Liferay.Language.get('rule-title')}
 							className="form-control-inline"
-							onChange={({target: {value}}) =>
-								onChangeRuleName(value)
-							}
+							onChange={({target: {value}}) => setRuleName(value)}
 							placeholder={Liferay.Language.get('untitled-rule')}
 							type="text"
 							value={ruleName}
@@ -167,7 +158,31 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 				</ClayInput.Group>
 			</ClayModal.Header>
 			<ClayModal.Body>
-				<div className="pl-4 pr-4" ref={ruleEditorRef}></div>
+				{!resourceState.loading ? (
+					<Editor
+						allowActions={[
+							'show',
+							'enable',
+							'require',
+							'calculate',
+							'jump-to-page',
+						]}
+						className="pl-4 pr-4"
+						dataProvider={[]}
+						fields={fields}
+						functionsURL={functionsURL}
+						onChange={(rule) => {
+							ruleRef.current = rule;
+						}}
+						onValidator={setInvalidRule}
+						operatorsByType={functionsMetadata}
+						pages={transformedPages}
+						roles={roles}
+						rule={rule}
+					/>
+				) : (
+					<ClayLoadingIndicator />
+				)}
 			</ClayModal.Body>
 			<ClayModal.Footer
 				last={
@@ -178,9 +193,13 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 						<ClayButton
 							disabled={invalidRule || !ruleName}
 							onClick={() =>
-								rule
-									? ruleEditor.handleRuleEdited({ruleName})
-									: ruleEditor.handleRuleAdded({ruleName})
+								dispatch({
+									payload: {dataRule: ruleRef.current},
+									type:
+										rule === INITIAL_RULE
+											? ADD_DATA_LAYOUT_RULE
+											: UPDATE_DATA_LAYOUT_RULE,
+								})
 							}
 						>
 							{Liferay.Language.get('save')}

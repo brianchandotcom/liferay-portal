@@ -31,7 +31,7 @@ List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntry
 						"pkccOptions", request.getAttribute(MFAFIDO2WebKeys.MFA_FIDO2_PKCC_OPTIONS)
 					).build()
 				%>'
-				class="btn btn-primary"
+				displayType="primary"
 				label="register-a-fido2-authenticator"
 				propsTransformer="js/RegistrationTransformer"
 			/>
@@ -44,7 +44,7 @@ List<MFAFIDO2CredentialEntry> mfaIDO2CredentialEntries = MFAFIDO2CredentialEntry
 
 		<aui:button-row>
 			<clay:button
-				class="btn btn-danger"
+				displayType="danger"
 				label="remove-all-registered-fido2-authenticators"
 				type="submit"
 			/>

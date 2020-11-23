@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"metal-promise": "3.0.5"
+		"frontend-js-web": "*"
 	},
 	"name": "frontend-js-spa-web",
 	"scripts": {

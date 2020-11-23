@@ -13,7 +13,6 @@
  */
 
 import {fetch} from 'frontend-js-web';
-import CancellablePromise from 'metal-promise';
 
 import errors from '../errors/errors';
 import globals from '../globals/globals';
@@ -230,7 +229,7 @@ class RequestScreen extends Screen {
 	load(path) {
 		const cache = this.getCache();
 		if (cache) {
-			return CancellablePromise.resolve(cache);
+			return Promise.resolve(cache);
 		}
 		let body = null;
 		let httpMethod = this.httpMethod;

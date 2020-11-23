@@ -13,7 +13,6 @@
  */
 
 import {debounce, delegate} from 'frontend-js-web';
-import CancellablePromise from 'metal-promise';
 
 import EventEmitter from '../events/EventEmitter';
 import EventHandler from '../events/EventHandler';
@@ -171,7 +170,7 @@ class App extends EventEmitter {
 
 		/**
 		 * Holds a deferred with the current navigation.
-		 * @type {?CancellablePromise}
+		 * @type {?Promise}
 		 * @default null
 		 * @protected
 		 */
@@ -461,7 +460,7 @@ class App extends EventEmitter {
 	/**
 	 * Dispatches to the first route handler that matches the current path, if
 	 * any.
-	 * @return {CancellablePromise} Returns a pending request cancellable promise.
+	 * @return {Promise} Returns a pending request cancellable promise.
 	 */
 	dispatch() {
 		return this.navigate(getCurrentBrowserPath(), true);
@@ -471,16 +470,12 @@ class App extends EventEmitter {
 	 * Starts navigation to a path.
 	 * @param {!string} path Path containing the querystring part.
 	 * @param {boolean=} opt_replaceHistory Replaces browser history.
-	 * @return {CancellablePromise} Returns a pending request cancellable promise.
+	 * @return {Promise} Returns a pending request cancellable promise.
 	 */
 	doNavigate_(path, opt_replaceHistory) {
 		var route = this.findRoute(path);
 		if (!route) {
-			this.pendingNavigate = CancellablePromise.reject(
-				new CancellablePromise.CancellationError('No route for ' + path)
-			);
-
-			return this.pendingNavigate;
+			return Promise.reject(new Error('No route for ' + path));
 		}
 
 		log('Navigate to [' + path + ']');
@@ -526,7 +521,7 @@ class App extends EventEmitter {
 				this.handleNavigateError_(path, nextScreen, reason);
 				throw reason;
 			})
-			.thenAlways(() => {
+			.finally(() => {
 				this.navigationStrategy = NavigationStrategy.IMMEDIATE;
 
 				if (this.scheduledNavigationQueue.length) {
@@ -695,7 +690,7 @@ class App extends EventEmitter {
 		});
 		if (!utils.isCurrentBrowserPath(path)) {
 			if (this.isNavigationPending && this.pendingNavigate) {
-				this.pendingNavigate.thenAlways(
+				this.pendingNavigate.finally(
 					() => this.removeScreen(path),
 					this
 				);
@@ -879,22 +874,18 @@ class App extends EventEmitter {
 	 * Cancels navigation if nextScreen's beforeActivate lifecycle method
 	 * resolves to true.
 	 * @param {!Screen} nextScreen
-	 * @return {!CancellablePromise}
+	 * @return {!Promise}
 	 */
 	maybePreventActivate_(nextScreen) {
-		return CancellablePromise.resolve()
+		return Promise.resolve()
 			.then(() => {
 				return nextScreen.beforeActivate();
 			})
 			.then((prevent) => {
 				if (prevent) {
-					this.pendingNavigate = CancellablePromise.reject(
-						new CancellablePromise.CancellationError(
-							'Cancelled by next screen'
-						)
+					return Promise.reject(
+						new Error('Cancelled by next screen')
 					);
-
-					return this.pendingNavigate;
 				}
 			});
 	}
@@ -902,10 +893,10 @@ class App extends EventEmitter {
 	/**
 	 * Cancels navigation if activeScreen's beforeDeactivate lifecycle
 	 * method resolves to true.
-	 * @return {!CancellablePromise}
+	 * @return {!Promise}
 	 */
 	maybePreventDeactivate_() {
-		return CancellablePromise.resolve()
+		return Promise.resolve()
 			.then(() => {
 				if (this.activeScreen) {
 					return this.activeScreen.beforeDeactivate();
@@ -913,13 +904,9 @@ class App extends EventEmitter {
 			})
 			.then((prevent) => {
 				if (prevent) {
-					this.pendingNavigate = CancellablePromise.reject(
-						new CancellablePromise.CancellationError(
-							'Cancelled by active screen'
-						)
+					return Promise.reject(
+						new Error('Cancelled by active screen')
 					);
-
-					return this.pendingNavigate;
 				}
 			});
 	}
@@ -987,7 +974,7 @@ class App extends EventEmitter {
 	 * @param {!string} path Path to navigate containing the base path.
 	 * @param {boolean=} opt_replaceHistory Replaces browser history.
 	 * @param {Event=} event Optional event object that triggered the navigation.
-	 * @return {CancellablePromise} Returns a pending request cancellable promise.
+	 * @return {Promise} Returns a pending request cancellable promise.
 	 */
 	navigate(path, opt_replaceHistory, opt_event) {
 		if (opt_event) {
@@ -1208,7 +1195,7 @@ class App extends EventEmitter {
 			uri.port = globals.window.location.port;
 			const isNavigationScheduled = this.maybeScheduleNavigation_(
 				uri.toString(),
-				{}
+				new Map()
 			);
 			if (isNavigationScheduled) {
 				return;
@@ -1255,7 +1242,7 @@ class App extends EventEmitter {
 				endNavigatePayload.error = reason;
 				throw reason;
 			})
-			.thenAlways(() => {
+			.finally(() => {
 				if (
 					!this.pendingNavigate &&
 					!this.scheduledNavigationQueue.length
@@ -1275,14 +1262,12 @@ class App extends EventEmitter {
 	/**
 	 * Prefetches the specified path if there is a route handler that matches.
 	 * @param {!string} path Path to navigate containing the base path.
-	 * @return {CancellablePromise} Returns a pending request cancellable promise.
+	 * @return {Promise} Returns a pending request cancellable promise.
 	 */
 	prefetch(path) {
 		var route = this.findRoute(path);
 		if (!route) {
-			return CancellablePromise.reject(
-				new CancellablePromise.CancellationError('No route for ' + path)
-			);
+			return Promise.reject(new Error('No route for ' + path));
 		}
 
 		log('Prefetching [' + path + ']');
@@ -1504,7 +1489,9 @@ class App extends EventEmitter {
 	 */
 	stopPendingNavigate_() {
 		if (this.pendingNavigate) {
-			this.pendingNavigate.cancel('Cancel pending navigation');
+
+			//this.pendingNavigate.cancel('Cancel pending navigation');
+
 		}
 		this.pendingNavigate = null;
 	}
@@ -1514,7 +1501,7 @@ class App extends EventEmitter {
 	 * one inside <code>setTimeout(cb, 0)</code>. Relevant to browsers that fires
 	 * scroll restoration asynchronously after popstate.
 	 * @protected
-	 * @return {?CancellablePromise=}
+	 * @return {?Promise=}
 	 */
 	syncScrollPositionSyncThenAsync_() {
 		var state = globals.window.history.state;
@@ -1531,7 +1518,7 @@ class App extends EventEmitter {
 			}
 		};
 
-		return new CancellablePromise((resolve) => {
+		return new Promise((resolve) => {
 			sync();
 
 			setTimeout(() => {

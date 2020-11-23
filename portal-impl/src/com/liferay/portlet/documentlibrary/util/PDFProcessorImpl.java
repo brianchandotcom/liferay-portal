@@ -669,9 +669,11 @@ public class PDFProcessorImpl
 			int previewFilesCount = _getPreviewFilesCount(file, decryptedFile);
 
 			if (previewFilesCount == 0) {
-				_log.error(
-					"Unable to decrypt PDF document for file version " +
-						fileVersion.getFileVersionId());
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to decrypt PDF document for file version " +
+							fileVersion.getFileVersionId());
+				}
 
 				_fileVersionPreviewEventListener.onFailure(fileVersion);
 

@@ -67,8 +67,20 @@
 }
 
 .portlet-dynamic-data-lists {
-	.sidenav-close {
-		display: inline-block;
+	.sidebar {
+		.taglib-workflow-status {
+			display: block;
+			margin-bottom: 12px;
+
+			.workflow-status {
+				color: inherit;
+			}
+
+			.workflow-label {
+				display: block;
+				margin-bottom: 4px;
+			}
+		}
 	}
 }
 

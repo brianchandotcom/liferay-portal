@@ -29,27 +29,33 @@ for (DDLRecordVersion recordVersion : recordVersions) {
 	request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, recordVersion);
 %>
 
-	<div>
-		<ul class="sidebar-header-actions">
-			<li>
-				<liferay-util:include page="/record_version_action.jsp" servletContext="<%= application %>" />
-			</li>
-		</ul>
+	<ul class="list-group sidebar-list-group">
+		<li class="list-group-item list-group-item-flex">
+			<clay:content-col
+				expand="<%= true %>"
+			>
+				<h4 class="list-group-title">
+					<liferay-ui:message arguments="<%= recordVersion.getVersion() %>" key="version-x" />
+				</h4>
 
-		<h4><liferay-ui:message arguments="<%= recordVersion.getVersion() %>" key="version-x" /></h4>
+				<p class="list-group-subtitle">
+					<liferay-ui:message key="author" />: <%= HtmlUtil.escape(recordVersion.getUserName()) %>
+				</p>
 
-		<p>
-			<small class="text-muted">
-				<liferay-ui:message key="author" />: <%= HtmlUtil.escape(recordVersion.getUserName()) %>
-			</small>
-		</p>
+				<p class="list-group-subtext">
+					<liferay-ui:message key="create-date" />: <%= dateSearchEntry.getName(request) %>
+				</p>
+			</clay:content-col>
 
-		<p>
-			<small class="text-muted">
-				<liferay-ui:message key="create-date" />: <%= dateSearchEntry.getName(request) %>
-			</small>
-		</p>
-	</div>
+			<clay:content-col>
+				<ul class="autofit-padded-no-gutters autofit-row">
+					<li class="autofit-col">
+						<liferay-util:include page="/record_version_action.jsp" servletContext="<%= application %>" />
+					</li>
+				</ul>
+			</clay:content-col>
+		</li>
+	</ul>
 
 <%
 }

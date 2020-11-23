@@ -72,7 +72,8 @@ public class AggregationUtil {
 			filterAggregation.addChildAggregation(termsAggregation);
 
 			NestedAggregation nestedAggregation = aggregations.nested(
-				"nestedAggregation", DDMIndexer.DDM_FIELD_ARRAY);
+				ddmStructureField.getDDMStructureFieldName(),
+				DDMIndexer.DDM_FIELD_ARRAY);
 
 			nestedAggregation.addChildAggregation(filterAggregation);
 

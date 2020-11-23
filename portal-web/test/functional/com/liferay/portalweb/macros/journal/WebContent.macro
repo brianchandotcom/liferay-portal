@@ -545,6 +545,7 @@ definition {
 				if (isSet(depotName)) {
 					ItemSelector.selectRepositoryImage(
 						depotName = "${depotName}",
+						folderName = "${folderName}",
 						imageFileName = "${webContentImage}",
 						navTab = "${navTab}");
 				}

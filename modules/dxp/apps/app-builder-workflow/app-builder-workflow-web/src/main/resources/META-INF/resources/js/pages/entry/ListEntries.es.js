@@ -38,6 +38,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';
 import useDataRecordApps from '../../hooks/useDataRecordApps.es';
 import ReassignEntryModal from './ReassignEntryModal.es';
+import {METRIC_INDEXES_KEY, refreshIndex} from './actions.es';
 
 const WORKFLOW_COLUMNS = [
 	{key: 'status', value: Liferay.Language.get('status')},
@@ -96,7 +97,7 @@ export default function ListEntries({history}) {
 
 	const previousQuery = usePrevious(query);
 
-	const doFetch = (query, workflowDefinitionId) => {
+	const doFetch = (query, workflowDefinitionId, refreshIndexes) => {
 		if (workflowDefinitionId) {
 			setFetchState((prevState) => ({
 				...prevState,
@@ -118,40 +119,56 @@ export default function ListEntries({history}) {
 
 						setDataRecordIds(classPKs);
 
-						getItem(
-							`/o/portal-workflow-metrics/v1.0/processes/${workflowDefinitionId}/instances`,
-							{classPKs, page: 1, pageSize: response.items.length}
-						).then((workflowResponse) => {
-							let items = response.items;
+						const getWorkflowInfo = () => {
+							return getItem(
+								`/o/portal-workflow-metrics/v1.0/processes/${workflowDefinitionId}/instances`,
+								{
+									classPKs,
+									page: 1,
+									pageSize: response.items.length,
+								}
+							).then((workflowResponse) => {
+								let items = response.items;
 
-							if (workflowResponse.totalCount > 0) {
-								items = response.items.map((item) => {
-									const {
-										assignees,
-										completed,
-										id: instanceId,
-										taskNames,
-									} =
-										workflowResponse.items.find(
-											({classPK}) => classPK === item.id
-										) || {};
+								if (workflowResponse.totalCount > 0) {
+									items = response.items.map((item) => {
+										const {
+											assignees,
+											completed,
+											id: instanceId,
+											taskNames,
+										} =
+											workflowResponse.items.find(
+												({classPK}) =>
+													classPK === item.id
+											) || {};
 
-									return {
-										...item,
-										assignees,
-										completed,
-										instanceId,
-										taskNames,
-									};
-								});
-							}
+										return {
+											...item,
+											assignees,
+											completed,
+											instanceId,
+											taskNames,
+										};
+									});
+								}
 
-							setFetchState((prevState) => ({
-								...prevState,
-								isFetching: false,
-								items,
-							}));
-						});
+								setFetchState((prevState) => ({
+									...prevState,
+									isFetching: false,
+									items,
+								}));
+							});
+						};
+
+						if (refreshIndexes) {
+							refreshIndex(METRIC_INDEXES_KEY)
+								.then(getWorkflowInfo)
+								.catch(getWorkflowInfo);
+						}
+						else {
+							getWorkflowInfo();
+						}
 					}
 				})
 				.catch(() => {
@@ -170,7 +187,8 @@ export default function ListEntries({history}) {
 			languageId: userLanguageId,
 		});
 
-	const refetch = () => doFetch(query, appWorkflowDefinitionId);
+	const refetch = (refreshIndexes) =>
+		doFetch(query, appWorkflowDefinitionId, refreshIndexes);
 
 	const onCloseModal = () => {
 		setModalVisible(false);

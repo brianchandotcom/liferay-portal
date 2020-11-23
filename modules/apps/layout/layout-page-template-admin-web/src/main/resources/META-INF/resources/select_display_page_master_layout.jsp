@@ -38,8 +38,23 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 			%>
 
 				<li class="card-page-item col-md-4 col-sm-6">
-					<clay:vertical-card-v2
-						verticalCard="<%= new SelectDisplayPageMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
+
+					<%
+					SelectDisplayPageMasterLayoutVerticalCard selectDisplayPageMasterLayoutVerticalCard = new SelectDisplayPageMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse);
+					%>
+
+					<clay:vertical-card
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"addDisplayPageUrl", selectDisplayPageMasterLayoutVerticalCard.getAddDisplayPageURL()
+							).put(
+								"mappingTypes", selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray()
+							).put(
+								"title", LanguageUtil.get(request, "add-display-page-template")
+							).build()
+						%>'
+						propsTransformer="js/propsTransformers/SelectDisplayPageMasterLayoutVerticalCardPropsTransformer"
+						verticalCard="<%= selectDisplayPageMasterLayoutVerticalCard %>"
 					/>
 				</li>
 
@@ -50,43 +65,3 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		</ul>
 	</div>
 </clay:container-fluid>
-
-<%
-StringBundler sb = new StringBundler(3);
-
-sb.append("metal-dom/src/all/dom as dom, ");
-sb.append(npmResolvedPackageName);
-sb.append("/js/modal/openDisplayPageModal.es as openDisplayPageModal");
-%>
-
-<aui:script require="<%= sb.toString() %>" sandbox="<%= true %>">
-	var addDisplayPageClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'.add-master-page-action-option',
-		function (event) {
-			var data = event.delegateTarget.dataset;
-
-			event.preventDefault();
-
-			openDisplayPageModal.default({
-				formSubmitURL: data.addDisplayPageUrl,
-				mappingTypes: JSON.parse(
-					'<%= selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray() %>'
-				),
-				namespace: '<portlet:namespace />',
-				spritemap:
-					'<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
-				title: '<liferay-ui:message key="add-display-page-template" />',
-			});
-		}
-	);
-
-	function handleDestroyPortlet() {
-		addDisplayPageClickHandler.removeListener();
-
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
-</aui:script>

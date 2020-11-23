@@ -63,7 +63,6 @@ page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil" %><%@
-page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@

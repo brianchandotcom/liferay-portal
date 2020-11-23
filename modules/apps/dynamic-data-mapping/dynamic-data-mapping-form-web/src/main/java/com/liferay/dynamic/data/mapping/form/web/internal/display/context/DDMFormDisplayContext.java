@@ -78,6 +78,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -187,6 +189,20 @@ public class DDMFormDisplayContext {
 		boolean requireCaptcha = isCaptchaRequired(ddmFormInstance);
 
 		DDMForm ddmForm = getDDMForm(ddmFormInstance, requireCaptcha);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (ddmFormField.isRepeatable() &&
+				Objects.equals(ddmFormField.getType(), "document_library")) {
+
+				ddmFormField.setProperty(
+					"maximumRepetitions",
+					_ddmFormWebConfiguration.
+						maximumRepetitionsForUploadFields());
+			}
+		}
 
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(
 			ddmFormInstance, requireCaptcha);

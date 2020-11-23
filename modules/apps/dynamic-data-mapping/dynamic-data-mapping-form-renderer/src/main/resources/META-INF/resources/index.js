@@ -24,7 +24,6 @@ export {
 export {PagesVisitor, RulesVisitor} from './js/util/visitors.es';
 export * as FormSupport from './js/util/FormSupport.es';
 export {getConnectedReactComponentAdapter} from './js/util/ReactComponentAdapter.es';
-export {useFieldTypesResource} from './js/hooks/useResource.es';
 
 // Composing Form
 

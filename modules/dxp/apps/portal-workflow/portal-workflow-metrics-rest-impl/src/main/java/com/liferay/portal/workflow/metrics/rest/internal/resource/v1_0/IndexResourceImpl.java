@@ -25,12 +25,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Index;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.IndexUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.IndexKeyException;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsBackgroundTaskExecutorNames;
+import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import java.io.Serializable;
@@ -40,6 +43,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,6 +72,33 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 					ResourceBundleUtil.getModuleAndPortalResourceBundle(
 						contextAcceptLanguage.getPreferredLocale(),
 						IndexResourceImpl.class))));
+	}
+
+	@Override
+	public void patchIndexesRefresh(Index index) throws Exception {
+		if (Objects.isNull(index) || Validator.isNull(index.getKey())) {
+			throw new IndexKeyException();
+		}
+
+		String[] indexEntityNames = _getIndexEntityNames(index);
+
+		if (ArrayUtil.isEmpty(indexEntityNames)) {
+			throw new IndexKeyException();
+		}
+
+		_searchEngineAdapter.execute(
+			new RefreshIndexRequest(
+				Stream.of(
+					indexEntityNames
+				).map(
+					_workflowMetricsIndexNameBuilderMap::get
+				).map(
+					workflowMetricsIndexNameBuilder ->
+						workflowMetricsIndexNameBuilder.getIndexName(
+							contextCompany.getCompanyId())
+				).toArray(
+					String[]::new
+				)));
 	}
 
 	@Override
@@ -102,6 +133,26 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
+	protected void addWorkflowMetricsIndexNameBuilder(
+		WorkflowMetricsIndexNameBuilder workflowMetricsIndexNameBuilder,
+		Map<String, Object> properties) {
+
+		String workflowMetricsIndexEntityName = GetterUtil.getString(
+			properties.get("workflow.metrics.index.entity.name"));
+
+		if (Validator.isNull(workflowMetricsIndexEntityName)) {
+			return;
+		}
+
+		_workflowMetricsIndexNameBuilderMap.put(
+			workflowMetricsIndexEntityName, workflowMetricsIndexNameBuilder);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void addWorkflowMetricsReindexer(
 		WorkflowMetricsReindexer workflowMetricsReindexer,
 		Map<String, Object> properties) {
@@ -114,6 +165,17 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 		}
 
 		_indexEntityNameSet.add(workflowMetricsIndexEntityName);
+	}
+
+	protected void removeWorkflowMetricsIndexNameBuilder(
+		WorkflowMetricsIndexNameBuilder workflowMetricsIndexNameBuilder,
+		Map<String, Object> properties) {
+
+		String workflowMetricsIndexEntityName = GetterUtil.getString(
+			properties.get("workflow.metrics.index.entity.name"));
+
+		_workflowMetricsIndexNameBuilderMap.remove(
+			workflowMetricsIndexEntityName);
 	}
 
 	protected void removeWorkflowMetricsReindexer(
@@ -172,11 +234,21 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 	}
 
 	private static final Set<String> _indexEntityNameSet = new HashSet<>();
+	private static final Map<String, WorkflowMetricsIndexNameBuilder>
+		_workflowMetricsIndexNameBuilderMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(search.engine.impl=Elasticsearch)"
+	)
+	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 }

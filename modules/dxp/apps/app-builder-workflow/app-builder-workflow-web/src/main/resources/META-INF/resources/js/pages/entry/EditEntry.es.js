@@ -37,6 +37,7 @@ import useDDMForms, {
 import useDataLayouts from '../../hooks/useDataLayouts.es';
 import useDataRecordApps from '../../hooks/useDataRecordApps.es';
 import ReassignEntryModal from './ReassignEntryModal.es';
+import {METRIC_INDEXES_KEY, refreshIndex} from './actions.es';
 
 const WorkflowInfoPortal = ({children}) => {
 	const portalElementId = 'workflowInfoBar';
@@ -214,7 +215,10 @@ export default function EditEntry({
 							? Liferay.Language.get('an-entry-was-updated')
 							: Liferay.Language.get('an-entry-was-added')
 					);
-					onCancel();
+
+					refreshIndex(METRIC_INDEXES_KEY)
+						.then(onCancel)
+						.catch(onCancel);
 				})
 				.catch(() => {
 					errorToast();

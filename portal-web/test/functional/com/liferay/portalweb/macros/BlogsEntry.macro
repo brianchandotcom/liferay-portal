@@ -136,10 +136,15 @@ definition {
 					imageFileName = "${imageFileName}",
 					navTab = "${navTab}");
 			}
-			else {
+			else if (isSet(currentSiteImage)) {
 				ItemSelector.selectDMImage(
-					imageFileName = "${webContentImage}",
+					imageFileName = "${imageFileName}",
 					navTab = "${navTab}");
+			}
+			else {
+				ItemSelector.uploadFile(
+					navTab = "${navTab}",
+					uploadFileName = "${uploadFileName}");
 			}
 		}
 		else {

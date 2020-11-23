@@ -85,9 +85,11 @@ public class AggregationContextProvider
 				ComplexEntityField complexEntityField =
 					(ComplexEntityField)entityField;
 
-				entityFieldsMap = complexEntityField.getEntityFieldsMap();
+				Map<String, EntityField> complexEntityFieldsMap =
+					complexEntityField.getEntityFieldsMap();
 
-				entityField = entityFieldsMap.get(aggregationTermParts[1]);
+				entityField = complexEntityFieldsMap.get(
+					aggregationTermParts[1]);
 			}
 
 			if (entityField != null) {

@@ -227,10 +227,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	public List<SpiraTestCaseComponent> getSpiraTestCaseComponents() {
-		if (_spiraTestCaseComponents != null) {
-			return new ArrayList<>();
-		}
-
 		JSONArray componentIDJSONArray = jsonObject.optJSONArray(
 			"ComponentIds");
 
@@ -240,15 +236,16 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		SpiraProject spiraProject = getSpiraProject();
 
-		_spiraTestCaseComponents = new ArrayList<>();
+		List<SpiraTestCaseComponent> spiraTestCaseComponents =
+			new ArrayList<>();
 
 		for (int i = 0; i < componentIDJSONArray.length(); i++) {
-			_spiraTestCaseComponents.add(
+			spiraTestCaseComponents.add(
 				spiraProject.getSpiraTestCaseComponentByID(
 					componentIDJSONArray.getInt(i)));
 		}
 
-		return _spiraTestCaseComponents;
+		return spiraTestCaseComponents;
 	}
 
 	public SpiraTestCasePriority getSpiraTestCasePriority() {
@@ -413,6 +410,102 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				SpiraRestAPIUtil.request(
 					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
 					requestJSONObject.toString());
+			}
+			catch (IOException ioException) {
+				if (updateRetryCount >= 2) {
+					throw new RuntimeException(ioException);
+				}
+
+				updateRetryCount++;
+			}
+			finally {
+				_refreshJSONObject();
+			}
+		}
+	}
+
+	public void updateSpiraTestCaseComponents(
+		SpiraTestCaseComponent... spiraTestCaseComponentsArray) {
+
+		if (spiraTestCaseComponentsArray == null) {
+			return;
+		}
+
+		boolean updated = false;
+
+		List<SpiraTestCaseComponent> currentSpiraTestCaseComponents =
+			getSpiraTestCaseComponents();
+
+		if (spiraTestCaseComponentsArray.length !=
+				currentSpiraTestCaseComponents.size()) {
+
+			updated = true;
+		}
+
+		for (SpiraTestCaseComponent spiraTestCaseComponent :
+				spiraTestCaseComponentsArray) {
+
+			if (updated) {
+				break;
+			}
+
+			boolean found = false;
+
+			for (SpiraTestCaseComponent currentSpiraTestCaseComponent :
+					currentSpiraTestCaseComponents) {
+
+				if (currentSpiraTestCaseComponent.equals(
+						spiraTestCaseComponent)) {
+
+					found = true;
+
+					break;
+				}
+			}
+
+			if (!found) {
+				updated = true;
+
+				break;
+			}
+		}
+
+		if (!updated) {
+			return;
+		}
+
+		String urlPath = "projects/{project_id}/test-cases";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		int updateRetryCount = 0;
+
+		JSONArray componentIDsJSONArray = new JSONArray();
+
+		for (SpiraTestCaseComponent spiraTestCaseComponent :
+				spiraTestCaseComponentsArray) {
+
+			componentIDsJSONArray.put(spiraTestCaseComponent.getID());
+		}
+
+		while (true) {
+			JSONObject requestJSONObject = toJSONObject();
+
+			requestJSONObject.remove("ComponentIds");
+
+			requestJSONObject.put("ComponentIds", componentIDsJSONArray);
+
+			try {
+				SpiraRestAPIUtil.request(
+					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
+					requestJSONObject.toString());
+
+				break;
 			}
 			catch (IOException ioException) {
 				if (updateRetryCount >= 2) {
@@ -693,7 +786,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	private static final String _CUSTOM_FIELD_FILE_PATH_KEY = "File Path";
 
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
-	private List<SpiraTestCaseComponent> _spiraTestCaseComponents;
 	private SpiraTestCaseProductVersion _spiraTestCaseProductVersion;
 
 }

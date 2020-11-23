@@ -410,7 +410,7 @@ definition {
 	}
 
 	@priority = "4"
-	test RolesOrganizationSearch {
+	test ViewAssetViaOrgRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONRole.addOrganizationRole(roleTitle = "Roles Orgrole Name");
@@ -784,7 +784,7 @@ definition {
 	}
 
 	@priority = "4"
-	test RolesSiteSearch {
+	test ViewAssetViaSiteRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONRole.addSiteRole(roleTitle = "Roles Siterole Name");
@@ -1602,8 +1602,8 @@ definition {
 
 	@description = "This is a use case for LPS-116055."
 	@priority = "5"
-	test ViewPermissionScopeChanged {
-		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#ViewPermissionScopeChanged";
+	test ChangeScope {
+		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#ChangeScope";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1801,9 +1801,9 @@ definition {
 		WebContent.viewWCViewableByPermissions();
 	}
 
-	@description = "This is a use case for LPS-97321."
+	@description = "This is a use case for LPS-97321. All subdirectories in Define Permissions should display."
 	@priority = "4"
-	test ViewUserPermissionSubdirectoryDisplays {
+	test ViewDefinePermissionsSubdirectoriesDisplay {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRole.addRegularRole(

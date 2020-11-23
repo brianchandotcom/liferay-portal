@@ -52,7 +52,8 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 		boolean allowBrowseDocuments = GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:allowBrowseDocuments"));
+				"liferay-ui:input-editor:allowBrowseDocuments"),
+			true);
 
 		if (allowBrowseDocuments) {
 			itemSelectorCriteria.add(new VideoItemSelectorCriterion());

@@ -64,7 +64,8 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card-v2
+				<clay:vertical-card
+					propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
 					verticalCard="<%= new DisplayPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
@@ -85,11 +86,6 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	<aui:input name="layoutPageTemplateEntryId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= LayoutPageTemplateAdminWebKeys.DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/DisplayPageDropdownDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= displayPageManagementToolbarDisplayContext.getDefaultEventHandler() %>"

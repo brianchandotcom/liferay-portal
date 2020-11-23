@@ -93,12 +93,6 @@ public class DisplayPageVerticalCard
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return LayoutPageTemplateAdminWebKeys.
-			DISPLAY_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER;
-	}
-
-	@Override
 	public String getHref() {
 		try {
 			String layoutFullURL = PortalUtil.getLayoutFullURL(

@@ -98,6 +98,7 @@ const mockGetItem = jest
 jest.mock('app-builder-web/js/utils/client.es', () => ({
 	addItem: () => mockAddItem(),
 	getItem: () => mockGetItem(),
+	request: jest.fn().mockResolvedValue(),
 }));
 
 jest.mock('app-builder-web/js/utils/toast.es', () => ({

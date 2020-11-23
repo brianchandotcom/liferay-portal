@@ -19,7 +19,7 @@
 	</macrodef>
 
 	<target depends="clean" name="build-sample-sql">
-		<property name="sample-data-sql" value="sample-data-${sample.sql.db.type}.sql" />
+		<property name="output.sql.file" value="sample-data-${sample.sql.db.type}.sql" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
@@ -105,14 +105,14 @@
 			<sysproperty key="sample-sql-properties" value="${sample.sql.properties.file}" />
 		</java>
 
-		<concat append="true" destfile="${sample-data-sql}">
+		<concat append="true" destfile="${output.sql.file}">
 			<filelist dir="../sql/portal/" files="portal-${sample.sql.db.type}.sql" />
 			<filelist dir="../sql/indexes/" files="indexes-${sample.sql.db.type}.sql" />
 		</concat>
 
 		<for list="${portal.module.dir.list}" param="module">
 			<sequential>
-				<build-sql sql.dir="@{module}" output.sql.file="${sample-data-sql}"/>
+				<build-sql sql.dir="@{module}" output.sql.file="${output.sql.file}"/>
 			</sequential>
 		</for>
 
@@ -124,7 +124,7 @@
 				<if>
 					<istrue value="${sample.sql.output.merge}" />
 					<then>
-						<concat append="true" destfile="${sample-data-sql}">
+						<concat append="true" destfile="${output.sql.file}">
 							<filelist dir="${sample.sql.output.dir}" files="sample-${sample.sql.db.type}.sql" />
 						</concat>
 					</then>
@@ -137,7 +137,7 @@
 								/>
 							</path>
 							<sequential>
-								<concat append="true" destfile="${sample-data-sql}">
+								<concat append="true" destfile="${output.sql.file}">
 									<filelist dir="${sample.sql.output.dir}/output" files="@{sql-file-filename}" />
 								</concat>
 							</sequential>

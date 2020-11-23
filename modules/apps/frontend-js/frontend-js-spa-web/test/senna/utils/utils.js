@@ -14,7 +14,6 @@
 
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import {
-	buildFragment,
 	clearNodeAttributes,
 	copyNodeAttributes,
 	getCurrentBrowserPath,
@@ -107,16 +106,5 @@ describe('utils', () => {
 
 	it('gets current browser path excluding hashbang', () => {
 		expect(getCurrentBrowserPathWithoutHash()).toBe('/path?a=1');
-	});
-
-	it('creates a document fragment from a string', () => {
-		const html = '<div>Hello World 1</div><div>Hello World 2</div>';
-		const fragment = buildFragment(html);
-
-		expect(fragment).toBeTruthy();
-		expect(fragment.nodeType).toBe(11);
-		expect(fragment.childNodes.length).toBe(2);
-		expect(fragment.childNodes[0].innerHTML).toBe('Hello World 1');
-		expect(fragment.childNodes[1].innerHTML).toBe('Hello World 2');
 	});
 });

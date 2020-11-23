@@ -12,9 +12,10 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
+
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
-import {buildFragment} from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('Screen', () => {
 	it('exposes lifecycle activate', () => {

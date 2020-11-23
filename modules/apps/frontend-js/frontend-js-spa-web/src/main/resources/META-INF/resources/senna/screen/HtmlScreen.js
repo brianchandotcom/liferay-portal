@@ -12,14 +12,13 @@
  * details.
  */
 
-import {runScriptsInElement} from 'frontend-js-web';
+import {buildFragment, runScriptsInElement} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
 import Uri from 'metal-uri';
 
 import globals from '../globals/globals';
 import Surface from '../surface/Surface';
 import {
-	buildFragment,
 	clearNodeAttributes,
 	copyNodeAttributes,
 	getUid,

@@ -12,10 +12,7 @@
  * details.
  */
 
-'use strict';
-
-import dom from 'metal-dom';
-
+import buildFragment from '../../../src/main/resources/META-INF/resources/liferay/util/build_fragment';
 import getCropRegion from '../../../src/main/resources/META-INF/resources/liferay/util/get_crop_region.es';
 
 describe('Liferay.Util.getCropRegion', () => {
@@ -39,7 +36,7 @@ describe('Liferay.Util.getCropRegion', () => {
 	});
 
 	it('throws an error if image parameter is not an image element', () => {
-		const image = dom.buildFragment('<div />');
+		const image = buildFragment('<div />');
 
 		const region = {
 			height: 100,

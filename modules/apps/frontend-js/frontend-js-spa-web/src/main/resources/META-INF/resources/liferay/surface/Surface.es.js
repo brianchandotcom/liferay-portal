@@ -12,8 +12,9 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
+
 import Surface from '../../senna/surface/Surface';
-import {buildFragment} from '../../senna/utils/utils';
 
 /**
  * LiferaySurface

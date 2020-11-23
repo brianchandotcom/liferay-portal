@@ -12,6 +12,8 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
+
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 
 describe('Surface', () => {
@@ -225,19 +227,6 @@ describe('Surface', () => {
 		});
 	});
 });
-
-function buildFragment(htmlString) {
-	const tempDiv = document.createElement('div');
-	tempDiv.innerHTML = `<br>${htmlString}`;
-	tempDiv.removeChild(tempDiv.firstChild);
-
-	const fragment = document.createDocumentFragment();
-	while (tempDiv.firstChild) {
-		fragment.appendChild(tempDiv.firstChild);
-	}
-
-	return fragment;
-}
 
 function enterDocumentSurfaceElement(surfaceId, opt_content) {
 	document.body.appendChild(

@@ -14,6 +14,7 @@
 
 import {fireEvent} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import {buildFragment} from 'frontend-js-web';
 
 import App from '../../../src/main/resources/META-INF/resources/senna/app/App';
 import EventEmitter from '../../../src/main/resources/META-INF/resources/senna/events/EventEmitter';
@@ -23,7 +24,6 @@ import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/scr
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
 import utils, {
-	buildFragment,
 	getCurrentBrowserPath,
 	getNodeOffset,
 	getUrlPathWithoutHash,

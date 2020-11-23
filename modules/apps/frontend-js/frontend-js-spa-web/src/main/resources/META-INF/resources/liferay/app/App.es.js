@@ -12,10 +12,10 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import {buildFragment, openToast} from 'frontend-js-web';
 
 import {App} from '../../senna/senna';
-import {buildFragment, getUid} from '../../senna/utils/utils';
+import {getUid} from '../../senna/utils/utils';
 import LiferaySurface from '../surface/Surface.es';
 import {getPortletBoundaryId, resetAllPortlets} from '../util/Utils.es';
 

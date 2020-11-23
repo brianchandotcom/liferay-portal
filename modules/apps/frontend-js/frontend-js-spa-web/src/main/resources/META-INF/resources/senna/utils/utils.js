@@ -67,24 +67,6 @@ class utils {
 export default utils;
 
 /**
- * Helper for converting a HTML string into a document fragment.
- * @param {string} htmlString The HTML string to convert.
- * @return {!Element} The resulting document fragment.
- */
-export function buildFragment(htmlString) {
-	const tempDiv = document.createElement('div');
-	tempDiv.innerHTML = `<br>${htmlString}`;
-	tempDiv.removeChild(tempDiv.firstChild);
-
-	const fragment = document.createDocumentFragment();
-	while (tempDiv.firstChild) {
-		fragment.appendChild(tempDiv.firstChild);
-	}
-
-	return fragment;
-}
-
-/**
  * Removes all attributes form node.
  * @return {void}
  * @static

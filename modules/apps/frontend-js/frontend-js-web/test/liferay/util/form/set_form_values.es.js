@@ -12,16 +12,13 @@
  * details.
  */
 
-'use strict';
-
-import dom from 'metal-dom';
-
+import buildFragment from '../../../../src/main/resources/META-INF/resources/liferay/util/build_fragment';
 import getFormElement from '../../../../src/main/resources/META-INF/resources/liferay/util/form/get_form_element.es';
 import setFormValues from '../../../../src/main/resources/META-INF/resources/liferay/util/form/set_form_values.es';
 
 describe('Liferay.Util.setFormValues', () => {
 	it('sets the given values of form elements', () => {
-		const fragment = dom.buildFragment(`
+		const fragment = buildFragment(`
 					<form data-fm-namespace="_com_liferay_test_portlet_" id="fm">
 						<input name="_com_liferay_test_portlet_foo" type="text" value="abc">
 						<input name="_com_liferay_test_portlet_bar" type="text" value="123">

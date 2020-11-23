@@ -12,11 +12,11 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
 
 import Disposable from '../Disposable';
 import globals from '../globals/globals';
-import {buildFragment} from '../utils/utils';
 
 class Surface extends Disposable {
 

@@ -12,12 +12,12 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
 import Uri from 'metal-uri';
 
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';
 import Surface from '../../../src/main/resources/META-INF/resources/senna/surface/Surface';
-import {buildFragment} from '../../../src/main/resources/META-INF/resources/senna/utils/utils';
 
 describe('HtmlScreen', () => {
 	beforeEach(() => {

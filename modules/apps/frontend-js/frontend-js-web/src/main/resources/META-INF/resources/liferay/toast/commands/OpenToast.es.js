@@ -14,9 +14,10 @@
 
 import ClayAlert from '@clayui/alert';
 import {render} from 'frontend-js-react-web';
-import {buildFragment} from 'metal-dom';
 import React from 'react';
 import {unmountComponentAtNode} from 'react-dom';
+
+import buildFragment from '../../util/build_fragment';
 
 const DEFAULT_ALERT_CONTAINER_ID = 'ToastAlertContainer';
 

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
+
 import AppDataAttributeHandler from '../../../src/main/resources/META-INF/resources/senna/app/AppDataAttributeHandler';
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import Screen from '../../../src/main/resources/META-INF/resources/senna/screen/Screen';
@@ -261,19 +263,6 @@ describe('AppDataAttributeHandler', () => {
 		});
 	});
 });
-
-function buildFragment(htmlString) {
-	const tempDiv = document.createElement('div');
-	tempDiv.innerHTML = `<br>${htmlString}`;
-	tempDiv.removeChild(tempDiv.firstChild);
-
-	const fragment = document.createDocumentFragment();
-	while (tempDiv.firstChild) {
-		fragment.appendChild(tempDiv.firstChild);
-	}
-
-	return fragment;
-}
 
 function enterDocumentRouteElement(path) {
 	document.body.appendChild(

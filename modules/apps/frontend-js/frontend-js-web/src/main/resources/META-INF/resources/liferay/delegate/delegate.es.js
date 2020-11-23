@@ -45,6 +45,8 @@ function delegate(element, eventName, selector, callback) {
 			!defaultPrevented &&
 			(target.matches(selector) || target.closest(selector))
 		) {
+			event.delegateTarget = target.closest(selector);
+
 			callback(event);
 		}
 	};

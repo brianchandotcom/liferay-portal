@@ -5,6 +5,8 @@
 	<import class="com.liferay.dynamic.data.mapping.model.DDMContent" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink" />
+	<import class="com.liferay.dynamic.data.mapping.model.DDMField" />
+	<import class="com.liferay.dynamic.data.mapping.model.DDMFieldAttribute" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMFormInstance" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion" />
@@ -63,6 +65,36 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dataProviderInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.dynamic.data.mapping.model.impl.DDMFieldImpl" table="DDMField">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fieldId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentFieldId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fieldName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fieldType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="instanceId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="localizable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeImpl" table="DDMFieldAttribute">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fieldAttributeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fieldId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="attributeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallAttributeValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="largeAttributeValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl" table="DDMFormInstance">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceId" type="long">

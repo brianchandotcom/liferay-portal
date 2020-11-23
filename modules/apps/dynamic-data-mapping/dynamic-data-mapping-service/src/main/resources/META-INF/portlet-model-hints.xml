@@ -53,6 +53,32 @@
 		<field name="dataProviderInstanceId" type="long" />
 		<field name="structureId" type="long" />
 	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMField">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="fieldId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="structureVersionId" type="long" />
+		<field name="parentFieldId" type="long" />
+		<field name="storageId" type="long" />
+		<field name="fieldName" type="String" />
+		<field name="fieldType" type="String" />
+		<field name="priority" type="int" />
+		<field name="instanceId" type="String" />
+		<field name="localizable" type="boolean" />
+	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMFieldAttribute">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="fieldAttributeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="fieldId" type="long" />
+		<field name="storageId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="attributeName" type="String" />
+		<field name="smallAttributeValue" type="String" />
+		<field name="largeAttributeValue" type="String" />
+	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstance">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />

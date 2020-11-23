@@ -4,12 +4,11 @@
 	<import file="../build-common.xml" />
 
 	<property name="sample-data-sql" value="sample-data-${sample.sql.db.type}.sql" />
-	<property name="build-db-file" value="../sql/build.xml" />
 
 	<macrodef name="build-sql">
 		<attribute name="dir" />
 		<sequential>
-			<ant antfile="${build-db-file}" inheritall="false" target="build-db">
+			<ant antfile="../sql/build.xml" inheritall="false" target="build-db">
 				<property name="db.sql.dir" value="@{dir}" />
 			</ant>
 

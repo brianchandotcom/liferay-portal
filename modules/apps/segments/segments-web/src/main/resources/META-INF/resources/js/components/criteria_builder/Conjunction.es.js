@@ -41,7 +41,8 @@ function Conjunction({
 	const [activeLabel, setActiveLabel] = useState(null);
 	useEffect(() => {
 		const selectedConjunction = supportedConjunctions.find(
-			(c) => c.name === conjunctionName
+			(conjunction) =>
+				conjunction.name.toLowerCase() === conjunctionName.toLowerCase()
 		);
 
 		setActiveLabel(selectedConjunction.label);

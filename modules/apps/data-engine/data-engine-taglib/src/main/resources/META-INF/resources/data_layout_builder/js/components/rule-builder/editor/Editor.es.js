@@ -111,6 +111,23 @@ const reducer = (state, action) => {
 				},
 			};
 		}
+		case ACTIONS_TYPES.CHANGE_ACTION_CALCULATE: {
+			const {actions, conditions} = state.ifStatement;
+			const {loc, value} = action.payload;
+
+			actions[loc] = {
+				...actions[loc],
+				expression: value,
+			};
+
+			return {
+				...state,
+				ifStatement: {
+					actions,
+					conditions,
+				},
+			};
+		}
 		case ACTIONS_TYPES.CHANGE_ACTION_TARGET: {
 			const {actions, conditions} = state.ifStatement;
 			const {loc, value} = action.payload;

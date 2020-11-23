@@ -22,14 +22,50 @@ import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useMemo} from 'react';
 
+import Calculator from '../Calculator/Calculator.es';
 import Timeline from './Timeline.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
 import {ACTIONS_OPTIONS} from './config.es';
 
 const ActionDefault = ({children}) => children;
 
-const ActionContentCalculate = () => {
-	return <div />;
+const ActionContentCalculate = ({
+	expression,
+	fields,
+	functionsURL,
+	onChange,
+	target,
+}) => {
+	const {resource} = useResource({
+		fetch,
+		link: location.origin + functionsURL,
+	});
+
+	const options = useMemo(() => {
+		return fields.filter(
+			({fieldName, type}) => type === 'numeric' && fieldName !== target
+		);
+	}, [fields]);
+
+	if (!resource) {
+		return null;
+	}
+
+	return (
+		<Calculator
+			expression={expression}
+			fields={options}
+			functions={resource}
+			onChange={(newExpression) =>
+				onChange({
+					payload: {
+						value: newExpression,
+					},
+					type: ACTIONS_TYPES.CHANGE_ACTION_CALCULATE,
+				})
+			}
+		/>
+	);
 };
 
 const ActionCalculate = ({children}) => (
@@ -290,6 +326,7 @@ export function Actions({
 	dispatch,
 	expression,
 	fields,
+	functionsURL,
 	name,
 	pages,
 	state: {ifStatement},
@@ -309,6 +346,7 @@ export function Actions({
 									dataProviderInstanceParameterSettingsURL
 								}
 								fields={fields}
+								functionsURL={functionsURL}
 								onChange={({payload, type}) =>
 									dispatch({
 										payload: {

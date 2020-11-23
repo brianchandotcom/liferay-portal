@@ -14,16 +14,10 @@
 
 import ClayForm from '@clayui/form';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
-import {
-	Field,
-	PageProvider,
-	useFieldTypesResource,
-} from 'dynamic-data-mapping-form-renderer';
+import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
 import React, {useMemo} from 'react';
 
 function CalculatorDisplay({expression, fields}) {
-	const {resource: fieldTypes} = useFieldTypesResource();
-
 	const value = useMemo(() => {
 		const newMaskedExpression = expression.replace(/[[\]]/g, '');
 
@@ -37,21 +31,17 @@ function CalculatorDisplay({expression, fields}) {
 
 	return (
 		<ClayForm.Group>
-			<PageProvider value={{fieldTypes}}>
-				<Field
-					field={{
-						displayStyle: 'multiline',
-						name: 'calculator-expression',
-						placeholder: Liferay.Language.get(
-							'the-expression-will-be-displayed-here'
-						),
-						readOnly: true,
-						showLabel: false,
-						type: 'text',
-						value,
-					}}
-				/>
-			</PageProvider>
+			<FieldStateless
+				displayStyle="multiline"
+				name="calculator-expression"
+				placeholder={Liferay.Language.get(
+					'the-expression-will-be-displayed-here'
+				)}
+				readOnly
+				showLabel={false}
+				type="text"
+				value={value}
+			/>
 		</ClayForm.Group>
 	);
 }

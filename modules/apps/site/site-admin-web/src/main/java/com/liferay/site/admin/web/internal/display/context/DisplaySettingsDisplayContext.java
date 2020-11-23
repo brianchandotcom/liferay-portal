@@ -16,6 +16,8 @@ package com.liferay.site.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -23,14 +25,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.admin.web.internal.util.JSONObjectStringPropertyComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,27 +89,31 @@ public class DisplaySettingsDisplayContext {
 		).build();
 	}
 
-	private List<KeyValuePair> _getAvailableLanguages() {
-		List<KeyValuePair> availableLanguages = new ArrayList<>();
+	private List<JSONObject> _getAvailableLanguages() {
+		List<JSONObject> availableLanguages = new ArrayList<>();
 
 		Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 			if (!siteAvailableLocales.contains(availableLocale)) {
 				availableLanguages.add(
-					new KeyValuePair(
-						LocaleUtil.toLanguageId(availableLocale),
+					JSONUtil.put(
+						"label", LocaleUtil.toLanguageId(availableLocale)
+					).put(
+						"value",
 						availableLocale.getDisplayName(
-							_themeDisplay.getLocale())));
+							_themeDisplay.getLocale())
+					));
 			}
 		}
 
 		return ListUtil.sort(
-			availableLanguages, new KeyValuePairComparator(false, true));
+			availableLanguages,
+			new JSONObjectStringPropertyComparator("value", true));
 	}
 
-	private List<KeyValuePair> _getCurrentLanguages() {
-		List<KeyValuePair> currentLanguages = new ArrayList<>();
+	private List<JSONObject> _getCurrentLanguages() {
+		List<JSONObject> currentLanguages = new ArrayList<>();
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_getTypeSettingsUnicodeProperties();
@@ -122,10 +127,12 @@ public class DisplaySettingsDisplayContext {
 						StringUtil.split(groupLanguageIds))) {
 
 				currentLanguages.add(
-					new KeyValuePair(
-						LanguageUtil.getLanguageId(currentLocale),
-						currentLocale.getDisplayName(
-							_themeDisplay.getLocale())));
+					JSONUtil.put(
+						"label", LanguageUtil.getLanguageId(currentLocale)
+					).put(
+						"value",
+						currentLocale.getDisplayName(_themeDisplay.getLocale())
+					));
 			}
 		}
 		else {
@@ -133,10 +140,13 @@ public class DisplaySettingsDisplayContext {
 
 			for (Locale siteAvailableLocale : siteAvailableLocales) {
 				currentLanguages.add(
-					new KeyValuePair(
-						LocaleUtil.toLanguageId(siteAvailableLocale),
+					JSONUtil.put(
+						"label", LanguageUtil.getLanguageId(siteAvailableLocale)
+					).put(
+						"value",
 						siteAvailableLocale.getDisplayName(
-							_themeDisplay.getLocale())));
+							_themeDisplay.getLocale())
+					));
 			}
 		}
 

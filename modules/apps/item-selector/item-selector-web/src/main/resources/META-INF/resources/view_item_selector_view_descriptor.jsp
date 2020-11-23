@@ -75,7 +75,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 								/>
 							</c:when>
 							<c:otherwise>
-								<clay:vertical-card-v2
+								<clay:vertical-card
 									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</c:otherwise>

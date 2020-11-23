@@ -288,6 +288,7 @@ const Main = ({
 	groupId,
 	id,
 	itemSelectorAuthToken,
+	maximumRepetitions,
 	name,
 	onBlur,
 	onChange,

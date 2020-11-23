@@ -87,6 +87,20 @@ public abstract class BaseIndexResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/refresh' -d $'{"key": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PATCH
+	@Path("/indexes/refresh")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Index")})
+	public void patchIndexesRefresh(Index index) throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/indexes/reindex' -d $'{"key": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override

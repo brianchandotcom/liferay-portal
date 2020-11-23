@@ -49,6 +49,8 @@ public interface IndexResource {
 
 	public Page<Index> getIndexesPage() throws Exception;
 
+	public void patchIndexesRefresh(Index index) throws Exception;
+
 	public void patchIndexesReindex(Index index) throws Exception;
 
 	public default void setContextAcceptLanguage(

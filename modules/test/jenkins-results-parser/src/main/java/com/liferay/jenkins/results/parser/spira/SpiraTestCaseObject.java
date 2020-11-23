@@ -397,8 +397,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		urlPathReplacements.put(
 			"project_id", String.valueOf(spiraProject.getID()));
 
-		JSONObject requestJSONObject = toJSONObject();
-
 		JSONArray customPropertiesJSONArray = new JSONArray();
 
 		for (SpiraCustomPropertyValue spiraCustomPropertyValue :
@@ -408,25 +406,30 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				spiraCustomPropertyValue.getCustomPropertyJSONObject());
 		}
 
-		requestJSONObject.remove("CustomProperties");
+		int updateRetryCount = 0;
 
-		requestJSONObject.put("CustomProperties", customPropertiesJSONArray);
+		while (true) {
+			JSONObject requestJSONObject = toJSONObject();
 
-		try {
-			SpiraRestAPIUtil.request(
-				urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
-				requestJSONObject.toString());
+			requestJSONObject.remove("CustomProperties");
 
-			urlPathReplacements.put("test_case_id", String.valueOf(getID()));
+			requestJSONObject.put(
+				"CustomProperties", customPropertiesJSONArray);
 
-			jsonObject = SpiraRestAPIUtil.requestJSONObject(
-				"projects/{project_id}/test-cases/{test_case_id}", null,
-				urlPathReplacements, HttpRequestMethod.GET, null);
+			try {
+				SpiraRestAPIUtil.request(
+					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
+					requestJSONObject.toString());
 
-			jsonObject.put("Path", getPath());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+				_refreshJSONObject();
+			}
+			catch (IOException ioException) {
+				if (updateRetryCount >= 2) {
+					throw new RuntimeException(ioException);
+				}
+
+				updateRetryCount++;
+			}
 		}
 	}
 
@@ -611,6 +614,28 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		super(jsonObject);
 
 		cacheSpiraArtifact(SpiraTestCaseObject.class, this);
+	}
+
+	private void _refreshJSONObject() {
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		urlPathReplacements.put("test_case_id", String.valueOf(getID()));
+
+		try {
+			jsonObject = SpiraRestAPIUtil.requestJSONObject(
+				"projects/{project_id}/test-cases/{test_case_id}", null,
+				urlPathReplacements, HttpRequestMethod.GET, null);
+
+			jsonObject.put("Path", getPath());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static final String _CUSTOM_FIELD_EXECUTION_TYPE_KEY =

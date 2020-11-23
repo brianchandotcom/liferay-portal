@@ -41,7 +41,7 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card-v2
+						<clay:vertical-card
 							verticalCard="<%= new JournalSelectDDMTemplateVerticalCard(ddmTemplate, renderRequest, journalSelectDDMTemplateDisplayContext) %>"
 						/>
 					</liferay-ui:search-container-column-text>

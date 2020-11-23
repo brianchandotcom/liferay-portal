@@ -143,7 +143,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card-v2
+								<clay:vertical-card
 									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>"
 								/>
 							</liferay-ui:search-container-column-text>

@@ -32,7 +32,6 @@ definition {
 	@priority = "5"
 	test OnlyCanEditContentWhenSelectContentEdition {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		task ("Add a Web Content Article, a Blogs Entry and a Document") {
 			JSONWebcontent.addWebContent(

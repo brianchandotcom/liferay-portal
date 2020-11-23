@@ -484,7 +484,6 @@ definition {
 	@priority = "5"
 	test ConvertWidgetPageWithNonStandardLayout {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ContentPageConverter#ConvertWidgetPageWithNonStandardLayout";
 
 		ApplicationsMenu.gotoPortlet(

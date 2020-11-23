@@ -278,7 +278,6 @@ definition {
 	@priority = "5"
 	test MapWebContentAuthor {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		task ("Add a display page with author name and profile fields mapped") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

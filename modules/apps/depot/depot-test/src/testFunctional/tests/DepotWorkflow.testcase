@@ -499,22 +499,22 @@ definition {
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addWithWorkflowCP(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
 
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Document_1.doc",
+			workflowAssetTitle = "Document_1.jpg",
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.rejectTaskByActions(
-			workflowAssetTitle = "Document_1.doc",
+			workflowAssetTitle = "Document_1.jpg",
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
@@ -527,27 +527,27 @@ definition {
 		Workflow.gotoPreviewEdit();
 
 		DMDocument.editDocument(
-			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc");
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
 		Button.clickSubmitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.resubmitTaskByActions(
-			workflowAssetTitle = "Document_2.doc",
+			workflowAssetTitle = "Document_2.jpg",
 			workflowAssetType = "Document",
 			workflowTask = "Update");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Document_2.doc",
+			workflowAssetTitle = "Document_2.jpg",
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Document_2.doc",
+			workflowAssetTitle = "Document_2.jpg",
 			workflowAssetType = "Document",
 			workflowTask = "Review");
 
@@ -557,7 +557,7 @@ definition {
 
 		DMDocument.viewCPStatus(
 			dmDocumentStatus = "Approved",
-			dmDocumentTitle = "Document_2.doc");
+			dmDocumentTitle = "Document_2.jpg");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -580,7 +580,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Documents and Media",
+			templateFieldNames = "Image",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -589,11 +589,11 @@ definition {
 
 		WebContent.addWithStructureCP(
 			depotName = "Test Depot Name",
-			fieldName = "DocumentsAndMedia",
 			folderName = "DM Folder Name",
+			navTab = "Documents and Media",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDocumentsAndMedia = "Document_2.doc",
+			webContentImage = "Document_2.jpg",
 			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();

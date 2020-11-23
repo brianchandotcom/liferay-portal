@@ -412,6 +412,14 @@ const init = ({
 };
 
 export function Editor({
+	allowActions = [
+		'show',
+		'enable',
+		'require',
+		'auto-fill',
+		'calculate',
+		'jump-to-page',
+	],
 	dataProvider,
 	fields,
 	onChange,
@@ -471,6 +479,7 @@ export function Editor({
 							{...otherProps}
 							{...otherData}
 							{...{[key]: state.ifStatement[key]}}
+							allowActions={allowActions}
 							dataProvider={dataProvider}
 							dispatch={dispatch}
 							fields={fields}

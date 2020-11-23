@@ -135,11 +135,11 @@ export const SUPPORTED_PROPERTY_TYPES = {
 
 export const BOOLEAN_OPTIONS = [
 	{
-		label: 'TRUE',
+		label: Liferay.Language.get('true'),
 		value: 'true',
 	},
 	{
-		label: 'FALSE',
+		label: Liferay.Language.get('false'),
 		value: 'false',
 	},
 ];

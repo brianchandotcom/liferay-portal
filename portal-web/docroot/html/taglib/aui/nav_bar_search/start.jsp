@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/nav_bar_search/init.jsp" %>
 
-<div class="collapse navbar-collapse <%= searchResults ? "open" : StringPool.BLANK %>" id="<%= id %>NavbarSearchCollapse">
+<div class="collapse navbar-collapse <%= searchResults ? "show" : StringPool.BLANK %>" id="<%= id %>NavbarSearchCollapse">
 	<div class="navbar-search <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(file) %>">
 			<liferay-ui:search-form
@@ -40,7 +40,7 @@
 
 					var handles = Liferay.Data['<%= id %>Handle'];
 
-					var navbarWillOpen = !navbarCollapse.hasClass('open');
+					var navbarWillOpen = !navbarCollapse.hasClass('show');
 
 					if (advancedSearchResults) {
 						navbarWillOpen = true;
@@ -63,7 +63,7 @@
 
 							Liferay.Data['<%= id %>Handle'] = null;
 
-							navbarCollapse.removeClass('open');
+							navbarCollapse.removeClass('show');
 
 							if (navbar) {
 								navbar.all('.navbar-btn, .nav').show();
@@ -86,7 +86,7 @@
 						handles.push(handleEscape, handleMouseOutside);
 					}
 
-					navbarCollapse.toggleClass('open', navbarWillOpen);
+					navbarCollapse.toggleClass('show', navbarWillOpen);
 
 					if (navbar && (Util.isPhone() || Util.isTablet())) {
 						navbar.all('.navbar-btn, .nav').hide();

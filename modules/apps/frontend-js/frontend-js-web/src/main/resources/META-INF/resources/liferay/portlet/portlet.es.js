@@ -37,15 +37,15 @@ export function minimizePortlet(portletSelector, trigger, options) {
 		const content = portlet.querySelector('.portlet-content-container');
 
 		if (content) {
-			const minimized = content.classList.contains('hide');
+			const minimized = content.classList.contains('d-none');
 
 			if (minimized) {
-				content.classList.remove('hide');
+				content.classList.remove('d-none');
 
 				portlet.classList.remove('portlet-minimized');
 			}
 			else {
-				content.classList.add('hide');
+				content.classList.add('d-none');
 
 				portlet.classList.add('portlet-minimized');
 			}

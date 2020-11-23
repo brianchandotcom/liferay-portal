@@ -77,32 +77,14 @@
 			<path refid="project.classpath" />
 		</path>
 
-		<beanshell>
-			InputStream inputStream = new FileInputStream("benchmarks.properties");
-			OutputStream outputStream = new FileOutputStream("benchmarks-merged.properties");
-
-			Properties properties = new Properties();
-
-			properties.load(inputStream);
-
-			for (String propertyKey : properties.stringPropertyNames()) {
-				properties.setProperty(propertyKey, project.getProperty(propertyKey));
-			}
-
-			properties.store(outputStream, "");
-
-			inputStream.close();
-			outputStream.close();
-		</beanshell>
-
-		<property name="sample.sql.properties.file" value="benchmarks-merged.properties" />
+		<echoproperties prefix="sample.sql." destfile="benchmarks-merged.properties"/>
 
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder"
 			classpathref="sample.sql.builder.classpath"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<sysproperty key="sample-sql-properties" value="${sample.sql.properties.file}" />
+			<sysproperty key="sample-sql-properties" value="benchmarks-merged.properties" />
 		</java>
 
 		<concat append="true" destfile="${output.sql.file}">

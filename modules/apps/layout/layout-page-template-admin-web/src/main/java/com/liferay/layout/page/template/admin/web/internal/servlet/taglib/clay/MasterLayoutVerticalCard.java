@@ -95,12 +95,6 @@ public class MasterLayoutVerticalCard
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return LayoutPageTemplateAdminWebKeys.
-			MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER;
-	}
-
-	@Override
 	public String getHref() {
 		try {
 			if (!LayoutPageTemplateEntryPermission.contains(

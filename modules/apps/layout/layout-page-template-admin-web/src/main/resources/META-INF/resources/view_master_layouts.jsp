@@ -65,7 +65,8 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card-v2
+				<clay:vertical-card
+					propsTransformer="js/propsTransformer/MasterLayoutDropdownPropsTransformer"
 					verticalCard="<%= new MasterLayoutVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
@@ -86,11 +87,6 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 	<aui:input name="layoutPageTemplateEntryId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= LayoutPageTemplateAdminWebKeys.MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/MasterLayoutDropdownDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= masterLayoutManagementToolbarDisplayContext.getDefaultEventHandler() %>"

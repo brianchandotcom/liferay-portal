@@ -27,8 +27,10 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see DDMContent
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class DDMContentTable extends BaseTable<DDMContentTable> {
 
 	public static final DDMContentTable INSTANCE = new DDMContentTable();

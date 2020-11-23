@@ -30,8 +30,10 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see DDMContentUtil
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface DDMContentPersistence
 	extends BasePersistence<DDMContent>, CTPersistence<DDMContent> {

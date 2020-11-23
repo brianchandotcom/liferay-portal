@@ -4,16 +4,16 @@
 	<import file="../build-common.xml" />
 
 	<macrodef name="build-sql">
-		<attribute name="dir" />
+		<attribute name="sql.dir" />
 		<attribute name="output.sql.file" />
 		<sequential>
 			<ant antfile="../sql/build.xml" inheritall="false" target="build-db">
-				<property name="db.sql.dir" value="@{dir}" />
+				<property name="db.sql.dir" value="@{sql.dir}" />
 			</ant>
 
 			<concat append="true" destfile="@{output.sql.file}">
-				<filelist dir="@{dir}/tables/" files="tables-${sample.sql.db.type}.sql" />
-				<filelist dir="@{dir}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
+				<filelist dir="@{sql.dir}/tables/" files="tables-${sample.sql.db.type}.sql" />
+				<filelist dir="@{sql.dir}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
 			</concat>
 		</sequential>
 	</macrodef>
@@ -112,7 +112,7 @@
 
 		<for list="${portal.module.dir.list}" param="module">
 			<sequential>
-				<build-sql dir="@{module}" output.sql.file="${sample-data-sql}"/>
+				<build-sql sql.dir="@{module}" output.sql.file="${sample-data-sql}"/>
 			</sequential>
 		</for>
 

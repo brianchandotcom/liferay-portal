@@ -14,7 +14,6 @@
 
 import {fetch} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
-import Uri from 'metal-uri';
 
 import errors from '../errors/errors';
 import globals from '../globals/globals';
@@ -124,13 +123,13 @@ class RequestScreen extends Screen {
 	 * @protected
 	 */
 	formatLoadPath(path) {
-		var uri = new Uri(path);
+		var uri = new URL(path, globals.window.location.origin);
 
-		uri.setHostname(globals.window.location.hostname);
-		uri.setProtocol(globals.window.location.protocol);
+		uri.hostname = globals.window.location.hostname;
+		uri.protocol = globals.window.location.protocol;
 
 		if (globals.window.location.port) {
-			uri.setPort(globals.window.location.port);
+			uri.port = globals.window.location.port;
 		}
 
 		return uri.toString();

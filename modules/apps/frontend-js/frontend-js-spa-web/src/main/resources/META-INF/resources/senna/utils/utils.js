@@ -12,8 +12,6 @@
  * details.
  */
 
-import Uri from 'metal-uri';
-
 import globals from '../globals/globals';
 
 /**
@@ -155,9 +153,12 @@ export function getUid() {
  * @static
  */
 export function getUrlPath(url) {
-	var uri = new Uri(url);
+	const uri =
+		!url || url.startsWith('/')
+			? new URL(url, globals.window.location.origin)
+			: new URL(url);
 
-	return uri.getPathname() + uri.getSearch() + uri.getHash();
+	return uri.pathname + uri.search + uri.hash;
 }
 
 /**
@@ -166,9 +167,12 @@ export function getUrlPath(url) {
  * @static
  */
 export function getUrlPathWithoutHash(url) {
-	var uri = new Uri(url);
+	const uri =
+		!url || url.startsWith('/')
+			? new URL(url, globals.window.location.origin)
+			: new URL(url);
 
-	return uri.getPathname() + uri.getSearch();
+	return uri.pathname + uri.search;
 }
 
 /**
@@ -177,9 +181,12 @@ export function getUrlPathWithoutHash(url) {
  * @static
  */
 export function getUrlPathWithoutHashAndSearch(url) {
-	var uri = new Uri(url);
+	const uri =
+		!url || url.startsWith('/')
+			? new URL(url, globals.window.location.origin)
+			: new URL(url);
 
-	return uri.getPathname();
+	return uri.pathname;
 }
 
 /**

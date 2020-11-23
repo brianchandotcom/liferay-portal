@@ -865,7 +865,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_layoutPageTemplateStructureLocalService;
 
 	@Inject(
-		filter = "mvc.command.name=/layout_page_template_admin/export_layout_page_template_entry"
+		filter = "mvc.command.name=/layout_page_template_admin/export_layout_page_template_entries"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
 

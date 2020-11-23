@@ -37,7 +37,8 @@ definition {
 
 	@priority = "5"
 	test ApproveInWCSubfolderWorkflow {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.gotoNavItem(navItem = "Structures");

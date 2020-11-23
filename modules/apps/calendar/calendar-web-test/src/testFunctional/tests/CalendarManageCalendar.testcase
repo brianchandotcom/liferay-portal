@@ -58,6 +58,8 @@ definition {
 
 	@priority = "3"
 	test ChangeCalendarTypeForAllDayEvent {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
@@ -78,6 +80,8 @@ definition {
 
 	@priority = "4"
 	test ChangeCalendarTypeForRegularEvent {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
@@ -98,6 +102,8 @@ definition {
 
 	@priority = "4"
 	test ChangeCalendarTypeForRepeatingEvent {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
@@ -120,6 +126,8 @@ definition {
 
 	@priority = "3"
 	test ChangeColorCalendarSiteCalendarsEventRegular {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
@@ -198,6 +206,8 @@ definition {
 
 	@priority = "4"
 	test DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -260,6 +270,8 @@ definition {
 
 	@priority = "4"
 	test DeleteCalendarMyCalendars {
+		property portal.upstream = "quarantine";
+
 		Calendar.add(
 			calendarName = "Calendar Name",
 			calendarType = "My Calendars");
@@ -276,6 +288,8 @@ definition {
 
 	@priority = "3"
 	test EditCalendarCurrentSiteCalendars {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.add(
@@ -294,6 +308,8 @@ definition {
 
 	@priority = "3"
 	test EditCalendarMyCalendars {
+		property portal.upstream = "quarantine";
+
 		Calendar.add(
 			calendarName = "My Calendar Name",
 			calendarType = "My Calendars",
@@ -365,7 +381,8 @@ definition {
 
 	@priority = "5"
 	test SearchForOtherCalendars {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Calendar#SearchForOtherCalendars";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -510,6 +527,7 @@ definition {
 
 	@priority = "4"
 	test ViewAvailableCalendars {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CalendarManageCalendar#ViewAvailableCalendars";
 
 		ApplicationsMenu.gotoPortlet(

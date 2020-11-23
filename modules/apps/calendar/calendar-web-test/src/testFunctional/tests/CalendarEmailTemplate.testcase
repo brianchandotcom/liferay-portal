@@ -84,6 +84,8 @@ definition {
 
 	@priority = "4"
 	test EditInviteForCurrentSiteCalendarsCalendar {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -199,6 +201,8 @@ definition {
 
 	@priority = "4"
 	test EditReminderForCurrentSiteCalendarsCalendar {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -253,6 +257,8 @@ definition {
 
 	@priority = "3"
 	test EditReminderForUserCalendar {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

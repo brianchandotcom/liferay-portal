@@ -59,6 +59,8 @@ definition {
 	@description = "This is a use case for LPS-57992."
 	@priority = "4"
 	test ExportUserCalendarAsICS {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(

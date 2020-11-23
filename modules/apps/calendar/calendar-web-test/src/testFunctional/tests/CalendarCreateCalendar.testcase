@@ -58,6 +58,8 @@ definition {
 
 	@priority = "4"
 	test AddCalendarToCurrentSiteCalendars {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.add(
@@ -75,6 +77,8 @@ definition {
 
 	@priority = "4"
 	test AddCalendarToMyCalendars {
+		property portal.upstream = "quarantine";
+
 		Calendar.add(
 			calendarName = "My Calendar Name",
 			calendarType = "My Calendars",
@@ -90,6 +94,8 @@ definition {
 
 	@priority = "4"
 	test AddUserCalendarToOtherCalendars {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -122,6 +128,7 @@ definition {
 	@description = "This is a use case for LPS-45062."
 	@priority = "5"
 	test ResizeAddedEventsViaEventBlock {
+		property portal.upstream = "quarantine";
 		property portal.release = "false";
 
 		CalendarNavigator.gotoView(viewType = "Day");

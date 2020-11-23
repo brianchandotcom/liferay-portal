@@ -60,7 +60,15 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		<c:choose>
 			<c:when test="<%= group == null %>">
 				<div class="sidebar-header">
-					<h4><liferay-ui:message key="sites" /></h4>
+					<clay:content-row
+						cssClass="sidebar-section"
+					>
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<h4 class="component-title"><liferay-ui:message key="sites" /></h4>
+						</clay:content-col>
+					</clay:content-row>
 				</div>
 
 				<clay:navigation-bar
@@ -68,25 +76,38 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				/>
 
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="num-of-sites" /></h5>
-
-					<p>
-						<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), siteAdminDisplayContext.getGroupId(), true) %>
-					</p>
+					<dl class="sidebar-dl">
+						<dt class="sidebar-dt">
+							<liferay-ui:message key="num-of-sites" />
+						</dt>
+						<dd class="sidebar-dd">
+							<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), siteAdminDisplayContext.getGroupId(), true) %>
+						</dd>
+					</dl>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-header">
-					<ul class="sidebar-header-actions">
-						<li>
-							<clay:dropdown-actions
-								defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-								dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>"
-							/>
-						</li>
-					</ul>
+					<clay:content-row
+						cssClass="sidebar-section"
+					>
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<h4 class="component-title"><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
+						</clay:content-col>
 
-					<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
+						<clay:content-col>
+							<ul class="autofit-padded-no-gutters autofit-row">
+								<li class="autofit-col">
+									<clay:dropdown-actions
+										defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+										dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>"
+									/>
+								</li>
+							</ul>
+						</clay:content-col>
+					</clay:content-row>
 				</div>
 
 				<clay:navigation-bar
@@ -100,8 +121,8 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(logoURL) %>">
-						<p>
-							<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="center-block img-fluid" src="<%= logoURL %>" />
+						<p class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel">
+							<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= logoURL %>" />
 						</p>
 					</c:if>
 
@@ -116,85 +137,101 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						</p>
 					</c:if>
 
-					<h5><liferay-ui:message key="members" /></h5>
+					<ul class="list-unstyled sidebar-dl sidebar-section">
+						<li class="sidebar-dt">
+							<liferay-ui:message key="members" />
+						</li>
+						<li class="sidebar-dd">
+							<c:if test="<%= (siteAdminDisplayContext.getUsersCount(group) == 0) && (siteAdminDisplayContext.getOrganizationsCount(group) == 0) && (siteAdminDisplayContext.getUserGroupsCount(group) == 0) %>">
+								<liferay-ui:message key="none" />
+							</c:if>
 
-					<c:if test="<%= (siteAdminDisplayContext.getUsersCount(group) == 0) && (siteAdminDisplayContext.getOrganizationsCount(group) == 0) && (siteAdminDisplayContext.getUserGroupsCount(group) == 0) %>">
-						<p>
-							<liferay-ui:message key="none" />
-						</p>
-					</c:if>
+							<%
+							String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
 
-					<%
-					String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
+							PortletURL assignMembersURL = PortalUtil.getControlPanelPortletURL(request, portletId, PortletRequest.RENDER_PHASE);
 
-					PortletURL assignMembersURL = PortalUtil.getControlPanelPortletURL(request, portletId, PortletRequest.RENDER_PHASE);
+							assignMembersURL.setParameter("redirect", currentURL);
+							assignMembersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+							%>
 
-					assignMembersURL.setParameter("redirect", currentURL);
-					assignMembersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-					%>
+							<c:if test="<%= siteAdminDisplayContext.getUsersCount(group) > 0 %>">
+								<div>
+									<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount(group) == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(group), false) %>' />
+								<div>
+							</c:if>
 
-					<c:if test="<%= siteAdminDisplayContext.getUsersCount(group) > 0 %>">
-						<p>
-							<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount(group) == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(group), false) %>' />
-						</p>
-					</c:if>
+							<c:if test="<%= siteAdminDisplayContext.getOrganizationsCount(group) > 0 %>">
+								<div>
+									<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getOrganizationsCount(group) == 1) ? "x-organization" : "x-organizations", siteAdminDisplayContext.getOrganizationsCount(group), false) %>' />
+								</div>
+							</c:if>
 
-					<c:if test="<%= siteAdminDisplayContext.getOrganizationsCount(group) > 0 %>">
-						<p>
-							<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getOrganizationsCount(group) == 1) ? "x-organization" : "x-organizations", siteAdminDisplayContext.getOrganizationsCount(group), false) %>' />
-						</p>
-					</c:if>
+							<c:if test="<%= siteAdminDisplayContext.getUserGroupsCount(group) > 0 %>">
+								<div>
+									<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUserGroupsCount(group) == 1) ? "x-user-groups" : "x-user-groups", siteAdminDisplayContext.getUserGroupsCount(group), false) %>' />
+								</div>
+							</c:if>
+						</li>
 
-					<c:if test="<%= siteAdminDisplayContext.getUserGroupsCount(group) > 0 %>">
-						<p>
-							<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUserGroupsCount(group) == 1) ? "x-user-groups" : "x-user-groups", siteAdminDisplayContext.getUserGroupsCount(group), false) %>' />
-						</p>
-					</c:if>
+						<c:if test="<%= siteAdminDisplayContext.getPendingRequestsCount(group) > 0 %>">
+							<li class="sidebar-dt"><liferay-ui:message key="request-pending" /></li>
 
-					<c:if test="<%= siteAdminDisplayContext.getPendingRequestsCount(group) > 0 %>">
-						<h5><liferay-ui:message key="request-pending" /></h5>
+							<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
+								<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+							</liferay-portlet:renderURL>
 
-						<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
-							<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-						</liferay-portlet:renderURL>
+							<li class="sidebar-dd">
+								<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getPendingRequestsCount(group) == 1) ? "x-request-pending" : "x-requests-pending", siteAdminDisplayContext.getPendingRequestsCount(group), false) %>' />
+							</li>
+						</c:if>
 
-						<p>
-							<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getPendingRequestsCount(group) == 1) ? "x-request-pending" : "x-requests-pending", siteAdminDisplayContext.getPendingRequestsCount(group), false) %>' />
-						</p>
-					</c:if>
+						<li class="sidebar-dt"><liferay-ui:message key="membership-type" /></li>
 
-					<h5><liferay-ui:message key="membership-type" /></h5>
+						<li class="sidebar-dd">
+							<liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
+						</li>
 
-					<p>
-						<liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
-					</p>
+						<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
+							<li class="sidebar-dt"><liferay-ui:message key="description" /></li>
 
-					<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
-						<h5><liferay-ui:message key="description" /></h5>
+							<li class="sidebar-dd">
+								<%= HtmlUtil.escape(group.getDescription()) %>
+							</li>
+						</c:if>
 
-						<p>
-							<%= HtmlUtil.escape(group.getDescription()) %>
-						</p>
-					</c:if>
-
-					<liferay-asset:asset-categories-summary
-						className="<%= Group.class.getName() %>"
-						classPK="<%= group.getGroupId() %>"
-					/>
-
-					<liferay-asset:asset-tags-summary
-						className="<%= Group.class.getName() %>"
-						classPK="<%= group.getGroupId() %>"
-					/>
+						<li class="sidebar-dt">
+							<liferay-asset:asset-categories-summary
+								className="<%= Group.class.getName() %>"
+								classPK="<%= group.getGroupId() %>"
+							/>
+						</li>
+						<li class="sidebar-dt">
+							<liferay-asset:asset-tags-summary
+								className="<%= Group.class.getName() %>"
+								classPK="<%= group.getGroupId() %>"
+							/>
+						</li>
+					</ul>
 				</div>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" /></h4>
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h4 class="component-title">
+						<liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" />
+					</h4>
+				</clay:content-col>
+			</clay:content-row>
 		</div>
 
 		<clay:navigation-bar
@@ -202,7 +239,11 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		/>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" /></h5>
+			<dl class="sidebar-dl sidebar-section">
+				<dt class="sidebar-dt">
+					<liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" />
+				</dt>
+			</dl>
 		</div>
 	</c:otherwise>
 </c:choose>

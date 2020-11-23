@@ -252,10 +252,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	public SpiraTestCasePriority getSpiraTestCasePriority() {
-		if (_spiraTestCasePriority != null) {
-			return _spiraTestCasePriority;
-		}
-
 		Integer testCasePriorityId = jsonObject.optInt("TestCasePriorityId");
 
 		if ((testCasePriorityId <= 0) ||
@@ -266,10 +262,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		SpiraProject spiraProject = getSpiraProject();
 
-		_spiraTestCasePriority = spiraProject.getSpiraTestCasePriorityByID(
-			testCasePriorityId);
+		SpiraTestCasePriority spiraTestCasePriority =
+			spiraProject.getSpiraTestCasePriorityByID(testCasePriorityId);
 
-		return _spiraTestCasePriority;
+		return spiraTestCasePriority;
 	}
 
 	public SpiraTestCaseProductVersion getSpiraTestCaseProductVersion() {
@@ -333,6 +329,60 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return JenkinsResultsParserUtil.combine(
 			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/TestCase/",
 			String.valueOf(getID()), ".aspx");
+	}
+
+	public void updateSpiraTestCasePriority(
+		SpiraTestCasePriority spiraTestCasePriority) {
+
+		if (spiraTestCasePriority == null) {
+			return;
+		}
+
+		SpiraTestCasePriority currentSpiraTestCasePriority =
+			getSpiraTestCasePriority();
+
+		if ((currentSpiraTestCasePriority != null) &&
+			currentSpiraTestCasePriority.equals(spiraTestCasePriority)) {
+
+			return;
+		}
+
+		String urlPath = "projects/{project_id}/test-cases";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		int updateRetryCount = 0;
+
+		while (true) {
+			JSONObject requestJSONObject = toJSONObject();
+
+			requestJSONObject.remove("TestCasePriorityId");
+
+			requestJSONObject.put(
+				"TestCasePriorityId", spiraTestCasePriority.getID());
+
+			try {
+				SpiraRestAPIUtil.request(
+					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
+					requestJSONObject.toString());
+
+				_refreshJSONObject();
+
+				break;
+			}
+			catch (IOException ioException) {
+				if (updateRetryCount >= 2) {
+					throw new RuntimeException(ioException);
+				}
+
+				updateRetryCount++;
+			}
+		}
 	}
 
 	public void updateSpiraCustomPropertyValues(
@@ -645,7 +695,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
 	private List<SpiraTestCaseComponent> _spiraTestCaseComponents;
-	private SpiraTestCasePriority _spiraTestCasePriority;
 	private SpiraTestCaseProductVersion _spiraTestCaseProductVersion;
 
 }

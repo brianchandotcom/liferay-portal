@@ -1,7 +1,7 @@
 <div class="component-tabs">
 	<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 		<button
-			aria-controls="navigationBarCollapse"
+			aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}"
 			aria-expanded="false"
 			aria-label="Tabs Toggle Navigation"
 			class="collapsed navbar-toggler navbar-toggler-link"
@@ -11,16 +11,16 @@
 			<span class="icon-caret-bottom"></span>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navigationBarCollapse">
+		<div class="collapse navbar-collapse" id="navigationBarCollapse-${fragmentEntryLinkNamespace}">
 			<ul class="navbar-nav" role="tablist">
 				[#list 0..configuration.numberOfTabs-1 as i]
 				<li class="nav-item" role="presentation">
 					<button
-						aria-controls="tabPanel${i+1}"
+						aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}"
 						aria-selected="false"
 						class="nav-link"
 						data-fragment-namespace="${fragmentEntryLinkNamespace}"
-						id="tab${i+1}"
+						id="tab${i+1}-${fragmentEntryLinkNamespace}"
 						role="tab"
 					>
 						<span
@@ -41,7 +41,7 @@
 
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
-		<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
+		<div aria-labelledby="tab${i+1}-${fragmentEntryLinkNamespace}" class="tab-panel-item d-none" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel${i+1}-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
 			<lfr-drop-zone data-lfr-drop-zone-id="${i+1}" data-lfr-priority="${i+1}"></lfr-drop-zone>
 		</div>
 		[/#list]

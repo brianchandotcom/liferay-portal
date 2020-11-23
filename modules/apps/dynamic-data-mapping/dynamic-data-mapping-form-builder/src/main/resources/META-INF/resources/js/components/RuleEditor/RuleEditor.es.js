@@ -12,13 +12,13 @@
  * details.
  */
 
+import '../Calculator/Calculator.es';
+
 import 'clay-alert';
 
 import 'clay-button';
 
 import 'clay-modal';
-
-import 'data-engine-taglib/data_layout_builder/js/components/rule-builder/Calculator/CalculatorReactAdapter.es';
 
 import 'dynamic-data-mapping-form-renderer/js/components/Field/ReactFieldAdapter.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';

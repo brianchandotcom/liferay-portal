@@ -410,6 +410,8 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				SpiraRestAPIUtil.request(
 					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
 					requestJSONObject.toString());
+
+				return;
 			}
 			catch (IOException ioException) {
 				if (updateRetryCount >= 2) {
@@ -505,7 +507,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
 					requestJSONObject.toString());
 
-				break;
+				return;
 			}
 			catch (IOException ioException) {
 				if (updateRetryCount >= 2) {
@@ -560,7 +562,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 					urlPath, null, urlPathReplacements, HttpRequestMethod.PUT,
 					requestJSONObject.toString());
 
-				break;
+				return;
 			}
 			catch (IOException ioException) {
 				if (updateRetryCount >= 2) {

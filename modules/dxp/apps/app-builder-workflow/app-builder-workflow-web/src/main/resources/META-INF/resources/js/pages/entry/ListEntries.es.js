@@ -43,7 +43,7 @@ import {METRIC_INDEXES_KEY, refreshIndex} from './actions.es';
 const WORKFLOW_COLUMNS = [
 	{key: 'status', value: Liferay.Language.get('status')},
 	{key: 'taskNames', value: Liferay.Language.get('step')},
-	{key: 'assignees', value: Liferay.Language.get('assignee')},
+	{key: 'assignee', value: Liferay.Language.get('assignee')},
 ];
 
 export default function ListEntries({history}) {
@@ -211,10 +211,10 @@ export default function ListEntries({history}) {
 
 				WORKFLOW_COLUMNS.forEach(({key}) => {
 					switch (key) {
-						case 'assignees': {
+						case 'assignee': {
 							const {assignees = [], taskNames = []} = entry;
 
-							const {id, name = emptyValue, reviewer} =
+							const {id = -1, name = emptyValue, reviewer} =
 								assignees[0] || {};
 
 							if (id === -1) {
@@ -300,7 +300,9 @@ export default function ListEntries({history}) {
 			show: ({canReassign}) => canReassign,
 		},
 		...useEntriesActions({
-			update: ({completed}) => completed === false,
+			update: ({assignees, completed}) =>
+				completed === false &&
+				assignees?.[0]?.id === Number(themeDisplay.getUserId()),
 		}),
 	];
 

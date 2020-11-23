@@ -820,13 +820,9 @@ public class PDFProcessorImpl
 							fileVersion.getFileVersionId(), " ",
 							fileVersion.getTitle(), "."));
 				}
-				else if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Unable to process ",
-							fileVersion.getFileVersionId(), " ",
-							fileVersion.getTitle(), "."),
-						exception);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
 				}
 
 				throw exception;

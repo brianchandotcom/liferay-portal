@@ -321,13 +321,9 @@ public class AudioProcessorImpl
 								destinationFileVersion.getFileVersionId(), " ",
 								destinationFileVersion.getTitle(), "."));
 					}
-					else if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Unable to process ",
-								destinationFileVersion.getFileVersionId(), " ",
-								destinationFileVersion.getTitle(), "."),
-							exception);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception, exception);
 					}
 
 					throw exception;

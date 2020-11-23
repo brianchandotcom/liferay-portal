@@ -25,10 +25,10 @@ definition {
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
 		JSONUser.addUser(
-			userEmailAddress = "u1@liferay.com",
-			userFirstName = "User",
-			userLastName = "1",
-			userScreenName = "user1");
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -36,8 +36,8 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			userEmailAddress = "u1@liferay.com",
-			userScreenName = "user1");
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoSite(site = "Global");
 
@@ -49,9 +49,9 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Screen Name");
 
-		Segmentation.fillTitle(titleField = "Segment User1");
+		Segmentation.fillTitle(titleField = "Segment usersn");
 
-		Segmentation.fillProperty(PropertyField = "User1");
+		Segmentation.fillProperty(PropertyField = "usersn");
 
 		Button.clickSave();
 
@@ -60,13 +60,13 @@ definition {
 			roleTitle = "Role User Segments");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
 			roleTitle = "Role User Segments");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
 			roleTitle = "Role User Segments");
 
 		ApplicationsMenu.gotoPortlet(
@@ -78,7 +78,7 @@ definition {
 
 		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
 
-		Role.addAssignees(assigneeName = "Segment User1");
+		Role.addAssignees(assigneeName = "Segment usersn");
 	}
 
 	tearDown {
@@ -101,7 +101,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.deactivateCP(userFirstName = "User");
+			User.deactivateCP(userFirstName = "userfn");
 
 			User.deleteCP();
 
@@ -126,9 +126,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
-			password = "password",
-			userEmailAddress = "u1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#PORTLET");
 	}
@@ -152,9 +152,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
-			password = "password",
-			userEmailAddress = "u1@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 

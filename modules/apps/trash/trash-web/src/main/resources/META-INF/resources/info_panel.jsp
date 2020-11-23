@@ -34,30 +34,40 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				%>
 
 				<div class="sidebar-header">
-					<ul class="sidebar-header-actions">
-						<li>
-							<c:choose>
-								<c:when test="<%= trashEntry.getRootEntry() == null %>">
-									<clay:dropdown-actions
-										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-										dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<clay:dropdown-actions
-										defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
-									/>
-								</c:otherwise>
-							</c:choose>
-						</li>
-					</ul>
+					<clay:content-row
+						cssClass="sidebar-section"
+					>
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<h4 class="component-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 
-					<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
+							<p class="component-subtitle">
+								<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
+							</p>
+						</clay:content-col>
 
-					<p>
-						<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
-					</p>
+						<clay:content-col>
+							<ul class="autofit-padded-no-gutters autofit-row">
+								<li class="autofit-col">
+									<c:choose>
+										<c:when test="<%= trashEntry.getRootEntry() == null %>">
+											<clay:dropdown-actions
+												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+												dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<clay:dropdown-actions
+												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+												dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
+											/>
+										</c:otherwise>
+									</c:choose>
+								</li>
+							</ul>
+						</clay:content-col>
+					</clay:content-row>
 				</div>
 
 				<clay:navigation-bar
@@ -65,22 +75,38 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				/>
 
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="removed-date" /></h5>
+					<dl class="sidebar-dl sidebar-section">
+						<dt class="sidebar-dt"><liferay-ui:message key="removed-date" /></dt>
 
-					<p>
-						<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
-					</p>
+						<dd class="sidebar-dd">
+							<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
+						</dd>
+						<dt class="sidebar-dt"><liferay-ui:message key="removed-by" /></dt>
 
-					<h5><liferay-ui:message key="removed-by" /></h5>
-
-					<p>
-						<%= HtmlUtil.escape(trashEntry.getUserName()) %>
-					</p>
+						<dd class="sidebar-dd">
+							<%= HtmlUtil.escape(trashEntry.getUserName()) %>
+						</dd>
+					</dl>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-header">
-					<h4><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
+					<clay:content-row
+						cssClass="sidebar-section"
+					>
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<h4 class="component-title"><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
+						</clay:content-col>
+
+						<clay:content-col>
+							<ul class="autofit-padded-no-gutters autofit-row">
+								<li class="autofit-col">
+								</li>
+							</ul>
+						</clay:content-col>
+					</clay:content-row>
 				</div>
 
 				<clay:navigation-bar
@@ -88,18 +114,28 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				/>
 
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="num-of-items" /></h5>
+					<dl class="sidebar-dl sidebar-section">
+						<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
-					<p>
-						<%= trashEntries.size() %>
-					</p>
+						<dd class="sidebar-dd">
+							<%= trashEntries.size() %>
+						</dd>
+					</dl>
 				</div>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message key="home" /></h4>
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h4 class="component-title"><liferay-ui:message key="home" /></h4>
+				</clay:content-col>
+			</clay:content-row>
 		</div>
 
 		<clay:navigation-bar
@@ -107,11 +143,13 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 		/>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+			<dl class="sidebar-dl sidebar-section">
+				<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
-			<p>
-				<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
-			</p>
+				<dd class="sidebar-dd">
+					<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
+				</dd>
+			</dl>
 		</div>
 	</c:otherwise>
 </c:choose>

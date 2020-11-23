@@ -26,21 +26,31 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 <c:if test="<%= trashRenderer != null %>">
 	<div class="sidebar-header">
-		<ul class="sidebar-header-actions">
-			<li>
+		<clay:content-row
+			cssClass="sidebar-section"
+		>
+			<clay:content-col
+				expand="<%= true %>"
+			>
+				<h4 class="component-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
+			</clay:content-col>
 
-				<%
-				TrashContainerActionDropdownItemsProvider trashContainerActionDropdownItemsProvider = new TrashContainerActionDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, trashDisplayContext);
-				%>
+			<clay:content-col>
+				<ul class="autofit-padded-no-gutters autofit-row">
+					<li class="autofit-col">
 
-				<clay:dropdown-actions
-					defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-					dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>"
-				/>
-			</li>
-		</ul>
+						<%
+						TrashContainerActionDropdownItemsProvider trashContainerActionDropdownItemsProvider = new TrashContainerActionDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, trashDisplayContext);
+						%>
 
-		<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
+						<clay:dropdown-actions
+							defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>"
+						/>
+					</li>
+				</ul>
+			</clay:content-col>
+		</clay:content-row>
 	</div>
 
 	<clay:navigation-bar
@@ -48,10 +58,12 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 	/>
 
 	<div class="sidebar-body">
-		<h5><liferay-ui:message key="num-of-items" /></h5>
+		<dl class="sidebar-dl sidebar-section">
+			<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
-		<p>
-			<%= trashHandler.getTrashModelsCount(classPK) %>
-		</p>
+			<dd class="sidebar-dd">
+				<%= trashHandler.getTrashModelsCount(classPK) %>
+			</dd>
+		</dl>
 	</div>
 </c:if>

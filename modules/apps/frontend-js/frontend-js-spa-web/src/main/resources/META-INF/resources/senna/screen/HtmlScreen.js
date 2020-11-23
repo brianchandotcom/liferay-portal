@@ -14,7 +14,6 @@
 
 import {buildFragment, runScriptsInElement} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
-import Uri from 'metal-uri';
 
 import globals from '../globals/globals';
 import Surface from '../surface/Surface';
@@ -342,20 +341,6 @@ class HtmlScreen extends RequestScreen {
 
 			return content;
 		});
-	}
-
-	/**
-	 * Creates a new element from given, copies attributes, mutates href to be
-	 * unique to prevent caching and more than one load/error event from firing.
-	 */
-	replaceStyleAndMakeUnique_(style) {
-		if (style.href) {
-			var newStyle = globals.document.createElement(style.tagName);
-			style.href = new Uri(style.href).makeUnique().toString();
-			copyNodeAttributes(style, newStyle);
-			style.parentNode.replaceChild(newStyle, style);
-			style.disabled = true;
-		}
 	}
 
 	/**

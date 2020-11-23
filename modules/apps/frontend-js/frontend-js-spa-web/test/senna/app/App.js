@@ -143,9 +143,11 @@ describe('App', function () {
 		globals.window = {
 			location: {
 				hash: '',
-				host: '',
-				hostname: '',
+				host: 'localhost:8080',
+				hostname: 'localhost',
+				origin: 'http://localhost:8080',
 				pathname: '/path1',
+				port: '8080',
 				search: '',
 			},
 		};
@@ -157,7 +159,9 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/pathOther', Screen));
 		globals.window = {
 			location: {
-				host: '',
+				host: 'localhost:8080',
+				hostname: 'localhost',
+				origin: 'http://localhost:8080',
 				pathname: '/path',
 				search: '',
 			},
@@ -170,7 +174,9 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/pathOther', Screen));
 		globals.window = {
 			location: {
-				host: '',
+				host: 'localhost:8080',
+				hostname: 'localhost',
+				origin: 'http://localhost:8080',
 				pathname: '/path/',
 				search: '',
 			},
@@ -506,6 +512,7 @@ describe('App', function () {
 			location: {
 				host: 'localhost',
 				hostname: 'localhost',
+				origin: 'http://localhost',
 				pathname: '/path',
 				search: '',
 			},
@@ -532,6 +539,7 @@ describe('App', function () {
 			location: {
 				host: 'localhost',
 				hostname: 'localhost',
+				origin: 'http://localhost',
 				pathname: '/path',
 				search: '',
 			},
@@ -556,6 +564,7 @@ describe('App', function () {
 			location: {
 				host: 'localhost',
 				hostname: 'localhost',
+				origin: 'http://localhost',
 				pathname: '/path',
 				search: '',
 			},
@@ -600,6 +609,7 @@ describe('App', function () {
 			history: {},
 			location: {
 				host: 'localhost',
+				origin: 'http://localhost',
 				pathname: '/path',
 				search: '',
 			},

@@ -33,6 +33,7 @@ describe('utils', () => {
 			location: {
 				hash: '#hash',
 				hostname: 'hostname',
+				origin: 'http://localhost',
 				pathname: '/path',
 				search: '?a=1',
 			},

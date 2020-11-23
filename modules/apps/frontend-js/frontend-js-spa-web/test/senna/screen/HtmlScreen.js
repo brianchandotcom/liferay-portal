@@ -13,7 +13,6 @@
  */
 
 import {buildFragment} from 'frontend-js-web';
-import Uri from 'metal-uri';
 
 import globals from '../../../src/main/resources/META-INF/resources/senna/globals/globals';
 import HtmlScreen from '../../../src/main/resources/META-INF/resources/senna/screen/HtmlScreen';
@@ -200,8 +199,8 @@ describe('HtmlScreen', () => {
 		);
 		screen.evaluateFavicon_().then(() => {
 			var element = document.querySelector('link[rel="Shortcut Icon"]');
-			var uri = new Uri(element.href);
-			expect(uri.getPathname()).toBe('/for/favicon.ico');
+			var uri = new URL(element.href);
+			expect(uri.pathname).toBe('/for/favicon.ico');
 			exitDocumentElement('surfaceId');
 			done();
 		});
@@ -241,9 +240,9 @@ describe('HtmlScreen', () => {
 		);
 		screen.evaluateFavicon_().then(() => {
 			var element = document.querySelector('link[rel="Shortcut Icon"]');
-			var uri = new Uri(element.href);
-			expect(uri.getPathname()).toBe('/for/favicon.ico');
-			expect(uri.hasParameter('q')).toBe(true);
+			var uri = new URL(element.href);
+			expect(uri.pathname).toBe('/for/favicon.ico');
+			expect(uri.searchParams.has('q')).toBe(true);
 			exitDocumentElement('surfaceId');
 			done();
 		});

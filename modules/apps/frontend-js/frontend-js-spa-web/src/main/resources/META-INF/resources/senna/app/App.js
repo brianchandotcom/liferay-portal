@@ -14,7 +14,6 @@
 
 import {debounce, delegate} from 'frontend-js-web';
 import CancellablePromise from 'metal-promise';
-import Uri from 'metal-uri';
 
 import EventEmitter from '../events/EventEmitter';
 import EventHandler from '../events/EventHandler';
@@ -358,15 +357,18 @@ class App extends EventEmitter {
 	 */
 	canNavigate(url) {
 		try {
-			const uri = new Uri(url);
+			const uri = url.startsWith('/')
+				? new URL(url, globals.window.location.origin)
+				: new URL(url);
 
 			const path = getUrlPath(url);
 
-			if (!this.isLinkSameOrigin_(uri.getHost())) {
+			if (!this.isLinkSameOrigin_(uri.host)) {
 				log('Offsite link clicked');
 
 				return false;
 			}
+
 			if (!this.isSameBasePath_(path)) {
 				log("Link clicked outside app's base path");
 
@@ -375,9 +377,10 @@ class App extends EventEmitter {
 
 			// Prevents navigation if it's a hash change on the same url.
 
-			if (uri.getHash() && utils.isCurrentBrowserPath(path)) {
+			if (uri.hash && utils.isCurrentBrowserPath(path)) {
 				return false;
 			}
+
 			if (!this.findRoute(path)) {
 				log('No route for ' + path);
 
@@ -719,13 +722,7 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	isLinkSameOrigin_(host) {
-		const hostUri = new Uri(host);
-		const locationHostUri = new Uri(globals.window.location.host);
-
-		return (
-			hostUri.getPort() === locationHostUri.getPort() &&
-			hostUri.getHostname() === locationHostUri.getHostname()
-		);
+		return host === globals.window.location.host;
 	}
 
 	/**
@@ -1204,9 +1201,11 @@ class App extends EventEmitter {
 					setReferrer(state.referrer);
 				}
 			});
-			const uri = new Uri(state.path);
-			uri.setHostname(globals.window.location.hostname);
-			uri.setPort(globals.window.location.port);
+			const uri = state.path.startsWith('/')
+				? new URL(state.path, globals.window.location.origin)
+				: new URL(state.path);
+			uri.hostname = globals.window.location.hostname;
+			uri.port = globals.window.location.port;
 			const isNavigationScheduled = this.maybeScheduleNavigation_(
 				uri.toString(),
 				{}
@@ -1313,7 +1312,9 @@ class App extends EventEmitter {
 			title = this.getDefaultTitle();
 		}
 		let redirectPath = nextScreen.beforeUpdateHistoryPath(path);
-		const hash = new Uri(path).getHash();
+		const hash = path.startsWith('/')
+			? new URL(path, globals.window.location.origin).hash
+			: new URL(path).hash;
 		redirectPath = this.maybeRestoreRedirectPathHash_(
 			path,
 			redirectPath,

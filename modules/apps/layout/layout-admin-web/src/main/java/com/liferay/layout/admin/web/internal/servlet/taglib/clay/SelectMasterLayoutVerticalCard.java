@@ -40,18 +40,18 @@ public class SelectMasterLayoutVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
-		return HashMapBuilder.put(
-			"name", _layoutPageTemplateEntry.getName()
-		).put(
-			"plid", String.valueOf(_layoutPageTemplateEntry.getPlid())
-		).build();
+	public String getCssClass() {
+		return "select-master-layout-option card-interactive " +
+			"card-interactive-primary";
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "select-master-layout-option card-interactive " +
-			"card-interactive-primary";
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-name", _layoutPageTemplateEntry.getName()
+		).put(
+			"data-plid", String.valueOf(_layoutPageTemplateEntry.getPlid())
+		).build();
 	}
 
 	@Override

@@ -53,7 +53,13 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
+	public String getCssClass() {
+		return "add-layout-action-option card-interactive " +
+			"card-interactive-primary";
+	}
+
+	@Override
+	public Map<String, String> getDynamicAttributes() {
 		Map<String, String> data = new HashMap<>();
 
 		try {
@@ -83,18 +89,12 @@ public class SelectLayoutPageTemplateEntryVerticalCard implements VerticalCard {
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
 
-			data.put("add-layout-url", addLayoutURL.toString());
+			data.put("data-add-layout-url", addLayoutURL.toString());
 		}
 		catch (Exception exception) {
 		}
 
 		return data;
-	}
-
-	@Override
-	public String getElementClasses() {
-		return "add-layout-action-option card-interactive " +
-			"card-interactive-primary";
 	}
 
 	@Override

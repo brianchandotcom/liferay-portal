@@ -37,7 +37,7 @@ SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (Sel
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card-v2
+				<clay:vertical-card
 					verticalCard="<%= new CollectionsVerticalCard(assetListEntry, selectLayoutCollectionDisplayContext.getSelGroupId(), renderRequest, renderResponse) %>"
 				/>
 			</liferay-ui:search-container-column-text>

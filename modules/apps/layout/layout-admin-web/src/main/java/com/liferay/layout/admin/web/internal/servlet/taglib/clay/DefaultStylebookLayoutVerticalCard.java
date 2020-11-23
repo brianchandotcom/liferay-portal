@@ -47,18 +47,18 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
-		return HashMapBuilder.put(
-			"name", _name
-		).put(
-			"styleBookEntryId", "0"
-		).build();
+	public String getCssClass() {
+		return "select-master-layout-option card-interactive " +
+			"card-interactive-primary";
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "select-master-layout-option card-interactive " +
-			"card-interactive-primary";
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-name", _name
+		).put(
+			"data-styleBookEntryId", "0"
+		).build();
 	}
 
 	@Override

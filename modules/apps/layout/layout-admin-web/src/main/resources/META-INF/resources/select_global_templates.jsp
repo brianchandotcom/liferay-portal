@@ -39,7 +39,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card-v2
+				<clay:vertical-card
 					verticalCard="<%= new SelectGlobalTemplatesVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
 				/>
 			</liferay-ui:search-container-column-text>

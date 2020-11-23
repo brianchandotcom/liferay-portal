@@ -28,7 +28,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 		%>
 
 			<li class="card-page-item col-md-4 col-sm-6">
-				<clay:vertical-card-v2
+				<clay:vertical-card
 					verticalCard="<%= new SelectBasicTemplatesVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
 				/>
 			</li>

@@ -62,7 +62,13 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
+	public String getCssClass() {
+		return "select-collection-action-option card-interactive " +
+			"card-interactive-secondary";
+	}
+
+	@Override
+	public Map<String, String> getDynamicAttributes() {
 		Map<String, String> data = new HashMap<>();
 
 		try {
@@ -100,7 +106,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 				InfoListProviderItemSelectorReturnType.class.getName());
 
 			data.put(
-				"select-layout-master-layout-url",
+				"data-select-layout-master-layout-url",
 				selectLayoutMasterLayoutURL.toString());
 		}
 		catch (Exception exception) {
@@ -110,12 +116,6 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		}
 
 		return data;
-	}
-
-	@Override
-	public String getElementClasses() {
-		return "select-collection-action-option card-interactive " +
-			"card-interactive-secondary";
 	}
 
 	@Override

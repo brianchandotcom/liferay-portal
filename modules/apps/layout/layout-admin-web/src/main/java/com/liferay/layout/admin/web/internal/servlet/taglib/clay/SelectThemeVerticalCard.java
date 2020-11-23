@@ -41,16 +41,16 @@ public class SelectThemeVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
-		return HashMapBuilder.put(
-			"themeid", _theme.getThemeId()
-		).build();
+	public String getCssClass() {
+		return "card-img-align-top card-interactive " +
+			"card-interactive-secondary selector-button";
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "card-img-align-top card-interactive " +
-			"card-interactive-secondary selector-button";
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-themeid", _theme.getThemeId()
+		).build();
 	}
 
 	@Override

@@ -32,7 +32,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 		%>
 
 			<li class="card-page-item col-md-3 col-sm-6 form-check-card">
-				<clay:vertical-card-v2
+				<clay:vertical-card
 					verticalCard="<%= new SelectMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest) %>"
 				/>
 			</li>

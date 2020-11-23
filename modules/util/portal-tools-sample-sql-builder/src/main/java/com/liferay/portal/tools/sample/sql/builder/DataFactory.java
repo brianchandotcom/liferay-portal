@@ -30,6 +30,9 @@ import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseModel;
+import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
@@ -488,6 +491,10 @@ public class DataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
+	}
+
+	public long getCommerceInventoryWarehouseClassNameId() {
+		return getClassNameId(CommerceInventoryWarehouse.class);
 	}
 
 	public long getCounterNext() {
@@ -1214,6 +1221,64 @@ public class DataFactory {
 		commerceCurrencyModel.setLastPublishDate(new Date());
 
 		return commerceCurrencyModel;
+	}
+
+	public CommerceInventoryWarehouseModel newCommerceInventoryWarehouseModel(
+		int index) {
+
+		CommerceInventoryWarehouseModel commerceInventoryWarehouseModel =
+			new CommerceInventoryWarehouseModelImpl();
+
+		// PK fields
+
+		long warehouseId = _counter.get();
+
+		commerceInventoryWarehouseModel.setCommerceInventoryWarehouseId(
+			warehouseId);
+
+		// Audit fields
+
+		commerceInventoryWarehouseModel.setCompanyId(_companyId);
+		commerceInventoryWarehouseModel.setUserName(_SAMPLE_USER_NAME);
+		commerceInventoryWarehouseModel.setCreateDate(new Date());
+		commerceInventoryWarehouseModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		commerceInventoryWarehouseModel.setName("Warehouse " + index);
+		commerceInventoryWarehouseModel.setDescription(
+			"Description for warehouse with ID " + warehouseId);
+		commerceInventoryWarehouseModel.setActive(true);
+		commerceInventoryWarehouseModel.setStreet1("Street1");
+		commerceInventoryWarehouseModel.setStreet2("Street2");
+		commerceInventoryWarehouseModel.setStreet3("Street3");
+		commerceInventoryWarehouseModel.setCity("City");
+		commerceInventoryWarehouseModel.setZip("Zip");
+		commerceInventoryWarehouseModel.setCommerceRegionCode("CA");
+		commerceInventoryWarehouseModel.setCountryTwoLettersISOCode("US");
+		commerceInventoryWarehouseModel.setLatitude(0);
+		commerceInventoryWarehouseModel.setLongitude(0);
+		commerceInventoryWarehouseModel.setType(null);
+
+		return commerceInventoryWarehouseModel;
+	}
+
+	public List<CommerceInventoryWarehouseModel>
+		newCommerceInventoryWarehouseModels() {
+
+		List<CommerceInventoryWarehouseModel> commerceInventoryWarehouseModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT);
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT;
+			 i++) {
+
+			commerceInventoryWarehouseModels.add(
+				newCommerceInventoryWarehouseModel(i));
+		}
+
+		return commerceInventoryWarehouseModels;
 	}
 
 	public CompanyModel newCompanyModel() {
@@ -3504,6 +3569,17 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			BlogsEntry.class.getName(),
 			String.valueOf(blogsEntryModel.getEntryId()), _sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CommerceInventoryWarehouseModel commerceInventoryWarehouseModel) {
+
+		return newResourcePermissionModels(
+			CommerceInventoryWarehouse.class.getName(),
+			String.valueOf(
+				commerceInventoryWarehouseModel.
+					getCommerceInventoryWarehouseId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

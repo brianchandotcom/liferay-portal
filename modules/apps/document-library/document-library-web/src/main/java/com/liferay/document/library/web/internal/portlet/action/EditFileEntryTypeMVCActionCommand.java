@@ -291,8 +291,10 @@ public class EditFileEntryTypeMVCActionCommand
 		long[] ddmStructureIds = _getLongArray(
 			actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
 
-		_dlFileEntryTypeLocalService.updateDDMStructureLinks(
-			fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
+		if (ddmStructureIds != null) {
+			_dlFileEntryTypeLocalService.updateDDMStructureLinks(
+				fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
+		}
 	}
 
 	@Reference

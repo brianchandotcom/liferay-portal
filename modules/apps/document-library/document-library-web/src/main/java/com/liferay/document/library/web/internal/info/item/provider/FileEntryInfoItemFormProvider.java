@@ -138,10 +138,15 @@ public class FileEntryInfoItemFormProvider
 			return null;
 		}
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			DLUtil.getDDMStructureKey(dlFileEntryType));
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			dlFileEntryType.getDataDefinitionId());
+
+		if (ddmStructure == null) {
+			ddmStructure = _ddmStructureLocalService.fetchStructure(
+				dlFileEntryType.getGroupId(),
+				_portal.getClassNameId(DLFileEntryMetadata.class),
+				DLUtil.getDDMStructureKey(dlFileEntryType));
+		}
 
 		if (ddmStructure == null) {
 			ddmStructure = _ddmStructureLocalService.fetchStructure(

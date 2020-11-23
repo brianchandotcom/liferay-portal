@@ -500,9 +500,57 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	getFormData() {
+		const layoutProvider = this.getLayoutProvider();
+		const {defaultLanguageId} = layoutProvider.props;
+
 		const {pages, rules} = this.getStore();
 
-		return this.getDataDefinitionAndDataLayout(pages, rules || []);
+		const pagesVisitor = new PagesVisitor(pages);
+
+		const newPages = pagesVisitor.mapFields((field) => {
+			const {settingsContext} = field;
+
+			const settingsContextPagesVisitor = new PagesVisitor(
+				settingsContext.pages
+			);
+
+			const newSettingsContext = {
+				...settingsContext,
+				pages: settingsContextPagesVisitor.mapFields(
+					(settingsField) => {
+						if (settingsField.type === 'options') {
+							const {value} = settingsField;
+							const newValue = {};
+
+							Object.keys(value).forEach((locale) => {
+								newValue[locale] = value[locale].filter(
+									(localizedValue) =>
+										localizedValue.value !== ''
+								);
+							});
+
+							if (!newValue[defaultLanguageId]) {
+								newValue[defaultLanguageId] = [];
+							}
+
+							settingsField = {
+								...settingsField,
+								value: newValue,
+							};
+						}
+
+						return settingsField;
+					}
+				),
+			};
+
+			return {
+				...field,
+				settingsContext: newSettingsContext,
+			};
+		});
+
+		return this.getDataDefinitionAndDataLayout(newPages, rules || []);
 	}
 
 	getLayoutProvider() {

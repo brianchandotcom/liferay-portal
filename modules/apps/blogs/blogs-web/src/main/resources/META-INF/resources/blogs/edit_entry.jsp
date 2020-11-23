@@ -445,48 +445,55 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 	</c:if>
 </aui:script>
 
-<aui:script use="liferay-blogs">
-	var blogs = Liferay.component(
-		'<portlet:namespace />Blogs',
-		new Liferay.Blogs({
-			constants: {
-				ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
-				ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
-				ADD: '<%= Constants.ADD %>',
-				CMD: '<%= Constants.CMD %>',
-				STATUS_DRAFT: '<%= WorkflowConstants.STATUS_DRAFT %>',
-				UPDATE: '<%= Constants.UPDATE %>',
-			},
-			descriptionLength: '<%= PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH %>',
-			editEntryURL: '<%= editEntryURL %>',
+<%
+Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
+	"constants",
+	HashMapBuilder.<String, Object>put(
+		"ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
+	).put(
+		"ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
+	).put(
+		"ADD", Constants.ADD
+	).put(
+		"CMD", Constants.CMD
+	).put(
+		"STATUS_DRAFT", WorkflowConstants.STATUS_DRAFT
+	).put(
+		"UPDATE", Constants.UPDATE
+	).build()
+).put(
+	"descriptionLength", PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH
+).put(
+	"editEntryURL", editEntryURL
+).build();
 
-			<c:if test="<%= entry != null %>">
-				entry: {
-					content: '<%= UnicodeFormatter.toString(content) %>',
-					customDescription: <%= customAbstract %>,
-					description: '<%= UnicodeFormatter.toString(description) %>',
-					pending: <%= entry.isPending() %>,
-					status: '<%= entry.getStatus() %>',
-					subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
-					title: '<%= UnicodeFormatter.toString(title) %>',
-					userId: '<%= entry.getUserId() %>',
-				},
-			</c:if>
+if (entry != null) {
+	taglibContext.put(
+		"entry",
+		HashMapBuilder.<String, Object>put(
+			"content", UnicodeFormatter.toString(content)
+		).put(
+			"customDescription", customAbstract
+		).put(
+			"description", UnicodeFormatter.toString(description)
+		).put(
+			"pending", entry.isPending()
+		).put(
+			"status", entry.getStatus()
+		).put(
+			"subtitle", UnicodeFormatter.toString(subtitle)
+		).put(
+			"title", UnicodeFormatter.toString(title)
+		).put(
+			"userId", entry.getUserId()
+		).build());
+}
+%>
 
-			namespace: '<portlet:namespace />',
-		})
-	);
-
-	var clearSaveDraftHandle = function (event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			blogs.destroy();
-
-			Liferay.detach('destroyPortlet', clearSaveDraftHandle);
-		}
-	};
-
-	Liferay.on('destroyPortlet', clearSaveDraftHandle);
-</aui:script>
+<liferay-frontend:component
+	context="<%= taglibContext %>"
+	module="blogs/js/blogs"
+/>
 
 <%
 if (entry != null) {

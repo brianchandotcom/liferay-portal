@@ -220,7 +220,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DataEngine.addFields(
+		DataEngine.addField(
 			fieldFieldLabel = "Text Box",
 			fieldLocation = "2",
 			fieldName = "Text",

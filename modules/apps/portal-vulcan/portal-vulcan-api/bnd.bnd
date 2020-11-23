@@ -18,6 +18,9 @@ Export-Package:\
 	com.liferay.portal.vulcan.pagination,\
 	com.liferay.portal.vulcan.permission,\
 	com.liferay.portal.vulcan.resource,\
+	com.liferay.portal.vulcan.search.aggregation,\
+	com.liferay.portal.vulcan.search.filter,\
+	com.liferay.portal.vulcan.search.sort,\
 	com.liferay.portal.vulcan.status,\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\

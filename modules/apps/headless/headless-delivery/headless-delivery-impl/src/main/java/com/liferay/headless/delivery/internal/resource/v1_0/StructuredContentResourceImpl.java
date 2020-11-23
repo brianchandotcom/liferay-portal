@@ -48,9 +48,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedContentValueUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentEntityModel;
-import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil;
-import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
-import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -98,6 +95,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.search.aggregation.AggregationUtil;
+import com.liferay.portal.vulcan.search.filter.FilterUtil;
+import com.liferay.portal.vulcan.search.sort.SortUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -1026,7 +1026,8 @@ public class StructuredContentResourceImpl
 				_dtoConverterRegistry, contextHttpServletRequest,
 				journalArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser), journalArticle);
+				contextUser),
+			journalArticle);
 	}
 
 	private void _validateContentFields(

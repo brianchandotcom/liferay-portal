@@ -23,9 +23,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardSec
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
-import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil;
-import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
-import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
@@ -52,6 +49,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.search.aggregation.AggregationUtil;
+import com.liferay.portal.vulcan.search.filter.FilterUtil;
+import com.liferay.portal.vulcan.search.sort.SortUtil;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 

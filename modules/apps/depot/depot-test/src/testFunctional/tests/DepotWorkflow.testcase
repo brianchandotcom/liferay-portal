@@ -481,9 +481,9 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@description = "This ensures that the resubmitted document from a depot is available to use in its connected site."
+	@description = "This ensures that the resubmitted image from a depot is available to use in its connected site."
 	@priority = "5"
-	test RejectAndResubmitDocument {
+	test RejectAndResubmitImage {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(

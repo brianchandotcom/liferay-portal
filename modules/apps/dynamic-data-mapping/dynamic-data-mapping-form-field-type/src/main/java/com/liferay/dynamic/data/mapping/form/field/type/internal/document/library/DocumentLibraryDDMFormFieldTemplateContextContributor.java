@@ -129,6 +129,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			getItemSelectorAuthToken(httpServletRequest));
 		parameters.put(
 			"lexiconIconsPath", getLexiconIconsPath(httpServletRequest));
+		parameters.put(
+			"maximumRepetitions",
+			GetterUtil.getInteger(
+				ddmFormField.getProperty("maximumRepetitions")));
 
 		Locale displayLocale;
 

@@ -20,8 +20,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Julien Castelain
@@ -80,6 +82,14 @@ public class ClaySampleVerticalCard implements VerticalCard {
 		}
 
 		return "custom-vertical-card-css-class";
+	}
+
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-id", getId()
+		).put(
+			"data-type", "vertical-card"
+		).build();
 	}
 
 	public String getHref() {

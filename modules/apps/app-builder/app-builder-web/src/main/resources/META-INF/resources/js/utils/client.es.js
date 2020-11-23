@@ -109,8 +109,9 @@ export const getItem = (endpoint, params) =>
 		method: 'GET',
 	}).then((response) => parseResponse(response));
 
-export const request = ({endpoint, method = 'GET', params = {}}) =>
+export const request = ({data, endpoint, method = 'GET', params = {}}) =>
 	fetch(getURL(endpoint, params), {
+		body: JSON.stringify(data),
 		headers: HEADERS,
 		method,
 	}).then((response) => parseResponse(response));

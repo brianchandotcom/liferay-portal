@@ -592,6 +592,8 @@ definition {
 			pageName = "Private Staging Page",
 			siteName = "Site Name");
 
+		Staging.markAsReadyForPublication();
+
 		Staging.gotoPublishToLive();
 
 		Staging.configurePublishToLive(checkPageName = "Private Pages");

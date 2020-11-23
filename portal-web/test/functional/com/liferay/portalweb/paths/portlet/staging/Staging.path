@@ -280,7 +280,7 @@
 <!--STAGING_MENU-->
 <tr>
 	<td>STAGING_MENU_READY_FOR_PUBLICATION</td>
-	<td>//span[@class='toggle-switch-handle' and @data-label-on='Ready for Publication']</td>
+	<td>//span[@class='toggle-switch-handle' and @data-label-on='Ready for Publish Process']</td>
 	<td></td>
 </tr>
 <tr>

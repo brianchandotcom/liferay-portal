@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.service.test.util;
 
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -41,7 +42,8 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
-			_randomCronExpression(), dispatchTrigger.getTaskExecutorType(),
+			_randomCronExpression(), _randomTaskClusterMode(),
+			dispatchTrigger.getTaskExecutorType(),
 			dispatchTrigger.getTaskSettingsUnicodeProperties(),
 			_randomName(nameSalt), dispatchTrigger.isSystem(),
 			dispatchTrigger.getUserId());
@@ -54,7 +56,7 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), user.getCompanyId(),
-			_randomCronExpression(), RandomTestUtil.randomString(20),
+			_randomCronExpression(), 0, RandomTestUtil.randomString(20),
 			RandomTestUtil.randomUnicodeProperties(
 				RandomTestUtil.randomInt(10, 30), 32, 64),
 			_randomName(nameSalt), RandomTestUtil.randomBoolean(),
@@ -68,8 +70,9 @@ public class DispatchTriggerTestUtil {
 
 	private static DispatchTrigger _randomDispatchTrigger(
 		boolean active, long companyId, String cronExpression,
-		String taskExecutorType, UnicodeProperties unicodeProperties,
-		String name, boolean system, long userId) {
+		int taskClusterMode, String taskExecutorType,
+		UnicodeProperties unicodeProperties, String name, boolean system,
+		long userId) {
 
 		return new DispatchTrigger() {
 
@@ -175,7 +178,7 @@ public class DispatchTriggerTestUtil {
 
 			@Override
 			public int getTaskClusterMode() {
-				throw new UnsupportedOperationException();
+				return _taskClusterMode;
 			}
 
 			@Override
@@ -424,6 +427,7 @@ public class DispatchTriggerTestUtil {
 			private final String _cronExpression = cronExpression;
 			private final String _name = name;
 			private final boolean _system = system;
+			private final int _taskClusterMode = taskClusterMode;
 			private final String _taskExecutorType = taskExecutorType;
 			private final UnicodeProperties _taskSettingsUnicodeProperties =
 				unicodeProperties;
@@ -438,6 +442,18 @@ public class DispatchTriggerTestUtil {
 		}
 
 		return String.format("TEST-TRIGGER-%06d", nameSalt);
+	}
+
+	private static int _randomTaskClusterMode() {
+		DispatchTaskClusterMode[] dispatchTaskClusterModes =
+			DispatchTaskClusterMode.values();
+
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			dispatchTaskClusterModes
+				[RandomTestUtil.randomInt(
+					0, dispatchTaskClusterModes.length - 1)];
+
+		return dispatchTaskClusterMode.getMode();
 	}
 
 }

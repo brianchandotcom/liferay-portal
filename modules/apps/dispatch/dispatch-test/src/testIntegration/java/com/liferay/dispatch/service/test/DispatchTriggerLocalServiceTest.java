@@ -162,7 +162,8 @@ public class DispatchTriggerLocalServiceTest {
 			expectedDispatchTrigger, 1);
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
-			DispatchTaskClusterMode.NOT_APPLICABLE;
+			DispatchTaskClusterMode.valueOf(
+				expectedDispatchTrigger.getTaskClusterMode());
 
 		try {
 			dispatchTrigger =
@@ -284,6 +285,9 @@ public class DispatchTriggerLocalServiceTest {
 		Assert.assertEquals(
 			expectedDispatchTrigger.getCronExpression(),
 			actualDispatchTrigger.getCronExpression());
+		Assert.assertEquals(
+			expectedDispatchTrigger.getTaskClusterMode(),
+			actualDispatchTrigger.getTaskClusterMode());
 		Assert.assertNotNull(actualDispatchTrigger.getStartDate());
 	}
 

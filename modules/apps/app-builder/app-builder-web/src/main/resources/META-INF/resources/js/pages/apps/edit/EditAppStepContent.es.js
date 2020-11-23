@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useEffect, useState} from 'react';
 
@@ -98,7 +99,14 @@ const EditAppStepContent = ({
 				</ClayLayout.ContentRow>
 			)}
 
-			<ClayLayout.ContentRow className="pl-4 pr-4 scrollable-container">
+			<ClayLayout.ContentRow
+				className={classNames(
+					'pl-4 pr-4',
+					showAlert
+						? 'scrollable-container-flatted'
+						: 'scrollable-container'
+				)}
+			>
 				<ClayLayout.ContentCol expand>
 					<ListItems
 						defaultLanguageId={defaultLanguageId}

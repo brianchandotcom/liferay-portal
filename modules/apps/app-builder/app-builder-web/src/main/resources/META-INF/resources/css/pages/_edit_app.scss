@@ -30,3 +30,7 @@
 .scrollable-container {
 	max-height: 25em;
 }
+
+.scrollable-container-flatted {
+	max-height: calc(376px - 56px);
+}

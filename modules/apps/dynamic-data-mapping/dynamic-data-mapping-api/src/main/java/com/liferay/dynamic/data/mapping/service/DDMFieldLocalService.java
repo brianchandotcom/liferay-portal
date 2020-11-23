@@ -15,6 +15,8 @@
 package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -121,6 +124,10 @@ public interface DDMFieldLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DDMField deleteDDMField(long fieldId) throws PortalException;
+
+	public void deleteDDMFields(long structureId);
+
+	public void deleteDDMFormValues(long storageId);
 
 	/**
 	 * @throws PortalException
@@ -237,6 +244,16 @@ public interface DDMFieldLocalService
 	public int getDDMFieldsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMFormValues getDDMFormValues(DDMForm ddmForm, long storageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDDMFormValuesCount(long structureId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDDMFormValuesCount(
+		long companyId, String fieldType, Map<String, Object> attributes);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -266,6 +283,10 @@ public interface DDMFieldLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMField updateDDMField(DDMField ddmField);
+
+	public void updateDDMFormValues(
+			long structureId, long storageId, DDMFormValues ddmFormValues)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)

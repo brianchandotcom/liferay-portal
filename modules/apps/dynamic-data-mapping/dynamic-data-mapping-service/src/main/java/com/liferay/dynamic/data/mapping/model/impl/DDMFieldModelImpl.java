@@ -90,7 +90,7 @@ public class DDMFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,structureVersionId LONG,parentFieldId LONG,storageId LONG,fieldName VARCHAR(75) null,fieldType VARCHAR(75) null,priority INTEGER,instanceId VARCHAR(75) null,localizable BOOLEAN,primary key (fieldId, ctCollectionId))";
+		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,structureVersionId LONG,parentFieldId LONG,storageId LONG,fieldName VARCHAR(255) null,fieldType VARCHAR(255) null,priority INTEGER,instanceId VARCHAR(75) null,localizable BOOLEAN,primary key (fieldId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMField";
 

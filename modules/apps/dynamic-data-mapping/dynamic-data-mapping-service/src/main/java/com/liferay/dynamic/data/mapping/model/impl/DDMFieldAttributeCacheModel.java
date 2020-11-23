@@ -149,7 +149,9 @@ public class DDMFieldAttributeCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -164,7 +166,7 @@ public class DDMFieldAttributeCacheModel
 		languageId = objectInput.readUTF();
 		attributeName = objectInput.readUTF();
 		smallAttributeValue = objectInput.readUTF();
-		largeAttributeValue = objectInput.readUTF();
+		largeAttributeValue = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -203,10 +205,10 @@ public class DDMFieldAttributeCacheModel
 		}
 
 		if (largeAttributeValue == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(largeAttributeValue);
+			objectOutput.writeObject(largeAttributeValue);
 		}
 	}
 

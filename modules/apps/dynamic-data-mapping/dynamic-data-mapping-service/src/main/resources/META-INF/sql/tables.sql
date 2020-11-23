@@ -52,8 +52,8 @@ create table DDMField (
 	structureVersionId LONG,
 	parentFieldId LONG,
 	storageId LONG,
-	fieldName VARCHAR(75) null,
-	fieldType VARCHAR(75) null,
+	fieldName VARCHAR(255) null,
+	fieldType VARCHAR(255) null,
 	priority INTEGER,
 	instanceId VARCHAR(75) null,
 	localizable BOOLEAN,
@@ -68,9 +68,9 @@ create table DDMFieldAttribute (
 	fieldId LONG,
 	storageId LONG,
 	languageId VARCHAR(75) null,
-	attributeName VARCHAR(75) null,
-	smallAttributeValue VARCHAR(75) null,
-	largeAttributeValue VARCHAR(75) null,
+	attributeName VARCHAR(255) null,
+	smallAttributeValue VARCHAR(255) null,
+	largeAttributeValue TEXT null,
 	primary key (fieldAttributeId, ctCollectionId)
 );
 

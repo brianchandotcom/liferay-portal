@@ -68,7 +68,7 @@ public class DDMFieldAttributeModelImpl
 		{"fieldId", Types.BIGINT}, {"storageId", Types.BIGINT},
 		{"languageId", Types.VARCHAR}, {"attributeName", Types.VARCHAR},
 		{"smallAttributeValue", Types.VARCHAR},
-		{"largeAttributeValue", Types.VARCHAR}
+		{"largeAttributeValue", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,11 +84,11 @@ public class DDMFieldAttributeModelImpl
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("attributeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("smallAttributeValue", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("largeAttributeValue", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("largeAttributeValue", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFieldAttribute (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldAttributeId LONG not null,companyId LONG,fieldId LONG,storageId LONG,languageId VARCHAR(75) null,attributeName VARCHAR(75) null,smallAttributeValue VARCHAR(75) null,largeAttributeValue VARCHAR(75) null,primary key (fieldAttributeId, ctCollectionId))";
+		"create table DDMFieldAttribute (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldAttributeId LONG not null,companyId LONG,fieldId LONG,storageId LONG,languageId VARCHAR(75) null,attributeName VARCHAR(255) null,smallAttributeValue VARCHAR(255) null,largeAttributeValue TEXT null,primary key (fieldAttributeId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMFieldAttribute";
 

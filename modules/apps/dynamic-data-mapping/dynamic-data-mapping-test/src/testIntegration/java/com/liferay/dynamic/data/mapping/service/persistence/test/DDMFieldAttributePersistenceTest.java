@@ -241,7 +241,7 @@ public class DDMFieldAttributePersistenceTest {
 			"DDMFieldAttribute", "mvccVersion", true, "ctCollectionId", true,
 			"fieldAttributeId", true, "companyId", true, "fieldId", true,
 			"storageId", true, "languageId", true, "attributeName", true,
-			"smallAttributeValue", true, "largeAttributeValue", true);
+			"smallAttributeValue", true);
 	}
 
 	@Test

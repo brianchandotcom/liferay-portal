@@ -213,6 +213,28 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraReleases;
 	}
 
+	public SpiraTestCaseComponent getSpiraTestCaseComponentByID(
+		int componentID) {
+
+		List<SpiraTestCaseComponent> spiraTestCaseComponents =
+			SpiraTestCaseComponent.getSpiraTestCaseComponents(
+				this,
+				new SearchQuery.SearchParameter(
+					SpiraTestCaseComponent.KEY_ID, componentID));
+
+		if (spiraTestCaseComponents.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case component ID " + componentID);
+		}
+
+		if (spiraTestCaseComponents.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case component ID " + componentID);
+		}
+
+		return spiraTestCaseComponents.get(0);
+	}
+
 	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(
 		int testCaseFolderID) {
 

@@ -17,12 +17,9 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -49,39 +46,31 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 			WebKeys.THEME_DISPLAY);
 	}
 
-	@Override
-	public Map<String, String> getData() {
-		return HashMapBuilder.put(
-			"add-layout-page-template-entry-url",
-			() -> {
-				long layoutPageTemplateCollectionId = ParamUtil.getLong(
-					_httpServletRequest, "layoutPageTemplateCollectionId");
+	public String getAddLayoutPageTemplateEntryURL() {
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			_httpServletRequest, "layoutPageTemplateCollectionId");
 
-				PortletURL addLayoutPageTemplateEntryURL =
-					_renderResponse.createActionURL();
+		PortletURL addLayoutPageTemplateEntryURL =
+			_renderResponse.createActionURL();
 
-				addLayoutPageTemplateEntryURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/layout_page_template_admin" +
-						"/add_layout_page_template_entry");
-				addLayoutPageTemplateEntryURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
-				addLayoutPageTemplateEntryURL.setParameter(
-					"layoutPageTemplateCollectionId",
-					String.valueOf(layoutPageTemplateCollectionId));
-				addLayoutPageTemplateEntryURL.setParameter(
-					"masterLayoutPlid",
-					String.valueOf(_layoutPageTemplateEntry.getPlid()));
+		addLayoutPageTemplateEntryURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template_admin/add_layout_page_template_entry");
+		addLayoutPageTemplateEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		addLayoutPageTemplateEntryURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(layoutPageTemplateCollectionId));
+		addLayoutPageTemplateEntryURL.setParameter(
+			"masterLayoutPlid",
+			String.valueOf(_layoutPageTemplateEntry.getPlid()));
 
-				return addLayoutPageTemplateEntryURL.toString();
-			}
-		).build();
+		return addLayoutPageTemplateEntryURL.toString();
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "add-master-page-action-option card-interactive " +
-			"card-interactive-primary";
+	public String getCssClass() {
+		return "card-interactive card-interactive-primary";
 	}
 
 	@Override

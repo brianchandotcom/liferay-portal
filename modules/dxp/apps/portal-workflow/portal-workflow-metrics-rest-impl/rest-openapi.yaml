@@ -604,6 +604,25 @@ paths:
                     description:
                         ""
             tags: ["Index"]
+    "/indexes/refresh":
+        patch:
+            operationId: patchIndexesRefresh
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Index"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Index"
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Index"]
     "/indexes/reindex":
         patch:
             operationId: patchIndexesReindex

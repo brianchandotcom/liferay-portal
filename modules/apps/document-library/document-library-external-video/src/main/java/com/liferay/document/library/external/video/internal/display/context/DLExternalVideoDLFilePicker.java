@@ -17,17 +17,11 @@ package com.liferay.document.library.external.video.internal.display.context;
 import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
-import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
-
-import javax.portlet.ResourceURL;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -118,30 +112,9 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 		httpServletRequest.setAttribute(
 			DLExternalVideo.class.getName(), _dlExternalVideo);
 		httpServletRequest.setAttribute(
-			DLExternalVideoWebKeys.GET_EXTERNAL_VIDEO_FIELDS_URL,
-			_getDLExternalVideoFieldsURL());
-		httpServletRequest.setAttribute(
-			DLExternalVideoWebKeys.NAMESPACE,
-			PortalUtil.getPortletNamespace(
-				DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO));
-		httpServletRequest.setAttribute(
 			DLExternalVideoWebKeys.ON_FILE_PICK_CALLBACK, _onFilePickCallback);
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
-	}
-
-	private String _getDLExternalVideoFieldsURL() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
-		ResourceURL getDLExternalVideoFieldsURL =
-			(ResourceURL)requestBackedPortletURLFactory.createResourceURL(
-				DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO);
-
-		getDLExternalVideoFieldsURL.setResourceID(
-			"/document_library_external_video/get_dl_external_video_fields");
-
-		return getDLExternalVideoFieldsURL.toString();
 	}
 
 	private final DLExternalVideo _dlExternalVideo;

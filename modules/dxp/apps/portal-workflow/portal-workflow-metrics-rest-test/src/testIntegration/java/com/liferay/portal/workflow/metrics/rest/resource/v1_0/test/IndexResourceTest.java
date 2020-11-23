@@ -15,11 +15,13 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Index;
+import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.IndexSerDes;
 
@@ -70,48 +72,14 @@ public class IndexResourceTest extends BaseIndexResourceTestCase {
 
 	@Override
 	@Test
+	public void testPatchIndexesRefresh() throws Exception {
+		_assertPatchIndexes(indexResource::patchIndexesRefreshHttpResponse);
+	}
+
+	@Override
+	@Test
 	public void testPatchIndexesReindex() throws Exception {
-		assertHttpResponseStatusCode(
-			400, indexResource.patchIndexesReindexHttpResponse(new Index()));
-
-		assertHttpResponseStatusCode(
-			400,
-			indexResource.patchIndexesReindexHttpResponse(
-				new Index() {
-					{
-						key = "Invalid";
-					}
-				}));
-
-		for (Index index : _getDefaultIndexes()) {
-			assertHttpResponseStatusCode(
-				204, indexResource.patchIndexesReindexHttpResponse(index));
-		}
-
-		assertHttpResponseStatusCode(
-			204,
-			indexResource.patchIndexesReindexHttpResponse(
-				new Index() {
-					{
-						key = Index.Group.METRIC.getValue();
-					}
-				}));
-		assertHttpResponseStatusCode(
-			204,
-			indexResource.patchIndexesReindexHttpResponse(
-				new Index() {
-					{
-						key = Index.Group.SLA.getValue();
-					}
-				}));
-		assertHttpResponseStatusCode(
-			204,
-			indexResource.patchIndexesReindexHttpResponse(
-				new Index() {
-					{
-						key = Index.Group.ALL.getValue();
-					}
-				}));
+		_assertPatchIndexes(indexResource::patchIndexesReindexHttpResponse);
 	}
 
 	@Rule
@@ -120,6 +88,54 @@ public class IndexResourceTest extends BaseIndexResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"key"};
+	}
+
+	private void _assertPatchIndexes(
+			UnsafeFunction<Index, HttpInvoker.HttpResponse, Exception>
+				patchIndexesHttpResponseUnsafeFunction)
+		throws Exception {
+
+		assertHttpResponseStatusCode(
+			400, patchIndexesHttpResponseUnsafeFunction.apply(new Index()));
+
+		assertHttpResponseStatusCode(
+			400,
+			patchIndexesHttpResponseUnsafeFunction.apply(
+				new Index() {
+					{
+						key = "Invalid";
+					}
+				}));
+
+		for (Index index : _getDefaultIndexes()) {
+			assertHttpResponseStatusCode(
+				204, patchIndexesHttpResponseUnsafeFunction.apply(index));
+		}
+
+		assertHttpResponseStatusCode(
+			204,
+			patchIndexesHttpResponseUnsafeFunction.apply(
+				new Index() {
+					{
+						key = Index.Group.METRIC.getValue();
+					}
+				}));
+		assertHttpResponseStatusCode(
+			204,
+			patchIndexesHttpResponseUnsafeFunction.apply(
+				new Index() {
+					{
+						key = Index.Group.SLA.getValue();
+					}
+				}));
+		assertHttpResponseStatusCode(
+			204,
+			patchIndexesHttpResponseUnsafeFunction.apply(
+				new Index() {
+					{
+						key = Index.Group.ALL.getValue();
+					}
+				}));
 	}
 
 	private List<Index> _getDefaultIndexes() {

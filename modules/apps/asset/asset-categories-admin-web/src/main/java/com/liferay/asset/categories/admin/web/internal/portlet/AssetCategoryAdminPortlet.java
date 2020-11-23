@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -188,7 +189,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 				LanguageUtil.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"x-was-created-successfully",
-					new Object[] {titleMap.get(themeDisplay.getLocale())}));
+					new Object[] {
+						HtmlUtil.escape(titleMap.get(themeDisplay.getLocale()))
+					}));
 		}
 		else {
 
@@ -210,7 +213,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 				LanguageUtil.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"x-was-updated-successfully",
-					new Object[] {titleMap.get(themeDisplay.getLocale())}));
+					new Object[] {
+						HtmlUtil.escape(titleMap.get(themeDisplay.getLocale()))
+					}));
 		}
 
 		sendRedirect(actionRequest, actionResponse);

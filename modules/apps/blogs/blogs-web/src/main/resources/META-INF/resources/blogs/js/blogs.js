@@ -12,769 +12,632 @@
  * details.
  */
 
-AUI.add(
-	'liferay-blogs',
-	(A) => {
-		var Lang = A.Lang;
+const CSS_INVISIBLE = 'invisible';
+const STR_BLANK = '';
+const STR_CHANGE = 'change';
+const STR_CLICK = 'click';
+const STR_SUFFIX = '...';
 
-		var CSS_INVISIBLE = 'invisible';
+const STRINGS = {
+	confirmDiscardImages: Liferay.Language.get(
+		'uploads-are-in-progress-confirmation'
+	),
+	saveDraftError: Liferay.Language.get('could-not-save-draft-to-the-server'),
+	saveDraftMessage: Liferay.Language.get('saving-draft'),
+	savedAtMessage: Liferay.Language.get('entry-saved-at-x'),
+	savedDraftAtMessage: Liferay.Language.get('draft-saved-at-x'),
+	titleRequiredAtPublish: Liferay.Language.get(
+		'this-field-is-required-to-publish-the-entry'
+	),
+};
 
-		var STR_BLANK = '';
+export default class Blogs {
+	constructor({
+		constants,
+		descriptionLength = 400,
+		editEntryURL,
+		entry,
+		namespace,
+		saveInterval = 30000,
+		strings = STRINGS,
+	}) {
+		this._config = {
+			constants,
+			descriptionLength,
+			editEntryURL,
+			entry,
+			namespace,
+			saveInterval,
+			strings,
+		};
 
-		var STR_CHANGE = 'change';
+		AUI().use('liferay-form', () => {
+			this._rootNode = document.getElementById(
+				`${this._config.namespace}fm`
+			);
 
-		var STR_CLICK = 'click';
+			this._bindUI();
 
-		var STR_SUFFIX = '...';
+			const draftEntry = entry && entry.status === constants.STATUS_DRAFT;
 
-		var Blogs = A.Component.create({
-			ATTRS: {
-				constants: {
-					validator: Lang.isObject,
-				},
+			const userEntry =
+				entry && entry.userId === themeDisplay.getUserId();
 
-				descriptionLength: {
-					validator: Lang.isNumber,
-					value: 400,
-				},
+			if (!entry || (userEntry && draftEntry)) {
+				this._initDraftSaveInterval();
+			}
 
-				editEntryURL: {
-					validator: Lang.isString,
-				},
+			const customDescriptionEnabled = entry && entry.customDescription;
 
-				entry: {
-					validator: Lang.isObject,
-				},
+			this._customDescription = customDescriptionEnabled
+				? entry.description
+				: STR_BLANK;
+			this._shortenDescription = !customDescriptionEnabled;
 
-				saveInterval: {
-					value: 30000,
-				},
+			this.setDescription(
+				window[`${this._config.namespace}contentEditor`].getText()
+			);
+		});
+	}
 
-				strings: {
-					validator: Lang.isObject,
-					value: {
-						confirmDiscardImages: Liferay.Language.get(
-							'uploads-are-in-progress-confirmation'
-						),
-						saveDraftError: Liferay.Language.get(
-							'could-not-save-draft-to-the-server'
-						),
-						saveDraftMessage: Liferay.Language.get('saving-draft'),
-						savedAtMessage: Liferay.Language.get(
-							'entry-saved-at-x'
-						),
-						savedDraftAtMessage: Liferay.Language.get(
-							'draft-saved-at-x'
-						),
-						titleRequiredAtPublish: Liferay.Language.get(
-							'this-field-is-required-to-publish-the-entry'
-						),
-					},
-				},
-			},
+	_automaticURL() {
+		const automaticURLInput = document.querySelector(
+			`input[name=${this._config.namespace}automaticURL]:checked`
+		);
 
-			AUGMENTS: [Liferay.PortletBase],
+		return automaticURLInput.value === 'true';
+	}
 
-			EXTENDS: A.Base,
+	_beforePublishBtnClick() {
+		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
-			NAME: 'liferay-blogs',
+		form.addRule(
+			document.getElementById(`${this._config.namespace}title`),
+			'required',
+			this._config.strings.titleRequiredAtPublish
+		);
+	}
 
-			NS: 'liferay-blogs',
+	_beforeSaveBtnClick() {
+		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
-			prototype: {
-				_automaticURL() {
-					return (
-						this.one('#urlOptions').one('input:checked').val() ===
-						'true'
-					);
-				},
+		form.removeRule(
+			document.getElementById(`${this._config.namespace}title`),
+			'required'
+		);
+	}
 
-				_beforePublishBtnClick() {
-					var instance = this;
+	_bindUI() {
+		this._captionNode = this._rootNode.querySelector(
+			'.cover-image-caption'
+		);
 
-					var form = Liferay.Form.get(instance.ns('fm'));
+		Liferay.on('coverImageDeleted', this._removeCaption, this);
+		Liferay.on(
+			['coverImageUploaded', 'coverImageSelected'],
+			this._showCaption,
+			this
+		);
 
-					var strings = instance.get('strings');
+		const publishButton = document.getElementById(
+			`${this._config.namespace}publishButton`
+		);
 
-					form.addRule(
-						instance.one('#title'),
-						'required',
-						strings.titleRequiredAtPublish
-					);
-				},
+		if (publishButton) {
+			publishButton.addEventListener(STR_CLICK, () => {
+				this._beforePublishBtnClick();
+				this._checkImagesBeforeSave(false, false);
+			});
+		}
 
-				_beforeSaveBtnClick() {
-					var instance = this;
+		const saveButton = document.getElementById(
+			`${this._config.namespace}saveButton`
+		);
 
-					var form = Liferay.Form.get(instance.ns('fm'));
+		if (saveButton) {
+			saveButton.addEventListener(STR_CLICK, () => {
+				this._beforeSaveBtnClick();
+				this._checkImagesBeforeSave(true, false);
+			});
+		}
 
-					form.removeRule(instance.one('#title'), 'required');
-				},
+		const customAbstractOptions = document.querySelectorAll(
+			`input[name=${this._config.namespace}customAbstract]`
+		);
 
-				_bindUI() {
-					var instance = this;
+		if (customAbstractOptions.length) {
+			customAbstractOptions.forEach((option) => {
+				option.addEventListener(
+					STR_CHANGE,
+					this._configureAbstract.bind(this)
+				);
+			});
+		}
 
-					instance._captionNode = instance.one(
-						'.cover-image-caption'
-					);
+		const urlOptions = document.querySelectorAll(
+			`input[name=${this._config.namespace}urlOptions]`
+		);
 
-					var eventHandles = [
-						Liferay.on(
-							'coverImageDeleted',
-							instance._removeCaption,
-							instance
-						),
-						Liferay.on(
-							['coverImageUploaded', 'coverImageSelected'],
-							instance._showCaption,
-							instance
-						),
-					];
+		if (urlOptions.length) {
+			urlOptions.forEach((option) => {
+				option.addEventListener(STR_CHANGE, this.urlOptions.bind(this));
+			});
+		}
+	}
 
-					var publishButton = instance.one('#publishButton');
+	_checkImagesBeforeSave(draft, ajax) {
+		const instance = this;
 
-					if (publishButton) {
-						eventHandles.push(
-							publishButton.before(
-								STR_CLICK,
-								A.bind('_beforePublishBtnClick', instance)
-							),
-							publishButton.on(
-								STR_CLICK,
-								A.bind(
-									'_checkImagesBeforeSave',
-									instance,
-									false,
-									false
-								)
-							)
-						);
-					}
+		const tempImages = this._getTempImages();
 
-					var saveButton = instance.one('#saveButton');
+		if (tempImages.length) {
+			if (confirm(this._config.strings.confirmDiscardImages)) {
+				tempImages.each((image) => {
+					image.parentElement.remove();
+				});
 
-					if (saveButton) {
-						eventHandles.push(
-							saveButton.before(
-								STR_CLICK,
-								A.bind('_beforeSaveBtnClick', instance)
-							),
-							saveButton.on(
-								STR_CLICK,
-								A.bind(
-									'_checkImagesBeforeSave',
-									instance,
-									true,
-									false
-								)
-							)
-						);
-					}
+				instance._saveEntry(draft, ajax);
+			}
+		}
+		else {
+			instance._saveEntry(draft, ajax);
+		}
+	}
 
-					var customAbstractOptions = instance.one(
-						'#entryAbstractOptions'
-					);
+	_configureAbstract(event) {
+		const target = event.target;
 
-					if (customAbstractOptions) {
-						eventHandles.push(
-							customAbstractOptions.delegate(
-								STR_CHANGE,
-								instance._configureAbstract,
-								'input[type="radio"]',
-								instance
-							)
-						);
-					}
+		let description = this._customDescription;
 
-					var urlOptions = instance.one('#urlOptions');
+		this._shortenDescription = target.value === 'false';
 
-					eventHandles.push(
-						urlOptions.delegate(
-							STR_CHANGE,
-							instance._onChangeURLOptions,
-							'input[type="radio"]',
-							instance
-						)
-					);
+		if (this._shortenDescription) {
+			this._customDescription = document.getElementById(
+				`${this._config.namespace}description`
+			).value;
 
-					instance._eventHandles = eventHandles;
-				},
+			description = window[
+				`${this._config.namespace}contentEditor`
+			].getText();
+		}
 
-				_checkImagesBeforeSave(draft, ajax) {
-					var instance = this;
+		this.setDescription(description);
+	}
 
-					if (instance._hasTempImages()) {
-						if (
-							confirm(
-								instance.get('strings').confirmDiscardImages
-							)
-						) {
-							instance._getTempImages().each((node) => {
-								node.ancestor().remove();
-							});
+	_getContentImages(content) {
+		const contentDom = document.createElement('div');
 
-							instance._saveEntry(draft, ajax);
-						}
-					}
-					else {
-						instance._saveEntry(draft, ajax);
-					}
-				},
+		contentDom.innerHTML = content;
 
-				_configureAbstract(event) {
-					var instance = this;
+		const contentImages = contentDom.getElementsByTagName('img');
 
-					var target = event.target;
+		const finalImages = [];
 
-					var description = instance._customDescription;
+		for (let i = 0; i < contentImages.length; i++) {
+			const currentImage = contentImages[i];
 
-					instance._shortenDescription = target.val() === 'false';
+			if (
+				currentImage.parentElement.tagName.toLowerCase() === 'picture'
+			) {
+				finalImages.push(currentImage.parentElement);
+			}
+			else {
+				finalImages.push(currentImage);
+			}
+		}
 
-					if (instance._shortenDescription) {
-						instance._customDescription = instance
-							.one('#description')
-							.val();
+		return finalImages;
+	}
 
-						description = window[
-							instance.ns('contentEditor')
-						].getText();
-					}
+	_getPrincipalForm() {
+		return this._rootNode;
+	}
 
-					instance.setDescription(description);
-				},
+	_getTempImages() {
+		return this._rootNode.querySelectorAll('img[data-random-id]');
+	}
 
-				_getContentImages(content) {
-					var contentDom = document.createElement('div');
+	_hasTempImages() {
+		return this._getTempImages().length > 0;
+	}
 
-					contentDom.innerHTML = content;
+	_initDraftSaveInterval() {
+		this._saveDraftTimer = setInterval(() => {
+			if (!this._hasTempImages()) {
+				this._saveEntry(true, true);
+			}
+		}, this._config.saveInterval);
 
-					var contentImages = contentDom.getElementsByTagName('img');
+		const entry = this._config.entry;
 
-					var finalImages = [];
+		this._oldContent = entry ? entry.content : STR_BLANK;
+		this._oldSubtitle = entry ? entry.subtitle : STR_BLANK;
+		this._oldTitle = entry ? entry.title : STR_BLANK;
+	}
 
-					for (var i = 0; i < contentImages.length; i++) {
-						var currentImage = contentImages[i];
+	_onChangeURLOptions() {
+		const urlTitleInput = document.getElementById(
+			`${this._config.namespace}urlTitle`
+		);
+		const urlTitleInputLabel = document.querySelector(
+			`[for="${this._config.namespace}urlTitle]`
+		);
 
-						if (
-							currentImage.parentElement.tagName.toLowerCase() ===
-							'picture'
-						) {
-							finalImages.push(currentImage.parentElement);
+		if (this._automaticURL()) {
+			this._lastCustomURL = urlTitleInput.value;
+
+			const title = document.getElementById(
+				`${this._config.namespace}title`
+			).value;
+
+			this.updateFriendlyURL(title);
+
+			Liferay.Util.toggleDisabled(urlTitleInput, true);
+			Liferay.Util.toggleDisabled(urlTitleInputLabel, true);
+		}
+		else {
+			urlTitleInput.value = this._lastCustomURL || urlTitleInput.value;
+
+			Liferay.Util.toggleDisabled(urlTitleInput, false);
+			Liferay.Util.toggleDisabled(urlTitleInputLabel, false);
+		}
+	}
+
+	_removeCaption() {
+		const captionNode = this._captionNode;
+
+		if (captionNode) {
+			captionNode.classList.add(CSS_INVISIBLE);
+		}
+
+		window[`${this._config.namespace}coverImageCaptionEditor`].setHTML(
+			STR_BLANK
+		);
+	}
+
+	_saveEntry(draft, ajax) {
+		const constants = this._config.constants;
+		const entry = this._config.entry;
+		const namespace = this._config.namespace;
+
+		const content = window[`${namespace}contentEditor`].getHTML();
+
+		const coverImageCaption = window[
+			`${namespace}coverImageCaptionEditor`
+		].getHTML();
+		const subtitle = document.getElementById(`${namespace}subtitle`).value;
+		const title = document.getElementById(`${namespace}title`).value;
+
+		const automaticURL = document.querySelector(
+			`input[name=${namespace}automaticURL]:checked`
+		).value;
+
+		const urlTitle = automaticURL
+			? ''
+			: document.getElementById(`${namespace}urlTitle`).value;
+
+		const form = this._getPrincipalForm();
+
+		if (draft && ajax) {
+			const hasData =
+				content !== STR_BLANK && (draft || title !== STR_BLANK);
+
+			const hasChanged =
+				this._oldContent !== content ||
+				this._oldSubtitle !== subtitle ||
+				this._oldTitle !== title;
+
+			if (hasData && hasChanged) {
+				const strings = this._config.strings;
+
+				const saveStatus = document.getElementById(
+					`${namespace}saveStatus`
+				);
+
+				const allowPingbacks = document.getElementById(
+					`${namespace}allowPingbacks`
+				);
+				const allowTrackbacks = document.getElementById(
+					`${namespace}allowTrackbacks`
+				);
+
+				const assetTagNames = document.getElementById(
+					`${namespace}assetTagNames`
+				);
+
+				const data = {
+					[`${namespace}allowPingbacks`]:
+						allowPingbacks && allowPingbacks.value,
+					[`${namespace}allowTrackbacks`]:
+						allowTrackbacks && allowTrackbacks.value,
+					[`${namespace}assetTagNames`]: assetTagNames
+						? assetTagNames.value
+						: '',
+					[`${namespace}cmd`]: constants.ADD,
+					[`${namespace}content`]: content,
+					[`${namespace}coverImageCaption`]: coverImageCaption,
+					[`${namespace}coverImageFileEntryCropRegion`]: document.getElementById(
+						`${namespace}coverImageFileEntryCropRegion`
+					).value,
+					[`${namespace}coverImageFileEntryId`]: document.getElementById(
+						`${namespace}coverImageFileEntryId`
+					).value,
+					[`${namespace}displayDateAmPm`]: document.getElementById(
+						`${namespace}displayDateAmPm`
+					).value,
+					[`${namespace}displayDateDay`]: document.getElementById(
+						`${namespace}displayDateDay`
+					).value,
+					[`${namespace}displayDateHour`]: document.getElementById(
+						`${namespace}displayDateHour`
+					).value,
+					[`${namespace}displayDateMinute`]: document.getElementById(
+						`${namespace}displayDateMinute`
+					).value,
+					[`${namespace}displayDateMonth`]: document.getElementById(
+						`${namespace}displayDateMonth`
+					).value,
+					[`${namespace}displayDateYear`]: document.getElementById(
+						`${namespace}displayDateYear`
+					).value,
+					[`${namespace}entryId`]: document.getElementById(
+						`${namespace}entryId`
+					).value,
+					[`${namespace}referringPortletResource`]: document.getElementById(
+						`${namespace}referringPortletResource`
+					).value,
+					[`${namespace}subtitle`]: subtitle,
+					[`${namespace}title`]: title,
+					[`${namespace}urlTitle`]: urlTitle,
+					[`${namespace}workflowAction`]: constants.ACTION_SAVE_DRAFT,
+				};
+
+				const customAttributes = document.querySelectorAll(
+					`[name=${namespace}ExpandoAttribute`
+				);
+
+				customAttributes.forEach((item) => {
+					data[item.getAttribute('name')] = item.value;
+				});
+
+				Liferay.Util.toggleDisabled(
+					document.getElementById(`${namespace}publishButton`),
+					true
+				);
+
+				this._updateStatus(strings.saveDraftMessage);
+
+				const body = new URLSearchParams(data);
+
+				Liferay.Util.fetch(this._config.editEntryURL, {
+					body,
+					method: 'POST',
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						this._oldContent = content;
+						this._oldSubtitle = subtitle;
+						this._oldTitle = title;
+
+						const message = data;
+
+						if (message) {
+							document.getElementById(
+								`${namespace}coverImageFileEntryId`
+							).value = message.coverImageFileEntryId;
+
+							document.getElementById(
+								`${namespace}entryId`
+							).value = message.entryId;
+
+							if (message.content) {
+								this._updateContentImages(
+									message.content,
+									message.attributeDataImageId
+								);
+							}
+
+							if (saveStatus) {
+								const saveText =
+									entry && entry.pending
+										? strings.savedAtMessage
+										: strings.savedDraftAtMessage;
+
+								const now = saveText.replace(
+									/\{0\}/gim,
+									new Date().toString()
+								);
+
+								this._updateStatus(now);
+							}
 						}
 						else {
-							finalImages.push(currentImage);
+
+							//TODO: check saveStatus.hide(); === saveStatus.classList.add(CSS_INVISIBLE);
+
+							saveStatus.classList.add(CSS_INVISIBLE);
 						}
-					}
 
-					return finalImages;
-				},
-
-				_getPrincipalForm(formName) {
-					var instance = this;
-
-					return instance.one(
-						'form[name=' + instance.ns(formName || 'fm') + ']'
-					);
-				},
-
-				_getTempImages() {
-					var instance = this;
-
-					return instance.all('img[data-random-id]');
-				},
-
-				_hasTempImages() {
-					var instance = this;
-
-					return instance._getTempImages().size() > 0;
-				},
-
-				_initDraftSaveInterval() {
-					var instance = this;
-
-					instance._saveDraftTimer = A.later(
-						instance.get('saveInterval'),
-						instance,
-						() => {
-							if (!instance._hasTempImages()) {
-								instance._saveEntry(true, true);
-							}
-						},
-						null,
-						true
-					);
-
-					var entry = instance.get('entry');
-
-					instance._oldContent = entry ? entry.content : STR_BLANK;
-					instance._oldSubtitle = entry ? entry.subtitle : STR_BLANK;
-					instance._oldTitle = entry ? entry.title : STR_BLANK;
-				},
-
-				_onChangeURLOptions() {
-					var instance = this;
-
-					var urlTitleInput = instance.one('#urlTitle');
-					var urlTitleInputLabel = instance.one(
-						'[for="' + instance.ns('urlTitle') + '"]'
-					);
-
-					if (instance._automaticURL()) {
-						instance._lastCustomURL = urlTitleInput.val();
-
-						var title = instance.one('#title').val();
-
-						instance.updateFriendlyURL(title);
-
-						Liferay.Util.toggleDisabled(urlTitleInput, true);
-						Liferay.Util.toggleDisabled(urlTitleInputLabel, true);
-					}
-					else {
-						urlTitleInput.val(
-							instance._lastCustomURL || urlTitleInput.val()
-						);
-
-						Liferay.Util.toggleDisabled(urlTitleInput, false);
-						Liferay.Util.toggleDisabled(urlTitleInputLabel, false);
-					}
-				},
-
-				_removeCaption() {
-					var instance = this;
-
-					var captionNode = instance._captionNode;
-
-					if (captionNode) {
-						captionNode.addClass(CSS_INVISIBLE);
-					}
-
-					window[instance.ns('coverImageCaptionEditor')].setHTML(
-						STR_BLANK
-					);
-				},
-
-				_saveEntry(draft, ajax) {
-					var instance = this;
-
-					var constants = instance.get('constants');
-
-					var content = window[
-						instance.ns('contentEditor')
-					].getHTML();
-					var coverImageCaption = window[
-						instance.ns('coverImageCaptionEditor')
-					].getHTML();
-					var subtitle = instance.one('#subtitle').val();
-					var title = instance.one('#title').val();
-
-					var automaticURL = instance
-						.one(
-							'input[name=' +
-								instance.ns('automaticURL') +
-								']:checked'
-						)
-						.val();
-
-					var urlTitle = automaticURL
-						? ''
-						: instance.one('#urlTitle').val();
-
-					var form = instance._getPrincipalForm();
-
-					if (draft && ajax) {
-						var hasData =
-							content !== STR_BLANK &&
-							(draft || title !== STR_BLANK);
-
-						var hasChanged =
-							instance._oldContent !== content ||
-							instance._oldSubtitle !== subtitle ||
-							instance._oldTitle !== title;
-
-						if (hasData && hasChanged) {
-							var strings = instance.get('strings');
-
-							var saveStatus = instance.one('#saveStatus');
-
-							var allowPingbacks = instance.one(
-								'#allowPingbacks'
-							);
-							var allowTrackbacks = instance.one(
-								'#allowTrackbacks'
-							);
-
-							var assetTagNames = instance.one('#assetTagNames');
-
-							var data = instance.ns({
-								allowPingbacks:
-									allowPingbacks && allowPingbacks.val(),
-								allowTrackbacks:
-									allowTrackbacks && allowTrackbacks.val(),
-								assetTagNames: assetTagNames
-									? assetTagNames.val()
-									: '',
-								cmd: constants.ADD,
-								content,
-								coverImageCaption,
-								coverImageFileEntryCropRegion: instance
-									.one('#coverImageFileEntryCropRegion')
-									.val(),
-								coverImageFileEntryId: instance
-									.one('#coverImageFileEntryId')
-									.val(),
-								displayDateAmPm: instance
-									.one('#displayDateAmPm')
-									.val(),
-								displayDateDay: instance
-									.one('#displayDateDay')
-									.val(),
-								displayDateHour: instance
-									.one('#displayDateHour')
-									.val(),
-								displayDateMinute: instance
-									.one('#displayDateMinute')
-									.val(),
-								displayDateMonth: instance
-									.one('#displayDateMonth')
-									.val(),
-								displayDateYear: instance
-									.one('#displayDateYear')
-									.val(),
-								entryId: instance.one('#entryId').val(),
-								referringPortletResource: instance
-									.one('#referringPortletResource')
-									.val(),
-								subtitle,
-								title,
-								urlTitle,
-								workflowAction: constants.ACTION_SAVE_DRAFT,
-							});
-
-							var customAttributes = form.all(
-								'[name^=' + instance.NS + 'ExpandoAttribute]'
-							);
-
-							customAttributes.each((item) => {
-								data[item.attr('name')] = item.val();
-							});
-
-							Liferay.Util.toggleDisabled(
-								instance.one('#publishButton'),
-								true
-							);
-
-							instance._updateStatus(strings.saveDraftMessage);
-
-							const body = new URLSearchParams(data);
-
-							Liferay.Util.fetch(instance.get('editEntryURL'), {
-								body,
-								method: 'POST',
-							})
-								.then((response) => {
-									return response.json();
-								})
-								.then((data) => {
-									instance._oldContent = content;
-									instance._oldSubtitle = subtitle;
-									instance._oldTitle = title;
-
-									var message = data;
-
-									if (message) {
-										instance
-											.one('#coverImageFileEntryId')
-											.val(message.coverImageFileEntryId);
-
-										instance
-											.one('#entryId')
-											.val(message.entryId);
-
-										if (message.content) {
-											instance._updateContentImages(
-												message.content,
-												message.attributeDataImageId
-											);
-										}
-
-										if (saveStatus) {
-											var entry = instance.get('entry');
-
-											var saveText =
-												entry && entry.pending
-													? strings.savedAtMessage
-													: strings.savedDraftAtMessage;
-
-											var now = saveText.replace(
-												/\{0\}/gim,
-												new Date().toString()
-											);
-
-											instance._updateStatus(now);
-										}
-									}
-									else {
-										saveStatus.hide();
-									}
-
-									Liferay.Util.toggleDisabled(
-										instance.one('#publishButton'),
-										false
-									);
-								})
-								.catch(() => {
-									instance._updateStatus(
-										strings.saveDraftError
-									);
-								});
-						}
-					}
-					else {
-						instance
-							.one('#' + constants.CMD)
-							.val(
-								instance.get('entry')
-									? constants.UPDATE
-									: constants.ADD
-							);
-
-						instance.one('#content').val(content);
-						instance
-							.one('#coverImageCaption')
-							.val(coverImageCaption);
-						instance
-							.one('#workflowAction')
-							.val(
-								draft
-									? constants.ACTION_SAVE_DRAFT
-									: constants.ACTION_PUBLISH
-							);
-
-						submitForm(form);
-					}
-				},
-
-				_shorten(text) {
-					var instance = this;
-
-					var descriptionLength = instance.get('descriptionLength');
-
-					if (text.length > descriptionLength) {
-						text = text.substring(0, descriptionLength);
-
-						if (STR_SUFFIX.length < descriptionLength) {
-							var spaceIndex = text.lastIndexOf(
-								' ',
-								descriptionLength - STR_SUFFIX.length
-							);
-
-							text = text
-								.substring(0, spaceIndex)
-								.concat(STR_SUFFIX);
-						}
-					}
-
-					return text;
-				},
-
-				_showCaption() {
-					var instance = this;
-
-					var captionNode = instance._captionNode;
-
-					if (captionNode) {
-						captionNode.removeClass(CSS_INVISIBLE);
-					}
-				},
-
-				_updateContentImages(finalContent, attributeDataImageId) {
-					var instance = this;
-
-					var originalContent = window[
-						instance.ns('contentEditor')
-					].getHTML();
-
-					var originalContentImages = instance._getContentImages(
-						originalContent
-					);
-
-					var finalContentImages = instance._getContentImages(
-						finalContent
-					);
-
-					if (
-						originalContentImages.length !=
-						finalContentImages.length
-					) {
-						return;
-					}
-
-					for (var i = 0; i < originalContentImages.length; i++) {
-						var image = originalContentImages[i];
-
-						var tempImageId = image.getAttribute(
-							attributeDataImageId
-						);
-
-						if (tempImageId) {
-							var el = instance.one(
-								'img[' +
-									attributeDataImageId +
-									'"=' +
-									tempImageId +
-									'"]'
-							);
-
-							if (el) {
-								var finalImage = finalContentImages[i];
-
-								if (el.get('tagName') === finalImage.tagName) {
-									el.removeAttribute('data-cke-saved-src');
-
-									for (
-										var j = 0;
-										j < finalImage.attributes.length;
-										j++
-									) {
-										var attr = finalImage.attributes[j];
-
-										el.attr(attr.name, attr.value);
-									}
-
-									el.removeAttribute(attributeDataImageId);
-								}
-								else {
-									el.replace(finalContentImages[i]);
-								}
-							}
-						}
-					}
-				},
-
-				_updateStatus(text) {
-					var instance = this;
-
-					var saveStatus = instance.one('#saveStatus');
-
-					if (saveStatus) {
-						saveStatus.html(text);
-					}
-				},
-
-				destructor() {
-					var instance = this;
-
-					if (instance._saveDraftTimer) {
-						instance._saveDraftTimer.cancel();
-					}
-
-					new A.EventHandle(instance._eventHandles).detach();
-				},
-
-				initializer() {
-					var instance = this;
-
-					instance._bindUI();
-
-					var entry = instance.get('entry');
-
-					var draftEntry =
-						entry &&
-						entry.status === instance.get('constants').STATUS_DRAFT;
-
-					var userEntry =
-						entry && entry.userId === themeDisplay.getUserId();
-
-					if (!entry || (userEntry && draftEntry)) {
-						instance._initDraftSaveInterval();
-					}
-
-					var customDescriptionEnabled =
-						entry && entry.customDescription;
-
-					instance._customDescription = customDescriptionEnabled
-						? entry.description
-						: STR_BLANK;
-					instance._shortenDescription = !customDescriptionEnabled;
-
-					instance.setDescription(
-						window[instance.ns('contentEditor')].getText()
-					);
-				},
-
-				setCustomDescription(text) {
-					var instance = this;
-
-					instance._customDescription = text;
-				},
-
-				setDescription(text) {
-					var instance = this;
-
-					var description = instance._customDescription;
-
-					if (instance._shortenDescription) {
-						description = instance._shorten(text);
-					}
-
-					var descriptionNode = instance.one('#description');
-
-					descriptionNode.val(description);
-
-					descriptionNode.attr(
-						'disabled',
-						instance._shortenDescription
-					);
-
-					var descriptionLabelNode = instance.one(
-						'[for="' + instance.ns('description') + '"]'
-					);
-
-					var form = Liferay.Form.get(instance.ns('fm'));
-
-					if (!instance._shortenDescription) {
-						Liferay.Util.toggleDisabled(descriptionNode, false);
 						Liferay.Util.toggleDisabled(
-							descriptionLabelNode,
+							document.getElementById(
+								`${namespace}publishButton`
+							),
 							false
 						);
+					})
+					.catch(() => {
+						this._updateStatus(strings.saveDraftError);
+					});
+			}
+		}
+		else {
+			document.getElementById(
+				`${namespace}${constants.CMD}`
+			).value = entry ? constants.UPDATE : constants.ADD;
 
-						form.addRule(instance.ns('description'), 'required');
+			document.getElementById(`${namespace}content`).value = content;
+			document.getElementById(
+				`${namespace}coverImageCaption`
+			).value = coverImageCaption;
+			document.getElementById(`${namespace}workflowAction`).value = draft
+				? constants.ACTION_SAVE_DRAFT
+				: constants.ACTION_PUBLISH;
+
+			submitForm(form);
+		}
+	}
+
+	_shorten(text) {
+		const descriptionLength = this._config.descriptionLength;
+
+		if (text.length > descriptionLength) {
+			text = text.substring(0, descriptionLength);
+
+			if (STR_SUFFIX.length < descriptionLength) {
+				const spaceIndex = text.lastIndexOf(
+					' ',
+					descriptionLength - STR_SUFFIX.length
+				);
+
+				text = text.substring(0, spaceIndex).concat(STR_SUFFIX);
+			}
+		}
+
+		return text;
+	}
+
+	_showCaption() {
+		const captionNode = this._captionNode;
+
+		if (captionNode) {
+			captionNode.removeClass(CSS_INVISIBLE);
+		}
+	}
+
+	_updateContentImages(finalContent, attributeDataImageId) {
+		const originalContent = window[
+			`${this._config.namespace}contentEditor`
+		].getHTML();
+
+		const originalContentImages = this._getContentImages(originalContent);
+
+		const finalContentImages = this._getContentImages(finalContent);
+
+		if (originalContentImages.length != finalContentImages.length) {
+			return;
+		}
+
+		for (let i = 0; i < originalContentImages.length; i++) {
+			const image = originalContentImages[i];
+
+			const tempImageId = image.getAttribute(attributeDataImageId);
+
+			if (tempImageId) {
+				const el = document.querySelector(
+
+					// TODO it´s working old `img[${attributeDataImageId}"=${tempImageId}"]`
+					// check`img[${attributeDataImageId}="${tempImageId}"]`
+
+					`img[${attributeDataImageId}"=${tempImageId}"]`
+				);
+
+				if (el) {
+					const finalImage = finalContentImages[i];
+
+					if (el.tagName === finalImage.tagName) {
+						el.removeAttribute('data-cke-saved-src');
+
+						for (let j = 0; j < finalImage.attributes.length; j++) {
+							const attr = finalImage.attributes[j];
+
+							el.setAttribute(attr.name, attr.value);
+						}
+
+						el.removeAttribute(attributeDataImageId);
 					}
 					else {
-						Liferay.Util.toggleDisabled(descriptionNode, true);
-						Liferay.Util.toggleDisabled(descriptionLabelNode, true);
 
-						form.removeRule(instance.ns('description'), 'required');
+						// TODO: check AUI_Element.replace === el.replaceWith
+
+						el.replaceWith(finalContentImages[i]);
 					}
-				},
-
-				updateFriendlyURL(title) {
-					var instance = this;
-
-					var urlTitleInput = instance.one('#urlTitle');
-
-					var friendlyURLEmpty = !urlTitleInput.val();
-
-					if (
-						instance._automaticURL() &&
-						(friendlyURLEmpty ||
-							instance._originalFriendlyURLChanged)
-					) {
-						urlTitleInput.val(
-							Liferay.Util.normalizeFriendlyURL(title)
-						);
-					}
-
-					instance._originalFriendlyURLChanged = true;
-				},
-			},
-		});
-
-		Liferay.Blogs = Blogs;
-	},
-	'',
-	{
-		requires: ['aui-base', 'liferay-form'],
+				}
+			}
+		}
 	}
-);
+
+	_updateStatus(text) {
+		const saveStatus = document.getElementById(
+			`${this._config.namespace}saveStatus`
+		);
+
+		if (saveStatus) {
+			saveStatus.innerHTML = text;
+		}
+	}
+
+	destructor() {
+		if (this._saveDraftTimer) {
+			clearInterval(this._saveDraftTimer);
+		}
+
+		// TODO: new A.EventHandle(instance._eventHandles).detach();
+
+	}
+
+	setCustomDescription(text) {
+		this._customDescription = text;
+	}
+
+	setDescription(text) {
+		let description = this._customDescription;
+
+		if (this._shortenDescription) {
+			description = this._shorten(text);
+		}
+
+		const descriptionNode = document.getElementById(
+			`${this._config.namespace}description`
+		);
+
+		descriptionNode.value = description;
+
+		descriptionNode.setAttribute('disabled', this._shortenDescription);
+
+		const descriptionLabelNode = this._rootNode.querySelector(
+			`[for="${this._config.namespace}description"]`
+		);
+
+		const form = Liferay.Form.get(`${this._config.namespace}fm`);
+
+		if (!this._shortenDescription) {
+			Liferay.Util.toggleDisabled(descriptionNode, false);
+			Liferay.Util.toggleDisabled(descriptionLabelNode, false);
+
+			form.addRule(`${this._config.namespace}description`, 'required');
+		}
+		else {
+			Liferay.Util.toggleDisabled(descriptionNode, true);
+			Liferay.Util.toggleDisabled(descriptionLabelNode, true);
+
+			form.removeRule(`${this._config.namespace}description`, 'required');
+		}
+	}
+
+	updateFriendlyURL(title) {
+		const urlTitleInput = document.getElementById(
+			`${this._config.namespace}urlTitle`
+		);
+
+		const friendlyURLEmpty = !urlTitleInput.value;
+
+		if (
+			this._automaticURL() &&
+			(friendlyURLEmpty || this._originalFriendlyURLChanged)
+		) {
+			urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(title);
+		}
+
+		this._originalFriendlyURLChanged = true;
+	}
+}

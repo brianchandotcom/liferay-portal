@@ -25,6 +25,15 @@
 			color: $gray-400;
 			font-size: 2rem;
 		}
+
+		&-text {
+			bottom: 1rem;
+			color: $secondary;
+			font-weight: 600;
+			position: absolute;
+			text-align: center;
+			width: 100%;
+		}
 	}
 
 	&-aspect-ratio {

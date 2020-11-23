@@ -31,8 +31,9 @@ const FilePickerVideoPreview = ({
 	onFilePickCallback,
 }) => {
 	const inputName = 'externalVideoURLInput';
-	const [url, setUrl] = useState(externalVideoURL);
+	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [url, setUrl] = useState(externalVideoURL);
 	const [videoHtml, setVideoHtml] = useState(externalVideoHTML);
 	const isMounted = useIsMounted();
 
@@ -57,12 +58,19 @@ const FilePickerVideoPreview = ({
 				if (isMounted()) {
 					setLoading(false);
 					setVideoHtml(externalVideoURL);
+					setError(
+						Liferay.Language.get(
+							'sorry,-this-platform-is-not-supported'
+						)
+					);
 				}
 			});
 	}, 500);
 
 	const handleUrlChange = (event) => {
 		const value = event.target.value.trim();
+
+		setError('');
 		setUrl(value);
 
 		if (value && validateUrl(value)) {
@@ -103,7 +111,14 @@ const FilePickerVideoPreview = ({
 							{loading ? (
 								<ClayLoadingIndicator />
 							) : (
-								<ClayIcon symbol="video" />
+								<>
+									<ClayIcon symbol="video" />
+									{error && (
+										<div className="file-picker-preview-video-placeholder-text">
+											{error}
+										</div>
+									)}
+								</>
 							)}
 						</div>
 					</div>

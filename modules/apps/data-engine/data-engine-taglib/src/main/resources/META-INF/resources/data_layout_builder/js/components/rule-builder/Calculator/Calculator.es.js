@@ -186,16 +186,7 @@ function removeTokenFromExpression({expression}) {
 }
 
 const Calculator = forwardRef(
-	(
-		{
-			expression: initialExpression,
-			fields,
-			functions,
-			index,
-			onEditExpression,
-		},
-		ref
-	) => {
+	({expression: initialExpression, fields, functions, onChange}, ref) => {
 		const [expression, setExpression] = useState(initialExpression);
 
 		const {
@@ -214,22 +205,18 @@ const Calculator = forwardRef(
 			? repeatableFields
 			: fields;
 
-		const updateExpression = ({index, newExpression}) => {
+		const updateExpression = (newExpression) => {
 			const newMaskedExpression = newExpression.replace(/[[\]]/g, '');
 
 			setExpression(newMaskedExpression);
-
-			onEditExpression({
-				expression: newMaskedExpression,
-				index,
-			});
+			onChange(newMaskedExpression);
 		};
 
 		const handleButtonClick = ({tokenType, tokenValue}) => {
 			if (tokenValue === 'backspace') {
 				const newExpression = removeTokenFromExpression({expression});
 
-				updateExpression({index, newExpression});
+				updateExpression(newExpression);
 			}
 			else {
 				const newExpression = addTokenToExpression({
@@ -238,7 +225,7 @@ const Calculator = forwardRef(
 					tokenValue,
 				});
 
-				updateExpression({index, newExpression});
+				updateExpression(newExpression);
 			}
 		};
 
@@ -254,7 +241,7 @@ const Calculator = forwardRef(
 				tokenValue: '(',
 			});
 
-			updateExpression({index, newExpression});
+			updateExpression(newExpression);
 		};
 
 		const handleFieldSelected = ({fieldName}) => {
@@ -264,7 +251,7 @@ const Calculator = forwardRef(
 				tokenValue: fieldName,
 			});
 
-			updateExpression({index, newExpression});
+			updateExpression(newExpression);
 		};
 
 		return (

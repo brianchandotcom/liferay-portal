@@ -335,6 +335,44 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return getSpiraTestCaseObjects(35000, spiraTestCaseProductVersion);
 	}
 
+	public SpiraTestCasePriority getSpiraTestCasePriorityByID(int priorityID) {
+		List<SpiraTestCasePriority> spiraTestCasePriorities =
+			SpiraTestCasePriority.getSpiraTestCasePriorities(
+				this,
+				new SearchQuery.SearchParameter(
+					SpiraTestCasePriority.KEY_ID, priorityID));
+
+		if (spiraTestCasePriorities.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case priority ID " + priorityID);
+		}
+
+		if (spiraTestCasePriorities.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case priority ID " + priorityID);
+		}
+
+		return spiraTestCasePriorities.get(0);
+	}
+
+	public SpiraTestCasePriority getSpiraTestCasePriorityByScore(int score) {
+		List<SpiraTestCasePriority> spiraTestCasePriorities =
+			SpiraTestCasePriority.getSpiraTestCasePriorities(
+				this, new SearchQuery.SearchParameter("Score", score));
+
+		if (spiraTestCasePriorities.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case priority score " + score);
+		}
+
+		if (spiraTestCasePriorities.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case priority score " + score);
+		}
+
+		return spiraTestCasePriorities.get(0);
+	}
+
 	public SpiraTestCaseType getSpiraTestCaseTypeByID(int testCaseTypeID) {
 		List<SpiraTestCaseType> spiraTestCaseTypes =
 			SpiraTestCaseType.getSpiraTestCaseTypes(

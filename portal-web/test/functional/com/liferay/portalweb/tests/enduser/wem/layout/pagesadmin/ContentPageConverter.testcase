@@ -400,8 +400,7 @@ definition {
 	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets, there will be a warning message shown in conversion preview"
 	@priority = "5"
 	test ConvertWidgetPageWithNestedApplicationsContainingWidgets {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

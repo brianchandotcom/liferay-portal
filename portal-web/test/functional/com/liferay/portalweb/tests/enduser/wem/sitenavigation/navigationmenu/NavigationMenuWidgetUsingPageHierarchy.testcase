@@ -31,8 +31,7 @@ definition {
 	@description = "This is a test for LPS-87134. Assert we can navigate to a child page in the Navigation Menu widget."
 	@priority = "5"
 	test AddChildPage {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Add a page and child page to the site") {
 			JSONLayout.addPublicLayout(

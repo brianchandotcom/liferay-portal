@@ -481,8 +481,7 @@ definition {
 	@description = "This is a test for LPS-121330. Can add an internal link to the Container element."
 	@priority = "5"
 	test MapDisplayPageURLToContainerElement {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Add a display page template with Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

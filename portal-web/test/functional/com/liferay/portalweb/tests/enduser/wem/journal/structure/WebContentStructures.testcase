@@ -26,8 +26,7 @@ definition {
 
 	@priority = "5"
 	test AddStructures {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

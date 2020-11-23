@@ -15,10 +15,12 @@
 package com.liferay.document.library.internal.display.context;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,9 +48,7 @@ public class DefaultDLMimeTypeDisplayContext
 
 			return "file-icon-color-0";
 		}
-		else if (_containsMimeType(
-					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
-
+		else if (_isMultimediaFileMimeType(mimeType)) {
 			return "file-icon-color-5";
 		}
 		else if (_containsMimeType(
@@ -85,9 +85,7 @@ public class DefaultDLMimeTypeDisplayContext
 
 			return "document-compressed";
 		}
-		else if (_containsMimeType(
-					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
-
+		else if (_isMultimediaFileMimeType(mimeType)) {
 			if (mimeType.startsWith("image")) {
 				return "document-image";
 			}
@@ -139,6 +137,17 @@ public class DefaultDLMimeTypeDisplayContext
 					return true;
 				}
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isMultimediaFileMimeType(String mimeType) {
+		if (Objects.equals(mimeType, DLContentTypes.EXTERNAL_VIDEO) ||
+			_containsMimeType(
+				_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
+
+			return true;
 		}
 
 		return false;

@@ -8203,7 +8203,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xstream.jar</file-name>
-				<version>1.4.11.1</version>
+				<version>1.4.14</version>
 				<project-name>XStream</project-name>
 				<project-url>http://xstream.codehaus.org</project-url>
 				<licenses>

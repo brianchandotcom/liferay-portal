@@ -34,7 +34,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 				<div class="form-group" id="<%= "namespace_assetCategoriesSelector_" + vocabularyId %>">
 					<c:if test='<%= Validator.isNotNull(vocabulary.get("title")) %>'>
 						<label>
-							<%= vocabulary.get("title") %>
+							<%= HtmlUtil.escape(GetterUtil.getString(vocabulary.get("title"))) %>
 
 							<c:if test='<%= GetterUtil.getBoolean(vocabulary.get("required")) %>'>
 								<span class="reference-mark">

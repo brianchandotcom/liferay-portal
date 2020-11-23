@@ -226,6 +226,27 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return _parentSpiraTestCaseFolder;
 	}
 
+	public SpiraTestCasePriority getSpiraTestCasePriority() {
+		if (_spiraTestCasePriority != null) {
+			return _spiraTestCasePriority;
+		}
+
+		Integer testCasePriorityId = jsonObject.optInt("TestCasePriorityId");
+
+		if ((testCasePriorityId <= 0) ||
+			(testCasePriorityId == JSONObject.NULL)) {
+
+			return null;
+		}
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		_spiraTestCasePriority = spiraProject.getSpiraTestCasePriorityByID(
+			testCasePriorityId);
+
+		return _spiraTestCasePriority;
+	}
+
 	public SpiraTestCaseProductVersion getSpiraTestCaseProductVersion() {
 		if (_spiraTestCaseProductVersion != null) {
 			return _spiraTestCaseProductVersion;
@@ -573,6 +594,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	private static final String _CUSTOM_FIELD_FILE_PATH_KEY = "File Path";
 
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
+	private SpiraTestCasePriority _spiraTestCasePriority;
 	private SpiraTestCaseProductVersion _spiraTestCaseProductVersion;
 
 }

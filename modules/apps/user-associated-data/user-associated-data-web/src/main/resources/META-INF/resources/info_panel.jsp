@@ -24,11 +24,19 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 	<c:choose>
 		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() == 0 %>">
 			<div class="sidebar-header">
-				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
-					<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
-				</c:if>
+				<clay:content-row
+					cssClass="sidebar-section"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
+							<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+						</c:if>
 
-				<h5 class="component-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
+						<p class="component-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></p>
+					</clay:content-col>
+				</clay:content-row>
 			</div>
 		</c:when>
 		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() == 1 %>">
@@ -45,15 +53,25 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 			%>
 
 			<div class="sidebar-header">
-				<ul class="sidebar-header-actions">
-					<li>
-						<%@ include file="/single_entity_action_menu.jspf" %>
-					</li>
-				</ul>
+				<clay:content-row
+					cssClass="sidebar-section"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
 
-				<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+						<p class="component-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></p>
+					</clay:content-col>
 
-				<h5 class="component-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
+					<clay:content-col>
+						<ul class="autofit-padded-no-gutters autofit-row">
+							<li class="autofit-col">
+								<%@ include file="/single_entity_action_menu.jspf" %>
+							</li>
+						</ul>
+					</clay:content-col>
+				</clay:content-row>
 			</div>
 
 			<div class="sidebar-body">
@@ -82,11 +100,19 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 		</c:when>
 		<c:when test="<%= uadInfoPanelDisplay.getUADEntitiesCount() > 1 %>">
 			<div class="sidebar-header">
-				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
-					<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
-				</c:if>
+				<clay:content-row
+					cssClass="sidebar-section"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
+							<h3 class="component-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+						</c:if>
 
-				<h5 class="component-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
+						<p class="component-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></p>
+					</clay:content-col>
+				</clay:content-row>
 			</div>
 		</c:when>
 	</c:choose>

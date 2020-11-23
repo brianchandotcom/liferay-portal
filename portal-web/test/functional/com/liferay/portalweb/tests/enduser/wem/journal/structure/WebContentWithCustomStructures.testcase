@@ -1532,9 +1532,7 @@ definition {
 		task ("Assert the web content article was added properly") {
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-			WebContent.viewCP(
+			WebContent.viewWithStructureCP(
 				webContentText = "WC WebContent Text",
 				webContentTitle = "WC WebContent Title");
 		}

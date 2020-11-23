@@ -22,7 +22,7 @@ import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useMemo} from 'react';
 
-import Calculator from '../Calculator/Calculator.es';
+import Calculator from './Calculator.es';
 import Timeline from './Timeline.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
 import {ACTIONS_OPTIONS} from './config.es';
@@ -45,7 +45,7 @@ const ActionContentCalculate = ({
 		return fields.filter(
 			({fieldName, type}) => type === 'numeric' && fieldName !== target
 		);
-	}, [fields]);
+	}, [fields, target]);
 
 	if (!resource) {
 		return null;

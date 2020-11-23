@@ -14,53 +14,15 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import Token from 'dynamic-data-mapping-form-builder/js/expressions/Token.es';
 import Tokenizer from 'dynamic-data-mapping-form-builder/js/expressions/Tokenizer.es';
+import {FieldStateless} from 'dynamic-data-mapping-form-renderer';
 import React, {forwardRef, useMemo, useState} from 'react';
 
 import CalculatorButtonArea from './CalculatorButtonArea.es';
-import CalculatorDisplay from './CalculatorDisplay.es';
-
-function FieldsDropdown({items, onFieldSelected = () => {}, ...otherProps}) {
-	const [active, setActive] = useState(false);
-
-	return (
-		<ClayDropDown
-			active={active}
-			onActiveChange={setActive}
-			{...otherProps}
-		>
-			<ClayDropDown.ItemList>
-				{items.map((item, i) => {
-					if (!item.separator) {
-						return (
-							<ClayDropDown.Item
-								aria-label={item.label}
-								key={item.fieldReference}
-								onClick={() => {
-									onFieldSelected(item);
-									setActive(false);
-								}}
-							>
-								{item.label}
-								{item.fieldReference && (
-									<span className="calculate-field-reference">
-										{` ${Liferay.Language.get(
-											'field-reference'
-										)}: ${item.fieldReference}`}
-									</span>
-								)}
-							</ClayDropDown.Item>
-						);
-					}
-
-					return <ClayDropDown.Divider key={i} />;
-				})}
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
-	);
-}
 
 function getRepeatableFields(fields) {
 	return fields.filter(({repeatable}) => repeatable === true);
@@ -188,6 +150,46 @@ function removeTokenFromExpression({expression}) {
 	return Tokenizer.stringifyTokens(tokens);
 }
 
+function FieldsDropdown({items, onFieldSelected = () => {}, ...otherProps}) {
+	const [active, setActive] = useState(false);
+
+	return (
+		<ClayDropDown
+			active={active}
+			onActiveChange={setActive}
+			{...otherProps}
+		>
+			<ClayDropDown.ItemList>
+				{items.map((item, i) => {
+					if (!item.separator) {
+						return (
+							<ClayDropDown.Item
+								aria-label={item.label}
+								key={item.fieldReference}
+								onClick={() => {
+									onFieldSelected(item);
+									setActive(false);
+								}}
+							>
+								{item.label}
+								{item.fieldReference && (
+									<span className="calculate-field-reference">
+										{` ${Liferay.Language.get(
+											'field-reference'
+										)}: ${item.fieldReference}`}
+									</span>
+								)}
+							</ClayDropDown.Item>
+						);
+					}
+
+					return <ClayDropDown.Divider key={i} />;
+				})}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
+	);
+}
+
 const Calculator = forwardRef(
 	({expression: initialExpression, fields, functions, onChange}, ref) => {
 		const [expression, setExpression] = useState(initialExpression);
@@ -203,6 +205,17 @@ const Calculator = forwardRef(
 		const repeatableFields = useMemo(() => getRepeatableFields(fields), [
 			fields,
 		]);
+
+		const value = useMemo(() => {
+			const newMaskedExpression = expression.replace(/[[\]]/g, '');
+
+			return (
+				RulesSupport.replaceFieldNameByFieldLabel(
+					newMaskedExpression,
+					fields
+				) ?? newMaskedExpression
+			);
+		}, [expression, fields]);
 
 		const dropdownItems = showOnlyRepeatableFields
 			? repeatableFields
@@ -292,10 +305,19 @@ const Calculator = forwardRef(
 							className="calculate-container-fields"
 							md="9"
 						>
-							<CalculatorDisplay
-								expression={expression}
-								fields={fields}
-							/>
+							<ClayForm.Group>
+								<FieldStateless
+									displayStyle="multiline"
+									name="calculator-expression"
+									placeholder={Liferay.Language.get(
+										'the-expression-will-be-displayed-here'
+									)}
+									readOnly
+									showLabel={false}
+									type="text"
+									value={value}
+								/>
+							</ClayForm.Group>
 						</ClayLayout.Col>
 					</div>
 				</ClayLayout.Col>

@@ -3,16 +3,15 @@
 <project basedir="." default="run" name="benchmarks">
 	<import file="../build-common.xml" />
 
-	<property name="sample-data-sql" value="sample-data-${sample.sql.db.type}.sql" />
-
 	<macrodef name="build-sql">
 		<attribute name="dir" />
+		<attribute name="output.sql.file" />
 		<sequential>
 			<ant antfile="../sql/build.xml" inheritall="false" target="build-db">
 				<property name="db.sql.dir" value="@{dir}" />
 			</ant>
 
-			<concat append="true" destfile="${sample-data-sql}">
+			<concat append="true" destfile="@{output.sql.file}">
 				<filelist dir="@{dir}/tables/" files="tables-${sample.sql.db.type}.sql" />
 				<filelist dir="@{dir}/indexes/" files="indexes-${sample.sql.db.type}.sql" />
 			</concat>
@@ -20,6 +19,8 @@
 	</macrodef>
 
 	<target depends="clean" name="build-sample-sql">
+		<property name="sample-data-sql" value="sample-data-${sample.sql.db.type}.sql" />
+
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
 
 		<path id="sample.sql.builder.classpath">
@@ -111,7 +112,7 @@
 
 		<for list="${portal.module.dir.list}" param="module">
 			<sequential>
-				<build-sql dir="@{module}" />
+				<build-sql dir="@{module}" output.sql.file="${sample-data-sql}"/>
 			</sequential>
 		</for>
 

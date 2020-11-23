@@ -691,6 +691,50 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 	</clay:col>
 </clay:row>
 
+<h4>Navigation Cards</h4>
+
+<clay:row>
+	<clay:col
+		md="3"
+	>
+		<clay:navigation-card
+			icon="page"
+			propsTransformer="js/ClaySampleNavigationCardPropsTransformer"
+			small="<%= true %>"
+			title="add-page"
+		/>
+	</clay:col>
+
+	<clay:col
+		md="3"
+	>
+		<clay:navigation-card
+			href="#"
+			icon="page"
+			small="<%= true %>"
+			title="children-pages"
+		/>
+	</clay:col>
+
+	<clay:col
+		md="3"
+	>
+		<clay:navigation-card
+			description="choose-a-display-page-template"
+			icon="page-template"
+			title="private-page"
+		/>
+	</clay:col>
+
+	<clay:col
+		md="3"
+	>
+		<clay:navigation-card
+			navigationCard="<%= new ClaySampleNavigationCard() %>"
+		/>
+	</clay:col>
+</clay:row>
+
 <%!
 private static final String _DOC_FILE_TITLE = "deliverable.doc";
 

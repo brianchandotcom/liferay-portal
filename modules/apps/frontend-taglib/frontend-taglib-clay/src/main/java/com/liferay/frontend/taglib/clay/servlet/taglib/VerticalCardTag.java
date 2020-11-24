@@ -39,7 +39,11 @@ public class VerticalCardTag extends BaseCardTag {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		if (getIcon() == null) {
-			setIcon("document-default");
+			setIcon("documents-and-media");
+		}
+
+		if (getStickerIcon() == null) {
+			setStickerIcon("document-default");
 		}
 
 		return super.doStartTag();

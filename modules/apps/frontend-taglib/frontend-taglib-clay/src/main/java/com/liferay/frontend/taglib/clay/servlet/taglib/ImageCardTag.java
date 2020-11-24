@@ -28,7 +28,11 @@ public class ImageCardTag extends VerticalCardTag {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		if (getIcon() == null) {
-			setIcon("document-image");
+			setIcon("camera");
+		}
+
+		if (getStickerIcon() == null) {
+			setStickerIcon("document-image");
 		}
 
 		return super.doStartTag();

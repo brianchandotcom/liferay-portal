@@ -1121,7 +1121,11 @@ definition {
 		if (isSet(truncatedHTMLTitle)) {
 			ProductMenuHelper.closeProductMenu();
 
+			takeScreenshot();
+
 			if (isSet(openGraph)) {
+				ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
 				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES_OG");
 			}
 			else {

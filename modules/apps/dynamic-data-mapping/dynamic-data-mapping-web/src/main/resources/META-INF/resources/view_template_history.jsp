@@ -52,13 +52,13 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 	<c:otherwise>
 		<liferay-ui:header
 			backURL="<%= backURL.toString() %>"
-			cssClass="container-fluid-1280"
+			cssClass="container-fluid container-fluid-max-xl"
 			title="<%= title %>"
 		/>
 	</c:otherwise>
 </c:choose>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 		total="<%= DDMTemplateVersionServiceUtil.getTemplateVersionsCount(templateId) %>"

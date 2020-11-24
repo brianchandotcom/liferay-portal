@@ -49,7 +49,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	displayContext="<%= uadExportProcessManagementToolbarDisplayContext %>"
 />
 
-<aui:form cssClass="container-fluid-1280">
+<aui:form cssClass="container-fluid container-fluid-max-xl">
 	<div id="<portlet:namespace />exportProcesses">
 
 		<%

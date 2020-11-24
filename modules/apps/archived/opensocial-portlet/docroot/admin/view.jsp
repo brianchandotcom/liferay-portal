@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl">
 	<div class="card main-content-card">
 		<div class="card-body">
 			<liferay-ui:search-container

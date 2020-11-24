@@ -33,7 +33,7 @@ StyleBookEntry layoutStyleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleB
 List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayContext.getStyleBookEntries();
 %>
 
-<aui:form cssClass="container-fluid-1280 mt-3" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl mt-3" name="fm">
 	<ul class="card-page card-page-equal-height">
 		<li class="card-page-item col-md-3 col-sm-6 form-check-card">
 			<clay:vertical-card-v2

@@ -20,7 +20,7 @@
 	displayContext="<%= new JournalSelectArticleTranslationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		id="articleTranslations"
 		searchContainer="<%= journalDisplayContext.getArticleTranslationsSearchContainer() %>"

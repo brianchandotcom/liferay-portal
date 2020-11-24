@@ -18,5 +18,5 @@
 
 <div class="info-bar-container">
 	<div class="info-bar info-bar-default">
-		<div class="container-fluid-1280">
+		<div class="container-fluid container-fluid-max-xl">
 			<div class="info-bar-center">

@@ -34,7 +34,7 @@ renderResponse.setTitle((ruleGroup == null) ? LanguageUtil.get(resourceBundle, "
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleGroupURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editRuleGroupURL %>" cssClass="container-fluid container-fluid-max-xl" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (ruleGroup == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

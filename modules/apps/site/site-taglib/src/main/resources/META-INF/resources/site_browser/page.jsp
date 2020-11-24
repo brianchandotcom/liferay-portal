@@ -25,7 +25,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
 />
 
-<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
+<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
 		searchContainer="<%= siteBrowserDisplayContext.getSearchContainer() %>"
 	>

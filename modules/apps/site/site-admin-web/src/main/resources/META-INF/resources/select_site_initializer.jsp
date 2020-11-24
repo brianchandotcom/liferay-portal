@@ -25,7 +25,7 @@ portletDisplay.setURLBack(selectSiteInitializerDisplayContext.getBackURL());
 renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 %>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"
 	>

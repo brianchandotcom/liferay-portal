@@ -24,7 +24,7 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 	displayContext="<%= new SelectTeamManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectTeamDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="selectTeamFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="selectTeamFm">
 	<liferay-ui:search-container
 		searchContainer="<%= selectTeamDisplayContext.getTeamSearchContainer() %>"
 	>

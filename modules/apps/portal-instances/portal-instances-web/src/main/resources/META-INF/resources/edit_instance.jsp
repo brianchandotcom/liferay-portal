@@ -39,7 +39,7 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 
 <portlet:actionURL name="/portal_instances/edit_instance" var="editInstanceURL" />
 
-<aui:form action="<%= editInstanceURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCompany();" %>'>
+<aui:form action="<%= editInstanceURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCompany();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="companyId" type="hidden" value="<%= companyId %>" />

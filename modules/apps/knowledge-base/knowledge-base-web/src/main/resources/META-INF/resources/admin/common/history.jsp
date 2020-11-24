@@ -45,7 +45,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </c:if>
 
-<aui:fieldset cssClass='<%= portletTitleBasedNavigation ? "container-fluid-1280 main-content-card panel" : StringPool.BLANK %>' markupView="lexicon">
+<aui:fieldset cssClass='<%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl main-content-card panel" : StringPool.BLANK %>' markupView="lexicon">
 
 	<%
 	RowChecker rowChecker = new RowChecker(renderResponse);

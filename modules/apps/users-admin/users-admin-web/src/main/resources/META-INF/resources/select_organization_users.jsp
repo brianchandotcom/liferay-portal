@@ -57,7 +57,7 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 	viewTypeItems="<%= selectOrganizationUsersManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<liferay-ui:search-container
 		id="users"
 		searchContainer="<%= userSearchContainer %>"

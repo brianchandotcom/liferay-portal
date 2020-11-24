@@ -30,7 +30,7 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteTeamsURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteTeamsURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= siteTeamsDisplayContext.getSearchContainer() %>"
 	>

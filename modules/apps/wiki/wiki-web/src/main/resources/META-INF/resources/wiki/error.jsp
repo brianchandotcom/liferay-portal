@@ -73,7 +73,7 @@ if (portletTitleBasedNavigation) {
 	searchURL.setParameter("keywords", title);
 	%>
 
-	<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
 		<div class="main-content-card panel">
 			<div class="panel-body">
 				<div class="alert alert-info">

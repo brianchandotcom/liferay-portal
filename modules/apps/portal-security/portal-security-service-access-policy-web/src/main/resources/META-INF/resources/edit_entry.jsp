@@ -53,7 +53,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 	<portlet:param name="mvcPath" value="/edit_entry.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= updateSAPEntryURL %>" cssClass="container-fluid-1280">
+<aui:form action="<%= updateSAPEntryURL %>" cssClass="container-fluid container-fluid-max-xl">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="sapEntryId" type="hidden" value="<%= sapEntryId %>" />
 

@@ -28,7 +28,7 @@ RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 	displayContext="<%= redirectNotFoundEntriesManagementToolbarDisplayContext %>"
 />
 
-<aui:form action="<%= redirectNotFoundEntriesSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= redirectNotFoundEntriesSearchContainer.getIteratorURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 
 	<%
 	List<RedirectNotFoundEntry> results = redirectNotFoundEntriesSearchContainer.getResults();

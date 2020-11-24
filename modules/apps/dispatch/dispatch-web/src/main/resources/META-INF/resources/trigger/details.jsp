@@ -35,14 +35,14 @@ if (dispatchTrigger != null) {
 
 <portlet:actionURL name="/dispatch/edit_dispatch_trigger" var="editDispatchTriggerActionURL" />
 
-<div class="closed container-fluid-1280" id="<portlet:namespace />editDispatchTriggerId">
+<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="container main-content-body sheet">
 		<liferay-ui:error exception="<%= NoSuchLogException.class %>" message="the-log-could-not-be-found" />
 		<liferay-ui:error exception="<%= NoSuchTriggerException.class %>" message="the-trigger-could-not-be-found" />
 
 		<liferay-ui:error-principal />
 
-		<aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+		<aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />

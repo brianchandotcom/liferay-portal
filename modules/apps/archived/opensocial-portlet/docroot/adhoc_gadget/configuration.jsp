@@ -71,7 +71,7 @@ Map<String, OAuthService> oAuthServices = (Map<String, OAuthService>)renderReque
 	<c:choose>
 		<c:when test='<%= tabs2.equals("gadget") || tabs2Names.equals("gadget") %>'>
 			<div class="portlet-configuration-body-content">
-				<div class="container-fluid-1280">
+				<div class="container-fluid container-fluid-max-xl">
 					<div class="card card-row-padded main-content-card">
 						<aui:fieldset>
 							<aui:input label="url" name="preferences--url--" type="text" value="<%= url %>" wrapperCssClass="lfr-input-text-container" />

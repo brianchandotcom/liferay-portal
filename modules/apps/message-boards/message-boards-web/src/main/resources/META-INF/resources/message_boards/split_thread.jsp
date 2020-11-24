@@ -47,7 +47,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
 	</portlet:actionURL>

@@ -35,7 +35,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 	</div>
 </c:if>
 
-<aui:form cssClass="container-fluid-1280" name="selectThemeFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="selectThemeFm">
 	<liferay-ui:search-container
 		id="themes"
 		searchContainer="<%= selectThemeDisplayContext.getThemesSearchContainer() %>"

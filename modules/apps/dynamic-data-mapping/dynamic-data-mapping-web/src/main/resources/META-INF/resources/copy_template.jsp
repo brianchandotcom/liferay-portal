@@ -34,7 +34,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 	<portlet:param name="mvcPath" value="/copy_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= copyTemplateURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" />
 
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />

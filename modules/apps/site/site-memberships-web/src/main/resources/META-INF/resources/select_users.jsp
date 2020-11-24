@@ -24,7 +24,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 	displayContext="<%= new SelectUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUsersDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280 portlet-site-memberships-select-users" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl portlet-site-memberships-select-users" name="fm">
 	<liferay-ui:membership-policy-error />
 
 	<liferay-ui:search-container

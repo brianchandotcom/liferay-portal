@@ -30,8 +30,8 @@ long timeMillis = endDate.getTime() - startDate.getTime();
 
 <portlet:actionURL name="/dispatch/edit_dispatch_log" var="editDispatchLogActionURL" />
 
-<div class="container-fluid-1280 sheet">
-	<aui:form action="<%= editDispatchLogActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<div class="container-fluid container-fluid-max-xl sheet">
+	<aui:form action="<%= editDispatchLogActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="dispatchLogId" type="hidden" value="<%= String.valueOf(dispatchLog.getDispatchLogId()) %>" />

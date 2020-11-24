@@ -76,7 +76,7 @@ if (Validator.isNotNull(editorGadgetURL)) {
 
 	<aui:model-context bean="<%= gadget %>" model="<%= Gadget.class %>" />
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid container-fluid-max-xl">
 		<div class="card card-row-padded main-content-card">
 			<aui:fieldset>
 				<c:choose>

@@ -24,7 +24,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries();
 %>
 
-<aui:form cssClass="container-fluid-1280 mt-3" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl mt-3" name="fm">
 	<ul class="card-page card-page-equal-height">
 
 		<%

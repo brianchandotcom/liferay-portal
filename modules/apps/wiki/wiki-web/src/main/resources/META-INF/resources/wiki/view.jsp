@@ -140,7 +140,7 @@ if (portletTitleBasedNavigation) {
 	</liferay-frontend:info-bar>
 </c:if>
 
-<div <%= portletTitleBasedNavigation ? "class=\"closed container-fluid-1280 sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"closed container-fluid container-fluid-max-xl sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
 	<c:if test="<%= portletTitleBasedNavigation %>">
 		<liferay-frontend:sidebar-panel>
 			<liferay-util:include page="/wiki_admin/page_info_panel.jsp" servletContext="<%= application %>" />

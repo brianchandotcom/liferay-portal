@@ -31,7 +31,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-util:include>
 
 <div id="<portlet:namespace />dispatchTriggerContainer">
-	<div class="closed container-fluid-1280" id="<portlet:namespace />infoPanelId">
+	<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />infoPanelId">
 		<div class="container">
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />

@@ -24,7 +24,7 @@ SelectFragmentCollectionDisplayContext selectFragmentCollectionDisplayContext = 
 	displayContext="<%= new SelectFragmentCollectionManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectFragmentCollectionDisplayContext.getFragmentCollectionsSearchContainer()) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="selectFragmentCollectionFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="selectFragmentCollectionFm">
 	<liferay-ui:search-container
 		searchContainer="<%= selectFragmentCollectionDisplayContext.getFragmentCollectionsSearchContainer() %>"
 	>

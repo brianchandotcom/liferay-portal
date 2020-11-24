@@ -57,7 +57,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 			</div>
 		</c:if>
 
-		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
+		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container

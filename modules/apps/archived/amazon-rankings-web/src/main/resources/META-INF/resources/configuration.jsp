@@ -33,7 +33,7 @@ isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
+		<div class="container-fluid container-fluid-max-xl">
 			<liferay-ui:error exception="<%= ValidatorException.class %>">
 
 				<%

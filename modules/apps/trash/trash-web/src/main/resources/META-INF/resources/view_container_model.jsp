@@ -24,7 +24,7 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
 </div>
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectContainerFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectContainerFm">
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>"
 	/>

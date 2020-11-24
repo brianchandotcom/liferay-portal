@@ -25,7 +25,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 />
 
 <clay:container-fluid>
-	<aui:form action="<%= viewDisplayContext.getActionURL() %>" cssClass="container-fluid-1280" name="fm">
+	<aui:form action="<%= viewDisplayContext.getActionURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 		<liferay-ui:search-container
 			id="searchContainer"
 			searchContainer="<%= viewDisplayContext.getSearchContainer() %>"

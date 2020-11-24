@@ -29,7 +29,7 @@ long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= copyStructureURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />

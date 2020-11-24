@@ -37,7 +37,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= postMembershipRequestURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= postMembershipRequestURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<c:if test="<%= !layout.isTypeControlPanel() %>">

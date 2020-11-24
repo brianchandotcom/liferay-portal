@@ -42,7 +42,7 @@ portletURL.setParameter("eventName", eventName);
 	%>'
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectFileEntryTypeFm">
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
 	>

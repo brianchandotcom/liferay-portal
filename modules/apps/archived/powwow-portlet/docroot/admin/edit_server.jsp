@@ -31,7 +31,7 @@ renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : Langua
 
 <liferay-portlet:actionURL name="updatePowwowServer" var="editURL" />
 
-<aui:form action="<%= editURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="powwowServerId" type="hidden" value="<%= String.valueOf(powwowServerId) %>" />
 

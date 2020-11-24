@@ -28,7 +28,7 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
-	cssClass="container-fluid-1280"
+	cssClass="container-fluid container-fluid-max-xl"
 	method="post"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

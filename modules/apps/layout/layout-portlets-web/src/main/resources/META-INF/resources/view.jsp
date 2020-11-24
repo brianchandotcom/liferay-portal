@@ -24,7 +24,7 @@ LayoutPortletsDisplayContext layoutPortletsDisplayContext = new LayoutPortletsDi
 	displayContext="<%= new LayoutPortletsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPortletsDisplayContext) %>"
 />
 
-<aui:form action="" cssClass="container-fluid-1280" name="fm">
+<aui:form action="" cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= layoutPortletsDisplayContext.getSearchContainer() %>"
 	>

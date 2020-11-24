@@ -26,7 +26,7 @@ SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisp
 	displayContext="<%= new JournalSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMStructureDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectDDMStructureFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectDDMStructureFm">
 	<liferay-ui:search-container
 		searchContainer="<%= ddmStructureSearch %>"
 	>

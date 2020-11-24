@@ -24,7 +24,7 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 	displayContext="<%= new JournalSelectDDMTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalSelectDDMTemplateDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280" method="post" name="selectDDMTemplateFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectDDMTemplateFm">
 	<liferay-ui:search-container
 		searchContainer="<%= journalSelectDDMTemplateDisplayContext.getTemplateSearch() %>"
 	>

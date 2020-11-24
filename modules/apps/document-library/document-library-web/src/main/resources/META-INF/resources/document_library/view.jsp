@@ -75,7 +75,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 			boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 			%>
 
-			<div class="closed <%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+			<div class="closed <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl" : StringPool.BLANK %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 				<liferay-frontend:sidebar-panel
 					resourceURL="<%= dlViewDisplayContext.getSidebarPanelURL() %>"
 					searchContainerId="entries"

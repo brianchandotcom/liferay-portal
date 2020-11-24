@@ -34,7 +34,7 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 	sortingURL="<%= selectSegmentsEntryDisplayContext.getSortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="selectSegmentsEntryFm">
+<aui:form cssClass="container-fluid container-fluid-max-xl" name="selectSegmentsEntryFm">
 	<liferay-ui:search-container
 		id="<%= selectSegmentsEntryDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= selectSegmentsEntryDisplayContext.getSearchContainer() %>"

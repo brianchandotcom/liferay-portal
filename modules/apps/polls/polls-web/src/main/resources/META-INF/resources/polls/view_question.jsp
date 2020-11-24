@@ -43,7 +43,7 @@ portletDisplay.setURLBack(redirect);
 	<portlet:param name="mvcActionCommand" value="/polls/view_question" />
 </portlet:actionURL>
 
-<aui:form action="<%= viewQuestionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= viewQuestionActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<portlet:renderURL var="viewQuestionRenderURL">
 		<portlet:param name="mvcRenderCommandName" value="/polls/view_question" />
 		<portlet:param name="redirect" value="<%= redirect %>" />

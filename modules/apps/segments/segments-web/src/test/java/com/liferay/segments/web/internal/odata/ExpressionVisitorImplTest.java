@@ -15,6 +15,7 @@
 package com.liferay.segments.web.internal.odata;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -52,6 +53,48 @@ public class ExpressionVisitorImplTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithAndOperation()
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		JSONObject jsonObject =
+			(JSONObject)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.AND,
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityFieldsMap.get("title"),
+					"title1"),
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.LT, entityFieldsMap.get("id"),
+					"2"));
+
+		Assert.assertEquals("and", jsonObject.getString("conjunctionName"));
+		Assert.assertEquals("group_1", jsonObject.getString("groupId"));
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"operatorName", "eq"
+				).put(
+					"propertyName", "title"
+				).put(
+					"value", "title1"
+				),
+				JSONUtil.put(
+					"operatorName", "lt"
+				).put(
+					"propertyName", "id"
+				).put(
+					"value", "2"
+				)
+			).toString(),
+			itemsJSONArray.toString());
 	}
 
 	@Test
@@ -202,6 +245,6 @@ public class ExpressionVisitorImplTest {
 	};
 
 	private static final ExpressionVisitorImpl _expressionVisitorImpl =
-		new ExpressionVisitorImpl(_entityModel);
+		new ExpressionVisitorImpl(0, _entityModel);
 
 }

@@ -2270,6 +2270,35 @@ definition {
 				fieldLocation = "12",
 				fieldName = "Numeric",
 				numericType = "Decimal");
+
+			var index = "1";
+
+			for (var optionValue : list "value 1,value 2,value 3") {
+				DataEngine.addFieldOption(
+					fieldFieldLabel = "Select from List",
+					index = "${index}",
+					optionValue = "${optionValue}");
+
+				var index = ${index} + 1;
+			}
+
+			var index = "1";
+
+			for (var optionValue : list "value 1,value 2,value 3") {
+				DataEngine.addFieldOption(
+					fieldFieldLabel = "Single Selection",
+					index = "${index}",
+					optionFieldLabel = "Options",
+					optionValue = "${optionValue}");
+
+				var index = ${index} + 1;
+			}
+
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Multiple Selection",
+				index = "1",
+				optionFieldLabel = "Options",
+				optionValue = "Boolean");
 		}
 
 		task ("Save the new structure") {

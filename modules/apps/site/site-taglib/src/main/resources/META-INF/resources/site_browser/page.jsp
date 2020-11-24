@@ -90,7 +90,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card-v2
+						<clay:vertical-card
 							verticalCard="<%= new SiteVerticalCard(group, renderRequest, selectedGroupIds) %>"
 						/>
 					</liferay-ui:search-container-column-text>

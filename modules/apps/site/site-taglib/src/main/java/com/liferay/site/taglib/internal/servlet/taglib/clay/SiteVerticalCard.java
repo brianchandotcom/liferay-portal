@@ -47,21 +47,30 @@ public class SiteVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
+	public String getCssClass() {
+		if (ArrayUtil.contains(_selectedGroupIds, _group.getGroupId())) {
+			return "text-muted";
+		}
+
+		return "card-interactive card-interactive-secondary selector-button";
+	}
+
+	@Override
+	public Map<String, String> getDynamicAttributes() {
 		Map<String, String> data = new HashMap<>();
 
 		try {
 			data.put(
-				"groupdescriptivename",
+				"data-groupdescriptivename",
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
-			data.put("groupid", String.valueOf(_group.getGroupId()));
 			data.put(
-				"groupscopelabel",
+				"data-groupscopelabel",
 				LanguageUtil.get(
 					_httpServletRequest, _group.getScopeLabel(_themeDisplay)));
 			data.put(
-				"grouptype",
+				"data-grouptype",
 				LanguageUtil.get(_httpServletRequest, _group.getTypeLabel()));
+			data.put("groupid", String.valueOf(_group.getGroupId()));
 			data.put("url", _group.getDisplayURL(_themeDisplay));
 			data.put("uuid", _group.getUuid());
 		}
@@ -69,15 +78,6 @@ public class SiteVerticalCard implements VerticalCard {
 		}
 
 		return data;
-	}
-
-	@Override
-	public String getElementClasses() {
-		if (ArrayUtil.contains(_selectedGroupIds, _group.getGroupId())) {
-			return "text-muted";
-		}
-
-		return "card-interactive card-interactive-secondary selector-button";
 	}
 
 	@Override

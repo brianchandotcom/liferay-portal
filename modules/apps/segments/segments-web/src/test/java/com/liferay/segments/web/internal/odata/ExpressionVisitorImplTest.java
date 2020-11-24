@@ -24,11 +24,15 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
+import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
+import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -70,6 +74,57 @@ public class ExpressionVisitorImplTest {
 				"propertyName", "title"
 			).put(
 				"value", "title1"
+			).toJSONString(),
+			jsonObject.toJSONString());
+	}
+
+	@Test
+	public void testVisitListExpressionOperation()
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		ListExpression listExpression = new ListExpression() {
+
+			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+				throws ExpressionVisitException {
+
+				List<Object> objects = Arrays.asList("title1", "title2");
+
+				return expressionVisitor.visitListExpressionOperation(
+					Operation.IN, (T)entityFieldsMap.get("title"),
+					(List<T>)objects);
+			}
+
+			@Override
+			public Expression getLeftOperationExpression() {
+				return null;
+			}
+
+			@Override
+			public Operation getOperation() {
+				return null;
+			}
+
+			@Override
+			public List<Expression> getRightOperationExpressions() {
+				return null;
+			}
+
+		};
+
+		JSONObject jsonObject = (JSONObject)listExpression.accept(
+			_expressionVisitorImpl);
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"operatorName",
+				StringUtil.toLowerCase(ListExpression.Operation.IN.toString())
+			).put(
+				"propertyName", "title"
+			).put(
+				"value", JSONUtil.putAll("title1", "title2")
 			).toJSONString(),
 			jsonObject.toJSONString());
 	}

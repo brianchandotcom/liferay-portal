@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -73,9 +74,17 @@ public class AccountEntryDisplay {
 		return _accountEntryId;
 	}
 
+	public Address getDefaultBillingAddress() {
+		return _defaultBillingAddress;
+	}
+
 	public String getDefaultLogoURL(PortletRequest portletRequest) {
 		return PortalUtil.getPathContext(portletRequest) +
 			"/account_entries_admin/icons/briefcase.svg";
+	}
+
+	public Address getDefaultShippingAddress() {
+		return _defaultShippingAddress;
 	}
 
 	public String getDescription() {
@@ -170,6 +179,8 @@ public class AccountEntryDisplay {
 	private AccountEntryDisplay() {
 		_accountEntryId = 0;
 		_active = true;
+		_defaultBillingAddress = null;
+		_defaultShippingAddress = null;
 		_description = StringPool.BLANK;
 		_domains = Collections.emptyList();
 		_logoId = 0;
@@ -185,6 +196,8 @@ public class AccountEntryDisplay {
 	private AccountEntryDisplay(AccountEntry accountEntry) {
 		_accountEntryId = accountEntry.getAccountEntryId();
 		_active = _isActive(accountEntry);
+		_defaultBillingAddress = accountEntry.getDefaultBillingAddress();
+		_defaultShippingAddress = accountEntry.getDefaultShippingAddress();
 		_description = accountEntry.getDescription();
 		_domains = _getDomains(accountEntry);
 		_logoId = accountEntry.getLogoId();
@@ -328,6 +341,8 @@ public class AccountEntryDisplay {
 
 	private final long _accountEntryId;
 	private final boolean _active;
+	private final Address _defaultBillingAddress;
+	private final Address _defaultShippingAddress;
 	private final String _description;
 	private final List<String> _domains;
 	private final long _logoId;

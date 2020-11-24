@@ -146,6 +146,8 @@ public class SampleSQLBuilderTest {
 			BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT,
 			"1");
 		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_CP_SPECIFICATION_OPTION_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");

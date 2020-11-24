@@ -39,6 +39,8 @@ import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.model.CPInstanceModel;
 import com.liferay.commerce.product.model.CPOptionCategoryModel;
+import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.model.CPSpecificationOptionModel;
 import com.liferay.commerce.product.model.CPTaxCategoryModel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CProductModel;
@@ -50,6 +52,7 @@ import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.commerce.product.model.impl.CPOptionCategoryModelImpl;
+import com.liferay.commerce.product.model.impl.CPSpecificationOptionModelImpl;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
@@ -1671,6 +1674,65 @@ public class DataFactory {
 			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT);
 
 		return cProductModel;
+	}
+
+	public CPSpecificationOptionModel newCPSpecificationOptionModel(
+		long cpOptionCategoryId, int index) {
+
+		CPSpecificationOptionModel cpSpecificationOptionModel =
+			new CPSpecificationOptionModelImpl();
+
+		// PK fields
+
+		long cpSpecificationOptionId = _counter.get();
+
+		cpSpecificationOptionModel.setCPSpecificationOptionId(
+			cpSpecificationOptionId);
+
+		// Audit fields
+
+		cpSpecificationOptionModel.setCompanyId(_companyId);
+		cpSpecificationOptionModel.setUserName(_SAMPLE_USER_NAME);
+		cpSpecificationOptionModel.setCreateDate(new Date());
+		cpSpecificationOptionModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cpSpecificationOptionModel.setCPOptionCategoryId(cpOptionCategoryId);
+		cpSpecificationOptionModel.setTitle("Specification Option " + index);
+		cpSpecificationOptionModel.setDescription(
+			"Description for specification option with ID " +
+				cpSpecificationOptionId);
+		cpSpecificationOptionModel.setFacetable(false);
+		cpSpecificationOptionModel.setKey("key" + index);
+		cpSpecificationOptionModel.setLastPublishDate(null);
+
+		return cpSpecificationOptionModel;
+	}
+
+	public List<CPSpecificationOptionModel> newCPSpecificationOptionModels(
+		List<CPOptionCategoryModel> cpOptionCategoryModels) {
+
+		List<CPSpecificationOptionModel> cpSpecificationOptionModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_CP_SPECIFICATION_OPTION_COUNT);
+
+		CPOptionCategoryModel cpOptionCategoryModel = null;
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_CP_SPECIFICATION_OPTION_COUNT;
+			 i++) {
+
+			if (cpOptionCategoryModels.size() >= i) {
+				cpOptionCategoryModel = cpOptionCategoryModels.get(i - 1);
+			}
+
+			cpSpecificationOptionModels.add(
+				newCPSpecificationOptionModel(
+					cpOptionCategoryModel.getCPOptionCategoryId(), i));
+		}
+
+		return cpSpecificationOptionModels;
 	}
 
 	public CPTaxCategoryModel newCPTaxCategoryModel() {
@@ -3635,6 +3697,16 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			CPOptionCategory.class.getName(),
 			String.valueOf(cpOptionCategoryModel.getCPOptionCategoryId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CPSpecificationOptionModel cpSpecificationOptionModel) {
+
+		return newResourcePermissionModels(
+			CPSpecificationOption.class.getName(),
+			String.valueOf(
+				cpSpecificationOptionModel.getCPSpecificationOptionId()),
 			_sampleUserId);
 	}
 

@@ -897,7 +897,7 @@ definition {
 		WebContentNavigator.gotoEditFeed(feedName = "Web Content Feed");
 
 		var webContentFeedUrl = selenium.getAttribute("//a[contains(@href,'rss') and contains(.,'Preview')]@href");
-		var stagingFeedId = StringUtil.extractLast("${webContentFeedUrl}", "/");
+		var stagingFeedId = StringUtil.extractLast("${webContentFeedUrl}", "=");
 		var entryExternalURL = StringUtil.replace("${webContentFeedUrl}", "http://", "");
 
 		echo("## * Staging FeedId: ${stagingFeedId}");
@@ -936,7 +936,7 @@ definition {
 			siteName = "Site Name");
 
 		var webContentFeedUrl = selenium.getAttribute("//div[contains(@class,'journal-content-article')]//a[contains(@href,'rss')]@href");
-		var liveFeedId = StringUtil.extractLast("${webContentFeedUrl}", "/");
+		var liveFeedId = StringUtil.extractLast("${webContentFeedUrl}", "=");
 
 		echo("## * Live FeedId: ${liveFeedId}");
 

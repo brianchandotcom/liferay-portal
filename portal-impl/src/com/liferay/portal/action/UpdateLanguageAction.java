@@ -162,10 +162,12 @@ public class UpdateLanguageAction implements Action {
 							).build());
 
 				friendlyURLSeparatorPart =
-						layoutFriendlyURLSeparatorComposite.getFriendlyURL();
+					layoutFriendlyURLSeparatorComposite.getFriendlyURL();
 			}
 			catch (NoSuchLayoutException noSuchLayoutException) {
-				if (!Portal.FRIENDLY_URL_SEPARATOR.equals(friendlyURLSeparator)) {
+				if (!Portal.FRIENDLY_URL_SEPARATOR.equals(
+						friendlyURLSeparator)) {
+
 					throw noSuchLayoutException;
 				}
 			}

@@ -102,8 +102,7 @@ public class ItemSelectorURLView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
-				new URLItemSelectorReturnType(),
-				new VideoURLItemSelectorReturnType()));
+				new URLItemSelectorReturnType()));
 
 	private ServletContext _servletContext;
 

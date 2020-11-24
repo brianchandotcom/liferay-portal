@@ -1399,9 +1399,9 @@ definition {
 
 		Refresh();
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "5"

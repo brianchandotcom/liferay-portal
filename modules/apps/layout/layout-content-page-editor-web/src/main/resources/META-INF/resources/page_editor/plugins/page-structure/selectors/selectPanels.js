@@ -132,9 +132,8 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 				].includes(activeItem.type) &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.imageSource]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				(activeItem.type === EDITABLE_TYPES.image ||
-					activeItem.type === EDITABLE_TYPES.backgroundImage),
+				activeItem.type === EDITABLE_TYPES.image ||
+				activeItem.type === EDITABLE_TYPES.backgroundImage,
 			[PANEL_IDS.editableMapping]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				activeItem.type !== EDITABLE_TYPES.image &&

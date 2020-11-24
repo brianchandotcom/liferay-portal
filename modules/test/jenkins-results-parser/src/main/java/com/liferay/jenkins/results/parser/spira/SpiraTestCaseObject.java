@@ -395,6 +395,15 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	public void updateSpiraTestCaseComponents(
+		List<SpiraTestCaseComponent> spiraTestCaseComponents) {
+
+		if (spiraTestCaseComponents != null) {
+			updateSpiraTestCaseComponents(
+				spiraTestCaseComponents.toArray(new SpiraTestCaseComponent[0]));
+		}
+	}
+
+	public void updateSpiraTestCaseComponents(
 		SpiraTestCaseComponent... spiraTestCaseComponents) {
 
 		if (spiraTestCaseComponents == null) {

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CARD_SUBTITLE</td>
-	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//div[contains(@class,'card-subtitle')]</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//*[contains(@class,'card-subtitle')]</td>
 	<td></td>
 </tr>
 <tr>

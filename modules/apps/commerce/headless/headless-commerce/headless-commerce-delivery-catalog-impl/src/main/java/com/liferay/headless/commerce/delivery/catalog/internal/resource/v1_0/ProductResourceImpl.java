@@ -119,6 +119,8 @@ public class ProductResourceImpl
 				"commerceChannelGroupId", commerceChannel.getGroupId()
 			).build();
 
+		searchContext.setAttributes(attributes);
+
 		long[] commerceAccountGroupIds =
 			_commerceAccountHelper.getCommerceAccountGroupIds(
 				_getAccountId(accountId, commerceChannel));
@@ -126,7 +128,6 @@ public class ProductResourceImpl
 		searchContext.setAttribute(
 			"commerceAccountGroupIds", commerceAccountGroupIds);
 
-		searchContext.setAttributes(attributes);
 		searchContext.setCompanyId(companyId);
 
 		CPQuery cpQuery = new CPQuery();

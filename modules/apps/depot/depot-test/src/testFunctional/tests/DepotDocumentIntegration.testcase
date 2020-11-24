@@ -175,6 +175,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			depotName = "Test Depot Name",
+			navTab = "Documents and Media",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentImage = "Document_2.jpeg",

@@ -24,6 +24,8 @@ public class DLExternalVideoConstants {
 
 	public static final String DDM_FIELD_NAME_HTML = "HTML";
 
+	public static final String DDM_FIELD_NAME_THUMBNAIL_URL = "THUMBNAIL_URL";
+
 	public static final String DDM_FIELD_NAME_TITLE = "TITLE";
 
 	public static final String DDM_FIELD_NAME_URL = "URL";

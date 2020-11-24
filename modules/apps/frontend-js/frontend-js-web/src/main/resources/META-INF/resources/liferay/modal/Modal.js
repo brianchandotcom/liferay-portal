@@ -17,11 +17,11 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {render} from 'frontend-js-react-web';
-import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
+import delegate from '../delegate/delegate.es';
 import navigate from '../util/navigate.es';
 
 const Modal = ({
@@ -452,14 +452,14 @@ class Iframe extends React.Component {
 		}
 
 		if (this.delegateHandler) {
-			this.delegateHandler.removeListener();
+			this.delegateHandler.dispose();
 		}
 	}
 
 	onLoadHandler = () => {
 		const iframeWindow = this.iframeRef.current.contentWindow;
 
-		this.delegateHandler = dom.delegate(
+		this.delegateHandler = delegate(
 			iframeWindow.document,
 			'click',
 			'.btn-cancel,.lfr-hide-dialog',

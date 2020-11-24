@@ -14,7 +14,7 @@
 
 import ClayTooltip from '@clayui/tooltip';
 import {render, useTimeout} from 'frontend-js-react-web';
-import dom from 'metal-dom';
+import {delegate} from 'frontend-js-web';
 import {Align} from 'metal-position';
 import React, {
 	useEffect,
@@ -155,7 +155,7 @@ const TooltipProvider = () => {
 
 	useEffect(() => {
 		const TRIGGER_SHOW_HANDLES = TRIGGER_SHOW_EVENTS.map((eventName) => {
-			return dom.delegate(
+			return delegate(
 				document.body,
 				eventName,
 				SELECTOR_TRIGGER,
@@ -165,26 +165,21 @@ const TooltipProvider = () => {
 		});
 
 		const TRIGGER_HIDE_HANDLES = TRIGGER_HIDE_EVENTS.map((eventName) => {
-			return dom.delegate(
-				document.body,
-				eventName,
-				SELECTOR_TRIGGER,
-				() => {
-					dispatch({type: 'hide'});
+			return delegate(document.body, eventName, SELECTOR_TRIGGER, () => {
+				dispatch({type: 'hide'});
 
-					restoreTitle(state.target);
-				}
-			);
+				restoreTitle(state.target);
+			});
 		});
 
-		const TOOLTIP_ENTER = dom.delegate(
+		const TOOLTIP_ENTER = delegate(
 			document.body,
 			'mouseenter',
 			SELECTOR_TOOLTIP,
 			() => dispatch({target: state.target, type: 'show'})
 		);
 
-		const TOOLTIP_LEAVE = dom.delegate(
+		const TOOLTIP_LEAVE = delegate(
 			document.body,
 			'mouseleave',
 			SELECTOR_TOOLTIP,

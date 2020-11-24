@@ -17,6 +17,7 @@ import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 
 import PortletBase from './PortletBase.es';
+import {delegate} from './delegate/delegate.es';
 
 /**
  * Appends list item elements to dropdown menus with inline-scrollers on scroll
@@ -42,7 +43,7 @@ class DynamicInlineScroll extends PortletBase {
 		rootNode = rootNode || document;
 
 		this.eventHandler_.add(
-			dom.delegate(
+			delegate(
 				rootNode,
 				'scroll',
 				'ul.pagination ul.inline-scroller',
@@ -57,7 +58,7 @@ class DynamicInlineScroll extends PortletBase {
 	detached() {
 		super.detached();
 
-		this.eventHandler_.removeAllListeners();
+		this.eventHandler_.dispose();
 	}
 
 	/**
@@ -150,16 +151,18 @@ class DynamicInlineScroll extends PortletBase {
 	 */
 	onScroll_(event) {
 		const {cur, initialPages, pages} = this;
-		const {target} = event;
+		const {delegateTarget} = event;
 
-		let pageIndex = this.getNumber_(target.getAttribute('data-page-index'));
+		let pageIndex = this.getNumber_(
+			delegateTarget.getAttribute('data-page-index')
+		);
 		let pageIndexMax = this.getNumber_(
-			target.getAttribute('data-max-index')
+			delegateTarget.getAttribute('data-max-index')
 		);
 
 		if (pageIndex === 0) {
 			const pageIndexCurrent = this.getNumber_(
-				target.getAttribute('data-current-index')
+				delegateTarget.getAttribute('data-current-index')
 			);
 
 			if (pageIndexCurrent === 0) {
@@ -177,10 +180,10 @@ class DynamicInlineScroll extends PortletBase {
 		if (
 			cur <= pages &&
 			pageIndex < pageIndexMax &&
-			target.getAttribute('scrollTop') >=
-				target.getAttribute('scrollHeight') - 300
+			delegateTarget.getAttribute('scrollTop') >=
+				delegateTarget.getAttribute('scrollHeight') - 300
 		) {
-			this.addListItem_(target, pageIndex);
+			this.addListItem_(delegateTarget, pageIndex);
 		}
 	}
 }

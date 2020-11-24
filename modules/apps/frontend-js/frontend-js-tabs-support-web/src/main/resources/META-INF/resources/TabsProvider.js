@@ -12,6 +12,7 @@
  * details.
  */
 
+import {delegate} from 'frontend-js-web';
 import dom from 'metal-dom';
 
 const CssClass = {
@@ -36,7 +37,7 @@ class TabsProvider {
 
 		this._setTransitionEndEvent();
 
-		dom.delegate(
+		delegate(
 			document.body,
 			'click',
 			Selector.TRIGGER,

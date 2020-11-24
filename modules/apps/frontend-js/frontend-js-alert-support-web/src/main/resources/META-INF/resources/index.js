@@ -12,13 +12,13 @@
  * details.
  */
 
-import dom from 'metal-dom';
+import {delegate} from 'frontend-js-web';
 
 let handle;
 
 export default () => {
 	if (!handle) {
-		handle = dom.delegate(
+		handle = delegate(
 			document.body,
 			'click',
 			'[data-dismiss="liferay-alert"]',

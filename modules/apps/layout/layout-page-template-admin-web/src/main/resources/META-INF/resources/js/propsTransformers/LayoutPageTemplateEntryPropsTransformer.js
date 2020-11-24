@@ -119,7 +119,7 @@ export default function LayoutPageTemplateEntryPropsTransformer({
 }) {
 	return {
 		...otherProps,
-		actions: actions.map((item) => {
+		actions: actions?.map((item) => {
 			return {
 				...item,
 				onClick(event) {

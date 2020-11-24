@@ -53,7 +53,7 @@ export default function LayoutPrototypeDropdownPropsTransformer({
 }) {
 	return {
 		...otherProps,
-		actions: actions.map((item) => {
+		actions: actions?.map((item) => {
 			return {
 				...item,
 				onClick(event) {

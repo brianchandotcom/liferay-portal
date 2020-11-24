@@ -129,7 +129,7 @@ export default function MasterLayoutDropdownPropsTransformer({
 }) {
 	return {
 		...otherProps,
-		actions: actions.map((item) => {
+		actions: actions?.map((item) => {
 			return {
 				...item,
 				onClick(event) {

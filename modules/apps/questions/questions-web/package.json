@@ -12,7 +12,7 @@
 		"@clayui/modal": "3.8.0",
 		"@clayui/navigation-bar": "3.3.0",
 		"@clayui/popover": "3.5.0",
-		"@clayui/sticker": "3.2.0",
+		"@clayui/sticker": "3.3.0",
 		"@clayui/tooltip": "3.4.0",
 		"asset-taglib": "*",
 		"bbcode-to-react": "^0.2.9",

@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/card": "3.5.1",
+		"@clayui/card": "3.6.0",
 		"@clayui/icon": "3.1.0",
-		"@clayui/sticker": "3.2.0",
+		"@clayui/sticker": "3.3.0",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"prop-types": "15.7.2",

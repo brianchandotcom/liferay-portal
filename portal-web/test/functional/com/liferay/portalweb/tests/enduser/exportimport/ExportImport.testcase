@@ -294,7 +294,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Documents and Media",
+			dmDocumentTypeFieldNames = "Upload",
 			dmDocumentTypeName = "DM Document Type Name");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");

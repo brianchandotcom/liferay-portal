@@ -19,37 +19,38 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.repository.exception.DispatchRepositoryException;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.process.CollectorOutputProcessor;
-import com.liferay.petra.process.ConsumerOutputProcessor;
-import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.process.ProcessUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
+import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParser;
+import com.liferay.dispatch.talend.web.internal.process.TalendProcess;
+import com.liferay.dispatch.talend.web.internal.process.TalendProcessCallable;
+import com.liferay.dispatch.talend.web.internal.process.TalendProcessLogger;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.Serializable;
 
-import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Igor Beslic
  */
 @Component(
 	immediate = true,
@@ -64,51 +65,45 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	public void doExecute(
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws IOException, PortalException {
+		throws PortalException {
 
-		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
+		TalendArchive talendArchive = fetchTalendArchive(
 			dispatchTrigger.getDispatchTriggerId());
 
-		InputStream inputStream = fileEntry.getContentStream();
+		if (talendArchive == null) {
+			throw new PortalException("Unable to fetch talend archive");
+		}
 
-		File tempFile = FileUtil.createTempFile(inputStream);
-
-		File tempFolder = FileUtil.createTempFolder();
-
-		FileUtil.unzip(tempFile, tempFolder);
-
-		String rootDirectoryName = tempFolder.getAbsolutePath();
-
-		String shFileName = _getSHFileName(rootDirectoryName);
-
-		_addExecutePermission(shFileName);
-
-		DispatchTalendCollectorOutputProcessor
-			dispatchTalendCollectorOutputProcessor =
-				new DispatchTalendCollectorOutputProcessor();
+		TalendProcess talendProcess = _getTalendProcess(
+			dispatchTrigger, talendArchive);
 
 		try {
-			Future<Map.Entry<byte[], byte[]>> future = ProcessUtil.execute(
-				dispatchTalendCollectorOutputProcessor,
-				_getArguments(dispatchTrigger, rootDirectoryName, shFileName));
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					talendProcess.getProcessConfig(),
+					new TalendProcessCallable(
+						ArrayUtil.toStringArray(
+							talendProcess.getMainMethodArguments()),
+						talendArchive.getJobMainClassFQN()));
 
-			Map.Entry<byte[], byte[]> entry = future.get();
+			NoticeableFuture<Serializable> future =
+				processChannel.getProcessNoticeableFuture();
 
-			dispatchTaskExecutorOutput.setError(entry.getValue());
-			dispatchTaskExecutorOutput.setOutput(entry.getKey());
+			while (!future.isDone()) {
+				Thread.yield();
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Completed job for dispatch trigger ID " +
+						dispatchTrigger.getDispatchTriggerId());
+			}
 		}
 		catch (Exception exception) {
-			dispatchTaskExecutorOutput.setError(
-				dispatchTalendCollectorOutputProcessor._stdErrByteArray);
-
 			throw new PortalException(exception);
 		}
 		finally {
-			FileUtil.deltree(rootDirectoryName);
-
-			if (tempFile != null) {
-				FileUtil.delete(tempFile);
-			}
+			FileUtil.deltree(new File(talendArchive.getJobDirectory()));
 		}
 	}
 
@@ -117,44 +112,41 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return DISPATCH_TASK_EXECUTOR_TYPE_TALEND;
 	}
 
-	private void _addExecutePermission(String shFileName)
+	protected TalendArchive fetchTalendArchive(long dispatchTriggerId)
 		throws PortalException {
 
-		try {
-			ProcessUtil.execute(
-				ConsumerOutputProcessor.INSTANCE, "chmod", "+x", shFileName);
+		FileEntry fileEntry = _dispatchFileRepository.fetchFileEntry(
+			dispatchTriggerId);
+
+		if (fileEntry == null) {
+			throw new DispatchRepositoryException(
+				"Unable to get file entry for dispatch trigger ID " +
+					dispatchTriggerId);
 		}
-		catch (ProcessException processException) {
-			throw new PortalException(processException);
-		}
+
+		return _talendArchiveParser.parse(fileEntry.getContentStream());
 	}
 
-	private List<String> _getArguments(
-			DispatchTrigger dispatchTrigger, String rootDirectoryName,
-			String shFileName)
-		throws PortalException {
+	private TalendProcess _getTalendProcess(
+		DispatchTrigger dispatchTrigger, TalendArchive talendArchive) {
 
-		List<String> arguments = new ArrayList<>();
+		TalendProcess.Builder talendProcessBuilder =
+			new TalendProcess.Builder();
 
-		arguments.add(shFileName);
-
-		arguments.add(
-			"--context_param companyId=" + dispatchTrigger.getCompanyId());
+		talendProcessBuilder.companyId(dispatchTrigger.getCompanyId());
 
 		Date lastRunStateDate =
 			_dispatchTriggerLocalService.fetchPreviousFireDate(
 				dispatchTrigger.getDispatchTriggerId());
 
-		if (lastRunStateDate != null) {
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+		talendProcessBuilder.lastRunStartDate(lastRunStateDate);
 
-			arguments.add(
-				"--context_param lastRunStartDate=" +
-					simpleDateFormat.format(lastRunStateDate));
-		}
+		talendProcessBuilder.liferayLibGlobalDirectory(
+			_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR));
 
-		arguments.add("--context_param jobWorkDirectory=" + rootDirectoryName);
+		talendProcessBuilder.processLogConsumer(new TalendProcessLogger());
+
+		talendProcessBuilder.talendArchive(talendArchive);
 
 		UnicodeProperties taskSettingsUnicodeProperties =
 			dispatchTrigger.getTaskSettingsUnicodeProperties();
@@ -163,25 +155,16 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			for (Map.Entry<String, String> propEntry :
 					taskSettingsUnicodeProperties.entrySet()) {
 
-				StringBundler contextSB = new StringBundler(4);
-
-				contextSB.append("--context_param ");
-				contextSB.append(propEntry.getKey());
-				contextSB.append(StringPool.EQUAL);
-				contextSB.append(propEntry.getValue());
-
-				arguments.add(contextSB.toString());
+				talendProcessBuilder.contextParam(
+					propEntry.getKey(), propEntry.getValue());
 			}
 		}
 
-		return arguments;
+		return talendProcessBuilder.build();
 	}
 
-	private String _getSHFileName(String rootDirectoryName) {
-		String[] strings = FileUtil.find(rootDirectoryName, "**\\*.sh", null);
-
-		return strings[0];
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		TalendDispatchTaskExecutor.class);
 
 	@Reference
 	private DispatchFileRepository _dispatchFileRepository;
@@ -189,31 +172,13 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
-	private class DispatchTalendCollectorOutputProcessor
-		extends CollectorOutputProcessor {
+	private final LocalProcessExecutor _localProcessExecutor =
+		new LocalProcessExecutor();
 
-		@Override
-		public byte[] processStdErr(InputStream stdErrInputStream)
-			throws ProcessException {
+	@Reference
+	private Props _props;
 
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			try {
-				StreamUtil.transfer(
-					stdErrInputStream, unsyncByteArrayOutputStream, false);
-			}
-			catch (IOException ioException) {
-				throw new ProcessException(ioException);
-			}
-
-			_stdErrByteArray = unsyncByteArrayOutputStream.toByteArray();
-
-			return _stdErrByteArray;
-		}
-
-		private byte[] _stdErrByteArray;
-
-	}
+	private final TalendArchiveParser _talendArchiveParser =
+		new TalendArchiveParser();
 
 }

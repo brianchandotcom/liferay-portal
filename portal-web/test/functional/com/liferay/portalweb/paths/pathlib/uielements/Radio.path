@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTOMATIC_URL_DISABLED</td>
+	<td>//label[contains(.,'Automatic')]/input[@type='radio' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_MENU</td>
 	<td>//label[contains(.,'Choose Menu')]/input[@type='radio']</td>
 	<td></td>
@@ -26,6 +31,11 @@
 <tr>
 	<td>CUSTOM_URL</td>
 	<td>//label[contains(.,'Custom')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_URL_DISABLED</td>
+	<td>//label[contains(.,'Custom')]/input[@type='radio' and @disabled]</td>
 	<td></td>
 </tr>
 <tr>

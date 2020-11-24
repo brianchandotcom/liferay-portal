@@ -361,8 +361,15 @@ public class ClusterSchedulerEngine
 										StringBundler.concat(
 											"Memory clustered job ",
 											getFullName(jobName, groupName),
-											" is not yet deployed on master"));
+											" is not yet deployed on master",
+											", notify master to add it"));
 								}
+
+								ClusterableContextThreadLocal.
+									putThreadLocalContext(
+										SchedulerEngine.
+											SCHEDULER_CLUSTER_INVOKING,
+										true);
 							}
 							else {
 								addMemoryClusteredJob(schedulerResponse);

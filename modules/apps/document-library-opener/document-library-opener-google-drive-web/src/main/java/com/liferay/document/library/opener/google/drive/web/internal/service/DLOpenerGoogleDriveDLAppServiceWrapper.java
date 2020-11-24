@@ -169,18 +169,19 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		String title = fileEntry.getTitle();
 
+		String mimeTypeExtension = DLOpenerMimeTypes.getMimeTypeExtension(
+			fileEntry.getMimeType());
+
 		if (!title.equals(dlOpenerGoogleDriveFileReference.getTitle())) {
 			title = _uniqueFileEntryTitleProvider.provide(
 				fileEntry.getGroupId(), fileEntry.getFolderId(),
+				mimeTypeExtension,
 				_dlValidator.fixName(
 					dlOpenerGoogleDriveFileReference.getTitle()));
 		}
 
 		try {
-			String sourceFileName = title;
-
-			sourceFileName += DLOpenerMimeTypes.getMimeTypeExtension(
-				fileEntry.getMimeType());
+			String sourceFileName = title.concat(mimeTypeExtension);
 
 			updateFileEntry(
 				fileEntry.getFileEntryId(), sourceFileName,

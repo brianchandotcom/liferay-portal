@@ -33,7 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true, property = "ddm.storage.adapter.type=default",
+	immediate = true,
+	property = {
+		"ddm.storage.adapter.type=default", "service.ranking:Integer=100"
+	},
 	service = DDMStorageAdapter.class
 )
 public class DefaultDDMStorageAdapter implements DDMStorageAdapter {

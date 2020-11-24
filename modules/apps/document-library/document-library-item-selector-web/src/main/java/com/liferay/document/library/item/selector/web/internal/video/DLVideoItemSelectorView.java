@@ -17,6 +17,7 @@ package com.liferay.document.library.item.selector.web.internal.video;
 import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
 import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
+import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -66,6 +67,13 @@ public class DLVideoItemSelectorView
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
+	}
+
+	@Override
+	protected void prepareDLItemSelectorViewDisplayContext(
+		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext) {
+
+		dlItemSelectorViewDisplayContext.setShowDragAndDropZone(false);
 	}
 
 	private static final List<ItemSelectorReturnType>

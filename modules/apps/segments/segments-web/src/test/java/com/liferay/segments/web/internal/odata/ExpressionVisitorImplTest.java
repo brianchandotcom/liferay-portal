@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -97,11 +99,40 @@ public class ExpressionVisitorImplTest {
 			jsonObject.toJSONString());
 	}
 
+	@Test
+	public void testVisitUnaryExpressionOperation()
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		JSONObject jsonObject =
+			_expressionVisitorImpl.visitUnaryExpressionOperation(
+				UnaryExpression.Operation.NOT,
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.GE, entityFieldsMap.get("id"),
+					"4"));
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"operatorName",
+				StringUtil.toLowerCase(
+					UnaryExpression.Operation.NOT + "-" +
+						BinaryExpression.Operation.GE.toString())
+			).put(
+				"propertyName", "id"
+			).put(
+				"value", "4"
+			).toJSONString(),
+			jsonObject.toJSONString());
+	}
+
 	private static final EntityModel _entityModel = new EntityModel() {
 
 		@Override
 		public Map<String, EntityField> getEntityFieldsMap() {
 			return Stream.of(
+				new IntegerEntityField("id", locale -> "id"),
 				new StringEntityField("title", locale -> "title")
 			).collect(
 				Collectors.toMap(EntityField::getName, Function.identity())

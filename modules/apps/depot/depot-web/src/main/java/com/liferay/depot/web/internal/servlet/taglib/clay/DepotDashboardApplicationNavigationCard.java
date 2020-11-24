@@ -14,25 +14,20 @@
 
 package com.liferay.depot.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
 
 /**
  * @author Adolfo Pérez
  */
-public class DepotDashboardApplicationVerticalCard implements VerticalCard {
+public class DepotDashboardApplicationNavigationCard implements NavigationCard {
 
-	public DepotDashboardApplicationVerticalCard(
-		String href, String icon, String title) {
+	public DepotDashboardApplicationNavigationCard(
+		String href, String icon, Boolean small, String title) {
 
 		_href = href;
 		_icon = icon;
+		_small = small;
 		_title = title;
-	}
-
-	@Override
-	public String getElementClasses() {
-		return "card-interactive card-interactive-primary card-type-template " +
-			"template-card";
 	}
 
 	@Override
@@ -51,12 +46,13 @@ public class DepotDashboardApplicationVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public boolean isSelectable() {
-		return false;
+	public Boolean isSmall() {
+		return _small;
 	}
 
 	private final String _href;
 	private final String _icon;
+	private final Boolean _small;
 	private final String _title;
 
 }

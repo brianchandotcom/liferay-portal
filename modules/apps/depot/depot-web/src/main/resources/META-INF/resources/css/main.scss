@@ -1,29 +1,5 @@
 @import 'atlas-variables';
 
-.lfr-depot-dashboard-container {
-	.card .autofit-col {
-		position: initial;
-	}
-
-	a.card-title {
-		&::after {
-			bottom: 0;
-			content: '';
-			left: 0;
-			pointer-events: auto;
-			position: absolute;
-			right: 0;
-			top: 0;
-			z-index: 1;
-		}
-
-		&:hover {
-			color: $dark;
-			text-decoration: unset;
-		}
-	}
-
-	.template-card-horizontal .card-title {
-		color: $dark;
-	}
+.lfr-depot-dashboard-container .card-title {
+	color: $dark;
 }

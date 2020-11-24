@@ -2100,6 +2100,16 @@ public class SitesImpl implements Sites {
 			isSkipImport(groupId, layoutSet, false, lastMergeVersion) ||
 			isSkipImport(groupId, layoutSet, true, lastMergeVersion)) {
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Skipping import of layout set prototype ",
+						layoutSetPrototype.getUuid(), " (mvccVersion ",
+						layoutSetPrototype.getMvccVersion(), ") to layout set ",
+						layoutSet.getLayoutSetId(), " (mvccVersion ",
+						layoutSet.getMvccVersion(), ")"));
+			}
+
 			return;
 		}
 

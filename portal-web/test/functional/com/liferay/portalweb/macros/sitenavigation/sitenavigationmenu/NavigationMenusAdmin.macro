@@ -99,6 +99,7 @@ definition {
 		}
 		else if ("${item}" == "URL") {
 			NavigationMenusAdmin._addItemURL(
+				target = "${target}",
 				url = "${url}",
 				urlName = "${urlName}");
 		}

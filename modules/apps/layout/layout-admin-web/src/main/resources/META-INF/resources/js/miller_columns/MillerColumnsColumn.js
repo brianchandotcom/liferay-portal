@@ -37,6 +37,7 @@ const isValidTarget = (sources, parent) =>
 const MillerColumnsColumn = ({
 	actionHandlers,
 	columnItems = [],
+	collumnContainer,
 	items,
 	namespace,
 	onItemDrop,
@@ -85,6 +86,7 @@ const MillerColumnsColumn = ({
 			{columnItems.map((item, index) => (
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
+					collumnContainer={collumnContainer}
 					item={{...item, itemIndex: index}}
 					items={items}
 					key={item.key}

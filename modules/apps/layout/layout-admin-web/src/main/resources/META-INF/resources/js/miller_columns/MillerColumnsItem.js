@@ -120,6 +120,7 @@ const getItemIndex = (item = {}, items) => {
 const noop = () => {};
 
 const MillerColumnsItem = ({
+	collumnContainer,
 	item: {
 		actions = [],
 		active,
@@ -269,6 +270,17 @@ const MillerColumnsItem = ({
 			}
 
 			setDropZone(dropZone);
+
+			if (Liferay.Browser.isSafari() && !Liferay.Browser.isChrome()) {
+				const clientOffset = monitor.getClientOffset();
+				const containerRect = collumnContainer.current.getBoundingClientRect();
+
+				const hoverClientX = containerRect.right - clientOffset.x
+
+				if (hoverClientX < ITEM_HOVER_BORDER_LIMIT) {
+					collumnContainer.current.scrollLeft = collumnContainer.current.scrollWidth;
+				}
+			}
 		},
 	});
 

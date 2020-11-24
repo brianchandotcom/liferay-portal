@@ -90,7 +90,7 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 								%>
 
 								<liferay-ui:search-container-column-text>
-									<clay:vertical-card-v2
+									<clay:vertical-card
 										verticalCard="<%= new ArchivedSettingsVerticalCard(archivedSettings, renderRequest, renderResponse) %>"
 									/>
 								</liferay-ui:search-container-column-text>

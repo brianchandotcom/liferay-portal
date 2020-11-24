@@ -30,7 +30,7 @@ export default function SelectLayoutPageTemplateEntryMasterLayoutVerticalCardPro
 		onClick: (event) => {
 			event.preventDefault();
 
-			openSimpleInputModal.default({
+			openSimpleInputModal({
 				dialogTitle,
 				formSubmitURL: addLayoutPageTemplateEntryUrl,
 				mainFieldLabel,

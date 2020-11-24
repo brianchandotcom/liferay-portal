@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -765,7 +764,20 @@ public class WorkflowTaskManagerImplTest {
 		_activateSingleApproverWorkflow(
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0);
 
-		DDLRecord record = _addRecord(recordSet);
+		String fieldName = RandomTestUtil.randomString();
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			DDMFormTestUtil.createDDMForm(fieldName));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				fieldName, StringPool.BLANK));
+
+		DDLRecord record = _ddlRecordLocalService.addRecord(
+			_adminUser.getUserId(), _group.getGroupId(),
+			recordSet.getRecordSetId(),
+			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
+			_serviceContext);
 
 		_checkUserNotificationEventsByUsers(
 			_adminUser, _portalContentReviewerUser, _siteAdminUser);
@@ -1301,19 +1313,6 @@ public class WorkflowTaskManagerImplTest {
 			ddmStructureIds, restrictionType, false, _serviceContext);
 	}
 
-	private DDLRecord _addRecord(DDLRecordSet recordSet) throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			RandomTestUtil.randomString());
-
-		DDMFormValues ddmFormValues = _createDDMFormValues(ddmForm);
-
-		return _ddlRecordLocalService.addRecord(
-			_adminUser.getUserId(), _group.getGroupId(),
-			recordSet.getRecordSetId(),
-			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
-			_serviceContext);
-	}
-
 	private DDLRecordSet _addRecordSet() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			RandomTestUtil.randomString());
@@ -1439,19 +1438,6 @@ public class WorkflowTaskManagerImplTest {
 			_group.getCompanyId(), user.getUserId(),
 			workflowTask.getWorkflowTaskId(), transition, StringPool.BLANK,
 			null);
-	}
-
-	private DDMFormValues _createDDMFormValues(DDMForm ddmForm) {
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-				RandomTestUtil.randomString(), StringPool.BLANK);
-
-		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		return ddmFormValues;
 	}
 
 	private void _createJoinXorWorkflow() throws Exception {

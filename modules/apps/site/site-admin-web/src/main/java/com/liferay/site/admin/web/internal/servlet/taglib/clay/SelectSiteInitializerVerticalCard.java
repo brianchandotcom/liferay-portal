@@ -49,6 +49,11 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getCssClass() {
+		return "add-site-action-card mb-0";
+	}
+
+	@Override
 	public Map<String, String> getData() {
 		return HashMapBuilder.put(
 			"add-site-url",
@@ -90,12 +95,6 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			"layout-set-prototype-id",
 			String.valueOf(_siteInitializerItem.getLayoutSetPrototypeId())
 		).build();
-	}
-
-	@Override
-	public String getElementClasses() {
-		return "add-site-action-option card-interactive " +
-			"card-interactive-secondary";
 	}
 
 	@Override

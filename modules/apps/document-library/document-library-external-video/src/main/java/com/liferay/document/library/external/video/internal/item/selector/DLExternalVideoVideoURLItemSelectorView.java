@@ -17,8 +17,8 @@ package com.liferay.document.library.external.video.internal.item.selector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 
+import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import org.osgi.service.component.annotations.Component;
@@ -40,11 +40,11 @@ import java.util.Locale;
  */
 @Component(service = ItemSelectorView.class)
 public class DLExternalVideoVideoURLItemSelectorView
-	implements ItemSelectorView<URLItemSelectorCriterion> {
+	implements ItemSelectorView<VideoItemSelectorCriterion> {
 
 	@Override
-	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return URLItemSelectorCriterion.class;
+	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return VideoItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -64,7 +64,7 @@ public class DLExternalVideoVideoURLItemSelectorView
 	@Override
 	public void renderHTML(
 		ServletRequest servletRequest, ServletResponse servletResponse,
-		URLItemSelectorCriterion urlItemSelectorCriterion,
+		VideoItemSelectorCriterion videoItemSelectorCriterion,
 		PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -72,6 +72,7 @@ public class DLExternalVideoVideoURLItemSelectorView
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/url.jsp");
+
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

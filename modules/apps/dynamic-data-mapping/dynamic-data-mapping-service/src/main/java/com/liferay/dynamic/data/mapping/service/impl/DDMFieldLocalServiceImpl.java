@@ -66,6 +66,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -728,7 +729,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			}
 		}
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		Map<String, Object> map = new TreeMap<>();
 
 		JSONDeserializer<Object> jsonDeserializer =
 			_jsonFactory.createJSONDeserializer();
@@ -736,13 +737,15 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
 				ddmFieldAttributeInfos) {
 
-			jsonObject.put(
+			map.put(
 				ddmFieldAttributeInfo._attributeName,
 				jsonDeserializer.deserialize(
 					ddmFieldAttributeInfo._attributeValue));
 		}
 
-		return jsonObject.toString();
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		return jsonSerializer.serialize(map);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

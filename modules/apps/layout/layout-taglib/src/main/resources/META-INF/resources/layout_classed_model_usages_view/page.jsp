@@ -73,11 +73,13 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 	</liferay-ui:search-container>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	if (
 		document.querySelector('#<portlet:namespace />layoutClassedModelUsagesList')
 	) {
-		var previewLayoutClassedModelUsagesList = dom.delegate(
+		var delegate = delegateModule.default;
+
+		var previewLayoutClassedModelUsagesList = delegate(
 			document.querySelector(
 				'#<portlet:namespace />layoutClassedModelUsagesList'
 			),
@@ -93,7 +95,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 		);
 
 		function removeListener() {
-			previewLayoutClassedModelUsagesList.removeListener();
+			previewLayoutClassedModelUsagesList.dispose();
 
 			Liferay.detach('destroyPortlet', removeListener);
 		}

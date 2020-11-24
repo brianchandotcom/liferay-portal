@@ -167,12 +167,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 	</clay:row>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+	var delegate = delegateModule.default;
+
 	var layoutPageTemplateEntries = document.getElementById(
 		'<portlet:namespace />layoutPageTemplateEntries'
 	);
 
-	var addLayoutActionOptionQueryClickHandler = dom.delegate(
+	var addLayoutActionOptionQueryClickHandler = delegate(
 		layoutPageTemplateEntries,
 		'click',
 		'.add-layout-action-option',
@@ -188,7 +190,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 	);
 
 	function handleDestroyPortlet() {
-		addLayoutActionOptionQueryClickHandler.removeListener();
+		addLayoutActionOptionQueryClickHandler.dispose();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

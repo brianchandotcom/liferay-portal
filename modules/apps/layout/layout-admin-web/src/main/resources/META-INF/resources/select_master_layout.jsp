@@ -44,8 +44,10 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 	</ul>
 </aui:form>
 
-<aui:script require="metal-dom/src/dom as dom">
-	var delegateHandler = dom.delegate(
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+	var delegate = delegateModule.default;
+
+	var delegateHandler = delegate(
 		document.body,
 		'click',
 		'.select-master-layout-option',
@@ -74,7 +76,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 	);
 
 	var onDestroyPortlet = function () {
-		delegateHandler.removeListener();
+		delegateHandler.dipose();
 
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	};

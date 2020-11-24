@@ -59,10 +59,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 	/>
 </c:if>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var collections = document.getElementById('<portlet:namespace />collections');
 
-	var selectLayoutMasterLayoutActionOptionQueryClickHandler = dom.delegate(
+	var delegate = delegateModule.default;
+
+	var selectLayoutMasterLayoutActionOptionQueryClickHandler = delegate(
 		collections,
 		'click',
 		'.select-collection-action-option',
@@ -74,7 +76,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 	);
 
 	function handleDestroyPortlet() {
-		selectLayoutMasterLayoutActionOptionQueryClickHandler.removeListener();
+		selectLayoutMasterLayoutActionOptionQueryClickHandler.dispose();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

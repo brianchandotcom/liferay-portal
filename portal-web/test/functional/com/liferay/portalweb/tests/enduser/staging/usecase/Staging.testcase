@@ -2059,7 +2059,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		for (var dmDocumentTitle : list "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt") {
+		for (var dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
 			Navigator.gotoSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");

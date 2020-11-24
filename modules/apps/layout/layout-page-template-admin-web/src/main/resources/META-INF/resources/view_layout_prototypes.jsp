@@ -64,7 +64,7 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					propsTransformer="js/propsTransformer/LayoutPrototypeDropdownPropsTransformer"
+					propsTransformer="js/propsTransformers/LayoutPrototypeDropdownPropsTransformer"
 					verticalCard="<%= new LayoutPrototypeVerticalCard(layoutPrototype, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

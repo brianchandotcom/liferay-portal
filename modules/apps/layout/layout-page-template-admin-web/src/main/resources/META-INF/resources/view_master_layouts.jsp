@@ -66,7 +66,7 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					propsTransformer="js/propsTransformer/MasterLayoutDropdownPropsTransformer"
+					propsTransformer="js/propsTransformers/MasterLayoutDropdownPropsTransformer"
 					verticalCard="<%= new MasterLayoutVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

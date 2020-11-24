@@ -36,6 +36,67 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120277. When add an URL type item, the blank target is set up after checking Open in a new tab."
+	@priority = "5"
+	test AddURLNavigationMenuItemWithBlankTarget {
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Test Navigation Menu Name");
+
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
+		}
+
+		task ("Add a URL item to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				target = "Blank",
+				url = "https://www.liferay.com",
+				urlName = "Liferay");
+		}
+
+		task ("Assert the URL item was added to the navigation menu") {
+			NavigationMenusAdmin.viewItem(itemName = "Liferay");
+		}
+
+		task ("Navigate to the Navigation Menu widget") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Configure the Navigation Menu widget to use the navigation menu") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Assert the Navigation Menu widget has the URL item and the link works properly") {
+			AssertClick(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE",
+				value1 = "Liferay");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+
+			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+			SelectWindow(locator1 = "title=Test Page Name - Test Site Name - ${siteName}");
+		}
+	}
+
 	@description = "This is a test for LPS-75059 and LPS-120277. When add an URL type item, the self target is defined by default."
 	@priority = "5"
 	test AddURLNavigationMenuItemWithSelfTarget {

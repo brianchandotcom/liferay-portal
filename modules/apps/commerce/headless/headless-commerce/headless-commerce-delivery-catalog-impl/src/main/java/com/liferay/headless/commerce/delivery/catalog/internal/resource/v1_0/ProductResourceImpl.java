@@ -146,9 +146,11 @@ public class ProductResourceImpl
 			commerceChannel.getGroupId(), searchContext, cpQuery,
 			pagination.getStartPosition(), pagination.getEndPosition());
 
+		long cpDataSourceCount = _cpDefinitionHelper.searchCount(
+			commerceChannel.getGroupId(), searchContext, cpQuery);
+
 		return Page.of(
-			_toProducts(cpDataSourceResult), pagination,
-			cpDataSourceResult.getLength());
+			_toProducts(cpDataSourceResult), pagination, cpDataSourceCount);
 	}
 
 	@Override

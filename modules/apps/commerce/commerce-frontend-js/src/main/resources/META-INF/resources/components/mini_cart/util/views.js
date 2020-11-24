@@ -13,6 +13,7 @@
  */
 
 import {getJsModule} from '../../../utilities/modules';
+import Summary from '../../summary/Summary';
 import CartItem from '../CartItem';
 import CartItemsList from '../CartItemsList';
 import CartItemsListActions from '../CartItemsListActions';
@@ -30,7 +31,6 @@ import {
 	ORDER_BUTTON,
 	SUMMARY,
 } from './constants';
-import Summary from '../../summary/Summary';
 
 export const DEFAULT_VIEWS = {
 	[CART]: {component: Wrapper},

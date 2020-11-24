@@ -53,8 +53,13 @@
 
 	<%
 	if (!labels.isEmpty()) {
-		for (Map.Entry<String, String> label : labels.entrySet()) {
 	%>
+
+		initialProps.labels = {};
+
+		<%
+		for (Map.Entry<String, String> label : labels.entrySet()) {
+		%>
 
 			initialProps.labels['<%= label.getKey() %>'] = '<%= label.getValue() %>';
 

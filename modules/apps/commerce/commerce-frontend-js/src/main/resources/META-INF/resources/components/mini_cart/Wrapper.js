@@ -20,9 +20,10 @@ import {ITEMS_LIST} from './util/constants';
 
 function Wrapper() {
 	const {CartViews, cartState, isOpen, spritemap} = useContext(
-			MiniCartContext
-		),
-		{cartItems = []} = cartState;
+		MiniCartContext
+	);
+
+	const {cartItems = []} = cartState;
 
 	return (
 		<div className={'mini-cart-wrapper'}>

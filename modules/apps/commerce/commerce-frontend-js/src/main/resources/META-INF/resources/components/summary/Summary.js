@@ -109,26 +109,26 @@ function Summary({
 	dataMapper,
 	datasetDisplayId,
 	isLoading,
+	items = [],
 	summaryData,
-	...props
 }) {
-	const [items, updateItems] = useState(props.items);
+	const [summaryItems, updateSummaryItems] = useState(items);
 
 	const mapDataToLayout = useCallback(
-			(data) =>
-				typeof dataMapper === 'function' ? dataMapper(data) : data,
-			[dataMapper]
-		),
-		refreshData = useCallback(
-			({id = null}) => {
-				if (!id || datasetDisplayId !== id) {
-					return AJAX.GET(apiUrl).then((data) =>
-						updateItems(mapDataToLayout(data))
-					);
-				}
-			},
-			[apiUrl, datasetDisplayId, mapDataToLayout]
-		);
+		(data) => (typeof dataMapper === 'function' ? dataMapper(data) : data),
+		[dataMapper]
+	);
+
+	const refreshData = useCallback(
+		({id = null}) => {
+			if (!id || datasetDisplayId !== id) {
+				return AJAX.GET(apiUrl).then((data) =>
+					updateSummaryItems(mapDataToLayout(data))
+				);
+			}
+		},
+		[apiUrl, datasetDisplayId, mapDataToLayout]
+	);
 
 	useEffect(() => {
 		if (!!apiUrl && !!datasetDisplayId) {
@@ -144,7 +144,7 @@ function Summary({
 
 	useEffect(() => {
 		if (!!summaryData && Object.keys(summaryData).length > 0) {
-			updateItems(mapDataToLayout(summaryData));
+			updateSummaryItems(mapDataToLayout(summaryData));
 		}
 
 		return () => {};
@@ -152,7 +152,7 @@ function Summary({
 
 	return (
 		<div className="row summary-table text-right">
-			{items.map((item, i) => (
+			{summaryItems.map((item, i) => (
 				<SummaryItem key={i} {...item} />
 			))}
 
@@ -164,15 +164,6 @@ function Summary({
 		</div>
 	);
 }
-
-Summary.propTypes = {
-	apiUrl: PropTypes.string,
-	dataMapper: PropTypes.func,
-	datasetDisplayId: PropTypes.string,
-	isLoading: PropTypes.bool,
-	items: PropTypes.array,
-	summaryData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-};
 
 Summary.defaultProps = {
 	dataMapper: (jsonData) => {
@@ -216,7 +207,15 @@ Summary.defaultProps = {
 		];
 	},
 	isLoading: false,
-	items: [],
+};
+
+Summary.propTypes = {
+	apiUrl: PropTypes.string,
+	dataMapper: PropTypes.func,
+	datasetDisplayId: PropTypes.string,
+	isLoading: PropTypes.bool,
+	items: PropTypes.array,
+	summaryData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 export default Summary;

@@ -24,36 +24,35 @@ import {REMOVE_ALL_ITEMS, VIEW_DETAILS} from './util/constants';
 
 function CartItemsListActions({numberOfItems}) {
 	const {
-			CartResource,
-			actionURLs,
-			cartState,
-			labels,
-			setIsUpdating,
-			updateCartModel,
-		} = useContext(MiniCartContext),
-		{id: orderId} = cartState,
-		{orderDetailURL} = actionURLs;
+		CartResource,
+		actionURLs,
+		cartState,
+		labels,
+		setIsUpdating,
+		updateCartModel,
+	} = useContext(MiniCartContext);
+
+	const {id: orderId} = cartState;
+	const {orderDetailURL} = actionURLs;
 
 	const [isAsking, setIsAsking] = useState(false);
 
-	const askConfirmation = () => setIsAsking(true),
-		cancel = () => {
-			setIsAsking(false);
-		},
-		flushCart = () => {
-			setIsUpdating(true);
+	const askConfirmation = () => setIsAsking(true);
+	const cancel = () => setIsAsking(false);
+	const flushCart = () => {
+		setIsUpdating(true);
 
-			CartResource.updateCartById(orderId, {...cartState, cartItems: []})
-				.then(() => updateCartModel({orderId}))
-				.then(() => {
-					setIsAsking(false);
-					setIsUpdating(false);
+		CartResource.updateCartById(orderId, {cartItems: []})
+			.then(() => updateCartModel({orderId}))
+			.then(() => {
+				setIsAsking(false);
+				setIsUpdating(false);
 
-					Liferay.fire(PRODUCT_REMOVED, {
-						skuId: 'all',
-					});
+				Liferay.fire(PRODUCT_REMOVED, {
+					skuId: 'all',
 				});
-		};
+			});
+	};
 
 	return (
 		<div className={'mini-cart-header'}>

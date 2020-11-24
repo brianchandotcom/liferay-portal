@@ -55,7 +55,7 @@ const PAGE_HEADER_COMPONENT_TYPE = {
 	[PAGE_HEADER_TYPES.EDITABLE]: EditablePageHeader.PageHeader,
 };
 
-const EDIT_PORTLET_NAMESPACE =
+const DDM_FORM_PORTLET_NAMESPACE =
 	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_';
 
 const isEmptyPage = ({rows}) => {
@@ -200,7 +200,8 @@ const Renderer = ({
 		}
 	});
 
-	const isEditPortletNamespace = EDIT_PORTLET_NAMESPACE === portletNamespace;
+	const isDDMFormPortletNamespace =
+		DDM_FORM_PORTLET_NAMESPACE === portletNamespace;
 
 	return (
 		<Components.Container
@@ -233,7 +234,7 @@ const Renderer = ({
 				page={page}
 				pageIndex={pageIndex}
 			>
-				{hasFieldRequired && isEditPortletNamespace && (
+				{hasFieldRequired && isDDMFormPortletNamespace && (
 					<p aria-hidden="true" className="text-secondary">
 						<span className="c-mr-1 reference-mark">
 							<ClayIcon symbol="asterisk" />

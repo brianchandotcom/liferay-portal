@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 import getDataAttributes from './get_data_attributes';
 
 export default function HorizontalCard({
-	actions = [],
+	actions,
 	additionalProps: _additionalProps,
 	componentId: _componentId,
 	cssClass,

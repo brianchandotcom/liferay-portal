@@ -18,7 +18,7 @@ import React, {useMemo, useState} from 'react';
 import getDataAttributes from './get_data_attributes';
 
 export default function VerticalCard({
-	actions = [],
+	actions,
 	additionalProps: _additionalProps,
 	componentId: _componentId,
 	cssClass,

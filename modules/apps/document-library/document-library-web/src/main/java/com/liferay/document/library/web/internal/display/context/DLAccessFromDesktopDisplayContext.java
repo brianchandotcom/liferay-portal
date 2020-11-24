@@ -40,8 +40,7 @@ public class DLAccessFromDesktopDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_dlRequestHelper = (DLRequestHelper)httpServletRequest.getAttribute(
-			DLRequestHelper.class.getName());
+		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 	}
 
 	public Folder getFolder() throws PortalException {

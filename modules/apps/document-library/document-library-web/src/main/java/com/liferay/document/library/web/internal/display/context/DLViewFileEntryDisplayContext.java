@@ -77,17 +77,15 @@ public class DLViewFileEntryDisplayContext {
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_dlRequestHelper = (DLRequestHelper)renderRequest.getAttribute(
-			DLRequestHelper.class.getName());
-
-		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
-			_dlRequestHelper);
-
 		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
 		_httpServletResponse = _portal.getHttpServletResponse(renderResponse);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
+
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			_dlRequestHelper);
 	}
 
 	public String getDiscussionClassName() throws PortalException {

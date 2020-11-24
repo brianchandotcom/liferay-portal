@@ -51,7 +51,7 @@ page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 
 <%
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-DLRequestHelper dlRequestHelper = (DLRequestHelper)request.getAttribute(DLRequestHelper.class.getName());
+DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 %>
 
 <%@ include file="/document_library/init-ext.jsp" %>

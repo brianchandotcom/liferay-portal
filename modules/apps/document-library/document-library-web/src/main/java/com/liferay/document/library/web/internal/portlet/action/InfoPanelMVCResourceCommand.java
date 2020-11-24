@@ -18,7 +18,6 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
-import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -67,10 +66,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			return;
 		}
 
-		resourceRequest.setAttribute(
-			DLRequestHelper.class.getName(),
-			new DLRequestHelper(
-				_portal.getHttpServletRequest(resourceRequest)));
 		resourceRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, _dlTrashHelper);
 		resourceRequest.setAttribute(

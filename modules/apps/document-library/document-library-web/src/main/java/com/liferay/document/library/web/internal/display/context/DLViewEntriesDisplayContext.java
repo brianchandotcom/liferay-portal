@@ -74,12 +74,14 @@ public class DLViewEntriesDisplayContext {
 		_dlAdminDisplayContext =
 			(DLAdminDisplayContext)liferayPortletRequest.getAttribute(
 				DLAdminDisplayContext.class.getName());
-		_dlRequestHelper = (DLRequestHelper)liferayPortletRequest.getAttribute(
-			DLRequestHelper.class.getName());
 		_dlTrashHelper = (DLTrashHelper)liferayPortletRequest.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER);
+
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
+
+		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
+
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

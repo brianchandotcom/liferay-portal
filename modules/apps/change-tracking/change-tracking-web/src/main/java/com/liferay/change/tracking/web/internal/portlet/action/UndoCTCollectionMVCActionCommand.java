@@ -14,15 +14,20 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.exception.PublicationLocalizedException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,29 +77,61 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				ctCollection.getName(), "\"");
 		}
 
-		CTCollection ctCollection = _ctCollectionService.undoCTCollection(
-			ctCollectionId, themeDisplay.getUserId(), name, description);
+		try {
+			CTCollection ctCollection = _ctCollectionService.undoCTCollection(
+				ctCollectionId, themeDisplay.getUserId(), name, description);
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, CTPortletKeys.PUBLICATIONS,
-			PortletRequest.RENDER_PHASE);
+			PortletURL redirectURL = PortletURLFactoryUtil.create(
+				actionRequest, CTPortletKeys.PUBLICATIONS,
+				PortletRequest.RENDER_PHASE);
 
-		String publishTime = ParamUtil.get(actionRequest, "publishTime", "now");
+			String publishTime = ParamUtil.get(
+				actionRequest, "publishTime", "now");
 
-		if (publishTime.equals("now")) {
+			if (publishTime.equals("now")) {
+				redirectURL.setParameter(
+					"mvcRenderCommandName", "/change_tracking/view_conflicts");
+			}
+			else {
+				redirectURL.setParameter(
+					"mvcRenderCommandName", "/change_tracking/view_changes");
+			}
+
 			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_conflicts");
-		}
-		else {
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_changes");
-		}
+				"ctCollectionId",
+				String.valueOf(ctCollection.getCtCollectionId()));
 
-		redirectURL.setParameter(
-			"ctCollectionId", String.valueOf(ctCollection.getCtCollectionId()));
+			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
+		}
+		catch (PublicationLocalizedException publicationLocalizedException) {
+			_log.error(
+				publicationLocalizedException, publicationLocalizedException);
 
-		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
+			SessionErrors.add(
+				actionRequest, PublicationLocalizedException.class.getName(),
+				publicationLocalizedException);
+
+			hideDefaultErrorMessage(actionRequest);
+		}
+		catch (SystemException systemException) {
+			Throwable throwable = systemException.getCause();
+
+			if (!(throwable instanceof PublicationLocalizedException)) {
+				throw systemException;
+			}
+
+			_log.error(throwable, throwable);
+
+			SessionErrors.add(
+				actionRequest, PublicationLocalizedException.class.getName(),
+				throwable);
+
+			hideDefaultErrorMessage(actionRequest);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UndoCTCollectionMVCActionCommand.class);
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

@@ -41,15 +41,15 @@ public class SelectRoleVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
-		return HashMapBuilder.put(
-			"id", String.valueOf(_role.getRoleId())
-		).build();
+	public String getCssClass() {
+		return "selector-button";
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "selector-button";
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-id", String.valueOf(_role.getRoleId())
+		).build();
 	}
 
 	@Override

@@ -48,13 +48,13 @@ const Collaborators = ({
 
 	if (total < 1) {
 		return (
-			<ClayLayout.ContentRow className="sidebar-panel">
-				<ClayLayout.ContentCol className="inline-item-before">
+			<ClayLayout.ContentRow className="sidebar-section" noGutters>
+				<ClayLayout.ContentCol>
 					<UserIcon {...owner} size="" />
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<div className="component-title h4 username">
+					<div className="component-title username">
 						{owner.displayURL ? (
 							<a href={owner.displayURL}>{owner.fullName}</a>
 						) : (
@@ -62,9 +62,9 @@ const Collaborators = ({
 						)}
 					</div>
 
-					<small className="text-muted">
+					<div className="component-subtitle">
 						{Liferay.Language.get('owner')}
-					</small>
+					</div>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 		);
@@ -74,7 +74,7 @@ const Collaborators = ({
 
 	return (
 		<>
-			<ClayLayout.ContentRow className="sidebar-panel">
+			<ClayLayout.ContentRow className="sidebar-section">
 				<ClayLayout.ContentCol className="collaborators-owner">
 					<div
 						className="lfr-portal-tooltip"
@@ -137,7 +137,7 @@ const Collaborators = ({
 			</ClayLayout.ContentRow>
 
 			{canManageCollaborators && (
-				<ClayLayout.ContentRow className="sidebar-panel">
+				<ClayLayout.ContentRow className="sidebar-section">
 					<ClayButton
 						className="btn-link collaborators-btn"
 						displayType="link"

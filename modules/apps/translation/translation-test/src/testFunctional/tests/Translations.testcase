@@ -462,15 +462,17 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
+		DataEngine.addFields(fieldNameList = "Numeric,Rich Text,Text");
 
-		for (var fieldName : list "Text,HTML,Integer,Number,Decimal,") {
-			DataEngine.addField(
-				fieldFieldLabel = "${fieldName}",
-				fieldName = "${fieldName}");
-		}
+		DataEngine.addField(
+			fieldFieldLabel = "Text Box",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Decimal",
+			fieldName = "Numeric",
+			numericType = "Decimal");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -487,18 +489,26 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
+		WebContent.addWithStructureCP(
+			numericType = "Decimal",
+			webContentNumeric = "0.5",
+			webContentNumericFieldLabel = "Decimal");
+
+		WebContent.addWithStructureCP(
+			fieldType = "Multiple Lines",
+			webContentText = "This is a Text Box field",
+			webContentTextFieldLabel = "Text Box");
+
 		var webContentSourceHTML = '''<h2 class="text-center">This is a HTML title</h2>''';
 
 		WebContent.addWithStructureCP(
 			description = "WC WebContent Description",
+			source = "true",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDecimal = "1.1",
-			webContentInteger = "123",
-			webContentNumber = "100",
-			webContentSourceHTML = "${webContentSourceHTML}",
+			webContentNumeric = "100",
+			webContentRichText = "${webContentSourceHTML}",
 			webContentText = "Text",
-			webContentTextBox = "This is a text box.",
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
@@ -514,9 +524,8 @@ definition {
 		Translations.viewBaseFields(
 			webContentDecimal = "1.1",
 			webContentDescription = "WC WebContent Description",
-			webContentHTML = "${webContentHTML}",
-			webContentInteger = "123",
-			webContentNumber = "100",
+			webContentNumeric = "100",
+			webContentRichText = "${webContentHTML}",
 			webContentText = "Text",
 			webContentTextBox = "This is a text box.",
 			webContentTitle = "WC WebContent Title");
@@ -526,7 +535,6 @@ definition {
 		Translations.translateFields(
 			webContentDecimal = "2.2",
 			webContentDescription = "WC WebContent Descripción",
-			webContentInteger = "321",
 			webContentNumber = "200",
 			webContentSourceHTML = "${webContentSourceHTML}",
 			webContentText = "Mensaje de texto",
@@ -547,7 +555,6 @@ definition {
 			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
 			webContentHTML = "${webContentHTML}",
-			webContentInteger = "321",
 			webContentNumber = "200",
 			webContentText = "Mensaje de texto",
 			webContentTextBox = "Este es un cuadro de texto.",
@@ -572,7 +579,6 @@ definition {
 			webContentDecimal = "22,0",
 			webContentDescription = "WC WebContent Descripción",
 			webContentHTML = "${webContentHTML}",
-			webContentInteger = "321",
 			webContentNumber = "200",
 			webContentText = "Mensaje de texto",
 			webContentTextBox = "Este es un cuadro de texto.",

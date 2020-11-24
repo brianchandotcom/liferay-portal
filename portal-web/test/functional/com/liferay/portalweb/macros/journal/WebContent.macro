@@ -637,12 +637,13 @@ definition {
 
 				Type.typeCodeMirrorEditorNoError(
 					locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-					value1 = "${content}");
+					value1 = "${webContentRichText}");
 			}
-
-			CKEditor.addContentInWebContent(
-				content = "${webContentRichText}",
-				fieldLabel = "${webContentRichTextFieldLabel}");
+			else {
+				CKEditor.addContentInWebContent(
+					content = "${webContentRichText}",
+					fieldLabel = "${webContentRichTextFieldLabel}");
+			}
 		}
 
 		if (isSet(webContentSelectFromList)) {

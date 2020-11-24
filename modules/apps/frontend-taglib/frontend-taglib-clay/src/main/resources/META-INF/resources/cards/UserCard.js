@@ -27,8 +27,8 @@ export default function UserCard({
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
-	selected: initialSelected,
 	selectable,
+	selected: initialSelected,
 	symbol,
 	...otherProps
 }) {

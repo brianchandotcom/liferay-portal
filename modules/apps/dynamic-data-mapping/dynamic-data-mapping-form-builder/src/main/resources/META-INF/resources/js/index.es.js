@@ -14,10 +14,9 @@
 
 import FormBuilderWithLayoutProvider from './components/FormBuilder/FormBuilderWithLayoutProvider.es';
 import RulesSupport from './components/RuleBuilder/RulesSupport.es';
-import RuleEditor from './components/RuleEditor/RuleEditor.es';
 import * as FieldSupport from './util/fieldSupport.es';
 
 export default FormBuilderWithLayoutProvider;
 export {Token} from '../js/expressions/Token.es';
 export {Tokenizer} from '../js/expressions/Tokenizer.es';
-export {FieldSupport, RuleEditor, RulesSupport};
+export {FieldSupport, RulesSupport};

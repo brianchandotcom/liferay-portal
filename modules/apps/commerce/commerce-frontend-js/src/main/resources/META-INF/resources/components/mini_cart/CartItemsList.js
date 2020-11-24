@@ -21,16 +21,16 @@ import {ADD_PRODUCT} from './util/constants';
 
 function CartItemsList({items}) {
 	const {
-			CartViews,
-			cartState,
-			isUpdating,
-			labels,
-			spritemap,
-			summaryDataMapper,
-		} = useContext(MiniCartContext),
-		{summary = {}} = cartState,
-		{itemsQuantity = 0} = summary,
-		{length: numberOfItems = 0} = items || [];
+		CartViews,
+		cartState,
+		isUpdating,
+		labels,
+		spritemap,
+		summaryDataMapper,
+	} = useContext(MiniCartContext);
+
+	const {summary = {}} = cartState;
+	const numberOfItems = items?.length || 0;
 
 	return (
 		<div className={'mini-cart-items-list'}>
@@ -44,15 +44,13 @@ function CartItemsList({items}) {
 						))}
 					</div>
 
-					{itemsQuantity > 0 && (
-						<>
-							<CartViews.Summary
-								dataMapper={summaryDataMapper}
-								isLoading={isUpdating}
-								summaryData={summary}
-							/>
-						</>
-					)}
+					<>
+						<CartViews.Summary
+							dataMapper={summaryDataMapper}
+							isLoading={isUpdating}
+							summaryData={summary}
+						/>
+					</>
 				</>
 			) : (
 				<div className="empty-cart">

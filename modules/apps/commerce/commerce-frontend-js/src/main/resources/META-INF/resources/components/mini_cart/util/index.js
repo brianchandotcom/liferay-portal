@@ -33,10 +33,6 @@ export function collectDiscountLevels(price) {
 	}, []);
 }
 
-export function normalizePartialObject(defaultObject, customObject) {
-	return {...defaultObject, ...customObject};
-}
-
 export function parseOptions(stringifiedJSON) {
 	let options;
 

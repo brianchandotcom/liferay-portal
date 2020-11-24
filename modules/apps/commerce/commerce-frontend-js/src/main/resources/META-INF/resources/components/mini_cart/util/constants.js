@@ -13,7 +13,7 @@
  */
 
 /**
- *	Cart implementation constants
+ * Cart implementation constants
  */
 export const DEFAULT_ORDER_DETAILS_PORTLET_ID =
 	'com_liferay_commerce_order_content_web_internal_portlet_' +
@@ -24,7 +24,7 @@ export const ORDER_UUID_PARAMETER = 'commerceOrderUuid';
 export const WORKFLOW_STATUS_APPROVED = 0;
 
 /**
- *	Cart component types keys constants
+ * Cart component types keys constants
  */
 export const CART = 'Cart';
 export const HEADER = 'Header';
@@ -36,12 +36,12 @@ export const ORDER_BUTTON = 'OrderButton';
 export const SUMMARY = 'Summary';
 
 /**
- * 	Cart labels keys constants
+ * Cart labels keys constants
  *
- * 	These strings are not used as language keys,
- * 	but rather to both document and override language keys.
+ * These strings are not used as language keys,
+ * but rather to both document and override language keys.
  *
- * 	@see ./labels.js
+ * @see ./labels.js
  */
 export const ADD_PRODUCT = 'Add a product to the cart';
 export const ORDER_IS_EMPTY = 'Your order is empty';

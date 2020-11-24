@@ -20,10 +20,10 @@ import {ORDER_IS_EMPTY, YOUR_ORDER} from './util/constants';
 
 function Header() {
 	const {cartState, closeCart, labels, spritemap, toggleable} = useContext(
-			MiniCartContext
-		),
-		{cartItems = []} = cartState,
-		numberOfItems = cartItems.length > 0 ? cartItems.length : 0;
+		MiniCartContext
+	);
+
+	const numberOfItems = cartState?.cartItems?.length || 0;
 
 	return (
 		<div className={'mini-cart-header'}>

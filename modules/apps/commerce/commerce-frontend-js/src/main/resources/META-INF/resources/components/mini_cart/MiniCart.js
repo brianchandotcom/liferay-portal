@@ -41,11 +41,7 @@ import {
 	VIEW_DETAILS,
 	YOUR_ORDER,
 } from './util/constants';
-import {
-	normalizePartialObject,
-	regenerateOrderDetailURL,
-	summaryDataMapper,
-} from './util/index';
+import {regenerateOrderDetailURL, summaryDataMapper} from './util/index';
 import {DEFAULT_LABELS} from './util/labels';
 import {DEFAULT_VIEWS, resolveCartViews} from './util/views';
 
@@ -64,17 +60,17 @@ function MiniCart({
 }) {
 	const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
-	const [isOpen, setIsOpen] = useState(!toggleable || false),
-		[isUpdating, setIsUpdating] = useState(false),
-		[cartState, updateCartState] = useState({itemsQuantity}),
-		[actionURLs, setActionURLs] = useState(cartActionURLs),
-		[CartViews, setCartViews] = useState({});
+	const [isOpen, setIsOpen] = useState(!toggleable);
+	const [isUpdating, setIsUpdating] = useState(false);
+	const [cartState, updateCartState] = useState({itemsQuantity});
+	const [actionURLs, setActionURLs] = useState(cartActionURLs);
+	const [CartViews, setCartViews] = useState({});
 
-	const closeCart = () => setIsOpen(false),
-		openCart = () => setIsOpen(true),
-		resetCartState = useCallback(() => updateCartState({}), [
-			updateCartState,
-		]);
+	const closeCart = () => setIsOpen(false);
+	const openCart = () => setIsOpen(true);
+	const resetCartState = useCallback(() => updateCartState({}), [
+		updateCartState,
+	]);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const updateCartModel = ({orderId: cartId}) =>
@@ -99,9 +95,10 @@ function MiniCart({
 			.catch(showErrorNotification);
 
 	useEffect(() => {
-		resolveCartViews(
-			normalizePartialObject(DEFAULT_VIEWS, cartViews)
-		).then((views) => setCartViews(views));
+		resolveCartViews({
+			...DEFAULT_VIEWS,
+			...cartViews,
+		}).then((views) => setCartViews(views));
 	}, [cartViews]);
 
 	useEffect(() => {
@@ -141,7 +138,7 @@ function MiniCart({
 				displayTotalItemsQuantity,
 				isOpen,
 				isUpdating,
-				labels: normalizePartialObject(DEFAULT_LABELS, labels),
+				labels: {...DEFAULT_LABELS, ...labels},
 				setIsUpdating,
 				spritemap,
 				summaryDataMapper,
@@ -152,10 +149,10 @@ function MiniCart({
 		>
 			{!!CartViews[CART] && (
 				<div
-					className={classnames(
-						'mini-cart',
-						(!toggleable || isOpen) && 'is-open'
-					)}
+					className={classnames({
+						'is-open': isOpen || !toggleable,
+						'mini-cart': true,
+					})}
 				>
 					{toggleable && (
 						<>

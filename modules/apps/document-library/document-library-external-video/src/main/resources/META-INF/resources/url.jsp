@@ -20,10 +20,29 @@
 String eventName = (String)request.getAttribute(DLExternalVideoVideoURLItemSelectorView.EVENT_NAME);
 %>
 
+<liferay-util:html-top
+	outputKey="document_library_external_video_file_picker_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/file_picker.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="lfr-form-content">
 	<clay:sheet>
 		<div class="panel-group panel-group-flush">
-			<span> VIDEO URL <%= eventName %></span>
+			<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" portletName="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" var="getDLExternalVideoFieldsURL" />
+
+			<react:component
+				module="js/ItemSelectorUrlVideo"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"eventName", eventName
+					).put(
+						"getDLExternalVideoFieldsURL", getDLExternalVideoFieldsURL
+					).put(
+						"namespace", PortalUtil.getPortletNamespace(DLPortletKeys.DOCUMENT_LIBRARY)
+					).build()
+				%>'
+			/>
 		</div>
 	</clay:sheet>
 </div>

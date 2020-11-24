@@ -12,7 +12,8 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
@@ -28,6 +29,7 @@ const VideoPreview = ({
 	externalVideoURL = '',
 	getDLExternalVideoFieldsURL,
 	namespace,
+	onAdd,
 	onSelectedVideo,
 }) => {
 	const inputName = 'externalVideoURLInput';
@@ -88,19 +90,33 @@ const VideoPreview = ({
 
 	return (
 		<>
-			<label htmlFor={inputName}>
-				{Liferay.Language.get('video-url')}
-			</label>
-			<ClayInput
-				id={inputName}
-				onChange={handleUrlChange}
-				placeholder="http://"
-				type="text"
-				value={url}
-			/>
-			<p className="form-text">
-				{Liferay.Language.get('video-url-help')}
-			</p>
+			<ClayForm.Group>
+				<label htmlFor={inputName}>
+					{Liferay.Language.get('video-url')}
+				</label>
+				<ClayInput
+					id={inputName}
+					onChange={handleUrlChange}
+					placeholder="http://"
+					type="text"
+					value={url}
+				/>
+				<p className="form-text">
+					{Liferay.Language.get('video-url-help')}
+				</p>
+
+				{onAdd && (
+					<ClayButton
+						disabled={!!(error || loading || !url)}
+						onClick={() => {
+							onAdd(url);
+						}}
+						type="button"
+					>
+						{Liferay.Language.get('add')}
+					</ClayButton>
+				)}
+			</ClayForm.Group>
 
 			<div className="file-picker-preview-video">
 				{videoHtml ? (

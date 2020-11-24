@@ -20,6 +20,7 @@ import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
+import com.liferay.change.tracking.exception.PublicationLocalizedException;
 import com.liferay.change.tracking.internal.CTEnclosureUtil;
 import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
@@ -617,17 +618,24 @@ public class CTCollectionLocalServiceImpl
 			ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 
 		if (undoCTCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			throw new IllegalArgumentException(
-				"Unable to undo " + undoCTCollection +
-					" because it is not published");
+			throw new PublicationLocalizedException(
+				StringBundler.concat(
+					"Unable to undo ", undoCTCollection,
+					" because it is not published"),
+				"unable-to-undo-x-because-it-is-not-published",
+				undoCTCollection.getName());
 		}
 
 		if (!_ctSchemaVersionLocalService.isLatestSchemaVersion(
 				undoCTCollection.getSchemaVersionId())) {
 
-			throw new IllegalArgumentException(
-				"Unable to undo " + undoCTCollection +
-					" because it is out of date with the current release");
+			throw new PublicationLocalizedException(
+				StringBundler.concat(
+					"Unable to undo ", undoCTCollection,
+					" because it is out of date with the current release"),
+				"unable-to-undo-x-because-it-is-out-of-date-with-the-current-" +
+					"release",
+				undoCTCollection.getName());
 		}
 
 		CTCollection newCTCollection = addCTCollection(
@@ -668,10 +676,13 @@ public class CTCollectionLocalServiceImpl
 					}
 
 					throw new SystemException(
-						StringBundler.concat(
-							"Unable to undo ", undoCTCollection,
-							" because service for ", modelClassNameId,
-							" is missing"));
+						new PublicationLocalizedException(
+							StringBundler.concat(
+								"Unable to undo ", undoCTCollection,
+								" because service for ", modelClassNameId,
+								" is missing"),
+							"unable-to-undo-x-because-service-for-x-is-missing",
+							undoCTCollection.getName(), modelClassNameId));
 				});
 
 			CTEntry ctEntry = ctEntryPersistence.create(++batchCounter);

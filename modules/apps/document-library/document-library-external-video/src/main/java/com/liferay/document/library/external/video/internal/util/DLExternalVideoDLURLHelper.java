@@ -14,8 +14,17 @@
 
 package com.liferay.document.library.external.video.internal.util;
 
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
+import com.liferay.document.library.external.video.internal.helper.DLExternalVideoMetadataHelper;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -125,6 +134,24 @@ public class DLExternalVideoDLURLHelper implements DLURLHelper {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		if (fileVersion.getModel() instanceof DLFileVersion) {
+			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+
+			DLExternalVideoMetadataHelper dlExternalVideoMetadataHelper =
+				new DLExternalVideoMetadataHelper(
+					_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+					dlFileVersion, _dlFileEntryMetadataLocalService,
+					_fieldsToDDMFormValuesConverter, _storageEngine);
+
+			if (dlExternalVideoMetadataHelper.isExternalVideo() &&
+				dlExternalVideoMetadataHelper.containsField(
+					DLExternalVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL)) {
+
+				return dlExternalVideoMetadataHelper.getFieldValue(
+					DLExternalVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL);
+			}
+		}
+
 		return _dlURLHelper.getThumbnailSrc(
 			fileEntry, fileVersion, themeDisplay);
 	}
@@ -134,7 +161,8 @@ public class DLExternalVideoDLURLHelper implements DLURLHelper {
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return _dlURLHelper.getThumbnailSrc(fileEntry, themeDisplay);
+		return getThumbnailSrc(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay);
 	}
 
 	@Override
@@ -166,9 +194,27 @@ public class DLExternalVideoDLURLHelper implements DLURLHelper {
 			openDocumentUrl);
 	}
 
+	@Reference
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
 	@Reference(
 		target = "(!(component.name=com.liferay.document.library.external.video.internal.util.DLExternalVideoDLURLHelper))"
 	)
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

@@ -11,7 +11,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import ViewEntry from '../../../src/main/resources/META-INF/resources/js/pages/entry/ViewEntry.es';
@@ -34,6 +34,8 @@ jest.mock('app-builder-web/js/utils/toast.es', () => ({
 }));
 
 describe('ViewEntry', () => {
+	afterEach(cleanup);
+
 	it('renders workflow info with pending entry', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
@@ -42,9 +44,7 @@ describe('ViewEntry', () => {
 			JSON.stringify({
 				items: [
 					{
-						assignees: [
-							{id: -1, name: 'Unassigned', reviewer: true},
-						],
+						assignees: [{id: -1, reviewer: true}],
 						classPK: 0,
 						completed: false,
 						taskNames: ['Review'],
@@ -76,6 +76,57 @@ describe('ViewEntry', () => {
 		expect(infoItems[0]).toHaveTextContent('status: pending');
 		expect(infoItems[1]).toHaveTextContent('step: Review');
 		expect(infoItems[2]).toHaveTextContent('assignee: Administrator');
+		expect(infoItems[3]).toHaveTextContent('version: 1.0');
+
+		const buttons = getAllByRole('button');
+
+		expect(buttons.length).toBe(4);
+		expect(buttons[0].title).toBe('previous-entry');
+		expect(buttons[1].title).toBe('next-entry');
+		expect(buttons[2].title).toBe('delete');
+		expect(buttons[3].title).toBe('assign-to');
+	});
+
+	it('renders workflow info with pending entry assigned to the current user', async () => {
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORDS(1)));
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_RECORD_APPS(1)));
+		fetch.mockResponseOnce(
+			JSON.stringify({
+				items: [
+					{
+						assignees: [{id: 0, name: 'Test Test', reviewer: true}],
+						classPK: 0,
+						completed: false,
+						taskNames: ['Review'],
+					},
+				],
+				totalCount: 1,
+			})
+		);
+		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
+
+		const {container, getAllByRole} = render(
+			<AppContextProviderWrapper appContext={context}>
+				<ViewEntry match={{params: {entryIndex: 1}}} />
+			</AppContextProviderWrapper>,
+			{wrapper: PermissionsContextProviderWrapper}
+		);
+
+		await waitForElementToBeRemoved(() =>
+			document.querySelector('span.loading-animation')
+		);
+
+		expect(
+			container.querySelector('.data-record-field-preview')
+		).toHaveTextContent('Name Test 0');
+
+		const infoItems = container.querySelectorAll('.info-item');
+
+		expect(infoItems.length).toBe(4);
+		expect(infoItems[0]).toHaveTextContent('status: pending');
+		expect(infoItems[1]).toHaveTextContent('step: Review');
+		expect(infoItems[2]).toHaveTextContent('assignee: Test Test');
 		expect(infoItems[3]).toHaveTextContent('version: 1.0');
 
 		const buttons = getAllByRole('button');

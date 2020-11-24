@@ -31,19 +31,19 @@ const context = {
 const instances = {
 	items: [
 		{
-			assignees: [{id: -1, name: 'Unassigned'}],
+			assignees: [{id: -1}],
 			classPK: 0,
 			completed: false,
 			taskNames: ['Review'],
 		},
 		{
-			assignees: [{name: 'User 2'}],
+			assignees: [{id: 123, name: 'User 2'}],
 			classPK: 1,
 			completed: false,
 			taskNames: ['Update'],
 		},
 		{
-			assignees: [{name: 'Unassigned'}],
+			assignees: [{id: -1}],
 			classPK: 2,
 			completed: false,
 			taskNames: ['Awaiting Review'],
@@ -108,7 +108,7 @@ describe('ListEntries', () => {
 		expect(entries[2].children[0]).toHaveTextContent('Name Test 2');
 		expect(entries[2].children[1]).toHaveTextContent('pending');
 		expect(entries[2].children[2]).toHaveTextContent('Awaiting Review');
-		expect(entries[2].children[3]).toHaveTextContent('Unassigned');
+		expect(entries[2].children[3]).toHaveTextContent('--');
 
 		expect(entries[3].children[0]).toHaveTextContent('Name Test 3');
 		expect(entries[3].children[1]).toHaveTextContent('completed');

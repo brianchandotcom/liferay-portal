@@ -149,9 +149,9 @@ definition {
 
 			AssertNotEditable(locator1 = "TextInput#MAX_WIDTH");
 
-			AssertNotEditable(locator1 = "Radio#AUTOMATIC_URL");
+			AssertElementPresent(locator1 = "Radio#AUTOMATIC_URL_DISABLED");
 
-			AssertNotEditable(locator1 = "Radio#CUSTOM_URL");
+			AssertElementPresent(locator1 = "Radio#CUSTOM_URL_DISABLED");
 		}
 		else {
 			if (!(contains("${maxHeightEdit}", "{maxHeightEdit}"))) {

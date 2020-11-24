@@ -77,6 +77,7 @@ export const createFieldSet = (
 		field: {
 			...fieldSetField,
 			rows,
+			style: {},
 		},
 		indexes: {
 			columnIndex: 0,

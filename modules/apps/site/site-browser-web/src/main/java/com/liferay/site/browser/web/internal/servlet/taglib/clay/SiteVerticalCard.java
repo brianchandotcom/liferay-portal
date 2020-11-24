@@ -50,6 +50,16 @@ public class SiteVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public String getCssClass() {
+		if (_siteBrowserDisplayContext.isShowLink(_group)) {
+			return "card-interactive card-interactive-secondary " +
+				"selector-button";
+		}
+
+		return null;
+	}
+
+	@Override
 	public Map<String, String> getData() {
 		if (!_siteBrowserDisplayContext.isShowLink(_group)) {
 			return null;
@@ -71,16 +81,6 @@ public class SiteVerticalCard implements VerticalCard {
 			).build();
 		}
 		catch (Exception exception) {
-		}
-
-		return null;
-	}
-
-	@Override
-	public String getElementClasses() {
-		if (_siteBrowserDisplayContext.isShowLink(_group)) {
-			return "card-interactive card-interactive-secondary " +
-				"selector-button";
 		}
 
 		return null;

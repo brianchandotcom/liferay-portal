@@ -1561,7 +1561,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/daisydiff.jar</file-name>
-				<version>1.2</version>
+				<version>1.2.0-atlassian-hosted</version>
 				<project-name>DaisyDiff</project-name>
 				<project-url>http://code.google.com/p/daisydiff</project-url>
 				<licenses>
@@ -1571,8 +1571,6 @@
 					</license>
 				</licenses>
 				<comments>
-					This was recompiled for compatibility with JDK 5.
-
 					Removed org.apache.*, org.cyberneko.*, and org.w3c.* because it
 					conflicts with nekohtml.jar and xercesImpl.jar.
 				</comments>

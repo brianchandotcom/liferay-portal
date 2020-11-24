@@ -58,6 +58,19 @@ public class NavigationCardTag extends BaseCardTag {
 			TagResourceBundleUtil.getResourceBundle(pageContext), description);
 	}
 
+	@Override
+	public String getIcon() {
+		String icon = super.getIcon();
+
+		NavigationCard navigationCard = getNavigationCard();
+
+		if ((icon == null) && (navigationCard != null)) {
+			return navigationCard.getIcon();
+		}
+
+		return icon;
+	}
+
 	public String getImageAlt() {
 		String imageAlt = _imageAlt;
 
@@ -103,10 +116,16 @@ public class NavigationCardTag extends BaseCardTag {
 	public Boolean isSmall() {
 		Boolean small = _small;
 
-		NavigationCard navigationCard = getNavigationCard();
+		if (_small == null) {
+			NavigationCard navigationCard = getNavigationCard();
 
-		if ((_small == null) && (navigationCard != null)) {
-			small = navigationCard.isSmall();
+			if ((navigationCard != null) &&
+				(navigationCard.isSmall() != null)) {
+
+				return navigationCard.isSmall();
+			}
+
+			return false;
 		}
 
 		return small;
@@ -143,7 +162,7 @@ public class NavigationCardTag extends BaseCardTag {
 		_description = null;
 		_imageAlt = null;
 		_imageSrc = null;
-		_small = false;
+		_small = null;
 		_title = null;
 	}
 
@@ -282,7 +301,7 @@ public class NavigationCardTag extends BaseCardTag {
 	private String _description;
 	private String _imageAlt;
 	private String _imageSrc;
-	private Boolean _small = false;
+	private Boolean _small;
 	private String _title;
 
 }

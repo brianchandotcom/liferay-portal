@@ -15,6 +15,8 @@
 package com.liferay.segments.web.internal.odata;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,9 +37,11 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * @author Cristina González
@@ -140,11 +144,17 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 	@Override
 	public Object visitListExpressionOperation(
-			ListExpression.Operation operation, Object left,
-			List<Object> rights)
+			ListExpression.Operation operation, Object left, List<Object> right)
 		throws ExpressionVisitException {
 
-		return null;
+		if (operation == ListExpression.Operation.IN) {
+			return _getOperationJSONObject(
+				String.valueOf(operation), (EntityField)left, right);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitListExpressionOperation with operation " +
+				operation);
 	}
 
 	@Override
@@ -214,6 +224,29 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method visitUnaryExpressionOperation with operation " +
 				operation);
+	}
+
+	private JSONObject _getOperationJSONObject(
+		String operatorName, EntityField entityField,
+		List<Object> fieldValues) {
+
+		Stream<Object> stream = fieldValues.stream();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		stream.map(
+			String::valueOf
+		).forEach(
+			value -> jsonArray.put(value)
+		);
+
+		return JSONUtil.put(
+			"operatorName", StringUtil.lowerCase(operatorName)
+		).put(
+			"propertyName", entityField.getName()
+		).put(
+			"value", jsonArray
+		);
 	}
 
 	private JSONObject _getOperationJSONObject(

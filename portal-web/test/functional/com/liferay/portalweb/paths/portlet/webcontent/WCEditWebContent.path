@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>SELECTION_OPTION</td>
-	<td>//legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//input//following-sibling::span[normalize-space()='${key_optionValue}']</td>
+	<td>//legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//input//following-sibling::span[normalize-space()='${key_optionValue}']//preceding-sibling::input</td>
 	<td></td>
 </tr>
 <tr>

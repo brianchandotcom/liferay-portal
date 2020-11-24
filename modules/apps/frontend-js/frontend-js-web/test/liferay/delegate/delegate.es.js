@@ -161,4 +161,24 @@ describe('delegate', () => {
 
 		expect(listener).not.toHaveBeenCalled();
 	});
+
+	it('gives access to delegateTarget inside the callback', () => {
+		document.body.innerHTML = `<div class="match" data-testid="match">
+				<div>
+					<div data-testid="most-inner-match"></div>
+				</div>
+			</div >`;
+
+		let delegateTarget;
+
+		const listener = (event) => {
+			delegateTarget = event.delegateTarget;
+		};
+
+		delegate(document, 'click', '.match', listener);
+
+		userEvent.click(getByTestId(document, 'most-inner-match'));
+
+		expect(delegateTarget).toBe(document.querySelector('.match'));
+	});
 });

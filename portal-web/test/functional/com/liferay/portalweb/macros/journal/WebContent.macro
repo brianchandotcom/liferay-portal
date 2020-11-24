@@ -600,7 +600,7 @@ definition {
 				var webContentMultipleSelectionFieldLabel = "Multiple Selection";
 			}
 
-			Check(
+			Check.checkNotVisible(
 				key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
 				key_optionValue = "${webContentMultipleSelection}",
 				locator1 = "WCEditWebContent#SELECTION_OPTION");
@@ -650,10 +650,11 @@ definition {
 				var webContentSelectFromListFieldLabel = "Select from List";
 			}
 
-			Select(
+			Click(
 				key_fieldFieldLabel = "${webContentSelectFromListFieldLabel}",
-				locator1 = "DDMField#SELECT_FROM_LIST",
-				value1 = "${webContentSelectFromList}");
+				locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER");
+
+			DropdownMenuItem.click(menuItem = "${webContentSelectFromList}");
 		}
 
 		if (isSet(webContentSingleSelection)) {
@@ -661,7 +662,7 @@ definition {
 				var webContentSingleSelectionFieldLabel = "Single Selection";
 			}
 
-			Check(
+			Check.checkNotVisible(
 				key_fieldFieldLabel = "${webContentSingleSelectionFieldLabel}",
 				key_optionValue = "${webContentSingleSelection}",
 				locator1 = "WCEditWebContent#SELECTION_OPTION");

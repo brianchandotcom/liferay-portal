@@ -42,6 +42,8 @@ import java.util.Locale;
 public class DLExternalVideoVideoURLItemSelectorView
 	implements ItemSelectorView<VideoItemSelectorCriterion> {
 
+	public static final String EVENT_NAME="EVENT_NAME";
+
 	@Override
 	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return VideoItemSelectorCriterion.class;
@@ -73,6 +75,7 @@ public class DLExternalVideoVideoURLItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/url.jsp");
 
+		servletRequest.setAttribute(EVENT_NAME, itemSelectedEventName);
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

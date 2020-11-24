@@ -106,7 +106,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 					_themeDisplay.getLocale(), userSearchContainer.getStart(),
 					userSearchContainer.getEnd());
 			}
-			else if (segmentsEntry != null) {
+			else if ((criteria == null) && (segmentsEntry != null)) {
 				total =
 					_segmentsEntryProviderRegistry.
 						getSegmentsEntryClassPKsCount(

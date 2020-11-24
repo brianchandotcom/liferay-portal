@@ -23,7 +23,14 @@ import EmptyState from '../empty-state/EmptyState.es';
 import List from '../list/List.es';
 import Card from './Card.es';
 
-const chartFactory = ({field, structure, summary, totalEntries, values}) => {
+const chartFactory = ({
+	field,
+	structure,
+	sumTotalValues,
+	summary,
+	totalEntries,
+	values,
+}) => {
 	const {options, type} = field;
 
 	switch (type) {
@@ -31,7 +38,7 @@ const chartFactory = ({field, structure, summary, totalEntries, values}) => {
 			return (
 				<SimpleBarChart
 					data={toDataArray(options, values)}
-					totalEntries={totalEntries}
+					totalEntries={sumTotalValues}
 				/>
 			);
 
@@ -57,7 +64,7 @@ const chartFactory = ({field, structure, summary, totalEntries, values}) => {
 					data={values}
 					field={field}
 					structure={structure}
-					totalEntries={totalEntries}
+					totalEntries={sumTotalValues}
 				/>
 			);
 		}
@@ -67,7 +74,7 @@ const chartFactory = ({field, structure, summary, totalEntries, values}) => {
 			return (
 				<PieChart
 					data={toDataArray(options, values)}
-					totalEntries={totalEntries}
+					totalEntries={sumTotalValues}
 				/>
 			);
 		case 'color':
@@ -110,8 +117,9 @@ export default ({data, fields}) => {
 		const chartContent = {
 			field,
 			structure,
+			sumTotalValues,
 			summary,
-			totalEntries: sumTotalValues,
+			totalEntries,
 			values,
 		};
 

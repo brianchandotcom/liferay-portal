@@ -493,9 +493,6 @@ public class VerticalCardTag extends BaseCardTag {
 		if (Validator.isNotNull(stickerStyle)) {
 			stickerTag.setDisplayType(stickerStyle);
 		}
-		else {
-			stickerTag.setDisplayType("primary");
-		}
 
 		stickerTag.setPosition("bottom-left");
 

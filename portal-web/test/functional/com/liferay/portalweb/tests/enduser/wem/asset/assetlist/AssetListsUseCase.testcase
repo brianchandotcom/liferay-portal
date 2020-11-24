@@ -24,13 +24,10 @@ definition {
 		}
 	}
 
-	// Ignore for LPS-123457
-
 	@description = "This is a test for LPS-115236. Configure Filter by Field."
-	@ignore = "true"
 	@priority = "5"
 	test ConfigureFilterByField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Add a web content structure with a Select field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -42,6 +39,17 @@ definition {
 			DataEngine.addField(
 				fieldFieldLabel = "Select from List",
 				fieldName = "Select from List");
+
+			var index = "1";
+
+			for (var optionValue : list "value 1,value 2,value 3") {
+				DataEngine.addFieldOption(
+					fieldFieldLabel = "Select from List",
+					index = "${index}",
+					optionValue = "${optionValue}");
+
+				var index = ${index} + 1;
+			}
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -70,16 +78,16 @@ definition {
 			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
 
 			Select(
-				key_fieldLabel = "Select from List",
+				key_fieldFieldLabel = "Select from List",
 				locator1 = "DDMField#SELECT_FROM_LIST",
-				value1 = "option 2");
+				value1 = "value 2");
 
 			Pause(locator1 = "3000");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Select from List",
+				key_fieldFieldLabel = "Select from List",
 				locator1 = "DDMField#SELECT_FROM_LIST",
-				value1 = "option 2");
+				value1 = "value 2");
 
 			Button.click(button = "Apply");
 

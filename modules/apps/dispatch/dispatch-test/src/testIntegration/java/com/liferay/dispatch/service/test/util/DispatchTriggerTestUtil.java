@@ -43,8 +43,8 @@ public class DispatchTriggerTestUtil {
 			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
 			_randomCronExpression(), dispatchTrigger.getTaskExecutorType(),
 			dispatchTrigger.getTaskSettingsUnicodeProperties(),
-			_randomName(dispatchTrigger.getUserId(), nameSalt),
-			dispatchTrigger.isSystem(), dispatchTrigger.getUserId());
+			_randomName(nameSalt), dispatchTrigger.isSystem(),
+			dispatchTrigger.getUserId());
 	}
 
 	public static DispatchTrigger randomDispatchTrigger(
@@ -57,8 +57,8 @@ public class DispatchTriggerTestUtil {
 			_randomCronExpression(), RandomTestUtil.randomString(20),
 			RandomTestUtil.randomUnicodeProperties(
 				RandomTestUtil.randomInt(10, 30), 32, 64),
-			_randomName(user.getUserId(), nameSalt),
-			RandomTestUtil.randomBoolean(), user.getUserId());
+			_randomName(nameSalt), RandomTestUtil.randomBoolean(),
+			user.getUserId());
 	}
 
 	private static String _randomCronExpression() {
@@ -432,12 +432,12 @@ public class DispatchTriggerTestUtil {
 		};
 	}
 
-	private static String _randomName(long userId, int nameSalt) {
+	private static String _randomName(int nameSalt) {
 		if (nameSalt < 0) {
 			return null;
 		}
 
-		return String.format("TEST-TRIGGER-%06d-%06d", userId, nameSalt);
+		return String.format("TEST-TRIGGER-%06d", nameSalt);
 	}
 
 }

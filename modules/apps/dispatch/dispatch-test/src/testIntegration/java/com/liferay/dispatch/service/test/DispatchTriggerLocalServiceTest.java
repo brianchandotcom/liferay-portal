@@ -236,6 +236,35 @@ public class DispatchTriggerLocalServiceTest {
 			DispatchTriggerNameException.class, exceptionClass);
 	}
 
+	@Test
+	public void testUpdateDispatchTriggerWhenMultiplePortalInstancesPresent()
+		throws Exception {
+
+		Company company1 = CompanyTestUtil.addCompany();
+
+		Company company2 = CompanyTestUtil.addCompany();
+
+		User user1 = UserTestUtil.addUser(company1);
+
+		User user2 = UserTestUtil.addUser(company2);
+
+		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(user1, 1));
+
+		DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(user2, 1));
+
+		Assert.assertEquals(
+			dispatchTrigger1.getName(), dispatchTrigger2.getName());
+
+		dispatchTrigger2 = _dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTrigger2.getDispatchTriggerId(), dispatchTrigger1.getName(),
+			dispatchTrigger1.getTaskSettingsUnicodeProperties());
+
+		Assert.assertEquals(
+			dispatchTrigger1.getName(), dispatchTrigger2.getName());
+	}
+
 	private DispatchTrigger _addDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 

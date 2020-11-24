@@ -66,6 +66,9 @@ public class GetDLExternalVideoFieldsMVCResourceCommand
 					"ICON_URL",
 					GetterUtil.getString(dlExternalVideo.getIconURL())
 				).put(
+					"THUMBNAIL_URL",
+					GetterUtil.getString(dlExternalVideo.getThumbnailURL())
+				).put(
 					"TITLE", GetterUtil.getString(dlExternalVideo.getTitle())
 				).put(
 					"URL", GetterUtil.getString(dlExternalVideo.getURL())

@@ -50,10 +50,10 @@ public class UniqueFileEntryTitleProviderImpl
 	}
 
 	@Override
-	public String provide(long groupId, long folderId, String fileName)
+	public String provide(long groupId, long folderId, String title)
 		throws PortalException {
 
-		return _provide(groupId, folderId, fileName);
+		return _provide(groupId, folderId, title);
 	}
 
 	@Override
@@ -85,9 +85,9 @@ public class UniqueFileEntryTitleProviderImpl
 		return false;
 	}
 
-	private boolean _exists(long groupId, long folderId, String fileName) {
+	private boolean _existsTitle(long groupId, long folderId, String title) {
 		try {
-			_dlAppLocalService.getFileEntry(groupId, folderId, fileName);
+			_dlAppLocalService.getFileEntry(groupId, folderId, title);
 
 			return true;
 		}
@@ -103,12 +103,12 @@ public class UniqueFileEntryTitleProviderImpl
 		return false;
 	}
 
-	private String _provide(long groupId, long folderId, String fileName)
+	private String _provide(long groupId, long folderId, String title)
 		throws PortalException {
 
 		return _uniqueFileNameProvider.provide(
-			fileName,
-			generatedFileName -> _exists(groupId, folderId, generatedFileName));
+			title,
+			generatedTitle -> _existsTitle(groupId, folderId, generatedTitle));
 	}
 
 	private String _provide(
@@ -120,7 +120,7 @@ public class UniqueFileEntryTitleProviderImpl
 			generatedTitle ->
 				_existsFileName(
 					groupId, folderId, generatedTitle.concat(extension)) ||
-				_exists(groupId, folderId, generatedTitle));
+				_existsTitle(groupId, folderId, generatedTitle));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

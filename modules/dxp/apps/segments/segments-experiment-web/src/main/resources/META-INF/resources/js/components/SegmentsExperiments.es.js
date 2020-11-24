@@ -196,7 +196,6 @@ function SegmentsExperiments({
 										<ClayButton.Group>
 											<ClayButton
 												alert
-												displayType="success"
 												onClick={() =>
 													_handlePublishVariant(
 														winnerVariant.segmentsExperienceId

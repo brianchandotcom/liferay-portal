@@ -31,9 +31,10 @@ runGradleTest {
 
 		String[] localDirFileNames = localDir.list()
 
-		assert localDirFileNames.length == 2
+		assert localDirFileNames.length == 3
 
 		assert localDirFileNames.contains("local_file")
+		assert localDirFileNames.contains("osgi")
 		assert localDirFileNames.contains("portal-ext.properties")
 
 		File deployDir = new File(inputDir, "deploy")
@@ -54,6 +55,14 @@ runGradleTest {
 		String[] workDirFileNames = workDir.list()
 
 		assert workDirFileNames.contains(".touch")
+
+		File overrideFile = new File(inputDir, "configs/local/osgi/marketplace/override/com.liferay.calendar.web-3.0.55.ext.jar");
+
+		assert overrideFile.exists()
+
+		overrideFile = new File(inputDir, "configs/other/osgi/marketplace/override/com.liferay.calendar.web-3.0.55.ext.jar");
+
+		assert overrideFile.exists()
 	}
 
 	finalizedBy cleanDockerImage

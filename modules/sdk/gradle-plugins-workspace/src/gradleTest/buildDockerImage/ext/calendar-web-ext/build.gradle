@@ -1,0 +1,5 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+
+	originalModule group: "com.liferay", name: "com.liferay.calendar.web"
+}

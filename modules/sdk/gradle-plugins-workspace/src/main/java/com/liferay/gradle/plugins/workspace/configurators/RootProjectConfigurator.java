@@ -138,6 +138,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
+	public static final String LIFERAY_CONFIGS_DIR_NAME = "configs";
+
 	public static final String LOGS_DOCKER_CONTAINER_TASK_NAME =
 		"logsDockerContainer";
 
@@ -562,7 +564,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay scripts /mnt/liferay/scripts");
 		dockerfile.instruction(
-			"COPY --chown=liferay:liferay " + _LIFERAY_CONFIGS_DIR_NAME +
+			"COPY --chown=liferay:liferay " + LIFERAY_CONFIGS_DIR_NAME +
 				" /home/liferay/configs");
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay " + _LIFERAY_IMAGE_SETUP_SCRIPT +
@@ -787,7 +789,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {
 								copySpec.into(
-									_LIFERAY_CONFIGS_DIR_NAME + "/" +
+									LIFERAY_CONFIGS_DIR_NAME + "/" +
 										configDir.getName());
 							}
 
@@ -809,7 +811,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
 						copySpec.exclude(commonConfigDirNames);
-						copySpec.into(_LIFERAY_CONFIGS_DIR_NAME);
+						copySpec.into(LIFERAY_CONFIGS_DIR_NAME);
 					}
 
 				});
@@ -1425,8 +1427,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
-
-	private static final String _LIFERAY_CONFIGS_DIR_NAME = "configs";
 
 	private static final String _LIFERAY_IMAGE_SETUP_SCRIPT =
 		"100_liferay_image_setup.sh";

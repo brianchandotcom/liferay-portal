@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -48,7 +49,8 @@ import java.util.stream.Stream;
  */
 public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
-	public ExpressionVisitorImpl(EntityModel entityModel) {
+	public ExpressionVisitorImpl(int groupCount, EntityModel entityModel) {
+		_groupCount = groupCount;
 		_entityModel = entityModel;
 	}
 
@@ -57,12 +59,18 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			BinaryExpression.Operation operation, Object left, Object right)
 		throws ExpressionVisitException {
 
-		if (Objects.equals(BinaryExpression.Operation.EQ, operation) ||
-			Objects.equals(BinaryExpression.Operation.GE, operation) ||
-			Objects.equals(BinaryExpression.Operation.GT, operation) ||
-			Objects.equals(BinaryExpression.Operation.LE, operation) ||
-			Objects.equals(BinaryExpression.Operation.LT, operation) ||
-			Objects.equals(BinaryExpression.Operation.NE, operation)) {
+		if (Objects.equals(BinaryExpression.Operation.AND, operation) ||
+			Objects.equals(BinaryExpression.Operation.OR, operation)) {
+
+			return _getConjunctionJSONObject(
+				operation, (JSONObject)left, (JSONObject)right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.EQ, operation) ||
+				 Objects.equals(BinaryExpression.Operation.GE, operation) ||
+				 Objects.equals(BinaryExpression.Operation.GT, operation) ||
+				 Objects.equals(BinaryExpression.Operation.LE, operation) ||
+				 Objects.equals(BinaryExpression.Operation.LT, operation) ||
+				 Objects.equals(BinaryExpression.Operation.NE, operation)) {
 
 			return _getOperationJSONObject(
 				String.valueOf(operation), (EntityField)left, right);
@@ -90,6 +98,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		return lambdaFunctionExpression.accept(
 			new ExpressionVisitorImpl(
+				0,
 				new EntityModel() {
 
 					@Override
@@ -226,6 +235,40 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				operation);
 	}
 
+	private JSONObject _getConjunctionJSONObject(
+		BinaryExpression.Operation operation, JSONObject leftJSONObject,
+		JSONObject rightJSONObject) {
+
+		String conjunctionName = leftJSONObject.getString("conjunctionName");
+
+		if (Validator.isNotNull(conjunctionName) &&
+			Objects.equals(conjunctionName, operation.toString())) {
+
+			JSONArray jsonArray = leftJSONObject.getJSONArray("items");
+
+			jsonArray.put(rightJSONObject);
+
+			return JSONUtil.put(
+				"conjunctionName",
+				StringUtil.lowerCase(String.valueOf(operation))
+			).put(
+				"groupId", leftJSONObject.getString("groupId")
+			).put(
+				"items", jsonArray
+			);
+		}
+
+		_groupCount++;
+
+		return JSONUtil.put(
+			"conjunctionName", StringUtil.lowerCase(String.valueOf(operation))
+		).put(
+			"groupId", "group_" + _groupCount
+		).put(
+			"items", JSONUtil.putAll(leftJSONObject, rightJSONObject)
+		);
+	}
+
 	private JSONObject _getOperationJSONObject(
 		String operatorName, EntityField entityField,
 		List<Object> fieldValues) {
@@ -262,5 +305,6 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	}
 
 	private final EntityModel _entityModel;
+	private int _groupCount;
 
 }

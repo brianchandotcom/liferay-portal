@@ -35,6 +35,13 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 		<liferay-util:include page="/document_library/view_file_entry_simple_view.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
+
+		<%
+		DLAdminDisplayContextProvider dlAdminDisplayContextProvider = dlWebComponentProvider.getDlAdminDisplayContextProvider();
+
+		renderRequest.setAttribute(DLViewFileEntryDisplayContext.class.getName(), new DLViewFileEntryDisplayContext(dlAdminDisplayContextProvider.getDLAdminDisplayContext(request, response), dlDisplayContextProvider, HtmlUtil.getHtml(), LanguageUtil.getLanguage(), PortalUtil.getPortal(), renderRequest, renderResponse));
+		%>
+
 		<liferay-util:include page="/document_library/view_file_entry.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="addPortletBreadcrumbEntries" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-util:include>

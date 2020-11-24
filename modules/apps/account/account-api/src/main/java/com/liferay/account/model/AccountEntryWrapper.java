@@ -220,6 +220,11 @@ public class AccountEntryWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Address getDefaultBillingAddress() {
+		return model.getDefaultBillingAddress();
+	}
+
 	/**
 	 * Returns the default billing address ID of this account entry.
 	 *
@@ -228,6 +233,11 @@ public class AccountEntryWrapper
 	@Override
 	public long getDefaultBillingAddressId() {
 		return model.getDefaultBillingAddressId();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Address getDefaultShippingAddress() {
+		return model.getDefaultShippingAddress();
 	}
 
 	/**

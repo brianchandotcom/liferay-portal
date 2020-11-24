@@ -71,6 +71,11 @@ public class TwitchDLExternalVideoProvider
 			}
 
 			@Override
+			public String getThumbnailURL() {
+				return null;
+			}
+
+			@Override
 			public String getTitle() {
 				return null;
 			}

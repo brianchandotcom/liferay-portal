@@ -193,16 +193,18 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 		if (!Objects.equals(
 				sourceFileName, dLOpenerOneDriveFileReference.getTitle())) {
 
+			String mimeTypeExtension =
+				DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
+					fileEntry.getMimeType());
+
 			title = _uniqueFileEntryTitleProvider.provide(
 				fileEntry.getGroupId(), fileEntry.getFolderId(),
+				mimeTypeExtension,
 				_dlValidator.fixName(
 					_removeExtension(
 						dLOpenerOneDriveFileReference.getTitle())));
 
-			sourceFileName = title;
-
-			sourceFileName += DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
-				fileEntry.getMimeType());
+			sourceFileName = title.concat(mimeTypeExtension);
 		}
 
 		try {

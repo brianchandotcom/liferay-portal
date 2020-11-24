@@ -115,11 +115,12 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			String title, ServiceContext serviceContext)
 		throws PortalException {
 
-		String uniqueTitle = uniqueFileEntryTitleProvider.provide(
-			serviceContext.getScopeGroupId(), folderId, title);
-
 		String mimeTypeExtension =
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(mimeType);
+
+		String uniqueTitle = uniqueFileEntryTitleProvider.provide(
+			serviceContext.getScopeGroupId(), folderId, mimeTypeExtension,
+			title);
 
 		String sourceFileName = uniqueTitle + mimeTypeExtension;
 

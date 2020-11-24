@@ -306,6 +306,22 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro stageFirstVocabularyConfiguration {
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_STAGE_VOCABULARY");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_UP_ARROW_BUTTON");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro tearDown {
 		Category.openCategoriesAdmin(siteURLKey = "global");
 

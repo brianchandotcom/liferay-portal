@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_BUTTON</td>
+	<td>//button[contains(@class, 'btn') and contains(@onclick,'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_STAGE_VOCABULARY</td>
+	<td>//option[contains(text(),'Stage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_UP_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'reorder-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_TITLE</td>
+	<td>//*[contains(@class, 'autofit-col autofit-col-expand') and contains(text(),'${auditGraphTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUTHOR_SELECT_DISPLAY_MODE_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'nav-link-monospaced') and contains(@class, 'btn nav-link')]</td>
 	<td></td>
@@ -159,7 +179,7 @@
 </tr>
 <tr>
 	<td>X_AXIS_VOCABULARY_NAME</td>
-	<td>//button[contains(@class, 'recharts-layer recharts-cartesian-axis-tick') and contains(text(),'${xAxisCtegoryName}')]</td>
+	<td>//button[contains(@class, 'recharts-layer recharts-cartesian-axis-tick') and contains(text(),'${xAxisCategoryName}')]</td>
 	<td></td>
 </tr>
 </tbody>

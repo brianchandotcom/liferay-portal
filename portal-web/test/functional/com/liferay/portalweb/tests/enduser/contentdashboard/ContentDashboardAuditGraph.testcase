@@ -99,11 +99,15 @@ definition {
 
 		Category.deleteCategoriesCP(vocabularyName = "Audience");
 
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId2}",
-			content = "WC content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Stage 1",
+			vocabularyName = "Stage",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
@@ -113,7 +117,24 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 			value1 = "WC Title",
-			xAxisCtegoryName = "Stage 1");
+			xAxisCategoryName = "Stage 1");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+			value1 = "Content per Stage",
+			auditGraphTitle = "Content per Stage");
+
+		ContentDashboard.stageFirstVocabularyConfiguration();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+			value1 = "WC Title",
+			xAxisCategoryName = "Stage 1");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+			value1 = "Content per Stage",
+			auditGraphTitle = "Content per Stage");
 	}
 
 	@description = "When there are not contents with Stage's categories, the X axis will show just one bar per each one of Audience's categories representing the total number of contents labeled with those categories"
@@ -125,11 +146,15 @@ definition {
 
 		Category.deleteCategoriesCP(vocabularyName = "Stage");
 
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId1}",
-			content = "WC content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Audience 1",
+			vocabularyName = "Audience",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
@@ -139,7 +164,24 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 			value1 = "WC Title",
-			xAxisCtegoryName = "Audience 1");
+			xAxisCategoryName = "Audience 1");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+			value1 = "Content per Audience",
+			auditGraphTitle = "Content per Audience");
+
+		ContentDashboard.stageFirstVocabularyConfiguration();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+			value1 = "WC Title",
+			xAxisCategoryName = "Audience 1");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
+			value1 = "Content per Audience",
+			auditGraphTitle = "Content per Audience");
 	}
 
 	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."

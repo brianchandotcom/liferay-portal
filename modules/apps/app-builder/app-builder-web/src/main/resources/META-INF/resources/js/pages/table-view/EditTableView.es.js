@@ -41,7 +41,7 @@ import {
 } from './utils.es';
 
 const EditTableView = withRouter(({history}) => {
-	const {popUpWindow, showTranslationManager} = useContext(AppContext);
+	const {popUpWindow} = useContext(AppContext);
 	const [{dataDefinition, dataListView}, dispatch] = useContext(
 		EditTableViewContext
 	);
@@ -190,25 +190,23 @@ const EditTableView = withRouter(({history}) => {
 					}}
 				>
 					<UpperToolbar>
-						{showTranslationManager && (
-							<UpperToolbar.Group>
-								<TranslationManager
-									availableLanguageIds={dataDefinition.availableLanguageIds.reduce(
-										(languages, languageId) => ({
-											...languages,
-											[languageId]: languageId,
-										}),
-										{}
-									)}
-									defaultLanguageId={defaultLanguageId}
-									editingLanguageId={editingLanguageId}
-									onEditingLanguageIdChange={
-										onEditingLanguageIdChange
-									}
-									translatedLanguageIds={dataListView.name}
-								/>
-							</UpperToolbar.Group>
-						)}
+						<UpperToolbar.Group>
+							<TranslationManager
+								availableLanguageIds={dataDefinition.availableLanguageIds.reduce(
+									(languages, languageId) => ({
+										...languages,
+										[languageId]: languageId,
+									}),
+									{}
+								)}
+								defaultLanguageId={defaultLanguageId}
+								editingLanguageId={editingLanguageId}
+								onEditingLanguageIdChange={
+									onEditingLanguageIdChange
+								}
+								translatedLanguageIds={dataListView.name}
+							/>
+						</UpperToolbar.Group>
 
 						<UpperToolbar.Input
 							onChange={onTableViewNameChange}

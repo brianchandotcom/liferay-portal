@@ -27,11 +27,7 @@ import {errorToast, successToast} from '../../utils/toast.es';
 import {getValidName} from '../../utils/utils.es';
 import FormViewContext from './FormViewContext.es';
 
-export default function FormViewUpperToolbar({
-	newCustomObject,
-	popUpWindow,
-	showTranslationManager,
-}) {
+export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 	const [defaultLanguageId, setDefaultLanguageId] = useState('');
 	const [editingLanguageId, setEditingLanguageId] = useState('');
 	const [isLoading, setLoading] = useState(false);
@@ -176,28 +172,24 @@ export default function FormViewUpperToolbar({
 	return (
 		<>
 			<UpperToolbar>
-				{showTranslationManager && (
-					<UpperToolbar.Group>
-						<TranslationManager
-							defaultLanguageId={defaultLanguageId}
-							editingLanguageId={editingLanguageId}
-							onEditingLanguageIdChange={
-								onEditingLanguageIdChange
-							}
-							translatedLanguageIds={{
-								...dataLayout.name,
-								...initialAvailableLanguageIds.reduce(
-									(acc, cur) => {
-										acc[cur] = cur;
+				<UpperToolbar.Group>
+					<TranslationManager
+						defaultLanguageId={defaultLanguageId}
+						editingLanguageId={editingLanguageId}
+						onEditingLanguageIdChange={onEditingLanguageIdChange}
+						translatedLanguageIds={{
+							...dataLayout.name,
+							...initialAvailableLanguageIds.reduce(
+								(acc, cur) => {
+									acc[cur] = cur;
 
-										return acc;
-									},
-									{}
-								),
-							}}
-						/>
-					</UpperToolbar.Group>
-				)}
+									return acc;
+								},
+								{}
+							),
+						}}
+					/>
+				</UpperToolbar.Group>
 
 				<UpperToolbar.Input
 					onChange={onDataLayoutNameChange}

@@ -15,7 +15,6 @@
 import {TranslationManager} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
-import {AppContext} from '../../../AppContext.es';
 import {UpperToolbarInput} from '../../../components/upper-toolbar/UpperToolbar.es';
 import EditAppContext, {UPDATE_NAME} from './EditAppContext.es';
 
@@ -25,7 +24,6 @@ export default ({
 	editingLanguageId,
 	onEditingLanguageIdChange,
 }) => {
-	const {showTranslationManager} = useContext(AppContext);
 	const {
 		dispatch,
 		state: {
@@ -46,25 +44,23 @@ export default ({
 	return (
 		<>
 			<div className="align-items-center bg-transparent card-header d-flex justify-content-between">
-				{showTranslationManager && (
-					<TranslationManager
-						availableLanguageIds={availableLanguageIds.reduce(
-							(acc, cur) => {
-								acc[cur] = cur;
+				<TranslationManager
+					availableLanguageIds={availableLanguageIds.reduce(
+						(acc, cur) => {
+							acc[cur] = cur;
 
-								return acc;
-							},
-							{}
-						)}
-						className="mr-1"
-						defaultLanguageId={defaultLanguageId}
-						editingLanguageId={editingLanguageId}
-						onEditingLanguageIdChange={(editingLanguageId) => {
-							onEditingLanguageIdChange(editingLanguageId);
-						}}
-						translatedLanguageIds={name}
-					/>
-				)}
+							return acc;
+						},
+						{}
+					)}
+					className="mr-1"
+					defaultLanguageId={defaultLanguageId}
+					editingLanguageId={editingLanguageId}
+					onEditingLanguageIdChange={(editingLanguageId) => {
+						onEditingLanguageIdChange(editingLanguageId);
+					}}
+					translatedLanguageIds={name}
+				/>
 				<UpperToolbarInput
 					maxLength={30}
 					onChange={onAppNameChange}

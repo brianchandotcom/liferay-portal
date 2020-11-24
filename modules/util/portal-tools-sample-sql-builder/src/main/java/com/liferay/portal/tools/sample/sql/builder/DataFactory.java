@@ -37,6 +37,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueModel;
 import com.liferay.commerce.product.model.CPInstanceModel;
 import com.liferay.commerce.product.model.CPOptionCategoryModel;
 import com.liferay.commerce.product.model.CPSpecificationOption;
@@ -50,6 +51,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
+import com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueModelImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.commerce.product.model.impl.CPOptionCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CPSpecificationOptionModelImpl;
@@ -559,6 +561,11 @@ public class DataFactory {
 
 	public int getMaxContentLayoutCount() {
 		return BenchmarksPropsValues.MAX_CONTENT_LAYOUT_COUNT;
+	}
+
+	public int getMaxCPDefinitionSpecificationOptionValueCount() {
+		return BenchmarksPropsValues.
+			MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT;
 	}
 
 	public int getMaxDDLRecordCount() {
@@ -1530,6 +1537,78 @@ public class DataFactory {
 			cpDefinitionModel.getCPDefinitionId(), SequentialUUID.generate(), 0,
 			true, true, "text/plain",
 			"Definition " + cpDefinitionModel.getCPDefinitionId());
+	}
+
+	public CPDefinitionSpecificationOptionValueModel
+		newCPDefinitionSpecificationOptionValueModel(
+			long cpDefinitionId, long cpSpecificationOptionId,
+			long cpOptionCategoryId, int index) {
+
+		CPDefinitionSpecificationOptionValueModel
+			cpDefinitionSpecificationOptionValueModel =
+				new CPDefinitionSpecificationOptionValueModelImpl();
+
+		// UUID
+
+		cpDefinitionSpecificationOptionValueModel.setUuid(
+			SequentialUUID.generate());
+
+		// PK fields
+
+		cpDefinitionSpecificationOptionValueModel.
+			setCPDefinitionSpecificationOptionValueId(_counter.get());
+
+		// Audit fields
+
+		cpDefinitionSpecificationOptionValueModel.setCompanyId(_companyId);
+		cpDefinitionSpecificationOptionValueModel.setUserName(
+			_SAMPLE_USER_NAME);
+		cpDefinitionSpecificationOptionValueModel.setCreateDate(new Date());
+		cpDefinitionSpecificationOptionValueModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cpDefinitionSpecificationOptionValueModel.setCPDefinitionId(
+			cpDefinitionId);
+		cpDefinitionSpecificationOptionValueModel.setCPSpecificationOptionId(
+			cpSpecificationOptionId);
+		cpDefinitionSpecificationOptionValueModel.setCPOptionCategoryId(
+			cpOptionCategoryId);
+		cpDefinitionSpecificationOptionValueModel.setValue(
+			StringBundler.concat(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
+				"available-locales=\"en_US\" default-locale=\"en_US\"><Value ",
+				"language-id=\"en_US\">Specification Option Value ", index,
+				"</Value></root>"));
+		cpDefinitionSpecificationOptionValueModel.setPriority(index - 1);
+		cpDefinitionSpecificationOptionValueModel.setLastPublishDate(null);
+
+		return cpDefinitionSpecificationOptionValueModel;
+	}
+
+	public List<CPDefinitionSpecificationOptionValueModel>
+		newCPDefinitionSpecificationOptionValueModels(
+			long cpDefinitionId, long cpSpecificationOptionId,
+			long cpOptionCategoryId, int index) {
+
+		List<CPDefinitionSpecificationOptionValueModel>
+			cpDefinitionSpecificationOptionValueModels = new ArrayList<>(
+				BenchmarksPropsValues.
+					MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT);
+
+		for (int i = 1;
+			 i <=
+				 BenchmarksPropsValues.
+					 MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT;
+			 i++) {
+
+			cpDefinitionSpecificationOptionValueModels.add(
+				newCPDefinitionSpecificationOptionValueModel(
+					cpDefinitionId, cpSpecificationOptionId, cpOptionCategoryId,
+					i));
+		}
+
+		return cpDefinitionSpecificationOptionValueModels;
 	}
 
 	public CPInstanceModel newCPInstanceModel(
@@ -5395,6 +5474,9 @@ public class DataFactory {
 
 				if (name.endsWith(StringPool.UNDERLINE)) {
 					name = name.substring(0, name.length() - 1);
+				}
+				else if (name.equals("CPDSpecificationOptionValueId")) {
+					name = "CPDefinitionSpecificationOptionValueId";
 				}
 				else if (name.equals("DeliverySubTypeSettings")) {
 					name = "DeliverySubscriptionTypeSettings";

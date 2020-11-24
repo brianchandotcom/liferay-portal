@@ -102,6 +102,12 @@ public class BenchmarksPropsValues {
 	public static final int MAX_CONTENT_LAYOUT_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT));
 
+	public static final int MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.
+					MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT));
+
 	public static final int MAX_CP_SPECIFICATION_OPTION_COUNT =
 		GetterUtil.getInteger(
 			PropertiesHolder._get(

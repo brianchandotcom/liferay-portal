@@ -63,6 +63,10 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_CONTENT_LAYOUT_COUNT =
 		"sample.sql.max.content.layout.count";
 
+	public static final String
+		MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT =
+			"sample.sql.max.cp.definition.specification.option.value.count";
+
 	public static final String MAX_CP_SPECIFICATION_OPTION_COUNT =
 		"sample.sql.max.cp.specification.option.count";
 

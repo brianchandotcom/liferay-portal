@@ -63,6 +63,7 @@ public class SiteVerticalCard implements VerticalCard {
 			data.put(
 				"data-groupdescriptivename",
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
+			data.put("data-groupid", String.valueOf(_group.getGroupId()));
 			data.put(
 				"data-groupscopelabel",
 				LanguageUtil.get(
@@ -70,7 +71,6 @@ public class SiteVerticalCard implements VerticalCard {
 			data.put(
 				"data-grouptype",
 				LanguageUtil.get(_httpServletRequest, _group.getTypeLabel()));
-			data.put("data-groupid", String.valueOf(_group.getGroupId()));
 			data.put("data-url", _group.getDisplayURL(_themeDisplay));
 			data.put("data-uuid", _group.getUuid());
 		}

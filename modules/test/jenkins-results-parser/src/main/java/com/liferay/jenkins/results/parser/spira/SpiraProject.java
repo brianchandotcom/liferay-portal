@@ -235,6 +235,10 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraTestCaseComponents.get(0);
 	}
 
+	public List<SpiraTestCaseComponent> getSpiraTestCaseComponents() {
+		return SpiraTestCaseComponent.getSpiraTestCaseComponents(this);
+	}
+
 	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(
 		int testCaseFolderID) {
 

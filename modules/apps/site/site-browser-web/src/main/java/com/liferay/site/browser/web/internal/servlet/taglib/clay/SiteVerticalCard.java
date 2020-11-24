@@ -60,24 +60,24 @@ public class SiteVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
+	public Map<String, String> getDynamicAttributes() {
 		if (!_siteBrowserDisplayContext.isShowLink(_group)) {
 			return null;
 		}
 
 		try {
 			return HashMapBuilder.put(
-				"entityid", String.valueOf(_group.getGroupId())
+				"data-entityid", String.valueOf(_group.getGroupId())
 			).put(
-				"entityname",
+				"data-entityname",
 				_group.getDescriptiveName(_themeDisplay.getLocale())
 			).put(
-				"grouptarget", _siteBrowserDisplayContext.getTarget()
+				"data-grouptarget", _siteBrowserDisplayContext.getTarget()
 			).put(
-				"grouptype",
+				"data-grouptype",
 				LanguageUtil.get(_httpServletRequest, _group.getTypeLabel())
 			).put(
-				"url", _group.getDisplayURL(_themeDisplay)
+				"data-url", _group.getDisplayURL(_themeDisplay)
 			).build();
 		}
 		catch (Exception exception) {

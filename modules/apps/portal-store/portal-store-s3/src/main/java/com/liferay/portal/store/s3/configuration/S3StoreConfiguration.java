@@ -158,7 +158,7 @@ public interface S3StoreConfiguration {
 
 	@Meta.AD(
 		description = "proxy-password-help", name = "proxy-password",
-		required = false
+		required = false, type = Meta.Type.Password
 	)
 	public String proxyPassword();
 

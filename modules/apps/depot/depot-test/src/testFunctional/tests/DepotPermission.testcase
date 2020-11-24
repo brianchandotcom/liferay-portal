@@ -381,6 +381,10 @@ definition {
 			resourceName = "com.liferay.depot.model.DepotEntry",
 			roleTitle = "Depot Regrole Name");
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		DepotNavigator.openDepotAdmin();
 
 		AssertTextEquals(

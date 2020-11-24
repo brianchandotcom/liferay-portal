@@ -96,11 +96,18 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 				itemSelectorReturnTypeResolverHandler, portletURL, search,
 				stagingGroupHelper);
 
+		prepareDLItemSelectorViewDisplayContext(
+			dlItemSelectorViewDisplayContext);
+
 		servletRequest.setAttribute(
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			dlItemSelectorViewDisplayContext);
 
 		requestDispatcher.include(servletRequest, servletResponse);
+	}
+
+	protected void prepareDLItemSelectorViewDisplayContext(
+		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext) {
 	}
 
 	@Reference

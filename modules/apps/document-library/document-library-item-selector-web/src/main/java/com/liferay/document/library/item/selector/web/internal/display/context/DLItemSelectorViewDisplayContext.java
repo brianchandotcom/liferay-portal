@@ -328,6 +328,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _showDragAndDropZone;
 	}
 
+	public void setShowDragAndDropZone(boolean showDragAndDropZone) {
+		_showDragAndDropZone = showDragAndDropZone;
+	}
+
 	private Optional<Long> _getFileEntryTypeIdOptional() {
 		if (!(_itemSelectorCriterion instanceof
 				InfoItemItemSelectorCriterion)) {

@@ -93,6 +93,12 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT));
 
+	public static final int MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.
+					MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT));
+
 	public static final int MAX_CONTENT_LAYOUT_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT));
 

@@ -38,6 +38,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.model.CPInstanceModel;
+import com.liferay.commerce.product.model.CPOptionCategoryModel;
 import com.liferay.commerce.product.model.CPTaxCategoryModel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CProductModel;
@@ -48,6 +49,7 @@ import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
+import com.liferay.commerce.product.model.impl.CPOptionCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
 import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.commerce.product.model.impl.CommerceCatalogModelImpl;
@@ -1591,6 +1593,51 @@ public class DataFactory {
 		cpInstanceModel.setStatusDate(new Date());
 
 		return cpInstanceModel;
+	}
+
+	public CPOptionCategoryModel newCPOptionCategoryModel(int index) {
+		CPOptionCategoryModel cpOptionCategoryModel =
+			new CPOptionCategoryModelImpl();
+
+		// PK fields
+
+		long cpOptionCategoryId = _counter.get();
+
+		cpOptionCategoryModel.setCPOptionCategoryId(cpOptionCategoryId);
+
+		// Audit fields
+
+		cpOptionCategoryModel.setCompanyId(_companyId);
+		cpOptionCategoryModel.setUserName(_SAMPLE_USER_NAME);
+		cpOptionCategoryModel.setCreateDate(new Date());
+		cpOptionCategoryModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cpOptionCategoryModel.setTitle("Option Category" + index);
+		cpOptionCategoryModel.setDescription(
+			"Description for option category with ID " + cpOptionCategoryId);
+		cpOptionCategoryModel.setPriority(index - 1);
+		cpOptionCategoryModel.setKey("key" + index);
+		cpOptionCategoryModel.setLastPublishDate(null);
+
+		return cpOptionCategoryModel;
+	}
+
+	public List<CPOptionCategoryModel> newCPOptionCategoryModels() {
+		List<CPOptionCategoryModel> cpOptionCategoryModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT);
+
+		for (int i = 1;
+			 i <=
+				 BenchmarksPropsValues.
+					 MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT;
+			 i++) {
+
+			cpOptionCategoryModels.add(newCPOptionCategoryModel(i));
+		}
+
+		return cpOptionCategoryModels;
 	}
 
 	public CProductModel newCProductModel(
@@ -3579,6 +3626,15 @@ public class DataFactory {
 			String.valueOf(
 				commerceInventoryWarehouseModel.
 					getCommerceInventoryWarehouseId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CPOptionCategoryModel cpOptionCategoryModel) {
+
+		return newResourcePermissionModels(
+			CPOptionCategory.class.getName(),
+			String.valueOf(cpOptionCategoryModel.getCPOptionCategoryId()),
 			_sampleUserId);
 	}
 

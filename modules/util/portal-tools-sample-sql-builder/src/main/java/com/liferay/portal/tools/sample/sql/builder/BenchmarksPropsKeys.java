@@ -57,6 +57,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_COMMERCE_PRODUCT_INSTANCE_COUNT =
 		"sample.sql.max.commerce.product.instance.count";
 
+	public static final String MAX_COMMERCE_PRODUCT_OPTION_CATEGORY_COUNT =
+		"sample.sql.max.commerce.product.option.category.count";
+
 	public static final String MAX_CONTENT_LAYOUT_COUNT =
 		"sample.sql.max.content.layout.count";
 

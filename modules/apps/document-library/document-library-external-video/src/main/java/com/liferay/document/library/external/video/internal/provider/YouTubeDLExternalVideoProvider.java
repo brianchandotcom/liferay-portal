@@ -36,8 +36,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,12 +88,6 @@ public class YouTubeDLExternalVideoProvider
 				public String getEmbeddableHTML() {
 					return StringUtil.replace(
 						getTpl(), "{embedId}", youTubeVideoId);
-				}
-
-				@Override
-				public String getIconURL() {
-					return _servletContext.getContextPath() +
-						"/icons/youtube.png";
 				}
 
 				@Override
@@ -169,10 +161,5 @@ public class YouTubeDLExternalVideoProvider
 
 	@Reference
 	private Http _http;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.external.video)"
-	)
-	private ServletContext _servletContext;
 
 }

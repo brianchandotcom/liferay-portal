@@ -34,7 +34,6 @@ page import="com.liferay.document.library.external.video.internal.item.selector.
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

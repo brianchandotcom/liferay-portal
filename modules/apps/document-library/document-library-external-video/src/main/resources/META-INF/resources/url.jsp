@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	String eventName = (String)request.getAttribute(
-		DLExternalVideoVideoURLItemSelectorView.EVENT_NAME);
+String eventName = (String)request.getAttribute(DLExternalVideoVideoURLItemSelectorView.EVENT_NAME);
 %>
 
 <div class="lfr-form-content">

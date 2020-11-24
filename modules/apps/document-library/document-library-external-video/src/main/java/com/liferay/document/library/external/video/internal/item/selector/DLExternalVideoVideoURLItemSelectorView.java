@@ -17,32 +17,35 @@ package com.liferay.document.library.external.video.internal.item.selector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
-
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 @Component(service = ItemSelectorView.class)
 public class DLExternalVideoVideoURLItemSelectorView
 	implements ItemSelectorView<VideoItemSelectorCriterion> {
 
-	public static final String EVENT_NAME="EVENT_NAME";
+	public static final String EVENT_NAME = "EVENT_NAME";
 
 	@Override
 	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -65,9 +68,9 @@ public class DLExternalVideoVideoURLItemSelectorView
 
 	@Override
 	public void renderHTML(
-		ServletRequest servletRequest, ServletResponse servletResponse,
-		VideoItemSelectorCriterion videoItemSelectorCriterion,
-		PortletURL portletURL, String itemSelectedEventName, boolean search)
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			VideoItemSelectorCriterion videoItemSelectorCriterion,
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		ServletContext servletContext = getServletContext();
@@ -90,8 +93,7 @@ public class DLExternalVideoVideoURLItemSelectorView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-		ListUtil.fromArray(
-			new VideoURLItemSelectorReturnType()));
+			ListUtil.fromArray(new VideoURLItemSelectorReturnType()));
 
 	private ServletContext _servletContext;
 

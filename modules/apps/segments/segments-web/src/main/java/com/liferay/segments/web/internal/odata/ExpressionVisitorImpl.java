@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.odata;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -87,10 +88,24 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 	@Override
 	public Object visitMethodExpression(
-			List<Object> expressions, MethodExpression.Type type)
-		throws ExpressionVisitException {
+		List<Object> expressions, MethodExpression.Type type) {
 
-		return null;
+		if (type == MethodExpression.Type.CONTAINS) {
+			if (expressions.size() != 2) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported method visitMethodExpression with method",
+						"type ", type, " and ", expressions.size(), "params"));
+			}
+
+			return _getOperationJSONObject(
+				String.valueOf(type), (EntityField)expressions.get(0),
+				expressions.get(1));
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitMethodExpression with method type " +
+				type);
 	}
 
 	@Override

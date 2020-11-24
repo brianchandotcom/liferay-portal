@@ -69,7 +69,7 @@
 			classpathref="sample.sql.builder.classpath"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<sysproperty key="sample-sql-properties" value="benchmarks-merged.properties" />
+			<sysproperty key="sample-sql-properties" value="${basedir}/benchmarks-merged.properties" />
 		</java>
 
 		<concat append="true" destfile="${output.sql.file}">

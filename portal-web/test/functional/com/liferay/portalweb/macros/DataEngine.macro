@@ -119,6 +119,29 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro addFieldOption {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (isSet(optionFieldLabel)) {
+			Type(
+				index = "${index}",
+				key_optionFieldLabel = "${optionFieldLabel}",
+				locator1 = "Sidebar#OPTION_INPUT",
+				value1 = "${optionValue}");
+		}
+		else {
+			Type(
+				index = "${index}",
+				locator1 = "Sidebar#OPTION_INPUT_WITHOUT_LABEL",
+				value1 = "${optionValue}");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro addFields {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

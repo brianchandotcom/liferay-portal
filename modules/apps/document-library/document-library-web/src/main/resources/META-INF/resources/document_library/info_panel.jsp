@@ -66,7 +66,15 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<liferay-util:include page="/document_library/subscribe.jsp" servletContext="<%= application %>" />
 						</li>
 
-						<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
+						<%
+						FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
+						%>
+
+						<c:if test="<%= folderActionDisplayContext.isShowActions() %>">
+							<li class="autofit-col">
+								<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
+							</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

@@ -550,6 +550,18 @@ $productMenuWidth: 320px;
 	}
 
 	.sidebar-body {
+		.collaborators {
+			.component-title {
+				font-weight: 600;
+				margin: 0;
+			}
+
+			.component-subtitle {
+				font-size: 14px;
+				font-weight: 600;
+			}
+		}
+
 		.thumbnail {
 			margin-bottom: 1.5rem;
 		}

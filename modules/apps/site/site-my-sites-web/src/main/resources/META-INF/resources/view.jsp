@@ -125,7 +125,7 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card-v2
+						<clay:vertical-card
 							verticalCard="<%= new SiteVerticalCard(group, renderRequest, renderResponse, siteMySitesDisplayContext.getTabs1(), siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId())) %>"
 						/>
 					</liferay-ui:search-container-column-text>

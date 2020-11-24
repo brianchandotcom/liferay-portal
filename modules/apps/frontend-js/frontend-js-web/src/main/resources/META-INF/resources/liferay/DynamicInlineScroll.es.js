@@ -151,18 +151,16 @@ class DynamicInlineScroll extends PortletBase {
 	 */
 	onScroll_(event) {
 		const {cur, initialPages, pages} = this;
-		const {delegateTarget} = event;
+		const {target} = event;
 
-		let pageIndex = this.getNumber_(
-			delegateTarget.getAttribute('data-page-index')
-		);
+		let pageIndex = this.getNumber_(target.getAttribute('data-page-index'));
 		let pageIndexMax = this.getNumber_(
-			delegateTarget.getAttribute('data-max-index')
+			target.getAttribute('data-max-index')
 		);
 
 		if (pageIndex === 0) {
 			const pageIndexCurrent = this.getNumber_(
-				delegateTarget.getAttribute('data-current-index')
+				target.getAttribute('data-current-index')
 			);
 
 			if (pageIndexCurrent === 0) {
@@ -180,10 +178,10 @@ class DynamicInlineScroll extends PortletBase {
 		if (
 			cur <= pages &&
 			pageIndex < pageIndexMax &&
-			delegateTarget.getAttribute('scrollTop') >=
-				delegateTarget.getAttribute('scrollHeight') - 300
+			target.getAttribute('scrollTop') >=
+				target.getAttribute('scrollHeight') - 300
 		) {
-			this.addListItem_(delegateTarget, pageIndex);
+			this.addListItem_(target, pageIndex);
 		}
 	}
 }

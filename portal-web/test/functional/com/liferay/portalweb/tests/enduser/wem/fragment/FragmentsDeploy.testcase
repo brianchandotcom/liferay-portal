@@ -43,7 +43,7 @@ definition {
 				collectionName = "imported",
 				scope = "Test Site Name");
 
-			LexiconCard.clickCardTitle(card = "Card");
+			LexiconCard.clickCardTitleLink(card = "Card");
 
 			AssertElementPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
 
@@ -81,7 +81,7 @@ definition {
 				collectionName = "imported",
 				scope = "Default");
 
-			LexiconCard.clickCardTitle(card = "Image");
+			LexiconCard.clickCardTitleLink(card = "Image");
 
 			AssertElementPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
 
@@ -119,7 +119,7 @@ definition {
 				collectionName = "imported",
 				scope = "Global");
 
-			LexiconCard.clickCardTitle(card = "Link");
+			LexiconCard.clickCardTitleLink(card = "Link");
 
 			AssertElementPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
 

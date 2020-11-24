@@ -18,7 +18,7 @@ definition {
 	}
 
 	macro gotoEntry {
-		LexiconCard.clickCardTitle(card = "${entry}");
+		LexiconCard.clickCardTitleLink(card = "${entry}");
 	}
 
 	macro gotoEntryEllipsisItem {

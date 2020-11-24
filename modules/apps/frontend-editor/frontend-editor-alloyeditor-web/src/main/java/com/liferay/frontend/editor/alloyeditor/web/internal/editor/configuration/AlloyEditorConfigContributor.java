@@ -175,7 +175,7 @@ public class AlloyEditorConfigContributor
 
 	protected JSONObject getToolbarsAddJSONObject() {
 		return JSONUtil.put(
-			"buttons", toJSONArray("['image', 'embedVideo', 'table', 'hline']")
+			"buttons", toJSONArray("['image', 'video', 'table', 'hline']")
 		).put(
 			"tabIndex", 2
 		);

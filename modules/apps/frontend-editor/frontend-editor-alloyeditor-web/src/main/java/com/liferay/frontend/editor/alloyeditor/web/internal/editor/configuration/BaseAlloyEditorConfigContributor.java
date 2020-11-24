@@ -64,7 +64,7 @@ public abstract class BaseAlloyEditorConfigContributor
 			"extraPlugins",
 			"addimages,ae_dragresize,ae_imagealignment,ae_placeholder," +
 				"ae_selectionregion,ae_tableresize,ae_tabletools,ae_uicore," +
-					"autolink"
+					"autolink,itemselector,media,videoembed"
 		).put(
 			"imageScaleResize", "scale"
 		).put(

@@ -108,12 +108,6 @@ public class SampleSQLBuilder {
 		finally {
 			FileUtil.deltree(tempDir);
 		}
-
-		FileUtil.write(
-			new File(
-				BenchmarksPropsValues.OUTPUT_DIR,
-				"benchmarks-actual.properties"),
-			BenchmarksPropsValues.ACTUAL_PROPERTIES_CONTENT);
 	}
 
 	protected void compressSQL(

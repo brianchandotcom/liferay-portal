@@ -36,9 +36,6 @@ import java.util.TimeZone;
  */
 public class BenchmarksPropsValues {
 
-	public static final String ACTUAL_PROPERTIES_CONTENT =
-		PropertiesHolder._ACTUAL_PROPERTIES_CONTENT;
-
 	public static final DBType DB_TYPE = DBType.valueOf(
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
@@ -179,8 +176,6 @@ public class BenchmarksPropsValues {
 			return _properties.getProperty(key);
 		}
 
-		private static final String _ACTUAL_PROPERTIES_CONTENT;
-
 		private static final Properties _properties;
 
 		static {
@@ -226,8 +221,6 @@ public class BenchmarksPropsValues {
 				sb.append(properties.getProperty(propertyName));
 				sb.append(StringPool.NEW_LINE);
 			}
-
-			_ACTUAL_PROPERTIES_CONTENT = sb.toString();
 
 			_properties = properties;
 		}

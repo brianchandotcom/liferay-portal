@@ -15,6 +15,10 @@
 package com.liferay.segments.web.internal.odata;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
@@ -22,24 +26,40 @@ import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Cristina González
  */
 public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
-	public ExpressionVisitorImpl() {
+	public ExpressionVisitorImpl(EntityModel entityModel) {
+		_entityModel = entityModel;
 	}
 
 	@Override
 	public Object visitBinaryExpressionOperation(
-			BinaryExpression.Operation operation, Object left,
-			Object right)
+			BinaryExpression.Operation operation, Object left, Object right)
 		throws ExpressionVisitException {
 
-		return null;
+		if (Objects.equals(BinaryExpression.Operation.EQ, operation) ||
+			Objects.equals(BinaryExpression.Operation.GE, operation) ||
+			Objects.equals(BinaryExpression.Operation.GT, operation) ||
+			Objects.equals(BinaryExpression.Operation.LE, operation) ||
+			Objects.equals(BinaryExpression.Operation.LT, operation) ||
+			Objects.equals(BinaryExpression.Operation.NE, operation)) {
+
+			return _getOperationJSONObject(
+				String.valueOf(operation), (EntityField)left, right);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitBinaryExpressionOperation with " +
+				"operation " + operation);
 	}
 
 	@Override
@@ -52,11 +72,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	}
 
 	@Override
-	public Object visitLiteralExpression(
-			LiteralExpression literalExpression)
+	public Object visitLiteralExpression(LiteralExpression literalExpression)
 		throws ExpressionVisitException {
 
-		return null;
+		return StringUtil.unquote(literalExpression.getText());
 	}
 
 	@Override
@@ -73,5 +92,29 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		return null;
 	}
+
+	@Override
+	public Object visitPrimitivePropertyExpression(
+		PrimitivePropertyExpression primitivePropertyExpression) {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		return entityFieldsMap.get(primitivePropertyExpression.getName());
+	}
+
+	private JSONObject _getOperationJSONObject(
+		String operatorName, EntityField entityField, Object fieldValue) {
+
+		return JSONUtil.put(
+			"operatorName", StringUtil.lowerCase(operatorName)
+		).put(
+			"propertyName", entityField.getName()
+		).put(
+			"value", fieldValue
+		);
+	}
+
+	private final EntityModel _entityModel;
 
 }

@@ -55,17 +55,17 @@ export default function VerticalCard({
 
 	const stickerProps = useMemo(() => {
 		const stickerProps = {
+			children: stickerLabel,
 			className: stickerCssClass,
-			content: stickerLabel,
 			displayType: stickerStyle,
 			shape: stickerShape,
 		};
 
 		if (stickerIcon) {
-			stickerProps.content = <ClayIcon symbol={stickerIcon} />;
+			stickerProps.children = <ClayIcon symbol={stickerIcon} />;
 		}
 		else if (stickerImageSrc) {
-			stickerProps.content = (
+			stickerProps.children = (
 				<ClaySticker.Image
 					alt={stickerImageAlt}
 					src={stickerImageSrc}

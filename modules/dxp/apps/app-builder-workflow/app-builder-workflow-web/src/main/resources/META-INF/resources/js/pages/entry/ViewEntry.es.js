@@ -203,7 +203,10 @@ export default function ViewEntry({
 	}, [entryIndex, query]);
 
 	const showButtons = {
-		update: workflowInfo?.completed === false,
+		update:
+			workflowInfo?.completed === false &&
+			workflowInfo?.assignees?.[0]?.id ===
+				Number(themeDisplay.getUserId()),
 	};
 
 	return (

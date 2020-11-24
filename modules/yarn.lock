@@ -928,10 +928,10 @@
     "@clayui/icon" "^3.1.0"
     classnames "^2.2.6"
 
-"@clayui/card@3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.5.1.tgz#219c2f44f0c74a4c7c0d938bba12bd61fb8984f1"
-  integrity sha512-KWnj2mCh4LH6LSfM5mnXLSWK5svzESH8p7o5bQS8gNWmygrn47Gcepm8UeWmVfjPuNO6mXMhYlRmpFbMdSScOQ==
+"@clayui/card@3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.6.0.tgz#fdb9a6cb6545a7c1c71d660a31aa882f0ed14ac9"
+  integrity sha512-tyUpoubYRUeFhaNUmauY9MKziAeaAHIYVQ2beo8FXn6EXEgoHTRz6vUke9iEX59ET9HzEPSECxYF2UL/IikzKA==
   dependencies:
     "@clayui/button" "^3.5.0"
     "@clayui/drop-down" "^3.8.0"
@@ -941,7 +941,7 @@
     "@clayui/layout" "^3.2.0"
     "@clayui/link" "^3.2.0"
     "@clayui/shared" "^3.3.0"
-    "@clayui/sticker" "^3.2.0"
+    "@clayui/sticker" "^3.3.0"
     classnames "^2.2.6"
 
 "@clayui/charts@3.2.0":
@@ -1057,10 +1057,10 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/list@3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.4.0.tgz#0df79ce740074f8c10459d76eb4cf95b08807c0a"
-  integrity sha512-tK5Xn3ETnbVQVYJ/XUuyUd98z9nPRLSlPd0c2bmL1WEjMCi2LJ54/J1RKPuiPX0baY1fWCrr25Giom647h4g0Q==
+"@clayui/list@3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.4.1.tgz#008621413534dad7b5ff44309b3162197461ff64"
+  integrity sha512-LT0e3C4UY5c7GMYgR1REEyUMdoGY6lXlgvxVrYWP/g4FBidqFVsjX2ECHMmcVmCBbA7atfMpYttpZx38YIfSkA==
   dependencies:
     "@clayui/drop-down" "^3.8.0"
     "@clayui/form" "^3.12.0"
@@ -1068,7 +1068,7 @@
     "@clayui/label" "^3.4.0"
     "@clayui/layout" "^3.2.0"
     "@clayui/link" "^3.2.0"
-    "@clayui/sticker" "^3.2.0"
+    "@clayui/sticker" "^3.3.0"
     classnames "^2.2.6"
     warning "^4.0.3"
 
@@ -1210,10 +1210,10 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/sticker@3.2.0", "@clayui/sticker@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.2.0.tgz#cf919f21e23470bdc283d2214b3e09834680cc42"
-  integrity sha512-bIBdWc+t0uUWR/HwJrOpH9kanAyiS9yJ/3eMtz6Hw8oLz1t3GrmiKj3mudkA5HHLHSFRiFlp2sWz8GMscmU/Nw==
+"@clayui/sticker@3.3.0", "@clayui/sticker@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.3.0.tgz#77fa3606688050bf9e731b49f319320c3718f00b"
+  integrity sha512-Qmu3jarLiyeQmTZYikIAk9g/npl8bPxN1xhaMWP4C95yUZJgCbvqwzDCSEPHYCR+QiedKizBVKG9kQMoqdmcPA==
   dependencies:
     classnames "^2.2.6"
 
@@ -3060,11 +3060,6 @@ async-settle@^1.0.0:
   dependencies:
     async-done "^1.2.2"
 
-async@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
-  integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
-
 async@^2.0.1, async@^2.6.1, async@^2.6.2:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
@@ -3862,7 +3857,7 @@ camelcase@^5.0.0, camelcase@^5.3.1:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
-caniuse-lite@^1.0.30001020, caniuse-lite@^1.0.30001022, caniuse-lite@^1.0.30001157:
+caniuse-lite@^1.0.30001020, caniuse-lite@^1.0.30001157:
   version "1.0.30001158"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001158.tgz#fce86d321369603c2bc855ee0e901a7f49f8310b"
   integrity sha512-s5loVYY+yKpuVA3HyW8BarzrtJvwHReuzugQXlv1iR3LKSReoFXRm86mT6hT7PEF5RxW+XQZg+6nYjlywYzQ+g==
@@ -5879,7 +5874,7 @@ ejs@^2.6.1:
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.7.4.tgz#48661287573dcc53e366c7a1ae52c3a120eec9ba"
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
-electron-to-chromium@^1.3.338, electron-to-chromium@^1.3.591:
+electron-to-chromium@^1.3.591:
   version "1.3.597"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.597.tgz#0d30fd4c0f5437149c28a6044c4e119357ae56aa"
   integrity sha512-VJI21MucKaqyFw0oe3j9BIg+nDF4MHzUZAmUwZzrxho+s8zPCD13Fds07Rgu+MTtAadO4tYTKFdAUksKYUyIJw==
@@ -10987,7 +10982,7 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
+"mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
@@ -11203,7 +11198,7 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
-node-releases@^1.1.46, node-releases@^1.1.66:
+node-releases@^1.1.66:
   version "1.1.67"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.67.tgz#28ebfcccd0baa6aad8e8d4d8fe4cbc49ae239c12"
   integrity sha512-V5QF9noGFl3EymEwUYzO+3NTDpGfQB4ve6Qfnzf3UNydMhjQRVPR1DZTuvWiLzaFJYw2fmDwAfnRNEVb64hSIg==

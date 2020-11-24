@@ -2432,14 +2432,7 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text Box",
-			fieldName = "Text",
-			fieldType = "Multiple Lines");
+		DataEngine.addFields(fieldNameList = "Text,Rich Text");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -2450,7 +2443,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "Structure Name",
 			templateDescription = "Template Description",
-			templateFieldNames = "Text,Text Box",
+			templateFieldNames = "Text,Rich Text",
 			templateName = "Template Name");
 
 		Navigator.openURL();
@@ -2462,12 +2455,9 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "Structure Name",
 			templateName = "Template Name",
+			webContentRichText = "Staging Web Content Body",
 			webContentText = "Staging Web Content Text",
 			webContentTitle = "Web Content Title");
-
-		WebContent.addWithStructureCP(
-			webContentText = "Staging Web Content Body",
-			webContentTextFieldLabel = "Text Box");
 
 		PortletEntry.publish();
 

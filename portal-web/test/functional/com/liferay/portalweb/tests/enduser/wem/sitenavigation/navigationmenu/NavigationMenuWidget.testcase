@@ -36,9 +36,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-75059. A user can add a link to a navigation menu."
-	@priority = "4"
-	test AddURLNavigationMenu {
+	@description = "This is a test for LPS-75059 and LPS-120277. When add an URL type item, the self target is defined by default."
+	@priority = "5"
+	test AddURLNavigationMenuItemWithSelfTarget {
+		property portal.acceptance = "true";
+
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -58,7 +60,7 @@ definition {
 		task ("Add a URL item to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
-				url = "https://www.liferay.com/",
+				url = "https://www.liferay.com",
 				urlName = "Liferay");
 		}
 
@@ -86,7 +88,7 @@ definition {
 				locator1 = "Home#PAGE",
 				value1 = "Liferay");
 
-			AssertLocation(value1 = "https://www.liferay.com/");
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
 	}
 

@@ -43,7 +43,7 @@ int mfaCheckerIndex = ParamUtil.getInteger(request, "mfaCheckerIndex");
 	%>
 
 	<c:if test="<%= browserMFACheckers.size() > 1 %>">
-		<portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="useAnotherBrowserMFAChecker">
+		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="useAnotherBrowserMFAChecker">
 			<portlet:param name="saveLastPath" value="<%= Boolean.FALSE.toString() %>" />
 			<portlet:param name="mvcRenderCommandName" value="/mfa_verify/view" />
 			<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />

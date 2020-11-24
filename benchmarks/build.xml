@@ -120,6 +120,7 @@
 				</if>
 			</then>
 		</if>
+		<echo>Here is the sql file contains all the data that SampleSQLBuilder generated: ${basedir}/${output.sql.file}</echo>
 	</target>
 
 	<target name="clean">

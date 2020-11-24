@@ -28,6 +28,7 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.List;
 import java.util.Map;
@@ -116,6 +117,27 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			_entityModel.getEntityFieldsMap();
 
 		return entityFieldsMap.get(primitivePropertyExpression.getName());
+	}
+
+	@Override
+	public JSONObject visitUnaryExpressionOperation(
+		UnaryExpression.Operation operation, Object operand) {
+
+		if (Objects.equals(UnaryExpression.Operation.NOT, operation)) {
+			JSONObject jsonObject = (JSONObject)operand;
+
+			jsonObject.put(
+				"operatorName",
+				StringUtil.lowerCase(
+					UnaryExpression.Operation.NOT + "-" +
+						jsonObject.getString("operatorName")));
+
+			return jsonObject;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitUnaryExpressionOperation with operation " +
+				operation);
 	}
 
 	private JSONObject _getOperationJSONObject(

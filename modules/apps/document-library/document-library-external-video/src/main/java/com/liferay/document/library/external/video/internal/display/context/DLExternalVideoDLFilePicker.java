@@ -48,10 +48,6 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getCurrentIconURL() {
-		if (_dlExternalVideo != null) {
-			return _dlExternalVideo.getIconURL();
-		}
-
 		return StringPool.BLANK;
 	}
 
@@ -72,7 +68,7 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getIconFieldName() {
-		return "ICON_URL";
+		return null;
 	}
 
 	@Override

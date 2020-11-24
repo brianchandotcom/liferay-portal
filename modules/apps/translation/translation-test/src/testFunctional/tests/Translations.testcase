@@ -469,7 +469,7 @@ definition {
 		for (var fieldName : list "Text,HTML,Integer,Number,Decimal,") {
 			DataEngine.addField(
 				fieldFieldLabel = "${fieldName}",
-				fieldType = "${fieldName}");
+				fieldName = "${fieldName}");
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");

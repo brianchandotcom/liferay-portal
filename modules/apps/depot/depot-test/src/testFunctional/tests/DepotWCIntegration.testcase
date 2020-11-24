@@ -102,7 +102,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldType = "Text");
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -874,8 +874,7 @@ definition {
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name${i}");
 
-			DynamicDataMapping.addField(
-				field = "Text",
+			DataEngine.addField(
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
 

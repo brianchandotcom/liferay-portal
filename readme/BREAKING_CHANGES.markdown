@@ -250,3 +250,27 @@ This change was made to make the logic for display pages more consistent with
 the overall concept of display pages.
 
 ---------------------------------------
+
+---------------------------------------
+
+### The CSS class .container-fluid-1280 has been replaced with .container-fluid.container-fluid-max-xl
+- **Date:** 2020-Nov-24
+- **JIRA Ticket:** [LPS-123894](https://issues.liferay.com/browse/LPS-123894)
+
+#### What changed?
+
+The CSS class `.container-fluid-1280` has been replaced with `.container-fluid.container-fluid-max-xl` and the compatibility layer that had its style has been removed from Portal.
+
+#### Who is affected?
+
+All the container elements that had the CSS class `.container-fluid-1280`
+
+#### How should I update my code?
+
+The first recommendation is to use the updated CSS classes from Clay `.container-fluid.container-fluid-max-xl` instead of `.container-fluid-1280`. The second one is to use ClayLayout [Components](https://clayui.com/docs/components/layout.html) & [Taglibs](https://clayui.com/docs/get-started/using-clay-in-jsps.html#clay-sidebar)
+
+#### Why was this change made?
+
+This change was made to remove deprecated legacy code from Portal and improve the code consistency and performance
+
+---------------------------------------

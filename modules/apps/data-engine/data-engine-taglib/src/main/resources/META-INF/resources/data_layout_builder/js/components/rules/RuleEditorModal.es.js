@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import {ClayInput} from '@clayui/form';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
@@ -26,28 +25,6 @@ import {ADD_DATA_LAYOUT_RULE, UPDATE_DATA_LAYOUT_RULE} from '../../actions.es';
 import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import {Editor} from '../rule-builder/editor/Editor.es';
-
-const INITIAL_RULE = {
-	actions: [
-		{
-			action: '',
-			target: '',
-		},
-	],
-	conditions: [
-		{
-			operands: [
-				{
-					type: '',
-					value: '',
-				},
-			],
-			operator: '',
-		},
-	],
-	logicalOperator: 'OR',
-	name: '',
-};
 
 function getTransformedPages(pages) {
 	return pages.map(({title}, index) => ({
@@ -83,20 +60,10 @@ function getFormattedRoles(roles) {
 	}));
 }
 
-const RuleEditorModalContent = ({onClose, rule = INITIAL_RULE}) => {
+const RuleEditorModalContent = ({onClose, rule}) => {
 	const [invalidRule, setInvalidRule] = useState(true);
 
-	/**
-	 * State flow: resourceNotAsked -> loading -> error/success
-	 * Success is implicit when all are false.
-	 */
-	const [resourceState, setResourceState] = useState(() => ({
-		error: false,
-		loading: false,
-	}));
-
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
-	const [ruleName, setRuleName] = useState(rule?.name[defaultLanguageId]);
+	const [ruleName, setRuleName] = useState(rule?.name[themeDisplay.getDefaultLanguageId()]);
 
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {pages} = dataLayoutBuilder.getStore();
@@ -115,14 +82,9 @@ const RuleEditorModalContent = ({onClose, rule = INITIAL_RULE}) => {
 	 */
 	const ruleRef = useRef(rule);
 
-	const rolesResource = useResource({
+	const {resource: rolesResource} = useResource({
 		fetch,
 		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles`,
-		onNetworkStatusChange: (status) =>
-			setResourceState({
-				error: status === 5,
-				loading: status < 4,
-			}),
 	});
 
 	const roles = useMemo(() => {
@@ -158,31 +120,27 @@ const RuleEditorModalContent = ({onClose, rule = INITIAL_RULE}) => {
 				</ClayInput.Group>
 			</ClayModal.Header>
 			<ClayModal.Body>
-				{!resourceState.loading ? (
-					<Editor
-						allowActions={[
-							'show',
-							'enable',
-							'require',
-							'calculate',
-							'jump-to-page',
-						]}
-						className="pl-4 pr-4"
-						dataProvider={[]}
-						fields={fields}
-						functionsURL={functionsURL}
-						onChange={(rule) => {
-							ruleRef.current = rule;
-						}}
-						onValidator={setInvalidRule}
-						operatorsByType={functionsMetadata}
-						pages={transformedPages}
-						roles={roles}
-						rule={rule}
-					/>
-				) : (
-					<ClayLoadingIndicator />
-				)}
+				<Editor
+					allowActions={[
+						'show',
+						'enable',
+						'require',
+						'calculate',
+						'jump-to-page',
+					]}
+					className="pl-4 pr-4"
+					dataProvider={[]}
+					fields={fields}
+					functionsURL={functionsURL}
+					onChange={(rule) => {
+						ruleRef.current = rule;
+					}}
+					onValidator={setInvalidRule}
+					operatorsByType={functionsMetadata}
+					pages={transformedPages}
+					roles={roles}
+					rule={rule}
+				/>
 			</ClayModal.Body>
 			<ClayModal.Footer
 				last={
@@ -196,9 +154,9 @@ const RuleEditorModalContent = ({onClose, rule = INITIAL_RULE}) => {
 								dispatch({
 									payload: {dataRule: ruleRef.current},
 									type:
-										rule === INITIAL_RULE
-											? ADD_DATA_LAYOUT_RULE
-											: UPDATE_DATA_LAYOUT_RULE,
+										rule
+											? UPDATE_DATA_LAYOUT_RULE
+											: ADD_DATA_LAYOUT_RULE,
 								})
 							}
 						>

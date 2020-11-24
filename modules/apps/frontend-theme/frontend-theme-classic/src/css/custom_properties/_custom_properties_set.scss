@@ -57,7 +57,7 @@ body,
 
 @each $key, $map in $custom-properties-button-maps {
 	.btn-#{$key} {
-		&:not(.dropdown-item) {
+		&:not(.dropdown-item):not(.alert-btn) {
 			@include clay-button-variant($map);
 		}
 	}

@@ -40,7 +40,7 @@
 	.portlet-configuration-body-content,
 	.process-list,
 	.roles-selector-body {
-		> .container-fluid-1280,
+		> .container-fluid-max-xl,
 		.container-view {
 			padding-top: 20px;
 
@@ -52,7 +52,7 @@
 			}
 		}
 
-		> .lfr-nav + .container-fluid-1280 {
+		> .lfr-nav + .container-fluid-max-xl {
 			padding-top: 0;
 		}
 	}

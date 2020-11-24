@@ -30,7 +30,7 @@ body {
 			padding: 0;
 		}
 
-		.portlet-body .container-fluid-1280 {
+		.portlet-body .container-fluid-max-xl {
 			max-width: map-get($container-max-widths, xl);
 			position: relative;
 		}

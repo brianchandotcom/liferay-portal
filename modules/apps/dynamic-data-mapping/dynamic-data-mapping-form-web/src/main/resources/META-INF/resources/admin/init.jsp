@@ -40,6 +40,7 @@ page import="com.liferay.dynamic.data.mapping.form.web.internal.display.context.
 page import="com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormViewFormInstanceRecordsDisplayContext" %><%@
 page import="com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.FieldSetPermissionCheckerHelper" %><%@
 page import="com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.FormInstancePermissionCheckerHelper" %><%@
+page import="com.liferay.dynamic.data.mapping.form.web.internal.search.DDMFormInstanceRowChecker" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormField" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMFormInstance" %><%@

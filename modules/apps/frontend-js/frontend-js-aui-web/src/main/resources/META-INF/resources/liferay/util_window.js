@@ -57,6 +57,12 @@ AUI.add(
 					value: 0.95,
 				},
 
+				toolbarCssClass: {
+					value: {
+						header: 'order-1',
+					},
+				},
+
 				toolbars: {
 					valueFn() {
 						var instance = this;

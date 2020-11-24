@@ -29,10 +29,6 @@
 }
 
 .modal-dialog {
-	@include media-breakpoint-up(sm) {
-		max-width: none;
-	}
-
 	&.modal-dialog-sm {
 		max-width: $modal-md;
 	}

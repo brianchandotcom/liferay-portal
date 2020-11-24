@@ -31,13 +31,14 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -48,6 +49,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.After;
@@ -123,15 +125,15 @@ public class DDMFieldLocalServiceTest {
 		ddmFormValues.setDefaultLocale(locale);
 		ddmFormValues.setAvailableLocales(Collections.singleton(locale));
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		jsonObject.put(
+		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			"groupId", _group.getGroupId()
 		).put(
 			"layoutId", _LAYOUT_ID
 		).put(
 			"privateLayout", false
-		);
+		).build();
+
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
@@ -139,7 +141,8 @@ public class DDMFieldLocalServiceTest {
 
 		ddmFormValues.setDDMFormFieldValues(
 			Arrays.asList(
-				_createDDMFormFieldValue(locale, "Page", jsonObject.toString()),
+				_createDDMFormFieldValue(
+					locale, "Page", jsonSerializer.serialize(map)),
 				_createDDMFormFieldValue(locale, "Number", "123"),
 				_createDDMFormFieldValue(
 					locale, "Select", jsonArray.toString())));

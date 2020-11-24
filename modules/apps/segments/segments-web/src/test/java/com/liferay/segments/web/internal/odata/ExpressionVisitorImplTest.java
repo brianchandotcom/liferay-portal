@@ -24,7 +24,9 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
+import com.liferay.portal.odata.filter.expression.MethodExpression;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -62,6 +64,31 @@ public class ExpressionVisitorImplTest {
 			JSONUtil.put(
 				"operatorName",
 				StringUtil.toLowerCase(BinaryExpression.Operation.EQ.toString())
+			).put(
+				"propertyName", "title"
+			).put(
+				"value", "title1"
+			).toJSONString(),
+			jsonObject.toJSONString());
+	}
+
+	@Test
+	public void testVisitMethodExpressionWithContains()
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		JSONObject jsonObject =
+			(JSONObject)_expressionVisitorImpl.visitMethodExpression(
+				Arrays.asList(entityFieldsMap.get("title"), "title1"),
+				MethodExpression.Type.CONTAINS);
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"operatorName",
+				StringUtil.toLowerCase(
+					MethodExpression.Type.CONTAINS.toString())
 			).put(
 				"propertyName", "title"
 			).put(

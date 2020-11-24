@@ -62,7 +62,7 @@
 			<path refid="project.classpath" />
 		</path>
 
-		<echoproperties prefix="sample.sql." destfile="benchmarks-merged.properties"/>
+		<echoproperties destfile="benchmarks-merged.properties" prefix="sample.sql." />
 
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder"
@@ -126,7 +126,7 @@
 		<delete includeemptydirs="true">
 			<fileset
 				dir="."
-				includes="*.csv,*.sql, benchmarks-merged.properties, liferay/**, output/**,temp/**"
+				includes="*.sql, benchmarks-merged.properties, liferay/**, generated/**,temp/**"
 			/>
 		</delete>
 	</target>

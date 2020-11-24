@@ -70,9 +70,9 @@ public class SiteVerticalCard implements VerticalCard {
 			data.put(
 				"data-grouptype",
 				LanguageUtil.get(_httpServletRequest, _group.getTypeLabel()));
-			data.put("groupid", String.valueOf(_group.getGroupId()));
-			data.put("url", _group.getDisplayURL(_themeDisplay));
-			data.put("uuid", _group.getUuid());
+			data.put("data-groupid", String.valueOf(_group.getGroupId()));
+			data.put("data-url", _group.getDisplayURL(_themeDisplay));
+			data.put("data-uuid", _group.getUuid());
 		}
 		catch (Exception exception) {
 		}

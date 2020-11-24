@@ -369,8 +369,8 @@ definition {
 			fieldName = "WebContent",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentSelectWCFile = "WC Depot WebContent",
-			webContentTitle = "WC WebContent Title");
+			webContentTitle = "WC WebContent Title",
+			webContentWebContent = "WC Depot WebContent");
 
 		PortletEntry.publish();
 

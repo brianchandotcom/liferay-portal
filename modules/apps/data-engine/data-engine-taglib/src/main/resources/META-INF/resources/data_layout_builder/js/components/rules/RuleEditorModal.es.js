@@ -63,7 +63,9 @@ function getFormattedRoles(roles) {
 const RuleEditorModalContent = ({onClose, rule}) => {
 	const [invalidRule, setInvalidRule] = useState(true);
 
-	const [ruleName, setRuleName] = useState(rule?.name[themeDisplay.getDefaultLanguageId()]);
+	const [ruleName, setRuleName] = useState(
+		rule?.name[themeDisplay.getDefaultLanguageId()]
+	);
 
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {pages} = dataLayoutBuilder.getStore();
@@ -153,10 +155,9 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 							onClick={() =>
 								dispatch({
 									payload: {dataRule: ruleRef.current},
-									type:
-										rule
-											? UPDATE_DATA_LAYOUT_RULE
-											: ADD_DATA_LAYOUT_RULE,
+									type: rule
+										? UPDATE_DATA_LAYOUT_RULE
+										: ADD_DATA_LAYOUT_RULE,
 								})
 							}
 						>

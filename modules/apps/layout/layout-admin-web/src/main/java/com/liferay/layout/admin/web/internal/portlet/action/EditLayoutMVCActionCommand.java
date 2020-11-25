@@ -17,6 +17,8 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -72,6 +74,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		try {
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
@@ -234,6 +237,14 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, portletResource + "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+		catch (ModelListenerException modelListenerException) {
+			if (modelListenerException.getCause() instanceof PortalException) {
+				throw (PortalException)modelListenerException.getCause();
+			}
+
+			throw modelListenerException;
+		}
 	}
 
 	@Reference

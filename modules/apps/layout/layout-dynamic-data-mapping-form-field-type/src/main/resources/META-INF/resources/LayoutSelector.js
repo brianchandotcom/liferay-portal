@@ -37,9 +37,7 @@ const LayoutSelector = ({
 		onChange('');
 	};
 
-	const handleFieldChanged = (event) => {
-		const selectedItem = event.selectedItem;
-
+	const handleFieldChanged = (selectedItem) => {
 		if (selectedItem && selectedItem.layoutId) {
 			setLayout(selectedItem);
 			onChange(JSON.stringify(selectedItem));

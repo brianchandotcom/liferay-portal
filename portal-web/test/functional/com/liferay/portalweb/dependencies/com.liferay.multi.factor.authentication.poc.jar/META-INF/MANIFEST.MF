@@ -1,0 +1,81 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1605283427340
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay Multi-Factor Authentication POC
+Bundle-SymbolicName: com.liferay.multi.factor.authentication.poc
+Bundle-Vendor: Liferay, Inc.
+Bundle-Version: 1.0.0
+Created-By: 1.8.0_144 (Oracle Corporation)
+Import-Package: aQute.bnd.annotation.metatype;version="[1.45,2)",com.l
+ iferay.multi.factor.authentication.spi.checker.browser;version="[1.0,
+ 2)",com.liferay.portal.configuration.metatype.annotations;version="[1
+ .3,2)",com.liferay.portal.configuration.metatype.bnd.util;version="[2
+ .0,3)",com.liferay.portal.kernel.settings.definition;version="[1.0,2)
+ ",com.liferay.portal.kernel.util;version="[11.0,12)",javax.servlet,ja
+ vax.servlet.http,org.osgi.framework;version="[1.8,2)"
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Liferay-Releng-App-Title: Liferay Multi-Factor Authentication
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Security
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Fix-Delivery-Method: core
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: true
+Liferay-Releng-Public: false
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Suite: foundation
+Liferay-Releng-Suite-Description: Apps and Features: System Settings, 
+ Web Content Editors, Web Content Template Languages, Theme Tools, Mob
+ ile Device Rules, Facebook Authentication, LDAP Authentication, NTLM 
+ Authentication, OpenID Authentication, OpenSSO Authentication, Remote
+  Authentication (AuthVerifiers), SSO-based Authentication, Token-base
+ d Authentication, Portal Scripting, Elasticsearch Support, Solr Suppo
+ rt, Documents and Media Store Implementations, and more.<br /><br />T
+ he Foundation suite provides applications and features that extend th
+ e functionality provided by Liferay's core. Much of the functionality
+  that belonged to Liferay's core prior to Liferay 7 has been extracte
+ d into the modules of the Foundation suite. The authentication module
+ s provide a variety of mechanisms for allowing users and remote appli
+ cations to authenticate to Liferay. The LDAP Authentication module al
+ lows administrators to establish connections to one or more LDAP dire
+ ctories from which users can be imported or exported. The SSO modules
+  allow users to authenticate to Liferay using a variety of single-sig
+ n on solutions. The Token-based Authentication module allows users or
+  remote applications to authenticate to Liferay without a password. T
+ he Scripting modules allow scripts to be written to invoke Liferay's 
+ API in several languages including Groovy, BeanShell, Python, Ruby, a
+ nd JavaScript.<br /><br />This suite is available in the Liferay bund
+ le.
+Liferay-Releng-Suite-Title: Liferay Foundation
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: true
+Private-Package: com.liferay.multi.factor.authentication.poc.internal.
+ checker,com.liferay.multi.factor.authentication.poc.internal.configur
+ ation,com.liferay.multi.factor.authentication.poc.internal.settings.d
+ efinition,content
+Provide-Capability: osgi.service;objectClass:List<String>="com.liferay
+ .portal.kernel.settings.definition.ConfigurationBeanDeclaration";uses
+ :="com.liferay.portal.kernel.settings.definition",liferay.resource.bu
+ ndle;bundle.symbolic.name="com.liferay.multi.factor.authentication.po
+ c";resource.bundle.base.name="content.Language"
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib
+ )(uri=http://liferay.com/tld/aui))",osgi.extender;filter:="(&(osgi.ex
+ tender=jsp.taglib)(uri=http://liferay.com/tld/theme))",osgi.extender;
+ filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))
+ ",osgi.extender;filter:="(&(osgi.extender=osgi.component)(version>=1.
+ 3.0)(!(version>=2.0.0)))",osgi.service;filter:="(objectClass=com.life
+ ray.portal.kernel.util.Portal)";effective:=active,osgi.service;filter
+ :="(objectClass=javax.servlet.ServletContext)";effective:=active,osgi
+ .contract;osgi.contract=JavaServlet;filter:="(&(osgi.contract=JavaSer
+ vlet)(version=3.1.0))",osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.
+ 8))"
+Service-Component: OSGI-INF/com.liferay.multi.factor.authentication.po
+ c.internal.checker.PocMFAChecker.xml,OSGI-INF/com.liferay.multi.facto
+ r.authentication.poc.internal.settings.definition.MFAPocCompanyConfig
+ urationBeanDeclaration.xml
+Tool: Bnd-4.3.0.201909301554
+Web-ContextPath: /multi-factor-authentication-poc
+

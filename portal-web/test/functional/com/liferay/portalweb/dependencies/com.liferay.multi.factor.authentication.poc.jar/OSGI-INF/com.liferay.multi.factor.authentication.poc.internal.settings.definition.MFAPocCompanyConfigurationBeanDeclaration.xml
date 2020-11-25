@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.multi.factor.authentication.poc.internal.settings.definition.MFAPocCompanyConfigurationBeanDeclaration">
+  <property name="mfa.visibility.configuration.pid" type="String" value="com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration"/>
+  <service>
+    <provide interface="com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration"/>
+  </service>
+  <implementation class="com.liferay.multi.factor.authentication.poc.internal.settings.definition.MFAPocCompanyConfigurationBeanDeclaration"/>
+</scr:component>

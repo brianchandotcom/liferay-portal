@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.1.0" localization="content/Language">
+  <OCD name="mfa-poc-configuration-name" id="com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration">
+    <AD name="enabled" id="enabled" cardinality="0" required="false" default="false" type="Boolean"/>
+    <AD name="order" id="service.ranking" cardinality="0" required="false" default="400" type="Integer"/>
+  </OCD>
+  <Designate pid="com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration">
+    <Object ocdref="com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration"/>
+  </Designate>
+</metatype:MetaData>

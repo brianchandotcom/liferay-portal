@@ -66,6 +66,8 @@ public class AuthVerifierPipeline {
 
 	public AuthVerifierPipeline(Map<String, Object> filterProperties) {
 		_filterProperties = filterProperties;
+
+		AuthVerifierTrackerCustomizer.addAuthVerifierPipeline(this);
 	}
 
 	public AuthVerifierResult verifyRequest(
@@ -93,18 +95,6 @@ public class AuthVerifierPipeline {
 		}
 
 		return _createGuestVerificationResult(accessControlContext);
-	}
-
-	private AuthVerifierPipeline() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(objectClass=" + AuthVerifier.class.getName() + ")");
-
-		_serviceTracker = registry.trackServices(
-			filter, new AuthVerifierTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private AuthVerifierResult _createGuestVerificationResult(
@@ -355,15 +345,20 @@ public class AuthVerifierPipeline {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierPipeline.class);
 
-	private final List<AuthVerifierConfiguration> _authVerifierConfigurations =
-		new CopyOnWriteArrayList<>();
-	private final Map<String, Object> _filterProperties;
-	private final ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
+	private static final ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
 		_serviceTracker;
 
-	private class AuthVerifierTrackerCustomizer
+	private final Map<String, Object> _filterProperties;
+
+	private static class AuthVerifierTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<AuthVerifier, AuthVerifierConfiguration> {
+
+		public static void addAuthVerifierPipeline(
+			AuthVerifierPipeline authVerifierPipeline) {
+
+			_authVerifierPipelines.add(authVerifierPipeline);
+		}
 
 		@Override
 		public AuthVerifierConfiguration addingService(
@@ -477,6 +472,23 @@ public class AuthVerifierPipeline {
 			return true;
 		}
 
+		private static final List<AuthVerifierConfiguration>
+			_authVerifierConfigurations = new CopyOnWriteArrayList<>();
+		private static final List<AuthVerifierPipeline> _authVerifierPipelines =
+			new CopyOnWriteArrayList<>();
+
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(objectClass=" + AuthVerifier.class.getName() + ")");
+
+		_serviceTracker = registry.trackServices(
+			filter, new AuthVerifierTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

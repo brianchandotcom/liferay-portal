@@ -118,10 +118,12 @@ public class TemplateProcessor implements ColumnProcessor {
 
 		String portletId = ParamUtil.getString(_httpServletRequest, "p_p_id");
 
-		try {
-			portlets.add(PortletLocalServiceUtil.getPortletById(portletId));
-		}
-		catch (NullPointerException nullPointerException) {
+		if (Validator.isNotNull(portletId)) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			if (portlet != null) {
+				portlets.add(portlet);
+			}
 		}
 
 		ThemeDisplay themeDisplay =

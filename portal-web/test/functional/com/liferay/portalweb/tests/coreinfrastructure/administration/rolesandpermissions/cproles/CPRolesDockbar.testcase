@@ -43,6 +43,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		Navigator.openURL();
 
 		AssertElementNotPresent(locator1 = "ControlMenu#SIMULATION");

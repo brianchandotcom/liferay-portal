@@ -140,8 +140,6 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.openURL();
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
@@ -151,6 +149,10 @@ definition {
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
 			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.openURL();
 

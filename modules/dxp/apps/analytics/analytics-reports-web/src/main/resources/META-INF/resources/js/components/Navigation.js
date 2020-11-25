@@ -19,6 +19,14 @@ import APIService from '../utils/APIService';
 import Detail from './Detail';
 import Main from './Main';
 
+const TRAFFIC_CHANNELS = {
+	DIRECT: 'direct',
+	ORGANIC: 'organic',
+	PAID: 'paid',
+	REFERRAL: 'referral',
+	SOCIAL: 'social',
+};
+
 export default function Navigation({
 	author,
 	canonicalURL,
@@ -80,7 +88,7 @@ export default function Navigation({
 
 		setCurrentPage({
 			data: trafficSource,
-			view: 'traffic-source-detail',
+			view: trafficSource.name,
 		});
 	};
 
@@ -159,7 +167,8 @@ export default function Navigation({
 				</div>
 			)}
 
-			{currentPage.view === 'traffic-source-detail' &&
+			{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
+				currentPage.view === TRAFFIC_CHANNELS.PAID) &&
 				currentPage.data.countryKeywords.length > 0 && (
 					<Detail
 						currentPage={currentPage}

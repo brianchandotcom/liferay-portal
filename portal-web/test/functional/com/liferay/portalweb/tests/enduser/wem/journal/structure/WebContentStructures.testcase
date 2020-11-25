@@ -315,33 +315,15 @@ definition {
 
 			PortletEntry.inputTitle(title = "Web Content Title");
 
-			for (var partialPageName : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
-				AssertClick(
-					key_fieldFieldLabel = "${partialPageName}",
-					locator1 = "WCEditWebContent#SELECT_BUTTON",
-					value1 = "Select");
-
-				Click(
-					key_pageName = "Test ${partialPageName}",
-					locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
-
-				Click(locator1 = "Button#SELECT");
+			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
+				WebContent.addWithStructureCP(
+					webContentLinkToPage = "Test ${fieldLabel}",
+					webContentLinkToPageFieldLabel = "${fieldLabel}");
 			}
 
-			AssertClick(
-				key_fieldName = "PageSet",
-				locator1 = "Button#SELECT_CONTENT",
-				value1 = "Select");
-
-			Click(
-				key_pageName = "Test Page Set",
-				locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
-
-			Click(
-				key_pageName = "Test Child Page",
-				locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
-
-			Click(locator1 = "Button#SELECT");
+			WebContent.addWithStructureCP(
+				webContentLinkToPage = "Test Child Page",
+				webContentLinkToPageFieldLabel = "Page Set");
 
 			PortletEntry.publish();
 		}
@@ -455,36 +437,9 @@ definition {
 		}
 
 		task ("Select the great grand child page in Link to Page field") {
-			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			AssertClick(
-				key_fieldFieldLabel = "Link to Page",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
-
-			for (var pageName : list "Test Parent Page,Test Child Page") {
-				Click(
-					key_pageName = "${pageName}",
-					locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
-			}
-
-			for (var n : list "9,10,11,12") {
-				ScrollWebElementIntoView(
-					key_pageName = "Test Grand Child Page ${n}",
-					locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
-			}
-
-			Click(
-				key_pageName = "Test Grand Child Page 12",
-				locator1 = "WC#LINK_TO_PAGE_SPECIFIC_PAGE_LINK");
-
-			Click(
-				key_pageName = "Test Great Grand Child Page",
-				locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
-
-			Click(locator1 = "Button#SELECT");
+			WebContent.addWithStructureCP(
+				webContentLinkToPage = "Test Great Grand Child Page",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}

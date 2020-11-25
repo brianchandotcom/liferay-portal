@@ -443,8 +443,19 @@ public class MainServlet extends HttpServlet {
 
 		_registerPortalInitialized();
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(_releaseManager.getStatusMessage(true));
+		if ((_releaseManager != null) && _log.isWarnEnabled()) {
+			String message = _releaseManager.getStatusMessage(true);
+
+			if (Validator.isNotNull(message)) {
+				_log.warn(message);
+			}
+			else if (_log.isInfoEnabled()) {
+				message = _releaseManager.getStatusMessage(false);
+
+				if (Validator.isNotNull(message)) {
+					_log.info(message);
+				}
+			}
 		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);

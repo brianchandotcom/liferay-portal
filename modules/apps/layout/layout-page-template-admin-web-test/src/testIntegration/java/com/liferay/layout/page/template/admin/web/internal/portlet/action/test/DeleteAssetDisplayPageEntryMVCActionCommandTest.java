@@ -20,7 +20,10 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -31,7 +34,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -60,6 +65,9 @@ public class DeleteAssetDisplayPageEntryMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_layout = _layoutLocalService.getLayout(
+			_layoutService.getControlPanelLayoutPlid());
 	}
 
 	@Test
@@ -92,6 +100,13 @@ public class DeleteAssetDisplayPageEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(_layout);
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		mockLiferayPortletActionRequest.setParameter(
 			"assetDisplayPageEntryId",
 			String.valueOf(assetDisplayPageEntry.getAssetDisplayPageEntryId()));
@@ -105,6 +120,14 @@ public class DeleteAssetDisplayPageEntryMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutService _layoutService;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_page_template_admin/delete_asset_display_page_entry"

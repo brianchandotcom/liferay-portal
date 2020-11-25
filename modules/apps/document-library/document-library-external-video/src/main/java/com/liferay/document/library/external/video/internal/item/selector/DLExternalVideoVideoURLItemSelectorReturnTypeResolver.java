@@ -72,7 +72,7 @@ public class DLExternalVideoVideoURLItemSelectorReturnTypeResolver
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
 			return _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false);
+				StringPool.BLANK, false, true);
 		}
 
 		return _portletFileRepository.getPortletFileEntryURL(

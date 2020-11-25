@@ -128,10 +128,6 @@ if (layoutSetPrototypeId > 0) {
 
 <script>
 	function <portlet:namespace />saveGroup(forceDisable) {
-		<c:if test="<%= (group != null) && !group.isCompany() %>">
-			<portlet:namespace />saveLocales();
-		</c:if>
-
 		submitForm(document.<portlet:namespace />fm);
 	}
 </script>

@@ -151,54 +151,6 @@ public class UpdateLanguageActionTest {
 		return separator + friendlyURLMap.get(locale);
 	}
 
-	private void _testGetRedirectWithPortletFriendlyURL(boolean i18n)
-		throws Exception {
-
-		Map<Locale, String> friendlyURLMap =
-			_journalArticle.getFriendlyURLMap();
-
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			_group.getDefaultLanguageId());
-
-		String path =
-			_PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER + friendlyURLMap.get(defaultLocale);
-
-		_testGetRedirectWithPortletFriendlyURL(i18n, path);
-	}
-
-	private void _testGetRedirectWithPortletFriendlyURL(
-			boolean i18n, String path)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		if (i18n) {
-			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
-			themeDisplay.setI18nPath("/" + _sourceLocale.getLanguage());
-		}
-
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-
-		String targetURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() + _layout.getFriendlyURL(_targetLocale);
-
-		targetURL += path + "?queryString";
-
-		String sourceURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() + _layout.getFriendlyURL(_sourceLocale);
-
-		sourceURL += path + "?queryString";
-
-		_assertRedirect(themeDisplay, targetURL, sourceURL);
-		_assertRedirect(
-			themeDisplay, targetURL,
-			"/" + _sourceLocale.getLanguage() + sourceURL);
-	}
-
 	private void _testGetRedirectWithControlPanelURL(boolean i18n)
 		throws Exception {
 
@@ -287,10 +239,59 @@ public class UpdateLanguageActionTest {
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
 
-	private static final String _PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER =
-		"/-/asset_publisher/instanceID/content/";
+	private void _testGetRedirectWithPortletFriendlyURL(boolean i18n)
+		throws Exception {
+
+		Map<Locale, String> friendlyURLMap =
+			_journalArticle.getFriendlyURLMap();
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			_group.getDefaultLanguageId());
+
+		String path =
+			_PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER +
+				friendlyURLMap.get(defaultLocale);
+
+		_testGetRedirectWithPortletFriendlyURL(i18n, path);
+	}
+
+	private void _testGetRedirectWithPortletFriendlyURL(
+			boolean i18n, String path)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		if (i18n) {
+			themeDisplay.setI18nLanguageId(_sourceLocale.getLanguage());
+			themeDisplay.setI18nPath("/" + _sourceLocale.getLanguage());
+		}
+
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		String targetURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + _layout.getFriendlyURL(_targetLocale);
+
+		targetURL += path + "?queryString";
+
+		String sourceURL =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + _layout.getFriendlyURL(_sourceLocale);
+
+		sourceURL += path + "?queryString";
+
+		_assertRedirect(themeDisplay, targetURL, sourceURL);
+		_assertRedirect(
+			themeDisplay, targetURL,
+			"/" + _sourceLocale.getLanguage() + sourceURL);
+	}
 
 	private static final String _FRIENDLY_URL_SEPARATOR_JOURNAL_ARTICLE = "/w/";
+
+	private static final String _PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER =
+		"/-/asset_publisher/instanceID/content/";
 
 	private final Locale _defaultLocale = LocaleUtil.US;
 	private Group _group;

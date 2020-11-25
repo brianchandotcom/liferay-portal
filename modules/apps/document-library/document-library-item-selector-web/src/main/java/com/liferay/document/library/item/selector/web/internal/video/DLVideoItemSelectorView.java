@@ -57,7 +57,7 @@ public class DLVideoItemSelectorView
 		String[] mimeTypes = {DLContentTypes.EXTERNAL_VIDEO};
 
 		if (XugglerUtil.isEnabled()) {
-			ArrayUtil.append(
+			mimeTypes = ArrayUtil.append(
 				mimeTypes, PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
 		}
 

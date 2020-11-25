@@ -85,6 +85,10 @@ public class DisplaySettingsDisplayContext {
 					true);
 			}
 		).put(
+			"liveGroupIsGuest", _liveGroup.isGuest()
+		).put(
+			"liveGroupIsOrganization", _liveGroup.isOrganization()
+		).put(
 			"portletNamespace", _liferayPortletResponse.getNamespace()
 		).build();
 	}

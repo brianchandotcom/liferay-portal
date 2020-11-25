@@ -186,6 +186,51 @@ definition {
 			displayPageTemplateType = "Default Display Page Template");
 	}
 
+	@description = "This is a test for LPS-121199. For web content mapped default DPT, could Delete Display page template directly."
+	@priority = "5"
+	test DeleteDisplayPageMappedDefaultDPT {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.viewSelectedDisplayPageTemplateCP(
+			displayPageTemplateName = "Display Page Name",
+			displayPageTemplateType = "Default Display Page Template");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete the default display page template? All related display pages will be deleted.");
+
+		Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
+
+		DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+	}
+
 	@description = "This is a test for LPS-90999. A user with permissions has access to edit the web content article or display page while viewing the article through its display page."
 	@priority = "5"
 	test EditWhenViewingInDisplayPageAsUser {

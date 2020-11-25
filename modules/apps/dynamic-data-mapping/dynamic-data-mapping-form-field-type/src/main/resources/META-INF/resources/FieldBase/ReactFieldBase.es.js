@@ -68,7 +68,7 @@ const FieldProperties = ({required, tooltip}) => {
 	return (
 		<>
 			{required && (
-				<span className="reference-mark">
+				<span className="ddm-label-required reference-mark">
 					<ClayIcon symbol="asterisk" />
 				</span>
 			)}

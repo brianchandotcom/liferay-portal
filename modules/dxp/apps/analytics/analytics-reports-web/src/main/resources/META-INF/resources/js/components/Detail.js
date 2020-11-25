@@ -75,7 +75,15 @@ export default function Detail({
 				/>
 			)}
 
-			{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && <SocialDetail />}
+			{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && (
+				<SocialDetail
+					currentPage={currentPage}
+					languageTag={languageTag}
+					timeSpanOptions={timeSpanOptions}
+					trafficShareDataProvider={trafficShareDataProvider}
+					trafficVolumeDataProvider={trafficVolumeDataProvider}
+				/>
+			)}
 		</>
 	);
 }

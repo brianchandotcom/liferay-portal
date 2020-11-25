@@ -194,7 +194,7 @@ export function Conditions({
 		});
 
 	return (
-		<Timeline.List className="liferay-ddm-form-builder-rule-condition-list">
+		<Timeline.List className="timeline-first">
 			<Timeline.Header
 				disabled={conditions.length === 1}
 				items={[

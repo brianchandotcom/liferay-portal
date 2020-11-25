@@ -64,11 +64,35 @@ public class AuthVerifierPipeline {
 			PropsKeys.AUTH_VERIFIER, simpleClassName, StringPool.PERIOD);
 	}
 
-	public static AuthVerifierResult verifyRequest(
+	public AuthVerifierPipeline(Map<String, Object> filterProperties) {
+		_filterProperties = filterProperties;
+	}
+
+	public AuthVerifierResult verifyRequest(
 			AccessControlContext accessControlContext)
 		throws PortalException {
 
-		return _authVerifierPipeline._verifyRequest(accessControlContext);
+		if (accessControlContext == null) {
+			throw new IllegalArgumentException(
+				"Access control context is null");
+		}
+
+		List<AuthVerifierConfiguration> authVerifierConfigurations =
+			_getAuthVerifierConfigurations(accessControlContext);
+
+		for (AuthVerifierConfiguration authVerifierConfiguration :
+				authVerifierConfigurations) {
+
+			AuthVerifierResult authVerifierResult =
+				_verifyWithAuthVerifierConfiguration(
+					accessControlContext, authVerifierConfiguration);
+
+			if (authVerifierResult != null) {
+				return authVerifierResult;
+			}
+		}
+
+		return _createGuestVerificationResult(accessControlContext);
 	}
 
 	private AuthVerifierPipeline() {
@@ -251,33 +275,6 @@ public class AuthVerifierPipeline {
 		return mergedSettings;
 	}
 
-	private AuthVerifierResult _verifyRequest(
-			AccessControlContext accessControlContext)
-		throws PortalException {
-
-		if (accessControlContext == null) {
-			throw new IllegalArgumentException(
-				"Access control context is null");
-		}
-
-		List<AuthVerifierConfiguration> authVerifierConfigurations =
-			_getAuthVerifierConfigurations(accessControlContext);
-
-		for (AuthVerifierConfiguration authVerifierConfiguration :
-				authVerifierConfigurations) {
-
-			AuthVerifierResult authVerifierResult =
-				_verifyWithAuthVerifierConfiguration(
-					accessControlContext, authVerifierConfiguration);
-
-			if (authVerifierResult != null) {
-				return authVerifierResult;
-			}
-		}
-
-		return _createGuestVerificationResult(accessControlContext);
-	}
-
 	private AuthVerifierResult _verifyWithAuthVerifierConfiguration(
 		AccessControlContext accessControlContext,
 		AuthVerifierConfiguration authVerifierConfiguration) {
@@ -358,11 +355,9 @@ public class AuthVerifierPipeline {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierPipeline.class);
 
-	private static final AuthVerifierPipeline _authVerifierPipeline =
-		new AuthVerifierPipeline();
-
 	private final List<AuthVerifierConfiguration> _authVerifierConfigurations =
 		new CopyOnWriteArrayList<>();
+	private final Map<String, Object> _filterProperties;
 	private final ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
 		_serviceTracker;
 

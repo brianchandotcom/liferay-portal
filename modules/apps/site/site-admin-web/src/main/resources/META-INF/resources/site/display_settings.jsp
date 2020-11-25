@@ -18,7 +18,20 @@
 
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+
+DisplaySettingsDisplayContext displaySettingsDisplayContext = new DisplaySettingsDisplayContext(request, liferayPortletResponse);
 %>
+
+<div id="<portlet:namespace />siteLanguageConfiguration">
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
+	<react:component
+		module="js/SiteLanguageConfiguration"
+		props="<%= displaySettingsDisplayContext.getPropsMap() %>"
+	/>
+</div>
 
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"

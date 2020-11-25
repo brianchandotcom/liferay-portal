@@ -51,6 +51,11 @@ public class UniqueFileEntryTitleProviderImpl
 			_language.get(resourceBundle, "untitled"));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #provide(long
+	 *             groupId, long folderId, String extension, String title)}
+	 */
+	@Deprecated
 	@Override
 	public String provide(long groupId, long folderId, String title)
 		throws PortalException {

@@ -36,6 +36,10 @@ public class UniqueFileEntryTitleProviderImpl
 		return _uniqueFileEntryTitleProvider.provide(groupId, folderId, locale);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public String provide(long groupId, long folderId, String fileName)
 		throws PortalException {

@@ -104,8 +104,8 @@ public class UpdateLanguageActionTest {
 
 	@Test
 	public void testGetRedirect() throws Exception {
-		_testGetRedirectWithAssetPublisherPortlet(false);
-		_testGetRedirectWithAssetPublisherPortlet(true);
+		_testGetRedirectWithPortletFriendlyURL(false);
+		_testGetRedirectWithPortletFriendlyURL(true);
 
 		_testGetRedirectWithControlPanelURL(false);
 		_testGetRedirectWithControlPanelURL(true);
@@ -151,7 +151,7 @@ public class UpdateLanguageActionTest {
 		return separator + friendlyURLMap.get(locale);
 	}
 
-	private void _testGetRedirectWithAssetPublisherPortlet(boolean i18n)
+	private void _testGetRedirectWithPortletFriendlyURL(boolean i18n)
 		throws Exception {
 
 		Map<Locale, String> friendlyURLMap =
@@ -161,12 +161,12 @@ public class UpdateLanguageActionTest {
 			_group.getDefaultLanguageId());
 
 		String path =
-			_ASSET_PUBLISHER_URL_PART + friendlyURLMap.get(defaultLocale);
+			_PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER + friendlyURLMap.get(defaultLocale);
 
-		_testGetRedirectWithAssetPublisherPortlet(i18n, path);
+		_testGetRedirectWithPortletFriendlyURL(i18n, path);
 	}
 
-	private void _testGetRedirectWithAssetPublisherPortlet(
+	private void _testGetRedirectWithPortletFriendlyURL(
 			boolean i18n, String path)
 		throws Exception {
 
@@ -287,7 +287,7 @@ public class UpdateLanguageActionTest {
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
 
-	private static final String _ASSET_PUBLISHER_URL_PART =
+	private static final String _PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER =
 		"/-/asset_publisher/instanceID/content/";
 
 	private static final String _FRIENDLY_URL_SEPARATOR_JOURNAL_ARTICLE = "/w/";

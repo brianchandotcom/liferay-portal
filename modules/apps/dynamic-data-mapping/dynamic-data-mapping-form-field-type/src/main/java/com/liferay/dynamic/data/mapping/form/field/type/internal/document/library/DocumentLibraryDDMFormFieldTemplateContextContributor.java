@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -50,7 +49,6 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -125,35 +123,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		parameters.put(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId"));
-
-		parameters.put(
-			"itemSelectorAuthToken",
-			getItemSelectorAuthToken(httpServletRequest));
-		parameters.put(
-			"lexiconIconsPath", getLexiconIconsPath(httpServletRequest));
 		parameters.put(
 			"maximumRepetitions",
 			GetterUtil.getInteger(
 				ddmFormField.getProperty("maximumRepetitions")));
-
-		Locale displayLocale;
-
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			displayLocale = ddmFormFieldRenderingContext.getLocale();
-		}
-		else {
-			displayLocale = getDisplayLocale(
-				ddmFormFieldRenderingContext.getHttpServletRequest());
-		}
-
-		Map<String, String> stringsMap = new HashMap<>();
-
-		stringsMap.put(
-			"select",
-			LanguageUtil.get(getResourceBundle(displayLocale), "select"));
-
-		parameters.put("strings", stringsMap);
-
 		parameters.put(
 			"uploadURL",
 			getUploadURL(
@@ -168,12 +141,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		parameters.put("value", value);
 
 		return parameters;
-	}
-
-	protected Locale getDisplayLocale(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
-
-		return themeDisplay.getLocale();
 	}
 
 	protected FileEntry getFileEntry(JSONObject valueJSONObject) {
@@ -225,48 +192,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		sb.append(fileEntry.getUuid());
 
 		return html.escape(sb.toString());
-	}
-
-	protected String getItemSelectorAuthToken(
-		HttpServletRequest httpServletRequest) {
-
-		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
-
-		if (themeDisplay == null) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			return AuthTokenUtil.getToken(
-				httpServletRequest,
-				portal.getControlPanelPlid(themeDisplay.getCompanyId()),
-				PortletKeys.ITEM_SELECTOR);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to generate item selector auth token ",
-				portalException);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	protected String getLexiconIconsPath(
-		HttpServletRequest httpServletRequest) {
-
-		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
-
-		if (themeDisplay == null) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(themeDisplay.getPathThemeImages());
-		sb.append("/clay/icons.svg");
-		sb.append(StringPool.POUND);
-
-		return sb.toString();
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

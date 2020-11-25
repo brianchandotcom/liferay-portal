@@ -176,6 +176,34 @@ username="elastic"</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-portal-x-pack-pki-osgi-properties">
+		<sequential>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="xpack"</echo>
+
+			<propertyregex
+				defaultValue="${elastic.xpack.elastic.user.password}"
+				input="${elastic.xpack.elastic.user.password}"
+				override="true"
+				property="osgi.config.elastic.user.password"
+				regexp="="
+				replace="\\\\="
+			/>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
+kibanaURL="https://localhost:5601"
+proxyServletLogEnable="true"</echo>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-remote.config">active="true"
+authenticationEnabled="false"
+connectionId="xpack"
+httpSSLEnabled="true"
+networkHostAddresses=["https://localhost:9200"]
+truststorePassword="liferay"
+truststorePath="${elasticsearch.dir}-1/config/certs/elastic-certificates.p12"
+truststoreType="pkcs12"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-portal-x-pack-security-truststore">
 		<sequential>
 			<if>

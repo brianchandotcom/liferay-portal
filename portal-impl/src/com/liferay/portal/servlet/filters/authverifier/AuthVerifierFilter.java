@@ -115,6 +115,8 @@ public class AuthVerifierFilter extends BasePortalFilter {
 				_log.warn("use_permission_checker is deprecated");
 			}
 		}
+
+		_authVerifierPipeline = new AuthVerifierPipeline(_initParametersMap);
 	}
 
 	@Override
@@ -280,6 +282,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierFilter.class.getName());
 
+	private AuthVerifierPipeline _authVerifierPipeline;
 	private boolean _guestAllowed = true;
 	private final Set<String> _hostsAllowed = new HashSet<>();
 	private boolean _httpsRequired;

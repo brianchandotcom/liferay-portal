@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -222,6 +223,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 	protected boolean isSessionErrorException(Throwable throwable) {
 		if (throwable instanceof AssetCategoryException ||
 			throwable instanceof DDMFormValuesValidationException ||
+			throwable instanceof DuplicateFriendlyURLEntryException ||
 			throwable instanceof
 				DuplicateLayoutPageTemplateCollectionException ||
 			throwable instanceof GroupInheritContentException ||

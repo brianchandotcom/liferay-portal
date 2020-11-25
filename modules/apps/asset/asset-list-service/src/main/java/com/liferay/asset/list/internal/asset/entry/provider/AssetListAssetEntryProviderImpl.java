@@ -686,8 +686,8 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private List<AssetEntry> _getManualAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryId, int start,
-		int end) {
+		AssetListEntry assetListEntry, long[] segmentsEntryId,
+		long[] assetCategoryIds, int start, int end) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels;
 
@@ -696,17 +696,19 @@ public class AssetListAssetEntryProviderImpl
 				_assetListEntryAssetEntryRelLocalService.
 					getAssetListEntryAssetEntryRels(
 						assetListEntry.getAssetListEntryId(),
-						_getCombinedSegmentsEntryIds(segmentsEntryId), start,
-						end);
+						_getCombinedSegmentsEntryIds(segmentsEntryId),
+						assetCategoryIds, start, end);
 		}
 		else {
 			assetListEntryAssetEntryRels =
 				_assetListEntryAssetEntryRelLocalService.
 					getAssetListEntryAssetEntryRels(
 						assetListEntry.getAssetListEntryId(),
-						_getFirstSegmentsEntryId(
-							assetListEntry, segmentsEntryId),
-						start, end);
+						new long[] {
+							_getFirstSegmentsEntryId(
+								assetListEntry, segmentsEntryId)
+						},
+						assetCategoryIds, start, end);
 		}
 
 		Stream<AssetListEntryAssetEntryRel> stream =

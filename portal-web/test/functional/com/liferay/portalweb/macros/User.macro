@@ -2858,6 +2858,12 @@ definition {
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD",
 				value1 = "${userJobTitle}");
 		}
+
+		if (isSet(userID)) {
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userID}");
+		}
 	}
 
 	macro viewUserInfomationOrganizationSitesCP {

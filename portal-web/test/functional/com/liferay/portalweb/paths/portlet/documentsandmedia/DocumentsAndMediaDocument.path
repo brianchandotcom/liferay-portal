@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_FILE_NAME</td>
-	<td>//h3[contains(@class,'sidebar-title')]</td>
+	<td>//p[contains(@class,'component-subtitle')]</td>
 	<td></td>
 </tr>
 <tr>

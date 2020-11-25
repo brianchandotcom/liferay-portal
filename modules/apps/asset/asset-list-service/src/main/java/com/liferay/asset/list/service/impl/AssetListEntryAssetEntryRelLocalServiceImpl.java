@@ -254,6 +254,40 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long[] segmentsEntryIds,
+		long[] assetCategoryIds) {
+
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return assetListEntryAssetEntryRelPersistence.countByA_S(
+				assetListEntryId, segmentsEntryIds);
+		}
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			AssetListEntryAssetEntryRelTable.INSTANCE
+		).innerJoinON(
+			AssetEntryAssetCategoryRelTable.INSTANCE,
+			AssetListEntryAssetEntryRelTable.INSTANCE.assetEntryId.eq(
+				AssetEntryAssetCategoryRelTable.INSTANCE.assetEntryId)
+		).where(
+			AssetEntryAssetCategoryRelTable.INSTANCE.assetCategoryId.in(
+				ArrayUtil.toArray(assetCategoryIds)
+			).and(
+				AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.eq(
+					assetListEntryId)
+			).and(
+				AssetListEntryAssetEntryRelTable.INSTANCE.segmentsEntryId.in(
+					ArrayUtil.toArray(segmentsEntryIds))
+			)
+		);
+
+		Long count = assetListEntryAssetEntryRelPersistence.dslQuery(dslQuery);
+
+		return count.intValue();
+	}
+
+	@Override
 	public AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
 			long assetListEntryId, long segmentsEntryId, int position,
 			int newPosition)

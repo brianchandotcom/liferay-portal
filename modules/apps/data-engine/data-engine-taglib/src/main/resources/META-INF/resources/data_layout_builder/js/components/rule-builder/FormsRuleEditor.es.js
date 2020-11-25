@@ -12,6 +12,8 @@
  * details.
  */
 
+import './FormsRuleEditor.scss';
+
 import ClayButton from '@clayui/button';
 import React, {useRef, useState} from 'react';
 
@@ -22,11 +24,9 @@ export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
 	const ruleRef = useRef(null);
 
 	return (
-		<div className="form-builder-rule-builder liferay-ddm-form-builder-rule-builder-content">
-			<div className="liferay-ddm-form-rule-builder-header">
-				<h2 className="form-builder-section-title text-default">
-					{Liferay.Language.get('rule')}
-				</h2>
+		<div className="form-rule-builder">
+			<div className="form-rule-builder-header">
+				<h2 className="text-default">{Liferay.Language.get('rule')}</h2>
 
 				<h4 className="text-default">
 					{Liferay.Language.get(
@@ -44,7 +44,7 @@ export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
 				onValidator={setDisabled}
 				{...otherProps}
 			/>
-			<div className="liferay-ddm-form-rule-builder-footer">
+			<div className="form-rule-builder-footer">
 				<ClayButton.Group spaced>
 					<ClayButton
 						disabled={disabled}

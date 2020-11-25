@@ -1,31 +1,28 @@
-.liferay-ddm-form-rule-builder-timeline {
-	margin-bottom: 0;
+.form-rule-builder-timeline {
+	// Autofill
 
-	&.can-remove-item {
-		.timeline-item:hover > .container-trash {
-			display: block;
+	.action-rule-data-provider {
+		p {
+			display: inline-block;
 		}
-	}
 
-	[class*=' target-message-'] {
-		max-width: max-content;
-	}
+		.data-provider-label-container {
+			margin-bottom: 15px;
+		}
 
-	&.liferay-ddm-form-builder-rule-action-list
-		.timeline-item:last-child:before {
-		bottom: 0;
-	}
+		.data-provider-parameter {
+			margin-right: 10px;
+		}
 
-	.container-trash {
-		cursor: pointer;
-		display: none;
-		padding: 10px;
-		position: absolute;
-		right: 10px;
-		top: 13px;
+		.data-provider-parameter-container {
+			background-color: #f8f8f8;
+			border-top: 1px solid #dce0e3;
+			margin-top: 15px;
+			padding: 20px 55px;
+		}
 
-		&:hover {
-			color: #65b6f0;
+		.no-padding {
+			padding: 0;
 		}
 	}
 }

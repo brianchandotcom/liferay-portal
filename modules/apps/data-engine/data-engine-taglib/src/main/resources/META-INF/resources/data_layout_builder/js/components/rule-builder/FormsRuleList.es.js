@@ -51,18 +51,16 @@ const OPERAND_TEXT = {
 };
 
 const EmptyState = () => (
-	<div className="main-content-body">
-		<div className="sheet taglib-empty-result-message">
-			<div className="taglib-empty-result-message-header"></div>
-			<div className="sheet-text text-center text-muted">
-				<p className="text-default">
-					{Liferay.Language.get(
-						'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
-					)}
-				</p>
-			</div>
+	<ClayLayout.Sheet className="taglib-empty-result-message">
+		<div className="taglib-empty-result-message-header"></div>
+		<div className="sheet-text text-center text-muted">
+			<p className="text-default">
+				{Liferay.Language.get(
+					'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'
+				)}
+			</p>
 		</div>
-	</div>
+	</ClayLayout.Sheet>
 );
 
 const ClayLabelCustom = ({children, ...otherProps}) => (
@@ -407,25 +405,23 @@ export const FormsRuleList = ({
 	onEdit,
 	...otherProps
 }) => (
-	<div className="form-rule-builder-container">
+	<div className="form-rule-list">
 		<h1 className="text-default">{Liferay.Language.get('rule-builder')}</h1>
 
-		<div className="form-rule-list">
-			{rules.length === 0 && <EmptyState />}
-			{rules.length > 0 && (
-				<ClayList>
-					{rules.map((rule, index) => (
-						<ListItem
-							key={index}
-							onDelete={() => onDelete(index)}
-							onEdit={() => onEdit(index)}
-							rule={rule}
-							{...otherProps}
-						/>
-					))}
-				</ClayList>
-			)}
-		</div>
+		{rules.length === 0 && <EmptyState />}
+		{rules.length > 0 && (
+			<ClayList className="mt-4" showQuickActionsOnHover={false}>
+				{rules.map((rule, index) => (
+					<ListItem
+						key={index}
+						onDelete={() => onDelete(index)}
+						onEdit={() => onEdit(index)}
+						rule={rule}
+						{...otherProps}
+					/>
+				))}
+			</ClayList>
+		)}
 	</div>
 );
 

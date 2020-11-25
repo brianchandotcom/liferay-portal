@@ -12,6 +12,8 @@
  * details.
  */
 
+import './Timeline.scss';
+
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
@@ -92,10 +94,7 @@ const Operator = ({operator}) => (
 const List = ({children, className, ...otherProps}) => (
 	<ul
 		{...otherProps}
-		className={classnames(
-			'liferay-ddm-form-rule-builder-timeline timeline can-remove-item',
-			className
-		)}
+		className={classnames('form-rule-builder-timeline timeline', className)}
 	>
 		{children}
 	</ul>
@@ -124,16 +123,16 @@ const ListHeader = ({disabled, items, operator, title, ...otherProps}) => (
 		<ClayPanel displayTitle={title} displayType="secondary">
 			{operator && (
 				<ClayDropDownWithItems
+					className="timeline-dropdown"
 					items={items}
 					trigger={
 						<ClayButton
-							className="dropdown-toggle-operator mr-3"
+							className="mr-3"
 							disabled={disabled}
 							displayType="secondary"
+							small
 						>
-							<span className="dropdown-toggle-selected-value text-uppercase">
-								{operator}
-							</span>
+							<span className="text-uppercase">{operator}</span>
 							<span className="inline-item inline-item-after">
 								<ClayIcon symbol="caret-bottom" />
 							</span>
@@ -149,10 +148,7 @@ const ListHeader = ({disabled, items, operator, title, ...otherProps}) => (
 const Timeline = ({children, className, ...otherProps}) => (
 	<div
 		{...otherProps}
-		className={classnames(
-			'form-builder-rule-builder liferay-ddm-form-builder-rule-builder-content',
-			className
-		)}
+		className={classnames('form-builder-rule-builder', className)}
 	>
 		{children}
 	</div>

@@ -439,10 +439,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
 
 		WebContent.addWithStructureCP(
-			linkedPageName = "Test Page",
-			linkFieldName = "LinkToPage",
 			structureName = "Test Structure",
 			templateName = "Test Template",
+			webContentLinkToPage = "Test Page",
 			webContentTitle = "WC Title");
 
 		PortletEntry.publish();

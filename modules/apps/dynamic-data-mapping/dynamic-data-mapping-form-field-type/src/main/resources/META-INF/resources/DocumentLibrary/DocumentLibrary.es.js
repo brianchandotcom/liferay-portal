@@ -20,71 +20,10 @@ import ClayProgressBar from '@clayui/progress-bar';
 import axios from 'axios';
 import {PagesVisitor, usePage} from 'dynamic-data-mapping-form-renderer';
 import {convertToFormData} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
-import {
-	ItemSelectorDialog,
-	createActionURL,
-	createPortletURL,
-} from 'frontend-js-web';
+import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
-
-function getDocumentLibrarySelectorURL({
-	folderId,
-	groupId,
-	itemSelectorAuthToken,
-	portletNamespace,
-}) {
-	const criterionJSON = {
-		desiredItemSelectorReturnTypes:
-			'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
-	};
-
-	const uploadCriterionJSON = {
-		URL: getUploadURL(),
-		desiredItemSelectorReturnTypes:
-			'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
-	};
-
-	const documentLibrarySelectorParameters = {
-		'0_json': JSON.stringify(criterionJSON),
-		'1_json': JSON.stringify(criterionJSON),
-		'2_json': JSON.stringify(uploadCriterionJSON),
-		criteria:
-			'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
-		doAsGroupId: groupId,
-		folderId,
-		itemSelectedEventName: `${portletNamespace}selectDocumentLibrary`,
-		p_p_auth: itemSelectorAuthToken,
-		p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
-		p_p_mode: 'view',
-		p_p_state: 'pop_up',
-		refererGroupId: groupId,
-	};
-
-	const documentLibrarySelectorURL = createPortletURL(
-		themeDisplay.getLayoutRelativeControlPanelURL(),
-		documentLibrarySelectorParameters
-	);
-
-	return documentLibrarySelectorURL.toString();
-}
-
-function getUploadURL() {
-	const uploadParameters = {
-		cmd: 'add_temp',
-		'javax.portlet.action': '/document_library/upload_file_entry',
-		p_auth: Liferay.authToken,
-		p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY,
-	};
-
-	const uploadURL = createActionURL(
-		themeDisplay.getLayoutRelativeURL(),
-		uploadParameters
-	);
-
-	return uploadURL.toString();
-}
 
 const CardItem = ({fileEntryTitle, fileEntryURL}) => {
 	return (
@@ -286,10 +225,7 @@ const Main = ({
 	fieldName,
 	fileEntryTitle,
 	fileEntryURL,
-	folderId,
-	groupId,
 	id,
-	itemSelectorAuthToken,
 	maximumRepetitions,
 	name,
 	onBlur,
@@ -358,19 +294,11 @@ const Main = ({
 		}
 	};
 
-	const handleSelectButtonClicked = ({
-		itemSelectorAuthToken,
-		portletNamespace,
-	}) => {
+	const handleSelectButtonClicked = ({portletNamespace}) => {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: `${portletNamespace}selectDocumentLibrary`,
 			singleSelect: true,
-			url: getDocumentLibrarySelectorURL({
-				folderId,
-				groupId,
-				itemSelectorAuthToken,
-				portletNamespace,
-			}),
+			url,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
@@ -481,7 +409,6 @@ const Main = ({
 					}}
 					onSelectButtonClicked={() =>
 						handleSelectButtonClicked({
-							itemSelectorAuthToken,
 							portletNamespace,
 						})
 					}

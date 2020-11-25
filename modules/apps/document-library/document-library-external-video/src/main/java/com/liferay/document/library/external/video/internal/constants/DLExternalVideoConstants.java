@@ -36,4 +36,6 @@ public class DLExternalVideoConstants {
 	public static final String DL_FILE_ENTRY_TYPE_NAME =
 		"External Video Shortcut";
 
+	public static final String SERVLET_PATH = "dl-external-video/embed";
+
 }

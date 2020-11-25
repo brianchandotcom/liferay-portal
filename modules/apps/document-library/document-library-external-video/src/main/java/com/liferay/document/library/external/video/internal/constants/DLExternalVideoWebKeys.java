@@ -23,4 +23,8 @@ public class DLExternalVideoWebKeys {
 
 	public static final String ON_FILE_PICK_CALLBACK = "ON_FILE_PICK_CALLBACK";
 
+	public static final String PREVIEW_FILE_URLS = "PREVIEW_FILE_URLS";
+
+	public static final String VIDEO_POSTER_URL = "VIDEO_POSTER_URL";
+
 }

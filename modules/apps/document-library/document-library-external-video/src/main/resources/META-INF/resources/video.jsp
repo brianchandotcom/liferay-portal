@@ -16,8 +16,47 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+List<String> previewFileURLs = (List<String>)request.getAttribute(DLExternalVideoWebKeys.PREVIEW_FILE_URLS);
+String videoPosterURL = (String)request.getAttribute(DLExternalVideoWebKeys.VIDEO_POSTER_URL);
+%>
+
 <html>
 	<body style="margin: 0;">
-		<video controls="true" src="<%= ParamUtil.getString(request, "url") %>" width="100%"></video>
+		<video
+			controls
+			controlsList="nodownload"
+
+			<c:if test="<%= Validator.isNotNull(videoPosterURL) %>">
+				poster="<%= videoPosterURL %>"
+			</c:if>
+
+			width="100%"
+		>
+
+			<%
+			for (String previewFileURL : previewFileURLs) {
+				String type = null;
+
+				if (Validator.isNotNull(previewFileURL)) {
+					if (previewFileURL.endsWith("mp4")) {
+						type = "video/mp4";
+					}
+					else if (previewFileURL.endsWith("ogv")) {
+						type = "video/ogv";
+					}
+				}
+
+				if (type != null) {
+			%>
+
+					<source src="<%= previewFileURL %>" type="<%= type %>" />
+
+			<%
+				}
+			}
+			%>
+
+		</video>
 	</body>
 </html>

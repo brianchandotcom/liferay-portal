@@ -30,6 +30,7 @@ export default function Detail({
 	languageTag,
 	onCurrentPageChange,
 	onTrafficSourceNameChange,
+	timeSpanOptions,
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
@@ -63,9 +64,15 @@ export default function Detail({
 					/>
 				)}
 
-				{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
-					<ReferralDetail />
-				)}
+			{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
+				<ReferralDetail
+					currentPage={currentPage}
+					languageTag={languageTag}
+					timeSpanOptions={timeSpanOptions}
+					trafficShareDataProvider={trafficShareDataProvider}
+					trafficVolumeDataProvider={trafficVolumeDataProvider}
+				/>
+			)}
 		</>
 	);
 }
@@ -75,6 +82,12 @@ Detail.proptypes = {
 	languageTag: PropTypes.string.isRequired,
 	onCurrentPageChange: PropTypes.func.isRequired,
 	onTrafficSourceNameChange: PropTypes.func.isRequired,
+	timeSpanOptions: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string,
+			label: PropTypes.string,
+		})
+	).isRequired,
 	trafficShareDataProvider: PropTypes.func.isRequired,
 	trafficVolumeDataProvider: PropTypes.func.isRequired,
 };

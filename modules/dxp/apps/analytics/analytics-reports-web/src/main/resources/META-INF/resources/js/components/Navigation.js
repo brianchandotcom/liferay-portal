@@ -165,6 +165,7 @@ export default function Navigation({
 					languageTag={languageTag}
 					onCurrentPageChange={handleCurrentPage}
 					onTrafficSourceNameChange={handleTrafficSourceName}
+					timeSpanOptions={timeSpanOptions}
 					trafficShareDataProvider={handleTrafficShare}
 					trafficVolumeDataProvider={handleTrafficVolume}
 				/>

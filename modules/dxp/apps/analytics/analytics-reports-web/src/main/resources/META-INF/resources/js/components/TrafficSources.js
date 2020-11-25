@@ -118,6 +118,10 @@ export default function TrafficSources({
 					<table>
 						<tbody>
 							{trafficSources.map((entry) => {
+								const hasDetails =
+									entry?.countryKeywords !== undefined ||
+									entry?.details !== undefined;
+
 								return (
 									<tr key={entry.name}>
 										<td
@@ -147,9 +151,7 @@ export default function TrafficSources({
 												)
 											}
 										>
-											{entry.value > 0 &&
-											entry.countryKeywords !==
-												undefined ? (
+											{entry.value > 0 && hasDetails ? (
 												<ClayButton
 													className="font-weight-semi-bold px-0 py-1 text-primary"
 													displayType="link"

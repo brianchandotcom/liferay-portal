@@ -126,7 +126,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 		for (int i = 0; i < 10; i++) {
 			assertCode(
 				HttpServletResponse.SC_NO_CONTENT,
-				serviceDelete("ccdest/foo." + i));
+				serviceDelete("ccdest/foo" + i));
 		}
 
 		assertCode(
@@ -221,7 +221,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 		for (int i = 0; i < 10; i++) {
 			assertCode(
 				HttpServletResponse.SC_NO_CONTENT,
-				serviceDelete("mvdest/foo." + i));
+				serviceDelete("mvdest/foo" + i));
 		}
 
 		assertCode(

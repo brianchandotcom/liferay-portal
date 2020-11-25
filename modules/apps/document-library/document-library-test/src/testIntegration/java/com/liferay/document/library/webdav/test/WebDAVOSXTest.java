@@ -358,21 +358,22 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			if (i == 0) {
 				assertCode(
 					HttpServletResponse.SC_CREATED,
-					serviceCopyOrMove(Method.MOVE, orig, dest, getLock(orig)));
+					serviceCopyOrMove(
+						Method.MOVE, orig, _TEST_FILE_TITLE, getLock(orig)));
 
 				moveLock(orig, dest);
 			}
 		}
 
 		for (int i = 0; i < 2; i++) {
-			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);
+			lock(HttpServletResponse.SC_OK, _TEST_FILE_TITLE);
 
-			tuple = serviceGet(_TEST_FILE_NAME);
+			tuple = serviceGet(_TEST_FILE_TITLE);
 
 			assertCode(HttpServletResponse.SC_OK, tuple);
 			Assert.assertArrayEquals(_testDeltaBytes, getResponseBody(tuple));
 
-			unlock(_TEST_FILE_NAME);
+			unlock(_TEST_FILE_TITLE);
 		}
 
 		lock(HttpServletResponse.SC_CREATED, _TEST_META_NAME);
@@ -697,6 +698,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	private static final String _TEST_FILE_NAME_ILLEGAL_CHARACTERS_ESCAPED =
 		"Test" + PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR + "0.docx";
+
+	private static final String _TEST_FILE_TITLE = "Test";
 
 	private static final String _TEST_META_NAME = "._Test.docx";
 

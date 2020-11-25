@@ -129,6 +129,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId"));
 		parameters.put(
+			"guestUploadURL",
+			getGuestUploadURL(
+				ddmFormFieldRenderingContext, folderId, httpServletRequest));
+		parameters.put(
 			"itemSelectorURL",
 			getItemSelectorURL(
 				ddmFormFieldRenderingContext, folderId, httpServletRequest));
@@ -136,10 +140,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			"maximumRepetitions",
 			GetterUtil.getInteger(
 				ddmFormField.getProperty("maximumRepetitions")));
-		parameters.put(
-			"uploadURL",
-			getUploadURL(
-				ddmFormFieldRenderingContext, folderId, httpServletRequest));
 
 		String value = ddmFormFieldRenderingContext.getValue();
 
@@ -203,6 +203,31 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		return html.escape(sb.toString());
 	}
 
+	protected String getGuestUploadURL(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		long folderId, HttpServletRequest httpServletRequest) {
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/dynamic_data_mapping_form/upload_file_entry");
+		portletURL.setParameter(
+			"formInstanceId",
+			ParamUtil.getString(httpServletRequest, "formInstanceId"));
+		portletURL.setParameter(
+			"groupId",
+			String.valueOf(
+				ddmFormFieldRenderingContext.getProperty("groupId")));
+		portletURL.setParameter("folderId", String.valueOf(folderId));
+
+		return portletURL.toString();
+	}
+
 	protected String getItemSelectorURL(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		long folderId, HttpServletRequest httpServletRequest) {
@@ -244,31 +269,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		return (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	protected String getUploadURL(
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
-		long folderId, HttpServletRequest httpServletRequest) {
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
-
-		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/dynamic_data_mapping_form/upload_file_entry");
-		portletURL.setParameter(
-			"formInstanceId",
-			ParamUtil.getString(httpServletRequest, "formInstanceId"));
-		portletURL.setParameter(
-			"groupId",
-			String.valueOf(
-				ddmFormFieldRenderingContext.getProperty("groupId")));
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-
-		return portletURL.toString();
 	}
 
 	protected JSONObject getValueJSONObject(String value) {

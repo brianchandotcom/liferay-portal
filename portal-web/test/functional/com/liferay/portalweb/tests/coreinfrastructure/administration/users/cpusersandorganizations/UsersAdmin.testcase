@@ -2220,35 +2220,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		var key_userScreenName = "test1";
-
-		AssertClick(
-			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
-			value1 = "test1");
-
-		AssertValue(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD",
-			value1 = "${userId}");
-
-		AssertValue(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "test1");
-
-		AssertValue(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "test1");
-
-		AssertValue(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "test1@liferay.com");
-
-		AssertValue(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "test1");
-
-		AssertValue(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD",
-			value1 = "11/24/1984");
+		User.viewCP(
+			userBirthday = "11/24/1984",
+			userEmailAddress = "test1@liferay.com",
+			userFirstName = "test1",
+			userID = "${userId}",
+			userLastName = "test1",
+			userScreenName = "test1");
 	}
 
 	@priority = "4"

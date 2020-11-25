@@ -146,4 +146,37 @@ describe('ReactFieldBase', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	it('renders the add button when repeatable is true', () => {
+		const {container} = render(
+			<FieldBaseWithProvider
+				label="Text"
+				repeatable={true}
+				showLabel={false}
+				spritemap={spritemap}
+			/>
+		);
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(container).toMatchSnapshot();
+	});
+
+	it('does not render the add button when repeatable is true and the maximum limit of repetions is reached', () => {
+		const {container} = render(
+			<FieldBaseWithProvider
+				label="Text"
+				overMaximumRepetitionsLimit={true}
+				repeatable={true}
+				showLabel={false}
+				spritemap={spritemap}
+			/>
+		);
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(container).toMatchSnapshot();
+	});
 });

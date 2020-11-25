@@ -87,6 +87,8 @@ definition {
 	@description = "This ensures that a regular role with the create redirections permission set can create a new redirection entry."
 	@priority = "5"
 	test AddRedirectRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -102,8 +104,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -276,6 +276,8 @@ definition {
 	@description = "This ensures that a regular role with the delete redirections permission set can delete a redirection entry."
 	@priority = "5"
 	test DeleteRedirectRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -291,8 +293,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -488,6 +488,8 @@ definition {
 	@description = "This ensures that a regular role with the update redirections permission set can edit a redirection entry."
 	@priority = "5"
 	test UpdateRedirectRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -503,8 +505,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -700,6 +700,8 @@ definition {
 	@description = "This ensures that a regular role with the view redirections permission set can view redirection entries."
 	@priority = "5"
 	test ViewRedirectPortletRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -720,8 +722,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
 		Role.openRolesAdmin();

@@ -29,6 +29,8 @@ definition {
 	@description = "This ensures that the user can perform operations to memberships with all permissions."
 	@priority = "5"
 	test AccessMembershipWithAllPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
@@ -60,8 +62,6 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn1");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -114,13 +114,13 @@ definition {
 	@description = "This ensures that the user can only view memberships with view permissions."
 	@priority = "5"
 	test AccessMembershipWithViewOnlyPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn1");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -188,6 +188,8 @@ definition {
 	@description = "This ensures that the user can only add web content to the depot that has permissions set."
 	@priority = "5"
 	test AddWebContentPermissionWithinDepot {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name 2");
@@ -199,8 +201,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
@@ -277,13 +277,13 @@ definition {
 	@description = "This ensures that user can perform CRUD operations to depots with all permissions."
 	@priority = "5"
 	test ConfigureRoleWithAllPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
@@ -352,13 +352,13 @@ definition {
 	@description = "This ensures that the user can only view depots with view permissions."
 	@priority = "5"
 	test ConfigureRoleWithViewOnly {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -381,6 +381,10 @@ definition {
 			resourceName = "com.liferay.depot.model.DepotEntry",
 			roleTitle = "Depot Regrole Name");
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		DepotNavigator.openDepotAdmin();
 
 		AssertTextEquals(
@@ -398,13 +402,13 @@ definition {
 	@description = "This test covers LPS-120011. This ensures that no asset libraries be returned when a user without view permission searches the asset library."
 	@priority = "4"
 	test SearchAssetLibraryWithoutViewPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn1");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -464,13 +468,13 @@ definition {
 	@description = "This ensures that able to select specific asset libraries scope from Collections permissions."
 	@priority = "5"
 	test SelectDepotFromCollectionsPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
@@ -489,13 +493,13 @@ definition {
 	@description = "This ensures that able to select specific asset libraries scope from DM permissions."
 	@priority = "5"
 	test SelectDepotFromDMPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
@@ -514,13 +518,13 @@ definition {
 	@description = "This ensures that able to select specific asset libraries scope from WC permissions."
 	@priority = "5"
 	test SelectDepotFromWCPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
@@ -606,6 +610,8 @@ definition {
 	@description = "This ensures that the user can view documents on site and library with all sites and libraries scope view permissions."
 	@priority = "5"
 	test ViewDocumentOnSiteAndLibrary {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Depot DM Document Title",
@@ -623,8 +629,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(

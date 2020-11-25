@@ -644,6 +644,8 @@ definition {
 	@description = "This ensures that the user can translate a Web content to the language she has permissions."
 	@priority = "5"
 	test TranslateWCWithSpecificLanguagesPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
@@ -654,8 +656,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(

@@ -270,6 +270,8 @@ definition {
 	@description = "This ensures that the user can perform CRUD operations with an AL role that has all WC permissions."
 	@priority = "5"
 	test AssignALRoleWithAllWCPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Asset Library");
@@ -311,8 +313,6 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test",
 			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -380,6 +380,8 @@ definition {
 	@description = "This ensures that the user can edit documents with an AL role that has edit documents permissions."
 	@priority = "5"
 	test AssignALRoleWithDMEditPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -428,13 +430,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",

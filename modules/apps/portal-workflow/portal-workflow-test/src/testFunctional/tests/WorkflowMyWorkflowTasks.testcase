@@ -322,6 +322,7 @@ definition {
 
 	@priority = "3"
 	test ReviewerApproveResubmitTaskByActionsUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "quarantine";
 
 		Permissions.setUpRegRoleLoginUserCP(
@@ -329,8 +330,6 @@ definition {
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
 			userScreenName = "usersn1");
 
 		ApplicationsMenu.gotoPortlet(

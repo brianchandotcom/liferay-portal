@@ -361,3 +361,36 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/structured-contents/{structuredContentId}/versions":
+        get:
+            # @review
+            description:
+                Retrieves all versions of a structured content via its ID.
+            operationId: getStructuredContentVersionsPage
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                type: array
+                    description:
+                        ""
+            tags: ["StructuredContent"]

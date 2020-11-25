@@ -268,6 +268,20 @@ public class StructuredContentSerDes {
 			sb.append(_toJSON(structuredContent.getDescription_i18n()));
 		}
 
+		if (structuredContent.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(structuredContent.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (structuredContent.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -659,6 +673,15 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getDescription_i18n()));
 		}
 
+		if (structuredContent.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(structuredContent.getExternalReferenceCode()));
+		}
+
 		if (structuredContent.getFriendlyUrlPath() == null) {
 			map.put("friendlyUrlPath", null);
 		}
@@ -908,6 +931,14 @@ public class StructuredContentSerDes {
 					structuredContent.setDescription_i18n(
 						(Map)StructuredContentSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					structuredContent.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {

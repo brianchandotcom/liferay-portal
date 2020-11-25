@@ -214,6 +214,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		structuredContent.setAssetLibraryKey(regex);
 		structuredContent.setDescription(regex);
+		structuredContent.setExternalReferenceCode(regex);
 		structuredContent.setFriendlyUrlPath(regex);
 		structuredContent.setKey(regex);
 		structuredContent.setTitle(regex);
@@ -227,6 +228,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Assert.assertEquals(regex, structuredContent.getAssetLibraryKey());
 		Assert.assertEquals(regex, structuredContent.getDescription());
+		Assert.assertEquals(
+			regex, structuredContent.getExternalReferenceCode());
 		Assert.assertEquals(regex, structuredContent.getFriendlyUrlPath());
 		Assert.assertEquals(regex, structuredContent.getKey());
 		Assert.assertEquals(regex, structuredContent.getTitle());
@@ -1552,6 +1555,152 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteStructuredContent() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testDeleteSiteStructuredContent_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.deleteSiteStructuredContentHttpResponse(
+				structuredContent.getSiteId(),
+				structuredContent.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getSiteStructuredContentHttpResponse(
+				structuredContent.getSiteId(),
+				structuredContent.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getSiteStructuredContentHttpResponse(
+				structuredContent.getSiteId(),
+				structuredContent.getExternalReferenceCode()));
+	}
+
+	protected StructuredContent
+			testDeleteSiteStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testGetSiteStructuredContent() throws Exception {
+		StructuredContent postStructuredContent =
+			testGetSiteStructuredContent_addStructuredContent();
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getSiteStructuredContent(
+				postStructuredContent.getSiteId(),
+				postStructuredContent.getExternalReferenceCode());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	protected StructuredContent
+			testGetSiteStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContent() throws Exception {
+		StructuredContent structuredContent =
+			testGraphQLStructuredContent_addStructuredContent();
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteStructuredContent",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												structuredContent.getSiteId() +
+													"\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												structuredContent.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/siteStructuredContent"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContentNotFound() throws Exception {
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteStructuredContent",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutSiteStructuredContent() throws Exception {
+		StructuredContent postStructuredContent =
+			testPutSiteStructuredContent_addStructuredContent();
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent putStructuredContent =
+			structuredContentResource.putSiteStructuredContent(
+				postStructuredContent.getSiteId(),
+				postStructuredContent.getExternalReferenceCode(),
+				randomStructuredContent);
+
+		assertEquals(randomStructuredContent, putStructuredContent);
+		assertValid(putStructuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getSiteStructuredContent(
+				putStructuredContent.getSiteId(),
+				putStructuredContent.getExternalReferenceCode());
+
+		assertEquals(randomStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	protected StructuredContent
+			testPutSiteStructuredContent_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
 	public void testGetStructuredContentFolderStructuredContentsPage()
 		throws Exception {
 
@@ -2617,6 +2766,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (structuredContent.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (structuredContent.getFriendlyUrlPath() == null) {
 					valid = false;
@@ -3030,6 +3189,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!equals(
 						(Map)structuredContent1.getDescription_i18n(),
 						(Map)structuredContent2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						structuredContent1.getExternalReferenceCode(),
+						structuredContent2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -3545,6 +3717,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(structuredContent.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(String.valueOf(structuredContent.getFriendlyUrlPath()));
@@ -3688,6 +3869,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

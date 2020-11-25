@@ -8607,6 +8607,7 @@ paths:
             description:
                 Deletes the structured content by its external reference code and returns a 204 if the operation
                 succeeds.
+            operationId: deleteSiteStructuredContent
             parameters:
                 - in: path
                   name: siteId
@@ -8631,6 +8632,7 @@ paths:
             # @review
             description:
                 Retrieves a structured content with the external reference code.
+            operationId: getSiteStructuredContent
             parameters:
                 - in: path
                   name: siteId
@@ -8658,6 +8660,7 @@ paths:
         put:
             description:
                 Updates, or creates if it not exists, the structured content with the given external reference code.
+            operationId: putSiteStructuredContent
             parameters:
                 - in: path
                   name: siteId

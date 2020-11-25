@@ -17,6 +17,7 @@ package com.liferay.document.library.opener.internal.upload;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -46,7 +47,8 @@ public class UniqueFileEntryTitleProviderImpl
 			locale, UniqueFileEntryTitleProviderImpl.class);
 
 		return _provide(
-			groupId, folderId, _language.get(resourceBundle, "untitled"));
+			groupId, folderId, StringPool.BLANK,
+			_language.get(resourceBundle, "untitled"));
 	}
 
 	@Override

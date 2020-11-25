@@ -719,6 +719,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121199. For web content mapped specific DPT, Unassign via view usage, could delete display page template successfull."
+	@priority = "5"
+	test UnassignAndDeleteDisplayPageMappedSpecificDPT {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Page Templates");
+
+		PortletEntry.publish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "View Usages");
+
+		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Unassign");
+
+		AssertConfirm(value1 = "Are you sure you do not want to set a display page template for this?");
+
+		Alert.viewSuccessMessageText(successMessage = "Successfully unassigned display page template.");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
+
+		Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
+
+		DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+	}
+
 	@description = "Add a fragment with multiple editable fields in it."
 	@priority = "4"
 	test ViewDisplayPageWithComplexRichTextFragments {

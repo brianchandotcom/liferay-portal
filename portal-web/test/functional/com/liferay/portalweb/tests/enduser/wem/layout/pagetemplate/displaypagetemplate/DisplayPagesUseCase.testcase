@@ -54,6 +54,7 @@ definition {
 			displayPageTemplateEntryName = "Display Page Name",
 			groupName = "Test Site Name",
 			subType = "Basic Web Content");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
@@ -106,6 +107,83 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
 
 		DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+	}
+
+	@description = "This is a test for LPS-121199. For web content mapped specific DPT, Assign to Default via view usage, could set content display page to the default one."
+	@priority = "4"
+	test AssignToDefaultAndViewSelectedDisplayPageTemplate {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name 1",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name 1");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name 2",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+		Button.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name 2",
+			pageType = "Display Page Templates");
+
+		PortletEntry.publish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name 2",
+			item = "View Usages");
+
+		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Assign to Default (Display Page Name 1)");
+
+		AssertConfirm(value1 = "Are you sure you want to use the default display page template (Display Page Name 1) for this?");
+
+		Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template: Display Page Name 1.");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		LexiconCard.viewMenuItemNotPresent(
+			card = "Display Page Name 1",
+			item = "View Usages");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+		WebContent.viewSelectedDisplayPageTemplateCP(
+			displayPageTemplateName = "Display Page Name 1",
+			displayPageTemplateType = "Default Display Page Template");
 	}
 
 	@description = "This is a test for LPS-90999. A user with permissions has access to edit the web content article or display page while viewing the article through its display page."
@@ -727,6 +805,7 @@ definition {
 			displayPageTemplateEntryName = "Display Page Name",
 			groupName = "Test Site Name",
 			subType = "Basic Web Content");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");

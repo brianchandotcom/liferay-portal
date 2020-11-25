@@ -12,6 +12,8 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
+
 import AutoSave from '../../../src/main/resources/META-INF/resources/admin/js/util/AutoSave.es';
 
 const AUTOSAVE_INTERVAL = 2;
@@ -19,13 +21,17 @@ const AUTOSAVE_INTERVAL = 2;
 const URL = '/sample/autosave';
 
 const createForm = () => {
-	document.body.append('<form id="mockForm"></form>');
+	const frag = buildFragment('<form id="mockForm"></form>');
+
+	document.body.appendChild(frag);
 
 	return document.querySelector('#mockForm');
 };
 
 const createInput = (id) => {
-	document.body.append(`<input id="${id}" value="0" />`);
+	const frag = buildFragment(`<input id="${id}" value="0" />`);
+
+	document.body.appendChild(frag);
 
 	return document.querySelector(`#${id}`);
 };

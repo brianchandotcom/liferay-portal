@@ -12,6 +12,8 @@
  * details.
  */
 
+import {buildFragment} from 'frontend-js-web';
+
 import Builder from '../../../../src/main/resources/META-INF/resources/js/components/FormBuilder/FormBuilder.es';
 import Pages from '../../__mock__/mockPages.es';
 import SuccessPageSettings from '../../__mock__/mockSuccessPage.es';
@@ -121,9 +123,15 @@ describe('Builder', () => {
 
 		jest.useFakeTimers();
 
-		document.body.append('<button id="addFieldButton"></button>');
-		document.body.append('<div class="ddm-translation-manager"></div>');
-		document.body.append('<div class="ddm-form-basic-info"></div>');
+		document.body.appendChild(
+			buildFragment('<button id="addFieldButton"></button>')
+		);
+		document.body.appendChild(
+			buildFragment('<div class="ddm-translation-manager"></div>')
+		);
+		document.body.appendChild(
+			buildFragment('<div class="ddm-form-basic-info"></div>')
+		);
 
 		addButton = document.querySelector('#addFieldButton');
 		basicInfo = document.querySelector('.ddm-form-basic-info');

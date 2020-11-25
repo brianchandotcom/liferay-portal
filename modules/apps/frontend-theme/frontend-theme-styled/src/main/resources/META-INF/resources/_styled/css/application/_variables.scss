@@ -107,21 +107,6 @@ $dialog-desktop-navbar-height: if(
 $dialog-footer-padding: 20px !default;
 $dialog-iframe-padding: 0 !default;
 
-// ---------- Splitter ----------
-
-$splitter-bg: map-get($panel-secondary, header-bg) !default;
-$splitter-border-radius: nth($panel-border-radius, 1)
-	nth($panel-border-radius, 1) 0 0 !default;
-$splitter-box-shadow: if(
-	variable-exists(panel-box-shadow),
-	$panel-box-shadow,
-	null
-) !default;
-$splitter-footer-margin: 20px;
-$splitter-padding: 10px 15px !default;
-$splitter-spaced-border-radius: $panel-border-radius;
-$splitter-text-color: map-get($panel-secondary, color) !default;
-
 // ---------- Toggle card ----------
 
 $toggle-card-border-radius: 2px !default;

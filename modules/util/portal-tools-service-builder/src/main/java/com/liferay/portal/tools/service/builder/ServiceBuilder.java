@@ -3293,14 +3293,7 @@ public class ServiceBuilder {
 				_testOutputPath, "/service/persistence/test/", entity.getName(),
 				"PersistenceTest.java"));
 
-		if (file.exists() &&
-			(entity.isDeprecated() || !entity.hasPersistence())) {
-
-			System.out.println("Removing " + file);
-
-			file.delete();
-		}
-		else {
+		if (entity.hasPersistence() && !entity.isDeprecated()) {
 			Map<String, Object> context = _getContext();
 
 			context.put("entity", entity);
@@ -3315,6 +3308,11 @@ public class ServiceBuilder {
 			String content = _processTemplate(_tplPersistenceTest, context);
 
 			_write(file, content, _modifiedFileNames);
+		}
+		else if (file.exists()) {
+			System.out.println("Removing " + file);
+
+			file.delete();
 		}
 
 		file = new File(

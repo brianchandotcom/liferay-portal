@@ -1,22 +1,22 @@
 @import 'atlas-variables';
 
 .applications-menu-modal {
-	.modal-full {
+	.modal-dialog {
 		margin: 0;
 		max-width: none;
 		width: 100%;
-
-		.modal-body {
-			padding: 0;
-		}
-
-		.modal-content {
-			border-radius: 0;
-			box-shadow: none;
-		}
 	}
 
-	.modal-info .btn-monospaced {
+	.modal-content {
+		border-radius: 0;
+		box-shadow: none;
+	}
+
+	.modal-body {
+		padding: 0;
+	}
+
+	.btn-monospaced {
 		color: $secondary;
 	}
 }

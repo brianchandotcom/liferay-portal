@@ -459,7 +459,6 @@ const ApplicationsMenu = ({
 				<ClayModal
 					className="applications-menu-modal"
 					observer={observer}
-					size="full"
 					status="info"
 				>
 					<ClayModal.Body>

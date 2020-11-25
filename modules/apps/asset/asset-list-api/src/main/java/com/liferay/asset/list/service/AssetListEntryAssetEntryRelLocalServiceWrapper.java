@@ -389,6 +389,18 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 				assetListEntryId, segmentsEntryIds, start, end);
 	}
 
+	@Override
+	public java.util.List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, long[] segmentsEntryIds,
+			long[] assetCategoryIds, int start, int end) {
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryAssetEntryRels(
+				assetListEntryId, segmentsEntryIds, assetCategoryIds, start,
+				end);
+	}
+
 	/**
 	 * Returns all the asset list entry asset entry rels matching the UUID and company.
 	 *
@@ -469,6 +481,16 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		return _assetListEntryAssetEntryRelLocalService.
 			getAssetListEntryAssetEntryRelsCount(
 				assetListEntryId, segmentsEntryIds);
+	}
+
+	@Override
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long[] segmentsEntryIds,
+		long[] assetCategoryIds) {
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryAssetEntryRelsCount(
+				assetListEntryId, segmentsEntryIds, assetCategoryIds);
 	}
 
 	@Override

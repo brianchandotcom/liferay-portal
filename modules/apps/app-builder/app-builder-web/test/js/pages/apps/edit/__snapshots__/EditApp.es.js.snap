@@ -20,6 +20,31 @@ exports[`EditApp renders 1`] = `
       <div
         class="align-items-center bg-transparent card-header d-flex justify-content-between"
       >
+        <div
+          class="dropdown localizable-dropdown mr-1"
+        >
+          <button
+            class="dropdown-toggle btn btn-monospaced btn-secondary"
+            symbol=""
+            type="button"
+          >
+            <span
+              class="inline-item"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#"
+                />
+              </svg>
+            </span>
+            <span
+              class="btn-section"
+            />
+          </button>
+        </div>
         <li
           class="tbar-item tbar-item-expand"
         >

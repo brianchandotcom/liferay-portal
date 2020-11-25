@@ -398,6 +398,45 @@ exports[`EditFormView renders 1`] = `
         class="tbar-nav"
       >
         <li
+          class="tbar-item"
+        >
+          <div
+            class="tbar-section"
+          >
+            <div
+              class="input-group"
+            >
+              <div
+                class="dropdown localizable-dropdown"
+              >
+                <button
+                  class="dropdown-toggle btn btn-monospaced btn-secondary"
+                  symbol="en-US"
+                  type="button"
+                >
+                  <span
+                    class="inline-item"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-en-us"
+                      role="presentation"
+                    >
+                      <use
+                        xlink:href="#en-us"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="btn-section"
+                  >
+                    en-US
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li
           class="tbar-item tbar-item-expand"
         >
           <div

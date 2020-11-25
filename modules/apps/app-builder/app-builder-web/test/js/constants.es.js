@@ -544,6 +544,7 @@ const FORM_VIEW_CONTEXT = {
 	focusedCustomObjectField: {},
 	focusedField: {},
 	hoveredField: {},
+	initialAvailableLanguageIds: [],
 	sidebarOpen: true,
 	sidebarPanelId: 'fields',
 	spritemap: 'icons.svg',

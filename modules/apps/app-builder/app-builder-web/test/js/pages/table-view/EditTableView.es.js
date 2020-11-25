@@ -76,13 +76,6 @@ const fieldTypes = [
 	},
 ];
 
-const AppContextProviderWrapper = (props) => (
-	<AppContextProvider
-		appContext={{showTranslationManager: true}}
-		{...props}
-	/>
-);
-
 const fieldTypeResponse = fieldTypes.map((fieldType, index) => ({
 	...fieldType,
 	displayOrder: index,
@@ -141,7 +134,7 @@ describe('EditTableView', () => {
 				<EditTableView />
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 
@@ -165,7 +158,7 @@ describe('EditTableView', () => {
 				<EditTableView />
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 
@@ -235,7 +228,7 @@ describe('EditTableView', () => {
 				<EditTableView />
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 
@@ -281,7 +274,7 @@ describe('EditTableView', () => {
 				<EditTableView />
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 
@@ -347,7 +340,7 @@ describe('EditTableView', () => {
 				</Router>
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 
@@ -385,7 +378,7 @@ describe('EditTableView', () => {
 				<EditTableView />
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 
@@ -436,7 +429,7 @@ describe('EditTableView', () => {
 				<EditTableView />
 			</DndProvider>,
 			{
-				wrapper: AppContextProviderWrapper,
+				wrapper: AppContextProvider,
 			}
 		);
 

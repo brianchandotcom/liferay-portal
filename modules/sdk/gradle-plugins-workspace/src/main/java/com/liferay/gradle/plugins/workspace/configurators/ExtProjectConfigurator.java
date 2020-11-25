@@ -206,7 +206,6 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 		dockerDeploy.setDescription(
 			"Assembles the project and deploys it to the Liferay Docker " +
 				"container.");
-
 		dockerDeploy.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
 		Task deployTask = GradleUtil.getTask(

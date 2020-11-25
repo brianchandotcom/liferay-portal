@@ -22,16 +22,6 @@
 	z-index: 1200;
 }
 
-.liferay-ddm-form-builder-calculator {
-	flex-direction: column;
-
-	.calculator-button-area button {
-		&.disabled {
-			pointer-events: none;
-		}
-	}
-}
-
 .ddm-field-container {
 	border: 1px solid transparent;
 	cursor: grab;
@@ -54,21 +44,6 @@
 .ddm-target {
 	height: 100%;
 	width: 100%;
-}
-
-.liferay-ddm-form-rule-builder-timeline .timeline-item .panel-body .dropdown {
-	&.dropdown-action,
-	&.calculator-add-field-button-container {
-		position: relative;
-		right: 0;
-		top: 0;
-	}
-
-	.calculator-add-operator-button-area {
-		background-color: #fff;
-		border: solid 1px #cdced9;
-		color: #6b6c7e;
-	}
 }
 
 .form-builder-rule-builder {

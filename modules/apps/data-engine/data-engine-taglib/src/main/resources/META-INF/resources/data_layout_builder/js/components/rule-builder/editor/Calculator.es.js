@@ -12,6 +12,8 @@
  * details.
  */
 
+import './Calculator.scss';
+
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';

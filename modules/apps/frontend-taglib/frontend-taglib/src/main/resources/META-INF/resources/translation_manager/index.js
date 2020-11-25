@@ -118,20 +118,22 @@ const TranslationManager = ({
 								setVisibleModal(true);
 							}}
 						/>
+						<div className="autofit-col">
+							<LocaleSelector
+								locales={locales}
+								onItemClick={(locale) => {
+									setAvailableLocales(
+										new Map(availableLocales).set(
+											locale.id,
+											locale
+										)
+									);
+
+									setEditingLocale(locale.id);
+								}}
+							/>
+						</div>
 					</LocalesContainer>
-				</div>
-
-				<div className="autofit-col">
-					<LocaleSelector
-						locales={locales}
-						onItemClick={(locale) => {
-							setAvailableLocales(
-								new Map(availableLocales).set(locale.id, locale)
-							);
-
-							setEditingLocale(locale.id);
-						}}
-					/>
 				</div>
 			</div>
 		</>

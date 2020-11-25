@@ -130,7 +130,7 @@ Use ${basedir}/${output.sql.file} and sql files in ${sample.sql.output.dir} to i
 	<target name="clean">
 		<delete includeemptydirs="true">
 			<fileset
-				dir="."
+				dir="${basedir}"
 				includes="benchmarks-actual.properties, liferay/**, ${build.dir}/**, ${output.sql.file}"
 			/>
 		</delete>

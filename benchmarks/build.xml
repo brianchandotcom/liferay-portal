@@ -94,39 +94,38 @@
 			</sequential>
 		</for>
 
-		<property name="sample.sql.create.single.file" value="true" />
-
 		<if>
-			<istrue value="${sample.sql.create.single.file}" />
+			<istrue value="${sample.sql.output.merge}" />
 			<then>
-				<if>
-					<istrue value="${sample.sql.output.merge}" />
-					<then>
+				<for param="sql-file-filename">
+					<path>
+						<fileset
+							dir="${sample.sql.output.dir}"
+							excludes="misc.sql"
+							includes="*.sql"
+						/>
+					</path>
+					<sequential>
 						<concat append="true" destfile="${output.sql.file}">
-							<filelist dir="${sample.sql.output.dir}" files="sample-${sample.sql.db.type}.sql" />
+							<filelist dir="${sample.sql.output.dir}" files="@{sql-file-filename}" />
 						</concat>
-					</then>
-					<else>
-						<for param="sql-file-filename">
-							<path>
-								<fileset
-									dir="${sample.sql.output.dir}/output"
-									includes="*.sql"
-								/>
-							</path>
-							<sequential>
-								<concat append="true" destfile="${output.sql.file}">
-									<filelist dir="${sample.sql.output.dir}/output" files="@{sql-file-filename}" />
-								</concat>
-							</sequential>
-						</for>
-					</else>
-				</if>
-			</then>
-		</if>
-		<echo>
+					</sequential>
+				</for>
+
+				<concat append="true" destfile="${output.sql.file}">
+					<filelist dir="${sample.sql.output.dir}" files="misc.sql" />
+				</concat>
+
+				<echo>
 Sample SQL Build Successful
 Use ${basedir}/${output.sql.file} to insert into database.</echo>
+			</then>
+			<else>
+				<echo>
+Sample SQL Build Successful
+Use ${basedir}/${output.sql.file} and sql files in ${sample.sql.output.dir} to insert into database.</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="clean">

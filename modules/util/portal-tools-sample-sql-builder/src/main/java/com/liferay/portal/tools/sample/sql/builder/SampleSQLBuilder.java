@@ -23,21 +23,17 @@ import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sample.sql.builder.io.CharPipe;
 import com.liferay.portal.tools.sample.sql.builder.io.UnsyncTeeWriter;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-
-import java.nio.channels.FileChannel;
 
 import java.sql.SQLException;
 
@@ -64,50 +60,11 @@ public class SampleSQLBuilder {
 	}
 
 	public SampleSQLBuilder() throws Exception {
+		File outputDir = new File(BenchmarksPropsValues.OUTPUT_DIR);
 
-		// Generic
+		outputDir.mkdirs();
 
-		File tempDir = new File(BenchmarksPropsValues.OUTPUT_DIR, "temp");
-
-		tempDir.mkdirs();
-
-		Reader reader = generateSQL();
-
-		try {
-
-			// Specific
-
-			compressSQL(reader, tempDir);
-
-			// Merge
-
-			if (BenchmarksPropsValues.OUTPUT_MERGE) {
-				File sqlFile = new File(
-					BenchmarksPropsValues.OUTPUT_DIR,
-					"sample-" + BenchmarksPropsValues.DB_TYPE + ".sql");
-
-				FileUtil.delete(sqlFile);
-
-				mergeSQL(tempDir, sqlFile);
-			}
-			else {
-				File outputDir = new File(
-					BenchmarksPropsValues.OUTPUT_DIR, "output");
-
-				FileUtil.deltree(outputDir);
-
-				if (!tempDir.renameTo(outputDir)) {
-
-					// This will only happen when temp and output directories
-					// are on different file systems
-
-					FileUtil.copyDirectory(tempDir, outputDir);
-				}
-			}
-		}
-		finally {
-			FileUtil.deltree(tempDir);
-		}
+		compressSQL(generateSQL(), outputDir);
 	}
 
 	protected void compressSQL(
@@ -260,48 +217,6 @@ public class SampleSQLBuilder {
 		thread.start();
 
 		return charPipe.getReader();
-	}
-
-	protected void mergeSQL(File inputDir, File outputSQLFile)
-		throws IOException {
-
-		FileOutputStream outputSQLFileOutputStream = new FileOutputStream(
-			outputSQLFile);
-
-		try (FileChannel outputFileChannel =
-				outputSQLFileOutputStream.getChannel()) {
-
-			File miscSQLFile = null;
-
-			for (File inputFile : inputDir.listFiles()) {
-				String inputFileName = inputFile.getName();
-
-				if (inputFileName.equals("misc.sql")) {
-					miscSQLFile = inputFile;
-
-					continue;
-				}
-
-				mergeSQL(inputFile, outputFileChannel);
-			}
-
-			if (miscSQLFile != null) {
-				mergeSQL(miscSQLFile, outputFileChannel);
-			}
-		}
-	}
-
-	protected void mergeSQL(File inputFile, FileChannel outputFileChannel)
-		throws IOException {
-
-		FileInputStream inputFileInputStream = new FileInputStream(inputFile);
-
-		try (FileChannel inputFileChannel = inputFileInputStream.getChannel()) {
-			inputFileChannel.transferTo(
-				0, inputFileChannel.size(), outputFileChannel);
-		}
-
-		inputFile.delete();
 	}
 
 	protected void writeToInsertSQLFile(

@@ -2063,6 +2063,18 @@ definition {
 			value1 = "rtl");
 	}
 
+	macro viewSelectedDisplayPageTemplateCP {
+		Panel.expandPanel(panel = "Display Page Template");
+
+		AssertSelectedLabel(
+			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+			value1 = "${displayPageTemplateType}");
+
+		AssertTextEquals(
+			locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
+			value1 = "${displayPageTemplateName}");
+	}
+
 	macro viewSelectedTemplateCP {
 		Panel.expandPanel(panel = "Default Template");
 

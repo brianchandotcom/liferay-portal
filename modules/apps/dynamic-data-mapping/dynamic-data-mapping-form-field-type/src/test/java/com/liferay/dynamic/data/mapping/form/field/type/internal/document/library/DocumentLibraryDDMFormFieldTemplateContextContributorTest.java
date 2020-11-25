@@ -155,8 +155,16 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetParametersShouldContainItemSelectorURL() {
+		ThemeDisplay themeDisplay = mockThemeDisplay();
+
+		when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			Boolean.TRUE
+		);
+
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+			themeDisplay);
 
 		Map<String, Object> parameters = spy.getParameters(
 			new DDMFormField("field", "document_library"),

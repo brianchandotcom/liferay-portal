@@ -226,6 +226,7 @@ const Main = ({
 	fileEntryTitle,
 	fileEntryURL,
 	id,
+	itemSelectorURL,
 	maximumRepetitions,
 	name,
 	onBlur,
@@ -298,7 +299,7 @@ const Main = ({
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: `${portletNamespace}selectDocumentLibrary`,
 			singleSelect: true,
-			url,
+			url: itemSelectorURL,
 		});
 
 		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
@@ -409,6 +410,7 @@ const Main = ({
 					}}
 					onSelectButtonClicked={() =>
 						handleSelectButtonClicked({
+							itemSelectorURL,
 							portletNamespace,
 						})
 					}

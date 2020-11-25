@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -27,7 +28,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -61,6 +64,36 @@ public class UniqueFileEntryTitleProviderTest {
 	}
 
 	@Test
+	public void testProvideWithExistingFileName() throws PortalException {
+		_dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_folder.getFolderId(), "someTitle.jpg", ContentTypes.IMAGE_JPEG,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, "test".getBytes(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
+			_group.getGroupId(), _folder.getFolderId(), ".jpg", "someTitle");
+
+		Assert.assertEquals("someTitle (1)", uniqueEntryFileName);
+	}
+
+	@Test
+	public void testProvideWithExistingName() throws PortalException {
+		_dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_folder.getFolderId(), null, ContentTypes.IMAGE_JPEG, "someTitle",
+			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
+			_group.getGroupId(), _folder.getFolderId(), StringPool.BLANK,
+			"someTitle");
+
+		Assert.assertEquals("someTitle (1)", uniqueEntryFileName);
+	}
+
+	@Test
 	public void testProvideWithLocale() throws PortalException {
 		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
 			_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US);
@@ -69,9 +102,43 @@ public class UniqueFileEntryTitleProviderTest {
 	}
 
 	@Test
+	public void testProvideWithLocaleWithExistingFileName()
+		throws PortalException {
+
+		_dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_folder.getFolderId(), "Untitled", ContentTypes.IMAGE_JPEG,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, "test".getBytes(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
+			_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US);
+
+		Assert.assertEquals("Untitled (1)", uniqueEntryFileName);
+	}
+
+	@Test
+	public void testProvideWithLocaleWithExistingTitle()
+		throws PortalException {
+
+		_dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_folder.getFolderId(), null, ContentTypes.IMAGE_JPEG, "Untitled",
+			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
+			_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US);
+
+		Assert.assertEquals("Untitled (1)", uniqueEntryFileName);
+	}
+
+	@Test
 	public void testProvideWithName() throws PortalException {
 		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), "someTitle");
+			_group.getGroupId(), _folder.getFolderId(), StringPool.BLANK,
+			"someTitle");
 
 		Assert.assertEquals("someTitle", uniqueEntryFileName);
 	}

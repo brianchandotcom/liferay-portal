@@ -475,9 +475,25 @@ body .ddm-user-view-content {
 .lfr-ddm-form-field-repeatable-toolbar {
 	.ddm-form-field-repeatable-add-button,
 	.ddm-form-field-repeatable-delete-button {
-		border-radius: 12px !important;
+		border-radius: 10px !important;
+		height: 18px;
 		padding: 2px !important;
 		position: absolute;
+		width: 18px;
+
+		.lexicon-icon {
+			height: 10px;
+			margin-bottom: 6px;
+			margin-top: 0;
+		}
+
+		.lexicon-icon-hr {
+			width: 8px;
+		}
+
+		.lexicon-icon-plus {
+			width: 10px;
+		}
 	}
 
 	.ddm-form-field-repeatable-delete-button {

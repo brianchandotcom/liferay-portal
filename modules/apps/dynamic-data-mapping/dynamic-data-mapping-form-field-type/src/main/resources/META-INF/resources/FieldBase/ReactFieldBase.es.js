@@ -95,6 +95,7 @@ function FieldBase({
 	name,
 	nestedFields,
 	onClick,
+	overMaximumRepetitionsLimit = false,
 	readOnly,
 	repeatable,
 	required,
@@ -203,7 +204,12 @@ function FieldBase({
 						)}
 
 						<ClayButton
-							className="ddm-form-field-repeatable-add-button p-0"
+							className={classNames(
+								'ddm-form-field-repeatable-add-button p-0',
+								{
+									hide: overMaximumRepetitionsLimit,
+								}
+							)}
 							disabled={readOnly}
 							onClick={() =>
 								dispatch({

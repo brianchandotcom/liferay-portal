@@ -18,7 +18,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayProgressBar from '@clayui/progress-bar';
 import axios from 'axios';
-import {usePage} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor, usePage} from 'dynamic-data-mapping-form-renderer';
 import {convertToFormData} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import {
 	ItemSelectorDialog,
@@ -282,6 +282,7 @@ const Main = ({
 	allowGuestUsers,
 	displayErrors: initialDisplayErrors,
 	errorMessage: initialErrorMessage,
+	fieldName,
 	fileEntryTitle,
 	fileEntryURL,
 	folderId,
@@ -300,12 +301,26 @@ const Main = ({
 	value = '{}',
 	...otherProps
 }) => {
-	const {portletNamespace} = usePage();
+	const {pages, portletNamespace} = usePage();
 	const [currentValue, setCurrentValue] = useState(value);
 	const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
 	const [displayErrors, setDisplayErrors] = useState(initialDisplayErrors);
 	const [valid, setValid] = useState(initialValid);
 	const [progress, setProgress] = useState(0);
+
+	const checkMaximumRepetitions = () => {
+		const visitor = new PagesVisitor(pages);
+
+		let repetitionsCounter = 0;
+
+		visitor.mapFields((field) => {
+			if (fieldName === field.fieldName) {
+				repetitionsCounter++;
+			}
+		});
+
+		return repetitionsCounter === maximumRepetitions;
+	};
 
 	const getErrorMessages = (errorMessage, isSignedIn) => {
 		const errorMessages = [errorMessage];
@@ -428,6 +443,9 @@ const Main = ({
 			errorMessage={getErrorMessages(errorMessage, isSignedIn)}
 			id={id}
 			name={name}
+			overMaximumRepetitionsLimit={
+				maximumRepetitions > 0 ? checkMaximumRepetitions() : false
+			}
 			readOnly={isSignedIn ? readOnly : true}
 			valid={isSignedIn ? valid : false}
 		>

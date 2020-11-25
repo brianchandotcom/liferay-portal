@@ -285,6 +285,142 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="generate-x-pack-pki-security-certificates">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-certutil ca --pem --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg value="elasticsearch-certutil ca --pem --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+
+			<unzip
+				dest="${elasticsearch.dir}/bin"
+				src="${elasticsearch.dir}/bin/elastic-stack-ca.zip"
+			/>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-pass liferay --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --dns localhost --pem --ca-key ${elasticsearch.dir}/bin/ca/ca.key --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-pass liferay --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --dns localhost --pem --ca-key c${elasticsearch.dir}/bin/ca/ca.key --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+
+			<unzip
+				dest="${elasticsearch.dir}/bin"
+				src="${elasticsearch.dir}/bin/elastic-certificates.zip"
+			/>
+
+			<move
+				todir="${elasticsearch.dir}/config/certs"
+			>
+				<fileset
+					dir="${elasticsearch.dir}/bin/CN=liferay.com,OU=Search,DC=liferay,DC=com"
+				/>
+				<mapper
+					from="CN=liferay.com,OU=Search,DC=liferay,DC=com.*"
+					to="elastic-certificates.*"
+					type="glob"
+				/>
+			</move>
+
+			<move
+				todir="${elasticsearch.dir}/config/certs"
+			>
+				<fileset
+					dir="${elasticsearch.dir}/bin/ca"
+				/>
+			</move>
+
+			<delete file="${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
+			<delete file="${elasticsearch.dir}/bin/elastic-certificates.zip" />
+			<delete dir="${elasticsearch.dir}/bin/CN=liferay.com,OU=Search,DC=liferay,DC=com" />
+
+			<if>
+			<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca.key --pass liferay --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/config/certs/elastic-certificates.p12" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/elastic-certificates.jks -srckeystore ${elasticsearch.dir}/config/certs/elastic-certificates.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-keystore create" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="liferay&#x0A;">
+						<arg value="-c" />
+						<arg value="./elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="liferay&#x0A;">
+						<arg value="-c" />
+						<arg value="./elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca.key --pass liferay --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/config/certs/elastic-certificates.p12" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/elastic-certificates.jks -srckeystore ${elasticsearch.dir}/config/certs/elastic-certificates.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="-c" />
+							<arg value="elasticsearch-keystore create" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
+							<arg value="-c" />
+							<arg value="elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
+							<arg value="-c" />
+							<arg value="elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-elasticsearch-analyzers">
 		<sequential>
 			<lstopwatch action="start" name="prepare.elasticsearch.analyzers" />

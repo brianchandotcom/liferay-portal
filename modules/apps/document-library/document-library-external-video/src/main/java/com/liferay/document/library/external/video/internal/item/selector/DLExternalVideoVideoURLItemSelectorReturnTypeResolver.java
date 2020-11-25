@@ -70,13 +70,13 @@ public class DLExternalVideoVideoURLItemSelectorReturnTypeResolver
 		}
 
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
-			return _dlURLHelper.getImagePreviewURL(
+			return _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}
 
 		return _portletFileRepository.getPortletFileEntryURL(
-			themeDisplay, fileEntry, "&imagePreview=1", false);
+			themeDisplay, fileEntry, StringPool.BLANK, false);
 	}
 
 	@Reference

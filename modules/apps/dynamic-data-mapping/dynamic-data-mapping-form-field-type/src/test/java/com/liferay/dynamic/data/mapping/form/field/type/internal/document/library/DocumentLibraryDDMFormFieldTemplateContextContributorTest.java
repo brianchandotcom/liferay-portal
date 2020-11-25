@@ -125,7 +125,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetParametersShouldContainItemSelectorAuthToken() {
+	public void testGetParametersShouldContainGuestUploadURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
 			mockThemeDisplay());
 
@@ -133,7 +133,24 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			new DDMFormField("field", "document_library"),
 			createDDMFormFieldRenderingContext());
 
-		Assert.assertEquals("token", parameters.get("itemSelectorAuthToken"));
+		String guestUploadURL = String.valueOf(
+			parameters.get("guestUploadURL"));
+
+		Assert.assertThat(
+			guestUploadURL,
+			CoreMatchers.containsString(
+				"param_javax.portlet.action=/dynamic_data_mapping_form" +
+					"/upload_file_entry"));
+		Assert.assertThat(
+			guestUploadURL,
+			CoreMatchers.containsString(
+				"param_formInstanceId=" + _FORM_INSTANCE_ID));
+		Assert.assertThat(
+			guestUploadURL,
+			CoreMatchers.containsString("param_groupId=" + _GROUP_ID));
+		Assert.assertThat(
+			guestUploadURL,
+			CoreMatchers.containsString("param_folderId=" + _FORMS_FOLDER_ID));
 	}
 
 	@Test
@@ -154,34 +171,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals(_PRIVATE_FOLDER_ID, parameters.get("folderId"));
-	}
-
-	@Test
-	public void testGetParametersShouldContainUploadURL() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
-
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
-
-		String uploadURL = String.valueOf(parameters.get("uploadURL"));
-
-		Assert.assertThat(
-			uploadURL,
-			CoreMatchers.containsString(
-				"param_javax.portlet.action=/dynamic_data_mapping_form" +
-					"/upload_file_entry"));
-		Assert.assertThat(
-			uploadURL,
-			CoreMatchers.containsString("param_folderId=" + _FORMS_FOLDER_ID));
-		Assert.assertThat(
-			uploadURL,
-			CoreMatchers.containsString(
-				"param_formInstanceId=" + _FORM_INSTANCE_ID));
-		Assert.assertThat(
-			uploadURL,
-			CoreMatchers.containsString("param_groupId=" + _GROUP_ID));
 	}
 
 	@Test
@@ -230,14 +219,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			spy
 		).getResourceBundle(
 			Matchers.any(Locale.class)
-		);
-
-		stubber = PowerMockito.doReturn("token");
-
-		stubber.when(
-			spy
-		).getItemSelectorAuthToken(
-			Matchers.any(HttpServletRequest.class)
 		);
 
 		stubber = PowerMockito.doReturn(themeDisplay);

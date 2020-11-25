@@ -16,8 +16,6 @@ import {
 	FormSupport,
 	PagesVisitor,
 	RulesVisitor,
-	generateName,
-	getRepeatedIndex,
 } from 'dynamic-data-mapping-form-renderer';
 import {openModal, openToast} from 'frontend-js-web';
 import Component from 'metal-jsx';
@@ -25,11 +23,7 @@ import {Config} from 'metal-state';
 
 import RulesSupport from '../../components/RuleBuilder/RulesSupport.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {
-	generateInstanceId,
-	getFieldProperties,
-	localizeField,
-} from '../../util/fieldSupport.es';
+import {getFieldProperties, localizeField} from '../../util/fieldSupport.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import handleColumnResized from './handlers/columnResizedHandler.es';
 import handleElementSetAdded from './handlers/elementSetAddedHandler.es';
@@ -191,10 +185,6 @@ class LayoutProvider extends Component {
 						editingLanguageId
 					),
 					hovered: fieldHovered.fieldName === field.fieldName,
-					name: generateName(field.name, {
-						instanceId: field.instanceId || generateInstanceId(),
-						repeatedIndex: getRepeatedIndex(field.name),
-					}),
 					selected: focusedField.fieldName === field.fieldName,
 					settingsContext: newSettingsContext,
 				};

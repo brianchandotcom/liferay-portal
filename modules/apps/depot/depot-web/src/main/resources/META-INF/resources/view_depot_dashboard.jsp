@@ -37,7 +37,7 @@ boolean panelsShown = false;
 	%>
 
 		<c:if test="<%= !panelApps.isEmpty() %>">
-			<div class="spliter-spaced splitter">
+			<div class="card-section-header c-m-0 c-px-0">
 				<%= panelCategory.getLabel(locale) %>
 			</div>
 

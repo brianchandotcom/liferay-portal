@@ -312,3 +312,32 @@ The first recommendation is to use the updated CSS classes from Clay `.container
 This change was made to remove deprecated legacy code from Portal and improve the code consistency and performance
 
 ---------------------------------------
+
+### Runtime minification of CSS and JS resources is now disabled by default
+- **Date:** 2020-Nov-27
+- **JIRA Ticket:** [LPS-123550](https://issues.liferay.com/browse/LPS-123550)
+
+#### What changed?
+
+The `minifier.enable` setting in `portal.properties` now defaults to
+`false`.  Instead of performing run-time minification of CSS and JS
+resources, we prepare pre-minified resources at build-time. There should
+be no user-visible changes in page styles or logic.
+
+#### Who is affected?
+
+Anybody who relies on specific implementation details of the run-time minifier
+(usually the Google Closure Compiler).
+
+#### How should I update my code?
+
+If you wish to maintain the run-time minification behavior, you can set
+`minifier.enable` back to `true` in `portal.properties`.
+
+#### Why was this change made?
+
+By moving minification of frontend resources from run-time to build-time
+we reduce server load and gain access to the latest minification
+technologies available within the frontend ecosystem.
+
+---------------------------------------

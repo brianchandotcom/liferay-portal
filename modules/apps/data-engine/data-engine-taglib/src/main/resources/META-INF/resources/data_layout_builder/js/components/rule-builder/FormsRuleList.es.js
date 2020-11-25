@@ -12,10 +12,13 @@
  * details.
  */
 
+import './FormsRuleList.scss';
+
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useMemo} from 'react';
@@ -299,57 +302,61 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 	);
 
 	return (
-		<ClayList.Item>
-			<div className="list-group-item-content">
-				<b className="inline-item inline-item-before">
-					{Liferay.Language.get('if')}
-				</b>
-				{conditions.map((condition, index) => (
-					<>
-						<Condition key={index} {...condition} />
-						{conditions.length - 1 > index && (
-							<LogicalOperator
-								key={'lo' + index}
-								logicalOperator={
-									LOGICAL_OPERATOR[rule['logical-operator']]
-								}
-							/>
-						)}
-					</>
-				))}
-				<br />
-				{actions.map(({action, ...otherProps}, index) => {
-					const Action = ACTIONS[action];
-
-					return (
+		<ClayList.Item flex>
+			<ClayLayout.ContentCol expand>
+				<div className="px-2 py-2">
+					<b className="inline-item inline-item-before">
+						{Liferay.Language.get('if')}
+					</b>
+					{conditions.map((condition, index) => (
 						<>
-							<Action
-								action={action}
-								dataProvider={dataProvider}
-								fields={fields}
-								key={index}
-								pages={pages}
-								{...otherProps}
-							/>
-							{actions.length - 1 > index && (
+							<Condition key={index} {...condition} />
+							{conditions.length - 1 > index && (
 								<LogicalOperator
 									key={'lo' + index}
-									logicalOperator={Liferay.Language.get(
-										'and'
-									)}
-								>
-									{` , `}
-								</LogicalOperator>
+									logicalOperator={
+										LOGICAL_OPERATOR[
+											rule['logical-operator']
+										]
+									}
+								/>
 							)}
 						</>
-					);
-				})}
-			</div>
-			<div className="list-group-item-field">
-				<div className="card-col-field">
+					))}
+					<br />
+					{actions.map(({action, ...otherProps}, index) => {
+						const Action = ACTIONS[action];
+
+						return (
+							<>
+								<Action
+									action={action}
+									dataProvider={dataProvider}
+									fields={fields}
+									key={index}
+									pages={pages}
+									{...otherProps}
+								/>
+								{actions.length - 1 > index && (
+									<LogicalOperator
+										key={'lo' + index}
+										logicalOperator={Liferay.Language.get(
+											'and'
+										)}
+									>
+										{` , `}
+									</LogicalOperator>
+								)}
+							</>
+						);
+					})}
+				</div>
+			</ClayLayout.ContentCol>
+			<ClayLayout.ContentCol>
+				<div className="form-rule-list-col px-2 py-2">
 					{invalidRule && (
 						<div
-							className="invalid-rule"
+							className="form-rule-list-invalid-rule"
 							title={Liferay.Language.get(
 								'due-to-missing-fields'
 							)}
@@ -389,7 +396,7 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 						}
 					/>
 				</div>
-			</div>
+			</ClayLayout.ContentCol>
 		</ClayList.Item>
 	);
 };
@@ -400,28 +407,24 @@ export const FormsRuleList = ({
 	onEdit,
 	...otherProps
 }) => (
-	<div className="form-builder-rule-builder-container">
-		<h1 className="form-builder-section-title text-default">
-			{Liferay.Language.get('rule-builder')}
-		</h1>
+	<div className="form-rule-builder-container">
+		<h1 className="text-default">{Liferay.Language.get('rule-builder')}</h1>
 
-		<div className="liferay-ddm-form-rule-rules-list-container">
-			<div className="ddm-rule-list-container form-builder-rule-list">
-				{rules.length === 0 && <EmptyState />}
-				{rules.length > 0 && (
-					<ul className="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
-						{rules.map((rule, index) => (
-							<ListItem
-								key={index}
-								onDelete={() => onDelete(index)}
-								onEdit={() => onEdit(index)}
-								rule={rule}
-								{...otherProps}
-							/>
-						))}
-					</ul>
-				)}
-			</div>
+		<div className="form-rule-list">
+			{rules.length === 0 && <EmptyState />}
+			{rules.length > 0 && (
+				<ClayList>
+					{rules.map((rule, index) => (
+						<ListItem
+							key={index}
+							onDelete={() => onDelete(index)}
+							onEdit={() => onEdit(index)}
+							rule={rule}
+							{...otherProps}
+						/>
+					))}
+				</ClayList>
+			)}
 		</div>
 	</div>
 );

@@ -1,0 +1,33 @@
+.form-rule-list {
+	h1 {
+		font-size: 32px;
+		margin: 0;
+		padding-bottom: 32px;
+		padding-top: 40px;
+
+		&.text-default {
+			font-weight: normal;
+		}
+	}
+
+	.form-rule-list-col {
+		display: flex;
+		width: max-content;
+
+		.form-rule-list-invalid-rule {
+			padding-top: 3px;
+		}
+	}
+
+	.list-group {
+		font-size: 16px;
+	}
+
+	.inline-item-after {
+		margin-left: 0.3rem;
+	}
+
+	.inline-item-before {
+		margin-right: 0.3rem;
+	}
+}

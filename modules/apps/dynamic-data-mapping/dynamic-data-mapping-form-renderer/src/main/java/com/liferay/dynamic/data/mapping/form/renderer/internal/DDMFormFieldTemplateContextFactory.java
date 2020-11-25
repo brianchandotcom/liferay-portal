@@ -669,7 +669,7 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, Object> changedProperties,
 		Map<String, Object> ddmFormFieldTemplateContext, Value value) {
 
-		if (changedProperties.get("value") != null) {
+		if (Validator.isNotNull(changedProperties.get("value"))) {
 			ddmFormFieldTemplateContext.put(
 				"value", changedProperties.get("value"));
 

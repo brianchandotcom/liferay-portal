@@ -62,14 +62,14 @@
 			<path refid="project.classpath" />
 		</path>
 
-		<echoproperties destfile="benchmarks-merged.properties" prefix="sample.sql." />
+		<echoproperties destfile="benchmarks-actual.properties" prefix="sample.sql." />
 
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder"
 			classpathref="sample.sql.builder.classpath"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<sysproperty key="sample-sql-properties" value="${basedir}/benchmarks-merged.properties" />
+			<sysproperty key="sample-sql-properties" value="${basedir}/benchmarks-actual.properties" />
 		</java>
 
 		<concat append="true" destfile="${output.sql.file}">
@@ -129,7 +129,7 @@ Use ${basedir}/${output.sql.file} to insert into database.</echo>
 		<delete includeemptydirs="true">
 			<fileset
 				dir="."
-				includes="*.sql, benchmarks-merged.properties, liferay/**, generated/**,temp/**"
+				includes="*.sql, benchmarks-actual.properties, liferay/**, generated/**,temp/**"
 			/>
 		</delete>
 	</target>

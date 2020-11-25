@@ -2919,8 +2919,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		while (count > 0) {
 			actions.click();
+
 			count -= 1;
 		}
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override

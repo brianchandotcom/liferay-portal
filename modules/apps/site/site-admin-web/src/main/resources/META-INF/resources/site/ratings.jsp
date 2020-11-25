@@ -92,33 +92,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 </aui:fieldset>
 
-<aui:script use="aui-base">
-	var ratingsSettingsContainer = A.one(
-		'#<portlet:namespace />ratingsSettingsContainer'
-	);
-
-	var ratingsTypeChanged = false;
-
-	ratingsSettingsContainer.delegate(
-		'change',
-		function (event) {
-			ratingsTypeChanged = true;
-		},
-		'select'
-	);
-
-	var form = A.one('#<portlet:namespace />fm');
-
-	form.on('submit', function (event) {
-		if (
-			ratingsTypeChanged &&
-			!confirm(
-				'<%= UnicodeLanguageUtil.get(request, "existing-ratings-data-values-will-be-adapted-to-match-the-new-ratings-type-even-though-it-may-not-be-accurate") %>'
-			)
-		) {
-			event.preventDefault();
-
-			event.stopImmediatePropagation();
-		}
-	});
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "ratings" %>'
+	module="js/site/Ratings"
+/>

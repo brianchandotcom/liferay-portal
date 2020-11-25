@@ -1,0 +1,26 @@
+.form-rule-builder {
+	.form-rule-builder-header {
+		margin-bottom: 35px;
+		padding: 0 68px;
+
+		h2 {
+			font-size: 32px;
+			margin: 0;
+			padding-top: 40px;
+		}
+
+		h2,
+		h4 {
+			font-weight: normal;
+		}
+	}
+
+	.form-rule-builder-footer {
+		margin: 3rem 0;
+		padding: 12px 68px;
+
+		.btn:not(:last-child) {
+			margin-right: 5px;
+		}
+	}
+}

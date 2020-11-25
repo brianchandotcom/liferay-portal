@@ -1,0 +1,76 @@
+.form-rule-builder-timeline {
+	margin: 0;
+
+	&.timeline-first {
+		.timeline-item:first-child:before {
+			top: 31px;
+		}
+	}
+
+	.timeline-item {
+		color: #869cad;
+		position: relative;
+
+		&:hover > .container-trash {
+			display: block;
+		}
+
+		&:not(:nth-of-type(1)) .timeline-icon {
+			background-color: #6b6c7e;
+		}
+
+		.timeline-icon {
+			border: 2px solid #6b6c7e;
+			margin-right: 2px;
+		}
+
+		.container-trash {
+			cursor: pointer;
+			display: none;
+			padding: 10px;
+			position: absolute;
+			right: 10px;
+			top: 13px;
+
+			&:hover {
+				color: #65b6f0;
+			}
+		}
+
+		.timeline-dropdown {
+			position: absolute;
+			right: 4px;
+			top: 4px;
+		}
+
+		.operator {
+			font-size: 14px;
+			margin-top: 10px;
+
+			.panel-body {
+				padding: 5px 17px;
+			}
+		}
+	}
+
+	.timeline-increment-action-button {
+		&:after {
+			content: '';
+			display: block;
+			height: 22px;
+		}
+
+		.timeline-increment {
+			left: 1px;
+		}
+	}
+
+	.form-group,
+	.form-group-autofit {
+		margin: 0;
+	}
+
+	.form-group-item:not(.form-group-item-shrink) {
+		max-width: 200px;
+	}
+}

@@ -2,7 +2,6 @@
 
 @import './components/components';
 @import './form-builder/form-builder';
-@import './rule-builder/rule-builder';
 
 .col-empty > p {
 	margin: 0;
@@ -44,48 +43,6 @@
 .ddm-target {
 	height: 100%;
 	width: 100%;
-}
-
-.form-builder-rule-builder {
-	.add-item.timeline-increment-icon {
-		padding-left: 10px;
-	}
-
-	.liferay-ddm-form-rule-builder-timeline {
-		margin-bottom: 0;
-
-		&.can-remove-item {
-			.timeline-item:hover > .container-trash {
-				display: block;
-			}
-		}
-
-		[class*=' target-message-'] {
-			max-width: max-content;
-		}
-
-		&.liferay-ddm-form-builder-rule-action-list
-			.timeline-item:last-child:before {
-			bottom: 0;
-		}
-
-		.container-trash {
-			cursor: pointer;
-			display: none;
-			padding: 10px;
-			position: absolute;
-			right: 10px;
-			top: 13px;
-
-			&:hover {
-				color: #65b6f0;
-			}
-		}
-	}
-}
-
-.form-builder-rule-builder-rule-description {
-	margin-bottom: 0;
 }
 
 .form-builder-select-field {

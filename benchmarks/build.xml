@@ -3,7 +3,11 @@
 <project basedir="." default="run" name="benchmarks">
 	<import file="../build-common.xml" />
 
+	<property name="build.dir" value="build" />
+
 	<target depends="clean" name="build-sample-sql">
+		<property name="sample.sql.output.dir" value="${basedir}/${build.dir}" />
+
 		<property name="output.sql.file" value="sample-data-${sample.sql.db.type}.sql" />
 
 		<gradle-execute dir="../modules/util/portal-tools-sample-sql-builder" task="jar" />
@@ -129,7 +133,7 @@ Use ${basedir}/${output.sql.file} to insert into database.</echo>
 		<delete includeemptydirs="true">
 			<fileset
 				dir="."
-				includes="*.sql, benchmarks-actual.properties, liferay/**, generated/**,temp/**"
+				includes="benchmarks-actual.properties, liferay/**, ${build.dir}/**"
 			/>
 		</delete>
 	</target>

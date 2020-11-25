@@ -120,7 +120,9 @@
 				</if>
 			</then>
 		</if>
-		<echo>Here is the sql file contains all the data that SampleSQLBuilder generated: ${basedir}/${output.sql.file}</echo>
+		<echo>
+Sample SQL Build Successful
+Use ${basedir}/${output.sql.file} to insert into database.</echo>
 	</target>
 
 	<target name="clean">

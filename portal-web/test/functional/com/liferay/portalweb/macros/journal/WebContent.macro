@@ -579,20 +579,21 @@ definition {
 				var webContentLinkToPageFieldLabel = "Link to Page";
 			}
 
-			var key_pageName = "${webContentLinkToPage}";
-
 			AssertClick(
 				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
-			while (IsElementNotPresent(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO")) {
-				Click(locator1 = "WC#LINK_TO_PAGE_NEXT_PAGE");
-			}
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Click(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");
+			Portlet.expandTree();
 
-			ClickNoError(locator1 = "Button#SELECT");
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "${webContentLinkToPage}",
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = "${webContentLinkToPage}");
+
+			SelectFrameTop();
 		}
 
 		if (isSet(webContentMultipleSelection)) {

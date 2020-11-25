@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CHOOSE_ACCOUNT_USER</td>
-	<td>//tr[contains(.,'${key_accountUserName}')]/td[4]//button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_accountUserName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

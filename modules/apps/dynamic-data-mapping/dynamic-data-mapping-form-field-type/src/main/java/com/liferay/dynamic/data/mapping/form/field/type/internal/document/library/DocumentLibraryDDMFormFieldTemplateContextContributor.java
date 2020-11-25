@@ -21,6 +21,10 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,6 +60,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -123,6 +128,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		parameters.put(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId"));
+		parameters.put(
+			"itemSelectorURL",
+			getItemSelectorURL(
+				ddmFormFieldRenderingContext, folderId, httpServletRequest));
 		parameters.put(
 			"maximumRepetitions",
 			GetterUtil.getInteger(
@@ -192,6 +201,32 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		sb.append(fileEntry.getUuid());
 
 		return html.escape(sb.toString());
+	}
+
+	protected String getItemSelectorURL(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		long folderId, HttpServletRequest httpServletRequest) {
+
+		if (_itemSelector == null) {
+			return null;
+		}
+
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new FileEntryItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			ddmFormFieldRenderingContext.getPortletNamespace() +
+				"selectDocumentLibrary",
+			fileItemSelectorCriterion);
+
+		itemSelectorURL.setParameter("folderId", String.valueOf(folderId));
+
+		return itemSelectorURL.toString();
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
@@ -478,6 +513,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

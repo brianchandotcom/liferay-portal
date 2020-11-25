@@ -59,6 +59,8 @@ public class DisplaySettingsDisplayContext {
 	}
 
 	public Map<String, Object> getPropsMap() throws PortalException {
+		Group liveGroup = _getLiveGroup();
+
 		return HashMapBuilder.<String, Object>put(
 			"availableLanguages", _getAvailableLanguages()
 		).put(
@@ -66,8 +68,6 @@ public class DisplaySettingsDisplayContext {
 		).put(
 			"defaultLanguageId",
 			() -> {
-				Group liveGroup = _getLiveGroup();
-
 				Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
 					liveGroup.getGroupId());
 
@@ -85,9 +85,9 @@ public class DisplaySettingsDisplayContext {
 					true);
 			}
 		).put(
-			"liveGroupIsGuest", _liveGroup.isGuest()
+			"liveGroupIsGuest", liveGroup.isGuest()
 		).put(
-			"liveGroupIsOrganization", _liveGroup.isOrganization()
+			"liveGroupIsOrganization", liveGroup.isOrganization()
 		).put(
 			"portletNamespace", _liferayPortletResponse.getNamespace()
 		).build();

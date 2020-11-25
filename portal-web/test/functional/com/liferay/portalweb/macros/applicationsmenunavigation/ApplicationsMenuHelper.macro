@@ -1,5 +1,9 @@
 definition {
 
+	macro assertNoApplicationsMenu {
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
+	}
+
 	macro closeApplicationsMenu {
 		if (IsElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
 			Click(locator1 = "ApplicationsMenu#TOGGLE");

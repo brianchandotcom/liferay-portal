@@ -25,6 +25,7 @@ import com.liferay.headless.delivery.search.sort.SortUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,7 +51,9 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.EntityExtensionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -137,6 +140,29 @@ public class StructuredContentResourceImpl
 
 				return _toExtensionStructuredContent(journalArticle);
 			});
+	}
+
+	@Override
+	public Page<StructuredContent> getStructuredContentsVersionsPage(
+			Long structuredContentId)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getArticle(
+			structuredContentId);
+
+		List<JournalArticle> journalArticleVersions =
+			_journalArticleService.getArticlesByArticleId(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		List<StructuredContent> structuredContents = new ArrayList<>();
+
+		for (JournalArticle journalArticleVersion : journalArticleVersions) {
+			structuredContents.add(
+				_toExtensionStructuredContent(journalArticleVersion));
+		}
+
+		return Page.of(structuredContents);
 	}
 
 	private StructuredContent _toExtensionStructuredContent(

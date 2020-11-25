@@ -31,3 +31,14 @@ export const isEqualObjects = (firstObj, secondObj) => {
 export const getValidName = (defaultName, name) => {
 	return name && name.toLowerCase() !== 'null' ? name : defaultName;
 };
+
+export const normalizeNames = (localizableValue, defaultName = '') => {
+	const name = {};
+
+	Object.keys(localizableValue).forEach((languageId) => {
+		const value = localizableValue[languageId];
+		name[languageId] = getValidName(defaultName, value).trim();
+	});
+
+	return name;
+};

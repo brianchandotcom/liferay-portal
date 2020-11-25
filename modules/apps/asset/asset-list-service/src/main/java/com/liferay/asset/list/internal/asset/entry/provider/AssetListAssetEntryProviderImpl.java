@@ -202,19 +202,8 @@ public class AssetListAssetEntryProviderImpl
 	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
 
-		if (Objects.equals(
-				assetListEntry.getType(),
-				AssetListEntryTypeConstants.TYPE_MANUAL)) {
-
-			return _assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRelsCount(
-					assetListEntry.getAssetListEntryId(),
-					_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-					true);
-		}
-
-		return _assetEntryLocalService.getEntriesCount(
-			getAssetEntryQuery(assetListEntry, segmentsEntryIds, userId));
+		return getAssetEntriesCount(
+			assetListEntry, segmentsEntryIds, new long[0], userId);
 	}
 
 	@Override

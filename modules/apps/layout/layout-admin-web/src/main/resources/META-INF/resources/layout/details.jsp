@@ -39,6 +39,7 @@ String friendlyURLBase = StringPool.BLANK;
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
+	<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-friendly-url-is-already-in-use.-please-enter-a-unique-friendly-url" />
 
 	<%
 	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();

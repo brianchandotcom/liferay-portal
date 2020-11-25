@@ -3293,7 +3293,9 @@ public class ServiceBuilder {
 				_testOutputPath, "/service/persistence/test/", entity.getName(),
 				"PersistenceTest.java"));
 
-		if (entity.isDeprecated() || !entity.hasPersistence()) {
+		if (file.exists() &&
+			(entity.isDeprecated() || !entity.hasPersistence())) {
+
 			System.out.println("Removing " + file);
 
 			file.delete();

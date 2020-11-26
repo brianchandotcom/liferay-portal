@@ -79,10 +79,6 @@ export default function ({eventName, journalArticleAssetClassName, namespace}) {
 			});
 	};
 
-	selectorButtons.forEach((applyButton) => {
-		applyButton.addEventListener('click', onSubmitForm);
-	});
-
 	const clickSubmitForm = delegate(
 		structureFormContainer,
 		'click',

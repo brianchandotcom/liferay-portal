@@ -550,7 +550,7 @@ definition {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
 		for (var tagName : list "tagone,tagtwo,tagthree") {
-			var key_dmDocumentTitle = "Document_1.doc";
+			var key_dmDocumentTitle = "Document_1";
 
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
@@ -558,7 +558,7 @@ definition {
 
 			DMDocument.editTags(tagName = "${tagName}");
 
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.doc");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1");
 
 			DMDocument.viewTag(tagName = "${tagName}");
 
@@ -567,7 +567,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_dmDocumentTitle = "Document_2.docx";
+		var key_dmDocumentTitle = "Document_2";
 
 		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
@@ -600,7 +600,7 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
 
-		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2.docx");
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2");
 
 		DMDocument.viewTag(tagName = "tagtwo");
 	}

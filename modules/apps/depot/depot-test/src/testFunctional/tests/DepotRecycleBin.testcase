@@ -147,7 +147,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		for (var key_dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
+		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 		}
 
@@ -160,7 +160,7 @@ definition {
 			portlet = "Recycle Bin");
 
 		RecycleBin.restoreCP(
-			assetName = "Document_1.doc",
+			assetName = "Document_1",
 			assetRestoreLocation = "Home",
 			assetType = "Document",
 			multipleAssets = "true");
@@ -168,13 +168,13 @@ definition {
 		Refresh();
 
 		RecycleBin.restoreCP(
-			assetName = "Document_2.jpg",
+			assetName = "Document_2",
 			assetRestoreLocation = "Home",
 			assetType = "Document");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		for (var dmDocumentTitle : list "Document_1.doc,Document_2.jpg") {
+		for (var dmDocumentTitle : list "Document_1,Document_2") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
 			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");

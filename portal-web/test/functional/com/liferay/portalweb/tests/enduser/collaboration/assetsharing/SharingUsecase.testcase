@@ -211,7 +211,7 @@ definition {
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
 			viewableBy = "Owner");
 
-		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_1");
 
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
@@ -260,11 +260,11 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		var key_contentTitle = "Document_1.jpeg";
+		var key_contentTitle = "Document_1";
 
 		AssertTextEquals(
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "Document_1.jpeg");
+			value1 = "Document_1");
 		AssertElementNotPresent(
 			key_contentTitle = "Blogs Entry Title",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
@@ -293,7 +293,7 @@ definition {
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
 			value1 = "Blogs Entry Title");
 		AssertElementNotPresent(
-			key_contentTitle = "Document_1.jpeg",
+			key_contentTitle = "Document_1",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 	}
 

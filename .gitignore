@@ -33,10 +33,11 @@
 /api
 /app.server.*.properties
 /baseline-reports
-/benchmarks/*.csv
 /benchmarks/*.sql
-/benchmarks/lib
-/benchmarks/log
+/benchmarks/benchmarks.*.properties
+/benchmarks/benchmarks-actual.properties
+/benchmarks/build
+/benchmarks/liferay
 /bin
 /build
 /build.*.properties

@@ -50,7 +50,7 @@ definition {
 			for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Asset Library Settings,Workflow") {
 				AssertTextEquals(
 					key_card = "${portletName}",
-					locator1 = "Card#CARD",
+					locator1 = "Card#CARD_TITLE",
 					value1 = "${portletName}");
 			}
 		}
@@ -156,7 +156,7 @@ definition {
 	macro gotoPortlet {
 		Click(
 			key_card = "${portlet}",
-			locator1 = "Card#CARD");
+			locator1 = "Card#CARD_TITLE");
 
 		if ("${portlet}" == "Settings") {
 			AssertTextEquals(

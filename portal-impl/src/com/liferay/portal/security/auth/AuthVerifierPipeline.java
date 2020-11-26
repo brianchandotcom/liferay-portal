@@ -463,7 +463,7 @@ public class AuthVerifierPipeline {
 				return null;
 			}
 
-			_authVerifierConfigurations.add(0, authVerifierConfiguration);
+			_authVerifierConfigurations.add(authVerifierConfiguration);
 
 			_rebuildAll();
 
@@ -483,7 +483,7 @@ public class AuthVerifierPipeline {
 					authVerifierConfiguration.getAuthVerifierClassName()));
 
 			if (_validate(authVerifierConfiguration)) {
-				_authVerifierConfigurations.add(0, authVerifierConfiguration);
+				_authVerifierConfigurations.add(authVerifierConfiguration);
 
 				_rebuildAll();
 			}

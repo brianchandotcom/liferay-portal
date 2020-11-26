@@ -62,8 +62,6 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 						"newCustomObject", newCustomObject
 					).put(
 						"popUpWindow", LiferayWindowState.isPopUp(request)
-					).put(
-						"showTranslationManager", request.getAttribute(AppBuilderWebKeys.SHOW_TRANSLATION_MANAGER)
 					).build()
 				%>'
 			/>

@@ -45,8 +45,6 @@
 			).put(
 				"pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic()
 			).put(
-				"showTranslationManager", request.getAttribute(AppBuilderWebKeys.SHOW_TRANSLATION_MANAGER)
-			).put(
 				"userId", themeDisplay.getUserId()
 			).put(
 				"workflowProcessBuilderPortletURL", String.valueOf(workflowProcessBuilderPortletURL)

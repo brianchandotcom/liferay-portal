@@ -98,9 +98,6 @@ public class AppsPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(AppBuilderWebKeys.APPS_TABS, appsTabs);
-		renderRequest.setAttribute(
-			AppBuilderWebKeys.SHOW_TRANSLATION_MANAGER,
-			_appBuilderConfiguration.showTranslationManager());
 
 		super.render(renderRequest, renderResponse);
 	}

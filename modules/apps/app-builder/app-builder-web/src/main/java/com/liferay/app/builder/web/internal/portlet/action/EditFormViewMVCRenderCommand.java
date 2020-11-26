@@ -16,7 +16,6 @@ package com.liferay.app.builder.web.internal.portlet.action;
 
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.web.internal.configuration.AppBuilderConfiguration;
-import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
@@ -45,10 +44,6 @@ public class EditFormViewMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		renderRequest.setAttribute(
-			AppBuilderWebKeys.SHOW_TRANSLATION_MANAGER,
-			_appBuilderConfiguration.showTranslationManager());
 
 		return "/edit_form_view.jsp";
 	}

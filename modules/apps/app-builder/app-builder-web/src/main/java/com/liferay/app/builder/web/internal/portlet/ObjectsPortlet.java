@@ -63,9 +63,6 @@ public class ObjectsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_NATIVE_OBJECTS_TAB,
 			_appBuilderConfiguration.showNativeObjectsTab());
-		renderRequest.setAttribute(
-			AppBuilderWebKeys.SHOW_TRANSLATION_MANAGER,
-			_appBuilderConfiguration.showTranslationManager());
 
 		super.doView(renderRequest, renderResponse);
 	}

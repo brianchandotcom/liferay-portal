@@ -28,6 +28,9 @@ configurations {
 	projectTemplates
 	testAPI
 
+	releaseApiJar
+	releaseApiJarSources
+
 	projectTemplatesTests {
 		extendsFrom projectTemplates
 
@@ -91,6 +94,11 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.mvc.portlet", version: "1.0.107"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.116"
 
+	if (project.hasProperty("releaseApiJarName")) {
+		releaseApiJar group: "com.liferay.portal", name: "release.${releaseApiJarName}.api", version: "${releaseApiJarVersion}"
+		releaseApiJarSources group: "com.liferay.portal", name: "release.${releaseApiJarName}.api", version: "${releaseApiJarVersion}", classifier: "sources"
+	}
+
 	testCompile gradleTestKit()
 	testCompile group: "com.googlecode.java-diff-utils", name: "diffutils", version: "1.3.0"
 	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.0"
@@ -147,6 +155,17 @@ repositories {
 	}
 }
 
+if (project.hasProperty("releaseApiJarName")) {
+	maven {
+		credentials {
+			username "${releaseApiJarRepoUsername}" ?: ""
+			password "${releaseApiJarRepoPassword}" ?: ""
+		}
+
+		url "${releaseApiJarRepo}"
+	}
+}
+
 test {
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:install"
@@ -155,6 +174,11 @@ test {
 	dependsOn writeProjectTemplateVersions
 
 	systemProperties projectTemplateTokens
+
+	if (project.hasProperty("releaseApiJarName")) {
+		systemProperty "releaseApiJarFile", configurations.releaseApiJar.singleFile
+		systemProperty "releaseApiJarSourcesFile", configurations.releaseApiJarSources.singleFile
+	}
 }
 
 testAPIJar {

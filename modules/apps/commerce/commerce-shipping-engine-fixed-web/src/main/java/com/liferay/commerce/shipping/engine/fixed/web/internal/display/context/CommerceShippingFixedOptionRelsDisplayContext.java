@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -58,6 +59,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 	extends BaseCommerceShippingFixedOptionDisplayContext {
 
 	public CommerceShippingFixedOptionRelsDisplayContext(
+		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCountryService commerceCountryService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceRegionService commerceRegionService,
@@ -71,8 +73,8 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		RenderResponse renderResponse) {
 
 		super(
-			commerceCurrencyLocalService, commerceShippingMethodService,
-			renderRequest, renderResponse);
+			commerceChannelLocalService, commerceCurrencyLocalService,
+			commerceShippingMethodService, renderRequest, renderResponse);
 
 		_commerceCountryService = commerceCountryService;
 		_commerceRegionService = commerceRegionService;

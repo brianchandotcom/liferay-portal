@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionException;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
@@ -63,6 +64,7 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 			CommerceShippingFixedOptionsDisplayContext
 				commerceShippingFixedOptionsDisplayContext =
 					new CommerceShippingFixedOptionsDisplayContext(
+						_commerceChannelLocalService,
 						_commerceCurrencyLocalService,
 						_commerceShippingMethodService,
 						_commerceShippingFixedOptionService, _portal,
@@ -91,6 +93,9 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -69,8 +70,9 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 			CommerceShippingFixedOptionRelsDisplayContext
 				commerceShippingFixedOptionRelsDisplayContext =
 					new CommerceShippingFixedOptionRelsDisplayContext(
-						_commerceCountryService, _commerceCurrencyLocalService,
-						_commerceRegionService, _commerceShippingMethodService,
+						_commerceChannelLocalService, _commerceCountryService,
+						_commerceCurrencyLocalService, _commerceRegionService,
+						_commerceShippingMethodService,
 						_commerceShippingFixedOptionService,
 						_commerceInventoryWarehouseService,
 						_commerceShippingFixedOptionRelService,
@@ -101,6 +103,9 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCountryService _commerceCountryService;

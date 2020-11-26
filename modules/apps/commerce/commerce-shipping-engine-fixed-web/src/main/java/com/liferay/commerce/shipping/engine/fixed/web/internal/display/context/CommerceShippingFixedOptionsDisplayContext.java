@@ -17,6 +17,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -45,6 +46,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 	extends BaseCommerceShippingFixedOptionDisplayContext {
 
 	public CommerceShippingFixedOptionsDisplayContext(
+		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
@@ -52,8 +54,8 @@ public class CommerceShippingFixedOptionsDisplayContext
 		RenderResponse renderResponse) {
 
 		super(
-			commerceCurrencyLocalService, commerceShippingMethodService,
-			renderRequest, renderResponse);
+			commerceChannelLocalService, commerceCurrencyLocalService,
+			commerceShippingMethodService, renderRequest, renderResponse);
 
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;

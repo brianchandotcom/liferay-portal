@@ -43,9 +43,13 @@ definition {
 
 			Click.pauseClickAt(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Open Graph Image");
 
 			Pause(locator1 = "3000");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 

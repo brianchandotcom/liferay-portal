@@ -37,9 +37,7 @@
 			"FormRenderer",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
 			"LayoutProvider/util",
-			"PageRenderer",
-			"RuleBuilder/RuleBuilder",
-			"RuleEditor"
+			"PageRenderer"
 		]
 	},
 	"main": "js/index.es.js",

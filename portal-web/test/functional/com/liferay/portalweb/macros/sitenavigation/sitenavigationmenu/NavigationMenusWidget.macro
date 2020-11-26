@@ -29,6 +29,8 @@ definition {
 	}
 
 	macro gotoNavigationMenuWidgetConfig {
+		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
+
 		Portlet.gotoPortletOptions(
 			portletName = "Navigation Menu",
 			portletOption = "Configuration");

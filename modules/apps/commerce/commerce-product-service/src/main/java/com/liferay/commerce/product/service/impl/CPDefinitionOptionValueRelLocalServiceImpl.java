@@ -986,12 +986,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		if (!cpInstance.isApproved()) {
 			throw new CPDefinitionOptionValueRelCPInstanceException();
 		}
-
-		if (cpDefinitionLocalService.hasChildCPDefinitions(
-				cpInstance.getCPDefinitionId())) {
-
-			throw new CPDefinitionOptionValueRelCPInstanceException();
-		}
 	}
 
 	private static final String _FIELD_KEY = "key";

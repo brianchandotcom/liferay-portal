@@ -49,10 +49,11 @@ Locale userLocale = user.getLocale();
 			if (data.event) {
 				Liferay.Util.Session.set(
 					'com.liferay.portal.user.locale.options.web_ignoreUserLocaleOptions',
-					true
+					true,
+					{
+						useHttpSession: true,
+					}
 				);
-
-				Liferay.Util.Session.set('useHttpSession', true);
 			}
 		},
 		type: 'info',

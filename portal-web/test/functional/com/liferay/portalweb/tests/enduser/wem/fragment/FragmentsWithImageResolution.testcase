@@ -56,6 +56,8 @@ definition {
 	@description = "This is a test for LPS-114283. Can select an image resolution manually in the desktop viewport."
 	@priority = "5"
 	test SelectImageResolutionManuallyInTheDesktopViewport {
+		property portal.acceptance = "true";
+
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -324,6 +326,8 @@ definition {
 	@description = "This is a test for LPS-113806. View auto image resolution when orignal image is greater than image resolution and image resolution is greater than viewport."
 	@priority = "5"
 	test ViewAutoImageResolutionWhenOriginalImageIsGreaterThanImageResolutionAndImageResolutionIsGreaterThanViewport {
+		property portal.acceptance = "true";
+
 		task ("Add an Image Resolution with 800px Max Width") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",

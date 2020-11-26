@@ -105,13 +105,15 @@ Hits hits = searchDisplayContext.getHits();
 	</clay:col>
 </clay:row>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var facetNavigation = document.getElementById(
 		'<portlet:namespace />facetNavigation'
 	);
 
+	var delegate = delegateModule.default;
+
 	if (facetNavigation) {
-		dom.delegate(facetNavigation, 'click', '.facet-value a', function (event) {
+		delegate(facetNavigation, 'click', '.facet-value a', function (event) {
 			event.preventDefault();
 
 			var target = event.delegateTarget;
@@ -166,7 +168,7 @@ Hits hits = searchDisplayContext.getHits();
 	);
 
 	if (searchResultsContainer) {
-		dom.delegate(searchResultsContainer, 'click', '.expand-details', function (
+		delegate(searchResultsContainer, 'click', '.expand-details', function (
 			event
 		) {
 			var target = event.delegateTarget;

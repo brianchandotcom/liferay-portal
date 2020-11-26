@@ -85,12 +85,14 @@
 	</div>
 </div>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var connectedAppKeyInput = document.querySelector(
 		'[name=<portlet:namespace />connectedAppKey]'
 	);
 
-	dom.delegate(
+	var delegate = delegateModule.default;
+
+	delegate(
 		document.getElementById('<portlet:namespace />connectedApp'),
 		'click',
 		'[data-key]',

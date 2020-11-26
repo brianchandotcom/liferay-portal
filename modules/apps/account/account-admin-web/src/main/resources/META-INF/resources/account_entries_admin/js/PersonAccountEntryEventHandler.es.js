@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PortletBase, openSelectionModal} from 'frontend-js-web';
+import {PortletBase, delegate, openSelectionModal} from 'frontend-js-web';
 import * as dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
@@ -39,7 +39,7 @@ class PersonAccountEntryEventHandler extends PortletBase {
 		);
 
 		this.eventHandler_.add(
-			dom.delegate(
+			delegate(
 				this.container,
 				'click',
 				this.removeUserLinkSelector,
@@ -53,7 +53,7 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	 */
 	detached() {
 		super.detached();
-		this.eventHandler_.removeAllListeners();
+		this.eventHandler_.dispose();
 	}
 
 	_handleOnSelect(selectedItemData) {

@@ -24,6 +24,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122082. The assets are ordered by modified date in view usages of display page template."
+	@priority = "5"
+	test ViewAssetsOrderInViewUsagesOfDisplayPageTemplate {
+		task ("Add a display page template based on Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content Display Page",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content Display Page");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add three web contents based on Basic Web Content and select the related display page template") {
+			for (var webContentTitle : list "The First Web Content,The Second Web Content,The Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${webContentTitle}");
+
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+				WebContent.editDisplayPage(
+					pageName = "Web Content Display Page",
+					pageType = "Display Page Templates");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("View assets order in view usages of display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Web Content Display Page",
+				item = "View Usages");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Web Content Display Page");
+
+			ManagementBar.viewFilterAndOrder(menuItem = "Modified Date");
+
+			var index = "1";
+
+			for (var webContentTitle : list "The First Web Content,The Second Web Content,The Third Web Content") {
+				AssertTextEquals.assertPartialText(
+					index = "${index}",
+					locator1 = "LexiconTable#TABLE_ROW",
+					value1 = "${webContentTitle}");
+
+				var index = ${index} + 1;
+			}
+
+			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+			var index = "1";
+
+			for (var webContentTitle : list "The Third Web Content,The Second Web Content,The First Web Content") {
+				AssertTextEquals.assertPartialText(
+					index = "${index}",
+					locator1 = "LexiconTable#TABLE_ROW",
+					value1 = "${webContentTitle}");
+
+				var index = ${index} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-122082. The user can view the usage of display page template."
 	@priority = "5"
 	test ViewUsageOfDisplayPageTemplate {

@@ -599,11 +599,6 @@ public class DataDefinitionResourceImpl
 							DataDefinitionField.class));
 				}
 
-				_normalize(
-					existingDataDefinition.getAvailableLanguageIds(),
-					nestedDataDefinitionFields,
-					dataDefinition.getDefaultLanguageId());
-
 				dataDefinitionField.setNestedDataDefinitionFields(
 					nestedDataDefinitionFields);
 			}
@@ -1018,66 +1013,6 @@ public class DataDefinitionResourceImpl
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, ddmFormFieldType.getClass()),
 			_portal.getResourceBundle(locale));
-	}
-
-	private void _normalize(
-		String[] availableLanguageIds,
-		DataDefinitionField[] dataDefinitionFields, String defaultLanguageId) {
-
-		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
-			Map<String, Object> customProperties =
-				dataDefinitionField.getCustomProperties();
-
-			if (MapUtil.isNotEmpty(customProperties)) {
-				_normalize(
-					availableLanguageIds, defaultLanguageId,
-					(Map)customProperties.get("options"));
-				_normalize(
-					availableLanguageIds, defaultLanguageId,
-					(Map)customProperties.get("placeholder"));
-				_normalize(
-					availableLanguageIds, defaultLanguageId,
-					(Map)customProperties.get("tooltip"));
-			}
-
-			_normalize(
-				availableLanguageIds, defaultLanguageId,
-				dataDefinitionField.getDefaultValue());
-			_normalize(
-				availableLanguageIds, defaultLanguageId,
-				dataDefinitionField.getLabel());
-
-			if (ArrayUtil.isNotEmpty(
-					dataDefinitionField.getNestedDataDefinitionFields())) {
-
-				_normalize(
-					availableLanguageIds,
-					dataDefinitionField.getNestedDataDefinitionFields(),
-					defaultLanguageId);
-			}
-
-			_normalize(
-				availableLanguageIds, defaultLanguageId,
-				dataDefinitionField.getTip());
-		}
-	}
-
-	private void _normalize(
-		String[] availableLanguageIds, String defaultLanguageId,
-		Map<String, Object> map) {
-
-		if (MapUtil.isEmpty(map)) {
-			return;
-		}
-
-		for (String languageId : availableLanguageIds) {
-			map.putIfAbsent(languageId, map.get(defaultLanguageId));
-		}
-
-		Set<Map.Entry<String, Object>> entries = map.entrySet();
-
-		entries.removeIf(
-			entry -> !ArrayUtil.contains(availableLanguageIds, entry.getKey()));
 	}
 
 	private void _removeFieldsFromDataLayout(

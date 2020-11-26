@@ -12,127 +12,21 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from 'frontend-js-react-web';
-import {addParams, fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
-import {useDebounceCallback} from './utils/hooks';
-import validateUrl from './utils/validateUrl';
+import VideoPreview from './components/VideoPreview';
 
-const FilePickerVideoPreview = ({
-	externalVideoHTML = '',
-	externalVideoURL = '',
-	getDLExternalVideoFieldsURL,
-	namespace,
-	onFilePickCallback,
-}) => {
-	const inputName = 'externalVideoURLInput';
-	const [error, setError] = useState('');
-	const [loading, setLoading] = useState(false);
-	const [url, setUrl] = useState(externalVideoURL);
-	const [videoHtml, setVideoHtml] = useState(externalVideoHTML);
-	const isMounted = useIsMounted();
-
-	const [getFields] = useDebounceCallback((dlExternalVideoURL) => {
-		fetch(
-			addParams(
-				{
-					[`${namespace}dlExternalVideoURL`]: dlExternalVideoURL,
-				},
-				getDLExternalVideoFieldsURL
-			)
-		)
-			.then((res) => res.json())
-			.then((fields) => {
-				if (isMounted()) {
-					setLoading(false);
-					setVideoHtml(fields.HTML);
-					window[onFilePickCallback](fields);
-				}
-			})
-			.catch(() => {
-				if (isMounted()) {
-					setLoading(false);
-					setVideoHtml(externalVideoURL);
-					setError(
-						Liferay.Language.get(
-							'sorry,-this-platform-is-not-supported'
-						)
-					);
-				}
-			});
-	}, 500);
-
-	const handleUrlChange = (event) => {
-		const value = event.target.value.trim();
-
-		setError('');
-		setUrl(value);
-
-		if (value && validateUrl(value)) {
-			setLoading(true);
-			getFields(value);
-		}
-		else {
-			setLoading(false);
-			setVideoHtml(externalVideoURL);
-		}
-	};
-
-	return (
-		<>
-			<label htmlFor={inputName}>
-				{Liferay.Language.get('video-url')}
-			</label>
-			<ClayInput
-				id={inputName}
-				onChange={handleUrlChange}
-				placeholder="http://"
-				type="text"
-				value={url}
-			/>
-			<p className="form-text">
-				{Liferay.Language.get('video-url-help')}
-			</p>
-
-			<div className="file-picker-preview-video">
-				{videoHtml ? (
-					<div
-						className="file-picker-preview-video-aspect-ratio"
-						dangerouslySetInnerHTML={{__html: videoHtml}}
-					/>
-				) : (
-					<div className="file-picker-preview-video-aspect-ratio">
-						<div className="file-picker-preview-video-placeholder">
-							{loading ? (
-								<ClayLoadingIndicator />
-							) : (
-								<>
-									<ClayIcon symbol="video" />
-									{error && (
-										<div className="file-picker-preview-video-placeholder-text">
-											{error}
-										</div>
-									)}
-								</>
-							)}
-						</div>
-					</div>
-				)}
-			</div>
-		</>
-	);
-};
+const FilePickerVideoPreview = ({onFilePickCallback, ...videoProps}) => (
+	<VideoPreview
+		{...videoProps}
+		onSelectedVideo={(fields) => {
+			window[onFilePickCallback](fields);
+		}}
+	></VideoPreview>
+);
 
 FilePickerVideoPreview.propTypes = {
-	externalVideoHTML: PropTypes.string,
-	externalVideoURL: PropTypes.string,
-	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
-	namespace: PropTypes.string.isRequired,
 	onFilePickCallback: PropTypes.string.isRequired,
 };
 

@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_DETAIL_WEB_CONTENT_FOLDER_CONTENT</td>
+	<td>//div[contains(@class,'asset-details')][${key_position}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

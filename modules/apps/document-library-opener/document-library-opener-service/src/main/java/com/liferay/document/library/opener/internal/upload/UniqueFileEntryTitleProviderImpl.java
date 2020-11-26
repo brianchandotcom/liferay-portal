@@ -61,7 +61,9 @@ public class UniqueFileEntryTitleProviderImpl
 	public String provide(long groupId, long folderId, String title)
 		throws PortalException {
 
-		return _provide(groupId, folderId, title);
+		return _uniqueFileNameProvider.provide(
+			title,
+			generatedTitle -> _titleExists(groupId, folderId, generatedTitle));
 	}
 
 	@Override
@@ -96,14 +98,6 @@ public class UniqueFileEntryTitleProviderImpl
 		return _exists(
 			() -> _dlAppLocalService.getFileEntryByFileName(
 				groupId, folderId, fileName));
-	}
-
-	private String _provide(long groupId, long folderId, String title)
-		throws PortalException {
-
-		return _uniqueFileNameProvider.provide(
-			title,
-			generatedTitle -> _titleExists(groupId, folderId, generatedTitle));
 	}
 
 	private String _provide(

@@ -1298,7 +1298,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
     >
       This is the label
       <span
-        class="reference-mark"
+        class="ddm-label-required reference-mark"
       >
         <svg
           class="lexicon-icon lexicon-icon-asterisk"

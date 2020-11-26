@@ -101,7 +101,7 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
       tabindex="0"
     >
       <span
-        class="reference-mark"
+        class="ddm-label-required reference-mark"
       >
         <svg
           class="lexicon-icon lexicon-icon-asterisk"

@@ -356,6 +356,35 @@ public class AuthVerifierPipeline {
 		}
 
 		/**
+		 * We have non-standard url-pattern across the portal for AuthVerifiers,
+		 * in order to be backward compatible, we need to do runtime fix, like:
+		 * "*" will be fixed to "/*"
+		 * "/abc*" will be fixed to "/abc/*"
+		 *
+		 * Notice both "*" and "/abc*" are valid url-pattern, but the ending "*"
+		 * is not considered as wildcard by servlet spec.
+		 *
+		 * In the future, all non-standard url-patterns need rewriting.
+		 */
+		private static String _fixLegacyURLPattern(String urlPattern) {
+			if ((urlPattern == null) || (urlPattern.length() == 0)) {
+				return urlPattern;
+			}
+
+			if (urlPattern.charAt(urlPattern.length() - 1) != '*') {
+				return urlPattern;
+			}
+
+			if ((urlPattern.length() > 1) &&
+				(urlPattern.charAt(urlPattern.length() - 2) == '/')) {
+
+				return urlPattern;
+			}
+
+			return urlPattern.substring(0, urlPattern.length() - 1) + "/*";
+		}
+
+		/**
 		 * Because we allow Filter to overwrite authVerifier's properties,
 		 * we need to create a new configuration that takes the overwritten
 		 * properties instead of authVerifier's original properties.
@@ -431,6 +460,8 @@ public class AuthVerifierPipeline {
 					properties.getProperty("urls.excludes"));
 
 				for (String urlsExclude : urlsExcludes) {
+					urlsExclude = _fixLegacyURLPattern(urlsExclude);
+
 					if (!excludeAuthVerifierConfigurations.containsKey(
 							urlsExclude)) {
 
@@ -450,6 +481,8 @@ public class AuthVerifierPipeline {
 					properties.getProperty("urls.includes"));
 
 				for (String urlsInclude : urlsIncludes) {
+					urlsInclude = _fixLegacyURLPattern(urlsInclude);
+
 					if (!includeAuthVerifierConfigurations.containsKey(
 							urlsInclude)) {
 

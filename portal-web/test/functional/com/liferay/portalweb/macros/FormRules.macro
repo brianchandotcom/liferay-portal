@@ -73,7 +73,7 @@ definition {
 
 		if (isSet(conditionValueField)) {
 			var key_conditionRowNumber = "${conditionRowNumber}";
-			var key_conditionValueField = "${conditionValueField}";
+			var key_selectValue = "${conditionValueField}";
 			var key_fieldColumnNumber = "4";
 
 			Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_VALUE_FIELD");

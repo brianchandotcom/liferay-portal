@@ -742,9 +742,10 @@ definition {
 		FormRules.gotoEdit(ruleNumber = "1");
 
 		var key_actionRowNumber = "1";
+		var key_fieldColumnNumber = "2";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "FormRules#RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET",
+			locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD",
 			value1 = "3 Renamed Page");
 	}
 

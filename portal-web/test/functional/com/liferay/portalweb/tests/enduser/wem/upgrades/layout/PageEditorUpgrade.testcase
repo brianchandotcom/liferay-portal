@@ -58,4 +58,28 @@ definition {
 		Upgrade.viewContributedFragmentStyle();
 	}
 
+	@description = "This is a use case for LPS-123098."
+	@priority = "4"
+	test ViewEditableFieldValueAfterUpgrade721 {
+		property data.archive.type = "data-archive-modify-editable-field-value";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Guest");
+
+		AssertTextEquals(
+			locator1 = "//div[contains(@class,'banner')]//h1",
+			value1 = "Edited Banner Title");
+
+		ContentPages.clickPencil();
+
+		PageEditor.viewFragmentEditableText(
+			contributed = "false",
+			editableText = "Edited Banner Title",
+			fragmentName = "Banner Center",
+			id = "01-title");
+	}
+
 }

@@ -97,7 +97,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<clay:vertical-card-v2
+								<clay:vertical-card
 									verticalCard="<%= depotAdminDisplayContext.getDepotEntryVerticalCard(depotEntry) %>"
 								/>
 							</liferay-ui:search-container-column-text>

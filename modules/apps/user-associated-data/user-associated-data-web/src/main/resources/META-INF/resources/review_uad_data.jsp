@@ -226,15 +226,15 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<portlet:param name="scope" value="<%= scope %>" />
 </portlet:renderURL>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var baseURL = '<%= reviewUADDataURL %>';
 
 	var clickListeners = [];
 
+	var delegate = delegateModule.default;
+
 	var registerClickHandler = function (element, clickHandlerFn) {
-		clickListeners.push(
-			dom.delegate(element, 'click', 'input', clickHandlerFn)
-		);
+		clickListeners.push(delegate(element, 'click', 'input', clickHandlerFn));
 	};
 
 	registerClickHandler(<portlet:namespace />applicationPanelBody, function (
@@ -276,7 +276,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 	function handleDestroyPortlet() {
 		for (var i = 0; i < clickListeners.length; i++) {
-			clickListeners[i].removeListener();
+			clickListeners[i].dispose();
 		}
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

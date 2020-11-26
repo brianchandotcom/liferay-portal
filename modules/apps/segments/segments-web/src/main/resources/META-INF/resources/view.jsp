@@ -171,12 +171,14 @@ request.setAttribute("view.jsp-eventName", eventName);
 	<aui:input name="siteRoleIds" type="hidden" />
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var form = document.getElementById(
 		'<portlet:namespace />updateSegmentsEntrySiteRolesFm'
 	);
 
-	dom.delegate(document, 'click', '.assign-site-roles-link', function (event) {
+	var delegate = delegateModule.default;
+
+	delegate(document, 'click', '.assign-site-roles-link', function (event) {
 		var link = event.target.closest('.assign-site-roles-link');
 
 		var itemSelectorURL = link.dataset.itemselectorurl;

@@ -59,8 +59,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>
 
-	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal">
-		var addSiteActionOptionQueryClickHandler = dom.delegate(
+	<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal,frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+		var delegate = delegateModule.default;
+
+		var addSiteActionOptionQueryClickHandler = delegate(
 			document.body,
 			'click',
 			'.add-site-action-button',
@@ -87,7 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		);
 
 		function handleDestroyPortlet() {
-			addSiteActionOptionQueryClickHandler.removeListener();
+			addSiteActionOptionQueryClickHandler.dispose();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}

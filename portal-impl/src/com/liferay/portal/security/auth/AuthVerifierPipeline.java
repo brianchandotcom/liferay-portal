@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -418,6 +420,13 @@ public class AuthVerifierPipeline {
 			}
 
 			if (mergedProperties.size() < 1) {
+				String portalPropertyProperty = GetterUtil.getString(
+					filterProperties.get("portal_property_prefix"));
+
+				if (Validator.isNotNull(portalPropertyProperty)) {
+					return authVerifierConfiguration;
+				}
+
 				return null;
 			}
 

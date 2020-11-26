@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -70,6 +71,9 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 				LanguageUtil.formatStorageSize(
 					_ddmFormUploadValidator.getGuestUploadMaximumFileSize(),
 					themeDisplay.getLocale()));
+		}
+		else if (portalException instanceof InvalidFileException) {
+			errorMessage = themeDisplay.translate("please-enter-a-valid-file");
 		}
 
 		return jsonObject.put(

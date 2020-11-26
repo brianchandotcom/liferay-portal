@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.petra.string.StringBundler;
@@ -91,10 +92,10 @@ public class DDMFormUploadValidator {
 	}
 
 	public void validateFileSize(File file, String fileName)
-		throws FileSizeException {
+		throws FileSizeException, InvalidFileException {
 
 		if (file == null) {
-			throw new FileSizeException("File is null for " + fileName);
+			throw new InvalidFileException("File is null for " + fileName);
 		}
 
 		long guestUploadMaximumFileSize = getGuestUploadMaximumFileSize();

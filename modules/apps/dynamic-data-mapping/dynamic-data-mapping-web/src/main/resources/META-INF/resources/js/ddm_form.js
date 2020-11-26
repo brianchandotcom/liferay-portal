@@ -4069,6 +4069,22 @@ AUI.add(
 					instance.updateDDMFormInputValue();
 				},
 
+				_updateNestedLocalizationMaps(fields) {
+					var instance = this;
+
+					fields.forEach((field) => {
+						var nestedFields = field.get('fields');
+
+						field.updateLocalizationMap(field.get('displayLocale'));
+
+						if (nestedFields.length) {
+							instance._updateNestedLocalizationMaps(
+								nestedFields
+							);
+						}
+					});
+				},
+
 				_valueFormNode() {
 					var instance = this;
 
@@ -4514,9 +4530,9 @@ AUI.add(
 
 					instance.toJSON();
 
-					instance.get('fields').forEach((field) => {
-						field.updateLocalizationMap(field.get('displayLocale'));
-					});
+					var fields = instance.get('fields');
+
+					instance._updateNestedLocalizationMaps(fields);
 
 					instance.fillEmptyLocales(
 						instance,

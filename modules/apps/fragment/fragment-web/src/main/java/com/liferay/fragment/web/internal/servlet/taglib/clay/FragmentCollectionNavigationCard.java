@@ -15,7 +15,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -25,24 +25,25 @@ import java.util.Map;
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentCollectionHorizontalCard implements HorizontalCard {
+public class FragmentCollectionNavigationCard implements NavigationCard {
 
-	public FragmentCollectionHorizontalCard(BaseModel<?> baseModel) {
+	public FragmentCollectionNavigationCard(BaseModel<?> baseModel) {
 		_fragmentCollection = (FragmentCollection)baseModel;
 	}
 
 	@Override
-	public Map<String, String> getData() {
-		return HashMapBuilder.put(
-			"id", String.valueOf(_fragmentCollection.getFragmentCollectionId())
-		).put(
-			"name", _fragmentCollection.getName()
-		).build();
+	public String getCssClass() {
+		return "card-interactive card-interactive-primary selector-button";
 	}
 
 	@Override
-	public String getElementClasses() {
-		return "card-interactive card-interactive-primary selector-button";
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-id",
+			String.valueOf(_fragmentCollection.getFragmentCollectionId())
+		).put(
+			"data-name", _fragmentCollection.getName()
+		).build();
 	}
 
 	@Override
@@ -58,6 +59,11 @@ public class FragmentCollectionHorizontalCard implements HorizontalCard {
 	@Override
 	public boolean isSelectable() {
 		return false;
+	}
+
+	@Override
+	public Boolean isSmall() {
+		return true;
 	}
 
 	private final FragmentCollection _fragmentCollection;

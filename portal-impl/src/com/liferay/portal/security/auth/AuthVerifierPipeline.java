@@ -106,49 +106,18 @@ public class AuthVerifierPipeline {
 					authVerifierConfigurations),
 			requestURI);
 
+		AuthVerifierConfigurationConsumer authVerifierConfigurationConsumer =
+			new AuthVerifierConfigurationConsumer(
+				accessControlContext, excludeAuthVerifierConfigurations);
+
 		_includeURLPatternMapper.consumeValues(
-			new Consumer<List<AuthVerifierConfiguration>>() {
+			authVerifierConfigurationConsumer, requestURI);
 
-				@Override
-				public void accept(
-					List<AuthVerifierConfiguration>
-						authVerifierConfigurations) {
-
-					if (accessControlContext.getAuthVerifierResult() != null) {
-						return;
-					}
-
-					for (AuthVerifierConfiguration authVerifierConfiguration :
-							authVerifierConfigurations) {
-
-						if (excludeAuthVerifierConfigurations.contains(
-								authVerifierConfiguration)) {
-
-							continue;
-						}
-
-						accessControlContext.setAuthVerifierResult(
-							_verifyWithAuthVerifierConfiguration(
-								accessControlContext,
-								authVerifierConfiguration));
-
-						if (accessControlContext.getAuthVerifierResult() !=
-								null) {
-
-							return;
-						}
-					}
-				}
-
-			},
-			requestURI);
-
-		if (accessControlContext.getAuthVerifierResult() == null) {
-			accessControlContext.setAuthVerifierResult(
-				_createGuestVerificationResult(accessControlContext));
+		if (authVerifierConfigurationConsumer.getAuthVerifierResult() != null) {
+			return authVerifierConfigurationConsumer.getAuthVerifierResult();
 		}
 
-		return accessControlContext.getAuthVerifierResult();
+		return _createGuestVerificationResult(accessControlContext);
 	}
 
 	private AuthVerifierResult _createGuestVerificationResult(
@@ -170,97 +139,6 @@ public class AuthVerifierPipeline {
 		return authVerifierResult;
 	}
 
-	private Map<String, Object> _mergeSettings(
-		Properties properties, Map<String, Object> settings) {
-
-		Map<String, Object> mergedSettings = new HashMap<>(settings);
-
-		if (properties != null) {
-			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-				mergedSettings.put((String)entry.getKey(), entry.getValue());
-			}
-		}
-
-		return mergedSettings;
-	}
-
-	private AuthVerifierResult _verifyWithAuthVerifierConfiguration(
-		AccessControlContext accessControlContext,
-		AuthVerifierConfiguration authVerifierConfiguration) {
-
-		AuthVerifierResult authVerifierResult = null;
-
-		AuthVerifier authVerifier = authVerifierConfiguration.getAuthVerifier();
-
-		Properties properties = authVerifierConfiguration.getProperties();
-
-		try {
-			authVerifierResult = authVerifier.verify(
-				accessControlContext, properties);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				Class<?> authVerifierClass = authVerifier.getClass();
-
-				_log.debug(
-					"Skipping " + authVerifierClass.getName(), exception);
-			}
-
-			return null;
-		}
-
-		if (authVerifierResult == null) {
-			Class<?> authVerifierClass = authVerifier.getClass();
-
-			_log.error(
-				"Auth verifier " + authVerifierClass.getName() +
-					" did not return an auth verifier result");
-
-			return null;
-		}
-
-		if (authVerifierResult.getState() ==
-				AuthVerifierResult.State.NOT_APPLICABLE) {
-
-			return null;
-		}
-
-		User user = UserLocalServiceUtil.fetchUser(
-			authVerifierResult.getUserId());
-
-		if ((user == null) || !user.isActive()) {
-			if (_log.isDebugEnabled()) {
-				Class<?> authVerifierClass = authVerifier.getClass();
-
-				if (user == null) {
-					_log.debug(
-						StringBundler.concat(
-							"Auth verifier ", authVerifierClass.getName(),
-							" returned null user",
-							authVerifierResult.getUserId()));
-				}
-				else {
-					_log.debug(
-						StringBundler.concat(
-							"Auth verifier ", authVerifierClass.getName(),
-							" returned inactive user",
-							authVerifierResult.getUserId()));
-				}
-			}
-
-			return null;
-		}
-
-		Map<String, Object> settings = _mergeSettings(
-			properties, authVerifierResult.getSettings());
-
-		settings.put(AUTH_TYPE, authVerifier.getAuthType());
-
-		authVerifierResult.setSettings(settings);
-
-		return authVerifierResult;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierPipeline.class);
 
@@ -272,6 +150,148 @@ public class AuthVerifierPipeline {
 	private final Map<String, Object> _filterProperties;
 	private URLPatternMapper<List<AuthVerifierConfiguration>>
 		_includeURLPatternMapper;
+
+	private static class AuthVerifierConfigurationConsumer
+		implements Consumer<List<AuthVerifierConfiguration>> {
+
+		public AuthVerifierConfigurationConsumer(
+			AccessControlContext accessControlContext,
+			Set<AuthVerifierConfiguration> excludedAuthVerifierConfigurations) {
+
+			_accessControlContext = accessControlContext;
+			_excludedAuthVerifierConfigurations =
+				excludedAuthVerifierConfigurations;
+		}
+
+		@Override
+		public void accept(
+			List<AuthVerifierConfiguration> authVerifierConfigurations) {
+
+			if (_authVerifierResult != null) {
+				return;
+			}
+
+			for (AuthVerifierConfiguration authVerifierConfiguration :
+					authVerifierConfigurations) {
+
+				if (_excludedAuthVerifierConfigurations.contains(
+						authVerifierConfiguration)) {
+
+					continue;
+				}
+
+				_authVerifierResult = _verifyWithAuthVerifierConfiguration(
+					_accessControlContext, authVerifierConfiguration);
+
+				if (_authVerifierResult != null) {
+					return;
+				}
+			}
+		}
+
+		public AuthVerifierResult getAuthVerifierResult() {
+			return _authVerifierResult;
+		}
+
+		private Map<String, Object> _mergeSettings(
+			Properties properties, Map<String, Object> settings) {
+
+			Map<String, Object> mergedSettings = new HashMap<>(settings);
+
+			if (properties != null) {
+				for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+					mergedSettings.put(
+						(String)entry.getKey(), entry.getValue());
+				}
+			}
+
+			return mergedSettings;
+		}
+
+		private AuthVerifierResult _verifyWithAuthVerifierConfiguration(
+			AccessControlContext accessControlContext,
+			AuthVerifierConfiguration authVerifierConfiguration) {
+
+			AuthVerifierResult authVerifierResult = null;
+
+			AuthVerifier authVerifier =
+				authVerifierConfiguration.getAuthVerifier();
+
+			Properties properties = authVerifierConfiguration.getProperties();
+
+			try {
+				authVerifierResult = authVerifier.verify(
+					accessControlContext, properties);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					Class<?> authVerifierClass = authVerifier.getClass();
+
+					_log.debug(
+						"Skipping " + authVerifierClass.getName(), exception);
+				}
+
+				return null;
+			}
+
+			if (authVerifierResult == null) {
+				Class<?> authVerifierClass = authVerifier.getClass();
+
+				_log.error(
+					"Auth verifier " + authVerifierClass.getName() +
+						" did not return an auth verifier result");
+
+				return null;
+			}
+
+			if (authVerifierResult.getState() ==
+					AuthVerifierResult.State.NOT_APPLICABLE) {
+
+				return null;
+			}
+
+			User user = UserLocalServiceUtil.fetchUser(
+				authVerifierResult.getUserId());
+
+			if ((user == null) || !user.isActive()) {
+				if (_log.isDebugEnabled()) {
+					Class<?> authVerifierClass = authVerifier.getClass();
+
+					if (user == null) {
+						_log.debug(
+							StringBundler.concat(
+								"Auth verifier ", authVerifierClass.getName(),
+								" returned null user",
+								authVerifierResult.getUserId()));
+					}
+					else {
+						_log.debug(
+							StringBundler.concat(
+								"Auth verifier ", authVerifierClass.getName(),
+								" returned inactive user",
+								authVerifierResult.getUserId()));
+					}
+				}
+
+				return null;
+			}
+
+			Map<String, Object> settings = _mergeSettings(
+				properties, authVerifierResult.getSettings());
+
+			settings.put(AUTH_TYPE, authVerifier.getAuthType());
+
+			authVerifierResult.setSettings(settings);
+
+			return authVerifierResult;
+		}
+
+		private final AccessControlContext _accessControlContext;
+		private AuthVerifierResult _authVerifierResult;
+		private final Set<AuthVerifierConfiguration>
+			_excludedAuthVerifierConfigurations;
+
+	}
 
 	private static class AuthVerifierTrackerCustomizer
 		implements ServiceTrackerCustomizer

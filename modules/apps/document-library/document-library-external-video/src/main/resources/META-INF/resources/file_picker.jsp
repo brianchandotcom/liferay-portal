@@ -18,6 +18,8 @@
 
 <%
 DLExternalVideo dlExternalVideo = (DLExternalVideo)request.getAttribute(DLExternalVideo.class.getName());
+String getDLExternalVideoFieldsURL = (String)request.getAttribute(DLExternalVideoWebKeys.GET_EXTERNAL_VIDEO_FIELDS_URL);
+String namespace = (String)request.getAttribute(DLExternalVideoWebKeys.NAMESPACE);
 String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.ON_FILE_PICK_CALLBACK);
 %>
 
@@ -51,8 +53,6 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 		</div>
 	</div>
 
-	<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" var="getDLExternalVideoFieldsURL" />
-
 	<react:component
 		module="js/FilePickerVideoPreview"
 		props='<%=
@@ -63,7 +63,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 			).put(
 				"getDLExternalVideoFieldsURL", getDLExternalVideoFieldsURL
 			).put(
-				"namespace", liferayPortletResponse.getNamespace()
+				"namespace", namespace
 			).put(
 				"onFilePickCallback", onFilePickCallback
 			).build()

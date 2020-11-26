@@ -17,15 +17,10 @@ package com.liferay.document.library.external.video.internal.constants;
 /**
  * @author Alejandro Tardín
  */
-public class DLExternalVideoWebKeys {
+public class DLExternalVideoPortletKeys {
 
-	public static final String EMBEDDABLE_HTML = "EMBEDDABLE_HTML";
-
-	public static final String GET_EXTERNAL_VIDEO_FIELDS_URL =
-		"GET_EXTERNAL_VIDEO_FIELDS_URL";
-
-	public static final String NAMESPACE = "NAMESPACE";
-
-	public static final String ON_FILE_PICK_CALLBACK = "ON_FILE_PICK_CALLBACK";
+	public static final String DL_EXTERNAL_VIDEO =
+		"com_liferay_document_library_external_video_internal_portlet_" +
+			"DLExternalVideoPortlet";
 
 }

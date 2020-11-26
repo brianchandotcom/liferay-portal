@@ -483,9 +483,9 @@ public class AuthVerifierPipeline {
 					authVerifierConfiguration.getAuthVerifierClassName()));
 
 			if (_validate(authVerifierConfiguration)) {
-				_rebuildAll();
-
 				_authVerifierConfigurations.add(0, authVerifierConfiguration);
+
+				_rebuildAll();
 			}
 		}
 

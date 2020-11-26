@@ -41,18 +41,20 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
-
-import jodd.util.Wildcard;
 
 /**
  * @author Tomas Polesovsky
  * @author Peter Fellwock
+ * @author Arthur Chan
  */
 public class AuthVerifierPipeline {
 
@@ -124,9 +126,6 @@ public class AuthVerifierPipeline {
 		HttpServletRequest httpServletRequest =
 			accessControlContext.getRequest();
 
-		List<AuthVerifierConfiguration> authVerifierConfigurations =
-			new ArrayList<>();
-
 		String requestURI = httpServletRequest.getRequestURI();
 
 		String contextPath = httpServletRequest.getContextPath();
@@ -134,45 +133,46 @@ public class AuthVerifierPipeline {
 		if (requestURI.equals(contextPath)) {
 			requestURI += "/";
 		}
-
-		for (AuthVerifierConfiguration authVerifierConfiguration :
-				_authVerifierConfigurations) {
-
-			if (_isMatchingRequestURI(authVerifierConfiguration, requestURI)) {
-				authVerifierConfigurations.add(authVerifierConfiguration);
-			}
+		else {
+			requestURI = requestURI.substring(contextPath.length());
 		}
 
-		return authVerifierConfigurations;
-	}
+		Set<AuthVerifierConfiguration> excludeAuthVerifierConfigurations =
+			new HashSet<>();
 
-	private boolean _isMatchingRequestURI(
-		AuthVerifierConfiguration authVerifierConfiguration,
-		String requestURI) {
+		_excludeURLPatternMapper.consumeValues(
+			authVerifierConfigurations ->
+				excludeAuthVerifierConfigurations.addAll(
+					authVerifierConfigurations),
+			requestURI);
 
-		Properties properties = authVerifierConfiguration.getProperties();
+		List<AuthVerifierConfiguration> foundAuthVerifierConfigurations =
+			new ArrayList<>();
 
-		String[] urlsExcludes = StringUtil.split(
-			properties.getProperty("urls.excludes"));
+		_includeURLPatternMapper.consumeValues(
+			new Consumer<List<AuthVerifierConfiguration>>() {
 
-		if ((urlsExcludes.length > 0) &&
-			(Wildcard.matchOne(requestURI, urlsExcludes) > -1)) {
+				@Override
+				public void accept(
+					List<AuthVerifierConfiguration>
+						authVerifierConfigurations) {
 
-			return false;
-		}
+					for (AuthVerifierConfiguration authVerifierConfiguration :
+							authVerifierConfigurations) {
 
-		String[] urlsIncludes = StringUtil.split(
-			properties.getProperty("urls.includes"));
+						if (!excludeAuthVerifierConfigurations.contains(
+								authVerifierConfiguration)) {
 
-		if (urlsIncludes.length == 0) {
-			return false;
-		}
+							foundAuthVerifierConfigurations.add(
+								authVerifierConfiguration);
+						}
+					}
+				}
 
-		if (Wildcard.matchOne(requestURI, urlsIncludes) > -1) {
-			return true;
-		}
+			},
+			requestURI);
 
-		return false;
+		return foundAuthVerifierConfigurations;
 	}
 
 	private Map<String, Object> _mergeSettings(

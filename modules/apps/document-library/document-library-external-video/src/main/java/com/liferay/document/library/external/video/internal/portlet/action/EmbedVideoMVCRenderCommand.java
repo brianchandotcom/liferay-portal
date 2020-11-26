@@ -77,7 +77,7 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 					return "/embed/error.jsp";
 				}
 				else if (!_videoProcessor.hasVideo(fileVersion)) {
-					return "/embed/pending.jsp";
+					return "/embed/generating.jsp";
 				}
 				else {
 					String videoPosterURL = _getVideoPosterURL(

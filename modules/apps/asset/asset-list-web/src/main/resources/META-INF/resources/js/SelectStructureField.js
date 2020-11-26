@@ -23,6 +23,8 @@ export default function ({eventName, journalArticleAssetClassName, namespace}) {
 		'.selector-button'
 	);
 
+	const eventDelegates = [];
+
 	selectorButtons.forEach((button) => {
 		const fieldsnamespace = button.dataset.fieldsnamespace;
 		const value = JSON.parse(button.dataset.value);
@@ -86,6 +88,8 @@ export default function ({eventName, journalArticleAssetClassName, namespace}) {
 		onSubmitForm
 	);
 
+	eventDelegates.push(clickSubmitForm);
+
 	const classTypeFieldsSearchContainerId = `${namespace}classTypeFieldsSearchContainer`;
 	const fieldSubtypeForms = structureFormContainer.querySelectorAll('form');
 
@@ -125,11 +129,12 @@ export default function ({eventName, journalArticleAssetClassName, namespace}) {
 			onToggleDisabled
 		);
 
-		return {
-			dispose() {
-				clickSubmitForm.dispose();
-				clickToggleDisabled.dispose();
-			},
-		};
+		eventDelegates.push(clickToggleDisabled);
 	});
+
+	return {
+		dispose() {
+			eventDelegates.forEach((eventDelegate) => eventDelegate.dispose());
+		},
+	};
 }

@@ -21,8 +21,10 @@ import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -69,6 +71,15 @@ public class MenuDisplayFragmentConfigurationParser {
 		return new MenuDisplayFragmentConfiguration(
 			displayStyle, hoveredItemColor, selectedItemColor, source,
 			sublevels);
+	}
+
+	private JSONObject _createJSONObject(String value) {
+		try {
+			return JSONFactoryUtil.createJSONObject(value);
+		}
+		catch (JSONException jsonException) {
+			return JSONFactoryUtil.createJSONObject();
+		}
 	}
 
 	private String _getColorPickerValue(
@@ -145,11 +156,12 @@ public class MenuDisplayFragmentConfigurationParser {
 	private MenuDisplayFragmentConfiguration.Source _getSource(
 		String configuration, String editableValues) {
 
-		Object object = _fragmentEntryConfigurationParser.getFieldValue(
-			configuration, editableValues, "source");
+		String source = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				configuration, editableValues, "source"));
 
-		if (object instanceof JSONObject) {
-			JSONObject jsonObject = (JSONObject)object;
+		if (JSONUtil.isValid(source)) {
+			JSONObject jsonObject = _createJSONObject(source);
 
 			if (jsonObject.has("contextualMenu")) {
 				return ContextualMenu.parse(

@@ -477,12 +477,8 @@ public class AuthVerifierPipeline {
 				for (String urlsExclude : urlsExcludes) {
 					urlsExclude = _fixLegacyURLPattern(urlsExclude);
 
-					if (!excludeAuthVerifierConfigurations.containsKey(
-							urlsExclude)) {
-
-						excludeAuthVerifierConfigurations.put(
-							urlsExclude, new ArrayList<>());
-					}
+					excludeAuthVerifierConfigurations.computeIfAbsent(
+						urlsExclude, key -> new ArrayList<>());
 
 					List<AuthVerifierConfiguration>
 						excludeAuthVerifierConfiguration =
@@ -498,12 +494,8 @@ public class AuthVerifierPipeline {
 				for (String urlsInclude : urlsIncludes) {
 					urlsInclude = _fixLegacyURLPattern(urlsInclude);
 
-					if (!includeAuthVerifierConfigurations.containsKey(
-							urlsInclude)) {
-
-						includeAuthVerifierConfigurations.put(
-							urlsInclude, new ArrayList<>());
-					}
+					includeAuthVerifierConfigurations.computeIfAbsent(
+						urlsInclude, key -> new ArrayList<>());
 
 					List<AuthVerifierConfiguration>
 						includeAuthVerifierConfiguration =

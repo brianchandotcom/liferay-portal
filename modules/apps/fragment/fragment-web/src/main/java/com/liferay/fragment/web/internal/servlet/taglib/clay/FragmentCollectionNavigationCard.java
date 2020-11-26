@@ -33,7 +33,7 @@ public class FragmentCollectionNavigationCard implements NavigationCard {
 
 	@Override
 	public String getCssClass() {
-		return "card-interactive card-interactive-primary selector-button";
+		return "selector-button";
 	}
 
 	@Override

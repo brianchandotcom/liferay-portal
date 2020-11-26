@@ -68,7 +68,15 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 				var titleElement = document.getElementById('<portlet:namespace />title');
 
 				if (titleElement) {
-					titleElement.value = documentTitle;
+					titleElement.value = documentTitle.replace(/\.[^.]*$/, '');
+				}
+
+				var fileNameElement = document.getElementById(
+					'<portlet:namespace />fileName'
+				);
+
+				if (fileNameElement) {
+					fileNameElement.value = documentTitle;
 				}
 
 				var documentDescription =

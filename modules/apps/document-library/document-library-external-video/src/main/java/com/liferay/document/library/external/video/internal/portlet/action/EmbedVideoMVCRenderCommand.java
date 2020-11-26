@@ -14,19 +14,23 @@
 
 package com.liferay.document.library.external.video.internal.portlet.action;
 
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,20 +71,31 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 				ParamUtil.getString(renderRequest, "url"));
 
 			if (fileEntry != null) {
-				String videoPosterURL = _getVideoPosterURL(
-					fileEntry,
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY));
+				FileVersion fileVersion = fileEntry.getFileVersion();
 
-				renderRequest.setAttribute(
-					DLExternalVideoWebKeys.PREVIEW_FILE_URLS,
-					_getPreviewFileURLs(
-						fileEntry, videoPosterURL, renderRequest));
+				if (_isPreviewFailure(fileVersion)) {
+					return "/embed/error.jsp";
+				}
+				else if (!_videoProcessor.hasVideo(fileVersion)) {
+					return "/embed/pending.jsp";
+				}
+				else {
+					String videoPosterURL = _getVideoPosterURL(
+						fileEntry,
+						(ThemeDisplay)renderRequest.getAttribute(
+							WebKeys.THEME_DISPLAY));
 
-				renderRequest.setAttribute(
-					DLExternalVideoWebKeys.VIDEO_POSTER_URL, videoPosterURL);
+					renderRequest.setAttribute(
+						DLExternalVideoWebKeys.PREVIEW_FILE_URLS,
+						_getPreviewFileURLs(
+							fileEntry, videoPosterURL, renderRequest));
 
-				return "/embed/video.jsp";
+					renderRequest.setAttribute(
+						DLExternalVideoWebKeys.VIDEO_POSTER_URL,
+						videoPosterURL);
+
+					return "/embed/video.jsp";
+				}
 			}
 		}
 		catch (PortalException portalException) {
@@ -173,6 +188,21 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 			"&videoThumbnail=1");
 	}
 
+	private boolean _isPreviewFailure(FileVersion fileVersion) {
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileVersionPreviewConstants.STATUS_FAILURE)) {
+
+			return true;
+		}
+
+		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbedVideoMVCRenderCommand.class);
 
@@ -181,6 +211,9 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

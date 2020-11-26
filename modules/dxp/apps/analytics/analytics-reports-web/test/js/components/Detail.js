@@ -101,7 +101,7 @@ const mockCurrentPage = {
 		title: 'Organic',
 		value: 278256,
 	},
-	view: 'traffic-source-detail',
+	view: 'organic',
 };
 
 const mockOnCurrentPageChange = jest.fn(() => Promise.resolve({view: 'main'}));

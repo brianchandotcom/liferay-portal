@@ -36,7 +36,7 @@ describe('Keywords', () => {
 				title: 'Organic',
 				value: 0,
 			},
-			view: 'traffic-source-detail',
+			view: 'organic',
 		};
 
 		const {getByText} = render(

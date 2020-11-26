@@ -266,81 +266,93 @@ public class AuthVerifierPipeline {
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				authVerifierConfigurations) {
 
-			AuthVerifierResult authVerifierResult = null;
+			AuthVerifierResult authVerifierResult =
+				_verifyWithAuthVerifierConfiguration(
+					accessControlContext, authVerifierConfiguration);
 
-			AuthVerifier authVerifier =
-				authVerifierConfiguration.getAuthVerifier();
-
-			Properties properties = authVerifierConfiguration.getProperties();
-
-			try {
-				authVerifierResult = authVerifier.verify(
-					accessControlContext, properties);
+			if (authVerifierResult != null) {
+				return authVerifierResult;
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					Class<?> authVerifierClass = authVerifier.getClass();
-
-					_log.debug(
-						"Skipping " + authVerifierClass.getName(), exception);
-				}
-
-				continue;
-			}
-
-			if (authVerifierResult == null) {
-				Class<?> authVerifierClass = authVerifier.getClass();
-
-				_log.error(
-					"Auth verifier " + authVerifierClass.getName() +
-						" did not return an auth verifier result");
-
-				continue;
-			}
-
-			if (authVerifierResult.getState() ==
-					AuthVerifierResult.State.NOT_APPLICABLE) {
-
-				continue;
-			}
-
-			User user = UserLocalServiceUtil.fetchUser(
-				authVerifierResult.getUserId());
-
-			if ((user == null) || !user.isActive()) {
-				if (_log.isDebugEnabled()) {
-					Class<?> authVerifierClass = authVerifier.getClass();
-
-					if (user == null) {
-						_log.debug(
-							StringBundler.concat(
-								"Auth verifier ", authVerifierClass.getName(),
-								" returned null user",
-								authVerifierResult.getUserId()));
-					}
-					else {
-						_log.debug(
-							StringBundler.concat(
-								"Auth verifier ", authVerifierClass.getName(),
-								" returned inactive user",
-								authVerifierResult.getUserId()));
-					}
-				}
-
-				continue;
-			}
-
-			Map<String, Object> settings = _mergeSettings(
-				properties, authVerifierResult.getSettings());
-
-			settings.put(AUTH_TYPE, authVerifier.getAuthType());
-
-			authVerifierResult.setSettings(settings);
-
-			return authVerifierResult;
 		}
 
 		return _createGuestVerificationResult(accessControlContext);
+	}
+
+	private AuthVerifierResult _verifyWithAuthVerifierConfiguration(
+		AccessControlContext accessControlContext,
+		AuthVerifierConfiguration authVerifierConfiguration) {
+
+		AuthVerifierResult authVerifierResult = null;
+
+		AuthVerifier authVerifier = authVerifierConfiguration.getAuthVerifier();
+
+		Properties properties = authVerifierConfiguration.getProperties();
+
+		try {
+			authVerifierResult = authVerifier.verify(
+				accessControlContext, properties);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				Class<?> authVerifierClass = authVerifier.getClass();
+
+				_log.debug(
+					"Skipping " + authVerifierClass.getName(), exception);
+			}
+
+			return null;
+		}
+
+		if (authVerifierResult == null) {
+			Class<?> authVerifierClass = authVerifier.getClass();
+
+			_log.error(
+				"Auth verifier " + authVerifierClass.getName() +
+					" did not return an auth verifier result");
+
+			return null;
+		}
+
+		if (authVerifierResult.getState() ==
+				AuthVerifierResult.State.NOT_APPLICABLE) {
+
+			return null;
+		}
+
+		User user = UserLocalServiceUtil.fetchUser(
+			authVerifierResult.getUserId());
+
+		if ((user == null) || !user.isActive()) {
+			if (_log.isDebugEnabled()) {
+				Class<?> authVerifierClass = authVerifier.getClass();
+
+				if (user == null) {
+					_log.debug(
+						StringBundler.concat(
+							"Auth verifier ", authVerifierClass.getName(),
+							" returned null user",
+							authVerifierResult.getUserId()));
+				}
+				else {
+					_log.debug(
+						StringBundler.concat(
+							"Auth verifier ", authVerifierClass.getName(),
+							" returned inactive user",
+							authVerifierResult.getUserId()));
+				}
+			}
+
+			return null;
+		}
+
+		Map<String, Object> settings = _mergeSettings(
+			properties, authVerifierResult.getSettings());
+
+		settings.put(AUTH_TYPE, authVerifier.getAuthType());
+
+		authVerifierResult.setSettings(settings);
+
+		return authVerifierResult;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -459,6 +459,119 @@ definition {
 			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 	}
 
+	@description = "This is a test for LPS-121199. For web content mapped specific DPT, could check all checkboxes beside the web contents."
+	@priority = "3"
+	test MapSpecificDPTAndCheckAllUsages {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content ${i}",
+				groupName = "Test Site Name",
+				title = "Webcontent Title ${i}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${i}");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "View Usages");
+
+		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Unassign");
+
+		AssertConfirm(value1 = "Are you sure you do not want to set a display page template for this?");
+
+		Alert.viewSuccessMessageText(successMessage = "Successfully unassigned display page template.");
+
+		for (var i : list "1,2,3") {
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Webcontent Title ${i}");
+		}
+	}
+
+	@description = "This is a test for LPS-121199. For document mapped specific DPT, could check multiple checkboxes beside the web contents."
+	@priority = "4"
+	test MapSpecificDPTAndCheckMultipleUsages {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Document");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		for (var i : list "1,2,3") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_${i}.txt",
+				dmDocumentTitle = "Document_${i}.txt");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Document_${i}.txt");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "View Usages");
+
+		Check(
+			key_tableEntry = "Document_1.txt",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		Check(
+			key_tableEntry = "Document_3.txt",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Assign to Default");
+
+		AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+
+		Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template.");
+
+		LexiconTable.viewTableEntryTitle(tableEntry = "Document_2.txt");
+	}
+
 	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to a fragment editable field in a display page."
 	@priority = "5"
 	test MapWebContentAuthor {

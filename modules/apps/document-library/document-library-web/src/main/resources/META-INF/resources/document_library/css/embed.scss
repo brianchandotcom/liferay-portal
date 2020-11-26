@@ -1,0 +1,30 @@
+@import 'atlas-variables';
+
+video {
+	display: block;
+	height: 100vh;
+	width: 100%;
+}
+
+.video-embed-placeholder {
+	align-items: center;
+	background-color: $gray-200;
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	position: relative;
+
+	.lexicon-icon {
+		color: $gray-400;
+		font-size: 2rem;
+	}
+
+	&-text {
+		bottom: 1rem;
+		color: $secondary;
+		font-weight: 600;
+		position: absolute;
+		text-align: center;
+		width: 100%;
+	}
+}

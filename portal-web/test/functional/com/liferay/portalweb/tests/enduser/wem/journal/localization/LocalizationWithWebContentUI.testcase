@@ -262,11 +262,9 @@ definition {
 
 		PortletEntry.changeLocale(locale = "fr-FR");
 
-		WebContent.addCP(webContentTitle = "WC WebContent Titre");
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "WC contenu WebContent");
+		WebContent.addWithStructureCP(
+			webContentText = "WC contenu WebContent",
+			webContentTitle = "WC WebContent Titre");
 
 		PortletEntry.publish();
 
@@ -294,9 +292,14 @@ definition {
 
 		PortletEntry.changeLocale(locale = "fr-FR");
 
-		WebContent.viewCP(
-			webContentText = "WC contenu WebContent",
-			webContentTitle = "WC WebContent Titre");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC WebContent Titre");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "WC contenu WebContent");
 
 		WebContent.viewStructureAndTemplateLocalization(
 			panel = "Modèle par défaut",

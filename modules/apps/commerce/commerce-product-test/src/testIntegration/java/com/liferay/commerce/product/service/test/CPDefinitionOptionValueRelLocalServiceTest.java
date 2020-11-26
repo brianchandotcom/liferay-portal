@@ -53,6 +53,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -104,6 +105,81 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_serviceContext = null;
 
 		_cpOptionLocalService.deleteCPOptions(_company.getCompanyId());
+	}
+
+	@Test
+	public void testPriceContributorOptionCPDefinitionAsCPDefinitionOptionValueRel()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Product bundle option value links product with chargeable option"
+		).given(
+			"Two products, each with one option with price type set to static"
+		).when(
+			"Product 1 option is not required and is not SKU contributor"
+		).and(
+			"Product 2 option is not required and is not SKU contributor"
+		).then(
+			"Product specialist can link product 1 option value to product 2"
+		).and(
+			"Product specialist can link product 2 option value to product 1"
+		);
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1 =
+			_addCPDefinitionWithOptionValue();
+
+		CPDefinitionOptionRel cpDefinitionOptionRel1 =
+			cpDefinitionOptionValueRel1.getCPDefinitionOptionRel();
+
+		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRel1.getCPDefinitionOptionRelId(),
+			cpDefinitionOptionRel1.getCPOptionId(),
+			cpDefinitionOptionRel1.getNameMap(),
+			cpDefinitionOptionRel1.getDescriptionMap(),
+			cpDefinitionOptionRel1.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel1.getPriority(),
+			cpDefinitionOptionRel1.isFacetable(), false, false,
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2 =
+			_addCPDefinitionWithOptionValue();
+
+		CPDefinitionOptionRel cpDefinitionOptionRel2 =
+			cpDefinitionOptionValueRel2.getCPDefinitionOptionRel();
+
+		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRel2.getCPDefinitionOptionRelId(),
+			cpDefinitionOptionRel2.getCPOptionId(),
+			cpDefinitionOptionRel2.getNameMap(),
+			cpDefinitionOptionRel2.getDescriptionMap(),
+			cpDefinitionOptionRel2.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel2.getPriority(),
+			cpDefinitionOptionRel2.isFacetable(), false, false,
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+
+		CPInstance cpDefinitionCPInstance2 = _getCPInstance(
+			cpDefinitionOptionRel2.getCPDefinitionId());
+
+		cpDefinitionOptionValueRel1 = _updateCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRel1,
+			cpDefinitionCPInstance2.getCPInstanceId(),
+			cpDefinitionOptionValueRel1.isPreselected(), BigDecimal.TEN, 1);
+
+		Assert.assertEquals(
+			cpDefinitionOptionValueRel1.getCPInstanceUuid(),
+			cpDefinitionCPInstance2.getCPInstanceUuid());
+
+		CPInstance cpDefinitionCPInstance1 = _getCPInstance(
+			cpDefinitionOptionRel1.getCPDefinitionId());
+
+		cpDefinitionOptionValueRel2 = _updateCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRel2,
+			cpDefinitionCPInstance1.getCPInstanceId(),
+			cpDefinitionOptionValueRel2.isPreselected(), BigDecimal.ONE, 1);
+
+		Assert.assertEquals(
+			cpDefinitionOptionValueRel2.getCPInstanceUuid(),
+			cpDefinitionCPInstance1.getCPInstanceUuid());
 	}
 
 	@Test
@@ -852,6 +928,20 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			newCPDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
 			newCPDefinitionOptionValueRel.isPreselected(), price,
 			cpDefinitionOptionValueRel.getQuantity());
+	}
+
+	private CPInstance _getCPInstance(long cpDefinitionId) throws Exception {
+		List<CPInstance> cpInstances =
+			_cpInstanceLocalService.getCPDefinitionApprovedCPInstances(
+				cpDefinitionId);
+
+		if (!cpInstances.isEmpty()) {
+			return cpInstances.get(0);
+		}
+
+		return CPTestUtil.addCPDefinitionCPInstanceWithPrice(
+			cpDefinitionId, Collections.emptyMap(),
+			new BigDecimal(RandomTestUtil.randomDouble()));
 	}
 
 	private CPDefinitionOptionValueRel _updateCPDefinitionOptionValueRel(

@@ -225,6 +225,13 @@ public class CommerceShippingFixedOptionClayTable
 			"commerceShippingFixedOptionId",
 			String.valueOf(shippingFixedOptionId));
 
+		long commerceShippingMethodId = ParamUtil.getLong(
+			httpServletRequest, "commerceShippingMethodId");
+
+		portletURL.setParameter(
+			"commerceShippingMethodId",
+			String.valueOf(commerceShippingMethodId));
+
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

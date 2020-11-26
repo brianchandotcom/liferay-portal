@@ -98,10 +98,7 @@ public class AuthVerifierPipeline {
 			new HashSet<>();
 
 		_excludeURLPatternMapper.consumeValues(
-			authVerifierConfigurations ->
-				excludeAuthVerifierConfigurations.addAll(
-					authVerifierConfigurations),
-			requestURI);
+			excludeAuthVerifierConfigurations::addAll, requestURI);
 
 		AuthVerifierConfigurationConsumer authVerifierConfigurationConsumer =
 			new AuthVerifierConfigurationConsumer(

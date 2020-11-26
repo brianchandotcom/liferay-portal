@@ -203,7 +203,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			if (parentSiteNavigationMenuItemId > 0) {
 				if (_isLayoutHierarchy(siteNavigationMenuId)) {
 					Layout layout = _layoutService.fetchLayout(
-						groupId, false, parentSiteNavigationMenuItemId);
+						groupId, siteNavigationMenuSource.isPrivateLayout(),
+						parentSiteNavigationMenuItemId);
 
 					navigationMenuTag.setRootItemId(layout.getUuid());
 				}

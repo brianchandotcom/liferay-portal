@@ -85,7 +85,7 @@ definition {
 	macro gotoPageTemplateViaEdit {
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
-		LexiconCard.clickCardTitle(card = "${pageTemplateName}");
+		LexiconCard.clickCardTitleLink(card = "${pageTemplateName}");
 	}
 
 	macro openGlobalPageTemplatesAdmin() {

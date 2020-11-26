@@ -102,7 +102,7 @@ definition {
 	}
 
 	macro gotoPageTemplate {
-		LexiconCard.clickCardTitle(card = "${pageTemplateName}");
+		LexiconCard.clickCardTitleLink(card = "${pageTemplateName}");
 	}
 
 	macro gotoPageTemplateEllipsisItem {

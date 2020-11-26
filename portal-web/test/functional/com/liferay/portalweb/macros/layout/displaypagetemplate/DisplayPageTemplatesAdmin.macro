@@ -43,7 +43,7 @@ definition {
 	}
 
 	macro gotoDisplayPage {
-		LexiconCard.clickCardTitle(card = "${displayPageName}");
+		LexiconCard.clickCardTitleLink(card = "${displayPageName}");
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}

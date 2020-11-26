@@ -19,7 +19,7 @@ definition {
 	}
 
 	macro gotoMasters {
-		LexiconCard.clickCardTitle(card = "${masterLayoutName}");
+		LexiconCard.clickCardTitleLink(card = "${masterLayoutName}");
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}

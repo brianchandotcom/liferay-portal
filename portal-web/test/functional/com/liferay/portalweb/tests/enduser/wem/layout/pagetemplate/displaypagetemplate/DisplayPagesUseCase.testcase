@@ -46,6 +46,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121199. For blog mapped specific DPT, Assign to Default via view usage, could set content display page to the default one with no display page template."
+	@priority = "3"
+	test AssignBlogUsageToDefaultDisplayPageTemplate {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Page Templates");
+
+		PortletEntry.publish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "View Usages");
+
+		Check(
+			key_tableEntry = "Blogs Entry Title",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Assign to Default");
+
+		AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+
+		Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template.");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		WebContent.viewSelectedDisplayPageTemplateCP(
+			displayPageTemplateName = "No Default Display Page Template",
+			displayPageTemplateType = "Default Display Page Template");
+	}
+
 	@description = "This is a test for LPS-121199. For web content mapped specific DPT, Assign to Default via view usage, could delete display page template successfully."
 	@priority = "5"
 	test AssignToDefaultAndDeleteDisplayPageMappedSpecificDPT {

@@ -36,6 +36,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			requirePasswordReset = "true",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
@@ -164,6 +165,22 @@ definition {
 			key_category = "Content",
 			key_portlet = "Content Dashboard",
 			locator1 = "ApplicationsMenu#PORTLET");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
+
+		Segmentation.enableAssingRolesBySegmentsCheckbox();
 	}
 
 }

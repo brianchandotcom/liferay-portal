@@ -83,46 +83,6 @@ public class AuthVerifierPipeline {
 				"Access control context is null");
 		}
 
-		List<AuthVerifierConfiguration> authVerifierConfigurations =
-			_getAuthVerifierConfigurations(accessControlContext);
-
-		for (AuthVerifierConfiguration authVerifierConfiguration :
-				authVerifierConfigurations) {
-
-			AuthVerifierResult authVerifierResult =
-				_verifyWithAuthVerifierConfiguration(
-					accessControlContext, authVerifierConfiguration);
-
-			if (authVerifierResult != null) {
-				return authVerifierResult;
-			}
-		}
-
-		return _createGuestVerificationResult(accessControlContext);
-	}
-
-	private AuthVerifierResult _createGuestVerificationResult(
-			AccessControlContext accessControlContext)
-		throws PortalException {
-
-		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
-
-		authVerifierResult.setState(AuthVerifierResult.State.UNSUCCESSFUL);
-
-		HttpServletRequest httpServletRequest =
-			accessControlContext.getRequest();
-
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			PortalUtil.getCompanyId(httpServletRequest));
-
-		authVerifierResult.setUserId(defaultUserId);
-
-		return authVerifierResult;
-	}
-
-	private List<AuthVerifierConfiguration> _getAuthVerifierConfigurations(
-		AccessControlContext accessControlContext) {
-
 		HttpServletRequest httpServletRequest =
 			accessControlContext.getRequest();
 
@@ -146,9 +106,6 @@ public class AuthVerifierPipeline {
 					authVerifierConfigurations),
 			requestURI);
 
-		List<AuthVerifierConfiguration> foundAuthVerifierConfigurations =
-			new ArrayList<>();
-
 		_includeURLPatternMapper.consumeValues(
 			new Consumer<List<AuthVerifierConfiguration>>() {
 
@@ -157,14 +114,28 @@ public class AuthVerifierPipeline {
 					List<AuthVerifierConfiguration>
 						authVerifierConfigurations) {
 
+					if (accessControlContext.getAuthVerifierResult() != null) {
+						return;
+					}
+
 					for (AuthVerifierConfiguration authVerifierConfiguration :
 							authVerifierConfigurations) {
 
-						if (!excludeAuthVerifierConfigurations.contains(
+						if (excludeAuthVerifierConfigurations.contains(
 								authVerifierConfiguration)) {
 
-							foundAuthVerifierConfigurations.add(
-								authVerifierConfiguration);
+							continue;
+						}
+
+						accessControlContext.setAuthVerifierResult(
+							_verifyWithAuthVerifierConfiguration(
+								accessControlContext,
+								authVerifierConfiguration));
+
+						if (accessControlContext.getAuthVerifierResult() !=
+								null) {
+
+							return;
 						}
 					}
 				}
@@ -172,7 +143,31 @@ public class AuthVerifierPipeline {
 			},
 			requestURI);
 
-		return foundAuthVerifierConfigurations;
+		if (accessControlContext.getAuthVerifierResult() == null) {
+			accessControlContext.setAuthVerifierResult(
+				_createGuestVerificationResult(accessControlContext));
+		}
+
+		return accessControlContext.getAuthVerifierResult();
+	}
+
+	private AuthVerifierResult _createGuestVerificationResult(
+			AccessControlContext accessControlContext)
+		throws PortalException {
+
+		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
+
+		authVerifierResult.setState(AuthVerifierResult.State.UNSUCCESSFUL);
+
+		HttpServletRequest httpServletRequest =
+			accessControlContext.getRequest();
+
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			PortalUtil.getCompanyId(httpServletRequest));
+
+		authVerifierResult.setUserId(defaultUserId);
+
+		return authVerifierResult;
 	}
 
 	private Map<String, Object> _mergeSettings(

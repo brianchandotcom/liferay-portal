@@ -143,8 +143,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 
-	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-		var handleAddApplicationBrandButtonClick = dom.delegate(
+	<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands,frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+		var delegate = delegateModule.default;
+
+		var handleAddApplicationBrandButtonClick = delegate(
 			document.body,
 			'click',
 			'#<portlet:namespace />addApplicationBrandButton',
@@ -163,7 +165,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 		);
 
 		function handleDestroyPortlet() {
-			handleAddApplicationBrandButtonClick.removeListener();
+			handleAddApplicationBrandButtonClick.dispose();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}

@@ -72,8 +72,10 @@
 	}
 </aui:script>
 
-<aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
-	var focusInPortletHandler = dom.delegate(
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule" sandbox="<%= true %>">
+	var delegate = delegateModule.default;
+	
+	var focusInPortletHandler = delegate(
 		document,
 		'focusin',
 		'.portlet',
@@ -82,7 +84,7 @@
 		}
 	);
 
-	var focusOutPortletHandler = dom.delegate(
+	var focusOutPortletHandler = delegate(
 		document,
 		'focusout',
 		'.portlet',

@@ -23,6 +23,7 @@ import React, {useState} from 'react';
 
 import {useDebounceCallback} from '../utils/hooks';
 import validateUrl from '../utils/validateUrl';
+import ConditionalWrapper from './ConditionalWrapper';
 
 const VideoPreview = ({
 	externalVideoHTML = '',
@@ -88,8 +89,25 @@ const VideoPreview = ({
 		}
 	};
 
+	const addDisabled = !!(error || loading || !url);
+
+	const handleAddSubmit = (event) => {
+		event.preventDefault();
+
+		if (addDisabled) {
+			return;
+		}
+
+		onAdd(url);
+	};
+
 	return (
-		<>
+		<ConditionalWrapper
+			condition={!!onAdd}
+			wrapper={(children) => (
+				<form onSubmit={handleAddSubmit}>{children}</form>
+			)}
+		>
 			<ClayForm.Group>
 				<label htmlFor={inputName}>
 					{Liferay.Language.get('video-url')}
@@ -106,13 +124,7 @@ const VideoPreview = ({
 				</p>
 
 				{onAdd && (
-					<ClayButton
-						disabled={!!(error || loading || !url)}
-						onClick={() => {
-							onAdd(url);
-						}}
-						type="button"
-					>
+					<ClayButton disabled={addDisabled} type="submit">
 						{Liferay.Language.get('add')}
 					</ClayButton>
 				)}
@@ -143,7 +155,7 @@ const VideoPreview = ({
 					</div>
 				)}
 			</div>
-		</>
+		</ConditionalWrapper>
 	);
 };
 

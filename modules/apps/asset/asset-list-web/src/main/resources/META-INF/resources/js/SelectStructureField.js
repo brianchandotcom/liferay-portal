@@ -14,7 +14,7 @@
 
 import {delegate, fetch, toggleDisabled} from 'frontend-js-web';
 
-export default function ({eventName, journalArticleAssetClassName, namespace}) {
+export default function ({assetClassName, eventName, namespace}) {
 	const structureFormContainer = document.getElementById(
 		`${namespace}selectDDMStructureFieldForm`
 	);
@@ -65,7 +65,7 @@ export default function ({eventName, journalArticleAssetClassName, namespace}) {
 				const message = document.getElementById(`${namespace}message`);
 
 				if (response.success) {
-					dataset.className = journalArticleAssetClassName;
+					dataset.className = assetClassName;
 					dataset.displayValue = response.displayValue;
 					dataset.value = response.value;
 

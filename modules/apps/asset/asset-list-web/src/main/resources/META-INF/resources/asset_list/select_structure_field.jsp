@@ -135,9 +135,9 @@ portletURL.setParameter("eventName", eventName);
 	componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"eventName", HtmlUtil.escapeJS(eventName)
+			"assetClassName", editAssetListDisplayContext.getClassName(assetRendererFactory)
 		).put(
-			"journalArticleAssetClassName", editAssetListDisplayContext.getClassName(assetRendererFactory)
+			"eventName", HtmlUtil.escapeJS(eventName)
 		).build()
 	%>'
 	module="js/SelectStructureField"

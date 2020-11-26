@@ -97,16 +97,16 @@ const ACTIONS = {
 				if (selectedItem) {
 					const itemValue = JSON.parse(selectedItem.value);
 
-					document.querySelector(
-						`${namespace}#layoutPageTemplateEntryId`
+					document.getElementById(
+						`${namespace}layoutPageTemplateEntryId`
 					).value = layoutPageTemplateEntryId;
 
-					document.querySelector(`${namespace}#fileEntryId`).value =
+					document.getElementById(`${namespace}fileEntryId`).value =
 						itemValue.fileEntryId;
 
 					submitForm(
-						document.querySelector(
-							`${namespace}#layoutPageTemplateEntryPreviewFm`
+						document.getElementById(
+							`${namespace}layoutPageTemplateEntryPreviewFm`
 						)
 					);
 				}

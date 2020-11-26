@@ -29,7 +29,7 @@ export default function TimeSpanSelector({
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	return (
-		<div className="d-flex mb-3 mt-4">
+		<div className="d-flex">
 			<ClaySelect
 				aria-label={Liferay.Language.get('select-date-range')}
 				className="bg-white"

@@ -290,15 +290,19 @@ export default function Chart({
 	return (
 		<>
 			{timeSpanOptions.length && (
-				<TimeSpanSelector
-					disabledNextTimeSpan={disabledNextTimeSpan}
-					disabledPreviousPeriodButton={disabledPreviousPeriodButton}
-					onNextTimeSpanClick={handleNextTimeSpanClick}
-					onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
-					onTimeSpanChange={handleTimeSpanChange}
-					timeSpanKey={chartState.timeSpanKey}
-					timeSpanOptions={timeSpanOptions}
-				/>
+				<div className="c-mb-3 c-mt-4">
+					<TimeSpanSelector
+						disabledNextTimeSpan={disabledNextTimeSpan}
+						disabledPreviousPeriodButton={
+							disabledPreviousPeriodButton
+						}
+						onNextTimeSpanClick={handleNextTimeSpanClick}
+						onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
+						onTimeSpanChange={handleTimeSpanChange}
+						timeSpanKey={chartState.timeSpanKey}
+						timeSpanOptions={timeSpanOptions}
+					/>
+				</div>
 			)}
 
 			{dataSet ? (

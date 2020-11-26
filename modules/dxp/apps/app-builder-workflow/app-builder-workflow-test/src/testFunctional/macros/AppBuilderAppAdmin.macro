@@ -4,6 +4,19 @@ definition {
 		AssertElementPresent(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
 	}
 
+	macro assertWorkflowAppDeploymentType {
+		AssertElementPresent(
+			key_deploymentType = "${deploymentType}",
+			key_workflowAppName = "${workflowAppName}",
+			locator1 = "AppBuilderAppAdmin#WORKFLOW_DELOYMENT_TYPE");
+	}
+
+	macro assertWorkflowAppName {
+		AssertElementPresent(
+			key_workflowAppName = "${workflowAppName}",
+			locator1 = "AppBuilderAppAdmin#WORKFLOW_APP_NAME");
+	}
+
 	macro assertWorkflowAppVersion {
 		AssertElementPresent(
 			key_versionNumber = "${versionNumber}",

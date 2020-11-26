@@ -55,8 +55,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_APP_NAME</td>
+	<td>//a[text() = '${key_workflowAppName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_APP_VERSION</td>
 	<td>//a[contains(text(),'${key_workflowAppName}')]/ancestor::tr//td[6 and contains(text(),'${key_versionNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_DELOYMENT_TYPE</td>
+	<td>//a[contains(text(),'${key_workflowAppName}')]/ancestor::tr//td[3 and contains(text(),'${key_deploymentType}')]</td>
 	<td></td>
 </tr>
 </tbody>

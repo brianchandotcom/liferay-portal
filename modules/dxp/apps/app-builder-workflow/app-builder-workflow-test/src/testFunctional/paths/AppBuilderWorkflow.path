@@ -124,6 +124,21 @@
 	<td>//div[contains(@class,'save-app-modal')]//*[contains(@class,'btn')][normalize-space(text())='${key_buttonName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DEPLOY_SETTINGS_BUTTON</td>
+	<td>//button[@title='Deploy Settings']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_ALERT_MODAL_TITLE</td>
+	<td>//div[contains(@class,'modal-title') and contains(text(),'Applying App Updates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_ALERT_MODAL_TEXT</td>
+	<td>//div[contains(@class,'modal-body')]//span[contains(text(),'Some of the updates cannot be applied to existing app data. Only new records will reflect the changes in existing deployments of the app.')]</td>
+	<td></td>
+</tr>
 <!--APP_RUNNING-->
 <tr>
 	<td>SELECT_NEW_ASSIGNEE_BUTTON</td>

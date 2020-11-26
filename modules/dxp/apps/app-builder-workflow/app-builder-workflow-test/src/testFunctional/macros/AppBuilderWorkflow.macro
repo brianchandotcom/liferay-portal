@@ -10,6 +10,11 @@ definition {
 			value1 = "${workflowAppName}");
 	}
 
+	macro assertAppUpdateAlertModal {
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#APP_ALERT_MODAL_TITLE");
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#APP_ALERT_MODAL_TEXT");
+	}
+
 	macro assertAssigneeInfoPresentOnStep {
 		AssertElementPresent(
 			key_assignee = "${assignee}",
@@ -102,6 +107,28 @@ definition {
 		Refresh();
 	}
 
+	macro changeDeploymentType {
+		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#DEPLOY_SETTINGS_BUTTON");
+
+		for (var deploymentOption : list "${deploymentOptionsToTurnOn}") {
+			App.toggleDeploy(deployOption = "${deploymentOption}");
+		}
+
+		for (var deploymentOption : list "${deploymentOptionsToTurnOff}") {
+			App.toggleDeploy(deployOption = "${deploymentOption}");
+		}
+
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+	}
+
+	macro changeTableView {
+		AppBuilderWorkflow.selectStep(step = "Start");
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.clickOnSelectTableView();
+		AppBuilderWorkflow.selectTableView(tableViewName = "${tableViewName}");
+	}
+
 	macro clickBackButton {
 		Click(locator1 = "AppBuilderWorkflow#BACK_BUTTON");
 	}
@@ -164,6 +191,11 @@ definition {
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 				value1 = "sent you a ${assetType} entry in the workflow.");
 		}
+	}
+
+	macro saveApp {
+		AppBuilderWorkflow.clickSaveButton();
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Save");
 	}
 
 	macro saveNewVersionedApp {

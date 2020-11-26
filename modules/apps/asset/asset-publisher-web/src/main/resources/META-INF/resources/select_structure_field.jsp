@@ -142,6 +142,7 @@ portletURL.setParameter("eventName", eventName);
 </clay:container-fluid>
 
 <liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"eventName", HtmlUtil.escapeJS(eventName)

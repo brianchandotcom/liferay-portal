@@ -1,2 +1,23 @@
 <div class="component-dropdown">
+	<div class="dropdown ${configuration.panelType}">
+		<button
+			aria-expanded="false"
+			aria-haspopup="true"
+			class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType} dropdown-toggle"
+			data-toggle="liferay-dropdown"
+			id="dropdown-fragment"
+			type="button"
+		>
+			<span data-lfr-editable-id="dropdown-text" data-lfr-editable-type="text">Dropdown</span>
+			<span class="inline-item inline-item-after">
+				<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+					<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#caret-bottom" />
+				</svg>
+			</span>
+		</button>
+
+		<div aria-labelledby="dropdown-fragment" class="dropdown-menu[#if configuration.keepOpen] keep-open[/#if] px-1">
+			<lfr-drop-zone data-lfr-drop-zone-id="1"></lfr-drop-zone>
+		</div>
+	</div>
 </div>

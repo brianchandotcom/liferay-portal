@@ -1,3 +1,82 @@
 {
-	"fieldSets": []
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "panel-type",
+					"name": "panelType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "regular",
+								"value": ""
+							},
+							{
+								"label": "full-width",
+								"value": "dropdown-full"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "keep-panel-open-in-edit-mode",
+					"name": "keepOpen",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
 }

@@ -373,8 +373,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
-	var selectArticleHandler = dom.delegate(
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule" sandbox="<%= true %>">
+	var selectArticleHandler = delegate(
 		document.querySelector('#<portlet:namespace />articlesContainer'),
 		'click',
 		'.articles',
@@ -384,6 +384,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					var activeFormCheckCards = document.querySelectorAll(
 						'.form-check-card.active'
 					);
+
 					var formCheckCard = event.delegateTarget.closest('.form-check-card');
 
 					if (activeFormCheckCards.length) {
@@ -426,7 +427,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	);
 
 	Liferay.on('destroyPortlet', function removeListener() {
-		selectArticleHandler.removeListener();
+		selectArticleHandler.dispose();
 
 		Liferay.detach('destroyPortlet', removeListener);
 	});

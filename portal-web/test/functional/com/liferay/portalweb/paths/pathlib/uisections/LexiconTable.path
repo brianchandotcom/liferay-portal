@@ -73,6 +73,11 @@
 	<td>//th[contains(.,'${key_tableHeader}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ROW</td>
+	<td>xpath=(//tr[@data-qa-id='row'])[${index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

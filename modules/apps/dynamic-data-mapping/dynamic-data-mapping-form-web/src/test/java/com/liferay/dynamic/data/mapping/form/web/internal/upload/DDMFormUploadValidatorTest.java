@@ -72,7 +72,7 @@ public class DDMFormUploadValidatorTest {
 
 	@Test
 	public void testValidFileName() throws Exception {
-		_ddmFormUploadValidator.validateFileName("test.jpg");
+		_ddmFormUploadValidator.validateFileName("Test_Upload - Forms.jpg");
 	}
 
 	@Test

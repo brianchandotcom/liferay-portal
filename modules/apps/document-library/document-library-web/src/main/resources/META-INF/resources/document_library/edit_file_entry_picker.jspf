@@ -55,20 +55,20 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 					pickButtonIcon.setAttribute('src', documentIconURL);
 				}
 
-				var documentTitle = fields['<%= dlFilePicker.getTitleFieldName() %>'];
+				var documentName = fields['<%= dlFilePicker.getTitleFieldName() %>'];
 
 				var pickButtonTitleElement = document.getElementById(
 					'<portlet:namespace />pickButtonTitle'
 				);
 
 				if (pickButtonTitleElement) {
-					pickButtonTitleElement.innerHTML = documentTitle || fields['URL'];
+					pickButtonTitleElement.innerHTML = documentName || fields['URL'];
 				}
 
 				var titleElement = document.getElementById('<portlet:namespace />title');
 
 				if (titleElement) {
-					titleElement.value = documentTitle.replace(/\.[^.]*$/, '');
+					titleElement.value = documentName.replace(/\.[^.]*$/, '');
 				}
 
 				var fileNameElement = document.getElementById(
@@ -76,7 +76,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 				);
 
 				if (fileNameElement) {
-					fileNameElement.value = documentTitle;
+					fileNameElement.value = documentName;
 				}
 
 				var documentDescription =

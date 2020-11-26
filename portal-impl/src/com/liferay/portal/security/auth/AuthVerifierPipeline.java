@@ -133,6 +133,143 @@ public class AuthVerifierPipeline {
 		return authVerifierResult;
 	}
 
+	/**
+	 * We have non-standard url-pattern across the portal for AuthVerifiers,
+	 * in order to be backward compatible, we need to do runtime fix, like:
+	 * "*" will be fixed to "/*"
+	 * "/abc*" will be fixed to "/abc/*"
+	 *
+	 * Notice both "*" and "/abc*" are valid url-pattern, but the ending "*"
+	 * is not considered as wildcard by servlet spec.
+	 *
+	 * In the future, all non-standard url-patterns need rewriting.
+	 */
+	private String _fixLegacyURLPattern(String urlPattern) {
+		if ((urlPattern == null) || (urlPattern.length() == 0)) {
+			return urlPattern;
+		}
+
+		if (urlPattern.charAt(urlPattern.length() - 1) != '*') {
+			return urlPattern;
+		}
+
+		if ((urlPattern.length() > 1) &&
+			(urlPattern.charAt(urlPattern.length() - 2) == '/')) {
+
+			return urlPattern;
+		}
+
+		return urlPattern.substring(0, urlPattern.length() - 1) + "/*";
+	}
+
+	/**
+	 * Because we allow Filter to overwrite authVerifier's properties,
+	 * we need to create a new configuration that takes the overwritten
+	 * properties instead of authVerifier's original properties.
+	 */
+	private AuthVerifierConfiguration _mergeAuthVerifierConfiguration(
+		AuthVerifierConfiguration authVerifierConfiguration,
+		Map<String, Object> filterProperties) {
+
+		String authVerifierPropertyName = getAuthVerifierPropertyName(
+			authVerifierConfiguration.getAuthVerifierClassName());
+
+		Properties mergedProperties = new Properties(
+			authVerifierConfiguration.getProperties());
+
+		for (Map.Entry<String, Object> propertyEntry :
+				filterProperties.entrySet()) {
+
+			String propertyName = propertyEntry.getKey();
+			Object propertyValue = propertyEntry.getValue();
+
+			if (propertyName.startsWith(authVerifierPropertyName) &&
+				(propertyValue instanceof String)) {
+
+				mergedProperties.setProperty(
+					propertyName.substring(authVerifierPropertyName.length()),
+					(String)propertyValue);
+			}
+		}
+
+		if (mergedProperties.size() < 1) {
+			if (filterProperties.containsKey("portal_property_prefix")) {
+				return authVerifierConfiguration;
+			}
+
+			return null;
+		}
+
+		AuthVerifierConfiguration mergedAuthVerifierConfiguration =
+			new AuthVerifierConfiguration();
+
+		mergedAuthVerifierConfiguration.setAuthVerifier(
+			authVerifierConfiguration.getAuthVerifier());
+		mergedAuthVerifierConfiguration.setAuthVerifierClassName(
+			authVerifierConfiguration.getAuthVerifierClassName());
+		mergedAuthVerifierConfiguration.setProperties(mergedProperties);
+
+		return mergedAuthVerifierConfiguration;
+	}
+
+	private void _rebuildConfiguration() {
+		Map<String, List<AuthVerifierConfiguration>>
+			excludeAuthVerifierConfigurations = new HashMap<>();
+
+		Map<String, List<AuthVerifierConfiguration>>
+			includeAuthVerifierConfigurations = new HashMap<>();
+
+		for (AuthVerifierConfiguration authVerifierConfiguration :
+				AuthVerifierTrackerCustomizer._authVerifierConfigurations) {
+
+			authVerifierConfiguration = _mergeAuthVerifierConfiguration(
+				authVerifierConfiguration, _filterProperties);
+
+			if (authVerifierConfiguration == null) {
+				continue;
+			}
+
+			Properties properties = authVerifierConfiguration.getProperties();
+
+			String[] urlsExcludes = StringUtil.split(
+				properties.getProperty("urls.excludes"));
+
+			for (String urlsExclude : urlsExcludes) {
+				urlsExclude = _fixLegacyURLPattern(urlsExclude);
+
+				excludeAuthVerifierConfigurations.computeIfAbsent(
+					urlsExclude, key -> new ArrayList<>());
+
+				List<AuthVerifierConfiguration>
+					excludeAuthVerifierConfiguration =
+						excludeAuthVerifierConfigurations.get(urlsExclude);
+
+				excludeAuthVerifierConfiguration.add(authVerifierConfiguration);
+			}
+
+			String[] urlsIncludes = StringUtil.split(
+				properties.getProperty("urls.includes"));
+
+			for (String urlsInclude : urlsIncludes) {
+				urlsInclude = _fixLegacyURLPattern(urlsInclude);
+
+				includeAuthVerifierConfigurations.computeIfAbsent(
+					urlsInclude, key -> new ArrayList<>());
+
+				List<AuthVerifierConfiguration>
+					includeAuthVerifierConfiguration =
+						includeAuthVerifierConfigurations.get(urlsInclude);
+
+				includeAuthVerifierConfiguration.add(authVerifierConfiguration);
+			}
+		}
+
+		_excludeURLPatternMapper = URLPatternMapperFactory.create(
+			excludeAuthVerifierConfigurations);
+		_includeURLPatternMapper = URLPatternMapperFactory.create(
+			includeAuthVerifierConfigurations);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierPipeline.class);
 
@@ -296,7 +433,7 @@ public class AuthVerifierPipeline {
 
 			_authVerifierPipelines.add(authVerifierPipeline);
 
-			_rebuildFor(authVerifierPipeline);
+			authVerifierPipeline._rebuildConfiguration();
 		}
 
 		@Override
@@ -366,154 +503,6 @@ public class AuthVerifierPipeline {
 			_rebuildAll();
 		}
 
-		/**
-		 * We have non-standard url-pattern across the portal for AuthVerifiers,
-		 * in order to be backward compatible, we need to do runtime fix, like:
-		 * "*" will be fixed to "/*"
-		 * "/abc*" will be fixed to "/abc/*"
-		 *
-		 * Notice both "*" and "/abc*" are valid url-pattern, but the ending "*"
-		 * is not considered as wildcard by servlet spec.
-		 *
-		 * In the future, all non-standard url-patterns need rewriting.
-		 */
-		private static String _fixLegacyURLPattern(String urlPattern) {
-			if ((urlPattern == null) || (urlPattern.length() == 0)) {
-				return urlPattern;
-			}
-
-			if (urlPattern.charAt(urlPattern.length() - 1) != '*') {
-				return urlPattern;
-			}
-
-			if ((urlPattern.length() > 1) &&
-				(urlPattern.charAt(urlPattern.length() - 2) == '/')) {
-
-				return urlPattern;
-			}
-
-			return urlPattern.substring(0, urlPattern.length() - 1) + "/*";
-		}
-
-		/**
-		 * Because we allow Filter to overwrite authVerifier's properties,
-		 * we need to create a new configuration that takes the overwritten
-		 * properties instead of authVerifier's original properties.
-		 */
-		private static AuthVerifierConfiguration
-			_mergeAuthVerifierConfiguration(
-				AuthVerifierConfiguration authVerifierConfiguration,
-				Map<String, Object> filterProperties) {
-
-			String authVerifierPropertyName =
-				AuthVerifierPipeline.getAuthVerifierPropertyName(
-					authVerifierConfiguration.getAuthVerifierClassName());
-
-			Properties mergedProperties = new Properties(
-				authVerifierConfiguration.getProperties());
-
-			for (Map.Entry<String, Object> propertyEntry :
-					filterProperties.entrySet()) {
-
-				String propertyName = propertyEntry.getKey();
-				Object propertyValue = propertyEntry.getValue();
-
-				if (propertyName.startsWith(authVerifierPropertyName) &&
-					(propertyValue instanceof String)) {
-
-					mergedProperties.setProperty(
-						propertyName.substring(
-							authVerifierPropertyName.length()),
-						(String)propertyValue);
-				}
-			}
-
-			if (mergedProperties.size() < 1) {
-				if (filterProperties.containsKey("portal_property_prefix")) {
-					return authVerifierConfiguration;
-				}
-
-				return null;
-			}
-
-			AuthVerifierConfiguration mergedAuthVerifierConfiguration =
-				new AuthVerifierConfiguration();
-
-			mergedAuthVerifierConfiguration.setAuthVerifier(
-				authVerifierConfiguration.getAuthVerifier());
-			mergedAuthVerifierConfiguration.setAuthVerifierClassName(
-				authVerifierConfiguration.getAuthVerifierClassName());
-			mergedAuthVerifierConfiguration.setProperties(mergedProperties);
-
-			return mergedAuthVerifierConfiguration;
-		}
-
-		private static void _rebuildFor(
-			AuthVerifierPipeline authVerifierPipeline) {
-
-			Map<String, List<AuthVerifierConfiguration>>
-				excludeAuthVerifierConfigurations = new HashMap<>();
-
-			Map<String, List<AuthVerifierConfiguration>>
-				includeAuthVerifierConfigurations = new HashMap<>();
-
-			for (AuthVerifierConfiguration authVerifierConfiguration :
-					_authVerifierConfigurations) {
-
-				authVerifierConfiguration = _mergeAuthVerifierConfiguration(
-					authVerifierConfiguration,
-					authVerifierPipeline._filterProperties);
-
-				if (authVerifierConfiguration == null) {
-					continue;
-				}
-
-				Properties properties =
-					authVerifierConfiguration.getProperties();
-
-				String[] urlsExcludes = StringUtil.split(
-					properties.getProperty("urls.excludes"));
-
-				for (String urlsExclude : urlsExcludes) {
-					urlsExclude = _fixLegacyURLPattern(urlsExclude);
-
-					excludeAuthVerifierConfigurations.computeIfAbsent(
-						urlsExclude, key -> new ArrayList<>());
-
-					List<AuthVerifierConfiguration>
-						excludeAuthVerifierConfiguration =
-							excludeAuthVerifierConfigurations.get(urlsExclude);
-
-					excludeAuthVerifierConfiguration.add(
-						authVerifierConfiguration);
-				}
-
-				String[] urlsIncludes = StringUtil.split(
-					properties.getProperty("urls.includes"));
-
-				for (String urlsInclude : urlsIncludes) {
-					urlsInclude = _fixLegacyURLPattern(urlsInclude);
-
-					includeAuthVerifierConfigurations.computeIfAbsent(
-						urlsInclude, key -> new ArrayList<>());
-
-					List<AuthVerifierConfiguration>
-						includeAuthVerifierConfiguration =
-							includeAuthVerifierConfigurations.get(urlsInclude);
-
-					includeAuthVerifierConfiguration.add(
-						authVerifierConfiguration);
-				}
-			}
-
-			authVerifierPipeline._excludeURLPatternMapper =
-				URLPatternMapperFactory.create(
-					excludeAuthVerifierConfigurations);
-			authVerifierPipeline._includeURLPatternMapper =
-				URLPatternMapperFactory.create(
-					includeAuthVerifierConfigurations);
-		}
-
 		private Properties _loadProperties(
 			ServiceReference<AuthVerifier> serviceReference,
 			String authVerifierClassName) {
@@ -545,7 +534,7 @@ public class AuthVerifierPipeline {
 			for (AuthVerifierPipeline authVerifierPipeline :
 					_authVerifierPipelines) {
 
-				_rebuildFor(authVerifierPipeline);
+				authVerifierPipeline._rebuildConfiguration();
 			}
 		}
 

@@ -64,6 +64,7 @@ definition {
 	macro defineConditionValue {
 		if (isSet(conditionFieldValue)) {
 			var key_conditionRowNumber = "${conditionRowNumber}";
+			var key_fieldColumnNumber = "4";
 
 			Type(
 				locator1 = "FormRules#RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD",
@@ -73,11 +74,12 @@ definition {
 		if (isSet(conditionValueField)) {
 			var key_conditionRowNumber = "${conditionRowNumber}";
 			var key_conditionValueField = "${conditionValueField}";
+			var key_fieldColumnNumber = "4";
 
 			Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_VALUE_FIELD");
 
 			AssertClick(
-				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD",
+				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
 				value1 = "${conditionValueField}");
 		}
 	}
@@ -97,29 +99,26 @@ definition {
 	}
 
 	macro selectAction {
-		var key_action = "${action}";
+		var key_selectValue = "${action}";
 		var key_actionRowNumber = "${actionRowNumber}";
+		var key_fieldColumnNumber = "1";
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD");
 
 		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_SELECT_ACTION",
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
 			value1 = "${action}");
 	}
 
 	macro selectActionTarget {
 		var key_actionRowNumber = "${actionRowNumber}";
-		var key_actionTarget = "${actionTarget}";
+		var key_selectValue = "${actionTarget}";
+		var key_fieldColumnNumber = "2";
 
-		if ("${action}" == "Jump to Page") {
-			Click(locator1 = "FormRules#RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET");
-		}
-		else {
-			Click(locator1 = "FormRules#RULE_BUILDER_ACTION_TARGET_FIELD");
-		}
+		Click(locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD");
 
 		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_SELECT_ACTION_TARGET",
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
 			value1 = "${actionTarget}");
 	}
 
@@ -170,39 +169,42 @@ definition {
 	}
 
 	macro selectConditionField {
-		var key_conditionField = "${conditionField}";
+		var key_selectValue = "${conditionField}";
 		var key_conditionRowNumber = "${conditionRowNumber}";
+		var key_fieldColumnNumber = "1";
 
 		ScrollBy(value1 = "0, 230");
 
 		Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
 		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_FIELD",
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
 			value1 = "${conditionField}");
 	}
 
 	macro selectConditionOperator {
-		var key_conditionOperator = "${conditionOperator}";
+		var key_selectValue = "${conditionOperator}";
 		var key_conditionRowNumber = "${conditionRowNumber}";
+		var key_fieldColumnNumber = "2";
 
-		Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD");
+		Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
 		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR",
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
 			value1 = "${conditionOperator}");
 	}
 
 	macro selectConditionValue {
 		var key_conditionRowNumber = "${conditionRowNumber}";
+		var key_fieldColumnNumber = "3";
 
 		if (isSet(conditionValueType)) {
-			Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD");
+			Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
-			var key_conditionValueType = "${conditionValueType}";
+			var key_selectValue = "${conditionValueType}";
 
 			AssertClick(
-				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE",
+				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
 				value1 = "${conditionValueType}");
 		}
 	}
@@ -265,26 +267,26 @@ definition {
 	macro viewConditionOperatorOptionsIsPresent {
 		Click(
 			key_conditionRowNumber = "${conditionRowNumber}",
-			locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD");
+			key_fieldColumnNumber = "2",
+			locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
 		for (var conditionOperator : list "Is equal to,Is not equal to,Contains,Does not contain") {
 			AssertElementPresent(
-				key_conditionOperator = "${conditionOperator}",
-				key_conditionRowNumber = "${conditionRowNumber}",
-				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR");
+				key_selectValue = "${conditionOperator}",
+				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");
 		}
 	}
 
 	macro viewConditionOperatorOptionsNotPresent {
 		Click(
 			key_conditionRowNumber = "${conditionRowNumber}",
-			locator1 = "FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD");
+			key_fieldColumnNumber = "2",
+			locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
 		for (var conditionOperator : list "Is equal to,Is not equal to,Contains,Does not contain") {
 			AssertElementNotPresent(
-				key_conditionOperator = "${conditionOperator}",
-				key_conditionRowNumber = "${conditionRowNumber}",
-				locator1 = "FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR");
+				key_selectValue = "${conditionOperator}",
+				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");
 		}
 	}
 

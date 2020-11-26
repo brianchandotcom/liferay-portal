@@ -21,67 +21,47 @@
 </tr>
 <tr>
     <td>RULE_BUILDER_ADD_ACTION</td>
-    <td>//a[contains(@class,'form-builder-rule-add-action')] | //div[contains(@class,'addbutton-timeline-item')][2]//button[contains(@class,'btn-primary')]</td>
+    <td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-increment-action-button')]//button</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_ADD_CONDITION</td>
-    <td>//a[contains(@class,'form-builder-rule-add-condition')] | //div[contains(@class,'addbutton-timeline-item')][1]//button[contains(@class,'btn-primary')]</td>
+    <td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-increment-action-button')]//button</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_BROKEN</td>
-    <td>//li[@class='list-group-item'][${key_ruleNumber}]//div[contains(@class,'invalid-rule')]//span[contains(text(), 'Broken Rule')]</td>
+    <td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'form-rule-list-invalid-rule')]//div[contains(text(), 'Broken Rule')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_RULE_CONDITION_DROPDOWN</td>
-    <td>//button[contains(@class,'dropdown-toggle-operator')]</td>
+    <td>//div[contains(@class,'timeline-dropdown')]//button</td>
     <td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-first') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-if')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
-    <td>RULE_BUILDER_SELECT_CONDITION_FIELD</td>
-    <td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-first')]/following-sibling::div[@class='drop-chosen']//a[text()='${key_conditionField}'] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_conditionField}']</td>
-    <td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_CONDITION_OPERATOR_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-operator')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>RULE_BUILDER_FIELD_SELECT_VALUE</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_selectValue}']</td>
 	<td></td>
 </tr>
 <tr>
-    <td>RULE_BUILDER_SELECT_CONDITION_OPERATOR</td>
-    <td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionOperator}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_conditionOperator}']</td>
-    <td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>RULE_BUILDER_ACTION_FIELD</td>
+	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
-</tr>
-<tr>
-    <td>RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE</td>
-    <td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-operand-type')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueType}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_conditionValueType}']</td>
-    <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_CONDITION_VALUE_FIELD</td>
-    <td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@data-field-name,'condition-second-operand-options')]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[contains(@class,'option-selected')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
-    <td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueField}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_conditionValueField}']</td>
+    <td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'option-selected')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>
-    <td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//input</td>
+    <td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//input</td>
     <td></td>
 </tr>
 <tr>
@@ -90,38 +70,13 @@
     <td></td>
 </tr>
 <tr>
-	<td>RULE_BUILDER_ACTION_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target') and contains(@class,'select-field-trigger')] | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'select-field-trigger')]</td>
-	<td></td>
-</tr>
-<tr>
-    <td>RULE_BUILDER_SELECT_ACTION</td>
-    <td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'target')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_action}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_action}']</td>
-    <td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_ACTION_TARGET_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/div | //li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div[contains(@class,'select-field-trigger')]/div</td>
-	<td></td>
-</tr>
-<tr>
-    <td>RULE_BUILDER_SELECT_ACTION_TARGET</td>
-    <td>//div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_actionTarget}']</td>
-    <td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div[contains(@class,'select-field-trigger')]/div</td>
-	<td></td>
-</tr>
-<tr>
     <td>RULE_BUILDER_SAVE_BUTTON</td>
-    <td>//button[contains(@class,'form-builder-rule-settings-save')] | //div[contains(@class,'liferay-ddm-form-rule-builder-footer')]//button[contains(@class,'btn-primary')]</td>
+    <td>//div[contains(@class,'form-rule-builder-footer')]//button[contains(@class,'btn-primary')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_SAVE_BUTTON_DISABLED</td>
-    <td>//button[@disabled='' and contains(@class,'form-builder-rule-settings-save')] | //button[@disabled='disabled' and contains(@class,'btn-primary')]</td>
+    <td>//div[contains(@class,'form-rule-builder-footer')]//button[@disabled='' and contains(@class,'btn-primary')]</td>
     <td></td>
 </tr>
 <tr>
@@ -132,7 +87,7 @@
 <!--RULE_BUILDER_AUTOFILL-->
 <tr>
 	<td>RULE_BUILDER_AUTOFILL_OUTPUT_FIELD</td>
-	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'parameter-output')]//div[contains(@class,'field-trigger')]</td>
+	<td>//div[contains(@class,'action-rule-data-provider')]//div[contains(@class,'data-provider-parameter-container')]//div[contains(@class,'field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -189,27 +144,27 @@
 <!--RULE_BUILDER_SUMMARY-->
 <tr>
     <td>RULE_BUILDER_SUMMARY_CONDITION_FIELD</td>
-    <td>//li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]/span[contains(.,'${key_conditionField}')] | //li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//div[contains(@class,'ddm-condition-container')]//span[contains(text(),'${key_conditionField}')]</td>
+    <td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//span[contains(@class,'inline-item')]//span[contains(text(),'${key_conditionField}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT</td>
-    <td>//li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//span[contains(.,'${key_conditionFieldConstant}')]</td>
+    <td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//span//div[contains(text(),'${key_conditionFieldConstant}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_SUMMARY_CONDITION_OPERATOR</td>
-    <td>//li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//b[@class='text-lowercase' and contains(.,'${key_conditionOperator}')]</td>
+    <td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class,'inline-item')]//em[contains(text(),'${key_conditionOperator}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_SUMMARY_ACTION</td>
-    <td>//li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//b[@class='text-lowercase']/following-sibling::b[contains(.,'${key_action}')] | //li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//b[@class='text-lowercase']/following-sibling::span[contains(.,'${key_action}')]</td>
+    <td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span[contains(.,'${key_action}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>RULE_BUILDER_SUMMARY_ACTION_TARGET</td>
-    <td>//li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//b[@class='text-lowercase']/following-sibling::b[contains(.,'${key_action}')]/span[contains(.,'${key_actionTarget}')] | //li[@class='list-group-item'][${key_ruleNumber}]//p[contains(@class,'rule-description')]//b[@class='text-lowercase']/following-sibling::span[contains(.,'${key_action}')]/following-sibling::span[contains(.,'${key_actionTarget}')]</td>
+    <td>//li[contains(@class, 'list-group-item')][${key_ruleNumber}]//div[contains(@class,'autofit-col-expand')]//b[contains(@class, 'text-lowercase')]/following-sibling::span[contains(.,'${key_action}')]//div[contains(text(), '${key_actionTarget}')]</td>
     <td></td>
 </tr>
 </tbody>

@@ -684,10 +684,11 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertTextEquals(
-			key_assetTitle = "WC Folder Name",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "WC Folder Name");
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetArticleDetails = "1 Article",
+			assetSubfolderDetails = "0 Subfolders",
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder");
 
 		Staging.gotoPublishToLive();
 
@@ -703,10 +704,11 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertTextEquals(
-			key_assetTitle = "WC Folder Name",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "WC Folder Name");
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetArticleDetails = "1 Article",
+			assetSubfolderDetails = "0 Subfolders",
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder");
 	}
 
 }

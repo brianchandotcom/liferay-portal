@@ -60,7 +60,10 @@ public class SessionClickAction implements Action {
 			while (enumeration.hasMoreElements()) {
 				String name = enumeration.nextElement();
 
-				if (!name.equals("doAsUserId") && !name.equals("p_auth")) {
+				if (!name.equals("cmd") &&
+					!name.equals("doAsUserId") &&
+					!name.equals("p_auth")) {
+
 					String value = ParamUtil.getString(
 						httpServletRequest, name);
 

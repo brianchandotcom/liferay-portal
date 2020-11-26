@@ -149,7 +149,7 @@ describe('getAllEditables', () => {
         <lfr-editable id="link-old" type="link"><a href="#placeholder" target="_blank">Go to placeholder</a></lfr-editable>
         <a data-lfr-editable-id="link-new" data-lfr-editable-type="link" href="#placeholder" target="_blank">Go to placeholder</a>
         <div data-lfr-background-image-id="background-image-duplo"></div>
-      </lfr-dropzone>
+      </lfr-drop-zone>
     `;
 
 		expect(getAllEditables(element)).toEqual([
@@ -180,7 +180,7 @@ describe('getAllEditables', () => {
 		]);
 	});
 
-	it('takes into account the priority attibute', () => {
+	it('takes into account the priority attribute', () => {
 		const element = document.createElement('div');
 
 		element.innerHTML = `

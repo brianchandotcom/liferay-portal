@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -43,6 +44,11 @@ public class DDMFormUploadValidatorTest {
 	public void setUp() throws Exception {
 		setUpDDMFormWebConfigurationActivator();
 		setUpFileUtil();
+	}
+
+	@Test(expected = InvalidFileException.class)
+	public void testInvalidFileException() throws Exception {
+		_ddmFormUploadValidator.validateFileSize(null, "test.jpg");
 	}
 
 	@Test(expected = FileExtensionException.class)

@@ -224,9 +224,9 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
-
-		MenuItem.click(menuItem = "Edit");
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Edit",
+			templateName = "Basic Web Content");
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");
 

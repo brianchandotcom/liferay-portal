@@ -15,13 +15,12 @@
 package com.liferay.portal.remote.cors.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
-import java.util.Dictionary;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,24 +60,23 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCORSUsingBasicWithCustomConfig() throws Exception {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("configuration.name", "test-cors");
-
-		properties.put("filter.mapping.url.pattern", "/api/jsonws/*");
-
-		createFactoryConfiguration(
-			PortalCORSConfiguration.class.getName(), properties);
-
+	public void testCORSUsingBasicWithDefaultConfig() throws Exception {
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, true);
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false);
 	}
 
 	@Test
-	public void testCORSUsingBasicWithDefaultConfig() throws Exception {
+	public void testCORSUsingBasicWithDisableAuthorization() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK",
+			true);
+
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, true);
-		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false);
+		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, true);
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK",
+			false);
 	}
 
 	@Test

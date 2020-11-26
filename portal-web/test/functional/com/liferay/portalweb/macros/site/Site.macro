@@ -88,13 +88,15 @@ definition {
 		}
 
 		if (isSet(parentSiteName)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			AssertClick(
 				locator1 = "Button#SELECT",
 				value1 = "Select");
 
 			var key_parentSiteName = "${parentSiteName}";
 
-			SelectFrame.selectFrameNoLoading(locator1 = "SitesSelectSite#SELECT_SITE_IFRAME");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Search.searchCP(searchTerm = "${parentSiteName}");
 

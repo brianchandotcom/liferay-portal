@@ -1429,12 +1429,12 @@ definition {
 			fieldFieldLabel = "Separator",
 			fieldName = "Separator");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Text",
 			fieldName = "Text",
 			targetFieldLabel = "Separator");
+
+		DataEngine.editFieldsGroupRepeatable();
 
 		WebContentStructures.saveCP(structureName = "Exported Structure");
 
@@ -1457,9 +1457,7 @@ definition {
 			webContentText = "Exported Template",
 			webContentTitle = "Exported Article");
 
-		SelectFrame(value1 = "relative=top");
-
-		DataEngine.addRepeatableField(fieldName = "Separator");
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 
 		takeScreenshot();
 

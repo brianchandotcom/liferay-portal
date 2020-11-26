@@ -168,7 +168,6 @@ public class SampleSQLBuilderTest {
 			"assetPublisher,blog,company,documentLibrary,dynamicDataList," +
 				"fragment,layout,mbCategory,mbThread,repository,wiki");
 		properties.put(BenchmarksPropsKeys.OUTPUT_DIR, outputDir);
-		properties.put(BenchmarksPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(
 			BenchmarksPropsKeys.SCRIPT,
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
@@ -190,8 +189,26 @@ public class SampleSQLBuilderTest {
 
 			_loadServiceComponentsSQL(connection);
 
-			HypersonicLoader.loadHypersonic(
-				connection, outputDir + "/sample-hypersonic.sql");
+			File dir = new File(outputDir);
+
+			boolean miscSQLFile = false;
+
+			for (File file : dir.listFiles()) {
+				String fileName = file.getName();
+
+				if (fileName.equals("misc.sql")) {
+					miscSQLFile = true;
+				}
+				else if (fileName.endsWith(".sql")) {
+					HypersonicLoader.loadHypersonic(
+						connection, outputDir + "/" + fileName);
+				}
+			}
+
+			if (miscSQLFile) {
+				HypersonicLoader.loadHypersonic(
+					connection, outputDir + "/misc.sql");
+			}
 
 			try (Statement statement = connection.createStatement()) {
 				statement.execute("SHUTDOWN COMPACT");

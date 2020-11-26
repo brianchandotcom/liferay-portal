@@ -531,11 +531,8 @@ public class AuthVerifierPipeline {
 		}
 
 		private void _rebuildAll() {
-			for (AuthVerifierPipeline authVerifierPipeline :
-					_authVerifierPipelines) {
-
-				authVerifierPipeline._rebuildConfiguration();
-			}
+			_authVerifierPipelines.forEach(
+				AuthVerifierPipeline::_rebuildConfiguration);
 		}
 
 		private boolean _validate(

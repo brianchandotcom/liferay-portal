@@ -17,6 +17,8 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,24 +39,35 @@ import javax.portlet.RenderResponse;
 public class BaseCommerceShippingFixedOptionDisplayContext {
 
 	public BaseCommerceShippingFixedOptionDisplayContext(
+		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		this.commerceChannelLocalService = commerceChannelLocalService;
 		this.commerceCurrencyLocalService = commerceCurrencyLocalService;
 		this.commerceShippingMethodService = commerceShippingMethodService;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 	}
 
-	public String getCommerceCurrencyCode() {
-		CommerceCurrency commerceCurrency = getCommerceCurrency();
+	public String getCommerceCurrencyCode() throws PortalException {
+		CommerceShippingMethod commerceShippingMethod =
+			getCommerceShippingMethod();
 
-		if (commerceCurrency != null) {
-			return commerceCurrency.getCode();
+		if (commerceShippingMethod == null) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceShippingMethod.getGroupId());
+
+		if (commerceChannel == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceChannel.getCommerceCurrencyCode();
 	}
 
 	public CommerceShippingMethod getCommerceShippingMethod()
@@ -125,7 +138,7 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 		return "details";
 	}
 
-	public BigDecimal round(BigDecimal value) {
+	public BigDecimal round(BigDecimal value) throws PortalException {
 		CommerceCurrency commerceCurrency = getCommerceCurrency();
 
 		if (commerceCurrency == null) {
@@ -135,12 +148,19 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 		return commerceCurrency.round(value);
 	}
 
-	protected CommerceCurrency getCommerceCurrency() {
+	protected CommerceCurrency getCommerceCurrency() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-			themeDisplay.getCompanyId());
+		String commerceCurrencyCode = getCommerceCurrencyCode();
+
+		if (commerceCurrencyCode.isEmpty()) {
+			return commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				themeDisplay.getCompanyId());
+		}
+
+		return commerceCurrencyLocalService.getCommerceCurrency(
+			themeDisplay.getCompanyId(), commerceCurrencyCode);
 	}
 
 	protected String getSelectedScreenNavigationCategoryKey() {
@@ -149,6 +169,7 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 			getScreenNavigationCategoryKey());
 	}
 
+	protected final CommerceChannelLocalService commerceChannelLocalService;
 	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
 	protected final CommerceShippingMethodService commerceShippingMethodService;
 	protected final RenderRequest renderRequest;

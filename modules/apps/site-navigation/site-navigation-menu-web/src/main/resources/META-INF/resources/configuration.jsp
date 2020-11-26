@@ -250,7 +250,7 @@ else {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var form = document.<portlet:namespace />fm;
 
 	form.addEventListener('change', <portlet:namespace />resetPreview);
@@ -490,7 +490,9 @@ else {
 		siteNavigationMenuIdInput &&
 		siteNavigationMenuType
 	) {
-		dom.delegate(
+		var delegate = delegateModule.default;
+
+		delegate(
 			document.<portlet:namespace />fm,
 			'change',
 			'.select-navigation',

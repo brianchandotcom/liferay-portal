@@ -215,8 +215,10 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:script require="metal-dom/src/all/dom as dom">
-			var selectItemHandler = dom.delegate(
+		<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+			var delegate = delegateModule.default;
+
+			var selectItemHandler = delegate(
 				document.querySelector('#<portlet:namespace />entriesContainer'),
 				'click',
 				'.entry',
@@ -249,7 +251,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 			);
 
 			Liferay.on('destroyPortlet', function removeListener() {
-				selectItemHandler.removeListener();
+				selectItemHandler.dispose();
 
 				Liferay.detach('destroyPortlet', removeListener);
 			});

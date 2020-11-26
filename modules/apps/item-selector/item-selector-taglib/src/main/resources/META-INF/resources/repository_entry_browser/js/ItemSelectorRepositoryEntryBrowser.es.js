@@ -14,8 +14,7 @@
 
 import {ClayAlert} from 'clay-alert';
 import {render} from 'frontend-js-react-web';
-import {PortletBase} from 'frontend-js-web';
-import dom from 'metal-dom';
+import {PortletBase, delegate} from 'frontend-js-web';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import ReactDOM from 'react-dom';
@@ -116,7 +115,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	 */
 	_bindEvents() {
 		this._eventHandler.add(
-			dom.delegate(this.rootNode, 'click', '.item-preview', (event) =>
+			delegate(this.rootNode, 'click', '.item-preview', (event) =>
 				this._onItemSelected(event.delegateTarget.dataset)
 			)
 		);

@@ -66,8 +66,10 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/all/dom as dom">
-	var selectItemHandler = dom.delegate(
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+	var delegate = delegateModule.default;
+
+	var selectItemHandler = delegate(
 		document.getElementById('<portlet:namespace />roleSelectorWrapper'),
 		'change',
 		'.entry input',
@@ -91,7 +93,7 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 	);
 
 	Liferay.on('destroyPortlet', function removeListener() {
-		selectItemHandler.removeListener();
+		selectItemHandler.dispose();
 
 		Liferay.detach('destroyPortlet', removeListener);
 	});

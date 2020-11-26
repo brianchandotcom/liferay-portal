@@ -147,8 +147,10 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal" sandbox="<%= true %>">
-	var renameSiteNavigationMenuClickHandler = dom.delegate(
+<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal,frontend-js-web/liferay/delegate/delegate.es as delegateModule" sandbox="<%= true %>">
+	var delegate = delegateModule.default;
+
+	var renameSiteNavigationMenuClickHandler = delegate(
 		document.body,
 		'click',
 		'.<portlet:namespace />update-site-navigation-menu-action-option > a',
@@ -175,7 +177,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 	);
 
 	function handleDestroyPortlet() {
-		renameSiteNavigationMenuClickHandler.removeListener();
+		renameSiteNavigationMenuClickHandler.dispose();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

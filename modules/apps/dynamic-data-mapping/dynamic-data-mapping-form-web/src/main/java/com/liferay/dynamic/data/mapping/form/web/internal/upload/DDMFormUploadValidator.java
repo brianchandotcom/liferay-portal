@@ -118,7 +118,7 @@ public class DDMFormUploadValidator {
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
 
 	private static final Pattern _fileNamePattern = Pattern.compile(
-		"^[a-zA-Z0-9]{1,200}\\.[a-zA-Z0-9]{1,10}\\b");
+		"^[a-zA-Z0-9-_\\s]{1,200}\\.[a-zA-Z0-9]{1,10}$");
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

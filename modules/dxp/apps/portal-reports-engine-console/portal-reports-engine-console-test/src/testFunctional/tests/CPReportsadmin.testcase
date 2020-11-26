@@ -342,8 +342,7 @@ definition {
 
 	@priority = "4"
 	test DownloadReportPDF {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

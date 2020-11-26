@@ -72,10 +72,11 @@ public class UniqueFileEntryTitleProviderTest {
 			StringPool.BLANK, "test".getBytes(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), ".jpg", "someTitle");
-
-		Assert.assertEquals("someTitle (1)", uniqueEntryFileName);
+		Assert.assertEquals(
+			"someTitle (1)",
+			_uniqueFileEntryTitleProvider.provide(
+				_group.getGroupId(), _folder.getFolderId(), ".jpg",
+				"someTitle"));
 	}
 
 	@Test
@@ -86,19 +87,19 @@ public class UniqueFileEntryTitleProviderTest {
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), StringPool.BLANK,
-			"someTitle");
-
-		Assert.assertEquals("someTitle (1)", uniqueEntryFileName);
+		Assert.assertEquals(
+			"someTitle (1)",
+			_uniqueFileEntryTitleProvider.provide(
+				_group.getGroupId(), _folder.getFolderId(), StringPool.BLANK,
+				"someTitle"));
 	}
 
 	@Test
 	public void testProvideWithLocale() throws PortalException {
-		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US);
-
-		Assert.assertEquals("Untitled", uniqueEntryFileName);
+		Assert.assertEquals(
+			"Untitled",
+			_uniqueFileEntryTitleProvider.provide(
+				_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US));
 	}
 
 	@Test
@@ -112,10 +113,10 @@ public class UniqueFileEntryTitleProviderTest {
 			StringPool.BLANK, "test".getBytes(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US);
-
-		Assert.assertEquals("Untitled (1)", uniqueEntryFileName);
+		Assert.assertEquals(
+			"Untitled (1)",
+			_uniqueFileEntryTitleProvider.provide(
+				_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US));
 	}
 
 	@Test
@@ -128,19 +129,19 @@ public class UniqueFileEntryTitleProviderTest {
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US);
-
-		Assert.assertEquals("Untitled (1)", uniqueEntryFileName);
+		Assert.assertEquals(
+			"Untitled (1)",
+			_uniqueFileEntryTitleProvider.provide(
+				_group.getGroupId(), _folder.getFolderId(), LocaleUtil.US));
 	}
 
 	@Test
 	public void testProvideWithName() throws PortalException {
-		String uniqueEntryFileName = _uniqueFileEntryTitleProvider.provide(
-			_group.getGroupId(), _folder.getFolderId(), StringPool.BLANK,
-			"someTitle");
-
-		Assert.assertEquals("someTitle", uniqueEntryFileName);
+		Assert.assertEquals(
+			"someTitle",
+			_uniqueFileEntryTitleProvider.provide(
+				_group.getGroupId(), _folder.getFolderId(), StringPool.BLANK,
+				"someTitle"));
 	}
 
 	@Inject

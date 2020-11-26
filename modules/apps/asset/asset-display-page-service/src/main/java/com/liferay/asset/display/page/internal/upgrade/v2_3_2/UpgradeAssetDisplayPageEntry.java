@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.display.page.internal.upgrade.v3_0_1;
+package com.liferay.asset.display.page.internal.upgrade.v2_3_2;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;

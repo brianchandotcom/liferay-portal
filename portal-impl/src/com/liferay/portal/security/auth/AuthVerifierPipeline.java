@@ -16,6 +16,8 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
+import com.liferay.petra.url.pattern.mapper.URLPatternMapperFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -348,7 +350,11 @@ public class AuthVerifierPipeline {
 	private static final ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
 		_serviceTracker;
 
+	private URLPatternMapper<List<AuthVerifierConfiguration>>
+		_excludeURLPatternMapper;
 	private final Map<String, Object> _filterProperties;
+	private URLPatternMapper<List<AuthVerifierConfiguration>>
+		_includeURLPatternMapper;
 
 	private static class AuthVerifierTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -358,6 +364,8 @@ public class AuthVerifierPipeline {
 			AuthVerifierPipeline authVerifierPipeline) {
 
 			_authVerifierPipelines.add(authVerifierPipeline);
+
+			_rebuildFor(authVerifierPipeline);
 		}
 
 		@Override
@@ -389,6 +397,8 @@ public class AuthVerifierPipeline {
 
 			_authVerifierConfigurations.add(0, authVerifierConfiguration);
 
+			_rebuildAll();
+
 			return authVerifierConfiguration;
 		}
 
@@ -405,6 +415,8 @@ public class AuthVerifierPipeline {
 					authVerifierConfiguration.getAuthVerifierClassName()));
 
 			if (_validate(authVerifierConfiguration)) {
+				_rebuildAll();
+
 				_authVerifierConfigurations.add(0, authVerifierConfiguration);
 			}
 		}
@@ -419,6 +431,70 @@ public class AuthVerifierPipeline {
 			registry.ungetService(serviceReference);
 
 			_authVerifierConfigurations.remove(authVerifierConfiguration);
+
+			_rebuildAll();
+		}
+
+		private static void _rebuildFor(
+			AuthVerifierPipeline authVerifierPipeline) {
+
+			Map<String, List<AuthVerifierConfiguration>>
+				excludeAuthVerifierConfigurations = new HashMap<>();
+
+			Map<String, List<AuthVerifierConfiguration>>
+				includeAuthVerifierConfigurations = new HashMap<>();
+
+			for (AuthVerifierConfiguration authVerifierConfiguration :
+					_authVerifierConfigurations) {
+
+				Properties properties =
+					authVerifierConfiguration.getProperties();
+
+				String[] urlsExcludes = StringUtil.split(
+					properties.getProperty("urls.excludes"));
+
+				for (String urlsExclude : urlsExcludes) {
+					if (!excludeAuthVerifierConfigurations.containsKey(
+							urlsExclude)) {
+
+						excludeAuthVerifierConfigurations.put(
+							urlsExclude, new ArrayList<>());
+					}
+
+					List<AuthVerifierConfiguration>
+						excludeAuthVerifierConfiguration =
+							excludeAuthVerifierConfigurations.get(urlsExclude);
+
+					excludeAuthVerifierConfiguration.add(
+						authVerifierConfiguration);
+				}
+
+				String[] urlsIncludes = StringUtil.split(
+					properties.getProperty("urls.includes"));
+
+				for (String urlsInclude : urlsIncludes) {
+					if (!includeAuthVerifierConfigurations.containsKey(
+							urlsInclude)) {
+
+						includeAuthVerifierConfigurations.put(
+							urlsInclude, new ArrayList<>());
+					}
+
+					List<AuthVerifierConfiguration>
+						includeAuthVerifierConfiguration =
+							includeAuthVerifierConfigurations.get(urlsInclude);
+
+					includeAuthVerifierConfiguration.add(
+						authVerifierConfiguration);
+				}
+			}
+
+			authVerifierPipeline._excludeURLPatternMapper =
+				URLPatternMapperFactory.create(
+					excludeAuthVerifierConfigurations);
+			authVerifierPipeline._includeURLPatternMapper =
+				URLPatternMapperFactory.create(
+					includeAuthVerifierConfigurations);
 		}
 
 		private Properties _loadProperties(
@@ -446,6 +522,14 @@ public class AuthVerifierPipeline {
 			}
 
 			return properties;
+		}
+
+		private void _rebuildAll() {
+			for (AuthVerifierPipeline authVerifierPipeline :
+					_authVerifierPipelines) {
+
+				_rebuildFor(authVerifierPipeline);
+			}
 		}
 
 		private boolean _validate(

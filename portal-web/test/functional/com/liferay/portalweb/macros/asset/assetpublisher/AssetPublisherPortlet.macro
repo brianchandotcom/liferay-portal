@@ -899,13 +899,26 @@ definition {
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetTitle}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${assetTitle}");
+		if ("${assetType}" == "Web Content Folder") {
+			AssertTextEquals.assertPartialText(
+				key_position = "1",
+				locator1 = "AP#ASSET_ABSTRACT_DETAIL_WEB_CONTENT_FOLDER_CONTENT",
+				value1 = "${assetSubfolderDetails}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "${assetContent}");
+			AssertTextEquals.assertPartialText(
+				key_position = "2",
+				locator1 = "AP#ASSET_ABSTRACT_DETAIL_WEB_CONTENT_FOLDER_CONTENT",
+				value1 = "${assetArticleDetails}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "${assetTitle}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
+				value1 = "${assetContent}");
+		}
 	}
 
 	macro viewAssetMetadataPG {

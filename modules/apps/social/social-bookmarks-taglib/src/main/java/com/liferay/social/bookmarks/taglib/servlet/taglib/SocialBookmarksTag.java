@@ -202,7 +202,7 @@ public class SocialBookmarksTag extends IncludeTag {
 				Layout layout = themeDisplay.getLayout();
 
 				_url = PortalUtil.getCanonicalURL(
-					_urlImpl.toString(), themeDisplay, layout, false, false);
+					_urlImpl.toString(), themeDisplay, layout, true, false);
 
 				try {
 					_url = PortalUtil.getAlternateURL(

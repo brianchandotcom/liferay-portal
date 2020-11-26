@@ -180,11 +180,6 @@ class Form extends Component {
 				this._handleAddFieldButtonClicked.bind(this)
 			),
 			dom.on(
-				`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
-				'click',
-				this._handleBackButtonClicked
-			),
-			dom.on(
 				'.forms-navigation-bar li',
 				'click',
 				this._handleFormNavClicked
@@ -203,6 +198,15 @@ class Form extends Component {
 				'.lfr-ddm-publish-button',
 				'click',
 				this._handlePublishButtonClicked.bind(this)
+			)
+		);
+
+		this._eventHandler.add(
+			dom.delegate(
+				document.body,
+				'click',
+				`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
+				this._handleBackButtonClicked.bind(this)
 			)
 		);
 
@@ -278,9 +282,6 @@ class Form extends Component {
 
 	created() {
 		this._createFormURL = this._createFormURL.bind(this);
-		this._handleBackButtonClicked = this._handleBackButtonClicked.bind(
-			this
-		);
 		this._handleFormNavClicked = this._handleFormNavClicked.bind(this);
 		this._handleNameEditorCopyAndPaste = this._handleNameEditorCopyAndPaste.bind(
 			this

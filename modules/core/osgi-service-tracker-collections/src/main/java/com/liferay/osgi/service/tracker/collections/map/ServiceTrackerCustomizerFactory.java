@@ -79,22 +79,8 @@ public class ServiceTrackerCustomizerFactory {
 				}
 
 				try {
-					final Map<String, Object> properties = _getProperties(
-						serviceReference);
-
-					return new ServiceWrapper<S>() {
-
-						@Override
-						public Map<String, Object> getProperties() {
-							return properties;
-						}
-
-						@Override
-						public S getService() {
-							return service;
-						}
-
-					};
+					return new ServiceWrapperImpl<>(
+						_getProperties(serviceReference), service);
 				}
 				catch (Throwable throwable) {
 					bundleContext.ungetService(serviceReference);
@@ -107,6 +93,12 @@ public class ServiceTrackerCustomizerFactory {
 			public void modifiedService(
 				ServiceReference<S> serviceReference,
 				ServiceWrapper<S> serviceWrapper) {
+
+				ServiceWrapperImpl serviceWrapperImpl =
+					(ServiceWrapperImpl)serviceWrapper;
+
+				serviceWrapperImpl._setProperties(
+					_getProperties(serviceReference));
 			}
 
 			@Override
@@ -141,6 +133,32 @@ public class ServiceTrackerCustomizerFactory {
 		}
 
 		return properties;
+	}
+
+	private static class ServiceWrapperImpl<S> implements ServiceWrapper<S> {
+
+		public ServiceWrapperImpl(Map<String, Object> properties, S service) {
+			_properties = properties;
+			_service = service;
+		}
+
+		@Override
+		public Map<String, Object> getProperties() {
+			return _properties;
+		}
+
+		@Override
+		public S getService() {
+			return _service;
+		}
+
+		private void _setProperties(Map<String, Object> properties) {
+			_properties = properties;
+		}
+
+		private volatile Map<String, Object> _properties;
+		private final S _service;
+
 	}
 
 }

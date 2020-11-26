@@ -51,26 +51,7 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public Map<String, String> getData() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return HashMapBuilder.put(
-			"ddmtemplateid", String.valueOf(_ddmTemplate.getTemplateId())
-		).put(
-			"ddmtemplatekey", _ddmTemplate.getTemplateKey()
-		).put(
-			"description", _ddmTemplate.getDescription(themeDisplay.getLocale())
-		).put(
-			"imageurl", _ddmTemplate.getTemplateImageURL(themeDisplay)
-		).put(
-			"name", _ddmTemplate.getName(themeDisplay.getLocale())
-		).build();
-	}
-
-	@Override
-	public String getElementClasses() {
+	public String getCssClass() {
 		if (_ddmTemplate.getTemplateId() !=
 				_journalSelectDDMTemplateDisplayContext.getDDMTemplateId()) {
 
@@ -79,6 +60,26 @@ public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public Map<String, String> getDynamicAttributes() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return HashMapBuilder.put(
+			"data-ddmtemplateid", String.valueOf(_ddmTemplate.getTemplateId())
+		).put(
+			"data-ddmtemplatekey", _ddmTemplate.getTemplateKey()
+		).put(
+			"data-description",
+			_ddmTemplate.getDescription(themeDisplay.getLocale())
+		).put(
+			"data-imageurl", _ddmTemplate.getTemplateImageURL(themeDisplay)
+		).put(
+			"data-name", _ddmTemplate.getName(themeDisplay.getLocale())
+		).build();
 	}
 
 	@Override

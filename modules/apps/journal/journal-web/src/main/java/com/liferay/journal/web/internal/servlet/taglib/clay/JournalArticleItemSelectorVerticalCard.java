@@ -52,7 +52,7 @@ public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public String getElementClasses() {
+	public String getCssClass() {
 		return "card-interactive card-interactive-secondary";
 	}
 

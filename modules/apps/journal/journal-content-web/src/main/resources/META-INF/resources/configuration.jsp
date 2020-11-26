@@ -50,7 +50,7 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var articlePreview = document.getElementById(
 		'<portlet:namespace />articlePreview'
 	);
@@ -58,9 +58,9 @@
 		'<portlet:namespace />assetEntryId'
 	);
 
-	dom.delegate(articlePreview, 'click', '.web-content-selector', function (
-		event
-	) {
+	var delegate = delegateModule.default;
+
+	delegate(articlePreview, 'click', '.web-content-selector', function (event) {
 		event.preventDefault();
 
 		Liferay.Util.openSelectionModal({
@@ -75,7 +75,7 @@
 		});
 	});
 
-	dom.delegate(articlePreview, 'click', '.selector-button', function (event) {
+	delegate(articlePreview, 'click', '.selector-button', function (event) {
 		event.preventDefault();
 		retrieveWebContent(-1);
 	});

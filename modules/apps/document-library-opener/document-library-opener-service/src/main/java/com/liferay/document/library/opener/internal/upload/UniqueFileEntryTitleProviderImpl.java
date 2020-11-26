@@ -17,6 +17,7 @@ package com.liferay.document.library.opener.internal.upload;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -71,12 +72,9 @@ public class UniqueFileEntryTitleProviderImpl
 		return _provide(groupId, folderId, extension, title);
 	}
 
-	private boolean _fileNameExists(
-		long groupId, long folderId, String fileName) {
-
+	private boolean _exists(UnsafeRunnable<PortalException> unsafeRunnable) {
 		try {
-			_dlAppLocalService.getFileEntryByFileName(
-				groupId, folderId, fileName);
+			unsafeRunnable.run();
 
 			return true;
 		}
@@ -90,6 +88,14 @@ public class UniqueFileEntryTitleProviderImpl
 		}
 
 		return false;
+	}
+
+	private boolean _fileNameExists(
+		long groupId, long folderId, String fileName) {
+
+		return _exists(
+			() -> _dlAppLocalService.getFileEntryByFileName(
+				groupId, folderId, fileName));
 	}
 
 	private String _provide(long groupId, long folderId, String title)
@@ -113,21 +119,8 @@ public class UniqueFileEntryTitleProviderImpl
 	}
 
 	private boolean _titleExists(long groupId, long folderId, String title) {
-		try {
-			_dlAppLocalService.getFileEntry(groupId, folderId, title);
-
-			return true;
-		}
-		catch (NoSuchFileEntryException noSuchFileEntryException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
-			}
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
-
-		return false;
+		return _exists(
+			() -> _dlAppLocalService.getFileEntry(groupId, folderId, title));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

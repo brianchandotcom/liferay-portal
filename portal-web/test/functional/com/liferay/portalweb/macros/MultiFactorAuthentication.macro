@@ -259,13 +259,9 @@ definition {
 
 		Button.click(button = "Submit");
 
-		if (IsElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FAILED_MESSAGE")) {
-			AssertElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-		}
-		else {
-			AssertElementNotPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD");
-			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-		}
+		AssertElementNotPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD");
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
 	macro verifyOTP {

@@ -128,8 +128,8 @@ definition {
 	@description = "This is a use case for LPS-45062."
 	@priority = "5"
 	test ResizeAddedEventsViaEventBlock {
-		property portal.upstream = "quarantine";
 		property portal.release = "false";
+		property portal.upstream = "quarantine";
 
 		CalendarNavigator.gotoView(viewType = "Day");
 

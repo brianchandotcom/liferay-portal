@@ -93,9 +93,9 @@ definition {
 
 	@priority = "5"
 	test ApproveEventWithInvitedUser {
-		property portal.upstream = "quarantine";
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName();
 

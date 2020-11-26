@@ -35,12 +35,6 @@ public class GroupVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public String getAspectRatioCssClasses() {
-		return "aspect-ratio-item-center-middle " +
-			"aspect-ratio-item-vertical-fluid";
-	}
-
-	@Override
 	public String getHref() {
 		if (_group.getGroupId() != _themeDisplay.getScopeGroupId()) {
 			return _group.getDisplayURL(_themeDisplay);
@@ -74,6 +68,11 @@ public class GroupVerticalCard implements VerticalCard {
 		}
 
 		return HtmlUtil.escape(_group.getName(_themeDisplay.getLocale()));
+	}
+
+	@Override
+	public Boolean isFlushVertical() {
+		return true;
 	}
 
 	@Override

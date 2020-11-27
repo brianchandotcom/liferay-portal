@@ -70,7 +70,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 					<liferay-ui:search-container-column-text>
 						<c:choose>
 							<c:when test="<%= itemDescriptor.isCompact() %>">
-								<clay:horizontal-card-v2
+								<clay:horizontal-card
 									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</c:when>

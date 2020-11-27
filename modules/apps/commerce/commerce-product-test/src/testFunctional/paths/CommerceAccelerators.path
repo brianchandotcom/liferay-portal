@@ -94,7 +94,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_DETAILS_PRICE_VALUE</td>
+	<td>PRODUCT_DETAILS_LIST_PRICE</td>
 	<td>//h2[contains(@class,'commerce-price')]//span[contains(@class,'price-value')]</td>
 	<td></td>
 </tr>

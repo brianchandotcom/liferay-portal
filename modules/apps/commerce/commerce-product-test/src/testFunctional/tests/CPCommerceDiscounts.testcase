@@ -61,12 +61,15 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewDiscountsEntry(
-			channelsEligibility = "Test Channel",
 			discountAmount = "15",
 			discountName = "Test Discount",
 			discountTarget = "Products",
 			discountType = "Percentage",
 			maximumDiscountAmount = "10");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(channelsEligibility = "Test Channel");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

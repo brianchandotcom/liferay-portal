@@ -187,15 +187,6 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 
 		Button.clickPublish();
-
-		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
-
-		CommerceEntry.setEntryEligibility(
-			accountGroupsEligibility = "${accountGroupsEligibility}",
-			accountsEligibility = "${accountsEligibility}",
-			channelsEligibility = "${channelsEligibility}");
-
-		Button.clickPublish();
 	}
 
 	macro addNewFilters {

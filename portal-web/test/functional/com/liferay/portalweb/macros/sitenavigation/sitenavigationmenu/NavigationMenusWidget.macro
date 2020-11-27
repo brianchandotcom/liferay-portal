@@ -44,7 +44,7 @@ definition {
 
 			MouseOver(
 				key_pageName = "${pageName}",
-				locator1 = "Home#PAGE");
+				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
 
 			Click(
 				key_itemName = "${itemName}",

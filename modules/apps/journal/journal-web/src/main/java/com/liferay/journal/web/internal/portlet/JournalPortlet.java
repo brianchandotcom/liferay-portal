@@ -224,7 +224,12 @@ public class JournalPortlet extends MVCPortlet {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+			else {
+				_log.error(exception.getMessage());
+			}
 
 			SessionErrors.add(renderRequest, exception.getClass());
 		}

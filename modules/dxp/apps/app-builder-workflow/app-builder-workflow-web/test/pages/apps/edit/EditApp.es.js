@@ -42,7 +42,6 @@ const app = {
 const appContextMock = {
 	baseResourceUrl: '',
 	namespace: '',
-	showTranslationManager: true,
 };
 
 const customObjectItems = {

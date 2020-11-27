@@ -12,7 +12,6 @@
 import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {AppContext} from 'app-builder-web/js/AppContext.es';
 import UpperToolbar, {
 	UpperToolbarInput,
 } from 'app-builder-web/js/components/upper-toolbar/UpperToolbar.es';
@@ -37,8 +36,6 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 		setDeployModalVisible,
 		state: {app},
 	} = useContext(EditAppContext);
-	const {showTranslationManager} = useContext(AppContext);
-
 	const {availableLanguageIds, defaultLanguageId} = config.dataObject;
 
 	const {undeployApp} = useDeployApp();
@@ -130,16 +127,14 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 
 	return (
 		<UpperToolbar className="align-items-center">
-			{showTranslationManager && (
-				<TranslationManager
-					availableLanguageIds={availableLanguages}
-					className="mr-1"
-					defaultLanguageId={defaultLanguageId}
-					editingLanguageId={editingLanguageId}
-					onEditingLanguageIdChange={onChangeEditingLanguageId}
-					translatedLanguageIds={app.name}
-				/>
-			)}
+			<TranslationManager
+				availableLanguageIds={availableLanguages}
+				className="mr-1"
+				defaultLanguageId={defaultLanguageId}
+				editingLanguageId={editingLanguageId}
+				onEditingLanguageIdChange={onChangeEditingLanguageId}
+				translatedLanguageIds={app.name}
+			/>
 
 			<UpperToolbarInput
 				maxLength={30}

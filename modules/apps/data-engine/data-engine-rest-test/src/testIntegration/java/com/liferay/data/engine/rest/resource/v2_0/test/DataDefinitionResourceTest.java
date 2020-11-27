@@ -268,6 +268,32 @@ public class DataDefinitionResourceTest
 	public void testPostDataDefinitionByContentType() throws Exception {
 		super.testPostDataDefinitionByContentType();
 
+		// Allow invalid field languages for app builder
+
+		DataDefinition fieldsetDataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE,
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition-basic.json")));
+
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			DataDefinitionTestUtil.read(
+				"data-definition-with-invalid-field-languages.json"));
+
+		for (DataDefinitionField dataDefinitionField :
+				dataDefinition.getDataDefinitionFields()) {
+
+			Map<String, Object> customProperties =
+				dataDefinitionField.getCustomProperties();
+
+			customProperties.put(
+				"ddmStructureId", fieldsetDataDefinition.getId());
+		}
+
+		assertValid(
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), "app-builder", dataDefinition));
+
 		// MustNotDuplicateFieldName
 
 		try {
@@ -513,46 +539,18 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("string", problem.getDetail());
 		}
 
-		// Fill the data layout name with the data definition's name when no
-		// name is set
+		// Provide default layout name when none is informed
 
-		DataDefinition dataDefinition =
+		dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				testGroup.getGroupId(), _CONTENT_TYPE,
 				DataDefinition.toDTO(
 					DataDefinitionTestUtil.read(
-						"data-definition-must-set-data-layout-name.json")));
+						"data-definition-empty-data-layout-name.json")));
 
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
 		Assert.assertEquals(dataDefinition.getName(), dataLayout.getName());
-
-		// Allows fields with language keys that are not included in the
-		// available languages for app-builder content type
-
-		DataDefinition fieldsetDataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				testGroup.getGroupId(), _CONTENT_TYPE,
-				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition-basic.json")));
-
-		dataDefinition = DataDefinition.toDTO(
-			DataDefinitionTestUtil.read(
-				"data-definition-parent-with-invalid-languages.json"));
-
-		for (DataDefinitionField dataDefinitionField :
-				dataDefinition.getDataDefinitionFields()) {
-
-			Map<String, Object> customProperties =
-				dataDefinitionField.getCustomProperties();
-
-			customProperties.put(
-				"ddmStructureId", fieldsetDataDefinition.getId());
-		}
-
-		assertValid(
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				testGroup.getGroupId(), "app-builder", dataDefinition));
 	}
 
 	@Override

@@ -95,15 +95,9 @@ public class AuthVerifierPipeline {
 			requestURI = requestURI.substring(contextPath.length());
 		}
 
-		Set<AuthVerifierConfiguration> excludeAuthVerifierConfigurations =
-			new HashSet<>();
-
-		_excludeURLPatternMapper.consumeValues(
-			excludeAuthVerifierConfigurations::addAll, requestURI);
-
 		AuthVerifierConfigurationConsumer authVerifierConfigurationConsumer =
 			new AuthVerifierConfigurationConsumer(
-				accessControlContext, excludeAuthVerifierConfigurations);
+				accessControlContext, _excludeURLPatternMapper, requestURI);
 
 		_includeURLPatternMapper.consumeValues(
 			authVerifierConfigurationConsumer, requestURI);
@@ -289,11 +283,13 @@ public class AuthVerifierPipeline {
 
 		public AuthVerifierConfigurationConsumer(
 			AccessControlContext accessControlContext,
-			Set<AuthVerifierConfiguration> excludedAuthVerifierConfigurations) {
+			URLPatternMapper<List<AuthVerifierConfiguration>>
+				excludeURLPatternMapper,
+			String requestURI) {
 
 			_accessControlContext = accessControlContext;
-			_excludedAuthVerifierConfigurations =
-				excludedAuthVerifierConfigurations;
+			_excludeURLPatternMapper = excludeURLPatternMapper;
+			_requestURI = requestURI;
 		}
 
 		@Override
@@ -302,6 +298,13 @@ public class AuthVerifierPipeline {
 
 			if (_authVerifierResult != null) {
 				return;
+			}
+
+			if (_excludedAuthVerifierConfigurations == null) {
+				_excludedAuthVerifierConfigurations = new HashSet<>();
+
+				_excludeURLPatternMapper.consumeValues(
+					_excludedAuthVerifierConfigurations::addAll, _requestURI);
 			}
 
 			for (AuthVerifierConfiguration authVerifierConfiguration :
@@ -421,8 +424,11 @@ public class AuthVerifierPipeline {
 
 		private final AccessControlContext _accessControlContext;
 		private AuthVerifierResult _authVerifierResult;
-		private final Set<AuthVerifierConfiguration>
+		private Set<AuthVerifierConfiguration>
 			_excludedAuthVerifierConfigurations;
+		private final URLPatternMapper<List<AuthVerifierConfiguration>>
+			_excludeURLPatternMapper;
+		private final String _requestURI;
 
 	}
 

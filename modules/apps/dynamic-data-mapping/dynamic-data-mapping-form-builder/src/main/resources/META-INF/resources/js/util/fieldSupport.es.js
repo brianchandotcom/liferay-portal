@@ -304,12 +304,7 @@ export const isFieldSetChild = (pages, fieldName) => {
 	return !!getParentFieldSet(pages, fieldName);
 };
 
-export const localizeField = (
-	field,
-	defaultLanguageId,
-	editingLanguageId,
-	localizationMap
-) => {
+export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 	let value = field.value;
 
 	if (
@@ -329,28 +324,9 @@ export const localizeField = (
 	}
 
 	if (field.localizable && field.localizedValue) {
-		let edited = false;
-
-		if (localizationMap && localizationMap[field.fieldName]) {
-			if (
-				localizationMap[field.fieldName][editingLanguageId] ===
-				undefined
-			) {
-				localizationMap[field.fieldName][editingLanguageId] = {
-					edited: false,
-				};
-			}
-
-			edited =
-				localizationMap[field.fieldName]?.[editingLanguageId].edited;
-		}
-		else {
-			edited = true;
-		}
-
 		let localizedValue = field.localizedValue[editingLanguageId];
 
-		if (localizedValue === undefined || !edited) {
+		if (localizedValue === undefined) {
 			localizedValue = field.localizedValue[defaultLanguageId];
 		}
 

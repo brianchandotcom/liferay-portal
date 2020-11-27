@@ -138,10 +138,7 @@ class LayoutProvider extends Component {
 			const settingsContext = {
 				...focusedField.settingsContext,
 				pages: this.getLocalizedPages(
-					focusedField.settingsContext.pages,
-					this.getSettingsContextLocalizationMap(
-						focusedField.fieldName
-					)
+					focusedField.settingsContext.pages
 				),
 			};
 
@@ -159,17 +156,12 @@ class LayoutProvider extends Component {
 		return focusedField;
 	}
 
-	getLocalizedPages(pages, settingsContextLocalizationMap) {
+	getLocalizedPages(pages) {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		const settingsVisitor = new PagesVisitor(pages);
 
 		return settingsVisitor.mapFields((field) =>
-			localizeField(
-				field,
-				defaultLanguageId,
-				editingLanguageId,
-				settingsContextLocalizationMap
-			)
+			localizeField(field, defaultLanguageId, editingLanguageId)
 		);
 	}
 
@@ -189,10 +181,7 @@ class LayoutProvider extends Component {
 					...settingsContext,
 					availableLanguageIds,
 					defaultLanguageId,
-					pages: this.getLocalizedPages(
-						settingsContext.pages,
-						this.getSettingsContextLocalizationMap(field.fieldName)
-					),
+					pages: this.getLocalizedPages(settingsContext.pages),
 				};
 
 				const newField = {
@@ -301,12 +290,6 @@ class LayoutProvider extends Component {
 		}
 
 		return rules;
-	}
-
-	getSettingsContextLocalizationMap(fieldName) {
-		const {localizationMap} = this.props;
-
-		return localizationMap[fieldName]?.settingsContextLocalizationMap;
 	}
 
 	render() {

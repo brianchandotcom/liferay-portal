@@ -25,9 +25,13 @@ function CalculatorDisplay({expression, fields}) {
 	const {resource: fieldTypes} = useFieldTypesResource();
 
 	const value = useMemo(() => {
+		const newMaskedExpression = expression.replace(/[[\]]/g, '');
+
 		return (
-			RulesSupport.replaceFieldNameByFieldLabel(expression, fields) ??
-			expression
+			RulesSupport.replaceFieldNameByFieldLabel(
+				newMaskedExpression,
+				fields
+			) ?? newMaskedExpression
 		);
 	}, [expression, fields]);
 

@@ -47,7 +47,6 @@ import com.fedex.ws.rate.v22.WeightUnits;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
@@ -57,10 +56,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.Dimensions;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
@@ -112,7 +108,6 @@ public class FedExCommerceShippingOptionHelper {
 	public FedExCommerceShippingOptionHelper(
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
-			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CommerceShippingHelper commerceShippingHelper,
 			CommerceShippingOriginLocator commerceShippingOriginLocator,
 			CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
@@ -123,7 +118,6 @@ public class FedExCommerceShippingOptionHelper {
 		_commerceContext = commerceContext;
 		_commerceOrder = commerceOrder;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceShippingHelper = commerceShippingHelper;
 		_commerceShippingOriginLocator = commerceShippingOriginLocator;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
@@ -228,9 +222,9 @@ public class FedExCommerceShippingOptionHelper {
 		throws Exception {
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+			if (!commerceOrderItem.isShippable() ||
+				commerceOrderItem.isFreeShipping()) {
 
-			if (!cpDefinition.isShippable() || cpDefinition.isFreeShipping()) {
 				commerceOrderItems.remove(commerceOrderItem);
 			}
 		}
@@ -514,27 +508,10 @@ public class FedExCommerceShippingOptionHelper {
 		BigDecimal price = BigDecimal.ZERO;
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			price = price.add(
-				_getPrice(
-					commerceOrderItem.getCPInstanceId(),
-					commerceOrderItem.getQuantity()));
+			price = price.add(commerceOrderItem.getFinalPrice());
 		}
 
 		return price;
-	}
-
-	private BigDecimal _getPrice(long cpInstanceId, int quantity)
-		throws Exception {
-
-		CommerceMoney commerceMoney =
-			_commerceProductPriceCalculation.getFinalPrice(
-				cpInstanceId, quantity, false, _commerceContext);
-
-		if (commerceMoney.isEmpty()) {
-			return BigDecimal.ZERO;
-		}
-
-		return commerceMoney.getPrice();
 	}
 
 	private RateRequest _getRateRequest(
@@ -676,20 +653,20 @@ public class FedExCommerceShippingOptionHelper {
 		for (int i = 0; i < commerceOrderItems.size(); i++) {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(i);
 
-			CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
-
 			Dimensions dimensions = _commerceShippingHelper.getDimensions(
-				cpInstance);
+				commerceOrderItem);
 
 			int fedExWidth = _getFedExDimension(dimensions.getWidth());
 			int fedExHeight = _getFedExDimension(dimensions.getHeight());
 			int fedExDepth = _getFedExDimension(dimensions.getDepth());
 
 			double fedExWeight = _getFedExWeight(
-				_commerceShippingHelper.getWeight(cpInstance));
+				_commerceShippingHelper.getWeight(commerceOrderItem));
 
-			BigDecimal price = _getPrice(
-				commerceOrderItem.getCPInstanceId(), 1);
+			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+
+			BigDecimal price = finalPrice.divide(
+				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 
 			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =
@@ -817,8 +794,6 @@ public class FedExCommerceShippingOptionHelper {
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CommerceOrder _commerceOrder;
-	private final CommerceProductPriceCalculation
-		_commerceProductPriceCalculation;
 	private final CommerceShippingHelper _commerceShippingHelper;
 	private final CommerceShippingOriginLocator _commerceShippingOriginLocator;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

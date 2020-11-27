@@ -20,21 +20,9 @@ definition {
 		else {
 			Navigator.openURL();
 
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Discounts");
+			CommerceConfiguration.commerceAdminTearDown();
 
-			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				CommerceEntry.deleteCommerceEntry();
-			}
-
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
-
-			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				CommerceEntry.deleteCommerceEntry();
-			}
+			CommerceConfiguration.commerceInitializersTearDown();
 		}
 	}
 

@@ -55,6 +55,9 @@ public class CollectionFilterFragmentRendererDisplayContext {
 			(List<AssetCategory>)_httpServletRequest.getAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES);
 
+		Long fragmentEntryLinkId = (Long)_httpServletRequest.getAttribute(
+			CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID);
+
 		Layout layout = _themeDisplay.getLayout();
 
 		try {
@@ -75,7 +78,7 @@ public class CollectionFilterFragmentRendererDisplayContext {
 							HttpUtil.addParameter(
 								layoutURL,
 								CollectionFilterFragmentRendererWebKeys.
-									CATEGORY_ID,
+									CATEGORY_ID + "_" + fragmentEntryLinkId,
 								assetCategory.getCategoryId()));
 						dropdownItem.setLabel(
 							assetCategory.getTitle(

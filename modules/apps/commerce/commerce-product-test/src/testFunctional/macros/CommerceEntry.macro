@@ -677,6 +677,8 @@ definition {
 				key_radioOption = "All Channels",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 		}
+
+		Button.clickPublish();
 	}
 
 	macro uploadCatalogEntrySingleImage {

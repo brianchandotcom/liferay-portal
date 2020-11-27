@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,48 +49,36 @@ public class CollectionFilterFragmentRendererDisplayContext {
 	}
 
 	public List<DropdownItem> getDropdownItems() {
+		String urlCurrent = _themeDisplay.getURLCurrent();
+
+		String parameterName = _getParameterName();
+
+		String url = HttpUtil.removeParameter(urlCurrent, parameterName);
+
+		DropdownItemListBuilder.DropdownItemListWrapper
+			dropdownItemListWrapper = DropdownItemListBuilder.add(
+				dropdownItem -> {
+					dropdownItem.setHref(url);
+					dropdownItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "all"));
+				});
+
 		List<AssetCategory> assetCategories =
 			(List<AssetCategory>)_httpServletRequest.getAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES);
 
-		Long fragmentEntryLinkId = (Long)_httpServletRequest.getAttribute(
-			CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID);
-
-		Layout layout = _themeDisplay.getLayout();
-
-		try {
-			String layoutURL = layout.getRegularURL(_httpServletRequest);
-
-			DropdownItemListBuilder.DropdownItemListWrapper
-				dropdownItemListWrapper = DropdownItemListBuilder.add(
-					dropdownItem -> {
-						dropdownItem.setHref(layoutURL);
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "all"));
-					});
-
-			for (AssetCategory assetCategory : assetCategories) {
-				dropdownItemListWrapper.add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							HttpUtil.addParameter(
-								layoutURL,
-								CollectionFilterFragmentRendererWebKeys.
-									CATEGORY_ID + "_" + fragmentEntryLinkId,
-								assetCategory.getCategoryId()));
-						dropdownItem.setLabel(
-							assetCategory.getTitle(
-								_themeDisplay.getLanguageId()));
-					});
-			}
-
-			return dropdownItemListWrapper.build();
-		}
-		catch (PortalException portalException) {
-			_log.error("Unable to get dropdown items", portalException);
+		for (AssetCategory assetCategory : assetCategories) {
+			dropdownItemListWrapper.add(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						HttpUtil.addParameter(
+							url, parameterName, assetCategory.getCategoryId()));
+					dropdownItem.setLabel(
+						assetCategory.getTitle(_themeDisplay.getLanguageId()));
+				});
 		}
 
-		return new ArrayList<>();
+		return dropdownItemListWrapper.build();
 	}
 
 	public String getSelectedCategoryTitle() {

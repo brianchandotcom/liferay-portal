@@ -32,6 +32,11 @@ export default function SiteLanguageConfiguration({
 	liveGroupIsOrganization,
 	portletNamespace,
 }) {
+	const [
+		showRemoveDefaultLanguageWarning,
+		setShowRemoveDefaultLanguageWarning,
+	] = useState(false);
+
 	const [availableLanguages, setAvailableLanguages] = useState(
 		initialAvailableLanguages
 	);
@@ -62,6 +67,23 @@ export default function SiteLanguageConfiguration({
 			),
 		[defaultLanguageId, portletNamespace]
 	);
+
+	const handleItemsChange = (items) => {
+		const [nextCurrentLanguages, nextAvailableLanguages] = items;
+
+		const removingDefaultLanguage = nextAvailableLanguages.some(
+			(language) => language.value === defaultLanguageId
+		);
+
+		if (removingDefaultLanguage) {
+			setShowRemoveDefaultLanguageWarning(true);
+		}
+		else {
+			setAvailableLanguages(nextAvailableLanguages);
+			setCurrentLanguages(nextCurrentLanguages);
+			setShowRemoveDefaultLanguageWarning(false);
+		}
+	};
 
 	return (
 		<>
@@ -139,6 +161,22 @@ export default function SiteLanguageConfiguration({
 						{Liferay.Language.get('available-languages')}
 					</h5>
 
+					{showRemoveDefaultLanguageWarning && (
+						<ClayAlert
+							autoClose
+							className="mt-3"
+							displayType="danger"
+							onClose={() => {
+								setShowRemoveDefaultLanguageWarning(false);
+							}}
+							title={Liferay.Language.get('error')}
+						>
+							{Liferay.Language.get(
+								'you-cannot-remove-a-language-that-is-the-current-default-language'
+							)}
+						</ClayAlert>
+					)}
+
 					<ClayInput
 						name={`${portletNamespace}TypeSettingsProperties--locales--`}
 						type="hidden"
@@ -152,15 +190,7 @@ export default function SiteLanguageConfiguration({
 						left={{
 							label: Liferay.Language.get('current'),
 						}}
-						onItemsChange={(items) => {
-							const [
-								nextCurrentLanguages,
-								nextAvailableLanguages,
-							] = items;
-
-							setCurrentLanguages(nextCurrentLanguages);
-							setAvailableLanguages(nextAvailableLanguages);
-						}}
+						onItemsChange={handleItemsChange}
 						right={{
 							label: Liferay.Language.get('available'),
 						}}

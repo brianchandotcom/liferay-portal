@@ -1100,6 +1100,13 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 
 		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
+		commerceOrderItem.setShippable(cpDefinition.isShippable());
+		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
+		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
+		commerceOrderItem.setShippingExtraPrice(
+			cpDefinition.getShippingExtraPrice());
+
+		_setDimensions(commerceOrderItem, cpInstance);
 
 		return commerceOrderItem;
 	}
@@ -1464,6 +1471,38 @@ public class CommerceOrderItemLocalServiceImpl
 		_setCommerceOrderItemDiscountValue(
 			commerceOrderItem,
 			commerceProductPrice.getDiscountValueWithTaxAmount(), true);
+	}
+
+	private void _setDimensions(
+			CommerceOrderItem commerceOrderItem, CPInstance cpInstance)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpInstance.getCPDefinitionId());
+
+		commerceOrderItem.setWidth(cpInstance.getWidth());
+
+		if (commerceOrderItem.getWidth() <= 0) {
+			commerceOrderItem.setWidth(cpDefinition.getWidth());
+		}
+
+		commerceOrderItem.setHeight(cpInstance.getHeight());
+
+		if (commerceOrderItem.getHeight() <= 0) {
+			commerceOrderItem.setWidth(cpDefinition.getHeight());
+		}
+
+		commerceOrderItem.setDepth(cpInstance.getDepth());
+
+		if (commerceOrderItem.getDepth() <= 0) {
+			commerceOrderItem.setWidth(cpDefinition.getDepth());
+		}
+
+		commerceOrderItem.setWeight(cpInstance.getWeight());
+
+		if (commerceOrderItem.getWeight() <= 0) {
+			commerceOrderItem.setWidth(cpDefinition.getWeight());
+		}
 	}
 
 	private void _updateBookedQuantity(

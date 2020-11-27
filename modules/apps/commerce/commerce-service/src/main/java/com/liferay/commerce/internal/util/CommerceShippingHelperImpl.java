@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.util;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +33,17 @@ import org.osgi.service.component.annotations.Component;
 	enabled = false, immediate = true, service = CommerceShippingHelper.class
 )
 public class CommerceShippingHelperImpl implements CommerceShippingHelper {
+
+	@Override
+	public Dimensions getDimensions(CommerceOrderItem commerceOrderItem) {
+		if (commerceOrderItem == null) {
+			return new Dimensions(0, 0, 0);
+		}
+
+		return new Dimensions(
+			commerceOrderItem.getWidth(), commerceOrderItem.getHeight(),
+			commerceOrderItem.getDepth());
+	}
 
 	@Override
 	public Dimensions getDimensions(CPInstance cpInstance) {
@@ -54,7 +64,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
 			if (commerceOrderItem.getQuantity() == 1) {
-				return getDimensions(commerceOrderItem.fetchCPInstance());
+				return getDimensions(commerceOrderItem);
 			}
 		}
 
@@ -64,14 +74,13 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		double volume = 0;
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+			if (!commerceOrderItem.isShippable() ||
+				commerceOrderItem.isFreeShipping()) {
 
-			if (!cpDefinition.isShippable() || cpDefinition.isFreeShipping()) {
 				continue;
 			}
 
-			Dimensions dimensions = getDimensions(
-				commerceOrderItem.fetchCPInstance());
+			Dimensions dimensions = getDimensions(commerceOrderItem);
 
 			double width = dimensions.getWidth();
 			double height = dimensions.getHeight();
@@ -98,6 +107,15 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 	}
 
 	@Override
+	public double getWeight(CommerceOrderItem commerceOrderItem) {
+		if (commerceOrderItem == null) {
+			return 0;
+		}
+
+		return commerceOrderItem.getWeight();
+	}
+
+	@Override
 	public double getWeight(CPInstance cpInstance) {
 		if (cpInstance == null) {
 			return 0;
@@ -113,15 +131,14 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		double weight = 0;
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+			if (!commerceOrderItem.isShippable() ||
+				commerceOrderItem.isFreeShipping()) {
 
-			if (!cpDefinition.isShippable() || cpDefinition.isFreeShipping()) {
 				continue;
 			}
 
 			weight +=
-				getWeight(commerceOrderItem.fetchCPInstance()) *
-					commerceOrderItem.getQuantity();
+				getWeight(commerceOrderItem) * commerceOrderItem.getQuantity();
 		}
 
 		return weight;
@@ -134,9 +151,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-
-			if (!cpDefinition.isFreeShipping()) {
+			if (!commerceOrderItem.isFreeShipping()) {
 				return false;
 			}
 		}
@@ -151,9 +166,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-
-			if (cpDefinition.isShippable()) {
+			if (commerceOrderItem.isShippable()) {
 				return true;
 			}
 		}

@@ -14,22 +14,29 @@
 
 package com.liferay.portal.upgrade.internal.release.osgi.commands;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.release.ReleaseManager;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedMap;
 
 import org.apache.felix.service.command.Descriptor;
 
@@ -43,117 +50,24 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=check", "osgi.command.function=execute",
-		"osgi.command.function=executeAll", "osgi.command.function=list",
-		"osgi.command.scope=upgrade"
+		"osgi.command.function=check", "osgi.command.function=checkAll",
+		"osgi.command.function=execute", "osgi.command.function=executeAll",
+		"osgi.command.function=list", "osgi.command.scope=upgrade"
 	},
 	service = ReleaseManagerOSGiCommands.class
 )
 public class ReleaseManagerOSGiCommands {
 
-	@Descriptor("List pending or running upgrades")
+	@Descriptor("List modules pending to upgrade")
 	@Override
 	public String check() {
-		return check(false);
+		return _getPendingUpgradeInfo(false);
 	}
 
-	public String check(boolean listAllUpgrades) {
-		StringBundler sb = new StringBundler(0);
-
-		Set<String> bundleSymbolicNames =
-			_releaseManager.getBundleSymbolicNames();
-
-		for (String bundleSymbolicName : bundleSymbolicNames) {
-			String currentSchemaVersion =
-				_releaseManager.getCurrentSchemaVersion(bundleSymbolicName);
-
-			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-				_releaseManager.getUpgradeInfos(bundleSymbolicName));
-
-			List<List<UpgradeInfo>> upgradeInfosList =
-				releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
-
-			int size = upgradeInfosList.size();
-
-			if (size > 1) {
-				sb.append("There are ");
-				sb.append(size);
-				sb.append(" possible end nodes for ");
-				sb.append(currentSchemaVersion);
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			if (size == 0) {
-				continue;
-			}
-
-			sb.append("There is an upgrade process available for ");
-			sb.append(bundleSymbolicName);
-			sb.append(" from ");
-			sb.append(currentSchemaVersion);
-			sb.append(" to ");
-
-			List<UpgradeInfo> upgradeInfos = upgradeInfosList.get(0);
-
-			UpgradeInfo lastUpgradeInfo = upgradeInfos.get(
-				upgradeInfos.size() - 1);
-
-			sb.append(lastUpgradeInfo.getToSchemaVersionString());
-
-			sb.append(StringPool.NEW_LINE);
-
-			if (listAllUpgrades) {
-				for (UpgradeInfo upgradeInfo : upgradeInfos) {
-					StringBundler sb2 = new StringBundler(
-						7 * upgradeInfos.size());
-
-					sb2.append(StringPool.TAB);
-
-					String fromSchemaString =
-						upgradeInfo.getFromSchemaVersionString();
-					String toSchemaString =
-						upgradeInfo.getToSchemaVersionString();
-
-					List<String> fromSchemaVersions = StringUtil.split(
-						fromSchemaString, CharPool.PERIOD);
-					List<String> toSchemaVersions = StringUtil.split(
-						toSchemaString, CharPool.PERIOD);
-
-					if (!toSchemaVersions.get(
-							0
-						).equals(
-							fromSchemaVersions.get(0)
-						) ||
-						!toSchemaVersions.get(
-							1
-						).equals(
-							fromSchemaVersions.get(1)
-						)) {
-
-						sb2.append("**REQUIRED** ");
-					}
-
-					UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
-
-					Class<?> clazz = upgradeStep.getClass();
-
-					sb2.append(clazz.getName());
-					sb2.append(" from ");
-					sb2.append(fromSchemaString);
-					sb2.append(" to ");
-					sb2.append(toSchemaString);
-					sb2.append(StringPool.NEW_LINE);
-
-					sb.append(sb2.toString());
-				}
-			}
-		}
-
-		if (sb.index() > 0) {
-			return sb.toString();
-		}
-
-		return null;
+	@Descriptor("List all modules' pending upgrade steps")
+	@Override
+	public String checkAll() {
+		return _getPendingUpgradeInfo(true);
 	}
 
 	@Descriptor("Execute upgrade for a specific module")
@@ -314,6 +228,176 @@ public class ReleaseManagerOSGiCommands {
 		}
 
 		executeAll(upgradeThrewExceptionBundleSymbolicNames);
+	}
+
+	private String _getPendingModulesUpgradesInfo(boolean listAllUpgrades) {
+		StringBundler sb = new StringBundler();
+
+		Set<String> bundleSymbolicNames =
+			_releaseManager.getBundleSymbolicNames();
+
+		for (String bundleSymbolicName : bundleSymbolicNames) {
+			String currentSchemaVersion =
+				_releaseManager.getCurrentSchemaVersion(bundleSymbolicName);
+
+			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+				_releaseManager.getUpgradeInfos(bundleSymbolicName));
+
+			List<List<UpgradeInfo>> upgradeInfosList =
+				releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
+
+			int size = upgradeInfosList.size();
+
+			if (size > 1) {
+				sb.append("There are ");
+				sb.append(size);
+				sb.append(" possible end nodes for ");
+				sb.append(currentSchemaVersion);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			if (size == 0) {
+				continue;
+			}
+
+			List<UpgradeInfo> upgradeInfos = upgradeInfosList.get(0);
+
+			UpgradeInfo lastUpgradeInfo = upgradeInfos.get(
+				upgradeInfos.size() - 1);
+
+			sb.append(
+				_getPendingUpgradeInfo(
+					bundleSymbolicName, currentSchemaVersion,
+					lastUpgradeInfo.getToSchemaVersionString()));
+
+			if (listAllUpgrades) {
+				sb.append(StringPool.COLON);
+				sb.append(StringPool.NEW_LINE);
+
+				for (UpgradeInfo upgradeInfo : upgradeInfos) {
+					UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+
+					sb.append(StringPool.TAB);
+					sb.append(
+						_getPendingUpgradeInfo(
+							upgradeStep.getClass(),
+							Version.parseVersion(
+								upgradeInfo.getFromSchemaVersionString()),
+							Version.parseVersion(
+								upgradeInfo.getToSchemaVersionString())));
+
+					sb.append(StringPool.NEW_LINE);
+				}
+			}
+			else {
+				sb.append(StringPool.NEW_LINE);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String _getPendingPortalUpgradesInfo(boolean listAllUpgrades) {
+		try (Connection connection = DataAccess.getConnection()) {
+			Version currentSchemaVersion =
+				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
+
+			SortedMap<Version, UpgradeProcess> pendingUpgrades =
+				PortalUpgradeProcess.getPendingUpgrades(currentSchemaVersion);
+
+			if (!pendingUpgrades.isEmpty()) {
+				Version latestSchemaVersion =
+					PortalUpgradeProcess.getLatestSchemaVersion();
+
+				StringBundler sb = new StringBundler();
+
+				sb.append(
+					_getPendingUpgradeInfo(
+						"Portal", currentSchemaVersion.toString(),
+						latestSchemaVersion.toString()));
+
+				if (listAllUpgrades) {
+					sb.append(StringPool.COLON);
+					sb.append(StringPool.NEW_LINE);
+
+					for (SortedMap.Entry<Version, UpgradeProcess> upgrade :
+							pendingUpgrades.entrySet()) {
+
+						Version version = upgrade.getKey();
+						UpgradeProcess upgradeProcess = upgrade.getValue();
+
+						sb.append(StringPool.TAB);
+						sb.append(
+							_getPendingUpgradeInfo(
+								upgradeProcess.getClass(), currentSchemaVersion,
+								version));
+						sb.append(StringPool.NEW_LINE);
+
+						currentSchemaVersion = version;
+					}
+				}
+				else {
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				return sb.toString();
+			}
+		}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get pending upgrades information for Portal");
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getPendingUpgradeInfo(boolean listAllUpgrades) {
+		return _getPendingPortalUpgradesInfo(listAllUpgrades) +
+			_getPendingModulesUpgradesInfo(listAllUpgrades);
+	}
+
+	private String _getPendingUpgradeInfo(
+		Class<?> upgradeClass, Version fromSchemaVersion,
+		Version toSchemaVersion) {
+
+		StringBundler sb = new StringBundler(6);
+
+		String toMessage = toSchemaVersion.toString();
+
+		if (UpgradeProcessUtil.isRequiredSchemaVersion(
+				fromSchemaVersion, toSchemaVersion)) {
+
+			toMessage = StringBundler.concat(
+				StringPool.SPACE, StringPool.OPEN_PARENTHESIS, "REQUIRED",
+				StringPool.CLOSE_PARENTHESIS);
+		}
+
+		sb.append(fromSchemaVersion.toString());
+		sb.append(" to ");
+		sb.append(toMessage);
+		sb.append(StringPool.COLON);
+		sb.append(StringPool.SPACE);
+		sb.append(upgradeClass.getName());
+
+		return sb.toString();
+	}
+
+	private String _getPendingUpgradeInfo(
+		String moduleName, String currentSchemaVersion,
+		String finalSchemaVersion) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("There are upgrade processes available for ");
+		sb.append(moduleName);
+		sb.append(" from ");
+		sb.append(currentSchemaVersion);
+		sb.append(" to ");
+		sb.append(finalSchemaVersion);
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

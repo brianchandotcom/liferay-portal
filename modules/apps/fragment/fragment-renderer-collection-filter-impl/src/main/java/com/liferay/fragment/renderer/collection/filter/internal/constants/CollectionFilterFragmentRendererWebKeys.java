@@ -25,4 +25,7 @@ public class CollectionFilterFragmentRendererWebKeys {
 
 	public static final String CATEGORY_ID = "categoryId";
 
+	public static final String FRAGMENT_ENTRY_LINK_ID =
+		"FRAGMENT_ENTRY_LINK_ID";
+
 }

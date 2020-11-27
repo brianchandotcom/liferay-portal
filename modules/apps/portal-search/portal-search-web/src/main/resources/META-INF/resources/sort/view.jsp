@@ -69,7 +69,7 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 
 						<%
 						boolean isSelected = false;
-						
+
 						for (SortTermDisplayContext sortTermDisplayContext : sortDisplayContext.getSortTermDisplayContexts()) {
 							if (sortTermDisplayContext.isSelected()) {
 								isSelected = true;
@@ -80,14 +80,14 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 
 						<%
 						}
-						
+
 						if (!isSelected) {
 						%>
 
 							<aui:option disabled="<%= true %>" label="sort-default-order" selected="<%= true %>" />
 
 						<%
-						} 
+						}
 						%>
 
 					</aui:select>

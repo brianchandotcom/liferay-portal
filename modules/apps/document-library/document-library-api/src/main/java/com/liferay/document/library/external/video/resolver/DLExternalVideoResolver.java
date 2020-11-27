@@ -15,11 +15,14 @@
 package com.liferay.document.library.external.video.resolver;
 
 import com.liferay.document.library.external.video.DLExternalVideo;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Alejandro Tardín
  */
 public interface DLExternalVideoResolver {
+
+	public DLExternalVideo resolve(FileEntry fileEntry);
 
 	public DLExternalVideo resolve(String url);
 

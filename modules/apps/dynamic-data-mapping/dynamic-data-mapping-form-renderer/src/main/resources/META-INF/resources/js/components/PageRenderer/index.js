@@ -192,13 +192,15 @@ const Renderer = ({
 
 	let hasFieldRequired = false;
 
-	const visitor = new PagesVisitor([pages[activePage]]);
+	if (pages?.[activePage]) {
+		const visitor = new PagesVisitor([pages[activePage]]);
 
-	visitor.mapFields((field) => {
-		if (field.required) {
-			hasFieldRequired = true;
-		}
-	});
+		visitor.mapFields((field) => {
+			if (field.required) {
+				hasFieldRequired = true;
+			}
+		});
+	}
 
 	const isDDMFormPortletNamespace =
 		DDM_FORM_PORTLET_NAMESPACE === portletNamespace;

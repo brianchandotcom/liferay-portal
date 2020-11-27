@@ -2332,10 +2332,14 @@ definition {
 				var webContentLinkToPageFieldLabel = "Link to Page";
 			}
 
-			AssertTextEquals(
-				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentLinkToPage}");
+			var selectedPage = selenium.getElementValue("//label[normalize-space(text())='${webContentLinkToPageFieldLabel}']/following-sibling::div//div[contains(@class,'input-group')]//input[contains(@type,'text')]");
+
+			if (contains("${selectedPage}", "${webContentLinkToPage}")) {
+				echo("The ${selectedPage} is shown in field.");
+			}
+			else {
+				TestUtils.fail(message = "The ${selectedPage} is not shown in field.");
+			}
 		}
 
 		if (isSet(webContentMultipleSelection)) {

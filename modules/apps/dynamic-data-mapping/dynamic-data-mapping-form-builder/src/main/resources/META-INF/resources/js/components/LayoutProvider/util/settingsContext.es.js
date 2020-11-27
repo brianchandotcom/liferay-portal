@@ -18,7 +18,7 @@ import {
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
-import {getDefaultFieldName, getField} from '../../../util/fieldSupport.es';
+import {getDefaultFieldName} from '../../../util/fieldSupport.es';
 import {updateFieldValidationProperty} from './fields.es';
 
 export const getSettingsContextProperty = (
@@ -301,38 +301,11 @@ export const updateField = (
 		editingLanguageId,
 		fieldNameGenerator,
 		generateFieldNameUsingFieldLabel,
-		localizationMap = {},
 	},
 	field,
 	propertyName,
 	propertyValue
 ) => {
-	const propertyField = getField(field.settingsContext.pages, propertyName);
-
-	if (propertyField && propertyField.localizable) {
-		if (!localizationMap[field.fieldName]) {
-			localizationMap[field.fieldName] = {
-				settingsContextLocalizationMap: {},
-			};
-		}
-
-		const {settingsContextLocalizationMap} = localizationMap[
-			field.fieldName
-		];
-
-		const propertyLocalizationMap =
-			settingsContextLocalizationMap[propertyName] ?? {};
-
-		propertyLocalizationMap[editingLanguageId] = {edited: true};
-
-		localizationMap[field.fieldName] = {
-			settingsContextLocalizationMap: {
-				...settingsContextLocalizationMap,
-				[propertyName]: propertyLocalizationMap,
-			},
-		};
-	}
-
 	if (propertyName === 'dataType') {
 		field = {
 			...field,

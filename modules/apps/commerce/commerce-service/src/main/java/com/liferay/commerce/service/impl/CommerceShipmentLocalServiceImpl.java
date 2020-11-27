@@ -330,6 +330,13 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
+		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
+			commerceShipment, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+
+		commerceShipment.setCommerceAddressId(
+			commerceAddress.getCommerceAddressId());
+
 		return commerceShipmentPersistence.update(commerceShipment);
 	}
 

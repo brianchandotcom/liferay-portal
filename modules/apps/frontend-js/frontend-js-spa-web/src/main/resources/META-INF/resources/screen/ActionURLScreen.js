@@ -13,7 +13,7 @@
  */
 
 import {getUrlPath} from '../util/utils';
-import EventScreen from './EventScreen.es';
+import EventScreen from './EventScreen';
 
 /**
  * ActionURLScreen

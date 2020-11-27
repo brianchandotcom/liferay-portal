@@ -12,11 +12,11 @@
  * details.
  */
 
-import App from './app/App.es';
+import App from './app/LiferayApp';
 import {version} from './app/version';
 import globals from './globals/globals';
-import ActionURLScreen from './screen/ActionURLScreen.es';
-import RenderURLScreen from './screen/RenderURLScreen.es';
+import ActionURLScreen from './screen/ActionURLScreen';
+import RenderURLScreen from './screen/RenderURLScreen';
 import {getUrlPath} from './util/utils';
 
 /**

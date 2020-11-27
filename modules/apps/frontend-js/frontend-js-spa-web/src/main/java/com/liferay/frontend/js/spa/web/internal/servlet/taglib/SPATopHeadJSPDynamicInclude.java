@@ -113,7 +113,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		configScriptData.writeTo(httpServletResponse.getWriter());
 
 		String initModuleName = _npmResolver.resolveModuleName(
-			"frontend-js-spa-web/liferay/init.es");
+			"frontend-js-spa-web/init");
 
 		ScriptData initScriptData = new ScriptData();
 
@@ -121,7 +121,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			null,
 			StringUtil.replaceToStringBundler(
 				_INIT_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
-			initModuleName + " as frontendJsSpaWebLiferayInitEs",
+			initModuleName + " as frontendJsSpaWebInit",
 			ScriptData.ModulesType.ES6);
 
 		initScriptData.writeTo(httpServletResponse.getWriter());

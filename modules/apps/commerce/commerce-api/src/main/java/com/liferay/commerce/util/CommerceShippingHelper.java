@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
@@ -25,12 +27,17 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
+@ProviderType
 public interface CommerceShippingHelper {
+
+	public Dimensions getDimensions(CommerceOrderItem commerceOrderItem);
 
 	public Dimensions getDimensions(CPInstance cpInstance);
 
 	public Dimensions getDimensions(List<CommerceOrderItem> commerceOrderItems)
 		throws PortalException;
+
+	public double getWeight(CommerceOrderItem commerceOrderItem);
 
 	public double getWeight(CPInstance cpInstance);
 

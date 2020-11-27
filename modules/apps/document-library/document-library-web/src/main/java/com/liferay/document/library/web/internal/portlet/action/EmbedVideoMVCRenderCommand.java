@@ -40,8 +40,6 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -67,8 +65,8 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
-			FileEntry fileEntry = _getFileEntry(
-				ParamUtil.getString(renderRequest, "url"));
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				ParamUtil.getLong(renderRequest, "fileEntryId"));
 
 			if (fileEntry != null) {
 				FileVersion fileVersion = fileEntry.getFileVersion();
@@ -111,17 +109,6 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 	)
 	protected void setDLProcessor(DLProcessor dlProcessor) {
 		_videoProcessor = (VideoProcessor)dlProcessor;
-	}
-
-	private FileEntry _getFileEntry(String url) throws PortalException {
-		Matcher matcher = _urlPattern.matcher(url);
-
-		if (matcher.matches()) {
-			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
-				matcher.group(2), Integer.valueOf(matcher.group(1)));
-		}
-
-		return null;
 	}
 
 	private List<String> _getPreviewFileURLs(
@@ -204,9 +191,6 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbedVideoMVCRenderCommand.class);
-
-	private static final Pattern _urlPattern = Pattern.compile(
-		".*\\/documents\\/(.+)\\/.+\\/.+\\/([^?]+).*");
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

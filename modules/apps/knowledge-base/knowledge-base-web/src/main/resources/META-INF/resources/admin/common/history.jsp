@@ -183,7 +183,7 @@ if (portletTitleBasedNavigation) {
 	</liferay-ui:search-container>
 </aui:fieldset>
 
-<aui:script require="metal-dom/src/dom as dom,frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var compareVersionsButton = document.getElementById(
 		'<portlet:namespace />compare'
 	);

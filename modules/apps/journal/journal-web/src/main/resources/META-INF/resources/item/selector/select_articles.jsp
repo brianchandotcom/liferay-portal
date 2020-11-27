@@ -374,6 +374,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 </clay:container-fluid>
 
 <aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule" sandbox="<%= true %>">
+	var delegate = delegateModule.default;
+
 	var selectArticleHandler = delegate(
 		document.querySelector('#<portlet:namespace />articlesContainer'),
 		'click',

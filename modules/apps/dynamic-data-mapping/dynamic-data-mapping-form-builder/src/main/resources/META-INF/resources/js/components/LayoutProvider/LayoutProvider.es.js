@@ -407,10 +407,7 @@ class LayoutProvider extends Component {
 					...settingsContext,
 					availableLanguageIds,
 					defaultLanguageId,
-					pages: this.getLocalizedPages(
-						settingsContext.pages,
-						this.getSettingsContextLocalizationMap(field.fieldName)
-					),
+					pages: this.getLocalizedPages(settingsContext.pages),
 				};
 
 				const newField = {

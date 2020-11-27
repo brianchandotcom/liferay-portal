@@ -74,7 +74,7 @@
 
 <aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var delegate = delegateModule.default;
-	
+
 	delegate(
 		document,
 		'focusin',

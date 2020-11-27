@@ -12,6 +12,7 @@
  * details.
  */
 
+import {CategoryTreeNodeSelectorField} from './CategoryTreeNodeSelectorField';
 import {CheckboxField} from './CheckboxField';
 import {CollectionSelectorField} from './CollectionSelectorField';
 import {ColorPaletteField} from './ColorPaletteField';
@@ -23,6 +24,7 @@ import {SelectField} from './SelectField';
 import {TextField} from './TextField';
 
 export const FRAGMENT_CONFIGURATION_FIELDS = {
+	categoryTreeNodeSelector: CategoryTreeNodeSelectorField,
 	checkbox: CheckboxField,
 	collectionSelector: CollectionSelectorField,
 	colorPalette: ColorPaletteField,

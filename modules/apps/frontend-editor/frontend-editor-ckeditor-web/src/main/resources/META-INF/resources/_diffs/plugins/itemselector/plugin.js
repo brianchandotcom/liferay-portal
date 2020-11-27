@@ -104,13 +104,6 @@
 			}
 		},
 
-		_commitVideoEmbedValue(value, editor) {
-			editor.plugins.videoembed.onOkVideo(editor, {
-				type: 'video',
-				url: value,
-			});
-		},
-
 		_commitVideoValue(value, node, extraStyles) {
 			var instance = this;
 
@@ -291,35 +284,14 @@
 			var instance = this;
 
 			if (selectedItem) {
-				var videoSrc = instance._getItemSrc(editor, selectedItem);
+				var html = instance._getItemSrc(editor, selectedItem);
 
-				if (videoSrc) {
+				if (html) {
 					if (typeof callback === 'function') {
-						callback(videoSrc);
+						callback(html);
 					}
 					else {
-						var videoProvider;
-
-						var videoembedPlugin = editor.plugins.videoembed;
-
-						if (videoembedPlugin) {
-							videoProvider = videoembedPlugin.getValidProvider(
-								editor,
-								videoSrc,
-								'video'
-							);
-						}
-
-						if (videoProvider) {
-							instance._commitVideoEmbedValue(videoSrc, editor);
-						}
-						else {
-							instance._commitMediaValue(
-								videoSrc,
-								editor,
-								'video'
-							);
-						}
+						editor.plugins.videoembed.onOkVideo(editor, html);
 					}
 				}
 			}

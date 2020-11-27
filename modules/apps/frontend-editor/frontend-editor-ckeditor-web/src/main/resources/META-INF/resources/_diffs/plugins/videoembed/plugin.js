@@ -13,8 +13,6 @@
  */
 
 if (!CKEDITOR.plugins.get('videoembed')) {
-	const REGEX_HTTP = /^https?/;
-
 	CKEDITOR.DEFAULT_LFR_EMBED_WIDGET_TPL =
 		'<div data-embed-url="{url}" class="embed-responsive embed-responsive-16by9">{content}<div class="embed-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
 
@@ -691,52 +689,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			});
 		},
 
-		onOkVideo(editor, data) {
-			const type = data.type;
-			const url = data.url;
-			let content;
-
-			if (REGEX_HTTP.test(url)) {
-				const provider = this.getValidProvider(editor, url, type);
-
-				if (provider) {
-					const schemeProvider = provider.urlSchemes.find((scheme) =>
-						scheme.test(url)
-					);
-
-					if (schemeProvider) {
-						const embedId = schemeProvider.exec(url)[1];
-
-						content = provider.tpl.output({
-							embedId,
-						});
-					}
-
-					editor._selectEmbedWidget = url;
-
-					const embedContent = this._generateEmbedContent(
-						editor,
-						url,
-						content
-					);
-
-					editor.insertHtml(embedContent);
-				}
-				else {
-					this._showError(
-						editor,
-						Liferay.Language.get(
-							'sorry,-this-platform-is-not-supported'
-						)
-					);
-				}
-			}
-			else {
-				this._showError(
-					editor,
-					Liferay.Language.get('enter-a-valid-url')
-				);
-			}
+		onOkVideo(editor, html) {
+			editor.insertHtml(html);
 		},
 
 		requires: 'widget',

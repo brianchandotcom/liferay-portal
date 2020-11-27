@@ -15,16 +15,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import VideoPreview from './components/VideoPreview';
+import ExternalVideoPreview from './components/ExternalVideoPreview';
 
 const FilePickerVideoPreview = ({onFilePickCallback, ...videoProps}) => (
-	<VideoPreview
+	<ExternalVideoPreview
 		{...videoProps}
 		onSelectedVideo={(fields) => {
 			window[onFilePickCallback](fields);
 		}}
 		small
-	></VideoPreview>
+	/>
 );
 
 FilePickerVideoPreview.propTypes = {

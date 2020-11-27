@@ -15,10 +15,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import VideoPreview from './components/VideoPreview';
+import ExternalVideoPreview from './components/ExternalVideoPreview';
 
 const ItemSelectorUrlVideo = ({eventName, ...videoProps}) => (
-	<VideoPreview
+	<ExternalVideoPreview
 		{...videoProps}
 		onAdd={(url) => {
 			Liferay.Util.getOpener().Liferay.fire(eventName, {

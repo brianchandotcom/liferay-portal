@@ -23,6 +23,8 @@ export interface Config {
 	addPortletURL: string;
 	addSegmentsExperienceURL: string;
 
+	assetCategoryTreeNodeItemSelectorURL: string;
+
 	autoExtendSessionEnabled: boolean;
 
 	availableLanguages: {

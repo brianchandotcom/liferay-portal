@@ -195,6 +195,20 @@ definition {
 			value1 = "${productName}");
 	}
 
+	macro viewDiscountedProductDetailsPage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+			value1 = "${productListPrice}");		
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT",
+			value1 = "${discountPercentage}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+			value1 = "${productDiscountedPrice}");
+	}
+
 	macro viewMiniumSelectedAccount {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 

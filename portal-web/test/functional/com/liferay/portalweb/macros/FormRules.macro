@@ -156,18 +156,6 @@ definition {
 		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST");
 	}
 
-	macro selectCalculateResultField {
-		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_RESULT_FIELD");
-
-		var key_calculateResultField = "${calculateResultField}";
-
-		ScrollBy(value1 = "0, 230");
-
-		AssertClick(
-			locator1 = "FormRules#RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST",
-			value1 = "${calculateResultField}");
-	}
-
 	macro selectConditionField {
 		var key_selectValue = "${conditionField}";
 		var key_conditionRowNumber = "${conditionRowNumber}";

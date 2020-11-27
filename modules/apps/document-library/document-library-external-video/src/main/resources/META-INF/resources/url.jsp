@@ -29,6 +29,22 @@ String eventName = (String)request.getAttribute(DLExternalVideoVideoURLItemSelec
 <div class="lfr-form-content">
 	<clay:sheet>
 		<div class="panel-group panel-group-flush">
+			<aui:input disabled="<%= true %>" label="video-url" name="externalVideoURL" wrapperCssClass="mb-0" />
+
+			<p class="form-text"><liferay-ui:message key="video-url-help" /></p>
+
+			<aui:button disabled="<%= true %>" primary="<%= true %>" value="add" />
+
+			<div class="external-video-preview mt-4">
+				<div class="external-video-preview-aspect-ratio">
+					<div class="external-video-preview-placeholder">
+						<clay:icon
+							symbol="video"
+						/>
+					</div>
+				</div>
+			</div>
+
 			<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" portletName="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" var="getDLExternalVideoFieldsURL" />
 
 			<react:component

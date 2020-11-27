@@ -30,11 +30,11 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 <aui:input name="contentType" type="hidden" value="<%= DLContentTypes.EXTERNAL_VIDEO %>" />
 
 <div class="form-group">
-	<aui:input label="video-url" name="externalVideoURL" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" wrapperCssClass="mb-0" />
+	<aui:input disabled="<%= true %>" label="video-url" name="externalVideoURL" value="<%= (dlExternalVideo != null) ? dlExternalVideo.getURL() : null %>" wrapperCssClass="mb-0" />
 
 	<p class="form-text"><liferay-ui:message key="video-url-help" /></p>
 
-	<div class="external-video-preview external-video-preview-small">
+	<div class="external-video-preview external-video-preview-small mt-4">
 		<div class="external-video-preview-aspect-ratio">
 			<c:choose>
 				<c:when test="<%= dlExternalVideo != null %>">

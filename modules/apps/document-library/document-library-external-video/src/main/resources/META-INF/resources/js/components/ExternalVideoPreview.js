@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
@@ -110,30 +110,28 @@ const VideoPreview = ({
 				<form onSubmit={handleAddSubmit}>{children}</form>
 			)}
 		>
-			<ClayForm.Group>
-				<label htmlFor={inputName}>
-					{Liferay.Language.get('video-url')}
-				</label>
-				<ClayInput
-					id={inputName}
-					onChange={handleUrlChange}
-					placeholder="http://"
-					type="text"
-					value={url}
-				/>
-				<p className="form-text">
-					{Liferay.Language.get('video-url-help')}
-				</p>
+			<label htmlFor={inputName}>
+				{Liferay.Language.get('video-url')}
+			</label>
+			<ClayInput
+				id={inputName}
+				onChange={handleUrlChange}
+				placeholder="http://"
+				type="text"
+				value={url}
+			/>
+			<p className="form-text">
+				{Liferay.Language.get('video-url-help')}
+			</p>
 
-				{onAdd && (
-					<ClayButton disabled={addDisabled} type="submit">
-						{Liferay.Language.get('add')}
-					</ClayButton>
-				)}
-			</ClayForm.Group>
+			{onAdd && (
+				<ClayButton disabled={addDisabled} type="submit">
+					{Liferay.Language.get('add')}
+				</ClayButton>
+			)}
 
 			<div
-				className={classNames('external-video-preview', {
+				className={classNames('external-video-preview mt-4', {
 					['external-video-preview-small']: small,
 				})}
 			>

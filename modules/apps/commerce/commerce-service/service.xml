@@ -420,6 +420,22 @@
 		<column name="requestedDeliveryDate" type="Date" />
 		<column name="bookedQuantityId" type="long" />
 		<column name="manuallyAdjusted" type="boolean" />
+		<column name="shippable" type="boolean" />
+		<column name="freeShipping" type="boolean" />
+		<column name="shipSeparately" type="boolean" />
+		<column name="shippingExtraPrice" type="double" />
+		<column name="width" type="double" />
+		<column name="height" type="double" />
+		<column name="depth" type="double" />
+		<column name="weight" type="double" />
+		<column name="subscriptionLength" type="int" />
+		<column name="subscriptionType" type="String" />
+		<column name="subscriptionTypeSettings" type="String" />
+		<column name="maxSubscriptionCycles" type="long" />
+		<column name="deliverySubscriptionLength" type="int" />
+		<column name="deliverySubscriptionType" type="String" />
+		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
 
 		<!-- Order -->
 

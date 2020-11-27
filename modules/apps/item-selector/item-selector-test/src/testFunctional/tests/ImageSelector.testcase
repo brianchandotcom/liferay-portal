@@ -108,7 +108,7 @@ definition {
 
 		ItemSelector.viewPreview(
 			footer = "1 of 3",
-			imageFileName = "Document_1.jpg");
+			imageFileName = "Document_1");
 
 		AssertVisible(locator1 = "ItemSelector#VIEWER_LEFT");
 
@@ -128,7 +128,7 @@ definition {
 
 		ItemSelector.viewPreview(
 			footer = "3 of 3",
-			imageFileName = "Document_3.jpg");
+			imageFileName = "Document_3");
 
 		KeyPress(
 			locator1 = "ItemSelector#VIEWER_INFO",

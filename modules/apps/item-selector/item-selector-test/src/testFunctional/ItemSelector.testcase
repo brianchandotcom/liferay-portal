@@ -350,7 +350,7 @@ definition {
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 			value1 = "Documents and Media");
 
-		for (var imageFileName : list "Document_1.jpg,Document_2.jpg,Document_3.jpg,Document_1.png,Document_2.png,Document_3.png") {
+		for (var imageFileName : list "Document_1,Document_2,Document_3,Document_1,Document_2,Document_3") {
 			AssertElementPresent(
 				key_imageFileName = "${imageFileName}",
 				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
@@ -360,13 +360,13 @@ definition {
 
 		Pagination.changePagination(itemsPerPage = "4");
 
-		for (var imageFileName : list "Document_1.jpg,Document_2.jpg,Document_1.png,Document_2.png") {
+		for (var imageFileName : list "Document_1,Document_2,Document_1,Document_2") {
 			AssertElementPresent(
 				key_imageFileName = "${imageFileName}",
 				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 		}
 
-		for (var imageFileName : list "Document_3.jpg,Document_3.png") {
+		for (var imageFileName : list "Document_3,Document_3") {
 			AssertElementNotPresent(
 				key_imageFileName = "${imageFileName}",
 				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");

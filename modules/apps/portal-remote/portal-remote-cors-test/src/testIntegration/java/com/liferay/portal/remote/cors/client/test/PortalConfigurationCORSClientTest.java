@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl;
+import org.apache.cxf.jaxrs.impl.RuntimeDelegateImpl;
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
@@ -38,15 +41,9 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.RuntimeDelegate;
-
-import org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl;
-import org.apache.cxf.jaxrs.impl.RuntimeDelegateImpl;
-
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Marta Medio
@@ -67,16 +64,20 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 	@Test
 	public void testCORSUsingBasicWithDisableAuthorization() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK",
-			true);
+		boolean corsDisableAuthorizationContextCheck =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK",
+				true);
 
-		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, true);
-		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, true);
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK",
-			false);
+		try {
+			assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, true);
+			assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, true);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK",
+				corsDisableAuthorizationContextCheck);
+		}
 	}
 
 	@Test

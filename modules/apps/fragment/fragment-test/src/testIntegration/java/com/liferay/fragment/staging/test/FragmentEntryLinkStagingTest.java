@@ -92,7 +92,7 @@ public class FragmentEntryLinkStagingTest {
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), LayoutConstants.TYPE_CONTENT,
 			typeSettingsUnicodeProperties.toString(), false, false,
-			Collections.emptyMap(), serviceContext);
+			Collections.emptyMap(), 0, serviceContext);
 	}
 
 	@Test

@@ -182,6 +182,20 @@ definition {
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 	}
 
+	macro viewDiscountedProductDetailsPage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+			value1 = "${productListPrice}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT",
+			value1 = "${discountPercentage}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+			value1 = "${productDiscountedPrice}");
+	}
+
 	macro viewEnabledAddToCartButton {
 		AssertElementPresent(
 			key_productName = "${productName}",
@@ -193,20 +207,6 @@ definition {
 			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME",
 			value1 = "${productName}");
-	}
-
-	macro viewDiscountedProductDetailsPage {
-		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
-			value1 = "${productListPrice}");		
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT",
-			value1 = "${discountPercentage}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
-			value1 = "${productDiscountedPrice}");
 	}
 
 	macro viewMiniumSelectedAccount {

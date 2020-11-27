@@ -6,7 +6,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		if(isSet(siteTemplateName)) {
+		if (isSet(siteTemplateName)) {
 			Site.addCP(
 				membershipType = "Private",
 				siteName = "${siteName}",

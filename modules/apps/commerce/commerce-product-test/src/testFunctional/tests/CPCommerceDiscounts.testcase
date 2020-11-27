@@ -65,7 +65,7 @@ definition {
 			title = "Add Products");
 
 		Button.clickPublish();
-		
+
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
 		CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");

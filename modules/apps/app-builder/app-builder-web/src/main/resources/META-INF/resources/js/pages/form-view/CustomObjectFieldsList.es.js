@@ -70,7 +70,7 @@ const getFieldTypes = ({
 }) => {
 	const customDataDefinitionFields = [];
 	const nativeDataDefinitionFields = [];
-	const {dataLayoutPages} = dataLayout;
+	const {dataLayoutFields, dataLayoutPages} = dataLayout;
 	const {dataDefinitionFields: fields, defaultLanguageId} = dataDefinition;
 
 	const setDefinitionField = (
@@ -79,6 +79,7 @@ const getFieldTypes = ({
 			fieldType,
 			label,
 			name,
+			required,
 			nestedDataDefinitionFields = [],
 			repeatable,
 			showLabel,
@@ -86,6 +87,7 @@ const getFieldTypes = ({
 		nested
 	) => {
 		const {ddmStructureId} = customProperties;
+		const {required: isLayoutRequired} = dataLayoutFields[name] || {};
 
 		if (fieldType === 'section') {
 			return;
@@ -147,6 +149,7 @@ const getFieldTypes = ({
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
 				(nestedField) => setDefinitionField(nestedField, true)
 			),
+			required: required && !isLayoutRequired,
 		};
 
 		if (nested) {

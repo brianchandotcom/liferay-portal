@@ -73,7 +73,8 @@ public class DLVideoItemSelectorView
 	protected void prepareDLItemSelectorViewDisplayContext(
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext) {
 
-		dlItemSelectorViewDisplayContext.setShowDragAndDropZone(false);
+		dlItemSelectorViewDisplayContext.setShowDragAndDropZone(
+			XugglerUtil.isEnabled());
 	}
 
 	private static final List<ItemSelectorReturnType>

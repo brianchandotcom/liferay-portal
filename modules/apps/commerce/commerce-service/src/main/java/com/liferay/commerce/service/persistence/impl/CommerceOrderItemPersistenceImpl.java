@@ -3739,6 +3739,8 @@ public class CommerceOrderItemPersistenceImpl
 		dbColumnNames.put(
 			"discountPercentageLevel4WithTaxAmount",
 			"discountPctLevel4WithTaxAmount");
+		dbColumnNames.put(
+			"deliverySubscriptionTypeSettings", "deliverySubTypeSettings");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -4510,7 +4512,8 @@ public class CommerceOrderItemPersistenceImpl
 			"discountPercentageLevel1WithTaxAmount",
 			"discountPercentageLevel2WithTaxAmount",
 			"discountPercentageLevel3WithTaxAmount",
-			"discountPercentageLevel4WithTaxAmount"
+			"discountPercentageLevel4WithTaxAmount",
+			"deliverySubscriptionTypeSettings"
 		});
 
 	@Override

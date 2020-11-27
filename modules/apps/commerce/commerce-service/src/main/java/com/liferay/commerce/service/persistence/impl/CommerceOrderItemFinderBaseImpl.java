@@ -49,6 +49,8 @@ public class CommerceOrderItemFinderBaseImpl
 		dbColumnNames.put(
 			"discountPercentageLevel4WithTaxAmount",
 			"discountPctLevel4WithTaxAmount");
+		dbColumnNames.put(
+			"deliverySubscriptionTypeSettings", "deliverySubTypeSettings");
 
 		setDBColumnNames(dbColumnNames);
 	}

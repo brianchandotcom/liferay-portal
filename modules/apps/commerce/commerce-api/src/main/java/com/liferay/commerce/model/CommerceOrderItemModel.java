@@ -780,6 +780,257 @@ public interface CommerceOrderItemModel
 	 */
 	public void setManuallyAdjusted(boolean manuallyAdjusted);
 
+	/**
+	 * Returns the shippable of this commerce order item.
+	 *
+	 * @return the shippable of this commerce order item
+	 */
+	public boolean getShippable();
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is shippable.
+	 *
+	 * @return <code>true</code> if this commerce order item is shippable; <code>false</code> otherwise
+	 */
+	public boolean isShippable();
+
+	/**
+	 * Sets whether this commerce order item is shippable.
+	 *
+	 * @param shippable the shippable of this commerce order item
+	 */
+	public void setShippable(boolean shippable);
+
+	/**
+	 * Returns the free shipping of this commerce order item.
+	 *
+	 * @return the free shipping of this commerce order item
+	 */
+	public boolean getFreeShipping();
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is free shipping.
+	 *
+	 * @return <code>true</code> if this commerce order item is free shipping; <code>false</code> otherwise
+	 */
+	public boolean isFreeShipping();
+
+	/**
+	 * Sets whether this commerce order item is free shipping.
+	 *
+	 * @param freeShipping the free shipping of this commerce order item
+	 */
+	public void setFreeShipping(boolean freeShipping);
+
+	/**
+	 * Returns the ship separately of this commerce order item.
+	 *
+	 * @return the ship separately of this commerce order item
+	 */
+	public boolean getShipSeparately();
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is ship separately.
+	 *
+	 * @return <code>true</code> if this commerce order item is ship separately; <code>false</code> otherwise
+	 */
+	public boolean isShipSeparately();
+
+	/**
+	 * Sets whether this commerce order item is ship separately.
+	 *
+	 * @param shipSeparately the ship separately of this commerce order item
+	 */
+	public void setShipSeparately(boolean shipSeparately);
+
+	/**
+	 * Returns the shipping extra price of this commerce order item.
+	 *
+	 * @return the shipping extra price of this commerce order item
+	 */
+	public double getShippingExtraPrice();
+
+	/**
+	 * Sets the shipping extra price of this commerce order item.
+	 *
+	 * @param shippingExtraPrice the shipping extra price of this commerce order item
+	 */
+	public void setShippingExtraPrice(double shippingExtraPrice);
+
+	/**
+	 * Returns the width of this commerce order item.
+	 *
+	 * @return the width of this commerce order item
+	 */
+	public double getWidth();
+
+	/**
+	 * Sets the width of this commerce order item.
+	 *
+	 * @param width the width of this commerce order item
+	 */
+	public void setWidth(double width);
+
+	/**
+	 * Returns the height of this commerce order item.
+	 *
+	 * @return the height of this commerce order item
+	 */
+	public double getHeight();
+
+	/**
+	 * Sets the height of this commerce order item.
+	 *
+	 * @param height the height of this commerce order item
+	 */
+	public void setHeight(double height);
+
+	/**
+	 * Returns the depth of this commerce order item.
+	 *
+	 * @return the depth of this commerce order item
+	 */
+	public double getDepth();
+
+	/**
+	 * Sets the depth of this commerce order item.
+	 *
+	 * @param depth the depth of this commerce order item
+	 */
+	public void setDepth(double depth);
+
+	/**
+	 * Returns the weight of this commerce order item.
+	 *
+	 * @return the weight of this commerce order item
+	 */
+	public double getWeight();
+
+	/**
+	 * Sets the weight of this commerce order item.
+	 *
+	 * @param weight the weight of this commerce order item
+	 */
+	public void setWeight(double weight);
+
+	/**
+	 * Returns the subscription length of this commerce order item.
+	 *
+	 * @return the subscription length of this commerce order item
+	 */
+	public int getSubscriptionLength();
+
+	/**
+	 * Sets the subscription length of this commerce order item.
+	 *
+	 * @param subscriptionLength the subscription length of this commerce order item
+	 */
+	public void setSubscriptionLength(int subscriptionLength);
+
+	/**
+	 * Returns the subscription type of this commerce order item.
+	 *
+	 * @return the subscription type of this commerce order item
+	 */
+	@AutoEscape
+	public String getSubscriptionType();
+
+	/**
+	 * Sets the subscription type of this commerce order item.
+	 *
+	 * @param subscriptionType the subscription type of this commerce order item
+	 */
+	public void setSubscriptionType(String subscriptionType);
+
+	/**
+	 * Returns the subscription type settings of this commerce order item.
+	 *
+	 * @return the subscription type settings of this commerce order item
+	 */
+	@AutoEscape
+	public String getSubscriptionTypeSettings();
+
+	/**
+	 * Sets the subscription type settings of this commerce order item.
+	 *
+	 * @param subscriptionTypeSettings the subscription type settings of this commerce order item
+	 */
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings);
+
+	/**
+	 * Returns the max subscription cycles of this commerce order item.
+	 *
+	 * @return the max subscription cycles of this commerce order item
+	 */
+	public long getMaxSubscriptionCycles();
+
+	/**
+	 * Sets the max subscription cycles of this commerce order item.
+	 *
+	 * @param maxSubscriptionCycles the max subscription cycles of this commerce order item
+	 */
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles);
+
+	/**
+	 * Returns the delivery subscription length of this commerce order item.
+	 *
+	 * @return the delivery subscription length of this commerce order item
+	 */
+	public int getDeliverySubscriptionLength();
+
+	/**
+	 * Sets the delivery subscription length of this commerce order item.
+	 *
+	 * @param deliverySubscriptionLength the delivery subscription length of this commerce order item
+	 */
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength);
+
+	/**
+	 * Returns the delivery subscription type of this commerce order item.
+	 *
+	 * @return the delivery subscription type of this commerce order item
+	 */
+	@AutoEscape
+	public String getDeliverySubscriptionType();
+
+	/**
+	 * Sets the delivery subscription type of this commerce order item.
+	 *
+	 * @param deliverySubscriptionType the delivery subscription type of this commerce order item
+	 */
+	public void setDeliverySubscriptionType(String deliverySubscriptionType);
+
+	/**
+	 * Returns the delivery subscription type settings of this commerce order item.
+	 *
+	 * @return the delivery subscription type settings of this commerce order item
+	 */
+	@AutoEscape
+	public String getDeliverySubscriptionTypeSettings();
+
+	/**
+	 * Sets the delivery subscription type settings of this commerce order item.
+	 *
+	 * @param deliverySubscriptionTypeSettings the delivery subscription type settings of this commerce order item
+	 */
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings);
+
+	/**
+	 * Returns the delivery max subscription cycles of this commerce order item.
+	 *
+	 * @return the delivery max subscription cycles of this commerce order item
+	 */
+	public long getDeliveryMaxSubscriptionCycles();
+
+	/**
+	 * Sets the delivery max subscription cycles of this commerce order item.
+	 *
+	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this commerce order item
+	 */
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

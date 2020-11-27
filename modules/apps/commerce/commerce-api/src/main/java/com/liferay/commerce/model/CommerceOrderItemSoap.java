@@ -87,6 +87,27 @@ public class CommerceOrderItemSoap implements Serializable {
 		soapModel.setRequestedDeliveryDate(model.getRequestedDeliveryDate());
 		soapModel.setBookedQuantityId(model.getBookedQuantityId());
 		soapModel.setManuallyAdjusted(model.isManuallyAdjusted());
+		soapModel.setShippable(model.isShippable());
+		soapModel.setFreeShipping(model.isFreeShipping());
+		soapModel.setShipSeparately(model.isShipSeparately());
+		soapModel.setShippingExtraPrice(model.getShippingExtraPrice());
+		soapModel.setWidth(model.getWidth());
+		soapModel.setHeight(model.getHeight());
+		soapModel.setDepth(model.getDepth());
+		soapModel.setWeight(model.getWeight());
+		soapModel.setSubscriptionLength(model.getSubscriptionLength());
+		soapModel.setSubscriptionType(model.getSubscriptionType());
+		soapModel.setSubscriptionTypeSettings(
+			model.getSubscriptionTypeSettings());
+		soapModel.setMaxSubscriptionCycles(model.getMaxSubscriptionCycles());
+		soapModel.setDeliverySubscriptionLength(
+			model.getDeliverySubscriptionLength());
+		soapModel.setDeliverySubscriptionType(
+			model.getDeliverySubscriptionType());
+		soapModel.setDeliverySubscriptionTypeSettings(
+			model.getDeliverySubscriptionTypeSettings());
+		soapModel.setDeliveryMaxSubscriptionCycles(
+			model.getDeliveryMaxSubscriptionCycles());
 
 		return soapModel;
 	}
@@ -504,6 +525,150 @@ public class CommerceOrderItemSoap implements Serializable {
 		_manuallyAdjusted = manuallyAdjusted;
 	}
 
+	public boolean getShippable() {
+		return _shippable;
+	}
+
+	public boolean isShippable() {
+		return _shippable;
+	}
+
+	public void setShippable(boolean shippable) {
+		_shippable = shippable;
+	}
+
+	public boolean getFreeShipping() {
+		return _freeShipping;
+	}
+
+	public boolean isFreeShipping() {
+		return _freeShipping;
+	}
+
+	public void setFreeShipping(boolean freeShipping) {
+		_freeShipping = freeShipping;
+	}
+
+	public boolean getShipSeparately() {
+		return _shipSeparately;
+	}
+
+	public boolean isShipSeparately() {
+		return _shipSeparately;
+	}
+
+	public void setShipSeparately(boolean shipSeparately) {
+		_shipSeparately = shipSeparately;
+	}
+
+	public double getShippingExtraPrice() {
+		return _shippingExtraPrice;
+	}
+
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		_shippingExtraPrice = shippingExtraPrice;
+	}
+
+	public double getWidth() {
+		return _width;
+	}
+
+	public void setWidth(double width) {
+		_width = width;
+	}
+
+	public double getHeight() {
+		return _height;
+	}
+
+	public void setHeight(double height) {
+		_height = height;
+	}
+
+	public double getDepth() {
+		return _depth;
+	}
+
+	public void setDepth(double depth) {
+		_depth = depth;
+	}
+
+	public double getWeight() {
+		return _weight;
+	}
+
+	public void setWeight(double weight) {
+		_weight = weight;
+	}
+
+	public int getSubscriptionLength() {
+		return _subscriptionLength;
+	}
+
+	public void setSubscriptionLength(int subscriptionLength) {
+		_subscriptionLength = subscriptionLength;
+	}
+
+	public String getSubscriptionType() {
+		return _subscriptionType;
+	}
+
+	public void setSubscriptionType(String subscriptionType) {
+		_subscriptionType = subscriptionType;
+	}
+
+	public String getSubscriptionTypeSettings() {
+		return _subscriptionTypeSettings;
+	}
+
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
+		_subscriptionTypeSettings = subscriptionTypeSettings;
+	}
+
+	public long getMaxSubscriptionCycles() {
+		return _maxSubscriptionCycles;
+	}
+
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
+		_maxSubscriptionCycles = maxSubscriptionCycles;
+	}
+
+	public int getDeliverySubscriptionLength() {
+		return _deliverySubscriptionLength;
+	}
+
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		_deliverySubscriptionLength = deliverySubscriptionLength;
+	}
+
+	public String getDeliverySubscriptionType() {
+		return _deliverySubscriptionType;
+	}
+
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		_deliverySubscriptionType = deliverySubscriptionType;
+	}
+
+	public String getDeliverySubscriptionTypeSettings() {
+		return _deliverySubscriptionTypeSettings;
+	}
+
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
+	}
+
+	public long getDeliveryMaxSubscriptionCycles() {
+		return _deliveryMaxSubscriptionCycles;
+	}
+
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
+	}
+
 	private String _externalReferenceCode;
 	private long _commerceOrderItemId;
 	private long _groupId;
@@ -545,5 +710,21 @@ public class CommerceOrderItemSoap implements Serializable {
 	private Date _requestedDeliveryDate;
 	private long _bookedQuantityId;
 	private boolean _manuallyAdjusted;
+	private boolean _shippable;
+	private boolean _freeShipping;
+	private boolean _shipSeparately;
+	private double _shippingExtraPrice;
+	private double _width;
+	private double _height;
+	private double _depth;
+	private double _weight;
+	private int _subscriptionLength;
+	private String _subscriptionType;
+	private String _subscriptionTypeSettings;
+	private long _maxSubscriptionCycles;
+	private int _deliverySubscriptionLength;
+	private String _deliverySubscriptionType;
+	private String _deliverySubscriptionTypeSettings;
+	private long _deliveryMaxSubscriptionCycles;
 
 }

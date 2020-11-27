@@ -220,6 +220,22 @@
 		<field name="requestedDeliveryDate" type="Date" />
 		<field name="bookedQuantityId" type="long" />
 		<field name="manuallyAdjusted" type="boolean" />
+		<field name="shippable" type="boolean" />
+		<field name="freeShipping" type="boolean" />
+		<field name="shipSeparately" type="boolean" />
+		<field name="shippingExtraPrice" type="double" />
+		<field name="width" type="double" />
+		<field name="height" type="double" />
+		<field name="depth" type="double" />
+		<field name="weight" type="double" />
+		<field name="subscriptionLength" type="int" />
+		<field name="subscriptionType" type="String" />
+		<field name="subscriptionTypeSettings" type="String" />
+		<field name="maxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderNote">
 		<field name="externalReferenceCode" type="String" />

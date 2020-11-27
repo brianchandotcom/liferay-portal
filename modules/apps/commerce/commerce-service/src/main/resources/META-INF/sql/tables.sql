@@ -220,7 +220,23 @@ create table CommerceOrderItem (
 	printedNote STRING null,
 	requestedDeliveryDate DATE null,
 	bookedQuantityId LONG,
-	manuallyAdjusted BOOLEAN
+	manuallyAdjusted BOOLEAN,
+	shippable BOOLEAN,
+	freeShipping BOOLEAN,
+	shipSeparately BOOLEAN,
+	shippingExtraPrice DOUBLE,
+	width DOUBLE,
+	height DOUBLE,
+	depth DOUBLE,
+	weight DOUBLE,
+	subscriptionLength INTEGER,
+	subscriptionType VARCHAR(75) null,
+	subscriptionTypeSettings VARCHAR(75) null,
+	maxSubscriptionCycles LONG,
+	deliverySubscriptionLength INTEGER,
+	deliverySubscriptionType VARCHAR(75) null,
+	deliverySubTypeSettings VARCHAR(75) null,
+	deliveryMaxSubscriptionCycles LONG
 );
 
 create table CommerceOrderNote (

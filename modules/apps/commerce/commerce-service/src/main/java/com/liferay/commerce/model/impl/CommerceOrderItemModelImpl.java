@@ -109,7 +109,19 @@ public class CommerceOrderItemModelImpl
 		{"subscription", Types.BOOLEAN}, {"deliveryGroup", Types.VARCHAR},
 		{"shippingAddressId", Types.BIGINT}, {"printedNote", Types.VARCHAR},
 		{"requestedDeliveryDate", Types.TIMESTAMP},
-		{"bookedQuantityId", Types.BIGINT}, {"manuallyAdjusted", Types.BOOLEAN}
+		{"bookedQuantityId", Types.BIGINT}, {"manuallyAdjusted", Types.BOOLEAN},
+		{"shippable", Types.BOOLEAN}, {"freeShipping", Types.BOOLEAN},
+		{"shipSeparately", Types.BOOLEAN}, {"shippingExtraPrice", Types.DOUBLE},
+		{"width", Types.DOUBLE}, {"height", Types.DOUBLE},
+		{"depth", Types.DOUBLE}, {"weight", Types.DOUBLE},
+		{"subscriptionLength", Types.INTEGER},
+		{"subscriptionType", Types.VARCHAR},
+		{"subscriptionTypeSettings", Types.VARCHAR},
+		{"maxSubscriptionCycles", Types.BIGINT},
+		{"deliverySubscriptionLength", Types.INTEGER},
+		{"deliverySubscriptionType", Types.VARCHAR},
+		{"deliverySubTypeSettings", Types.VARCHAR},
+		{"deliveryMaxSubscriptionCycles", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -157,10 +169,26 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("requestedDeliveryDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("bookedQuantityId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("manuallyAdjusted", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("freeShipping", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shipSeparately", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippingExtraPrice", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("subscriptionLength", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("subscriptionType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subscriptionTypeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("maxSubscriptionCycles", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("deliverySubscriptionLength", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("deliverySubscriptionType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deliverySubTypeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deliveryMaxSubscriptionCycles", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePriceListId LONG,CProductId LONG,CPInstanceId LONG,parentCommerceOrderItemId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,name STRING null,sku VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,discountAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,subscription BOOLEAN,deliveryGroup VARCHAR(75) null,shippingAddressId LONG,printedNote STRING null,requestedDeliveryDate DATE null,bookedQuantityId LONG,manuallyAdjusted BOOLEAN)";
+		"create table CommerceOrderItem (externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePriceListId LONG,CProductId LONG,CPInstanceId LONG,parentCommerceOrderItemId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,name STRING null,sku VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,discountAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,subscription BOOLEAN,deliveryGroup VARCHAR(75) null,shippingAddressId LONG,printedNote STRING null,requestedDeliveryDate DATE null,bookedQuantityId LONG,manuallyAdjusted BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,maxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -316,6 +344,27 @@ public class CommerceOrderItemModelImpl
 		model.setRequestedDeliveryDate(soapModel.getRequestedDeliveryDate());
 		model.setBookedQuantityId(soapModel.getBookedQuantityId());
 		model.setManuallyAdjusted(soapModel.isManuallyAdjusted());
+		model.setShippable(soapModel.isShippable());
+		model.setFreeShipping(soapModel.isFreeShipping());
+		model.setShipSeparately(soapModel.isShipSeparately());
+		model.setShippingExtraPrice(soapModel.getShippingExtraPrice());
+		model.setWidth(soapModel.getWidth());
+		model.setHeight(soapModel.getHeight());
+		model.setDepth(soapModel.getDepth());
+		model.setWeight(soapModel.getWeight());
+		model.setSubscriptionLength(soapModel.getSubscriptionLength());
+		model.setSubscriptionType(soapModel.getSubscriptionType());
+		model.setSubscriptionTypeSettings(
+			soapModel.getSubscriptionTypeSettings());
+		model.setMaxSubscriptionCycles(soapModel.getMaxSubscriptionCycles());
+		model.setDeliverySubscriptionLength(
+			soapModel.getDeliverySubscriptionLength());
+		model.setDeliverySubscriptionType(
+			soapModel.getDeliverySubscriptionType());
+		model.setDeliverySubscriptionTypeSettings(
+			soapModel.getDeliverySubscriptionTypeSettings());
+		model.setDeliveryMaxSubscriptionCycles(
+			soapModel.getDeliveryMaxSubscriptionCycles());
 
 		return model;
 	}
@@ -727,6 +776,102 @@ public class CommerceOrderItemModelImpl
 			"manuallyAdjusted",
 			(BiConsumer<CommerceOrderItem, Boolean>)
 				CommerceOrderItem::setManuallyAdjusted);
+		attributeGetterFunctions.put(
+			"shippable", CommerceOrderItem::getShippable);
+		attributeSetterBiConsumers.put(
+			"shippable",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setShippable);
+		attributeGetterFunctions.put(
+			"freeShipping", CommerceOrderItem::getFreeShipping);
+		attributeSetterBiConsumers.put(
+			"freeShipping",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setFreeShipping);
+		attributeGetterFunctions.put(
+			"shipSeparately", CommerceOrderItem::getShipSeparately);
+		attributeSetterBiConsumers.put(
+			"shipSeparately",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setShipSeparately);
+		attributeGetterFunctions.put(
+			"shippingExtraPrice", CommerceOrderItem::getShippingExtraPrice);
+		attributeSetterBiConsumers.put(
+			"shippingExtraPrice",
+			(BiConsumer<CommerceOrderItem, Double>)
+				CommerceOrderItem::setShippingExtraPrice);
+		attributeGetterFunctions.put("width", CommerceOrderItem::getWidth);
+		attributeSetterBiConsumers.put(
+			"width",
+			(BiConsumer<CommerceOrderItem, Double>)CommerceOrderItem::setWidth);
+		attributeGetterFunctions.put("height", CommerceOrderItem::getHeight);
+		attributeSetterBiConsumers.put(
+			"height",
+			(BiConsumer<CommerceOrderItem, Double>)
+				CommerceOrderItem::setHeight);
+		attributeGetterFunctions.put("depth", CommerceOrderItem::getDepth);
+		attributeSetterBiConsumers.put(
+			"depth",
+			(BiConsumer<CommerceOrderItem, Double>)CommerceOrderItem::setDepth);
+		attributeGetterFunctions.put("weight", CommerceOrderItem::getWeight);
+		attributeSetterBiConsumers.put(
+			"weight",
+			(BiConsumer<CommerceOrderItem, Double>)
+				CommerceOrderItem::setWeight);
+		attributeGetterFunctions.put(
+			"subscriptionLength", CommerceOrderItem::getSubscriptionLength);
+		attributeSetterBiConsumers.put(
+			"subscriptionLength",
+			(BiConsumer<CommerceOrderItem, Integer>)
+				CommerceOrderItem::setSubscriptionLength);
+		attributeGetterFunctions.put(
+			"subscriptionType", CommerceOrderItem::getSubscriptionType);
+		attributeSetterBiConsumers.put(
+			"subscriptionType",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setSubscriptionType);
+		attributeGetterFunctions.put(
+			"subscriptionTypeSettings",
+			CommerceOrderItem::getSubscriptionTypeSettings);
+		attributeSetterBiConsumers.put(
+			"subscriptionTypeSettings",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setSubscriptionTypeSettings);
+		attributeGetterFunctions.put(
+			"maxSubscriptionCycles",
+			CommerceOrderItem::getMaxSubscriptionCycles);
+		attributeSetterBiConsumers.put(
+			"maxSubscriptionCycles",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setMaxSubscriptionCycles);
+		attributeGetterFunctions.put(
+			"deliverySubscriptionLength",
+			CommerceOrderItem::getDeliverySubscriptionLength);
+		attributeSetterBiConsumers.put(
+			"deliverySubscriptionLength",
+			(BiConsumer<CommerceOrderItem, Integer>)
+				CommerceOrderItem::setDeliverySubscriptionLength);
+		attributeGetterFunctions.put(
+			"deliverySubscriptionType",
+			CommerceOrderItem::getDeliverySubscriptionType);
+		attributeSetterBiConsumers.put(
+			"deliverySubscriptionType",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setDeliverySubscriptionType);
+		attributeGetterFunctions.put(
+			"deliverySubscriptionTypeSettings",
+			CommerceOrderItem::getDeliverySubscriptionTypeSettings);
+		attributeSetterBiConsumers.put(
+			"deliverySubscriptionTypeSettings",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setDeliverySubscriptionTypeSettings);
+		attributeGetterFunctions.put(
+			"deliveryMaxSubscriptionCycles",
+			CommerceOrderItem::getDeliveryMaxSubscriptionCycles);
+		attributeSetterBiConsumers.put(
+			"deliveryMaxSubscriptionCycles",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setDeliveryMaxSubscriptionCycles);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -1604,6 +1749,288 @@ public class CommerceOrderItemModelImpl
 		_manuallyAdjusted = manuallyAdjusted;
 	}
 
+	@JSON
+	@Override
+	public boolean getShippable() {
+		return _shippable;
+	}
+
+	@JSON
+	@Override
+	public boolean isShippable() {
+		return _shippable;
+	}
+
+	@Override
+	public void setShippable(boolean shippable) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shippable = shippable;
+	}
+
+	@JSON
+	@Override
+	public boolean getFreeShipping() {
+		return _freeShipping;
+	}
+
+	@JSON
+	@Override
+	public boolean isFreeShipping() {
+		return _freeShipping;
+	}
+
+	@Override
+	public void setFreeShipping(boolean freeShipping) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_freeShipping = freeShipping;
+	}
+
+	@JSON
+	@Override
+	public boolean getShipSeparately() {
+		return _shipSeparately;
+	}
+
+	@JSON
+	@Override
+	public boolean isShipSeparately() {
+		return _shipSeparately;
+	}
+
+	@Override
+	public void setShipSeparately(boolean shipSeparately) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shipSeparately = shipSeparately;
+	}
+
+	@JSON
+	@Override
+	public double getShippingExtraPrice() {
+		return _shippingExtraPrice;
+	}
+
+	@Override
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shippingExtraPrice = shippingExtraPrice;
+	}
+
+	@JSON
+	@Override
+	public double getWidth() {
+		return _width;
+	}
+
+	@Override
+	public void setWidth(double width) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_width = width;
+	}
+
+	@JSON
+	@Override
+	public double getHeight() {
+		return _height;
+	}
+
+	@Override
+	public void setHeight(double height) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_height = height;
+	}
+
+	@JSON
+	@Override
+	public double getDepth() {
+		return _depth;
+	}
+
+	@Override
+	public void setDepth(double depth) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_depth = depth;
+	}
+
+	@JSON
+	@Override
+	public double getWeight() {
+		return _weight;
+	}
+
+	@Override
+	public void setWeight(double weight) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_weight = weight;
+	}
+
+	@JSON
+	@Override
+	public int getSubscriptionLength() {
+		return _subscriptionLength;
+	}
+
+	@Override
+	public void setSubscriptionLength(int subscriptionLength) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subscriptionLength = subscriptionLength;
+	}
+
+	@JSON
+	@Override
+	public String getSubscriptionType() {
+		if (_subscriptionType == null) {
+			return "";
+		}
+		else {
+			return _subscriptionType;
+		}
+	}
+
+	@Override
+	public void setSubscriptionType(String subscriptionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subscriptionType = subscriptionType;
+	}
+
+	@JSON
+	@Override
+	public String getSubscriptionTypeSettings() {
+		if (_subscriptionTypeSettings == null) {
+			return "";
+		}
+		else {
+			return _subscriptionTypeSettings;
+		}
+	}
+
+	@Override
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subscriptionTypeSettings = subscriptionTypeSettings;
+	}
+
+	@JSON
+	@Override
+	public long getMaxSubscriptionCycles() {
+		return _maxSubscriptionCycles;
+	}
+
+	@Override
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_maxSubscriptionCycles = maxSubscriptionCycles;
+	}
+
+	@JSON
+	@Override
+	public int getDeliverySubscriptionLength() {
+		return _deliverySubscriptionLength;
+	}
+
+	@Override
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliverySubscriptionLength = deliverySubscriptionLength;
+	}
+
+	@JSON
+	@Override
+	public String getDeliverySubscriptionType() {
+		if (_deliverySubscriptionType == null) {
+			return "";
+		}
+		else {
+			return _deliverySubscriptionType;
+		}
+	}
+
+	@Override
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliverySubscriptionType = deliverySubscriptionType;
+	}
+
+	@JSON
+	@Override
+	public String getDeliverySubscriptionTypeSettings() {
+		if (_deliverySubscriptionTypeSettings == null) {
+			return "";
+		}
+		else {
+			return _deliverySubscriptionTypeSettings;
+		}
+	}
+
+	@Override
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
+	}
+
+	@JSON
+	@Override
+	public long getDeliveryMaxSubscriptionCycles() {
+		return _deliveryMaxSubscriptionCycles;
+	}
+
+	@Override
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -1781,6 +2208,28 @@ public class CommerceOrderItemModelImpl
 			getRequestedDeliveryDate());
 		commerceOrderItemImpl.setBookedQuantityId(getBookedQuantityId());
 		commerceOrderItemImpl.setManuallyAdjusted(isManuallyAdjusted());
+		commerceOrderItemImpl.setShippable(isShippable());
+		commerceOrderItemImpl.setFreeShipping(isFreeShipping());
+		commerceOrderItemImpl.setShipSeparately(isShipSeparately());
+		commerceOrderItemImpl.setShippingExtraPrice(getShippingExtraPrice());
+		commerceOrderItemImpl.setWidth(getWidth());
+		commerceOrderItemImpl.setHeight(getHeight());
+		commerceOrderItemImpl.setDepth(getDepth());
+		commerceOrderItemImpl.setWeight(getWeight());
+		commerceOrderItemImpl.setSubscriptionLength(getSubscriptionLength());
+		commerceOrderItemImpl.setSubscriptionType(getSubscriptionType());
+		commerceOrderItemImpl.setSubscriptionTypeSettings(
+			getSubscriptionTypeSettings());
+		commerceOrderItemImpl.setMaxSubscriptionCycles(
+			getMaxSubscriptionCycles());
+		commerceOrderItemImpl.setDeliverySubscriptionLength(
+			getDeliverySubscriptionLength());
+		commerceOrderItemImpl.setDeliverySubscriptionType(
+			getDeliverySubscriptionType());
+		commerceOrderItemImpl.setDeliverySubscriptionTypeSettings(
+			getDeliverySubscriptionTypeSettings());
+		commerceOrderItemImpl.setDeliveryMaxSubscriptionCycles(
+			getDeliveryMaxSubscriptionCycles());
 
 		commerceOrderItemImpl.resetOriginalValues();
 
@@ -2025,6 +2474,79 @@ public class CommerceOrderItemModelImpl
 
 		commerceOrderItemCacheModel.manuallyAdjusted = isManuallyAdjusted();
 
+		commerceOrderItemCacheModel.shippable = isShippable();
+
+		commerceOrderItemCacheModel.freeShipping = isFreeShipping();
+
+		commerceOrderItemCacheModel.shipSeparately = isShipSeparately();
+
+		commerceOrderItemCacheModel.shippingExtraPrice =
+			getShippingExtraPrice();
+
+		commerceOrderItemCacheModel.width = getWidth();
+
+		commerceOrderItemCacheModel.height = getHeight();
+
+		commerceOrderItemCacheModel.depth = getDepth();
+
+		commerceOrderItemCacheModel.weight = getWeight();
+
+		commerceOrderItemCacheModel.subscriptionLength =
+			getSubscriptionLength();
+
+		commerceOrderItemCacheModel.subscriptionType = getSubscriptionType();
+
+		String subscriptionType = commerceOrderItemCacheModel.subscriptionType;
+
+		if ((subscriptionType != null) && (subscriptionType.length() == 0)) {
+			commerceOrderItemCacheModel.subscriptionType = null;
+		}
+
+		commerceOrderItemCacheModel.subscriptionTypeSettings =
+			getSubscriptionTypeSettings();
+
+		String subscriptionTypeSettings =
+			commerceOrderItemCacheModel.subscriptionTypeSettings;
+
+		if ((subscriptionTypeSettings != null) &&
+			(subscriptionTypeSettings.length() == 0)) {
+
+			commerceOrderItemCacheModel.subscriptionTypeSettings = null;
+		}
+
+		commerceOrderItemCacheModel.maxSubscriptionCycles =
+			getMaxSubscriptionCycles();
+
+		commerceOrderItemCacheModel.deliverySubscriptionLength =
+			getDeliverySubscriptionLength();
+
+		commerceOrderItemCacheModel.deliverySubscriptionType =
+			getDeliverySubscriptionType();
+
+		String deliverySubscriptionType =
+			commerceOrderItemCacheModel.deliverySubscriptionType;
+
+		if ((deliverySubscriptionType != null) &&
+			(deliverySubscriptionType.length() == 0)) {
+
+			commerceOrderItemCacheModel.deliverySubscriptionType = null;
+		}
+
+		commerceOrderItemCacheModel.deliverySubscriptionTypeSettings =
+			getDeliverySubscriptionTypeSettings();
+
+		String deliverySubscriptionTypeSettings =
+			commerceOrderItemCacheModel.deliverySubscriptionTypeSettings;
+
+		if ((deliverySubscriptionTypeSettings != null) &&
+			(deliverySubscriptionTypeSettings.length() == 0)) {
+
+			commerceOrderItemCacheModel.deliverySubscriptionTypeSettings = null;
+		}
+
+		commerceOrderItemCacheModel.deliveryMaxSubscriptionCycles =
+			getDeliveryMaxSubscriptionCycles();
+
 		return commerceOrderItemCacheModel;
 	}
 
@@ -2141,6 +2663,22 @@ public class CommerceOrderItemModelImpl
 	private Date _requestedDeliveryDate;
 	private long _bookedQuantityId;
 	private boolean _manuallyAdjusted;
+	private boolean _shippable;
+	private boolean _freeShipping;
+	private boolean _shipSeparately;
+	private double _shippingExtraPrice;
+	private double _width;
+	private double _height;
+	private double _depth;
+	private double _weight;
+	private int _subscriptionLength;
+	private String _subscriptionType;
+	private String _subscriptionTypeSettings;
+	private long _maxSubscriptionCycles;
+	private int _deliverySubscriptionLength;
+	private String _deliverySubscriptionType;
+	private String _deliverySubscriptionTypeSettings;
+	private long _deliveryMaxSubscriptionCycles;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -2231,6 +2769,28 @@ public class CommerceOrderItemModelImpl
 			"requestedDeliveryDate", _requestedDeliveryDate);
 		_columnOriginalValues.put("bookedQuantityId", _bookedQuantityId);
 		_columnOriginalValues.put("manuallyAdjusted", _manuallyAdjusted);
+		_columnOriginalValues.put("shippable", _shippable);
+		_columnOriginalValues.put("freeShipping", _freeShipping);
+		_columnOriginalValues.put("shipSeparately", _shipSeparately);
+		_columnOriginalValues.put("shippingExtraPrice", _shippingExtraPrice);
+		_columnOriginalValues.put("width", _width);
+		_columnOriginalValues.put("height", _height);
+		_columnOriginalValues.put("depth", _depth);
+		_columnOriginalValues.put("weight", _weight);
+		_columnOriginalValues.put("subscriptionLength", _subscriptionLength);
+		_columnOriginalValues.put("subscriptionType", _subscriptionType);
+		_columnOriginalValues.put(
+			"subscriptionTypeSettings", _subscriptionTypeSettings);
+		_columnOriginalValues.put(
+			"maxSubscriptionCycles", _maxSubscriptionCycles);
+		_columnOriginalValues.put(
+			"deliverySubscriptionLength", _deliverySubscriptionLength);
+		_columnOriginalValues.put(
+			"deliverySubscriptionType", _deliverySubscriptionType);
+		_columnOriginalValues.put(
+			"deliverySubTypeSettings", _deliverySubscriptionTypeSettings);
+		_columnOriginalValues.put(
+			"deliveryMaxSubscriptionCycles", _deliveryMaxSubscriptionCycles);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -2250,6 +2810,8 @@ public class CommerceOrderItemModelImpl
 		attributeNames.put(
 			"discountPctLevel4WithTaxAmount",
 			"discountPercentageLevel4WithTaxAmount");
+		attributeNames.put(
+			"deliverySubTypeSettings", "deliverySubscriptionTypeSettings");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -2346,6 +2908,38 @@ public class CommerceOrderItemModelImpl
 		columnBitmasks.put("bookedQuantityId", 549755813888L);
 
 		columnBitmasks.put("manuallyAdjusted", 1099511627776L);
+
+		columnBitmasks.put("shippable", 2199023255552L);
+
+		columnBitmasks.put("freeShipping", 4398046511104L);
+
+		columnBitmasks.put("shipSeparately", 8796093022208L);
+
+		columnBitmasks.put("shippingExtraPrice", 17592186044416L);
+
+		columnBitmasks.put("width", 35184372088832L);
+
+		columnBitmasks.put("height", 70368744177664L);
+
+		columnBitmasks.put("depth", 140737488355328L);
+
+		columnBitmasks.put("weight", 281474976710656L);
+
+		columnBitmasks.put("subscriptionLength", 562949953421312L);
+
+		columnBitmasks.put("subscriptionType", 1125899906842624L);
+
+		columnBitmasks.put("subscriptionTypeSettings", 2251799813685248L);
+
+		columnBitmasks.put("maxSubscriptionCycles", 4503599627370496L);
+
+		columnBitmasks.put("deliverySubscriptionLength", 9007199254740992L);
+
+		columnBitmasks.put("deliverySubscriptionType", 18014398509481984L);
+
+		columnBitmasks.put("deliverySubTypeSettings", 36028797018963968L);
+
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 72057594037927936L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

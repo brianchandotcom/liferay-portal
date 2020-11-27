@@ -66,7 +66,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(115);
 
 		sb.append("{externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -150,6 +150,38 @@ public class CommerceOrderItemCacheModel
 		sb.append(bookedQuantityId);
 		sb.append(", manuallyAdjusted=");
 		sb.append(manuallyAdjusted);
+		sb.append(", shippable=");
+		sb.append(shippable);
+		sb.append(", freeShipping=");
+		sb.append(freeShipping);
+		sb.append(", shipSeparately=");
+		sb.append(shipSeparately);
+		sb.append(", shippingExtraPrice=");
+		sb.append(shippingExtraPrice);
+		sb.append(", width=");
+		sb.append(width);
+		sb.append(", height=");
+		sb.append(height);
+		sb.append(", depth=");
+		sb.append(depth);
+		sb.append(", weight=");
+		sb.append(weight);
+		sb.append(", subscriptionLength=");
+		sb.append(subscriptionLength);
+		sb.append(", subscriptionType=");
+		sb.append(subscriptionType);
+		sb.append(", subscriptionTypeSettings=");
+		sb.append(subscriptionTypeSettings);
+		sb.append(", maxSubscriptionCycles=");
+		sb.append(maxSubscriptionCycles);
+		sb.append(", deliverySubscriptionLength=");
+		sb.append(deliverySubscriptionLength);
+		sb.append(", deliverySubscriptionType=");
+		sb.append(deliverySubscriptionType);
+		sb.append(", deliverySubscriptionTypeSettings=");
+		sb.append(deliverySubscriptionTypeSettings);
+		sb.append(", deliveryMaxSubscriptionCycles=");
+		sb.append(deliveryMaxSubscriptionCycles);
 		sb.append("}");
 
 		return sb.toString();
@@ -278,6 +310,53 @@ public class CommerceOrderItemCacheModel
 
 		commerceOrderItemImpl.setBookedQuantityId(bookedQuantityId);
 		commerceOrderItemImpl.setManuallyAdjusted(manuallyAdjusted);
+		commerceOrderItemImpl.setShippable(shippable);
+		commerceOrderItemImpl.setFreeShipping(freeShipping);
+		commerceOrderItemImpl.setShipSeparately(shipSeparately);
+		commerceOrderItemImpl.setShippingExtraPrice(shippingExtraPrice);
+		commerceOrderItemImpl.setWidth(width);
+		commerceOrderItemImpl.setHeight(height);
+		commerceOrderItemImpl.setDepth(depth);
+		commerceOrderItemImpl.setWeight(weight);
+		commerceOrderItemImpl.setSubscriptionLength(subscriptionLength);
+
+		if (subscriptionType == null) {
+			commerceOrderItemImpl.setSubscriptionType("");
+		}
+		else {
+			commerceOrderItemImpl.setSubscriptionType(subscriptionType);
+		}
+
+		if (subscriptionTypeSettings == null) {
+			commerceOrderItemImpl.setSubscriptionTypeSettings("");
+		}
+		else {
+			commerceOrderItemImpl.setSubscriptionTypeSettings(
+				subscriptionTypeSettings);
+		}
+
+		commerceOrderItemImpl.setMaxSubscriptionCycles(maxSubscriptionCycles);
+		commerceOrderItemImpl.setDeliverySubscriptionLength(
+			deliverySubscriptionLength);
+
+		if (deliverySubscriptionType == null) {
+			commerceOrderItemImpl.setDeliverySubscriptionType("");
+		}
+		else {
+			commerceOrderItemImpl.setDeliverySubscriptionType(
+				deliverySubscriptionType);
+		}
+
+		if (deliverySubscriptionTypeSettings == null) {
+			commerceOrderItemImpl.setDeliverySubscriptionTypeSettings("");
+		}
+		else {
+			commerceOrderItemImpl.setDeliverySubscriptionTypeSettings(
+				deliverySubscriptionTypeSettings);
+		}
+
+		commerceOrderItemImpl.setDeliveryMaxSubscriptionCycles(
+			deliveryMaxSubscriptionCycles);
 
 		commerceOrderItemImpl.resetOriginalValues();
 
@@ -348,6 +427,34 @@ public class CommerceOrderItemCacheModel
 		bookedQuantityId = objectInput.readLong();
 
 		manuallyAdjusted = objectInput.readBoolean();
+
+		shippable = objectInput.readBoolean();
+
+		freeShipping = objectInput.readBoolean();
+
+		shipSeparately = objectInput.readBoolean();
+
+		shippingExtraPrice = objectInput.readDouble();
+
+		width = objectInput.readDouble();
+
+		height = objectInput.readDouble();
+
+		depth = objectInput.readDouble();
+
+		weight = objectInput.readDouble();
+
+		subscriptionLength = objectInput.readInt();
+		subscriptionType = objectInput.readUTF();
+		subscriptionTypeSettings = objectInput.readUTF();
+
+		maxSubscriptionCycles = objectInput.readLong();
+
+		deliverySubscriptionLength = objectInput.readInt();
+		deliverySubscriptionType = objectInput.readUTF();
+		deliverySubscriptionTypeSettings = objectInput.readUTF();
+
+		deliveryMaxSubscriptionCycles = objectInput.readLong();
 	}
 
 	@Override
@@ -452,6 +559,58 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(bookedQuantityId);
 
 		objectOutput.writeBoolean(manuallyAdjusted);
+
+		objectOutput.writeBoolean(shippable);
+
+		objectOutput.writeBoolean(freeShipping);
+
+		objectOutput.writeBoolean(shipSeparately);
+
+		objectOutput.writeDouble(shippingExtraPrice);
+
+		objectOutput.writeDouble(width);
+
+		objectOutput.writeDouble(height);
+
+		objectOutput.writeDouble(depth);
+
+		objectOutput.writeDouble(weight);
+
+		objectOutput.writeInt(subscriptionLength);
+
+		if (subscriptionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(subscriptionType);
+		}
+
+		if (subscriptionTypeSettings == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(subscriptionTypeSettings);
+		}
+
+		objectOutput.writeLong(maxSubscriptionCycles);
+
+		objectOutput.writeInt(deliverySubscriptionLength);
+
+		if (deliverySubscriptionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliverySubscriptionType);
+		}
+
+		if (deliverySubscriptionTypeSettings == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deliverySubscriptionTypeSettings);
+		}
+
+		objectOutput.writeLong(deliveryMaxSubscriptionCycles);
 	}
 
 	public String externalReferenceCode;
@@ -495,5 +654,21 @@ public class CommerceOrderItemCacheModel
 	public long requestedDeliveryDate;
 	public long bookedQuantityId;
 	public boolean manuallyAdjusted;
+	public boolean shippable;
+	public boolean freeShipping;
+	public boolean shipSeparately;
+	public double shippingExtraPrice;
+	public double width;
+	public double height;
+	public double depth;
+	public double weight;
+	public int subscriptionLength;
+	public String subscriptionType;
+	public String subscriptionTypeSettings;
+	public long maxSubscriptionCycles;
+	public int deliverySubscriptionLength;
+	public String deliverySubscriptionType;
+	public String deliverySubscriptionTypeSettings;
+	public long deliveryMaxSubscriptionCycles;
 
 }

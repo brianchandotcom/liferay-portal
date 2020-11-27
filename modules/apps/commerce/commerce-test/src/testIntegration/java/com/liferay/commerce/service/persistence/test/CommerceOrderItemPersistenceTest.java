@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -227,6 +228,44 @@ public class CommerceOrderItemPersistenceTest {
 		newCommerceOrderItem.setManuallyAdjusted(
 			RandomTestUtil.randomBoolean());
 
+		newCommerceOrderItem.setShippable(RandomTestUtil.randomBoolean());
+
+		newCommerceOrderItem.setFreeShipping(RandomTestUtil.randomBoolean());
+
+		newCommerceOrderItem.setShipSeparately(RandomTestUtil.randomBoolean());
+
+		newCommerceOrderItem.setShippingExtraPrice(RandomTestUtil.nextDouble());
+
+		newCommerceOrderItem.setWidth(RandomTestUtil.nextDouble());
+
+		newCommerceOrderItem.setHeight(RandomTestUtil.nextDouble());
+
+		newCommerceOrderItem.setDepth(RandomTestUtil.nextDouble());
+
+		newCommerceOrderItem.setWeight(RandomTestUtil.nextDouble());
+
+		newCommerceOrderItem.setSubscriptionLength(RandomTestUtil.nextInt());
+
+		newCommerceOrderItem.setSubscriptionType(RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setSubscriptionTypeSettings(
+			RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setMaxSubscriptionCycles(
+			RandomTestUtil.nextLong());
+
+		newCommerceOrderItem.setDeliverySubscriptionLength(
+			RandomTestUtil.nextInt());
+
+		newCommerceOrderItem.setDeliverySubscriptionType(
+			RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setDeliverySubscriptionTypeSettings(
+			RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setDeliveryMaxSubscriptionCycles(
+			RandomTestUtil.nextLong());
+
 		_commerceOrderItems.add(_persistence.update(newCommerceOrderItem));
 
 		CommerceOrderItem existingCommerceOrderItem =
@@ -360,6 +399,54 @@ public class CommerceOrderItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderItem.isManuallyAdjusted(),
 			newCommerceOrderItem.isManuallyAdjusted());
+		Assert.assertEquals(
+			existingCommerceOrderItem.isShippable(),
+			newCommerceOrderItem.isShippable());
+		Assert.assertEquals(
+			existingCommerceOrderItem.isFreeShipping(),
+			newCommerceOrderItem.isFreeShipping());
+		Assert.assertEquals(
+			existingCommerceOrderItem.isShipSeparately(),
+			newCommerceOrderItem.isShipSeparately());
+		AssertUtils.assertEquals(
+			existingCommerceOrderItem.getShippingExtraPrice(),
+			newCommerceOrderItem.getShippingExtraPrice());
+		AssertUtils.assertEquals(
+			existingCommerceOrderItem.getWidth(),
+			newCommerceOrderItem.getWidth());
+		AssertUtils.assertEquals(
+			existingCommerceOrderItem.getHeight(),
+			newCommerceOrderItem.getHeight());
+		AssertUtils.assertEquals(
+			existingCommerceOrderItem.getDepth(),
+			newCommerceOrderItem.getDepth());
+		AssertUtils.assertEquals(
+			existingCommerceOrderItem.getWeight(),
+			newCommerceOrderItem.getWeight());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getSubscriptionLength(),
+			newCommerceOrderItem.getSubscriptionLength());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getSubscriptionType(),
+			newCommerceOrderItem.getSubscriptionType());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getSubscriptionTypeSettings(),
+			newCommerceOrderItem.getSubscriptionTypeSettings());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getMaxSubscriptionCycles(),
+			newCommerceOrderItem.getMaxSubscriptionCycles());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getDeliverySubscriptionLength(),
+			newCommerceOrderItem.getDeliverySubscriptionLength());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getDeliverySubscriptionType(),
+			newCommerceOrderItem.getDeliverySubscriptionType());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getDeliverySubscriptionTypeSettings(),
+			newCommerceOrderItem.getDeliverySubscriptionTypeSettings());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getDeliveryMaxSubscriptionCycles(),
+			newCommerceOrderItem.getDeliveryMaxSubscriptionCycles());
 	}
 
 	@Test
@@ -466,7 +553,14 @@ public class CommerceOrderItemPersistenceTest {
 			"discountPercentageLevel4WithTaxAmount", true, "subscription", true,
 			"deliveryGroup", true, "shippingAddressId", true, "printedNote",
 			true, "requestedDeliveryDate", true, "bookedQuantityId", true,
-			"manuallyAdjusted", true);
+			"manuallyAdjusted", true, "shippable", true, "freeShipping", true,
+			"shipSeparately", true, "shippingExtraPrice", true, "width", true,
+			"height", true, "depth", true, "weight", true, "subscriptionLength",
+			true, "subscriptionType", true, "subscriptionTypeSettings", true,
+			"maxSubscriptionCycles", true, "deliverySubscriptionLength", true,
+			"deliverySubscriptionType", true,
+			"deliverySubscriptionTypeSettings", true,
+			"deliveryMaxSubscriptionCycles", true);
 	}
 
 	@Test
@@ -862,6 +956,43 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setBookedQuantityId(RandomTestUtil.nextLong());
 
 		commerceOrderItem.setManuallyAdjusted(RandomTestUtil.randomBoolean());
+
+		commerceOrderItem.setShippable(RandomTestUtil.randomBoolean());
+
+		commerceOrderItem.setFreeShipping(RandomTestUtil.randomBoolean());
+
+		commerceOrderItem.setShipSeparately(RandomTestUtil.randomBoolean());
+
+		commerceOrderItem.setShippingExtraPrice(RandomTestUtil.nextDouble());
+
+		commerceOrderItem.setWidth(RandomTestUtil.nextDouble());
+
+		commerceOrderItem.setHeight(RandomTestUtil.nextDouble());
+
+		commerceOrderItem.setDepth(RandomTestUtil.nextDouble());
+
+		commerceOrderItem.setWeight(RandomTestUtil.nextDouble());
+
+		commerceOrderItem.setSubscriptionLength(RandomTestUtil.nextInt());
+
+		commerceOrderItem.setSubscriptionType(RandomTestUtil.randomString());
+
+		commerceOrderItem.setSubscriptionTypeSettings(
+			RandomTestUtil.randomString());
+
+		commerceOrderItem.setMaxSubscriptionCycles(RandomTestUtil.nextLong());
+
+		commerceOrderItem.setDeliverySubscriptionLength(
+			RandomTestUtil.nextInt());
+
+		commerceOrderItem.setDeliverySubscriptionType(
+			RandomTestUtil.randomString());
+
+		commerceOrderItem.setDeliverySubscriptionTypeSettings(
+			RandomTestUtil.randomString());
+
+		commerceOrderItem.setDeliveryMaxSubscriptionCycles(
+			RandomTestUtil.nextLong());
 
 		_commerceOrderItems.add(_persistence.update(commerceOrderItem));
 

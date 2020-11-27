@@ -98,6 +98,29 @@ public class CommerceOrderItemWrapper
 		attributes.put("requestedDeliveryDate", getRequestedDeliveryDate());
 		attributes.put("bookedQuantityId", getBookedQuantityId());
 		attributes.put("manuallyAdjusted", isManuallyAdjusted());
+		attributes.put("shippable", isShippable());
+		attributes.put("freeShipping", isFreeShipping());
+		attributes.put("shipSeparately", isShipSeparately());
+		attributes.put("shippingExtraPrice", getShippingExtraPrice());
+		attributes.put("width", getWidth());
+		attributes.put("height", getHeight());
+		attributes.put("depth", getDepth());
+		attributes.put("weight", getWeight());
+		attributes.put("subscriptionLength", getSubscriptionLength());
+		attributes.put("subscriptionType", getSubscriptionType());
+		attributes.put(
+			"subscriptionTypeSettings", getSubscriptionTypeSettings());
+		attributes.put("maxSubscriptionCycles", getMaxSubscriptionCycles());
+		attributes.put(
+			"deliverySubscriptionLength", getDeliverySubscriptionLength());
+		attributes.put(
+			"deliverySubscriptionType", getDeliverySubscriptionType());
+		attributes.put(
+			"deliverySubscriptionTypeSettings",
+			getDeliverySubscriptionTypeSettings());
+		attributes.put(
+			"deliveryMaxSubscriptionCycles",
+			getDeliveryMaxSubscriptionCycles());
 
 		return attributes;
 	}
@@ -369,6 +392,111 @@ public class CommerceOrderItemWrapper
 		if (manuallyAdjusted != null) {
 			setManuallyAdjusted(manuallyAdjusted);
 		}
+
+		Boolean shippable = (Boolean)attributes.get("shippable");
+
+		if (shippable != null) {
+			setShippable(shippable);
+		}
+
+		Boolean freeShipping = (Boolean)attributes.get("freeShipping");
+
+		if (freeShipping != null) {
+			setFreeShipping(freeShipping);
+		}
+
+		Boolean shipSeparately = (Boolean)attributes.get("shipSeparately");
+
+		if (shipSeparately != null) {
+			setShipSeparately(shipSeparately);
+		}
+
+		Double shippingExtraPrice = (Double)attributes.get(
+			"shippingExtraPrice");
+
+		if (shippingExtraPrice != null) {
+			setShippingExtraPrice(shippingExtraPrice);
+		}
+
+		Double width = (Double)attributes.get("width");
+
+		if (width != null) {
+			setWidth(width);
+		}
+
+		Double height = (Double)attributes.get("height");
+
+		if (height != null) {
+			setHeight(height);
+		}
+
+		Double depth = (Double)attributes.get("depth");
+
+		if (depth != null) {
+			setDepth(depth);
+		}
+
+		Double weight = (Double)attributes.get("weight");
+
+		if (weight != null) {
+			setWeight(weight);
+		}
+
+		Integer subscriptionLength = (Integer)attributes.get(
+			"subscriptionLength");
+
+		if (subscriptionLength != null) {
+			setSubscriptionLength(subscriptionLength);
+		}
+
+		String subscriptionType = (String)attributes.get("subscriptionType");
+
+		if (subscriptionType != null) {
+			setSubscriptionType(subscriptionType);
+		}
+
+		String subscriptionTypeSettings = (String)attributes.get(
+			"subscriptionTypeSettings");
+
+		if (subscriptionTypeSettings != null) {
+			setSubscriptionTypeSettings(subscriptionTypeSettings);
+		}
+
+		Long maxSubscriptionCycles = (Long)attributes.get(
+			"maxSubscriptionCycles");
+
+		if (maxSubscriptionCycles != null) {
+			setMaxSubscriptionCycles(maxSubscriptionCycles);
+		}
+
+		Integer deliverySubscriptionLength = (Integer)attributes.get(
+			"deliverySubscriptionLength");
+
+		if (deliverySubscriptionLength != null) {
+			setDeliverySubscriptionLength(deliverySubscriptionLength);
+		}
+
+		String deliverySubscriptionType = (String)attributes.get(
+			"deliverySubscriptionType");
+
+		if (deliverySubscriptionType != null) {
+			setDeliverySubscriptionType(deliverySubscriptionType);
+		}
+
+		String deliverySubscriptionTypeSettings = (String)attributes.get(
+			"deliverySubscriptionTypeSettings");
+
+		if (deliverySubscriptionTypeSettings != null) {
+			setDeliverySubscriptionTypeSettings(
+				deliverySubscriptionTypeSettings);
+		}
+
+		Long deliveryMaxSubscriptionCycles = (Long)attributes.get(
+			"deliveryMaxSubscriptionCycles");
+
+		if (deliveryMaxSubscriptionCycles != null) {
+			setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
+		}
 	}
 
 	@Override
@@ -525,6 +653,56 @@ public class CommerceOrderItemWrapper
 	@Override
 	public String getDeliveryGroup() {
 		return model.getDeliveryGroup();
+	}
+
+	/**
+	 * Returns the delivery max subscription cycles of this commerce order item.
+	 *
+	 * @return the delivery max subscription cycles of this commerce order item
+	 */
+	@Override
+	public long getDeliveryMaxSubscriptionCycles() {
+		return model.getDeliveryMaxSubscriptionCycles();
+	}
+
+	/**
+	 * Returns the delivery subscription length of this commerce order item.
+	 *
+	 * @return the delivery subscription length of this commerce order item
+	 */
+	@Override
+	public int getDeliverySubscriptionLength() {
+		return model.getDeliverySubscriptionLength();
+	}
+
+	/**
+	 * Returns the delivery subscription type of this commerce order item.
+	 *
+	 * @return the delivery subscription type of this commerce order item
+	 */
+	@Override
+	public String getDeliverySubscriptionType() {
+		return model.getDeliverySubscriptionType();
+	}
+
+	/**
+	 * Returns the delivery subscription type settings of this commerce order item.
+	 *
+	 * @return the delivery subscription type settings of this commerce order item
+	 */
+	@Override
+	public String getDeliverySubscriptionTypeSettings() {
+		return model.getDeliverySubscriptionTypeSettings();
+	}
+
+	/**
+	 * Returns the depth of this commerce order item.
+	 *
+	 * @return the depth of this commerce order item
+	 */
+	@Override
+	public double getDepth() {
+		return model.getDepth();
 	}
 
 	/**
@@ -690,6 +868,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the free shipping of this commerce order item.
+	 *
+	 * @return the free shipping of this commerce order item
+	 */
+	@Override
+	public boolean getFreeShipping() {
+		return model.getFreeShipping();
+	}
+
+	/**
 	 * Returns the group ID of this commerce order item.
 	 *
 	 * @return the group ID of this commerce order item
@@ -697,6 +885,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the height of this commerce order item.
+	 *
+	 * @return the height of this commerce order item
+	 */
+	@Override
+	public double getHeight() {
+		return model.getHeight();
 	}
 
 	/**
@@ -717,6 +915,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public boolean getManuallyAdjusted() {
 		return model.getManuallyAdjusted();
+	}
+
+	/**
+	 * Returns the max subscription cycles of this commerce order item.
+	 *
+	 * @return the max subscription cycles of this commerce order item
+	 */
+	@Override
+	public long getMaxSubscriptionCycles() {
+		return model.getMaxSubscriptionCycles();
 	}
 
 	/**
@@ -897,6 +1105,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the shippable of this commerce order item.
+	 *
+	 * @return the shippable of this commerce order item
+	 */
+	@Override
+	public boolean getShippable() {
+		return model.getShippable();
+	}
+
+	/**
 	 * Returns the shipped quantity of this commerce order item.
 	 *
 	 * @return the shipped quantity of this commerce order item
@@ -917,6 +1135,26 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the shipping extra price of this commerce order item.
+	 *
+	 * @return the shipping extra price of this commerce order item
+	 */
+	@Override
+	public double getShippingExtraPrice() {
+		return model.getShippingExtraPrice();
+	}
+
+	/**
+	 * Returns the ship separately of this commerce order item.
+	 *
+	 * @return the ship separately of this commerce order item
+	 */
+	@Override
+	public boolean getShipSeparately() {
+		return model.getShipSeparately();
+	}
+
+	/**
 	 * Returns the sku of this commerce order item.
 	 *
 	 * @return the sku of this commerce order item
@@ -934,6 +1172,36 @@ public class CommerceOrderItemWrapper
 	@Override
 	public boolean getSubscription() {
 		return model.getSubscription();
+	}
+
+	/**
+	 * Returns the subscription length of this commerce order item.
+	 *
+	 * @return the subscription length of this commerce order item
+	 */
+	@Override
+	public int getSubscriptionLength() {
+		return model.getSubscriptionLength();
+	}
+
+	/**
+	 * Returns the subscription type of this commerce order item.
+	 *
+	 * @return the subscription type of this commerce order item
+	 */
+	@Override
+	public String getSubscriptionType() {
+		return model.getSubscriptionType();
+	}
+
+	/**
+	 * Returns the subscription type settings of this commerce order item.
+	 *
+	 * @return the subscription type settings of this commerce order item
+	 */
+	@Override
+	public String getSubscriptionTypeSettings() {
+		return model.getSubscriptionTypeSettings();
 	}
 
 	/**
@@ -1001,9 +1269,39 @@ public class CommerceOrderItemWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns the weight of this commerce order item.
+	 *
+	 * @return the weight of this commerce order item
+	 */
+	@Override
+	public double getWeight() {
+		return model.getWeight();
+	}
+
+	/**
+	 * Returns the width of this commerce order item.
+	 *
+	 * @return the width of this commerce order item
+	 */
+	@Override
+	public double getWidth() {
+		return model.getWidth();
+	}
+
 	@Override
 	public boolean hasParentCommerceOrderItem() {
 		return model.hasParentCommerceOrderItem();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is free shipping.
+	 *
+	 * @return <code>true</code> if this commerce order item is free shipping; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isFreeShipping() {
+		return model.isFreeShipping();
 	}
 
 	/**
@@ -1014,6 +1312,26 @@ public class CommerceOrderItemWrapper
 	@Override
 	public boolean isManuallyAdjusted() {
 		return model.isManuallyAdjusted();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is shippable.
+	 *
+	 * @return <code>true</code> if this commerce order item is shippable; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isShippable() {
+		return model.isShippable();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is ship separately.
+	 *
+	 * @return <code>true</code> if this commerce order item is ship separately; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isShipSeparately() {
+		return model.isShipSeparately();
 	}
 
 	/**
@@ -1134,6 +1452,61 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setDeliveryGroup(String deliveryGroup) {
 		model.setDeliveryGroup(deliveryGroup);
+	}
+
+	/**
+	 * Sets the delivery max subscription cycles of this commerce order item.
+	 *
+	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this commerce order item
+	 */
+	@Override
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		model.setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
+	}
+
+	/**
+	 * Sets the delivery subscription length of this commerce order item.
+	 *
+	 * @param deliverySubscriptionLength the delivery subscription length of this commerce order item
+	 */
+	@Override
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		model.setDeliverySubscriptionLength(deliverySubscriptionLength);
+	}
+
+	/**
+	 * Sets the delivery subscription type of this commerce order item.
+	 *
+	 * @param deliverySubscriptionType the delivery subscription type of this commerce order item
+	 */
+	@Override
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		model.setDeliverySubscriptionType(deliverySubscriptionType);
+	}
+
+	/**
+	 * Sets the delivery subscription type settings of this commerce order item.
+	 *
+	 * @param deliverySubscriptionTypeSettings the delivery subscription type settings of this commerce order item
+	 */
+	@Override
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		model.setDeliverySubscriptionTypeSettings(
+			deliverySubscriptionTypeSettings);
+	}
+
+	/**
+	 * Sets the depth of this commerce order item.
+	 *
+	 * @param depth the depth of this commerce order item
+	 */
+	@Override
+	public void setDepth(double depth) {
+		model.setDepth(depth);
 	}
 
 	/**
@@ -1287,6 +1660,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Sets whether this commerce order item is free shipping.
+	 *
+	 * @param freeShipping the free shipping of this commerce order item
+	 */
+	@Override
+	public void setFreeShipping(boolean freeShipping) {
+		model.setFreeShipping(freeShipping);
+	}
+
+	/**
 	 * Sets the group ID of this commerce order item.
 	 *
 	 * @param groupId the group ID of this commerce order item
@@ -1294,6 +1677,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the height of this commerce order item.
+	 *
+	 * @param height the height of this commerce order item
+	 */
+	@Override
+	public void setHeight(double height) {
+		model.setHeight(height);
 	}
 
 	/**
@@ -1314,6 +1707,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setManuallyAdjusted(boolean manuallyAdjusted) {
 		model.setManuallyAdjusted(manuallyAdjusted);
+	}
+
+	/**
+	 * Sets the max subscription cycles of this commerce order item.
+	 *
+	 * @param maxSubscriptionCycles the max subscription cycles of this commerce order item
+	 */
+	@Override
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
+		model.setMaxSubscriptionCycles(maxSubscriptionCycles);
 	}
 
 	/**
@@ -1460,6 +1863,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Sets whether this commerce order item is shippable.
+	 *
+	 * @param shippable the shippable of this commerce order item
+	 */
+	@Override
+	public void setShippable(boolean shippable) {
+		model.setShippable(shippable);
+	}
+
+	/**
 	 * Sets the shipped quantity of this commerce order item.
 	 *
 	 * @param shippedQuantity the shipped quantity of this commerce order item
@@ -1480,6 +1893,26 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Sets the shipping extra price of this commerce order item.
+	 *
+	 * @param shippingExtraPrice the shipping extra price of this commerce order item
+	 */
+	@Override
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		model.setShippingExtraPrice(shippingExtraPrice);
+	}
+
+	/**
+	 * Sets whether this commerce order item is ship separately.
+	 *
+	 * @param shipSeparately the ship separately of this commerce order item
+	 */
+	@Override
+	public void setShipSeparately(boolean shipSeparately) {
+		model.setShipSeparately(shipSeparately);
+	}
+
+	/**
 	 * Sets the sku of this commerce order item.
 	 *
 	 * @param sku the sku of this commerce order item
@@ -1497,6 +1930,36 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setSubscription(boolean subscription) {
 		model.setSubscription(subscription);
+	}
+
+	/**
+	 * Sets the subscription length of this commerce order item.
+	 *
+	 * @param subscriptionLength the subscription length of this commerce order item
+	 */
+	@Override
+	public void setSubscriptionLength(int subscriptionLength) {
+		model.setSubscriptionLength(subscriptionLength);
+	}
+
+	/**
+	 * Sets the subscription type of this commerce order item.
+	 *
+	 * @param subscriptionType the subscription type of this commerce order item
+	 */
+	@Override
+	public void setSubscriptionType(String subscriptionType) {
+		model.setSubscriptionType(subscriptionType);
+	}
+
+	/**
+	 * Sets the subscription type settings of this commerce order item.
+	 *
+	 * @param subscriptionTypeSettings the subscription type settings of this commerce order item
+	 */
+	@Override
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
+		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
 	}
 
 	/**
@@ -1547,6 +2010,26 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the weight of this commerce order item.
+	 *
+	 * @param weight the weight of this commerce order item
+	 */
+	@Override
+	public void setWeight(double weight) {
+		model.setWeight(weight);
+	}
+
+	/**
+	 * Sets the width of this commerce order item.
+	 *
+	 * @param width the width of this commerce order item
+	 */
+	@Override
+	public void setWidth(double width) {
+		model.setWidth(width);
 	}
 
 	@Override

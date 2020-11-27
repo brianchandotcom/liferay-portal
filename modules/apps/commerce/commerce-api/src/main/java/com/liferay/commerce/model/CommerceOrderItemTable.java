@@ -170,6 +170,60 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		createColumn(
 			"manuallyAdjusted", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Boolean> shippable =
+		createColumn(
+			"shippable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Boolean> freeShipping =
+		createColumn(
+			"freeShipping", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Boolean> shipSeparately =
+		createColumn(
+			"shipSeparately", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Double> shippingExtraPrice =
+		createColumn(
+			"shippingExtraPrice", Double.class, Types.DOUBLE,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Double> width = createColumn(
+		"width", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Double> height = createColumn(
+		"height", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Double> depth = createColumn(
+		"depth", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Double> weight = createColumn(
+		"weight", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Integer> subscriptionLength =
+		createColumn(
+			"subscriptionLength", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, String> subscriptionType =
+		createColumn(
+			"subscriptionType", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, String>
+		subscriptionTypeSettings = createColumn(
+			"subscriptionTypeSettings", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Long> maxSubscriptionCycles =
+		createColumn(
+			"maxSubscriptionCycles", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Integer>
+		deliverySubscriptionLength = createColumn(
+			"deliverySubscriptionLength", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, String>
+		deliverySubscriptionType = createColumn(
+			"deliverySubscriptionType", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, String>
+		deliverySubscriptionTypeSettings = createColumn(
+			"deliverySubTypeSettings", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Long>
+		deliveryMaxSubscriptionCycles = createColumn(
+			"deliveryMaxSubscriptionCycles", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 
 	private CommerceOrderItemTable() {
 		super("CommerceOrderItem", CommerceOrderItemTable::new);

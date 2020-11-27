@@ -16,10 +16,10 @@ definition {
 
 		if ("${pageTemplateType}" == "Content Page Template") {
 			if (isSet(masterLayoutName)) {
-				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "${masterLayoutName}");
+				LexiconCard.clickCard(card = "${masterLayoutName}");
 			}
 			else {
-				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Blank");
+				LexiconCard.clickCard(card = "Blank");
 			}
 		}
 

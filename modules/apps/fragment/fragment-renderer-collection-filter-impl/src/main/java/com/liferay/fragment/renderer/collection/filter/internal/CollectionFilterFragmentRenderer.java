@@ -17,10 +17,15 @@ package com.liferay.fragment.renderer.collection.filter.internal;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.PrintWriter;
 
@@ -33,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -52,9 +58,22 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 	public String getConfiguration(
 		FragmentRendererContext fragmentRendererContext) {
 
-		return JSONUtil.put(
-			"fieldSets", JSONUtil.putAll()
-		).toString();
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(
+					getClass(),
+					"/META-INF/resources/fragment/renderer/collection/filter" +
+						"/configuration.json"));
+
+			return _fragmentEntryConfigurationParser.translateConfiguration(
+				jsonObject, resourceBundle);
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -104,4 +123,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 	private volatile FFFragmentRendererCollectionFilterConfiguration
 		_ffFragmentRendererCollectionFilterConfiguration;
 
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 }

@@ -90,10 +90,18 @@ class Surface extends Disposable {
 	 * @return {Element}
 	 */
 	addContent(screenId, opt_content) {
-		var child = this.defaultChild;
+		const fragment =
+			typeof opt_content === 'string'
+				? buildFragment(opt_content)
+				: opt_content;
 
-		if (opt_content) {
+		Liferay.DOMTaskRunner.runTasks(fragment);
+
+		let child = this.defaultChild;
+
+		if (fragment) {
 			child = this.getChild(screenId);
+
 			if (child) {
 				while (child.firstChild) {
 					child.removeChild(child.firstChild);
@@ -101,16 +109,14 @@ class Surface extends Disposable {
 			}
 			else {
 				child = this.createChild(screenId);
+
 				this.transition(child, null);
 			}
-			child.appendChild(
-				typeof opt_content === 'string'
-					? buildFragment(opt_content)
-					: opt_content
-			);
+
+			child.appendChild(fragment);
 		}
 
-		var element = this.getElement();
+		const element = this.getElement();
 
 		if (element && child) {
 			element.appendChild(child);

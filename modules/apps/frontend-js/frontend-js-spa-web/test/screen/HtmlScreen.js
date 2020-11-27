@@ -19,6 +19,12 @@ import HtmlScreen from '../../src/main/resources/META-INF/resources/screen/HtmlS
 import Surface from '../../src/main/resources/META-INF/resources/surface/Surface';
 
 describe('HtmlScreen', () => {
+	beforeAll(() => {
+		globals.window.Liferay.DOMTaskRunner = {
+			runTasks: jest.fn(),
+		};
+	});
+
 	beforeEach(() => {
 		jest.spyOn(console, 'log').mockImplementation(() => {});
 	});

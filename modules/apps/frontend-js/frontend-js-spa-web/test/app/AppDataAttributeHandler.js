@@ -24,6 +24,10 @@ describe('AppDataAttributeHandler', () => {
 		globals.window.senna = {
 			Screen,
 		};
+
+		globals.window.Liferay.DOMTaskRunner = {
+			runTasks: jest.fn(),
+		};
 	});
 
 	beforeEach(() => {

@@ -14,9 +14,16 @@
 
 import {buildFragment} from 'frontend-js-web';
 
+import globals from '../../src/main/resources/META-INF/resources/globals/globals';
 import Surface from '../../src/main/resources/META-INF/resources/surface/Surface';
 
 describe('Surface', () => {
+	beforeAll(() => {
+		globals.window.Liferay.DOMTaskRunner = {
+			runTasks: jest.fn(),
+		};
+	});
+
 	describe('Constructor', () => {
 		it('throws error when surface id not specified', () => {
 			expect(() => {

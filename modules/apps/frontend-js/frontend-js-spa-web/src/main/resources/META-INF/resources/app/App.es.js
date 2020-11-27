@@ -14,7 +14,7 @@
 
 import {buildFragment, openToast} from 'frontend-js-web';
 
-import LiferaySurface from '../surface/Surface.es';
+import LiferaySurface from '../surface/Surface';
 import {getPortletBoundaryId, getUid, resetAllPortlets} from '../util/utils';
 import {App} from './App';
 

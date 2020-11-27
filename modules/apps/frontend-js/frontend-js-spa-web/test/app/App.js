@@ -40,6 +40,12 @@ StubScreen.prototype.evaluateStyles = jest.fn();
 StubScreen.prototype.evaluateScripts = jest.fn();
 
 describe('App', function () {
+	beforeAll(() => {
+		globals.window.Liferay.DOMTaskRunner = {
+			runTasks: jest.fn(),
+		};
+	});
+
 	beforeEach(() => {
 		globals.window = window;
 		globals.capturedFormElement = undefined;

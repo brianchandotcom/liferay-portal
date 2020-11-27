@@ -14,10 +14,17 @@
 
 import {buildFragment} from 'frontend-js-web';
 
+import globals from '../../src/main/resources/META-INF/resources/globals/globals';
 import Screen from '../../src/main/resources/META-INF/resources/screen/Screen';
 import Surface from '../../src/main/resources/META-INF/resources/surface/Surface';
 
 describe('Screen', () => {
+	beforeAll(() => {
+		globals.window.Liferay.DOMTaskRunner = {
+			runTasks: jest.fn(),
+		};
+	});
+
 	it('exposes lifecycle activate', () => {
 		expect(() => {
 			new Screen().activate();

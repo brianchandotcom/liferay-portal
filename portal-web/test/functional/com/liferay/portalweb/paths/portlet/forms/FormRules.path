@@ -122,16 +122,6 @@
     <td></td>
 </tr>
 <tr>
-    <td>RULE_BUILDER_CALCULATE_RESULT_FIELD</td>
-    <td>//div[contains(@class,'calculate-container-fields')]//div[contains(@id,'action')] | //div[contains(@class,'target-action')]//div[contains(@class,'form-builder-select-field')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST</td>
-    <td>//div[contains(@class,'calculate-container-fields')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateResultField}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_calculateResultField}']</td>
-    <td></td>
-</tr>
-<tr>
     <td>RULE_BUILDER_CALCULATE_RESULT_EXPRESSION</td>
     <td>//div[contains(@class,'calculate-container-fields')]//textarea[contains(.,'${key_calculatorExpression}')]</td>
     <td></td>

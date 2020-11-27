@@ -3517,7 +3517,9 @@ definition {
 			action = "Calculate",
 			actionRowNumber = "1");
 
-		FormRules.selectCalculateResultField(calculateResultField = "Total");
+		FormRules.selectActionTarget(
+			actionTarget = "Total",
+			actionRowNumber = "1");
 
 		FormRules.selectCalculateField(calculateFieldOption = "Value");
 

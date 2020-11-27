@@ -14,31 +14,12 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import java.util.Set;
-
 /**
  * @author Samuel Ziemer
+ * @author Alberto Chaparro
  */
 public interface ReleaseManager {
 
-	public String check();
-
-	public String check(boolean listAllUpgrades);
-
-	public String execute(String bundleSymbolicName);
-
-	public String execute(String bundleSymbolicName, String toVersionString);
-
-	public String executeAll();
-
-	public String getSchemaVersionString(String bundleSymbolicName);
-
-	public Set<String> getUpgradableBundleSymbolicNames();
-
-	public boolean isUpgradable(String bundleSymbolicName);
-
-	public String list();
-
-	public String list(String bundleSymbolicName);
+	public String getStatusMessage(boolean checkMicro);
 
 }

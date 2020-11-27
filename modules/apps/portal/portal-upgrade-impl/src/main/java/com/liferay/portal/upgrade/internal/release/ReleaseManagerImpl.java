@@ -20,23 +20,32 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
 import com.liferay.portal.util.PropsValues;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -54,9 +63,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Alberto Chaparro
+ * @author Samuel Ziemer
  */
 @Component(immediate = true, service = ReleaseManager.class)
-public class ReleaseManager {
+public class ReleaseManagerImpl implements ReleaseManager {
 
 	public Set<String> getBundleSymbolicNames() {
 		return _serviceTrackerMap.keySet();
@@ -74,6 +84,50 @@ public class ReleaseManager {
 		}
 
 		return currentSchemaVersion;
+	}
+
+	@Override
+	public String getStatusMessage(boolean checkMicro) {
+		String message =
+			"%s upgrades in %s are pending. Run the upgrade process or type " +
+				"upgrade:help in Gogo shell to get more information.";
+
+		if (!checkMicro) {
+			if (_isPendingRequiredModuleUpgrades()) {
+				return String.format(message, "Required", "modules");
+			}
+
+			return StringPool.BLANK;
+		}
+
+		String where = StringPool.BLANK;
+
+		try (Connection connection = DataAccess.getConnection()) {
+			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
+				where = "portal";
+			}
+		}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get pending upgrade information for Portal");
+			}
+		}
+
+		if (_isPendingModuleUpgrades()) {
+			if (Validator.isNotNull(where)) {
+				where = "and " + where;
+			}
+			else {
+				where = "modules";
+			}
+		}
+
+		if (Validator.isNotNull(where)) {
+			return String.format(message, "Optional", where);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public Set<String> getUpgradableBundleSymbolicNames() {
@@ -103,11 +157,12 @@ public class ReleaseManager {
 				"(upgrade.db.type=", db.getDBType(), ")))"),
 			new PropertyServiceReferenceMapper<String, UpgradeStep>(
 				"upgrade.bundle.symbolic.name"),
-			new ReleaseManager.UpgradeServiceTrackerCustomizer(bundleContext),
+			new ReleaseManagerImpl.UpgradeServiceTrackerCustomizer(
+				bundleContext),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<UpgradeStep>(
 					"upgrade.from.schema.version")),
-			new ReleaseManager.UpgradeInfoServiceTrackerMapListener());
+			new ReleaseManagerImpl.UpgradeInfoServiceTrackerMapListener());
 
 		Set<String> upgradedBundleSymbolicNames = new HashSet<>();
 
@@ -158,7 +213,47 @@ public class ReleaseManager {
 		return false;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ReleaseManager.class);
+	private boolean _isPendingModuleUpgrades() {
+		for (String bundleSymbolicName : getBundleSymbolicNames()) {
+			if (isUpgradable(bundleSymbolicName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isPendingRequiredModuleUpgrades() {
+		Set<String> upgradableBundleSymbolicNames =
+			getUpgradableBundleSymbolicNames();
+
+		for (String bundleSymbolicName : upgradableBundleSymbolicNames) {
+			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+				getUpgradeInfos(bundleSymbolicName));
+
+			List<List<UpgradeInfo>> upgradeInfosList =
+				releaseGraphManager.getUpgradeInfosList(
+					getCurrentSchemaVersion(bundleSymbolicName));
+
+			List<UpgradeInfo> upgradeInfos = upgradeInfosList.get(0);
+
+			for (UpgradeInfo upgradeInfo : upgradeInfos) {
+				if (UpgradeProcessUtil.isRequiredSchemaVersion(
+						Version.parseVersion(
+							upgradeInfo.getFromSchemaVersionString()),
+						Version.parseVersion(
+							upgradeInfo.getToSchemaVersionString()))) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReleaseManagerImpl.class);
 
 	private boolean _activated;
 

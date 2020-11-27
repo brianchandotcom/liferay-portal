@@ -28,7 +28,7 @@ import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
-import com.liferay.portal.upgrade.internal.release.ReleaseManager;
+import com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -70,7 +70,7 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("Execute upgrade for a specific module")
 	public String execute(String bundleSymbolicName) {
-		List<UpgradeInfo> upgradeInfos = _releaseManager.getUpgradeInfos(
+		List<UpgradeInfo> upgradeInfos = _releaseManagerImpl.getUpgradeInfos(
 			bundleSymbolicName);
 
 		if (upgradeInfos == null) {
@@ -95,15 +95,15 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("Execute upgrade for a specific module and final version")
 	public String execute(String bundleSymbolicName, String toVersionString) {
-		List<UpgradeInfo> upgradeInfos = _releaseManager.getUpgradeInfos(
+		List<UpgradeInfo> upgradeInfos = _releaseManagerImpl.getUpgradeInfos(
 			bundleSymbolicName);
 
 		if (upgradeInfos == null) {
 			return "No upgrade processes registered for " + bundleSymbolicName;
 		}
 
-		String currentSchemaVersion = _releaseManager.getCurrentSchemaVersion(
-			bundleSymbolicName);
+		String currentSchemaVersion =
+			_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName);
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
@@ -149,7 +149,7 @@ public class ReleaseManagerOSGiCommands {
 	@Descriptor("List registered upgrade processes for all modules")
 	public String list() {
 		Set<String> bundleSymbolicNames =
-			_releaseManager.getBundleSymbolicNames();
+			_releaseManagerImpl.getBundleSymbolicNames();
 
 		StringBundler sb = new StringBundler(2 * bundleSymbolicNames.size());
 
@@ -165,7 +165,7 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List registered upgrade processes for a specific module")
 	public String list(String bundleSymbolicName) {
-		List<UpgradeInfo> upgradeInfos = _releaseManager.getUpgradeInfos(
+		List<UpgradeInfo> upgradeInfos = _releaseManagerImpl.getUpgradeInfos(
 			bundleSymbolicName);
 
 		StringBundler sb = new StringBundler(5 + (3 * upgradeInfos.size()));
@@ -173,7 +173,8 @@ public class ReleaseManagerOSGiCommands {
 		sb.append("Registered upgrade processes for ");
 		sb.append(bundleSymbolicName);
 		sb.append(StringPool.SPACE);
-		sb.append(_releaseManager.getCurrentSchemaVersion(bundleSymbolicName));
+		sb.append(
+			_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName));
 		sb.append(StringPool.NEW_LINE);
 
 		for (UpgradeInfo upgradeProcess : upgradeInfos) {
@@ -191,7 +192,7 @@ public class ReleaseManagerOSGiCommands {
 		Set<String> upgradeThrewExceptionBundleSymbolicNames) {
 
 		Set<String> upgradableBundleSymbolicNames =
-			_releaseManager.getUpgradableBundleSymbolicNames();
+			_releaseManagerImpl.getUpgradableBundleSymbolicNames();
 
 		upgradableBundleSymbolicNames.removeAll(
 			upgradeThrewExceptionBundleSymbolicNames);
@@ -205,7 +206,7 @@ public class ReleaseManagerOSGiCommands {
 
 			try {
 				List<UpgradeInfo> upgradeInfos =
-					_releaseManager.getUpgradeInfos(
+					_releaseManagerImpl.getUpgradeInfos(
 						upgradableBundleSymbolicName);
 
 				_upgradeExecutor.execute(
@@ -232,14 +233,14 @@ public class ReleaseManagerOSGiCommands {
 		StringBundler sb = new StringBundler();
 
 		Set<String> bundleSymbolicNames =
-			_releaseManager.getBundleSymbolicNames();
+			_releaseManagerImpl.getBundleSymbolicNames();
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
 			String currentSchemaVersion =
-				_releaseManager.getCurrentSchemaVersion(bundleSymbolicName);
+				_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName);
 
 			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-				_releaseManager.getUpgradeInfos(bundleSymbolicName));
+				_releaseManagerImpl.getUpgradeInfos(bundleSymbolicName));
 
 			List<List<UpgradeInfo>> upgradeInfosList =
 				releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
@@ -344,7 +345,7 @@ public class ReleaseManagerOSGiCommands {
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get pending upgrades information for Portal");
+					"Unable to get pending upgrade information for Portal");
 			}
 		}
 
@@ -402,7 +403,7 @@ public class ReleaseManagerOSGiCommands {
 		ReleaseManagerOSGiCommands.class);
 
 	@Reference
-	private ReleaseManager _releaseManager;
+	private ReleaseManagerImpl _releaseManagerImpl;
 
 	@Reference
 	private SwappedLogExecutor _swappedLogExecutor;

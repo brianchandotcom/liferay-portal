@@ -42,7 +42,7 @@ else {
 	beanIdLabel="id"
 	model="<%= CommerceShipment.class %>"
 	thumbnailUrl="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(commerceAccount, themeDisplay.getPathImage()) %>"
-	title="<%= commerceAccount.getName() %>"
+	title="<%= String.valueOf(commerceShipment.getCommerceShipmentId()) %>"
 	wrapperCssClasses="side-panel-top-anchor"
 />
 

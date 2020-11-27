@@ -17,7 +17,7 @@ package com.liferay.item.selector.editor.configuration.internal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -81,7 +81,7 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
 	protected List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
-		return Arrays.asList(new VideoURLItemSelectorReturnType());
+		return Arrays.asList(new VideoEmbeddableHTMLItemSelectorReturnType());
 	}
 
 	@Override

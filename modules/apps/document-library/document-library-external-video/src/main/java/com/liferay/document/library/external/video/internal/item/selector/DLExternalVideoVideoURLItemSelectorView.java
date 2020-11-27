@@ -17,7 +17,7 @@ package com.liferay.document.library.external.video.internal.item.selector;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -87,7 +87,8 @@ public class DLExternalVideoVideoURLItemSelectorView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(new VideoURLItemSelectorReturnType()));
+			ListUtil.fromArray(
+				new VideoEmbeddableHTMLItemSelectorReturnType()));
 
 	private ServletContext _servletContext;
 

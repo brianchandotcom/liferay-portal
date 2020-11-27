@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.external.video.internal.item.selector;
+package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
-import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -31,15 +31,15 @@ import org.osgi.service.component.annotations.Reference;
 	property = "service.ranking:Integer=100",
 	service = ItemSelectorReturnTypeResolver.class
 )
-public class DLExternalVideoVideoURLItemSelectorReturnTypeResolver
+public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<VideoURLItemSelectorReturnType, FileEntry> {
+		<VideoEmbeddableHTMLItemSelectorReturnType, FileEntry> {
 
 	@Override
-	public Class<VideoURLItemSelectorReturnType>
+	public Class<VideoEmbeddableHTMLItemSelectorReturnType>
 		getItemSelectorReturnTypeClass() {
 
-		return VideoURLItemSelectorReturnType.class;
+		return VideoEmbeddableHTMLItemSelectorReturnType.class;
 	}
 
 	@Override

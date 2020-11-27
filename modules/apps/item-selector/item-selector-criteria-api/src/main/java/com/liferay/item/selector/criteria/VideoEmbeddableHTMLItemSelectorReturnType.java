@@ -17,13 +17,11 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * This return type should return the URL of a video as a string.
- *
- * If the video is an external video the URL will point to the
- * external video service.
+ * This return type should return the embeddable HTML of a video as a string.
  *
  * @author Alejandro Tardín
  * @review
  */
-public class VideoURLItemSelectorReturnType implements ItemSelectorReturnType {
+public class VideoEmbeddableHTMLItemSelectorReturnType
+	implements ItemSelectorReturnType {
 }

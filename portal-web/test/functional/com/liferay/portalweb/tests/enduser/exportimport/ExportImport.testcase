@@ -1888,10 +1888,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name A");
 
 		WebContent.addWithStructureCP(
-			linkedPageName = "Page B",
-			linkFieldName = "LinkToPage",
 			structureName = "Structure Name A",
 			templateName = "Template Name A",
+			webContentLinkToPage = "Page B",
 			webContentTitle = "WC WebContent Title 1");
 
 		PortletEntry.publish();
@@ -1901,11 +1900,10 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name B");
 
 		WebContent.addWithStructureCP(
-			fieldName = "WebContent",
 			structureName = "Structure Name B",
 			templateName = "Template Name B",
-			webContentSelectWCFile = "WC WebContent Title 1",
-			webContentTitle = "WC WebContent Title 2");
+			webContentTitle = "WC WebContent Title 2",
+			webContentWebContent = "WC WebContent Title 1");
 
 		PortletEntry.publish();
 

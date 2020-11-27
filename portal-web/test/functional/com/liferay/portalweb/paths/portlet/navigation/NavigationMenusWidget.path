@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CHILD_TOGGLE</td>
+	<td>//div[contains(@id,'navbar')]//a[contains(@class,'dropdown-toggle')][contains(.,'${key_pageName}')]//*[name()='svg'][contains(@class,'angle-down')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_NAVIGATION</td>
 	<td>//select[contains(@id,'selectSiteNavigationMenuType')]</td>
 	<td></td>

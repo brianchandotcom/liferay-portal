@@ -134,7 +134,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		Set<String> upgradableBundleSymbolicNames = new HashSet<>();
 
 		for (String bundleSymbolicName : getBundleSymbolicNames()) {
-			if (isUpgradable(bundleSymbolicName)) {
+			if (_isUpgradable(bundleSymbolicName)) {
 				upgradableBundleSymbolicNames.add(bundleSymbolicName);
 			}
 		}
@@ -196,26 +196,9 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		_serviceTrackerMap.close();
 	}
 
-	protected boolean isUpgradable(String bundleSymbolicName) {
-		String currentSchemaVersion = getCurrentSchemaVersion(
-			bundleSymbolicName);
-
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			getUpgradeInfos(bundleSymbolicName));
-
-		List<List<UpgradeInfo>> upgradeInfosList =
-			releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
-
-		if (upgradeInfosList.size() == 1) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isPendingModuleUpgrades() {
 		for (String bundleSymbolicName : getBundleSymbolicNames()) {
-			if (isUpgradable(bundleSymbolicName)) {
+			if (_isUpgradable(bundleSymbolicName)) {
 				return true;
 			}
 		}
@@ -247,6 +230,21 @@ public class ReleaseManagerImpl implements ReleaseManager {
 					return true;
 				}
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isUpgradable(String bundleSymbolicName) {
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+			getUpgradeInfos(bundleSymbolicName));
+
+		List<List<UpgradeInfo>> upgradeInfosList =
+			releaseGraphManager.getUpgradeInfosList(
+				getCurrentSchemaVersion(bundleSymbolicName));
+
+		if (upgradeInfosList.size() == 1) {
+			return true;
 		}
 
 		return false;

@@ -3728,6 +3728,8 @@ public class CommerceOrderItemPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put(
+			"deliverySubscriptionTypeSettings", "deliverySubTypeSettings");
+		dbColumnNames.put(
 			"discountPercentageLevel1WithTaxAmount",
 			"discountPctLevel1WithTaxAmount");
 		dbColumnNames.put(
@@ -4507,6 +4509,7 @@ public class CommerceOrderItemPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
+			"deliverySubscriptionTypeSettings",
 			"discountPercentageLevel1WithTaxAmount",
 			"discountPercentageLevel2WithTaxAmount",
 			"discountPercentageLevel3WithTaxAmount",

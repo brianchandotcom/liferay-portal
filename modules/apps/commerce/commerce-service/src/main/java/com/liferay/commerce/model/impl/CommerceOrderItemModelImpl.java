@@ -86,30 +86,41 @@ public class CommerceOrderItemModelImpl
 		{"commerceOrderItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"commerceOrderId", Types.BIGINT},
-		{"commercePriceListId", Types.BIGINT}, {"CProductId", Types.BIGINT},
-		{"CPInstanceId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"bookedQuantityId", Types.BIGINT},
+		{"commerceOrderId", Types.BIGINT},
+		{"commercePriceListId", Types.BIGINT}, {"CPInstanceId", Types.BIGINT},
+		{"CProductId", Types.BIGINT},
 		{"parentCommerceOrderItemId", Types.BIGINT},
-		{"quantity", Types.INTEGER}, {"shippedQuantity", Types.INTEGER},
-		{"json", Types.CLOB}, {"name", Types.VARCHAR}, {"sku", Types.VARCHAR},
-		{"unitPrice", Types.DECIMAL}, {"promoPrice", Types.DECIMAL},
-		{"discountAmount", Types.DECIMAL}, {"finalPrice", Types.DECIMAL},
+		{"shippingAddressId", Types.BIGINT}, {"deliveryGroup", Types.VARCHAR},
+		{"deliveryMaxSubscriptionCycles", Types.BIGINT},
+		{"deliverySubscriptionLength", Types.INTEGER},
+		{"deliverySubscriptionType", Types.VARCHAR},
+		{"deliverySubTypeSettings", Types.VARCHAR}, {"depth", Types.DOUBLE},
+		{"discountAmount", Types.DECIMAL},
 		{"discountPercentageLevel1", Types.DECIMAL},
 		{"discountPercentageLevel2", Types.DECIMAL},
 		{"discountPercentageLevel3", Types.DECIMAL},
 		{"discountPercentageLevel4", Types.DECIMAL},
-		{"unitPriceWithTaxAmount", Types.DECIMAL},
-		{"promoPriceWithTaxAmount", Types.DECIMAL},
-		{"discountWithTaxAmount", Types.DECIMAL},
-		{"finalPriceWithTaxAmount", Types.DECIMAL},
 		{"discountPctLevel1WithTaxAmount", Types.DECIMAL},
 		{"discountPctLevel2WithTaxAmount", Types.DECIMAL},
 		{"discountPctLevel3WithTaxAmount", Types.DECIMAL},
 		{"discountPctLevel4WithTaxAmount", Types.DECIMAL},
-		{"subscription", Types.BOOLEAN}, {"deliveryGroup", Types.VARCHAR},
-		{"shippingAddressId", Types.BIGINT}, {"printedNote", Types.VARCHAR},
+		{"discountWithTaxAmount", Types.DECIMAL}, {"finalPrice", Types.DECIMAL},
+		{"finalPriceWithTaxAmount", Types.DECIMAL},
+		{"freeShipping", Types.BOOLEAN}, {"height", Types.DOUBLE},
+		{"json", Types.CLOB}, {"manuallyAdjusted", Types.BOOLEAN},
+		{"maxSubscriptionCycles", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"printedNote", Types.VARCHAR}, {"promoPrice", Types.DECIMAL},
+		{"promoPriceWithTaxAmount", Types.DECIMAL}, {"quantity", Types.INTEGER},
 		{"requestedDeliveryDate", Types.TIMESTAMP},
-		{"bookedQuantityId", Types.BIGINT}, {"manuallyAdjusted", Types.BOOLEAN}
+		{"shipSeparately", Types.BOOLEAN}, {"shippable", Types.BOOLEAN},
+		{"shippedQuantity", Types.INTEGER},
+		{"shippingExtraPrice", Types.DOUBLE}, {"sku", Types.VARCHAR},
+		{"subscription", Types.BOOLEAN}, {"subscriptionLength", Types.INTEGER},
+		{"subscriptionType", Types.VARCHAR},
+		{"subscriptionTypeSettings", Types.VARCHAR},
+		{"unitPrice", Types.DECIMAL}, {"unitPriceWithTaxAmount", Types.DECIMAL},
+		{"weight", Types.DOUBLE}, {"width", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -124,43 +135,59 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("bookedQuantityId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceOrderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentCommerceOrderItemId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("unitPrice", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("deliveryGroup", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deliveryMaxSubscriptionCycles", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("deliverySubscriptionLength", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("deliverySubscriptionType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deliverySubTypeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("discountAmount", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("finalPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel1", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel2", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel3", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel4", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("unitPriceWithTaxAmount", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("promoPriceWithTaxAmount", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("discountWithTaxAmount", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("finalPriceWithTaxAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPctLevel1WithTaxAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPctLevel2WithTaxAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPctLevel3WithTaxAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPctLevel4WithTaxAmount", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("subscription", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("deliveryGroup", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("printedNote", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("requestedDeliveryDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("bookedQuantityId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("discountWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("finalPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("finalPriceWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("freeShipping", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("manuallyAdjusted", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("maxSubscriptionCycles", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("printedNote", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("promoPriceWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("requestedDeliveryDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("shipSeparately", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("shippingExtraPrice", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subscription", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("subscriptionLength", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("subscriptionType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subscriptionTypeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("unitPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("unitPriceWithTaxAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePriceListId LONG,CProductId LONG,CPInstanceId LONG,parentCommerceOrderItemId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,name STRING null,sku VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,discountAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,subscription BOOLEAN,deliveryGroup VARCHAR(75) null,shippingAddressId LONG,printedNote STRING null,requestedDeliveryDate DATE null,bookedQuantityId LONG,manuallyAdjusted BOOLEAN)";
+		"create table CommerceOrderItem (externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CProductId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,printedNote STRING null,promoPrice DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,quantity INTEGER,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -272,21 +299,25 @@ public class CommerceOrderItemModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setBookedQuantityId(soapModel.getBookedQuantityId());
 		model.setCommerceOrderId(soapModel.getCommerceOrderId());
 		model.setCommercePriceListId(soapModel.getCommercePriceListId());
-		model.setCProductId(soapModel.getCProductId());
 		model.setCPInstanceId(soapModel.getCPInstanceId());
+		model.setCProductId(soapModel.getCProductId());
 		model.setParentCommerceOrderItemId(
 			soapModel.getParentCommerceOrderItemId());
-		model.setQuantity(soapModel.getQuantity());
-		model.setShippedQuantity(soapModel.getShippedQuantity());
-		model.setJson(soapModel.getJson());
-		model.setName(soapModel.getName());
-		model.setSku(soapModel.getSku());
-		model.setUnitPrice(soapModel.getUnitPrice());
-		model.setPromoPrice(soapModel.getPromoPrice());
+		model.setShippingAddressId(soapModel.getShippingAddressId());
+		model.setDeliveryGroup(soapModel.getDeliveryGroup());
+		model.setDeliveryMaxSubscriptionCycles(
+			soapModel.getDeliveryMaxSubscriptionCycles());
+		model.setDeliverySubscriptionLength(
+			soapModel.getDeliverySubscriptionLength());
+		model.setDeliverySubscriptionType(
+			soapModel.getDeliverySubscriptionType());
+		model.setDeliverySubscriptionTypeSettings(
+			soapModel.getDeliverySubscriptionTypeSettings());
+		model.setDepth(soapModel.getDepth());
 		model.setDiscountAmount(soapModel.getDiscountAmount());
-		model.setFinalPrice(soapModel.getFinalPrice());
 		model.setDiscountPercentageLevel1(
 			soapModel.getDiscountPercentageLevel1());
 		model.setDiscountPercentageLevel2(
@@ -295,12 +326,6 @@ public class CommerceOrderItemModelImpl
 			soapModel.getDiscountPercentageLevel3());
 		model.setDiscountPercentageLevel4(
 			soapModel.getDiscountPercentageLevel4());
-		model.setUnitPriceWithTaxAmount(soapModel.getUnitPriceWithTaxAmount());
-		model.setPromoPriceWithTaxAmount(
-			soapModel.getPromoPriceWithTaxAmount());
-		model.setDiscountWithTaxAmount(soapModel.getDiscountWithTaxAmount());
-		model.setFinalPriceWithTaxAmount(
-			soapModel.getFinalPriceWithTaxAmount());
 		model.setDiscountPercentageLevel1WithTaxAmount(
 			soapModel.getDiscountPercentageLevel1WithTaxAmount());
 		model.setDiscountPercentageLevel2WithTaxAmount(
@@ -309,13 +334,36 @@ public class CommerceOrderItemModelImpl
 			soapModel.getDiscountPercentageLevel3WithTaxAmount());
 		model.setDiscountPercentageLevel4WithTaxAmount(
 			soapModel.getDiscountPercentageLevel4WithTaxAmount());
-		model.setSubscription(soapModel.isSubscription());
-		model.setDeliveryGroup(soapModel.getDeliveryGroup());
-		model.setShippingAddressId(soapModel.getShippingAddressId());
-		model.setPrintedNote(soapModel.getPrintedNote());
-		model.setRequestedDeliveryDate(soapModel.getRequestedDeliveryDate());
-		model.setBookedQuantityId(soapModel.getBookedQuantityId());
+		model.setDiscountWithTaxAmount(soapModel.getDiscountWithTaxAmount());
+		model.setFinalPrice(soapModel.getFinalPrice());
+		model.setFinalPriceWithTaxAmount(
+			soapModel.getFinalPriceWithTaxAmount());
+		model.setFreeShipping(soapModel.isFreeShipping());
+		model.setHeight(soapModel.getHeight());
+		model.setJson(soapModel.getJson());
 		model.setManuallyAdjusted(soapModel.isManuallyAdjusted());
+		model.setMaxSubscriptionCycles(soapModel.getMaxSubscriptionCycles());
+		model.setName(soapModel.getName());
+		model.setPrintedNote(soapModel.getPrintedNote());
+		model.setPromoPrice(soapModel.getPromoPrice());
+		model.setPromoPriceWithTaxAmount(
+			soapModel.getPromoPriceWithTaxAmount());
+		model.setQuantity(soapModel.getQuantity());
+		model.setRequestedDeliveryDate(soapModel.getRequestedDeliveryDate());
+		model.setShipSeparately(soapModel.isShipSeparately());
+		model.setShippable(soapModel.isShippable());
+		model.setShippedQuantity(soapModel.getShippedQuantity());
+		model.setShippingExtraPrice(soapModel.getShippingExtraPrice());
+		model.setSku(soapModel.getSku());
+		model.setSubscription(soapModel.isSubscription());
+		model.setSubscriptionLength(soapModel.getSubscriptionLength());
+		model.setSubscriptionType(soapModel.getSubscriptionType());
+		model.setSubscriptionTypeSettings(
+			soapModel.getSubscriptionTypeSettings());
+		model.setUnitPrice(soapModel.getUnitPrice());
+		model.setUnitPriceWithTaxAmount(soapModel.getUnitPriceWithTaxAmount());
+		model.setWeight(soapModel.getWeight());
+		model.setWidth(soapModel.getWidth());
 
 		return model;
 	}
@@ -522,6 +570,12 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, Date>)
 				CommerceOrderItem::setModifiedDate);
 		attributeGetterFunctions.put(
+			"bookedQuantityId", CommerceOrderItem::getBookedQuantityId);
+		attributeSetterBiConsumers.put(
+			"bookedQuantityId",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setBookedQuantityId);
+		attributeGetterFunctions.put(
 			"commerceOrderId", CommerceOrderItem::getCommerceOrderId);
 		attributeSetterBiConsumers.put(
 			"commerceOrderId",
@@ -534,17 +588,17 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, Long>)
 				CommerceOrderItem::setCommercePriceListId);
 		attributeGetterFunctions.put(
-			"CProductId", CommerceOrderItem::getCProductId);
-		attributeSetterBiConsumers.put(
-			"CProductId",
-			(BiConsumer<CommerceOrderItem, Long>)
-				CommerceOrderItem::setCProductId);
-		attributeGetterFunctions.put(
 			"CPInstanceId", CommerceOrderItem::getCPInstanceId);
 		attributeSetterBiConsumers.put(
 			"CPInstanceId",
 			(BiConsumer<CommerceOrderItem, Long>)
 				CommerceOrderItem::setCPInstanceId);
+		attributeGetterFunctions.put(
+			"CProductId", CommerceOrderItem::getCProductId);
+		attributeSetterBiConsumers.put(
+			"CProductId",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setCProductId);
 		attributeGetterFunctions.put(
 			"parentCommerceOrderItemId",
 			CommerceOrderItem::getParentCommerceOrderItemId);
@@ -553,53 +607,55 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, Long>)
 				CommerceOrderItem::setParentCommerceOrderItemId);
 		attributeGetterFunctions.put(
-			"quantity", CommerceOrderItem::getQuantity);
+			"shippingAddressId", CommerceOrderItem::getShippingAddressId);
 		attributeSetterBiConsumers.put(
-			"quantity",
+			"shippingAddressId",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setShippingAddressId);
+		attributeGetterFunctions.put(
+			"deliveryGroup", CommerceOrderItem::getDeliveryGroup);
+		attributeSetterBiConsumers.put(
+			"deliveryGroup",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setDeliveryGroup);
+		attributeGetterFunctions.put(
+			"deliveryMaxSubscriptionCycles",
+			CommerceOrderItem::getDeliveryMaxSubscriptionCycles);
+		attributeSetterBiConsumers.put(
+			"deliveryMaxSubscriptionCycles",
+			(BiConsumer<CommerceOrderItem, Long>)
+				CommerceOrderItem::setDeliveryMaxSubscriptionCycles);
+		attributeGetterFunctions.put(
+			"deliverySubscriptionLength",
+			CommerceOrderItem::getDeliverySubscriptionLength);
+		attributeSetterBiConsumers.put(
+			"deliverySubscriptionLength",
 			(BiConsumer<CommerceOrderItem, Integer>)
-				CommerceOrderItem::setQuantity);
+				CommerceOrderItem::setDeliverySubscriptionLength);
 		attributeGetterFunctions.put(
-			"shippedQuantity", CommerceOrderItem::getShippedQuantity);
+			"deliverySubscriptionType",
+			CommerceOrderItem::getDeliverySubscriptionType);
 		attributeSetterBiConsumers.put(
-			"shippedQuantity",
-			(BiConsumer<CommerceOrderItem, Integer>)
-				CommerceOrderItem::setShippedQuantity);
-		attributeGetterFunctions.put("json", CommerceOrderItem::getJson);
-		attributeSetterBiConsumers.put(
-			"json",
-			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setJson);
-		attributeGetterFunctions.put("name", CommerceOrderItem::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setName);
-		attributeGetterFunctions.put("sku", CommerceOrderItem::getSku);
-		attributeSetterBiConsumers.put(
-			"sku",
-			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setSku);
+			"deliverySubscriptionType",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setDeliverySubscriptionType);
 		attributeGetterFunctions.put(
-			"unitPrice", CommerceOrderItem::getUnitPrice);
+			"deliverySubscriptionTypeSettings",
+			CommerceOrderItem::getDeliverySubscriptionTypeSettings);
 		attributeSetterBiConsumers.put(
-			"unitPrice",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setUnitPrice);
-		attributeGetterFunctions.put(
-			"promoPrice", CommerceOrderItem::getPromoPrice);
+			"deliverySubscriptionTypeSettings",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setDeliverySubscriptionTypeSettings);
+		attributeGetterFunctions.put("depth", CommerceOrderItem::getDepth);
 		attributeSetterBiConsumers.put(
-			"promoPrice",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setPromoPrice);
+			"depth",
+			(BiConsumer<CommerceOrderItem, Double>)CommerceOrderItem::setDepth);
 		attributeGetterFunctions.put(
 			"discountAmount", CommerceOrderItem::getDiscountAmount);
 		attributeSetterBiConsumers.put(
 			"discountAmount",
 			(BiConsumer<CommerceOrderItem, BigDecimal>)
 				CommerceOrderItem::setDiscountAmount);
-		attributeGetterFunctions.put(
-			"finalPrice", CommerceOrderItem::getFinalPrice);
-		attributeSetterBiConsumers.put(
-			"finalPrice",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setFinalPrice);
 		attributeGetterFunctions.put(
 			"discountPercentageLevel1",
 			CommerceOrderItem::getDiscountPercentageLevel1);
@@ -629,34 +685,6 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, BigDecimal>)
 				CommerceOrderItem::setDiscountPercentageLevel4);
 		attributeGetterFunctions.put(
-			"unitPriceWithTaxAmount",
-			CommerceOrderItem::getUnitPriceWithTaxAmount);
-		attributeSetterBiConsumers.put(
-			"unitPriceWithTaxAmount",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setUnitPriceWithTaxAmount);
-		attributeGetterFunctions.put(
-			"promoPriceWithTaxAmount",
-			CommerceOrderItem::getPromoPriceWithTaxAmount);
-		attributeSetterBiConsumers.put(
-			"promoPriceWithTaxAmount",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setPromoPriceWithTaxAmount);
-		attributeGetterFunctions.put(
-			"discountWithTaxAmount",
-			CommerceOrderItem::getDiscountWithTaxAmount);
-		attributeSetterBiConsumers.put(
-			"discountWithTaxAmount",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setDiscountWithTaxAmount);
-		attributeGetterFunctions.put(
-			"finalPriceWithTaxAmount",
-			CommerceOrderItem::getFinalPriceWithTaxAmount);
-		attributeSetterBiConsumers.put(
-			"finalPriceWithTaxAmount",
-			(BiConsumer<CommerceOrderItem, BigDecimal>)
-				CommerceOrderItem::setFinalPriceWithTaxAmount);
-		attributeGetterFunctions.put(
 			"discountPercentageLevel1WithTaxAmount",
 			CommerceOrderItem::getDiscountPercentageLevel1WithTaxAmount);
 		attributeSetterBiConsumers.put(
@@ -685,29 +713,82 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, BigDecimal>)
 				CommerceOrderItem::setDiscountPercentageLevel4WithTaxAmount);
 		attributeGetterFunctions.put(
-			"subscription", CommerceOrderItem::getSubscription);
+			"discountWithTaxAmount",
+			CommerceOrderItem::getDiscountWithTaxAmount);
 		attributeSetterBiConsumers.put(
-			"subscription",
+			"discountWithTaxAmount",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setDiscountWithTaxAmount);
+		attributeGetterFunctions.put(
+			"finalPrice", CommerceOrderItem::getFinalPrice);
+		attributeSetterBiConsumers.put(
+			"finalPrice",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setFinalPrice);
+		attributeGetterFunctions.put(
+			"finalPriceWithTaxAmount",
+			CommerceOrderItem::getFinalPriceWithTaxAmount);
+		attributeSetterBiConsumers.put(
+			"finalPriceWithTaxAmount",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setFinalPriceWithTaxAmount);
+		attributeGetterFunctions.put(
+			"freeShipping", CommerceOrderItem::getFreeShipping);
+		attributeSetterBiConsumers.put(
+			"freeShipping",
 			(BiConsumer<CommerceOrderItem, Boolean>)
-				CommerceOrderItem::setSubscription);
-		attributeGetterFunctions.put(
-			"deliveryGroup", CommerceOrderItem::getDeliveryGroup);
+				CommerceOrderItem::setFreeShipping);
+		attributeGetterFunctions.put("height", CommerceOrderItem::getHeight);
 		attributeSetterBiConsumers.put(
-			"deliveryGroup",
-			(BiConsumer<CommerceOrderItem, String>)
-				CommerceOrderItem::setDeliveryGroup);
-		attributeGetterFunctions.put(
-			"shippingAddressId", CommerceOrderItem::getShippingAddressId);
+			"height",
+			(BiConsumer<CommerceOrderItem, Double>)
+				CommerceOrderItem::setHeight);
+		attributeGetterFunctions.put("json", CommerceOrderItem::getJson);
 		attributeSetterBiConsumers.put(
-			"shippingAddressId",
+			"json",
+			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setJson);
+		attributeGetterFunctions.put(
+			"manuallyAdjusted", CommerceOrderItem::getManuallyAdjusted);
+		attributeSetterBiConsumers.put(
+			"manuallyAdjusted",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setManuallyAdjusted);
+		attributeGetterFunctions.put(
+			"maxSubscriptionCycles",
+			CommerceOrderItem::getMaxSubscriptionCycles);
+		attributeSetterBiConsumers.put(
+			"maxSubscriptionCycles",
 			(BiConsumer<CommerceOrderItem, Long>)
-				CommerceOrderItem::setShippingAddressId);
+				CommerceOrderItem::setMaxSubscriptionCycles);
+		attributeGetterFunctions.put("name", CommerceOrderItem::getName);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setName);
 		attributeGetterFunctions.put(
 			"printedNote", CommerceOrderItem::getPrintedNote);
 		attributeSetterBiConsumers.put(
 			"printedNote",
 			(BiConsumer<CommerceOrderItem, String>)
 				CommerceOrderItem::setPrintedNote);
+		attributeGetterFunctions.put(
+			"promoPrice", CommerceOrderItem::getPromoPrice);
+		attributeSetterBiConsumers.put(
+			"promoPrice",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setPromoPrice);
+		attributeGetterFunctions.put(
+			"promoPriceWithTaxAmount",
+			CommerceOrderItem::getPromoPriceWithTaxAmount);
+		attributeSetterBiConsumers.put(
+			"promoPriceWithTaxAmount",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setPromoPriceWithTaxAmount);
+		attributeGetterFunctions.put(
+			"quantity", CommerceOrderItem::getQuantity);
+		attributeSetterBiConsumers.put(
+			"quantity",
+			(BiConsumer<CommerceOrderItem, Integer>)
+				CommerceOrderItem::setQuantity);
 		attributeGetterFunctions.put(
 			"requestedDeliveryDate",
 			CommerceOrderItem::getRequestedDeliveryDate);
@@ -716,17 +797,80 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, Date>)
 				CommerceOrderItem::setRequestedDeliveryDate);
 		attributeGetterFunctions.put(
-			"bookedQuantityId", CommerceOrderItem::getBookedQuantityId);
+			"shipSeparately", CommerceOrderItem::getShipSeparately);
 		attributeSetterBiConsumers.put(
-			"bookedQuantityId",
-			(BiConsumer<CommerceOrderItem, Long>)
-				CommerceOrderItem::setBookedQuantityId);
-		attributeGetterFunctions.put(
-			"manuallyAdjusted", CommerceOrderItem::getManuallyAdjusted);
-		attributeSetterBiConsumers.put(
-			"manuallyAdjusted",
+			"shipSeparately",
 			(BiConsumer<CommerceOrderItem, Boolean>)
-				CommerceOrderItem::setManuallyAdjusted);
+				CommerceOrderItem::setShipSeparately);
+		attributeGetterFunctions.put(
+			"shippable", CommerceOrderItem::getShippable);
+		attributeSetterBiConsumers.put(
+			"shippable",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setShippable);
+		attributeGetterFunctions.put(
+			"shippedQuantity", CommerceOrderItem::getShippedQuantity);
+		attributeSetterBiConsumers.put(
+			"shippedQuantity",
+			(BiConsumer<CommerceOrderItem, Integer>)
+				CommerceOrderItem::setShippedQuantity);
+		attributeGetterFunctions.put(
+			"shippingExtraPrice", CommerceOrderItem::getShippingExtraPrice);
+		attributeSetterBiConsumers.put(
+			"shippingExtraPrice",
+			(BiConsumer<CommerceOrderItem, Double>)
+				CommerceOrderItem::setShippingExtraPrice);
+		attributeGetterFunctions.put("sku", CommerceOrderItem::getSku);
+		attributeSetterBiConsumers.put(
+			"sku",
+			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setSku);
+		attributeGetterFunctions.put(
+			"subscription", CommerceOrderItem::getSubscription);
+		attributeSetterBiConsumers.put(
+			"subscription",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setSubscription);
+		attributeGetterFunctions.put(
+			"subscriptionLength", CommerceOrderItem::getSubscriptionLength);
+		attributeSetterBiConsumers.put(
+			"subscriptionLength",
+			(BiConsumer<CommerceOrderItem, Integer>)
+				CommerceOrderItem::setSubscriptionLength);
+		attributeGetterFunctions.put(
+			"subscriptionType", CommerceOrderItem::getSubscriptionType);
+		attributeSetterBiConsumers.put(
+			"subscriptionType",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setSubscriptionType);
+		attributeGetterFunctions.put(
+			"subscriptionTypeSettings",
+			CommerceOrderItem::getSubscriptionTypeSettings);
+		attributeSetterBiConsumers.put(
+			"subscriptionTypeSettings",
+			(BiConsumer<CommerceOrderItem, String>)
+				CommerceOrderItem::setSubscriptionTypeSettings);
+		attributeGetterFunctions.put(
+			"unitPrice", CommerceOrderItem::getUnitPrice);
+		attributeSetterBiConsumers.put(
+			"unitPrice",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setUnitPrice);
+		attributeGetterFunctions.put(
+			"unitPriceWithTaxAmount",
+			CommerceOrderItem::getUnitPriceWithTaxAmount);
+		attributeSetterBiConsumers.put(
+			"unitPriceWithTaxAmount",
+			(BiConsumer<CommerceOrderItem, BigDecimal>)
+				CommerceOrderItem::setUnitPriceWithTaxAmount);
+		attributeGetterFunctions.put("weight", CommerceOrderItem::getWeight);
+		attributeSetterBiConsumers.put(
+			"weight",
+			(BiConsumer<CommerceOrderItem, Double>)
+				CommerceOrderItem::setWeight);
+		attributeGetterFunctions.put("width", CommerceOrderItem::getWidth);
+		attributeSetterBiConsumers.put(
+			"width",
+			(BiConsumer<CommerceOrderItem, Double>)CommerceOrderItem::setWidth);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -907,6 +1051,31 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
+	public long getBookedQuantityId() {
+		return _bookedQuantityId;
+	}
+
+	@Override
+	public void setBookedQuantityId(long bookedQuantityId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_bookedQuantityId = bookedQuantityId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalBookedQuantityId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("bookedQuantityId"));
+	}
+
+	@JSON
+	@Override
 	public long getCommerceOrderId() {
 		return _commerceOrderId;
 	}
@@ -947,31 +1116,6 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public long getCProductId() {
-		return _CProductId;
-	}
-
-	@Override
-	public void setCProductId(long CProductId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_CProductId = CProductId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCProductId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("CProductId"));
-	}
-
-	@JSON
-	@Override
 	public long getCPInstanceId() {
 		return _CPInstanceId;
 	}
@@ -993,6 +1137,31 @@ public class CommerceOrderItemModelImpl
 	public long getOriginalCPInstanceId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("CPInstanceId"));
+	}
+
+	@JSON
+	@Override
+	public long getCProductId() {
+		return _CProductId;
+	}
+
+	@Override
+	public void setCProductId(long CProductId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_CProductId = CProductId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCProductId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON
@@ -1022,32 +1191,362 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public int getQuantity() {
-		return _quantity;
+	public long getShippingAddressId() {
+		return _shippingAddressId;
 	}
 
 	@Override
-	public void setQuantity(int quantity) {
+	public void setShippingAddressId(long shippingAddressId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_quantity = quantity;
+		_shippingAddressId = shippingAddressId;
 	}
 
 	@JSON
 	@Override
-	public int getShippedQuantity() {
-		return _shippedQuantity;
+	public String getDeliveryGroup() {
+		if (_deliveryGroup == null) {
+			return "";
+		}
+		else {
+			return _deliveryGroup;
+		}
 	}
 
 	@Override
-	public void setShippedQuantity(int shippedQuantity) {
+	public void setDeliveryGroup(String deliveryGroup) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_shippedQuantity = shippedQuantity;
+		_deliveryGroup = deliveryGroup;
+	}
+
+	@JSON
+	@Override
+	public long getDeliveryMaxSubscriptionCycles() {
+		return _deliveryMaxSubscriptionCycles;
+	}
+
+	@Override
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
+	}
+
+	@JSON
+	@Override
+	public int getDeliverySubscriptionLength() {
+		return _deliverySubscriptionLength;
+	}
+
+	@Override
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliverySubscriptionLength = deliverySubscriptionLength;
+	}
+
+	@JSON
+	@Override
+	public String getDeliverySubscriptionType() {
+		if (_deliverySubscriptionType == null) {
+			return "";
+		}
+		else {
+			return _deliverySubscriptionType;
+		}
+	}
+
+	@Override
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliverySubscriptionType = deliverySubscriptionType;
+	}
+
+	@JSON
+	@Override
+	public String getDeliverySubscriptionTypeSettings() {
+		if (_deliverySubscriptionTypeSettings == null) {
+			return "";
+		}
+		else {
+			return _deliverySubscriptionTypeSettings;
+		}
+	}
+
+	@Override
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
+	}
+
+	@JSON
+	@Override
+	public double getDepth() {
+		return _depth;
+	}
+
+	@Override
+	public void setDepth(double depth) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_depth = depth;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountAmount() {
+		return _discountAmount;
+	}
+
+	@Override
+	public void setDiscountAmount(BigDecimal discountAmount) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountAmount = discountAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel1() {
+		return _discountPercentageLevel1;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel1(
+		BigDecimal discountPercentageLevel1) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel1 = discountPercentageLevel1;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel2() {
+		return _discountPercentageLevel2;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel2(
+		BigDecimal discountPercentageLevel2) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel2 = discountPercentageLevel2;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel3() {
+		return _discountPercentageLevel3;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel3(
+		BigDecimal discountPercentageLevel3) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel3 = discountPercentageLevel3;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel4() {
+		return _discountPercentageLevel4;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel4(
+		BigDecimal discountPercentageLevel4) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel4 = discountPercentageLevel4;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel1WithTaxAmount() {
+		return _discountPercentageLevel1WithTaxAmount;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal discountPercentageLevel1WithTaxAmount) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel1WithTaxAmount =
+			discountPercentageLevel1WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel2WithTaxAmount() {
+		return _discountPercentageLevel2WithTaxAmount;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal discountPercentageLevel2WithTaxAmount) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel2WithTaxAmount =
+			discountPercentageLevel2WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel3WithTaxAmount() {
+		return _discountPercentageLevel3WithTaxAmount;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal discountPercentageLevel3WithTaxAmount) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel3WithTaxAmount =
+			discountPercentageLevel3WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountPercentageLevel4WithTaxAmount() {
+		return _discountPercentageLevel4WithTaxAmount;
+	}
+
+	@Override
+	public void setDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal discountPercentageLevel4WithTaxAmount) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountPercentageLevel4WithTaxAmount =
+			discountPercentageLevel4WithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getDiscountWithTaxAmount() {
+		return _discountWithTaxAmount;
+	}
+
+	@Override
+	public void setDiscountWithTaxAmount(BigDecimal discountWithTaxAmount) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountWithTaxAmount = discountWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getFinalPrice() {
+		return _finalPrice;
+	}
+
+	@Override
+	public void setFinalPrice(BigDecimal finalPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_finalPrice = finalPrice;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getFinalPriceWithTaxAmount() {
+		return _finalPriceWithTaxAmount;
+	}
+
+	@Override
+	public void setFinalPriceWithTaxAmount(BigDecimal finalPriceWithTaxAmount) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_finalPriceWithTaxAmount = finalPriceWithTaxAmount;
+	}
+
+	@JSON
+	@Override
+	public boolean getFreeShipping() {
+		return _freeShipping;
+	}
+
+	@JSON
+	@Override
+	public boolean isFreeShipping() {
+		return _freeShipping;
+	}
+
+	@Override
+	public void setFreeShipping(boolean freeShipping) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_freeShipping = freeShipping;
+	}
+
+	@JSON
+	@Override
+	public double getHeight() {
+		return _height;
+	}
+
+	@Override
+	public void setHeight(double height) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_height = height;
 	}
 
 	@JSON
@@ -1068,6 +1567,42 @@ public class CommerceOrderItemModelImpl
 		}
 
 		_json = json;
+	}
+
+	@JSON
+	@Override
+	public boolean getManuallyAdjusted() {
+		return _manuallyAdjusted;
+	}
+
+	@JSON
+	@Override
+	public boolean isManuallyAdjusted() {
+		return _manuallyAdjusted;
+	}
+
+	@Override
+	public void setManuallyAdjusted(boolean manuallyAdjusted) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_manuallyAdjusted = manuallyAdjusted;
+	}
+
+	@JSON
+	@Override
+	public long getMaxSubscriptionCycles() {
+		return _maxSubscriptionCycles;
+	}
+
+	@Override
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_maxSubscriptionCycles = maxSubscriptionCycles;
 	}
 
 	@JSON
@@ -1179,37 +1714,22 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public String getSku() {
-		if (_sku == null) {
+	public String getPrintedNote() {
+		if (_printedNote == null) {
 			return "";
 		}
 		else {
-			return _sku;
+			return _printedNote;
 		}
 	}
 
 	@Override
-	public void setSku(String sku) {
+	public void setPrintedNote(String printedNote) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_sku = sku;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getUnitPrice() {
-		return _unitPrice;
-	}
-
-	@Override
-	public void setUnitPrice(BigDecimal unitPrice) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_unitPrice = unitPrice;
+		_printedNote = printedNote;
 	}
 
 	@JSON
@@ -1229,119 +1749,6 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public BigDecimal getDiscountAmount() {
-		return _discountAmount;
-	}
-
-	@Override
-	public void setDiscountAmount(BigDecimal discountAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountAmount = discountAmount;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getFinalPrice() {
-		return _finalPrice;
-	}
-
-	@Override
-	public void setFinalPrice(BigDecimal finalPrice) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_finalPrice = finalPrice;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getDiscountPercentageLevel1() {
-		return _discountPercentageLevel1;
-	}
-
-	@Override
-	public void setDiscountPercentageLevel1(
-		BigDecimal discountPercentageLevel1) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountPercentageLevel1 = discountPercentageLevel1;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getDiscountPercentageLevel2() {
-		return _discountPercentageLevel2;
-	}
-
-	@Override
-	public void setDiscountPercentageLevel2(
-		BigDecimal discountPercentageLevel2) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountPercentageLevel2 = discountPercentageLevel2;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getDiscountPercentageLevel3() {
-		return _discountPercentageLevel3;
-	}
-
-	@Override
-	public void setDiscountPercentageLevel3(
-		BigDecimal discountPercentageLevel3) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountPercentageLevel3 = discountPercentageLevel3;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getDiscountPercentageLevel4() {
-		return _discountPercentageLevel4;
-	}
-
-	@Override
-	public void setDiscountPercentageLevel4(
-		BigDecimal discountPercentageLevel4) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountPercentageLevel4 = discountPercentageLevel4;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getUnitPriceWithTaxAmount() {
-		return _unitPriceWithTaxAmount;
-	}
-
-	@Override
-	public void setUnitPriceWithTaxAmount(BigDecimal unitPriceWithTaxAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_unitPriceWithTaxAmount = unitPriceWithTaxAmount;
-	}
-
-	@JSON
-	@Override
 	public BigDecimal getPromoPriceWithTaxAmount() {
 		return _promoPriceWithTaxAmount;
 	}
@@ -1357,104 +1764,124 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public BigDecimal getDiscountWithTaxAmount() {
-		return _discountWithTaxAmount;
+	public int getQuantity() {
+		return _quantity;
 	}
 
 	@Override
-	public void setDiscountWithTaxAmount(BigDecimal discountWithTaxAmount) {
+	public void setQuantity(int quantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_discountWithTaxAmount = discountWithTaxAmount;
+		_quantity = quantity;
 	}
 
 	@JSON
 	@Override
-	public BigDecimal getFinalPriceWithTaxAmount() {
-		return _finalPriceWithTaxAmount;
+	public Date getRequestedDeliveryDate() {
+		return _requestedDeliveryDate;
 	}
 
 	@Override
-	public void setFinalPriceWithTaxAmount(BigDecimal finalPriceWithTaxAmount) {
+	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_finalPriceWithTaxAmount = finalPriceWithTaxAmount;
+		_requestedDeliveryDate = requestedDeliveryDate;
 	}
 
 	@JSON
 	@Override
-	public BigDecimal getDiscountPercentageLevel1WithTaxAmount() {
-		return _discountPercentageLevel1WithTaxAmount;
-	}
-
-	@Override
-	public void setDiscountPercentageLevel1WithTaxAmount(
-		BigDecimal discountPercentageLevel1WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountPercentageLevel1WithTaxAmount =
-			discountPercentageLevel1WithTaxAmount;
+	public boolean getShipSeparately() {
+		return _shipSeparately;
 	}
 
 	@JSON
 	@Override
-	public BigDecimal getDiscountPercentageLevel2WithTaxAmount() {
-		return _discountPercentageLevel2WithTaxAmount;
+	public boolean isShipSeparately() {
+		return _shipSeparately;
 	}
 
 	@Override
-	public void setDiscountPercentageLevel2WithTaxAmount(
-		BigDecimal discountPercentageLevel2WithTaxAmount) {
-
+	public void setShipSeparately(boolean shipSeparately) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_discountPercentageLevel2WithTaxAmount =
-			discountPercentageLevel2WithTaxAmount;
+		_shipSeparately = shipSeparately;
 	}
 
 	@JSON
 	@Override
-	public BigDecimal getDiscountPercentageLevel3WithTaxAmount() {
-		return _discountPercentageLevel3WithTaxAmount;
-	}
-
-	@Override
-	public void setDiscountPercentageLevel3WithTaxAmount(
-		BigDecimal discountPercentageLevel3WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_discountPercentageLevel3WithTaxAmount =
-			discountPercentageLevel3WithTaxAmount;
+	public boolean getShippable() {
+		return _shippable;
 	}
 
 	@JSON
 	@Override
-	public BigDecimal getDiscountPercentageLevel4WithTaxAmount() {
-		return _discountPercentageLevel4WithTaxAmount;
+	public boolean isShippable() {
+		return _shippable;
 	}
 
 	@Override
-	public void setDiscountPercentageLevel4WithTaxAmount(
-		BigDecimal discountPercentageLevel4WithTaxAmount) {
-
+	public void setShippable(boolean shippable) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_discountPercentageLevel4WithTaxAmount =
-			discountPercentageLevel4WithTaxAmount;
+		_shippable = shippable;
+	}
+
+	@JSON
+	@Override
+	public int getShippedQuantity() {
+		return _shippedQuantity;
+	}
+
+	@Override
+	public void setShippedQuantity(int shippedQuantity) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shippedQuantity = shippedQuantity;
+	}
+
+	@JSON
+	@Override
+	public double getShippingExtraPrice() {
+		return _shippingExtraPrice;
+	}
+
+	@Override
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shippingExtraPrice = shippingExtraPrice;
+	}
+
+	@JSON
+	@Override
+	public String getSku() {
+		if (_sku == null) {
+			return "";
+		}
+		else {
+			return _sku;
+		}
+	}
+
+	@Override
+	public void setSku(String sku) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_sku = sku;
 	}
 
 	@JSON
@@ -1490,118 +1917,117 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public String getDeliveryGroup() {
-		if (_deliveryGroup == null) {
+	public int getSubscriptionLength() {
+		return _subscriptionLength;
+	}
+
+	@Override
+	public void setSubscriptionLength(int subscriptionLength) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subscriptionLength = subscriptionLength;
+	}
+
+	@JSON
+	@Override
+	public String getSubscriptionType() {
+		if (_subscriptionType == null) {
 			return "";
 		}
 		else {
-			return _deliveryGroup;
+			return _subscriptionType;
 		}
 	}
 
 	@Override
-	public void setDeliveryGroup(String deliveryGroup) {
+	public void setSubscriptionType(String subscriptionType) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_deliveryGroup = deliveryGroup;
+		_subscriptionType = subscriptionType;
 	}
 
 	@JSON
 	@Override
-	public long getShippingAddressId() {
-		return _shippingAddressId;
-	}
-
-	@Override
-	public void setShippingAddressId(long shippingAddressId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_shippingAddressId = shippingAddressId;
-	}
-
-	@JSON
-	@Override
-	public String getPrintedNote() {
-		if (_printedNote == null) {
+	public String getSubscriptionTypeSettings() {
+		if (_subscriptionTypeSettings == null) {
 			return "";
 		}
 		else {
-			return _printedNote;
+			return _subscriptionTypeSettings;
 		}
 	}
 
 	@Override
-	public void setPrintedNote(String printedNote) {
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_printedNote = printedNote;
+		_subscriptionTypeSettings = subscriptionTypeSettings;
 	}
 
 	@JSON
 	@Override
-	public Date getRequestedDeliveryDate() {
-		return _requestedDeliveryDate;
+	public BigDecimal getUnitPrice() {
+		return _unitPrice;
 	}
 
 	@Override
-	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
+	public void setUnitPrice(BigDecimal unitPrice) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_requestedDeliveryDate = requestedDeliveryDate;
+		_unitPrice = unitPrice;
 	}
 
 	@JSON
 	@Override
-	public long getBookedQuantityId() {
-		return _bookedQuantityId;
+	public BigDecimal getUnitPriceWithTaxAmount() {
+		return _unitPriceWithTaxAmount;
 	}
 
 	@Override
-	public void setBookedQuantityId(long bookedQuantityId) {
+	public void setUnitPriceWithTaxAmount(BigDecimal unitPriceWithTaxAmount) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_bookedQuantityId = bookedQuantityId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalBookedQuantityId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("bookedQuantityId"));
+		_unitPriceWithTaxAmount = unitPriceWithTaxAmount;
 	}
 
 	@JSON
 	@Override
-	public boolean getManuallyAdjusted() {
-		return _manuallyAdjusted;
-	}
-
-	@JSON
-	@Override
-	public boolean isManuallyAdjusted() {
-		return _manuallyAdjusted;
+	public double getWeight() {
+		return _weight;
 	}
 
 	@Override
-	public void setManuallyAdjusted(boolean manuallyAdjusted) {
+	public void setWeight(double weight) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_manuallyAdjusted = manuallyAdjusted;
+		_weight = weight;
+	}
+
+	@JSON
+	@Override
+	public double getWidth() {
+		return _width;
+	}
+
+	@Override
+	public void setWidth(double width) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_width = width;
 	}
 
 	public long getColumnBitmask() {
@@ -1734,21 +2160,25 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemImpl.setUserName(getUserName());
 		commerceOrderItemImpl.setCreateDate(getCreateDate());
 		commerceOrderItemImpl.setModifiedDate(getModifiedDate());
+		commerceOrderItemImpl.setBookedQuantityId(getBookedQuantityId());
 		commerceOrderItemImpl.setCommerceOrderId(getCommerceOrderId());
 		commerceOrderItemImpl.setCommercePriceListId(getCommercePriceListId());
-		commerceOrderItemImpl.setCProductId(getCProductId());
 		commerceOrderItemImpl.setCPInstanceId(getCPInstanceId());
+		commerceOrderItemImpl.setCProductId(getCProductId());
 		commerceOrderItemImpl.setParentCommerceOrderItemId(
 			getParentCommerceOrderItemId());
-		commerceOrderItemImpl.setQuantity(getQuantity());
-		commerceOrderItemImpl.setShippedQuantity(getShippedQuantity());
-		commerceOrderItemImpl.setJson(getJson());
-		commerceOrderItemImpl.setName(getName());
-		commerceOrderItemImpl.setSku(getSku());
-		commerceOrderItemImpl.setUnitPrice(getUnitPrice());
-		commerceOrderItemImpl.setPromoPrice(getPromoPrice());
+		commerceOrderItemImpl.setShippingAddressId(getShippingAddressId());
+		commerceOrderItemImpl.setDeliveryGroup(getDeliveryGroup());
+		commerceOrderItemImpl.setDeliveryMaxSubscriptionCycles(
+			getDeliveryMaxSubscriptionCycles());
+		commerceOrderItemImpl.setDeliverySubscriptionLength(
+			getDeliverySubscriptionLength());
+		commerceOrderItemImpl.setDeliverySubscriptionType(
+			getDeliverySubscriptionType());
+		commerceOrderItemImpl.setDeliverySubscriptionTypeSettings(
+			getDeliverySubscriptionTypeSettings());
+		commerceOrderItemImpl.setDepth(getDepth());
 		commerceOrderItemImpl.setDiscountAmount(getDiscountAmount());
-		commerceOrderItemImpl.setFinalPrice(getFinalPrice());
 		commerceOrderItemImpl.setDiscountPercentageLevel1(
 			getDiscountPercentageLevel1());
 		commerceOrderItemImpl.setDiscountPercentageLevel2(
@@ -1757,14 +2187,6 @@ public class CommerceOrderItemModelImpl
 			getDiscountPercentageLevel3());
 		commerceOrderItemImpl.setDiscountPercentageLevel4(
 			getDiscountPercentageLevel4());
-		commerceOrderItemImpl.setUnitPriceWithTaxAmount(
-			getUnitPriceWithTaxAmount());
-		commerceOrderItemImpl.setPromoPriceWithTaxAmount(
-			getPromoPriceWithTaxAmount());
-		commerceOrderItemImpl.setDiscountWithTaxAmount(
-			getDiscountWithTaxAmount());
-		commerceOrderItemImpl.setFinalPriceWithTaxAmount(
-			getFinalPriceWithTaxAmount());
 		commerceOrderItemImpl.setDiscountPercentageLevel1WithTaxAmount(
 			getDiscountPercentageLevel1WithTaxAmount());
 		commerceOrderItemImpl.setDiscountPercentageLevel2WithTaxAmount(
@@ -1773,14 +2195,40 @@ public class CommerceOrderItemModelImpl
 			getDiscountPercentageLevel3WithTaxAmount());
 		commerceOrderItemImpl.setDiscountPercentageLevel4WithTaxAmount(
 			getDiscountPercentageLevel4WithTaxAmount());
-		commerceOrderItemImpl.setSubscription(isSubscription());
-		commerceOrderItemImpl.setDeliveryGroup(getDeliveryGroup());
-		commerceOrderItemImpl.setShippingAddressId(getShippingAddressId());
+		commerceOrderItemImpl.setDiscountWithTaxAmount(
+			getDiscountWithTaxAmount());
+		commerceOrderItemImpl.setFinalPrice(getFinalPrice());
+		commerceOrderItemImpl.setFinalPriceWithTaxAmount(
+			getFinalPriceWithTaxAmount());
+		commerceOrderItemImpl.setFreeShipping(isFreeShipping());
+		commerceOrderItemImpl.setHeight(getHeight());
+		commerceOrderItemImpl.setJson(getJson());
+		commerceOrderItemImpl.setManuallyAdjusted(isManuallyAdjusted());
+		commerceOrderItemImpl.setMaxSubscriptionCycles(
+			getMaxSubscriptionCycles());
+		commerceOrderItemImpl.setName(getName());
 		commerceOrderItemImpl.setPrintedNote(getPrintedNote());
+		commerceOrderItemImpl.setPromoPrice(getPromoPrice());
+		commerceOrderItemImpl.setPromoPriceWithTaxAmount(
+			getPromoPriceWithTaxAmount());
+		commerceOrderItemImpl.setQuantity(getQuantity());
 		commerceOrderItemImpl.setRequestedDeliveryDate(
 			getRequestedDeliveryDate());
-		commerceOrderItemImpl.setBookedQuantityId(getBookedQuantityId());
-		commerceOrderItemImpl.setManuallyAdjusted(isManuallyAdjusted());
+		commerceOrderItemImpl.setShipSeparately(isShipSeparately());
+		commerceOrderItemImpl.setShippable(isShippable());
+		commerceOrderItemImpl.setShippedQuantity(getShippedQuantity());
+		commerceOrderItemImpl.setShippingExtraPrice(getShippingExtraPrice());
+		commerceOrderItemImpl.setSku(getSku());
+		commerceOrderItemImpl.setSubscription(isSubscription());
+		commerceOrderItemImpl.setSubscriptionLength(getSubscriptionLength());
+		commerceOrderItemImpl.setSubscriptionType(getSubscriptionType());
+		commerceOrderItemImpl.setSubscriptionTypeSettings(
+			getSubscriptionTypeSettings());
+		commerceOrderItemImpl.setUnitPrice(getUnitPrice());
+		commerceOrderItemImpl.setUnitPriceWithTaxAmount(
+			getUnitPriceWithTaxAmount());
+		commerceOrderItemImpl.setWeight(getWeight());
+		commerceOrderItemImpl.setWidth(getWidth());
 
 		commerceOrderItemImpl.resetOriginalValues();
 
@@ -1907,53 +2355,63 @@ public class CommerceOrderItemModelImpl
 			commerceOrderItemCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commerceOrderItemCacheModel.bookedQuantityId = getBookedQuantityId();
+
 		commerceOrderItemCacheModel.commerceOrderId = getCommerceOrderId();
 
 		commerceOrderItemCacheModel.commercePriceListId =
 			getCommercePriceListId();
 
-		commerceOrderItemCacheModel.CProductId = getCProductId();
-
 		commerceOrderItemCacheModel.CPInstanceId = getCPInstanceId();
+
+		commerceOrderItemCacheModel.CProductId = getCProductId();
 
 		commerceOrderItemCacheModel.parentCommerceOrderItemId =
 			getParentCommerceOrderItemId();
 
-		commerceOrderItemCacheModel.quantity = getQuantity();
+		commerceOrderItemCacheModel.shippingAddressId = getShippingAddressId();
 
-		commerceOrderItemCacheModel.shippedQuantity = getShippedQuantity();
+		commerceOrderItemCacheModel.deliveryGroup = getDeliveryGroup();
 
-		commerceOrderItemCacheModel.json = getJson();
+		String deliveryGroup = commerceOrderItemCacheModel.deliveryGroup;
 
-		String json = commerceOrderItemCacheModel.json;
-
-		if ((json != null) && (json.length() == 0)) {
-			commerceOrderItemCacheModel.json = null;
+		if ((deliveryGroup != null) && (deliveryGroup.length() == 0)) {
+			commerceOrderItemCacheModel.deliveryGroup = null;
 		}
 
-		commerceOrderItemCacheModel.name = getName();
+		commerceOrderItemCacheModel.deliveryMaxSubscriptionCycles =
+			getDeliveryMaxSubscriptionCycles();
 
-		String name = commerceOrderItemCacheModel.name;
+		commerceOrderItemCacheModel.deliverySubscriptionLength =
+			getDeliverySubscriptionLength();
 
-		if ((name != null) && (name.length() == 0)) {
-			commerceOrderItemCacheModel.name = null;
+		commerceOrderItemCacheModel.deliverySubscriptionType =
+			getDeliverySubscriptionType();
+
+		String deliverySubscriptionType =
+			commerceOrderItemCacheModel.deliverySubscriptionType;
+
+		if ((deliverySubscriptionType != null) &&
+			(deliverySubscriptionType.length() == 0)) {
+
+			commerceOrderItemCacheModel.deliverySubscriptionType = null;
 		}
 
-		commerceOrderItemCacheModel.sku = getSku();
+		commerceOrderItemCacheModel.deliverySubscriptionTypeSettings =
+			getDeliverySubscriptionTypeSettings();
 
-		String sku = commerceOrderItemCacheModel.sku;
+		String deliverySubscriptionTypeSettings =
+			commerceOrderItemCacheModel.deliverySubscriptionTypeSettings;
 
-		if ((sku != null) && (sku.length() == 0)) {
-			commerceOrderItemCacheModel.sku = null;
+		if ((deliverySubscriptionTypeSettings != null) &&
+			(deliverySubscriptionTypeSettings.length() == 0)) {
+
+			commerceOrderItemCacheModel.deliverySubscriptionTypeSettings = null;
 		}
 
-		commerceOrderItemCacheModel.unitPrice = getUnitPrice();
-
-		commerceOrderItemCacheModel.promoPrice = getPromoPrice();
+		commerceOrderItemCacheModel.depth = getDepth();
 
 		commerceOrderItemCacheModel.discountAmount = getDiscountAmount();
-
-		commerceOrderItemCacheModel.finalPrice = getFinalPrice();
 
 		commerceOrderItemCacheModel.discountPercentageLevel1 =
 			getDiscountPercentageLevel1();
@@ -1967,18 +2425,6 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemCacheModel.discountPercentageLevel4 =
 			getDiscountPercentageLevel4();
 
-		commerceOrderItemCacheModel.unitPriceWithTaxAmount =
-			getUnitPriceWithTaxAmount();
-
-		commerceOrderItemCacheModel.promoPriceWithTaxAmount =
-			getPromoPriceWithTaxAmount();
-
-		commerceOrderItemCacheModel.discountWithTaxAmount =
-			getDiscountWithTaxAmount();
-
-		commerceOrderItemCacheModel.finalPriceWithTaxAmount =
-			getFinalPriceWithTaxAmount();
-
 		commerceOrderItemCacheModel.discountPercentageLevel1WithTaxAmount =
 			getDiscountPercentageLevel1WithTaxAmount();
 
@@ -1991,17 +2437,38 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemCacheModel.discountPercentageLevel4WithTaxAmount =
 			getDiscountPercentageLevel4WithTaxAmount();
 
-		commerceOrderItemCacheModel.subscription = isSubscription();
+		commerceOrderItemCacheModel.discountWithTaxAmount =
+			getDiscountWithTaxAmount();
 
-		commerceOrderItemCacheModel.deliveryGroup = getDeliveryGroup();
+		commerceOrderItemCacheModel.finalPrice = getFinalPrice();
 
-		String deliveryGroup = commerceOrderItemCacheModel.deliveryGroup;
+		commerceOrderItemCacheModel.finalPriceWithTaxAmount =
+			getFinalPriceWithTaxAmount();
 
-		if ((deliveryGroup != null) && (deliveryGroup.length() == 0)) {
-			commerceOrderItemCacheModel.deliveryGroup = null;
+		commerceOrderItemCacheModel.freeShipping = isFreeShipping();
+
+		commerceOrderItemCacheModel.height = getHeight();
+
+		commerceOrderItemCacheModel.json = getJson();
+
+		String json = commerceOrderItemCacheModel.json;
+
+		if ((json != null) && (json.length() == 0)) {
+			commerceOrderItemCacheModel.json = null;
 		}
 
-		commerceOrderItemCacheModel.shippingAddressId = getShippingAddressId();
+		commerceOrderItemCacheModel.manuallyAdjusted = isManuallyAdjusted();
+
+		commerceOrderItemCacheModel.maxSubscriptionCycles =
+			getMaxSubscriptionCycles();
+
+		commerceOrderItemCacheModel.name = getName();
+
+		String name = commerceOrderItemCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			commerceOrderItemCacheModel.name = null;
+		}
 
 		commerceOrderItemCacheModel.printedNote = getPrintedNote();
 
@@ -2010,6 +2477,13 @@ public class CommerceOrderItemModelImpl
 		if ((printedNote != null) && (printedNote.length() == 0)) {
 			commerceOrderItemCacheModel.printedNote = null;
 		}
+
+		commerceOrderItemCacheModel.promoPrice = getPromoPrice();
+
+		commerceOrderItemCacheModel.promoPriceWithTaxAmount =
+			getPromoPriceWithTaxAmount();
+
+		commerceOrderItemCacheModel.quantity = getQuantity();
 
 		Date requestedDeliveryDate = getRequestedDeliveryDate();
 
@@ -2021,9 +2495,56 @@ public class CommerceOrderItemModelImpl
 			commerceOrderItemCacheModel.requestedDeliveryDate = Long.MIN_VALUE;
 		}
 
-		commerceOrderItemCacheModel.bookedQuantityId = getBookedQuantityId();
+		commerceOrderItemCacheModel.shipSeparately = isShipSeparately();
 
-		commerceOrderItemCacheModel.manuallyAdjusted = isManuallyAdjusted();
+		commerceOrderItemCacheModel.shippable = isShippable();
+
+		commerceOrderItemCacheModel.shippedQuantity = getShippedQuantity();
+
+		commerceOrderItemCacheModel.shippingExtraPrice =
+			getShippingExtraPrice();
+
+		commerceOrderItemCacheModel.sku = getSku();
+
+		String sku = commerceOrderItemCacheModel.sku;
+
+		if ((sku != null) && (sku.length() == 0)) {
+			commerceOrderItemCacheModel.sku = null;
+		}
+
+		commerceOrderItemCacheModel.subscription = isSubscription();
+
+		commerceOrderItemCacheModel.subscriptionLength =
+			getSubscriptionLength();
+
+		commerceOrderItemCacheModel.subscriptionType = getSubscriptionType();
+
+		String subscriptionType = commerceOrderItemCacheModel.subscriptionType;
+
+		if ((subscriptionType != null) && (subscriptionType.length() == 0)) {
+			commerceOrderItemCacheModel.subscriptionType = null;
+		}
+
+		commerceOrderItemCacheModel.subscriptionTypeSettings =
+			getSubscriptionTypeSettings();
+
+		String subscriptionTypeSettings =
+			commerceOrderItemCacheModel.subscriptionTypeSettings;
+
+		if ((subscriptionTypeSettings != null) &&
+			(subscriptionTypeSettings.length() == 0)) {
+
+			commerceOrderItemCacheModel.subscriptionTypeSettings = null;
+		}
+
+		commerceOrderItemCacheModel.unitPrice = getUnitPrice();
+
+		commerceOrderItemCacheModel.unitPriceWithTaxAmount =
+			getUnitPriceWithTaxAmount();
+
+		commerceOrderItemCacheModel.weight = getWeight();
+
+		commerceOrderItemCacheModel.width = getWidth();
 
 		return commerceOrderItemCacheModel;
 	}
@@ -2107,40 +2628,56 @@ public class CommerceOrderItemModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _bookedQuantityId;
 	private long _commerceOrderId;
 	private long _commercePriceListId;
-	private long _CProductId;
 	private long _CPInstanceId;
+	private long _CProductId;
 	private long _parentCommerceOrderItemId;
-	private int _quantity;
-	private int _shippedQuantity;
-	private String _json;
-	private String _name;
-	private String _nameCurrentLanguageId;
-	private String _sku;
-	private BigDecimal _unitPrice;
-	private BigDecimal _promoPrice;
+	private long _shippingAddressId;
+	private String _deliveryGroup;
+	private long _deliveryMaxSubscriptionCycles;
+	private int _deliverySubscriptionLength;
+	private String _deliverySubscriptionType;
+	private String _deliverySubscriptionTypeSettings;
+	private double _depth;
 	private BigDecimal _discountAmount;
-	private BigDecimal _finalPrice;
 	private BigDecimal _discountPercentageLevel1;
 	private BigDecimal _discountPercentageLevel2;
 	private BigDecimal _discountPercentageLevel3;
 	private BigDecimal _discountPercentageLevel4;
-	private BigDecimal _unitPriceWithTaxAmount;
-	private BigDecimal _promoPriceWithTaxAmount;
-	private BigDecimal _discountWithTaxAmount;
-	private BigDecimal _finalPriceWithTaxAmount;
 	private BigDecimal _discountPercentageLevel1WithTaxAmount;
 	private BigDecimal _discountPercentageLevel2WithTaxAmount;
 	private BigDecimal _discountPercentageLevel3WithTaxAmount;
 	private BigDecimal _discountPercentageLevel4WithTaxAmount;
-	private boolean _subscription;
-	private String _deliveryGroup;
-	private long _shippingAddressId;
-	private String _printedNote;
-	private Date _requestedDeliveryDate;
-	private long _bookedQuantityId;
+	private BigDecimal _discountWithTaxAmount;
+	private BigDecimal _finalPrice;
+	private BigDecimal _finalPriceWithTaxAmount;
+	private boolean _freeShipping;
+	private double _height;
+	private String _json;
 	private boolean _manuallyAdjusted;
+	private long _maxSubscriptionCycles;
+	private String _name;
+	private String _nameCurrentLanguageId;
+	private String _printedNote;
+	private BigDecimal _promoPrice;
+	private BigDecimal _promoPriceWithTaxAmount;
+	private int _quantity;
+	private Date _requestedDeliveryDate;
+	private boolean _shipSeparately;
+	private boolean _shippable;
+	private int _shippedQuantity;
+	private double _shippingExtraPrice;
+	private String _sku;
+	private boolean _subscription;
+	private int _subscriptionLength;
+	private String _subscriptionType;
+	private String _subscriptionTypeSettings;
+	private BigDecimal _unitPrice;
+	private BigDecimal _unitPriceWithTaxAmount;
+	private double _weight;
+	private double _width;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -2180,21 +2717,25 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("bookedQuantityId", _bookedQuantityId);
 		_columnOriginalValues.put("commerceOrderId", _commerceOrderId);
 		_columnOriginalValues.put("commercePriceListId", _commercePriceListId);
-		_columnOriginalValues.put("CProductId", _CProductId);
 		_columnOriginalValues.put("CPInstanceId", _CPInstanceId);
+		_columnOriginalValues.put("CProductId", _CProductId);
 		_columnOriginalValues.put(
 			"parentCommerceOrderItemId", _parentCommerceOrderItemId);
-		_columnOriginalValues.put("quantity", _quantity);
-		_columnOriginalValues.put("shippedQuantity", _shippedQuantity);
-		_columnOriginalValues.put("json", _json);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("sku", _sku);
-		_columnOriginalValues.put("unitPrice", _unitPrice);
-		_columnOriginalValues.put("promoPrice", _promoPrice);
+		_columnOriginalValues.put("shippingAddressId", _shippingAddressId);
+		_columnOriginalValues.put("deliveryGroup", _deliveryGroup);
+		_columnOriginalValues.put(
+			"deliveryMaxSubscriptionCycles", _deliveryMaxSubscriptionCycles);
+		_columnOriginalValues.put(
+			"deliverySubscriptionLength", _deliverySubscriptionLength);
+		_columnOriginalValues.put(
+			"deliverySubscriptionType", _deliverySubscriptionType);
+		_columnOriginalValues.put(
+			"deliverySubTypeSettings", _deliverySubscriptionTypeSettings);
+		_columnOriginalValues.put("depth", _depth);
 		_columnOriginalValues.put("discountAmount", _discountAmount);
-		_columnOriginalValues.put("finalPrice", _finalPrice);
 		_columnOriginalValues.put(
 			"discountPercentageLevel1", _discountPercentageLevel1);
 		_columnOriginalValues.put(
@@ -2203,14 +2744,6 @@ public class CommerceOrderItemModelImpl
 			"discountPercentageLevel3", _discountPercentageLevel3);
 		_columnOriginalValues.put(
 			"discountPercentageLevel4", _discountPercentageLevel4);
-		_columnOriginalValues.put(
-			"unitPriceWithTaxAmount", _unitPriceWithTaxAmount);
-		_columnOriginalValues.put(
-			"promoPriceWithTaxAmount", _promoPriceWithTaxAmount);
-		_columnOriginalValues.put(
-			"discountWithTaxAmount", _discountWithTaxAmount);
-		_columnOriginalValues.put(
-			"finalPriceWithTaxAmount", _finalPriceWithTaxAmount);
 		_columnOriginalValues.put(
 			"discountPctLevel1WithTaxAmount",
 			_discountPercentageLevel1WithTaxAmount);
@@ -2223,14 +2756,40 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put(
 			"discountPctLevel4WithTaxAmount",
 			_discountPercentageLevel4WithTaxAmount);
-		_columnOriginalValues.put("subscription", _subscription);
-		_columnOriginalValues.put("deliveryGroup", _deliveryGroup);
-		_columnOriginalValues.put("shippingAddressId", _shippingAddressId);
+		_columnOriginalValues.put(
+			"discountWithTaxAmount", _discountWithTaxAmount);
+		_columnOriginalValues.put("finalPrice", _finalPrice);
+		_columnOriginalValues.put(
+			"finalPriceWithTaxAmount", _finalPriceWithTaxAmount);
+		_columnOriginalValues.put("freeShipping", _freeShipping);
+		_columnOriginalValues.put("height", _height);
+		_columnOriginalValues.put("json", _json);
+		_columnOriginalValues.put("manuallyAdjusted", _manuallyAdjusted);
+		_columnOriginalValues.put(
+			"maxSubscriptionCycles", _maxSubscriptionCycles);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("printedNote", _printedNote);
+		_columnOriginalValues.put("promoPrice", _promoPrice);
+		_columnOriginalValues.put(
+			"promoPriceWithTaxAmount", _promoPriceWithTaxAmount);
+		_columnOriginalValues.put("quantity", _quantity);
 		_columnOriginalValues.put(
 			"requestedDeliveryDate", _requestedDeliveryDate);
-		_columnOriginalValues.put("bookedQuantityId", _bookedQuantityId);
-		_columnOriginalValues.put("manuallyAdjusted", _manuallyAdjusted);
+		_columnOriginalValues.put("shipSeparately", _shipSeparately);
+		_columnOriginalValues.put("shippable", _shippable);
+		_columnOriginalValues.put("shippedQuantity", _shippedQuantity);
+		_columnOriginalValues.put("shippingExtraPrice", _shippingExtraPrice);
+		_columnOriginalValues.put("sku", _sku);
+		_columnOriginalValues.put("subscription", _subscription);
+		_columnOriginalValues.put("subscriptionLength", _subscriptionLength);
+		_columnOriginalValues.put("subscriptionType", _subscriptionType);
+		_columnOriginalValues.put(
+			"subscriptionTypeSettings", _subscriptionTypeSettings);
+		_columnOriginalValues.put("unitPrice", _unitPrice);
+		_columnOriginalValues.put(
+			"unitPriceWithTaxAmount", _unitPriceWithTaxAmount);
+		_columnOriginalValues.put("weight", _weight);
+		_columnOriginalValues.put("width", _width);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -2238,6 +2797,8 @@ public class CommerceOrderItemModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put(
+			"deliverySubTypeSettings", "deliverySubscriptionTypeSettings");
 		attributeNames.put(
 			"discountPctLevel1WithTaxAmount",
 			"discountPercentageLevel1WithTaxAmount");
@@ -2281,33 +2842,33 @@ public class CommerceOrderItemModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("commerceOrderId", 256L);
+		columnBitmasks.put("bookedQuantityId", 256L);
 
-		columnBitmasks.put("commercePriceListId", 512L);
+		columnBitmasks.put("commerceOrderId", 512L);
 
-		columnBitmasks.put("CProductId", 1024L);
+		columnBitmasks.put("commercePriceListId", 1024L);
 
 		columnBitmasks.put("CPInstanceId", 2048L);
 
-		columnBitmasks.put("parentCommerceOrderItemId", 4096L);
+		columnBitmasks.put("CProductId", 4096L);
 
-		columnBitmasks.put("quantity", 8192L);
+		columnBitmasks.put("parentCommerceOrderItemId", 8192L);
 
-		columnBitmasks.put("shippedQuantity", 16384L);
+		columnBitmasks.put("shippingAddressId", 16384L);
 
-		columnBitmasks.put("json", 32768L);
+		columnBitmasks.put("deliveryGroup", 32768L);
 
-		columnBitmasks.put("name", 65536L);
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 65536L);
 
-		columnBitmasks.put("sku", 131072L);
+		columnBitmasks.put("deliverySubscriptionLength", 131072L);
 
-		columnBitmasks.put("unitPrice", 262144L);
+		columnBitmasks.put("deliverySubscriptionType", 262144L);
 
-		columnBitmasks.put("promoPrice", 524288L);
+		columnBitmasks.put("deliverySubTypeSettings", 524288L);
 
-		columnBitmasks.put("discountAmount", 1048576L);
+		columnBitmasks.put("depth", 1048576L);
 
-		columnBitmasks.put("finalPrice", 2097152L);
+		columnBitmasks.put("discountAmount", 2097152L);
 
 		columnBitmasks.put("discountPercentageLevel1", 4194304L);
 
@@ -2317,35 +2878,67 @@ public class CommerceOrderItemModelImpl
 
 		columnBitmasks.put("discountPercentageLevel4", 33554432L);
 
-		columnBitmasks.put("unitPriceWithTaxAmount", 67108864L);
+		columnBitmasks.put("discountPctLevel1WithTaxAmount", 67108864L);
 
-		columnBitmasks.put("promoPriceWithTaxAmount", 134217728L);
+		columnBitmasks.put("discountPctLevel2WithTaxAmount", 134217728L);
 
-		columnBitmasks.put("discountWithTaxAmount", 268435456L);
+		columnBitmasks.put("discountPctLevel3WithTaxAmount", 268435456L);
 
-		columnBitmasks.put("finalPriceWithTaxAmount", 536870912L);
+		columnBitmasks.put("discountPctLevel4WithTaxAmount", 536870912L);
 
-		columnBitmasks.put("discountPctLevel1WithTaxAmount", 1073741824L);
+		columnBitmasks.put("discountWithTaxAmount", 1073741824L);
 
-		columnBitmasks.put("discountPctLevel2WithTaxAmount", 2147483648L);
+		columnBitmasks.put("finalPrice", 2147483648L);
 
-		columnBitmasks.put("discountPctLevel3WithTaxAmount", 4294967296L);
+		columnBitmasks.put("finalPriceWithTaxAmount", 4294967296L);
 
-		columnBitmasks.put("discountPctLevel4WithTaxAmount", 8589934592L);
+		columnBitmasks.put("freeShipping", 8589934592L);
 
-		columnBitmasks.put("subscription", 17179869184L);
+		columnBitmasks.put("height", 17179869184L);
 
-		columnBitmasks.put("deliveryGroup", 34359738368L);
+		columnBitmasks.put("json", 34359738368L);
 
-		columnBitmasks.put("shippingAddressId", 68719476736L);
+		columnBitmasks.put("manuallyAdjusted", 68719476736L);
 
-		columnBitmasks.put("printedNote", 137438953472L);
+		columnBitmasks.put("maxSubscriptionCycles", 137438953472L);
 
-		columnBitmasks.put("requestedDeliveryDate", 274877906944L);
+		columnBitmasks.put("name", 274877906944L);
 
-		columnBitmasks.put("bookedQuantityId", 549755813888L);
+		columnBitmasks.put("printedNote", 549755813888L);
 
-		columnBitmasks.put("manuallyAdjusted", 1099511627776L);
+		columnBitmasks.put("promoPrice", 1099511627776L);
+
+		columnBitmasks.put("promoPriceWithTaxAmount", 2199023255552L);
+
+		columnBitmasks.put("quantity", 4398046511104L);
+
+		columnBitmasks.put("requestedDeliveryDate", 8796093022208L);
+
+		columnBitmasks.put("shipSeparately", 17592186044416L);
+
+		columnBitmasks.put("shippable", 35184372088832L);
+
+		columnBitmasks.put("shippedQuantity", 70368744177664L);
+
+		columnBitmasks.put("shippingExtraPrice", 140737488355328L);
+
+		columnBitmasks.put("sku", 281474976710656L);
+
+		columnBitmasks.put("subscription", 562949953421312L);
+
+		columnBitmasks.put("subscriptionLength", 1125899906842624L);
+
+		columnBitmasks.put("subscriptionType", 2251799813685248L);
+
+		columnBitmasks.put("subscriptionTypeSettings", 4503599627370496L);
+
+		columnBitmasks.put("unitPrice", 9007199254740992L);
+
+		columnBitmasks.put("unitPriceWithTaxAmount", 18014398509481984L);
+
+		columnBitmasks.put("weight", 36028797018963968L);
+
+		columnBitmasks.put("width", 72057594037927936L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

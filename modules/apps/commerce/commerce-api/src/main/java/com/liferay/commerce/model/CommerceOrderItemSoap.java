@@ -43,21 +43,25 @@ public class CommerceOrderItemSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setBookedQuantityId(model.getBookedQuantityId());
 		soapModel.setCommerceOrderId(model.getCommerceOrderId());
 		soapModel.setCommercePriceListId(model.getCommercePriceListId());
-		soapModel.setCProductId(model.getCProductId());
 		soapModel.setCPInstanceId(model.getCPInstanceId());
+		soapModel.setCProductId(model.getCProductId());
 		soapModel.setParentCommerceOrderItemId(
 			model.getParentCommerceOrderItemId());
-		soapModel.setQuantity(model.getQuantity());
-		soapModel.setShippedQuantity(model.getShippedQuantity());
-		soapModel.setJson(model.getJson());
-		soapModel.setName(model.getName());
-		soapModel.setSku(model.getSku());
-		soapModel.setUnitPrice(model.getUnitPrice());
-		soapModel.setPromoPrice(model.getPromoPrice());
+		soapModel.setShippingAddressId(model.getShippingAddressId());
+		soapModel.setDeliveryGroup(model.getDeliveryGroup());
+		soapModel.setDeliveryMaxSubscriptionCycles(
+			model.getDeliveryMaxSubscriptionCycles());
+		soapModel.setDeliverySubscriptionLength(
+			model.getDeliverySubscriptionLength());
+		soapModel.setDeliverySubscriptionType(
+			model.getDeliverySubscriptionType());
+		soapModel.setDeliverySubscriptionTypeSettings(
+			model.getDeliverySubscriptionTypeSettings());
+		soapModel.setDepth(model.getDepth());
 		soapModel.setDiscountAmount(model.getDiscountAmount());
-		soapModel.setFinalPrice(model.getFinalPrice());
 		soapModel.setDiscountPercentageLevel1(
 			model.getDiscountPercentageLevel1());
 		soapModel.setDiscountPercentageLevel2(
@@ -66,12 +70,6 @@ public class CommerceOrderItemSoap implements Serializable {
 			model.getDiscountPercentageLevel3());
 		soapModel.setDiscountPercentageLevel4(
 			model.getDiscountPercentageLevel4());
-		soapModel.setUnitPriceWithTaxAmount(model.getUnitPriceWithTaxAmount());
-		soapModel.setPromoPriceWithTaxAmount(
-			model.getPromoPriceWithTaxAmount());
-		soapModel.setDiscountWithTaxAmount(model.getDiscountWithTaxAmount());
-		soapModel.setFinalPriceWithTaxAmount(
-			model.getFinalPriceWithTaxAmount());
 		soapModel.setDiscountPercentageLevel1WithTaxAmount(
 			model.getDiscountPercentageLevel1WithTaxAmount());
 		soapModel.setDiscountPercentageLevel2WithTaxAmount(
@@ -80,13 +78,36 @@ public class CommerceOrderItemSoap implements Serializable {
 			model.getDiscountPercentageLevel3WithTaxAmount());
 		soapModel.setDiscountPercentageLevel4WithTaxAmount(
 			model.getDiscountPercentageLevel4WithTaxAmount());
-		soapModel.setSubscription(model.isSubscription());
-		soapModel.setDeliveryGroup(model.getDeliveryGroup());
-		soapModel.setShippingAddressId(model.getShippingAddressId());
-		soapModel.setPrintedNote(model.getPrintedNote());
-		soapModel.setRequestedDeliveryDate(model.getRequestedDeliveryDate());
-		soapModel.setBookedQuantityId(model.getBookedQuantityId());
+		soapModel.setDiscountWithTaxAmount(model.getDiscountWithTaxAmount());
+		soapModel.setFinalPrice(model.getFinalPrice());
+		soapModel.setFinalPriceWithTaxAmount(
+			model.getFinalPriceWithTaxAmount());
+		soapModel.setFreeShipping(model.isFreeShipping());
+		soapModel.setHeight(model.getHeight());
+		soapModel.setJson(model.getJson());
 		soapModel.setManuallyAdjusted(model.isManuallyAdjusted());
+		soapModel.setMaxSubscriptionCycles(model.getMaxSubscriptionCycles());
+		soapModel.setName(model.getName());
+		soapModel.setPrintedNote(model.getPrintedNote());
+		soapModel.setPromoPrice(model.getPromoPrice());
+		soapModel.setPromoPriceWithTaxAmount(
+			model.getPromoPriceWithTaxAmount());
+		soapModel.setQuantity(model.getQuantity());
+		soapModel.setRequestedDeliveryDate(model.getRequestedDeliveryDate());
+		soapModel.setShipSeparately(model.isShipSeparately());
+		soapModel.setShippable(model.isShippable());
+		soapModel.setShippedQuantity(model.getShippedQuantity());
+		soapModel.setShippingExtraPrice(model.getShippingExtraPrice());
+		soapModel.setSku(model.getSku());
+		soapModel.setSubscription(model.isSubscription());
+		soapModel.setSubscriptionLength(model.getSubscriptionLength());
+		soapModel.setSubscriptionType(model.getSubscriptionType());
+		soapModel.setSubscriptionTypeSettings(
+			model.getSubscriptionTypeSettings());
+		soapModel.setUnitPrice(model.getUnitPrice());
+		soapModel.setUnitPriceWithTaxAmount(model.getUnitPriceWithTaxAmount());
+		soapModel.setWeight(model.getWeight());
+		soapModel.setWidth(model.getWidth());
 
 		return soapModel;
 	}
@@ -212,6 +233,14 @@ public class CommerceOrderItemSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getBookedQuantityId() {
+		return _bookedQuantityId;
+	}
+
+	public void setBookedQuantityId(long bookedQuantityId) {
+		_bookedQuantityId = bookedQuantityId;
+	}
+
 	public long getCommerceOrderId() {
 		return _commerceOrderId;
 	}
@@ -228,20 +257,20 @@ public class CommerceOrderItemSoap implements Serializable {
 		_commercePriceListId = commercePriceListId;
 	}
 
-	public long getCProductId() {
-		return _CProductId;
-	}
-
-	public void setCProductId(long CProductId) {
-		_CProductId = CProductId;
-	}
-
 	public long getCPInstanceId() {
 		return _CPInstanceId;
 	}
 
 	public void setCPInstanceId(long CPInstanceId) {
 		_CPInstanceId = CPInstanceId;
+	}
+
+	public long getCProductId() {
+		return _CProductId;
+	}
+
+	public void setCProductId(long CProductId) {
+		_CProductId = CProductId;
 	}
 
 	public long getParentCommerceOrderItemId() {
@@ -252,60 +281,64 @@ public class CommerceOrderItemSoap implements Serializable {
 		_parentCommerceOrderItemId = parentCommerceOrderItemId;
 	}
 
-	public int getQuantity() {
-		return _quantity;
+	public long getShippingAddressId() {
+		return _shippingAddressId;
 	}
 
-	public void setQuantity(int quantity) {
-		_quantity = quantity;
+	public void setShippingAddressId(long shippingAddressId) {
+		_shippingAddressId = shippingAddressId;
 	}
 
-	public int getShippedQuantity() {
-		return _shippedQuantity;
+	public String getDeliveryGroup() {
+		return _deliveryGroup;
 	}
 
-	public void setShippedQuantity(int shippedQuantity) {
-		_shippedQuantity = shippedQuantity;
+	public void setDeliveryGroup(String deliveryGroup) {
+		_deliveryGroup = deliveryGroup;
 	}
 
-	public String getJson() {
-		return _json;
+	public long getDeliveryMaxSubscriptionCycles() {
+		return _deliveryMaxSubscriptionCycles;
 	}
 
-	public void setJson(String json) {
-		_json = json;
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles) {
+
+		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
 	}
 
-	public String getName() {
-		return _name;
+	public int getDeliverySubscriptionLength() {
+		return _deliverySubscriptionLength;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		_deliverySubscriptionLength = deliverySubscriptionLength;
 	}
 
-	public String getSku() {
-		return _sku;
+	public String getDeliverySubscriptionType() {
+		return _deliverySubscriptionType;
 	}
 
-	public void setSku(String sku) {
-		_sku = sku;
+	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		_deliverySubscriptionType = deliverySubscriptionType;
 	}
 
-	public BigDecimal getUnitPrice() {
-		return _unitPrice;
+	public String getDeliverySubscriptionTypeSettings() {
+		return _deliverySubscriptionTypeSettings;
 	}
 
-	public void setUnitPrice(BigDecimal unitPrice) {
-		_unitPrice = unitPrice;
+	public void setDeliverySubscriptionTypeSettings(
+		String deliverySubscriptionTypeSettings) {
+
+		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
 	}
 
-	public BigDecimal getPromoPrice() {
-		return _promoPrice;
+	public double getDepth() {
+		return _depth;
 	}
 
-	public void setPromoPrice(BigDecimal promoPrice) {
-		_promoPrice = promoPrice;
+	public void setDepth(double depth) {
+		_depth = depth;
 	}
 
 	public BigDecimal getDiscountAmount() {
@@ -314,14 +347,6 @@ public class CommerceOrderItemSoap implements Serializable {
 
 	public void setDiscountAmount(BigDecimal discountAmount) {
 		_discountAmount = discountAmount;
-	}
-
-	public BigDecimal getFinalPrice() {
-		return _finalPrice;
-	}
-
-	public void setFinalPrice(BigDecimal finalPrice) {
-		_finalPrice = finalPrice;
 	}
 
 	public BigDecimal getDiscountPercentageLevel1() {
@@ -362,38 +387,6 @@ public class CommerceOrderItemSoap implements Serializable {
 		BigDecimal discountPercentageLevel4) {
 
 		_discountPercentageLevel4 = discountPercentageLevel4;
-	}
-
-	public BigDecimal getUnitPriceWithTaxAmount() {
-		return _unitPriceWithTaxAmount;
-	}
-
-	public void setUnitPriceWithTaxAmount(BigDecimal unitPriceWithTaxAmount) {
-		_unitPriceWithTaxAmount = unitPriceWithTaxAmount;
-	}
-
-	public BigDecimal getPromoPriceWithTaxAmount() {
-		return _promoPriceWithTaxAmount;
-	}
-
-	public void setPromoPriceWithTaxAmount(BigDecimal promoPriceWithTaxAmount) {
-		_promoPriceWithTaxAmount = promoPriceWithTaxAmount;
-	}
-
-	public BigDecimal getDiscountWithTaxAmount() {
-		return _discountWithTaxAmount;
-	}
-
-	public void setDiscountWithTaxAmount(BigDecimal discountWithTaxAmount) {
-		_discountWithTaxAmount = discountWithTaxAmount;
-	}
-
-	public BigDecimal getFinalPriceWithTaxAmount() {
-		return _finalPriceWithTaxAmount;
-	}
-
-	public void setFinalPriceWithTaxAmount(BigDecimal finalPriceWithTaxAmount) {
-		_finalPriceWithTaxAmount = finalPriceWithTaxAmount;
 	}
 
 	public BigDecimal getDiscountPercentageLevel1WithTaxAmount() {
@@ -440,56 +433,56 @@ public class CommerceOrderItemSoap implements Serializable {
 			discountPercentageLevel4WithTaxAmount;
 	}
 
-	public boolean getSubscription() {
-		return _subscription;
+	public BigDecimal getDiscountWithTaxAmount() {
+		return _discountWithTaxAmount;
 	}
 
-	public boolean isSubscription() {
-		return _subscription;
+	public void setDiscountWithTaxAmount(BigDecimal discountWithTaxAmount) {
+		_discountWithTaxAmount = discountWithTaxAmount;
 	}
 
-	public void setSubscription(boolean subscription) {
-		_subscription = subscription;
+	public BigDecimal getFinalPrice() {
+		return _finalPrice;
 	}
 
-	public String getDeliveryGroup() {
-		return _deliveryGroup;
+	public void setFinalPrice(BigDecimal finalPrice) {
+		_finalPrice = finalPrice;
 	}
 
-	public void setDeliveryGroup(String deliveryGroup) {
-		_deliveryGroup = deliveryGroup;
+	public BigDecimal getFinalPriceWithTaxAmount() {
+		return _finalPriceWithTaxAmount;
 	}
 
-	public long getShippingAddressId() {
-		return _shippingAddressId;
+	public void setFinalPriceWithTaxAmount(BigDecimal finalPriceWithTaxAmount) {
+		_finalPriceWithTaxAmount = finalPriceWithTaxAmount;
 	}
 
-	public void setShippingAddressId(long shippingAddressId) {
-		_shippingAddressId = shippingAddressId;
+	public boolean getFreeShipping() {
+		return _freeShipping;
 	}
 
-	public String getPrintedNote() {
-		return _printedNote;
+	public boolean isFreeShipping() {
+		return _freeShipping;
 	}
 
-	public void setPrintedNote(String printedNote) {
-		_printedNote = printedNote;
+	public void setFreeShipping(boolean freeShipping) {
+		_freeShipping = freeShipping;
 	}
 
-	public Date getRequestedDeliveryDate() {
-		return _requestedDeliveryDate;
+	public double getHeight() {
+		return _height;
 	}
 
-	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
-		_requestedDeliveryDate = requestedDeliveryDate;
+	public void setHeight(double height) {
+		_height = height;
 	}
 
-	public long getBookedQuantityId() {
-		return _bookedQuantityId;
+	public String getJson() {
+		return _json;
 	}
 
-	public void setBookedQuantityId(long bookedQuantityId) {
-		_bookedQuantityId = bookedQuantityId;
+	public void setJson(String json) {
+		_json = json;
 	}
 
 	public boolean getManuallyAdjusted() {
@@ -504,6 +497,178 @@ public class CommerceOrderItemSoap implements Serializable {
 		_manuallyAdjusted = manuallyAdjusted;
 	}
 
+	public long getMaxSubscriptionCycles() {
+		return _maxSubscriptionCycles;
+	}
+
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
+		_maxSubscriptionCycles = maxSubscriptionCycles;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getPrintedNote() {
+		return _printedNote;
+	}
+
+	public void setPrintedNote(String printedNote) {
+		_printedNote = printedNote;
+	}
+
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	public void setPromoPrice(BigDecimal promoPrice) {
+		_promoPrice = promoPrice;
+	}
+
+	public BigDecimal getPromoPriceWithTaxAmount() {
+		return _promoPriceWithTaxAmount;
+	}
+
+	public void setPromoPriceWithTaxAmount(BigDecimal promoPriceWithTaxAmount) {
+		_promoPriceWithTaxAmount = promoPriceWithTaxAmount;
+	}
+
+	public int getQuantity() {
+		return _quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		_quantity = quantity;
+	}
+
+	public Date getRequestedDeliveryDate() {
+		return _requestedDeliveryDate;
+	}
+
+	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
+		_requestedDeliveryDate = requestedDeliveryDate;
+	}
+
+	public boolean getShipSeparately() {
+		return _shipSeparately;
+	}
+
+	public boolean isShipSeparately() {
+		return _shipSeparately;
+	}
+
+	public void setShipSeparately(boolean shipSeparately) {
+		_shipSeparately = shipSeparately;
+	}
+
+	public boolean getShippable() {
+		return _shippable;
+	}
+
+	public boolean isShippable() {
+		return _shippable;
+	}
+
+	public void setShippable(boolean shippable) {
+		_shippable = shippable;
+	}
+
+	public int getShippedQuantity() {
+		return _shippedQuantity;
+	}
+
+	public void setShippedQuantity(int shippedQuantity) {
+		_shippedQuantity = shippedQuantity;
+	}
+
+	public double getShippingExtraPrice() {
+		return _shippingExtraPrice;
+	}
+
+	public void setShippingExtraPrice(double shippingExtraPrice) {
+		_shippingExtraPrice = shippingExtraPrice;
+	}
+
+	public String getSku() {
+		return _sku;
+	}
+
+	public void setSku(String sku) {
+		_sku = sku;
+	}
+
+	public boolean getSubscription() {
+		return _subscription;
+	}
+
+	public boolean isSubscription() {
+		return _subscription;
+	}
+
+	public void setSubscription(boolean subscription) {
+		_subscription = subscription;
+	}
+
+	public int getSubscriptionLength() {
+		return _subscriptionLength;
+	}
+
+	public void setSubscriptionLength(int subscriptionLength) {
+		_subscriptionLength = subscriptionLength;
+	}
+
+	public String getSubscriptionType() {
+		return _subscriptionType;
+	}
+
+	public void setSubscriptionType(String subscriptionType) {
+		_subscriptionType = subscriptionType;
+	}
+
+	public String getSubscriptionTypeSettings() {
+		return _subscriptionTypeSettings;
+	}
+
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
+		_subscriptionTypeSettings = subscriptionTypeSettings;
+	}
+
+	public BigDecimal getUnitPrice() {
+		return _unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		_unitPrice = unitPrice;
+	}
+
+	public BigDecimal getUnitPriceWithTaxAmount() {
+		return _unitPriceWithTaxAmount;
+	}
+
+	public void setUnitPriceWithTaxAmount(BigDecimal unitPriceWithTaxAmount) {
+		_unitPriceWithTaxAmount = unitPriceWithTaxAmount;
+	}
+
+	public double getWeight() {
+		return _weight;
+	}
+
+	public void setWeight(double weight) {
+		_weight = weight;
+	}
+
+	public double getWidth() {
+		return _width;
+	}
+
+	public void setWidth(double width) {
+		_width = width;
+	}
+
 	private String _externalReferenceCode;
 	private long _commerceOrderItemId;
 	private long _groupId;
@@ -512,38 +677,54 @@ public class CommerceOrderItemSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _bookedQuantityId;
 	private long _commerceOrderId;
 	private long _commercePriceListId;
-	private long _CProductId;
 	private long _CPInstanceId;
+	private long _CProductId;
 	private long _parentCommerceOrderItemId;
-	private int _quantity;
-	private int _shippedQuantity;
-	private String _json;
-	private String _name;
-	private String _sku;
-	private BigDecimal _unitPrice;
-	private BigDecimal _promoPrice;
+	private long _shippingAddressId;
+	private String _deliveryGroup;
+	private long _deliveryMaxSubscriptionCycles;
+	private int _deliverySubscriptionLength;
+	private String _deliverySubscriptionType;
+	private String _deliverySubscriptionTypeSettings;
+	private double _depth;
 	private BigDecimal _discountAmount;
-	private BigDecimal _finalPrice;
 	private BigDecimal _discountPercentageLevel1;
 	private BigDecimal _discountPercentageLevel2;
 	private BigDecimal _discountPercentageLevel3;
 	private BigDecimal _discountPercentageLevel4;
-	private BigDecimal _unitPriceWithTaxAmount;
-	private BigDecimal _promoPriceWithTaxAmount;
-	private BigDecimal _discountWithTaxAmount;
-	private BigDecimal _finalPriceWithTaxAmount;
 	private BigDecimal _discountPercentageLevel1WithTaxAmount;
 	private BigDecimal _discountPercentageLevel2WithTaxAmount;
 	private BigDecimal _discountPercentageLevel3WithTaxAmount;
 	private BigDecimal _discountPercentageLevel4WithTaxAmount;
-	private boolean _subscription;
-	private String _deliveryGroup;
-	private long _shippingAddressId;
-	private String _printedNote;
-	private Date _requestedDeliveryDate;
-	private long _bookedQuantityId;
+	private BigDecimal _discountWithTaxAmount;
+	private BigDecimal _finalPrice;
+	private BigDecimal _finalPriceWithTaxAmount;
+	private boolean _freeShipping;
+	private double _height;
+	private String _json;
 	private boolean _manuallyAdjusted;
+	private long _maxSubscriptionCycles;
+	private String _name;
+	private String _printedNote;
+	private BigDecimal _promoPrice;
+	private BigDecimal _promoPriceWithTaxAmount;
+	private int _quantity;
+	private Date _requestedDeliveryDate;
+	private boolean _shipSeparately;
+	private boolean _shippable;
+	private int _shippedQuantity;
+	private double _shippingExtraPrice;
+	private String _sku;
+	private boolean _subscription;
+	private int _subscriptionLength;
+	private String _subscriptionType;
+	private String _subscriptionTypeSettings;
+	private BigDecimal _unitPrice;
+	private BigDecimal _unitPriceWithTaxAmount;
+	private double _weight;
+	private double _width;
 
 }

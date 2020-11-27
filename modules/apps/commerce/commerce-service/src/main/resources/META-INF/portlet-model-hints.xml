@@ -183,43 +183,59 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="bookedQuantityId" type="long" />
 		<field name="commerceOrderId" type="long" />
 		<field name="commercePriceListId" type="long" />
-		<field name="CProductId" type="long" />
 		<field name="CPInstanceId" type="long" />
+		<field name="CProductId" type="long" />
 		<field name="parentCommerceOrderItemId" type="long" />
-		<field name="quantity" type="int" />
-		<field name="shippedQuantity" type="int" />
-		<field name="json" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field localized="true" name="name" type="String" />
-		<field name="sku" type="String" />
-		<field name="unitPrice" type="BigDecimal" />
-		<field name="promoPrice" type="BigDecimal" />
+		<field name="shippingAddressId" type="long" />
+		<field name="deliveryGroup" type="String" />
+		<field name="deliveryMaxSubscriptionCycles" type="long" />
+		<field name="deliverySubscriptionLength" type="int" />
+		<field name="deliverySubscriptionType" type="String" />
+		<field name="deliverySubscriptionTypeSettings" type="String" />
+		<field name="depth" type="double" />
 		<field name="discountAmount" type="BigDecimal" />
-		<field name="finalPrice" type="BigDecimal" />
 		<field name="discountPercentageLevel1" type="BigDecimal" />
 		<field name="discountPercentageLevel2" type="BigDecimal" />
 		<field name="discountPercentageLevel3" type="BigDecimal" />
 		<field name="discountPercentageLevel4" type="BigDecimal" />
-		<field name="unitPriceWithTaxAmount" type="BigDecimal" />
-		<field name="promoPriceWithTaxAmount" type="BigDecimal" />
-		<field name="discountWithTaxAmount" type="BigDecimal" />
-		<field name="finalPriceWithTaxAmount" type="BigDecimal" />
 		<field name="discountPercentageLevel1WithTaxAmount" type="BigDecimal" />
 		<field name="discountPercentageLevel2WithTaxAmount" type="BigDecimal" />
 		<field name="discountPercentageLevel3WithTaxAmount" type="BigDecimal" />
 		<field name="discountPercentageLevel4WithTaxAmount" type="BigDecimal" />
-		<field name="subscription" type="boolean" />
-		<field name="deliveryGroup" type="String" />
-		<field name="shippingAddressId" type="long" />
+		<field name="discountWithTaxAmount" type="BigDecimal" />
+		<field name="finalPrice" type="BigDecimal" />
+		<field name="finalPriceWithTaxAmount" type="BigDecimal" />
+		<field name="freeShipping" type="boolean" />
+		<field name="height" type="double" />
+		<field name="json" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="manuallyAdjusted" type="boolean" />
+		<field name="maxSubscriptionCycles" type="long" />
+		<field localized="true" name="name" type="String" />
 		<field name="printedNote" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="promoPrice" type="BigDecimal" />
+		<field name="promoPriceWithTaxAmount" type="BigDecimal" />
+		<field name="quantity" type="int" />
 		<field name="requestedDeliveryDate" type="Date" />
-		<field name="bookedQuantityId" type="long" />
-		<field name="manuallyAdjusted" type="boolean" />
+		<field name="shipSeparately" type="boolean" />
+		<field name="shippable" type="boolean" />
+		<field name="shippedQuantity" type="int" />
+		<field name="shippingExtraPrice" type="double" />
+		<field name="sku" type="String" />
+		<field name="subscription" type="boolean" />
+		<field name="subscriptionLength" type="int" />
+		<field name="subscriptionType" type="String" />
+		<field name="subscriptionTypeSettings" type="String" />
+		<field name="unitPrice" type="BigDecimal" />
+		<field name="unitPriceWithTaxAmount" type="BigDecimal" />
+		<field name="weight" type="double" />
+		<field name="width" type="double" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderNote">
 		<field name="externalReferenceCode" type="String" />

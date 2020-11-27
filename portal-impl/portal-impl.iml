@@ -1,45 +1,67 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-	<component name="NewModuleRootManager" inherit-compiler-output="true">
-		<exclude-output />
-		<content url="file://$MODULE_DIR$">
-			<sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-			<sourceFolder url="file://$MODULE_DIR$/test/unit" isTestSource="true" />
-			<excludeFolder url="file://$MODULE_DIR$/classes" />
-			<excludeFolder url="file://$MODULE_DIR$/test-classes" />
-			<excludeFolder url="file://$MODULE_DIR$/test-coverage" />
-			<excludeFolder url="file://$MODULE_DIR$/test-results" />
-		</content>
-		<orderEntry type="inheritedJdk" />
-		<orderEntry type="sourceFolder" forTests="false" />
-		<orderEntry type="module" module-name="petra-concurrent" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-content" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-encryptor" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-executor" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-function" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-io" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-lang" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-log4j" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-mail" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-memory" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-nio" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-process" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-reflect" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-sql-dsl-api" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-sql-dsl-spi" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-string" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-url-pattern-mapper" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-xml" scope="PROVIDED" />
-		<orderEntry type="module" module-name="util-bridges" />
-		<orderEntry type="module" module-name="util-java" />
-		<orderEntry type="module" module-name="util-taglib" />
-		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
-		<orderEntry type="module" module-name="portal-test" scope="TEST" />
-		<orderEntry type="module" module-name="portal-test-integration" scope="TEST" />
-		<orderEntry type="module" module-name="registry-api" />
-		<orderEntry type="library" scope="PROVIDED" name="development" level="project" />
-		<orderEntry type="library" name="portal" level="project" />
-		<orderEntry type="library" scope="PROVIDED" name="global" level="project" />
-	</component>
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/com/liferay/portal/deploy/dependencies/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/src/com/liferay/portal/deploy/dependencies" relative="/WEB-INF" />
+        </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src" />
+        </sourceRoots>
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping />
+        <naming-strategy-map />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence-custom.xml" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/unit" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/test-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/test-results" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="petra-concurrent" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-content" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-encryptor" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-executor" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-function" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-io" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-lang" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-log4j" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-mail" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-memory" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-nio" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-process" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-reflect" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-sql-dsl-api" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-sql-dsl-spi" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-string" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-url-pattern-mapper" scope="PROVIDED" />
+    <orderEntry type="module" module-name="petra-xml" scope="PROVIDED" />
+    <orderEntry type="module" module-name="util-bridges" />
+    <orderEntry type="module" module-name="util-java" />
+    <orderEntry type="module" module-name="util-taglib" />
+    <orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
+    <orderEntry type="module" module-name="portal-test" scope="TEST" />
+    <orderEntry type="module" module-name="portal-test-integration" scope="TEST" />
+    <orderEntry type="module" module-name="registry-api" />
+    <orderEntry type="library" scope="PROVIDED" name="development" level="project" />
+    <orderEntry type="library" name="portal" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="global" level="project" />
+  </component>
 </module>

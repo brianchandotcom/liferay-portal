@@ -223,16 +223,6 @@ public class StartupHelperUtil {
 
 			throw new RuntimeException(msg);
 		}
-
-		if (!PortalUpgradeProcess.isInLatestSchemaVersion(
-				DataAccess.getConnection())) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Execute the upgrade tool first if you need to upgrade " +
-						"the portal to the latest schema version");
-			}
-		}
 	}
 
 	private static final String[] _UPGRADE_PROCESS_CLASS_NAMES = {

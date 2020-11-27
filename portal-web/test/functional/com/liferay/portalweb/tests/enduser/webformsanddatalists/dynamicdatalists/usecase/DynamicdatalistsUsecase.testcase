@@ -398,6 +398,8 @@ definition {
 	@description = "This is a use case for LPS-66229."
 	@priority = "3"
 	test AddRecordWithBlankWebContentField {
+		property portal.acceptance = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -443,6 +445,8 @@ definition {
 	@description = "This is a use case for LPS-66439."
 	@priority = "5"
 	test AddRecordWithPopulatedWebContentField {
+		property portal.acceptance = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

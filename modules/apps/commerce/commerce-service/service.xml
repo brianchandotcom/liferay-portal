@@ -387,39 +387,55 @@
 
 		<!-- Other fields -->
 
+		<column name="bookedQuantityId" type="long" />
 		<column name="commerceOrderId" type="long" />
 		<column name="commercePriceListId" type="long" />
-		<column name="CProductId" type="long" />
 		<column name="CPInstanceId" type="long" />
+		<column name="CProductId" type="long" />
 		<column name="parentCommerceOrderItemId" type="long" />
-		<column name="quantity" type="int" />
-		<column name="shippedQuantity" type="int" />
-		<column name="json" type="String" />
-		<column localized="true" name="name" type="String" />
-		<column name="sku" type="String" />
-		<column name="unitPrice" type="BigDecimal" />
-		<column name="promoPrice" type="BigDecimal" />
+		<column name="shippingAddressId" type="long" />
+		<column name="deliveryGroup" type="String" />
+		<column name="deliveryMaxSubscriptionCycles" type="long" />
+		<column name="deliverySubscriptionLength" type="int" />
+		<column name="deliverySubscriptionType" type="String" />
+		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
+		<column name="depth" type="double" />
 		<column name="discountAmount" type="BigDecimal" />
-		<column name="finalPrice" type="BigDecimal" />
 		<column name="discountPercentageLevel1" type="BigDecimal" />
 		<column name="discountPercentageLevel2" type="BigDecimal" />
 		<column name="discountPercentageLevel3" type="BigDecimal" />
 		<column name="discountPercentageLevel4" type="BigDecimal" />
-		<column name="unitPriceWithTaxAmount" type="BigDecimal" />
-		<column name="promoPriceWithTaxAmount" type="BigDecimal" />
-		<column name="discountWithTaxAmount" type="BigDecimal" />
-		<column name="finalPriceWithTaxAmount" type="BigDecimal" />
 		<column db-name="discountPctLevel1WithTaxAmount" name="discountPercentageLevel1WithTaxAmount" type="BigDecimal" />
 		<column db-name="discountPctLevel2WithTaxAmount" name="discountPercentageLevel2WithTaxAmount" type="BigDecimal" />
 		<column db-name="discountPctLevel3WithTaxAmount" name="discountPercentageLevel3WithTaxAmount" type="BigDecimal" />
 		<column db-name="discountPctLevel4WithTaxAmount" name="discountPercentageLevel4WithTaxAmount" type="BigDecimal" />
-		<column name="subscription" type="boolean" />
-		<column name="deliveryGroup" type="String" />
-		<column name="shippingAddressId" type="long" />
-		<column name="printedNote" type="String" />
-		<column name="requestedDeliveryDate" type="Date" />
-		<column name="bookedQuantityId" type="long" />
+		<column name="discountWithTaxAmount" type="BigDecimal" />
+		<column name="finalPrice" type="BigDecimal" />
+		<column name="finalPriceWithTaxAmount" type="BigDecimal" />
+		<column name="freeShipping" type="boolean" />
+		<column name="height" type="double" />
+		<column name="json" type="String" />
 		<column name="manuallyAdjusted" type="boolean" />
+		<column name="maxSubscriptionCycles" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column name="printedNote" type="String" />
+		<column name="promoPrice" type="BigDecimal" />
+		<column name="promoPriceWithTaxAmount" type="BigDecimal" />
+		<column name="quantity" type="int" />
+		<column name="requestedDeliveryDate" type="Date" />
+		<column name="shipSeparately" type="boolean" />
+		<column name="shippable" type="boolean" />
+		<column name="shippedQuantity" type="int" />
+		<column name="shippingExtraPrice" type="double" />
+		<column name="sku" type="String" />
+		<column name="subscription" type="boolean" />
+		<column name="subscriptionLength" type="int" />
+		<column name="subscriptionType" type="String" />
+		<column name="subscriptionTypeSettings" type="String" />
+		<column name="unitPrice" type="BigDecimal" />
+		<column name="unitPriceWithTaxAmount" type="BigDecimal" />
+		<column name="weight" type="double" />
+		<column name="width" type="double" />
 
 		<!-- Order -->
 

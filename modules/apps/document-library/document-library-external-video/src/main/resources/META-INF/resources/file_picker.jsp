@@ -22,9 +22,9 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_external_video_file_picker_css"
+	outputKey="document_library_external_video_preview_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/file_picker.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/external_video_preview.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <aui:input name="contentType" type="hidden" value="<%= DLContentTypes.EXTERNAL_VIDEO %>" />
@@ -34,14 +34,14 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 
 	<p class="form-text"><liferay-ui:message key="video-url-help" /></p>
 
-	<div class="file-picker-preview-video file-picker-preview-video-small">
-		<div class="file-picker-preview-video-aspect-ratio">
+	<div class="external-video-preview external-video-preview-small">
+		<div class="external-video-preview-aspect-ratio">
 			<c:choose>
 				<c:when test="<%= dlExternalVideo != null %>">
 					<%= dlExternalVideo.getEmbeddableHTML() %>
 				</c:when>
 				<c:otherwise>
-					<div class="file-picker-preview-video-placeholder">
+					<div class="external-video-preview-placeholder">
 						<clay:icon
 							symbol="video"
 						/>

@@ -133,25 +133,25 @@ const VideoPreview = ({
 			</ClayForm.Group>
 
 			<div
-				className={classNames('file-picker-preview-video', {
-					['file-picker-preview-video-small']: small,
+				className={classNames('external-video-preview', {
+					['external-video-preview-small']: small,
 				})}
 			>
 				{videoHtml ? (
 					<div
-						className="file-picker-preview-video-aspect-ratio"
+						className="external-video-preview-aspect-ratio"
 						dangerouslySetInnerHTML={{__html: videoHtml}}
 					/>
 				) : (
-					<div className="file-picker-preview-video-aspect-ratio">
-						<div className="file-picker-preview-video-placeholder">
+					<div className="external-video-preview-aspect-ratio">
+						<div className="external-video-preview-placeholder">
 							{loading ? (
 								<ClayLoadingIndicator />
 							) : (
 								<>
 									<ClayIcon symbol="video" />
 									{error && (
-										<div className="file-picker-preview-video-placeholder-text">
+										<div className="external-video-preview-placeholder-text">
 											{error}
 										</div>
 									)}

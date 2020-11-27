@@ -66,18 +66,12 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 		defaultLanguageId,
 		fieldNameGenerator,
 		generateFieldNameUsingFieldLabel,
-		localizationMap,
 	} = props;
 	const newFieldName = fieldNameGenerator(
 		getDefaultFieldName(),
 		null,
 		blacklist
 	);
-
-	if (localizationMap) {
-		localizationMap[newFieldName] =
-			localizationMap[originalField.fieldName];
-	}
 
 	let duplicatedField = updateField(
 		props,

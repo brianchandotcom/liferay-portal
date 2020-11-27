@@ -100,20 +100,13 @@ export const normalizeSettingsContextPages = (
 	defaultLanguageId,
 	editingLanguageId,
 	fieldType,
-	generatedFieldName,
-	settingsContextLocalizationMap = {}
+	generatedFieldName
 ) => {
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapFields(
 		(field) => {
 			const {fieldName} = field;
-
-			if (field.localizable) {
-				settingsContextLocalizationMap[fieldName] = {
-					[editingLanguageId]: {edited: false},
-				};
-			}
 
 			if (fieldName === 'fieldReference' || fieldName === 'name') {
 				field = {
@@ -190,7 +183,6 @@ export const createField = (props, event) => {
 		defaultLanguageId,
 		editingLanguageId,
 		fieldNameGenerator,
-		localizationMap = {},
 		spritemap,
 	} = props;
 	const {
@@ -217,8 +209,6 @@ export const createField = (props, event) => {
 		}
 	}
 
-	localizationMap[newFieldName] = {settingsContextLocalizationMap: {}};
-
 	const newField = {
 		...fieldType,
 		fieldName: newFieldName,
@@ -231,8 +221,7 @@ export const createField = (props, event) => {
 				defaultLanguageId,
 				editingLanguageId,
 				fieldType,
-				newFieldName,
-				localizationMap[newFieldName].settingsContextLocalizationMap
+				newFieldName
 			),
 			type: fieldType.name,
 		},

@@ -763,9 +763,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		AssertClick(
-				key_fieldFieldLabel = "Web Content",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			key_fieldFieldLabel = "Web Content",
+			locator1 = "WCEditWebContent#SELECT_BUTTON",
+			value1 = "Select");
 
 		ItemSelector.viewWCEverywhereFilterResults(
 			folderWebContentTitle = "WC WebContent From Depot",

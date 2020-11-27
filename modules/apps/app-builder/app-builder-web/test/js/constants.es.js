@@ -173,7 +173,7 @@ const dataDefinitionField = {
 	nestedDataDefinitionFields: [],
 	readOnly: false,
 	repeatable: false,
-	required: false,
+	required: true,
 	showLabel: true,
 	tip: {
 		en_US: '',
@@ -529,6 +529,7 @@ const FORM_VIEW_CONTEXT = {
 	dataDefinition: DATA_DEFINITION_RESPONSES.THREE_ITEMS,
 	dataDefinitionId: 0,
 	dataLayout: {
+		dataLayoutFields: {},
 		dataLayoutPages: [],
 		dataRules: [],
 		name: {

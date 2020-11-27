@@ -22,13 +22,42 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {AppContextProvider} from '../../../../src/main/resources/META-INF/resources/js/AppContext.es';
 import EditFormView from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/EditFormView.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
-import {FORM_VIEW} from '../../constants.es';
+import {ENTRY, FORM_VIEW} from '../../constants.es';
 
 const {
 	EDIT_FORM_VIEW_PROPS,
 	FORM_VIEW_CONTEXT,
 	getDataLayoutBuilderProps,
 } = FORM_VIEW;
+
+const setDataLayoutBuilderProps = (props) => {
+	window.Liferay = {
+		...window.Liferay,
+		componentReady: () => {
+			return new Promise((resolve) => {
+				resolve(props);
+			});
+		},
+	};
+};
+
+const EditFormViewWrapper = ({trackingIndicator = false, ...otherProps}) => (
+	<AppContextProvider>
+		<ClayModalProvider>
+			<div className="tools-control-group">
+				<div className="control-menu-level-1-heading" />
+			</div>
+
+			{trackingIndicator && <div className="change-tracking-indicator" />}
+
+			<DndProvider backend={HTML5Backend}>
+				<div id={EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId} />
+
+				<EditFormView {...EDIT_FORM_VIEW_PROPS} {...otherProps} />
+			</DndProvider>
+		</ClayModalProvider>
+	</AppContextProvider>
+);
 
 describe('EditFormView', () => {
 	let dataLayoutBuilderProps;
@@ -48,14 +77,7 @@ describe('EditFormView', () => {
 			.spyOn(toast, 'successToast')
 			.mockImplementation(() => {});
 
-		window.Liferay = {
-			...window.Liferay,
-			componentReady: () => {
-				return new Promise((resolve) => {
-					resolve(dataLayoutBuilderProps);
-				});
-			},
-		};
+		setDataLayoutBuilderProps(dataLayoutBuilderProps);
 	});
 
 	afterEach(() => {
@@ -69,21 +91,7 @@ describe('EditFormView', () => {
 	});
 
 	it('renders', async () => {
-		const {asFragment} = render(
-			<AppContextProvider>
-				<div className="tools-control-group">
-					<div className="control-menu-level-1-heading" />
-				</div>
-
-				<DndProvider backend={HTML5Backend}>
-					<div
-						id={EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId}
-					/>
-
-					<EditFormView {...EDIT_FORM_VIEW_PROPS} />
-				</DndProvider>
-			</AppContextProvider>
-		);
+		const {asFragment} = render(<EditFormViewWrapper />);
 
 		await act(async () => {
 			jest.runAllTimers();
@@ -92,25 +100,68 @@ describe('EditFormView', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
+	it('renders with required fields', async () => {
+		const {DATA_DEFINITION} = ENTRY;
+
+		const context = {
+			...FORM_VIEW_CONTEXT,
+			dataDefinition: {
+				...DATA_DEFINITION,
+				dataDefinitionFields: [
+					{
+						...DATA_DEFINITION.dataDefinitionFields[0],
+						name: 'Text',
+					},
+				],
+			},
+			dataLayout: {
+				...FORM_VIEW_CONTEXT.dataLayout,
+				dataLayoutFields: {
+					Text: {
+						required: true,
+					},
+				},
+			},
+		};
+
+		dataLayoutBuilderProps = {
+			...dataLayoutBuilderProps,
+			getState: () => context,
+		};
+
+		setDataLayoutBuilderProps(dataLayoutBuilderProps);
+
+		const {container, queryByText, rerender} = render(
+			<EditFormViewWrapper />
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		// assert with required fields at Form View Level
+
+		expect(queryByText('Name')).toBeTruthy();
+		expect(container.querySelector('.reference-mark')).toBeFalsy();
+
+		// assert with required fields at Object Level
+
+		context.dataLayout.dataLayoutFields.Text.required = false;
+
+		setDataLayoutBuilderProps({
+			...dataLayoutBuilderProps,
+			getState: () => context,
+		});
+
+		rerender(<EditFormViewWrapper />);
+
+		expect(queryByText('Name')).toBeTruthy();
+		expect(container.querySelector('.reference-mark')).toBeTruthy();
+	});
+
 	it('renders as edit-form-view and make actions', async () => {
 		const {queryByPlaceholderText, queryByText} = render(
-			<AppContextProvider>
-				<ClayModalProvider>
-					<div className="tools-control-group">
-						<div className="control-menu-level-1-heading" />
-					</div>
-
-					<DndProvider backend={HTML5Backend}>
-						<div
-							id={
-								EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId
-							}
-						/>
-
-						<EditFormView {...EDIT_FORM_VIEW_PROPS} />
-					</DndProvider>
-				</ClayModalProvider>
-			</AppContextProvider>
+			<EditFormViewWrapper />
 		);
 
 		await act(async () => {
@@ -164,25 +215,7 @@ describe('EditFormView', () => {
 			.mockResponseOnce(response)
 			.mockResponseOnce(JSON.stringify({items: []}));
 
-		const {container, queryByText} = render(
-			<AppContextProvider>
-				<ClayModalProvider>
-					<div className="tools-control-group">
-						<div className="control-menu-level-1-heading" />
-					</div>
-
-					<DndProvider backend={HTML5Backend}>
-						<div
-							id={
-								EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId
-							}
-						/>
-
-						<EditFormView {...EDIT_FORM_VIEW_PROPS} />
-					</DndProvider>
-				</ClayModalProvider>
-			</AppContextProvider>
-		);
+		const {container, queryByText} = render(<EditFormViewWrapper />);
 
 		await act(async () => {
 			jest.runAllTimers();
@@ -237,25 +270,11 @@ describe('EditFormView', () => {
 			queryAllByText,
 			queryByText,
 		} = render(
-			<AppContextProvider>
-				<div className="tools-control-group">
-					<div className="control-menu-level-1-heading" />
-				</div>
-
-				<div className="change-tracking-indicator" />
-
-				<DndProvider backend={HTML5Backend}>
-					<div
-						id={EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId}
-					/>
-
-					<EditFormView
-						{...EDIT_FORM_VIEW_PROPS}
-						dataLayoutId={0}
-						newCustomObject={false}
-					/>
-				</DndProvider>
-			</AppContextProvider>
+			<EditFormViewWrapper
+				dataLayoutId={0}
+				newCustomObject={false}
+				trackingIndicator
+			/>
 		);
 
 		await act(async () => {
@@ -293,25 +312,7 @@ describe('EditFormView', () => {
 				],
 			})
 		);
-		const {container, queryByText} = render(
-			<AppContextProvider>
-				<ClayModalProvider>
-					<div className="tools-control-group">
-						<div className="control-menu-level-1-heading" />
-					</div>
-
-					<DndProvider backend={HTML5Backend}>
-						<div
-							id={
-								EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId
-							}
-						/>
-
-						<EditFormView {...EDIT_FORM_VIEW_PROPS} />
-					</DndProvider>
-				</ClayModalProvider>
-			</AppContextProvider>
-		);
+		const {container, queryByText} = render(<EditFormViewWrapper />);
 
 		await act(async () => {
 			jest.runAllTimers();
@@ -388,25 +389,7 @@ describe('EditFormView', () => {
 				],
 			})
 		);
-		const {container, queryByText} = render(
-			<AppContextProvider>
-				<ClayModalProvider>
-					<div className="tools-control-group">
-						<div className="control-menu-level-1-heading" />
-					</div>
-
-					<DndProvider backend={HTML5Backend}>
-						<div
-							id={
-								EDIT_FORM_VIEW_PROPS.customObjectSidebarElementId
-							}
-						/>
-
-						<EditFormView {...EDIT_FORM_VIEW_PROPS} />
-					</DndProvider>
-				</ClayModalProvider>
-			</AppContextProvider>
-		);
+		const {container, queryByText} = render(<EditFormViewWrapper />);
 
 		await act(async () => {
 			jest.runAllTimers();

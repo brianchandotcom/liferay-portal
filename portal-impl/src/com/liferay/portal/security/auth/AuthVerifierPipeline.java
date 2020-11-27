@@ -37,7 +37,6 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +46,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -193,10 +194,6 @@ public class AuthVerifierPipeline {
 		}
 
 		if (mergedProperties.size() < 1) {
-			if (filterProperties.containsKey("portal_property_prefix")) {
-				return authVerifierConfiguration;
-			}
-
 			return null;
 		}
 
@@ -219,14 +216,19 @@ public class AuthVerifierPipeline {
 		Map<String, List<AuthVerifierConfiguration>>
 			includeAuthVerifierConfigurations = new HashMap<>();
 
+		boolean containsPortalPropertyPrefix = _filterProperties.containsKey(
+			"portal_property_prefix");
+
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				AuthVerifierTrackerCustomizer._authVerifierConfigurations) {
 
-			authVerifierConfiguration = _mergeAuthVerifierConfiguration(
-				authVerifierConfiguration, _filterProperties);
+			if (!containsPortalPropertyPrefix) {
+				authVerifierConfiguration = _mergeAuthVerifierConfiguration(
+					authVerifierConfiguration, _filterProperties);
 
-			if (authVerifierConfiguration == null) {
-				continue;
+				if (authVerifierConfiguration == null) {
+					continue;
+				}
 			}
 
 			Properties properties = authVerifierConfiguration.getProperties();

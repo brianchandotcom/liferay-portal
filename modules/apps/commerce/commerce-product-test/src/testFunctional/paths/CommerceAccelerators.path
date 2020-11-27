@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_DISCOUNT</td>
+	<td>//h2[contains(@class,'commerce-price')]//span[contains(@class,'price-value-discount')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_LIST_PRICE</td>
 	<td>//h2[contains(@class,'commerce-price')]//span[contains(@class,'price-value')]</td>
 	<td></td>

@@ -285,13 +285,13 @@ exports[`EditTableView renders 1`] = `
                   <div
                     class="pr-2 autofit-col autofit-col-expand"
                   >
-                    <h4
+                    <div
                       class="list-group-title text-truncate"
                     >
-                      <span>
+                      <label>
                         Name
-                      </span>
-                    </h4>
+                      </label>
+                    </div>
                     <p
                       class="list-group-subtitle text-truncate"
                     >

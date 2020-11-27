@@ -143,7 +143,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 
-	<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands,frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+	<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		var delegate = delegateModule.default;
 
 		var handleAddApplicationBrandButtonClick = delegate(

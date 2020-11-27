@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_LIST_PRICE_INACTIVE</td>
+	<td>//h2[contains(@class,'commerce-price')]//span[contains(@class,'price-value-inactive')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_NET_PRICE</td>
 	<td>//h2[contains(@class,'commerce-price')]//span[contains(@class,'price-value-final')]</td>
 	<td></td>

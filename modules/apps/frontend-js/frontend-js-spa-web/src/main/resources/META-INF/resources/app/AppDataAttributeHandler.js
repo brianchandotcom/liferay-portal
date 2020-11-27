@@ -12,10 +12,10 @@
  * details.
  */
 
-import Disposable from '../util/Disposable';
 import globals from '../globals/globals';
 import Route from '../route/Route';
 import HtmlScreen from '../screen/HtmlScreen';
+import Disposable from '../util/Disposable';
 import {getUid, log} from '../util/utils';
 import App from './App';
 import dataAttributes from './dataAttributes';

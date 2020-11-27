@@ -14,10 +14,9 @@
 
 import {buildFragment, openToast} from 'frontend-js-web';
 
-import {App} from './App';
-import {getUid} from '../util/utils';
 import LiferaySurface from '../surface/Surface.es';
-import {getPortletBoundaryId, resetAllPortlets} from '../util/Utils.es';
+import {getPortletBoundaryId, getUid, resetAllPortlets} from '../util/utils';
+import {App} from './App';
 
 const MAX_TIMEOUT = Math.pow(2, 31) - 1;
 const PROPAGATED_PARAMS = ['bodyCssClass'];

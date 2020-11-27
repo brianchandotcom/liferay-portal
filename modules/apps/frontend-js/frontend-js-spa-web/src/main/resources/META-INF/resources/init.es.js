@@ -12,12 +12,12 @@
  * details.
  */
 
-import globals from './globals/globals';
-import {version} from './app/version';
-import {getUrlPath} from './util/utils';
 import App from './app/App.es';
+import {version} from './app/version';
+import globals from './globals/globals';
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import RenderURLScreen from './screen/RenderURLScreen.es';
+import {getUrlPath} from './util/utils';
 
 /**
  * Initializes a Senna App with routes that match both ActionURLs and RenderURLs.

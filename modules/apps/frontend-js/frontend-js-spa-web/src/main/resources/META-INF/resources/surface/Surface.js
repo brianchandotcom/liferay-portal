@@ -14,8 +14,8 @@
 
 import {buildFragment} from 'frontend-js-web';
 
-import Disposable from '../util/Disposable';
 import globals from '../globals/globals';
+import Disposable from '../util/Disposable';
 
 class Surface extends Disposable {
 

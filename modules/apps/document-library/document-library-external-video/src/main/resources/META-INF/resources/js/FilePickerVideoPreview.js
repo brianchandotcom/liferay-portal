@@ -23,6 +23,7 @@ const FilePickerVideoPreview = ({onFilePickCallback, ...videoProps}) => (
 		onSelectedVideo={(fields) => {
 			window[onFilePickCallback](fields);
 		}}
+		small
 	></VideoPreview>
 );
 

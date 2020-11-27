@@ -1,19 +1,9 @@
 @import 'atlas-variables';
 
 .file-picker-preview-video {
-	$border-width: 1px;
 	$component: &;
-	$padding: 1rem;
-	$video-max-width: 360px;
 
-	background-color: $white;
-	border: $border-width solid $secondary-l3;
-	border-radius: 0.25rem;
 	font-size: 0.875rem;
-	max-width: calc(
-		#{$border-width * 2} + #{$padding * 2} + #{$video-max-width}
-	);
-	padding: $padding;
 
 	&-placeholder {
 		align-items: center;
@@ -51,5 +41,19 @@
 			top: 0;
 			width: 100%;
 		}
+	}
+
+	&-small {
+		$border-width: 1px;
+		$padding: 1rem;
+		$video-max-width: 360px;
+
+		background-color: $white;
+		border: $border-width solid $secondary-l3;
+		border-radius: 0.25rem;
+		max-width: calc(
+			#{$border-width * 2} + #{$padding * 2} + #{$video-max-width}
+		);
+		padding: $padding;
 	}
 }

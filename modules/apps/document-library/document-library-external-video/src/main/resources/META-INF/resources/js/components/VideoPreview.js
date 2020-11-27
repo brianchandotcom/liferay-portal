@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {addParams, fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -32,6 +33,7 @@ const VideoPreview = ({
 	namespace,
 	onAdd,
 	onSelectedVideo,
+	small,
 }) => {
 	const inputName = 'externalVideoURLInput';
 	const [error, setError] = useState('');
@@ -130,7 +132,11 @@ const VideoPreview = ({
 				)}
 			</ClayForm.Group>
 
-			<div className="file-picker-preview-video">
+			<div
+				className={classNames('file-picker-preview-video', {
+					['file-picker-preview-video-small']: small,
+				})}
+			>
 				{videoHtml ? (
 					<div
 						className="file-picker-preview-video-aspect-ratio"

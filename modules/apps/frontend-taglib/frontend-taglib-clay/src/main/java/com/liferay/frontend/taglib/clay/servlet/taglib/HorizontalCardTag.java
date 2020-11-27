@@ -58,6 +58,14 @@ public class HorizontalCardTag extends BaseCardTag {
 		String icon = super.getIcon();
 
 		if (icon == null) {
+			HorizontalCard horizontalCard = getHorizontalCard();
+
+			if ((horizontalCard != null) &&
+				(horizontalCard.getIcon() != null)) {
+
+				return horizontalCard.getIcon();
+			}
+
 			return "folder";
 		}
 

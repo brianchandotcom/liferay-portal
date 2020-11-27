@@ -400,7 +400,7 @@ definition {
 		CommerceAcceleratorsInitializer.viewMiniumSelectedAccount(selectedAccount = "Commerce Account 1");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_VALUE",
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "45.00");
 
 		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
@@ -408,7 +408,7 @@ definition {
 		Refresh();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_VALUE",
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "45.00");
 
 		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 3");
@@ -416,7 +416,7 @@ definition {
 		Refresh();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_VALUE",
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "50.00");
 	}
 

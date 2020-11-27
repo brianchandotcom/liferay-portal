@@ -102,16 +102,14 @@ public class ReleaseManagerOSGiCommands {
 			return "No upgrade processes registered for " + bundleSymbolicName;
 		}
 
-		String currentSchemaVersion =
-			_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName);
-
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
 
 		_upgradeExecutor.executeUpgradeInfos(
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
-				currentSchemaVersion, toVersionString),
+				_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName),
+				toVersionString),
 			null);
 
 		return null;

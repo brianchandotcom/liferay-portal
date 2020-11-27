@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-content-transformer-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:asset:asset-api")
+	compileOnly project(":apps:asset:asset-categories-item-selector-api")
 	compileOnly project(":apps:asset:asset-info-display-api")
 	compileOnly project(":apps:asset:asset-list-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")

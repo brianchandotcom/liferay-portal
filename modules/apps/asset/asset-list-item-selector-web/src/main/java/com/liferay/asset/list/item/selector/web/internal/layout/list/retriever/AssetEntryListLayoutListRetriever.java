@@ -66,7 +66,7 @@ public class AssetEntryListLayoutListRetriever
 		Optional<long[]> assetCategoryIdsOptional =
 			layoutListRetrieverContext.getAssetCategoryIdsOptional();
 
-		long[] assetCategoryIds = assetCategoryIdsOptional.orElse(null);
+		long[] assetCategoryIds = assetCategoryIdsOptional.orElse(new long[0]);
 
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();

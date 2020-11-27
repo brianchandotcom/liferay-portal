@@ -51,15 +51,6 @@ function getFields(pages) {
 	return fields;
 }
 
-function getFormattedRoles(roles) {
-	return roles.map(({id, name}) => ({
-		id: `${id}`,
-		label: name,
-		name,
-		value: name,
-	}));
-}
-
 const RuleEditorModalContent = ({onClose, rule}) => {
 	const [invalidRule, setInvalidRule] = useState(true);
 
@@ -89,13 +80,16 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles`,
 	});
 
-	const roles = useMemo(() => {
-		if (rolesResource?.items?.roles) {
-			return getFormattedRoles(rolesResource?.items?.roles);
-		}
-
-		return [];
-	}, [rolesResource]);
+	const roles = useMemo(
+		() =>
+			rolesResource?.items.map(({id, name}) => ({
+				id: `${id}`,
+				label: name,
+				name,
+				value: name,
+			})),
+		[rolesResource]
+	);
 
 	const transformedPages = useMemo(() => getTransformedPages(pages), [pages]);
 	const fields = useMemo(() => getFields(pages), [pages]);
@@ -152,14 +146,21 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 						</ClayButton>
 						<ClayButton
 							disabled={invalidRule || !ruleName}
-							onClick={() =>
+							onClick={() => {
 								dispatch({
-									payload: {dataRule: ruleRef.current},
+									payload: {
+										dataRule: {
+											...ruleRef.current,
+											name: ruleName,
+										},
+										loc: rule?.ruleEditedIndex,
+									},
 									type: rule
 										? UPDATE_DATA_LAYOUT_RULE
 										: ADD_DATA_LAYOUT_RULE,
-								})
-							}
+								});
+								onClose();
+							}}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>

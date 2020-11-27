@@ -39,7 +39,7 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 		>
 
 			<%
-			String cssClass = "table-cell-content";
+			String cssClass = "table-cell-expand";
 
 			RowChecker rowChecker = searchContainer.getRowChecker();
 

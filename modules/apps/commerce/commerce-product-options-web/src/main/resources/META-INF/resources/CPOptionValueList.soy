@@ -28,7 +28,7 @@
 		<table class="table table-autofit table-heading-nowrap table-hover table-responsive">
 			<thead>
 				<tr>
-					<th class="table-cell-content">
+					<th class="table-cell-expand">
 						<span class="text-truncate" title="Description">{msg desc=""}name{/msg}</span>
 					</th>
 					<th>
@@ -52,7 +52,7 @@
 				{/let}
 
 				<tr data-id="0" {$attributes}>
-					<td class="table-cell-content">
+					<td class="table-cell-expand">
 						{if $newOptionValueName == ''}
 							[{msg desc=""}new-option-value{/msg}]
 						{else}
@@ -72,7 +72,7 @@
 						{/let}
 
 						<tr class="{$classes}" data-id="{$optionValue.cpOptionValueId}" onclick="{$_handleSelectOptionValueClick}">
-							<td class="table-cell-content">
+							<td class="table-cell-expand">
 								{$optionValue.name}
 							</td>
 							<td>

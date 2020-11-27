@@ -98,7 +98,7 @@ if (fixedHeader) {
 									if (entry.isTruncate()) {
 										truncate = true;
 
-										cssClass += " table-cell-content";
+										cssClass += " table-cell-expand";
 									}
 
 									if (!Validator.isBlank(entry.getAlign())) {
@@ -120,7 +120,7 @@ if (fixedHeader) {
 								if (entry.isTruncate()) {
 									truncate = true;
 
-									cssClass += " table-cell-content";
+									cssClass += " table-cell-expand";
 								}
 							}
 						}
@@ -301,7 +301,7 @@ if (fixedHeader) {
 							if (entry.isTruncate()) {
 								truncate = true;
 
-								columnClassName += " table-cell-content";
+								columnClassName += " table-cell-expand";
 							}
 
 							String normalizedColumnName = null;

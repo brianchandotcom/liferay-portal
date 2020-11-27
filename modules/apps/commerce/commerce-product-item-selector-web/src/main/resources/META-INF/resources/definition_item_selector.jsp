@@ -103,7 +103,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 			</c:choose>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="name"
 			>
 				<div class="commerce-product-definition-title" data-id="<%= cpDefinition.getCPDefinitionId() %>">
@@ -112,33 +112,33 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="type"
 			>
 				<%= cpType.getLabel(locale) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="sku"
 				value="<%= cpDefinitionItemSelectorViewDisplayContext.getSku(cpDefinition, locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="modified-date"
 				property="modifiedDate"
 			/>
 
 			<liferay-ui:search-container-column-status
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="status"
 				status="<%= cpDefinition.getStatus() %>"
 			/>
 
 			<c:if test="<%= cpDefinitionItemSelectorViewDisplayContext.isSingleSelection() %>">
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 				>
 					<aui:button cssClass="selector-button" value="choose" />
 				</liferay-ui:search-container-column-text>

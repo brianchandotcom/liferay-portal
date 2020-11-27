@@ -158,10 +158,10 @@ renderResponse.setTitle(definition.getName(locale));
 						%>
 
 							<tr>
-								<td class="table-cell-content">
+								<td class="table-cell-expand">
 									<span class="truncate-text"><%= HtmlUtil.escape(key) %></span>
 								</td>
-								<td class="table-cell-content">
+								<td class="table-cell-expand">
 									<span class="truncate-text"><%= HtmlUtil.escape(value) %></span>
 								</td>
 							</tr>

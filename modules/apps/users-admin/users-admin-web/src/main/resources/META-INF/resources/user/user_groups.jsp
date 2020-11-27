@@ -89,7 +89,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		modelVar="userGroup"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="name"
 			property="name"
 		/>

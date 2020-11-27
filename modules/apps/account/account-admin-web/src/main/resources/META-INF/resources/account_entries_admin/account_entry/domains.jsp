@@ -82,7 +82,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 			modelVar="domain"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="name"
 				value="<%= domain %>"
 			/>

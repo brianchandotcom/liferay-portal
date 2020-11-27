@@ -69,7 +69,7 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 			modelVar="cpOption"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="name"
 			>
 				<div class="commerce-product-option-title" data-id="<%= cpOption.getCPOptionId() %>">
@@ -78,7 +78,7 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="modified-date"
 				property="modifiedDate"
 			/>

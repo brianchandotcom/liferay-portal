@@ -67,7 +67,7 @@ th {
 	}
 }
 
-.table-cell-content {
+.table-cell-expand {
 	display: table-cell;
 	max-width: 100px;
 	min-width: 100px;
@@ -85,7 +85,7 @@ th {
 .table-responsive {
 	-webkit-overflow-scrolling: touch;
 
-	.table .table-cell-content {
+	.table .table-cell-expand {
 		@media (max-width: $grid-float-breakpoint-max) {
 			white-space: normal;
 		}
@@ -190,7 +190,7 @@ th {
 		}
 	}
 
-	.table-cell-content {
+	.table-cell-expand {
 		width: auto;
 	}
 }
@@ -202,7 +202,7 @@ th {
 	}
 }
 
-.table-responsive .table-heading-nowrap > thead > tr > .table-cell-content {
+.table-responsive .table-heading-nowrap > thead > tr > .table-cell-expand {
 	white-space: nowrap;
 }
 

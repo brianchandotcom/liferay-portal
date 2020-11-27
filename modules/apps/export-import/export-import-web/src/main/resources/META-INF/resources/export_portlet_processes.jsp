@@ -87,7 +87,7 @@ else {
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="download"
 			>
 

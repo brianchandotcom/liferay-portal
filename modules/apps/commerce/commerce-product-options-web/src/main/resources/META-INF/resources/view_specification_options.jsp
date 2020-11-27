@@ -147,26 +147,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="important table-cell-content"
+								cssClass="important table-cell-expand"
 								href="<%= rowURL %>"
 								name="label"
 								value="<%= HtmlUtil.escape(cpSpecificationOption.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="default-group"
 								value="<%= HtmlUtil.escape(cpSpecificationOptionDisplayContext.getCPOptionCategoryTitle(cpSpecificationOption)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="use-in-faceted-navigation"
 								value='<%= LanguageUtil.get(request, cpSpecificationOption.isFacetable() ? "yes" : "no") %>'
 							/>
 
 							<liferay-ui:search-container-column-date
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="modified-date"
 								property="modifiedDate"
 							/>

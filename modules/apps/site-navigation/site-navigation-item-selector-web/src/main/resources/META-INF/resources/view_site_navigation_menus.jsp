@@ -81,7 +81,7 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="title"
 					>
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">

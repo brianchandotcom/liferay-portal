@@ -79,12 +79,12 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="description"
 			/>
 		</liferay-ui:search-container-row>

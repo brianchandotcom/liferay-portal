@@ -70,7 +70,7 @@ PortletURL portletURL = commercePricingClassItemSelectorViewDisplayContext.getPo
 			modelVar="commercePricingClass"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="title"
 			>
 				<div class="commerce-pricing-class-title" data-id="<%= commercePricingClass.getCommercePricingClassId() %>">
@@ -79,13 +79,13 @@ PortletURL portletURL = commercePricingClassItemSelectorViewDisplayContext.getPo
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="author"
 				property="userName"
 			/>
 
 			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="create-date"
 				property="createDate"
 			/>

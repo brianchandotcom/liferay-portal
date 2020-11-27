@@ -59,31 +59,31 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="important table-cell-content"
+								cssClass="important table-cell-expand"
 								href="<%= rowURL %>"
 								property="name"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="task-executor-type"
 								property="taskExecutorType"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="system"
 								value='<%= dispatchTrigger.isSystem() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="next-fire-date"
 								value="<%= dispatchTriggerDisplayContext.getNextFireDateString(dispatchTrigger.getDispatchTriggerId()) %>"
 							/>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								path="/trigger/buttons.jsp"
 							/>
 

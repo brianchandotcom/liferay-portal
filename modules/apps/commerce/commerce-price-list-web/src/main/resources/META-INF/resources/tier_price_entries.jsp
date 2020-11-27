@@ -165,7 +165,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 								modelVar="commerceTierPriceEntry"
 							>
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									name="id"
 									value="<%= String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()) %>"
 								/>
@@ -180,32 +180,32 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 								%>
 
 								<liferay-ui:search-container-column-text
-									cssClass="important table-cell-content"
+									cssClass="important table-cell-expand"
 									href="<%= rowURL %>"
 									name="product-name"
 									value="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									name="sku"
 									value="<%= HtmlUtil.escape(cpInstance.getSku()) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									name="price"
 									value="<%= HtmlUtil.escape(commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryPrice(commerceTierPriceEntry)) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									name="min-quantity"
 									property="minQuantity"
 								/>
 
 								<liferay-ui:search-container-column-date
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									name="create-date"
 									property="createDate"
 								/>

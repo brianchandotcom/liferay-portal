@@ -134,20 +134,20 @@ CommerceAccountAdminDisplayContext commerceAccountAdminDisplayContext = (Commerc
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						title="name"
 						value="<%= HtmlUtil.escape(commerceAccount.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="active"
 						value='<%= LanguageUtil.get(request, commerceAccount.isActive() ? "yes" : "no") %>'
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="type"
 						value="<%= LanguageUtil.get(request, CommerceAccountConstants.getAccountTypeLabel(commerceAccount.getType())) %>"
 					/>

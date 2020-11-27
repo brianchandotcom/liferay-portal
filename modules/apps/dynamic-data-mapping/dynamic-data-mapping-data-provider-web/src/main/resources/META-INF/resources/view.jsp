@@ -81,14 +81,14 @@ renderResponse.setTitle(ddmDataProviderDisplayContext.getTitle());
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									href="<%= rowURL %>"
 									name="name"
 									value="<%= HtmlUtil.escape(dataProviderInstance.getName(locale)) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									name="description"
 									value="<%= HtmlUtil.escape(dataProviderInstance.getDescription(locale)) %>"
 								/>

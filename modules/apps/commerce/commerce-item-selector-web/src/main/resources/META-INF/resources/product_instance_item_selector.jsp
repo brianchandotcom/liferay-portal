@@ -73,7 +73,7 @@ PortletURL portletURL = commerceProductInstanceItemSelectorViewDisplayContext.ge
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="title"
 			>
 				<div class="commerce-product-definition-title" data-id="<%= cpDefinition.getCPDefinitionId() %>">
@@ -82,12 +82,12 @@ PortletURL portletURL = commerceProductInstanceItemSelectorViewDisplayContext.ge
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="sku"
 			/>
 
 			<liferay-ui:search-container-column-status
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="status"
 				status="<%= cpInstance.getStatus() %>"
 			/>

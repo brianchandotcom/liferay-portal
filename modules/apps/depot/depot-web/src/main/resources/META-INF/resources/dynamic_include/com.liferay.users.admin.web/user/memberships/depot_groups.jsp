@@ -92,13 +92,13 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		rowIdProperty="friendlyURL"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="name"
 			value="<%= HtmlUtil.escape(group.getName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="roles"
 			value="<%= HtmlUtil.escape(depotAdminMembershipsDisplayContext.getRoles(group)) %>"
 		/>

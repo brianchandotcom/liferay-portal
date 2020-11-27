@@ -89,7 +89,7 @@ if (cpDisplayLayout != null) {
 						modelVar="cpDefinition"
 					>
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							value="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 						/>
 

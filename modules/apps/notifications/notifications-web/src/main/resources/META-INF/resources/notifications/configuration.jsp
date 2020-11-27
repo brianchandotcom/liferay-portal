@@ -79,7 +79,7 @@
 
 										<c:if test="<%= i == 0 %>">
 											<tr>
-												<th class="table-cell-content">
+												<th class="table-cell-expand">
 													<liferay-ui:message key="receive-a-notification-when-someone" />
 												</th>
 
@@ -100,7 +100,7 @@
 										</c:if>
 
 										<tr>
-											<td class="table-cell-content">
+											<td class="table-cell-expand">
 												<liferay-ui:message key="<%= userNotificationDefinition.getDescription(locale) %>" />
 											</td>
 

@@ -91,7 +91,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		rowIdProperty="friendlyURL"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="name"
 		>
 			<liferay-staging:descriptive-name
@@ -110,7 +110,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="roles"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
 		/>
@@ -298,7 +298,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			rowIdProperty="friendlyURL"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="name"
 				value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
 			/>
@@ -314,7 +314,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="roles"
 				value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, inheritedRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, inheritedRolesCount)) %>"
 			/>

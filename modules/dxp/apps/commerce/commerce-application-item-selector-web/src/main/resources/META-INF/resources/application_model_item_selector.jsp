@@ -73,13 +73,13 @@ PortletURL portletURL = commerceApplicationModelItemSelectorViewDisplayContext.g
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="id"
 				property="commerceApplicationModelId"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="name"
 			/>
 		</liferay-ui:search-container-row>

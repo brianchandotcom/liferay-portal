@@ -102,13 +102,13 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-content"
+					cssClass="important table-cell-expand"
 					href="<%= rowURL %>"
 					property="name"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					property="year"
 				/>
 

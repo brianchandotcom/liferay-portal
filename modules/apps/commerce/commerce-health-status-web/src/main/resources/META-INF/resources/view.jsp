@@ -31,19 +31,19 @@ CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext = (Commerc
 				modelVar="commerceHealthStatus"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="name"
 					value="<%= commerceHealthStatus.getName(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="description"
 					value="<%= commerceHealthStatus.getDescription(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="status"
 				>
 

@@ -54,7 +54,7 @@
 		}
 	}
 
-	.table-cell-content {
+	.table-cell-expand {
 		@extend %table-cell-expand;
 	}
 
@@ -63,7 +63,7 @@
 	}
 
 	.table-autofit {
-		.table-cell-content {
+		.table-cell-expand {
 			width: auto;
 		}
 	}

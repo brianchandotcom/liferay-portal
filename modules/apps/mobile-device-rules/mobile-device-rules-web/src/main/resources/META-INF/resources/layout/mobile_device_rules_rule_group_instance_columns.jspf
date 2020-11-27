@@ -19,7 +19,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand"
 	name="name"
 >
 	<%= HtmlUtil.escape(mdrRuleGroup.getName(locale)) %>
@@ -34,7 +34,7 @@ List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupIn
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand"
 	name="actions"
 	value="<%= HtmlUtil.escape(ListUtil.toString(mdrActions, MDRAction.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>"
 />

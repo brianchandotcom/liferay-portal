@@ -68,14 +68,14 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="name"
 						orderable="<%= true %>"
 						property="name"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="description"
 						orderable="<%= true %>"
 						property="description"

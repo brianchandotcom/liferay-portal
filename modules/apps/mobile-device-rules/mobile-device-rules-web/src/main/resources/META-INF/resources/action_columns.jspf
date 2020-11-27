@@ -20,13 +20,13 @@
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand"
 	name="name"
 	value="<%= action.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
+	cssClass="table-cell-expand"
 	name="description"
 	value="<%= action.getDescription(locale) %>"
 />

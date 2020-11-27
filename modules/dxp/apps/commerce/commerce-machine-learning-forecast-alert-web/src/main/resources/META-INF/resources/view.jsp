@@ -49,23 +49,23 @@ CommerceMLForecastAlertEntryListDisplayContext commerceMLForecastAlertEntryListD
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						name="name"
 						value="<%= commerceAccount.getName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						property="forecast"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						property="actual"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						property="relativeChange"
 					/>
 

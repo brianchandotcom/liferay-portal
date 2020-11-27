@@ -97,7 +97,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="name"
 					value="<%= HtmlUtil.escape((commercePricingClass == null) ? StringPool.BLANK : commercePricingClass.getTitle(themeDisplay.getLanguageId())) %>"
 				/>

@@ -97,20 +97,20 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						name="name"
 						value="<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="description"
 						value="<%= HtmlUtil.escape(cpTaxCategory.getDescription(languageId)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="create-date"
 						property="createDate"
 					/>

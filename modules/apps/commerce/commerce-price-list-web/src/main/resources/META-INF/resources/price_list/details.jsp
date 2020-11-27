@@ -127,7 +127,7 @@ if (parentCommercePriceList != null) {
 		modelVar="curCommercePriceList"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			value="<%= HtmlUtil.escape(curCommercePriceList.getName()) %>"
 		/>
 
@@ -167,7 +167,7 @@ if (parentCommercePriceList != null) {
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			value="<%= HtmlUtil.escape(commerceAccountGroup.getName()) %>"
 		/>
 
@@ -207,7 +207,7 @@ if (parentCommercePriceList != null) {
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			value="<%= HtmlUtil.escape(commerceAccount.getName()) %>"
 		/>
 

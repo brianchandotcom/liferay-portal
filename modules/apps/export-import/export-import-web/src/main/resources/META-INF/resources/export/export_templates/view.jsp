@@ -100,14 +100,14 @@ ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext = new 
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					href="<%= rowURL %>"
 					name="title"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="description"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>"
 				/>

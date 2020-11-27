@@ -55,13 +55,13 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 			modelVar="group"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="name"
 				value="<%= HtmlUtil.escape(group.getName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="channel"
 				value="<%= HtmlUtil.escape(simpleSiteItemSelectorViewDisplayContext.getChannelUsingSite(group.getGroupId())) %>"
 			/>
@@ -76,7 +76,7 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 			>
 				<c:choose>
 					<c:when test="<%= simpleSiteItemSelectorViewDisplayContext.isSiteAvailable(group.getGroupId()) %>">

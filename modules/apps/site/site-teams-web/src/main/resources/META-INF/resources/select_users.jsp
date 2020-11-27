@@ -70,13 +70,13 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="name"
 						property="fullName"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="screen-name"
 						property="screenName"
 					/>

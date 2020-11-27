@@ -110,7 +110,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			modelVar="role"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="title"
 			>
 				<liferay-ui:icon
@@ -283,7 +283,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				modelVar="userGroupRole"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="title"
 				>
 					<liferay-ui:icon
@@ -294,7 +294,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="organization"
 					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 				/>
@@ -483,7 +483,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				modelVar="userGroupRole"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="title"
 				>
 					<liferay-ui:icon
@@ -494,7 +494,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="site"
 				>
 					<liferay-staging:descriptive-name
@@ -646,7 +646,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				modelVar="userGroupGroupRole"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="title"
 				>
 					<liferay-ui:icon
@@ -657,7 +657,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="site"
 				>
 					<liferay-staging:descriptive-name
@@ -666,7 +666,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="user-group"
 					value="<%= HtmlUtil.escape(userGroupGroupRole.getUserGroup().getName()) %>"
 				/>

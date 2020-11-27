@@ -59,7 +59,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						%>
 
 						<liferay-ui:search-container-column-text
-							cssClass="important table-cell-content"
+							cssClass="important table-cell-expand"
 							href="<%= rowURL %>"
 							name="start-date"
 						>
@@ -67,14 +67,14 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							name="runtime"
 						>
 							<%= (commerceDataIntegrationProcessLog.getEndDate() == null) ? StringPool.DASH : String.valueOf(commerceDataIntegrationProcessLog.getEndDate().getTime() - commerceDataIntegrationProcessLog.getStartDate().getTime()) + " ms" %>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							name="process"
 							value="<%= HtmlUtil.escape(commerceDataIntegrationProcess.getName()) %>"
 						/>

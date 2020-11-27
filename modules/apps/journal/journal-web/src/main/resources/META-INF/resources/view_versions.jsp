@@ -86,7 +86,7 @@
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="title"
 					value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 				/>

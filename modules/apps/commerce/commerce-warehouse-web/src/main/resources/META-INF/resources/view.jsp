@@ -119,20 +119,20 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-content"
+					cssClass="important table-cell-expand"
 					href="<%= rowURL %>"
 					name="name"
 					value="<%= HtmlUtil.escape(commerceInventoryWarehouse.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="city"
 					value="<%= HtmlUtil.escape(commerceInventoryWarehouse.getCity()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="active"
 				>
 					<c:choose>

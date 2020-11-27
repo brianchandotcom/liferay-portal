@@ -144,7 +144,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="name"
 					>
 						<c:choose>
@@ -160,7 +160,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="description"
 						value="<%= ruleGroup.getDescription(locale) %>"
 					/>

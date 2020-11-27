@@ -46,20 +46,20 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content table-title"
+				cssClass="table-cell-expand table-title"
 				name="name"
 				orderable="<%= true %>"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="parent-organization"
 				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="type"
 				orderable="<%= true %>"
 				value="<%= LanguageUtil.get(request, organization.getType()) %>"

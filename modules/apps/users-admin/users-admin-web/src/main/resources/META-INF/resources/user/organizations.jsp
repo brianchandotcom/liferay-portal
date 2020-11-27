@@ -93,7 +93,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		modelVar="organization"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="name"
 			property="name"
 		/>
@@ -114,7 +114,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="roles"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
 		/>

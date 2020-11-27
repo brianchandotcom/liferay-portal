@@ -55,7 +55,7 @@ else {
 			modelVar="backgroundTask"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="user"
 			>
 				<liferay-ui:user-display
@@ -67,20 +67,20 @@ else {
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="status"
 				path="/publish_process_message.jsp"
 			/>
 
 			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="create-date"
 				orderable="<%= true %>"
 				value="<%= backgroundTask.getCreateDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="completion-date"
 				orderable="<%= true %>"
 				value="<%= backgroundTask.getCompletionDate() %>"

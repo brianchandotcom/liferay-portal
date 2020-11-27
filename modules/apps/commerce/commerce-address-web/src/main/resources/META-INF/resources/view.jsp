@@ -104,14 +104,14 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						name="name"
 						value="<%= HtmlUtil.escape(commerceCountry.getName(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="billing-allowed"
 					>
 						<c:choose>
@@ -133,7 +133,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="shipping-allowed"
 					>
 						<c:choose>
@@ -155,7 +155,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="two-letter-iso-code"
 						property="twoLettersISOCode"
 					/>

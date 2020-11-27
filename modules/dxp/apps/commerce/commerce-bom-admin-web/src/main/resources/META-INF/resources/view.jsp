@@ -133,7 +133,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						name="name"
 						value="<%= commerceBOMDefinition.getName() %>"
@@ -153,7 +153,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						name="name"
 						value="<%= commerceBOMFolder.getName() %>"

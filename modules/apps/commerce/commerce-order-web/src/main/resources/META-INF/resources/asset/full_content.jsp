@@ -38,18 +38,18 @@ CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceOrderC
 			modelVar="commerceOrderItem"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="important table-cell-content"
+				cssClass="important table-cell-expand"
 				property="sku"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="name"
 				value="<%= commerceOrderItem.getName(locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="quantity"
 			/>
 
@@ -58,7 +58,7 @@ CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceOrderC
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="price"
 				value="<%= finalPriceCommerceMoney.format(locale) %>"
 			/>

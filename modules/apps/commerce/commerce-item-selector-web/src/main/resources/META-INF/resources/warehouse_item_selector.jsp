@@ -73,12 +73,12 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 			modelVar="commerceInventoryWarehouse"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="city"
 			/>
 		</liferay-ui:search-container-row>

@@ -78,7 +78,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="source-url"
 					>
 
@@ -92,7 +92,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="destination-url"
 					>
 

@@ -64,7 +64,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="name"
 				>
 					<c:choose>
@@ -96,7 +96,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="description"
 					path="/template_description.jsp"
 				/>

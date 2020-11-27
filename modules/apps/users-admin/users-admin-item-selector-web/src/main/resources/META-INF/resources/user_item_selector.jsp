@@ -81,13 +81,13 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content table-title"
+						cssClass="table-cell-expand table-title"
 						name="name"
 						value="<%= HtmlUtil.escape(user.getFullName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="screen-name"
 						property="screenName"
 					/>

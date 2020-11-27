@@ -95,13 +95,13 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-content"
+					cssClass="important table-cell-expand"
 					name="name"
 					value="<%= HtmlUtil.escape(commerceApplicationModel.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="year"
 					value="<%= HtmlUtil.escape(commerceApplicationModel.getYear()) %>"
 				/>

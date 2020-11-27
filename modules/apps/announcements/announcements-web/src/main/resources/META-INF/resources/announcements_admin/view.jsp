@@ -114,7 +114,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					href="<%= rowURL %>"
 					name="title"
 					value="<%= HtmlUtil.escape(entry.getTitle()) %>"

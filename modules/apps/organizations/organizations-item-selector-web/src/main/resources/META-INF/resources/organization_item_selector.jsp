@@ -79,18 +79,18 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="path"
 				value="<%= organizationItemSelectorViewDisplayContext.getPath(organization) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="type"
 			/>
 		</liferay-ui:search-container-row>

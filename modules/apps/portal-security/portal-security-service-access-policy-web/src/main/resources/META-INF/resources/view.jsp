@@ -79,7 +79,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				href="<%= rowURL %>"
 				name="name"
 			>
@@ -87,7 +87,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="description"
 				value="<%= sapEntry.getTitle(locale) %>"
 			/>

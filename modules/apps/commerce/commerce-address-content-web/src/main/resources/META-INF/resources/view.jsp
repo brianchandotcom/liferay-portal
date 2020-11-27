@@ -72,7 +72,7 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 								/>
 
 								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
+									cssClass="table-cell-expand"
 									property="street1"
 								/>
 

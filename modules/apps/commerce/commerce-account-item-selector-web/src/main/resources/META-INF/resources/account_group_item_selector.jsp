@@ -80,12 +80,12 @@ PortletURL portletURL = commerceAccountGroupItemSelectorViewDisplayContext.getPo
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				name="create-date"
 				property="createDate"
 			/>

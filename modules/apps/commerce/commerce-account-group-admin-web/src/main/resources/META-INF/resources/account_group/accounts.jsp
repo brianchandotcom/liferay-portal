@@ -97,13 +97,13 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="id"
 						value="<%= String.valueOf(commerceAccount.getCommerceAccountId()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						name="name"
 						value="<%= HtmlUtil.escape(commerceAccount.getName()) %>"
 					/>

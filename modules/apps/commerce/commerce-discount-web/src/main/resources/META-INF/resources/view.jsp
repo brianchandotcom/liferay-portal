@@ -104,13 +104,13 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 					</portlet:renderURL>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
+						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						property="title"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-expand"
 						name="active"
 						value='<%= LanguageUtil.get(request, commerceDiscount.isActive() ? "yes" : "no") %>'
 					/>

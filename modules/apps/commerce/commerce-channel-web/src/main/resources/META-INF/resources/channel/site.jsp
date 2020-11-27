@@ -86,7 +86,7 @@ if (commerceChannel != null) {
 						modelVar="group"
 					>
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							value="<%= HtmlUtil.escape(group.getName(locale)) %>"
 						/>
 

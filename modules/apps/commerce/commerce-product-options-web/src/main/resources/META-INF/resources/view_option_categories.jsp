@@ -140,19 +140,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="important table-cell-content"
+								cssClass="important table-cell-expand"
 								href="<%= rowURL %>"
 								name="group"
 								value="<%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								property="priority"
 							/>
 
 							<liferay-ui:search-container-column-date
-								cssClass="table-cell-content"
+								cssClass="table-cell-expand"
 								name="modified-date"
 								property="modifiedDate"
 							/>

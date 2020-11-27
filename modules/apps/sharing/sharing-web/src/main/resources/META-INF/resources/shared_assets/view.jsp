@@ -64,7 +64,7 @@ viewSharedAssetsDisplayContext.populateResults(sharingEntriesSearchContainer);
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="table-cell-expand"
 				href="<%= viewSharedAssetsDisplayContext.isVisible(sharingEntry) ? rowURL : null %>"
 				name="title"
 				orderable="<%= false %>"

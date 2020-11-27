@@ -90,7 +90,7 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 						<liferay-ui:search-container-column-image
-							cssClass="table-cell-content"
+							cssClass="table-cell-expand"
 							name="image"
 							src="<%= thumbnailSrc %>"
 						/>
@@ -103,36 +103,36 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 				</c:choose>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="title"
 					value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="extension"
 					value="<%= HtmlUtil.escape(fileEntry.getExtension()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					property="priority"
 				/>
 
 				<liferay-ui:search-container-column-status
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="status"
 					status="<%= cpAttachmentFileEntry.getStatus() %>"
 				/>
 
 				<liferay-ui:search-container-column-date
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="modified-date"
 					property="modifiedDate"
 				/>
 
 				<liferay-ui:search-container-column-date
-					cssClass="table-cell-content"
+					cssClass="table-cell-expand"
 					name="display-date"
 					property="displayDate"
 				/>

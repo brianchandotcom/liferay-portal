@@ -97,7 +97,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-content"
+					cssClass="important table-cell-expand"
 					href="<%= rowURL %>"
 					property="name"
 				/>

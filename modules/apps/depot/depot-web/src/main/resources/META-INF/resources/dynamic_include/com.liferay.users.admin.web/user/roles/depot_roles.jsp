@@ -85,7 +85,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		modelVar="userGroupRole"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="title"
 		>
 			<liferay-ui:icon
@@ -96,7 +96,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="<%= depotAdminRolesDisplayContext.getAssetLibraryLabel() %>"
 		>
 			<liferay-staging:descriptive-name

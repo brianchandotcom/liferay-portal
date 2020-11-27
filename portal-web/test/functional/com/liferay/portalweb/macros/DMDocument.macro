@@ -186,7 +186,7 @@ definition {
 			var key_fieldName = "Text";
 
 			Type(
-				locator1 = "TextInput#DDM",
+				locator1 = "TextInput#TEXT_SPECIFIC",
 				value1 = "${textField}");
 		}
 

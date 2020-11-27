@@ -388,20 +388,18 @@ const createReducer = (dataLayoutBuilder) => {
 				};
 			}
 			case UPDATE_DATA_LAYOUT_RULE: {
-				let {dataRule} = action.payload;
+				const {dataRule, loc} = action.payload;
 				const {
 					dataLayout: {dataRules},
 				} = state;
-
-				dataRule = normalizeRule(dataRule);
 
 				return {
 					...state,
 					dataLayout: {
 						...state.dataLayout,
 						dataRules: dataRules.map((rule, index) => {
-							if (index === dataRule.ruleEditedIndex) {
-								return dataRule;
+							if (index === loc) {
+								return normalizeRule(dataRule);
 							}
 
 							return rule;

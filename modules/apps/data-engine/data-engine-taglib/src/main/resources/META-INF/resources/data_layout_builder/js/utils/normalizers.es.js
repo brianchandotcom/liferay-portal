@@ -190,17 +190,10 @@ export function normalizeDataLayoutRows(dataLayoutPages) {
  * @param {Object} dataRule
  */
 export function normalizeRule(dataRule) {
-	if (Object.prototype.hasOwnProperty.call(dataRule, 'logical-operator')) {
-		dataRule['logicalOperator'] = dataRule['logical-operator'];
-		delete dataRule['logical-operator'];
-	}
-
-	dataRule = {
+	return {
 		...dataRule,
 		name: {
 			en_US: dataRule.name,
 		},
 	};
-
-	return dataRule;
 }

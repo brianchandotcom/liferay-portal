@@ -612,8 +612,6 @@ class DataLayoutBuilder extends React.Component {
 
 		this.formBuilderWithLayoutProvider.props.layoutProviderProps = this.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line
 
-		layoutProvider.getEvents().pagesUpdated(layoutProvider.getPages());
-
 		if (Object.keys(focusedField).length) {
 			layoutProvider
 				.getEvents()

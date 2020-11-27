@@ -2,7 +2,7 @@ Bundle-Name: Liferay Commerce Service
 Bundle-SymbolicName: com.liferay.commerce.service
 Bundle-Version: 11.0.0
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
-Liferay-Require-SchemaVersion: 4.9.1
+Liferay-Require-SchemaVersion: 4.10.0
 Liferay-Service: true
 Provide-Capability:\
 	liferay.resource.bundle;\

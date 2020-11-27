@@ -27,9 +27,9 @@ import javax.portlet.PortletResponse;
 /**
  * @author Lino Alves
  */
-public class DDMDataProviderRowChecker extends EmptyOnClickRowChecker {
+public class DDMDataProviderInstanceRowChecker extends EmptyOnClickRowChecker {
 
-	public DDMDataProviderRowChecker(PortletResponse portletResponse) {
+	public DDMDataProviderInstanceRowChecker(PortletResponse portletResponse) {
 		super(portletResponse);
 	}
 
@@ -54,6 +54,6 @@ public class DDMDataProviderRowChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMDataProviderRowChecker.class);
+		DDMDataProviderInstanceRowChecker.class);
 
 }

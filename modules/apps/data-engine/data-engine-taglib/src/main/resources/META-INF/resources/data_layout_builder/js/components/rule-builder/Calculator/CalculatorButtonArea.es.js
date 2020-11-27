@@ -14,6 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import Token from 'dynamic-data-mapping-form-builder/js/expressions/Token.es';
 import React from 'react';
 
 const ONE_TO_NINE = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -27,12 +28,11 @@ const OPERATORS = [
 
 const TOKEN_TYPES = {
 	BACKSPACE: 'Backspace',
-	LITERAL: 'Literal',
-	OPERATOR: 'Operator',
-	PARENTHESIS_LEFT: 'Left Parenthesis',
-	PARENTHESIS_RIGHT: 'Parenthesis Right',
+	LITERAL: Token.LITERAL,
+	OPERATOR: Token.OPERATOR,
+	PARENTHESIS_LEFT: Token.LEFT_PARENTHESIS,
+	PARENTHESIS_RIGHT: Token.RIGHT_PARENTHESIS,
 };
-
 function CalculatorButtonArea({
 	disableDot,
 	disableFunctions,

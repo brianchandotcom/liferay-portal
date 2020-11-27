@@ -56,14 +56,14 @@ public class ReleaseManagerOSGiCommands {
 			_releaseManager.getBundleSymbolicNames();
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
-			String schemaVersionString = _releaseManager.getSchemaVersionString(
-				bundleSymbolicName);
+			String currentSchemaVersion =
+				_releaseManager.getCurrentSchemaVersion(bundleSymbolicName);
 
 			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 				_releaseManager.getUpgradeInfos(bundleSymbolicName));
 
 			List<List<UpgradeInfo>> upgradeInfosList =
-				releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+				releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
 
 			int size = upgradeInfosList.size();
 
@@ -71,7 +71,7 @@ public class ReleaseManagerOSGiCommands {
 				sb.append("There are ");
 				sb.append(size);
 				sb.append(" possible end nodes for ");
-				sb.append(schemaVersionString);
+				sb.append(currentSchemaVersion);
 				sb.append(StringPool.NEW_LINE);
 			}
 
@@ -82,7 +82,7 @@ public class ReleaseManagerOSGiCommands {
 			sb.append("There is an upgrade process available for ");
 			sb.append(bundleSymbolicName);
 			sb.append(" from ");
-			sb.append(schemaVersionString);
+			sb.append(currentSchemaVersion);
 			sb.append(" to ");
 
 			List<UpgradeInfo> upgradeInfos = upgradeInfosList.get(0);
@@ -138,7 +138,7 @@ public class ReleaseManagerOSGiCommands {
 			return "No upgrade processes registered for " + bundleSymbolicName;
 		}
 
-		String schemaVersionString = _releaseManager.getSchemaVersionString(
+		String currentSchemaVersion = _releaseManager.getCurrentSchemaVersion(
 			bundleSymbolicName);
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
@@ -147,7 +147,7 @@ public class ReleaseManagerOSGiCommands {
 		_upgradeExecutor.executeUpgradeInfos(
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
-				schemaVersionString, toVersionString),
+				currentSchemaVersion, toVersionString),
 			null);
 
 		return null;
@@ -209,7 +209,7 @@ public class ReleaseManagerOSGiCommands {
 		sb.append("Registered upgrade processes for ");
 		sb.append(bundleSymbolicName);
 		sb.append(StringPool.SPACE);
-		sb.append(_releaseManager.getSchemaVersionString(bundleSymbolicName));
+		sb.append(_releaseManager.getCurrentSchemaVersion(bundleSymbolicName));
 		sb.append(StringPool.NEW_LINE);
 
 		for (UpgradeInfo upgradeProcess : upgradeInfos) {

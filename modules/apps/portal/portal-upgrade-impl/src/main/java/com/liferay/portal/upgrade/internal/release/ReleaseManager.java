@@ -62,18 +62,18 @@ public class ReleaseManager {
 		return _serviceTrackerMap.keySet();
 	}
 
-	public String getSchemaVersionString(String bundleSymbolicName) {
-		String schemaVersionString = "0.0.0";
+	public String getCurrentSchemaVersion(String bundleSymbolicName) {
+		String currentSchemaVersion = "0.0.0";
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
 		if ((release != null) &&
 			Validator.isNotNull(release.getSchemaVersion())) {
 
-			schemaVersionString = release.getSchemaVersion();
+			currentSchemaVersion = release.getSchemaVersion();
 		}
 
-		return schemaVersionString;
+		return currentSchemaVersion;
 	}
 
 	public Set<String> getUpgradableBundleSymbolicNames() {
@@ -142,13 +142,14 @@ public class ReleaseManager {
 	}
 
 	protected boolean isUpgradable(String bundleSymbolicName) {
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
+		String currentSchemaVersion = getCurrentSchemaVersion(
+			bundleSymbolicName);
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			getUpgradeInfos(bundleSymbolicName));
 
 		List<List<UpgradeInfo>> upgradeInfosList =
-			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+			releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
 
 		if (upgradeInfosList.size() == 1) {
 			return true;

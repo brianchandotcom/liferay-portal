@@ -178,9 +178,11 @@ definition {
 			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
 			value1 = "${discountAmount}");
 
-		Type(
-			locator1 = "CommerceEntry#MAXIMUM_DISCOUNT_AMOUNT_FIELD",
-			value1 = "${maximumDiscountAmount}");
+		if (isSet(maximumDiscountAmount)) {
+			Type(
+				locator1 = "CommerceEntry#MAXIMUM_DISCOUNT_AMOUNT_FIELD",
+				value1 = "${maximumDiscountAmount}");
+		}
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 

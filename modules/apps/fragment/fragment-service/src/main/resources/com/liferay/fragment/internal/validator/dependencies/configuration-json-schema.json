@@ -133,6 +133,7 @@
 				},
 				"type": {
 					"enum": [
+						"categoryTreeNodeSelector",
 						"checkbox",
 						"colorPalette",
 						"colorPicker",

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -80,10 +81,14 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -775,15 +780,38 @@ public class RenderLayoutStructureDisplayContext {
 			return _assetCategoryIds;
 		}
 
-		long[] assetCategoryIds = new long[0];
+		Set<Long> assetCategoryIds = new HashSet<>();
 
-		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
+		Map<String, String[]> parameterMap =
+			_httpServletRequest.getParameterMap();
 
-		if (categoryId != 0) {
-			assetCategoryIds = new long[] {categoryId};
+		Set<String> parameterNames = parameterMap.keySet();
+
+		Stream<String> parameterNameStream = parameterNames.stream();
+
+		Set<String> categoryIdParameterNames = parameterNameStream.filter(
+			parameterName -> parameterName.startsWith("categoryId_")
+		).collect(
+			Collectors.toSet()
+		);
+
+		for (String categoryIdParameterName : categoryIdParameterNames) {
+			String[] values = parameterMap.get(categoryIdParameterName);
+
+			if (ArrayUtil.isNotEmpty(values)) {
+				long assetCategoryId = GetterUtil.getLong(values[0]);
+
+				if (assetCategoryId != 0) {
+					assetCategoryIds.add(assetCategoryId);
+				}
+			}
 		}
 
-		_assetCategoryIds = assetCategoryIds;
+		Stream<Long> assetCategoryIdStream = assetCategoryIds.stream();
+
+		_assetCategoryIds = assetCategoryIdStream.mapToLong(
+			i -> i
+		).toArray();
 
 		return _assetCategoryIds;
 	}

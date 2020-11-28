@@ -16,7 +16,8 @@
 
 <div class="row">
 	<div class="col-12">
-		<liferay-ui:error exception="<%= CommerceDiscountCouponCodeException.class %>" message="there-is-another-discount-with-the-same-coupon-code" />
+		<liferay-ui:error exception="<%= CommerceDiscountCouponCodeException.class %>" message="please-enter-a-valid-coupon-code" />
+		<liferay-ui:error exception="<%= DuplicateCommerceDiscountException.class %>" message="there-is-another-discount-with-the-same-coupon-code" />
 
 		<commerce-ui:panel
 			bodyClasses="flex-fill"

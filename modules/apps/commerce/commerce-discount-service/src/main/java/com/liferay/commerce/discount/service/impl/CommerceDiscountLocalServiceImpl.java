@@ -1411,7 +1411,7 @@ public class CommerceDiscountLocalServiceImpl
 				 (commerceDiscountId !=
 					 commerceDiscount.getCommerceDiscountId()))) {
 
-				throw new CommerceDiscountCouponCodeException();
+				throw new DuplicateCommerceDiscountException();
 			}
 		}
 

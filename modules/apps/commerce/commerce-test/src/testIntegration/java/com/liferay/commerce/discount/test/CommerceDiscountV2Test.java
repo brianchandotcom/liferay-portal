@@ -25,6 +25,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
+import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
@@ -1138,6 +1139,32 @@ public class CommerceDiscountV2Test {
 		Assert.assertEquals(
 			expectedPrice.stripTrailingZeros(),
 			finalPrice.stripTrailingZeros());
+	}
+
+	@Test(expected = DuplicateCommerceDiscountException.class)
+	public void testDuplicateCouponCode() throws Exception {
+		frutillaRule.scenario(
+			"It is not possible to create 2 discounts with the same coupon code"
+		).given(
+			"A discount with a coupon code"
+		).when(
+			"I try to create another discount with the same coupon code"
+		).then(
+			"I should receive an exception"
+		);
+
+		String couponCode = StringUtil.randomString();
+
+		CommerceDiscount commerceDiscount =
+			CommerceDiscountTestUtil.addCouponDiscount(
+				_user.getGroupId(), 1, couponCode,
+				CommerceDiscountConstants.TARGET_TOTAL, null);
+
+		Assert.assertNotNull(commerceDiscount);
+
+		CommerceDiscountTestUtil.addCouponDiscount(
+			_user.getGroupId(), 1, couponCode,
+			CommerceDiscountConstants.TARGET_TOTAL, null);
 	}
 
 	@Test

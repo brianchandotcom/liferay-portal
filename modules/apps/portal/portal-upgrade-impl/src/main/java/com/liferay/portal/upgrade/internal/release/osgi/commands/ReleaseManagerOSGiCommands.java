@@ -306,6 +306,8 @@ public class ReleaseManagerOSGiCommands {
 						"Portal", currentSchemaVersion.toString(),
 						latestSchemaVersion.toString()));
 
+				sb.append(" (requires upgrade tool or auto upgrade)");
+
 				if (listAllUpgrades) {
 					sb.append(StringPool.COLON);
 

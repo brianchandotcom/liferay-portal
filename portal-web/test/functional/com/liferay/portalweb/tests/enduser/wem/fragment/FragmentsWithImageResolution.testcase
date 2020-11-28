@@ -87,6 +87,11 @@ definition {
 				fragmentName = "Image",
 				id = "image-square");
 
+			AssertClick(
+				key_navItem = "Image Source",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Image Source");
+
 			Pause(locator1 = "3000");
 		}
 
@@ -157,6 +162,11 @@ definition {
 			PageEditor.clickEditableField(
 				fragmentName = "Image",
 				id = "image-square");
+
+			AssertClick(
+				key_navItem = "Image Source",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Image Source");
 
 			Pause(locator1 = "3000");
 		}

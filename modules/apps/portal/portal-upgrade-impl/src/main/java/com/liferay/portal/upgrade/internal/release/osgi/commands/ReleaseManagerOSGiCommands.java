@@ -269,25 +269,18 @@ public class ReleaseManagerOSGiCommands {
 
 			if (listAllUpgrades) {
 				sb.append(StringPool.COLON);
-				sb.append(StringPool.NEW_LINE);
 
 				for (UpgradeInfo upgradeInfo : upgradeInfos) {
 					UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
+					sb.append(StringPool.NEW_LINE);
 					sb.append(StringPool.TAB);
 					sb.append(
 						_getPendingUpgradeInfo(
 							upgradeStep.getClass(),
-							Version.parseVersion(
-								upgradeInfo.getFromSchemaVersionString()),
-							Version.parseVersion(
-								upgradeInfo.getToSchemaVersionString())));
-
-					sb.append(StringPool.NEW_LINE);
+							upgradeInfo.getFromSchemaVersionString(),
+							upgradeInfo.getToSchemaVersionString()));
 				}
-			}
-			else {
-				sb.append(StringPool.NEW_LINE);
 			}
 		}
 
@@ -315,7 +308,6 @@ public class ReleaseManagerOSGiCommands {
 
 				if (listAllUpgrades) {
 					sb.append(StringPool.COLON);
-					sb.append(StringPool.NEW_LINE);
 
 					for (SortedMap.Entry<Version, UpgradeProcess> upgrade :
 							pendingUpgrades.entrySet()) {
@@ -323,18 +315,17 @@ public class ReleaseManagerOSGiCommands {
 						Version version = upgrade.getKey();
 						UpgradeProcess upgradeProcess = upgrade.getValue();
 
+						sb.append(StringPool.NEW_LINE);
 						sb.append(StringPool.TAB);
 						sb.append(
 							_getPendingUpgradeInfo(
-								upgradeProcess.getClass(), currentSchemaVersion,
-								version));
+								upgradeProcess.getClass(),
+								currentSchemaVersion.toString(),
+								version.toString()));
 						sb.append(StringPool.NEW_LINE);
 
 						currentSchemaVersion = version;
 					}
-				}
-				else {
-					sb.append(StringPool.NEW_LINE);
 				}
 
 				return sb.toString();
@@ -351,27 +342,37 @@ public class ReleaseManagerOSGiCommands {
 	}
 
 	private String _getPendingUpgradeInfo(boolean listAllUpgrades) {
-		return _getPendingPortalUpgradesInfo(listAllUpgrades) +
-			_getPendingModulesUpgradesInfo(listAllUpgrades);
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_getPendingPortalUpgradesInfo(listAllUpgrades));
+
+		if (sb.length() > 0) {
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.append(_getPendingModulesUpgradesInfo(listAllUpgrades));
+
+		return sb.toString();
 	}
 
 	private String _getPendingUpgradeInfo(
-		Class<?> upgradeClass, Version fromSchemaVersion,
-		Version toSchemaVersion) {
+		Class<?> upgradeClass, String fromSchemaVersion,
+		String toSchemaVersion) {
 
 		StringBundler sb = new StringBundler(6);
 
-		String toMessage = toSchemaVersion.toString();
+		String toMessage = toSchemaVersion;
 
 		if (UpgradeProcessUtil.isRequiredSchemaVersion(
-				fromSchemaVersion, toSchemaVersion)) {
+				Version.parseVersion(fromSchemaVersion),
+				Version.parseVersion(toSchemaVersion))) {
 
-			toMessage = StringBundler.concat(
+			toMessage += StringBundler.concat(
 				StringPool.SPACE, StringPool.OPEN_PARENTHESIS, "REQUIRED",
 				StringPool.CLOSE_PARENTHESIS);
 		}
 
-		sb.append(fromSchemaVersion.toString());
+		sb.append(fromSchemaVersion);
 		sb.append(" to ");
 		sb.append(toMessage);
 		sb.append(StringPool.COLON);

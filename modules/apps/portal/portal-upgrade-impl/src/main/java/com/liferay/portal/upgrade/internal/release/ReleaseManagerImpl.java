@@ -65,7 +65,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Alberto Chaparro
  * @author Samuel Ziemer
  */
-@Component(immediate = true, service = ReleaseManager.class)
+@Component(
+	immediate = true, service = {ReleaseManager.class, ReleaseManagerImpl.class}
+)
 public class ReleaseManagerImpl implements ReleaseManager {
 
 	public Set<String> getBundleSymbolicNames() {
@@ -87,12 +89,12 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	}
 
 	@Override
-	public String getStatusMessage(boolean checkMicro) {
+	public String getStatusMessage(boolean onlyRequiredUpgrades) {
 		String message =
 			"%s upgrades in %s are pending. Run the upgrade process or type " +
-				"upgrade:help in Gogo shell to get more information.";
+				"upgrade:checkAll in the Gogo shell to get more information.";
 
-		if (!checkMicro) {
+		if (onlyRequiredUpgrades) {
 			if (_isPendingRequiredModuleUpgrades()) {
 				return String.format(message, "Required", "modules");
 			}
@@ -103,7 +105,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		String where = StringPool.BLANK;
 
 		try (Connection connection = DataAccess.getConnection()) {
-			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
+			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
 				where = "portal";
 			}
 		}

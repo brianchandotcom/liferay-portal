@@ -12,8 +12,6 @@
  * details.
  */
 
-import globals from '../globals/globals';
-
 /**
  * Counter for unique id.
  * @type {Number}
@@ -33,9 +31,7 @@ class utils {
 	 * @static
 	 */
 	static getCurrentBrowserPathWithoutHash() {
-		return (
-			globals.window.location.pathname + globals.window.location.search
-		);
+		return window.location.pathname + window.location.search;
 	}
 
 	/**
@@ -48,7 +44,7 @@ class utils {
 		if (url) {
 			const currentBrowserPath = this.getCurrentBrowserPathWithoutHash();
 
-			//const currentBrowserPath = globals.window.location.pathname + globals.window.location.search;
+			//const currentBrowserPath = window.location.pathname + window.location.search;
 
 			// the getUrlPath will create a Uri and will normalize the path and
 			// remove the trailling '/' for properly comparing paths.
@@ -94,7 +90,7 @@ export function copyNodeAttributes(source, target) {
  * @static
  */
 export function getCurrentBrowserPath() {
-	return `${globals.window.location.pathname}${globals.window.location.search}${globals.window.location.hash}`;
+	return `${window.location.pathname}${window.location.search}${window.location.hash}`;
 }
 
 /**
@@ -103,7 +99,7 @@ export function getCurrentBrowserPath() {
  * @static
  */
 export function getCurrentBrowserPathWithoutHash() {
-	return `${globals.window.location.pathname}${globals.window.location.search}`;
+	return `${window.location.pathname}${window.location.search}`;
 }
 
 /**
@@ -157,7 +153,7 @@ export function getUid() {
 export function getUrlPath(url) {
 	const uri =
 		!url || url.startsWith('/')
-			? new URL(url, globals.window.location.origin)
+			? new URL(url, window.location.origin)
 			: new URL(url);
 
 	return uri.pathname + uri.search + uri.hash;
@@ -171,7 +167,7 @@ export function getUrlPath(url) {
 export function getUrlPathWithoutHash(url) {
 	const uri =
 		!url || url.startsWith('/')
-			? new URL(url, globals.window.location.origin)
+			? new URL(url, window.location.origin)
 			: new URL(url);
 
 	return uri.pathname + uri.search;
@@ -185,7 +181,7 @@ export function getUrlPathWithoutHash(url) {
 export function getUrlPathWithoutHashAndSearch(url) {
 	const uri =
 		!url || url.startsWith('/')
-			? new URL(url, globals.window.location.origin)
+			? new URL(url, window.location.origin)
 			: new URL(url);
 
 	return uri.pathname;
@@ -338,7 +334,7 @@ export function runStylesInElement(element, defaultFn, appendFn) {
  * @static
  */
 export function setReferrer(referrer) {
-	Object.defineProperty(globals.document, 'referrer', {
+	Object.defineProperty(document, 'referrer', {
 		configurable: true,
 		get() {
 			return referrer;

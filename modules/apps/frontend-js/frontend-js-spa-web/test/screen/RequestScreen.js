@@ -104,7 +104,7 @@ describe('RequestScreen', () => {
 		var screen = new RequestScreen();
 		screen.load('/url').then(() => {
 			expect(screen.getRequest().url).toBe(
-				globals.window.location.origin + '/url'
+				window.location.origin + '/url'
 			);
 			expect(screen.getRequest().requestHeaders).toHaveProperty(
 				'X-PJAX',
@@ -216,7 +216,7 @@ describe('RequestScreen', () => {
 	it('forces post method and request body wrapped in FormData', (done) => {
 		fetch.mockResponse('');
 
-		globals.capturedFormElement = globals.document.createElement('form');
+		globals.capturedFormElement = document.createElement('form');
 		var screen = new RequestScreen();
 		screen.load('/url').then(() => {
 			expect(screen.getRequest().method).toBe(RequestScreen.POST);
@@ -229,8 +229,8 @@ describe('RequestScreen', () => {
 	it('adds submit input button value into request FormData', (done) => {
 		fetch.mockResponse('');
 
-		globals.capturedFormElement = globals.document.createElement('form');
-		const submitButton = globals.document.createElement('button');
+		globals.capturedFormElement = document.createElement('form');
+		const submitButton = document.createElement('button');
 		submitButton.name = 'submitButton';
 		submitButton.type = 'submit';
 		submitButton.value = 'Send';
@@ -253,10 +253,7 @@ describe('RequestScreen', () => {
 		fetch.mockResponse('');
 
 		var screen = new RequestScreen();
-		var wrongProtocol = globals.window.location.origin.replace(
-			'http',
-			'https'
-		);
+		var wrongProtocol = window.location.origin.replace('http', 'https');
 		screen.load(wrongProtocol + '/url').then(() => {
 			var url = screen.getRequest().url;
 			expect(url.indexOf('http:')).toBe(0);

@@ -41,13 +41,12 @@ StubScreen.prototype.evaluateScripts = jest.fn();
 
 describe('App', function () {
 	beforeAll(() => {
-		globals.window.Liferay.DOMTaskRunner = {
+		window.Liferay.DOMTaskRunner = {
 			runTasks: jest.fn(),
 		};
 	});
 
 	beforeEach(() => {
-		globals.window = window;
 		globals.capturedFormElement = undefined;
 		globals.capturedFormButtonElement = undefined;
 
@@ -58,8 +57,8 @@ describe('App', function () {
 
 		jest.spyOn(console, 'log').mockImplementation(() => {});
 		jest.spyOn(window, 'scrollTo').mockImplementation((top, left) => {
-			globals.window.history.state.scrollTop = top;
-			globals.window.history.state.scrollLeft = left;
+			window.history.state.scrollTop = top;
+			window.history.state.scrollLeft = left;
 			window.pageXOffset = top;
 			window.pageYOffset = left;
 		});
@@ -131,64 +130,72 @@ describe('App', function () {
 	it('does not allow navigation for urls with hashbang when navigating to same basepath', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
-		globals.window = {
-			location: {
-				hash: '',
-				host: '',
-				hostname: '',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			hash: '',
+			host: '',
+			hostname: '',
+			pathname: '/path',
+			search: '',
+		});
+
 		expect(this.app.canNavigate('/path#hashbang')).toBe(false);
+
+		restoreWindowLocation();
 	});
 
 	it('allows navigation for urls with hashbang when navigating to different basepath', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
-		globals.window = {
-			location: {
-				hash: '',
-				host: 'localhost:8080',
-				hostname: 'localhost',
-				origin: 'http://localhost:8080',
-				pathname: '/path1',
-				port: '8080',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			hash: '',
+			host: 'localhost:8080',
+			hostname: 'localhost',
+			origin: 'http://localhost:8080',
+			pathname: '/path1',
+			port: '8080',
+			search: '',
+		});
+
 		expect(this.app.canNavigate('/path#hashbang')).toBe(true);
+
+		restoreWindowLocation();
 	});
 
 	it('finds route for urls with hashbang for different basepath', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/pathOther', Screen));
-		globals.window = {
-			location: {
-				host: 'localhost:8080',
-				hostname: 'localhost',
-				origin: 'http://localhost:8080',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost:8080',
+			hostname: 'localhost',
+			origin: 'http://localhost:8080',
+			pathname: '/path',
+			search: '',
+		});
+
 		expect(this.app.findRoute('/pathOther#hashbang')).toBeTruthy();
+
+		restoreWindowLocation();
 	});
 
 	it('finds route for urls ending with or without slash', () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/pathOther', Screen));
-		globals.window = {
-			location: {
-				host: 'localhost:8080',
-				hostname: 'localhost',
-				origin: 'http://localhost:8080',
-				pathname: '/path/',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost:8080',
+			hostname: 'localhost',
+			origin: 'http://localhost:8080',
+			pathname: '/path/',
+			search: '',
+		});
+
 		expect(this.app.findRoute('/pathOther')).toBeTruthy();
 		expect(this.app.findRoute('/pathOther/')).toBeTruthy();
+
+		restoreWindowLocation();
 	});
 
 	it('ignores query string on findRoute when ignoreQueryStringFromRoutePath is enabled', () => {
@@ -465,7 +472,7 @@ describe('App', function () {
 	});
 
 	it('gets default title', () => {
-		globals.document.title = 'default';
+		document.title = 'default';
 		this.app = new App();
 		expect(this.app.getDefaultTitle()).toBe('default');
 		this.app.setDefaultTitle('title');
@@ -513,21 +520,21 @@ describe('App', function () {
 
 	it('tests if can navigate to url', () => {
 		this.app = new App();
-		globals.window = {
-			history: {},
-			location: {
-				host: 'localhost',
-				hostname: 'localhost',
-				origin: 'http://localhost',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost',
+			hostname: 'localhost',
+			origin: 'http://localhost',
+			pathname: '/path',
+			search: '',
+		});
+
 		this.app.setBasePath('/base');
 		this.app.addRoutes([
 			new Route('/', Screen),
 			new Route('/path', Screen),
 		]);
+
 		expect(this.app.canNavigate('http://localhost/base/')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/base')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/base/path')).toBe(true);
@@ -536,69 +543,75 @@ describe('App', function () {
 		expect(this.app.canNavigate('http://external/path')).toBe(false);
 		expect(this.app.canNavigate('tel:+0101010101')).toBe(false);
 		expect(this.app.canNavigate('mailto:contact@sennajs.com')).toBe(false);
+
+		restoreWindowLocation();
 	});
 
 	it('tests if can navigate to url with base path ending in "/"', () => {
 		this.app = new App();
-		globals.window = {
-			history: {},
-			location: {
-				host: 'localhost',
-				hostname: 'localhost',
-				origin: 'http://localhost',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost',
+			hostname: 'localhost',
+			origin: 'http://localhost',
+			pathname: '/path',
+			search: '',
+		});
+
 		this.app.setBasePath('/base/');
 		this.app.addRoutes([
 			new Route('/', Screen),
 			new Route('/path', Screen),
 		]);
+
 		expect(this.app.canNavigate('http://localhost/base/')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/base')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/base/path')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/base/path1')).toBe(false);
 		expect(this.app.canNavigate('http://localhost/path')).toBe(false);
 		expect(this.app.canNavigate('http://external/path')).toBe(false);
+
+		restoreWindowLocation();
 	});
 
 	it('is able to navigate to route that ends with "/"', () => {
 		this.app = new App();
-		globals.window = {
-			history: {},
-			location: {
-				host: 'localhost',
-				hostname: 'localhost',
-				origin: 'http://localhost',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost',
+			hostname: 'localhost',
+			origin: 'http://localhost',
+			pathname: '/path',
+			search: '',
+		});
+
 		this.app.addRoutes([
 			new Route('/path/', Screen),
 			new Route('/path/(\\d+)/', Screen),
 		]);
+
 		expect(this.app.canNavigate('http://localhost/path')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/path/')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/path/123')).toBe(true);
 		expect(this.app.canNavigate('http://localhost/path/123/')).toBe(true);
+
+		restoreWindowLocation();
 	});
 
 	it('detects a navigation to different port and refresh page', () => {
 		this.app = new App();
-		globals.window = {
-			history: {},
-			location: {
-				host: 'localhost:8080',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost:8080',
+			pathname: '/path',
+			search: '',
+		});
+
 		this.app.addRoutes([
 			new Route('/path/', Screen),
 			new Route('/path/(\\d+)/', Screen),
 		]);
+
 		expect(this.app.canNavigate('http://localhost:9080/path')).toBe(false);
 		expect(this.app.canNavigate('http://localhost:9081/path/')).toBe(false);
 		expect(this.app.canNavigate('http://localhost:9082/path/123')).toBe(
@@ -607,36 +620,40 @@ describe('App', function () {
 		expect(this.app.canNavigate('http://localhost:9083/path/123/')).toBe(
 			false
 		);
+
+		restoreWindowLocation();
 	});
 
 	it('is able to navigate to a path using default protocol port', () => {
 		this.app = new App();
-		globals.window = {
-			history: {},
-			location: {
-				host: 'localhost',
-				origin: 'http://localhost',
-				pathname: '/path',
-				search: '',
-			},
-		};
+
+		const restoreWindowLocation = mockWindowLocation({
+			host: 'localhost',
+			origin: 'http://localhost',
+			pathname: '/path',
+			search: '',
+		});
+
 		this.app.addRoutes([
 			new Route('/path/', Screen),
 			new Route('/path/(\\d+)/', Screen),
 		]);
+
 		expect(this.app.canNavigate('http://localhost:80/path')).toBe(true);
 		expect(this.app.canNavigate('http://localhost:80/path/')).toBe(true);
 		expect(this.app.canNavigate('http://localhost:80/path/123')).toBe(true);
 		expect(this.app.canNavigate('http://localhost:80/path/123/')).toBe(
 			true
 		);
+
+		restoreWindowLocation();
 	});
 
 	it('stores proper senna state after navigate', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.navigate('/path').then(() => {
-			const state = globals.window.history.state;
+			const state = window.history.state;
 			expect(state.path).toBe('/path');
 			expect(state.redirectPath).toBe('/path');
 			expect(state.scrollLeft).toBe(0);
@@ -697,7 +714,7 @@ describe('App', function () {
 			event.path = '/path1';
 		});
 		this.app.navigate('/path').then(() => {
-			expect(globals.window.location.pathname).toBe('/path1');
+			expect(window.location.pathname).toBe('/path1');
 			done();
 		});
 	});
@@ -758,13 +775,13 @@ describe('App', function () {
 			.then(() => this.app.navigate('/path2'))
 			.then(() => {
 				var activeScreen = this.app.activeScreen;
-				expect(globals.window.location.pathname).toBe('/path2');
+				expect(window.location.pathname).toBe('/path2');
 				this.app.once('endNavigate', () => {
-					expect(globals.window.location.pathname).toBe('/path1');
+					expect(window.location.pathname).toBe('/path1');
 					expect(this.app.activeScreen).not.toBe(activeScreen);
 					done();
 				});
-				globals.window.history.back();
+				window.history.back();
 			});
 	});
 
@@ -778,7 +795,7 @@ describe('App', function () {
 			.then(() => {
 				var startNavigate = jest.fn();
 				this.app.on('startNavigate', startNavigate);
-				globals.window.addEventListener(
+				window.addEventListener(
 					'popstate',
 					() => {
 						expect(startNavigate).not.toHaveBeenCalled();
@@ -786,7 +803,7 @@ describe('App', function () {
 					},
 					{once: true}
 				);
-				globals.window.history.back();
+				window.history.back();
 			});
 	});
 
@@ -853,7 +870,7 @@ describe('App', function () {
 
 	it('adds loading css class on navigate', (done) => {
 		var containsLoadingCssClass = () => {
-			return globals.document.documentElement.classList.contains(
+			return document.documentElement.classList.contains(
 				this.app.getLoadingCssClass()
 			);
 		};
@@ -873,7 +890,7 @@ describe('App', function () {
 
 	it.skip('does not remove loading css class on navigate if there is pending navigate', (done) => {
 		var containsLoadingCssClass = () => {
-			return globals.document.documentElement.classList.contains(
+			return document.documentElement.classList.contains(
 				this.app.getLoadingCssClass()
 			);
 		};
@@ -909,11 +926,11 @@ describe('App', function () {
 	it('stores scroll position on page scroll', (done) => {
 		this.app = new App();
 		setTimeout(() => {
-			expect(globals.window.history.state.scrollTop).toBe(100);
-			expect(globals.window.history.state.scrollLeft).toBe(100);
+			expect(window.history.state.scrollTop).toBe(100);
+			expect(window.history.state.scrollLeft).toBe(100);
 			done();
 		}, 300);
-		globals.window.scrollTo(100, 100);
+		window.scrollTo(100, 100);
 	});
 
 	it('does not store page scroll position during navigate', (done) => {
@@ -942,7 +959,7 @@ describe('App', function () {
 					done();
 				});
 			}, 300);
-			globals.window.scrollTo(100, 100);
+			window.scrollTo(100, 100);
 		});
 	});
 
@@ -959,7 +976,7 @@ describe('App', function () {
 					done();
 				});
 			}, 100);
-			globals.window.scrollTo(100, 100);
+			window.scrollTo(100, 100);
 		});
 	});
 
@@ -977,24 +994,20 @@ describe('App', function () {
 						expect(window.pageYOffset).toBe(100);
 						done();
 					});
-					globals.window.history.back();
+					window.history.back();
 				});
 			}, 300);
-			globals.window.scrollTo(100, 100);
+			window.scrollTo(100, 100);
 		});
 	});
 
 	it.skip('dispatches navigate to current path', (done) => {
-		globals.window.history.replaceState({}, '', '/path1?foo=1#hash');
+		window.history.replaceState({}, '', '/path1?foo=1#hash');
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.on('endNavigate', (payload) => {
 			expect(payload.path).toBe('/path1?foo=1#hash');
-			globals.window.history.replaceState(
-				{},
-				'',
-				getCurrentBrowserPath()
-			);
+			window.history.replaceState({}, '', getCurrentBrowserPath());
 			done();
 		});
 		this.app.dispatch();
@@ -1264,7 +1277,7 @@ describe('App', function () {
 		this.app.navigate('/path1').then(() => {
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path2').then(() => {
-				globals.window.addEventListener(
+				window.addEventListener(
 					'popstate',
 					() => {
 						expect(this.app.reloadPage).toHaveBeenCalled();
@@ -1272,7 +1285,7 @@ describe('App', function () {
 					},
 					{once: true}
 				);
-				globals.window.history.back();
+				window.history.back();
 			});
 		});
 	});
@@ -1287,7 +1300,7 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path1', NullStateScreen));
 		this.app.navigate('/path1').then(() => {
 			this.app.navigate('/path1#hash').then(() => {
-				globals.window.addEventListener(
+				window.addEventListener(
 					'popstate',
 					() => {
 						expect(getCurrentBrowserPath(document.referrer)).toBe(
@@ -1297,7 +1310,7 @@ describe('App', function () {
 					},
 					{once: true}
 				);
-				globals.window.history.back();
+				window.history.back();
 			});
 		});
 	});
@@ -1307,10 +1320,10 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.reloadPage = jest.fn();
 		this.app.navigate('/path').then(() => {
-			globals.window.location.hash = 'hash1';
+			window.location.hash = 'hash1';
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path').then(() => {
-				globals.window.addEventListener(
+				window.addEventListener(
 					'popstate',
 					() => {
 						expect(this.app.reloadPage).not.toHaveBeenCalled();
@@ -1318,7 +1331,7 @@ describe('App', function () {
 					},
 					{once: true}
 				);
-				globals.window.history.back();
+				window.history.back();
 			});
 		});
 	});
@@ -1329,10 +1342,10 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.reloadPage = jest.fn();
 		this.app.navigate('/path1').then(() => {
-			globals.window.location.hash = 'hash1';
+			window.location.hash = 'hash1';
 			window.history.replaceState(null, null, null);
 			this.app.navigate('/path2').then(() => {
-				globals.window.addEventListener(
+				window.addEventListener(
 					'popstate',
 					() => {
 						expect(this.app.reloadPage).toHaveBeenCalled();
@@ -1340,7 +1353,7 @@ describe('App', function () {
 					},
 					{once: true}
 				);
-				globals.window.history.back();
+				window.history.back();
 			});
 		});
 	});
@@ -1350,7 +1363,7 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.reloadPage = jest.fn();
 		window.history.replaceState(null, null, '/path#hash1');
-		globals.window.addEventListener(
+		window.addEventListener(
 			'popstate',
 			() => {
 				expect(this.app.reloadPage).not.toHaveBeenCalled();
@@ -1358,7 +1371,7 @@ describe('App', function () {
 			},
 			{once: true}
 		);
-		fireEvent(globals.window, new PopStateEvent('popstate'));
+		fireEvent(window, new PopStateEvent('popstate'));
 	});
 
 	it('does not navigate on clicking links when onbeforeunload returns truthy value', () => {
@@ -1391,7 +1404,7 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path2', Screen));
 		this.app.navigate('/path1').then(() => {
 			this.app.navigate('/path2').then(() => {
-				globals.window.history.back();
+				window.history.back();
 
 				// assumes that the path must remain the same
 
@@ -1410,29 +1423,29 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.navigate('/path').then(() => {
-			globals.window.location.hash = 'link';
+			window.location.hash = 'link';
 			window.history.replaceState(null, null, null);
-			globals.window.location.hash = 'other';
+			window.location.hash = 'other';
 			window.history.replaceState(null, null, null);
-			globals.window.addEventListener(
+			window.addEventListener(
 				'popstate',
 				() => {
 					expect(window.pageXOffset).toBe(1000);
 					expect(window.pageYOffset).toBe(1000);
 					exitDocumentLinkElement();
 
-					globals.window.addEventListener(
+					window.addEventListener(
 						'popstate',
 						() => {
 							done();
 						},
 						{once: true}
 					);
-					globals.window.history.back();
+					window.history.back();
 				},
 				{once: true}
 			);
-			globals.window.history.back();
+			window.history.back();
 		});
 	});
 
@@ -1598,7 +1611,7 @@ describe('App', function () {
 
 	it('captures form button when submitting', (done) => {
 		const form = enterDocumentFormElement('/path', 'post');
-		const button = globals.document.createElement('button');
+		const button = document.createElement('button');
 		form.appendChild(button);
 		this.app = new App();
 
@@ -1628,7 +1641,7 @@ describe('App', function () {
 
 	it('captures form button when clicking submit button', () => {
 		const form = enterDocumentFormElement('/path', 'post');
-		const button = globals.document.createElement('button');
+		const button = document.createElement('button');
 		button.type = 'submit';
 		button.tabindex = 1;
 		form.appendChild(button);
@@ -1676,7 +1689,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', RedirectScreen));
 		this.app.navigate('/path').then(() => {
-			expect(globals.window.location.pathname).toBe('/redirect');
+			expect(window.location.pathname).toBe('/redirect');
 			done();
 		});
 	});
@@ -1938,7 +1951,7 @@ describe('App', function () {
 	it('adds surface content after history path is updated', (done) => {
 		var surface = new Surface('surfaceId');
 		surface.addContent = () => {
-			expect(globals.window.location.pathname).toBe('/path');
+			expect(window.location.pathname).toBe('/path');
 		};
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
@@ -1990,7 +2003,7 @@ describe('App', function () {
 		this.app.on('endNavigate', (event) => {
 			if (event.path === '/path3') {
 				expect(this.app.scheduledNavigationEvent).toBeFalsy();
-				expect(globals.window.location.pathname).toBe('/path3');
+				expect(window.location.pathname).toBe('/path3');
 				done();
 			}
 		});
@@ -2028,7 +2041,7 @@ describe('App', function () {
 		this.app.on('endNavigate', (event) => {
 			if (event.path === '/path3') {
 				expect(this.app.scheduledNavigationEvent).toBeFalsy();
-				expect(globals.window.location.pathname).toBe('/path3');
+				expect(window.location.pathname).toBe('/path3');
 				done();
 			}
 		});
@@ -2043,7 +2056,7 @@ describe('App', function () {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', TitledScreen));
 		this.app.navigate('/path').then(() => {
-			expect(globals.document.title).toBe('title');
+			expect(document.title).toBe('title');
 			done();
 		});
 	});
@@ -2125,8 +2138,8 @@ describe('App', function () {
 
 					}
 				});
-				globals.window.history.go(-1);
-				setTimeout(() => globals.window.history.go(-1), 50);
+				window.history.go(-1);
+				setTimeout(() => window.history.go(-1), 50);
 			});
 	});
 
@@ -2162,27 +2175,23 @@ describe('App', function () {
 				return this.app.navigate('/path2');
 			})
 			.then(() => {
-				expect(getUrlPathWithoutHash(globals.document.referrer)).toBe(
-					'/path1'
-				);
+				expect(getUrlPathWithoutHash(document.referrer)).toBe('/path1');
 
 				return this.app.navigate('/path3');
 			})
 			.then(() => {
-				expect(getUrlPathWithoutHash(globals.document.referrer)).toBe(
-					'/path2'
-				);
+				expect(getUrlPathWithoutHash(document.referrer)).toBe('/path2');
 				this.app.on(
 					'endNavigate',
 					() => {
-						expect(
-							getUrlPathWithoutHash(globals.document.referrer)
-						).toBe('/path1');
+						expect(getUrlPathWithoutHash(document.referrer)).toBe(
+							'/path1'
+						);
 						done();
 					},
 					true
 				);
-				globals.window.history.back();
+				window.history.back();
 			});
 	});
 
@@ -2197,7 +2206,7 @@ describe('App', function () {
 
 			return this.app.navigate('/path2').then(() => {
 				return new Promise((resolve) => {
-					globals.window.addEventListener(
+					window.addEventListener(
 						'popstate',
 						() => {
 							expect(this.app.reloadPage).not.toHaveBeenCalled();
@@ -2206,7 +2215,7 @@ describe('App', function () {
 						{once: true}
 					);
 					this.app.skipLoadPopstate = true;
-					globals.window.history.back();
+					window.history.back();
 				});
 			});
 		});
@@ -2238,4 +2247,64 @@ function exitDocumentLinkElement() {
 
 function preventDefault(event) {
 	event.preventDefault();
+}
+
+function mockWindowLocation({
+	hash = '#hash',
+	host = 'localhost:8080',
+	hostname = 'localhost',
+	origin = 'http://localhost:8080',
+	pathname = '/path',
+	port = '8080',
+	search = '?a=1',
+}) {
+	const location = window.location;
+
+	delete window.location;
+
+	window.location = Object.defineProperties(
+		{},
+		{
+			...Object.getOwnPropertyDescriptors(location),
+
+			hash: {
+				configurable: true,
+				value: hash,
+			},
+
+			host: {
+				configurable: true,
+				value: host,
+			},
+
+			hostname: {
+				configurable: true,
+				value: hostname,
+			},
+
+			origin: {
+				configurable: true,
+				value: origin,
+			},
+
+			pathname: {
+				configurable: true,
+				value: pathname,
+			},
+
+			port: {
+				configurable: true,
+				value: port,
+			},
+
+			search: {
+				configurable: true,
+				value: search,
+			},
+		}
+	);
+
+	return () => {
+		window.location = location;
+	};
 }

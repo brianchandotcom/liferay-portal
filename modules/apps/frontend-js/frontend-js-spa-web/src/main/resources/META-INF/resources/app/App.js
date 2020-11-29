@@ -97,7 +97,7 @@ class App extends EventEmitter {
 		 * @default null
 		 * @protected
 		 */
-		this.defaultTitle = globals.document.title;
+		this.defaultTitle = document.title;
 
 		/**
 		 * Holds the form selector to define forms that are routed.
@@ -146,7 +146,7 @@ class App extends EventEmitter {
 		 * @protected
 		 */
 		this.nativeScrollRestorationSupported =
-			'scrollRestoration' in globals.window.history;
+			'scrollRestoration' in window.history;
 
 		/**
 		 * When set to NavigationStrategy.SCHEDULE_LAST means that the current navigation
@@ -227,7 +227,7 @@ class App extends EventEmitter {
 
 		/**
 		 * When set to true the first erroneous popstate fired on page load will be
-		 * ignored, only if <code>globals.window.history.state</code> is also
+		 * ignored, only if <code>window.history.state</code> is also
 		 * <code>null</code>.
 		 * @type {boolean}
 		 * @default false
@@ -257,17 +257,13 @@ class App extends EventEmitter {
 
 		this.appEventHandlers_.add(
 			this.addDOMEventListener(
-				globals.window,
+				window,
 				'scroll',
 				debounce(this.onScroll_.bind(this), 100)
 			),
+			this.addDOMEventListener(window, 'load', this.onLoad_.bind(this)),
 			this.addDOMEventListener(
-				globals.window,
-				'load',
-				this.onLoad_.bind(this)
-			),
-			this.addDOMEventListener(
-				globals.window,
+				window,
 				'popstate',
 				this.onPopstate_.bind(this)
 			)
@@ -357,7 +353,7 @@ class App extends EventEmitter {
 	canNavigate(url) {
 		try {
 			const uri = url.startsWith('/')
-				? new URL(url, globals.window.location.origin)
+				? new URL(url, window.location.origin)
 				: new URL(url);
 
 			const path = getUrlPath(url);
@@ -712,12 +708,12 @@ class App extends EventEmitter {
 	/**
 	 * Tests if host is an offsite link.
 	 * @param {!string} host Link host to compare with
-	 *     <code>globals.window.location.host</code>.
+	 *     <code>window.location.host</code>.
 	 * @return {boolean}
 	 * @protected
 	 */
 	isLinkSameOrigin_(host) {
-		return host === globals.window.location.host;
+		return host === window.location.host;
 	}
 
 	/**
@@ -737,7 +733,7 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	lockHistoryScrollPosition_() {
-		var state = globals.window.history.state;
+		var state = window.history.state;
 		if (!state) {
 			return;
 		}
@@ -753,22 +749,18 @@ class App extends EventEmitter {
 
 		var winner = false;
 		var switchScrollPositionRace = function () {
-			globals.document.removeEventListener(
+			document.removeEventListener(
 				'scroll',
 				switchScrollPositionRace,
 				false
 			);
 			if (!winner) {
-				globals.window.scrollTo(state.scrollLeft, state.scrollTop);
+				window.scrollTo(state.scrollLeft, state.scrollTop);
 				winner = true;
 			}
 		};
 		setTimeout(switchScrollPositionRace);
-		globals.document.addEventListener(
-			'scroll',
-			switchScrollPositionRace,
-			false
-		);
+		document.addEventListener('scroll', switchScrollPositionRace, false);
 	}
 
 	/**
@@ -777,9 +769,8 @@ class App extends EventEmitter {
 	 */
 	maybeDisableNativeScrollRestoration() {
 		if (this.nativeScrollRestorationSupported) {
-			this.nativeScrollRestoration_ =
-				globals.window.history.scrollRestoration;
-			globals.window.history.scrollRestoration = 'manual';
+			this.nativeScrollRestoration_ = window.history.scrollRestoration;
+			window.history.scrollRestoration = 'manual';
 		}
 	}
 
@@ -915,14 +906,12 @@ class App extends EventEmitter {
 	 * Maybe reposition scroll to hashed anchor.
 	 */
 	maybeRepositionScrollToHashedAnchor() {
-		const hash = globals.window.location.hash;
+		const hash = window.location.hash;
 		if (hash) {
-			const anchorElement = globals.document.getElementById(
-				hash.substring(1)
-			);
+			const anchorElement = document.getElementById(hash.substring(1));
 			if (anchorElement) {
 				const {offsetLeft, offsetTop} = getNodeOffset(anchorElement);
-				globals.window.scrollTo(offsetLeft, offsetTop);
+				window.scrollTo(offsetLeft, offsetTop);
 			}
 		}
 	}
@@ -936,7 +925,7 @@ class App extends EventEmitter {
 			this.nativeScrollRestorationSupported &&
 			this.nativeScrollRestoration_
 		) {
-			globals.window.history.scrollRestoration = this.nativeScrollRestoration_;
+			window.history.scrollRestoration = this.nativeScrollRestoration_;
 		}
 	}
 
@@ -961,8 +950,8 @@ class App extends EventEmitter {
 	 * @param {!string} path Path containing anchor
 	 */
 	maybeUpdateScrollPositionState_() {
-		var hash = globals.window.location.hash;
-		var anchorElement = globals.document.getElementById(hash.substring(1));
+		var hash = window.location.hash;
+		var anchorElement = document.getElementById(hash.substring(1));
 		if (anchorElement) {
 			const {offsetLeft, offsetTop} = getNodeOffset(anchorElement);
 			this.saveHistoryCurrentPageScrollPosition_(offsetTop, offsetLeft);
@@ -1093,8 +1082,8 @@ class App extends EventEmitter {
 		event.capturedFormElement = form;
 		const buttonSelector =
 			'button:not([type]),button[type=submit],input[type=submit]';
-		if (globals.document.activeElement.matches(buttonSelector)) {
-			event.capturedFormButtonElement = globals.document.activeElement;
+		if (document.activeElement.matches(buttonSelector)) {
+			event.capturedFormButtonElement = document.activeElement;
 		}
 		else {
 			event.capturedFormButtonElement = form.querySelector(
@@ -1129,7 +1118,7 @@ class App extends EventEmitter {
 	 * Handles browser history changes and fires app's navigation if the state
 	 * belows to us. If we detect a popstate and the state is <code>null</code>,
 	 * assume it is navigating to an external page or to a page we don't have
-	 * route, then <code>globals.window.location.reload()</code> is invoked in order to
+	 * route, then <code>window.location.reload()</code> is invoked in order to
 	 * reload the content to the current url.
 	 * @param {!Event} event Event facade
 	 * @protected
@@ -1150,7 +1139,7 @@ class App extends EventEmitter {
 		var state = event.state;
 
 		if (!state) {
-			if (globals.window.location.hash) {
+			if (window.location.hash) {
 
 				// If senna is on an redirect path and a hash popstate happens
 				// to a different url, reload the browser. This behavior doesn't
@@ -1189,10 +1178,10 @@ class App extends EventEmitter {
 				}
 			});
 			const uri = state.path.startsWith('/')
-				? new URL(state.path, globals.window.location.origin)
+				? new URL(state.path, window.location.origin)
 				: new URL(state.path);
-			uri.hostname = globals.window.location.hostname;
-			uri.port = globals.window.location.port;
+			uri.hostname = window.location.hostname;
+			uri.port = window.location.port;
 			const isNavigationScheduled = this.maybeScheduleNavigation_(
 				uri.toString(),
 				new Map()
@@ -1212,8 +1201,8 @@ class App extends EventEmitter {
 	onScroll_() {
 		if (this.captureScrollPositionFromScrollEvent) {
 			this.saveHistoryCurrentPageScrollPosition_(
-				globals.window.pageYOffset,
-				globals.window.pageXOffset
+				window.pageYOffset,
+				window.pageXOffset
 			);
 		}
 	}
@@ -1227,7 +1216,7 @@ class App extends EventEmitter {
 	onStartNavigate_(event) {
 		this.maybeDisableNativeScrollRestoration();
 		this.captureScrollPositionFromScrollEvent = false;
-		globals.document.documentElement.classList.add(this.loadingCssClass);
+		document.documentElement.classList.add(this.loadingCssClass);
 
 		var endNavigatePayload = {
 			form: event.form,
@@ -1247,7 +1236,7 @@ class App extends EventEmitter {
 					!this.pendingNavigate &&
 					!this.scheduledNavigationQueue.length
 				) {
-					globals.document.documentElement.classList.remove(
+					document.documentElement.classList.remove(
 						this.loadingCssClass
 					);
 					this.maybeRestoreNativeScrollRestoration();
@@ -1298,7 +1287,7 @@ class App extends EventEmitter {
 		}
 		let redirectPath = nextScreen.beforeUpdateHistoryPath(path);
 		const hash = path.startsWith('/')
-			? new URL(path, globals.window.location.origin).hash
+			? new URL(path, window.location.origin).hash
 			: new URL(path).hash;
 		redirectPath = this.maybeRestoreRedirectPathHash_(
 			path,
@@ -1353,7 +1342,7 @@ class App extends EventEmitter {
 	 * Reloads the page by performing `window.location.reload()`.
 	 */
 	reloadPage() {
-		globals.window.location.reload();
+		window.location.reload();
 	}
 
 	/**
@@ -1392,10 +1381,10 @@ class App extends EventEmitter {
 	 * @param {!number} scrollLeft Number containing the left scroll position to be saved.
 	 */
 	saveHistoryCurrentPageScrollPosition_(scrollTop, scrollLeft) {
-		var state = globals.window.history.state;
+		var state = window.history.state;
 		if (state && state.senna) {
 			[state.scrollTop, state.scrollLeft] = [scrollTop, scrollLeft];
-			globals.window.history.replaceState(state, null, null);
+			window.history.replaceState(state, null, null);
 		}
 	}
 
@@ -1504,7 +1493,7 @@ class App extends EventEmitter {
 	 * @return {?Promise=}
 	 */
 	syncScrollPositionSyncThenAsync_() {
-		var state = globals.window.history.state;
+		var state = window.history.state;
 		if (!state) {
 			return;
 		}
@@ -1514,7 +1503,7 @@ class App extends EventEmitter {
 
 		var sync = () => {
 			if (this.updateScrollPosition) {
-				globals.window.scrollTo(scrollLeft, scrollTop);
+				window.scrollTo(scrollLeft, scrollTop);
 			}
 		};
 
@@ -1537,27 +1526,27 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	updateHistory_(title, path, state, opt_replaceHistory) {
-		const referrer = globals.window.location.href;
+		const referrer = window.location.href;
 
 		if (state) {
 			state.referrer = referrer;
 		}
 
 		if (opt_replaceHistory) {
-			globals.window.history.replaceState(state, title, path);
+			window.history.replaceState(state, title, path);
 		}
 		else {
-			globals.window.history.pushState(state, title, path);
+			window.history.pushState(state, title, path);
 		}
 
 		setReferrer(referrer);
 
-		const titleNode = globals.document.querySelector('title');
+		const titleNode = document.querySelector('title');
 		if (titleNode) {
 			titleNode.innerHTML = title;
 		}
 		else {
-			globals.document.title = title;
+			document.title = title;
 		}
 	}
 }

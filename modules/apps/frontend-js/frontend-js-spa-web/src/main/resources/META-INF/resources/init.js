@@ -101,9 +101,8 @@ const initSPA = function () {
 				const buttonSelector =
 					'button:not([type]),button[type=submit],input[type=submit]';
 
-				if (globals.document.activeElement.matches(buttonSelector)) {
-					globals.capturedFormButtonElement =
-						globals.document.activeElement;
+				if (document.activeElement.matches(buttonSelector)) {
+					globals.capturedFormButtonElement = document.activeElement;
 				}
 				else {
 					globals.capturedFormButtonElement = formElement.querySelector(
@@ -130,8 +129,8 @@ const initSPA = function () {
 
 export default {
 	init(callback) {
-		if (globals.document.readyState == 'loading') {
-			globals.document.addEventListener('DOMContentLoaded', () => {
+		if (document.readyState == 'loading') {
+			document.addEventListener('DOMContentLoaded', () => {
 				callback.call(this, initSPA());
 			});
 		}

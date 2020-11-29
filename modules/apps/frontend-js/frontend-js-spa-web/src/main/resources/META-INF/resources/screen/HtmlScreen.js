@@ -14,7 +14,6 @@
 
 import {buildFragment, runScriptsInElement} from 'frontend-js-web';
 
-import globals from '../globals/globals';
 import Surface from '../surface/Surface';
 import {
 	clearNodeAttributes,
@@ -68,7 +67,7 @@ class HtmlScreen extends RequestScreen {
 	 */
 	allocateVirtualDocumentForContent(htmlString) {
 		if (!this.virtualDocument) {
-			this.virtualDocument = globals.document.createElement('html');
+			this.virtualDocument = document.createElement('html');
 		}
 
 		this.copyNodeAttributesFromContent_(htmlString, this.virtualDocument);
@@ -90,7 +89,7 @@ class HtmlScreen extends RequestScreen {
 			this.pendingStyles.push(newStyle);
 		}
 		if (newStyle.id) {
-			var styleInDoc = globals.document.getElementById(newStyle.id);
+			var styleInDoc = document.getElementById(newStyle.id);
 			if (styleInDoc) {
 				styleInDoc.parentNode.insertBefore(
 					newStyle,
@@ -100,7 +99,7 @@ class HtmlScreen extends RequestScreen {
 				return;
 			}
 		}
-		globals.document.head.appendChild(newStyle);
+		document.head.appendChild(newStyle);
 	}
 
 	/**
@@ -109,11 +108,11 @@ class HtmlScreen extends RequestScreen {
 	 */
 	assertSameBodyIdInVirtualDocument() {
 		var bodySurface = this.virtualDocument.querySelector('body');
-		if (!globals.document.body.id) {
-			globals.document.body.id = 'senna_surface_' + getUid();
+		if (!document.body.id) {
+			document.body.id = 'senna_surface_' + getUid();
 		}
 		if (bodySurface) {
-			bodySurface.id = globals.document.body.id;
+			bodySurface.id = document.body.id;
 		}
 	}
 
@@ -270,11 +269,8 @@ class HtmlScreen extends RequestScreen {
 	 */
 	flip(surfaces) {
 		return super.flip(surfaces).then(() => {
-			clearNodeAttributes(globals.document.documentElement);
-			copyNodeAttributes(
-				this.virtualDocument,
-				globals.document.documentElement
-			);
+			clearNodeAttributes(document.documentElement);
+			copyNodeAttributes(this.virtualDocument, document.documentElement);
 			this.evaluateFavicon_();
 			this.updateMetaTags_();
 		});
@@ -287,7 +283,7 @@ class HtmlScreen extends RequestScreen {
 			currentMetaNodes.forEach((element) => element.remove());
 			if (metasFromVirtualDocument) {
 				metasFromVirtualDocument.forEach((meta) =>
-					globals.document.head.appendChild(meta)
+					document.head.appendChild(meta)
 				);
 			}
 		}
@@ -376,9 +372,7 @@ class HtmlScreen extends RequestScreen {
 	 * @return {array.<Element>}
 	 */
 	querySelectorAll_(selector) {
-		return Array.prototype.slice.call(
-			globals.document.querySelectorAll(selector)
-		);
+		return Array.prototype.slice.call(document.querySelectorAll(selector));
 	}
 
 	/**

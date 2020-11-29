@@ -14,13 +14,12 @@
 
 import {buildFragment} from 'frontend-js-web';
 
-import globals from '../../src/main/resources/META-INF/resources/globals/globals';
 import HtmlScreen from '../../src/main/resources/META-INF/resources/screen/HtmlScreen';
 import Surface from '../../src/main/resources/META-INF/resources/surface/Surface';
 
 describe('HtmlScreen', () => {
 	beforeAll(() => {
-		globals.window.Liferay.DOMTaskRunner = {
+		window.Liferay.DOMTaskRunner = {
 			runTasks: jest.fn(),
 		};
 	});
@@ -126,7 +125,7 @@ describe('HtmlScreen', () => {
 
 	it('sets body id in virtual document to page body id', () => {
 		var screen = new HtmlScreen();
-		globals.document.body.id = 'bodyAsSurface';
+		document.body.id = 'bodyAsSurface';
 		screen.allocateVirtualDocumentForContent('<body>body</body>');
 		screen.assertSameBodyIdInVirtualDocument();
 		expect(screen.virtualDocument.querySelector('body').id).toBe(
@@ -136,7 +135,7 @@ describe('HtmlScreen', () => {
 
 	it('sets body id in virtual document to page body id even when it was already set', () => {
 		var screen = new HtmlScreen();
-		globals.document.body.id = 'bodyAsSurface';
+		document.body.id = 'bodyAsSurface';
 		screen.allocateVirtualDocumentForContent(
 			'<body id="serverId">body</body>'
 		);
@@ -148,12 +147,12 @@ describe('HtmlScreen', () => {
 
 	it('sets body id in document and use the same in virtual document', () => {
 		var screen = new HtmlScreen();
-		globals.document.body.id = '';
+		document.body.id = '';
 		screen.allocateVirtualDocumentForContent('<body>body</body>');
 		screen.assertSameBodyIdInVirtualDocument();
-		expect(globals.document.body.id).toBeTruthy();
+		expect(document.body.id).toBeTruthy();
 		expect(screen.virtualDocument.querySelector('body').id).toBe(
-			globals.document.body.id
+			document.body.id
 		);
 	});
 

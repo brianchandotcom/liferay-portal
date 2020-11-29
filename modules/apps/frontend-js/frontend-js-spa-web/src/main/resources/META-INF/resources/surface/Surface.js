@@ -14,7 +14,6 @@
 
 import {buildFragment} from 'frontend-js-web';
 
-import globals from '../globals/globals';
 import Disposable from '../util/Disposable';
 
 class Surface extends Disposable {
@@ -131,7 +130,7 @@ class Surface extends Disposable {
 	 * @return {Element}
 	 */
 	createChild(screenId) {
-		var child = globals.document.createElement('div');
+		var child = document.createElement('div');
 		child.setAttribute('id', this.makeId_(screenId));
 
 		return child;
@@ -143,7 +142,7 @@ class Surface extends Disposable {
 	 * @return {?Element}
 	 */
 	getChild(screenId) {
-		return globals.document.getElementById(this.makeId_(screenId));
+		return document.getElementById(this.makeId_(screenId));
 	}
 
 	/**
@@ -156,7 +155,7 @@ class Surface extends Disposable {
 		if (this.element) {
 			return this.element;
 		}
-		this.element = globals.document.getElementById(this.id);
+		this.element = document.getElementById(this.id);
 
 		return this.element;
 	}
@@ -197,7 +196,7 @@ class Surface extends Disposable {
 	maybeWrapContentAsDefault_() {
 		var element = this.getElement();
 		if (element && !this.defaultChild) {
-			var fragment = globals.document.createDocumentFragment();
+			var fragment = document.createDocumentFragment();
 			while (element.firstChild) {
 				fragment.appendChild(element.firstChild);
 			}

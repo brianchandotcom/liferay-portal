@@ -122,13 +122,13 @@ class RequestScreen extends Screen {
 	 * @protected
 	 */
 	formatLoadPath(path) {
-		var uri = new URL(path, globals.window.location.origin);
+		var uri = new URL(path, window.location.origin);
 
-		uri.hostname = globals.window.location.hostname;
-		uri.protocol = globals.window.location.protocol;
+		uri.hostname = window.location.hostname;
+		uri.protocol = window.location.protocol;
 
-		if (globals.window.location.port) {
-			uri.port = globals.window.location.port;
+		if (window.location.port) {
+			uri.port = window.location.port;
 		}
 
 		return uri.toString();

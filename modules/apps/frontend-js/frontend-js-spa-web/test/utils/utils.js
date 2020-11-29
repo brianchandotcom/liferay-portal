@@ -12,7 +12,6 @@
  * details.
  */
 
-import globals from '../../src/main/resources/META-INF/resources/globals/globals';
 import {
 	clearNodeAttributes,
 	copyNodeAttributes,
@@ -25,23 +24,46 @@ import {
 } from '../../src/main/resources/META-INF/resources/util/utils';
 
 describe('utils', () => {
+	const oldWindowLocation = window.location;
+
 	beforeAll(() => {
-		globals.window = {
-			history: {
-				pushState: 1,
-			},
-			location: {
-				hash: '#hash',
-				hostname: 'hostname',
-				origin: 'http://localhost',
-				pathname: '/path',
-				search: '?a=1',
-			},
-		};
+		delete window.location;
+
+		window.location = Object.defineProperties(
+			{},
+			{
+				...Object.getOwnPropertyDescriptors(oldWindowLocation),
+
+				hash: {
+					configurable: true,
+					value: '#hash',
+				},
+
+				hostname: {
+					configurable: true,
+					value: 'hostname',
+				},
+
+				origin: {
+					configurable: true,
+					value: 'http://localhost',
+				},
+
+				pathname: {
+					configurable: true,
+					value: '/path',
+				},
+
+				search: {
+					configurable: true,
+					value: '?a=1',
+				},
+			}
+		);
 	});
 
 	afterAll(() => {
-		globals.window = window;
+		window.location = oldWindowLocation;
 	});
 
 	it('copies attributes from source node to target node', () => {

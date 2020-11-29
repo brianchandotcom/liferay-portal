@@ -12,8 +12,6 @@
  * details.
  */
 
-'use strict';
-
 /**
  * Holds value error messages.
  * @const

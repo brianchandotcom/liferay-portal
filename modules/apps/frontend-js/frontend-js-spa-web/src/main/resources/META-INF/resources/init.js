@@ -13,7 +13,6 @@
  */
 
 import App from './app/LiferayApp';
-import {version} from './app/version';
 import globals from './globals/globals';
 import ActionURLScreen from './screen/ActionURLScreen';
 import RenderURLScreen from './screen/RenderURLScreen';
@@ -123,7 +122,6 @@ const initSPA = function () {
 	Liferay.initComponentCache();
 
 	Liferay.SPA.app = app;
-	Liferay.SPA.version = version;
 
 	Liferay.fire('SPAReady');
 

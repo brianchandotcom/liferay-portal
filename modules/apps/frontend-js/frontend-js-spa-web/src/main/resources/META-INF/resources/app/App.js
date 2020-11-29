@@ -19,13 +19,14 @@ import EventHandler from '../events/EventHandler';
 import Route from '../route/Route';
 import Screen from '../screen/Screen';
 import Surface from '../surface/Surface';
-import utils, {
+import {
 	getCurrentBrowserPath,
 	getCurrentBrowserPathWithoutHash,
 	getNodeOffset,
 	getUrlPath,
 	getUrlPathWithoutHash,
 	getUrlPathWithoutHashAndSearch,
+	isCurrentBrowserPath,
 	log,
 	removePathTrailingSlash,
 	setReferrer,
@@ -80,7 +81,7 @@ class App extends EventEmitter {
 		 * @default the current browser path.
 		 * @protected
 		 */
-		this.browserPathBeforeNavigate = utils.getCurrentBrowserPathWithoutHash();
+		this.browserPathBeforeNavigate = getCurrentBrowserPathWithoutHash();
 
 		/**
 		 * Captures scroll position from scroll event.
@@ -371,7 +372,7 @@ class App extends EventEmitter {
 
 			// Prevents navigation if it's a hash change on the same url.
 
-			if (uri.hash && utils.isCurrentBrowserPath(path)) {
+			if (uri.hash && isCurrentBrowserPath(path)) {
 				return false;
 			}
 
@@ -683,7 +684,7 @@ class App extends EventEmitter {
 			nextScreen,
 			path,
 		});
-		if (!utils.isCurrentBrowserPath(path)) {
+		if (!isCurrentBrowserPath(path)) {
 			if (this.isNavigationPending && this.pendingNavigate) {
 				this.pendingNavigate.finally(
 					() => this.removeScreen(path),
@@ -1129,7 +1130,7 @@ class App extends EventEmitter {
 
 		// Do not navigate if the popstate was triggered by a hash change.
 
-		if (utils.isCurrentBrowserPath(this.browserPathBeforeNavigate)) {
+		if (isCurrentBrowserPath(this.browserPathBeforeNavigate)) {
 			this.maybeRepositionScrollToHashedAnchor();
 
 			return;
@@ -1147,7 +1148,7 @@ class App extends EventEmitter {
 
 				if (
 					this.redirectPath &&
-					!utils.isCurrentBrowserPath(this.redirectPath)
+					!isCurrentBrowserPath(this.redirectPath)
 				) {
 					this.reloadPage();
 				}

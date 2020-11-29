@@ -20,47 +20,6 @@
 let uniqueIdCounter = 1;
 
 /**
- * A collection of static utility functions.
- * @const
- */
-class utils {
-
-	/**
-	 * Gets the current browser path excluding hashbang.
-	 * @return {!string}
-	 * @static
-	 */
-	static getCurrentBrowserPathWithoutHash() {
-		return window.location.pathname + window.location.search;
-	}
-
-	/**
-	 * Checks if url is in the same browser current url excluding the hashbang.
-	 * @param  {!string} url
-	 * @return {boolean}
-	 * @static
-	 */
-	static isCurrentBrowserPath(url) {
-		if (url) {
-			const currentBrowserPath = this.getCurrentBrowserPathWithoutHash();
-
-			//const currentBrowserPath = window.location.pathname + window.location.search;
-
-			// the getUrlPath will create a Uri and will normalize the path and
-			// remove the trailling '/' for properly comparing paths.
-
-			return (
-				getUrlPathWithoutHash(url) === getUrlPath(currentBrowserPath)
-			);
-		}
-
-		return false;
-	}
-}
-
-export default utils;
-
-/**
  * Removes all attributes form node.
  * @return {void}
  * @static

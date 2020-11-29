@@ -22,7 +22,7 @@ import Route from '../../src/main/resources/META-INF/resources/route/Route';
 import HtmlScreen from '../../src/main/resources/META-INF/resources/screen/HtmlScreen';
 import Screen from '../../src/main/resources/META-INF/resources/screen/Screen';
 import Surface from '../../src/main/resources/META-INF/resources/surface/Surface';
-import utils, {
+import {
 	getCurrentBrowserPath,
 	getNodeOffset,
 	getUrlPathWithoutHash,
@@ -1509,11 +1509,6 @@ describe('App', function () {
 	});
 
 	it('exposes form reference in event data when submitting routed forms', (done) => {
-		jest.spyOn(
-			utils,
-			'getCurrentBrowserPathWithoutHash'
-		).mockImplementation(() => '/asdasdasdasas');
-
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		const form = enterDocumentFormElement('/path', 'post');

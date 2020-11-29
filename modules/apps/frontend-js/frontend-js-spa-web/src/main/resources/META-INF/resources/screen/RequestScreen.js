@@ -14,9 +14,13 @@
 
 import {fetch} from 'frontend-js-web';
 
-import errors from '../errors/errors';
 import {getUrlPath} from '../util/utils';
 import Screen from './Screen';
+
+const INVALID_STATUS = 'Invalid status code';
+const REQUEST_ERROR = 'Request error';
+const REQUEST_TIMEOUT = 'Request timeout';
+const REQUEST_PREMATURE_TERMINATION = 'Request terminated prematurely';
 
 class RequestScreen extends Screen {
 
@@ -79,7 +83,7 @@ class RequestScreen extends Screen {
 	 */
 	assertValidResponseStatusCode(status) {
 		if (!this.isValidResponseStatusCode(status)) {
-			var error = new Error(errors.INVALID_STATUS);
+			var error = new Error(INVALID_STATUS);
 			error.invalidStatus = true;
 			error.statusCode = status;
 			throw error;
@@ -278,20 +282,20 @@ class RequestScreen extends Screen {
 				}),
 			new Promise((_, reject) => {
 				setTimeout(
-					() => reject(new Error(errors.REQUEST_TIMEOUT)),
+					() => reject(new Error(REQUEST_TIMEOUT)),
 					this.timeout
 				);
 			}),
 		]).catch((reason) => {
 			switch (reason.message) {
-				case errors.REQUEST_TIMEOUT:
+				case REQUEST_TIMEOUT:
 					reason.timeout = true;
 					break;
-				case errors.REQUEST_PREMATURE_TERMINATION:
+				case REQUEST_PREMATURE_TERMINATION:
 					reason.requestError = true;
 					reason.requestPrematureTermination = true;
 					break;
-				case errors.REQUEST_ERROR:
+				case REQUEST_ERROR:
 				default:
 					reason.requestError = true;
 					break;

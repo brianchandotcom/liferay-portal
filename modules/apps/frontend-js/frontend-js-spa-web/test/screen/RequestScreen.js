@@ -12,7 +12,6 @@
  * details.
  */
 
-import errors from '../../src/main/resources/META-INF/resources/errors/errors';
 import RequestScreen from '../../src/main/resources/META-INF/resources/screen/RequestScreen';
 
 describe('RequestScreen', () => {
@@ -208,7 +207,7 @@ describe('RequestScreen', () => {
 	});
 
 	it('fails for request errors response', (done) => {
-		fetch.mockReject(new Error(errors.REQUEST_ERROR));
+		fetch.mockReject(new Error('Request error'));
 
 		new RequestScreen().load('/url').catch((error) => {
 			expect(error.requestError).toBeTruthy();

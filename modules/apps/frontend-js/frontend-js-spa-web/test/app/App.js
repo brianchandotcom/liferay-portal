@@ -18,7 +18,6 @@ import {buildFragment} from 'frontend-js-web';
 
 import App from '../../src/main/resources/META-INF/resources/app/App';
 import EventEmitter from '../../src/main/resources/META-INF/resources/events/EventEmitter';
-import globals from '../../src/main/resources/META-INF/resources/globals/globals';
 import Route from '../../src/main/resources/META-INF/resources/route/Route';
 import HtmlScreen from '../../src/main/resources/META-INF/resources/screen/HtmlScreen';
 import Screen from '../../src/main/resources/META-INF/resources/screen/Screen';
@@ -47,8 +46,7 @@ describe('App', function () {
 	});
 
 	beforeEach(() => {
-		globals.capturedFormElement = undefined;
-		globals.capturedFormButtonElement = undefined;
+		Liferay.SPA = {};
 
 		const beforeunload = jest.fn();
 		window.onbeforeunload = beforeunload;
@@ -1500,7 +1498,7 @@ describe('App', function () {
 			'submit',
 			(event) => {
 				event.preventDefault();
-				expect(globals.capturedFormElement).toBeFalsy();
+				expect(Liferay.SPA.__capturedFormElement__).toBeFalsy();
 				form.remove();
 				done();
 			},
@@ -1578,7 +1576,7 @@ describe('App', function () {
 		this.app.setAllowPreventNavigate(false);
 		form.addEventListener('submit', preventDefault);
 		fireEvent.submit(form);
-		expect(globals.capturedFormElement).toBeFalsy();
+		expect(Liferay.SPA.__capturedFormElement__).toBeFalsy();
 		form.remove();
 	});
 
@@ -1601,8 +1599,8 @@ describe('App', function () {
 		this.app.on('beforeNavigate', (event) => {
 			expect(event.form).toBeTruthy();
 			form.remove();
-			expect(globals.capturedFormElement).toBeTruthy();
-			globals.capturedFormElement = null;
+			expect(Liferay.SPA.__capturedFormElement__).toBeTruthy();
+			Liferay.SPA.__capturedFormElement__ = null;
 			done();
 		});
 		form.addEventListener('submit', jest.fn());
@@ -1629,10 +1627,10 @@ describe('App', function () {
 		this.app.addRoutes(new Route('/path', StubScreen));
 
 		this.app.on('beforeNavigate', () => {
-			expect(globals.capturedFormButtonElement).toBeTruthy();
+			expect(Liferay.SPA.__capturedFormButtonElement__).toBeTruthy();
 			form.remove();
-			globals.capturedFormElement = null;
-			globals.capturedFormButtonElement = null;
+			Liferay.SPA.__capturedFormElement__ = null;
+			Liferay.SPA.__capturedFormButtonElement__ = null;
 			done();
 		});
 
@@ -1660,8 +1658,8 @@ describe('App', function () {
 		this.app.setAllowPreventNavigate(false);
 		this.app.addRoutes(new Route('/path', Screen));
 		button.click();
-		expect(globals.capturedFormButtonElement).toBeTruthy();
-		globals.capturedFormButtonElement = null;
+		expect(Liferay.SPA.__capturedFormButtonElement__).toBeTruthy();
+		Liferay.SPA.__capturedFormButtonElement__ = null;
 		form.remove();
 	});
 
@@ -2061,11 +2059,11 @@ describe('App', function () {
 		});
 	});
 
-	it('sets globals.capturedFormElement to null after navigate', (done) => {
+	it('sets Liferay.SPA.__capturedFormElement__ to null after navigate', (done) => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		this.app.navigate('/path').then(() => {
-			expect(globals.capturedFormElement).toBeNull();
+			expect(Liferay.SPA.__capturedFormElement__).toBeNull();
 			done();
 		});
 	});

@@ -13,10 +13,13 @@
  */
 
 import errors from '../../src/main/resources/META-INF/resources/errors/errors';
-import globals from '../../src/main/resources/META-INF/resources/globals/globals';
 import RequestScreen from '../../src/main/resources/META-INF/resources/screen/RequestScreen';
 
 describe('RequestScreen', () => {
+	beforeEach(() => {
+		Liferay.SPA = {};
+	});
+
 	it('is cacheable', () => {
 		var screen = new RequestScreen();
 		expect(screen.isCacheable()).toBe(true);
@@ -216,12 +219,12 @@ describe('RequestScreen', () => {
 	it('forces post method and request body wrapped in FormData', (done) => {
 		fetch.mockResponse('');
 
-		globals.capturedFormElement = document.createElement('form');
+		Liferay.SPA.__capturedFormElement__ = document.createElement('form');
 		var screen = new RequestScreen();
 		screen.load('/url').then(() => {
 			expect(screen.getRequest().method).toBe(RequestScreen.POST);
 			expect(screen.getRequest().requestBody).toBeInstanceOf(FormData);
-			globals.capturedFormElement = null;
+			Liferay.SPA.__capturedFormElement__ = null;
 			done();
 		});
 	});
@@ -229,13 +232,13 @@ describe('RequestScreen', () => {
 	it('adds submit input button value into request FormData', (done) => {
 		fetch.mockResponse('');
 
-		globals.capturedFormElement = document.createElement('form');
+		Liferay.SPA.__capturedFormElement__ = document.createElement('form');
 		const submitButton = document.createElement('button');
 		submitButton.name = 'submitButton';
 		submitButton.type = 'submit';
 		submitButton.value = 'Send';
-		globals.capturedFormElement.appendChild(submitButton);
-		globals.capturedFormButtonElement = submitButton;
+		Liferay.SPA.__capturedFormElement__.appendChild(submitButton);
+		Liferay.SPA.__capturedFormButtonElement__ = submitButton;
 		var screen = new RequestScreen();
 		var spy = jest.spyOn(FormData.prototype, 'append');
 		screen.load('/url').then(() => {
@@ -243,8 +246,8 @@ describe('RequestScreen', () => {
 				submitButton.name,
 				submitButton.value
 			);
-			globals.capturedFormElement = null;
-			globals.capturedFormButtonElement = null;
+			Liferay.SPA.__capturedFormElement__ = null;
+			Liferay.SPA.__capturedFormButtonElement__ = null;
 			done();
 		});
 	});

@@ -13,7 +13,6 @@
  */
 
 import App from './app/LiferayApp';
-import globals from './globals/globals';
 import ActionURLScreen from './screen/ActionURLScreen';
 import RenderURLScreen from './screen/RenderURLScreen';
 import {getUrlPath} from './util/utils';
@@ -96,16 +95,17 @@ const initSPA = function () {
 			) {
 				Liferay.Util._submitLocked = false;
 
-				globals.capturedFormElement = formElement;
+				Liferay.SPA.__capturedFormElement__ = formElement;
 
 				const buttonSelector =
 					'button:not([type]),button[type=submit],input[type=submit]';
 
 				if (document.activeElement.matches(buttonSelector)) {
-					globals.capturedFormButtonElement = document.activeElement;
+					Liferay.SPA.__capturedFormButtonElement__ =
+						document.activeElement;
 				}
 				else {
-					globals.capturedFormButtonElement = formElement.querySelector(
+					Liferay.SPA.__capturedFormButtonElement__ = formElement.querySelector(
 						buttonSelector
 					);
 				}

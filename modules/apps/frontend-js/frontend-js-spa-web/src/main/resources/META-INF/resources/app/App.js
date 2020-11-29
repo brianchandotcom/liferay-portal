@@ -16,7 +16,6 @@ import {debounce, delegate} from 'frontend-js-web';
 
 import EventEmitter from '../events/EventEmitter';
 import EventHandler from '../events/EventHandler';
-import globals from '../globals/globals';
 import Route from '../route/Route';
 import Screen from '../screen/Screen';
 import Surface from '../surface/Surface';
@@ -561,8 +560,8 @@ class App extends EventEmitter {
 		this.screens[path] = nextScreen;
 		this.isNavigationPending = false;
 		this.pendingNavigate = null;
-		globals.capturedFormElement = null;
-		globals.capturedFormButtonElement = null;
+		Liferay.SPA.__capturedFormElement__ = null;
+		Liferay.SPA.__capturedFormButtonElement__ = null;
 		log('Navigation done');
 	}
 
@@ -967,8 +966,8 @@ class App extends EventEmitter {
 	 */
 	navigate(path, opt_replaceHistory, opt_event) {
 		if (opt_event) {
-			globals.capturedFormElement = opt_event.capturedFormElement;
-			globals.capturedFormButtonElement =
+			Liferay.SPA.__capturedFormElement__ = opt_event.capturedFormElement;
+			Liferay.SPA.__capturedFormButtonElement__ =
 				opt_event.capturedFormButtonElement;
 		}
 
@@ -995,8 +994,8 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	onBeforeNavigate_(event) {
-		if (globals.capturedFormElement) {
-			event.form = globals.capturedFormElement;
+		if (Liferay.SPA.__capturedFormElement__) {
+			event.form = Liferay.SPA.__capturedFormElement__;
 		}
 	}
 
@@ -1295,7 +1294,7 @@ class App extends EventEmitter {
 			hash
 		);
 		const historyState = {
-			form: !!globals.capturedFormElement,
+			form: !!Liferay.SPA.__capturedFormElement__,
 			path,
 			redirectPath,
 			scrollLeft: 0,

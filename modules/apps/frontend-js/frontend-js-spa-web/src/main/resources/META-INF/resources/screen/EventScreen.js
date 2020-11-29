@@ -12,7 +12,6 @@
  * details.
  */
 
-import globals from '../globals/globals';
 import HtmlScreen from './HtmlScreen';
 
 /**
@@ -83,7 +82,10 @@ class EventScreen extends HtmlScreen {
 	checkRedirectPath(redirectPath) {
 		const app = Liferay.SPA.app;
 
-		if (!globals.capturedFormElement && !app.findRoute(redirectPath)) {
+		if (
+			!Liferay.SPA.__capturedFormElement__ &&
+			!app.findRoute(redirectPath)
+		) {
 			window.location.href = redirectPath;
 		}
 	}

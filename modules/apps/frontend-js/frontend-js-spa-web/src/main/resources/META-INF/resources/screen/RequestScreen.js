@@ -15,7 +15,6 @@
 import {fetch} from 'frontend-js-web';
 
 import errors from '../errors/errors';
-import globals from '../globals/globals';
 import {getUrlPath} from '../util/utils';
 import Screen from './Screen';
 
@@ -234,10 +233,10 @@ class RequestScreen extends Screen {
 		let body = null;
 		let httpMethod = this.httpMethod;
 		const requestHeaders = {'X-PJAX': 'true', ...this.httpHeaders};
-		if (globals.capturedFormElement) {
+		if (Liferay.SPA.__capturedFormElement__) {
 			body = this.getFormData(
-				globals.capturedFormElement,
-				globals.capturedFormButtonElement
+				Liferay.SPA.__capturedFormElement__,
+				Liferay.SPA.__capturedFormButtonElement__
 			);
 			httpMethod = RequestScreen.POST;
 		}

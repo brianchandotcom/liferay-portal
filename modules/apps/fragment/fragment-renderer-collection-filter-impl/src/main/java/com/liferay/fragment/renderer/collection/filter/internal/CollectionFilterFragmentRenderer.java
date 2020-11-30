@@ -27,8 +27,10 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -116,18 +118,30 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		Object assetVocabularyIdObject =
-			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfiguration(fragmentRendererContext),
-				fragmentEntryLink.getEditableValues(), "vocabularyId");
+		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
+			getConfiguration(fragmentRendererContext),
+			fragmentEntryLink.getEditableValues(), "source");
 
-		if (Validator.isNull(assetVocabularyIdObject)) {
+		if (Validator.isNull(sourceObject) ||
+			!JSONUtil.isValid(sourceObject.toString())) {
+
 			return;
 		}
 
-		Long assetVocabularyId = GetterUtil.getLong(assetVocabularyIdObject);
+		JSONObject sourceJSONObject;
 
-		if (assetVocabularyId == 0) {
+		try {
+			sourceJSONObject = _jsonFactory.createJSONObject(
+				sourceObject.toString());
+		}
+		catch (JSONException jsonException) {
+			return;
+		}
+
+		long assetCategoryTreeNodeId = GetterUtil.getLong(
+			sourceJSONObject.getString("categoryTreeNodeId"));
+
+		if (assetCategoryTreeNodeId == 0) {
 			return;
 		}
 
@@ -138,9 +152,10 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		try {
 			List<AssetCategory> assetCategories =
 				_assetCategoryService.getVocabularyCategories(
-					assetVocabularyId, 0,
+					assetCategoryTreeNodeId, 0,
 					_assetCategoryService.getVocabularyCategoriesCount(
-						themeDisplay.getScopeGroupId(), assetVocabularyId),
+						themeDisplay.getScopeGroupId(),
+						assetCategoryTreeNodeId),
 					null);
 
 			httpServletRequest.setAttribute(
@@ -148,7 +163,8 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				assetCategories);
 
 			AssetVocabulary assetVocabulary =
-				_assetVocabularyService.fetchVocabulary(assetVocabularyId);
+				_assetVocabularyService.fetchVocabulary(
+					assetCategoryTreeNodeId);
 
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
@@ -191,6 +207,9 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.collection.filter.impl)"

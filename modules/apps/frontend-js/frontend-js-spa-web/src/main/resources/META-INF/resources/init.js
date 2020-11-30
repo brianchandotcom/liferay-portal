@@ -23,9 +23,8 @@ import {getUrlPath} from './util/utils';
  * forms are properly submitted using SPA.
  * @return {!App} The Senna App initialized
  */
-
-const initSPA = function () {
-	const app = new App();
+const initSPA = function (config) {
+	const app = new App(config);
 
 	app.addRoutes([
 		{
@@ -35,12 +34,12 @@ const initSPA = function () {
 
 				const uri = new URL(url, window.location.origin);
 
-				const loginRedirect = new URL(
-					Liferay.SPA.loginRedirect,
+				const loginRedirectURL = new URL(
+					config.loginRedirect,
 					window.location.origin
 				);
 
-				const host = loginRedirect.host || window.location.host;
+				const host = loginRedirectURL.host || window.location.host;
 
 				if (app.isLinkSameOrigin_(host)) {
 					match = uri.searchParams.get('p_p_lifecycle') === '1';
@@ -57,7 +56,7 @@ const initSPA = function () {
 				if (
 					(url + '/').indexOf(themeDisplay.getPathMain() + '/') !== 0
 				) {
-					const excluded = Liferay.SPA.excludedPaths.some(
+					const excluded = config.excludedPaths.some(
 						(excludedPath) => url.indexOf(excludedPath) === 0
 					);
 
@@ -83,8 +82,7 @@ const initSPA = function () {
 			)
 				? form
 				: form.getDOM();
-			const formSelector =
-				'form' + Liferay.SPA.navigationExceptionSelectors;
+			const formSelector = 'form' + config.navigationExceptionSelectors;
 			const url = formElement.action;
 
 			if (
@@ -120,22 +118,20 @@ const initSPA = function () {
 
 	Liferay.initComponentCache();
 
-	Liferay.SPA.app = app;
+	Liferay.SPA = {app};
 
 	Liferay.fire('SPAReady');
 
 	return app;
 };
 
-export default {
-	init(callback) {
-		if (document.readyState == 'loading') {
-			document.addEventListener('DOMContentLoaded', () => {
-				callback.call(this, initSPA());
-			});
-		}
-		else {
-			callback.call(this, initSPA());
-		}
-	},
-};
+export default function init(config) {
+	if (document.readyState == 'loading') {
+		document.addEventListener('DOMContentLoaded', () => {
+			initSPA(config);
+		});
+	}
+	else {
+		initSPA(config);
+	}
+}

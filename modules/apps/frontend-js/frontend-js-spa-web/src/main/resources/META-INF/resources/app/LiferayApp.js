@@ -42,18 +42,32 @@ class LiferayApp extends App {
 	 * @inheritDoc
 	 */
 
-	constructor() {
+	constructor({
+		cacheExpirationTime,
+		clearScreensCache,
+		debugEnabled,
+		navigationExceptionSelectors,
+		portletsBlacklist,
+		requestTimeout,
+		userNotification,
+		validStatusCodes,
+	}) {
 		super();
 
-		this.portletsBlacklist = {};
-		this.validStatusCodes = [];
+		this._cacheExpirationTime = cacheExpirationTime;
+		this._clearScreensCache = clearScreensCache;
+		this._debugEnabled = debugEnabled;
+
+		this.portletsBlacklist = portletsBlacklist;
+		this.userNotification = userNotification;
+		this.validStatusCodes = validStatusCodes;
 
 		this.setShouldUseFacade(true);
 
-		this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || MAX_TIMEOUT;
+		this.timeout = Math.max(requestTimeout, 0) || MAX_TIMEOUT;
 		this.timeoutAlert = null;
 
-		const exceptionsSelector = Liferay.SPA.navigationExceptionSelectors;
+		const exceptionsSelector = navigationExceptionSelectors;
 
 		this.setFormSelector('form' + exceptionsSelector);
 		this.setLinkSelector('a' + exceptionsSelector);
@@ -113,7 +127,7 @@ class LiferayApp extends App {
 	 */
 
 	getCacheExpirationTime() {
-		return Liferay.SPA.cacheExpirationTime;
+		return this._cacheExpirationTime;
 	}
 
 	/**
@@ -145,17 +159,11 @@ class LiferayApp extends App {
 	 */
 
 	isInPortletBlacklist(element) {
-		return Object.keys(this.portletsBlacklist).some((portletId) => {
-			const boundaryId = getPortletBoundaryId(portletId);
+		const portletsBlacklistSelector = this.portletsBlacklist
+			.map((portletId) => `[id^="${getPortletBoundaryId(portletId)}"]`)
+			.join();
 
-			const portlets = document.querySelectorAll(
-				'[id^="' + boundaryId + '"]'
-			);
-
-			return Array.prototype.slice
-				.call(portlets)
-				.some((portlet) => portlet.contains(element));
-		});
+		return !!element.closest(portletsBlacklistSelector);
 	}
 
 	/**
@@ -181,16 +189,16 @@ class LiferayApp extends App {
 
 	/**
 	 * A callback for Senna's `beforeNavigate` event. The cache is cleared
-	 * for all screens when the flag `Liferay.SPA.clearScreensCache`
-	 * is set or when a form submission is about to occur. This method also
-	 * exposes the `beforeNavigate` event to the Liferay global object so
-	 * anyone can listen to it.
+	 * for all screens when the flag `clearScreensCache` is set or when a form
+	 * submission is about to occur. This method also exposes the
+	 * `beforeNavigate` event to the Liferay global object so anyone can listen
+	 * to it.
 	 * @param  {!Object} data Data about the event
 	 * @param  {!Event} event The event object
 	 */
 
 	onBeforeNavigate(data, event) {
-		if (Liferay.SPA.clearScreensCache || data.form) {
+		if (this._clearScreensCache || data.form) {
 			this.clearScreensCache();
 		}
 
@@ -321,7 +329,7 @@ class LiferayApp extends App {
 				'there-was-an-unexpected-error.-please-refresh-the-current-page'
 			);
 
-			if (Liferay.SPA.debugEnabled) {
+			if (this._debugEnabled) {
 				console.error(event.error);
 
 				if (event.error.invalidStatus) {
@@ -401,7 +409,7 @@ class LiferayApp extends App {
 	/**
 	 * Clears the timer that notifies the user when the SPA request
 	 * takes longer than the thresshold time configured in the
-	 * `Liferay.SPA.userNotification.timeout` System Settings property
+	 * `this.userNotification.timeout` System Settings property
 	 */
 
 	_clearRequestTimer() {
@@ -466,14 +474,14 @@ class LiferayApp extends App {
 	/**
 	 * Starts the timer that shows the user a notification when the SPA
 	 * request takes longer than the threshold time configured in the
-	 * `Liferay.SPA.userNotification.timeout` System Settings property
+	 * `userNotification.timeout` System Settings property
 	 * @param  {!String} path The path that may time out
 	 */
 
 	_startRequestTimer(path) {
 		this._clearRequestTimer();
 
-		if (Liferay.SPA.userNotification.timeout > 0) {
+		if (this.userNotification.timeout > 0) {
 			this.requestTimer = setTimeout(() => {
 				Liferay.fire('spaRequestTimeout', {
 					path,
@@ -482,13 +490,13 @@ class LiferayApp extends App {
 				this._hideTimeoutAlert();
 
 				this._createNotification({
-					message: Liferay.SPA.userNotification.message,
-					title: Liferay.SPA.userNotification.title,
+					message: this.userNotification.message,
+					title: this.userNotification.title,
 					type: 'warning',
 				}).then((alert) => {
 					this.timeoutAlert = alert;
 				});
-			}, Liferay.SPA.userNotification.timeout);
+			}, this.userNotification.timeout);
 		}
 	}
 

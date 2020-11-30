@@ -17,7 +17,6 @@ package com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper;
 import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration;
 import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfigurationUtil;
 import com.liferay.osgi.util.StringPlus;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -79,8 +78,8 @@ public class SPAHelper {
 		return _cacheExpirationTime;
 	}
 
-	public String getExcludedPaths() {
-		return _SPA_EXCLUDED_PATHS;
+	public JSONArray getExcludedPathsJSONArray() {
+		return _SPA_EXCLUDED_PATHS_JSON_ARRAY;
 	}
 
 	public ResourceBundle getLanguageResourceBundle(
@@ -101,10 +100,9 @@ public class SPAHelper {
 		return _navigationExceptionSelectorsString;
 	}
 
-	public String getPortletsBlacklist(ThemeDisplay themeDisplay) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.OPEN_CURLY_BRACE);
+	public JSONArray getPortletsBlacklistJSONArray(ThemeDisplay themeDisplay) {
+		JSONArray portletsBlacklistJSONArray =
+			JSONFactoryUtil.createJSONArray();
 
 		_portletLocalService.visitPortlets(
 			themeDisplay.getCompanyId(),
@@ -113,22 +111,11 @@ public class SPAHelper {
 					!portlet.isUndeployedPortlet() && portlet.isActive() &&
 					portlet.isReady()) {
 
-					sb.append(StringPool.QUOTE);
-					sb.append(portlet.getPortletId());
-					sb.append("\":true,");
+					portletsBlacklistJSONArray.put(portlet.getPortletId());
 				}
 			});
 
-		if (sb.index() == 1) {
-			sb.append(StringPool.CLOSE_CURLY_BRACE);
-		}
-		else {
-			sb.setIndex(sb.index() - 1);
-
-			sb.append("\":true}");
-		}
-
-		return sb.toString();
+		return portletsBlacklistJSONArray;
 	}
 
 	public int getRequestTimeout() {
@@ -139,8 +126,8 @@ public class SPAHelper {
 		return _spaConfiguration.userNotificationTimeout();
 	}
 
-	public String getValidStatusCodes() {
-		return _VALID_STATUS_CODES;
+	public JSONArray getValidStatusCodesJSONArray() {
+		return _VALID_STATUS_CODES_JSON_ARRAY;
 	}
 
 	public boolean isClearScreensCache(
@@ -247,12 +234,12 @@ public class SPAHelper {
 
 	private static final String _REDIRECT_PARAM_NAME;
 
-	private static final String _SPA_EXCLUDED_PATHS;
+	private static final JSONArray _SPA_EXCLUDED_PATHS_JSON_ARRAY;
 
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =
 		"javascript.single.page.application.navigation.exception.selector";
 
-	private static final String _VALID_STATUS_CODES;
+	private static final JSONArray _VALID_STATUS_CODES_JSON_ARRAY;
 
 	private static final Log _log = LogFactoryUtil.getLog(SPAHelper.class);
 
@@ -273,7 +260,7 @@ public class SPAHelper {
 			}
 		}
 
-		_VALID_STATUS_CODES = jsonArray.toJSONString();
+		_VALID_STATUS_CODES_JSON_ARRAY = jsonArray;
 
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
@@ -289,7 +276,7 @@ public class SPAHelper {
 			jsonArray.put(PortalUtil.getPathContext() + excludedPath);
 		}
 
-		_SPA_EXCLUDED_PATHS = jsonArray.toString();
+		_SPA_EXCLUDED_PATHS_JSON_ARRAY = jsonArray;
 	}
 
 	private long _cacheExpirationTime;

@@ -72,6 +72,12 @@
 				},
 				{
 					"defaultValue": false,
+					"label": "display-on-hover",
+					"name": "displayOnHover",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
 					"label": "keep-panel-open-in-edit-mode",
 					"name": "keepOpen",
 					"type": "checkbox"

@@ -56,9 +56,28 @@ function handleBodyClick(event) {
 	}
 }
 
+function handleDropdownHover() {
+	if (!isShown()) {
+		toggleMenu();
+	}
+}
+
+function handleDropdownLeave() {
+	if (isShown()) {
+		toggleMenu();
+	}
+}
+
 function main() {
 	if (configuration.keepOpen && editMode) {
 		toggleMenu();
+	}
+	else if (configuration.displayOnHover) {
+		toggle.addEventListener('mouseenter', handleDropdownHover);
+		toggle.addEventListener('mouseleave', handleDropdownLeave);
+
+		menu.addEventListener('mouseenter', handleDropdownHover);
+		menu.addEventListener('mouseleave', handleDropdownLeave);
 	}
 	else {
 		toggle.addEventListener('click', handleToggleClick);

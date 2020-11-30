@@ -237,12 +237,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							"insert into PortletPreferenceValue (mvccVersion, ",
 							"ctCollectionId, portletPreferenceValueId, ",
 							"companyId, portletPreferencesId, name, index_, ",
-							"smallValue, largeValue, readOnly) select 0 as ",
+							"largeValue, readOnly, smallValue) select 0 as ",
 							"mvccVersion, 0 as ctCollectionId, ? as ",
 							"portletPreferenceValueId, TEMP_TABLE.companyId, ",
 							"? as portletPreferencesId, TEMP_TABLE.name, ",
-							"TEMP_TABLE.index_, TEMP_TABLE.smallValue, ",
-							"TEMP_TABLE.largeValue, TEMP_TABLE.readOnly from ",
+							"TEMP_TABLE.index_, TEMP_TABLE.largeValue, ",
+							"TEMP_TABLE.readOnly, TEMP_TABLE.smallValue from ",
 							"PortletPreferenceValue TEMP_TABLE where ",
 							"TEMP_TABLE.portletPreferenceValueId = ?")))) {
 

@@ -43,8 +43,8 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				"default 0 not null, ctCollectionId LONG default 0 not null, ",
 				"portletPreferenceValueId LONG not null, companyId LONG, ",
 				"portletPreferencesId LONG, name VARCHAR(255) null, index_ ",
-				"INTEGER, smallValue VARCHAR(255) null, largeValue TEXT null, ",
-				"readOnly BOOLEAN, primary key (portletPreferenceValueId, ",
+				"INTEGER, largeValue TEXT null, readOnly BOOLEAN, smallValue ",
+				"VARCHAR(255) null, primary key (portletPreferenceValueId, ",
 				"ctCollectionId))"));
 
 		try (PreparedStatement selectPreparedStatement =
@@ -63,7 +63,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 							"insert into PortletPreferenceValue (mvccVersion, ",
 							"ctCollectionId, portletPreferenceValueId, ",
 							"companyId, portletPreferencesId, name, index_, ",
-							"smallValue, largeValue, readOnly) values (0, ?, ",
+							"largeValue, readOnly, smallValue) values (0, ?, ",
 							"?, ?, ?, ?, ?, ?, ?, ?)")));
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
@@ -108,16 +108,16 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 								PortletPreferenceValueImpl.
 									SMALL_VALUE_MAX_LENGTH) {
 
-							insertPreparedStatement.setString(7, value);
-							insertPreparedStatement.setString(8, null);
+							insertPreparedStatement.setString(7, null);
+							insertPreparedStatement.setString(9, value);
 						}
 						else {
-							insertPreparedStatement.setString(7, null);
-							insertPreparedStatement.setString(8, value);
+							insertPreparedStatement.setString(7, value);
+							insertPreparedStatement.setString(9, null);
 						}
 
 						insertPreparedStatement.setBoolean(
-							9, preference.isReadOnly());
+							8, preference.isReadOnly());
 
 						insertPreparedStatement.addBatch();
 					}

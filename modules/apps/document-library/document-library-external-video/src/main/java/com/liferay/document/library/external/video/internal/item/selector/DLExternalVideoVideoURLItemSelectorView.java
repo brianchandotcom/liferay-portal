@@ -51,10 +51,6 @@ public class DLExternalVideoVideoURLItemSelectorView
 		return VideoItemSelectorCriterion.class;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
@@ -72,10 +68,8 @@ public class DLExternalVideoVideoURLItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = getServletContext();
-
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/url.jsp");
+			_servletContext.getRequestDispatcher("/url.jsp");
 
 		servletRequest.setAttribute(
 			DLExternalVideoWebKeys.EVENT_NAME, itemSelectedEventName);

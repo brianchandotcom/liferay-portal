@@ -78,6 +78,14 @@ public class AccountEntryDisplay {
 		return _defaultBillingAddress;
 	}
 
+	public long getDefaultBillingAddressId() {
+		if (_defaultBillingAddress == null) {
+			return 0L;
+		}
+
+		return _defaultBillingAddress.getAddressId();
+	}
+
 	public String getDefaultLogoURL(PortletRequest portletRequest) {
 		return PortalUtil.getPathContext(portletRequest) +
 			"/account_entries_admin/icons/briefcase.svg";
@@ -85,6 +93,14 @@ public class AccountEntryDisplay {
 
 	public Address getDefaultShippingAddress() {
 		return _defaultShippingAddress;
+	}
+
+	public long getDefaultShippingAddressId() {
+		if (_defaultShippingAddress == null) {
+			return 0L;
+		}
+
+		return _defaultShippingAddress.getAddressId();
 	}
 
 	public String getDescription() {

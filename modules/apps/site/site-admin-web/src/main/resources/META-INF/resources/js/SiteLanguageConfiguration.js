@@ -21,7 +21,7 @@ import {
 	ClaySelectWithOption,
 } from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 export default function SiteLanguageConfiguration({
 	availableLanguages: initialAvailableLanguages,
@@ -35,6 +35,11 @@ export default function SiteLanguageConfiguration({
 	const [
 		showRemoveDefaultLanguageWarning,
 		setShowRemoveDefaultLanguageWarning,
+	] = useState(false);
+
+	const [
+		showDefaultLanguageSiteNameWarning,
+		setShowDefaultLanguageSiteNameWarning,
 	] = useState(false);
 
 	const [availableLanguages, setAvailableLanguages] = useState(
@@ -60,14 +65,6 @@ export default function SiteLanguageConfiguration({
 		[currentLanguages, defaultLanguageId]
 	);
 
-	const defaultLanguageSiteName = useMemo(
-		() =>
-			Liferay.component(`${portletNamespace}name`)?.getValue(
-				defaultLanguageId
-			),
-		[defaultLanguageId, portletNamespace]
-	);
-
 	const handleItemsChange = (items) => {
 		const [nextCurrentLanguages, nextAvailableLanguages] = items;
 
@@ -84,6 +81,30 @@ export default function SiteLanguageConfiguration({
 			setShowRemoveDefaultLanguageWarning(false);
 		}
 	};
+
+	useEffect(() => {
+		const nameInput = Liferay.component(`${portletNamespace}name`);
+
+		if (
+			nameInput &&
+			!nameInput.getValue(defaultLanguageId) &&
+			!liveGroupIsGuest &&
+			!liveGroupIsOrganization
+		) {
+			setShowDefaultLanguageSiteNameWarning(true);
+
+			nameInput.selectFlag(defaultLanguageId, false);
+			nameInput.updateInput(Liferay.Language.get('unnamed-site'));
+		}
+		else {
+			setShowDefaultLanguageSiteNameWarning(false);
+		}
+	}, [
+		defaultLanguageId,
+		portletNamespace,
+		liveGroupIsGuest,
+		liveGroupIsOrganization,
+	]);
 
 	return (
 		<>
@@ -147,15 +168,13 @@ export default function SiteLanguageConfiguration({
 						</ClayAlert>
 					)}
 
-					{!defaultLanguageSiteName &&
-						!liveGroupIsGuest &&
-						!liveGroupIsOrganization && (
-							<ClayAlert className="mt-3" displayType="warning">
-								{Liferay.Language.get(
-									'site-name-will-display-a-generic-text-until-a-translation-is-added'
-								)}
-							</ClayAlert>
-						)}
+					{showDefaultLanguageSiteNameWarning && (
+						<ClayAlert className="mt-3" displayType="warning">
+							{Liferay.Language.get(
+								'site-name-will-display-a-generic-text-until-a-translation-is-added'
+							)}
+						</ClayAlert>
+					)}
 
 					<h5 className="h4 mt-4">
 						{Liferay.Language.get('available-languages')}

@@ -115,19 +115,20 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		Object vocabularyIdObject =
+		Object assetVocabularyIdObject =
 			_fragmentEntryConfigurationParser.getFieldValue(
 				getConfiguration(fragmentRendererContext),
 				fragmentEntryLink.getEditableValues(), "vocabularyId");
 
-		if (Validator.isNull(vocabularyIdObject)) {
+		if (Validator.isNull(assetVocabularyIdObject)) {
 			return;
 		}
 
-		Long vocabularyId = null;
+		Long assetVocabularyId = null;
 
 		try {
-			vocabularyId = Long.parseLong(vocabularyIdObject.toString());
+			assetVocabularyId = Long.parseLong(
+				assetVocabularyIdObject.toString());
 		}
 		catch (NumberFormatException numberFormatException) {
 			_log.error(
@@ -143,9 +144,9 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		try {
 			List<AssetCategory> assetCategories =
 				_assetCategoryService.getVocabularyCategories(
-					vocabularyId, 0,
+					assetVocabularyId, 0,
 					_assetCategoryService.getVocabularyCategoriesCount(
-						themeDisplay.getScopeGroupId(), vocabularyId),
+						themeDisplay.getScopeGroupId(), assetVocabularyId),
 					null);
 
 			httpServletRequest.setAttribute(
@@ -153,7 +154,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				assetCategories);
 
 			AssetVocabulary assetVocabulary =
-				_assetVocabularyService.fetchVocabulary(vocabularyId);
+				_assetVocabularyService.fetchVocabulary(assetVocabularyId);
 
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,

@@ -474,24 +474,24 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		File deployDir = new File(dockerDir, "deploy");
 		File workDir = new File(dockerDir, "work");
 
+		String deployPath = deployDir.getAbsolutePath();
+
 		String dockerPath = dockerDir.getAbsolutePath();
 
 		String workPath = workDir.getAbsolutePath();
-
-		String deployPath = deployDir.getAbsolutePath();
 
 		if (OSDetector.isWindows()) {
 			String prefix = FilenameUtils.getPrefix(dockerPath);
 
 			if (prefix.contains(":")) {
+				deployPath = '/' + deployPath.replace(":", "");
 				dockerPath = '/' + dockerPath.replace(":", "");
 				workPath = '/' + workPath.replace(":", "");
-				deployPath = '/' + deployPath.replace(":", "");
 			}
 
+			deployPath = deployPath.replace('\\', '/');
 			dockerPath = dockerPath.replace('\\', '/');
 			workPath = workPath.replace('\\', '/');
-			deployPath = deployPath.replace('\\', '/');
 		}
 
 		DockerCreateContainer.HostConfig hostConfig =

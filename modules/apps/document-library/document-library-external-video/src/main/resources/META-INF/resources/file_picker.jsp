@@ -54,7 +54,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 	<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" var="getDLExternalVideoFieldsURL" />
 
 	<react:component
-		module="js/FilePickerVideoPreview"
+		module="js/DLExternalVideoDLFilePicker"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"externalVideoHTML", (dlExternalVideo != null) ? dlExternalVideo.getEmbeddableHTML() : ""

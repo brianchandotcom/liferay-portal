@@ -26,7 +26,7 @@ import {useDebounceCallback} from '../utils/hooks';
 import validateUrl from '../utils/validateUrl';
 import ConditionalWrapper from './ConditionalWrapper';
 
-const VideoPreview = ({
+const DLExternalVideoPreview = ({
 	externalVideoHTML = '',
 	externalVideoURL = '',
 	getDLExternalVideoFieldsURL,
@@ -167,7 +167,7 @@ const VideoPreview = ({
 	);
 };
 
-VideoPreview.propTypes = {
+DLExternalVideoPreview.propTypes = {
 	externalVideoHTML: PropTypes.string,
 	externalVideoURL: PropTypes.string,
 	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
@@ -175,4 +175,4 @@ VideoPreview.propTypes = {
 	onSelectedVideo: PropTypes.func,
 };
 
-export default VideoPreview;
+export default DLExternalVideoPreview;

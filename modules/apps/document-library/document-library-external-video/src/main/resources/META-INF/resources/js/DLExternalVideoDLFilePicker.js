@@ -15,10 +15,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ExternalVideoPreview from './components/ExternalVideoPreview';
+import DLExternalVideoPreview from './components/DLExternalVideoPreview';
 
-const FilePickerVideoPreview = ({onFilePickCallback, ...videoProps}) => (
-	<ExternalVideoPreview
+const DLExternalVideoDLFilePicker = ({onFilePickCallback, ...videoProps}) => (
+	<DLExternalVideoPreview
 		{...videoProps}
 		onSelectedVideo={(fields) => {
 			window[onFilePickCallback](fields);
@@ -27,8 +27,8 @@ const FilePickerVideoPreview = ({onFilePickCallback, ...videoProps}) => (
 	/>
 );
 
-FilePickerVideoPreview.propTypes = {
+DLExternalVideoDLFilePicker.propTypes = {
 	onFilePickCallback: PropTypes.string.isRequired,
 };
 
-export default FilePickerVideoPreview;
+export default DLExternalVideoDLFilePicker;

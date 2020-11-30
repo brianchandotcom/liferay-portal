@@ -15,10 +15,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ExternalVideoPreview from './components/ExternalVideoPreview';
+import DLExternalVideoPreview from './components/DLExternalVideoPreview';
 
-const ItemSelectorUrlVideo = ({eventName, ...videoProps}) => (
-	<ExternalVideoPreview
+const DLExternalVideoVideoURLItemSelectorView = ({
+	eventName,
+	...videoProps
+}) => (
+	<DLExternalVideoPreview
 		{...videoProps}
 		onAdd={(url) => {
 			Liferay.Util.getOpener().Liferay.fire(eventName, {
@@ -31,8 +34,8 @@ const ItemSelectorUrlVideo = ({eventName, ...videoProps}) => (
 	/>
 );
 
-ItemSelectorUrlVideo.propTypes = {
+DLExternalVideoVideoURLItemSelectorView.propTypes = {
 	eventName: PropTypes.string.isRequired,
 };
 
-export default ItemSelectorUrlVideo;
+export default DLExternalVideoVideoURLItemSelectorView;

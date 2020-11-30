@@ -26,6 +26,8 @@ public interface CommerceInventoryAuditType {
 	public String formatLog(long userId, String context, Locale locale)
 		throws Exception;
 
+	public String formatQuantity(int quantity, Locale locale);
+
 	public String getLog(Map<String, String> context);
 
 	public String getType();

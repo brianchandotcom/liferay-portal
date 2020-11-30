@@ -456,6 +456,7 @@ definition {
 
 	@priority = "4"
 	test EditPublishTemplate {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "StagingUsecase#EditPublishTemplate";
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");

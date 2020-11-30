@@ -3440,6 +3440,8 @@ definition {
 	@description = "This is a use case for LPS-97827."
 	@priority = "2"
 	test ViewParentPageNameAfterPublishChangesInChildPage {
+		property portal.upstream = "quarantine";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Child Page A",

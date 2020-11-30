@@ -2,7 +2,6 @@
 	"dependencies": {
 		"@clayui/tooltip": "3.4.1",
 		"frontend-js-react-web": "*",
-		"metal-dom": "2.16.8",
 		"metal-position": "2.1.2",
 		"react": "16.12.0"
 	},

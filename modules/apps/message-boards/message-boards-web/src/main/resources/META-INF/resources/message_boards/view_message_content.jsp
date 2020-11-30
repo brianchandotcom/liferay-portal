@@ -299,7 +299,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
+<aui:script require="frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
 	var moreMessagesButton = document.getElementById(
 		'<portlet:namespace />moreMessages'
 	);

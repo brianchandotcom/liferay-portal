@@ -82,7 +82,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script sandbox="<%= true %>">
 	var targetTagNameSelect = document.getElementById(
 		'<portlet:namespace />targetTagName'
 	);

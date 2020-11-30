@@ -5,7 +5,6 @@
 		"@clayui/icon": "3.1.0",
 		"@clayui/layout": "3.2.0",
 		"frontend-js-web": "*",
-		"metal-dom": "2.16.8",
 		"metal-drag-drop": "3.3.1",
 		"metal-position": "2.1.2",
 		"metal-state": "2.16.8",

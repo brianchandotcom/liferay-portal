@@ -13,7 +13,6 @@
 		"@clayui/sticker": "3.3.0",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"metal-dom": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},

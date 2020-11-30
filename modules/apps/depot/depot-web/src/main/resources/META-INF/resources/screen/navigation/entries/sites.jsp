@@ -134,7 +134,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		/>
 	</liferay-ui:search-container>
 
-	<aui:script require="metal-dom/src/all/dom as dom">
+	<aui:script sandbox="<%= true %>">
 		var addConnectedSiteButton = document.querySelector(
 			'#<portlet:namespace />addConnectedSiteButton'
 		);

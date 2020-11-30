@@ -91,9 +91,7 @@ String curSection = formNavigatorStepsDisplayContext.getCurSection();
 	</aui:button-row>
 </c:if>
 
-<aui:script require="metal-dom/src/dom">
-	var dom = metalDomSrcDom.default;
-
+<aui:script sandbox="<%= true %>">
 	var redirectField = document.querySelector(
 		'input[name="<portlet:namespace />redirect"]'
 	);

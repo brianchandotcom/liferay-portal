@@ -182,7 +182,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 		<portlet:param name="parentCommerceBOMFolderId" value="<%= String.valueOf(commerceBOMAdminDisplayContext.getCommerceBOMFolderId()) %>" />
 	</portlet:actionURL>
 
-	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+	<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		function handleAddBOMFolderButtonClick(event) {
 			event.preventDefault();
 

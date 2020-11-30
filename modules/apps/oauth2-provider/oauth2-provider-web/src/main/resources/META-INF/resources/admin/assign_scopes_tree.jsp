@@ -150,7 +150,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 	</clay:sheet>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script sandbox="<%= true %>">
 	AUI().use('node', 'aui-modal', function (A) {
 		A.all('input[name="<portlet:namespace />scopeAliases"]').each(function () {
 			this.on('click', function () {

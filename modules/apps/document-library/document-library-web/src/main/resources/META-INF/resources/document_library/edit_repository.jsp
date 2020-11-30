@@ -171,7 +171,7 @@ renderResponse.setTitle(headerTitle);
 	</div>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script sandbox="<%= true %>">
 	var settingsParametersContainer = document.getElementById(
 		'<portlet:namespace />settingsParameters'
 	);

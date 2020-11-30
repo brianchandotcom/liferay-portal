@@ -92,7 +92,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 	</clay:row>
 </clay:container-fluid>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script sandbox="<%= true %>">
 	AUI().use('node', 'aui-modal', function (A) {
 		if (A.all('#<portlet:namespace />navGlobalScopes .panel').size() > 0) {
 			A.one('#<portlet:namespace />navScopeTypes').toggleClass(

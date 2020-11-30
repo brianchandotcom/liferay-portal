@@ -201,7 +201,7 @@ String friendlyURLBase = StringPool.BLANK;
 	</clay:sheet-section>
 </c:if>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script sandbox="<%= true %>">
 	Liferay.Util.toggleBoxes(
 		'<portlet:namespace />layoutPrototypeLinkEnabled',
 		'<portlet:namespace />layoutPrototypeMergeAlert'

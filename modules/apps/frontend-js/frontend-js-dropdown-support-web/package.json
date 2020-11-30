@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"dom-align": "1.10.4",
-		"metal-dom": "2.16.8"
+		"dom-align": "1.10.4"
 	},
 	"name": "frontend-js-dropdown-support-web",
 	"private": true,

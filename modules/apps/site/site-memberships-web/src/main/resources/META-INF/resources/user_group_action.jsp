@@ -86,7 +86,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script sandbox="<%= true %>">
 	var assignRolesLink = document.getElementById(
 		'<portlet:namespace /><%= row.getRowId() %>assignRoles'
 	);

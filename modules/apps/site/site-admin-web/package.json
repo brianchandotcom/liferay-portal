@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"metal-dom": "2.16.8"
+		"frontend-js-web": "*"
 	},
 	"name": "site-admin-web",
 	"scripts": {

@@ -120,7 +120,7 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 		<aui:input name="organizationId" type="hidden" value="<%= String.valueOf(commerceOrganizationDisplayContext.getOrganizationId()) %>" />
 	</aui:form>
 
-	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+	<aui:script require="frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		Liferay.provide(
 			window,
 			'handleAddOrganizationButtonClick',

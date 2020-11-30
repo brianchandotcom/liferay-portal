@@ -71,10 +71,11 @@ String[] categoryKeys = formNavigatorDisplayContext.getCategoryKeys();
 	</div>
 </c:if>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script sandbox="<%= true %>">
 	var redirectField = document.querySelector(
 		'input[name="<portlet:namespace />redirect"]'
 	);
+
 	var tabs1Param = '<%= formNavigatorDisplayContext.getTabs1Param() %>';
 
 	var updateRedirectField = function (event) {

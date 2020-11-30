@@ -76,7 +76,6 @@
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
-		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",
 		"metal-soy": "2.16.9",
 		"metal-state": "2.16.8",

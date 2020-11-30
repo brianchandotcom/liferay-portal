@@ -263,9 +263,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="metal-dom/src/dom">
-	var dom = metalDomSrcDom.default;
-
+<aui:script sandbox="<%= true %>">
 	var form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {

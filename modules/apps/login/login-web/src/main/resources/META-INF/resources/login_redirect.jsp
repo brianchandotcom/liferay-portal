@@ -46,11 +46,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	</div>
 
 	<aui:script sandbox="<%= true %>">
-		var showStatusMessage = Liferay.lazyLoad('metal-dom/src/dom', function (
-			dom,
-			type,
-			message
-		) {
+		var showStatusMessage = function (type, message) {
 			var messageContainer = document.getElementById(
 				'<portlet:namespace />login-status-messages'
 			);
@@ -64,64 +60,59 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 				messageContainer.classList.remove('hide');
 			}
-		});
+		};
 
-		window.<portlet:namespace />activateAccount = Liferay.lazyLoad(
-			'metal-dom/src/dom',
-			function (dom) {
-				var form = document.getElementById('<portlet:namespace />fm');
+		window.<portlet:namespace />activateAccount = function () {
+			var form = document.getElementById('<portlet:namespace />fm');
 
-				function onError() {
-					var message =
-						'<liferay-ui:message key="your-request-failed-to-complete" />';
+			function onError() {
+				var message =
+					'<liferay-ui:message key="your-request-failed-to-complete" />';
 
-					showStatusMessage('danger', message);
+				showStatusMessage('danger', message);
 
-					var anonymousAccount = form.querySelector('.anonymous-account');
+				var anonymousAccount = form.querySelector('.anonymous-account');
+
+				if (anonymousAccount) {
+					anonymousAccount.classList.replace('show', 'hide');
+				}
+			}
+
+			Liferay.Util.fetch('<%= updateIncompleteUserURL %>', {
+				body: new FormData(form),
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
+				method: 'POST',
+			})
+				.then(function (response) {
+					return response.ok ? response.json() : Promise.reject();
+				})
+				.then(function (data) {
+					return !data.exception ? data.userStatus : Promise.reject();
+				})
+				.then(function (userStatus) {
+					var message = '';
+
+					if (userStatus == 'user_added') {
+						message =
+							'<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message arguments="<%= emailAddress %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />';
+					}
+					else if (userStatus == 'user_pending') {
+						message =
+							'<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
+					}
+
+					showStatusMessage('success', message);
+
+					var anonymousAccount = document.querySelector('.anonymous-account');
 
 					if (anonymousAccount) {
 						anonymousAccount.classList.replace('show', 'hide');
 					}
-				}
-
-				Liferay.Util.fetch('<%= updateIncompleteUserURL %>', {
-					body: new FormData(form),
-					headers: new Headers({
-						'Content-Type': 'application/json',
-					}),
-					method: 'POST',
 				})
-					.then(function (response) {
-						return response.ok ? response.json() : Promise.reject();
-					})
-					.then(function (data) {
-						return !data.exception ? data.userStatus : Promise.reject();
-					})
-					.then(function (userStatus) {
-						var message = '';
-
-						if (userStatus == 'user_added') {
-							message =
-								'<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message arguments="<%= emailAddress %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />';
-						}
-						else if (userStatus == 'user_pending') {
-							message =
-								'<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
-						}
-
-						showStatusMessage('success', message);
-
-						var anonymousAccount = document.querySelector(
-							'.anonymous-account'
-						);
-
-						if (anonymousAccount) {
-							anonymousAccount.classList.replace('show', 'hide');
-						}
-					})
-					.catch(onError);
-			}
-		);
+				.catch(onError);
+		};
 	</aui:script>
 </c:if>
 

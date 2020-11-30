@@ -20,7 +20,6 @@
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",
 		"metal-position": "2.1.2",
 		"prop-types": "15.7.2",

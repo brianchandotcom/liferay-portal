@@ -43,7 +43,7 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 %>
 
 	<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-		<div class="card-section-header c-m-0 c-px-0">
+		<div class="c-m-0 c-px-0 card-section-header">
 			<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
 		</div>
 	</c:if>

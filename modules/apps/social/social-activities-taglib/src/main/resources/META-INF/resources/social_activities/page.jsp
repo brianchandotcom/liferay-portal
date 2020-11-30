@@ -69,7 +69,7 @@
 			%>
 
 			<ul class="list-unstyled">
-				<li class="card-section-header c-m-0 c-px-0">
+				<li class="c-m-0 c-px-0 card-section-header">
 					<c:choose>
 						<c:when test="<%= curDaysBetween == 0 %>">
 							<liferay-ui:message key="today" />

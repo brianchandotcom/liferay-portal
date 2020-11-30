@@ -53,7 +53,7 @@
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "",
+					"defaultValue": "dropdown-fragment-menu-regular",
 					"label": "panel-type",
 					"name": "panelType",
 					"type": "select",
@@ -61,11 +61,11 @@
 						"validValues": [
 							{
 								"label": "regular",
-								"value": ""
+								"value": "dropdown-fragment-menu-regular"
 							},
 							{
 								"label": "full-width",
-								"value": "dropdown-full"
+								"value": "dropdown-fragment-menu-full"
 							}
 						]
 					}

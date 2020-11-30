@@ -1,11 +1,10 @@
 <div class="component-dropdown">
-	<div class="dropdown ${configuration.panelType}">
+	<div class="dropdown-fragment">
 		<button
 			aria-expanded="false"
 			aria-haspopup="true"
-			class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType} dropdown-toggle"
-			data-toggle="liferay-dropdown"
-			id="dropdown-fragment"
+			class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType} dropdown-fragment-toggle"
+			id="dropdown-fragment-${fragmentEntryLinkNamespace}"
 			type="button"
 		>
 			<span data-lfr-editable-id="dropdown-text" data-lfr-editable-type="text">Dropdown</span>
@@ -16,7 +15,7 @@
 			</span>
 		</button>
 
-		<div aria-labelledby="dropdown-fragment" class="dropdown-menu[#if configuration.keepOpen] keep-open[/#if] px-1">
+		<div aria-labelledby="dropdown-fragment" class="dropdown-fragment-menu ${configuration.panelType} p-1">
 			<lfr-drop-zone data-lfr-drop-zone-id="1"></lfr-drop-zone>
 		</div>
 	</div>

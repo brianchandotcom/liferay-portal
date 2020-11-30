@@ -199,6 +199,8 @@ class JournalPortlet extends PortletBase {
 
 		this._setActionName(actionName);
 
+		this._setAvailableLocales(this.availableLocales);
+
 		if (!articleId) {
 			const articleIdInput = this._getInputByName('articleId');
 
@@ -223,6 +225,14 @@ class JournalPortlet extends PortletBase {
 		const actionInput = this._getInputByName(ACTION_INPUT_NAME);
 
 		actionInput.value = actionName;
+	}
+
+	_setAvailableLocales(availableLocales) {
+		const availableLocalesInput = this._getInputByName(
+			this.ns('availableLocales')
+		);
+
+		availableLocalesInput.value = availableLocales;
 	}
 
 	/**

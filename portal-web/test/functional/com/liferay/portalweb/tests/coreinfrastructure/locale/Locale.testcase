@@ -308,7 +308,9 @@ definition {
 		Navigator.gotoNavTab(navTab = "Languages");
 
 		task ("Assert the default language options radio box is checked") {
-			AssertChecked(locator1 = "SiteSettingsDisplaySettings#DEFAULT_LANGUAGES_RADIO");
+			AssertChecked.assertCheckedNotVisible(
+				index = "1",
+				locator1 = "SiteSettingsDisplaySettings#LANGUAGES_RADIO");
 		}
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

@@ -1991,17 +1991,15 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DynamicDataMapping.editFieldPredefinedValue(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text",
-			fieldPredefinedValue = "(Enter Text Here)");
-
-		DynamicDataMapping.editFieldRequired(fieldFieldLabel = "Text");
+		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentText = "(Enter Text Here)");
+
+		PortletEntry.save();
 
 		NavItem.gotoTemplates();
 

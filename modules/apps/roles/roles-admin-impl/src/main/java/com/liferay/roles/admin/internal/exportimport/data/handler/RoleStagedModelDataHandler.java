@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.kernel.security.permission.PermissionConverterUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.model.adapter.StagedGroup;
 
 import java.util.List;
 
@@ -152,6 +154,13 @@ public class RoleStagedModelDataHandler
 
 		Element roleElement = portletDataContext.getExportDataElement(role);
 
+		for (Group group : _groupLocalService.getRoleGroups(role.getRoleId())) {
+			portletDataContext.addReferenceElement(
+				role, roleElement,
+				ModelAdapterUtil.adapt(group, Group.class, StagedGroup.class),
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
+		}
+
 		portletDataContext.addClassedModel(
 			roleElement, ExportImportPathUtil.getModelPath(role), role);
 	}
@@ -212,6 +221,23 @@ public class RoleStagedModelDataHandler
 						"Skip importing individually scoped permissions",
 						noSuchResourceActionException);
 				}
+			}
+		}
+
+		List<Element> groupElements = portletDataContext.getReferenceElements(
+			role, StagedGroup.class);
+
+		for (Element groupElement : groupElements) {
+			long companyId = GetterUtil.getLong(
+				groupElement.attributeValue("company-id"));
+			String uuid = groupElement.attributeValue("uuid");
+
+			Group group = _groupLocalService.fetchGroupByUuidAndCompanyId(
+				uuid, companyId);
+
+			if (group != null) {
+				_groupLocalService.addRoleGroup(
+					importedRole.getRoleId(), group);
 			}
 		}
 

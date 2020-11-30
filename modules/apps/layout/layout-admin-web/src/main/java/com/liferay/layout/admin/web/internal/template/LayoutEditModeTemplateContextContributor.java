@@ -45,7 +45,9 @@ public class LayoutEditModeTemplateContextContributor
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
-		if (layoutMode.equals(Constants.EDIT)) {
+		if (layoutMode.equals(Constants.EDIT) ||
+			layoutMode.equals(Constants.PREVIEW)) {
+
 			StringBuilder sb = new StringBuilder(3);
 
 			sb.append(GetterUtil.getString(contextObjects.get("bodyCssClass")));

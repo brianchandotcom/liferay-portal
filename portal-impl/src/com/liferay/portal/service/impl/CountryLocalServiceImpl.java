@@ -82,6 +82,11 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCountriesByCompanyId(long companyId) {
+		countryPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
 	public List<Country> getCountriesByCompanyId(long companyId) {
 		return countryPersistence.findByCompanyId(companyId);
 	}

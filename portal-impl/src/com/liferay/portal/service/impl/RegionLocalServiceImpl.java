@@ -58,6 +58,11 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		return regionPersistence.update(region);
 	}
 
+	@Override
+	public void deleteRegionsByCountryId(long countryId) {
+		regionPersistence.removeByCountryId(countryId);
+	}
+
 	protected void validate(String name, String regionCode)
 		throws PortalException {
 

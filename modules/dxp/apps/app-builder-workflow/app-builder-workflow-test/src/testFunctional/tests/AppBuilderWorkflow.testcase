@@ -201,7 +201,7 @@ definition {
 		AppBuilderAppAdmin.validateObjectResultNotPresent(objectName = "my custom object 2");
 
 		AppBuilderWorkflow.selectObject(objectName = "my custom object 1");
-		AppBuilderWorkflow.clickOnSelectFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 		AppBuilderAppAdmin.searchItem(itemName = "My Form View 1");
 		AppBuilderWorkflow.validateFormOrTableViewResultPresent(itemName = "My Form View 1");
 		AppBuilderWorkflow.validateFormOrTableViewResultNotPresent(itemName = "My Form View 2");
@@ -217,7 +217,7 @@ definition {
 		AppBuilderWorkflow.selectTableView(tableViewName = "My Table View 1");
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "my custom object 2");
-		AppBuilderWorkflow.clickOnSelectFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 		AppBuilderWorkflow.validateFormOrTableViewResultPresent(itemName = "My Form View From Object 2");
 		AppBuilderWorkflow.validateFormOrTableViewResultNotPresent(itemName = "My Form View 1");
 		AppBuilderWorkflow.validateFormOrTableViewResultNotPresent(itemName = "My Form View 2");
@@ -241,7 +241,7 @@ definition {
 		AppBuilderWorkflow.selectObject(objectName = "my custom object 1");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
-		AppBuilderWorkflow.clickOnSelectFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 		AppBuilderWorkflow.selectFormView(formViewName = "My Form View 1");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
@@ -793,6 +793,128 @@ definition {
 		AppBuilderAdmin.editItem(itemName = "Edited Content");
 
 		AppBuilderWorkflow.assertFieldDisabled(fieldName = "Text");
+	}
+
+	@description = "LRQA-60711 - Automate LPS-112434: As an App Admin, I want to deploy an App having different Form Views of the same Data Object for each Step"
+	@priority = "4"
+	test ValidateFormViewsOnSteps {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 1",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View 1");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Numeric",
+			formViewName = "My Form View 2");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Date",
+			formViewName = "Other Object Form View",
+			tableViewName = "Other Object Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "My Form View 1",
+			objectName = "my custom object 1",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View 1",
+			positionNumber = "1");
+
+		AppBuilderWorkflow.addNewFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "2");
+		AppBuilderWorkflow.assertFormViewPresentOnList(formViewName = "My Form View 1");
+		AppBuilderWorkflow.assertFormViewPresentOnList(formViewName = "My Form View 2");
+		AppBuilderWorkflow.assertFormViewNotPresentOnList(formViewName = "Other Object Form View");
+		AppBuilderWorkflow.selectFormView(formViewName = "My Form View 2");
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "2");
+
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View 1",
+			positionNumber = "1");
+
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View 2",
+			positionNumber = "2");
+
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+		Button.click(button = "Deploy");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
+		AppBuilderAdmin.editItem(itemName = "Content");
+		FormViewBuilder.assertTextPresent(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "1987");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
+		AppBuilderAdmin.editItem(itemName = "Content");
+		FormViewBuilder.assertTextPresent(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		FormViewBuilder.assertTextPresent(
+			fieldName = "Numeric",
+			fieldValue = "1987");
 	}
 
 	@description = "Automate LPS-111262 & LPS-111681"

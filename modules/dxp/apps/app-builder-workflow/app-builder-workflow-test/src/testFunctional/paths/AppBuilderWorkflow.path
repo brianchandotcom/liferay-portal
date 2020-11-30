@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>SELECT_FORM_VIEW_BUTTON</td>
-	<td>//button[contains(@aria-labelledby,'form-view')]</td>
+	<td>xpath=(//button[contains(@aria-labelledby,'form-view')])[${key_positionNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FORM_VIEW_BUTTON_TEXT</td>
-	<td>//button[contains(@aria-labelledby,'form-view')]//span</td>
+	<td>xpath=(//button[contains(@aria-labelledby,'form-view')]//span)[${key_positionNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>FORM_OR_TABLE_VIEW_ITEM</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(text(),'${key_itemName}')]</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'dropdown-item') and contains(text(),'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,6 +137,11 @@
 <tr>
 	<td>APP_ALERT_MODAL_TEXT</td>
 	<td>//div[contains(@class,'modal-body')]//span[contains(text(),'Some of the updates cannot be applied to existing app data. Only new records will reflect the changes in existing deployments of the app.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_FORM_VIEW_BUTTON</td>
+	<td>//button//span[text()='Add New Form View']</td>
 	<td></td>
 </tr>
 <!--APP_RUNNING-->

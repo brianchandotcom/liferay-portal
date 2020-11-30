@@ -98,6 +98,13 @@ definition {
 		Click(locator1 = "FormViewBuilder#RULE_ADD_BUTTON");
 	}
 
+	macro assertTextPresent {
+		AssertTextEquals(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#TEXT_FIELD",
+			value1 = "${fieldValue}");
+	}
+
 	macro cancelButtonInDeleteFromObject {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
 	}

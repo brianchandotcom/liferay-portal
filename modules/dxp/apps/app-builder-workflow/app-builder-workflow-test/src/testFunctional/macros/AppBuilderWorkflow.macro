@@ -1,5 +1,9 @@
 definition {
 
+	macro addNewFormView {
+		Click(locator1 = "AppBuilderWorkflow#ADD_NEW_FORM_VIEW_BUTTON");
+	}
+
 	macro addNewStep {
 		Click(locator1 = "AppBuilderWorkflow#NEW_STEP_BUTTON");
 	}
@@ -63,6 +67,25 @@ definition {
 		AssertVisible(
 			key_fieldName = "${fieldName}",
 			locator1 = "AppBuilderWorkflow#TEXT_FIELD_DISABLED");
+	}
+
+	macro assertFormViewNotPresentOnList {
+		AssertElementNotPresent(
+			key_itemName = "${formViewName}",
+			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
+	}
+
+	macro assertFormViewPresentOnList {
+		AssertElementPresent(
+			key_itemName = "${formViewName}",
+			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
+	}
+
+	macro assertFormViewSelected {
+		AssertTextEquals(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT",
+			value1 = "${formViewName}");
 	}
 
 	macro assertStepNotPresent {
@@ -138,7 +161,9 @@ definition {
 	}
 
 	macro clickOnSelectFormView {
-		Click(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON");
+		Click(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON");
 	}
 
 	macro clickOnSelectObject {
@@ -232,7 +257,7 @@ definition {
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "${objectName}");
 
-		AppBuilderWorkflow.clickOnSelectFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 		AppBuilderWorkflow.selectFormView(formViewName = "${formViewName}");
 
 		AppBuilderWorkflow.clickOnSelectTableView();
@@ -260,8 +285,9 @@ definition {
 
 		AppBuilderWorkflow.selectDataAndViewsCard();
 
+		key_positionNumber = "1";
 		if (!(IsTextEqual.isPartialText(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT", value1 = "${formViewName}"))) {
-			AppBuilderWorkflow.clickOnSelectFormView();
+			AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 			AppBuilderWorkflow.selectFormView(formViewName = "${formViewName}");
 		}
 

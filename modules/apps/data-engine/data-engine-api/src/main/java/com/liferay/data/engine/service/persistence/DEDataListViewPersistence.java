@@ -17,6 +17,7 @@ package com.liferay.data.engine.service.persistence;
 import com.liferay.data.engine.exception.NoSuchDataListViewException;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DEDataListViewPersistence
-	extends BasePersistence<DEDataListView> {
+	extends BasePersistence<DEDataListView>, CTPersistence<DEDataListView> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

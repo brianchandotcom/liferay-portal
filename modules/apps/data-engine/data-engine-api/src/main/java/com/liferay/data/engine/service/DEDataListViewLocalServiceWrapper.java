@@ -14,7 +14,10 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DEDataListViewLocalService}.
@@ -44,14 +47,12 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the de data list view that was added
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView addDEDataListView(
-		com.liferay.data.engine.model.DEDataListView deDataListView) {
-
+	public DEDataListView addDEDataListView(DEDataListView deDataListView) {
 		return _deDataListViewLocalService.addDEDataListView(deDataListView);
 	}
 
 	@Override
-	public com.liferay.data.engine.model.DEDataListView addDEDataListView(
+	public DEDataListView addDEDataListView(
 			long groupId, long companyId, long userId, String appliedFilters,
 			long ddmStructureId, String fieldNames,
 			java.util.Map<java.util.Locale, String> name, String sortField)
@@ -69,9 +70,7 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the new de data list view
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView createDEDataListView(
-		long deDataListViewId) {
-
+	public DEDataListView createDEDataListView(long deDataListViewId) {
 		return _deDataListViewLocalService.createDEDataListView(
 			deDataListViewId);
 	}
@@ -98,9 +97,7 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the de data list view that was removed
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView deleteDEDataListView(
-		com.liferay.data.engine.model.DEDataListView deDataListView) {
-
+	public DEDataListView deleteDEDataListView(DEDataListView deDataListView) {
 		return _deDataListViewLocalService.deleteDEDataListView(deDataListView);
 	}
 
@@ -116,8 +113,7 @@ public class DEDataListViewLocalServiceWrapper
 	 * @throws PortalException if a de data list view with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView deleteDEDataListView(
-			long deDataListViewId)
+	public DEDataListView deleteDEDataListView(long deDataListViewId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _deDataListViewLocalService.deleteDEDataListView(
@@ -237,9 +233,7 @@ public class DEDataListViewLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.data.engine.model.DEDataListView fetchDEDataListView(
-		long deDataListViewId) {
-
+	public DEDataListView fetchDEDataListView(long deDataListViewId) {
 		return _deDataListViewLocalService.fetchDEDataListView(
 			deDataListViewId);
 	}
@@ -252,8 +246,8 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView
-		fetchDEDataListViewByUuidAndGroupId(String uuid, long groupId) {
+	public DEDataListView fetchDEDataListViewByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _deDataListViewLocalService.fetchDEDataListViewByUuidAndGroupId(
 			uuid, groupId);
@@ -274,8 +268,7 @@ public class DEDataListViewLocalServiceWrapper
 	 * @throws PortalException if a de data list view with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView getDEDataListView(
-			long deDataListViewId)
+	public DEDataListView getDEDataListView(long deDataListViewId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _deDataListViewLocalService.getDEDataListView(deDataListViewId);
@@ -290,8 +283,8 @@ public class DEDataListViewLocalServiceWrapper
 	 * @throws PortalException if a matching de data list view could not be found
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView
-			getDEDataListViewByUuidAndGroupId(String uuid, long groupId)
+	public DEDataListView getDEDataListViewByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _deDataListViewLocalService.getDEDataListViewByUuidAndGroupId(
@@ -310,27 +303,24 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the range of de data list views
 	 */
 	@Override
-	public java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViews(int start, int end) {
+	public java.util.List<DEDataListView> getDEDataListViews(
+		int start, int end) {
 
 		return _deDataListViewLocalService.getDEDataListViews(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViews(long ddmStructureId) {
+	public java.util.List<DEDataListView> getDEDataListViews(
+		long ddmStructureId) {
 
 		return _deDataListViewLocalService.getDEDataListViews(ddmStructureId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViews(
-			long groupId, long companyId, long ddmStructureId, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.data.engine.model.DEDataListView>
-					orderByComparator) {
+	public java.util.List<DEDataListView> getDEDataListViews(
+		long groupId, long companyId, long ddmStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
+			orderByComparator) {
 
 		return _deDataListViewLocalService.getDEDataListViews(
 			groupId, companyId, ddmStructureId, start, end, orderByComparator);
@@ -344,8 +334,8 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the matching de data list views, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViewsByUuidAndCompanyId(String uuid, long companyId) {
+	public java.util.List<DEDataListView> getDEDataListViewsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _deDataListViewLocalService.getDEDataListViewsByUuidAndCompanyId(
 			uuid, companyId);
@@ -362,12 +352,10 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the range of matching de data list views, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.data.engine.model.DEDataListView>
-		getDEDataListViewsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.data.engine.model.DEDataListView>
-					orderByComparator) {
+	public java.util.List<DEDataListView> getDEDataListViewsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DEDataListView>
+			orderByComparator) {
 
 		return _deDataListViewLocalService.getDEDataListViewsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -440,20 +428,38 @@ public class DEDataListViewLocalServiceWrapper
 	 * @return the de data list view that was updated
 	 */
 	@Override
-	public com.liferay.data.engine.model.DEDataListView updateDEDataListView(
-		com.liferay.data.engine.model.DEDataListView deDataListView) {
-
+	public DEDataListView updateDEDataListView(DEDataListView deDataListView) {
 		return _deDataListViewLocalService.updateDEDataListView(deDataListView);
 	}
 
 	@Override
-	public com.liferay.data.engine.model.DEDataListView updateDEDataListView(
+	public DEDataListView updateDEDataListView(
 			long deDataListViewId, String appliedFilters, String fieldNames,
 			java.util.Map<java.util.Locale, String> nameMap, String sortField)
 		throws Exception {
 
 		return _deDataListViewLocalService.updateDEDataListView(
 			deDataListViewId, appliedFilters, fieldNames, nameMap, sortField);
+	}
+
+	@Override
+	public CTPersistence<DEDataListView> getCTPersistence() {
+		return _deDataListViewLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<DEDataListView> getModelClass() {
+		return _deDataListViewLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<DEDataListView>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _deDataListViewLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

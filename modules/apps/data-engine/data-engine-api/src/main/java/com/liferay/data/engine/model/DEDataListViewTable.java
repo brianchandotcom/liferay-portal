@@ -34,6 +34,11 @@ public class DEDataListViewTable extends BaseTable<DEDataListViewTable> {
 	public static final DEDataListViewTable INSTANCE =
 		new DEDataListViewTable();
 
+	public final Column<DEDataListViewTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DEDataListViewTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DEDataListViewTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DEDataListViewTable, Long> deDataListViewId =

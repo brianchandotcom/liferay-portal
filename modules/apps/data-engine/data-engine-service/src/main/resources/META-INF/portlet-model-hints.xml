@@ -2,6 +2,8 @@
 
 <model-hints>
 	<model name="com.liferay.data.engine.model.DEDataDefinitionFieldLink">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="deDataDefinitionFieldLinkId" type="long" />
 		<field name="groupId" type="long" />
@@ -15,6 +17,8 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.data.engine.model.DEDataListView">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="deDataListViewId" type="long" />
 		<field name="groupId" type="long" />

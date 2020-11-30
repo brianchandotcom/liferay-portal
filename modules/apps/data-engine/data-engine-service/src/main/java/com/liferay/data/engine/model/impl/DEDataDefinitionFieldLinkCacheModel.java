@@ -18,6 +18,7 @@ import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class DEDataDefinitionFieldLinkCacheModel
-	implements CacheModel<DEDataDefinitionFieldLink>, Externalizable {
+	implements CacheModel<DEDataDefinitionFieldLink>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +51,10 @@ public class DEDataDefinitionFieldLinkCacheModel
 			deDataDefinitionFieldLinkCacheModel =
 				(DEDataDefinitionFieldLinkCacheModel)object;
 
-		if (deDataDefinitionFieldLinkId ==
+		if ((deDataDefinitionFieldLinkId ==
 				deDataDefinitionFieldLinkCacheModel.
-					deDataDefinitionFieldLinkId) {
+					deDataDefinitionFieldLinkId) &&
+			(mvccVersion == deDataDefinitionFieldLinkCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +64,30 @@ public class DEDataDefinitionFieldLinkCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, deDataDefinitionFieldLinkId);
+		int hashCode = HashUtil.hash(0, deDataDefinitionFieldLinkId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", deDataDefinitionFieldLinkId=");
 		sb.append(deDataDefinitionFieldLinkId);
@@ -99,6 +118,9 @@ public class DEDataDefinitionFieldLinkCacheModel
 	public DEDataDefinitionFieldLink toEntityModel() {
 		DEDataDefinitionFieldLinkImpl deDataDefinitionFieldLinkImpl =
 			new DEDataDefinitionFieldLinkImpl();
+
+		deDataDefinitionFieldLinkImpl.setMvccVersion(mvccVersion);
+		deDataDefinitionFieldLinkImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			deDataDefinitionFieldLinkImpl.setUuid("");
@@ -153,6 +175,9 @@ public class DEDataDefinitionFieldLinkCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		deDataDefinitionFieldLinkId = objectInput.readLong();
@@ -174,6 +199,10 @@ public class DEDataDefinitionFieldLinkCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -205,6 +234,8 @@ public class DEDataDefinitionFieldLinkCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long deDataDefinitionFieldLinkId;
 	public long groupId;

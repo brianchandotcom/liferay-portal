@@ -1,10 +1,15 @@
-create unique index IX_2CEE588F on DEDataDefinitionFieldLink (classNameId, classPK, ddmStructureId, fieldName[$COLUMN_LENGTH:75$]);
-create index IX_7BAE5B6E on DEDataDefinitionFieldLink (classNameId, ddmStructureId, fieldName[$COLUMN_LENGTH:75$]);
-create index IX_E931B304 on DEDataDefinitionFieldLink (ddmStructureId, fieldName[$COLUMN_LENGTH:75$]);
-create index IX_5145BB70 on DEDataDefinitionFieldLink (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_AAE65DF2 on DEDataDefinitionFieldLink (uuid_[$COLUMN_LENGTH:75$], groupId);
+create index IX_94C1A22F on DEDataDefinitionFieldLink (classNameId, classPK, ctCollectionId);
+create unique index IX_998C30ED on DEDataDefinitionFieldLink (classNameId, classPK, ddmStructureId, fieldName[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_F149FA5 on DEDataDefinitionFieldLink (classNameId, ddmStructureId, ctCollectionId);
+create index IX_95CC on DEDataDefinitionFieldLink (classNameId, ddmStructureId, fieldName[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_110695CF on DEDataDefinitionFieldLink (ddmStructureId, ctCollectionId);
+create index IX_57E0162 on DEDataDefinitionFieldLink (ddmStructureId, fieldName[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_1C2BB1CE on DEDataDefinitionFieldLink (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_8A366C16 on DEDataDefinitionFieldLink (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_AA8B1050 on DEDataDefinitionFieldLink (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create index IX_1C932689 on DEDataListView (ddmStructureId);
-create index IX_FA1639C7 on DEDataListView (groupId, companyId, ddmStructureId);
-create index IX_7113A88 on DEDataListView (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_3336C30A on DEDataListView (uuid_[$COLUMN_LENGTH:75$], groupId);
+create index IX_8DD9CAE7 on DEDataListView (ddmStructureId, ctCollectionId);
+create index IX_29FAA225 on DEDataListView (groupId, companyId, ddmStructureId, ctCollectionId);
+create index IX_B10600E6 on DEDataListView (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_9BB69BFE on DEDataListView (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_275E4568 on DEDataListView (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

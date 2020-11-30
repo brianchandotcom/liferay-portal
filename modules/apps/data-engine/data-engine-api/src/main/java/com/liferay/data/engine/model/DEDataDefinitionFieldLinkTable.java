@@ -34,6 +34,12 @@ public class DEDataDefinitionFieldLinkTable
 	public static final DEDataDefinitionFieldLinkTable INSTANCE =
 		new DEDataDefinitionFieldLinkTable();
 
+	public final Column<DEDataDefinitionFieldLinkTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DEDataDefinitionFieldLinkTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DEDataDefinitionFieldLinkTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DEDataDefinitionFieldLinkTable, Long>

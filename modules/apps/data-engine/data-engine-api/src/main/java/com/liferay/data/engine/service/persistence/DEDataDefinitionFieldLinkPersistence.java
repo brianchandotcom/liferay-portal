@@ -17,6 +17,7 @@ package com.liferay.data.engine.service.persistence;
 import com.liferay.data.engine.exception.NoSuchDataDefinitionFieldLinkException;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DEDataDefinitionFieldLinkPersistence
-	extends BasePersistence<DEDataDefinitionFieldLink> {
+	extends BasePersistence<DEDataDefinitionFieldLink>,
+			CTPersistence<DEDataDefinitionFieldLink> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

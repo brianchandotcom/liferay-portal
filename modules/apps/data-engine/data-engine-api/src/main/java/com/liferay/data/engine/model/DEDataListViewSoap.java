@@ -33,6 +33,8 @@ public class DEDataListViewSoap implements Serializable {
 	public static DEDataListViewSoap toSoapModel(DEDataListView model) {
 		DEDataListViewSoap soapModel = new DEDataListViewSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setDeDataListViewId(model.getDeDataListViewId());
 		soapModel.setGroupId(model.getGroupId());
@@ -102,6 +104,22 @@ public class DEDataListViewSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setDeDataListViewId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public String getUuid() {
@@ -208,6 +226,8 @@ public class DEDataListViewSoap implements Serializable {
 		_sortField = sortField;
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _deDataListViewId;
 	private long _groupId;

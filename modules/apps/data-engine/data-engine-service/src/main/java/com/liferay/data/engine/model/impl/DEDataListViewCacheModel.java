@@ -18,6 +18,7 @@ import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class DEDataListViewCacheModel
-	implements CacheModel<DEDataListView>, Externalizable {
+	implements CacheModel<DEDataListView>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,9 @@ public class DEDataListViewCacheModel
 		DEDataListViewCacheModel deDataListViewCacheModel =
 			(DEDataListViewCacheModel)object;
 
-		if (deDataListViewId == deDataListViewCacheModel.deDataListViewId) {
+		if ((deDataListViewId == deDataListViewCacheModel.deDataListViewId) &&
+			(mvccVersion == deDataListViewCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,30 @@ public class DEDataListViewCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, deDataListViewId);
+		int hashCode = HashUtil.hash(0, deDataListViewId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", deDataListViewId=");
 		sb.append(deDataListViewId);
@@ -98,6 +117,9 @@ public class DEDataListViewCacheModel
 	@Override
 	public DEDataListView toEntityModel() {
 		DEDataListViewImpl deDataListViewImpl = new DEDataListViewImpl();
+
+		deDataListViewImpl.setMvccVersion(mvccVersion);
+		deDataListViewImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			deDataListViewImpl.setUuid("");
@@ -171,6 +193,9 @@ public class DEDataListViewCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		deDataListViewId = objectInput.readLong();
@@ -193,6 +218,10 @@ public class DEDataListViewCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -249,6 +278,8 @@ public class DEDataListViewCacheModel
 		}
 	}
 
+	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long deDataListViewId;
 	public long groupId;

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -46,6 +48,8 @@ public class DEDataDefinitionFieldLinkWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"deDataDefinitionFieldLinkId", getDeDataDefinitionFieldLinkId());
@@ -64,6 +68,18 @@ public class DEDataDefinitionFieldLinkWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -183,6 +199,16 @@ public class DEDataDefinitionFieldLinkWrapper
 	}
 
 	/**
+	 * Returns the ct collection ID of this de data definition field link.
+	 *
+	 * @return the ct collection ID of this de data definition field link
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
+	}
+
+	/**
 	 * Returns the ddm structure ID of this de data definition field link.
 	 *
 	 * @return the ddm structure ID of this de data definition field link
@@ -240,6 +266,16 @@ public class DEDataDefinitionFieldLinkWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this de data definition field link.
+	 *
+	 * @return the mvcc version of this de data definition field link
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -313,6 +349,16 @@ public class DEDataDefinitionFieldLinkWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this de data definition field link.
+	 *
+	 * @param ctCollectionId the ct collection ID of this de data definition field link
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the ddm structure ID of this de data definition field link.
 	 *
 	 * @param ddmStructureId the ddm structure ID of this de data definition field link
@@ -375,6 +421,16 @@ public class DEDataDefinitionFieldLinkWrapper
 	}
 
 	/**
+	 * Sets the mvcc version of this de data definition field link.
+	 *
+	 * @param mvccVersion the mvcc version of this de data definition field link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
+	}
+
+	/**
 	 * Sets the primary key of this de data definition field link.
 	 *
 	 * @param primaryKey the primary key of this de data definition field link
@@ -392,6 +448,20 @@ public class DEDataDefinitionFieldLinkWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<DEDataDefinitionFieldLink, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<DEDataDefinitionFieldLink, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

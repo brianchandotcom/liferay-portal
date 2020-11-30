@@ -21,8 +21,6 @@ DLEditFolderDisplayContext dlEditFolderDisplayContext = new DLEditFolderDisplayC
 
 Folder folder = dlEditFolderDisplayContext.getFolder();
 
-Folder parentFolder = dlEditFolderDisplayContext.getParentFolder();
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(dlEditFolderDisplayContext.getRedirect());
 
@@ -46,7 +44,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 	</portlet:actionURL>
 
 	<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "savePage();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= dlEditFolderDisplayContext.isRootFolder() ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= dlEditFolderDisplayContext.getCmd() %>" />
 		<aui:input name="redirect" type="hidden" value="<%= dlEditFolderDisplayContext.getRedirect() %>" />
 		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 		<aui:input name="folderId" type="hidden" value="<%= dlEditFolderDisplayContext.getFolderId() %>" />
@@ -83,13 +81,13 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-					<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
+					<c:if test="<%= dlEditFolderDisplayContext.isShowDescription() %>">
 						<aui:input name="description" />
 					</c:if>
 				</c:if>
 			</aui:fieldset>
 
-			<c:if test="<%= dlEditFolderDisplayContext.isRootFolder() || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
+			<c:if test="<%= dlEditFolderDisplayContext.isFileEntryTypeSupported() %>">
 
 				<%
 				DLFolder dlFolder = null;
@@ -114,11 +112,11 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 				}
 				%>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage='<%= dlEditFolderDisplayContext.isRootFolder() ? "" : "document-type-restrictions-help" %>' label='<%= dlEditFolderDisplayContext.isRootFolder() ? "" : (dlEditFolderDisplayContext.isWorkflowEnabled() ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage="<%= dlEditFolderDisplayContext.getFileEntryTypeRestrictionsHelpMessage() %>" label="<%= dlEditFolderDisplayContext.getFileEntryTypeRestrictionsLabel() %>">
 					<c:if test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
-						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= dlEditFolderDisplayContext.isWorkflowEnabled() ? LanguageUtil.format(request, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", dlEditFolderDisplayContext.getParentFolderName(), false) : LanguageUtil.format(request, "use-document-type-restrictions-of-the-parent-folder-x", dlEditFolderDisplayContext.getParentFolderName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
+						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= LanguageUtil.format(request, dlEditFolderDisplayContext.isWorkflowEnabled() ? "use-document-type-restrictions-and-workflow-of-the-parent-folder-x" : "use-document-type-restrictions-of-the-parent-folder-x", dlEditFolderDisplayContext.getParentFolderName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
 
-						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= dlEditFolderDisplayContext.isWorkflowEnabled() ? LanguageUtil.format(request, "define-specific-document-type-restrictions-and-workflow-for-this-folder-x", folder.getName(), false) : LanguageUtil.format(request, "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
+						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= LanguageUtil.format(request, dlEditFolderDisplayContext.isWorkflowEnabled() ? "define-specific-document-type-restrictions-and-workflow-for-this-folder-x" : "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
 
 						<div class="<%= (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeDefinedDiv">
 							<liferay-ui:search-container
@@ -243,7 +241,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 			</c:if>
 
 			<c:if test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
-				<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
+				<c:if test="<%= dlEditFolderDisplayContext.isSupportsMetadata() %>">
 					<liferay-expando:custom-attributes-available
 						className="<%= DLFolderConstants.getClassName() %>"
 					>
@@ -258,7 +256,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 					</liferay-expando:custom-attributes-available>
 				</c:if>
 
-				<c:if test="<%= (folder == null) && !RepositoryUtil.isExternalRepository(dlEditFolderDisplayContext.getRepositoryId()) %>">
+				<c:if test="<%= dlEditFolderDisplayContext.isSupportsPermissions() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= DLFolderConstants.getClassName() %>"

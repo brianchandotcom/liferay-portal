@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.util.RepositoryUtil;
 
 import java.util.List;
 
@@ -48,6 +52,40 @@ public class DLEditFolderDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getCmd() {
+		if (isRootFolder()) {
+			return "updateWorkflowDefinitions";
+		}
+
+		Folder folder = getFolder();
+
+		if (folder == null) {
+			return Constants.ADD;
+		}
+
+		return Constants.UPDATE;
+	}
+
+	public String getFileEntryTypeRestrictionsHelpMessage() {
+		if (isRootFolder()) {
+			return StringPool.BLANK;
+		}
+
+		return "document-type-restrictions-help";
+	}
+
+	public String getFileEntryTypeRestrictionsLabel() throws PortalException {
+		if (isRootFolder()) {
+			return StringPool.BLANK;
+		}
+
+		if (isWorkflowEnabled()) {
+			return "document-type-restrictions-and-workflow";
+		}
+
+		return "document-type-restrictions";
 	}
 
 	public Folder getFolder() {
@@ -173,8 +211,52 @@ public class DLEditFolderDisplayContext {
 		return _workflowDefinitions;
 	}
 
+	public boolean isFileEntryTypeSupported() {
+		Folder folder = getFolder();
+
+		if (isRootFolder() ||
+			((folder != null) && (folder.getModel() instanceof DLFolder))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isRootFolder() {
 		return ParamUtil.getBoolean(_httpServletRequest, "rootFolder");
+	}
+
+	public boolean isShowDescription() {
+		Folder parentFolder = getParentFolder();
+
+		if ((parentFolder == null) || parentFolder.isSupportsMetadata()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSupportsMetadata() {
+		Folder parentFolder = getParentFolder();
+
+		if ((parentFolder == null) || parentFolder.isSupportsMetadata()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSupportsPermissions() {
+		Folder folder = getFolder();
+
+		if ((folder == null) &&
+			!RepositoryUtil.isExternalRepository(getRepositoryId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isWorkflowEnabled() throws PortalException {

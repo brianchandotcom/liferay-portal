@@ -32,6 +32,10 @@ const getEditedPages = ({editingLanguageId, name, pages, value}) => {
 						...field.localizedValue,
 						[editingLanguageId]: value,
 					},
+					localizedValueEdited: {
+						...(field.localizedValueEdited ?? {}),
+						[editingLanguageId]: true,
+					},
 					value,
 				};
 			}

@@ -43,6 +43,10 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 		}
 
 		if (localizable) {
+			const edited =
+				localizedValue[languageId] ||
+				(localizedValueEdited && localizedValueEdited[languageId]);
+
 			if (!dataRecordValues[fieldName]) {
 				if (preserveValue) {
 					dataRecordValues[fieldName] = {
@@ -50,10 +54,7 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 						[languageId]: [],
 					};
 				}
-				else if (
-					localizedValue[languageId] ||
-					(localizedValueEdited && localizedValueEdited[languageId])
-				) {
+				else if (edited) {
 					dataRecordValues[fieldName] = {
 						[languageId]: [],
 						...localizedValue,
@@ -64,10 +65,7 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 			if (repeatable) {
 				dataRecordValues[fieldName][languageId].push(_value);
 			}
-			else if (
-				localizedValue[languageId] ||
-				(localizedValueEdited && localizedValueEdited[languageId])
-			) {
+			else if (edited) {
 				dataRecordValues[fieldName] = {
 					...localizedValue,
 					[languageId]: _value,

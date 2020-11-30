@@ -413,15 +413,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			_portletFileRepository
 		);
 
-		Repository repository = mockRepository();
-
-		PowerMockito.when(
-			_portletFileRepository.fetchPortletRepository(
-				_GROUP_ID, DDMFormConstants.SERVICE_NAME)
-		).thenReturn(
-			repository
-		);
-
 		Folder folder = mockFolder(_FORMS_FOLDER_ID);
 
 		PowerMockito.when(
@@ -430,6 +421,15 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 				DDMFormConstants.DDM_FORM_UPLOADED_FILES_FOLDER_NAME)
 		).thenReturn(
 			folder
+		);
+
+		Repository repository = mockRepository();
+
+		PowerMockito.when(
+			_portletFileRepository.fetchPortletRepository(
+				_GROUP_ID, DDMFormConstants.SERVICE_NAME)
+		).thenReturn(
+			repository
 		);
 	}
 

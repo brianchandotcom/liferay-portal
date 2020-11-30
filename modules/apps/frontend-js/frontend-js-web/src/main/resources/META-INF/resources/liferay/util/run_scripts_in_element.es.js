@@ -40,8 +40,8 @@ function runJSFromFile(src, next, appendFn) {
 		next();
 	};
 
-	scriptElement.addEventListener('load', callback);
-	scriptElement.addEventListener('error', callback);
+	scriptElement.addEventListener('load', callback, {once: true});
+	scriptElement.addEventListener('error', callback, {once: true});
 
 	if (appendFn) {
 		appendFn(scriptElement);
@@ -54,29 +54,30 @@ function runJSFromFile(src, next, appendFn) {
 function runScriptsInOrder(scripts, i, defaultFn, appendFn) {
 	const scriptElement = scripts[i];
 
-	if (
-		!scriptElement ||
-		(scriptElement.type && scriptElement.type !== 'text/javascript')
-	) {
-		return;
-	}
-
 	const runNextScript = () => {
 		if (i < scripts.length - 1) {
 			runScriptsInOrder(scripts, i + 1, defaultFn, appendFn);
 		}
 		else if (defaultFn) {
-			defaultFn();
+			setTimeout(defaultFn);
 		}
 	};
 
-	scriptElement.remove();
-
-	if (scriptElement.src) {
-		runJSFromFile(scriptElement.src, runNextScript, appendFn);
+	if (!scriptElement) {
+		return;
+	}
+	else if (scriptElement.type && scriptElement.type !== 'text/javascript') {
+		runNextScript();
 	}
 	else {
-		runJSFromText(scriptElement.text, runNextScript, appendFn);
+		scriptElement.remove();
+
+		if (scriptElement.src) {
+			runJSFromFile(scriptElement.src, runNextScript, appendFn);
+		}
+		else {
+			runJSFromText(scriptElement.text, runNextScript, appendFn);
+		}
 	}
 }
 
@@ -84,7 +85,7 @@ export default function (element, defaultFn, appendFn) {
 	const scripts = element.querySelectorAll('script');
 
 	if (!scripts.length && defaultFn) {
-		defaultFn();
+		setTimeout(defaultFn);
 
 		return;
 	}

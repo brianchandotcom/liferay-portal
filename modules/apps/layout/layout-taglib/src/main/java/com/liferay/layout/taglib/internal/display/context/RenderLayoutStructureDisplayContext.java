@@ -775,8 +775,15 @@ public class RenderLayoutStructureDisplayContext {
 			return _assetCategoryIds;
 		}
 
-		_assetCategoryIds = GetterUtil.getLongValues(
-			_httpServletRequest.getAttribute("ASSET_CATEGORY_IDS"));
+		long[] assetCategoryIds = new long[0];
+
+		long categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
+
+		if (categoryId != 0) {
+			assetCategoryIds = new long[] {categoryId};
+		}
+
+		_assetCategoryIds = assetCategoryIds;
 
 		return _assetCategoryIds;
 	}

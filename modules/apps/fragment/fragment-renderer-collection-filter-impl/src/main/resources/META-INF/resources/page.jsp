@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <p>
-	<%= collectionFilterFragmentRendererDisplayContext.getVocabularyTitle() %>
+	<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>
 </p>
 
 <clay:dropdown-menu
@@ -25,5 +25,5 @@
 	displayType="secondary"
 	dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
 	label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedCategoryTitle() %>"
-	title="<%= collectionFilterFragmentRendererDisplayContext.getVocabularyTitle() %>"
+	title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
 />

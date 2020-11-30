@@ -1,6 +1,6 @@
 <div class="fragment_dm">
-	[#if configuration.itemSelectorName.title??]
-		 ${configuration.itemSelectorName.title}
+	[#if itemSelectorNameObject??]
+		 ${itemSelectorNameObject.getTitle()}
 	[#else]
 		<div class="portlet-msg-info">The selected content will be shown here.</div>
 	[/#if]

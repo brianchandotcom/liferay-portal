@@ -17,6 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AccountEntryDisplay accountEntryDisplay = AccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
+
+long defaultAddressId = 0;
+
+String type = ParamUtil.getString(request, "type");
+
+if (Objects.equals("billing", type)) {
+	defaultAddressId = accountEntryDisplay.getDefaultBillingAddressId();
+}
+else if (Objects.equals("shipping", type)) {
+	defaultAddressId = accountEntryDisplay.getDefaultShippingAddressId();
+}
+
 SearchContainer<AddressDisplay> accountEntryAddressDisplaySearchContainer = AccountEntryAddressDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
 accountEntryAddressDisplaySearchContainer.setRowChecker(null);
@@ -78,6 +91,7 @@ ViewAccountEntryAddressesManagementToolbarDisplayContext viewAccountEntryAddress
 
 			<liferay-ui:search-container-column-text>
 				<clay:radio
+					checked="<%= addressDisplay.getAddressId() == defaultAddressId %>"
 					cssClass="selector-button"
 					data-entityid="<%= addressDisplay.getAddressId() %>"
 					label="<%= addressDisplay.getName() %>"

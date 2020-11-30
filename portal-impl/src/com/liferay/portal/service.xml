@@ -1929,9 +1929,9 @@
 		<column name="portletPreferencesId" type="long" />
 		<column name="name" type="String" />
 		<column name="index" type="int" />
-		<column name="smallValue" type="String" />
 		<column name="largeValue" type="String" />
 		<column name="readOnly" type="boolean" />
+		<column name="smallValue" type="String" />
 
 		<!-- Order -->
 

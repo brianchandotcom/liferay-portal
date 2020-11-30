@@ -53,7 +53,9 @@ xpack:
           pki1:
             order: 0</echo>
 
-			<echo append="true" file="${elasticsearch.dir}/config/role_mapping.yml">${line.separator}superuser:
+			<echo append="true" file="${elasticsearch.dir}-1/config/role_mapping.yml">${line.separator}superuser:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
+kibana_system:
   - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
 		</sequential>
 	</macrodef>
@@ -120,6 +122,30 @@ server.ssl.enabled: true
 server.ssl.key: ${elasticsearch.dir}-1/config/certs/localhost/localhost.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000</echo>
+
+			<replace
+				file="${elastic.kibana.dir}/config/kibana.yml"
+			>
+				<replacetoken><![CDATA[elasticsearch.hosts: "http://localhost:9200"]]></replacetoken>
+				<replacevalue><![CDATA[elasticsearch.hosts: "https://localhost:9200"]]></replacevalue>
+			</replace>
+		</sequential>
+	</macrodef>
+
+<macrodef name="configure-kibana-x-pack-pki-security-properties">
+		<sequential>
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca.crt" ]
+elasticsearch.ssl.certificate: ${elasticsearch.dir}-1/config/certs/elastic-certificates.crt
+elasticsearch.ssl.key: ${elasticsearch.dir}-1/config/certs/elastic-certificates.key
+elasticsearch.ssl.verificationMode: certificate
+server.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca.crt" ]
+server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/elastic-certificates.crt
+server.ssl.enabled: true
+server.ssl.key: ${elasticsearch.dir}-1/config/certs/elastic-certificates.key
+xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
+xpack.security.sessionTimeout: 600000
+elasticsearch.ssl.alwaysPresentCertificate: true</echo>
 
 			<replace
 				file="${elastic.kibana.dir}/config/kibana.yml"

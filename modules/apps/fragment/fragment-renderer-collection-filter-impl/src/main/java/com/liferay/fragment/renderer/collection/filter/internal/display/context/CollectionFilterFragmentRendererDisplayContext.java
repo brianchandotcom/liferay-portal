@@ -97,8 +97,7 @@ public class CollectionFilterFragmentRendererDisplayContext {
 
 	public String getSelectedCategoryTitle() {
 		long categoryId = ParamUtil.get(
-			_httpServletRequest,
-			CollectionFilterFragmentRendererWebKeys.CATEGORY_ID, 0);
+			_httpServletRequest, _getParameterName(), 0);
 
 		if (categoryId != 0) {
 			AssetCategory assetCategory = null;

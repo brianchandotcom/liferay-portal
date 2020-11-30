@@ -124,6 +124,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				id = commerceOrder.getCommerceOrderId();
 				lastPriceUpdateDate = commerceOrder.getLastPriceUpdateDate();
 				modifiedDate = commerceOrder.getModifiedDate();
+				orderDate = commerceOrder.getOrderDate();
 				orderStatus = commerceOrder.getOrderStatus();
 				orderStatusInfo = _getOrderStatusInfo(
 					commerceOrder.getOrderStatus(), commerceOrderStatusLabel,

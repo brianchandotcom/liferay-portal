@@ -494,8 +494,6 @@ portletURL.setWindowState(WindowState.NORMAL);
 						.then(function (data) {
 							contactsCenter.renderContent(data, true);
 
-							window.scrollTo(0, 0);
-
 							contactsContainer.loadingmask.hide();
 						})
 						.catch(function () {

@@ -187,7 +187,10 @@ const EditTableView = withRouter(({history}) => {
 					onSubmit={(event) => {
 						event.preventDefault();
 
-						if (!isLoading) {
+						if (
+							!isLoading &&
+							dataListView.name[editingLanguageId]?.trim()
+						) {
 							onSave();
 						}
 					}}

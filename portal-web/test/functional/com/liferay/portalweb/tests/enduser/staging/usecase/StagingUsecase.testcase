@@ -1310,6 +1310,7 @@ definition {
 	@priority = "5"
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "StagingUsecase#TrashEntryReferencePublishing";
 		property testray.component.names = "Training";
 

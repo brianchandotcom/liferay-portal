@@ -951,6 +951,8 @@ definition {
 	@description = "This is a use case for LPS-88331."
 	@priority = "3"
 	test ExportImportSiteWithNestedUploadField {
+		property portal.upstream = "quarantine";
+
 		JSONGroup.addGroup(groupName = "Site A");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
@@ -1415,6 +1417,8 @@ definition {
 	@description = "This is a use case for LPS-86608."
 	@priority = "3"
 	test ExportImportWebcontentWithRepeatField {
+		property portal.upstream = "quarantine";
+
 		JSONGroup.addGroup(groupName = "Exported Site");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
@@ -1700,6 +1704,7 @@ definition {
 	@priority = "3"
 	test ImportSiteWithMissingReferenceOfPreloadedEntry {
 		property portal.release = "false";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ExportImport#ImportSiteWithMissingReferenceOfPreloadedEntry";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");
@@ -1818,6 +1823,8 @@ definition {
 	@description = "This is a use case for LPS-97544 and LPS-90886."
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {
+		property portal.upstream = "quarantine";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

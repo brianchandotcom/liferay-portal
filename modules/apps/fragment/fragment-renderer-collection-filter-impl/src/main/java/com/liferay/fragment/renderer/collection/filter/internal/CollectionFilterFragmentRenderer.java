@@ -158,6 +158,10 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
 				assetCategories);
 
+			httpServletRequest.setAttribute(
+				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
+				fragmentEntryLink.getFragmentEntryLinkId());
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");
 

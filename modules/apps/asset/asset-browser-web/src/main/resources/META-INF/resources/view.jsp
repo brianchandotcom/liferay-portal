@@ -272,8 +272,10 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:script require="metal-dom/src/all/dom as dom">
-			var delegateHandler = dom.delegate(
+		<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+			var delegate = delegateModule.default;
+
+			var delegateHandler = delegate(
 				document.querySelector('#<portlet:namespace />selectAssetFm'),
 				'click',
 				'.selector-button',
@@ -290,7 +292,7 @@
 			);
 
 			var onDestroyPortlet = function () {
-				delegateHandler.removeListener();
+				delegateHandler.dispose();
 
 				Liferay.detach('destroyPortlet', onDestroyPortlet);
 			};

@@ -12,12 +12,11 @@
  * details.
  */
 
-import {PortletBase} from 'frontend-js-web';
-import dom from 'metal-dom';
+import {PortletBase, delegate} from 'frontend-js-web';
 
 export default class TopLinkEventHandler extends PortletBase {
 	attached() {
-		this._delegateHandler = dom.delegate(
+		this._delegateHandler = delegate(
 			document.body,
 			'click',
 			'a',
@@ -36,6 +35,6 @@ export default class TopLinkEventHandler extends PortletBase {
 	}
 
 	dispose() {
-		this._delegateHandler.removeListener();
+		this._delegateHandler.dispose();
 	}
 }

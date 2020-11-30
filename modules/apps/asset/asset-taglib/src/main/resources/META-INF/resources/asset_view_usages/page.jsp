@@ -73,9 +73,11 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 	</liferay-ui:search-container>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	if (document.querySelector('#<portlet:namespace />assetEntryUsagesList')) {
-		var previewAssetEntryUsagesList = dom.delegate(
+		var delegate = delegateModule.default;
+
+		var previewAssetEntryUsagesList = delegate(
 			document.querySelector('#<portlet:namespace />assetEntryUsagesList'),
 			'click',
 			'.preview-asset-entry-usage',
@@ -91,7 +93,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 		);
 
 		function removeListener() {
-			previewAssetEntryUsagesList.removeListener();
+			previewAssetEntryUsagesList.dispose();
 
 			Liferay.detach('destroyPortlet', removeListener);
 		}

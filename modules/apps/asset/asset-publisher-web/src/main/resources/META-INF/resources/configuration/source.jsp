@@ -221,7 +221,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	</c:if>
 </aui:fieldset>
 
-<aui:script require="metal-dom/src/dom as dom">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	var Util = Liferay.Util;
 
 	var MAP_DDM_STRUCTURES = {};
@@ -490,7 +490,9 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		});
 	}
 
-	dom.delegate(
+	var delegate = delegateModule.default;
+
+	delegate(
 		sourcePanel,
 		'click',
 		'.asset-subtypefields-wrapper-enable label',
@@ -531,9 +533,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		'<portlet:namespace />ddmStructureDisplayFieldValue'
 	);
 
-	dom.delegate(sourcePanel, 'click', '.asset-subtypefields-popup', function (
-		event
-	) {
+	delegate(sourcePanel, 'click', '.asset-subtypefields-popup', function (event) {
 		var delegateTarget = event.delegateTarget;
 
 		var btn = delegateTarget.querySelector('.btn');

@@ -220,7 +220,7 @@ definition {
 				value1 = "${webContentDescription}");
 		}
 
-		if (isSet(webContentHTML)) {
+		if (isSet(webContentRichText)) {
 			AssertTextEquals.assertPartialText(
 				key_content = "${webContentHTML}",
 				key_fieldName = "HTML",
@@ -229,38 +229,41 @@ definition {
 		}
 
 		if (isSet(webContentText)) {
-			AssertElementPresent(
-				key_fieldName = "Text",
-				key_fieldValue = "${webContentText}",
-				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+			if (!(isSet(webContentTextFieldLabel))) {
+				var webContentTextFieldLabel = "Text";
+			}
+
+			if ("${fieldType}" == "Multiple Lines") {
+				AssertElementPresent(
+					key_fieldName = "${webContentTextFieldLabel}",
+					key_fieldValue = "${webContentText}",
+					locator1 = "Translation#BASE_LANGUAGE_TEXT_BOX_FIELD");
+			}
+			else {
+				AssertElementPresent(
+					key_fieldName = "${webContentTextFieldLabel}",
+					key_fieldValue = "${webContentText}",
+					locator1 = "Translation#BASE_LANGUAGE_FIELD");
+			}
 		}
 
-		if (isSet(webContentTextBox)) {
-			AssertElementPresent(
-				key_fieldName = "Text Box",
-				key_fieldValue = "${webContentTextBox}",
-				locator1 = "Translation#BASE_LANGUAGE_TEXT_BOX_FIELD");
-		}
+		if (isSet(webContentNumeric)) {
+			if (!(isSet(webContentNumericFieldLabel))) {
+				var webContentNumericFieldLabel = "Numeric";
+			}
 
-		if (isSet(webContentInteger)) {
-			AssertElementPresent(
-				key_fieldName = "Integer",
-				key_fieldValue = "${webContentInteger}",
-				locator1 = "Translation#BASE_LANGUAGE_FIELD");
-		}
-
-		if (isSet(webContentNumber)) {
-			AssertElementPresent(
-				key_fieldName = "Number",
-				key_fieldValue = "${webContentNumber}",
-				locator1 = "Translation#BASE_LANGUAGE_FIELD");
-		}
-
-		if (isSet(webContentDecimal)) {
-			AssertElementPresent(
-				key_fieldName = "Decimal",
-				key_fieldValue = "${webContentDecimal}",
-				locator1 = "Translation#BASE_LANGUAGE_FIELD");
+			if ("${numericType}" == "Decimal") {
+				AssertElementPresent(
+					key_fieldName = "${webContentNumericFieldLabel}",
+					key_fieldValue = "${webContentNumeric}",
+					locator1 = "Translation#BASE_LANGUAGE_FIELD");
+			}
+			else {
+				AssertElementPresent(
+					key_fieldName = "${webContentNumericFieldLabel}",
+					key_fieldValue = "${webContentNumeric}",
+					locator1 = "Translation#BASE_LANGUAGE_FIELD");
+			}
 		}
 	}
 

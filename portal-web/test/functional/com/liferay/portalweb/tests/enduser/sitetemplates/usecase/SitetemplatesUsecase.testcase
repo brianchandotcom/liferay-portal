@@ -152,6 +152,8 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
+		Refresh();
+
 		Page.viewNoPG(pageName = "Site Page Name");
 
 		Page.viewNoPG(pageName = "Site Child Page Name");

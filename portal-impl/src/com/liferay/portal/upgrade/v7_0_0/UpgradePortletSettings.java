@@ -239,12 +239,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							"companyId, portletPreferencesId, name, index_, ",
 							"smallValue, largeValue, readOnly) select 0 as ",
 							"mvccVersion, 0 as ctCollectionId, ? as ",
-							"portletPreferenceValueId, copyTable.companyId, ? ",
-							"as portletPreferencesId, copyTable.name, ",
-							"copyTable.index_, copyTable.smallValue, ",
-							"copyTable.largeValue, copyTable.readOnly from ",
-							"PortletPreferenceValue copyTable where ",
-							"copyTable.portletPreferenceValueId = ?")))) {
+							"portletPreferenceValueId, TEMP_TABLE.companyId, ",
+							"? as portletPreferencesId, TEMP_TABLE.name, ",
+							"TEMP_TABLE.index_, TEMP_TABLE.smallValue, ",
+							"TEMP_TABLE.largeValue, TEMP_TABLE.readOnly from ",
+							"PortletPreferenceValue TEMP_TABLE where ",
+							"TEMP_TABLE.portletPreferenceValueId = ?")))) {
 
 			selectPreparedStatement.setLong(1, oldPortletPreferencesId);
 

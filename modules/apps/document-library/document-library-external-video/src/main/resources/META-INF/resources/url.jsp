@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String eventName = (String)request.getAttribute(DLExternalVideoVideoURLItemSelectorView.EVENT_NAME);
+String eventName = (String)request.getAttribute(DLExternalVideoWebKeys.EVENT_NAME);
 %>
 
 <liferay-util:html-top

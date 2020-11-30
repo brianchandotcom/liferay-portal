@@ -21,6 +21,8 @@ public class DLExternalVideoWebKeys {
 
 	public static final String EMBEDDABLE_HTML = "EMBEDDABLE_HTML";
 
+	public static final String EVENT_NAME = "EVENT_NAME";
+
 	public static final String ON_FILE_PICK_CALLBACK = "ON_FILE_PICK_CALLBACK";
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.external.video.internal.item.selector;
 
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.VideoURLItemSelectorReturnType;
@@ -44,8 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ItemSelectorView.class)
 public class DLExternalVideoVideoURLItemSelectorView
 	implements ItemSelectorView<VideoItemSelectorCriterion> {
-
-	public static final String EVENT_NAME = "EVENT_NAME";
 
 	@Override
 	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -78,7 +77,8 @@ public class DLExternalVideoVideoURLItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/url.jsp");
 
-		servletRequest.setAttribute(EVENT_NAME, itemSelectedEventName);
+		servletRequest.setAttribute(
+			DLExternalVideoWebKeys.EVENT_NAME, itemSelectedEventName);
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

@@ -1,0 +1,14 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"label": "Vocabulary Id",
+					"name": "vocabularyId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -14,18 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_LANGUAGES_RADIO</td>
-	<td>//input[contains(@id,'inheritLocales')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEFAULT_LANGUAGE_SELECT_FIELD</td>
 	<td>//select[contains(@name,'languageId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO</td>
-	<td>//input[contains(@id,'customLocales')]</td>
 	<td></td>
 </tr>
 <tr>

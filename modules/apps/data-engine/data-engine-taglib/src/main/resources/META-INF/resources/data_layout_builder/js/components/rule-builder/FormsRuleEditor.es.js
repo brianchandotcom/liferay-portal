@@ -19,7 +19,16 @@ import React, {useRef, useState} from 'react';
 
 import {Editor} from './editor/Editor.es';
 
-export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
+// A simple implementation of local storage outside
+// the React lifecycle to maintain the state of the
+// saved rule while the user can browse other pages.
+// The status is reset when Save or Cancel is invoked.
+
+const localDataStorage = {
+	rule: undefined,
+};
+
+export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 	const [disabled, setDisabled] = useState(true);
 	const ruleRef = useRef(null);
 
@@ -40,8 +49,10 @@ export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
 						...otherProps,
 						['logical-operator']: logicalOperator,
 					};
+					localDataStorage.rule = ruleRef.current;
 				}}
 				onValidator={setDisabled}
+				rule={rule ?? localDataStorage.rule}
 				{...otherProps}
 			/>
 			<div className="form-rule-builder-footer">
@@ -49,11 +60,20 @@ export const FormsRuleEditor = ({onCancel, onSave, ...otherProps}) => {
 					<ClayButton
 						disabled={disabled}
 						displayType="primary"
-						onClick={() => onSave(ruleRef.current)}
+						onClick={() => {
+							localDataStorage.rule = undefined;
+							onSave(ruleRef.current);
+						}}
 					>
 						{Liferay.Language.get('save')}
 					</ClayButton>
-					<ClayButton displayType="secondary" onClick={onCancel}>
+					<ClayButton
+						displayType="secondary"
+						onClick={() => {
+							localDataStorage.rule = undefined;
+							onCancel();
+						}}
+					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>
 				</ClayButton.Group>

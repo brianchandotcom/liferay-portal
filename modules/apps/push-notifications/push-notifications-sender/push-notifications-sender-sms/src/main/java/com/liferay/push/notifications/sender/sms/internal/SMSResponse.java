@@ -19,8 +19,6 @@ import com.liferay.push.notifications.sender.BaseResponse;
 
 import com.twilio.rest.api.v2010.account.Message;
 
-import java.math.BigDecimal;
-
 /**
  * @author Bruno Farache
  */
@@ -33,9 +31,7 @@ public class SMSResponse extends BaseResponse {
 		id = message.getSid();
 		payload = payloadJSONObject.toString();
 
-		BigDecimal priceBigDecimal = message.getPrice();
-
-		price = priceBigDecimal.toPlainString();
+		price = message.getPrice();
 
 		Message.Status messageStatus = message.getStatus();
 

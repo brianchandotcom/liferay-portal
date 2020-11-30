@@ -12,16 +12,35 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ConditionalWrapper = ({children, condition, wrapper}) =>
-	condition ? wrapper(children) : <>{children}</>;
+const DLExternalVideoPreview = ({onChange, url}) => {
+	const inputName = 'externalVideoURLInput';
 
-ConditionalWrapper.propTypes = {
-	children: PropTypes.node.isRequired,
-	condition: PropTypes.bool.isRequired,
-	wrapper: PropTypes.func.isRequired,
+	return (
+		<>
+			<label htmlFor={inputName}>
+				{Liferay.Language.get('video-url')}
+			</label>
+			<ClayInput
+				id={inputName}
+				onChange={(event) => onChange(event.target.value.trim())}
+				placeholder="http://"
+				type="text"
+				value={url}
+			/>
+			<p className="form-text">
+				{Liferay.Language.get('video-url-help')}
+			</p>
+		</>
+	);
 };
 
-export default ConditionalWrapper;
+DLExternalVideoPreview.propTypes = {
+	onChange: PropTypes.func,
+	url: PropTypes.string,
+};
+
+export default DLExternalVideoPreview;

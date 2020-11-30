@@ -13,21 +13,51 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
+import DLExternalVideoInput from './components/DLExternalVideoInput';
 import DLExternalVideoPreview from './components/DLExternalVideoPreview';
+import {useDLExternalVideoFields} from './utils/hooks';
 
-const DLExternalVideoDLFilePicker = ({onFilePickCallback, ...videoProps}) => (
-	<DLExternalVideoPreview
-		{...videoProps}
-		onSelectedVideo={(fields) => {
+const DLExternalVideoDLFilePicker = ({
+	externalVideoHTML,
+	externalVideoURL,
+	getDLExternalVideoFieldsURL,
+	namespace,
+	onFilePickCallback,
+}) => {
+	const [url, setUrl] = useState(externalVideoURL);
+	const {error, fields, loading} = useDLExternalVideoFields({
+		getDLExternalVideoFieldsURL,
+		namespace,
+		url,
+	});
+
+	useEffect(() => {
+		if (fields) {
 			window[onFilePickCallback](fields);
-		}}
-		small
-	/>
-);
+		}
+	}, [fields, onFilePickCallback]);
+
+	return (
+		<>
+			<DLExternalVideoInput onChange={setUrl} url={url} />
+
+			<DLExternalVideoPreview
+				error={error}
+				loading={loading}
+				small
+				videoHTML={fields ? fields.HTML : externalVideoHTML}
+			/>
+		</>
+	);
+};
 
 DLExternalVideoDLFilePicker.propTypes = {
+	externalVideoHTML: PropTypes.string,
+	externalVideoURL: PropTypes.string,
+	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
+	namespace: PropTypes.string.isRequired,
 	onFilePickCallback: PropTypes.string.isRequired,
 };
 

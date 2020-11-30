@@ -12,30 +12,56 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
+import DLExternalVideoInput from './components/DLExternalVideoInput';
 import DLExternalVideoPreview from './components/DLExternalVideoPreview';
+import {useDLExternalVideoFields} from './utils/hooks';
 
 const DLExternalVideoVideoURLItemSelectorView = ({
 	eventName,
-	...videoProps
-}) => (
-	<DLExternalVideoPreview
-		{...videoProps}
-		onAdd={(url) => {
-			Liferay.Util.getOpener().Liferay.fire(eventName, {
-				data: {
-					returnType: 'URL',
-					value: url,
-				},
-			});
-		}}
-	/>
-);
+	getDLExternalVideoFieldsURL,
+	namespace,
+}) => {
+	const [url, setUrl] = useState('');
+	const {error, fields, loading} = useDLExternalVideoFields({
+		getDLExternalVideoFieldsURL,
+		namespace,
+		url,
+	});
+
+	return (
+		<form
+			onSubmit={() =>
+				Liferay.Util.getOpener().Liferay.fire(eventName, {
+					data: {
+						returnType: 'URL',
+						value: fields.URL,
+					},
+				})
+			}
+		>
+			<DLExternalVideoInput onChange={setUrl} url={url} />
+
+			<ClayButton disabled={!fields || loading} type="submit">
+				{Liferay.Language.get('add')}
+			</ClayButton>
+
+			<DLExternalVideoPreview
+				error={error}
+				loading={loading}
+				videoHTML={fields && fields.HTML}
+			/>
+		</form>
+	);
+};
 
 DLExternalVideoVideoURLItemSelectorView.propTypes = {
 	eventName: PropTypes.string.isRequired,
+	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
+	namespace: PropTypes.string.isRequired,
 };
 
 export default DLExternalVideoVideoURLItemSelectorView;

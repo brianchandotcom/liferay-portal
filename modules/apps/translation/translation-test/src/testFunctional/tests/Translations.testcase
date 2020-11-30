@@ -519,15 +519,23 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
+		Translations.viewBaseFields(
+			fieldType = "Multiple Lines",
+			webContentText = "This is a Text Box field",
+			webContentTextFieldLabel = "Text Box");
+
+		Translations.viewBaseFields(
+			numericType = "Decimal",
+			webContentNumeric = "0.5",
+			webContentNumericFieldLabel = "Decimal");
+
 		var webContentHTML = "This is a HTML title";
 
 		Translations.viewBaseFields(
-			webContentDecimal = "1.1",
 			webContentDescription = "WC WebContent Description",
 			webContentNumeric = "100",
 			webContentRichText = "${webContentHTML}",
 			webContentText = "Text",
-			webContentTextBox = "This is a text box.",
 			webContentTitle = "WC WebContent Title");
 
 		var webContentSourceHTML = '''<h2 class="text-center">Este es un título HTML</h2>''';

@@ -131,6 +131,14 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		return assetVocabulary.getTitle(_themeDisplay.getLanguageId());
 	}
 
+	private String _getParameterName() {
+		Long fragmentEntryLinkId = (Long)_httpServletRequest.getAttribute(
+			CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID);
+
+		return CollectionFilterFragmentRendererWebKeys.CATEGORY_ID + "_" +
+			fragmentEntryLinkId;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CollectionFilterFragmentRendererDisplayContext.class);
 

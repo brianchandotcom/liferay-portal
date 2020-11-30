@@ -128,27 +128,6 @@ public class DLEditFolderDisplayContext {
 		return LanguageUtil.getLanguageId(_httpServletRequest);
 	}
 
-	public Folder getParentFolder() {
-		try {
-			if (_parentFolder != null) {
-				return _parentFolder;
-			}
-
-			if (getParentFolderId() ==
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-				return null;
-			}
-
-			_parentFolder = DLAppServiceUtil.getFolder(getParentFolderId());
-
-			return _parentFolder;
-		}
-		catch (Exception exception) {
-			return null;
-		}
-	}
-
 	public long getParentFolderId() {
 		if (_parentFolderId != null) {
 			return _parentFolderId;
@@ -162,7 +141,7 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public String getParentFolderName() {
-		Folder folder = getParentFolder();
+		Folder folder = _getParentFolder();
 
 		if (folder == null) {
 			return LanguageUtil.get(_httpServletRequest, "home");
@@ -228,7 +207,7 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public boolean isShowDescription() {
-		Folder parentFolder = getParentFolder();
+		Folder parentFolder = _getParentFolder();
 
 		if ((parentFolder == null) || parentFolder.isSupportsMetadata()) {
 			return true;
@@ -238,7 +217,7 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public boolean isSupportsMetadata() {
-		Folder parentFolder = getParentFolder();
+		Folder parentFolder = _getParentFolder();
 
 		if ((parentFolder == null) || parentFolder.isSupportsMetadata()) {
 			return true;
@@ -285,6 +264,27 @@ public class DLEditFolderDisplayContext {
 		}
 
 		return _workflowEnabled;
+	}
+
+	private Folder _getParentFolder() {
+		try {
+			if (_parentFolder != null) {
+				return _parentFolder;
+			}
+
+			if (getParentFolderId() ==
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				return null;
+			}
+
+			_parentFolder = DLAppServiceUtil.getFolder(getParentFolderId());
+
+			return _parentFolder;
+		}
+		catch (Exception exception) {
+			return null;
+		}
 	}
 
 	private Folder _folder;

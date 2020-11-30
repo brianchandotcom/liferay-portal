@@ -190,12 +190,23 @@ definition {
 				value1 = "${textField}");
 		}
 
-		if (isSet(numberField)) {
-			var key_fieldName = "Number";
+		if (isSet(numericField)) {
+			var key_fieldName = "Numeric";
 
 			Type(
-				locator1 = "TextInput#DDM",
-				value1 = "${numberField}");
+				locator1 = "TextInput#NUMERIC",
+				value1 = "${numericField}");
+		}
+
+		if (isSet(dateValue)) {
+			if (!(isSet(dateFieldLabel))) {
+				var dateFieldLabel = "Date";
+			}
+
+			Type(
+				key_fieldFieldLabel = "${dateFieldLabel}",
+				locator1 = "WCEditWebContent#DATE_INPUT",
+				value1 = "${dateValue}");
 		}
 
 		if (isSet(booleanField)) {
@@ -1966,12 +1977,12 @@ definition {
 				value1 = "${textContent}");
 		}
 
-		if (isSet(numberValue)) {
-			var key_numberValue = "${numberValue}";
+		if (isSet(numericValue)) {
+			var key_numberValue = "${numericValue}";
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_NUMBER",
-				value1 = "${numberValue}");
+				value1 = "${numericValue}");
 		}
 
 		if (isSet(dateValue)) {

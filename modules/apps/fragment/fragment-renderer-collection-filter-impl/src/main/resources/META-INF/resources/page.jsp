@@ -24,6 +24,6 @@
 	cssClass="form-control form-control-select form-control-sm text-left"
 	displayType="secondary"
 	dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
-	label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedCategoryTitle() %>"
+	label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
 	title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
 />

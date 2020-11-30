@@ -101,16 +101,16 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		return dropdownItemListWrapper.build();
 	}
 
-	public String getSelectedCategoryTitle() {
-		long categoryId = ParamUtil.get(
+	public String getSelectedAssetCategoryTitle() {
+		long assetCategoryId = ParamUtil.get(
 			_httpServletRequest, _getParameterName(), 0);
 
-		if (categoryId != 0) {
+		if (assetCategoryId != 0) {
 			AssetCategory assetCategory = null;
 
 			try {
 				assetCategory = AssetCategoryServiceUtil.fetchCategory(
-					categoryId);
+					assetCategoryId);
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);

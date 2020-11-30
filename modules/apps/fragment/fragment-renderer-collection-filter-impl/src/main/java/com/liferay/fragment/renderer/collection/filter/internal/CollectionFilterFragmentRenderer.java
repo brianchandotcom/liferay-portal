@@ -119,9 +119,14 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
 			getConfiguration(fragmentRendererContext),
-			fragmentEntryLink.getEditableValues(), "source");
+			fragmentEntryLink.getEditableValues(), themeDisplay.getLocale(),
+			"source");
 
 		if (Validator.isNull(sourceObject) ||
 			!JSONUtil.isValid(sourceObject.toString())) {
@@ -145,10 +150,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		if (assetCategoryTreeNodeId == 0) {
 			return;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		String assetCategoryTreeNodeType = sourceJSONObject.getString(
 			"categoryTreeNodeType");

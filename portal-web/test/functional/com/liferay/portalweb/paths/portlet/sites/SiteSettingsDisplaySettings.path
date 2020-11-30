@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGES_SELECT_FIELD</td>
+	<td>//div[contains(@class,'listbox-${key_position}')]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
 	<td>//div[@class='btn-group-vertical']/button[1]</td>
 	<td></td>

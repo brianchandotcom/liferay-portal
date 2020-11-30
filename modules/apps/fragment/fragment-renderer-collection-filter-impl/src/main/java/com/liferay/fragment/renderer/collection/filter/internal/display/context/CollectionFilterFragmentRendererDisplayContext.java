@@ -48,6 +48,26 @@ public class CollectionFilterFragmentRendererDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getAssetCategoryTreeNodeTitle() {
+		AssetCategory assetCategory =
+			(AssetCategory)_httpServletRequest.getAttribute(
+				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+
+		AssetVocabulary assetVocabulary =
+			(AssetVocabulary)_httpServletRequest.getAttribute(
+				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+
+		if ((assetCategory == null) && (assetVocabulary == null)) {
+			return StringPool.BLANK;
+		}
+
+		if (assetVocabulary != null) {
+			return assetVocabulary.getTitle(_themeDisplay.getLanguageId());
+		}
+
+		return assetCategory.getTitle(_themeDisplay.getLanguageId());
+	}
+
 	public List<DropdownItem> getDropdownItems() {
 		String urlCurrent = _themeDisplay.getURLCurrent();
 
@@ -102,18 +122,6 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "select");
-	}
-
-	public String getVocabularyTitle() {
-		AssetVocabulary assetVocabulary =
-			(AssetVocabulary)_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
-
-		if (assetVocabulary == null) {
-			return StringPool.BLANK;
-		}
-
-		return assetVocabulary.getTitle(_themeDisplay.getLanguageId());
 	}
 
 	private String _getParameterName() {

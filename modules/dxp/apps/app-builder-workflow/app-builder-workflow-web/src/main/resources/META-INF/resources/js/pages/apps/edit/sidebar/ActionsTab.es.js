@@ -51,6 +51,7 @@ export default function ActionsTab({
 				</label>
 
 				<ClayInput
+					maxLength="50"
 					onChange={(event) => onChangeActionName(event, true)}
 					type="text"
 					value={primaryAction.name}
@@ -97,6 +98,7 @@ export default function ActionsTab({
 						</label>
 
 						<ClayInput
+							maxLength="50"
 							onChange={(event) =>
 								onChangeActionName(event, false)
 							}

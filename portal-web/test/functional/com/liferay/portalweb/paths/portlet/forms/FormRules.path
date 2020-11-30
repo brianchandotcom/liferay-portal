@@ -16,7 +16,7 @@
 </tr>
 <tr>
     <td>RULE_BUILDER_ROW_VERTICAL_ELLIPSIS</td>
-    <td>//div[contains(@class,'list-group-item-field')]//div[contains(@class,'dropdown-action')]</td>
+    <td>//div[contains(@class,'form-rule-list')]//li[contains(@class,'list-group-item')][${key_ruleNumber}]//button[contains(@class,'dropdown-toggle')]</td>
     <td></td>
 </tr>
 <tr>

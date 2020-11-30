@@ -69,7 +69,9 @@ class JournalPortlet extends PortletBase {
 		}
 
 		this._localeChangedHandler = new LocaleChangedHandler({
+			callback: this._onLocaleChanged,
 			contentTitle: this.contentTitle,
+			context: this,
 			defaultLanguageId: this.defaultLanguageId,
 			namespace: this.namespace,
 		});
@@ -135,6 +137,17 @@ class JournalPortlet extends PortletBase {
 		const actionName = actionInput.value;
 
 		this._saveArticle(actionName);
+	}
+
+	/**
+	 * @private
+	 */
+	_onLocaleChanged(context, languageId) {
+		const {availableLocales} = context;
+
+		if (!availableLocales.includes(languageId)) {
+			availableLocales.push(languageId);
+		}
 	}
 
 	/**
@@ -259,6 +272,7 @@ class JournalPortlet extends PortletBase {
 
 JournalPortlet.STATE = {
 	_selectedLanguageId: Config.internal().string(),
+	availableLocales: Config.array(),
 	contentTitle: Config.string(),
 	defaultLanguageId: Config.string(),
 };

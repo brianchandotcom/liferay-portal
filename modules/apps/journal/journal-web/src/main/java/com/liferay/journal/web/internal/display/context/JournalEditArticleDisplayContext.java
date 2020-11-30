@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -142,7 +143,7 @@ public class JournalEditArticleDisplayContext {
 			() -> {
 				Map<String, Object> strings = new HashMap<>();
 
-				Set<Locale> locales = getAvailableLocales();
+				Set<Locale> locales = new HashSet<>(getAvailableLocales());
 
 				locales.add(
 					LocaleUtil.fromLanguageId(getDefaultArticleLanguageId()));

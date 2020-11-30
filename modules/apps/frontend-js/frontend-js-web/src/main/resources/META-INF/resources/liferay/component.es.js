@@ -113,6 +113,11 @@ const _onStartNavigate = function (event) {
 
 		componentIds = componentIds.filter((componentId) => {
 			const component = components[componentId];
+
+			if (!component) {
+				return false;
+			}
+
 			const componentConfig = componentConfigs[componentId];
 
 			const cacheablePortletUri = DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every(

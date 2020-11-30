@@ -124,6 +124,16 @@ const getDataRecordValues = ({
 	return newDataRecordValues;
 };
 
+const getLocalizedValueEdited = (fieldName, pages) => {
+	const visitor = new PagesVisitor(pages);
+
+	const {localizedValueEdited} = visitor.findField(
+		(field) => field.fieldName === fieldName
+	);
+
+	return {localizedValueEdited};
+};
+
 export default function pageLanguageUpdate({
 	ddmStructureLayoutId,
 	nextEditingLanguageId,
@@ -160,8 +170,8 @@ export default function pageLanguageUpdate({
 			}
 		)
 			.then((response) => response.json())
-			.then(({pages}) => {
-				const visitor = new PagesVisitor(pages);
+			.then((response) => {
+				const visitor = new PagesVisitor(response.pages);
 				const newPages = visitor.mapFields(
 					(field, index) => {
 						if (!field.localizedValue) {
@@ -189,7 +199,10 @@ export default function pageLanguageUpdate({
 							};
 						}
 
-						return field;
+						return {
+							...field,
+							...getLocalizedValueEdited(field.fieldName, pages),
+						};
 					},
 					true,
 					true

@@ -50,12 +50,11 @@ public class CountryModelListener extends BaseModelListener<Country> {
 	}
 
 	private void _processCountryRegions(Country country) {
-		String countryName = country.getName();
+		String a2 = country.getA2();
 
 		try {
 			String path =
-				"com/liferay/address/dependencies/regions/" + countryName +
-					".json";
+				"com/liferay/address/dependencies/regions/" + a2 + ".json";
 
 			if (_classLoader.getResource(path) == null) {
 				return;
@@ -64,7 +63,7 @@ public class CountryModelListener extends BaseModelListener<Country> {
 			JSONArray regionsJSONArray = _getJSONArray(path);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Regions found for country " + countryName);
+				_log.debug("Regions found for country " + a2);
 			}
 
 			for (int i = 0; i < regionsJSONArray.length(); i++) {
@@ -95,7 +94,7 @@ public class CountryModelListener extends BaseModelListener<Country> {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No regions found for country " + countryName);
+				_log.debug("No regions found for country " + a2);
 			}
 		}
 	}

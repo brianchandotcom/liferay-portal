@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -124,16 +125,9 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		Long assetVocabularyId = null;
+		Long assetVocabularyId = GetterUtil.getLong(assetVocabularyIdObject);
 
-		try {
-			assetVocabularyId = Long.parseLong(
-				assetVocabularyIdObject.toString());
-		}
-		catch (NumberFormatException numberFormatException) {
-			_log.error(
-				"Unable to parse asset vocabulary ID", numberFormatException);
-
+		if (assetVocabularyId == 0) {
 			return;
 		}
 

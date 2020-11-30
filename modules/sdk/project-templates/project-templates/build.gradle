@@ -153,16 +153,16 @@ repositories {
 
 		dir = dir.getParentFile();
 	}
-}
 
-if (project.hasProperty("releaseApiJarName")) {
-	maven {
-		credentials {
-			username "${releaseApiJarRepoUsername}" ?: ""
-			password "${releaseApiJarRepoPassword}" ?: ""
+	if (project.hasProperty("releaseApiJarName")) {
+		maven {
+			credentials {
+				username "${releaseApiJarRepoUsername}" ?: ""
+				password "${releaseApiJarRepoPassword}" ?: ""
+			}
+
+			url "${releaseApiJarRepo}"
 		}
-
-		url "${releaseApiJarRepo}"
 	}
 }
 

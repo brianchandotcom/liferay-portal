@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -69,156 +70,161 @@ public class ProjectTemplatesAPIJarTest
 
 		Assert.assertTrue(releaseApiJarSourcesFile.exists());
 
-		File portalClassesFolder = temporaryFolder.newFolder(
-			"portal-classes-" + releaseApiJarFile.getName());
+		File classesFolder = temporaryFolder.newFolder(
+			releaseApiJarFile.getName() + "-classes");
 
-		ZipUtil.unzip(releaseApiJarFile, portalClassesFolder);
+		ZipUtil.unzip(releaseApiJarFile, classesFolder);
 
-		File portalClassesSourceFolder = temporaryFolder.newFolder(
-			"portal-classes-sources-" + releaseApiJarSourcesFile.getName());
+		File sourcesFolder = temporaryFolder.newFolder(
+			releaseApiJarSourcesFile.getName() + "-sources");
 
-		ZipUtil.unzip(releaseApiJarSourcesFile, portalClassesSourceFolder);
+		ZipUtil.unzip(releaseApiJarSourcesFile, sourcesFolder);
 
-		Set<String> classesSets = _extractApiFiles(
-			portalClassesFolder.toPath(), ".class");
+		Path classesPath = classesFolder.toPath();
 
-		Set<String> javaSets = _extractApiFiles(
-			portalClassesSourceFolder.toPath(), ".java");
+		Set<String> classFiles = _searchFiles(classesPath, ".class");
 
-		List<String> ignoreSourceList = Arrays.asList(_IGNORESOURCE);
+		Assert.assertFalse(classFiles.isEmpty());
 
-		for (String classItem : classesSets) {
-			if (!classItem.contains("$") &&
-				!ignoreSourceList.contains(classItem)) {
+		Set<String> javaFiles = _searchFiles(sourcesFolder.toPath(), ".java");
 
-				Assert.assertTrue(javaSets.contains(classItem));
+		Assert.assertFalse(javaFiles.isEmpty());
+
+		for (String classFile : classFiles) {
+			if (!classFile.contains("$") &&
+				!_ignoreClasses.contains(classFile)) {
+
+				Assert.assertTrue(javaFiles.contains(classFile));
 			}
 		}
 
-		Set<String> tldClasses = _extractTldFi1les(
-			portalClassesFolder.toPath());
+		Set<String> tldClasses = _findTldClasses(classesPath);
+
+		Assert.assertFalse(tldClasses.isEmpty());
+
+		List<String> missingTldClasses = new ArrayList<>();
 
 		for (String tldClass : tldClasses) {
-			if (!javaSets.contains(tldClass)) {
-				Assert.assertTrue(classesSets.contains(tldClass));
+			if (!classFiles.contains(tldClass)) {
+				missingTldClasses.add(tldClass);
 			}
 		}
+
+		Assert.assertTrue(
+			"Missing tldClasses: " + missingTldClasses.toString(),
+			missingTldClasses.isEmpty());
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private Set<String> _extractApiFiles(Path sourcePath, String filterName) {
-		Set<String> apiSets = new HashSet<>();
+	private Set<String> _findTldClasses(Path sourcePath) throws Exception {
+		Set<String> tldClasses = new HashSet<>();
 
-		try {
-			Files.walkFileTree(
-				sourcePath,
-				new SimpleFileVisitor<Path>() {
+		Files.walkFileTree(
+			sourcePath,
+			new SimpleFileVisitor<Path>() {
 
-					@Override
-					public FileVisitResult visitFile(
-							Path path, BasicFileAttributes basicFileAttributes)
-						throws IOException {
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-						String fileName = String.valueOf(path.getFileName());
+					String fileName = String.valueOf(path.getFileName());
 
-						if (fileName.endsWith(filterName)) {
-							URI folderURI = sourcePath.toUri();
+					if (fileName.endsWith(".tld")) {
+						try (FileInputStream fileInputStream =
+								new FileInputStream(path.toFile())) {
 
-							URI uri = path.toUri();
+							DocumentBuilderFactory builderFactory =
+								DocumentBuilderFactory.newInstance();
 
-							URI relativeURI = folderURI.relativize(uri);
+							DocumentBuilder builder =
+								builderFactory.newDocumentBuilder();
 
-							String relativePath = relativeURI.getPath();
+							Document xmlDocument = builder.parse(
+								fileInputStream);
 
-							apiSets.add(relativePath.replace(filterName, ""));
-						}
+							XPathFactory xPathFactoryInstance =
+								XPathFactory.newInstance();
 
-						return FileVisitResult.CONTINUE;
-					}
+							XPath xPath = xPathFactoryInstance.newXPath();
 
-				});
-		}
-		catch (Exception exception) {
-		}
+							XPathExpression xPathExpression = xPath.compile(
+								"/taglib/tag/tag-class");
 
-		return apiSets;
-	}
+							NodeList nodeList =
+								(NodeList)xPathExpression.evaluate(
+									xmlDocument, XPathConstants.NODESET);
 
-	private Set<String> _extractTldFi1les(Path sourcePath) {
-		Set<String> tldClassSets = new HashSet<>();
+							for (int i = nodeList.getLength() - 1; i >= 0;
+								 i--) {
 
-		try {
-			Files.walkFileTree(
-				sourcePath,
-				new SimpleFileVisitor<Path>() {
+								Node child = nodeList.item(i);
 
-					@Override
-					public FileVisitResult visitFile(
-							Path path, BasicFileAttributes basicFileAttributes)
-						throws IOException {
+								String tagClassContent = child.getTextContent();
 
-						String fileName = String.valueOf(path.getFileName());
+								if (tagClassContent.startsWith(
+										"com.liferay.")) {
 
-						if (fileName.endsWith(".tld")) {
-							try (FileInputStream fileIS = new FileInputStream(
-									path.toFile())) {
-
-								DocumentBuilderFactory builderFactory =
-									DocumentBuilderFactory.newInstance();
-
-								DocumentBuilder builder =
-									builderFactory.newDocumentBuilder();
-
-								Document xmlDocument = builder.parse(fileIS);
-
-								XPathFactory xPathFactoryInstance =
-									XPathFactory.newInstance();
-
-								XPath xPath = xPathFactoryInstance.newXPath();
-
-								String expression = "/taglib/tag/tag-class";
-
-								XPathExpression xPathExpression = xPath.compile(
-									expression);
-
-								NodeList nodeList =
-									(NodeList)xPathExpression.evaluate(
-										xmlDocument, XPathConstants.NODESET);
-
-								for (int n = nodeList.getLength() - 1; n >= 0;
-									 n--) {
-
-									Node child = nodeList.item(n);
-
-									String tagClassContent =
-										child.getTextContent();
-
-									if (tagClassContent.startsWith(
-											"com.liferay.")) {
-
-										tldClassSets.add(
-											tagClassContent.replace('.', '/'));
-									}
+									tldClasses.add(
+										tagClassContent.replace('.', '/'));
 								}
 							}
-							catch (Exception exception) {
-							}
 						}
-
-						return FileVisitResult.CONTINUE;
+						catch (Exception exception) {
+						}
 					}
 
-				});
-		}
-		catch (Exception exception) {
-		}
+					return FileVisitResult.CONTINUE;
+				}
 
-		return tldClassSets;
+			});
+
+		return tldClasses;
 	}
 
-	private static final String[] _IGNORESOURCE = {
+	private Set<String> _searchFiles(Path sourcePath, String filterName)
+		throws Exception {
+
+		Set<String> results = new HashSet<>();
+
+		Files.walkFileTree(
+			sourcePath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (fileName.endsWith(filterName)) {
+						URI folderURI = sourcePath.toUri();
+
+						URI relativeURI = folderURI.relativize(path.toUri());
+
+						String relativePath = relativeURI.getPath();
+
+						results.add(relativePath.replace(filterName, ""));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return results;
+	}
+
+	private static final String _RELEASE_API_JAR_FILE = System.getProperty(
+		"releaseApiJarFile");
+
+	private static final String _RELEASE_API_JAR_SOURCES_FILE =
+		System.getProperty("releaseApiJarSourcesFile");
+
+	private static final List<String> _ignoreClasses = Arrays.asList(
 		"com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer",
 		"org/osgi/service/event/TopicPermissionCollection",
 		"org/osgi/framework/AdaptPermissionCollection",
@@ -230,13 +236,6 @@ public class ProjectTemplatesAPIJarTest
 		"org/osgi/framework/ServicePermissionCollection",
 		"org/osgi/framework/BundlePermissionCollection",
 		"org/osgi/framework/AdminPermissionCollection",
-		"org/osgi/service/condpermadmin/BooleanCondition"
-	};
-
-	private static final String _RELEASE_API_JAR_FILE = System.getProperty(
-		"releaseApiJarFile");
-
-	private static final String _RELEASE_API_JAR_SOURCES_FILE =
-		System.getProperty("releaseApiJarSourcesFile");
+		"org/osgi/service/condpermadmin/BooleanCondition");
 
 }

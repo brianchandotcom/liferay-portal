@@ -23,6 +23,8 @@ definition {
 
 		ProductMenuHelper.openProductMenu();
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		ProductMenuHelper.openWorkspace();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

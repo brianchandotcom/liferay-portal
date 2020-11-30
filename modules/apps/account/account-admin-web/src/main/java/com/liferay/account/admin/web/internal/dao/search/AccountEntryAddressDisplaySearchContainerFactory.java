@@ -75,7 +75,8 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		if (Validator.isNotNull(type) && !type.equals("all")) {
-			params.put("type", type);
+			params.put(
+				"typeNames", new String[] {type, "billing-and-shipping"});
 		}
 
 		ThemeDisplay themeDisplay =

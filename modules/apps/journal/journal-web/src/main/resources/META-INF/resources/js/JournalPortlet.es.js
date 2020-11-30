@@ -142,9 +142,7 @@ class JournalPortlet extends PortletBase {
 	/**
 	 * @private
 	 */
-	_onLocaleChanged(context, languageId) {
-		const {availableLocales} = context;
-
+	_onLocaleChanged({availableLocales}, languageId) {
 		if (!availableLocales.includes(languageId)) {
 			availableLocales.push(languageId);
 		}

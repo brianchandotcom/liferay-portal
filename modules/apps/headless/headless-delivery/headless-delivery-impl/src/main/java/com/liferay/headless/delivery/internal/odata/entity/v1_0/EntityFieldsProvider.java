@@ -83,7 +83,7 @@ public class EntityFieldsProvider {
 
 		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.CHECKBOX)) {
 			return new BooleanEntityField(
-				ddmFormField.getName(),
+				ddmFormField.getFieldReference(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "String"));
@@ -92,7 +92,7 @@ public class EntityFieldsProvider {
 					ddmFormField.getDataType(), FieldConstants.DATE)) {
 
 			return new DateEntityField(
-				ddmFormField.getName(),
+				ddmFormField.getFieldReference(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "String"),
@@ -107,7 +107,7 @@ public class EntityFieldsProvider {
 					 ddmFormField.getDataType(), FieldConstants.NUMBER)) {
 
 			return new DoubleEntityField(
-				ddmFormField.getName(),
+				ddmFormField.getFieldReference(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "Number"));
@@ -118,7 +118,7 @@ public class EntityFieldsProvider {
 					 ddmFormField.getDataType(), FieldConstants.LONG)) {
 
 			return new IntegerEntityField(
-				ddmFormField.getName(),
+				ddmFormField.getFieldReference(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "Number"));
@@ -130,7 +130,7 @@ public class EntityFieldsProvider {
 				  Objects.equals(ddmFormField.getIndexType(), "keyword"))) {
 
 			return new StringEntityField(
-				ddmFormField.getName(),
+				ddmFormField.getFieldReference(),
 				locale -> _toFilterableOrSortableFieldName(
 					ddmStructure.getStructureId(), ddmFormField.getName(),
 					locale, "String"));

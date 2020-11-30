@@ -68,7 +68,8 @@ public class DDMValueUtil {
 
 		if (contentFieldValue == null) {
 			throw new BadRequestException(
-				"No value is specified for field " + ddmFormField.getName());
+				"No value is specified for field " +
+					ddmFormField.getFieldReference());
 		}
 
 		if (ddmFormField.isLocalizable()) {

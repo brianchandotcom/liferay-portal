@@ -69,7 +69,8 @@ public class DDMFormValuesUtil {
 					_flattenDDMFormFieldValues(
 						rootDDMFormFields,
 						ddmFormField -> _toDDMFormFieldValues(
-							contentFieldMap.get(ddmFormField.getName()),
+							contentFieldMap.get(
+								ddmFormField.getFieldReference()),
 							ddmFormField, dlAppService, groupId,
 							journalArticleService, layoutLocalService,
 							locale)));
@@ -126,12 +127,13 @@ public class DDMFormValuesUtil {
 		return new DDMFormFieldValue() {
 			{
 				setName(ddmFormField.getName());
+				setFieldReference(ddmFormField.getFieldReference());
 				setNestedDDMFormFields(
 					_flattenDDMFormFieldValues(
 						ddmFormField.getNestedDDMFormFields(),
 						field -> _toDDMFormFieldValues(
-							contentFieldMap.get(field.getName()), field,
-							dlAppService, groupId, journalArticleService,
+							contentFieldMap.get(field.getFieldReference()),
+							field, dlAppService, groupId, journalArticleService,
 							layoutLocalService, locale)));
 				setValue(value);
 			}
@@ -148,7 +150,7 @@ public class DDMFormValuesUtil {
 			if (ddmFormField.isRequired()) {
 				throw new BadRequestException(
 					"No value is specified for field " +
-						ddmFormField.getName());
+						ddmFormField.getFieldReference());
 			}
 
 			return Collections.singletonList(

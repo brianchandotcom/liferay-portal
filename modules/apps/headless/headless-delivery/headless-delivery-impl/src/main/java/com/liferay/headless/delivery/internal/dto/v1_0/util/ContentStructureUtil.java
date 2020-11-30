@@ -132,7 +132,7 @@ public class ContentStructureUtil {
 					acceptAllLanguage, labelLocalizedValue.getValues());
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
-				name = ddmFormField.getName();
+				name = ddmFormField.getFieldReference();
 				nestedContentStructureFields = TransformUtil.transformToArray(
 					ddmFormField.getNestedDDMFormFields(),
 					ddmFormField -> _toContentStructureField(

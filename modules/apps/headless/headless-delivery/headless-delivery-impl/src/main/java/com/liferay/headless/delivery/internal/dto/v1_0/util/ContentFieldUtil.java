@@ -93,7 +93,7 @@ public class ContentFieldUtil {
 				label_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					localizedValue.getValues());
-				name = ddmFormField.getName();
+				name = ddmFormField.getFieldReference();
 				nestedContentFields = TransformUtil.transformToArray(
 					ddmFormFieldValue.getNestedDDMFormFieldValues(),
 					value -> toContentField(

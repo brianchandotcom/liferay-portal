@@ -36,6 +36,7 @@ const VideoPreview = ({
 	small,
 }) => {
 	const inputName = 'externalVideoURLInput';
+	const [validURL, setValidURL] = useState(false);
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [url, setUrl] = useState(externalVideoURL);
@@ -43,6 +44,7 @@ const VideoPreview = ({
 	const isMounted = useIsMounted();
 
 	const [getFields] = useDebounceCallback((dlExternalVideoURL) => {
+		setValidURL(false);
 		fetch(
 			addParams(
 				{
@@ -55,6 +57,7 @@ const VideoPreview = ({
 			.then((fields) => {
 				if (isMounted()) {
 					setLoading(false);
+					setValidURL(true);
 					setVideoHtml(fields.HTML);
 
 					if (onSelectedVideo) {
@@ -87,11 +90,12 @@ const VideoPreview = ({
 		}
 		else {
 			setLoading(false);
+			setValidURL(false);
 			setVideoHtml(externalVideoURL);
 		}
 	};
 
-	const addDisabled = !!(error || loading || !url);
+	const addDisabled = !!(error || loading || !url || !validURL);
 
 	const handleAddSubmit = (event) => {
 		event.preventDefault();

@@ -1289,6 +1289,8 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
+		<get-testcase-property property.name="elastic.xpack.pki.authentication.enabled" />
+
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
@@ -1298,6 +1300,14 @@ xpack.monitoring.collection.enabled: true</echo>
 
 				<configure-portal-x-pack-security-truststore />
 			</then>
+			<elseif>
+				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<generate-x-pack-pki-security-certificates />
+
+					<configure-elasticsearch-x-pack-pki-security-properties />
+				</then>
+			</elseif>
 		</if>
 
 		<configure-portal-remote-elasticsearch-osgi-properties />
@@ -1352,6 +1362,32 @@ xpack.monitoring.collection.enabled: true</echo>
 
 				<lstopwatch action="total" name="start.elasticsearch" />
 			</then>
+			<elseif>
+				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<sleep seconds="30" />
+
+					<set-x-pack-user-passwords />
+
+					<start-x-pack-trial />
+
+					<sleep seconds="10" />
+
+					<antcall target="stop-elasticsearch" />
+
+					<enable-pki-properties />
+
+					<antcall target="start-elasticsearch-node" />
+
+					<sleep seconds="10" />
+
+					<configure-portal-x-pack-pki-osgi-properties />
+
+					<antcall target="start-kibana" />
+
+					<lstopwatch action="total" name="start.elasticsearch" />
+				</then>
+			</elseif>
 			<else>
 				<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
 					<http url="http://localhost:9200/" />
@@ -1464,6 +1500,8 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
+		<get-testcase-property property.name="elastic.xpack.pki.authentication.enabled" />
+
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
@@ -1471,6 +1509,14 @@ xpack.monitoring.collection.enabled: true</echo>
 
 				<configure-kibana-x-pack-security-properties />
 			</then>
+			<elseif>
+				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<configure-kibana-properties />
+
+					<configure-kibana-x-pack-pki-security-properties />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
@@ -1555,6 +1601,8 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
+		<get-testcase-property property.name="elastic.xpack.pki.authentication.enabled" />
+
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
@@ -1562,6 +1610,12 @@ xpack.monitoring.collection.enabled: true</echo>
 
 				<antcall target="stop-kibana" />
 			</then>
+			<elseif>
+				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<echo>Stopping elasticsearch</echo>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

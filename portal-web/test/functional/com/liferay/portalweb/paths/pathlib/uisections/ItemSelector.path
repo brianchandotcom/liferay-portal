@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>LOCATION_INFO_CARDS_2</td>
-	<td>//div[contains(@class,'card-row') and contains(.,'${key_title}')]//div[contains(@class,'card-subtitle') and contains(.,'${key_locationName}')]</td>
+	<td>//div[contains(@class,'card-row') and contains(.,'${key_title}')]//p[contains(@class,'card-subtitle') and contains(.,'${key_locationName}')]</td>
 	<td></td>
 </tr>
 <tr>

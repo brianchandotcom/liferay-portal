@@ -3,10 +3,9 @@
 		{
 			"fields": [
 				{
-					"dataType": "int",
-					"label": "Vocabulary Id",
-					"name": "vocabularyId",
-					"type": "text"
+					"label": "source",
+					"name": "source",
+					"type": "categoryTreeNodeSelector"
 				}
 			]
 		}

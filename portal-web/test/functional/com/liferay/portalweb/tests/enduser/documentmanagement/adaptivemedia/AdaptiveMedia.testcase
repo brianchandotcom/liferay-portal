@@ -204,8 +204,8 @@ definition {
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "testResolutionNoDimensions",
-			maxHeight = "0",
-			maxWidth = "0",
+			maxHeight = "",
+			maxWidth = "",
 			noDimensions = "true");
 
 		ApplicationsMenu.gotoPortlet(
@@ -493,7 +493,7 @@ definition {
 			imageNameEdit = "testResolutionEdit",
 			maxHeightEdit = "0",
 			maxWidthEdit = "0",
-			noDimensions = "true");
+			zero = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

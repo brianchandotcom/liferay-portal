@@ -10,11 +10,16 @@ definition {
 			key_assigneeType = "${assigneeType}",
 			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
 
-		Search.searchCP(searchTerm = "${assigneeName}");
+		if (isSet(assigneeAll)) {
+			PortletEntry.selectAll();
+		}
+		else {
+			Search.searchCP(searchTerm = "${assigneeName}");
 
-		Check(
-			key_tableEntry = "${assigneeName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			Check(
+				key_tableEntry = "${assigneeName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+		}
 
 		SelectFrameTop();
 

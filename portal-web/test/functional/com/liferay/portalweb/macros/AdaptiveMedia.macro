@@ -63,11 +63,13 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "A configuration with this ID already exists. Please enter a unique ID.");
 		}
 		else if (isSet(zero)) {
-			Alert.viewErrorMessage(errorMessage = "Please enter a max width or max height value larger than 0.");
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Please enter a max width or max height value larger than 0.");
 		}
 		else if (isSet(noDimensions)) {
 			AssertTextEquals(
-				locator1 = "Message#REQUIRED_INFO",
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "At least one value is required.");
 		}
 		else {
@@ -181,7 +183,7 @@ definition {
 
 		if (isSet(noDimensions)) {
 			AssertTextEquals(
-				locator1 = "Message#REQUIRED_INFO",
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "At least one value is required.");
 		}
 		else {

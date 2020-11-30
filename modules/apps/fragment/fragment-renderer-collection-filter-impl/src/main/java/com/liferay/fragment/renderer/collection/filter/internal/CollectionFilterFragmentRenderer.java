@@ -130,7 +130,8 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			vocabularyId = Long.parseLong(vocabularyIdObject.toString());
 		}
 		catch (NumberFormatException numberFormatException) {
-			_log.error("Unable to parse vocabulary id", numberFormatException);
+			_log.error(
+				"Unable to parse asset vocabulary ID", numberFormatException);
 
 			return;
 		}

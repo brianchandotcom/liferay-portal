@@ -20,7 +20,9 @@
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 %>
 
-<clay:sheet-section>
+<clay:sheet-section
+	id='<%= liferayPortletResponse.getNamespace() + "defaultAddresses" %>'
+>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="sheet-subtitle"
@@ -47,20 +49,36 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 			Address defaultBillingAddress = accountEntryDisplay.getDefaultBillingAddress();
 			%>
 
-			<c:choose>
-				<c:when test="<%= defaultBillingAddress == null %>">
-					<liferay-ui:message key="not-set" />
-				</c:when>
-				<c:otherwise>
-					<h4><%= defaultBillingAddress.getName() %></h4>
+			<address id="<portlet:namespace />billingAddress">
+				<c:choose>
+					<c:when test="<%= defaultBillingAddress == null %>">
+						<liferay-ui:message key="not-set" />
+					</c:when>
+					<c:otherwise>
+						<h4><%= defaultBillingAddress.getName() %></h4>
 
-					<liferay-text-localizer:address-display
-						address="<%= defaultBillingAddress %>"
-					/>
+						<liferay-text-localizer:address-display
+							address="<%= defaultBillingAddress %>"
+						/>
 
-					<span class="autofit-row"><%= defaultBillingAddress.getPhoneNumber() %></span>
-				</c:otherwise>
-			</c:choose>
+						<span class="autofit-row"><%= defaultBillingAddress.getPhoneNumber() %></span>
+					</c:otherwise>
+				</c:choose>
+			</address>
+
+			<liferay-ui:icon
+				cssClass="modify-link"
+				data='<%=
+					HashMapBuilder.<String, Object>put(
+						"type", "billing"
+					).build()
+				%>'
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message='<%= (accountEntryDisplay.getDefaultBillingAddress() == null) ? "set-default-address" : "change" %>'
+				method="get"
+				url="javascript:;"
+			/>
 		</div>
 
 		<div class="form-group-item">
@@ -76,20 +94,59 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 			Address defaultShippingAddress = accountEntryDisplay.getDefaultShippingAddress();
 			%>
 
-			<c:choose>
-				<c:when test="<%= defaultShippingAddress == null %>">
-					<liferay-ui:message key="not-set" />
-				</c:when>
-				<c:otherwise>
-					<h4><%= defaultShippingAddress.getName() %></h4>
+			<address>
+				<c:choose>
+					<c:when test="<%= defaultShippingAddress == null %>">
+						<liferay-ui:message key="not-set" />
+					</c:when>
+					<c:otherwise>
+						<h4><%= defaultShippingAddress.getName() %></h4>
 
-					<liferay-text-localizer:address-display
-						address="<%= defaultShippingAddress %>"
-					/>
+						<liferay-text-localizer:address-display
+							address="<%= defaultShippingAddress %>"
+						/>
 
-					<span class="autofit-row"><%= defaultShippingAddress.getPhoneNumber() %></span>
-				</c:otherwise>
-			</c:choose>
+						<span class="autofit-row"><%= defaultShippingAddress.getPhoneNumber() %></span>
+					</c:otherwise>
+				</c:choose>
+			</address>
+
+			<liferay-ui:icon
+				cssClass="modify-link"
+				data='<%=
+					HashMapBuilder.<String, Object>put(
+						"type", "shipping"
+					).build()
+				%>'
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message='<%= (accountEntryDisplay.getDefaultShippingAddress() == null) ? "set-default-address" : "change" %>'
+				method="get"
+				url="javascript:;"
+			/>
 		</div>
 	</div>
 </clay:sheet-section>
+
+<portlet:renderURL var="selectDefaultAddressURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/account_entries_admin/account_entry/select_default_address.jsp" />
+	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+</portlet:renderURL>
+
+<portlet:actionURL name="/account_admin/update_account_entry_default_address" var="updateAccountEntryDefaultAddressURL">
+	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"baseSelectDefaultAddressURL", selectDefaultAddressURL
+		).put(
+			"baseUpdateAccountEntryDefaultAddressesURL", updateAccountEntryDefaultAddressURL
+		).put(
+			"defaultAddressesContainerId", liferayPortletResponse.getNamespace() + "defaultAddresses"
+		).build()
+	%>'
+	module="account_entries_admin/js/DefaultAddresses"
+/>

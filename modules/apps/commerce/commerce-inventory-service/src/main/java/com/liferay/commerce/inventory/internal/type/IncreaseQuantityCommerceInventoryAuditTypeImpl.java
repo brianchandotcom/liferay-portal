@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.internal.type;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -45,6 +46,11 @@ public class IncreaseQuantityCommerceInventoryAuditTypeImpl
 
 		return LanguageUtil.format(
 			locale, "x-increased-the-quantity-on-hand", user.getFullName());
+	}
+
+	@Override
+	public String formatQuantity(int quantity, Locale locale) {
+		return StringPool.PLUS + StringPool.SPACE + quantity;
 	}
 
 	@Override

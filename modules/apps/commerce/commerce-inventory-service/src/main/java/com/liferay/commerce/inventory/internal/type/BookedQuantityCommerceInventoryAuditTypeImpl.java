@@ -17,6 +17,7 @@ package com.liferay.commerce.inventory.internal.type;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,6 +54,11 @@ public class BookedQuantityCommerceInventoryAuditTypeImpl
 					CommerceInventoryAuditTypeConstants.ACCOUNT_NAME),
 				jsonObject.get(CommerceInventoryAuditTypeConstants.ORDER_ID)
 			});
+	}
+
+	@Override
+	public String formatQuantity(int quantity, Locale locale) {
+		return StringPool.MINUS + StringPool.SPACE + quantity;
 	}
 
 	@Override

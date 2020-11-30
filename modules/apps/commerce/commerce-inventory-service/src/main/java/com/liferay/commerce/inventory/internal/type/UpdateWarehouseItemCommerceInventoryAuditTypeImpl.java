@@ -50,6 +50,11 @@ public class UpdateWarehouseItemCommerceInventoryAuditTypeImpl
 	}
 
 	@Override
+	public String formatQuantity(int quantity, Locale locale) {
+		return LanguageUtil.format(locale, "set-to-x", quantity);
+	}
+
+	@Override
 	public String getLog(Map<String, String> context) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 

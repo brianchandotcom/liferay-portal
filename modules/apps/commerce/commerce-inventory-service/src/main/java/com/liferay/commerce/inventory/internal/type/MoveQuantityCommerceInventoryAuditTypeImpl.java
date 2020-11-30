@@ -58,6 +58,11 @@ public class MoveQuantityCommerceInventoryAuditTypeImpl
 	}
 
 	@Override
+	public String formatQuantity(int quantity, Locale locale) {
+		return String.valueOf(quantity);
+	}
+
+	@Override
 	public String getLog(Map<String, String> context) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 

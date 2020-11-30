@@ -17,6 +17,7 @@ package com.liferay.commerce.inventory.internal.type;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -55,6 +56,11 @@ public class RestoreQuantityCommerceInventoryAuditTypeImpl
 				user.getFullName(),
 				jsonObject.get(CommerceInventoryAuditTypeConstants.SHIPMENT_ID)
 			});
+	}
+
+	@Override
+	public String formatQuantity(int quantity, Locale locale) {
+		return StringPool.PLUS + StringPool.SPACE + quantity;
 	}
 
 	@Override

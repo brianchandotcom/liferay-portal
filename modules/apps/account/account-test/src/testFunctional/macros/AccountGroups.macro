@@ -29,10 +29,12 @@ definition {
 
 		Refresh();
 
-		AssertTextEquals.assertPartialText(
-			key_tableEntry = "${assigneeName}",
-			locator1 = "LexiconTable#TABLE_ENTRY",
-			value1 = "${assigneeName}");
+		for (var assigneeName : list "${assigneeNames}") {
+			AssertTextEquals.assertPartialText(
+				key_tableEntry = "${assigneeName}",
+				locator1 = "LexiconTable#TABLE_ENTRY",
+				value1 = "${assigneeName}");
+		}
 	}
 
 	macro addCP {

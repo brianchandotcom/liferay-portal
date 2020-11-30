@@ -75,11 +75,7 @@ const FieldProperties = ({required, tooltip}) => {
 
 			{tooltip && (
 				<span className="ddm-tooltip">
-					<ClayIcon
-						data-tooltip-align="right"
-						symbol="question-circle-full"
-						title={tooltip}
-					/>
+					<ClayIcon symbol="question-circle-full" title={tooltip} />
 				</span>
 			)}
 		</>

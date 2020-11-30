@@ -63,4 +63,44 @@ definition {
 		AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
 	}
 
+	@priority = "4"
+	test DeleteAccountGroup {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group to make search field works.",
+			accountGroupName = "Search AG");
+
+		Navigator.gotoBack();
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group for delete testing.",
+			accountGroupName = "Delete AG");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		LexiconEntry.viewEntryName(rowEntry = "Delete AG");
+
+		LexiconEntry.delete(rowEntry = "Delete AG");
+
+		Search.searchCP(searchTerm = "Delete AG");
+
+		AccountGroups.viewDefault(tabName = "Account Groups");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		Search.searchCP(searchTerm = "Delete AG");
+
+		AccountGroups.viewDefault(tabName = "Account Groups");
+	}
+
 }

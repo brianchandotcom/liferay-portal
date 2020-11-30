@@ -17,50 +17,32 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+DLEditFolderDisplayContext dlEditFolderDisplayContext = new DLEditFolderDisplayContext(request);
 
-Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+Folder folder = dlEditFolderDisplayContext.getFolder();
 
-long folderId = BeanParamUtil.getLong(folder, request, "folderId");
+long folderId = dlEditFolderDisplayContext.getFolderId();
 
-long repositoryId = BeanParamUtil.getLong(folder, request, "repositoryId");
+long repositoryId = dlEditFolderDisplayContext.getRepositoryId();
 
-Folder parentFolder = null;
+Folder parentFolder = dlEditFolderDisplayContext.getParentFolder();
 
-long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+long parentFolderId = dlEditFolderDisplayContext.getParentFolderId();
 
-String parentFolderName = LanguageUtil.get(request, "home");
+String parentFolderName = dlEditFolderDisplayContext.getParentFolderName();
 
-try {
-	if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-		parentFolder = DLAppLocalServiceUtil.getFolder(parentFolderId);
+boolean rootFolder = dlEditFolderDisplayContext.isRootFolder();
 
-		parentFolderName = parentFolder.getName();
-	}
-}
-catch (NoSuchFolderException nsfe) {
-}
+boolean workflowEnabled = dlEditFolderDisplayContext.isWorkflowEnabled();
 
-boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
+List<WorkflowDefinition> workflowDefinitions = dlEditFolderDisplayContext.getWorkflowDefinitions();
 
-Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null) && DLFolderPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), folderId, ActionKeys.UPDATE) && !scopeGroup.isLayoutSetPrototype();
-
-List<WorkflowDefinition> workflowDefinitions = null;
-
-if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-}
-
-String languageId = LanguageUtil.getLanguageId(request);
-
-String headerTitle = (folder == null) ? (rootFolder ? LanguageUtil.get(request, "home") : LanguageUtil.get(request, "new-folder")) : folder.getName();
+String languageId = dlEditFolderDisplayContext.getLanguageId();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(dlEditFolderDisplayContext.getRedirect());
 
-renderResponse.setTitle(headerTitle);
+renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 %>
 
 <liferay-util:buffer
@@ -81,7 +63,7 @@ renderResponse.setTitle(headerTitle);
 
 	<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "savePage();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="redirect" type="hidden" value="<%= dlEditFolderDisplayContext.getRedirect() %>" />
 		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
@@ -305,7 +287,7 @@ renderResponse.setTitle(headerTitle);
 		<aui:button-row>
 			<aui:button type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= dlEditFolderDisplayContext.getRedirect() %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>

@@ -26,6 +26,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLAdminDi
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDataEngineDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLEditFolderDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryAdditionalMetadataSetsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryTypeDetailsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewDisplayContext" %><%@

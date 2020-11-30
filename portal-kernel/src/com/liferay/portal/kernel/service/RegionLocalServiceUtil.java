@@ -127,6 +127,10 @@ public class RegionLocalServiceUtil {
 		return getService().deleteRegion(region);
 	}
 
+	public static void deleteRegionsByCountryId(long countryId) {
+		getService().deleteRegionsByCountryId(countryId);
+	}
+
 	public static <T> T dslQuery(
 		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 

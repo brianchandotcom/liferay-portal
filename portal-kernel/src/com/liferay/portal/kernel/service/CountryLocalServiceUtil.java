@@ -88,6 +88,10 @@ public class CountryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteCountriesByCompanyId(long companyId) {
+		getService().deleteCountriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Deletes the country from the database. Also notifies the appropriate model listeners.
 	 *

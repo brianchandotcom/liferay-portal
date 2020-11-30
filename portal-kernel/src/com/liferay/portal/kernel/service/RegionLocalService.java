@@ -128,6 +128,8 @@ public interface RegionLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Region deleteRegion(Region region);
 
+	public void deleteRegionsByCountryId(long countryId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 

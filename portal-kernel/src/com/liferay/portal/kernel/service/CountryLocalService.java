@@ -99,6 +99,8 @@ public interface CountryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void deleteCountriesByCompanyId(long companyId);
+
 	/**
 	 * Deletes the country from the database. Also notifies the appropriate model listeners.
 	 *

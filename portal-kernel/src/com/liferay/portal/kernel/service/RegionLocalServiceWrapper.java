@@ -125,6 +125,11 @@ public class RegionLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteRegionsByCountryId(long countryId) {
+		_regionLocalService.deleteRegionsByCountryId(countryId);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _regionLocalService.dslQuery(dslQuery);
 	}

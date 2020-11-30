@@ -85,6 +85,11 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteCountriesByCompanyId(long companyId) {
+		_countryLocalService.deleteCountriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Deletes the country from the database. Also notifies the appropriate model listeners.
 	 *

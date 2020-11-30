@@ -68,7 +68,7 @@ const VideoPreview = ({
 			.catch(() => {
 				if (isMounted()) {
 					setLoading(false);
-					setVideoHtml(externalVideoURL);
+					setVideoHtml(externalVideoHTML);
 					setError(
 						Liferay.Language.get(
 							'sorry,-this-platform-is-not-supported'
@@ -91,7 +91,7 @@ const VideoPreview = ({
 		else {
 			setLoading(false);
 			setValidURL(false);
-			setVideoHtml(externalVideoURL);
+			setVideoHtml(externalVideoHTML);
 		}
 	};
 

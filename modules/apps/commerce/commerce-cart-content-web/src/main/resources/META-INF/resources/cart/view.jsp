@@ -141,19 +141,45 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					%>
 
 					<liferay-ui:search-container-column-text
-						name="list-price"
+						name="price"
 					>
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
 							<%
 							CommerceMoney unitPriceCommerceMoney = commerceOrderItem.getUnitPriceMoney();
+							CommerceMoney unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceMoney();
 
 							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 								unitPriceCommerceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+								unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceWithTaxAmountMoney();
 							}
 							%>
 
-							<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
+							<c:choose>
+								<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) && CommerceBigDecimalUtil.lt(unitPromoPriceCommerceMoney.getPrice(), unitPriceCommerceMoney.getPrice()) %>">
+									<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="discount"
+					>
+						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
+
+							<%
+							CommerceMoney discountAmountCommerceMoney = commerceOrderItem.getDiscountAmountMoney();
+
+							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+								discountAmountCommerceMoney = commerceOrderItem.getDiscountWithTaxAmountMoney();
+							}
+							%>
+
+							<%= HtmlUtil.escape(discountAmountCommerceMoney.format(locale)) %>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 

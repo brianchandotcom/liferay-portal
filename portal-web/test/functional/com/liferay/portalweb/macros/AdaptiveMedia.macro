@@ -186,6 +186,11 @@ definition {
 				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "At least one value is required.");
 		}
+		else if (isSet(zero)) {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Please enter a max width or max height value larger than 0.");
+		}
 		else {
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}

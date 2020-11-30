@@ -693,14 +693,14 @@ definition {
 			for (var applicationList : list "${applicationList}") {
 				AssertElementNotPresent(
 					key_card = "${applicationList}",
-					locator1 = "Card#CARD");
+					locator1 = "Card#CARD_TITLE");
 			}
 		}
 		else {
 			for (var applicationList : list "${applicationList}") {
 				AssertVisible(
 					key_card = "${applicationList}",
-					locator1 = "Card#CARD");
+					locator1 = "Card#CARD_TITLE");
 			}
 		}
 	}

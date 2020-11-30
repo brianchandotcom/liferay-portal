@@ -74,7 +74,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 					WebKeys.THEME_DISPLAY);
 
 			return addFileEntry(
-				folderId, formInstanceId, groupId, file, fileName,
+				formInstanceId, groupId, folderId, file, fileName,
 				MimeTypesUtil.getContentType(file, fileName), themeDisplay);
 		}
 		finally {
@@ -83,7 +83,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 	}
 
 	protected FileEntry addFileEntry(
-			long folderId, long formInstanceId, long groupId, File file,
+			long formInstanceId, long groupId, long folderId, File file,
 			String fileName, String mimeType, ThemeDisplay themeDisplay)
 		throws PortalException {
 

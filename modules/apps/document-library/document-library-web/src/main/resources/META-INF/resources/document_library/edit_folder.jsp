@@ -21,23 +21,7 @@ DLEditFolderDisplayContext dlEditFolderDisplayContext = new DLEditFolderDisplayC
 
 Folder folder = dlEditFolderDisplayContext.getFolder();
 
-long folderId = dlEditFolderDisplayContext.getFolderId();
-
-long repositoryId = dlEditFolderDisplayContext.getRepositoryId();
-
 Folder parentFolder = dlEditFolderDisplayContext.getParentFolder();
-
-long parentFolderId = dlEditFolderDisplayContext.getParentFolderId();
-
-String parentFolderName = dlEditFolderDisplayContext.getParentFolderName();
-
-boolean rootFolder = dlEditFolderDisplayContext.isRootFolder();
-
-boolean workflowEnabled = dlEditFolderDisplayContext.isWorkflowEnabled();
-
-List<WorkflowDefinition> workflowDefinitions = dlEditFolderDisplayContext.getWorkflowDefinitions();
-
-String languageId = dlEditFolderDisplayContext.getLanguageId();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(dlEditFolderDisplayContext.getRedirect());
@@ -62,12 +46,12 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 	</portlet:actionURL>
 
 	<aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "savePage();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= dlEditFolderDisplayContext.isRootFolder() ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />
 		<aui:input name="redirect" type="hidden" value="<%= dlEditFolderDisplayContext.getRedirect() %>" />
 		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
-		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
+		<aui:input name="folderId" type="hidden" value="<%= dlEditFolderDisplayContext.getFolderId() %>" />
+		<aui:input name="repositoryId" type="hidden" value="<%= dlEditFolderDisplayContext.getRepositoryId() %>" />
+		<aui:input name="parentFolderId" type="hidden" value="<%= dlEditFolderDisplayContext.getParentFolderId() %>" />
 
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-folder-name" />
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
@@ -92,9 +76,9 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<c:if test="<%= !rootFolder %>">
+				<c:if test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
 					<c:if test="<%= folder != null %>">
-						<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
+						<aui:input name="parentFolder" type="resource" value="<%= dlEditFolderDisplayContext.getParentFolderName() %>" />
 					</c:if>
 
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
@@ -105,24 +89,24 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 				</c:if>
 			</aui:fieldset>
 
-			<c:if test="<%= rootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
+			<c:if test="<%= dlEditFolderDisplayContext.isRootFolder() || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
 
 				<%
 				DLFolder dlFolder = null;
 
 				long defaultFileEntryTypeId = 0;
 
-				if (!rootFolder) {
+				if (!dlEditFolderDisplayContext.isRootFolder()) {
 					dlFolder = (DLFolder)folder.getModel();
 
 					defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
 				}
 
-				List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, false);
+				List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), dlEditFolderDisplayContext.getFolderId(), false);
 
 				String headerNames = null;
 
-				if (workflowEnabled) {
+				if (dlEditFolderDisplayContext.isWorkflowEnabled()) {
 					headerNames = "name,workflow,null";
 				}
 				else {
@@ -130,11 +114,11 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 				}
 				%>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
-					<c:if test="<%= !rootFolder %>">
-						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(request, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", parentFolderName, false) : LanguageUtil.format(request, "use-document-type-restrictions-of-the-parent-folder-x", parentFolderName, false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage='<%= dlEditFolderDisplayContext.isRootFolder() ? "" : "document-type-restrictions-help" %>' label='<%= dlEditFolderDisplayContext.isRootFolder() ? "" : (dlEditFolderDisplayContext.isWorkflowEnabled() ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
+					<c:if test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
+						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= dlEditFolderDisplayContext.isWorkflowEnabled() ? LanguageUtil.format(request, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", dlEditFolderDisplayContext.getParentFolderName(), false) : LanguageUtil.format(request, "use-document-type-restrictions-of-the-parent-folder-x", dlEditFolderDisplayContext.getParentFolderName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
 
-						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= workflowEnabled ? LanguageUtil.format(request, "define-specific-document-type-restrictions-and-workflow-for-this-folder-x", folder.getName(), false) : LanguageUtil.format(request, "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
+						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" id="restrictionTypeDefined" label='<%= dlEditFolderDisplayContext.isWorkflowEnabled() ? LanguageUtil.format(request, "define-specific-document-type-restrictions-and-workflow-for-this-folder-x", folder.getName(), false) : LanguageUtil.format(request, "define-specific-document-type-restrictions-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW %>" />
 
 						<div class="<%= (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeDefinedDiv">
 							<liferay-ui:search-container
@@ -156,7 +140,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 										value="<%= dlFileEntryType.getName(locale) %>"
 									/>
 
-									<c:if test="<%= workflowEnabled %>">
+									<c:if test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">
 										<liferay-ui:search-container-column-text
 											name="workflow"
 										>
@@ -164,9 +148,9 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 												<aui:option label="no-workflow" value="" />
 
 												<%
-												WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, dlFileEntryType.getFileEntryTypeId(), true);
+												WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), dlEditFolderDisplayContext.getRepositoryId(), DLFolderConstants.getClassName(), dlEditFolderDisplayContext.getFolderId(), dlFileEntryType.getFileEntryTypeId(), true);
 
-												for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+												for (WorkflowDefinition workflowDefinition : dlEditFolderDisplayContext.getWorkflowDefinitions()) {
 													boolean selected = false;
 
 													if ((workflowDefinitionLink != null) && Objects.equals(workflowDefinitionLink.getWorkflowDefinitionName(), workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
@@ -174,7 +158,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 													}
 												%>
 
-													<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+													<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(dlEditFolderDisplayContext.getLanguageId())) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 												<%
 												}
@@ -221,9 +205,9 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 						</div>
 					</c:if>
 
-					<c:if test="<%= workflowEnabled %>">
+					<c:if test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">
 						<c:choose>
-							<c:when test="<%= !rootFolder %>">
+							<c:when test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
 								<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(locale, "default-workflow-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
 							</c:when>
 							<c:otherwise>
@@ -231,14 +215,14 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 							</c:otherwise>
 						</c:choose>
 
-						<div class="<%= (rootFolder || (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeWorkflowDiv">
+						<div class="<%= (dlEditFolderDisplayContext.isRootFolder() || (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_WORKFLOW)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />restrictionTypeWorkflowDiv">
 							<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'>
 								<aui:option label="no-workflow" value="" />
 
 								<%
-								WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+								WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), dlEditFolderDisplayContext.getRepositoryId(), DLFolderConstants.getClassName(), dlEditFolderDisplayContext.getFolderId(), DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
 
-								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+								for (WorkflowDefinition workflowDefinition : dlEditFolderDisplayContext.getWorkflowDefinitions()) {
 									boolean selected = false;
 
 									if ((workflowDefinitionLink != null) && Objects.equals(workflowDefinitionLink.getWorkflowDefinitionName(), workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
@@ -246,7 +230,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 									}
 								%>
 
-									<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+									<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(dlEditFolderDisplayContext.getLanguageId())) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 								<%
 								}
@@ -258,7 +242,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 				</aui:fieldset>
 			</c:if>
 
-			<c:if test="<%= !rootFolder %>">
+			<c:if test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
 				<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
 					<liferay-expando:custom-attributes-available
 						className="<%= DLFolderConstants.getClassName() %>"
@@ -274,7 +258,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 					</liferay-expando:custom-attributes-available>
 				</c:if>
 
-				<c:if test="<%= (folder == null) && !RepositoryUtil.isExternalRepository(repositoryId) %>">
+				<c:if test="<%= (folder == null) && !RepositoryUtil.isExternalRepository(dlEditFolderDisplayContext.getRepositoryId()) %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= DLFolderConstants.getClassName() %>"
@@ -295,15 +279,15 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 <liferay-util:buffer
 	var="workflowDefinitionsBuffer"
 >
-	<c:if test="<%= workflowEnabled %>">
+	<c:if test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">
 		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE" title="workflow-definition">
 			<aui:option label="no-workflow" value="" />
 
 			<%
-			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+			for (WorkflowDefinition workflowDefinition : dlEditFolderDisplayContext.getWorkflowDefinitions()) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(languageId)) %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+				<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(dlEditFolderDisplayContext.getLanguageId())) %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
 			<%
 			}
@@ -318,7 +302,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 	window['<portlet:namespace />savePage'] = function () {
 		var message =
-			'<%= UnicodeLanguageUtil.get(request, workflowEnabled ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
+			'<%= UnicodeLanguageUtil.get(request, dlEditFolderDisplayContext.isWorkflowEnabled() ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
 
 		var submit = true;
 
@@ -344,7 +328,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 		'<portlet:namespace />restrictionTypeWorkflowDiv'
 	);
 
-	<c:if test="<%= !rootFolder %>">
+	<c:if test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
 		Liferay.Util.toggleRadio(
 			'<portlet:namespace />restrictionTypeWorkflow',
 			'<portlet:namespace />restrictionTypeWorkflowDiv',
@@ -365,7 +349,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 			'" href="javascript:;"><%= UnicodeFormatter.toString(removeFileEntryTypeIcon) %></a>';
 
 		<c:choose>
-			<c:when test="<%= workflowEnabled %>">
+			<c:when test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">
 				var restrictionTypeWorkflow = document.getElementById(
 					'<portlet:namespace />restrictionTypeWorkflow'
 				);
@@ -520,13 +504,13 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 </aui:script>
 
 <%
-if (!rootFolder && (folder == null)) {
-	DLBreadcrumbUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
+if (!dlEditFolderDisplayContext.isRootFolder() && (folder == null)) {
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlEditFolderDisplayContext.getParentFolderId(), request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 }
 else {
-	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(dlEditFolderDisplayContext.getFolderId(), request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }

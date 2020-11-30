@@ -51,13 +51,25 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public Folder getFolder() {
-		return (Folder)_httpServletRequest.getAttribute(
+		if (_folder != null) {
+			return _folder;
+		}
+
+		_folder = (Folder)_httpServletRequest.getAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+		return _folder;
 	}
 
 	public long getFolderId() {
-		return BeanParamUtil.getLong(
+		if (_folderId != null) {
+			return _folderId;
+		}
+
+		_folderId = BeanParamUtil.getLong(
 			getFolder(), _httpServletRequest, "folderId");
+
+		return _folderId;
 	}
 
 	public String getHeaderTitle() {
@@ -78,15 +90,21 @@ public class DLEditFolderDisplayContext {
 		return LanguageUtil.getLanguageId(_httpServletRequest);
 	}
 
-	public Folder getParentFolder() throws PortalException {
+	public Folder getParentFolder() {
 		try {
+			if (_parentFolder != null) {
+				return _parentFolder;
+			}
+
 			if (getParentFolderId() ==
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				return null;
 			}
 
-			return DLAppServiceUtil.getFolder(getParentFolderId());
+			_parentFolder = DLAppServiceUtil.getFolder(getParentFolderId());
+
+			return _parentFolder;
 		}
 		catch (Exception exception) {
 			return null;
@@ -94,12 +112,18 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public long getParentFolderId() {
-		return BeanParamUtil.getLong(
+		if (_parentFolderId != null) {
+			return _parentFolderId;
+		}
+
+		_parentFolderId = BeanParamUtil.getLong(
 			getFolder(), _httpServletRequest, "parentFolderId",
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		return _parentFolderId;
 	}
 
-	public String getParentFolderName() throws PortalException {
+	public String getParentFolderName() {
 		Folder folder = getParentFolder();
 
 		if (folder == null) {
@@ -110,24 +134,43 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public String getRedirect() {
-		return ParamUtil.getString(_httpServletRequest, "redirect");
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		return _redirect;
 	}
 
 	public long getRepositoryId() {
-		return BeanParamUtil.getLong(
+		if (_repositoryId != null) {
+			return _repositoryId;
+		}
+
+		_repositoryId = BeanParamUtil.getLong(
 			getFolder(), _httpServletRequest, "repositoryId");
+
+		return _repositoryId;
 	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitions()
 		throws PortalException {
 
+		if (_workflowDefinitions != null) {
+			return _workflowDefinitions;
+		}
+
 		if (!isWorkflowEnabled()) {
 			return null;
 		}
 
-		return WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-			_themeDisplay.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		_workflowDefinitions =
+			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+				_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		return _workflowDefinitions;
 	}
 
 	public boolean isRootFolder() {
@@ -135,6 +178,10 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public boolean isWorkflowEnabled() throws PortalException {
+		if (_workflowEnabled != null) {
+			return _workflowEnabled;
+		}
+
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		WorkflowHandler<DLFileEntry> workflowHandler =
@@ -149,13 +196,24 @@ public class DLEditFolderDisplayContext {
 				ActionKeys.UPDATE) &&
 			!scopeGroup.isLayoutSetPrototype()) {
 
-			return true;
+			_workflowEnabled = true;
+		}
+		else {
+			_workflowEnabled = false;
 		}
 
-		return false;
+		return _workflowEnabled;
 	}
 
+	private Folder _folder;
+	private Long _folderId;
 	private final HttpServletRequest _httpServletRequest;
+	private Folder _parentFolder;
+	private Long _parentFolderId;
+	private String _redirect;
+	private Long _repositoryId;
 	private final ThemeDisplay _themeDisplay;
+	private List<WorkflowDefinition> _workflowDefinitions;
+	private Boolean _workflowEnabled;
 
 }

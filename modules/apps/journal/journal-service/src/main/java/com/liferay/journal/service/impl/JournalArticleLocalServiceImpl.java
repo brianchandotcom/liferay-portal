@@ -7406,9 +7406,9 @@ public class JournalArticleLocalServiceImpl
 			String articleURL)
 		throws PortalException {
 
-		int maxVersionCount = getArticleMaxVersionCount();
+		int journalArticleMaxVersionCount = getJournalArticleMaxVersionCount();
 
-		if (maxVersionCount <= 0) {
+		if (journalArticleMaxVersionCount <= 0) {
 			return;
 		}
 
@@ -7421,7 +7421,7 @@ public class JournalArticleLocalServiceImpl
 			article.getGroupId(), article.getArticleId(),
 			WorkflowConstants.STATUS_APPROVED);
 
-		for (int i = maxVersionCount; i < articles.size(); i++) {
+		for (int i = journalArticleMaxVersionCount; i < articles.size(); i++) {
 			JournalArticle curArticle = articles.get(i);
 
 			expireArticle(
@@ -7778,15 +7778,6 @@ public class JournalArticleLocalServiceImpl
 			cacheable);
 	}
 
-	protected int getArticleMaxVersionCount() throws PortalException {
-		JournalServiceConfiguration journalServiceConfiguration =
-			configurationProvider.getCompanyConfiguration(
-				JournalServiceConfiguration.class,
-				CompanyThreadLocal.getCompanyId());
-
-		return journalServiceConfiguration.maxVersionCount();
-	}
-
 	protected List<ObjectValuePair<Long, Integer>> getArticleVersionStatuses(
 		List<JournalArticle> articles) {
 
@@ -7833,6 +7824,15 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticlePersistence.findByG_A_ST_First(
 			groupId, articleId, status, orderByComparator);
+	}
+
+	protected int getJournalArticleMaxVersionCount() throws PortalException {
+		JournalServiceConfiguration journalServiceConfiguration =
+			configurationProvider.getCompanyConfiguration(
+				JournalServiceConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
+
+		return journalServiceConfiguration.journalArticleMaxVersionCount();
 	}
 
 	protected JournalGroupServiceConfiguration

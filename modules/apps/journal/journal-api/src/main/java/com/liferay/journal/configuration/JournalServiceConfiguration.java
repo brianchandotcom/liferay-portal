@@ -144,8 +144,11 @@ public interface JournalServiceConfiguration {
 	)
 	public String journalArticleStorageType();
 
-	@Meta.AD(deflt = "0", name = "max-version-count", required = false)
-	public int maxVersionCount();
+	@Meta.AD(
+		deflt = "0", name = "journal-article-max-version-count",
+		required = false
+	)
+	public int journalArticleMaxVersionCount();
 
 	@Meta.AD(
 		deflt = "false",

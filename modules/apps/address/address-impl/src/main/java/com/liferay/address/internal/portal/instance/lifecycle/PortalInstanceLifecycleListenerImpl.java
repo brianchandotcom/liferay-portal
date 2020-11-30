@@ -43,6 +43,13 @@ public class PortalInstanceLifecycleListenerImpl
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public void portalInstancePreunregistered(Company company)
+		throws Exception {
+
+		_countryLocalService.deleteCountriesByCompanyId(company.getCompanyId());
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		int count = _countryLocalService.getCountriesCountByCompanyId(
 			company.getCompanyId());

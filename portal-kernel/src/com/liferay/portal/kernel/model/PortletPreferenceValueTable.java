@@ -55,14 +55,14 @@ public class PortletPreferenceValueTable
 	public final Column<PortletPreferenceValueTable, Integer> index =
 		createColumn(
 			"index_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<PortletPreferenceValueTable, String> smallValue =
-		createColumn(
-			"smallValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PortletPreferenceValueTable, Clob> largeValue =
 		createColumn("largeValue", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<PortletPreferenceValueTable, Boolean> readOnly =
 		createColumn(
 			"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<PortletPreferenceValueTable, String> smallValue =
+		createColumn(
+			"smallValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private PortletPreferenceValueTable() {
 		super("PortletPreferenceValue", PortletPreferenceValueTable::new);

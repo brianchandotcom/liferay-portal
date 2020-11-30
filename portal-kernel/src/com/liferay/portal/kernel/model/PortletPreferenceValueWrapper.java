@@ -52,9 +52,9 @@ public class PortletPreferenceValueWrapper
 		attributes.put("portletPreferencesId", getPortletPreferencesId());
 		attributes.put("name", getName());
 		attributes.put("index", getIndex());
-		attributes.put("smallValue", getSmallValue());
 		attributes.put("largeValue", getLargeValue());
 		attributes.put("readOnly", isReadOnly());
+		attributes.put("smallValue", getSmallValue());
 
 		return attributes;
 	}
@@ -105,12 +105,6 @@ public class PortletPreferenceValueWrapper
 			setIndex(index);
 		}
 
-		String smallValue = (String)attributes.get("smallValue");
-
-		if (smallValue != null) {
-			setSmallValue(smallValue);
-		}
-
 		String largeValue = (String)attributes.get("largeValue");
 
 		if (largeValue != null) {
@@ -121,6 +115,12 @@ public class PortletPreferenceValueWrapper
 
 		if (readOnly != null) {
 			setReadOnly(readOnly);
+		}
+
+		String smallValue = (String)attributes.get("smallValue");
+
+		if (smallValue != null) {
+			setSmallValue(smallValue);
 		}
 	}
 

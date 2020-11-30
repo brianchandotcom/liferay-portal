@@ -92,12 +92,12 @@ public class PortletPreferenceValueCacheModel
 		sb.append(name);
 		sb.append(", index=");
 		sb.append(index);
-		sb.append(", smallValue=");
-		sb.append(smallValue);
 		sb.append(", largeValue=");
 		sb.append(largeValue);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
+		sb.append(", smallValue=");
+		sb.append(smallValue);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,13 +125,6 @@ public class PortletPreferenceValueCacheModel
 
 		portletPreferenceValueImpl.setIndex(index);
 
-		if (smallValue == null) {
-			portletPreferenceValueImpl.setSmallValue("");
-		}
-		else {
-			portletPreferenceValueImpl.setSmallValue(smallValue);
-		}
-
 		if (largeValue == null) {
 			portletPreferenceValueImpl.setLargeValue("");
 		}
@@ -140,6 +133,13 @@ public class PortletPreferenceValueCacheModel
 		}
 
 		portletPreferenceValueImpl.setReadOnly(readOnly);
+
+		if (smallValue == null) {
+			portletPreferenceValueImpl.setSmallValue("");
+		}
+		else {
+			portletPreferenceValueImpl.setSmallValue(smallValue);
+		}
 
 		portletPreferenceValueImpl.resetOriginalValues();
 
@@ -162,10 +162,10 @@ public class PortletPreferenceValueCacheModel
 		name = objectInput.readUTF();
 
 		index = objectInput.readInt();
-		smallValue = objectInput.readUTF();
 		largeValue = (String)objectInput.readObject();
 
 		readOnly = objectInput.readBoolean();
+		smallValue = objectInput.readUTF();
 	}
 
 	@Override
@@ -189,13 +189,6 @@ public class PortletPreferenceValueCacheModel
 
 		objectOutput.writeInt(index);
 
-		if (smallValue == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(smallValue);
-		}
-
 		if (largeValue == null) {
 			objectOutput.writeObject("");
 		}
@@ -204,6 +197,13 @@ public class PortletPreferenceValueCacheModel
 		}
 
 		objectOutput.writeBoolean(readOnly);
+
+		if (smallValue == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(smallValue);
+		}
 	}
 
 	public long mvccVersion;
@@ -213,8 +213,8 @@ public class PortletPreferenceValueCacheModel
 	public long portletPreferencesId;
 	public String name;
 	public int index;
-	public String smallValue;
 	public String largeValue;
 	public boolean readOnly;
+	public String smallValue;
 
 }

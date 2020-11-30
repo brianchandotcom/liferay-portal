@@ -139,11 +139,11 @@ public class PortletPreferenceValuePersistenceTest {
 
 		newPortletPreferenceValue.setIndex(RandomTestUtil.nextInt());
 
-		newPortletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
-
 		newPortletPreferenceValue.setLargeValue(RandomTestUtil.randomString());
 
 		newPortletPreferenceValue.setReadOnly(RandomTestUtil.randomBoolean());
+
+		newPortletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
 		_portletPreferenceValues.add(
 			_persistence.update(newPortletPreferenceValue));
@@ -174,14 +174,14 @@ public class PortletPreferenceValuePersistenceTest {
 			existingPortletPreferenceValue.getIndex(),
 			newPortletPreferenceValue.getIndex());
 		Assert.assertEquals(
-			existingPortletPreferenceValue.getSmallValue(),
-			newPortletPreferenceValue.getSmallValue());
-		Assert.assertEquals(
 			existingPortletPreferenceValue.getLargeValue(),
 			newPortletPreferenceValue.getLargeValue());
 		Assert.assertEquals(
 			existingPortletPreferenceValue.isReadOnly(),
 			newPortletPreferenceValue.isReadOnly());
+		Assert.assertEquals(
+			existingPortletPreferenceValue.getSmallValue(),
+			newPortletPreferenceValue.getSmallValue());
 	}
 
 	@Test
@@ -250,7 +250,7 @@ public class PortletPreferenceValuePersistenceTest {
 			"PortletPreferenceValue", "mvccVersion", true, "ctCollectionId",
 			true, "portletPreferenceValueId", true, "companyId", true,
 			"portletPreferencesId", true, "name", true, "index", true,
-			"smallValue", true, "readOnly", true);
+			"readOnly", true, "smallValue", true);
 	}
 
 	@Test
@@ -583,11 +583,11 @@ public class PortletPreferenceValuePersistenceTest {
 
 		portletPreferenceValue.setIndex(RandomTestUtil.nextInt());
 
-		portletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
-
 		portletPreferenceValue.setLargeValue(RandomTestUtil.randomString());
 
 		portletPreferenceValue.setReadOnly(RandomTestUtil.randomBoolean());
+
+		portletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
 		_portletPreferenceValues.add(
 			_persistence.update(portletPreferenceValue));

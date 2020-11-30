@@ -2959,9 +2959,9 @@ public class PortletPreferenceValuePersistenceImpl
 		ctStrictColumnNames.add("portletPreferencesId");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("index_");
-		ctStrictColumnNames.add("smallValue");
 		ctStrictColumnNames.add("largeValue");
 		ctStrictColumnNames.add("readOnly");
+		ctStrictColumnNames.add("smallValue");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

@@ -1194,42 +1194,6 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 	}
 
-	macro viewCurrentLanguagesCP {
-		var key_displaySettings = "${displaySettings}";
-
-		if (IsNotVisible(locator1 = "SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO")) {
-			Navigator.gotoNavTab(navTab = "Languages");
-		}
-
-		Check(
-			locator1 = "SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO",
-			value1 = "Display Settings");
-
-		for (var currentSiteLanguage : list "${currentSiteLanguages}") {
-			var currentSiteLanguage = "${currentSiteLanguage}";
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = "${currentSiteLanguage}");
-		}
-
-		for (var availableSiteLanguage : list "${availableSiteLanguages}") {
-			var availableSiteLanguage = "${availableSiteLanguage}";
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-				value1 = "${availableSiteLanguage}");
-		}
-
-		if (isSet(defaultSiteLanguage)) {
-			var defaultSiteLanguage = "${defaultSiteLanguage}";
-
-			Select(
-				locator1 = "Select#DEFAULT_LANGUAGE",
-				value1 = "${defaultSiteLanguage}");
-		}
-	}
-
 	macro viewCustomSiteLogoInDifferentViews {
 		ProductMenuHelper.openProductMenu();
 

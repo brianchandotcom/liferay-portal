@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
-	<td>//div[@class='btn-group-vertical']/button[1]</td>
+	<td>//button[contains(@aria-label,'Transfer Item Left to Right')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
-	<td>//div[@class='btn-group-vertical']/button[2]</td>
+	<td>//button[contains(@aria-label,'Transfer Item Right to Left')]</td>
 	<td></td>
 </tr>
 </tbody>

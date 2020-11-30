@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>LANGUAGES_RADIO</td>
+	<td>xpath=(//div[contains(@class,'custom-radio')]//input[contains(@name,'inheritLocales')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFAULT_LANGUAGES_RADIO</td>
 	<td>//input[contains(@id,'inheritLocales')]</td>
 	<td></td>

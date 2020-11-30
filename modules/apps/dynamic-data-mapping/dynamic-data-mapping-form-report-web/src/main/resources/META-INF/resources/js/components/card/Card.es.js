@@ -15,7 +15,6 @@
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useContext} from 'react';
 
 import EmptyState from '../empty-state/EmptyState.es';
@@ -57,16 +56,14 @@ export default ({
 				<ClayLayout.Col>
 					<ClayCard displayType="image">
 						<ClayCard.AspectRatio className="card-header card-item-first">
-							<ClayTooltipProvider>
-								<div
-									className="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
-									data-tooltip-align="bottom"
-									data-tooltip-delay={300}
-									title={title}
-								>
-									<ClayIcon symbol={icon} />
-								</div>
-							</ClayTooltipProvider>
+							<div
+								className="aspect-ratio-item aspect-ratio-item-center-left aspect-ratio-item-fluid card-symbol card-type-asset-icon"
+								data-tooltip-align="bottom"
+								data-tooltip-delay={300}
+								title={title}
+							>
+								<ClayIcon symbol={icon} />
+							</div>
 
 							<div className="field-info">
 								<ClayCard.Description displayType="title">

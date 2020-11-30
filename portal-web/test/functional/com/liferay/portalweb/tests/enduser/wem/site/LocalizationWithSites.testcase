@@ -461,6 +461,7 @@ definition {
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "español (España),alemán (Alemania)",
+			defaultSiteLanguage = "español (España)",
 			displaySettings = "Display Settings",
 			localizedLanguageTab = "Idiomas",
 			localizedSaveButton = "Guardar",
@@ -497,6 +498,7 @@ definition {
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",
+			defaultSiteLanguage = "español (España)",
 			displaySettings = "Display Settings",
 			localizedLanguageTab = "Idiomas",
 			localizedSaveButton = "Guardar",

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -149,26 +150,52 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String assetCategoryTreeNodeType = sourceJSONObject.getString(
+			"categoryTreeNodeType");
+
+		List<AssetCategory> assetCategories = new ArrayList<>();
+
 		try {
-			List<AssetCategory> assetCategories =
-				_assetCategoryService.getVocabularyCategories(
-					assetCategoryTreeNodeId, 0,
-					_assetCategoryService.getVocabularyCategoriesCount(
-						themeDisplay.getScopeGroupId(),
-						assetCategoryTreeNodeId),
-					null);
+			if (assetCategoryTreeNodeType.equals("Category")) {
+				assetCategories = _assetCategoryService.getChildCategories(
+					assetCategoryTreeNodeId);
+
+				AssetCategory assetCategory =
+					_assetCategoryService.fetchCategory(
+						assetCategoryTreeNodeId);
+
+				httpServletRequest.setAttribute(
+					CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY,
+					assetCategory);
+
+				httpServletRequest.removeAttribute(
+					CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+			}
+			else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
+				assetCategories =
+					_assetCategoryService.getVocabularyRootCategories(
+						themeDisplay.getScopeGroupId(), assetCategoryTreeNodeId,
+						0,
+						_assetCategoryService.getVocabularyCategoriesCount(
+							themeDisplay.getScopeGroupId(),
+							assetCategoryTreeNodeId),
+						null);
+
+				AssetVocabulary assetVocabulary =
+					_assetVocabularyService.fetchVocabulary(
+						assetCategoryTreeNodeId);
+
+				httpServletRequest.setAttribute(
+					CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
+					assetVocabulary);
+
+				httpServletRequest.removeAttribute(
+					CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+			}
 
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
 				assetCategories);
-
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyService.fetchVocabulary(
-					assetCategoryTreeNodeId);
-
-			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
-				assetVocabulary);
 
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,

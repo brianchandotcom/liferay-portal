@@ -21,6 +21,8 @@ public class CollectionFilterFragmentRendererWebKeys {
 
 	public static final String ASSET_CATEGORIES = "ASSET_CATEGORIES";
 
+	public static final String ASSET_CATEGORY = "ASSET_CATEGORY";
+
 	public static final String ASSET_VOCABULARY = "ASSET_VOCABULARY";
 
 	public static final String CATEGORY_ID = "categoryId";

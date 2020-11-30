@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
+package com.liferay.data.engine.internal.change.tracking.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLinkTable;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutTable;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
+import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.data.engine.model.DEDataListViewTable;
+import com.liferay.data.engine.service.persistence.DEDataListViewPersistence;
+import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,48 +31,44 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class DDMStructureLayoutTableReferenceDefinition
-	implements TableReferenceDefinition<DDMStructureLayoutTable> {
+public class DEDataListViewTableReferenceDefinition
+	implements TableReferenceDefinition<DEDataListViewTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<DDMStructureLayoutTable>
+		ChildTableReferenceInfoBuilder<DEDataListViewTable>
 			childTableReferenceInfoBuilder) {
 
 		childTableReferenceInfoBuilder.classNameReference(
-			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
+			DEDataListViewTable.INSTANCE.deDataListViewId,
 			DEDataDefinitionFieldLinkTable.INSTANCE.classPK,
-			DDMStructureLayout.class
-		).systemEventReference(
-			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
-			DDMStructureLayout.class
-		);
+			DEDataListView.class);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<DDMStructureLayoutTable>
+		ParentTableReferenceInfoBuilder<DEDataListViewTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			DDMStructureLayoutTable.INSTANCE
+			DEDataListViewTable.INSTANCE
 		).singleColumnReference(
-			DDMStructureLayoutTable.INSTANCE.structureVersionId,
-			DDMStructureVersionTable.INSTANCE.structureVersionId
+			DEDataListViewTable.INSTANCE.ddmStructureId,
+			DDMStructureTable.INSTANCE.structureId
 		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _ddmStructureLayoutPersistence;
+		return _deDataListViewPersistence;
 	}
 
 	@Override
-	public DDMStructureLayoutTable getTable() {
-		return DDMStructureLayoutTable.INSTANCE;
+	public DEDataListViewTable getTable() {
+		return DEDataListViewTable.INSTANCE;
 	}
 
 	@Reference
-	private DDMStructureLayoutPersistence _ddmStructureLayoutPersistence;
+	private DEDataListViewPersistence _deDataListViewPersistence;
 
 }

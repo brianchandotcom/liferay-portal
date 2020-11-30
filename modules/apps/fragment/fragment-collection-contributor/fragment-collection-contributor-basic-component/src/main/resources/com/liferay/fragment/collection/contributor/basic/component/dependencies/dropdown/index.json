@@ -66,6 +66,10 @@
 							{
 								"label": "full-width",
 								"value": "dropdown-fragment-menu-full"
+							},
+							{
+								"label": "mega-menu",
+								"value": "mega-menu"
 							}
 						]
 					}

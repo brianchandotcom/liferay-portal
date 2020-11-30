@@ -17,16 +17,52 @@ const toggleEditable = toggle.querySelector('[data-lfr-editable-id]');
 const menu = fragmentElement.querySelector('.dropdown-fragment-menu');
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 
+let alignMenuInterval;
+
+function alignMenu() {
+	const toggleRect = toggle.getBoundingClientRect();
+
+	const parent =
+		document.querySelector('.page-editor__layout-viewport__resizer') ||
+		document.body;
+	const parentRect = parent.getBoundingClientRect();
+
+	menu.style.position = 'fixed';
+	menu.style.left = `${parentRect.left}px`;
+	menu.style.top = `${toggleRect.bottom}px`;
+	menu.style.width = `${parent.getBoundingClientRect().width}px`;
+}
+
 function toggleMenu() {
 	if (isShown()) {
 		menu.style.display = 'none';
 
 		toggle.setAttribute('aria-expanded', 'false');
+
+		window.removeEventListener('resize', handleWindowEvent);
+		window.removeEventListener('scroll', handleWindowEvent);
+
+		clearInterval(alignMenuInterval);
 	}
 	else {
 		menu.style.display = 'block';
 
 		toggle.setAttribute('aria-expanded', 'true');
+
+		if (configuration.panelType === 'mega-menu') {
+			alignMenu();
+
+			window.addEventListener('resize', alignMenu);
+			window.addEventListener('scroll', alignMenu);
+
+			// In edit mode, we align the dropdown menu every second when it has
+			// type mega menu and it's kept open to avoid aligning problems when
+			// opening product menu and sidebar
+
+			if (editMode && configuration.keepOpen) {
+				alignMenuInterval = setInterval(alignMenu, 1000);
+			}
+		}
 	}
 }
 
@@ -66,6 +102,17 @@ function handleDropdownLeave() {
 	if (isShown()) {
 		toggleMenu();
 	}
+}
+
+function handleWindowEvent() {
+	if (!toggle.isConnected) {
+		window.removeEventListener('resize', handleWindowEvent);
+		window.removeEventListener('scroll', handleWindowEvent);
+
+		return;
+	}
+
+	alignMenu();
 }
 
 function main() {

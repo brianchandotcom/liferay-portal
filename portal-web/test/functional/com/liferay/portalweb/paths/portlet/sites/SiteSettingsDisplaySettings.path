@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGES_SELECT_OPTION</td>
+	<td>xpath=(//div[contains(@class,'listbox-${key_position}')]//select/option)[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
 	<td>//div[@class='btn-group-vertical']/button[1]</td>
 	<td></td>

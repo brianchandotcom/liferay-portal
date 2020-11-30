@@ -30,21 +30,17 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.eventHandler_.add(
-			dom.on(
-				this.selectUserButton,
-				'click',
-				this._handleSelectUserButtonClicked.bind(this)
-			)
+		this.selectUserButtonHandle_ = dom.on(
+			this.selectUserButton,
+			'click',
+			this._handleSelectUserButtonClicked.bind(this)
 		);
 
-		this.eventHandler_.add(
-			delegate(
-				this.container,
-				'click',
-				this.removeUserLinkSelector,
-				this._handleRemoveUserButtonClicked.bind(this)
-			)
+		this.removeUserButtonHandle_ = delegate(
+			this.container,
+			'click',
+			this.removeUserLinkSelector,
+			this._handleRemoveUserButtonClicked.bind(this)
 		);
 	}
 
@@ -53,7 +49,8 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	 */
 	detached() {
 		super.detached();
-		this.eventHandler_.dispose();
+		this.selectUserButtonHandle_.removeListener();
+		this.removeUserButtonHandle_.dispose();
 	}
 
 	_handleOnSelect(selectedItemData) {

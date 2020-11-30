@@ -141,13 +141,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyService.fetchVocabulary(vocabularyId);
-
-			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
-				assetVocabulary);
-
 			List<AssetCategory> assetCategories =
 				_assetCategoryService.getVocabularyCategories(
 					vocabularyId, 0,
@@ -158,6 +151,13 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
 				assetCategories);
+
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyService.fetchVocabulary(vocabularyId);
+
+			httpServletRequest.setAttribute(
+				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
+				assetVocabulary);
 
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,

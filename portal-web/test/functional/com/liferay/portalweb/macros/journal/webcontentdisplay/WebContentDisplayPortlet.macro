@@ -284,11 +284,12 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		Click(
+		AssertClick(
 			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+			value1 = "Sites and Libraries");
 
 		Click(
 			key_card = "${otherSiteName}",

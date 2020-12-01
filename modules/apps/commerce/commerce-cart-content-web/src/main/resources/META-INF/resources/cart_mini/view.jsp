@@ -154,18 +154,35 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</div>
 				</liferay-ui:search-container-column-text>
 
-				<c:if test="<%= commerceCartContentMiniDisplayContext.hasViewPricePermission() %>">
+				<%
+				String commercePriceDisplayType = commerceCartContentMiniDisplayContext.getCommercePriceDisplayType();
+				%>
 
-					<%
-					CommerceMoney unitPriceCommerceMoney = commerceOrderItem.getUnitPriceMoney();
-					%>
+				<liferay-ui:search-container-column-text
+					name="price"
+				>
+					<c:if test="<%= commerceCartContentMiniDisplayContext.hasViewPricePermission() %>">
 
-					<liferay-ui:search-container-column-text>
-						<div class="mt-3">
-							<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
-						</div>
-					</liferay-ui:search-container-column-text>
-				</c:if>
+						<%
+						CommerceMoney unitPriceCommerceMoney = commerceOrderItem.getUnitPriceMoney();
+						CommerceMoney unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceMoney();
+
+						if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+							unitPriceCommerceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+							unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceWithTaxAmountMoney();
+						}
+						%>
+
+						<c:choose>
+							<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) && CommerceBigDecimalUtil.lt(unitPromoPriceCommerceMoney.getPrice(), unitPriceCommerceMoney.getPrice()) %>">
+								<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(unitPriceCommerceMoney.format(locale)) %>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

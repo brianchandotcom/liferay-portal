@@ -118,6 +118,40 @@ public class ProjectTemplatesAPIJarTest
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+	private Set<String> _getPaths(Path sourcePath, String extension)
+		throws Exception {
+
+		Set<String> results = new HashSet<>();
+
+		Files.walkFileTree(
+			sourcePath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (fileName.endsWith(extension)) {
+						URI folderURI = sourcePath.toUri();
+
+						URI relativeURI = folderURI.relativize(path.toUri());
+
+						String relativePath = relativeURI.getPath();
+
+						results.add(relativePath.replace(extension, ""));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return results;
+	}
+
 	private Set<String> _getTLDClassPaths(Path sourcePath) throws Exception {
 		Set<String> results = new HashSet<>();
 
@@ -171,40 +205,6 @@ public class ProjectTemplatesAPIJarTest
 						}
 						catch (Exception exception) {
 						}
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		return results;
-	}
-
-	private Set<String> _getPaths(Path sourcePath, String extension)
-		throws Exception {
-
-		Set<String> results = new HashSet<>();
-
-		Files.walkFileTree(
-			sourcePath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					String fileName = String.valueOf(path.getFileName());
-
-					if (fileName.endsWith(extension)) {
-						URI folderURI = sourcePath.toUri();
-
-						URI relativeURI = folderURI.relativize(path.toUri());
-
-						String relativePath = relativeURI.getPath();
-
-						results.add(relativePath.replace(extension, ""));
 					}
 
 					return FileVisitResult.CONTINUE;

@@ -191,7 +191,7 @@ public class ProjectTemplatesAPIJarTest
 
 					if (fileName.endsWith(".tld")) {
 						results.computeIfAbsent(
-							fileName, f -> new ArrayList<String>());
+							fileName, key -> new ArrayList<String>());
 
 						try (FileInputStream fileInputStream =
 								new FileInputStream(path.toFile())) {

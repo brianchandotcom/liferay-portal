@@ -15,10 +15,13 @@
 package com.liferay.change.tracking.internal.model.listener;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTPreferencesTable;
 import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.model.CTSchemaVersionTable;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseTable;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ReleaseImpl;
 
 import java.util.List;
@@ -122,7 +126,26 @@ public class ReleaseModelListener extends BaseModelListener<Release> {
 
 			_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 		}
+
+		for (CTCollection ctCollection :
+				_ctCollectionLocalService.<List<CTCollection>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						CTCollectionTable.INSTANCE
+					).from(
+						CTCollectionTable.INSTANCE
+					).where(
+						CTCollectionTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_DRAFT)
+					))) {
+
+			ctCollection.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+			_ctCollectionLocalService.updateCTCollection(ctCollection);
+		}
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

@@ -2758,6 +2758,39 @@ public class DataFactory {
 			GroupConstants.GLOBAL, false);
 	}
 
+	public List<LayoutModel> newGroupLayoutModels(long groupId) {
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		layoutModels.add(
+			newLayoutModel(
+				groupId, "welcome", LoginPortletKeys.LOGIN + ",",
+				HelloWorldPortletKeys.HELLO_WORLD + ","));
+		layoutModels.add(
+			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
+		layoutModels.add(
+			newLayoutModel(
+				groupId, "commerce_product", "",
+				CPPortletKeys.CP_CONTENT_WEB + ","));
+		layoutModels.add(
+			newLayoutModel(
+				groupId, "document_library", "",
+				DLPortletKeys.DOCUMENT_LIBRARY + ","));
+		layoutModels.add(
+			newLayoutModel(
+				groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
+		layoutModels.add(
+			newLayoutModel(groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
+
+		if (BenchmarksPropsValues.ENABLE_SEARCH_BAR) {
+			layoutModels.add(
+				newLayoutModel(
+					groupId, "search", true, "1_2_columns_i",
+					_getSearchPageColumns()));
+		}
+
+		return layoutModels;
+	}
+
 	public GroupModel newGroupModel(UserModel userModel) {
 		return newGroupModel(
 			_counter.get(), getClassNameId(User.class), userModel.getUserId(),
@@ -3520,39 +3553,6 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModel;
-	}
-
-	public List<LayoutModel> newPublicLayoutModels(long groupId) {
-		List<LayoutModel> layoutModels = new ArrayList<>();
-
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "welcome", LoginPortletKeys.LOGIN + ",",
-				HelloWorldPortletKeys.HELLO_WORLD + ","));
-		layoutModels.add(
-			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "commerce_product", "",
-				CPPortletKeys.CP_CONTENT_WEB + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "document_library", "",
-				DLPortletKeys.DOCUMENT_LIBRARY + ","));
-		layoutModels.add(
-			newLayoutModel(
-				groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
-		layoutModels.add(
-			newLayoutModel(groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
-
-		if (BenchmarksPropsValues.ENABLE_SEARCH_BAR) {
-			layoutModels.add(
-				newLayoutModel(
-					groupId, "search", true, "1_2_columns_i",
-					_getSearchPageColumns()));
-		}
-
-		return layoutModels;
 	}
 
 	public List<ReleaseModel> newReleaseModels() throws IOException {

@@ -36,10 +36,10 @@
 		_parentDLFolderId=0
 	/>
 
-	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId) />
+	<#assign groupLayoutModels = dataFactory.newGroupLayoutModels(groupId) />
 
-	<#list publicLayoutModels as publicLayoutModel>
-		<@insertLayout _layoutModel=publicLayoutModel />
+	<#list groupLayoutModels as groupLayoutModel>
+		<@insertLayout _layoutModel=groupLayoutModel />
 	</#list>
 
 	<@insertGroup _groupModel=groupModel />

@@ -16,6 +16,8 @@ package com.liferay.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import java.io.InputStream;
 
@@ -31,6 +33,14 @@ import javax.servlet.http.HttpServletRequest;
  * @see    DisplayContext
  */
 public interface CTDisplayRenderer<T> {
+
+	public default String getContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, T model)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Returns the input stream for the model and key from when the URL was
@@ -65,6 +75,19 @@ public interface CTDisplayRenderer<T> {
 	 */
 	public Class<T> getModelClass();
 
+	public default String getPreviousContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, T currentModel,
+			T previousModel)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default T getPreviousVersion(T model) throws PortalException {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Returns the title for the model.
 	 *
@@ -83,6 +106,14 @@ public interface CTDisplayRenderer<T> {
 	 */
 	public String getTypeName(Locale locale);
 
+	public default String getVersionName(T model) {
+		throw new UnsupportedOperationException();
+	}
+
+	public default boolean hasContent() {
+		return false;
+	}
+
 	/**
 	 * Returns whether the model may be hidden by default. Hidden models may be
 	 * filtered out in some views.
@@ -91,6 +122,10 @@ public interface CTDisplayRenderer<T> {
 	 * @return whether the model may be hidden by default
 	 */
 	public default boolean isHideable(T model) {
+		return false;
+	}
+
+	public default boolean isVersioned() {
 		return false;
 	}
 

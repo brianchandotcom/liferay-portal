@@ -38,7 +38,7 @@ function getSessionClickURL() {
 /**
  * Gets the Store utility fetch value for given key
  * @param {String} key string for fetch request
- * @param {Array} List of options
+ * @param {Object} options (currently only useHttpSession, defaulting to false)
  * @return {Promise}
  * @review
  */
@@ -71,7 +71,7 @@ export function getSessionValue(key, options = {}) {
  * Sets the Store utility fetch value
  * @param {String} key of the formData
  * @param {Object|String} value of the key for the formData
- * @param {Array} List of options
+ * @param {Object} options (currently only useHttpSession, defaulting to false)
  * @return {Promise}
  * @review
  */

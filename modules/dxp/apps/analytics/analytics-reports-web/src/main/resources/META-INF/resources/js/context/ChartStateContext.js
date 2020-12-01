@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {useContext, useReducer} from 'react';
+import React, {createContext, useContext, useReducer, useRef} from 'react';
 
-import ConnectionContext from '../context/ConnectionContext';
+import ConnectionContext from './ConnectionContext';
 
 const ADD_DATA_SET_ITEMS = 'add-data-keys';
 const CHANGE_TIME_SPAN_KEY = 'change-time-span-key';
@@ -19,20 +19,33 @@ const NEXT_TIME_SPAN = 'next-time-span';
 const PREV_TIME_SPAN = 'previous-time-span';
 const SET_LOADING = 'set-loading';
 
+const INITIAL_STATE = {
+	dataSet: {histogram: [], keyList: [], totals: []},
+	loading: true,
+	publishDate: null,
+	timeSpanKey: null,
+	timeSpanOffset: 0,
+};
+
 const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
 
-export const useChartState = ({publishDate, timeSpanKey}) => {
+const ChartStateContext = createContext(INITIAL_STATE);
+
+export const ChartStateContextProvider = ({children, value}) => {
+	const stateAndDispatch = useReducer(reducer, {...INITIAL_STATE, ...value});
+
+	return (
+		<ChartStateContext.Provider value={stateAndDispatch}>
+			{children}
+		</ChartStateContext.Provider>
+	);
+};
+
+export const useChartState = () => {
+	const [state, dispatch] = useContext(ChartStateContext);
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [state, dispatch] = useReducer(reducer, {
-		dataSet: {histogram: [], keyList: [], totals: []},
-		loading: true,
-		publishDate,
-		timeSpanKey,
-		timeSpanOffset: 0,
-	});
-
-	const actions = {
+	const actionsRef = useRef({
 		addDataSetItems: (payload) =>
 			dispatch({
 				payload,
@@ -44,9 +57,9 @@ export const useChartState = ({publishDate, timeSpanKey}) => {
 		nextTimeSpan: () => dispatch({type: NEXT_TIME_SPAN}),
 		previousTimeSpan: () => dispatch({type: PREV_TIME_SPAN}),
 		setLoading: () => dispatch({type: SET_LOADING}),
-	};
+	});
 
-	return {actions, state};
+	return {actions: actionsRef.current, state};
 };
 
 /**

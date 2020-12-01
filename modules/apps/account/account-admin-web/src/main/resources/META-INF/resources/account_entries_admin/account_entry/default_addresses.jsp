@@ -68,19 +68,39 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 				</c:choose>
 			</address>
 
-			<liferay-ui:icon
-				cssClass="modify-link"
-				data='<%=
-					HashMapBuilder.<String, Object>put(
-						"type", "billing"
-					).build()
-				%>'
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message='<%= (accountEntryDisplay.getDefaultBillingAddress() == null) ? "set-default-address" : "change" %>'
-				method="get"
-				url="javascript:;"
-			/>
+			<div class="btn-group button-holder">
+				<liferay-ui:icon
+					cssClass="btn-one modify-link"
+					data='<%=
+						HashMapBuilder.<String, Object>put(
+							"type", "billing"
+						).build()
+					%>'
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message='<%= (accountEntryDisplay.getDefaultBillingAddress() == null) ? "set-default-address" : "change" %>'
+					method="get"
+					url="javascript:;"
+				/>
+
+				<c:if test="<%= accountEntryDisplay.getDefaultBillingAddress() != null %>">
+					<portlet:actionURL name="/account_admin/update_account_entry_default_address" var="removeDefaultBillingAddressURL">
+						<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+						<portlet:param name="addressId" value="0" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="type" value="billing" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon
+						cssClass="btn-two c-ml-sm-3 c-mt-3 c-mt-sm-0"
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm"
+						message="remove"
+						method="get"
+						url="<%= removeDefaultBillingAddressURL %>"
+					/>
+				</c:if>
+			</div>
 		</div>
 
 		<div class="form-group-item">
@@ -115,19 +135,39 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 				</c:choose>
 			</address>
 
-			<liferay-ui:icon
-				cssClass="modify-link"
-				data='<%=
-					HashMapBuilder.<String, Object>put(
-						"type", "shipping"
-					).build()
-				%>'
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message='<%= (accountEntryDisplay.getDefaultShippingAddress() == null) ? "set-default-address" : "change" %>'
-				method="get"
-				url="javascript:;"
-			/>
+			<div class="btn-group button-holder">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					data='<%=
+						HashMapBuilder.<String, Object>put(
+							"type", "shipping"
+						).build()
+					%>'
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message='<%= (accountEntryDisplay.getDefaultShippingAddress() == null) ? "set-default-address" : "change" %>'
+					method="get"
+					url="javascript:;"
+				/>
+
+				<c:if test="<%= accountEntryDisplay.getDefaultShippingAddress() != null %>">
+					<portlet:actionURL name="/account_admin/update_account_entry_default_address" var="removeDefaultShippingAddressURL">
+						<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+						<portlet:param name="addressId" value="0" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="type" value="shipping" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon
+						cssClass="btn-two c-ml-sm-3 c-mt-3 c-mt-sm-0"
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm"
+						message="remove"
+						method="get"
+						url="<%= removeDefaultShippingAddressURL %>"
+					/>
+				</c:if>
+			</div>
 		</div>
 	</div>
 </clay:sheet-section>

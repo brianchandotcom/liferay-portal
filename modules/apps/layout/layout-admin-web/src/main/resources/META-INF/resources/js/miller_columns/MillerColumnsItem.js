@@ -122,7 +122,7 @@ const noop = () => {};
 let timerId;
 
 const MillerColumnsItem = ({
-	collumnContainer,
+	columnsContainer,
 	item: {
 		actions = [],
 		active,
@@ -274,32 +274,34 @@ const MillerColumnsItem = ({
 			setDropZone(dropZone);
 
 			if (Liferay.Browser.isSafari() && !Liferay.Browser.isChrome()) {
-
-				const throttleFunction  = (func, delay) => {
+				const throttleFunction = (func, delay) => {
 					if (timerId) {
-						return
+						return;
 					}
-	
-					timerId  =  setTimeout(function () {
-						func()
-	
-						timerId  =  undefined;
-					}, delay)
-				}
 
-				const scroll = () =>{
+					timerId = setTimeout(() => {
+						func();
+
+						timerId = undefined;
+					}, delay);
+				};
+
+				const scroll = () => {
 					const clientOffset = monitor.getClientOffset();
-					const containerRect = collumnContainer.current.getBoundingClientRect();
+					const containerRect = columnsContainer.current.getBoundingClientRect();
 
-					const hoverClientX = containerRect.right - clientOffset.x
+					const hoverClientX = containerRect.right - clientOffset.x;
 
 					if (hoverClientX < ITEM_HOVER_BORDER_LIMIT) {
-						collumnContainer.current.scrollLeft += ref.current.getBoundingClientRect().width;
+						columnsContainer.current.scrollLeft += ref.current.getBoundingClientRect().width;
 					}
-					else if (hoverClientX > (containerRect.width - ITEM_HOVER_BORDER_LIMIT)) {
-						collumnContainer.current.scrollLeft -= ref.current.getBoundingClientRect().width;
+					else if (
+						hoverClientX >
+						containerRect.width - ITEM_HOVER_BORDER_LIMIT
+					) {
+						columnsContainer.current.scrollLeft -= ref.current.getBoundingClientRect().width;
 					}
-				}
+				};
 
 				throttleFunction(scroll, 500);
 			}

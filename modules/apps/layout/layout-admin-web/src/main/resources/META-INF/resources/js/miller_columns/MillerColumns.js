@@ -265,7 +265,7 @@ const MillerColumns = ({
 					<MillerColumnsColumn
 						actionHandlers={actionHandlers}
 						columnItems={column.items}
-						collumnContainer={ref}
+						columnsContainer={ref}
 						items={items}
 						key={index}
 						namespace={namespace}

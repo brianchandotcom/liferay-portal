@@ -1927,11 +1927,11 @@
 		<!-- Other fields -->
 
 		<column name="portletPreferencesId" type="long" />
-		<column name="name" type="String" />
 		<column name="index" type="int" />
-		<column name="smallValue" type="String" />
 		<column name="largeValue" type="String" />
+		<column name="name" type="String" />
 		<column name="readOnly" type="boolean" />
+		<column name="smallValue" type="String" />
 
 		<!-- Order -->
 
@@ -1948,10 +1948,10 @@
 			<finder-column name="portletPreferencesId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="P_N_I" return-type="PortletPreferenceValue" unique="true">
+		<finder name="P_I_N" return-type="PortletPreferenceValue" unique="true">
 			<finder-column name="portletPreferencesId" />
-			<finder-column name="name" />
 			<finder-column name="index" />
+			<finder-column name="name" />
 		</finder>
 		<finder name="P_N_SV" return-type="Collection">
 			<finder-column name="portletPreferencesId" />

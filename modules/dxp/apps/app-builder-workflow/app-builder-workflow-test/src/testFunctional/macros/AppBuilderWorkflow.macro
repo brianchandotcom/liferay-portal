@@ -382,6 +382,10 @@ definition {
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
+	macro validatePlusButton {
+		AssertElementPresent(locator1 = "AppBuilder#BUTTON_ADD");
+	}
+
 	macro verifyAssignToOption {
 		Click(
 			key_itemName = "${itemName}",

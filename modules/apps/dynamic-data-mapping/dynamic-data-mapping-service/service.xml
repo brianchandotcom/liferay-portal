@@ -121,14 +121,14 @@
 
 		<!-- Other fields -->
 
-		<column name="structureVersionId" type="long" />
 		<column name="parentFieldId" type="long" />
 		<column name="storageId" type="long" />
+		<column name="structureVersionId" type="long" />
 		<column name="fieldName" type="String" />
 		<column name="fieldType" type="String" />
-		<column name="priority" type="int" />
 		<column name="instanceId" type="String" />
 		<column name="localizable" type="boolean" />
+		<column name="priority" type="int" />
 
 		<!-- Order -->
 
@@ -138,11 +138,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="StructureVersionId" return-type="Collection">
-			<finder-column name="structureVersionId" />
-		</finder>
 		<finder name="StorageId" return-type="Collection">
 			<finder-column name="storageId" />
+		</finder>
+		<finder name="StructureVersionId" return-type="Collection">
+			<finder-column name="structureVersionId" />
 		</finder>
 		<finder name="C_F" return-type="Collection">
 			<finder-column name="companyId" />
@@ -167,10 +167,10 @@
 
 		<column name="fieldId" type="long" />
 		<column name="storageId" type="long" />
-		<column name="languageId" type="String" />
 		<column name="attributeName" type="String" />
-		<column name="smallAttributeValue" type="String" />
+		<column name="languageId" type="String" />
 		<column name="largeAttributeValue" type="String" />
+		<column name="smallAttributeValue" type="String" />
 
 		<!-- Finder methods -->
 
@@ -185,10 +185,10 @@
 			<finder-column name="attributeName" />
 			<finder-column name="smallAttributeValue" />
 		</finder>
-		<finder name="F_L_AN" return-type="DDMFieldAttribute" unique="true">
+		<finder name="F_AN_L" return-type="DDMFieldAttribute" unique="true">
 			<finder-column name="fieldId" />
-			<finder-column name="languageId" />
 			<finder-column name="attributeName" />
+			<finder-column name="languageId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="DDMFormInstance" remote-service="true" uuid="true">

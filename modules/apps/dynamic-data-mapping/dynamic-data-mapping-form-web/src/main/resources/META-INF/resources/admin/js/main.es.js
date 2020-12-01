@@ -30,6 +30,7 @@ import {
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
+import {delegate} from 'frontend-js-web';
 import core from 'metal';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
@@ -201,13 +202,11 @@ class Form extends Component {
 			)
 		);
 
-		this._eventHandler.add(
-			dom.delegate(
-				document.body,
-				'click',
-				`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
-				this._handleBackButtonClicked.bind(this)
-			)
+		this._backButtonClickEventHandler = delegate(
+			document.body,
+			'click',
+			`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
+			this._handleBackButtonClicked.bind(this)
 		);
 
 		const shareURLButton = document.querySelector(
@@ -308,6 +307,8 @@ class Form extends Component {
 		}
 
 		Notifications.closeAlert();
+
+		this._backButtonClickEventHandler.dispose();
 
 		this._eventHandler.removeAllListeners();
 

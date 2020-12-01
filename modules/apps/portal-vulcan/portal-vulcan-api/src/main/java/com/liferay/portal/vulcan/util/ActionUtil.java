@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -234,12 +235,30 @@ public class ActionUtil {
 		return HashMapBuilder.put(
 			"href",
 			() -> {
+				MultivaluedMap<String, String> pathParameters =
+					uriInfo.getPathParameters();
+
+				Set<Map.Entry<String, List<String>>> entrySet =
+					pathParameters.entrySet();
+
+				Stream<Map.Entry<String, List<String>>> stream =
+					entrySet.stream();
+
 				UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(uriInfo);
 
 				return uriBuilder.path(
 					_getVersion(uriInfo)
 				).path(
 					clazz.getSuperclass(), methodName
+				).resolveTemplates(
+					stream.collect(
+						Collectors.toMap(
+							Map.Entry::getKey,
+							entry -> {
+								List<String> value = entry.getValue();
+
+								return value.get(0);
+							}))
 				).toTemplate();
 			}
 		).put(

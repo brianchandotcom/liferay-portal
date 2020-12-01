@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -80,6 +81,9 @@ public class ReleaseModelListenerTest {
 			_ctSchemaVersionLocalService.isLatestSchemaVersion(
 				_ctCollection.getSchemaVersionId()));
 
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, _ctCollection.getStatus());
+
 		_releaseLocalService.updateRelease(
 			ReleaseModelListenerTest.class.getSimpleName(), "1.1.0", "1.0.0");
 
@@ -125,6 +129,12 @@ public class ReleaseModelListenerTest {
 
 			Assert.assertTrue(message, message.startsWith("Unable to publish"));
 		}
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, _ctCollection.getStatus());
 	}
 
 	@Inject

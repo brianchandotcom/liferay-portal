@@ -16,6 +16,7 @@ package com.liferay.change.tracking.internal.upgrade.v2_4_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Preston Crary
@@ -33,6 +34,12 @@ public class UpgradeCTSchemaVersion extends UpgradeProcess {
 				"create table CTSchemaVersion (mvccVersion LONG default 0 not ",
 				"null, schemaVersionId LONG not null primary key, companyId ",
 				"LONG, schemaContext TEXT null)"));
+
+		runSQL(
+			StringBundler.concat(
+				"update CTCollection set status = ",
+				WorkflowConstants.STATUS_EXPIRED, " where status = ",
+				WorkflowConstants.STATUS_DRAFT));
 	}
 
 }

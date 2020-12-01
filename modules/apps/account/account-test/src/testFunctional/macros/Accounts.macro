@@ -28,11 +28,18 @@ definition {
 				value1 = "Save");
 		}
 		else {
-			Search.searchCP(searchTerm = "${assigneeName}");
+			if (isSet(selectAll)) {
+				ManagementBar.setFilterAndOrder(filterBy = "All Users");
 
-			Check(
-				key_tableEntry = "${assigneeName}",
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+				PortletEntry.selectAll();
+			}
+			else {
+				Search.searchCP(searchTerm = "${assigneeName}");
+
+				Check(
+					key_tableEntry = "${assigneeName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
 
 			SelectFrameTop();
 
@@ -40,13 +47,6 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-
-		Refresh();
-
-		AssertTextEquals.assertPartialText(
-			key_tableEntry = "${assigneeName}",
-			locator1 = "LexiconTable#TABLE_ENTRY",
-			value1 = "${assigneeName}");
 	}
 
 	macro addCP {

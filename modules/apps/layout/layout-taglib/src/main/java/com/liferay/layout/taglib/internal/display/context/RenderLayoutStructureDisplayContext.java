@@ -775,12 +775,12 @@ public class RenderLayoutStructureDisplayContext {
 		return "var(--" + cssVariable + ")";
 	}
 
-	private long[] _getAssetCategoryIds() {
+	private long[][] _getAssetCategoryIds() {
 		if (_assetCategoryIds != null) {
 			return _assetCategoryIds;
 		}
 
-		Set<Long> assetCategoryIds = new HashSet<>();
+		Set<long[]> assetCategoryIdsSet = new HashSet<>();
 
 		Map<String, String[]> parameterMap =
 			_httpServletRequest.getParameterMap();
@@ -802,16 +802,13 @@ public class RenderLayoutStructureDisplayContext {
 				long assetCategoryId = GetterUtil.getLong(values[0]);
 
 				if (assetCategoryId != 0) {
-					assetCategoryIds.add(assetCategoryId);
+					assetCategoryIdsSet.add(new long[] {assetCategoryId});
 				}
 			}
 		}
 
-		Stream<Long> assetCategoryIdStream = assetCategoryIds.stream();
-
-		_assetCategoryIds = assetCategoryIdStream.mapToLong(
-			i -> i
-		).toArray();
+		_assetCategoryIds = assetCategoryIdsSet.toArray(
+			new long[assetCategoryIdsSet.size()][]);
 
 		return _assetCategoryIds;
 	}
@@ -1204,7 +1201,7 @@ public class RenderLayoutStructureDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderLayoutStructureDisplayContext.class);
 
-	private long[] _assetCategoryIds;
+	private long[][] _assetCategoryIds;
 	private final Map<String, Object> _fieldValues;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;

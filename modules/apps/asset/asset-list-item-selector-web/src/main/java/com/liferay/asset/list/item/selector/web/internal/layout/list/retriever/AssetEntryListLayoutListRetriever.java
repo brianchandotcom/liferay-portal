@@ -63,10 +63,11 @@ public class AssetEntryListLayoutListRetriever
 		long[] segmentsExperienceIds = segmentsExperienceIdsOptional.orElse(
 			new long[] {0});
 
-		Optional<long[]> assetCategoryIdsOptional =
+		Optional<long[][]> assetCategoryIdsOptional =
 			layoutListRetrieverContext.getAssetCategoryIdsOptional();
 
-		long[] assetCategoryIds = assetCategoryIdsOptional.orElse(new long[0]);
+		long[][] assetCategoryIds = assetCategoryIdsOptional.orElse(
+			new long[0][]);
 
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
@@ -109,10 +110,11 @@ public class AssetEntryListLayoutListRetriever
 		long[] segmentsExperienceIds = segmentsExperienceIdsOptional.orElse(
 			new long[] {0});
 
-		Optional<long[]> assetCategoryIdsOptional =
+		Optional<long[][]> assetCategoryIdsOptional =
 			layoutListRetrieverContext.getAssetCategoryIdsOptional();
 
-		long[] assetCategoryIds = assetCategoryIdsOptional.orElse(null);
+		long[][] assetCategoryIds = assetCategoryIdsOptional.orElse(
+			new long[0][]);
 
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
 			assetListEntry, new long[] {segmentsExperienceIds[0]},

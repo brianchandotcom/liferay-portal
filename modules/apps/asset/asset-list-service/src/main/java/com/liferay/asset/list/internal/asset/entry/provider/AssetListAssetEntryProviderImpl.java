@@ -127,7 +127,7 @@ public class AssetListAssetEntryProviderImpl
 	@Override
 	public List<AssetEntry> getAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[] assetCategoryIds, String userId, int start, int end) {
+		long[][] assetCategoryIds, String userId, int start, int end) {
 
 		if (Objects.equals(
 				assetListEntry.getType(),
@@ -156,7 +156,8 @@ public class AssetListAssetEntryProviderImpl
 		int start, int end) {
 
 		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, new long[0], userId, start, end);
+			assetListEntry, segmentsEntryIds, new long[0][], userId, start,
+			end);
 	}
 
 	@Override
@@ -178,7 +179,7 @@ public class AssetListAssetEntryProviderImpl
 	@Override
 	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[] assetCategoryIds, String userId) {
+		long[][] assetCategoryIds, String userId) {
 
 		if (Objects.equals(
 				assetListEntry.getType(),
@@ -203,7 +204,7 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
 
 		return getAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, new long[0], userId);
+			assetListEntry, segmentsEntryIds, new long[0][], userId);
 	}
 
 	@Override
@@ -708,7 +709,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _getManualAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryId,
-		long[] assetCategoryIds, int start, int end) {
+		long[][] assetCategoryIds, int start, int end) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels;
 

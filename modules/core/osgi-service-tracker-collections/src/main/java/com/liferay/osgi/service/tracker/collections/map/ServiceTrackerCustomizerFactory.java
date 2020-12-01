@@ -67,15 +67,15 @@ public class ServiceTrackerCustomizerFactory {
 	}
 
 	public static <S> ServiceTrackerCustomizer<S, ServiceWrapper<S>>
-		serviceWrapper(final BundleContext bundleContext) {
+		serviceWrapper(BundleContext bundleContext) {
 
 		return new ServiceTrackerCustomizer<S, ServiceWrapper<S>>() {
 
 			@Override
 			public ServiceWrapper<S> addingService(
-				final ServiceReference<S> serviceReference) {
+				ServiceReference<S> serviceReference) {
 
-				final S service = bundleContext.getService(serviceReference);
+				S service = bundleContext.getService(serviceReference);
 
 				if (service == null) {
 					return null;

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessor;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
@@ -45,6 +44,24 @@ public class DefaultSegmentsExperienceRequestProcessor
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long groupId,
+			long classNameId, long classPK, long[] segmentsExperienceIds)
+		throws PortalException {
+
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				groupId, classNameId, classPK, true);
+
+		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
+
+		return stream.mapToLong(
+			SegmentsExperienceModel::getSegmentsExperienceId
+		).toArray();
+	}
+
+	@Override
+	public long[] getSegmentsExperienceIds(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long groupId,
 			long classNameId, long classPK, long[] segmentsEntryIds,
 			long[] segmentsExperienceIds)
 		throws PortalException {
@@ -59,9 +76,6 @@ public class DefaultSegmentsExperienceRequestProcessor
 			SegmentsExperienceModel::getSegmentsExperienceId
 		).toArray();
 	}
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

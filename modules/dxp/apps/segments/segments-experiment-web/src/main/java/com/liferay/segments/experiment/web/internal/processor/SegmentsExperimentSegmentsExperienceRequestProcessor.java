@@ -66,7 +66,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	public long[] getSegmentsExperienceIds(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long groupId, long classNameId,
-		long classPK, long[] segmentsEntryIds, long[] segmentsExperienceIds) {
+		long classPK, long[] segmentsExperienceIds) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -185,6 +185,17 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		return new long[] {segmentsExperienceId};
+	}
+
+	@Override
+	public long[] getSegmentsExperienceIds(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, long groupId, long classNameId,
+		long classPK, long[] segmentsEntryIds, long[] segmentsExperienceIds) {
+
+		return getSegmentsExperienceIds(
+			httpServletRequest, httpServletResponse, groupId, classNameId,
+			classPK, segmentsExperienceIds);
 	}
 
 	protected long getSegmentsExperimentSegmentsExperienceId(

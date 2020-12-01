@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeUtil;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemTypeChecker;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -27,14 +28,17 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -107,12 +111,15 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		booleanFilter.add(classNameIdTermsFilter, BooleanClauseOccur.MUST);
 
 		if (Validator.isNotNull(keywords)) {
-			TermsFilter keywordsTermsFilter = new TermsFilter(
-				"localized_name_".concat(LocaleUtil.toLanguageId(locale)));
+			String sortableKeywords = StringUtil.replace(
+				StringUtil.toLowerCase(keywords), ' ', '*');
 
-			keywordsTermsFilter.addValue(keywords);
+			WildcardQuery wildcardQuery = new WildcardQueryImpl(
+				Field.getSortableFieldName(
+					"localized_name_".concat(LocaleUtil.toLanguageId(locale))),
+				StringPool.STAR + sortableKeywords + StringPool.STAR);
 
-			booleanFilter.add(keywordsTermsFilter, BooleanClauseOccur.MUST);
+			booleanQueryImpl.add(wildcardQuery, BooleanClauseOccur.MUST);
 		}
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);

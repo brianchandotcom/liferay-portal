@@ -43,6 +43,9 @@ public class BenchmarksPropsValues {
 		StringUtil.toUpperCase(
 			PropertiesHolder._get(BenchmarksPropsKeys.DB_TYPE)));
 
+	public static final boolean ENABLE_SEARCH_BAR = GetterUtil.getBoolean(
+		PropertiesHolder._get(BenchmarksPropsKeys.ENABLE_SEARCH_BAR));
+
 	public static final int MAX_ASSET_CATEGORY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT));
 

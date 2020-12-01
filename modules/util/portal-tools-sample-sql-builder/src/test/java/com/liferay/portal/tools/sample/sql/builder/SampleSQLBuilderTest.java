@@ -125,6 +125,7 @@ public class SampleSQLBuilderTest {
 
 	private void _initProperties(Properties properties, String outputDir) {
 		properties.put(BenchmarksPropsKeys.DB_TYPE, "hypersonic");
+		properties.put(BenchmarksPropsKeys.ENABLE_SEARCH_BAR, "true");
 		properties.put(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT, "1");

@@ -1719,10 +1719,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@36.0.1":
-  version "36.0.1"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-36.0.1.tgz#dbd6ccc418cae1f8fd0fc65699e368fa36787a9c"
-  integrity sha512-8L/6z8h7GG8cI0XCPQVYUZ4yGsIsgDLqC5wZdKbAi0mJBbwiyNS12d615vEGBgK6g9DyDFpgl/wG49wCuyfjSg==
+"@liferay/npm-scripts@36.2.0":
+  version "36.2.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-36.2.0.tgz#97e8448b4b7e88fabc0ab393c1557eff36fb14c2"
+  integrity sha512-UbIJVXf433njEo2SS0ZOsG+SUEfILtw0i/7kbH1y9lDPHYtxn97aIZZC31VWP4/p/w0KiaUl4HUsugdvLsGosA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1780,6 +1780,7 @@
     style-ext-html-webpack-plugin "4.1.2"
     style-loader "^1.1.3"
     stylelint "^13.2.0"
+    terser "5.3.8"
     ts-loader "^8.0.4"
     typescript "^4.0.3"
     webpack "^5.4.0"
@@ -14770,6 +14771,15 @@ terser-webpack-plugin@^5.0.3:
     serialize-javascript "^5.0.1"
     source-map "^0.6.1"
     terser "^5.3.8"
+
+terser@5.3.8:
+  version "5.3.8"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.3.8.tgz#991ae8ba21a3d990579b54aa9af11586197a75dd"
+  integrity sha512-zVotuHoIfnYjtlurOouTazciEfL7V38QMAOhGqpXDEg6yT13cF4+fEP9b0rrCEQTn+tT46uxgFsTZzhygk+CzQ==
+  dependencies:
+    commander "^2.20.0"
+    source-map "~0.7.2"
+    source-map-support "~0.5.19"
 
 terser@^4.6.3:
   version "4.7.0"

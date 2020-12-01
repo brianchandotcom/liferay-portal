@@ -208,16 +208,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void deleteBackgroundTask(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
-
-		backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
-	}
-
 	public void editGroup(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Throwable {

@@ -32,18 +32,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 		String previewURL = StringPool.BLANK;
 
 		if (Objects.equals(fileEntry.getVersion(), fileVersion.getVersion())) {
-			if (ImageProcessorUtil.hasImages(fileVersion)) {
-				previewURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
-			}
-			else if (PDFProcessorUtil.hasImages(fileVersion)) {
-				previewURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&previewFileIndex=1");
-			}
-			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-				previewURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1");
-			}
-			else {
-				previewURL = DLURLHelperUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
-			}
+			previewURL = DLURLHelperUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
 		}
 		%>
 

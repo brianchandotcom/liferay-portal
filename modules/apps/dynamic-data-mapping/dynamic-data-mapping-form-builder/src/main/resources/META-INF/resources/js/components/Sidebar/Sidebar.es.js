@@ -207,7 +207,7 @@ class Sidebar extends Component {
 			return;
 		}
 
-		dom.once(container, transitionEnd, () => {
+		container.addEventListener(transitionEnd, () => {
 			if (this._isEditMode()) {
 				const firstInput = this.element.querySelector('input');
 
@@ -216,7 +216,7 @@ class Sidebar extends Component {
 					selectText(firstInput);
 				}
 			}
-		});
+		}, {once: true});
 
 		this.setState({
 			activeTab: 0,
@@ -594,8 +594,8 @@ class Sidebar extends Component {
 		) {
 			this.close();
 
-			dom.once(this.refs.container, transitionEnd, () =>
-				this.dispatchFieldBlurred()
+			this.refs.container.addEventListener(transitionEnd, () =>
+				this.dispatchFieldBlurred(), {once: true}
 			);
 
 			if (!this._isModalElement(target)) {
@@ -754,10 +754,10 @@ class Sidebar extends Component {
 
 		this.close();
 
-		dom.once(this.refs.container, transitionEnd, () => {
+		this.refs.container.addEventListener(transitionEnd, () => {
 			this.dispatchFieldBlurred();
 			this.open();
-		});
+		}, {once: true});
 	}
 
 	_handleSettingsFieldBlurred({fieldInstance, value}) {

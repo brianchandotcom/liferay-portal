@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"metal-dom": "2.16.8"
-	},
 	"name": "frontend-js-tabs-support-web",
 	"private": true,
 	"scripts": {

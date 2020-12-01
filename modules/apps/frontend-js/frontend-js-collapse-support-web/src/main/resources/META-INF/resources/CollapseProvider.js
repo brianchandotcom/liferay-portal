@@ -101,7 +101,7 @@ class CollapseProvider {
 			onHidden();
 		}
 		else {
-			dom.once(panel, this._transitionEndEvent, onHidden);
+			panel.addEventListener(this._transitionEndEvent, onHidden, {once: true});
 
 			panel.classList.add(CssClass.COLLAPSING);
 			panel.style[dimension] = 0;
@@ -170,7 +170,7 @@ class CollapseProvider {
 			onShown();
 		}
 		else {
-			dom.once(panel, this._transitionEndEvent, onShown);
+			panel.addEventListener(this._transitionEndEvent, onShown, {once: true});
 
 			const capitalizedDimension =
 				dimension[0].toUpperCase() + dimension.slice(1);

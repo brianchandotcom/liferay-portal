@@ -19,6 +19,7 @@ import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -301,6 +302,29 @@ public class AccountEntryLocalServiceImpl
 	@Override
 	public int getAccountEntriesCount(long companyId, int status) {
 		return accountEntryPersistence.countByC_S(companyId, status);
+	}
+
+	@Override
+	public AccountEntry getGuestAccountEntry(long companyId)
+		throws PortalException {
+
+		User defaultUser = userLocalService.getDefaultUser(companyId);
+
+		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
+
+		accountEntryImpl.setAccountEntryId(
+			AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
+
+		accountEntryImpl.setCompanyId(defaultUser.getCompanyId());
+		accountEntryImpl.setUserId(defaultUser.getUserId());
+		accountEntryImpl.setUserName(defaultUser.getFullName());
+		accountEntryImpl.setParentAccountEntryId(
+			AccountConstants.DEFAULT_PARENT_ACCOUNT_ENTRY_ID);
+		accountEntryImpl.setName(defaultUser.getFullName());
+		accountEntryImpl.setType(AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST);
+		accountEntryImpl.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		return accountEntryImpl;
 	}
 
 	@Override

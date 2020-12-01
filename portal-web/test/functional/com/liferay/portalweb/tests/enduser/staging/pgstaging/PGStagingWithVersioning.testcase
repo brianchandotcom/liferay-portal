@@ -54,6 +54,7 @@ definition {
 	test AddPageVariation {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PGStagingWithVersioning#AddPageVariation";
 		property testray.component.names = "Training";
 
 		Staging.addPageVariationPG(pageVariationName = "Page Variation Name");

@@ -350,6 +350,122 @@ definition {
 	}
 
 	@priority = "4"
+	test AssignUserToAccountWithDomain {
+		AccountConfiguration.enableAccountEmailDomain();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an account with domain",
+			accountName = "Account with Domain",
+			domainEnable = "true",
+			domainNames = "liferay.com");
+
+		Navigator.gotoBack();
+
+		Accounts.addCP(
+			accountDescription = "This is an account without domain",
+			accountName = "Account no Domain",
+			domainEnable = "true");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Account no Domain",
+			userEmailAddress = "userea1@different.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Account no Domain",
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account no Domain");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.addAssignee(
+			accountName = "Account no Domain",
+			assigneeType = "Users",
+			selectAll = "Yes");
+
+		Refresh();
+
+		for (var assigneeName : list "userfn1,userfn2") {
+			Accounts.viewAssignee(assigneeName = "${assigneeName}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Domain");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_accountName = "Account with Domain",
+			key_assigneeType = "Users",
+			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
+
+		ManagementBar.setFilterAndOrder(filterBy = "All Users");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+		PortletEntry.selectAll();
+
+		SelectFrameTop();
+
+		Button.clickAssign();
+
+		Alert.viewSuccessMessage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Domain");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+	}
+
+	@priority = "4"
 	test CancelAccountCreation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

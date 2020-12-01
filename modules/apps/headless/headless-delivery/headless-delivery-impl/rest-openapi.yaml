@@ -1735,6 +1735,28 @@ components:
             required:
                 - name
             type: object
+        Language:
+            # @review
+            description:
+                Describes a specific language in the platform
+            properties:
+                countryName:
+                    type: string
+                countryName_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                id:
+                    type: string
+                markedAsDefault:
+                    type: boolean
+                name:
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
         MasterPage:
             description:
                 ""
@@ -7948,6 +7970,35 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseFolder"]
+    "/sites/{siteId}/languages":
+        get:
+            # @review
+            description:
+                Retrieves the site's languages.
+            operationId: getSiteLanguagesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Language"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Language"
+                                type: array
+                    description:
+                        ""
+            tags: [ "Language" ]
     "/sites/{siteId}/message-board-messages":
         # @review
         get:

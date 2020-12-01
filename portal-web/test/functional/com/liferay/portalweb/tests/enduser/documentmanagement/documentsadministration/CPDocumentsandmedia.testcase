@@ -953,7 +953,7 @@ definition {
 
 	@description = "This ensures that the document title can be displayed correctly in the different views."
 	@priority = "5"
-	test ViewDocumentInDifferentViews {
+	test ViewDocumentsInDifferentViews {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -980,6 +980,32 @@ definition {
 		DMDocument.viewCP(
 			dmDocumentFileName = "Document_1.txt",
 			dmDocumentTitle = "Document_1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_2.docx,Document_3.docx");
+
+		for (var n : list "2,3") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewCardTitle(card = "Document_${n}");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "Document_${n}");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			LexiconList.viewListEntryTitleLink(listEntry = "Document_${n}");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_${n}");
+
+			DMDocument.viewCP(
+				dmDocumentFileName = "Document_${n}.docx",
+				dmDocumentTitle = "Document_${n}");
+		}
 	}
 
 }

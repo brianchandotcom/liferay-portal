@@ -39,7 +39,7 @@ public class DefaultLayoutListRetrieverContext
 		return Optional.ofNullable(_segmentsExperienceIds);
 	}
 
-	public void setAssetCategoryIdsOptional(long[][] assetCategoryIds) {
+	public void setAssetCategoryIds(long[][] assetCategoryIds) {
 		_assetCategoryIds = assetCategoryIds;
 	}
 

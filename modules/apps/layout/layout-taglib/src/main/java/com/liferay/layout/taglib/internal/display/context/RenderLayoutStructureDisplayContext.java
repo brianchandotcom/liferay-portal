@@ -161,7 +161,7 @@ public class RenderLayoutStructureDisplayContext {
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
 
-		defaultLayoutListRetrieverContext.setAssetCategoryIdsOptional(
+		defaultLayoutListRetrieverContext.setAssetCategoryIds(
 			_getAssetCategoryIds());
 		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
 			_getSegmentsExperienceIds());

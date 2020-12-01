@@ -80,8 +80,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(
 					getClass(),
-					"/META-INF/resources/fragment/renderer/menu/display" +
-						"/configuration.json"));
+					"/com/liferay/fragment/renderer/menu/display/internal" +
+						"/dependencies/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
 				jsonObject, resourceBundle);
@@ -285,8 +285,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		String styles = StringUtil.replace(
 			StringUtil.read(
 				getClass(),
-				"/META-INF/resources/fragment/renderer/menu/display" +
-					"/styles.tmpl"),
+				"/com/liferay/fragment/renderer/menu/display/internal" +
+					"/dependencies/styles.tmpl"),
 			"${", "}",
 			HashMapBuilder.put(
 				"fragmentId", fragmentId

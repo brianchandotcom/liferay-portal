@@ -36,11 +36,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -56,7 +53,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Marco Leo
@@ -275,70 +271,6 @@ public class CPSearchResultsDisplayContext {
 		return false;
 	}
 
-	protected static String getCompleteOriginalURL(
-		HttpServletRequest httpServletRequest) {
-
-		StringBuffer sb = new StringBuffer();
-
-		String requestURL = null;
-		String queryString = null;
-
-		boolean forwarded = false;
-
-		if (httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI) != null) {
-
-			forwarded = true;
-		}
-
-		if (forwarded) {
-			requestURL = PortalUtil.getAbsoluteURL(
-				httpServletRequest,
-				(String)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI));
-
-			queryString = (String)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		}
-		else {
-			requestURL = String.valueOf(httpServletRequest.getRequestURL());
-
-			queryString = httpServletRequest.getQueryString();
-		}
-
-		sb.append(requestURL);
-
-		if (queryString != null) {
-			sb.append(StringPool.QUESTION);
-			sb.append(queryString);
-		}
-
-		String proxyPath = PortalUtil.getPathProxy();
-
-		if (Validator.isNotNull(proxyPath)) {
-			int x =
-				sb.indexOf(Http.PROTOCOL_DELIMITER) +
-					Http.PROTOCOL_DELIMITER.length();
-
-			int y = sb.indexOf(StringPool.SLASH, x);
-
-			sb.insert(y, proxyPath);
-		}
-
-		String completeURL = sb.toString();
-
-		if (httpServletRequest.isRequestedSessionIdFromURL()) {
-			HttpSession session = httpServletRequest.getSession();
-
-			String sessionId = session.getId();
-
-			completeURL = PortalUtil.getURLWithSessionId(
-				completeURL, sessionId);
-		}
-
-		return completeURL;
-	}
-
 	protected SearchContainer<CPCatalogEntry> buildSearchContainer(
 		CPDataSourceResult cpDataSourceResult, int paginationStart,
 		String paginationStartParameterName, int paginationDelta,
@@ -395,7 +327,7 @@ public class CPSearchResultsDisplayContext {
 
 	protected String getURLString() {
 		return HttpUtil.removeParameter(
-			getCompleteOriginalURL(_httpServletRequest), "start");
+			_cpRequestHelper.getCurrentURL(), "start");
 	}
 
 	private final CPContentListEntryRendererRegistry

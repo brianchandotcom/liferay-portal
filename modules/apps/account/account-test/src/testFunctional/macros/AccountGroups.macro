@@ -48,16 +48,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAccountDefault {
-		AssertElementPresent(
-			key_tab = "Accounts",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No accounts were found.");
-	}
-
 	macro viewAssignee {
 		AssertElementPresent(
 			key_tab = "Accounts",
@@ -67,6 +57,20 @@ definition {
 			key_tableEntry = "${assigneeName}",
 			locator1 = "LexiconTable#TABLE_ENTRY",
 			value1 = "${assigneeName}");
+	}
+
+	macro viewDefault {
+		if (IsElementPresent(locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			AssertElementPresent(
+				key_tab = "${tabName}",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+		}
+
+		var tabName = StringUtil.toLowerCase("${tabName}");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No ${tabName} were found.");
 	}
 
 }

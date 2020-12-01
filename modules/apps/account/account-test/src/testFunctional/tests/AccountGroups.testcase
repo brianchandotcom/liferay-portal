@@ -46,7 +46,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
 
-		AccountGroups.viewAccountDefault();
+		AccountGroups.viewDefault(tabName = "Accounts");
 
 		AccountGroups.addAssignee(
 			accountGroupName = "Test Account Group",

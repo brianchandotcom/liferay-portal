@@ -119,6 +119,8 @@ const getItemIndex = (item = {}, items) => {
 
 const noop = () => {};
 
+let timerId;
+
 const MillerColumnsItem = ({
 	collumnContainer,
 	item: {
@@ -272,14 +274,34 @@ const MillerColumnsItem = ({
 			setDropZone(dropZone);
 
 			if (Liferay.Browser.isSafari() && !Liferay.Browser.isChrome()) {
-				const clientOffset = monitor.getClientOffset();
-				const containerRect = collumnContainer.current.getBoundingClientRect();
 
-				const hoverClientX = containerRect.right - clientOffset.x
-
-				if (hoverClientX < ITEM_HOVER_BORDER_LIMIT) {
-					collumnContainer.current.scrollLeft = collumnContainer.current.scrollWidth;
+				const throttleFunction  = (func, delay) => {
+					if (timerId) {
+						return
+					}
+	
+					timerId  =  setTimeout(function () {
+						func()
+	
+						timerId  =  undefined;
+					}, delay)
 				}
+
+				const scroll = () =>{
+					const clientOffset = monitor.getClientOffset();
+					const containerRect = collumnContainer.current.getBoundingClientRect();
+
+					const hoverClientX = containerRect.right - clientOffset.x
+
+					if (hoverClientX < ITEM_HOVER_BORDER_LIMIT) {
+						collumnContainer.current.scrollLeft += ref.current.getBoundingClientRect().width;
+					}
+					else if (hoverClientX > (containerRect.width - ITEM_HOVER_BORDER_LIMIT)) {
+						collumnContainer.current.scrollLeft -= ref.current.getBoundingClientRect().width;
+					}
+				}
+
+				throttleFunction(scroll, 500);
 			}
 		},
 	});

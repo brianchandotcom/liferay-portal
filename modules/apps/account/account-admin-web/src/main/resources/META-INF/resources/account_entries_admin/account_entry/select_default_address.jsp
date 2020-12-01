@@ -34,12 +34,11 @@ SearchContainer<AddressDisplay> accountEntryAddressDisplaySearchContainer = Acco
 
 accountEntryAddressDisplaySearchContainer.setRowChecker(null);
 
-ViewAccountEntryAddressesManagementToolbarDisplayContext viewAccountEntryAddressesManagementToolbarDisplayContext = new ViewAccountEntryAddressesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryAddressDisplaySearchContainer);
+SelectAccountEntryAddressManagementToolbarDisplayContext selectAccountEntryAddressManagementToolbarDisplayContext = new SelectAccountEntryAddressManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryAddressDisplaySearchContainer);
 %>
 
 <clay:management-toolbar-v2
-	displayContext="<%= viewAccountEntryAddressesManagementToolbarDisplayContext %>"
-	selectable="<%= false %>"
+	displayContext="<%= selectAccountEntryAddressManagementToolbarDisplayContext %>"
 />
 
 <clay:container-fluid
@@ -116,6 +115,6 @@ ViewAccountEntryAddressesManagementToolbarDisplayContext viewAccountEntryAddress
 </script>
 
 <liferay-frontend:component
-	componentId="<%= viewAccountEntryAddressesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	componentId="<%= selectAccountEntryAddressManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="account_entries_admin/js/AccountEntryAddressesManagementToolbarDefaultEventHandler.es"
 />

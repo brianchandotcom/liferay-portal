@@ -83,7 +83,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
-					name="zip"
+					name="postal-code"
 					value="<%= addressDisplay.getZip() %>"
 				/>
 

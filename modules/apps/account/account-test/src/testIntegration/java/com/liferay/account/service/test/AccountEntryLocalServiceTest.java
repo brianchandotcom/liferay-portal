@@ -311,6 +311,26 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetGuestAccountEntry() throws Exception {
+		AccountEntry guestAccountEntry =
+			_accountEntryLocalService.getGuestAccountEntry(
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), guestAccountEntry.getCompanyId());
+		Assert.assertEquals(
+			AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
+			guestAccountEntry.getAccountEntryId());
+		Assert.assertEquals(
+			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
+			guestAccountEntry.getType());
+
+		Assert.assertNull(
+			_accountEntryLocalService.fetchAccountEntry(
+				AccountConstants.ACCOUNT_ENTRY_ID_GUEST));
+	}
+
+	@Test
 	public void testSearchByAccountGroupIds() throws Exception {
 		_addAccountEntries();
 

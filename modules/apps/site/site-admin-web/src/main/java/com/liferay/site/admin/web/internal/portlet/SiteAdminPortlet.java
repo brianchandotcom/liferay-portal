@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
@@ -251,53 +250,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 			WebKeys.REDIRECT, siteAdministrationURL.toString());
 
 		sendRedirect(actionRequest, actionResponse);
-	}
-
-	/**
-	 * Resets the number of failed merge attempts for the site template, which
-	 * is accessed by retrieving the layout set prototype ID. Once the counter
-	 * is reset, the modified site template is merged back into its linked site,
-	 * which is accessed by retrieving the group ID and private layout set.
-	 *
-	 * <p>
-	 * If the number of failed merge attempts is not equal to zero after the
-	 * merge, an error key is submitted to {@link SessionErrors}.
-	 * </p>
-	 *
-	 * @param  actionRequest the portlet request used to retrieve parameters
-	 * @throws Exception if an exception occurred
-	 */
-	public void resetMergeFailCountAndMerge(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "layoutSetPrototypeId");
-
-		LayoutSetPrototype layoutSetPrototype =
-			layoutSetPrototypeService.getLayoutSetPrototype(
-				layoutSetPrototypeId);
-
-		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayoutSet = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSet");
-
-		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
-			groupId, privateLayoutSet);
-
-		SitesUtil.resetPrototype(layoutSet);
-
-		SitesUtil.mergeLayoutSetPrototypeLayouts(
-			groupLocalService.getGroup(groupId), layoutSet);
-
-		layoutSetPrototype = layoutSetPrototypeService.getLayoutSetPrototype(
-			layoutSetPrototypeId);
-
-		if (SitesUtil.getMergeFailCount(layoutSetPrototype) > 0) {
-			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
-		}
 	}
 
 	@Override

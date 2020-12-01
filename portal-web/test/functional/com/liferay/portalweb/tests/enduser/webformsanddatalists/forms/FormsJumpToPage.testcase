@@ -609,6 +609,8 @@ definition {
 
 		var key_conditionRowNumber = "1";
 
+		var key_fieldColumnNumber = "4";
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "FormRules#RULE_BUILDER_CONDITION_VALUE_FIELD",
 			value1 = "Edited Destiny");

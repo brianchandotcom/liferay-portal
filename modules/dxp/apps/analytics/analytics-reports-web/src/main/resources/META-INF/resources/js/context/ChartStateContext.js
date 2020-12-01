@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useContext, useReducer, useRef} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 
 import ConnectionContext from './ConnectionContext';
 
@@ -49,25 +49,46 @@ export const ChartStateContextProvider = ({
 	);
 };
 
-export const useChartState = () => {
-	const [state, dispatch] = useContext(ChartStateContext);
+export const useAddDataSetItems = () => {
+	const [, dispatch] = useContext(ChartStateContext);
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const actionsRef = useRef({
-		addDataSetItems: (payload) =>
-			dispatch({
-				payload,
-				type: ADD_DATA_SET_ITEMS,
-				validAnalyticsConnection,
-			}),
-		changeTimeSpanKey: (payload) =>
-			dispatch({payload, type: CHANGE_TIME_SPAN_KEY}),
-		nextTimeSpan: () => dispatch({type: NEXT_TIME_SPAN}),
-		previousTimeSpan: () => dispatch({type: PREV_TIME_SPAN}),
-		setLoading: () => dispatch({type: SET_LOADING}),
-	});
+	return (payload) =>
+		dispatch({
+			payload,
+			type: ADD_DATA_SET_ITEMS,
+			validAnalyticsConnection,
+		});
+};
 
-	return {actions: actionsRef.current, state};
+export const useChangeTimeSpanKey = () => {
+	const [, dispatch] = useContext(ChartStateContext);
+
+	return (payload) => dispatch({payload, type: CHANGE_TIME_SPAN_KEY});
+};
+
+export const useChartState = () => {
+	const [state] = useContext(ChartStateContext);
+
+	return state;
+};
+
+export const useNextTimeSpan = () => {
+	const [, dispatch] = useContext(ChartStateContext);
+
+	return () => dispatch({type: NEXT_TIME_SPAN});
+};
+
+export const useSetLoading = () => {
+	const [, dispatch] = useContext(ChartStateContext);
+
+	return () => dispatch({type: SET_LOADING});
+};
+
+export const usePreviousTimeSpan = () => {
+	const [, dispatch] = useContext(ChartStateContext);
+
+	return () => dispatch({type: PREV_TIME_SPAN});
 };
 
 /**

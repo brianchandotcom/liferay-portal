@@ -25,7 +25,14 @@ import {
 	YAxis,
 } from 'recharts';
 
-import {useChartState} from '../context/ChartStateContext';
+import {
+	useAddDataSetItems,
+	useChangeTimeSpanKey,
+	useChartState,
+	useNextTimeSpan,
+	usePreviousTimeSpan,
+	useSetLoading,
+} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContext, useHistoricalWarning} from '../context/store';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
@@ -139,14 +146,24 @@ export default function Chart({
 
 	const [, addHistoricalWarning] = useHistoricalWarning();
 
-	const {actions, state: chartState} = useChartState();
+	const chartState = useChartState();
+
+	const addDataSetItems = useAddDataSetItems();
+
+	const setLoading = useSetLoading();
+
+	const changeTimeSpanKey = useChangeTimeSpanKey();
+
+	const previousTimeSpan = usePreviousTimeSpan();
+
+	const nextTimeSpan = useNextTimeSpan();
 
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
 		let gone = false;
 
-		actions.setLoading();
+		setLoading();
 
 		const timeSpanComparator =
 			chartState.timeSpanKey === LAST_24_HOURS
@@ -185,7 +202,7 @@ export default function Chart({
 					}
 				}
 
-				actions.addDataSetItems({
+				addDataSetItems({
 					dataSetItems,
 					keys,
 					timeSpanComparator,
@@ -193,7 +210,7 @@ export default function Chart({
 			});
 		}
 		else {
-			actions.addDataSetItems({
+			addDataSetItems({
 				keys,
 				timeSpanComparator,
 			});
@@ -254,13 +271,13 @@ export default function Chart({
 	const handleTimeSpanChange = (event) => {
 		const {value} = event.target;
 
-		actions.changeTimeSpanKey({key: value});
+		changeTimeSpanKey({key: value});
 	};
 	const handlePreviousTimeSpanClick = () => {
-		actions.previousTimeSpan();
+		previousTimeSpan();
 	};
 	const handleNextTimeSpanClick = () => {
-		actions.nextTimeSpan();
+		nextTimeSpan();
 	};
 
 	const legendFormatter =

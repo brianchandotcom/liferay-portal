@@ -21,6 +21,9 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
+	public static final String ENABLE_SEARCH_BAR =
+		"sample.sql.search.bar.enabled";
+
 	public static final String MAX_ASSET_CATEGORY_COUNT =
 		"sample.sql.max.asset.category.count";
 

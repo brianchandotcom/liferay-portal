@@ -1303,7 +1303,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
-		<get-testcase-property property.name="elastic.xpack.pki.authentication.enabled" />
+		<get-testcase-property property.name="elastic.monitoring.pki.authentication.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
@@ -1315,7 +1315,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<configure-portal-x-pack-security-truststore />
 			</then>
 			<elseif>
-				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<equals arg1="${elastic.monitoring.pki.authentication.enabled}" arg2="true" />
 				<then>
 					<generate-x-pack-pki-security-certificates />
 
@@ -1377,7 +1377,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<lstopwatch action="total" name="start.elasticsearch" />
 			</then>
 			<elseif>
-				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<equals arg1="${elastic.monitoring.pki.authentication.enabled}" arg2="true" />
 				<then>
 					<sleep seconds="30" />
 
@@ -1514,7 +1514,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
-		<get-testcase-property property.name="elastic.xpack.pki.authentication.enabled" />
+		<get-testcase-property property.name="elastic.monitoring.pki.authentication.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
@@ -1524,7 +1524,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<configure-kibana-x-pack-security-properties />
 			</then>
 			<elseif>
-				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<equals arg1="${elastic.monitoring.pki.authentication.enabled}" arg2="true" />
 				<then>
 					<configure-kibana-properties />
 
@@ -1615,7 +1615,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
-		<get-testcase-property property.name="elastic.xpack.pki.authentication.enabled" />
+		<get-testcase-property property.name="elastic.monitoring.pki.authentication.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
@@ -1625,7 +1625,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<antcall target="stop-kibana" />
 			</then>
 			<elseif>
-				<equals arg1="${elastic.xpack.pki.authentication.enabled}" arg2="true" />
+				<equals arg1="${elastic.monitoring.pki.authentication.enabled}" arg2="true" />
 				<then>
 					<echo>Stopping elasticsearch</echo>
 				</then>

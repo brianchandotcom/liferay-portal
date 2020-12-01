@@ -77,12 +77,12 @@ public class UpgradeDDMField extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
-				"create table DDMField (mvccVersion LONG default 0 not null,",
+				"create table DDMField (mvccVersion LONG default 0 not null, ",
 				"ctCollectionId LONG default 0 not null, fieldId LONG not ",
-				"null, companyId LONG, structureVersionId LONG, parentFieldId ",
-				"LONG, storageId LONG, fieldName VARCHAR(255) null, fieldType ",
-				"VARCHAR(255) null, priority INTEGER, instanceId VARCHAR(75) ",
-				"null, localizable BOOLEAN, primary key (fieldId, ",
+				"null, companyId LONG, parentFieldId LONG, storageId LONG, ",
+				"structureVersionId LONG, fieldName VARCHAR(255) null, ",
+				"fieldType VARCHAR(255) null, instanceId VARCHAR(75) null, ",
+				"localizable BOOLEAN, priority INTEGER, primary key (fieldId, ",
 				"ctCollectionId))"));
 
 		runSQL(
@@ -90,10 +90,10 @@ public class UpgradeDDMField extends UpgradeProcess {
 				"create table DDMFieldAttribute (mvccVersion LONG default 0 ",
 				"not null, ctCollectionId LONG default 0 not null, ",
 				"fieldAttributeId LONG not null, companyId LONG, fieldId ",
-				"LONG, storageId LONG, languageId VARCHAR(75) null, ",
-				"attributeName VARCHAR(255) null, smallAttributeValue ",
-				"VARCHAR(255) null, largeAttributeValue TEXT null, primary ",
-				"key (fieldAttributeId, ctCollectionId))"));
+				"LONG, storageId LONG, attributeName VARCHAR(255) null, ",
+				"languageId VARCHAR(75) null, largeAttributeValue TEXT null, ",
+				"smallAttributeValue VARCHAR(255) null, primary key ",
+				"(fieldAttributeId, ctCollectionId))"));
 
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
@@ -118,18 +118,18 @@ public class UpgradeDDMField extends UpgradeProcess {
 						StringBundler.concat(
 							"insert into DDMField (mvccVersion, ",
 							"ctCollectionId, fieldId, companyId, ",
-							"structureVersionId, parentFieldId, storageId, ",
-							"fieldName, fieldType, priority, instanceId, ",
-							"localizable) values (0, 0, ?, ?, ?, ?, ?, ?, ?, ",
-							"?, ?, ?)")));
+							"parentFieldId, storageId, structureVersionId, ",
+							"fieldName, fieldType, instanceId, localizable, ",
+							"priority) values (0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ",
+							"?, ?)")));
 			PreparedStatement insertDDMFieldAttributePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
 						StringBundler.concat(
 							"insert into DDMFieldAttribute (mvccVersion, ",
 							"ctCollectionId, fieldAttributeId, companyId, ",
-							"fieldId, storageId, languageId, attributeName, ",
-							"smallAttributeValue, largeAttributeValue) values ",
+							"fieldId, storageId, attributeName, languageId, ",
+							"largeAttributeValue, smallAttributeValue) values ",
 							"(0, 0, ?, ?, ?, ?, ?, ?, ?, ?)")));
 			PreparedStatement deleteDDMContentPreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
@@ -140,14 +140,14 @@ public class UpgradeDDMField extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				_upgradeDDMContent(
+					resultSet.getLong("companyId"),
+					resultSet.getLong("contentId"),
 					insertDDMFieldPreparedStatement,
 					insertDDMFieldAttributePreparedStatement,
+					resultSet.getString("data_"),
 					deleteDDMContentPreparedStatement,
-					resultSet.getLong("contentId"),
-					resultSet.getLong("companyId"),
 					resultSet.getLong("structureId"),
-					resultSet.getLong("structureVersionId"),
-					resultSet.getString("data_"));
+					resultSet.getLong("structureVersionId"));
 			}
 
 			insertDDMFieldPreparedStatement.executeBatch();
@@ -384,11 +384,11 @@ public class UpgradeDDMField extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMContent(
+			long companyId, long contentId,
 			PreparedStatement insertDDMFieldPreparedStatement,
 			PreparedStatement insertDDMFieldAttributePreparedStatement,
-			PreparedStatement deleteDDMContentPreparedStatement, long contentId,
-			long companyId, long structureId, long structureVersionId,
-			String data)
+			String data, PreparedStatement deleteDDMContentPreparedStatement,
+			long structureId, long structureVersionId)
 		throws Exception {
 
 		DDMForm ddmForm = _getFullHierarchyDDMForm(structureId);
@@ -463,16 +463,16 @@ public class UpgradeDDMField extends UpgradeProcess {
 
 			insertDDMFieldPreparedStatement.setLong(1, fieldId);
 			insertDDMFieldPreparedStatement.setLong(2, companyId);
-			insertDDMFieldPreparedStatement.setLong(3, structureVersionId);
-			insertDDMFieldPreparedStatement.setLong(4, parentFieldId);
-			insertDDMFieldPreparedStatement.setLong(5, contentId);
+			insertDDMFieldPreparedStatement.setLong(3, parentFieldId);
+			insertDDMFieldPreparedStatement.setLong(4, contentId);
+			insertDDMFieldPreparedStatement.setLong(5, structureVersionId);
 			insertDDMFieldPreparedStatement.setString(
 				6, ddmFieldInfo._fieldName);
 			insertDDMFieldPreparedStatement.setString(7, fieldType);
-			insertDDMFieldPreparedStatement.setInt(8, priority);
 			insertDDMFieldPreparedStatement.setString(
-				9, ddmFieldInfo._instanceId);
-			insertDDMFieldPreparedStatement.setBoolean(10, localizable);
+				8, ddmFieldInfo._instanceId);
+			insertDDMFieldPreparedStatement.setBoolean(9, localizable);
+			insertDDMFieldPreparedStatement.setInt(10, priority);
 
 			insertDDMFieldPreparedStatement.addBatch();
 
@@ -487,12 +487,12 @@ public class UpgradeDDMField extends UpgradeProcess {
 				String largeAttributeValue = null;
 
 				if (ddmFieldAttributeInfo._attributeValue != null) {
-					if (ddmFieldAttributeInfo._attributeValue.length() <= 255) {
-						smallAttributeValue =
+					if (ddmFieldAttributeInfo._attributeValue.length() > 255) {
+						largeAttributeValue =
 							ddmFieldAttributeInfo._attributeValue;
 					}
 					else {
-						largeAttributeValue =
+						smallAttributeValue =
 							ddmFieldAttributeInfo._attributeValue;
 					}
 				}
@@ -503,13 +503,13 @@ public class UpgradeDDMField extends UpgradeProcess {
 				insertDDMFieldAttributePreparedStatement.setLong(3, fieldId);
 				insertDDMFieldAttributePreparedStatement.setLong(4, contentId);
 				insertDDMFieldAttributePreparedStatement.setString(
-					5, ddmFieldAttributeInfo._languageId);
+					5, ddmFieldAttributeInfo._attributeName);
 				insertDDMFieldAttributePreparedStatement.setString(
-					6, ddmFieldAttributeInfo._attributeName);
+					6, ddmFieldAttributeInfo._languageId);
 				insertDDMFieldAttributePreparedStatement.setString(
-					7, smallAttributeValue);
+					7, largeAttributeValue);
 				insertDDMFieldAttributePreparedStatement.setString(
-					8, largeAttributeValue);
+					8, smallAttributeValue);
 
 				insertDDMFieldAttributePreparedStatement.addBatch();
 			}

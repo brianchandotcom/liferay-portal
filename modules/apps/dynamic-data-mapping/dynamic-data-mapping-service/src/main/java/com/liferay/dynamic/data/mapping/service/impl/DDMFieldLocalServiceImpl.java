@@ -402,13 +402,13 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 					ddmFieldInfo._parentInstanceId);
 			}
 
-			ddmField.setStructureVersionId(
-				ddmStructureVersion.getStructureVersionId());
 			ddmField.setParentFieldId(parentFieldId);
 			ddmField.setStorageId(storageId);
+			ddmField.setStructureVersionId(
+				ddmStructureVersion.getStructureVersionId());
 			ddmField.setFieldName(ddmFieldInfo._fieldName);
-			ddmField.setPriority(priority);
 			ddmField.setInstanceId(ddmFieldInfo._instanceId);
+			ddmField.setPriority(priority);
 
 			if (ddmFieldInfo != rootDDMFieldInfo) {
 				DDMFormField ddmFormField = ddmFormFieldsMap.get(
@@ -457,9 +457,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			ddmFieldAttribute.setFieldId(fieldId);
 
 			ddmFieldAttribute.setStorageId(storageId);
-			ddmFieldAttribute.setLanguageId(ddmFieldAttributeInfo._languageId);
 			ddmFieldAttribute.setAttributeName(
 				ddmFieldAttributeInfo._attributeName);
+			ddmFieldAttribute.setLanguageId(ddmFieldAttributeInfo._languageId);
 			ddmFieldAttribute.setAttributeValue(
 				ddmFieldAttributeInfo._attributeValue);
 

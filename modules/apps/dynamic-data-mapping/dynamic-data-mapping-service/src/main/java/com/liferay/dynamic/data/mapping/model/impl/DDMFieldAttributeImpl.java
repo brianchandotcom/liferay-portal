@@ -23,10 +23,10 @@ public class DDMFieldAttributeImpl extends DDMFieldAttributeBaseImpl {
 
 	@Override
 	public String getAttributeValue() {
-		String value = getSmallAttributeValue();
+		String value = getLargeAttributeValue();
 
 		if (value.isEmpty()) {
-			value = getLargeAttributeValue();
+			value = getSmallAttributeValue();
 		}
 
 		return value;
@@ -34,21 +34,20 @@ public class DDMFieldAttributeImpl extends DDMFieldAttributeBaseImpl {
 
 	@Override
 	public void setAttributeValue(String value) {
-		if (value == null) {
-			setSmallAttributeValue(null);
+		String largeAttributeValue = null;
+		String smallAttributeValue = null;
 
-			setLargeAttributeValue(null);
+		if (value != null) {
+			if (value.length() > SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
+				largeAttributeValue = value;
+			}
+			else {
+				smallAttributeValue = value;
+			}
 		}
-		else if (value.length() <= SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
-			setSmallAttributeValue(value);
 
-			setLargeAttributeValue(null);
-		}
-		else {
-			setSmallAttributeValue(null);
-
-			setLargeAttributeValue(value);
-		}
+		setLargeAttributeValue(largeAttributeValue);
+		setSmallAttributeValue(smallAttributeValue);
 	}
 
 }

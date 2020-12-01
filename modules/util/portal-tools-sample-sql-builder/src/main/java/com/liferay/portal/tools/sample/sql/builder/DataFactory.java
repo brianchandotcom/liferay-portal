@@ -1959,8 +1959,55 @@ public class DataFactory {
 	}
 
 	public List<DDMFieldAttributeModel> newDDMFieldAttributeModels(
-		DDMStorageLinkModel ddmStorageLinkModel, DDLRecordModel ddlRecordModel,
-		int currentIndex, List<DDMFieldModel> ddmFieldModels) {
+		DLFileEntryModel dlFileEntryModel, List<DDMFieldModel> ddmFieldModels,
+		DDMStorageLinkModel ddmStorageLinkModel) {
+
+		DDMFieldModel ddmFieldModel = ddmFieldModels.get(0);
+
+		DDMFieldAttributeModel ddmFieldAttributeModel1 =
+			new DDMFieldAttributeModelImpl();
+
+		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
+		ddmFieldAttributeModel1.setCompanyId(_companyId);
+		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
+		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
+		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
+		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
+
+		DDMFieldAttributeModel ddmFieldAttributeModel2 =
+			new DDMFieldAttributeModelImpl();
+
+		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
+		ddmFieldAttributeModel2.setCompanyId(_companyId);
+		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
+		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
+		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
+		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
+
+		ddmFieldModel = ddmFieldModels.get(1);
+
+		DDMFieldAttributeModel ddmFieldAttributeModel3 =
+			new DDMFieldAttributeModelImpl();
+
+		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
+		ddmFieldAttributeModel3.setCompanyId(_companyId);
+		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel3.setStorageId(ddmStorageLinkModel.getClassPK());
+		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
+		ddmFieldAttributeModel3.setLanguageId("en_US");
+		ddmFieldAttributeModel3.setSmallAttributeValue("text/plain");
+
+		return Arrays.asList(
+			ddmFieldAttributeModel1, ddmFieldAttributeModel2,
+			ddmFieldAttributeModel3);
+	}
+
+	public List<DDMFieldAttributeModel> newDDMFieldAttributeModels(
+		int currentIndex, DDLRecordModel ddlRecordModel,
+		List<DDMFieldModel> ddmFieldModels,
+		DDMStorageLinkModel ddmStorageLinkModel) {
 
 		List<DDMFieldAttributeModel> ddmFieldAttributeModels =
 			new ArrayList<>();
@@ -1974,8 +2021,8 @@ public class DataFactory {
 		ddmFieldAttributeModel1.setCompanyId(_companyId);
 		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
 		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
+		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
 		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
 
 		ddmFieldAttributeModels.add(ddmFieldAttributeModel1);
@@ -1987,8 +2034,8 @@ public class DataFactory {
 		ddmFieldAttributeModel2.setCompanyId(_companyId);
 		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
 		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
 		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
+		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
 		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
 
 		ddmFieldAttributeModels.add(ddmFieldAttributeModel2);
@@ -2004,8 +2051,8 @@ public class DataFactory {
 			ddmFieldAttributeModel.setFieldId(ddmFieldModel.getFieldId());
 			ddmFieldAttributeModel.setStorageId(
 				ddmStorageLinkModel.getClassPK());
-			ddmFieldAttributeModel.setLanguageId("en_US");
 			ddmFieldAttributeModel.setAttributeName(StringPool.BLANK);
+			ddmFieldAttributeModel.setLanguageId("en_US");
 			ddmFieldAttributeModel.setSmallAttributeValue(
 				"Test Record " + currentIndex);
 
@@ -2015,55 +2062,42 @@ public class DataFactory {
 		return ddmFieldAttributeModels;
 	}
 
-	public List<DDMFieldAttributeModel> newDDMFieldAttributeModels(
-		DDMStorageLinkModel ddmStorageLinkModel,
-		DLFileEntryModel dlFileEntryModel, List<DDMFieldModel> ddmFieldModels) {
+	public List<DDMFieldModel> newDDMFieldModels(
+		DLFileEntryModel dlFileEntryModel,
+		DDMStorageLinkModel ddmStorageLinkModel) {
 
-		DDMFieldModel ddmFieldModel = ddmFieldModels.get(0);
+		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
 
-		DDMFieldAttributeModel ddmFieldAttributeModel1 =
-			new DDMFieldAttributeModelImpl();
+		ddmFieldModel1.setFieldId(_counter.get());
+		ddmFieldModel1.setCompanyId(_companyId);
+		ddmFieldModel1.setParentFieldId(0);
+		ddmFieldModel1.setStorageId(ddmStorageLinkModel.getClassPK());
+		ddmFieldModel1.setStructureVersionId(_defaultDLDDMStructureVersionId);
+		ddmFieldModel1.setFieldName(StringPool.BLANK);
+		ddmFieldModel1.setFieldType(StringPool.BLANK);
+		ddmFieldModel1.setInstanceId(StringPool.BLANK);
+		ddmFieldModel1.setLocalizable(false);
+		ddmFieldModel1.setPriority(0);
 
-		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
-		ddmFieldAttributeModel1.setCompanyId(_companyId);
-		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
-		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
+		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
 
-		DDMFieldAttributeModel ddmFieldAttributeModel2 =
-			new DDMFieldAttributeModelImpl();
+		ddmFieldModel2.setFieldId(_counter.get());
+		ddmFieldModel2.setCompanyId(_companyId);
+		ddmFieldModel2.setParentFieldId(0);
+		ddmFieldModel2.setStorageId(ddmStorageLinkModel.getClassPK());
+		ddmFieldModel2.setStructureVersionId(_defaultDLDDMStructureVersionId);
+		ddmFieldModel2.setFieldName("CONTENT_TYPE");
+		ddmFieldModel2.setFieldType("string");
+		ddmFieldModel2.setInstanceId(StringUtil.randomId());
+		ddmFieldModel2.setLocalizable(true);
+		ddmFieldModel2.setPriority(1);
 
-		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
-		ddmFieldAttributeModel2.setCompanyId(_companyId);
-		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
-		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
-
-		ddmFieldModel = ddmFieldModels.get(1);
-
-		DDMFieldAttributeModel ddmFieldAttributeModel3 =
-			new DDMFieldAttributeModelImpl();
-
-		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
-		ddmFieldAttributeModel3.setCompanyId(_companyId);
-		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel3.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel3.setLanguageId("en_US");
-		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
-		ddmFieldAttributeModel3.setSmallAttributeValue("text/plain");
-
-		return Arrays.asList(
-			ddmFieldAttributeModel1, ddmFieldAttributeModel2,
-			ddmFieldAttributeModel3);
+		return Arrays.asList(ddmFieldModel1, ddmFieldModel2);
 	}
 
 	public List<DDMFieldModel> newDDMFieldModels(
-		DDMStorageLinkModel ddmStorageLinkModel, DDLRecordModel ddlRecordModel,
-		int currentIndex) {
+		int currentIndex, DDLRecordModel ddlRecordModel,
+		DDMStorageLinkModel ddmStorageLinkModel) {
 
 		List<DDMFieldModel> ddmFieldModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT + 1);
@@ -2072,14 +2106,14 @@ public class DataFactory {
 
 		ddmFieldModel.setFieldId(_counter.get());
 		ddmFieldModel.setCompanyId(_companyId);
-		ddmFieldModel.setStructureVersionId(_defaultDLDDMStructureVersionId);
 		ddmFieldModel.setParentFieldId(0);
 		ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
+		ddmFieldModel.setStructureVersionId(_defaultDLDDMStructureVersionId);
 		ddmFieldModel.setFieldName(StringPool.BLANK);
 		ddmFieldModel.setFieldType(StringPool.BLANK);
-		ddmFieldModel.setPriority(0);
 		ddmFieldModel.setInstanceId(StringPool.BLANK);
 		ddmFieldModel.setLocalizable(false);
+		ddmFieldModel.setPriority(0);
 
 		ddmFieldModels.add(ddmFieldModel);
 
@@ -2090,16 +2124,16 @@ public class DataFactory {
 
 			ddmFieldModel.setFieldId(_counter.get());
 			ddmFieldModel.setCompanyId(_companyId);
-			ddmFieldModel.setStructureVersionId(
-				_defaultDLDDMStructureVersionId);
 			ddmFieldModel.setParentFieldId(0);
 			ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
+			ddmFieldModel.setStructureVersionId(
+				_defaultDLDDMStructureVersionId);
 			ddmFieldModel.setFieldName(
 				nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			ddmFieldModel.setFieldType("string");
-			ddmFieldModel.setPriority(i);
 			ddmFieldModel.setInstanceId(StringUtil.randomId());
 			ddmFieldModel.setLocalizable(true);
+			ddmFieldModel.setPriority(i);
 
 			ddmFieldModels.add(ddmFieldModel);
 		}
@@ -2107,37 +2141,20 @@ public class DataFactory {
 		return ddmFieldModels;
 	}
 
-	public List<DDMFieldModel> newDDMFieldModels(
-		DDMStorageLinkModel ddmStorageLinkModel,
-		DLFileEntryModel dlFileEntryModel) {
+	public DDMStorageLinkModel newDDMStorageLinkModel(
+		DDLRecordModel ddlRecordModel, long ddmStorageLinkId,
+		long structureId) {
 
-		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
+		return newDDMStorageLinkModel(
+			ddmStorageLinkId, ddlRecordModel.getDDMStorageId(), structureId);
+	}
 
-		ddmFieldModel1.setFieldId(_counter.get());
-		ddmFieldModel1.setCompanyId(_companyId);
-		ddmFieldModel1.setStructureVersionId(_defaultDLDDMStructureVersionId);
-		ddmFieldModel1.setParentFieldId(0);
-		ddmFieldModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel1.setFieldName(StringPool.BLANK);
-		ddmFieldModel1.setFieldType(StringPool.BLANK);
-		ddmFieldModel1.setPriority(0);
-		ddmFieldModel1.setInstanceId(StringPool.BLANK);
-		ddmFieldModel1.setLocalizable(false);
+	public DDMStorageLinkModel newDDMStorageLinkModel(
+		DLFileEntryModel dlFileEntryModel, long ddmStorageLinkId,
+		long structureId) {
 
-		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
-
-		ddmFieldModel2.setFieldId(_counter.get());
-		ddmFieldModel2.setCompanyId(_companyId);
-		ddmFieldModel2.setStructureVersionId(_defaultDLDDMStructureVersionId);
-		ddmFieldModel2.setParentFieldId(0);
-		ddmFieldModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel2.setFieldName("CONTENT_TYPE");
-		ddmFieldModel2.setFieldType("string");
-		ddmFieldModel2.setPriority(1);
-		ddmFieldModel2.setInstanceId(StringUtil.randomId());
-		ddmFieldModel2.setLocalizable(true);
-
-		return Arrays.asList(ddmFieldModel1, ddmFieldModel2);
+		return newDDMStorageLinkModel(
+			ddmStorageLinkId, _counter.get(), structureId);
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -2163,22 +2180,6 @@ public class DataFactory {
 			_defaultJournalDDMStructureVersionId);
 
 		return ddmStorageLinkModel;
-	}
-
-	public DDMStorageLinkModel newDDMStorageLinkModel(
-		long ddmStorageLinkId, DDLRecordModel ddlRecordModel,
-		long structureId) {
-
-		return newDDMStorageLinkModel(
-			ddmStorageLinkId, ddlRecordModel.getDDMStorageId(), structureId);
-	}
-
-	public DDMStorageLinkModel newDDMStorageLinkModel(
-		long ddmStorageLinkId, DLFileEntryModel dlFileEntryModel,
-		long structureId) {
-
-		return newDDMStorageLinkModel(
-			ddmStorageLinkId, _counter.get(), structureId);
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(

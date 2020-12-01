@@ -25,7 +25,7 @@ const DLExternalVideoPreview = ({error, loading, small, videoHTML}) => {
 				['external-video-preview-small']: small,
 			})}
 		>
-			{videoHTML ? (
+			{videoHTML && !error && !loading ? (
 				<div
 					className="external-video-preview-aspect-ratio"
 					dangerouslySetInnerHTML={{__html: videoHTML}}

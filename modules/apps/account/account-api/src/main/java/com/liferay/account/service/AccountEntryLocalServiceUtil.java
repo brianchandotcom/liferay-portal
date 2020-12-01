@@ -387,6 +387,13 @@ public class AccountEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.account.model.AccountEntry getGuestAccountEntry(
+			long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getGuestAccountEntry(companyId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

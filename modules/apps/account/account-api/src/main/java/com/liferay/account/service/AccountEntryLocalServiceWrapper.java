@@ -413,6 +413,14 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry getGuestAccountEntry(
+			long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.getGuestAccountEntry(companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

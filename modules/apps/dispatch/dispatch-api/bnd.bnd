@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.dispatch.model,\
 	com.liferay.dispatch.repository,\
 	com.liferay.dispatch.repository.exception,\
-	com.liferay.dispatch.security.permission,\
 	com.liferay.dispatch.service,\
 	com.liferay.dispatch.service.persistence
 Provide-Capability:\

@@ -94,7 +94,7 @@ const TranslationManager = ({
 			)}
 
 			<div className="autofit-row">
-				<div className="autofit-col">
+				<div className="autofit-col autofit-col-expand">
 					<LocalesContainer
 						className={cssClass}
 						id={id}

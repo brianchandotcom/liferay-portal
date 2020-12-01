@@ -50,4 +50,16 @@ definition {
 		return "${utcMonth}";
 	}
 
+	macro getUTCYear {
+		var javaScript = '''
+		var utcYear = new Date().getUTCFullYear().toString();
+
+		return utcYear;
+		''';
+
+		var utcYear = selenium.getEval("${javaScript}");
+
+		return "${utcYear}";
+	}
+
 }

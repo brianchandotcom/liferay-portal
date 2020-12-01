@@ -62,16 +62,16 @@ export default function VerticalCard({
 			shape: stickerShape,
 		};
 
-		if (stickerIcon) {
-			stickerProps.children = <ClayIcon symbol={stickerIcon} />;
-		}
-		else if (stickerImageSrc) {
+		if (stickerImageSrc) {
 			stickerProps.children = (
 				<ClaySticker.Image
 					alt={stickerImageAlt}
 					src={stickerImageSrc}
 				/>
 			);
+		}
+		else if (stickerIcon) {
+			stickerProps.children = <ClayIcon symbol={stickerIcon} />;
 		}
 
 		return stickerProps;

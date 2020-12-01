@@ -42,9 +42,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				"create table PortletPreferenceValue (mvccVersion LONG ",
 				"default 0 not null, ctCollectionId LONG default 0 not null, ",
 				"portletPreferenceValueId LONG not null, companyId LONG, ",
-				"portletPreferencesId LONG, name VARCHAR(255) null, index_ ",
-				"INTEGER, smallValue VARCHAR(255) null, largeValue TEXT null, ",
-				"readOnly BOOLEAN, primary key (portletPreferenceValueId, ",
+				"portletPreferencesId LONG, index_ INTEGER, largeValue TEXT ",
+				"null, name VARCHAR(255) null, readOnly BOOLEAN, smallValue ",
+				"VARCHAR(255) null, primary key (portletPreferenceValueId, ",
 				"ctCollectionId))"));
 
 		try (PreparedStatement selectPreparedStatement =
@@ -62,9 +62,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 						StringBundler.concat(
 							"insert into PortletPreferenceValue (mvccVersion, ",
 							"ctCollectionId, portletPreferenceValueId, ",
-							"companyId, portletPreferencesId, name, index_, ",
-							"smallValue, largeValue, readOnly) values (0, ?, ",
-							"?, ?, ?, ?, ?, ?, ?, ?)")));
+							"companyId, portletPreferencesId, index_, ",
+							"largeValue, name, readOnly, smallValue) values ",
+							"(0, ?, ?, ?, ?, ?, ?, ?, ?, ?)")));
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -91,6 +91,21 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					String[] values = preference.getValues();
 
 					for (int i = 0; i < values.length; i++) {
+						String value = values[i];
+
+						String largeValue = null;
+						String smallValue = null;
+
+						if (value.length() >
+								PortletPreferenceValueImpl.
+									SMALL_VALUE_MAX_LENGTH) {
+
+							largeValue = value;
+						}
+						else {
+							smallValue = value;
+						}
+
 						insertPreparedStatement.setLong(1, ctCollectionId);
 						insertPreparedStatement.setLong(
 							2,
@@ -98,26 +113,13 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 						insertPreparedStatement.setLong(3, companyId);
 						insertPreparedStatement.setLong(
 							4, portletPreferencesId);
+						insertPreparedStatement.setInt(5, i);
+						insertPreparedStatement.setString(6, largeValue);
 						insertPreparedStatement.setString(
-							5, preference.getName());
-						insertPreparedStatement.setInt(6, i);
-
-						String value = values[i];
-
-						if (value.length() <=
-								PortletPreferenceValueImpl.
-									SMALL_VALUE_MAX_LENGTH) {
-
-							insertPreparedStatement.setString(7, value);
-							insertPreparedStatement.setString(8, null);
-						}
-						else {
-							insertPreparedStatement.setString(7, null);
-							insertPreparedStatement.setString(8, value);
-						}
-
+							7, preference.getName());
 						insertPreparedStatement.setBoolean(
-							9, preference.isReadOnly());
+							8, preference.isReadOnly());
+						insertPreparedStatement.setString(9, smallValue);
 
 						insertPreparedStatement.addBatch();
 					}

@@ -23,10 +23,10 @@ public class PortletPreferenceValueImpl extends PortletPreferenceValueBaseImpl {
 
 	@Override
 	public String getValue() {
-		String value = getSmallValue();
+		String value = getLargeValue();
 
 		if (value.isEmpty()) {
-			value = getLargeValue();
+			value = getSmallValue();
 		}
 
 		return value;
@@ -34,21 +34,20 @@ public class PortletPreferenceValueImpl extends PortletPreferenceValueBaseImpl {
 
 	@Override
 	public void setValue(String value) {
-		if (value == null) {
-			setSmallValue(null);
+		String largeValue = null;
+		String smallValue = null;
 
-			setLargeValue(null);
+		if (value != null) {
+			if (value.length() > SMALL_VALUE_MAX_LENGTH) {
+				largeValue = value;
+			}
+			else {
+				smallValue = value;
+			}
 		}
-		else if (value.length() <= SMALL_VALUE_MAX_LENGTH) {
-			setSmallValue(value);
 
-			setLargeValue(null);
-		}
-		else {
-			setSmallValue(null);
-
-			setLargeValue(value);
-		}
+		setLargeValue(largeValue);
+		setSmallValue(smallValue);
 	}
 
 }

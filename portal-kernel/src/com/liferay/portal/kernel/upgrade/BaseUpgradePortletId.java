@@ -284,8 +284,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			String selectSQL = StringBundler.concat(
 				"select PortletPreferenceValue.portletPreferenceValueId, ",
-				"PortletPreferenceValue.smallValue, ",
-				"PortletPreferenceValue.largeValue from ",
+				"PortletPreferenceValue.largeValue, ",
+				"PortletPreferenceValue.smallValue from ",
 				"PortletPreferenceValue inner join PortletPreferences on ",
 				"PortletPreferences.portletPreferencesId = ",
 				"PortletPreferenceValue.portletPreferencesId where ",
@@ -296,8 +296,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"_USER_%' and PortletPreferenceValue.name = 'portletSetupCss'");
 
 			String updateSQL =
-				"update PortletPreferenceValue set smallValue = ?, " +
-					"largeValue = ? where portletPreferenceValueId = ?";
+				"update PortletPreferenceValue set largeValue = ?, " +
+					"smallValue = ? where portletPreferenceValueId = ?";
 
 			try (PreparedStatement selectPreparedStatement =
 					connection.prepareStatement(selectSQL);
@@ -321,14 +321,18 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 						continue;
 					}
 
+					String largeValue = null;
+					String smallValue = null;
+
 					if (newValue.length() > smallValueMaxLength) {
-						updatePreparedStatement.setString(1, null);
-						updatePreparedStatement.setString(2, value);
+						largeValue = value;
 					}
 					else {
-						updatePreparedStatement.setString(1, value);
-						updatePreparedStatement.setString(2, null);
+						smallValue = value;
 					}
+
+					updatePreparedStatement.setString(1, largeValue);
+					updatePreparedStatement.setString(2, smallValue);
 
 					updatePreparedStatement.setLong(
 						3, resultSet.getLong("portletPreferenceValueId"));

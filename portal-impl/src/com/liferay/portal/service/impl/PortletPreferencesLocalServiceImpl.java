@@ -992,8 +992,8 @@ public class PortletPreferencesLocalServiceImpl
 						portletPreferences.getCompanyId());
 					portletPreferenceValue.setPortletPreferencesId(
 						portletPreferences.getPortletPreferencesId());
-					portletPreferenceValue.setName(preference.getName());
 					portletPreferenceValue.setIndex(i);
+					portletPreferenceValue.setName(preference.getName());
 					portletPreferenceValue.setReadOnly(readOnly);
 					portletPreferenceValue.setValue(value);
 

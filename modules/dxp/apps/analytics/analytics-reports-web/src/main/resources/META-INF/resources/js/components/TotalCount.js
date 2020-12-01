@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useWarning} from '../context/store';
+import {StoreContext, useWarning} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 

@@ -14,7 +14,7 @@ import React from 'react';
 
 import Navigation from '../../../src/main/resources/META-INF/resources/js/components/Navigation';
 import ConnectionContext from '../../../src/main/resources/META-INF/resources/js/context/ConnectionContext';
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/store';
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 import '@testing-library/jest-dom/extend-expect';
 

@@ -34,7 +34,7 @@ import {
 	useSetLoading,
 } from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useHistoricalWarning} from '../context/store';
+import {StoreContext, useHistoricalWarning} from '../context/StoreContext';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';

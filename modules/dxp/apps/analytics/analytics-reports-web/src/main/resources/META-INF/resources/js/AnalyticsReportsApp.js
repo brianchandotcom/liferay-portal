@@ -18,7 +18,7 @@ import React, {useCallback, useEffect, useReducer} from 'react';
 import Navigation from './components/Navigation';
 import {ChartStateContextProvider} from './context/ChartStateContext';
 import ConnectionContext from './context/ConnectionContext';
-import {StoreContextProvider} from './context/store';
+import {StoreContextProvider} from './context/StoreContext';
 
 import '../css/analytics-reports-app.scss';
 

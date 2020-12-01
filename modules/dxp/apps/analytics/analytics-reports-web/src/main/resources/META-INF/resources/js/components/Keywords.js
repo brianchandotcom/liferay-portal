@@ -18,7 +18,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
-import {StoreContext} from '../context/store';
+import {StoreContext} from '../context/StoreContext';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 

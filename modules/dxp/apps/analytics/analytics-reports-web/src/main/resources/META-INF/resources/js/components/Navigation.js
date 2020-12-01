@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext} from '../context/store';
+import {StoreContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
 import Detail from './Detail';
 import Main from './Main';

@@ -61,7 +61,9 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 							address="<%= defaultBillingAddress %>"
 						/>
 
-						<span class="autofit-row"><%= defaultBillingAddress.getPhoneNumber() %></span>
+						<c:if test="<%= Validator.isNotNull(defaultBillingAddress.getPhoneNumber()) %>">
+							<span class="autofit-row"><%= defaultBillingAddress.getPhoneNumber() %></span>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
 			</address>
@@ -106,7 +108,9 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 							address="<%= defaultShippingAddress %>"
 						/>
 
-						<span class="autofit-row"><%= defaultShippingAddress.getPhoneNumber() %></span>
+						<c:if test="<%= Validator.isNotNull(defaultShippingAddress.getPhoneNumber()) %>">
+							<span class="autofit-row"><%= defaultShippingAddress.getPhoneNumber() %></span>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
 			</address>

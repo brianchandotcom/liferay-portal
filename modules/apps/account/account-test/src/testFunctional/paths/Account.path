@@ -53,6 +53,11 @@
 	<td>//tr[contains(.,'${key_domainName}')]/td[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_CONTENT_ENTRY_ACCOUNTS</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//td[contains(.,'${key_rowEntryAccount}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

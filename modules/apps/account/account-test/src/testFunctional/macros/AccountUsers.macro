@@ -164,6 +164,13 @@ definition {
 		}
 	}
 
+	macro viewEntryAccounts {
+		AssertElementPresent(
+			key_rowEntry = "${accountUserName}",
+			key_rowEntryAccount = "${accountName}",
+			locator1 = "Account#ENTRY_CONTENT_ENTRY_ACCOUNTS");
+	}
+
 	macro viewValidDomains {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

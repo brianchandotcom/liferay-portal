@@ -1672,13 +1672,15 @@ class ChangeTrackingChangesView extends React.Component {
 						: 'sheet'
 				}
 			>
-				<h2 className="autofit-row sheet-title">
+				<div className="autofit-row sheet-title">
 					<div className="autofit-col autofit-col-expand">
-						<span className="heading-text">
-							{this.state.node.description
-								? this.state.node.description
-								: this.state.node.title}
-						</span>
+						<h2>{this.state.node.title} </h2>
+
+						{this.state.node.description && (
+							<div className="entry-description">
+								{this.state.node.description}
+							</div>
+						)}
 					</div>
 
 					{this.state.dropdownItems &&
@@ -1699,7 +1701,7 @@ class ChangeTrackingChangesView extends React.Component {
 								/>
 							</div>
 						)}
-				</h2>
+				</div>
 				<div className="sheet-section">
 					{this.state.loading && (
 						<div className="publications-loading-animation-wrapper">

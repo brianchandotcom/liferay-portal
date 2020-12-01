@@ -62,9 +62,9 @@ public class DisplaySettingsDisplayContext {
 		Group liveGroup = _getLiveGroup();
 
 		return HashMapBuilder.<String, Object>put(
-			"availableLanguages", _getAvailableLanguages()
+			"availableLanguages", _getAvailableLanguagesJSONObjects()
 		).put(
-			"currentLanguages", _getCurrentLanguages()
+			"currentLanguages", _getCurrentLanguagesJSONObjects()
 		).put(
 			"defaultLanguageId",
 			() -> {
@@ -93,14 +93,14 @@ public class DisplaySettingsDisplayContext {
 		).build();
 	}
 
-	private List<JSONObject> _getAvailableLanguages() {
-		List<JSONObject> availableLanguages = new ArrayList<>();
+	private List<JSONObject> _getAvailableLanguagesJSONObjects() {
+		List<JSONObject> availableLanguagesJSONObjects = new ArrayList<>();
 
 		Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 			if (!siteAvailableLocales.contains(availableLocale)) {
-				availableLanguages.add(
+				availableLanguagesJSONObjects.add(
 					JSONUtil.put(
 						"label",
 						availableLocale.getDisplayName(
@@ -112,12 +112,12 @@ public class DisplaySettingsDisplayContext {
 		}
 
 		return ListUtil.sort(
-			availableLanguages,
+			availableLanguagesJSONObjects,
 			new JSONObjectStringPropertyComparator("value", true));
 	}
 
-	private List<JSONObject> _getCurrentLanguages() {
-		List<JSONObject> currentLanguages = new ArrayList<>();
+	private List<JSONObject> _getCurrentLanguagesJSONObjects() {
+		List<JSONObject> currentLanguagesJSONObjects = new ArrayList<>();
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_getTypeSettingsUnicodeProperties();
@@ -130,7 +130,7 @@ public class DisplaySettingsDisplayContext {
 					LocaleUtil.fromLanguageIds(
 						StringUtil.split(groupLanguageIds))) {
 
-				currentLanguages.add(
+				currentLanguagesJSONObjects.add(
 					JSONUtil.put(
 						"label",
 						currentLocale.getDisplayName(_themeDisplay.getLocale())
@@ -143,7 +143,7 @@ public class DisplaySettingsDisplayContext {
 			Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
 
 			for (Locale siteAvailableLocale : siteAvailableLocales) {
-				currentLanguages.add(
+				currentLanguagesJSONObjects.add(
 					JSONUtil.put(
 						"label",
 						siteAvailableLocale.getDisplayName(
@@ -154,7 +154,7 @@ public class DisplaySettingsDisplayContext {
 			}
 		}
 
-		return currentLanguages;
+		return currentLanguagesJSONObjects;
 	}
 
 	private Group _getLiveGroup() {

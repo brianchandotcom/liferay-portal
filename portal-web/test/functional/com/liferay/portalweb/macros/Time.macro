@@ -36,4 +36,18 @@ definition {
 		return "${utcMinutes}";
 	}
 
+	macro getUTCMonth {
+		var javaScript = '''
+		var utcMonth = new Date().getUTCMonth().toString();
+
+		return utcMonth;
+		''';
+
+		var utcMonth = selenium.getEval("${javaScript}");
+
+		var utcMonth = ${utcMonth} + 1;
+
+		return "${utcMonth}";
+	}
+
 }

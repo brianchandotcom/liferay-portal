@@ -187,7 +187,7 @@ public class SiteActionDropdownItemsProvider {
 		PortletURL leaveSiteURL = _liferayPortletResponse.createActionURL();
 
 		leaveSiteURL.setParameter(
-			ActionRequest.ACTION_NAME, "editGroupAssignments");
+			ActionRequest.ACTION_NAME, "/site_admin/edit_group_assignments");
 
 		leaveSiteURL.setParameter("redirect", _getRedirect());
 		leaveSiteURL.setParameter(

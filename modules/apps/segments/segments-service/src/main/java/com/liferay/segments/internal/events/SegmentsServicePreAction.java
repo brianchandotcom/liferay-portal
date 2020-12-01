@@ -131,21 +131,29 @@ public class SegmentsServicePreAction extends Action {
 				_segmentsExperienceRequestProcessorRegistry.
 					getSegmentsExperienceIds(
 						httpServletRequest, httpServletResponse, groupId,
-						classNameId, classPK,
-						_segmentsEntryRetriever.getSegmentsEntryIds(
-							groupId, userId,
-							_requestContextMapper.map(httpServletRequest)));
+						classNameId, classPK);
 
-			return ArrayUtil.append(
-				segmentsExperienceIds, SegmentsExperienceConstants.ID_DEFAULT);
+			if (segmentsExperienceIds.length > 0) {
+				long[] segmentsEntryIds =
+					_segmentsEntryRetriever.getSegmentsEntryIds(
+						groupId, userId,
+						_requestContextMapper.map(httpServletRequest));
+
+				return ArrayUtil.append(
+					_segmentsExperienceRequestProcessorRegistry.
+						getSegmentsExperienceIds(
+							httpServletRequest, httpServletResponse, groupId,
+							classNameId, classPK, segmentsEntryIds),
+					SegmentsExperienceConstants.ID_DEFAULT);
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException, portalException);
 			}
-
-			return new long[] {SegmentsExperienceConstants.ID_DEFAULT};
 		}
+
+		return new long[] {SegmentsExperienceConstants.ID_DEFAULT};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

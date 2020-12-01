@@ -1060,10 +1060,7 @@ class App extends EventEmitter {
 
 			return;
 		}
-		this.maybeNavigate_(
-			event.target.closest(this.getLinkSelector()).href,
-			event
-		);
+		this.maybeNavigate_(event.delegateTarget.href, event);
 	}
 
 	/**
@@ -1073,7 +1070,7 @@ class App extends EventEmitter {
 	 * @protected
 	 */
 	onDocSubmitDelegate_(event) {
-		var form = event.target.closest(this.getFormSelector());
+		var form = event.delegateTarget;
 		if (form.method === 'get') {
 			log('GET method not supported');
 

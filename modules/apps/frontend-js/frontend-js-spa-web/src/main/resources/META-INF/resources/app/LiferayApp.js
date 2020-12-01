@@ -58,6 +58,8 @@ class LiferayApp extends App {
 		this._clearScreensCache = clearScreensCache;
 		this._debugEnabled = debugEnabled;
 
+		this.formSelector = `form${navigationExceptionSelectors}`;
+		this.linkSelector = `a${navigationExceptionSelectors}`;
 		this.portletsBlacklist = portletsBlacklist;
 		this.userNotification = userNotification;
 		this.validStatusCodes = validStatusCodes;
@@ -67,10 +69,6 @@ class LiferayApp extends App {
 		this.timeout = Math.max(requestTimeout, 0) || MAX_TIMEOUT;
 		this.timeoutAlert = null;
 
-		const exceptionsSelector = navigationExceptionSelectors;
-
-		this.setFormSelector('form' + exceptionsSelector);
-		this.setLinkSelector('a' + exceptionsSelector);
 		this.setLoadingCssClass('lfr-spa-loading');
 
 		this.on('beforeNavigate', this.onBeforeNavigate);

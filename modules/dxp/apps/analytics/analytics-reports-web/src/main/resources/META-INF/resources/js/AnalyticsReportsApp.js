@@ -135,6 +135,7 @@ export default function ({context}) {
 				>
 					<ChartStateContextProvider
 						publishDate={state.data.publishDate}
+						timeRange={state.data.timeRange}
 						timeSpanKey={state.data.timeSpanKey}
 					>
 						<div className="analytics-reports-app">

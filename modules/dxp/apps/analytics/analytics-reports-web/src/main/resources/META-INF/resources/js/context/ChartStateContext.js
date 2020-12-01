@@ -23,6 +23,7 @@ const INITIAL_STATE = {
 	dataSet: {histogram: [], keyList: [], totals: []},
 	loading: true,
 	publishDate: null,
+	timeRange: null,
 	timeSpanKey: null,
 	timeSpanOffset: 0,
 };
@@ -34,11 +35,13 @@ const ChartStateContext = createContext(INITIAL_STATE);
 export const ChartStateContextProvider = ({
 	children,
 	publishDate,
+	timeRange,
 	timeSpanKey,
 }) => {
 	const stateAndDispatch = useReducer(reducer, {
 		...INITIAL_STATE,
 		publishDate,
+		timeRange,
 		timeSpanKey,
 	});
 
@@ -72,6 +75,31 @@ export const useChartState = () => {
 
 	return state;
 };
+
+export function useDateTitle() {
+	const [state] = useContext(ChartStateContext);
+
+	const {histogram} = state.dataSet;
+	const {timeRange} = state;
+
+	return useMemo(() => {
+		if (histogram.length) {
+			const firstDateLabel = histogram[0].label;
+			const lastDateLabel = histogram[histogram.length - 1].label;
+
+			return {
+				firstDate: new Date(firstDateLabel),
+				lastDate: new Date(lastDateLabel),
+			};
+		}
+		else {
+			return {
+				firstDate: new Date(timeRange.startDate),
+				lastDate: new Date(timeRange.endDate),
+			};
+		}
+	}, [histogram, timeRange]);
+}
 
 export function useIsPreviousPeriodButtonDisabled() {
 	const [state] = useContext(ChartStateContext);

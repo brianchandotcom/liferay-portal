@@ -29,6 +29,7 @@ import {
 	useAddDataSetItems,
 	useChangeTimeSpanKey,
 	useChartState,
+	useDateTitle,
 	useIsPreviousPeriodButtonDisabled,
 	useNextTimeSpan,
 	usePreviousTimeSpan,
@@ -161,6 +162,16 @@ export default function Chart({
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
+	const dateFormatters = useMemo(() => dateFormat(languageTag), [
+		languageTag,
+	]);
+
+	const {firstDate, lastDate} = useDateTitle();
+
+	const title = useMemo(() => {
+		return dateFormatters.formatChartTitle([firstDate, lastDate]);
+	}, [dateFormatters, firstDate, lastDate]);
+
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
@@ -225,10 +236,6 @@ export default function Chart({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chartState.timeSpanKey, chartState.timeSpanOffset]);
 
-	const dateFormatters = useMemo(() => dateFormat(languageTag), [
-		languageTag,
-	]);
-
 	const {dataSet} = chartState;
 	const {histogram, keyList} = dataSet;
 
@@ -239,24 +246,6 @@ export default function Chart({
 			? publishDateISOString.split(':')[0].concat(':00:00')
 			: publishDateISOString.split('T')[0].concat('T00:00:00');
 	}, [chartState.timeSpanKey, publishDate]);
-
-	const title = useMemo(() => {
-		if (histogram.length) {
-			const firstDateLabel = histogram[0].label;
-			const lastDateLabel = histogram[histogram.length - 1].label;
-
-			return dateFormatters.formatChartTitle([
-				new Date(firstDateLabel),
-				new Date(lastDateLabel),
-			]);
-		}
-		else {
-			return dateFormatters.formatChartTitle([
-				new Date(timeRange.startDate),
-				new Date(timeRange.endDate),
-			]);
-		}
-	}, [dateFormatters, histogram, timeRange]);
 
 	const handleTimeSpanChange = (event) => {
 		const {value} = event.target;

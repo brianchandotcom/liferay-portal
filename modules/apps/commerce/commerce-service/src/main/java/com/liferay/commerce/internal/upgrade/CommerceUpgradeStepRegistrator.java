@@ -181,6 +181,11 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			new com.liferay.commerce.internal.upgrade.v4_9_1.
 				CommerceOrderUpgradeProcess());
 
+		registry.register(
+			"4.9.1", "4.10.0",
+			new com.liferay.commerce.internal.upgrade.v4_10_0.
+				CommerceOrderItemUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

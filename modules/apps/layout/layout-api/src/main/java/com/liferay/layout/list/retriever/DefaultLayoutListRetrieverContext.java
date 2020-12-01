@@ -47,10 +47,17 @@ public class DefaultLayoutListRetrieverContext
 		_pagination = pagination;
 	}
 
-	public void setSegmentsExperienceIdsOptional(
-		long[] segmentsExperienceIdsOptional) {
+	public void setSegmentsExperienceIds(long[] segmentsExperienceIds) {
+		_segmentsExperienceIds = segmentsExperienceIds;
+	}
 
-		_segmentsExperienceIds = segmentsExperienceIdsOptional;
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #setSegmentsExperienceIds(long[])}
+	 */
+	@Deprecated
+	public void setSegmentsExperienceIdsOptional(long[] segmentsExperienceIds) {
+		_segmentsExperienceIds = segmentsExperienceIds;
 	}
 
 	private long[][] _assetCategoryIds;

@@ -13,6 +13,7 @@ import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import Translation from '../../../src/main/resources/META-INF/resources/js/components/Translation';
+import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -40,18 +41,23 @@ describe('Translation', () => {
 	it('renders', () => {
 		const testProps = {
 			defaultLanguage: 'en-US',
-			publishDate: '2020-08-23',
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
+			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			timeSpanKey: 'last-7-days',
 		};
 
 		const {asFragment} = render(
-			<Translation
-				defaultLanguage={'en-US'}
-				onSelectedLanguageClick={() => {}}
-				publishDate={testProps.publishDate}
+			<ChartStateContextProvider
+				publishDate={testProps.pagePublishDate}
+				timeRange={testProps.timeRange}
 				timeSpanKey={testProps.timeSpanKey}
-				viewURLs={mockViewURLs}
-			/>
+			>
+				<Translation
+					defaultLanguage={testProps.defaultLanguage}
+					onSelectedLanguageClick={() => {}}
+					viewURLs={mockViewURLs}
+				/>
+			</ChartStateContextProvider>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -60,18 +66,23 @@ describe('Translation', () => {
 	it('renders languages translated into', () => {
 		const testProps = {
 			defaultLanguage: 'en-US',
-			publishDate: '2020-08-23',
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
+			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			timeSpanKey: 'last-7-days',
 		};
 
 		const {getAllByText, getByText} = render(
-			<Translation
-				defaultLanguage={'en-US'}
-				onSelectedLanguageClick={() => {}}
-				publishDate={testProps.publishDate}
+			<ChartStateContextProvider
+				publishDate={testProps.pagePublishDate}
+				timeRange={testProps.timeRange}
 				timeSpanKey={testProps.timeSpanKey}
-				viewURLs={mockViewURLs}
-			/>
+			>
+				<Translation
+					defaultLanguage={testProps.defaultLanguage}
+					onSelectedLanguageClick={() => {}}
+					viewURLs={mockViewURLs}
+				/>
+			</ChartStateContextProvider>
 		);
 
 		expect(getByText('languages-translated-into')).toBeInTheDocument();

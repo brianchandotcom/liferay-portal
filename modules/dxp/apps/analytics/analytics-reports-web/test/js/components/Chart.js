@@ -14,6 +14,7 @@ import {cleanup, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
+import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
 
 const mockReadsDataProvider = jest.fn(() =>
 	Promise.resolve({
@@ -146,20 +147,24 @@ describe('Chart', () => {
 
 	it('displays total views and date range title for default time span', async () => {
 		const testProps = {
-			languageTag: 'en-US',
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			timeSpanKey: 'last-7-days',
 		};
 
 		const {getByText} = render(
-			<Chart
-				dataProviders={[mockViewsDataProvider]}
-				languageTag={testProps.languageTag}
-				publishDate={mockPublishDate}
+			<ChartStateContextProvider
+				publishDate={testProps.pagePublishDate}
 				timeRange={testProps.timeRange}
 				timeSpanKey={testProps.timeSpanKey}
-				timeSpanOptions={mockTimeSpanOptions}
-			/>
+			>
+				<Chart
+					dataProviders={[mockViewsDataProvider]}
+					languageTag={'en-US'}
+					publishDate={mockPublishDate}
+					timeSpanOptions={mockTimeSpanOptions}
+				/>
+			</ChartStateContextProvider>
 		);
 
 		await wait(() =>
@@ -178,20 +183,27 @@ describe('Chart', () => {
 
 	it('displays total views and reads and date range title for default time span', async () => {
 		const testProps = {
-			languageTag: 'en-US',
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			timeSpanKey: 'last-7-days',
 		};
 
 		const {getByText} = render(
-			<Chart
-				dataProviders={[mockViewsDataProvider, mockReadsDataProvider]}
-				languageTag={testProps.languageTag}
-				publishDate={mockPublishDate}
+			<ChartStateContextProvider
+				publishDate={testProps.pagePublishDate}
 				timeRange={testProps.timeRange}
 				timeSpanKey={testProps.timeSpanKey}
-				timeSpanOptions={mockTimeSpanOptions}
-			/>
+			>
+				<Chart
+					dataProviders={[
+						mockViewsDataProvider,
+						mockReadsDataProvider,
+					]}
+					languageTag={'en-US'}
+					publishDate={mockPublishDate}
+					timeSpanOptions={mockTimeSpanOptions}
+				/>
+			</ChartStateContextProvider>
 		);
 
 		await wait(() =>

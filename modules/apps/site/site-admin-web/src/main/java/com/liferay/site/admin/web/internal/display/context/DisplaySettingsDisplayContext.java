@@ -16,6 +16,8 @@ package com.liferay.site.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -62,9 +64,9 @@ public class DisplaySettingsDisplayContext {
 		Group liveGroup = _getLiveGroup();
 
 		return HashMapBuilder.<String, Object>put(
-			"availableLanguages", _getAvailableLanguages()
+			"availableLanguages", _getAvailableLanguagesJSONArray()
 		).put(
-			"currentLanguages", _getCurrentLanguages()
+			"currentLanguages", _getCurrentLanguagesJSONArray()
 		).put(
 			"defaultLanguageId",
 			() -> {
@@ -93,7 +95,10 @@ public class DisplaySettingsDisplayContext {
 		).build();
 	}
 
-	private List<JSONObject> _getAvailableLanguages() {
+	private JSONArray _getAvailableLanguagesJSONArray() {
+		JSONArray availableLanguagesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
 		List<JSONObject> availableLanguages = new ArrayList<>();
 
 		Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
@@ -111,13 +116,19 @@ public class DisplaySettingsDisplayContext {
 			}
 		}
 
-		return ListUtil.sort(
+		List<JSONObject> sortedAvailableLanguages = ListUtil.sort(
 			availableLanguages,
 			new JSONObjectStringPropertyComparator("value", true));
+
+		for (JSONObject jsonObject : sortedAvailableLanguages) {
+			availableLanguagesJSONArray.put(jsonObject);
+		}
+
+		return availableLanguagesJSONArray;
 	}
 
-	private List<JSONObject> _getCurrentLanguages() {
-		List<JSONObject> currentLanguages = new ArrayList<>();
+	private JSONArray _getCurrentLanguagesJSONArray() {
+		JSONArray currentLanguagesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_getTypeSettingsUnicodeProperties();
@@ -130,7 +141,7 @@ public class DisplaySettingsDisplayContext {
 					LocaleUtil.fromLanguageIds(
 						StringUtil.split(groupLanguageIds))) {
 
-				currentLanguages.add(
+				currentLanguagesJSONArray.put(
 					JSONUtil.put(
 						"label",
 						currentLocale.getDisplayName(_themeDisplay.getLocale())
@@ -143,7 +154,7 @@ public class DisplaySettingsDisplayContext {
 			Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
 
 			for (Locale siteAvailableLocale : siteAvailableLocales) {
-				currentLanguages.add(
+				currentLanguagesJSONArray.put(
 					JSONUtil.put(
 						"label",
 						siteAvailableLocale.getDisplayName(
@@ -154,7 +165,7 @@ public class DisplaySettingsDisplayContext {
 			}
 		}
 
-		return currentLanguages;
+		return currentLanguagesJSONArray;
 	}
 
 	private Group _getLiveGroup() {

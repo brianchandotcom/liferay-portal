@@ -273,12 +273,31 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#ASSIGN_USER");
 
-		Search.searchCP(searchTerm = "${accountUserName}");
+		if (isSet(newUser)) {
+			LexiconEntry.gotoAdd();
 
-		AssertClick(
-			key_accountUserName = "${accountUserName}",
-			locator1 = "Account#CHOOSE_ACCOUNT_USER",
-			value1 = "Choose");
+			AccountUsers.addUserInfos(
+				accountName = "${accountName}",
+				domainValidation = "${domainValidation}",
+				emailDomainName = "${emailDomainName}",
+				userEmailAddress = "${userEmailAddress}",
+				userFirstName = "${accountUserName}",
+				userLastName = "${userLastName}",
+				userScreenName = "${userScreenName}",
+				validDomainNames = "${validDomainNames}");
+
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+		else {
+			Search.searchCP(searchTerm = "${accountUserName}");
+
+			AssertClick(
+				key_accountUserName = "${accountUserName}",
+				locator1 = "Account#CHOOSE_ACCOUNT_USER",
+				value1 = "Choose");
+		}
 
 		SelectFrame(value1 = "relative=top");
 

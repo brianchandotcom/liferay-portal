@@ -44,6 +44,31 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		clearCachedSpiraArtifacts(SpiraTestCaseRun.class);
 	}
 
+	public static void deleteSpiraTestCaseRuns(
+		List<SpiraTestCaseRun> spiraTestCaseRuns) {
+
+		for (SpiraTestCaseRun spiraTestCaseRun : spiraTestCaseRuns) {
+			Map<String, String> urlPathReplacements = new HashMap<>();
+
+			SpiraProject spiraProject = spiraTestCaseRun.getSpiraProject();
+
+			urlPathReplacements.put(
+				"project_id", String.valueOf(spiraProject.getID()));
+
+			urlPathReplacements.put(
+				"test_run_id", String.valueOf(spiraTestCaseRun.getID()));
+
+			try {
+				SpiraRestAPIUtil.request(
+					"projects/{project_id}/test-runs/{test_run_id}", null,
+					urlPathReplacements, HttpRequestMethod.DELETE, null);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
 	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
 		SpiraReleaseBuild spiraReleaseBuild, SpiraTestSet spiraTestSet,

@@ -393,7 +393,7 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	public java.util.List<AssetListEntryAssetEntryRel>
 		getAssetListEntryAssetEntryRels(
 			long assetListEntryId, long[] segmentsEntryIds,
-			long[] assetCategoryIds, int start, int end) {
+			long[][] assetCategoryIds, int start, int end) {
 
 		return _assetListEntryAssetEntryRelLocalService.
 			getAssetListEntryAssetEntryRels(
@@ -486,7 +486,7 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	@Override
 	public int getAssetListEntryAssetEntryRelsCount(
 		long assetListEntryId, long[] segmentsEntryIds,
-		long[] assetCategoryIds) {
+		long[][] assetCategoryIds) {
 
 		return _assetListEntryAssetEntryRelLocalService.
 			getAssetListEntryAssetEntryRelsCount(

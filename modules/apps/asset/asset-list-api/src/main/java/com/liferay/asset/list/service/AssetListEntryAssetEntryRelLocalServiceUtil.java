@@ -370,7 +370,7 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 		<com.liferay.asset.list.model.AssetListEntryAssetEntryRel>
 			getAssetListEntryAssetEntryRels(
 				long assetListEntryId, long[] segmentsEntryIds,
-				long[] assetCategoryIds, int start, int end) {
+				long[][] assetCategoryIds, int start, int end) {
 
 		return getService().getAssetListEntryAssetEntryRels(
 			assetListEntryId, segmentsEntryIds, assetCategoryIds, start, end);
@@ -453,7 +453,7 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 	public static int getAssetListEntryAssetEntryRelsCount(
 		long assetListEntryId, long[] segmentsEntryIds,
-		long[] assetCategoryIds) {
+		long[][] assetCategoryIds) {
 
 		return getService().getAssetListEntryAssetEntryRelsCount(
 			assetListEntryId, segmentsEntryIds, assetCategoryIds);

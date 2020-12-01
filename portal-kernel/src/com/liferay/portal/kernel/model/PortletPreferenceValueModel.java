@@ -134,21 +134,6 @@ public interface PortletPreferenceValueModel
 	public void setPortletPreferencesId(long portletPreferencesId);
 
 	/**
-	 * Returns the name of this portlet preference value.
-	 *
-	 * @return the name of this portlet preference value
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this portlet preference value.
-	 *
-	 * @param name the name of this portlet preference value
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the index of this portlet preference value.
 	 *
 	 * @return the index of this portlet preference value
@@ -161,21 +146,6 @@ public interface PortletPreferenceValueModel
 	 * @param index the index of this portlet preference value
 	 */
 	public void setIndex(int index);
-
-	/**
-	 * Returns the small value of this portlet preference value.
-	 *
-	 * @return the small value of this portlet preference value
-	 */
-	@AutoEscape
-	public String getSmallValue();
-
-	/**
-	 * Sets the small value of this portlet preference value.
-	 *
-	 * @param smallValue the small value of this portlet preference value
-	 */
-	public void setSmallValue(String smallValue);
 
 	/**
 	 * Returns the large value of this portlet preference value.
@@ -191,6 +161,21 @@ public interface PortletPreferenceValueModel
 	 * @param largeValue the large value of this portlet preference value
 	 */
 	public void setLargeValue(String largeValue);
+
+	/**
+	 * Returns the name of this portlet preference value.
+	 *
+	 * @return the name of this portlet preference value
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this portlet preference value.
+	 *
+	 * @param name the name of this portlet preference value
+	 */
+	public void setName(String name);
 
 	/**
 	 * Returns the read only of this portlet preference value.
@@ -212,5 +197,20 @@ public interface PortletPreferenceValueModel
 	 * @param readOnly the read only of this portlet preference value
 	 */
 	public void setReadOnly(boolean readOnly);
+
+	/**
+	 * Returns the small value of this portlet preference value.
+	 *
+	 * @return the small value of this portlet preference value
+	 */
+	@AutoEscape
+	public String getSmallValue();
+
+	/**
+	 * Sets the small value of this portlet preference value.
+	 *
+	 * @param smallValue the small value of this portlet preference value
+	 */
+	public void setSmallValue(String smallValue);
 
 }

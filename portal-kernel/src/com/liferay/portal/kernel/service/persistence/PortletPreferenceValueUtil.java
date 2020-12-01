@@ -502,82 +502,82 @@ public class PortletPreferenceValueUtil {
 	}
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
 	 * @param index the index
+	 * @param name the name
 	 * @return the matching portlet preference value
 	 * @throws NoSuchPortletPreferenceValueException if a matching portlet preference value could not be found
 	 */
-	public static PortletPreferenceValue findByP_N_I(
-			long portletPreferencesId, String name, int index)
+	public static PortletPreferenceValue findByP_I_N(
+			long portletPreferencesId, int index, String name)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchPortletPreferenceValueException {
 
-		return getPersistence().findByP_N_I(portletPreferencesId, name, index);
+		return getPersistence().findByP_I_N(portletPreferencesId, index, name);
 	}
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
 	 * @param index the index
+	 * @param name the name
 	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
-	public static PortletPreferenceValue fetchByP_N_I(
-		long portletPreferencesId, String name, int index) {
+	public static PortletPreferenceValue fetchByP_I_N(
+		long portletPreferencesId, int index, String name) {
 
-		return getPersistence().fetchByP_N_I(portletPreferencesId, name, index);
+		return getPersistence().fetchByP_I_N(portletPreferencesId, index, name);
 	}
 
 	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
 	 * @param index the index
+	 * @param name the name
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
 	 */
-	public static PortletPreferenceValue fetchByP_N_I(
-		long portletPreferencesId, String name, int index,
+	public static PortletPreferenceValue fetchByP_I_N(
+		long portletPreferencesId, int index, String name,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByP_N_I(
-			portletPreferencesId, name, index, useFinderCache);
+		return getPersistence().fetchByP_I_N(
+			portletPreferencesId, index, name, useFinderCache);
 	}
 
 	/**
-	 * Removes the portlet preference value where portletPreferencesId = &#63; and name = &#63; and index = &#63; from the database.
+	 * Removes the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; from the database.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
 	 * @param index the index
+	 * @param name the name
 	 * @return the portlet preference value that was removed
 	 */
-	public static PortletPreferenceValue removeByP_N_I(
-			long portletPreferencesId, String name, int index)
+	public static PortletPreferenceValue removeByP_I_N(
+			long portletPreferencesId, int index, String name)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchPortletPreferenceValueException {
 
-		return getPersistence().removeByP_N_I(
-			portletPreferencesId, name, index);
+		return getPersistence().removeByP_I_N(
+			portletPreferencesId, index, name);
 	}
 
 	/**
-	 * Returns the number of portlet preference values where portletPreferencesId = &#63; and name = &#63; and index = &#63;.
+	 * Returns the number of portlet preference values where portletPreferencesId = &#63; and index = &#63; and name = &#63;.
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
 	 * @param index the index
+	 * @param name the name
 	 * @return the number of matching portlet preference values
 	 */
-	public static int countByP_N_I(
-		long portletPreferencesId, String name, int index) {
+	public static int countByP_I_N(
+		long portletPreferencesId, int index, String name) {
 
-		return getPersistence().countByP_N_I(portletPreferencesId, name, index);
+		return getPersistence().countByP_I_N(portletPreferencesId, index, name);
 	}
 
 	/**

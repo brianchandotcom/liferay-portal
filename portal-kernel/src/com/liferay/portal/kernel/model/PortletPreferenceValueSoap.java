@@ -40,11 +40,11 @@ public class PortletPreferenceValueSoap implements Serializable {
 			model.getPortletPreferenceValueId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setPortletPreferencesId(model.getPortletPreferencesId());
-		soapModel.setName(model.getName());
 		soapModel.setIndex(model.getIndex());
-		soapModel.setSmallValue(model.getSmallValue());
 		soapModel.setLargeValue(model.getLargeValue());
+		soapModel.setName(model.getName());
 		soapModel.setReadOnly(model.isReadOnly());
+		soapModel.setSmallValue(model.getSmallValue());
 
 		return soapModel;
 	}
@@ -147,14 +147,6 @@ public class PortletPreferenceValueSoap implements Serializable {
 		_portletPreferencesId = portletPreferencesId;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	public int getIndex() {
 		return _index;
 	}
@@ -163,20 +155,20 @@ public class PortletPreferenceValueSoap implements Serializable {
 		_index = index;
 	}
 
-	public String getSmallValue() {
-		return _smallValue;
-	}
-
-	public void setSmallValue(String smallValue) {
-		_smallValue = smallValue;
-	}
-
 	public String getLargeValue() {
 		return _largeValue;
 	}
 
 	public void setLargeValue(String largeValue) {
 		_largeValue = largeValue;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public boolean getReadOnly() {
@@ -191,15 +183,23 @@ public class PortletPreferenceValueSoap implements Serializable {
 		_readOnly = readOnly;
 	}
 
+	public String getSmallValue() {
+		return _smallValue;
+	}
+
+	public void setSmallValue(String smallValue) {
+		_smallValue = smallValue;
+	}
+
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private long _portletPreferenceValueId;
 	private long _companyId;
 	private long _portletPreferencesId;
-	private String _name;
 	private int _index;
-	private String _smallValue;
 	private String _largeValue;
+	private String _name;
 	private boolean _readOnly;
+	private String _smallValue;
 
 }

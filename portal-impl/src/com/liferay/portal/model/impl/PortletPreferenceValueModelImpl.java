@@ -66,9 +66,9 @@ public class PortletPreferenceValueModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"portletPreferenceValueId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"portletPreferencesId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"index_", Types.INTEGER}, {"smallValue", Types.VARCHAR},
-		{"largeValue", Types.CLOB}, {"readOnly", Types.BOOLEAN}
+		{"portletPreferencesId", Types.BIGINT}, {"index_", Types.INTEGER},
+		{"largeValue", Types.CLOB}, {"name", Types.VARCHAR},
+		{"readOnly", Types.BOOLEAN}, {"smallValue", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -80,15 +80,15 @@ public class PortletPreferenceValueModelImpl
 		TABLE_COLUMNS_MAP.put("portletPreferenceValueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletPreferencesId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("index_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("smallValue", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("largeValue", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("smallValue", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortletPreferenceValue (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferenceValueId LONG not null,companyId LONG,portletPreferencesId LONG,name VARCHAR(255) null,index_ INTEGER,smallValue VARCHAR(255) null,largeValue TEXT null,readOnly BOOLEAN,primary key (portletPreferenceValueId, ctCollectionId))";
+		"create table PortletPreferenceValue (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferenceValueId LONG not null,companyId LONG,portletPreferencesId LONG,index_ INTEGER,largeValue TEXT null,name VARCHAR(255) null,readOnly BOOLEAN,smallValue VARCHAR(255) null,primary key (portletPreferenceValueId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table PortletPreferenceValue";
@@ -312,34 +312,34 @@ public class PortletPreferenceValueModelImpl
 			"portletPreferencesId",
 			(BiConsumer<PortletPreferenceValue, Long>)
 				PortletPreferenceValue::setPortletPreferencesId);
-		attributeGetterFunctions.put("name", PortletPreferenceValue::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<PortletPreferenceValue, String>)
-				PortletPreferenceValue::setName);
 		attributeGetterFunctions.put("index", PortletPreferenceValue::getIndex);
 		attributeSetterBiConsumers.put(
 			"index",
 			(BiConsumer<PortletPreferenceValue, Integer>)
 				PortletPreferenceValue::setIndex);
 		attributeGetterFunctions.put(
-			"smallValue", PortletPreferenceValue::getSmallValue);
-		attributeSetterBiConsumers.put(
-			"smallValue",
-			(BiConsumer<PortletPreferenceValue, String>)
-				PortletPreferenceValue::setSmallValue);
-		attributeGetterFunctions.put(
 			"largeValue", PortletPreferenceValue::getLargeValue);
 		attributeSetterBiConsumers.put(
 			"largeValue",
 			(BiConsumer<PortletPreferenceValue, String>)
 				PortletPreferenceValue::setLargeValue);
+		attributeGetterFunctions.put("name", PortletPreferenceValue::getName);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<PortletPreferenceValue, String>)
+				PortletPreferenceValue::setName);
 		attributeGetterFunctions.put(
 			"readOnly", PortletPreferenceValue::getReadOnly);
 		attributeSetterBiConsumers.put(
 			"readOnly",
 			(BiConsumer<PortletPreferenceValue, Boolean>)
 				PortletPreferenceValue::setReadOnly);
+		attributeGetterFunctions.put(
+			"smallValue", PortletPreferenceValue::getSmallValue);
+		attributeSetterBiConsumers.put(
+			"smallValue",
+			(BiConsumer<PortletPreferenceValue, String>)
+				PortletPreferenceValue::setSmallValue);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -428,6 +428,49 @@ public class PortletPreferenceValueModelImpl
 	}
 
 	@Override
+	public int getIndex() {
+		return _index;
+	}
+
+	@Override
+	public void setIndex(int index) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_index = index;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalIndex() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("index_"));
+	}
+
+	@Override
+	public String getLargeValue() {
+		if (_largeValue == null) {
+			return "";
+		}
+		else {
+			return _largeValue;
+		}
+	}
+
+	@Override
+	public void setLargeValue(String largeValue) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_largeValue = largeValue;
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -456,27 +499,22 @@ public class PortletPreferenceValueModelImpl
 	}
 
 	@Override
-	public int getIndex() {
-		return _index;
+	public boolean getReadOnly() {
+		return _readOnly;
 	}
 
 	@Override
-	public void setIndex(int index) {
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
+	@Override
+	public void setReadOnly(boolean readOnly) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_index = index;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public int getOriginalIndex() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("index_"));
+		_readOnly = readOnly;
 	}
 
 	@Override
@@ -505,44 +543,6 @@ public class PortletPreferenceValueModelImpl
 	@Deprecated
 	public String getOriginalSmallValue() {
 		return getColumnOriginalValue("smallValue");
-	}
-
-	@Override
-	public String getLargeValue() {
-		if (_largeValue == null) {
-			return "";
-		}
-		else {
-			return _largeValue;
-		}
-	}
-
-	@Override
-	public void setLargeValue(String largeValue) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_largeValue = largeValue;
-	}
-
-	@Override
-	public boolean getReadOnly() {
-		return _readOnly;
-	}
-
-	@Override
-	public boolean isReadOnly() {
-		return _readOnly;
-	}
-
-	@Override
-	public void setReadOnly(boolean readOnly) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_readOnly = readOnly;
 	}
 
 	public long getColumnBitmask() {
@@ -608,11 +608,11 @@ public class PortletPreferenceValueModelImpl
 		portletPreferenceValueImpl.setCompanyId(getCompanyId());
 		portletPreferenceValueImpl.setPortletPreferencesId(
 			getPortletPreferencesId());
-		portletPreferenceValueImpl.setName(getName());
 		portletPreferenceValueImpl.setIndex(getIndex());
-		portletPreferenceValueImpl.setSmallValue(getSmallValue());
 		portletPreferenceValueImpl.setLargeValue(getLargeValue());
+		portletPreferenceValueImpl.setName(getName());
 		portletPreferenceValueImpl.setReadOnly(isReadOnly());
+		portletPreferenceValueImpl.setSmallValue(getSmallValue());
 
 		portletPreferenceValueImpl.resetOriginalValues();
 
@@ -710,23 +710,7 @@ public class PortletPreferenceValueModelImpl
 		portletPreferenceValueCacheModel.portletPreferencesId =
 			getPortletPreferencesId();
 
-		portletPreferenceValueCacheModel.name = getName();
-
-		String name = portletPreferenceValueCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			portletPreferenceValueCacheModel.name = null;
-		}
-
 		portletPreferenceValueCacheModel.index = getIndex();
-
-		portletPreferenceValueCacheModel.smallValue = getSmallValue();
-
-		String smallValue = portletPreferenceValueCacheModel.smallValue;
-
-		if ((smallValue != null) && (smallValue.length() == 0)) {
-			portletPreferenceValueCacheModel.smallValue = null;
-		}
 
 		portletPreferenceValueCacheModel.largeValue = getLargeValue();
 
@@ -736,7 +720,23 @@ public class PortletPreferenceValueModelImpl
 			portletPreferenceValueCacheModel.largeValue = null;
 		}
 
+		portletPreferenceValueCacheModel.name = getName();
+
+		String name = portletPreferenceValueCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			portletPreferenceValueCacheModel.name = null;
+		}
+
 		portletPreferenceValueCacheModel.readOnly = isReadOnly();
+
+		portletPreferenceValueCacheModel.smallValue = getSmallValue();
+
+		String smallValue = portletPreferenceValueCacheModel.smallValue;
+
+		if ((smallValue != null) && (smallValue.length() == 0)) {
+			portletPreferenceValueCacheModel.smallValue = null;
+		}
 
 		return portletPreferenceValueCacheModel;
 	}
@@ -818,11 +818,11 @@ public class PortletPreferenceValueModelImpl
 	private long _portletPreferenceValueId;
 	private long _companyId;
 	private long _portletPreferencesId;
-	private String _name;
 	private int _index;
-	private String _smallValue;
 	private String _largeValue;
+	private String _name;
 	private boolean _readOnly;
+	private String _smallValue;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -860,11 +860,11 @@ public class PortletPreferenceValueModelImpl
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put(
 			"portletPreferencesId", _portletPreferencesId);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("index_", _index);
-		_columnOriginalValues.put("smallValue", _smallValue);
 		_columnOriginalValues.put("largeValue", _largeValue);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("readOnly", _readOnly);
+		_columnOriginalValues.put("smallValue", _smallValue);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -898,15 +898,15 @@ public class PortletPreferenceValueModelImpl
 
 		columnBitmasks.put("portletPreferencesId", 16L);
 
-		columnBitmasks.put("name", 32L);
+		columnBitmasks.put("index_", 32L);
 
-		columnBitmasks.put("index_", 64L);
+		columnBitmasks.put("largeValue", 64L);
 
-		columnBitmasks.put("smallValue", 128L);
+		columnBitmasks.put("name", 128L);
 
-		columnBitmasks.put("largeValue", 256L);
+		columnBitmasks.put("readOnly", 256L);
 
-		columnBitmasks.put("readOnly", 512L);
+		columnBitmasks.put("smallValue", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

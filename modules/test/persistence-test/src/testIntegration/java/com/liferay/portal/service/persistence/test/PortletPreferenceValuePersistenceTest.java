@@ -135,15 +135,15 @@ public class PortletPreferenceValuePersistenceTest {
 		newPortletPreferenceValue.setPortletPreferencesId(
 			RandomTestUtil.nextLong());
 
-		newPortletPreferenceValue.setName(RandomTestUtil.randomString());
-
 		newPortletPreferenceValue.setIndex(RandomTestUtil.nextInt());
-
-		newPortletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
 		newPortletPreferenceValue.setLargeValue(RandomTestUtil.randomString());
 
+		newPortletPreferenceValue.setName(RandomTestUtil.randomString());
+
 		newPortletPreferenceValue.setReadOnly(RandomTestUtil.randomBoolean());
+
+		newPortletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
 		_portletPreferenceValues.add(
 			_persistence.update(newPortletPreferenceValue));
@@ -168,20 +168,20 @@ public class PortletPreferenceValuePersistenceTest {
 			existingPortletPreferenceValue.getPortletPreferencesId(),
 			newPortletPreferenceValue.getPortletPreferencesId());
 		Assert.assertEquals(
-			existingPortletPreferenceValue.getName(),
-			newPortletPreferenceValue.getName());
-		Assert.assertEquals(
 			existingPortletPreferenceValue.getIndex(),
 			newPortletPreferenceValue.getIndex());
-		Assert.assertEquals(
-			existingPortletPreferenceValue.getSmallValue(),
-			newPortletPreferenceValue.getSmallValue());
 		Assert.assertEquals(
 			existingPortletPreferenceValue.getLargeValue(),
 			newPortletPreferenceValue.getLargeValue());
 		Assert.assertEquals(
+			existingPortletPreferenceValue.getName(),
+			newPortletPreferenceValue.getName());
+		Assert.assertEquals(
 			existingPortletPreferenceValue.isReadOnly(),
 			newPortletPreferenceValue.isReadOnly());
+		Assert.assertEquals(
+			existingPortletPreferenceValue.getSmallValue(),
+			newPortletPreferenceValue.getSmallValue());
 	}
 
 	@Test
@@ -201,13 +201,13 @@ public class PortletPreferenceValuePersistenceTest {
 	}
 
 	@Test
-	public void testCountByP_N_I() throws Exception {
-		_persistence.countByP_N_I(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+	public void testCountByP_I_N() throws Exception {
+		_persistence.countByP_I_N(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(), "");
 
-		_persistence.countByP_N_I(0L, "null", 0);
+		_persistence.countByP_I_N(0L, 0, "null");
 
-		_persistence.countByP_N_I(0L, (String)null, 0);
+		_persistence.countByP_I_N(0L, 0, (String)null);
 	}
 
 	@Test
@@ -249,8 +249,8 @@ public class PortletPreferenceValuePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"PortletPreferenceValue", "mvccVersion", true, "ctCollectionId",
 			true, "portletPreferenceValueId", true, "companyId", true,
-			"portletPreferencesId", true, "name", true, "index", true,
-			"smallValue", true, "readOnly", true);
+			"portletPreferencesId", true, "index", true, "name", true,
+			"readOnly", true, "smallValue", true);
 	}
 
 	@Test
@@ -552,15 +552,15 @@ public class PortletPreferenceValuePersistenceTest {
 				portletPreferenceValue, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "portletPreferencesId"));
 		Assert.assertEquals(
-			portletPreferenceValue.getName(),
-			ReflectionTestUtil.invoke(
-				portletPreferenceValue, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "name"));
-		Assert.assertEquals(
 			Integer.valueOf(portletPreferenceValue.getIndex()),
 			ReflectionTestUtil.<Integer>invoke(
 				portletPreferenceValue, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "index_"));
+		Assert.assertEquals(
+			portletPreferenceValue.getName(),
+			ReflectionTestUtil.invoke(
+				portletPreferenceValue, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected PortletPreferenceValue addPortletPreferenceValue()
@@ -579,15 +579,15 @@ public class PortletPreferenceValuePersistenceTest {
 		portletPreferenceValue.setPortletPreferencesId(
 			RandomTestUtil.nextLong());
 
-		portletPreferenceValue.setName(RandomTestUtil.randomString());
-
 		portletPreferenceValue.setIndex(RandomTestUtil.nextInt());
-
-		portletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
 		portletPreferenceValue.setLargeValue(RandomTestUtil.randomString());
 
+		portletPreferenceValue.setName(RandomTestUtil.randomString());
+
 		portletPreferenceValue.setReadOnly(RandomTestUtil.randomBoolean());
+
+		portletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
 		_portletPreferenceValues.add(
 			_persistence.update(portletPreferenceValue));

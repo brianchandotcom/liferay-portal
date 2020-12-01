@@ -88,16 +88,16 @@ public class PortletPreferenceValueCacheModel
 		sb.append(companyId);
 		sb.append(", portletPreferencesId=");
 		sb.append(portletPreferencesId);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", index=");
 		sb.append(index);
-		sb.append(", smallValue=");
-		sb.append(smallValue);
 		sb.append(", largeValue=");
 		sb.append(largeValue);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
+		sb.append(", smallValue=");
+		sb.append(smallValue);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,22 +115,7 @@ public class PortletPreferenceValueCacheModel
 		portletPreferenceValueImpl.setCompanyId(companyId);
 		portletPreferenceValueImpl.setPortletPreferencesId(
 			portletPreferencesId);
-
-		if (name == null) {
-			portletPreferenceValueImpl.setName("");
-		}
-		else {
-			portletPreferenceValueImpl.setName(name);
-		}
-
 		portletPreferenceValueImpl.setIndex(index);
-
-		if (smallValue == null) {
-			portletPreferenceValueImpl.setSmallValue("");
-		}
-		else {
-			portletPreferenceValueImpl.setSmallValue(smallValue);
-		}
 
 		if (largeValue == null) {
 			portletPreferenceValueImpl.setLargeValue("");
@@ -139,7 +124,21 @@ public class PortletPreferenceValueCacheModel
 			portletPreferenceValueImpl.setLargeValue(largeValue);
 		}
 
+		if (name == null) {
+			portletPreferenceValueImpl.setName("");
+		}
+		else {
+			portletPreferenceValueImpl.setName(name);
+		}
+
 		portletPreferenceValueImpl.setReadOnly(readOnly);
+
+		if (smallValue == null) {
+			portletPreferenceValueImpl.setSmallValue("");
+		}
+		else {
+			portletPreferenceValueImpl.setSmallValue(smallValue);
+		}
 
 		portletPreferenceValueImpl.resetOriginalValues();
 
@@ -159,13 +158,13 @@ public class PortletPreferenceValueCacheModel
 		companyId = objectInput.readLong();
 
 		portletPreferencesId = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		index = objectInput.readInt();
-		smallValue = objectInput.readUTF();
 		largeValue = (String)objectInput.readObject();
+		name = objectInput.readUTF();
 
 		readOnly = objectInput.readBoolean();
+		smallValue = objectInput.readUTF();
 	}
 
 	@Override
@@ -180,21 +179,7 @@ public class PortletPreferenceValueCacheModel
 
 		objectOutput.writeLong(portletPreferencesId);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		objectOutput.writeInt(index);
-
-		if (smallValue == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(smallValue);
-		}
 
 		if (largeValue == null) {
 			objectOutput.writeObject("");
@@ -203,7 +188,21 @@ public class PortletPreferenceValueCacheModel
 			objectOutput.writeObject(largeValue);
 		}
 
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		objectOutput.writeBoolean(readOnly);
+
+		if (smallValue == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(smallValue);
+		}
 	}
 
 	public long mvccVersion;
@@ -211,10 +210,10 @@ public class PortletPreferenceValueCacheModel
 	public long portletPreferenceValueId;
 	public long companyId;
 	public long portletPreferencesId;
-	public String name;
 	public int index;
-	public String smallValue;
 	public String largeValue;
+	public String name;
 	public boolean readOnly;
+	public String smallValue;
 
 }

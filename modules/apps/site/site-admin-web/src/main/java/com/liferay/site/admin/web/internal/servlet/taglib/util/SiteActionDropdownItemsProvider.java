@@ -166,7 +166,8 @@ public class SiteActionDropdownItemsProvider {
 
 		PortletURL deleteSiteURL = _liferayPortletResponse.createActionURL();
 
-		deleteSiteURL.setParameter(ActionRequest.ACTION_NAME, "deleteGroups");
+		deleteSiteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/site_admin/delete_groups");
 
 		deleteSiteURL.setParameter("redirect", _getRedirect());
 		deleteSiteURL.setParameter(

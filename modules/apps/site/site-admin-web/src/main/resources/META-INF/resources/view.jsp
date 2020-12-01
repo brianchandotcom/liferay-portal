@@ -51,7 +51,7 @@ if (group != null) {
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
-		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
+		<portlet:actionURL name="/site_admin/delete_groups" var="deleteGroupsURL" />
 
 		<aui:form action="<%= deleteGroupsURL %>" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

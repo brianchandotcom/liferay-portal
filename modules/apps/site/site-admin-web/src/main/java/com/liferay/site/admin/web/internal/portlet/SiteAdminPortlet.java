@@ -239,31 +239,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
 	}
 
-	public void deleteGroups(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] deleteGroupIds = null;
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		if (groupId > 0) {
-			deleteGroupIds = new long[] {groupId};
-		}
-		else {
-			deleteGroupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
-		}
-
-		for (long deleteGroupId : deleteGroupIds) {
-			groupService.deleteGroup(deleteGroupId);
-
-			LiveUsers.deleteGroup(themeDisplay.getCompanyId(), deleteGroupId);
-		}
-	}
-
 	public void editGroup(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Throwable {

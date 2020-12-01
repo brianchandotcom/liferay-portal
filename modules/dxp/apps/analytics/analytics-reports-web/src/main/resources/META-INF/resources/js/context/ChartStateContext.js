@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useContext, useReducer} from 'react';
+import React, {createContext, useContext, useMemo, useReducer} from 'react';
 
 import ConnectionContext from './ConnectionContext';
 
@@ -72,6 +72,26 @@ export const useChartState = () => {
 
 	return state;
 };
+
+export function useIsPreviousPeriodButtonDisabled() {
+	const [state] = useContext(ChartStateContext);
+
+	const {histogram} = state.dataSet;
+	const {publishDate} = state;
+
+	return useMemo(() => {
+		if (histogram.length) {
+			const firstDateLabel = histogram[0].label;
+
+			const firstDate = new Date(firstDateLabel);
+			const publishedDate = new Date(publishDate);
+
+			return firstDate < publishedDate;
+		}
+
+		return true;
+	}, [histogram, publishDate]);
+}
 
 export const useNextTimeSpan = () => {
 	const [, dispatch] = useContext(ChartStateContext);

@@ -29,6 +29,7 @@ import {
 	useAddDataSetItems,
 	useChangeTimeSpanKey,
 	useChartState,
+	useIsPreviousPeriodButtonDisabled,
 	useNextTimeSpan,
 	usePreviousTimeSpan,
 	useSetLoading,
@@ -158,6 +159,8 @@ export default function Chart({
 
 	const nextTimeSpan = useNextTimeSpan();
 
+	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
+
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
@@ -229,19 +232,6 @@ export default function Chart({
 	const {dataSet} = chartState;
 	const {histogram, keyList} = dataSet;
 
-	const disabledPreviousPeriodButton = useMemo(() => {
-		if (histogram.length) {
-			const firstDateLabel = histogram[0].label;
-
-			const firstDate = new Date(firstDateLabel);
-			const publishedDate = new Date(publishDate);
-
-			return firstDate < publishedDate;
-		}
-
-		return true;
-	}, [histogram, publishDate]);
-
 	const referenceDotPosition = useMemo(() => {
 		const publishDateISOString = new Date(publishDate).toISOString();
 
@@ -307,7 +297,7 @@ export default function Chart({
 					<TimeSpanSelector
 						disabledNextTimeSpan={disabledNextTimeSpan}
 						disabledPreviousPeriodButton={
-							disabledPreviousPeriodButton
+							isPreviousPeriodButtonDisabled
 						}
 						onNextTimeSpanClick={handleNextTimeSpanClick}
 						onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
@@ -423,7 +413,7 @@ export default function Chart({
 												CHART_COLORS.publishDate
 											}
 											showPublishedDateLabel={
-												disabledPreviousPeriodButton
+												isPreviousPeriodButtonDisabled
 											}
 										/>
 									}

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.PendingBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,11 +44,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.MembershipRequest;
@@ -371,29 +367,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		return null;
 	}
 
-	protected long getRefererGroupId(ThemeDisplay themeDisplay)
-		throws Exception {
-
-		long refererGroupId = 0;
-
-		try {
-			Layout refererLayout = layoutLocalService.getLayout(
-				themeDisplay.getRefererPlid());
-
-			refererGroupId = refererLayout.getGroupId();
-		}
-		catch (NoSuchLayoutException noSuchLayoutException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLayoutException, noSuchLayoutException);
-			}
-		}
-
-		return refererGroupId;
-	}
-
 	protected PortletURL getSiteAdministrationURL(
 		ActionRequest actionRequest, Group group) {
 
@@ -525,7 +498,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		if ((groupId == themeDisplay.getDoAsGroupId()) ||
 			(groupId == themeDisplay.getScopeGroupId()) ||
-			(groupId == getRefererGroupId(themeDisplay))) {
+			(groupId == ActionUtil.getRefererGroupId(themeDisplay))) {
 
 			throw new RequiredGroupException.MustNotDeleteCurrentGroup(groupId);
 		}
@@ -1046,9 +1019,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected UserService userService;
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteAdminPortlet.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

@@ -16,9 +16,15 @@ package com.liferay.site.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.AvailableLocaleException;
 import com.liferay.portal.kernel.exception.GroupNameException;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -63,6 +69,29 @@ public class ActionUtil {
 
 		return HttpUtil.getParameter(
 			redirect, actionResponse.getNamespace() + "historyKey", false);
+	}
+
+	public static long getRefererGroupId(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long refererGroupId = 0;
+
+		try {
+			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
+				themeDisplay.getRefererPlid());
+
+			refererGroupId = refererLayout.getGroupId();
+		}
+		catch (NoSuchLayoutException noSuchLayoutException) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchLayoutException, noSuchLayoutException);
+			}
+		}
+
+		return refererGroupId;
 	}
 
 	public static List<Long> getRoleIds(PortletRequest portletRequest) {
@@ -142,5 +171,7 @@ public class ActionUtil {
 			throw new GroupNameException();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);
 
 }

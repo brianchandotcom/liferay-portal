@@ -2219,6 +2219,24 @@ public class ServiceBuilder {
 		}
 	}
 
+	private boolean _containSpecialCharacter(String name) {
+		for (char c : name.toCharArray()) {
+			if (((c >= CharPool.LOWER_CASE_A) &&
+				 (c <= CharPool.LOWER_CASE_Z)) ||
+				((c >= CharPool.UPPER_CASE_A) &&
+				 (c <= CharPool.UPPER_CASE_Z)) ||
+				((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) ||
+				(c == CharPool.UNDERLINE)) {
+
+				continue;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _createBaseUADAnonymizer(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -6527,10 +6545,20 @@ public class ServiceBuilder {
 				for (EntityColumn column : entityColumns) {
 					String name = column.getName();
 
-					finderWhere = StringUtil.replace(
-						finderWhere, name, alias + "." + name);
-					finderDBWhere = StringUtil.replace(
-						finderDBWhere, name, alias + "." + column.getDBName());
+					if (_containSpecialCharacter(name)) {
+						finderWhere = StringUtil.replace(
+							finderWhere, name, alias + "." + name);
+						finderDBWhere = StringUtil.replace(
+							finderDBWhere, name,
+							alias + "." + column.getDBName());
+					}
+					else {
+						finderWhere = finderWhere.replaceAll(
+							"\\b" + name + "\\b", alias + "." + name);
+						finderDBWhere = finderDBWhere.replaceAll(
+							"\\b" + name + "\\b",
+							alias + "." + column.getDBName());
+					}
 				}
 			}
 

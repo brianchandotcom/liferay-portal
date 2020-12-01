@@ -782,10 +782,9 @@ definition {
 			configurationName = "Google Drive",
 			configurationScope = "Virtual Instance Scope");
 
-		var googlePropertiesSet = MathUtil.randomNumber("3");
-		var googleClientID = PropsUtil.get("google.client.id.${googlePropertiesSet}");
-		var googleClientSecret = PropsUtil.get("google.client.secret.${googlePropertiesSet}");
-		var googlePickerAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
+		var googleClientID = PropsUtil.get("google.client.id.4");
+		var googleClientSecret = PropsUtil.get("google.client.secret.4");
+		var googlePickerAPIKey = PropsUtil.get("google.api.key.4");
 
 		PortalSettings.configureGoogleDrive(
 			googleClientID = "${googleClientID}",
@@ -799,8 +798,8 @@ definition {
 		MenuItem.click(menuItem = "Google Drive Shortcut");
 
 		GoogleDrive.gotoDrive(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
 		GoogleDrive.selectDocument(googleDocName = "liferay.txt");
@@ -1125,10 +1124,9 @@ definition {
 			configurationName = "Google Drive",
 			configurationScope = "Virtual Instance Scope");
 
-		var googlePropertiesSet = MathUtil.randomNumber("3");
-		var googleClientID = PropsUtil.get("google.client.id.${googlePropertiesSet}");
-		var googleClientSecret = PropsUtil.get("google.client.secret.${googlePropertiesSet}");
-		var googlePickerAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
+		var googleClientID = PropsUtil.get("google.client.id.4");
+		var googleClientSecret = PropsUtil.get("google.client.secret.4");
+		var googlePickerAPIKey = PropsUtil.get("google.api.key.4");
 
 		PortalSettings.configureGoogleDrive(
 			googleClientID = "${googleClientID}",
@@ -1142,8 +1140,8 @@ definition {
 		MenuItem.click(menuItem = "Google Drive Shortcut");
 
 		GoogleDrive.gotoDrive(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
 		GoogleDrive.selectDocument(googleDocName = "liferay.txt");

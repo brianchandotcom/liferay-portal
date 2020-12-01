@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -328,10 +329,11 @@ public class LinkTag extends BaseContainerTag {
 			}
 
 			if (Validator.isNotNull(_label)) {
-				jspWriter.write(
-					LanguageUtil.get(
-						TagResourceBundleUtil.getResourceBundle(pageContext),
-						_label));
+				String label = LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_label);
+
+				jspWriter.write(HtmlUtil.escape(label));
 			}
 
 			return SKIP_BODY;

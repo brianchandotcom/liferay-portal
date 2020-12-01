@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
@@ -519,7 +520,7 @@ public class VerticalCardTag extends BaseCardTag {
 		jspWriter.write("<p class=\"card-title\" title=\"");
 
 		if (Validator.isNotNull(title)) {
-			jspWriter.write(title);
+			jspWriter.write(HtmlUtil.escapeAttribute(title));
 		}
 
 		jspWriter.write("\"><span class=\"text-truncate-inline\">");
@@ -539,7 +540,7 @@ public class VerticalCardTag extends BaseCardTag {
 			jspWriter.write("<span class=\"text-truncate\">");
 
 			if (Validator.isNotNull(title)) {
-				jspWriter.write(title);
+				jspWriter.write(HtmlUtil.escape(title));
 			}
 
 			jspWriter.write("</span>");

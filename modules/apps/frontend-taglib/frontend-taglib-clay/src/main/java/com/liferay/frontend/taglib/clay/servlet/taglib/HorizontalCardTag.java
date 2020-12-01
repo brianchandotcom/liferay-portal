@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -188,7 +189,7 @@ public class HorizontalCardTag extends BaseCardTag {
 
 		if (title != null) {
 			jspWriter.write(" title=\"");
-			jspWriter.write(title);
+			jspWriter.write(HtmlUtil.escapeAttribute(title));
 			jspWriter.write("\"");
 		}
 
@@ -213,7 +214,7 @@ public class HorizontalCardTag extends BaseCardTag {
 			jspWriter.write("<span class=\"text-truncate\">");
 
 			if (title != null) {
-				jspWriter.write(title);
+				jspWriter.write(HtmlUtil.escape(title));
 			}
 
 			jspWriter.write("</span>");

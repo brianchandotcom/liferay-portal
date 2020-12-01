@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationCard;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
@@ -289,10 +290,10 @@ public class NavigationCardTag extends BaseCardTag {
 		jspWriter.write("<p class=\"card-");
 		jspWriter.write(displayType);
 		jspWriter.write("\" title=\"");
-		jspWriter.write(description);
+		jspWriter.write(HtmlUtil.escapeAttribute(description));
 		jspWriter.write("\"><span class=\"text-truncate-inline\">");
 		jspWriter.write("<span class=\"text-truncate\">");
-		jspWriter.write(description);
+		jspWriter.write(HtmlUtil.escape(description));
 		jspWriter.write("</span></span></p>");
 	}
 

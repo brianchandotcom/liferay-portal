@@ -30,9 +30,14 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -97,21 +102,38 @@ public class ProjectTemplatesAPIJarTest
 			}
 		}
 
-		Set<String> tldClassPaths = _getTLDClassPaths(classesPath);
+		Map<String, List<String>> tldClassPaths = _getTLDClassPaths(
+			classesPath);
 
 		Assert.assertFalse(tldClassPaths.isEmpty());
 
-		List<String> missingTLDClassPaths = new ArrayList<>();
+		Set<Map.Entry<String, List<String>>> entries = tldClassPaths.entrySet();
 
-		for (String tldClassPath : tldClassPaths) {
-			if (!classPaths.contains(tldClassPath)) {
-				missingTLDClassPaths.add(tldClassPath);
-			}
-		}
+		StringBuilder sb = new StringBuilder("");
+
+		entries.forEach(
+			entry -> {
+				List<String> tldClasses = entry.getValue();
+
+				Stream<String> stream = tldClasses.stream();
+
+				List<String> missingTLDClasses = stream.filter(
+					tldClass -> !classPaths.contains(tldClass)
+				).collect(
+					Collectors.toList()
+				);
+
+				if (!missingTLDClasses.isEmpty()) {
+					sb.append(entry.getKey() + "\n");
+
+					missingTLDClasses.forEach(
+						tldClass -> sb.append("\t" + tldClass + "\n"));
+				}
+			});
 
 		Assert.assertTrue(
-			"Missing TLD Classes: " + missingTLDClassPaths.toString(),
-			missingTLDClassPaths.isEmpty());
+			"Missing TLD Classes: " + sb.toString(),
+			Objects.equals("", sb.toString()));
 	}
 
 	@Rule
@@ -151,8 +173,10 @@ public class ProjectTemplatesAPIJarTest
 		return results;
 	}
 
-	private Set<String> _getTLDClassPaths(Path sourcePath) throws Exception {
-		Set<String> results = new HashSet<>();
+	private Map<String, List<String>> _getTLDClassPaths(Path sourcePath)
+		throws Exception {
+
+		Map<String, List<String>> results = new HashMap<>();
 
 		Files.walkFileTree(
 			sourcePath,
@@ -166,6 +190,9 @@ public class ProjectTemplatesAPIJarTest
 					String fileName = String.valueOf(path.getFileName());
 
 					if (fileName.endsWith(".tld")) {
+						results.computeIfAbsent(
+							fileName, f -> new ArrayList<String>());
+
 						try (FileInputStream fileInputStream =
 								new FileInputStream(path.toFile())) {
 
@@ -190,6 +217,8 @@ public class ProjectTemplatesAPIJarTest
 								(NodeList)xPathExpression.evaluate(
 									xmlDocument, XPathConstants.NODESET);
 
+							List<String> paths = results.get(fileName);
+
 							for (int i = nodeList.getLength() - 1; i >= 0;
 								 i--) {
 
@@ -198,7 +227,7 @@ public class ProjectTemplatesAPIJarTest
 								String textContent = childNode.getTextContent();
 
 								if (textContent.startsWith("com.liferay.")) {
-									results.add(textContent.replace('.', '/'));
+									paths.add(textContent.replace('.', '/'));
 								}
 							}
 						}

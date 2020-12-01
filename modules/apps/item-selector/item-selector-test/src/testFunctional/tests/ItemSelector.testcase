@@ -827,8 +827,8 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		AssertClick(
-			key_fieldName = "WebContent",
-			locator1 = "Button#SELECT_CONTENT",
+			key_fieldFieldLabel = "Web Content",
+			locator1 = "WCEditWebContent#SELECT_BUTTON",
 			value1 = "Select");
 
 		ItemSelector.viewWCEverywhereFilterResults(
@@ -848,8 +848,8 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		AssertClick(
-			key_fieldName = "WebContent",
-			locator1 = "Button#SELECT_CONTENT",
+			key_fieldFieldLabel = "Web Content",
+			locator1 = "WCEditWebContent#SELECT_BUTTON",
 			value1 = "Select");
 
 		ItemSelector.viewWCEverywhereFilterResults(webContentTitle = "WC WebContent Title");

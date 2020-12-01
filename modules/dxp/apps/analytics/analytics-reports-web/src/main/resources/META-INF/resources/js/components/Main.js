@@ -27,7 +27,6 @@ export default function Main({
 	onTrafficSourceClick,
 	pagePublishDate,
 	pageTitle,
-	timeRange,
 	timeSpanOptions,
 	totalReadsDataProvider,
 	totalViewsDataProvider,
@@ -81,7 +80,6 @@ export default function Main({
 				dataProviders={chartDataProviders}
 				languageTag={languageTag}
 				publishDate={pagePublishDate}
-				timeRange={timeRange}
 				timeSpanOptions={timeSpanOptions}
 			/>
 
@@ -103,7 +101,6 @@ Main.proptypes = {
 	onTrafficSourceClick: PropTypes.func.isRequired,
 	pagePublishDate: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string.isRequired,
-	timeRange: PropTypes.object.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

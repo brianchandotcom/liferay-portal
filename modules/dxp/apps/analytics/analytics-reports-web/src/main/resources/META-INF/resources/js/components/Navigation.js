@@ -29,7 +29,6 @@ export default function Navigation({
 	page,
 	pagePublishDate,
 	pageTitle,
-	timeRange,
 	timeSpanOptions,
 	viewURLs,
 }) {
@@ -147,7 +146,6 @@ export default function Navigation({
 						onTrafficSourceClick={handleTrafficSourceClick}
 						pagePublishDate={pagePublishDate}
 						pageTitle={pageTitle}
-						timeRange={timeRange}
 						timeSpanOptions={timeSpanOptions}
 						totalReadsDataProvider={handleTotalReads}
 						totalViewsDataProvider={handleTotalViews}
@@ -186,7 +184,6 @@ Navigation.proptypes = {
 	).isRequired,
 	pagePublishDate: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string.isRequired,
-	timeRange: PropTypes.object.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,

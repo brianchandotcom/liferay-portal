@@ -151,7 +151,6 @@ export default function ({context}) {
 								page={state.data.page}
 								pagePublishDate={state.data.publishDate}
 								pageTitle={state.data.title}
-								timeRange={state.data.timeRange}
 								timeSpanOptions={state.data.timeSpans}
 								viewURLs={state.data.viewURLs}
 							/>

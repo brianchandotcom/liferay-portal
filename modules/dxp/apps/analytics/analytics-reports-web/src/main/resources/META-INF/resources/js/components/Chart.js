@@ -139,7 +139,6 @@ export default function Chart({
 	dataProviders = [],
 	languageTag,
 	publishDate,
-	timeRange,
 	timeSpanOptions,
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
@@ -344,10 +343,10 @@ export default function Chart({
 									histogram.length === 0
 										? [
 												new Date(
-													timeRange.startDate
+													chartState.timeRange.startDate
 												).getDate(),
 												new Date(
-													timeRange.endDate
+													chartState.timeRange.endDate
 												).getDate(),
 										  ]
 										: []
@@ -482,7 +481,6 @@ Chart.propTypes = {
 	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
 	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,
-	timeRange: PropTypes.object.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,

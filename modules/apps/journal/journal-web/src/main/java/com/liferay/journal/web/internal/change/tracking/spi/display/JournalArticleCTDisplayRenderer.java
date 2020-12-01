@@ -21,12 +21,18 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,6 +53,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class JournalArticleCTDisplayRenderer
 	extends BaseCTDisplayRenderer<JournalArticle> {
+
+	@Override
+	public String getContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalArticle journalArticle)
+		throws Exception {
+
+		return _getContent(
+			liferayPortletRequest, liferayPortletResponse, journalArticle,
+			journalArticle.getDefaultLanguageId());
+	}
 
 	@Override
 	public String getEditURL(
@@ -86,8 +104,60 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
+	public String getPreviousContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalArticle currentJournalArticle,
+			JournalArticle previousJournalArticle)
+		throws Exception {
+
+		return _getContent(
+			liferayPortletRequest, liferayPortletResponse,
+			previousJournalArticle,
+			currentJournalArticle.getDefaultLanguageId());
+	}
+
+	@Override
+	public JournalArticle getPreviousVersion(
+		JournalArticle currentJournalArticle) {
+
+		boolean found = false;
+
+		for (JournalArticle journalArticle :
+				_journalArticleLocalService.getArticlesByResourcePrimKey(
+					currentJournalArticle.getResourcePrimKey())) {
+
+			if (found) {
+				return journalArticle;
+			}
+			else if (journalArticle.getVersion() ==
+						currentJournalArticle.getVersion()) {
+
+				found = true;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getTitle(Locale locale, JournalArticle journalArticle) {
 		return journalArticle.getTitle(locale);
+	}
+
+	@Override
+	public String getVersionName(JournalArticle journalArticle) {
+		return String.valueOf(journalArticle.getVersion());
+	}
+
+	@Override
+	public boolean hasContent() {
+		return true;
+	}
+
+	@Override
+	public boolean isVersioned() {
+		return true;
 	}
 
 	@Override
@@ -141,8 +211,37 @@ public class JournalArticleCTDisplayRenderer
 		);
 	}
 
+	private String _getContent(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalArticle journalArticle, String languageId)
+		throws Exception {
+
+		PortletRequestModel portletRequestModel = new PortletRequestModel(
+			liferayPortletRequest, liferayPortletResponse);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!_journalArticleLocalService.isRenderable(
+				journalArticle, portletRequestModel, themeDisplay)) {
+
+			throw new CompareVersionsException(journalArticle.getVersion());
+		}
+
+		JournalArticleDisplay articleDisplay =
+			_journalArticleLocalService.getArticleDisplay(
+				journalArticle, null, Constants.VIEW, languageId, 1,
+				portletRequestModel, themeDisplay);
+
+		return articleDisplay.getContent();
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalContent _journalContent;

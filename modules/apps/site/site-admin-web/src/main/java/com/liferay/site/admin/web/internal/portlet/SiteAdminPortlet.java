@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.AvailableLocaleException;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
@@ -102,6 +101,7 @@ import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
+import com.liferay.site.admin.web.internal.portlet.action.ActionUtil;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -111,13 +111,11 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -195,7 +193,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 				actionRequest, group);
 
 			siteAdministrationURL.setParameter(
-				"historyKey", getHistoryKey(actionRequest, actionResponse));
+				"historyKey",
+				ActionUtil.getHistoryKey(actionRequest, actionResponse));
 			siteAdministrationURL.setParameter(
 				"redirect", siteAdministrationURL.toString());
 
@@ -288,7 +287,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 			actionRequest, group);
 
 		siteAdministrationURL.setParameter(
-			"historyKey", getHistoryKey(actionRequest, actionResponse));
+			"historyKey",
+			ActionUtil.getHistoryKey(actionRequest, actionResponse));
 		siteAdministrationURL.setParameter(
 			"redirect", siteAdministrationURL.toString());
 
@@ -423,15 +423,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		return ArrayUtil.toArray(filteredUserIds.toArray(new Long[0]));
 	}
 
-	protected String getHistoryKey(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		return http.getParameter(
-			redirect, actionResponse.getNamespace() + "historyKey", false);
-	}
-
 	protected Group getLiveGroup(PortletRequest portletRequest)
 		throws PortalException {
 
@@ -467,26 +458,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		return refererGroupId;
 	}
 
-	protected List<Long> getRoleIds(PortletRequest portletRequest)
-		throws Exception {
-
-		List<Long> roleIds = new ArrayList<>();
-
-		long[] siteRolesRoleIds = ArrayUtil.unique(
-			ParamUtil.getLongValues(
-				portletRequest, "siteRolesSearchContainerPrimaryKeys"));
-
-		for (long siteRolesRoleId : siteRolesRoleIds) {
-			if (siteRolesRoleId == 0) {
-				continue;
-			}
-
-			roleIds.add(siteRolesRoleId);
-		}
-
-		return roleIds;
-	}
-
 	protected PortletURL getSiteAdministrationURL(
 		ActionRequest actionRequest, Group group) {
 
@@ -500,26 +471,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		return portal.getControlPanelPortletURL(
 			actionRequest, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-	}
-
-	protected List<Long> getTeamIds(PortletRequest portletRequest)
-		throws Exception {
-
-		List<Long> teamIds = new ArrayList<>();
-
-		long[] teamsTeamIds = ArrayUtil.unique(
-			ParamUtil.getLongValues(
-				portletRequest, "teamsSearchContainerPrimaryKeys"));
-
-		for (long teamsTeamId : teamsTeamIds) {
-			if (teamsTeamId == 0) {
-				continue;
-			}
-
-			teamIds.add(teamsTeamId);
-		}
-
-		return teamIds;
 	}
 
 	@Override
@@ -626,39 +577,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	protected TreeMap<String, String> toTreeMap(
-			ActionRequest actionRequest, String parameterPrefix,
-			Set<Locale> availableLocales)
-		throws AvailableLocaleException {
-
-		TreeMap<String, String> treeMap = new TreeMap<>();
-
-		String[] virtualHostnames = ParamUtil.getStringValues(
-			actionRequest, parameterPrefix + "name[]");
-		String[] virtualHostLanguageIds = ParamUtil.getStringValues(
-			actionRequest, parameterPrefix + "LanguageId[]");
-
-		for (int i = 0; i < virtualHostnames.length; i++) {
-			String virtualHostname = virtualHostnames[i];
-
-			String virtualHostLanguageId = (String)ArrayUtil.getValue(
-				virtualHostLanguageIds, i);
-
-			if (Validator.isNotNull(virtualHostLanguageId)) {
-				Locale locale = LocaleUtil.fromLanguageId(
-					virtualHostLanguageId);
-
-				if (!availableLocales.contains(locale)) {
-					throw new AvailableLocaleException(virtualHostLanguageId);
-				}
-			}
-
-			treeMap.put(virtualHostname, virtualHostLanguageId);
-		}
-
-		return treeMap;
 	}
 
 	protected void updateActive(ActionRequest actionRequest, boolean active)
@@ -795,7 +713,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 				Locale defaultLocale = LocaleUtil.fromLanguageId(
 					unicodeProperties.getProperty("languageId"));
 
-				validateDefaultLocaleGroupName(nameMap, defaultLocale);
+				ActionUtil.validateDefaultLocaleGroupName(
+					nameMap, defaultLocale);
 			}
 
 			liveGroup = groupService.updateGroup(
@@ -853,10 +772,12 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		typeSettingsUnicodeProperties.setProperty(
 			"defaultSiteRoleIds",
-			ListUtil.toString(getRoleIds(actionRequest), StringPool.BLANK));
+			ListUtil.toString(
+				ActionUtil.getRoleIds(actionRequest), StringPool.BLANK));
 		typeSettingsUnicodeProperties.setProperty(
 			"defaultTeamIds",
-			ListUtil.toString(getTeamIds(actionRequest), StringPool.BLANK));
+			ListUtil.toString(
+				ActionUtil.getTeamIds(actionRequest), StringPool.BLANK));
 
 		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
 			themeDisplay.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
@@ -1012,13 +933,15 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		layoutSetService.updateVirtualHosts(
 			liveGroup.getGroupId(), false,
-			toTreeMap(actionRequest, "publicVirtualHost", availableLocales));
+			ActionUtil.toTreeMap(
+				actionRequest, "publicVirtualHost", availableLocales));
 
 		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
 
 		layoutSetService.updateVirtualHosts(
 			liveGroup.getGroupId(), true,
-			toTreeMap(actionRequest, "privateVirtualHost", availableLocales));
+			ActionUtil.toTreeMap(
+				actionRequest, "privateVirtualHost", availableLocales));
 
 		// Staging
 
@@ -1034,13 +957,13 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 			layoutSetService.updateVirtualHosts(
 				stagingGroup.getGroupId(), false,
-				toTreeMap(
+				ActionUtil.toTreeMap(
 					actionRequest, "stagingPublicVirtualHost",
 					availableLocales));
 
 			layoutSetService.updateVirtualHosts(
 				stagingGroup.getGroupId(), true,
-				toTreeMap(
+				ActionUtil.toTreeMap(
 					actionRequest, "stagingPrivateVirtualHost",
 					availableLocales));
 
@@ -1145,15 +1068,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		themeDisplay.setSiteGroupId(liveGroup.getGroupId());
 
 		return liveGroup;
-	}
-
-	protected void validateDefaultLocaleGroupName(
-			Map<Locale, String> nameMap, Locale defaultLocale)
-		throws PortalException {
-
-		if ((nameMap == null) || Validator.isNull(nameMap.get(defaultLocale))) {
-			throw new GroupNameException();
-		}
 	}
 
 	@Reference

@@ -10189,6 +10189,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="google.api.key.4" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.api.key.4=${google.api.key.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="google.client.id.1" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -10216,6 +10225,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="google.client.id.4" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.id.4=${google.client.id.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="google.client.secret.1" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -10238,6 +10256,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					google.client.secret.3=${google.client.secret.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.secret.4" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.secret.4=${google.client.secret.4}
 				</echo>
 			</then>
 		</if>

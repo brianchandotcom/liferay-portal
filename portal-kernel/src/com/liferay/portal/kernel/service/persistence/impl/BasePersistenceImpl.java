@@ -167,7 +167,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		DefaultASTNodeListener defaultASTNodeListener =
 			new DefaultASTNodeListener();
 
-		String sql = dslQuery.toSQL(defaultASTNodeListener);
+		StringBundler sb = new StringBundler();
+
+		dslQuery.toSQL(sb::append, defaultASTNodeListener);
 
 		String[] tableNames = defaultASTNodeListener.getTableNames();
 
@@ -201,7 +203,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		FinderPath finderPath = new FinderPath(
 			FinderPath.encodeDSLQueryCacheName(tableNames), "dslQuery",
-			_getClassNames(scalarValues), new String[0],
+			sb.getStrings(), new String[0],
 			projectionType == ProjectionType.MODELS);
 
 		Object[] arguments = _getArguments(scalarValues);
@@ -218,7 +220,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			session = openSession();
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				sql, true, tableNames);
+				sb.toString(), true, tableNames);
 
 			if (!scalarValues.isEmpty()) {
 				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -964,22 +966,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		return arguments.toArray(new Object[0]);
-	}
-
-	private String[] _getClassNames(List<Object> objects) {
-		if ((objects == null) || objects.isEmpty()) {
-			return new String[0];
-		}
-
-		List<String> types = new ArrayList<>();
-
-		for (Object object : objects) {
-			Class<?> clazz = object.getClass();
-
-			types.add(clazz.getName());
-		}
-
-		return types.toArray(new String[0]);
 	}
 
 	private ProjectionType _getProjectionType(

@@ -294,6 +294,102 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
+	@description = "This ensures that the document file can be downloaded through the document file name."
+	@priority = "5"
+	test DownloadDocumentThroughFileName {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.mp4,Document_2.mp3,Document_3.doc");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_1.mp4");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_1.mp4");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_2",
+			dmDocumentTitleEdit = "Document_2Edit");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_2.mp3");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_2.mp3");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileName = "Document_3.doc",
+			dmDocumentFileNameEdit = "Document_3Edit.doc",
+			dmDocumentTitle = "Document_3");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_3Edit.doc");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3Edit.doc");
+	}
+
+	@description = "This ensures that the document file can be downloaded through the document title."
+	@priority = "5"
+	test DownloadDocumentThroughTitle {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.ppt,Document_3.txt");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_1");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_2",
+			dmDocumentTitleEdit = "Document_2Edit");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_2Edit");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_2.ppt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileName = "Document_3.txt",
+			dmDocumentFileNameEdit = "Document_3Edit.txt",
+			dmDocumentTitle = "Document_3");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_3");
+
+		DownloadTempFile();
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "Document_3Edit.txt");
+	}
+
 	@description = "This ensures that the document file name will be applied to the downloaded file name."
 	@priority = "5"
 	test DownloadDocumentWithCustomFileName {
@@ -641,6 +737,52 @@ definition {
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",
 			dmFolderName = "DM Folder Name");
+	}
+
+	@description = "This ensures that the document file can be accessed through the original URL."
+	@priority = "5"
+	test PreviewDocumentThroughURL {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf,Document_3.png");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_1");
+
+		var key_imageSourceURL = "${portalURL}/documents/${siteID}/0/Document_1";
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_2",
+			dmDocumentTitleEdit = "Document_2Edit");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_2.pdf");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		AssertHTMLSourceTextPresent(value1 = "application/pdf");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileName = "Document_3.png",
+			dmDocumentFileNameEdit = "Document_3Edit.png",
+			dmDocumentTitle = "Document_3");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteID}/0/Document_3");
+
+		var key_imageSourceURL = "${portalURL}/documents/${siteID}/0/Document_3";
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."

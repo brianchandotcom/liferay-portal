@@ -155,9 +155,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 				defaultLayoutListRetrieverContext.setPagination(
 					Pagination.of(size, 0));
-				defaultLayoutListRetrieverContext.
-					setSegmentsExperienceIdsOptional(
-						new long[] {segmentsExperienceId});
+				defaultLayoutListRetrieverContext.setSegmentsExperienceIds(
+					new long[] {segmentsExperienceId});
 
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(

@@ -163,7 +163,7 @@ public class RenderLayoutStructureDisplayContext {
 
 		defaultLayoutListRetrieverContext.setAssetCategoryIds(
 			_getAssetCategoryIds());
-		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
+		defaultLayoutListRetrieverContext.setSegmentsExperienceIds(
 			_getSegmentsExperienceIds());
 		defaultLayoutListRetrieverContext.setPagination(
 			Pagination.of(

@@ -77,6 +77,8 @@ public class DLExternalVideoResolverTest {
 		Assert.assertNotNull(
 			_dlExternalVideoResolver.resolve(
 				"https://www.youtube.com/watch?v=VIDEO_ID"));
+		Assert.assertNotNull(
+			_dlExternalVideoResolver.resolve("https://youtu.be/VIDEO_ID"));
 	}
 
 	@Inject

@@ -26,11 +26,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,9 +51,9 @@ public class YouTubeDLExternalVideoProvider
 
 	@Override
 	public DLExternalVideo getDLExternalVideo(String url) {
-		Matcher matcher = _urlPattern.matcher(url);
+		String youTubeVideoId = _getYouTubeVideoId(url);
 
-		if (!matcher.matches()) {
+		if (Validator.isNull(youTubeVideoId)) {
 			return null;
 		}
 
@@ -83,7 +87,7 @@ public class YouTubeDLExternalVideoProvider
 				@Override
 				public String getEmbeddableHTML() {
 					return StringUtil.replace(
-						getTpl(), "{embedId}", matcher.group(1));
+						getTpl(), "{embedId}", youTubeVideoId);
 				}
 
 				@Override
@@ -126,14 +130,34 @@ public class YouTubeDLExternalVideoProvider
 
 	@Override
 	public String[] getURLSchemes() {
-		return new String[] {_urlPattern.pattern()};
+		Stream<Pattern> stream = _urlPatterns.stream();
+
+		return stream.map(
+			Pattern::pattern
+		).toArray(
+			String[]::new
+		);
+	}
+
+	private String _getYouTubeVideoId(String url) {
+		for (Pattern urlPattern : _urlPatterns) {
+			Matcher matcher = urlPattern.matcher(url);
+
+			if (matcher.matches()) {
+				return matcher.group(1);
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		YouTubeDLExternalVideoProvider.class);
 
-	private static final Pattern _urlPattern = Pattern.compile(
-		"https?:\\/\\/(?:www\\.)?youtube\\.com\\/watch\\?v=(\\S*)$");
+	private static final List<Pattern> _urlPatterns = Arrays.asList(
+		Pattern.compile(
+			"https?:\\/\\/(?:www\\.)?youtube\\.com\\/watch\\?v=(\\S*)$"),
+		Pattern.compile("https?:\\/\\/(?:www\\.)?youtu\\.be\\/(\\S*)$"));
 
 	@Reference
 	private Http _http;

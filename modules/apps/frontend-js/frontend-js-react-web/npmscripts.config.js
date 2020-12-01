@@ -12,8 +12,6 @@
  * details.
  */
 
-const preset = require('@liferay/npm-scripts/src/presets/standard');
-
 module.exports = {
 	federation: true,
 	preset: '@liferay/npm-scripts/src/presets/standard',

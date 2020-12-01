@@ -63,7 +63,23 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				new ArrayList<>(spiraCustomPropertyValueSet));
 
 		if (!spiraTestCaseObjects.isEmpty()) {
-			return spiraTestCaseObjects.get(0);
+			SpiraTestCaseObject targetSpiraTestCaseObject = null;
+
+			for (SpiraTestCaseObject spiraTestCaseObject :
+					spiraTestCaseObjects) {
+
+				if (targetSpiraTestCaseObject == null) {
+					targetSpiraTestCaseObject = spiraTestCaseObject;
+				}
+
+				if (targetSpiraTestCaseObject.getID() >
+						spiraTestCaseObject.getID()) {
+
+					targetSpiraTestCaseObject = spiraTestCaseObject;
+				}
+			}
+
+			return targetSpiraTestCaseObject;
 		}
 
 		String urlPath = "projects/{project_id}/test-cases";

@@ -505,6 +505,20 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					</then>
 				</elseif>
 			</if>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+				</then>
+				<else>
+					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

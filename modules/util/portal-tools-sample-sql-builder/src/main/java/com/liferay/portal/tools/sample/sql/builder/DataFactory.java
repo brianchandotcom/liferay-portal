@@ -45,11 +45,13 @@ import com.liferay.commerce.price.list.model.CommercePriceListModel;
 import com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl;
 import com.liferay.commerce.price.list.model.impl.CommercePriceListModelImpl;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryModel;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
 import com.liferay.commerce.product.model.CPDefinitionModel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueModel;
 import com.liferay.commerce.product.model.CPInstanceModel;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionCategoryModel;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CPSpecificationOptionModel;
@@ -60,6 +62,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceCatalogModel;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
+import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueModelImpl;
@@ -572,6 +575,16 @@ public class DataFactory {
 
 	public int getMaxContentLayoutCount() {
 		return BenchmarksPropsValues.MAX_CONTENT_LAYOUT_COUNT;
+	}
+
+	public int getMaxCPDefinitionAttachmentTypeImageCount() {
+		return BenchmarksPropsValues.
+			MAX_CP_DEFINITION_ATTACHMENT_TYPE_IMAGE_COUNT;
+	}
+
+	public int getMaxCPDefinitionAttachmentTypePDFCount() {
+		return BenchmarksPropsValues.
+			MAX_CP_DEFINITION_ATTACHMENT_TYPE_PDF_COUNT;
 	}
 
 	public int getMaxCPDefinitionSpecificationOptionValueCount() {
@@ -1677,6 +1690,58 @@ public class DataFactory {
 			_newCounterModel(SocialActivity.class.getName()));
 	}
 
+	public CPAttachmentFileEntryModel newCPAttachmentFileEntryModel(
+		long groupId, long cpDefinitionId, int index, int type) {
+
+		CPAttachmentFileEntryModel cpAttachmentFileEntryModel =
+			new CPAttachmentFileEntryModelImpl();
+
+		// UUID
+
+		cpAttachmentFileEntryModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		cpAttachmentFileEntryModel.setCPAttachmentFileEntryId(_counter.get());
+
+		// Group instance
+
+		cpAttachmentFileEntryModel.setGroupId(groupId);
+
+		// Audit fields
+
+		cpAttachmentFileEntryModel.setCompanyId(_companyId);
+		cpAttachmentFileEntryModel.setUserName(_SAMPLE_USER_NAME);
+		cpAttachmentFileEntryModel.setCreateDate(new Date());
+		cpAttachmentFileEntryModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		cpAttachmentFileEntryModel.setClassNameId(
+			getClassNameId(CPDefinition.class));
+		cpAttachmentFileEntryModel.setClassPK(cpDefinitionId);
+		cpAttachmentFileEntryModel.setFileEntryId(0);
+		cpAttachmentFileEntryModel.setDisplayDate(null);
+		cpAttachmentFileEntryModel.setExpirationDate(null);
+
+		String title = StringBundler.concat(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
+			"=\"en_US\" default-locale=\"en_US\"><Title language-id=\"en_US\">",
+			"Attachment file Entry  ", index, "</Title></root>");
+
+		cpAttachmentFileEntryModel.setTitle(title);
+
+		cpAttachmentFileEntryModel.setPriority(0);
+		cpAttachmentFileEntryModel.setType(type);
+		cpAttachmentFileEntryModel.setLastPublishDate(new Date());
+		cpAttachmentFileEntryModel.setStatus(0);
+		cpAttachmentFileEntryModel.setStatusByUserId(_sampleUserId);
+		cpAttachmentFileEntryModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpAttachmentFileEntryModel.setStatusDate(new Date());
+
+		return cpAttachmentFileEntryModel;
+	}
+
 	public CPDefinitionLocalizationModel newCPDefinitionLocalizationModel(
 		CPDefinitionModel cpDefinitionModel) {
 
@@ -2761,6 +2826,50 @@ public class DataFactory {
 		return dlFileEntryMetadataModel;
 	}
 
+	public DLFileEntryModel newDlFileEntryModel(
+		DLFolderModel dlFolderModel, String name, String extension,
+		String mimeType) {
+
+		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
+
+		// UUID
+
+		dlFileEntryModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		dlFileEntryModel.setFileEntryId(_counter.get());
+
+		// Group instance
+
+		dlFileEntryModel.setGroupId(dlFolderModel.getGroupId());
+
+		// Audit fields
+
+		dlFileEntryModel.setCompanyId(_companyId);
+		dlFileEntryModel.setUserId(_sampleUserId);
+		dlFileEntryModel.setUserName(_SAMPLE_USER_NAME);
+		dlFileEntryModel.setCreateDate(nextFutureDate());
+		dlFileEntryModel.setModifiedDate(nextFutureDate());
+
+		// Other fields
+
+		dlFileEntryModel.setRepositoryId(dlFolderModel.getRepositoryId());
+		dlFileEntryModel.setFolderId(dlFolderModel.getFolderId());
+		dlFileEntryModel.setName(name);
+		dlFileEntryModel.setFileName(name + "." + extension);
+		dlFileEntryModel.setExtension(extension);
+		dlFileEntryModel.setMimeType(mimeType);
+		dlFileEntryModel.setTitle(name + "." + extension);
+		dlFileEntryModel.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
+		dlFileEntryModel.setSize(BenchmarksPropsValues.MAX_DL_FILE_ENTRY_SIZE);
+		dlFileEntryModel.setLastPublishDate(nextFutureDate());
+
+		return dlFileEntryModel;
+	}
+
 	public List<DLFileEntryModel> newDlFileEntryModels(
 		DLFolderModel dlFolderModel) {
 
@@ -2857,6 +2966,44 @@ public class DataFactory {
 		return dlFileVersionModel;
 	}
 
+	public DLFolderModel newDLFolderModel(
+		long groupId, long parentFolderId, String name) {
+
+		DLFolderModel dlFolderModel = new DLFolderModelImpl();
+
+		// UUID
+
+		dlFolderModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		dlFolderModel.setFolderId(_counter.get());
+
+		// Group instance
+
+		dlFolderModel.setGroupId(groupId);
+
+		// Audit fields
+
+		dlFolderModel.setCompanyId(_companyId);
+		dlFolderModel.setUserId(_sampleUserId);
+		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
+		dlFolderModel.setCreateDate(nextFutureDate());
+		dlFolderModel.setModifiedDate(nextFutureDate());
+
+		// Other fields
+
+		dlFolderModel.setRepositoryId(groupId);
+		dlFolderModel.setParentFolderId(parentFolderId);
+		dlFolderModel.setName(name);
+		dlFolderModel.setLastPostDate(nextFutureDate());
+		dlFolderModel.setDefaultFileEntryTypeId(_DEFAULT_DL_FILE_ENTRY_TYPE_ID);
+		dlFolderModel.setLastPublishDate(nextFutureDate());
+		dlFolderModel.setStatusDate(nextFutureDate());
+
+		return dlFolderModel;
+	}
+
 	public List<DLFolderModel> newDLFolderModels(
 		long groupId, long parentFolderId) {
 
@@ -2864,7 +3011,8 @@ public class DataFactory {
 			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FOLDER_COUNT; i++) {
-			dlFolderModels.add(newDLFolderModel(groupId, parentFolderId, i));
+			dlFolderModels.add(
+				newDLFolderModel(groupId, parentFolderId, "Test Folder " + i));
 		}
 
 		return dlFolderModels;
@@ -4544,6 +4692,15 @@ public class DataFactory {
 		return userName;
 	}
 
+	public CPAttachmentFileEntryModel setCPAttachmentFileEntryFileEntryId(
+		CPAttachmentFileEntryModel cpAttachmentFileEntryModel,
+		long fileEntryId) {
+
+		cpAttachmentFileEntryModel.setFileEntryId(fileEntryId);
+
+		return cpAttachmentFileEntryModel;
+	}
+
 	public CProductModel setCProductModelPublishedCPDefinitionId(
 		CProductModel cProductModel, int version, long cpDefinitionId) {
 
@@ -5078,82 +5235,8 @@ public class DataFactory {
 	protected DLFileEntryModel newDlFileEntryModel(
 		DLFolderModel dlFolderModel, int index) {
 
-		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
-
-		// UUID
-
-		dlFileEntryModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		dlFileEntryModel.setFileEntryId(_counter.get());
-
-		// Group instance
-
-		dlFileEntryModel.setGroupId(dlFolderModel.getGroupId());
-
-		// Audit fields
-
-		dlFileEntryModel.setCompanyId(_companyId);
-		dlFileEntryModel.setUserId(_sampleUserId);
-		dlFileEntryModel.setUserName(_SAMPLE_USER_NAME);
-		dlFileEntryModel.setCreateDate(nextFutureDate());
-		dlFileEntryModel.setModifiedDate(nextFutureDate());
-
-		// Other fields
-
-		dlFileEntryModel.setRepositoryId(dlFolderModel.getRepositoryId());
-		dlFileEntryModel.setFolderId(dlFolderModel.getFolderId());
-		dlFileEntryModel.setName("TestFile" + index);
-		dlFileEntryModel.setFileName("TestFile" + index + ".txt");
-		dlFileEntryModel.setExtension("txt");
-		dlFileEntryModel.setMimeType(ContentTypes.TEXT_PLAIN);
-		dlFileEntryModel.setTitle("TestFile" + index + ".txt");
-		dlFileEntryModel.setFileEntryTypeId(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
-		dlFileEntryModel.setSize(BenchmarksPropsValues.MAX_DL_FILE_ENTRY_SIZE);
-		dlFileEntryModel.setLastPublishDate(nextFutureDate());
-
-		return dlFileEntryModel;
-	}
-
-	protected DLFolderModel newDLFolderModel(
-		long groupId, long parentFolderId, int index) {
-
-		DLFolderModel dlFolderModel = new DLFolderModelImpl();
-
-		// UUID
-
-		dlFolderModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		dlFolderModel.setFolderId(_counter.get());
-
-		// Group instance
-
-		dlFolderModel.setGroupId(groupId);
-
-		// Audit fields
-
-		dlFolderModel.setCompanyId(_companyId);
-		dlFolderModel.setUserId(_sampleUserId);
-		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
-		dlFolderModel.setCreateDate(nextFutureDate());
-		dlFolderModel.setModifiedDate(nextFutureDate());
-
-		// Other fields
-
-		dlFolderModel.setRepositoryId(groupId);
-		dlFolderModel.setParentFolderId(parentFolderId);
-		dlFolderModel.setName("Test Folder " + index);
-		dlFolderModel.setLastPostDate(nextFutureDate());
-		dlFolderModel.setDefaultFileEntryTypeId(_DEFAULT_DL_FILE_ENTRY_TYPE_ID);
-		dlFolderModel.setLastPublishDate(nextFutureDate());
-		dlFolderModel.setStatusDate(nextFutureDate());
-
-		return dlFolderModel;
+		return newDlFileEntryModel(
+			dlFolderModel, "TestFile" + index, "txt", ContentTypes.TEXT_PLAIN);
 	}
 
 	protected GroupModel newGroupModel(

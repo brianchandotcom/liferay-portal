@@ -137,6 +137,8 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_BLOGS_ENTRY_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_ORDER_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_PRICE_LIST_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT, "1");

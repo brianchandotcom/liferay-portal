@@ -72,6 +72,12 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_CONTENT_LAYOUT_COUNT =
 		"sample.sql.max.content.layout.count";
 
+	public static final String MAX_CP_DEFINITION_ATTACHMENT_TYPE_IMAGE_COUNT =
+		"sample.sql.max.cp.definition.attachment.type.image.count";
+
+	public static final String MAX_CP_DEFINITION_ATTACHMENT_TYPE_PDF_COUNT =
+		"sample.sql.max.cp.definition.attachment.type.pdf.count";
+
 	public static final String
 		MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT =
 			"sample.sql.max.cp.definition.specification.option.value.count";

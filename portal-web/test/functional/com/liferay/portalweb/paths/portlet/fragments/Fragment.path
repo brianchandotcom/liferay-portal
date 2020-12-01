@@ -64,8 +64,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_IMAGE_LINK</td>
-	<td>//*[@id='main-content']//a[contains(@href,'${baseURL}')]/img</td>
+	<td>FRAGMENT_LINK</td>
+	<td>//a[contains(@href,'${key_URL}')]${key_append}</td>
 	<td></td>
 </tr>
 <tr>

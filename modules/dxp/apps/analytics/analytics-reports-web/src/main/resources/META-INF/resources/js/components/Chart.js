@@ -265,8 +265,6 @@ export default function Chart({
 			validAnalyticsConnection
 		);
 
-	const disabledNextTimeSpan = chartState.timeSpanOffset === 0;
-
 	const xAxisFormatter =
 		chartState.timeSpanKey === LAST_24_HOURS
 			? dateFormatters.formatNumericHour
@@ -281,7 +279,7 @@ export default function Chart({
 			{timeSpanOptions.length && (
 				<div className="c-mb-3 c-mt-4">
 					<TimeSpanSelector
-						disabledNextTimeSpan={disabledNextTimeSpan}
+						disabledNextTimeSpan={chartState.timeSpanOffset === 0}
 						disabledPreviousPeriodButton={
 							isPreviousPeriodButtonDisabled
 						}

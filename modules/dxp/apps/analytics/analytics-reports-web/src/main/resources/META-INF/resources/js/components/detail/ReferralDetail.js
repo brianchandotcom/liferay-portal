@@ -14,18 +14,23 @@ import ClayList from '@clayui/list';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {Align} from 'metal-position';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
+import {
+	useChangeTimeSpanKey,
+	useChartState,
+	useDateTitle,
+	useIsPreviousPeriodButtonDisabled,
+	useNextTimeSpan,
+	usePreviousTimeSpan,
+} from '../../context/ChartStateContext';
+import {generateDateFormatters as dateFormat} from '../../utils/dateFormat';
 import {numberFormat} from '../../utils/numberFormat';
 import Hint from '../Hint';
 import TimeSpanSelector from '../TimeSpanSelector';
 import TotalCount from '../TotalCount';
 
-const MOCK_TITLE = '19 - Nov 25, 2020';
-
 const ITEMS_TO_SHOW = 5;
-
-const noop = () => {};
 
 export default function ReferralDetail({
 	currentPage,
@@ -39,21 +44,55 @@ export default function ReferralDetail({
 	const {details} = currentPage.data;
 	const {referringDomains, referringPages} = details;
 
+	const dateFormatters = useMemo(() => dateFormat(languageTag), [
+		languageTag,
+	]);
+
+	const {firstDate, lastDate} = useDateTitle();
+
+	const title = useMemo(() => {
+		return dateFormatters.formatChartTitle([firstDate, lastDate]);
+	}, [dateFormatters, firstDate, lastDate]);
+
+	const chartState = useChartState();
+
+	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
+
+	const changeTimeSpanKey = useChangeTimeSpanKey();
+
+	const previousTimeSpan = usePreviousTimeSpan();
+
+	const nextTimeSpan = useNextTimeSpan();
+
+	const handleTimeSpanChange = (event) => {
+		const {value} = event.target;
+
+		changeTimeSpanKey({key: value});
+	};
+	const handlePreviousTimeSpanClick = () => {
+		previousTimeSpan();
+	};
+	const handleNextTimeSpanClick = () => {
+		nextTimeSpan();
+	};
+
 	return (
 		<div className="c-p-3 traffic-source-detail">
 			<div className="c-mb-3 c-mt-2">
 				<TimeSpanSelector
-					disabledNextTimeSpan={true}
-					disabledPreviousPeriodButton={true}
-					onNextTimeSpanClick={noop}
-					onPreviousTimeSpanClick={noop}
-					onTimeSpanChange={noop}
-					timeSpanKey={0}
+					disabledNextTimeSpan={chartState.timeSpanOffset === 0}
+					disabledPreviousPeriodButton={
+						isPreviousPeriodButtonDisabled
+					}
+					onNextTimeSpanClick={handleNextTimeSpanClick}
+					onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
+					onTimeSpanChange={handleTimeSpanChange}
+					timeSpanKey={chartState.timeSpanKey}
 					timeSpanOptions={timeSpanOptions}
 				/>
 			</div>
 
-			{MOCK_TITLE && <h5 className="c-mb-4">{MOCK_TITLE}</h5>}
+			{title && <h5 className="c-mb-4">{title}</h5>}
 
 			<TotalCount
 				className="c-mb-2"

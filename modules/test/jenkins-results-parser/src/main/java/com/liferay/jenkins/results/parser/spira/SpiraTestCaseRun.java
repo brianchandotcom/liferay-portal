@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -498,6 +499,15 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		final SpiraTestCaseObject spiraTestCase,
 		final SearchQuery.SearchParameter... searchParameters) {
 
+		List<SearchQuery.SearchParameter> searchParameterList =
+			new ArrayList<>();
+
+		Collections.addAll(searchParameterList, searchParameters);
+
+		searchParameterList.add(
+			new SearchQuery.SearchParameter(
+				SpiraTestCaseObject.KEY_ID, spiraTestCase.getID()));
+
 		return getSpiraArtifacts(
 			SpiraTestCaseRun.class,
 			new Supplier<List<JSONObject>>() {
@@ -517,7 +527,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				}
 
 			},
-			searchParameters);
+			searchParameterList.toArray(new SearchQuery.SearchParameter[0]));
 	}
 
 	protected static final Integer ARTIFACT_TYPE_ID = 5;

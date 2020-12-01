@@ -49,11 +49,10 @@ public class CommercePendingOrderItemClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		ClayTableSchemaField priceField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"price", "list-price");
+		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
 
-		priceField.setContentRenderer("commerceTablePrice");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"promoPrice", "sale-price");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
 

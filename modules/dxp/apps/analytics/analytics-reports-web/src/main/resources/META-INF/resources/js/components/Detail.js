@@ -16,6 +16,7 @@ import React from 'react';
 
 import KeywordsDetail from './detail/KeywordsDetail';
 import ReferralDetail from './detail/ReferralDetail';
+import SocialDetail from './detail/SocialDetail';
 
 const TRAFFIC_CHANNELS = {
 	DIRECT: 'direct',
@@ -73,6 +74,8 @@ export default function Detail({
 					trafficVolumeDataProvider={trafficVolumeDataProvider}
 				/>
 			)}
+
+			{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && <SocialDetail />}
 		</>
 	);
 }

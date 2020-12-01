@@ -38,22 +38,22 @@ public class DDMFieldTable extends BaseTable<DDMFieldTable> {
 		"fieldId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMFieldTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<DDMFieldTable, Long> structureVersionId = createColumn(
-		"structureVersionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, Long> parentFieldId = createColumn(
 		"parentFieldId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, Long> storageId = createColumn(
 		"storageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DDMFieldTable, Long> structureVersionId = createColumn(
+		"structureVersionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, String> fieldName = createColumn(
 		"fieldName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, String> fieldType = createColumn(
 		"fieldType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<DDMFieldTable, Integer> priority = createColumn(
-		"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, String> instanceId = createColumn(
 		"instanceId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldTable, Boolean> localizable = createColumn(
 		"localizable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<DDMFieldTable, Integer> priority = createColumn(
+		"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private DDMFieldTable() {
 		super("DDMField", DDMFieldTable::new);

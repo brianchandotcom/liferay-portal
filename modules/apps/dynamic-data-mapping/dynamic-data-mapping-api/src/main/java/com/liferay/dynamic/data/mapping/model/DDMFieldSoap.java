@@ -36,14 +36,14 @@ public class DDMFieldSoap implements Serializable {
 		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setFieldId(model.getFieldId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setStructureVersionId(model.getStructureVersionId());
 		soapModel.setParentFieldId(model.getParentFieldId());
 		soapModel.setStorageId(model.getStorageId());
+		soapModel.setStructureVersionId(model.getStructureVersionId());
 		soapModel.setFieldName(model.getFieldName());
 		soapModel.setFieldType(model.getFieldType());
-		soapModel.setPriority(model.getPriority());
 		soapModel.setInstanceId(model.getInstanceId());
 		soapModel.setLocalizable(model.isLocalizable());
+		soapModel.setPriority(model.getPriority());
 
 		return soapModel;
 	}
@@ -129,14 +129,6 @@ public class DDMFieldSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public long getStructureVersionId() {
-		return _structureVersionId;
-	}
-
-	public void setStructureVersionId(long structureVersionId) {
-		_structureVersionId = structureVersionId;
-	}
-
 	public long getParentFieldId() {
 		return _parentFieldId;
 	}
@@ -153,6 +145,14 @@ public class DDMFieldSoap implements Serializable {
 		_storageId = storageId;
 	}
 
+	public long getStructureVersionId() {
+		return _structureVersionId;
+	}
+
+	public void setStructureVersionId(long structureVersionId) {
+		_structureVersionId = structureVersionId;
+	}
+
 	public String getFieldName() {
 		return _fieldName;
 	}
@@ -167,14 +167,6 @@ public class DDMFieldSoap implements Serializable {
 
 	public void setFieldType(String fieldType) {
 		_fieldType = fieldType;
-	}
-
-	public int getPriority() {
-		return _priority;
-	}
-
-	public void setPriority(int priority) {
-		_priority = priority;
 	}
 
 	public String getInstanceId() {
@@ -197,17 +189,25 @@ public class DDMFieldSoap implements Serializable {
 		_localizable = localizable;
 	}
 
+	public int getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(int priority) {
+		_priority = priority;
+	}
+
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private long _fieldId;
 	private long _companyId;
-	private long _structureVersionId;
 	private long _parentFieldId;
 	private long _storageId;
+	private long _structureVersionId;
 	private String _fieldName;
 	private String _fieldType;
-	private int _priority;
 	private String _instanceId;
 	private boolean _localizable;
+	private int _priority;
 
 }

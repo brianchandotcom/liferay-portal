@@ -66,9 +66,9 @@ public class DDMFieldAttributeModelImpl
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"fieldAttributeId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"fieldId", Types.BIGINT}, {"storageId", Types.BIGINT},
-		{"languageId", Types.VARCHAR}, {"attributeName", Types.VARCHAR},
-		{"smallAttributeValue", Types.VARCHAR},
-		{"largeAttributeValue", Types.CLOB}
+		{"attributeName", Types.VARCHAR}, {"languageId", Types.VARCHAR},
+		{"largeAttributeValue", Types.CLOB},
+		{"smallAttributeValue", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,14 +81,14 @@ public class DDMFieldAttributeModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("storageId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("attributeName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("smallAttributeValue", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("largeAttributeValue", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("smallAttributeValue", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFieldAttribute (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldAttributeId LONG not null,companyId LONG,fieldId LONG,storageId LONG,languageId VARCHAR(75) null,attributeName VARCHAR(255) null,smallAttributeValue VARCHAR(255) null,largeAttributeValue TEXT null,primary key (fieldAttributeId, ctCollectionId))";
+		"create table DDMFieldAttribute (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldAttributeId LONG not null,companyId LONG,fieldId LONG,storageId LONG,attributeName VARCHAR(255) null,languageId VARCHAR(75) null,largeAttributeValue TEXT null,smallAttributeValue VARCHAR(255) null,primary key (fieldAttributeId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMFieldAttribute";
 
@@ -317,29 +317,29 @@ public class DDMFieldAttributeModelImpl
 			(BiConsumer<DDMFieldAttribute, Long>)
 				DDMFieldAttribute::setStorageId);
 		attributeGetterFunctions.put(
-			"languageId", DDMFieldAttribute::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<DDMFieldAttribute, String>)
-				DDMFieldAttribute::setLanguageId);
-		attributeGetterFunctions.put(
 			"attributeName", DDMFieldAttribute::getAttributeName);
 		attributeSetterBiConsumers.put(
 			"attributeName",
 			(BiConsumer<DDMFieldAttribute, String>)
 				DDMFieldAttribute::setAttributeName);
 		attributeGetterFunctions.put(
-			"smallAttributeValue", DDMFieldAttribute::getSmallAttributeValue);
+			"languageId", DDMFieldAttribute::getLanguageId);
 		attributeSetterBiConsumers.put(
-			"smallAttributeValue",
+			"languageId",
 			(BiConsumer<DDMFieldAttribute, String>)
-				DDMFieldAttribute::setSmallAttributeValue);
+				DDMFieldAttribute::setLanguageId);
 		attributeGetterFunctions.put(
 			"largeAttributeValue", DDMFieldAttribute::getLargeAttributeValue);
 		attributeSetterBiConsumers.put(
 			"largeAttributeValue",
 			(BiConsumer<DDMFieldAttribute, String>)
 				DDMFieldAttribute::setLargeAttributeValue);
+		attributeGetterFunctions.put(
+			"smallAttributeValue", DDMFieldAttribute::getSmallAttributeValue);
+		attributeSetterBiConsumers.put(
+			"smallAttributeValue",
+			(BiConsumer<DDMFieldAttribute, String>)
+				DDMFieldAttribute::setSmallAttributeValue);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -451,34 +451,6 @@ public class DDMFieldAttributeModelImpl
 	}
 
 	@Override
-	public String getLanguageId() {
-		if (_languageId == null) {
-			return "";
-		}
-		else {
-			return _languageId;
-		}
-	}
-
-	@Override
-	public void setLanguageId(String languageId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_languageId = languageId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalLanguageId() {
-		return getColumnOriginalValue("languageId");
-	}
-
-	@Override
 	public String getAttributeName() {
 		if (_attributeName == null) {
 			return "";
@@ -507,6 +479,53 @@ public class DDMFieldAttributeModelImpl
 	}
 
 	@Override
+	public String getLanguageId() {
+		if (_languageId == null) {
+			return "";
+		}
+		else {
+			return _languageId;
+		}
+	}
+
+	@Override
+	public void setLanguageId(String languageId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_languageId = languageId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalLanguageId() {
+		return getColumnOriginalValue("languageId");
+	}
+
+	@Override
+	public String getLargeAttributeValue() {
+		if (_largeAttributeValue == null) {
+			return "";
+		}
+		else {
+			return _largeAttributeValue;
+		}
+	}
+
+	@Override
+	public void setLargeAttributeValue(String largeAttributeValue) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_largeAttributeValue = largeAttributeValue;
+	}
+
+	@Override
 	public String getSmallAttributeValue() {
 		if (_smallAttributeValue == null) {
 			return "";
@@ -532,25 +551,6 @@ public class DDMFieldAttributeModelImpl
 	@Deprecated
 	public String getOriginalSmallAttributeValue() {
 		return getColumnOriginalValue("smallAttributeValue");
-	}
-
-	@Override
-	public String getLargeAttributeValue() {
-		if (_largeAttributeValue == null) {
-			return "";
-		}
-		else {
-			return _largeAttributeValue;
-		}
-	}
-
-	@Override
-	public void setLargeAttributeValue(String largeAttributeValue) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_largeAttributeValue = largeAttributeValue;
 	}
 
 	public long getColumnBitmask() {
@@ -614,10 +614,10 @@ public class DDMFieldAttributeModelImpl
 		ddmFieldAttributeImpl.setCompanyId(getCompanyId());
 		ddmFieldAttributeImpl.setFieldId(getFieldId());
 		ddmFieldAttributeImpl.setStorageId(getStorageId());
-		ddmFieldAttributeImpl.setLanguageId(getLanguageId());
 		ddmFieldAttributeImpl.setAttributeName(getAttributeName());
-		ddmFieldAttributeImpl.setSmallAttributeValue(getSmallAttributeValue());
+		ddmFieldAttributeImpl.setLanguageId(getLanguageId());
 		ddmFieldAttributeImpl.setLargeAttributeValue(getLargeAttributeValue());
+		ddmFieldAttributeImpl.setSmallAttributeValue(getSmallAttributeValue());
 
 		ddmFieldAttributeImpl.resetOriginalValues();
 
@@ -708,14 +708,6 @@ public class DDMFieldAttributeModelImpl
 
 		ddmFieldAttributeCacheModel.storageId = getStorageId();
 
-		ddmFieldAttributeCacheModel.languageId = getLanguageId();
-
-		String languageId = ddmFieldAttributeCacheModel.languageId;
-
-		if ((languageId != null) && (languageId.length() == 0)) {
-			ddmFieldAttributeCacheModel.languageId = null;
-		}
-
 		ddmFieldAttributeCacheModel.attributeName = getAttributeName();
 
 		String attributeName = ddmFieldAttributeCacheModel.attributeName;
@@ -724,16 +716,12 @@ public class DDMFieldAttributeModelImpl
 			ddmFieldAttributeCacheModel.attributeName = null;
 		}
 
-		ddmFieldAttributeCacheModel.smallAttributeValue =
-			getSmallAttributeValue();
+		ddmFieldAttributeCacheModel.languageId = getLanguageId();
 
-		String smallAttributeValue =
-			ddmFieldAttributeCacheModel.smallAttributeValue;
+		String languageId = ddmFieldAttributeCacheModel.languageId;
 
-		if ((smallAttributeValue != null) &&
-			(smallAttributeValue.length() == 0)) {
-
-			ddmFieldAttributeCacheModel.smallAttributeValue = null;
+		if ((languageId != null) && (languageId.length() == 0)) {
+			ddmFieldAttributeCacheModel.languageId = null;
 		}
 
 		ddmFieldAttributeCacheModel.largeAttributeValue =
@@ -746,6 +734,18 @@ public class DDMFieldAttributeModelImpl
 			(largeAttributeValue.length() == 0)) {
 
 			ddmFieldAttributeCacheModel.largeAttributeValue = null;
+		}
+
+		ddmFieldAttributeCacheModel.smallAttributeValue =
+			getSmallAttributeValue();
+
+		String smallAttributeValue =
+			ddmFieldAttributeCacheModel.smallAttributeValue;
+
+		if ((smallAttributeValue != null) &&
+			(smallAttributeValue.length() == 0)) {
+
+			ddmFieldAttributeCacheModel.smallAttributeValue = null;
 		}
 
 		return ddmFieldAttributeCacheModel;
@@ -827,10 +827,10 @@ public class DDMFieldAttributeModelImpl
 	private long _companyId;
 	private long _fieldId;
 	private long _storageId;
-	private String _languageId;
 	private String _attributeName;
-	private String _smallAttributeValue;
+	private String _languageId;
 	private String _largeAttributeValue;
+	private String _smallAttributeValue;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<DDMFieldAttribute, Object> function =
@@ -865,10 +865,10 @@ public class DDMFieldAttributeModelImpl
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("fieldId", _fieldId);
 		_columnOriginalValues.put("storageId", _storageId);
-		_columnOriginalValues.put("languageId", _languageId);
 		_columnOriginalValues.put("attributeName", _attributeName);
-		_columnOriginalValues.put("smallAttributeValue", _smallAttributeValue);
+		_columnOriginalValues.put("languageId", _languageId);
 		_columnOriginalValues.put("largeAttributeValue", _largeAttributeValue);
+		_columnOriginalValues.put("smallAttributeValue", _smallAttributeValue);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -894,13 +894,13 @@ public class DDMFieldAttributeModelImpl
 
 		columnBitmasks.put("storageId", 32L);
 
-		columnBitmasks.put("languageId", 64L);
+		columnBitmasks.put("attributeName", 64L);
 
-		columnBitmasks.put("attributeName", 128L);
+		columnBitmasks.put("languageId", 128L);
 
-		columnBitmasks.put("smallAttributeValue", 256L);
+		columnBitmasks.put("largeAttributeValue", 256L);
 
-		columnBitmasks.put("largeAttributeValue", 512L);
+		columnBitmasks.put("smallAttributeValue", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

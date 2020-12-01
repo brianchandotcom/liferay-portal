@@ -122,20 +122,6 @@ public interface DDMFieldModel
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the structure version ID of this ddm field.
-	 *
-	 * @return the structure version ID of this ddm field
-	 */
-	public long getStructureVersionId();
-
-	/**
-	 * Sets the structure version ID of this ddm field.
-	 *
-	 * @param structureVersionId the structure version ID of this ddm field
-	 */
-	public void setStructureVersionId(long structureVersionId);
-
-	/**
 	 * Returns the parent field ID of this ddm field.
 	 *
 	 * @return the parent field ID of this ddm field
@@ -162,6 +148,20 @@ public interface DDMFieldModel
 	 * @param storageId the storage ID of this ddm field
 	 */
 	public void setStorageId(long storageId);
+
+	/**
+	 * Returns the structure version ID of this ddm field.
+	 *
+	 * @return the structure version ID of this ddm field
+	 */
+	public long getStructureVersionId();
+
+	/**
+	 * Sets the structure version ID of this ddm field.
+	 *
+	 * @param structureVersionId the structure version ID of this ddm field
+	 */
+	public void setStructureVersionId(long structureVersionId);
 
 	/**
 	 * Returns the field name of this ddm field.
@@ -192,20 +192,6 @@ public interface DDMFieldModel
 	 * @param fieldType the field type of this ddm field
 	 */
 	public void setFieldType(String fieldType);
-
-	/**
-	 * Returns the priority of this ddm field.
-	 *
-	 * @return the priority of this ddm field
-	 */
-	public int getPriority();
-
-	/**
-	 * Sets the priority of this ddm field.
-	 *
-	 * @param priority the priority of this ddm field
-	 */
-	public void setPriority(int priority);
 
 	/**
 	 * Returns the instance ID of this ddm field.
@@ -242,5 +228,19 @@ public interface DDMFieldModel
 	 * @param localizable the localizable of this ddm field
 	 */
 	public void setLocalizable(boolean localizable);
+
+	/**
+	 * Returns the priority of this ddm field.
+	 *
+	 * @return the priority of this ddm field
+	 */
+	public int getPriority();
+
+	/**
+	 * Sets the priority of this ddm field.
+	 *
+	 * @param priority the priority of this ddm field
+	 */
+	public void setPriority(int priority);
 
 }

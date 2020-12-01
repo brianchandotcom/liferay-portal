@@ -130,21 +130,21 @@ public class DDMFieldPersistenceTest {
 
 		newDDMField.setCompanyId(RandomTestUtil.nextLong());
 
-		newDDMField.setStructureVersionId(RandomTestUtil.nextLong());
-
 		newDDMField.setParentFieldId(RandomTestUtil.nextLong());
 
 		newDDMField.setStorageId(RandomTestUtil.nextLong());
+
+		newDDMField.setStructureVersionId(RandomTestUtil.nextLong());
 
 		newDDMField.setFieldName(RandomTestUtil.randomString());
 
 		newDDMField.setFieldType(RandomTestUtil.randomString());
 
-		newDDMField.setPriority(RandomTestUtil.nextInt());
-
 		newDDMField.setInstanceId(RandomTestUtil.randomString());
 
 		newDDMField.setLocalizable(RandomTestUtil.randomBoolean());
+
+		newDDMField.setPriority(RandomTestUtil.nextInt());
 
 		_ddmFields.add(_persistence.update(newDDMField));
 
@@ -161,30 +161,23 @@ public class DDMFieldPersistenceTest {
 		Assert.assertEquals(
 			existingDDMField.getCompanyId(), newDDMField.getCompanyId());
 		Assert.assertEquals(
-			existingDDMField.getStructureVersionId(),
-			newDDMField.getStructureVersionId());
-		Assert.assertEquals(
 			existingDDMField.getParentFieldId(),
 			newDDMField.getParentFieldId());
 		Assert.assertEquals(
 			existingDDMField.getStorageId(), newDDMField.getStorageId());
 		Assert.assertEquals(
+			existingDDMField.getStructureVersionId(),
+			newDDMField.getStructureVersionId());
+		Assert.assertEquals(
 			existingDDMField.getFieldName(), newDDMField.getFieldName());
 		Assert.assertEquals(
 			existingDDMField.getFieldType(), newDDMField.getFieldType());
 		Assert.assertEquals(
-			existingDDMField.getPriority(), newDDMField.getPriority());
-		Assert.assertEquals(
 			existingDDMField.getInstanceId(), newDDMField.getInstanceId());
 		Assert.assertEquals(
 			existingDDMField.isLocalizable(), newDDMField.isLocalizable());
-	}
-
-	@Test
-	public void testCountByStructureVersionId() throws Exception {
-		_persistence.countByStructureVersionId(RandomTestUtil.nextLong());
-
-		_persistence.countByStructureVersionId(0L);
+		Assert.assertEquals(
+			existingDDMField.getPriority(), newDDMField.getPriority());
 	}
 
 	@Test
@@ -192,6 +185,13 @@ public class DDMFieldPersistenceTest {
 		_persistence.countByStorageId(RandomTestUtil.nextLong());
 
 		_persistence.countByStorageId(0L);
+	}
+
+	@Test
+	public void testCountByStructureVersionId() throws Exception {
+		_persistence.countByStructureVersionId(RandomTestUtil.nextLong());
+
+		_persistence.countByStructureVersionId(0L);
 	}
 
 	@Test
@@ -238,10 +238,9 @@ public class DDMFieldPersistenceTest {
 	protected OrderByComparator<DDMField> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"DDMField", "mvccVersion", true, "ctCollectionId", true, "fieldId",
-			true, "companyId", true, "structureVersionId", true,
-			"parentFieldId", true, "storageId", true, "fieldName", true,
-			"fieldType", true, "priority", true, "instanceId", true,
-			"localizable", true);
+			true, "companyId", true, "parentFieldId", true, "storageId", true,
+			"structureVersionId", true, "fieldName", true, "fieldType", true,
+			"instanceId", true, "localizable", true, "priority", true);
 	}
 
 	@Test
@@ -518,21 +517,21 @@ public class DDMFieldPersistenceTest {
 
 		ddmField.setCompanyId(RandomTestUtil.nextLong());
 
-		ddmField.setStructureVersionId(RandomTestUtil.nextLong());
-
 		ddmField.setParentFieldId(RandomTestUtil.nextLong());
 
 		ddmField.setStorageId(RandomTestUtil.nextLong());
+
+		ddmField.setStructureVersionId(RandomTestUtil.nextLong());
 
 		ddmField.setFieldName(RandomTestUtil.randomString());
 
 		ddmField.setFieldType(RandomTestUtil.randomString());
 
-		ddmField.setPriority(RandomTestUtil.nextInt());
-
 		ddmField.setInstanceId(RandomTestUtil.randomString());
 
 		ddmField.setLocalizable(RandomTestUtil.randomBoolean());
+
+		ddmField.setPriority(RandomTestUtil.nextInt());
 
 		_ddmFields.add(_persistence.update(ddmField));
 

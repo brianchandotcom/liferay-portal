@@ -1873,25 +1873,25 @@ public class DDMFieldAttributePersistenceImpl
 	private static final String _FINDER_COLUMN_AN_SAV_SMALLATTRIBUTEVALUE_3 =
 		"(ddmFieldAttribute.smallAttributeValue IS NULL OR ddmFieldAttribute.smallAttributeValue = '')";
 
-	private FinderPath _finderPathFetchByF_L_AN;
-	private FinderPath _finderPathCountByF_L_AN;
+	private FinderPath _finderPathFetchByF_AN_L;
+	private FinderPath _finderPathCountByF_AN_L;
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; or throws a <code>NoSuchFieldAttributeException</code> if it could not be found.
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or throws a <code>NoSuchFieldAttributeException</code> if it could not be found.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the matching ddm field attribute
 	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
 	 */
 	@Override
-	public DDMFieldAttribute findByF_L_AN(
-			long fieldId, String languageId, String attributeName)
+	public DDMFieldAttribute findByF_AN_L(
+			long fieldId, String attributeName, String languageId)
 		throws NoSuchFieldAttributeException {
 
-		DDMFieldAttribute ddmFieldAttribute = fetchByF_L_AN(
-			fieldId, languageId, attributeName);
+		DDMFieldAttribute ddmFieldAttribute = fetchByF_AN_L(
+			fieldId, attributeName, languageId);
 
 		if (ddmFieldAttribute == null) {
 			StringBundler sb = new StringBundler(8);
@@ -1901,11 +1901,11 @@ public class DDMFieldAttributePersistenceImpl
 			sb.append("fieldId=");
 			sb.append(fieldId);
 
-			sb.append(", languageId=");
-			sb.append(languageId);
-
 			sb.append(", attributeName=");
 			sb.append(attributeName);
+
+			sb.append(", languageId=");
+			sb.append(languageId);
 
 			sb.append("}");
 
@@ -1920,36 +1920,36 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
 	@Override
-	public DDMFieldAttribute fetchByF_L_AN(
-		long fieldId, String languageId, String attributeName) {
+	public DDMFieldAttribute fetchByF_AN_L(
+		long fieldId, String attributeName, String languageId) {
 
-		return fetchByF_L_AN(fieldId, languageId, attributeName, true);
+		return fetchByF_AN_L(fieldId, attributeName, languageId, true);
 	}
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
 	@Override
-	public DDMFieldAttribute fetchByF_L_AN(
-		long fieldId, String languageId, String attributeName,
+	public DDMFieldAttribute fetchByF_AN_L(
+		long fieldId, String attributeName, String languageId,
 		boolean useFinderCache) {
 
-		languageId = Objects.toString(languageId, "");
 		attributeName = Objects.toString(attributeName, "");
+		languageId = Objects.toString(languageId, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			DDMFieldAttribute.class);
@@ -1957,14 +1957,14 @@ public class DDMFieldAttributePersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {fieldId, languageId, attributeName};
+			finderArgs = new Object[] {fieldId, attributeName, languageId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByF_L_AN, finderArgs);
+				_finderPathFetchByF_AN_L, finderArgs);
 		}
 
 		if (result instanceof DDMFieldAttribute) {
@@ -1972,9 +1972,9 @@ public class DDMFieldAttributePersistenceImpl
 
 			if ((fieldId != ddmFieldAttribute.getFieldId()) ||
 				!Objects.equals(
-					languageId, ddmFieldAttribute.getLanguageId()) ||
+					attributeName, ddmFieldAttribute.getAttributeName()) ||
 				!Objects.equals(
-					attributeName, ddmFieldAttribute.getAttributeName())) {
+					languageId, ddmFieldAttribute.getLanguageId())) {
 
 				result = null;
 			}
@@ -1985,28 +1985,28 @@ public class DDMFieldAttributePersistenceImpl
 
 			sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
 
-			sb.append(_FINDER_COLUMN_F_L_AN_FIELDID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_L_AN_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_F_L_AN_LANGUAGEID_2);
-			}
+			sb.append(_FINDER_COLUMN_F_AN_L_FIELDID_2);
 
 			boolean bindAttributeName = false;
 
 			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_L_AN_ATTRIBUTENAME_3);
+				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3);
 			}
 			else {
 				bindAttributeName = true;
 
-				sb.append(_FINDER_COLUMN_F_L_AN_ATTRIBUTENAME_2);
+				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2);
+			}
+
+			boolean bindLanguageId = false;
+
+			if (languageId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_2);
 			}
 
 			String sql = sb.toString();
@@ -2022,12 +2022,12 @@ public class DDMFieldAttributePersistenceImpl
 
 				queryPos.add(fieldId);
 
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
 				if (bindAttributeName) {
 					queryPos.add(attributeName);
+				}
+
+				if (bindLanguageId) {
+					queryPos.add(languageId);
 				}
 
 				List<DDMFieldAttribute> list = query.list();
@@ -2035,7 +2035,7 @@ public class DDMFieldAttributePersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByF_L_AN, finderArgs, list);
+							_finderPathFetchByF_AN_L, finderArgs, list);
 					}
 				}
 				else {
@@ -2063,38 +2063,38 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 	/**
-	 * Removes the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; from the database.
+	 * Removes the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the ddm field attribute that was removed
 	 */
 	@Override
-	public DDMFieldAttribute removeByF_L_AN(
-			long fieldId, String languageId, String attributeName)
+	public DDMFieldAttribute removeByF_AN_L(
+			long fieldId, String attributeName, String languageId)
 		throws NoSuchFieldAttributeException {
 
-		DDMFieldAttribute ddmFieldAttribute = findByF_L_AN(
-			fieldId, languageId, attributeName);
+		DDMFieldAttribute ddmFieldAttribute = findByF_AN_L(
+			fieldId, attributeName, languageId);
 
 		return remove(ddmFieldAttribute);
 	}
 
 	/**
-	 * Returns the number of ddm field attributes where fieldId = &#63; and languageId = &#63; and attributeName = &#63;.
+	 * Returns the number of ddm field attributes where fieldId = &#63; and attributeName = &#63; and languageId = &#63;.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the number of matching ddm field attributes
 	 */
 	@Override
-	public int countByF_L_AN(
-		long fieldId, String languageId, String attributeName) {
+	public int countByF_AN_L(
+		long fieldId, String attributeName, String languageId) {
 
-		languageId = Objects.toString(languageId, "");
 		attributeName = Objects.toString(attributeName, "");
+		languageId = Objects.toString(languageId, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			DDMFieldAttribute.class);
@@ -2105,9 +2105,9 @@ public class DDMFieldAttributePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByF_L_AN;
+			finderPath = _finderPathCountByF_AN_L;
 
-			finderArgs = new Object[] {fieldId, languageId, attributeName};
+			finderArgs = new Object[] {fieldId, attributeName, languageId};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs);
 		}
@@ -2117,28 +2117,28 @@ public class DDMFieldAttributePersistenceImpl
 
 			sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
 
-			sb.append(_FINDER_COLUMN_F_L_AN_FIELDID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_L_AN_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_F_L_AN_LANGUAGEID_2);
-			}
+			sb.append(_FINDER_COLUMN_F_AN_L_FIELDID_2);
 
 			boolean bindAttributeName = false;
 
 			if (attributeName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_F_L_AN_ATTRIBUTENAME_3);
+				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3);
 			}
 			else {
 				bindAttributeName = true;
 
-				sb.append(_FINDER_COLUMN_F_L_AN_ATTRIBUTENAME_2);
+				sb.append(_FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2);
+			}
+
+			boolean bindLanguageId = false;
+
+			if (languageId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				sb.append(_FINDER_COLUMN_F_AN_L_LANGUAGEID_2);
 			}
 
 			String sql = sb.toString();
@@ -2154,12 +2154,12 @@ public class DDMFieldAttributePersistenceImpl
 
 				queryPos.add(fieldId);
 
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
 				if (bindAttributeName) {
 					queryPos.add(attributeName);
+				}
+
+				if (bindLanguageId) {
+					queryPos.add(languageId);
 				}
 
 				count = (Long)query.uniqueResult();
@@ -2179,20 +2179,20 @@ public class DDMFieldAttributePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_F_L_AN_FIELDID_2 =
+	private static final String _FINDER_COLUMN_F_AN_L_FIELDID_2 =
 		"ddmFieldAttribute.fieldId = ? AND ";
 
-	private static final String _FINDER_COLUMN_F_L_AN_LANGUAGEID_2 =
-		"ddmFieldAttribute.languageId = ? AND ";
+	private static final String _FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_2 =
+		"ddmFieldAttribute.attributeName = ? AND ";
 
-	private static final String _FINDER_COLUMN_F_L_AN_LANGUAGEID_3 =
-		"(ddmFieldAttribute.languageId IS NULL OR ddmFieldAttribute.languageId = '') AND ";
+	private static final String _FINDER_COLUMN_F_AN_L_ATTRIBUTENAME_3 =
+		"(ddmFieldAttribute.attributeName IS NULL OR ddmFieldAttribute.attributeName = '') AND ";
 
-	private static final String _FINDER_COLUMN_F_L_AN_ATTRIBUTENAME_2 =
-		"ddmFieldAttribute.attributeName = ?";
+	private static final String _FINDER_COLUMN_F_AN_L_LANGUAGEID_2 =
+		"ddmFieldAttribute.languageId = ?";
 
-	private static final String _FINDER_COLUMN_F_L_AN_ATTRIBUTENAME_3 =
-		"(ddmFieldAttribute.attributeName IS NULL OR ddmFieldAttribute.attributeName = '')";
+	private static final String _FINDER_COLUMN_F_AN_L_LANGUAGEID_3 =
+		"(ddmFieldAttribute.languageId IS NULL OR ddmFieldAttribute.languageId = '')";
 
 	public DDMFieldAttributePersistenceImpl() {
 		setModelClass(DDMFieldAttribute.class);
@@ -2219,11 +2219,11 @@ public class DDMFieldAttributePersistenceImpl
 			ddmFieldAttribute);
 
 		finderCache.putResult(
-			_finderPathFetchByF_L_AN,
+			_finderPathFetchByF_AN_L,
 			new Object[] {
 				ddmFieldAttribute.getFieldId(),
-				ddmFieldAttribute.getLanguageId(),
-				ddmFieldAttribute.getAttributeName()
+				ddmFieldAttribute.getAttributeName(),
+				ddmFieldAttribute.getLanguageId()
 			},
 			ddmFieldAttribute);
 	}
@@ -2298,13 +2298,13 @@ public class DDMFieldAttributePersistenceImpl
 
 		Object[] args = new Object[] {
 			ddmFieldAttributeModelImpl.getFieldId(),
-			ddmFieldAttributeModelImpl.getLanguageId(),
-			ddmFieldAttributeModelImpl.getAttributeName()
+			ddmFieldAttributeModelImpl.getAttributeName(),
+			ddmFieldAttributeModelImpl.getLanguageId()
 		};
 
-		finderCache.putResult(_finderPathCountByF_L_AN, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByF_AN_L, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByF_L_AN, args, ddmFieldAttributeModelImpl);
+			_finderPathFetchByF_AN_L, args, ddmFieldAttributeModelImpl);
 	}
 
 	/**
@@ -2905,10 +2905,10 @@ public class DDMFieldAttributePersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("fieldId");
 		ctStrictColumnNames.add("storageId");
-		ctStrictColumnNames.add("languageId");
 		ctStrictColumnNames.add("attributeName");
-		ctStrictColumnNames.add("smallAttributeValue");
+		ctStrictColumnNames.add("languageId");
 		ctStrictColumnNames.add("largeAttributeValue");
+		ctStrictColumnNames.add("smallAttributeValue");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
@@ -2922,7 +2922,7 @@ public class DDMFieldAttributePersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"fieldId", "languageId", "attributeName"});
+			new String[] {"fieldId", "attributeName", "languageId"});
 	}
 
 	/**
@@ -3005,21 +3005,21 @@ public class DDMFieldAttributePersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"attributeName", "smallAttributeValue"}, false);
 
-		_finderPathFetchByF_L_AN = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_L_AN",
+		_finderPathFetchByF_AN_L = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByF_AN_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"fieldId", "languageId", "attributeName"}, true);
+			new String[] {"fieldId", "attributeName", "languageId"}, true);
 
-		_finderPathCountByF_L_AN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_L_AN",
+		_finderPathCountByF_AN_L = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_AN_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"fieldId", "languageId", "attributeName"}, false);
+			new String[] {"fieldId", "attributeName", "languageId"}, false);
 	}
 
 	@Deactivate

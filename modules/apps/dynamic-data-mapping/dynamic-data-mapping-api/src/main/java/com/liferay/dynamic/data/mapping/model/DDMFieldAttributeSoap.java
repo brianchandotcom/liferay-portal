@@ -38,10 +38,10 @@ public class DDMFieldAttributeSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setFieldId(model.getFieldId());
 		soapModel.setStorageId(model.getStorageId());
-		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setAttributeName(model.getAttributeName());
-		soapModel.setSmallAttributeValue(model.getSmallAttributeValue());
+		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setLargeAttributeValue(model.getLargeAttributeValue());
+		soapModel.setSmallAttributeValue(model.getSmallAttributeValue());
 
 		return soapModel;
 	}
@@ -151,14 +151,6 @@ public class DDMFieldAttributeSoap implements Serializable {
 		_storageId = storageId;
 	}
 
-	public String getLanguageId() {
-		return _languageId;
-	}
-
-	public void setLanguageId(String languageId) {
-		_languageId = languageId;
-	}
-
 	public String getAttributeName() {
 		return _attributeName;
 	}
@@ -167,12 +159,12 @@ public class DDMFieldAttributeSoap implements Serializable {
 		_attributeName = attributeName;
 	}
 
-	public String getSmallAttributeValue() {
-		return _smallAttributeValue;
+	public String getLanguageId() {
+		return _languageId;
 	}
 
-	public void setSmallAttributeValue(String smallAttributeValue) {
-		_smallAttributeValue = smallAttributeValue;
+	public void setLanguageId(String languageId) {
+		_languageId = languageId;
 	}
 
 	public String getLargeAttributeValue() {
@@ -183,15 +175,23 @@ public class DDMFieldAttributeSoap implements Serializable {
 		_largeAttributeValue = largeAttributeValue;
 	}
 
+	public String getSmallAttributeValue() {
+		return _smallAttributeValue;
+	}
+
+	public void setSmallAttributeValue(String smallAttributeValue) {
+		_smallAttributeValue = smallAttributeValue;
+	}
+
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private long _fieldAttributeId;
 	private long _companyId;
 	private long _fieldId;
 	private long _storageId;
-	private String _languageId;
 	private String _attributeName;
-	private String _smallAttributeValue;
+	private String _languageId;
 	private String _largeAttributeValue;
+	private String _smallAttributeValue;
 
 }

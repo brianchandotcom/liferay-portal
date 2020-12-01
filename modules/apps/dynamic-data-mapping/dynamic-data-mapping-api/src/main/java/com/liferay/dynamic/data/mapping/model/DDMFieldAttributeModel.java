@@ -151,21 +151,6 @@ public interface DDMFieldAttributeModel
 	public void setStorageId(long storageId);
 
 	/**
-	 * Returns the language ID of this ddm field attribute.
-	 *
-	 * @return the language ID of this ddm field attribute
-	 */
-	@AutoEscape
-	public String getLanguageId();
-
-	/**
-	 * Sets the language ID of this ddm field attribute.
-	 *
-	 * @param languageId the language ID of this ddm field attribute
-	 */
-	public void setLanguageId(String languageId);
-
-	/**
 	 * Returns the attribute name of this ddm field attribute.
 	 *
 	 * @return the attribute name of this ddm field attribute
@@ -181,19 +166,19 @@ public interface DDMFieldAttributeModel
 	public void setAttributeName(String attributeName);
 
 	/**
-	 * Returns the small attribute value of this ddm field attribute.
+	 * Returns the language ID of this ddm field attribute.
 	 *
-	 * @return the small attribute value of this ddm field attribute
+	 * @return the language ID of this ddm field attribute
 	 */
 	@AutoEscape
-	public String getSmallAttributeValue();
+	public String getLanguageId();
 
 	/**
-	 * Sets the small attribute value of this ddm field attribute.
+	 * Sets the language ID of this ddm field attribute.
 	 *
-	 * @param smallAttributeValue the small attribute value of this ddm field attribute
+	 * @param languageId the language ID of this ddm field attribute
 	 */
-	public void setSmallAttributeValue(String smallAttributeValue);
+	public void setLanguageId(String languageId);
 
 	/**
 	 * Returns the large attribute value of this ddm field attribute.
@@ -209,5 +194,20 @@ public interface DDMFieldAttributeModel
 	 * @param largeAttributeValue the large attribute value of this ddm field attribute
 	 */
 	public void setLargeAttributeValue(String largeAttributeValue);
+
+	/**
+	 * Returns the small attribute value of this ddm field attribute.
+	 *
+	 * @return the small attribute value of this ddm field attribute
+	 */
+	@AutoEscape
+	public String getSmallAttributeValue();
+
+	/**
+	 * Sets the small attribute value of this ddm field attribute.
+	 *
+	 * @param smallAttributeValue the small attribute value of this ddm field attribute
+	 */
+	public void setSmallAttributeValue(String smallAttributeValue);
 
 }

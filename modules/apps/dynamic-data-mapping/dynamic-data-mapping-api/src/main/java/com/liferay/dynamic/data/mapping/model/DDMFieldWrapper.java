@@ -47,14 +47,14 @@ public class DDMFieldWrapper
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("fieldId", getFieldId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("parentFieldId", getParentFieldId());
 		attributes.put("storageId", getStorageId());
+		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("fieldName", getFieldName());
 		attributes.put("fieldType", getFieldType());
-		attributes.put("priority", getPriority());
 		attributes.put("instanceId", getInstanceId());
 		attributes.put("localizable", isLocalizable());
+		attributes.put("priority", getPriority());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class DDMFieldWrapper
 			setCompanyId(companyId);
 		}
 
-		Long structureVersionId = (Long)attributes.get("structureVersionId");
-
-		if (structureVersionId != null) {
-			setStructureVersionId(structureVersionId);
-		}
-
 		Long parentFieldId = (Long)attributes.get("parentFieldId");
 
 		if (parentFieldId != null) {
@@ -101,6 +95,12 @@ public class DDMFieldWrapper
 
 		if (storageId != null) {
 			setStorageId(storageId);
+		}
+
+		Long structureVersionId = (Long)attributes.get("structureVersionId");
+
+		if (structureVersionId != null) {
+			setStructureVersionId(structureVersionId);
 		}
 
 		String fieldName = (String)attributes.get("fieldName");
@@ -115,12 +115,6 @@ public class DDMFieldWrapper
 			setFieldType(fieldType);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
 		String instanceId = (String)attributes.get("instanceId");
 
 		if (instanceId != null) {
@@ -131,6 +125,12 @@ public class DDMFieldWrapper
 
 		if (localizable != null) {
 			setLocalizable(localizable);
+		}
+
+		Integer priority = (Integer)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 	}
 

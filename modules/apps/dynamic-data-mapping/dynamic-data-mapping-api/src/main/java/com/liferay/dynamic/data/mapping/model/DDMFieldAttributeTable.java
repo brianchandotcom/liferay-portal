@@ -47,19 +47,19 @@ public class DDMFieldAttributeTable extends BaseTable<DDMFieldAttributeTable> {
 		"fieldId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldAttributeTable, Long> storageId = createColumn(
 		"storageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<DDMFieldAttributeTable, String> languageId =
-		createColumn(
-			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldAttributeTable, String> attributeName =
 		createColumn(
 			"attributeName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DDMFieldAttributeTable, String> languageId =
+		createColumn(
+			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DDMFieldAttributeTable, Clob> largeAttributeValue =
+		createColumn(
+			"largeAttributeValue", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<DDMFieldAttributeTable, String> smallAttributeValue =
 		createColumn(
 			"smallAttributeValue", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<DDMFieldAttributeTable, Clob> largeAttributeValue =
-		createColumn(
-			"largeAttributeValue", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private DDMFieldAttributeTable() {
 		super("DDMFieldAttribute", DDMFieldAttributeTable::new);

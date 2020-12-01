@@ -132,14 +132,14 @@ public class DDMFieldAttributePersistenceTest {
 
 		newDDMFieldAttribute.setStorageId(RandomTestUtil.nextLong());
 
-		newDDMFieldAttribute.setLanguageId(RandomTestUtil.randomString());
-
 		newDDMFieldAttribute.setAttributeName(RandomTestUtil.randomString());
 
-		newDDMFieldAttribute.setSmallAttributeValue(
-			RandomTestUtil.randomString());
+		newDDMFieldAttribute.setLanguageId(RandomTestUtil.randomString());
 
 		newDDMFieldAttribute.setLargeAttributeValue(
+			RandomTestUtil.randomString());
+
+		newDDMFieldAttribute.setSmallAttributeValue(
 			RandomTestUtil.randomString());
 
 		_ddmFieldAttributes.add(_persistence.update(newDDMFieldAttribute));
@@ -166,17 +166,17 @@ public class DDMFieldAttributePersistenceTest {
 			existingDDMFieldAttribute.getStorageId(),
 			newDDMFieldAttribute.getStorageId());
 		Assert.assertEquals(
-			existingDDMFieldAttribute.getLanguageId(),
-			newDDMFieldAttribute.getLanguageId());
-		Assert.assertEquals(
 			existingDDMFieldAttribute.getAttributeName(),
 			newDDMFieldAttribute.getAttributeName());
 		Assert.assertEquals(
-			existingDDMFieldAttribute.getSmallAttributeValue(),
-			newDDMFieldAttribute.getSmallAttributeValue());
+			existingDDMFieldAttribute.getLanguageId(),
+			newDDMFieldAttribute.getLanguageId());
 		Assert.assertEquals(
 			existingDDMFieldAttribute.getLargeAttributeValue(),
 			newDDMFieldAttribute.getLargeAttributeValue());
+		Assert.assertEquals(
+			existingDDMFieldAttribute.getSmallAttributeValue(),
+			newDDMFieldAttribute.getSmallAttributeValue());
 	}
 
 	@Test
@@ -205,12 +205,12 @@ public class DDMFieldAttributePersistenceTest {
 	}
 
 	@Test
-	public void testCountByF_L_AN() throws Exception {
-		_persistence.countByF_L_AN(RandomTestUtil.nextLong(), "", "");
+	public void testCountByF_AN_L() throws Exception {
+		_persistence.countByF_AN_L(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByF_L_AN(0L, "null", "null");
+		_persistence.countByF_AN_L(0L, "null", "null");
 
-		_persistence.countByF_L_AN(0L, (String)null, (String)null);
+		_persistence.countByF_AN_L(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -240,7 +240,7 @@ public class DDMFieldAttributePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"DDMFieldAttribute", "mvccVersion", true, "ctCollectionId", true,
 			"fieldAttributeId", true, "companyId", true, "fieldId", true,
-			"storageId", true, "languageId", true, "attributeName", true,
+			"storageId", true, "attributeName", true, "languageId", true,
 			"smallAttributeValue", true);
 	}
 
@@ -495,15 +495,15 @@ public class DDMFieldAttributePersistenceTest {
 				ddmFieldAttribute, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "fieldId"));
 		Assert.assertEquals(
-			ddmFieldAttribute.getLanguageId(),
-			ReflectionTestUtil.invoke(
-				ddmFieldAttribute, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "languageId"));
-		Assert.assertEquals(
 			ddmFieldAttribute.getAttributeName(),
 			ReflectionTestUtil.invoke(
 				ddmFieldAttribute, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "attributeName"));
+		Assert.assertEquals(
+			ddmFieldAttribute.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				ddmFieldAttribute, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "languageId"));
 	}
 
 	protected DDMFieldAttribute addDDMFieldAttribute() throws Exception {
@@ -521,13 +521,13 @@ public class DDMFieldAttributePersistenceTest {
 
 		ddmFieldAttribute.setStorageId(RandomTestUtil.nextLong());
 
-		ddmFieldAttribute.setLanguageId(RandomTestUtil.randomString());
-
 		ddmFieldAttribute.setAttributeName(RandomTestUtil.randomString());
 
-		ddmFieldAttribute.setSmallAttributeValue(RandomTestUtil.randomString());
+		ddmFieldAttribute.setLanguageId(RandomTestUtil.randomString());
 
 		ddmFieldAttribute.setLargeAttributeValue(RandomTestUtil.randomString());
+
+		ddmFieldAttribute.setSmallAttributeValue(RandomTestUtil.randomString());
 
 		_ddmFieldAttributes.add(_persistence.update(ddmFieldAttribute));
 

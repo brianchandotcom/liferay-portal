@@ -65,10 +65,10 @@ public class DDMFieldModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"fieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"structureVersionId", Types.BIGINT}, {"parentFieldId", Types.BIGINT},
-		{"storageId", Types.BIGINT}, {"fieldName", Types.VARCHAR},
-		{"fieldType", Types.VARCHAR}, {"priority", Types.INTEGER},
-		{"instanceId", Types.VARCHAR}, {"localizable", Types.BOOLEAN}
+		{"parentFieldId", Types.BIGINT}, {"storageId", Types.BIGINT},
+		{"structureVersionId", Types.BIGINT}, {"fieldName", Types.VARCHAR},
+		{"fieldType", Types.VARCHAR}, {"instanceId", Types.VARCHAR},
+		{"localizable", Types.BOOLEAN}, {"priority", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,18 +79,18 @@ public class DDMFieldModelImpl
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("storageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fieldType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("instanceId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("localizable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,structureVersionId LONG,parentFieldId LONG,storageId LONG,fieldName VARCHAR(255) null,fieldType VARCHAR(255) null,priority INTEGER,instanceId VARCHAR(75) null,localizable BOOLEAN,primary key (fieldId, ctCollectionId))";
+		"create table DDMField (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fieldId LONG not null,companyId LONG,parentFieldId LONG,storageId LONG,structureVersionId LONG,fieldName VARCHAR(255) null,fieldType VARCHAR(255) null,instanceId VARCHAR(75) null,localizable BOOLEAN,priority INTEGER,primary key (fieldId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMField";
 
@@ -295,11 +295,6 @@ public class DDMFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"companyId", (BiConsumer<DDMField, Long>)DDMField::setCompanyId);
 		attributeGetterFunctions.put(
-			"structureVersionId", DDMField::getStructureVersionId);
-		attributeSetterBiConsumers.put(
-			"structureVersionId",
-			(BiConsumer<DDMField, Long>)DDMField::setStructureVersionId);
-		attributeGetterFunctions.put(
 			"parentFieldId", DDMField::getParentFieldId);
 		attributeSetterBiConsumers.put(
 			"parentFieldId",
@@ -307,15 +302,17 @@ public class DDMFieldModelImpl
 		attributeGetterFunctions.put("storageId", DDMField::getStorageId);
 		attributeSetterBiConsumers.put(
 			"storageId", (BiConsumer<DDMField, Long>)DDMField::setStorageId);
+		attributeGetterFunctions.put(
+			"structureVersionId", DDMField::getStructureVersionId);
+		attributeSetterBiConsumers.put(
+			"structureVersionId",
+			(BiConsumer<DDMField, Long>)DDMField::setStructureVersionId);
 		attributeGetterFunctions.put("fieldName", DDMField::getFieldName);
 		attributeSetterBiConsumers.put(
 			"fieldName", (BiConsumer<DDMField, String>)DDMField::setFieldName);
 		attributeGetterFunctions.put("fieldType", DDMField::getFieldType);
 		attributeSetterBiConsumers.put(
 			"fieldType", (BiConsumer<DDMField, String>)DDMField::setFieldType);
-		attributeGetterFunctions.put("priority", DDMField::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority", (BiConsumer<DDMField, Integer>)DDMField::setPriority);
 		attributeGetterFunctions.put("instanceId", DDMField::getInstanceId);
 		attributeSetterBiConsumers.put(
 			"instanceId",
@@ -324,6 +321,9 @@ public class DDMFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"localizable",
 			(BiConsumer<DDMField, Boolean>)DDMField::setLocalizable);
+		attributeGetterFunctions.put("priority", DDMField::getPriority);
+		attributeSetterBiConsumers.put(
+			"priority", (BiConsumer<DDMField, Integer>)DDMField::setPriority);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -398,30 +398,6 @@ public class DDMFieldModelImpl
 	}
 
 	@Override
-	public long getStructureVersionId() {
-		return _structureVersionId;
-	}
-
-	@Override
-	public void setStructureVersionId(long structureVersionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_structureVersionId = structureVersionId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalStructureVersionId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("structureVersionId"));
-	}
-
-	@Override
 	public long getParentFieldId() {
 		return _parentFieldId;
 	}
@@ -457,6 +433,30 @@ public class DDMFieldModelImpl
 	public long getOriginalStorageId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("storageId"));
+	}
+
+	@Override
+	public long getStructureVersionId() {
+		return _structureVersionId;
+	}
+
+	@Override
+	public void setStructureVersionId(long structureVersionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_structureVersionId = structureVersionId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalStructureVersionId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
 	}
 
 	@Override
@@ -507,20 +507,6 @@ public class DDMFieldModelImpl
 	}
 
 	@Override
-	public int getPriority() {
-		return _priority;
-	}
-
-	@Override
-	public void setPriority(int priority) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_priority = priority;
-	}
-
-	@Override
 	public String getInstanceId() {
 		if (_instanceId == null) {
 			return "";
@@ -565,6 +551,20 @@ public class DDMFieldModelImpl
 		}
 
 		_localizable = localizable;
+	}
+
+	@Override
+	public int getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(int priority) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priority = priority;
 	}
 
 	public long getColumnBitmask() {
@@ -625,14 +625,14 @@ public class DDMFieldModelImpl
 		ddmFieldImpl.setCtCollectionId(getCtCollectionId());
 		ddmFieldImpl.setFieldId(getFieldId());
 		ddmFieldImpl.setCompanyId(getCompanyId());
-		ddmFieldImpl.setStructureVersionId(getStructureVersionId());
 		ddmFieldImpl.setParentFieldId(getParentFieldId());
 		ddmFieldImpl.setStorageId(getStorageId());
+		ddmFieldImpl.setStructureVersionId(getStructureVersionId());
 		ddmFieldImpl.setFieldName(getFieldName());
 		ddmFieldImpl.setFieldType(getFieldType());
-		ddmFieldImpl.setPriority(getPriority());
 		ddmFieldImpl.setInstanceId(getInstanceId());
 		ddmFieldImpl.setLocalizable(isLocalizable());
+		ddmFieldImpl.setPriority(getPriority());
 
 		ddmFieldImpl.resetOriginalValues();
 
@@ -724,11 +724,11 @@ public class DDMFieldModelImpl
 
 		ddmFieldCacheModel.companyId = getCompanyId();
 
-		ddmFieldCacheModel.structureVersionId = getStructureVersionId();
-
 		ddmFieldCacheModel.parentFieldId = getParentFieldId();
 
 		ddmFieldCacheModel.storageId = getStorageId();
+
+		ddmFieldCacheModel.structureVersionId = getStructureVersionId();
 
 		ddmFieldCacheModel.fieldName = getFieldName();
 
@@ -746,8 +746,6 @@ public class DDMFieldModelImpl
 			ddmFieldCacheModel.fieldType = null;
 		}
 
-		ddmFieldCacheModel.priority = getPriority();
-
 		ddmFieldCacheModel.instanceId = getInstanceId();
 
 		String instanceId = ddmFieldCacheModel.instanceId;
@@ -757,6 +755,8 @@ public class DDMFieldModelImpl
 		}
 
 		ddmFieldCacheModel.localizable = isLocalizable();
+
+		ddmFieldCacheModel.priority = getPriority();
 
 		return ddmFieldCacheModel;
 	}
@@ -835,14 +835,14 @@ public class DDMFieldModelImpl
 	private long _ctCollectionId;
 	private long _fieldId;
 	private long _companyId;
-	private long _structureVersionId;
 	private long _parentFieldId;
 	private long _storageId;
+	private long _structureVersionId;
 	private String _fieldName;
 	private String _fieldType;
-	private int _priority;
 	private String _instanceId;
 	private boolean _localizable;
+	private int _priority;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<DDMField, Object> function = _attributeGetterFunctions.get(
@@ -875,14 +875,14 @@ public class DDMFieldModelImpl
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("fieldId", _fieldId);
 		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("structureVersionId", _structureVersionId);
 		_columnOriginalValues.put("parentFieldId", _parentFieldId);
 		_columnOriginalValues.put("storageId", _storageId);
+		_columnOriginalValues.put("structureVersionId", _structureVersionId);
 		_columnOriginalValues.put("fieldName", _fieldName);
 		_columnOriginalValues.put("fieldType", _fieldType);
-		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("instanceId", _instanceId);
 		_columnOriginalValues.put("localizable", _localizable);
+		_columnOriginalValues.put("priority", _priority);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -904,21 +904,21 @@ public class DDMFieldModelImpl
 
 		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("structureVersionId", 16L);
+		columnBitmasks.put("parentFieldId", 16L);
 
-		columnBitmasks.put("parentFieldId", 32L);
+		columnBitmasks.put("storageId", 32L);
 
-		columnBitmasks.put("storageId", 64L);
+		columnBitmasks.put("structureVersionId", 64L);
 
 		columnBitmasks.put("fieldName", 128L);
 
 		columnBitmasks.put("fieldType", 256L);
 
-		columnBitmasks.put("priority", 512L);
+		columnBitmasks.put("instanceId", 512L);
 
-		columnBitmasks.put("instanceId", 1024L);
+		columnBitmasks.put("localizable", 1024L);
 
-		columnBitmasks.put("localizable", 2048L);
+		columnBitmasks.put("priority", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

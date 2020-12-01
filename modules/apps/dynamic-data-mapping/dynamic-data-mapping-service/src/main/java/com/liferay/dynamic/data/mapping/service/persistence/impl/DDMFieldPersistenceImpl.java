@@ -100,6 +100,513 @@ public class DDMFieldPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByStorageId;
+	private FinderPath _finderPathWithoutPaginationFindByStorageId;
+	private FinderPath _finderPathCountByStorageId;
+
+	/**
+	 * Returns all the ddm fields where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @return the matching ddm fields
+	 */
+	@Override
+	public List<DDMField> findByStorageId(long storageId) {
+		return findByStorageId(
+			storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ddm fields where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @return the range of matching ddm fields
+	 */
+	@Override
+	public List<DDMField> findByStorageId(long storageId, int start, int end) {
+		return findByStorageId(storageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm fields
+	 */
+	@Override
+	public List<DDMField> findByStorageId(
+		long storageId, int start, int end,
+		OrderByComparator<DDMField> orderByComparator) {
+
+		return findByStorageId(storageId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm fields
+	 */
+	@Override
+	public List<DDMField> findByStorageId(
+		long storageId, int start, int end,
+		OrderByComparator<DDMField> orderByComparator, boolean useFinderCache) {
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			DDMField.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByStorageId;
+				finderArgs = new Object[] {storageId};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByStorageId;
+			finderArgs = new Object[] {
+				storageId, start, end, orderByComparator
+			};
+		}
+
+		List<DDMField> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<DDMField>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMField ddmField : list) {
+					if (storageId != ddmField.getStorageId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_DDMFIELD_WHERE);
+
+			sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(DDMFieldModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(storageId);
+
+				list = (List<DDMField>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field
+	 * @throws NoSuchFieldException if a matching ddm field could not be found
+	 */
+	@Override
+	public DDMField findByStorageId_First(
+			long storageId, OrderByComparator<DDMField> orderByComparator)
+		throws NoSuchFieldException {
+
+		DDMField ddmField = fetchByStorageId_First(
+			storageId, orderByComparator);
+
+		if (ddmField != null) {
+			return ddmField;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("storageId=");
+		sb.append(storageId);
+
+		sb.append("}");
+
+		throw new NoSuchFieldException(sb.toString());
+	}
+
+	/**
+	 * Returns the first ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
+	 */
+	@Override
+	public DDMField fetchByStorageId_First(
+		long storageId, OrderByComparator<DDMField> orderByComparator) {
+
+		List<DDMField> list = findByStorageId(
+			storageId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field
+	 * @throws NoSuchFieldException if a matching ddm field could not be found
+	 */
+	@Override
+	public DDMField findByStorageId_Last(
+			long storageId, OrderByComparator<DDMField> orderByComparator)
+		throws NoSuchFieldException {
+
+		DDMField ddmField = fetchByStorageId_Last(storageId, orderByComparator);
+
+		if (ddmField != null) {
+			return ddmField;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("storageId=");
+		sb.append(storageId);
+
+		sb.append("}");
+
+		throw new NoSuchFieldException(sb.toString());
+	}
+
+	/**
+	 * Returns the last ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
+	 */
+	@Override
+	public DDMField fetchByStorageId_Last(
+		long storageId, OrderByComparator<DDMField> orderByComparator) {
+
+		int count = countByStorageId(storageId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDMField> list = findByStorageId(
+			storageId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ddm fields before and after the current ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param fieldId the primary key of the current ddm field
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm field
+	 * @throws NoSuchFieldException if a ddm field with the primary key could not be found
+	 */
+	@Override
+	public DDMField[] findByStorageId_PrevAndNext(
+			long fieldId, long storageId,
+			OrderByComparator<DDMField> orderByComparator)
+		throws NoSuchFieldException {
+
+		DDMField ddmField = findByPrimaryKey(fieldId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMField[] array = new DDMFieldImpl[3];
+
+			array[0] = getByStorageId_PrevAndNext(
+				session, ddmField, storageId, orderByComparator, true);
+
+			array[1] = ddmField;
+
+			array[2] = getByStorageId_PrevAndNext(
+				session, ddmField, storageId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMField getByStorageId_PrevAndNext(
+		Session session, DDMField ddmField, long storageId,
+		OrderByComparator<DDMField> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_DDMFIELD_WHERE);
+
+		sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(DDMFieldModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(storageId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(ddmField)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DDMField> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the ddm fields where storageId = &#63; from the database.
+	 *
+	 * @param storageId the storage ID
+	 */
+	@Override
+	public void removeByStorageId(long storageId) {
+		for (DDMField ddmField :
+				findByStorageId(
+					storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(ddmField);
+		}
+	}
+
+	/**
+	 * Returns the number of ddm fields where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @return the number of matching ddm fields
+	 */
+	@Override
+	public int countByStorageId(long storageId) {
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			DDMField.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByStorageId;
+
+			finderArgs = new Object[] {storageId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_DDMFIELD_WHERE);
+
+			sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(storageId);
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_STORAGEID_STORAGEID_2 =
+		"ddmField.storageId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByStructureVersionId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureVersionId;
 	private FinderPath _finderPathCountByStructureVersionId;
@@ -620,513 +1127,6 @@ public class DDMFieldPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_2 =
 			"ddmField.structureVersionId = ?";
-
-	private FinderPath _finderPathWithPaginationFindByStorageId;
-	private FinderPath _finderPathWithoutPaginationFindByStorageId;
-	private FinderPath _finderPathCountByStorageId;
-
-	/**
-	 * Returns all the ddm fields where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(long storageId) {
-		return findByStorageId(
-			storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @return the range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(long storageId, int start, int end) {
-		return findByStorageId(storageId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(
-		long storageId, int start, int end,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		return findByStorageId(storageId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(
-		long storageId, int start, int end,
-		OrderByComparator<DDMField> orderByComparator, boolean useFinderCache) {
-
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMField.class);
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByStorageId;
-				finderArgs = new Object[] {storageId};
-			}
-		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByStorageId;
-			finderArgs = new Object[] {
-				storageId, start, end, orderByComparator
-			};
-		}
-
-		List<DDMField> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<DDMField>)finderCache.getResult(
-				finderPath, finderArgs);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMField ddmField : list) {
-					if (storageId != ddmField.getStorageId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_DDMFIELD_WHERE);
-
-			sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DDMFieldModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				list = (List<DDMField>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField findByStorageId_First(
-			long storageId, OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = fetchByStorageId_First(
-			storageId, orderByComparator);
-
-		if (ddmField != null) {
-			return ddmField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the first ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByStorageId_First(
-		long storageId, OrderByComparator<DDMField> orderByComparator) {
-
-		List<DDMField> list = findByStorageId(
-			storageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField findByStorageId_Last(
-			long storageId, OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = fetchByStorageId_Last(storageId, orderByComparator);
-
-		if (ddmField != null) {
-			return ddmField;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByStorageId_Last(
-		long storageId, OrderByComparator<DDMField> orderByComparator) {
-
-		int count = countByStorageId(storageId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DDMField> list = findByStorageId(
-			storageId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the ddm fields before and after the current ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param fieldId the primary key of the current ddm field
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field
-	 * @throws NoSuchFieldException if a ddm field with the primary key could not be found
-	 */
-	@Override
-	public DDMField[] findByStorageId_PrevAndNext(
-			long fieldId, long storageId,
-			OrderByComparator<DDMField> orderByComparator)
-		throws NoSuchFieldException {
-
-		DDMField ddmField = findByPrimaryKey(fieldId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMField[] array = new DDMFieldImpl[3];
-
-			array[0] = getByStorageId_PrevAndNext(
-				session, ddmField, storageId, orderByComparator, true);
-
-			array[1] = ddmField;
-
-			array[2] = getByStorageId_PrevAndNext(
-				session, ddmField, storageId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected DDMField getByStorageId_PrevAndNext(
-		Session session, DDMField ddmField, long storageId,
-		OrderByComparator<DDMField> orderByComparator, boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(3);
-		}
-
-		sb.append(_SQL_SELECT_DDMFIELD_WHERE);
-
-		sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(DDMFieldModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(storageId);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(ddmField)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<DDMField> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the ddm fields where storageId = &#63; from the database.
-	 *
-	 * @param storageId the storage ID
-	 */
-	@Override
-	public void removeByStorageId(long storageId) {
-		for (DDMField ddmField :
-				findByStorageId(
-					storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmField);
-		}
-	}
-
-	/**
-	 * Returns the number of ddm fields where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the number of matching ddm fields
-	 */
-	@Override
-	public int countByStorageId(long storageId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMField.class);
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathCountByStorageId;
-
-			finderArgs = new Object[] {storageId};
-
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
-		}
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_DDMFIELD_WHERE);
-
-			sb.append(_FINDER_COLUMN_STORAGEID_STORAGEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(storageId);
-
-				count = (Long)query.uniqueResult();
-
-				if (productionMode) {
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_STORAGEID_STORAGEID_2 =
-		"ddmField.storageId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_F;
 	private FinderPath _finderPathWithoutPaginationFindByC_F;
@@ -2660,14 +2660,14 @@ public class DDMFieldPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("structureVersionId");
 		ctStrictColumnNames.add("parentFieldId");
 		ctStrictColumnNames.add("storageId");
+		ctStrictColumnNames.add("structureVersionId");
 		ctStrictColumnNames.add("fieldName");
 		ctStrictColumnNames.add("fieldType");
-		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("instanceId");
 		ctStrictColumnNames.add("localizable");
+		ctStrictColumnNames.add("priority");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
@@ -2705,24 +2705,6 @@ public class DDMFieldPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureVersionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureVersionId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByStructureVersionId", new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, true);
-
-		_finderPathCountByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByStructureVersionId", new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, false);
-
 		_finderPathWithPaginationFindByStorageId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
 			new String[] {
@@ -2740,6 +2722,24 @@ public class DDMFieldPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStorageId",
 			new String[] {Long.class.getName()}, new String[] {"storageId"},
 			false);
+
+		_finderPathWithPaginationFindByStructureVersionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureVersionId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"structureVersionId"}, true);
+
+		_finderPathWithoutPaginationFindByStructureVersionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByStructureVersionId", new String[] {Long.class.getName()},
+			new String[] {"structureVersionId"}, true);
+
+		_finderPathCountByStructureVersionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByStructureVersionId", new String[] {Long.class.getName()},
+			new String[] {"structureVersionId"}, false);
 
 		_finderPathWithPaginationFindByC_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",

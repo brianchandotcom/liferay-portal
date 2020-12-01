@@ -84,22 +84,22 @@ public class DDMFieldCacheModel
 		sb.append(fieldId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", structureVersionId=");
-		sb.append(structureVersionId);
 		sb.append(", parentFieldId=");
 		sb.append(parentFieldId);
 		sb.append(", storageId=");
 		sb.append(storageId);
+		sb.append(", structureVersionId=");
+		sb.append(structureVersionId);
 		sb.append(", fieldName=");
 		sb.append(fieldName);
 		sb.append(", fieldType=");
 		sb.append(fieldType);
-		sb.append(", priority=");
-		sb.append(priority);
 		sb.append(", instanceId=");
 		sb.append(instanceId);
 		sb.append(", localizable=");
 		sb.append(localizable);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,9 +113,9 @@ public class DDMFieldCacheModel
 		ddmFieldImpl.setCtCollectionId(ctCollectionId);
 		ddmFieldImpl.setFieldId(fieldId);
 		ddmFieldImpl.setCompanyId(companyId);
-		ddmFieldImpl.setStructureVersionId(structureVersionId);
 		ddmFieldImpl.setParentFieldId(parentFieldId);
 		ddmFieldImpl.setStorageId(storageId);
+		ddmFieldImpl.setStructureVersionId(structureVersionId);
 
 		if (fieldName == null) {
 			ddmFieldImpl.setFieldName("");
@@ -131,8 +131,6 @@ public class DDMFieldCacheModel
 			ddmFieldImpl.setFieldType(fieldType);
 		}
 
-		ddmFieldImpl.setPriority(priority);
-
 		if (instanceId == null) {
 			ddmFieldImpl.setInstanceId("");
 		}
@@ -141,6 +139,7 @@ public class DDMFieldCacheModel
 		}
 
 		ddmFieldImpl.setLocalizable(localizable);
+		ddmFieldImpl.setPriority(priority);
 
 		ddmFieldImpl.resetOriginalValues();
 
@@ -157,18 +156,18 @@ public class DDMFieldCacheModel
 
 		companyId = objectInput.readLong();
 
-		structureVersionId = objectInput.readLong();
-
 		parentFieldId = objectInput.readLong();
 
 		storageId = objectInput.readLong();
+
+		structureVersionId = objectInput.readLong();
 		fieldName = objectInput.readUTF();
 		fieldType = objectInput.readUTF();
-
-		priority = objectInput.readInt();
 		instanceId = objectInput.readUTF();
 
 		localizable = objectInput.readBoolean();
+
+		priority = objectInput.readInt();
 	}
 
 	@Override
@@ -181,11 +180,11 @@ public class DDMFieldCacheModel
 
 		objectOutput.writeLong(companyId);
 
-		objectOutput.writeLong(structureVersionId);
-
 		objectOutput.writeLong(parentFieldId);
 
 		objectOutput.writeLong(storageId);
+
+		objectOutput.writeLong(structureVersionId);
 
 		if (fieldName == null) {
 			objectOutput.writeUTF("");
@@ -201,8 +200,6 @@ public class DDMFieldCacheModel
 			objectOutput.writeUTF(fieldType);
 		}
 
-		objectOutput.writeInt(priority);
-
 		if (instanceId == null) {
 			objectOutput.writeUTF("");
 		}
@@ -211,19 +208,21 @@ public class DDMFieldCacheModel
 		}
 
 		objectOutput.writeBoolean(localizable);
+
+		objectOutput.writeInt(priority);
 	}
 
 	public long mvccVersion;
 	public long ctCollectionId;
 	public long fieldId;
 	public long companyId;
-	public long structureVersionId;
 	public long parentFieldId;
 	public long storageId;
+	public long structureVersionId;
 	public String fieldName;
 	public String fieldType;
-	public int priority;
 	public String instanceId;
 	public boolean localizable;
+	public int priority;
 
 }

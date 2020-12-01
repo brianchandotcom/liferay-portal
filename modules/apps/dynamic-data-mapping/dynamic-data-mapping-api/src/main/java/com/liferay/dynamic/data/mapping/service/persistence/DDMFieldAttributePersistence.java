@@ -499,64 +499,64 @@ public interface DDMFieldAttributePersistence
 	public int countByAN_SAV(String attributeName, String smallAttributeValue);
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; or throws a <code>NoSuchFieldAttributeException</code> if it could not be found.
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or throws a <code>NoSuchFieldAttributeException</code> if it could not be found.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the matching ddm field attribute
 	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
 	 */
-	public DDMFieldAttribute findByF_L_AN(
-			long fieldId, String languageId, String attributeName)
+	public DDMFieldAttribute findByF_AN_L(
+			long fieldId, String attributeName, String languageId)
 		throws NoSuchFieldAttributeException;
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
-	public DDMFieldAttribute fetchByF_L_AN(
-		long fieldId, String languageId, String attributeName);
+	public DDMFieldAttribute fetchByF_AN_L(
+		long fieldId, String attributeName, String languageId);
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
 	 */
-	public DDMFieldAttribute fetchByF_L_AN(
-		long fieldId, String languageId, String attributeName,
+	public DDMFieldAttribute fetchByF_AN_L(
+		long fieldId, String attributeName, String languageId,
 		boolean useFinderCache);
 
 	/**
-	 * Removes the ddm field attribute where fieldId = &#63; and languageId = &#63; and attributeName = &#63; from the database.
+	 * Removes the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the ddm field attribute that was removed
 	 */
-	public DDMFieldAttribute removeByF_L_AN(
-			long fieldId, String languageId, String attributeName)
+	public DDMFieldAttribute removeByF_AN_L(
+			long fieldId, String attributeName, String languageId)
 		throws NoSuchFieldAttributeException;
 
 	/**
-	 * Returns the number of ddm field attributes where fieldId = &#63; and languageId = &#63; and attributeName = &#63;.
+	 * Returns the number of ddm field attributes where fieldId = &#63; and attributeName = &#63; and languageId = &#63;.
 	 *
 	 * @param fieldId the field ID
-	 * @param languageId the language ID
 	 * @param attributeName the attribute name
+	 * @param languageId the language ID
 	 * @return the number of matching ddm field attributes
 	 */
-	public int countByF_L_AN(
-		long fieldId, String languageId, String attributeName);
+	public int countByF_AN_L(
+		long fieldId, String attributeName, String languageId);
 
 	/**
 	 * Caches the ddm field attribute in the entity cache if it is enabled.

@@ -124,6 +124,174 @@ public class DDMFieldUtil {
 	}
 
 	/**
+	 * Returns all the ddm fields where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @return the matching ddm fields
+	 */
+	public static List<DDMField> findByStorageId(long storageId) {
+		return getPersistence().findByStorageId(storageId);
+	}
+
+	/**
+	 * Returns a range of all the ddm fields where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @return the range of matching ddm fields
+	 */
+	public static List<DDMField> findByStorageId(
+		long storageId, int start, int end) {
+
+		return getPersistence().findByStorageId(storageId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm fields
+	 */
+	public static List<DDMField> findByStorageId(
+		long storageId, int start, int end,
+		OrderByComparator<DDMField> orderByComparator) {
+
+		return getPersistence().findByStorageId(
+			storageId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm fields
+	 */
+	public static List<DDMField> findByStorageId(
+		long storageId, int start, int end,
+		OrderByComparator<DDMField> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByStorageId(
+			storageId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field
+	 * @throws NoSuchFieldException if a matching ddm field could not be found
+	 */
+	public static DDMField findByStorageId_First(
+			long storageId, OrderByComparator<DDMField> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
+
+		return getPersistence().findByStorageId_First(
+			storageId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
+	 */
+	public static DDMField fetchByStorageId_First(
+		long storageId, OrderByComparator<DDMField> orderByComparator) {
+
+		return getPersistence().fetchByStorageId_First(
+			storageId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field
+	 * @throws NoSuchFieldException if a matching ddm field could not be found
+	 */
+	public static DDMField findByStorageId_Last(
+			long storageId, OrderByComparator<DDMField> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
+
+		return getPersistence().findByStorageId_Last(
+			storageId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
+	 */
+	public static DDMField fetchByStorageId_Last(
+		long storageId, OrderByComparator<DDMField> orderByComparator) {
+
+		return getPersistence().fetchByStorageId_Last(
+			storageId, orderByComparator);
+	}
+
+	/**
+	 * Returns the ddm fields before and after the current ddm field in the ordered set where storageId = &#63;.
+	 *
+	 * @param fieldId the primary key of the current ddm field
+	 * @param storageId the storage ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm field
+	 * @throws NoSuchFieldException if a ddm field with the primary key could not be found
+	 */
+	public static DDMField[] findByStorageId_PrevAndNext(
+			long fieldId, long storageId,
+			OrderByComparator<DDMField> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
+
+		return getPersistence().findByStorageId_PrevAndNext(
+			fieldId, storageId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the ddm fields where storageId = &#63; from the database.
+	 *
+	 * @param storageId the storage ID
+	 */
+	public static void removeByStorageId(long storageId) {
+		getPersistence().removeByStorageId(storageId);
+	}
+
+	/**
+	 * Returns the number of ddm fields where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @return the number of matching ddm fields
+	 */
+	public static int countByStorageId(long storageId) {
+		return getPersistence().countByStorageId(storageId);
+	}
+
+	/**
 	 * Returns all the ddm fields where structureVersionId = &#63;.
 	 *
 	 * @param structureVersionId the structure version ID
@@ -296,174 +464,6 @@ public class DDMFieldUtil {
 	 */
 	public static int countByStructureVersionId(long structureVersionId) {
 		return getPersistence().countByStructureVersionId(structureVersionId);
-	}
-
-	/**
-	 * Returns all the ddm fields where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the matching ddm fields
-	 */
-	public static List<DDMField> findByStorageId(long storageId) {
-		return getPersistence().findByStorageId(storageId);
-	}
-
-	/**
-	 * Returns a range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @return the range of matching ddm fields
-	 */
-	public static List<DDMField> findByStorageId(
-		long storageId, int start, int end) {
-
-		return getPersistence().findByStorageId(storageId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm fields
-	 */
-	public static List<DDMField> findByStorageId(
-		long storageId, int start, int end,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		return getPersistence().findByStorageId(
-			storageId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm fields
-	 */
-	public static List<DDMField> findByStorageId(
-		long storageId, int start, int end,
-		OrderByComparator<DDMField> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByStorageId(
-			storageId, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	public static DDMField findByStorageId_First(
-			long storageId, OrderByComparator<DDMField> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
-
-		return getPersistence().findByStorageId_First(
-			storageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	public static DDMField fetchByStorageId_First(
-		long storageId, OrderByComparator<DDMField> orderByComparator) {
-
-		return getPersistence().fetchByStorageId_First(
-			storageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field
-	 * @throws NoSuchFieldException if a matching ddm field could not be found
-	 */
-	public static DDMField findByStorageId_Last(
-			long storageId, OrderByComparator<DDMField> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
-
-		return getPersistence().findByStorageId_Last(
-			storageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	public static DDMField fetchByStorageId_Last(
-		long storageId, OrderByComparator<DDMField> orderByComparator) {
-
-		return getPersistence().fetchByStorageId_Last(
-			storageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the ddm fields before and after the current ddm field in the ordered set where storageId = &#63;.
-	 *
-	 * @param fieldId the primary key of the current ddm field
-	 * @param storageId the storage ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next ddm field
-	 * @throws NoSuchFieldException if a ddm field with the primary key could not be found
-	 */
-	public static DDMField[] findByStorageId_PrevAndNext(
-			long fieldId, long storageId,
-			OrderByComparator<DDMField> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
-
-		return getPersistence().findByStorageId_PrevAndNext(
-			fieldId, storageId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the ddm fields where storageId = &#63; from the database.
-	 *
-	 * @param storageId the storage ID
-	 */
-	public static void removeByStorageId(long storageId) {
-		getPersistence().removeByStorageId(storageId);
-	}
-
-	/**
-	 * Returns the number of ddm fields where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the number of matching ddm fields
-	 */
-	public static int countByStorageId(long storageId) {
-		return getPersistence().countByStorageId(storageId);
 	}
 
 	/**

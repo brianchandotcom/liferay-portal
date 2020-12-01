@@ -452,6 +452,66 @@ definition {
 			step = "2");
 	}
 
+	@description = "Create an Object and Form during Workflow App Creation"
+	@priority = "5"
+	test CreateObjectAndForm {
+		property portal.acceptance = "true";
+
+		AppBuilderWorkflow.validatePlusButton();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setUpTwoFieldSets(
+			fieldSetName = "Field Sets",
+			fieldType1 = "Text",
+			fieldType2 = "Numeric");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Sets");
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Option${number}",
+				optionValue = "Option ${number}",
+				rowNumber = "${number}");
+		}
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Multiple Selection");
+
+		FormViewBuilder.gotoRules();
+
+		FormViewBuilder.addRule();
+
+		FormViewBuilder.editRuleName(ruleName = "Multiple Selection Rule");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Multiple Selection",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Upload");
+
+		FormViewBuilder.ruleSave();
+
+		FormViewBuilder.setName(formViewName = "Form One");
+
+		FormViewBuilder.save();
+	}
+
 	@description = "Create an App through the 'Apps' portlet"
 	@priority = "5"
 	test CreateStandardApp {

@@ -34,6 +34,7 @@ definition {
 		Accounts.addCP(
 			accountDescription = "This is an Account with Multi Domains",
 			accountName = "Account with Multi Domains",
+			domainEnable = "true",
 			domainNames = "liferay.com,Google.com,si-na.com,9teen.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -66,6 +67,7 @@ definition {
 		Accounts.addCP(
 			accountDescription = "This is an Account with Multi Domains",
 			accountName = "AM Account",
+			domainEnable = "true",
 			domainNames = "liferay.com,Google.com");
 
 		AccountConfiguration.addAccountManager(
@@ -197,6 +199,7 @@ definition {
 		Accounts.addCP(
 			accountDescription = "This is an Account with Multi Domains",
 			accountName = "AM Account",
+			domainEnable = "true",
 			domainNames = "liferay.com,Google.com,9teen.com");
 
 		AccountConfiguration.addAccountManager(
@@ -261,6 +264,7 @@ definition {
 		Accounts.addCP(
 			accountDescription = "This is an Account with Multi Domains",
 			accountName = "AM Account",
+			domainEnable = "true",
 			domainNames = "liferay.com,Google.com,9teen.com");
 
 		AccountConfiguration.addAccountManager(
@@ -759,6 +763,7 @@ definition {
 		Accounts.addCP(
 			accountDescription = "Remove Domain from the Account",
 			accountName = "Remove Account Domain",
+			domainEnable = "true",
 			domainNames = "liferay.com,Google.com");
 
 		ApplicationsMenu.gotoPortlet(

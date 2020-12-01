@@ -90,8 +90,12 @@ definition {
 			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 		}
 
-		if (isSet(domainNames)) {
-			Accounts.addDomains(domainNames = "${domainNames}");
+		if (isSet(domainEnable)) {
+			AssertElementPresent(locator1 = "Account#DOMAIN_SECTION");
+
+			if (isSet(domainNames)) {
+				Accounts.addDomains(domainNames = "${domainNames}");
+			}
 		}
 		else {
 			AssertElementNotPresent(locator1 = "Account#DOMAIN_SECTION");

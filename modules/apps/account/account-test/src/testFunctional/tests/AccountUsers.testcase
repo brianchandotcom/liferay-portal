@@ -126,6 +126,7 @@ definition {
 		Accounts.addCP(
 			accountDescription = "This is a test for adding user to account.",
 			accountName = "Account with Exist User",
+			domainEnable = "true",
 			domainNames = "liferay.com");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");

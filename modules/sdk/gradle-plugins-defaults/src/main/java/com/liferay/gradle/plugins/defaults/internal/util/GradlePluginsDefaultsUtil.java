@@ -33,6 +33,7 @@ import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.internal.authentication.DefaultBasicAuthentication;
+import org.gradle.util.GradleVersion;
 
 /**
  * @author Andrea Di Giorgi
@@ -65,23 +66,28 @@ public class GradlePluginsDefaultsUtil {
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
 		if (!Boolean.getBoolean("maven.local.ignore")) {
-			repositoryHandler.mavenLocal(
-				new Action<MavenArtifactRepository>() {
+			GradleVersion gradleVersion = GradleVersion.current();
 
-					@Override
-					public void execute(
-						MavenArtifactRepository mavenArtifactRepository) {
+			if (gradleVersion.compareTo(GradleVersion.version("6.0")) > 0) {
+				repositoryHandler.mavenLocal(
+					new Action<MavenArtifactRepository>() {
 
-						MavenArtifactRepository.MetadataSources
-							metadataSources =
-								mavenArtifactRepository.getMetadataSources();
+						@Override
+						public void execute(
+							MavenArtifactRepository mavenArtifactRepository) {
 
-						metadataSources.mavenPom();
+							MavenArtifactRepository.MetadataSources
+								metadataSources =
+									mavenArtifactRepository.
+										getMetadataSources();
 
-						metadataSources.artifact();
-					}
+							metadataSources.mavenPom();
 
-				});
+							metadataSources.artifact();
+						}
+
+					});
+			}
 
 			File tmpMavenRepositoryDir = null;
 

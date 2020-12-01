@@ -13,7 +13,7 @@ buildTaglibs {
 }
 
 dependencies {
-	alloyTaglib group: "com.liferay.alloy-taglibs", name: "alloy-taglib", version: "latest.release"
+	alloyTaglib group: "com.liferay.alloy-taglibs", name: "alloy-taglib", version: "1.1.14"
 	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.16.0"
 	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.32.0"
 	alloyTaglib group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.2.0"

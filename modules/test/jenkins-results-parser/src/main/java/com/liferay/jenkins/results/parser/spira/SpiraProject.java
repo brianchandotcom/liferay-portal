@@ -399,6 +399,41 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraTestCasePriorities.get(0);
 	}
 
+	public List<SpiraTestCaseProductVersion> getSpiraTestCaseProductVersions(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		SpiraCustomProperty spiraCustomProperty =
+			SpiraCustomProperty.createSpiraCustomProperty(
+				this, spiraArtifactClass,
+				SpiraTestCaseProductVersion.CUSTOM_PROPERTY_NAME,
+				SpiraCustomProperty.Type.LIST);
+
+		SpiraCustomList spiraCustomList =
+			spiraCustomProperty.getSpiraCustomList();
+
+		List<SpiraTestCaseProductVersion> spiraTestCaseProductVersions =
+			new ArrayList<>();
+
+		for (SpiraCustomListValue spiraCustomListValue :
+				spiraCustomList.getSpiraCustomListValues()) {
+
+			SpiraCustomPropertyValue spiraCustomPropertyValue =
+				SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty, spiraCustomListValue.getName());
+
+			if (!(spiraCustomPropertyValue instanceof
+					SpiraTestCaseProductVersion)) {
+
+				continue;
+			}
+
+			spiraTestCaseProductVersions.add(
+				(SpiraTestCaseProductVersion)spiraCustomPropertyValue);
+		}
+
+		return spiraTestCaseProductVersions;
+	}
+
 	public SpiraTestCaseType getSpiraTestCaseTypeByID(int testCaseTypeID) {
 		List<SpiraTestCaseType> spiraTestCaseTypes =
 			SpiraTestCaseType.getSpiraTestCaseTypes(

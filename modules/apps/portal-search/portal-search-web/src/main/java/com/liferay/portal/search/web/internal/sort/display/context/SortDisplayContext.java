@@ -46,8 +46,16 @@ public class SortDisplayContext {
 		return _sortTermDisplayContexts;
 	}
 
+	public boolean isAnySelected() {
+		return _anySelected;
+	}
+
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setAnySelected(boolean anySelected) {
+		_anySelected = anySelected;
 	}
 
 	public void setDisplayStyleGroupId(long displayStyleGroupId) {
@@ -78,6 +86,7 @@ public class SortDisplayContext {
 		_sortTermDisplayContexts = sortTermDisplayContexts;
 	}
 
+	private boolean _anySelected;
 	private long _displayStyleGroupId;
 	private String _parameterName;
 	private String _parameterValue;

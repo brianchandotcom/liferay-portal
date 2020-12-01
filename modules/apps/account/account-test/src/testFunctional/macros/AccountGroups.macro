@@ -55,6 +55,42 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeAccount {
+		Search.searchCP(searchTerm = "${accountGroupName}");
+
+		if ("${removeType}" == "Toolbar Remove Icon") {
+			LexiconEntry.selectEntry(key_rowEntry = "${accountGroupName}");
+
+			ClickNoError(locator1 = "ManagementBar#REMOVE");
+
+			AssertConfirm(value1 = "Are you sure you want to remove the selected accounts?");
+
+			Alert.viewSuccessMessage();
+		}
+		else if ("${removeType}" == "Management Toolbar") {
+			LexiconEntry.selectEntry(key_rowEntry = "${accountGroupName}");
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Remove");
+
+			AssertConfirm(value1 = "Are you sure you want to remove the selected accounts?");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			ClickNoError(
+				key_entryName = "${accountGroupName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
+
+			AssertConfirm(value1 = "Are you sure you want to remove this account?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		LexiconEntry.viewNoEntry(rowEntry = "${accountGroupName}");
+	}
+
 	macro viewAssignee {
 		AssertElementPresent(
 			key_tab = "Accounts",

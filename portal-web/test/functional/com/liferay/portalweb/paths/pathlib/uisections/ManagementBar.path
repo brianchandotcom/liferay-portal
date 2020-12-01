@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE</td>
+	<td>//div[contains(@id,'ManagementToolbar')]//button[contains(@title,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_RESULT_SUMMARY</td>
 	<td>//div[contains(@id,'ManagementToolbar')]//span[@class='text-truncate']</td>
 	<td></td>

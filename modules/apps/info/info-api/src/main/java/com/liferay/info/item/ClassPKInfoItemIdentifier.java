@@ -24,8 +24,8 @@ import java.util.Objects;
  */
 public class ClassPKInfoItemIdentifier extends BaseInfoItemIdentifier {
 
-	public static final InfoItemServiceFilter INFO_SERVICE_FILTER =
-		getInfoServiceFilter(ClassPKInfoItemIdentifier.class);
+	public static final InfoItemServiceFilter INFO_ITEM_SERVICE_FILTER =
+		getInfoItemServiceFilter(ClassPKInfoItemIdentifier.class);
 
 	public ClassPKInfoItemIdentifier(long classPK) {
 		_classPK = classPK;
@@ -51,8 +51,8 @@ public class ClassPKInfoItemIdentifier extends BaseInfoItemIdentifier {
 		return _classPK;
 	}
 
-	public InfoItemServiceFilter getInfoServiceFilter() {
-		return INFO_SERVICE_FILTER;
+	public InfoItemServiceFilter getInfoItemServiceFilter() {
+		return INFO_ITEM_SERVICE_FILTER;
 	}
 
 	@Override

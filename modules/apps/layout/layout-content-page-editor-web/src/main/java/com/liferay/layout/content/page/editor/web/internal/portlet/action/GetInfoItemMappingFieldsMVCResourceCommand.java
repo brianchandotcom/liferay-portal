@@ -100,7 +100,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, itemClassName,
-				infoItemIdentifier.getInfoServiceFilter());
+				infoItemIdentifier.getInfoItemServiceFilter());
 
 		if (infoItemObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(

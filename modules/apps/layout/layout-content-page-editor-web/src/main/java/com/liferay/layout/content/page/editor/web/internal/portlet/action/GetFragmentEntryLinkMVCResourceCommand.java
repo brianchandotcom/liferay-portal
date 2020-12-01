@@ -125,7 +125,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 				InfoItemObjectProvider<Object> infoItemObjectProvider =
 					_infoItemServiceTracker.getFirstInfoItemService(
 						InfoItemObjectProvider.class, collectionItemClassName,
-						infoItemIdentifier.getInfoServiceFilter());
+						infoItemIdentifier.getInfoItemServiceFilter());
 
 				if (infoItemObjectProvider != null) {
 					Object infoItemObject = infoItemObjectProvider.getInfoItem(

@@ -270,7 +270,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					InfoItemObjectProvider.class,
 					portal.getClassName(
 						layoutDisplayPageObjectProvider.getClassNameId()),
-					infoItemIdentifier.getInfoServiceFilter());
+					infoItemIdentifier.getInfoItemServiceFilter());
 
 		infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
 

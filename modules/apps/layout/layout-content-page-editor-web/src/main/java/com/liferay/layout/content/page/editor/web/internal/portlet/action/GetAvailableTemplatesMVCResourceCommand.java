@@ -138,7 +138,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className,
-				infoItemIdentifier.getInfoServiceFilter());
+				infoItemIdentifier.getInfoItemServiceFilter());
 
 		try {
 			if (infoItemObjectProvider != null) {

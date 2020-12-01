@@ -37,11 +37,11 @@ public abstract class BaseInfoItemIdentifier implements InfoItemIdentifier {
 		_version = version;
 	}
 
-	protected static InfoItemServiceFilter getInfoServiceFilter(
-		Class<? extends InfoItemIdentifier> infoServiceFilterClass) {
+	protected static InfoItemServiceFilter getInfoItemServiceFilter(
+		Class<? extends InfoItemIdentifier> infoItemServiceFilterClass) {
 
 		return new OptionalPropertyInfoItemServiceFilter(
-			"info.item.identifier", infoServiceFilterClass.getName());
+			"info.item.identifier", infoItemServiceFilterClass.getName());
 	}
 
 	private String _version;

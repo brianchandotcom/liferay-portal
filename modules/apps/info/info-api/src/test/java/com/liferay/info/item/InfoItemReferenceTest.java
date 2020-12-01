@@ -90,7 +90,7 @@ public class InfoItemReferenceTest {
 		InfoItemIdentifier infoItemIdentifier = new InfoItemIdentifier() {
 
 			@Override
-			public InfoItemServiceFilter getInfoServiceFilter() {
+			public InfoItemServiceFilter getInfoItemServiceFilter() {
 				return null;
 			}
 

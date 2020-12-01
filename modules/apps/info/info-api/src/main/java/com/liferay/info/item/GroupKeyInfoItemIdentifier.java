@@ -24,8 +24,8 @@ import java.util.Objects;
  */
 public class GroupKeyInfoItemIdentifier extends BaseInfoItemIdentifier {
 
-	public static final InfoItemServiceFilter INFO_SERVICE_FILTER =
-		getInfoServiceFilter(GroupKeyInfoItemIdentifier.class);
+	public static final InfoItemServiceFilter INFO_ITEM_SERVICE_FILTER =
+		getInfoItemServiceFilter(GroupKeyInfoItemIdentifier.class);
 
 	public GroupKeyInfoItemIdentifier(long groupId, String key) {
 		_groupId = groupId;
@@ -58,8 +58,8 @@ public class GroupKeyInfoItemIdentifier extends BaseInfoItemIdentifier {
 		return _groupId;
 	}
 
-	public InfoItemServiceFilter getInfoServiceFilter() {
-		return INFO_SERVICE_FILTER;
+	public InfoItemServiceFilter getInfoItemServiceFilter() {
+		return INFO_ITEM_SERVICE_FILTER;
 	}
 
 	public String getKey() {

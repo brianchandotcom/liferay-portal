@@ -247,7 +247,7 @@ public class FragmentEntryProcessorHelperImpl
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className,
-				infoItemIdentifier.getInfoServiceFilter());
+				infoItemIdentifier.getInfoItemServiceFilter());
 
 		if (infoItemObjectProvider == null) {
 			return null;

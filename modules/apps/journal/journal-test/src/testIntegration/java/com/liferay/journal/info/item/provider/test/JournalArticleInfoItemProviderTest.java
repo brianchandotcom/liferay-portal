@@ -79,7 +79,7 @@ public class JournalArticleInfoItemProviderTest {
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					JournalArticle.class.getName(),
-					infoItemIdentifier.getInfoServiceFilter());
+					infoItemIdentifier.getInfoItemServiceFilter());
 
 		JournalArticle publishedArticle =
 			journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
@@ -106,7 +106,7 @@ public class JournalArticleInfoItemProviderTest {
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					JournalArticle.class.getName(),
-					infoItemIdentifier.getInfoServiceFilter());
+					infoItemIdentifier.getInfoItemServiceFilter());
 
 		journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
 	}

@@ -31,7 +31,7 @@ public interface InfoItemIdentifier {
 	public static final String VERSION_LATEST_APPROVED =
 		"VERSION_LATEST_APPROVED";
 
-	public InfoItemServiceFilter getInfoServiceFilter();
+	public InfoItemServiceFilter getInfoItemServiceFilter();
 
 	public Optional<String> getVersionOptional();
 

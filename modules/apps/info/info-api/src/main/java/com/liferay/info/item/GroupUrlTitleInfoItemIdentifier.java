@@ -24,8 +24,8 @@ import java.util.Objects;
  */
 public class GroupUrlTitleInfoItemIdentifier extends BaseInfoItemIdentifier {
 
-	public static final InfoItemServiceFilter INFO_SERVICE_FILTER =
-		getInfoServiceFilter(GroupUrlTitleInfoItemIdentifier.class);
+	public static final InfoItemServiceFilter INFO_ITEM_SERVICE_FILTER =
+		getInfoItemServiceFilter(GroupUrlTitleInfoItemIdentifier.class);
 
 	public GroupUrlTitleInfoItemIdentifier(long groupId, String urlTitle) {
 		_groupId = groupId;
@@ -60,8 +60,8 @@ public class GroupUrlTitleInfoItemIdentifier extends BaseInfoItemIdentifier {
 		return _groupId;
 	}
 
-	public InfoItemServiceFilter getInfoServiceFilter() {
-		return INFO_SERVICE_FILTER;
+	public InfoItemServiceFilter getInfoItemServiceFilter() {
+		return INFO_ITEM_SERVICE_FILTER;
 	}
 
 	public String getUrlTitle() {

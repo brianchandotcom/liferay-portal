@@ -277,6 +277,32 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		return spiraTestCaseRuns;
 	}
 
+	public JSONObject getAutomatedJSONObject() {
+		if (_automatedJSONObject != null) {
+			return _automatedJSONObject;
+		}
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		urlPathReplacements.put("test_run_id", String.valueOf(getID()));
+
+		try {
+			_automatedJSONObject = SpiraRestAPIUtil.requestJSONObject(
+				"projects/{project_id}/test-runs/{test_run_id}/automated", null,
+				urlPathReplacements, HttpRequestMethod.GET, null);
+
+			return _automatedJSONObject;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	@Override
 	public String getURL() {
 		SpiraProject spiraProject = getSpiraProject();
@@ -616,6 +642,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		cacheSpiraArtifact(SpiraTestCaseRun.class, this);
 	}
+
+	private JSONObject _automatedJSONObject;
 
 	private abstract static class IndexedCallable<T> implements Callable<T> {
 

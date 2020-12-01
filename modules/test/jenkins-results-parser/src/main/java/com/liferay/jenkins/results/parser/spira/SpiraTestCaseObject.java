@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.google.common.collect.Lists;
+
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
@@ -339,6 +341,48 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return JenkinsResultsParserUtil.combine(
 			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/TestCase/",
 			String.valueOf(getID()), ".aspx");
+	}
+
+	public void mergeSpiraTestCaseObject(
+		SpiraTestCaseObject spiraTestCaseObject) {
+
+		SpiraProject spiraProject = getSpiraProject();
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		for (List<SpiraTestCaseRun> spiraTestCaseRuns :
+				Lists.partition(
+					spiraTestCaseObject.getSpiraTestCaseRuns(), 25)) {
+
+			JSONArray requestJSONArray = new JSONArray();
+
+			for (SpiraTestCaseRun spiraTestCaseRun : spiraTestCaseRuns) {
+				JSONObject requestJSONObject =
+					spiraTestCaseRun.getAutomatedJSONObject();
+
+				requestJSONObject.put(SpiraTestCaseObject.KEY_ID, getID());
+
+				requestJSONArray.put(requestJSONObject);
+			}
+
+			try {
+				SpiraRestAPIUtil.request(
+					"projects/{project_id}/test-runs/record-multiple", null,
+					urlPathReplacements, HttpRequestMethod.POST,
+					requestJSONArray.toString());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			SpiraTestCaseRun.deleteSpiraTestCaseRuns(spiraTestCaseRuns);
+		}
+
+		deleteSpiraTestCaseObjectByID(
+			spiraProject, spiraTestCaseObject.getID());
 	}
 
 	public void updateSpiraCustomPropertyValues(

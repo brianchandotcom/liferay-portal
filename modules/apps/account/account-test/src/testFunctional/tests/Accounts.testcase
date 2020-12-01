@@ -117,6 +117,48 @@ definition {
 	}
 
 	@priority = "4"
+	test AddNewUserViaPersonAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a Person Account.",
+			accountName = "Person Account",
+			accountType = "Person");
+
+		Accounts.selectUser(
+			accountName = "Person Account",
+			accountUserName = "userfn1",
+			newUser = "Yes",
+			userEmailAddress = "userfn1@liferay.com",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Accounts.selectUser(
+			accountName = "Person Account",
+			accountUserName = "userfn2",
+			newUser = "Yes",
+			userEmailAddress = "userfn2@liferay.com",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.viewEntryAccounts(
+			accountName = "Person Account",
+			accountUserName = "userfn2");
+
+		AccountUsers.viewEntryAccounts(
+			accountName = "No Assigned Account",
+			accountUserName = "userfn1");
+	}
+
+	@priority = "4"
 	test AddPersonAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

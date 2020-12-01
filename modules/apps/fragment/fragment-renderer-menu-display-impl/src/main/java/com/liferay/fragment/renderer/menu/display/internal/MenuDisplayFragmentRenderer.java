@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -134,8 +134,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 				fragmentId, menuDisplayFragmentConfiguration, printWriter);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				menuDisplayFragmentConfiguration);
+				themeDisplay.getCompanyId(), menuDisplayFragmentConfiguration);
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
 
@@ -155,7 +154,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _configureMenu(
-			long groupId,
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
 			NavigationMenuTag navigationMenuTag)
 		throws PortalException {
@@ -202,8 +200,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 			if (parentSiteNavigationMenuItemId > 0) {
 				if (_isLayoutHierarchy(siteNavigationMenuId)) {
-					Layout layout = _layoutService.fetchLayout(
-						groupId, siteNavigationMenuSource.isPrivateLayout(),
+					Layout layout = _layoutLocalService.fetchLayout(
 						parentSiteNavigationMenuItemId);
 
 					navigationMenuTag.setRootItemId(layout.getUuid());
@@ -231,7 +228,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private NavigationMenuTag _getNavigationMenuTag(
-			long companyId, long groupId,
+			long companyId,
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration)
 		throws PortalException {
 
@@ -245,8 +242,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			navigationMenuTag.setDdmTemplateKey(ddmTemplate.getTemplateKey());
 		}
 
-		_configureMenu(
-			groupId, menuDisplayFragmentConfiguration, navigationMenuTag);
+		_configureMenu(menuDisplayFragmentConfiguration, navigationMenuTag);
 
 		return navigationMenuTag;
 	}
@@ -323,7 +319,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private LayoutService _layoutService;
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private MenuDisplayFragmentConfigurationParser

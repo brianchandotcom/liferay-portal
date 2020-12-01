@@ -131,7 +131,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 			}
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_themeDisplay.getScopeGroupId(), isPrivateLayout(),
 				getParentSiteNavigationMenuItemId());
 
 			return layout.getName(_themeDisplay.getLocale());
@@ -355,7 +354,6 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 		if (getParentSiteNavigationMenuItemId() != 0) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_themeDisplay.getScopeGroupId(), isPrivateLayout(),
 				getParentSiteNavigationMenuItemId());
 
 			List<Layout> ancestors = layout.getAncestors();
@@ -367,18 +365,32 @@ public class SelectSiteNavigationMenuDisplayContext {
 					_createBreadcrumbEntry(
 						ancestor.getName(_themeDisplay.getLocale()),
 						_getSelectSiteNavigationMenuLevelURL(
-							getSiteNavigationMenuId(),
-							ancestor.getLayoutId())));
+							getSiteNavigationMenuId(), ancestor.getPlid())));
 			}
 
 			breadcrumbEntries.add(
 				_createBreadcrumbEntry(
 					layout.getName(_themeDisplay.getLocale()),
 					_getSelectSiteNavigationMenuLevelURL(
-						getSiteNavigationMenuId(), layout.getLayoutId())));
+						getSiteNavigationMenuId(), layout.getPlid())));
 		}
 
 		return breadcrumbEntries;
+	}
+
+	private List<Layout> _getLayouts() {
+		long parentSiteNavigationMenuItemId =
+			getParentSiteNavigationMenuItemId();
+
+		if (parentSiteNavigationMenuItemId > 0) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				getParentSiteNavigationMenuItemId());
+
+			return layout.getChildren();
+		}
+
+		return LayoutLocalServiceUtil.getLayouts(
+			_themeDisplay.getScopeGroupId(), isPrivateLayout(), 0);
 	}
 
 	private BreadcrumbEntry _getMenusBreadcrumbEntry() {
@@ -508,16 +520,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 			return siteNavigationItems;
 		}
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_themeDisplay.getScopeGroupId(), isPrivateLayout(),
-			getParentSiteNavigationMenuItemId());
-
-		for (Layout layout : layouts) {
+		for (Layout layout : _getLayouts()) {
 			siteNavigationItems.add(
 				SiteNavigationMenuEntry.of(
 					layout.getName(_themeDisplay.getLocale()),
 					_getSelectSiteNavigationMenuLevelURL(
-						getSiteNavigationMenuId(), layout.getLayoutId())));
+						getSiteNavigationMenuId(), layout.getPlid())));
 		}
 
 		return siteNavigationItems;

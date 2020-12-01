@@ -31,8 +31,16 @@ const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
 
 const ChartStateContext = createContext(INITIAL_STATE);
 
-export const ChartStateContextProvider = ({children, value}) => {
-	const stateAndDispatch = useReducer(reducer, {...INITIAL_STATE, ...value});
+export const ChartStateContextProvider = ({
+	children,
+	publishDate,
+	timeSpanKey,
+}) => {
+	const stateAndDispatch = useReducer(reducer, {
+		...INITIAL_STATE,
+		publishDate,
+		timeSpanKey,
+	});
 
 	return (
 		<ChartStateContext.Provider value={stateAndDispatch}>

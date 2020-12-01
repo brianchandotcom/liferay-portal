@@ -134,10 +134,8 @@ export default function ({context}) {
 					}}
 				>
 					<ChartStateContextProvider
-						value={{
-							publishDate: state.data.publishDate,
-							timeSpanKey: state.data.timeSpanKey,
-						}}
+						publishDate={state.data.publishDate}
+						timeSpanKey={state.data.timeSpanKey}
 					>
 						<div className="analytics-reports-app">
 							<Navigation

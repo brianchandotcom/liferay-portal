@@ -331,8 +331,8 @@ definition {
 		}
 
 		var publishDateDay = Time.getUTCDay();
-		var publishDateMonth = DateUtil.getCurrentMonth();
-		var publishDateYear = DateUtil.getCurrentYear();
+		var publishDateMonth = Time.getUTCMonth();
+		var publishDateYear = Time.getUTCYear();
 		var publishDate = "${publishDateYear}-${publishDateMonth}-${publishDateDay}";
 
 		Type(

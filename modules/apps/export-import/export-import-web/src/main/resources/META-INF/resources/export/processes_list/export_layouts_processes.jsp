@@ -172,7 +172,7 @@ portletURL.setParameter("searchContainerId", searchContainerId);
 								}
 								%>
 
-								<div class="active progress progress-xs">
+								<div class="active progress">
 									<div class="progress-bar" style="width: <%= percentage %>%;">
 										<c:if test="<%= allProgressBarCountersTotal > 0 %>">
 											<%= percentage + StringPool.PERCENT %>

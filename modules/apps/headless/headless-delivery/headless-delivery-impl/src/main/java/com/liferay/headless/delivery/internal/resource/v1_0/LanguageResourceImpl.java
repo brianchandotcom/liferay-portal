@@ -14,9 +14,25 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.Language;
 import com.liferay.headless.delivery.resource.v1_0.LanguageResource;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +43,85 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = LanguageResource.class
 )
 public class LanguageResourceImpl extends BaseLanguageResourceImpl {
+
+	@Override
+	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception {
+		boolean acceptAllLanguages =
+			contextAcceptLanguage.isAcceptAllLanguages();
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(siteId);
+
+		Locale defaultLocale = _getGroupDefaultLocale(siteId);
+		Locale preferredLocale = contextAcceptLanguage.getPreferredLocale();
+
+		return Page.of(
+			TransformUtil.transform(
+				availableLocales,
+				availableLocale -> _toLanguage(
+					acceptAllLanguages, availableLocales, defaultLocale,
+					availableLocale, preferredLocale)));
+	}
+
+	private Locale _getGroupDefaultLocale(long groupId) throws Exception {
+		Group group = _groupService.getGroup(groupId);
+
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+			group.getName());
+
+		if (Validator.isNotNull(defaultLanguageId)) {
+			return LocaleUtil.fromLanguageId(defaultLanguageId);
+		}
+
+		return LocaleUtil.getSiteDefault();
+	}
+
+	private Language _toLanguage(
+		boolean acceptAllLanguages, Set<Locale> availableLocales,
+		Locale defaultLocale, Locale locale, Locale preferredLocale) {
+
+		return new Language() {
+			{
+				countryName = locale.getDisplayCountry(preferredLocale);
+				id = LocaleUtil.toLanguageId(locale);
+				markedAsDefault = Objects.equals(defaultLocale, locale);
+				name = locale.getDisplayLanguage(preferredLocale);
+
+				setCountryName_i18n(
+					() -> {
+						if (!acceptAllLanguages) {
+							return null;
+						}
+
+						Stream<Locale> availableLocalesStream =
+							availableLocales.stream();
+
+						return availableLocalesStream.collect(
+							Collectors.toMap(
+								LocaleUtil::toBCP47LanguageId,
+								availableLocale -> locale.getDisplayCountry(
+									availableLocale)));
+					});
+
+				setName_i18n(
+					() -> {
+						if (!acceptAllLanguages) {
+							return null;
+						}
+
+						Stream<Locale> availableLocalesStream =
+							availableLocales.stream();
+
+						return availableLocalesStream.collect(
+							Collectors.toMap(
+								LocaleUtil::toBCP47LanguageId,
+								availableLocale -> locale.getDisplayLanguage(
+									availableLocale)));
+					});
+			}
+		};
+	}
+
+	@Reference
+	private GroupService _groupService;
+
 }

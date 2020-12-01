@@ -17,13 +17,11 @@ import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
-import {useChartState} from '../state/chartState';
+import {useChartState} from '../context/ChartStateContext';
 
 export default function Translation({
 	defaultLanguage,
 	onSelectedLanguageClick,
-	publishDate,
-	timeSpanKey,
 	viewURLs,
 }) {
 	const [active, setActive] = useState(false);
@@ -35,10 +33,7 @@ export default function Translation({
 		);
 	}, [defaultLanguage, viewURLs]);
 
-	const {state: chartState} = useChartState({
-		publishDate,
-		timeSpanKey,
-	});
+	const {state: chartState} = useChartState();
 
 	return (
 		<ClayLayout.ContentRow>
@@ -81,7 +76,7 @@ export default function Translation({
 								onClick={() => {
 									onSelectedLanguageClick(
 										language.viewURL,
-										timeSpanKey,
+										chartState.timeSpanKey,
 										chartState.timeSpanOffset
 									);
 								}}
@@ -121,8 +116,6 @@ export default function Translation({
 Translation.propTypes = {
 	defaultLanguage: PropTypes.string.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,
-	publishDate: PropTypes.string.isRequired,
-	timeSpanKey: PropTypes.string.isRequired,
 	viewURLs: PropTypes.arrayOf(
 		PropTypes.shape({
 			default: PropTypes.bool.isRequired,

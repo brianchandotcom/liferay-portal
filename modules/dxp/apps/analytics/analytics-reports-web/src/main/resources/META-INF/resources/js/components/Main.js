@@ -28,7 +28,6 @@ export default function Main({
 	pagePublishDate,
 	pageTitle,
 	timeRange,
-	timeSpanKey,
 	timeSpanOptions,
 	totalReadsDataProvider,
 	totalViewsDataProvider,
@@ -49,8 +48,6 @@ export default function Main({
 				<Translation
 					defaultLanguage={languageTag}
 					onSelectedLanguageClick={onSelectedLanguageClick}
-					publishDate={pagePublishDate}
-					timeSpanKey={timeSpanKey}
 					viewURLs={viewURLs}
 				/>
 			</div>
@@ -85,7 +82,6 @@ export default function Main({
 				languageTag={languageTag}
 				publishDate={pagePublishDate}
 				timeRange={timeRange}
-				timeSpanKey={timeSpanKey}
 				timeSpanOptions={timeSpanOptions}
 			/>
 
@@ -108,7 +104,6 @@ Main.proptypes = {
 	pagePublishDate: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string.isRequired,
 	timeRange: PropTypes.object.isRequired,
-	timeSpanKey: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

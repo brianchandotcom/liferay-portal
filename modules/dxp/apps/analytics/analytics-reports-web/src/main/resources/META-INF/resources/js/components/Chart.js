@@ -25,9 +25,9 @@ import {
 	YAxis,
 } from 'recharts';
 
+import {useChartState} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContext, useHistoricalWarning} from '../context/store';
-import {useChartState} from '../state/chartState';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
@@ -131,7 +131,6 @@ export default function Chart({
 	languageTag,
 	publishDate,
 	timeRange,
-	timeSpanKey,
 	timeSpanOptions,
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
@@ -140,10 +139,7 @@ export default function Chart({
 
 	const [, addHistoricalWarning] = useHistoricalWarning();
 
-	const {actions, state: chartState} = useChartState({
-		publishDate,
-		timeSpanKey,
-	});
+	const {actions, state: chartState} = useChartState();
 
 	const isMounted = useIsMounted();
 
@@ -491,7 +487,6 @@ Chart.propTypes = {
 	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,
 	timeRange: PropTypes.object.isRequired,
-	timeSpanKey: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,

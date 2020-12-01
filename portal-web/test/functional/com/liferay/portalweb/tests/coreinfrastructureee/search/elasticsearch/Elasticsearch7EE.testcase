@@ -830,6 +830,30 @@ definition {
 	}
 
 	@priority = "5"
+	test MonitoringPkiAuthenticationSmokeTest {
+		property elastic.monitoring.pki.authentication.enabled = "true";
+		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
+		property portal.upstream = "quarantine";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPKISmokeTest";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+
+		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+
+		ElasticsearchMonitoring.viewPkiPG();
+	}
+
+	@priority = "5"
 	test PortalClusterSmokeTest {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";

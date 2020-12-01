@@ -3546,7 +3546,10 @@ public class DataFactory {
 			newLayoutModel(groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
 
 		if (BenchmarksPropsValues.ENABLE_SEARCH_BAR) {
-			layoutModels.add(newSearchLayoutModel(groupId));
+			layoutModels.add(
+				newLayoutModel(
+					groupId, "search", true, "1_2_columns_i",
+					_getSearchPageColumns()));
 		}
 
 		return layoutModels;
@@ -3805,45 +3808,6 @@ public class DataFactory {
 		return newUserModel(
 			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
 			_SAMPLE_USER_NAME, false);
-	}
-
-	public LayoutModel newSearchLayoutModel(long groupId) {
-		String prefix = "com_liferay_portal_search_web";
-
-		StringBundler column1SB = new StringBundler(4);
-
-		column1SB.append(prefix);
-		column1SB.append("_search_bar_portlet_SearchBarPortlet,");
-		column1SB.append(prefix);
-		column1SB.append("_suggestions_portlet_SuggestionsPortlet,");
-
-		StringBundler column2SB = new StringBundler(14);
-
-		column2SB.append(prefix);
-		column2SB.append("_site_facet_portlet_SiteFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_type_facet_portlet_TypeFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_tag_facet_portlet_TagFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_category_facet_portlet_CategoryFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_folder_facet_portlet_FolderFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_user_facet_portlet_UserFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_modified_facet_portlet_ModifiedFacetPortlet,");
-
-		StringBundler column3SB = new StringBundler(4);
-
-		column3SB.append(prefix);
-		column3SB.append("_search_results_portlet_SearchResultsPortlet,");
-		column3SB.append(prefix);
-		column3SB.append("_search_options_portlet_SearchOptionsPortlet,");
-
-		return newLayoutModel(
-			groupId, "search", true, "1_2_columns_i", column1SB.toString(),
-			column2SB.toString(), column3SB.toString());
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -5250,6 +5214,45 @@ public class DataFactory {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private String[] _getSearchPageColumns() {
+		String prefix = "com_liferay_portal_search_web";
+
+		StringBundler column1SB = new StringBundler(4);
+
+		column1SB.append(prefix);
+		column1SB.append("_search_bar_portlet_SearchBarPortlet,");
+		column1SB.append(prefix);
+		column1SB.append("_suggestions_portlet_SuggestionsPortlet,");
+
+		StringBundler column2SB = new StringBundler(14);
+
+		column2SB.append(prefix);
+		column2SB.append("_site_facet_portlet_SiteFacetPortlet,");
+		column2SB.append(prefix);
+		column2SB.append("_type_facet_portlet_TypeFacetPortlet,");
+		column2SB.append(prefix);
+		column2SB.append("_tag_facet_portlet_TagFacetPortlet,");
+		column2SB.append(prefix);
+		column2SB.append("_category_facet_portlet_CategoryFacetPortlet,");
+		column2SB.append(prefix);
+		column2SB.append("_folder_facet_portlet_FolderFacetPortlet,");
+		column2SB.append(prefix);
+		column2SB.append("_user_facet_portlet_UserFacetPortlet,");
+		column2SB.append(prefix);
+		column2SB.append("_modified_facet_portlet_ModifiedFacetPortlet,");
+
+		StringBundler column3SB = new StringBundler(4);
+
+		column3SB.append(prefix);
+		column3SB.append("_search_results_portlet_SearchResultsPortlet,");
+		column3SB.append(prefix);
+		column3SB.append("_search_options_portlet_SearchOptionsPortlet,");
+
+		return new String[] {
+			column1SB.toString(), column2SB.toString(), column3SB.toString()
+		};
 	}
 
 	private String _readFile(String resourceName) throws Exception {

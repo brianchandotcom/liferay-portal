@@ -191,6 +191,11 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		this.userLocalService = userLocalService;
 	}
 
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #setWorkersSize(int, int)}
+	 */
+	@Deprecated
 	public void setWorkersCoreSize(int workersCoreSize) {
 		_workersCoreSize = workersCoreSize;
 
@@ -199,10 +204,27 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		}
 	}
 
+	/**
+	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #setWorkersSize(int, int)}
+	 */
+	@Deprecated
 	public void setWorkersMaxSize(int workersMaxSize) {
 		_workersMaxSize = workersMaxSize;
 
 		if (_noticeableThreadPoolExecutor != null) {
+			_noticeableThreadPoolExecutor.setMaximumPoolSize(workersMaxSize);
+		}
+	}
+
+	public void setWorkersSize(int workersCoreSize, int workersMaxSize) {
+		_workersCoreSize = workersCoreSize;
+
+		_workersMaxSize = workersMaxSize;
+
+		if (_noticeableThreadPoolExecutor != null) {
+			_noticeableThreadPoolExecutor.setCorePoolSize(workersCoreSize);
+
 			_noticeableThreadPoolExecutor.setMaximumPoolSize(workersMaxSize);
 		}
 	}

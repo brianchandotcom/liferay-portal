@@ -529,9 +529,8 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 			baseAsyncDestination.setMaximumQueueSize(
 				destinationWorkerConfiguration.maxQueueSize());
-			baseAsyncDestination.setWorkersCoreSize(
-				destinationWorkerConfiguration.workerCoreSize());
-			baseAsyncDestination.setWorkersMaxSize(
+			baseAsyncDestination.setWorkersSize(
+				destinationWorkerConfiguration.workerCoreSize(),
 				destinationWorkerConfiguration.workerMaxSize());
 		}
 	}

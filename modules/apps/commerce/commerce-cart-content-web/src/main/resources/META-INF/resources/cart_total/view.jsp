@@ -92,7 +92,7 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 				</c:if>
 
 				<div class="col-auto">
-					<h3 class="h4"><liferay-ui:message key="subtotalCommerceMoney" /></h3>
+					<h3 class="h4"><liferay-ui:message key="subtotal" /></h3>
 				</div>
 
 				<div class="col text-right">

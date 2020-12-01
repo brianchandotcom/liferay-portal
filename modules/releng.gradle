@@ -1447,7 +1447,7 @@ private List<String> _getIncludes(File jarFile) {
 
 		String path = it.path
 
-		if (path.startsWith("com/liferay/") && (jar.getResource(path + "/packageinfo") != null)) {
+		if (path.startsWith("com/liferay/") && ((jar.getResource(path + "/packageinfo") != null) || path.endsWith("/taglib"))) {
 			includes.add(path + "/*")
 		}
 	}
@@ -1514,6 +1514,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		if (enforceVersionArtifacts != null) {
 			for (String artifact : enforceVersionArtifacts.split(",")) {
 				if (!artifact.startsWith("com.fasterxml") &&
+					!artifact.startsWith("com.liferay.alloy-taglibs:alloy-taglib:") &&
 					!artifact.startsWith("com.liferay:biz.aQute.bnd.annotation:") &&
 					!artifact.startsWith("com.liferay.portletmvc4spring:com.liferay.portletmvc4spring.test:") &&
 					!artifact.startsWith("io.swagger") &&

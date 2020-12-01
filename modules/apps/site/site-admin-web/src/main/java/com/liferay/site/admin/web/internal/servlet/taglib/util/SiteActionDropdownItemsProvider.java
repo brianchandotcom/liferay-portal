@@ -112,7 +112,8 @@ public class SiteActionDropdownItemsProvider {
 
 		PortletURL activateSiteURL = _liferayPortletResponse.createActionURL();
 
-		activateSiteURL.setParameter(ActionRequest.ACTION_NAME, "activate");
+		activateSiteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/site_admin/activate_group");
 
 		activateSiteURL.setParameter("redirect", _getRedirect());
 		activateSiteURL.setParameter(

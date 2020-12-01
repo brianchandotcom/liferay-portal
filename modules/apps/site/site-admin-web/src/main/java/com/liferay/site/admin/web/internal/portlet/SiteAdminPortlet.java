@@ -154,13 +154,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteAdminPortlet extends MVCPortlet {
 
-	public void activate(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateActive(actionRequest, true);
-	}
-
 	public void addGroup(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Throwable {

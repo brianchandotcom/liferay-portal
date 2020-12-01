@@ -16,6 +16,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useReducer} from 'react';
 
 import Navigation from './components/Navigation';
+import {ChartStateContextProvider} from './context/ChartStateContext';
 import ConnectionContext from './context/ConnectionContext';
 import {StoreContextProvider} from './context/store';
 
@@ -132,25 +133,31 @@ export default function ({context}) {
 						publishedToday: state.data.publishedToday,
 					}}
 				>
-					<div className="analytics-reports-app">
-						<Navigation
-							author={state.data.author}
-							canonicalURL={state.data.canonicalURL}
-							endpoints={state.data.endpoints}
-							languageTag={state.data.languageTag}
-							namespace={state.data.namespace}
-							onSelectedLanguageClick={
-								handleSelectedLanguageClick
-							}
-							page={state.data.page}
-							pagePublishDate={state.data.publishDate}
-							pageTitle={state.data.title}
-							timeRange={state.data.timeRange}
-							timeSpanKey={state.data.timeSpanKey}
-							timeSpanOptions={state.data.timeSpans}
-							viewURLs={state.data.viewURLs}
-						/>
-					</div>
+					<ChartStateContextProvider
+						value={{
+							publishDate: state.data.publishDate,
+							timeSpanKey: state.data.timeSpanKey,
+						}}
+					>
+						<div className="analytics-reports-app">
+							<Navigation
+								author={state.data.author}
+								canonicalURL={state.data.canonicalURL}
+								endpoints={state.data.endpoints}
+								languageTag={state.data.languageTag}
+								namespace={state.data.namespace}
+								onSelectedLanguageClick={
+									handleSelectedLanguageClick
+								}
+								page={state.data.page}
+								pagePublishDate={state.data.publishDate}
+								pageTitle={state.data.title}
+								timeRange={state.data.timeRange}
+								timeSpanOptions={state.data.timeSpans}
+								viewURLs={state.data.viewURLs}
+							/>
+						</div>
+					</ChartStateContextProvider>
 				</StoreContextProvider>
 			</ConnectionContext.Provider>
 		)

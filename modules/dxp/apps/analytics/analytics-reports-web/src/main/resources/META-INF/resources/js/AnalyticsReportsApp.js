@@ -107,8 +107,8 @@ export default function ({context}) {
 	}, [analyticsReportsDataURL]);
 
 	const handleSelectedLanguageClick = useCallback(
-		(url, timeSpanOffset, timeSpanOption) => {
-			getData(url, timeSpanOffset, timeSpanOption);
+		(url, timeSpanKey, timeSpanOffset) => {
+			getData(url, timeSpanKey, timeSpanOffset);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]

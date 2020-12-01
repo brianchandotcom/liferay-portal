@@ -42,13 +42,11 @@ class DynamicInlineScroll extends PortletBase {
 
 		rootNode = rootNode || document;
 
-		this.eventHandler_.add(
-			delegate(
-				rootNode,
-				'scroll',
-				'ul.pagination ul.inline-scroller',
-				this.onScroll_.bind(this)
-			)
+		this.inlineScrollEventHandler_ = delegate(
+			rootNode,
+			'scroll',
+			'ul.pagination ul.inline-scroller',
+			this.onScroll_.bind(this)
 		);
 	}
 
@@ -58,7 +56,8 @@ class DynamicInlineScroll extends PortletBase {
 	detached() {
 		super.detached();
 
-		this.eventHandler_.dispose();
+		this.inlineScrollEventHandler_.dispose();
+		this.eventHandler_.removeAllListeners();
 	}
 
 	/**

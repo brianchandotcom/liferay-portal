@@ -209,13 +209,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void deactivate(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		updateActive(actionRequest, false);
-	}
-
 	public void deleteBackgroundTask(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -479,36 +472,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	protected void updateActive(ActionRequest actionRequest, boolean active)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		if ((groupId == themeDisplay.getDoAsGroupId()) ||
-			(groupId == themeDisplay.getScopeGroupId()) ||
-			(groupId == ActionUtil.getRefererGroupId(themeDisplay))) {
-
-			throw new RequiredGroupException.MustNotDeleteCurrentGroup(groupId);
-		}
-
-		Group group = groupService.getGroup(groupId);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Group.class.getName(), actionRequest);
-
-		groupService.updateGroup(
-			groupId, group.getParentGroupId(), group.getNameMap(),
-			group.getDescriptionMap(), group.getType(),
-			group.isManualMembership(), group.getMembershipRestriction(),
-			group.getFriendlyURL(), group.isInheritContent(), active,
-			serviceContext);
-
-		themeDisplay.setScopeGroupId(groupId);
 	}
 
 	protected Group updateGroup(ActionRequest actionRequest) throws Exception {

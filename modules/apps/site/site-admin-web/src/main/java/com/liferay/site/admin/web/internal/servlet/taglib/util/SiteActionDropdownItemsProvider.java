@@ -147,7 +147,8 @@ public class SiteActionDropdownItemsProvider {
 		PortletURL deactivateSiteURL =
 			_liferayPortletResponse.createActionURL();
 
-		deactivateSiteURL.setParameter(ActionRequest.ACTION_NAME, "deactivate");
+		deactivateSiteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/site_admin/deactivate_group");
 
 		deactivateSiteURL.setParameter("redirect", _getRedirect());
 		deactivateSiteURL.setParameter(

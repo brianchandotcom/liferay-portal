@@ -80,8 +80,8 @@ public class DLExternalVideoDLURLHelper implements DLURLHelper {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return _dlURLHelper.getImagePreviewURL(
-			fileEntry, fileVersion, themeDisplay);
+		return getImagePreviewURL(
+			fileEntry, fileVersion, themeDisplay, null, true, true);
 	}
 
 	@Override
@@ -90,6 +90,19 @@ public class DLExternalVideoDLURLHelper implements DLURLHelper {
 			ThemeDisplay themeDisplay, String queryString,
 			boolean appendVersion, boolean absoluteURL)
 		throws PortalException {
+
+		DLExternalVideoMetadataHelper dlExternalVideoMetadataHelper =
+			_dlExternalVideoMetadataHelperFactory.
+				getDLExternalVideoMetadataHelper(fileVersion);
+
+		if (dlExternalVideoMetadataHelper != null) {
+			String thumbnailURL = dlExternalVideoMetadataHelper.getFieldValue(
+				DLExternalVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL);
+
+			if (Validator.isNotNull(thumbnailURL)) {
+				return thumbnailURL;
+			}
+		}
 
 		return _dlURLHelper.getImagePreviewURL(
 			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
@@ -101,7 +114,8 @@ public class DLExternalVideoDLURLHelper implements DLURLHelper {
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return _dlURLHelper.getImagePreviewURL(fileEntry, themeDisplay);
+		return getImagePreviewURL(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay);
 	}
 
 	@Override

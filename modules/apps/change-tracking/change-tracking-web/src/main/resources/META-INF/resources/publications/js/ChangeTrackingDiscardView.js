@@ -17,6 +17,8 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import React, {useState} from 'react';
 
+import ChangeTrackingRenderView from './ChangeTrackingRenderView';
+
 const ChangeTrackingDiscardView = ({
 	ctEntriesJSONArray,
 	spritemap,
@@ -202,7 +204,9 @@ const ChangeTrackingDiscardView = ({
 						</div>
 					</div>
 				</ClayModal.Header>
-				<ClayModal.Body url={viewEntry.viewURL}></ClayModal.Body>
+				<div>
+					<ChangeTrackingRenderView spritemap={spritemap} />
+				</div>
 			</ClayModal>
 		);
 	};

@@ -70,56 +70,56 @@ public class ProjectTemplatesAPIJarTest
 
 		Assert.assertTrue(releaseApiJarSourcesFile.exists());
 
-		File classesFolder = temporaryFolder.newFolder(
+		File classesDir = temporaryFolder.newFolder(
 			releaseApiJarFile.getName() + "-classes");
 
-		ZipUtil.unzip(releaseApiJarFile, classesFolder);
+		ZipUtil.unzip(releaseApiJarFile, classesDir);
 
-		File sourcesFolder = temporaryFolder.newFolder(
+		File sourcesDir = temporaryFolder.newFolder(
 			releaseApiJarSourcesFile.getName() + "-sources");
 
-		ZipUtil.unzip(releaseApiJarSourcesFile, sourcesFolder);
+		ZipUtil.unzip(releaseApiJarSourcesFile, sourcesDir);
 
-		Path classesPath = classesFolder.toPath();
+		Path classesPath = classesDir.toPath();
 
-		Set<String> classFiles = _searchFiles(classesPath, ".class");
+		Set<String> classPaths = _getPaths(classesPath, ".class");
 
-		Assert.assertFalse(classFiles.isEmpty());
+		Assert.assertFalse(classPaths.isEmpty());
 
-		Set<String> javaFiles = _searchFiles(sourcesFolder.toPath(), ".java");
+		Set<String> javaPaths = _getPaths(sourcesDir.toPath(), ".java");
 
-		Assert.assertFalse(javaFiles.isEmpty());
+		Assert.assertFalse(javaPaths.isEmpty());
 
-		for (String classFile : classFiles) {
-			if (!classFile.contains("$") &&
-				!_ignoreClasses.contains(classFile)) {
+		for (String classPath : classPaths) {
+			if (!classPath.contains("$") &&
+				!_ignoreClassPaths.contains(classPath)) {
 
-				Assert.assertTrue(javaFiles.contains(classFile));
+				Assert.assertTrue(javaPaths.contains(classPath));
 			}
 		}
 
-		Set<String> tldClasses = _findTldClasses(classesPath);
+		Set<String> tldClassPaths = _getTLDClassPaths(classesPath);
 
-		Assert.assertFalse(tldClasses.isEmpty());
+		Assert.assertFalse(tldClassPaths.isEmpty());
 
-		List<String> missingTldClasses = new ArrayList<>();
+		List<String> missingTLDClassPaths = new ArrayList<>();
 
-		for (String tldClass : tldClasses) {
-			if (!classFiles.contains(tldClass)) {
-				missingTldClasses.add(tldClass);
+		for (String tldClassPath : tldClassPaths) {
+			if (!classPaths.contains(tldClassPath)) {
+				missingTLDClassPaths.add(tldClassPath);
 			}
 		}
 
 		Assert.assertTrue(
-			"Missing tldClasses: " + missingTldClasses.toString(),
-			missingTldClasses.isEmpty());
+			"Missing TLD Classes: " + missingTLDClassPaths.toString(),
+			missingTLDClassPaths.isEmpty());
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private Set<String> _findTldClasses(Path sourcePath) throws Exception {
-		Set<String> tldClasses = new HashSet<>();
+	private Set<String> _getTLDClassPaths(Path sourcePath) throws Exception {
+		Set<String> results = new HashSet<>();
 
 		Files.walkFileTree(
 			sourcePath,
@@ -139,16 +139,16 @@ public class ProjectTemplatesAPIJarTest
 							DocumentBuilderFactory builderFactory =
 								DocumentBuilderFactory.newInstance();
 
-							DocumentBuilder builder =
+							DocumentBuilder documentBuilder =
 								builderFactory.newDocumentBuilder();
 
-							Document xmlDocument = builder.parse(
+							Document xmlDocument = documentBuilder.parse(
 								fileInputStream);
 
-							XPathFactory xPathFactoryInstance =
+							XPathFactory xPathFactory =
 								XPathFactory.newInstance();
 
-							XPath xPath = xPathFactoryInstance.newXPath();
+							XPath xPath = xPathFactory.newXPath();
 
 							XPathExpression xPathExpression = xPath.compile(
 								"/taglib/tag/tag-class");
@@ -160,15 +160,12 @@ public class ProjectTemplatesAPIJarTest
 							for (int i = nodeList.getLength() - 1; i >= 0;
 								 i--) {
 
-								Node child = nodeList.item(i);
+								Node childNode = nodeList.item(i);
 
-								String tagClassContent = child.getTextContent();
+								String textContent = childNode.getTextContent();
 
-								if (tagClassContent.startsWith(
-										"com.liferay.")) {
-
-									tldClasses.add(
-										tagClassContent.replace('.', '/'));
+								if (textContent.startsWith("com.liferay.")) {
+									results.add(textContent.replace('.', '/'));
 								}
 							}
 						}
@@ -181,10 +178,10 @@ public class ProjectTemplatesAPIJarTest
 
 			});
 
-		return tldClasses;
+		return results;
 	}
 
-	private Set<String> _searchFiles(Path sourcePath, String filterName)
+	private Set<String> _getPaths(Path sourcePath, String extension)
 		throws Exception {
 
 		Set<String> results = new HashSet<>();
@@ -200,14 +197,14 @@ public class ProjectTemplatesAPIJarTest
 
 					String fileName = String.valueOf(path.getFileName());
 
-					if (fileName.endsWith(filterName)) {
+					if (fileName.endsWith(extension)) {
 						URI folderURI = sourcePath.toUri();
 
 						URI relativeURI = folderURI.relativize(path.toUri());
 
 						String relativePath = relativeURI.getPath();
 
-						results.add(relativePath.replace(filterName, ""));
+						results.add(relativePath.replace(extension, ""));
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -224,18 +221,18 @@ public class ProjectTemplatesAPIJarTest
 	private static final String _RELEASE_API_JAR_SOURCES_FILE =
 		System.getProperty("releaseApiJarSourcesFile");
 
-	private static final List<String> _ignoreClasses = Arrays.asList(
+	private static final List<String> _ignoreClassPaths = Arrays.asList(
 		"com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer",
-		"org/osgi/service/event/TopicPermissionCollection",
-		"org/osgi/framework/AdaptPermissionCollection",
-		"org/osgi/framework/PackagePermissionCollection",
-		"org/osgi/service/cm/ConfigurationPermissionCollection",
 		"javax/servlet/http/NoBodyOutputStream",
-		"org/osgi/framework/CapabilityPermissionCollection",
 		"javax/servlet/http/NoBodyResponse",
-		"org/osgi/framework/ServicePermissionCollection",
-		"org/osgi/framework/BundlePermissionCollection",
+		"org/osgi/framework/AdaptPermissionCollection",
 		"org/osgi/framework/AdminPermissionCollection",
-		"org/osgi/service/condpermadmin/BooleanCondition");
+		"org/osgi/framework/BundlePermissionCollection",
+		"org/osgi/framework/CapabilityPermissionCollection",
+		"org/osgi/framework/PackagePermissionCollection",
+		"org/osgi/framework/ServicePermissionCollection",
+		"org/osgi/service/cm/ConfigurationPermissionCollection",
+		"org/osgi/service/condpermadmin/BooleanCondition",
+		"org/osgi/service/event/TopicPermissionCollection");
 
 }

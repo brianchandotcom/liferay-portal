@@ -26,10 +26,9 @@ cleanProjectTemplatesTests {
 
 configurations {
 	projectTemplates
-	testAPI
-
 	releaseApiJar
 	releaseApiJarSources
+	testAPI
 
 	projectTemplatesTests {
 		extendsFrom projectTemplates

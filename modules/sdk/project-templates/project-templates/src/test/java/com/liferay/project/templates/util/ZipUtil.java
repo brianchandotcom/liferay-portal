@@ -28,9 +28,9 @@ import java.util.zip.ZipFile;
 /**
  * @author Gregory Amerson
  */
-public final class ZipUtil {
+public class ZipUtil {
 
-	public static void unzip(File sourceFile, File destdir) throws IOException {
+	public static void unzip(File sourceFile, File destDir) throws IOException {
 		try (ZipFile zipFile = new ZipFile(sourceFile)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -40,14 +40,14 @@ public final class ZipUtil {
 				String entryName = zipEntry.getName();
 
 				if (zipEntry.isDirectory()) {
-					_mkdir(new File(destdir, entryName));
+					_createDir(new File(destDir, entryName));
 
 					continue;
 				}
 
-				File file = new File(destdir, entryName);
+				File file = new File(destDir, entryName);
 
-				_mkdir(file.getParentFile());
+				_createDir(file.getParentFile());
 
 				try (InputStream inputStream = zipFile.getInputStream(zipEntry);
 					OutputStream outputStream = Files.newOutputStream(
@@ -69,11 +69,11 @@ public final class ZipUtil {
 		}
 	}
 
-	private static void _mkdir(File dir) throws IOException {
+	private static void _createDir(File dir) throws IOException {
 		if (!dir.exists() && !dir.mkdirs()) {
-			String msg = "Could not create dir: " + dir.getPath();
+			String message = "Could not create dir: " + dir.getPath();
 
-			throw new IOException(msg);
+			throw new IOException(message);
 		}
 	}
 

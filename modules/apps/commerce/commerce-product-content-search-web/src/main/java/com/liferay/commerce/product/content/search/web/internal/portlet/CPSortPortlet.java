@@ -99,7 +99,8 @@ public class CPSortPortlet
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(themeDisplay.getRequest());
 
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 

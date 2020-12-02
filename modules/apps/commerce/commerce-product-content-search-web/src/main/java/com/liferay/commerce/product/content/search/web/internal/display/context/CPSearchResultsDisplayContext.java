@@ -28,6 +28,7 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -211,8 +212,17 @@ public class CPSearchResultsDisplayContext {
 	}
 
 	public String getOrderByCol() {
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
+		String portletId = ParamUtil.getString(
+			originalHttpServletRequest, "p_p_id");
+
 		return ParamUtil.getString(
-			_httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			originalHttpServletRequest,
+			StringBundler.concat(
+				StringPool.UNDERLINE, portletId, StringPool.UNDERLINE,
+				SearchContainer.DEFAULT_ORDER_BY_COL_PARAM),
 			"relevance");
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.dispatch.internal.upgrade.v2_1_0;
 
 import com.liferay.dispatch.internal.upgrade.v2_1_0.util.DispatchTriggerTable;
-import com.liferay.dispatch.model.impl.DispatchTriggerModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -30,7 +29,7 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 		}
 
 		alter(
-			DispatchTriggerModelImpl.class,
+			DispatchTriggerTable.class,
 			new AlterTableAddColumn("overlapAllowed", "BOOLEAN"));
 	}
 

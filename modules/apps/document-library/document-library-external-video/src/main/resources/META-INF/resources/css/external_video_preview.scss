@@ -59,7 +59,7 @@
 
 		&#{$component}-sm {
 			max-width: calc(
-				#{$border-width * 2} + #{$padding * 2} + #{$video-max-width}
+				#{$padding * 2} + #{$video-max-width-sm + ($border-width * 2)}
 			);
 		}
 	}

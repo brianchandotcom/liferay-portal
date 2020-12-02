@@ -823,6 +823,11 @@
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td//button</td>
 	<td></td>
 </tr>
+<tr>
+	<td>YOUTUBE_PLAY</td>
+	<td>//button[contains(@class,'ytp-large-play-button')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_FACEBOOK_VIDEO_VALID</td>
+	<td>//div[contains(@class,'pluginSkinLight')]//div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_FIELD_REQUIRED</td>
 	<td>//div[@role='alert' and contains(.,'This field is required')] | //span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
 	<td></td>
@@ -224,6 +229,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_YOUTUBE_VIDEO_VALID</td>
+	<td>//div[contains(@class,'ytp-error-content-wrap')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERIC</td>
 	<td>//div[contains(@class,'alert')]</td>
 	<td></td>
@@ -231,6 +241,11 @@
 <tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_EXTERNAL_VIDEO_PREVIEW</td>
+	<td>//div[contains(@class,'external-video-preview-placeholder-text')]</td>
 	<td></td>
 </tr>
 <tr>

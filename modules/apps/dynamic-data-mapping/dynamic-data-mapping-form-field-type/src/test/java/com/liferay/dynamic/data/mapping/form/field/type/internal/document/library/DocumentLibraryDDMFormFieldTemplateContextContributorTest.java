@@ -101,6 +101,22 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersShouldContainAllowGuestUsers() {
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", "document_library");
+
+		ddmFormField.setProperty("allowGuestUsers", true);
+
+		Map<String, Object> parameters = spy.getParameters(
+			ddmFormField, createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(true, parameters.get("allowGuestUsers"));
+	}
+
+	@Test
 	public void testGetParametersShouldContainFileEntryURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
 			mockThemeDisplay());
@@ -171,6 +187,22 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
+	}
+
+	@Test
+	public void testGetParametersShouldContainMaximumRepetitions() {
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", "document_library");
+
+		ddmFormField.setProperty("maximumRepetitions", 8);
+
+		Map<String, Object> parameters = spy.getParameters(
+			ddmFormField, createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(8, parameters.get("maximumRepetitions"));
 	}
 
 	@Test

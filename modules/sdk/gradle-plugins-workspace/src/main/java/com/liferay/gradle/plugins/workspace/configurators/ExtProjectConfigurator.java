@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.workspace.LiferayExtPlugin;
 import com.liferay.gradle.plugins.workspace.LiferayOSGiExtPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
@@ -43,6 +44,7 @@ import java.util.Set;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySourceSpec;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
@@ -52,6 +54,7 @@ import org.gradle.api.tasks.Copy;
 /**
  * @author David Truong
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
@@ -198,7 +201,39 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 					dockerDeploy.into(
 						RootProjectConfigurator.LIFERAY_CONFIGS_DIR_NAME + "/" +
 							configDir.getName() + "/osgi/marketplace/override",
-						copySpec -> copySpec.from(sourcePath));
+						copySpec -> {
+							Closure<Void> copySpecClosure = new Closure<Void>(
+								project) {
+
+								@SuppressWarnings("unused")
+								public void doCall(CopySpec copySpec) {
+									copySpec.rename(
+										new Closure<String>(project) {
+
+											public String doCall(
+												String fileName) {
+
+												LiferayExtension
+													liferayExtension =
+														GradleUtil.getExtension(
+															project,
+															LiferayExtension.
+																class);
+
+												Closure<String> closure =
+													liferayExtension.
+														getDeployedFileNameClosure();
+
+												return closure.call(sourcePath);
+											}
+
+										});
+								}
+
+							};
+
+							copySpec.from(sourcePath, copySpecClosure);
+						});
 				}
 			}
 		}

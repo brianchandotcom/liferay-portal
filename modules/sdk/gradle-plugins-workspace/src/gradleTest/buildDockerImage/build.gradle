@@ -56,11 +56,11 @@ runGradleTest {
 
 		assert workDirFileNames.contains(".touch")
 
-		File overrideFile = new File(inputDir, "configs/local/osgi/marketplace/override/com.liferay.calendar.web-3.0.55.ext.jar");
+		File overrideFile = new File(inputDir, "configs/local/osgi/marketplace/override/com.liferay.calendar.web.jar");
 
 		assert overrideFile.exists()
 
-		overrideFile = new File(inputDir, "configs/other/osgi/marketplace/override/com.liferay.calendar.web-3.0.55.ext.jar");
+		overrideFile = new File(inputDir, "configs/other/osgi/marketplace/override/com.liferay.calendar.web.jar");
 
 		assert overrideFile.exists()
 	}

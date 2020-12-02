@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
@@ -26,6 +26,8 @@ import selectSegmentsExperienceId from '../../../../app/selectors/selectSegments
 import ImageService from '../../../../app/services/ImageService';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
+import {setIn} from '../../../../app/utils/setIn';
+import {updateIn} from '../../../../app/utils/updateIn';
 import {useId} from '../../../../app/utils/useId';
 import {ImageSelector} from '../../../../common/components/ImageSelector';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
@@ -44,7 +46,6 @@ export function ImagePropertiesPanel({item}) {
 	const dispatch = useDispatch();
 	const editables = useSelector((state) => state.editables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const imageDescriptionInputId = useId();
 	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
 	const [imageSizes, setImageSizes] = useState([]);
 	const imageSizeSelectId = useId();
@@ -53,8 +54,6 @@ export function ImagePropertiesPanel({item}) {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-
-	const canUpdateImage = selectedViewportSize === VIEWPORT_SIZES.desktop;
 
 	const processorKey =
 		type === EDITABLE_TYPES.backgroundImage
@@ -88,7 +87,12 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.imageTitle ||
 		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
-	const [imageDescription, setImageDescription] = useState('');
+	const imageDescription =
+		typeof editableConfig.alt === 'object'
+			? editableConfig.alt[languageId] ||
+			  editableConfig.alt[config.defaultLanguageId] ||
+			  ''
+			: editableConfig.alt || '';
 
 	useEffect(() => {
 		const {maxWidth, minWidth} = config.availableViewportSizes[
@@ -151,89 +155,18 @@ export function ImagePropertiesPanel({item}) {
 		}
 	}, [dispatch, editableContent.fileEntryId]);
 
-	const translatedImageDescription =
-		typeof editableConfig.alt === 'object'
-			? editableConfig.alt[languageId] ||
-			  editableConfig.alt[config.defaultLanguageId] ||
-			  ''
-			: editableConfig.alt || '';
-
-	useEffect(() => {
-		setImageDescription((imageDescription) => {
-			if (imageDescription !== translatedImageDescription) {
-				return translatedImageDescription;
-			}
-
-			return imageDescription;
-		});
-	}, [editableConfig.alt, languageId, translatedImageDescription]);
-
-	const updateEditableConfig = (
-		newConfig = {},
-		editableValues,
-		editableId,
-		processorKey
-	) => {
-		const editableProcessorValues = editableValues[processorKey];
-
-		const editableValue = editableValues[processorKey][editableId];
-
-		const editableConfig = editableValue.config || {};
-
-		const nextEditableValues = {
-			...editableValues,
-			[processorKey]: {
-				...editableProcessorValues,
-				[editableId]: {
-					...editableProcessorValues[editableId],
-					config: {
-						...editableConfig,
-						...newConfig,
-					},
-				},
-			},
-		};
-
-		dispatch(
-			updateEditableValuesThunk({
-				editableValues: nextEditableValues,
-				fragmentEntryLinkId,
-				segmentsExperienceId,
-			})
-		);
-	};
-
-	const onImageChange = (imageTitle, imageUrl, fileEntryId) => {
-		const {editableValues} = fragmentEntryLinks[fragmentEntryLinkId];
-
-		const editableProcessorValues = editableValues[processorKey];
-
-		const editableValue = editableProcessorValues[editableId];
-
-		let nextEditableValue = {};
-
-		setImageDescription('');
-		setImageSize(DEFAULT_IMAGE_SIZE);
-		setImageSizes([]);
-
-		const nextEditableValueConfig = {
-			...editableValue.config,
-			alt: '',
-			imageConfiguration: {},
-			imageTitle: imageTitle || '',
-		};
-
-		const nextEditableValueContent = config.adaptiveMediaEnabled
-			? {
-					fileEntryId,
-					url: imageUrl,
-			  }
-			: imageUrl;
-
-		nextEditableValue = {
+	const handleImageChanged = (nextImage) => {
+		const nextEditableValue = {
 			...editableValue,
-			config: nextEditableValueConfig,
-			[languageId]: nextEditableValueContent,
+
+			config: {
+				alt: {},
+				imageConfiguration: {},
+				imageTitle: nextImage.title || '',
+			},
+			[languageId]: config.adaptiveMediaEnabled
+				? nextImage
+				: nextImage.url,
 		};
 
 		delete nextEditableValue.classNameId;
@@ -242,20 +175,64 @@ export function ImagePropertiesPanel({item}) {
 		delete nextEditableValue.fieldId;
 		delete nextEditableValue.mappedField;
 
-		const nextEditableValues = {
-			...editableValues,
-
-			[processorKey]: {
-				...editableProcessorValues,
-				[editableId]: {
-					...nextEditableValue,
-				},
-			},
-		};
-
 		dispatch(
 			updateEditableValuesThunk({
-				editableValues: nextEditableValues,
+				editableValues: setIn(
+					editableValues,
+					[processorKey, editableId],
+					nextEditableValue
+				),
+				fragmentEntryLinkId,
+				segmentsExperienceId,
+			})
+		);
+	};
+
+	const handleImageDescriptionChanged = (nextImageDescription) => {
+		dispatch(
+			updateEditableValuesThunk({
+				editableValues: updateIn(
+					editableValues,
+					[processorKey, editableId, 'config', 'alt'],
+					(alt) => {
+
+						// If alt is a string (old style), we need to
+						// migrate it to an object to allow translations.
+
+						if (typeof alt === 'string') {
+							return {
+								[config.defaultLanguageId]: alt,
+								[languageId]: nextImageDescription,
+							};
+						}
+
+						return {
+							...alt,
+							[languageId]: nextImageDescription,
+						};
+					},
+					{}
+				),
+				fragmentEntryLinkId,
+				segmentsExperienceId,
+			})
+		);
+	};
+
+	const handleImageSizeChanged = (imageSizeId) => {
+		dispatch(
+			updateEditableValuesThunk({
+				editableValues: setIn(
+					editableValues,
+					[
+						processorKey,
+						editableId,
+						'config',
+						'imageConfiguration',
+						selectedViewportSize,
+					],
+					imageSizeId
+				),
 				fragmentEntryLinkId,
 				segmentsExperienceId,
 			})
@@ -264,14 +241,24 @@ export function ImagePropertiesPanel({item}) {
 
 	return (
 		<>
-			{canUpdateImage && (
+			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
 				<ImageSelector
+					imageDescription={imageDescription}
 					imageTitle={imageTitle}
 					label={Liferay.Language.get('image')}
-					onClearButtonPressed={() => onImageChange('', '')}
-					onImageSelected={(image) =>
-						onImageChange(image.title, image.url, image.fileEntryId)
+					onClearButtonPressed={() => {
+						handleImageChanged({
+							fileEntryId: '',
+							title: '',
+							url: '',
+						});
+					}}
+					onImageDescriptionChanged={
+						type === EDITABLE_TYPES.image
+							? handleImageDescriptionChanged
+							: null
 					}
+					onImageSelected={handleImageChanged}
 				/>
 			)}
 
@@ -285,19 +272,7 @@ export function ImagePropertiesPanel({item}) {
 						id={imageSizeSelectId}
 						name={imageSizeSelectId}
 						onChange={(event) =>
-							updateEditableConfig(
-								{
-									imageConfiguration: {
-										...(editableConfig.imageConfiguration ||
-											{}),
-										[selectedViewportSize]:
-											event.target.value,
-									},
-								},
-								editableValues,
-								editableId,
-								processorKey
-							)
+							handleImageSizeChanged(event.target.value)
 						}
 						options={imageSizes}
 						value={
@@ -323,47 +298,6 @@ export function ImagePropertiesPanel({item}) {
 						{Number(imageSize.size).toFixed(2)}kB
 					</span>
 				</div>
-			)}
-
-			{canUpdateImage && type === EDITABLE_TYPES.image && (
-				<ClayForm.Group>
-					<label htmlFor={imageDescriptionInputId}>
-						{Liferay.Language.get('image-description')}
-					</label>
-					<ClayInput
-						id={imageDescriptionInputId}
-						onBlur={() => {
-							if (
-								translatedImageDescription !== imageDescription
-							) {
-								const altValue =
-									typeof editableConfig.alt === 'object'
-										? editableConfig.alt
-										: {
-												[config.defaultLanguageId]: translatedImageDescription,
-										  };
-
-								updateEditableConfig(
-									{
-										alt: {
-											...altValue,
-											[languageId]: imageDescription,
-										},
-									},
-									editableValues,
-									editableId,
-									processorKey
-								);
-							}
-						}}
-						onChange={(event) => {
-							setImageDescription(event.target.value);
-						}}
-						sizing="sm"
-						type="text"
-						value={imageDescription || ''}
-					/>
-				</ClayForm.Group>
 			)}
 		</>
 	);

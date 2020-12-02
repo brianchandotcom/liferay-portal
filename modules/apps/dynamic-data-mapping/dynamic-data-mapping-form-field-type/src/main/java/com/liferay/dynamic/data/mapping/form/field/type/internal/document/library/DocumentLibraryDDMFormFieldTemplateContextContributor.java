@@ -130,14 +130,24 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		parameters.put(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId"));
-		parameters.put(
-			"guestUploadURL",
-			getGuestUploadURL(
-				ddmFormFieldRenderingContext, folderId, httpServletRequest));
-		parameters.put(
-			"itemSelectorURL",
-			getItemSelectorURL(
-				ddmFormFieldRenderingContext, folderId, httpServletRequest));
+
+		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
+
+		if (!themeDisplay.isSignedIn()) {
+			parameters.put(
+				"guestUploadURL",
+				getGuestUploadURL(
+					ddmFormFieldRenderingContext, folderId,
+					httpServletRequest));
+		}
+		else {
+			parameters.put(
+				"itemSelectorURL",
+				getItemSelectorURL(
+					ddmFormFieldRenderingContext, folderId,
+					httpServletRequest));
+		}
+
 		parameters.put(
 			"maximumRepetitions",
 			GetterUtil.getInteger(

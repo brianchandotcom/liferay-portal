@@ -37,6 +37,10 @@ public interface DLFilePicker {
 
 	public String getDescriptionFieldName();
 
+	public default String getFileNameFieldName() {
+		return null;
+	}
+
 	public String getIconFieldName();
 
 	public String getJavaScript() throws PortalException;

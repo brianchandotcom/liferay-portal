@@ -55,28 +55,30 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 					pickButtonIcon.setAttribute('src', documentIconURL);
 				}
 
-				var documentName = fields['<%= dlFilePicker.getTitleFieldName() %>'];
+				var title = fields['<%= dlFilePicker.getTitleFieldName() %>'];
 
 				var pickButtonTitleElement = document.getElementById(
 					'<portlet:namespace />pickButtonTitle'
 				);
 
 				if (pickButtonTitleElement) {
-					pickButtonTitleElement.innerHTML = documentName || fields['URL'];
+					pickButtonTitleElement.innerHTML = title || fields['URL'];
 				}
 
 				var titleElement = document.getElementById('<portlet:namespace />title');
 
 				if (titleElement) {
-					titleElement.value = documentName.replace(/\.[^.]*$/, '');
+					titleElement.value = title;
 				}
 
 				var fileNameElement = document.getElementById(
 					'<portlet:namespace />fileName'
 				);
 
+				var fileName = fields['<%= dlFilePicker.getFileNameFieldName() %>'];
+
 				if (fileNameElement) {
-					fileNameElement.value = documentName;
+					fileNameElement.value = fileName || '';
 				}
 
 				var documentDescription =

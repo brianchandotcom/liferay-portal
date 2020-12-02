@@ -69,6 +69,7 @@ export const DEFAULT_RULE = {
 
 export const ACTION_TARGET_SHAPE = {
 	'auto-fill': {
+		ddmDataProviderInstanceUUID: null,
 		inputs: {},
 		outputs: {},
 	},

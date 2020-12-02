@@ -132,10 +132,11 @@ const reducer = (state, action) => {
 		}
 		case ACTIONS_TYPES.CHANGE_ACTION_TARGET: {
 			const {actions, conditions} = state.ifStatement;
-			const {loc, value} = action.payload;
+			const {loc, value, ...otherPayloads} = action.payload;
 
 			actions[loc] = {
 				...actions[loc],
+				...otherPayloads,
 				label: value,
 				target: value,
 			};
@@ -156,8 +157,8 @@ const reducer = (state, action) => {
 
 			actions[loc] = {
 				...shape,
-				...actions[loc],
 				action: value,
+				target: '',
 			};
 
 			return {

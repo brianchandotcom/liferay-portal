@@ -264,6 +264,7 @@ function Target({
 	conditions,
 	dataProvider,
 	fields,
+	onChange,
 	pages,
 	target,
 	...otherProps
@@ -300,6 +301,23 @@ function Target({
 			<Timeline.FormGroupItem>
 				<FieldStateless
 					{...otherProps}
+					onChange={(event) => {
+						const value = event.value[0];
+
+						switch (action) {
+							case 'auto-fill':
+								onChange({
+									ddmDataProviderInstanceUUID: dataProvider.find(
+										({id}) => id === value
+									).uuid,
+									value,
+								});
+								break;
+							default:
+								onChange({value});
+								break;
+						}
+					}}
 					options={options}
 					placeholder={Liferay.Language.get('choose-an-option')}
 					showEmptyOption={false}
@@ -404,8 +422,8 @@ export function Actions({
 								onChange={(event) =>
 									dispatch({
 										payload: {
+											...event,
 											loc: index,
-											value: event.value[0],
 										},
 										type:
 											ACTIONS_TYPES.CHANGE_ACTION_TARGET,

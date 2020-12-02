@@ -36,6 +36,12 @@
 
 		embed,
 		iframe,
+		object {
+			background-color: $black;
+		}
+
+		embed,
+		iframe,
 		object,
 		#{$component}-placeholder {
 			height: 100%;

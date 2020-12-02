@@ -14,7 +14,13 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.portlet.shared.search;
 
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.custom.CustomFacetSearchContributor;
+import com.liferay.portal.search.facet.nested.NestedFacetSearchContributor;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferences;
@@ -47,28 +53,75 @@ public class CustomFacetPortletSharedSearchContributor
 			new CustomFacetPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
+		Optional<String> fieldToAggregateOptional =
+			customFacetPortletPreferences.getAggregationFieldOptional();
+
+		if (!fieldToAggregateOptional.isPresent()) {
+			return;
+		}
+
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
 				customFacetPortletPreferences.getFederatedSearchKeyOptional());
 
-		Optional<String> fieldToAggregateOptional =
-			customFacetPortletPreferences.getAggregationFieldOptional();
+		String fieldToAggregate = fieldToAggregateOptional.get();
 
-		fieldToAggregateOptional.ifPresent(
-			fieldToAggregate -> customFacetSearchContributor.contribute(
+		if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
+			fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+
+			String[] ddmStructureParts = StringUtil.split(
+				fieldToAggregate, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+			String[] ddmFieldParts = StringUtil.split(
+				ddmStructureParts[3], StringPool.UNDERLINE);
+
+			String nestedFieldToAggregate = ddmIndexer.getValueFieldName(
+				ddmStructureParts[1],
+				LocaleUtil.fromLanguageId(
+					ddmFieldParts[1] + "_" + ddmFieldParts[2]));
+
+			nestedFacetSearchContributor.contribute(
 				searchRequestBuilder,
-				customFacetBuilder -> customFacetBuilder.aggregationName(
+				nestedFacetBuilder -> nestedFacetBuilder.aggregationName(
 					portletSharedSearchSettings.getPortletId()
 				).fieldToAggregate(
+					StringBundler.concat(
+						DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+						nestedFieldToAggregate)
+				).filterField(
+					StringBundler.concat(
+						DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+						DDMIndexer.DDM_FIELD_NAME)
+				).filterValue(
 					fieldToAggregate
 				).frequencyThreshold(
 					customFacetPortletPreferences.getFrequencyThreshold()
 				).maxTerms(
 					customFacetPortletPreferences.getMaxTerms()
+				).path(
+					DDMIndexer.DDM_FIELD_ARRAY
 				).selectedValues(
 					portletSharedSearchSettings.getParameterValues(
 						getParameterName(customFacetPortletPreferences))
-				)));
+				));
+
+			return;
+		}
+
+		customFacetSearchContributor.contribute(
+			searchRequestBuilder,
+			customFacetBuilder -> customFacetBuilder.aggregationName(
+				portletSharedSearchSettings.getPortletId()
+			).fieldToAggregate(
+				fieldToAggregate
+			).frequencyThreshold(
+				customFacetPortletPreferences.getFrequencyThreshold()
+			).maxTerms(
+				customFacetPortletPreferences.getMaxTerms()
+			).selectedValues(
+				portletSharedSearchSettings.getParameterValues(
+					getParameterName(customFacetPortletPreferences))
+			));
 	}
 
 	protected String getParameterName(
@@ -88,5 +141,11 @@ public class CustomFacetPortletSharedSearchContributor
 
 	@Reference
 	protected CustomFacetSearchContributor customFacetSearchContributor;
+
+	@Reference
+	protected DDMIndexer ddmIndexer;
+
+	@Reference
+	protected NestedFacetSearchContributor nestedFacetSearchContributor;
 
 }

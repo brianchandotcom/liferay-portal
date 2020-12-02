@@ -145,27 +145,27 @@ export default function Chart({
 
 	const [{publishedToday}] = useContext(StoreContext);
 
-	const [, addHistoricalWarning] = useHistoricalWarning();
-
 	const chartState = useChartState();
+
+	const {firstDate, lastDate} = useDateTitle();
+
+	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
+
+	const [, addHistoricalWarning] = useHistoricalWarning();
 
 	const addDataSetItems = useAddDataSetItems();
 
-	const setLoading = useSetLoading();
-
 	const changeTimeSpanKey = useChangeTimeSpanKey();
-
-	const previousTimeSpan = usePreviousTimeSpan();
 
 	const nextTimeSpan = useNextTimeSpan();
 
-	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
+	const previousTimeSpan = usePreviousTimeSpan();
+
+	const setLoading = useSetLoading();
 
 	const dateFormatters = useMemo(() => dateFormat(languageTag), [
 		languageTag,
 	]);
-
-	const {firstDate, lastDate} = useDateTitle();
 
 	const title = useMemo(() => {
 		return dateFormatters.formatChartTitle([firstDate, lastDate]);

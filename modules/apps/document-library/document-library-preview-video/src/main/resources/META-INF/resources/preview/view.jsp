@@ -17,12 +17,6 @@
 <%@ include file="/preview/init.jsp" %>
 
 <liferay-util:html-top
-	outputKey="document_library_preview_video_css"
->
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
-<liferay-util:html-top
 	outputKey="document_library_external_video_preview_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/document-library-external-video/css/external_video_preview.css") %>" rel="stylesheet" />

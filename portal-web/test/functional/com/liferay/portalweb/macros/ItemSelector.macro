@@ -22,13 +22,20 @@ definition {
 			key_text = "Add",
 			locator1 = "Button#ANY_DISABLED");
 
-		Type(
-			locator1 = "TextInput#URL",
-			value1 = "${imageSourceURL}");
+		if (isSet(embedVideo)) {
+			Type(
+				locator1 = "TextInput#VIDEO_URL",
+				value1 = "${embedVideo}");
+		}
+		else {
+			Type(
+				locator1 = "TextInput#URL",
+				value1 = "${imageSourceURL}");
 
-		AssertTextEquals(
-			locator1 = "TextInput#URL",
-			value1 = "${imageSourceURL}");
+			AssertTextEquals(
+				locator1 = "TextInput#URL",
+				value1 = "${imageSourceURL}");
+		}
 
 		if (("${type}" == "Audio") || ("${type}" == "Video")) {
 			AssertElementPresent.pauseAssertVisible(

@@ -117,7 +117,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -183,7 +182,7 @@ public class DLFileEntryLocalServiceImpl
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
 
-		String extension = DLAppUtil.getExtension(title, sourceFileName);
+		String extension = FileUtil.getExtension(sourceFileName);
 
 		String fileName = DLUtil.getSanitizedFileName(title, extension);
 
@@ -1651,7 +1650,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		String extension = DLAppUtil.getExtension(title, sourceFileName);
+		String extension = FileUtil.getExtension(sourceFileName);
 
 		if ((file == null) && (inputStream == null)) {
 			if (Validator.isNull(extension)) {

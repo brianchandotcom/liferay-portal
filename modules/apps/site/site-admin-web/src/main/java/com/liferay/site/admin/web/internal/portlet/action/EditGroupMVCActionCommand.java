@@ -136,16 +136,18 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 	private PortletURL _getSiteAdministrationURL(
 		ActionRequest actionRequest, Group group) {
 
-		String portletId = SiteAdminPortletKeys.SITE_ADMIN;
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (liveGroupId <= 0) {
-			portletId = SiteAdminPortletKeys.SITE_SETTINGS;
+		if (scopeGroup.isStagingGroup()) {
+			group = group.getStagingGroup();
 		}
 
 		return _portal.getControlPanelPortletURL(
-			actionRequest, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
+			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
+			PortletRequest.RENDER_PHASE);
 	}
 
 	private Group _updateGroup(ActionRequest actionRequest) throws Exception {

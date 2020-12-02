@@ -15,7 +15,6 @@
 package com.liferay.site.admin.web.internal.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -26,11 +25,8 @@ import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -85,24 +81,6 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		}
 
 		super.doDispatch(renderRequest, renderResponse);
-	}
-
-	@Override
-	protected PortletURL getSiteAdministrationURL(
-		ActionRequest actionRequest, Group group) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isStagingGroup()) {
-			group = group.getStagingGroup();
-		}
-
-		return portal.getControlPanelPortletURL(
-			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,
-			PortletRequest.RENDER_PHASE);
 	}
 
 }

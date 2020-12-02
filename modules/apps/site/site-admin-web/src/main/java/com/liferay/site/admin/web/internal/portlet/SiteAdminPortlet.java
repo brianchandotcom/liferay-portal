@@ -32,14 +32,11 @@ import com.liferay.portal.kernel.exception.PendingBackgroundTaskException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -47,11 +44,8 @@ import com.liferay.site.util.GroupSearchProvider;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -129,21 +123,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected PortletURL getSiteAdministrationURL(
-		ActionRequest actionRequest, Group group) {
-
-		String portletId = SiteAdminPortletKeys.SITE_ADMIN;
-
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-
-		if (liveGroupId <= 0) {
-			portletId = SiteAdminPortletKeys.SITE_SETTINGS;
-		}
-
-		return portal.getControlPanelPortletURL(
-			actionRequest, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
-	}
-
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
 		if (throwable instanceof AssetCategoryException ||
@@ -175,9 +154,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	@Reference
 	protected GroupSearchProvider groupSearchProvider;
-
-	@Reference
-	protected Portal portal;
 
 	@Reference
 	protected SiteInitializerRegistry siteInitializerRegistry;

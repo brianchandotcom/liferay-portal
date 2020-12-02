@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/css": "3.20.0"
+		"@clayui/css": "3.21.0"
 	},
 	"name": "liferay-frontend-theme-unstyled",
 	"scripts": {

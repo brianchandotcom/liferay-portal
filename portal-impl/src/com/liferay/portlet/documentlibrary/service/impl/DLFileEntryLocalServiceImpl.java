@@ -201,8 +201,7 @@ public class DLFileEntryLocalServiceImpl
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
 			fileEntryTypeId);
 
-		validateFile(
-			groupId, folderId, 0, sourceFileName, fileName, extension, title);
+		validateFile(groupId, folderId, 0, fileName, extension, title);
 
 		long fileEntryId = counterLocalService.increment();
 
@@ -2427,8 +2426,7 @@ public class DLFileEntryLocalServiceImpl
 
 			validateFile(
 				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getFileEntryId(), sourceFileName, fileName,
-				extension, title);
+				dlFileEntry.getFileEntryId(), fileName, extension, title);
 
 			// File version
 
@@ -2552,12 +2550,11 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void validateFile(
-			long groupId, long folderId, long fileEntryId,
-			String sourceFileName, String fileName, String extension,
-			String title)
+			long groupId, long folderId, long fileEntryId, String fileName,
+			String extension, String title)
 		throws PortalException {
 
-		DLValidatorUtil.validateFileName(title);
+		DLValidatorUtil.validateFileName(fileName);
 
 		validateFileExtension(fileName, extension);
 

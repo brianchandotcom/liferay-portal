@@ -44,7 +44,7 @@
 	<td></td>
 </tr>ç<tr>
 	<td>AUTHOR_CARDS_ELEMENT</td>
-	<td>//*[contains(@class, 'aspect-ratio card-item-first')]</td>
+	<td>//*[contains(@class, 'card-item-first')]</td>
 	<td></td>
 </tr>
 <tr>

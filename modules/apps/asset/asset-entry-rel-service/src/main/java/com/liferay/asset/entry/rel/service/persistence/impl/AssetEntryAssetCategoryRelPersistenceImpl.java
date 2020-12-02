@@ -2331,15 +2331,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryAssetCategoryRelPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(AssetPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

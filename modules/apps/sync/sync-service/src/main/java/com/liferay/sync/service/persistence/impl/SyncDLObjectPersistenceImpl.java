@@ -7002,15 +7002,6 @@ public class SyncDLObjectPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"size", "type"});
 
-	static {
-		try {
-			Class.forName(SyncPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

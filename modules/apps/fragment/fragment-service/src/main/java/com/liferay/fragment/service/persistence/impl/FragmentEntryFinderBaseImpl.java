@@ -86,13 +86,4 @@ public abstract class FragmentEntryFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(FragmentPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

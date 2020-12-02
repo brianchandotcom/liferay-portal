@@ -3677,15 +3677,6 @@ public class ChangesetEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChangesetEntryPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(ChangesetPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

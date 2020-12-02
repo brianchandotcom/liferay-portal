@@ -6260,15 +6260,6 @@ public class JournalContentSearchPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentSearchPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(JournalPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

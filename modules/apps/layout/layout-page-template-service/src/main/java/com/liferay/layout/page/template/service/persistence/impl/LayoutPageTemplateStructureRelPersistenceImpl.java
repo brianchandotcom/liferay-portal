@@ -3986,15 +3986,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "layoutPageTemplateStructureRelId", "data"});
 
-	static {
-		try {
-			Class.forName(LayoutPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

@@ -3635,15 +3635,6 @@ public class BlogsStatsUserPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsStatsUserPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(BlogsPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

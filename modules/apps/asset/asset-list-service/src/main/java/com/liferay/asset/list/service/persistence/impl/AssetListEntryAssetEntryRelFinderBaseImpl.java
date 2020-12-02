@@ -86,13 +86,4 @@ public abstract class AssetListEntryAssetEntryRelFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListEntryAssetEntryRelFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(AssetListPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

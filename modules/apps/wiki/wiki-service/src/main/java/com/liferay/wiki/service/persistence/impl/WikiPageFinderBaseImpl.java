@@ -85,13 +85,4 @@ public abstract class WikiPageFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(WikiPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

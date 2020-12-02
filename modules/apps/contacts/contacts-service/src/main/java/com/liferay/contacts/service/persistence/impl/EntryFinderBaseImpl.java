@@ -64,13 +64,4 @@ public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 	@Reference
 	protected EntryPersistence entryPersistence;
 
-	static {
-		try {
-			Class.forName(ContactsPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

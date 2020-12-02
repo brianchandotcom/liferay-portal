@@ -2291,15 +2291,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetAutoTaggerEntryPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(AssetAutoTaggerPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

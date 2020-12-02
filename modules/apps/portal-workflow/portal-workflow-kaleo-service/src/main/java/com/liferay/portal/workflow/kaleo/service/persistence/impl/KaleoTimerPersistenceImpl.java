@@ -1955,15 +1955,6 @@ public class KaleoTimerPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTimerPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(KaleoPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

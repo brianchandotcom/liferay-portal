@@ -86,13 +86,4 @@ public abstract class DDMFormInstanceFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(DDMPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

@@ -85,13 +85,4 @@ public abstract class SharingEntryFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharingEntryFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(SharingPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

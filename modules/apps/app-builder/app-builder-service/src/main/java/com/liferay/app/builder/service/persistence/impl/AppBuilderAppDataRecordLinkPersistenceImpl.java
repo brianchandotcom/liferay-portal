@@ -2367,15 +2367,6 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AppBuilderAppDataRecordLinkPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(AppBuilderPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

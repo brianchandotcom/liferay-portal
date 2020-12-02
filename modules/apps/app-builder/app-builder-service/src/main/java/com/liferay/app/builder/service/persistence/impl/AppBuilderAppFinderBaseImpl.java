@@ -86,13 +86,4 @@ public abstract class AppBuilderAppFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AppBuilderAppFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(AppBuilderPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

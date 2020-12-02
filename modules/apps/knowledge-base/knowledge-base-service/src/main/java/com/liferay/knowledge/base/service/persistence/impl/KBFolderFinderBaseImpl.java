@@ -85,13 +85,4 @@ public abstract class KBFolderFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBFolderFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(KBPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

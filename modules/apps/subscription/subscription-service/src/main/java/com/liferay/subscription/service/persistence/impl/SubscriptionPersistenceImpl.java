@@ -4412,15 +4412,6 @@ public class SubscriptionPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(SubscriptionPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

@@ -86,13 +86,4 @@ public abstract class OAuth2AuthorizationFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2AuthorizationFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(OAuthTwoPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

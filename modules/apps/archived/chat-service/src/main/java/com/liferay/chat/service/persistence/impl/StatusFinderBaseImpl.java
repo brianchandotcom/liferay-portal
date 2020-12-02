@@ -84,13 +84,4 @@ public abstract class StatusFinderBaseImpl extends BasePersistenceImpl<Status> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StatusFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(ChatPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

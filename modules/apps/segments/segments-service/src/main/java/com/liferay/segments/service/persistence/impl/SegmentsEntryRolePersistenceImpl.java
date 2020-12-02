@@ -2267,15 +2267,6 @@ public class SegmentsEntryRolePersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRolePersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(SegmentsPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

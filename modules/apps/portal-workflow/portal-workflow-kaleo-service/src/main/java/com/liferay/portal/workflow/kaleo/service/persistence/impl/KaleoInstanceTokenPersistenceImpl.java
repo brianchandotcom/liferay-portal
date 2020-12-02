@@ -3579,15 +3579,6 @@ public class KaleoInstanceTokenPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoInstanceTokenPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(KaleoPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

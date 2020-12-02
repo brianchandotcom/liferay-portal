@@ -1781,15 +1781,6 @@ public class DepotAppCustomizationPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotAppCustomizationPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(DepotPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

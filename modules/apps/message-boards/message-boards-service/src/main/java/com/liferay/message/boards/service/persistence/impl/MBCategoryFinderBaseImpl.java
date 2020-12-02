@@ -85,13 +85,4 @@ public abstract class MBCategoryFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBCategoryFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(MBPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

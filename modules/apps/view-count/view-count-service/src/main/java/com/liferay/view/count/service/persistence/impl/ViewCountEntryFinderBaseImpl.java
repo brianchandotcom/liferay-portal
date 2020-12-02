@@ -65,13 +65,4 @@ public abstract class ViewCountEntryFinderBaseImpl
 	@Reference
 	protected ViewCountEntryPersistence viewCountEntryPersistence;
 
-	static {
-		try {
-			Class.forName(ViewCountPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

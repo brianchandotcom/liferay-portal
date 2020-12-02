@@ -1002,15 +1002,6 @@ public class HtmlPreviewEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		HtmlPreviewEntryPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(PreviewPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

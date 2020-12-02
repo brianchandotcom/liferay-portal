@@ -85,13 +85,4 @@ public abstract class JournalFolderFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(JournalPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

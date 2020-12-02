@@ -2506,15 +2506,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalizationPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(JournalPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

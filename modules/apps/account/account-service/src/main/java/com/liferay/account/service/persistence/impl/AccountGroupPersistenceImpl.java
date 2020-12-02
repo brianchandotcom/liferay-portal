@@ -1515,15 +1515,6 @@ public class AccountGroupPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountGroupPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(AccountPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

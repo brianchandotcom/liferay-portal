@@ -629,15 +629,6 @@ public class RSVEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		RSVEntryPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(RSVPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

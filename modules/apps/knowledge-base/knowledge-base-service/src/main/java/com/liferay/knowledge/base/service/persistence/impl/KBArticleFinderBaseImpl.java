@@ -85,13 +85,4 @@ public abstract class KBArticleFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(KBPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

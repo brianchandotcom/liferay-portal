@@ -2186,15 +2186,6 @@ public class AccountRolePersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountRolePersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(AccountPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

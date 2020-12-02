@@ -65,13 +65,4 @@ public abstract class BlogsStatsUserFinderBaseImpl
 	@Reference
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 
-	static {
-		try {
-			Class.forName(BlogsPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

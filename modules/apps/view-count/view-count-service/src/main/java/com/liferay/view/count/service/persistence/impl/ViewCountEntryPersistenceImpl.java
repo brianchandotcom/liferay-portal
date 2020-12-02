@@ -647,15 +647,6 @@ public class ViewCountEntryPersistenceImpl
 	private static final Set<String> _compoundPKColumnNames = SetUtil.fromArray(
 		new String[] {"companyId", "classNameId", "classPK"});
 
-	static {
-		try {
-			Class.forName(ViewCountPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

@@ -85,13 +85,4 @@ public abstract class PollsQuestionFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PollsQuestionFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(PollsPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

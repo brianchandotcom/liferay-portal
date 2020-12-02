@@ -2783,15 +2783,6 @@ public class MBStatsUserPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBStatsUserPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(MBPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

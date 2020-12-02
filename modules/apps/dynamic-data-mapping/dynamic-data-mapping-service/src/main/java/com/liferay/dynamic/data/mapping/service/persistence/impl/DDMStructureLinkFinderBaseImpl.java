@@ -65,13 +65,4 @@ public abstract class DDMStructureLinkFinderBaseImpl
 	@Reference
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 
-	static {
-		try {
-			Class.forName(DDMPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

@@ -85,13 +85,4 @@ public abstract class MDRRuleGroupFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRRuleGroupFinderBaseImpl.class);
 
-	static {
-		try {
-			Class.forName(MDRPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 }

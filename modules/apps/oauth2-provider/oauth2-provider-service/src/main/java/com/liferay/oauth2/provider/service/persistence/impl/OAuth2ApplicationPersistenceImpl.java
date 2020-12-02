@@ -1951,15 +1951,6 @@ public class OAuth2ApplicationPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"oAuth2ApplicationScopeAliasesId"});
 
-	static {
-		try {
-			Class.forName(OAuthTwoPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

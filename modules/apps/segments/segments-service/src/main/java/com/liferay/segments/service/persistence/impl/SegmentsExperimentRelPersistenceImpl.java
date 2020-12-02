@@ -1786,15 +1786,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentRelPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(SegmentsPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

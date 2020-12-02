@@ -3787,15 +3787,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordVersionPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(DDMPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;

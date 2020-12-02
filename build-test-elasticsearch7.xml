@@ -218,12 +218,12 @@ truststoreType="pkcs12"</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}/config/certs/localhost.p12" />
+						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/config/certs/elastic-certificates.p12" />
 					</exec>
 
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/elastic-certificates.jks -srckeystore ${elasticsearch.dir}/config/certs/elastic-certificates.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
 					</exec>
 
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
@@ -246,12 +246,12 @@ truststoreType="pkcs12"</echo>
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}/config/certs/localhost.p12" />
+							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca.key --pass liferay --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/config/certs/elastic-certificates.p12" />
 						</exec>
 
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/localhost.jks -srckeystore ${elasticsearch.dir}/config/certs/localhost.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
+							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/elastic-certificates.jks -srckeystore ${elasticsearch.dir}/config/certs/elastic-certificates.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
 						</exec>
 
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
@@ -307,7 +307,7 @@ kibana_system:
 		</sequential>
 	</macrodef>
 
-	<macrodef name="generate-x-pack-pki-security-certificates">
+	<macrodef name="generate-x-pack-security-certificates">
 		<sequential>
 			<if>
 				<os family="unix" />
@@ -338,7 +338,7 @@ kibana_system:
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-pass liferay --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --dns localhost --pem --ca-key ${elasticsearch.dir}/bin/ca/ca.key --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
+						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
 					</exec>
 				</then>
 				<elseif>
@@ -346,7 +346,7 @@ kibana_system:
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-pass liferay --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --dns localhost --pem --ca-key c${elasticsearch.dir}/bin/ca/ca.key --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
+							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
 						</exec>
 					</then>
 				</elseif>
@@ -381,144 +381,6 @@ kibana_system:
 			<delete file="${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
 			<delete file="${elasticsearch.dir}/bin/elastic-certificates.zip" />
 			<delete dir="${elasticsearch.dir}/bin/CN=liferay.com,OU=Search,DC=liferay,DC=com" />
-
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca.key --pass liferay --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/config/certs/elastic-certificates.p12" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/elastic-certificates.jks -srckeystore ${elasticsearch.dir}/config/certs/elastic-certificates.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch-keystore create" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="liferay&#x0A;">
-						<arg value="-c" />
-						<arg value="./elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="liferay&#x0A;">
-						<arg value="-c" />
-						<arg value="./elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/config/certs/ca.crt --ca-key ${elasticsearch.dir}/config/certs/ca.key --pass liferay --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/config/certs/elastic-certificates.p12" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="keytool -importkeystore -deststorepass liferay -destkeystore ${elasticsearch.dir}/config/certs/elastic-certificates.jks -srckeystore ${elasticsearch.dir}/config/certs/elastic-certificates.p12 -srcstoretype PKCS12 -srcstorepass liferay" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="-c" />
-							<arg value="elasticsearch-keystore create" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
-							<arg value="-c" />
-							<arg value="elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
-							<arg value="-c" />
-							<arg value="elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<then>
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
-
-					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
-				</then>
-				<else>
-					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="generate-x-pack-security-certificates">
-		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch-certutil ca --pem --ca-dn CN=localhost --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="elasticsearch-certutil ca --pem --ca-dn CN=localhost --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-
-			<unzip
-				dest="${elasticsearch.dir}/bin"
-				src="${elasticsearch.dir}/bin/elastic-stack-ca.zip"
-			/>
-
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}/bin/certificate-bundle.zip" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name localhost --out ${elasticsearch.dir}/bin/certificate-bundle.zip" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-
-			<unzip
-				dest="${elasticsearch.dir}/bin"
-				src="${elasticsearch.dir}/bin/certificate-bundle.zip"
-			/>
-
-			<move
-				file="${elasticsearch.dir}/bin/ca"
-				todir="${elasticsearch.dir}/config/certs"
-			/>
-
-			<move
-				file="${elasticsearch.dir}/bin/localhost"
-				todir="${elasticsearch.dir}/config/certs"
-			/>
-
-			<delete file="${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
-			<delete file="${elasticsearch.dir}/bin/certificate-bundle.zip" />
 		</sequential>
 	</macrodef>
 

@@ -27,19 +27,16 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.admin.web.internal.util.JSONObjectStringPropertyComparator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -96,16 +93,19 @@ public class DisplaySettingsDisplayContext {
 	}
 
 	private JSONArray _getAvailableLanguagesJSONArray() {
-		JSONArray availableLanguagesJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		Set<JSONObject> availableLanguagesJSONObjects = new TreeSet<>(
+			(jsonObject1, jsonObject2) -> {
+				String value1 = jsonObject1.getString("value");
+				String value2 = jsonObject2.getString("value");
 
-		List<JSONObject> availableLanguages = new ArrayList<>();
+				return value1.compareTo(value2);
+			});
 
 		Set<Locale> siteAvailableLocales = _getSiteAvailableLocales();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 			if (!siteAvailableLocales.contains(availableLocale)) {
-				availableLanguages.add(
+				availableLanguagesJSONObjects.add(
 					JSONUtil.put(
 						"label",
 						availableLocale.getDisplayName(
@@ -116,15 +116,7 @@ public class DisplaySettingsDisplayContext {
 			}
 		}
 
-		List<JSONObject> sortedAvailableLanguages = ListUtil.sort(
-			availableLanguages,
-			new JSONObjectStringPropertyComparator("value", true));
-
-		for (JSONObject jsonObject : sortedAvailableLanguages) {
-			availableLanguagesJSONArray.put(jsonObject);
-		}
-
-		return availableLanguagesJSONArray;
+		return JSONFactoryUtil.createJSONArray(availableLanguagesJSONObjects);
 	}
 
 	private JSONArray _getCurrentLanguagesJSONArray() {

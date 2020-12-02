@@ -2901,17 +2901,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			});
 	</#if>
 
-	<#if dependencyInjectorDS>
-		static {
-			try {
-				Class.forName(${portletShortName}PersistenceConstants.class.getName());
-			}
-			catch (ClassNotFoundException classNotFoundException) {
-				throw new ExceptionInInitializerError(classNotFoundException);
-			}
-		}
-	</#if>
-
 	<#if serviceBuilder.isVersionGTE_7_4_0()>
 		@Override
 		protected FinderCache getFinderCache() {

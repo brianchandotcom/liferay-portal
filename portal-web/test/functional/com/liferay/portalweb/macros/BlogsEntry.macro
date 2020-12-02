@@ -46,15 +46,10 @@ definition {
 
 			Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_VIDEO");
 
-			Type(
-				locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
-				value1 = "${embedVideo}");
-
-			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE",
-				value1 = "Video playback is disabled during edit mode");
+			ItemSelector.addFromURL(
+				embedVideo = "${embedVideo}",
+				navTab = "${navTab}",
+				type = "Video");
 		}
 	}
 

@@ -152,7 +152,8 @@ function DirectImagePanel({item}) {
 			  ''
 			: editableConfig.alt || '';
 
-	const imageSizeId = editableConfig.imageProperties?.[selectedViewportSize];
+	const imageSizeId =
+		editableConfig.imageConfiguration?.[selectedViewportSize];
 
 	const handleImageChanged = (nextImage) => {
 		const nextEditableValue = {

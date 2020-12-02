@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service.persistence;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDLRecordSetVersionPersistence
-	extends BasePersistence<DDLRecordSetVersion> {
+	extends BasePersistence<DDLRecordSetVersion>,
+			CTPersistence<DDLRecordSetVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

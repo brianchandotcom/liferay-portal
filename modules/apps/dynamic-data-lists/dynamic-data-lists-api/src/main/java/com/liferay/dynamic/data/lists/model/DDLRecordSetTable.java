@@ -35,6 +35,8 @@ public class DDLRecordSetTable extends BaseTable<DDLRecordSetTable> {
 
 	public final Column<DDLRecordSetTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DDLRecordSetTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDLRecordSetTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDLRecordSetTable, Long> recordSetId = createColumn(

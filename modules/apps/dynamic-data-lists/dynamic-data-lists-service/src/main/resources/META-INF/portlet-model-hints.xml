@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecord">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="recordId" type="long" />
 		<field name="groupId" type="long" />
@@ -26,6 +27,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSet">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="recordSetId" type="long" />
 		<field name="groupId" type="long" />
@@ -57,6 +59,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSetVersion">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="recordSetVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -78,6 +81,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordVersion">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="recordVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

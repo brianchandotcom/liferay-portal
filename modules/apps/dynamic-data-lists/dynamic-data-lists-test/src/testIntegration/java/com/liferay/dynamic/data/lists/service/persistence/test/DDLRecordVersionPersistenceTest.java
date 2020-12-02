@@ -127,6 +127,8 @@ public class DDLRecordVersionPersistenceTest {
 
 		newDDLRecordVersion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDLRecordVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDLRecordVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDLRecordVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -165,6 +167,9 @@ public class DDLRecordVersionPersistenceTest {
 		Assert.assertEquals(
 			existingDDLRecordVersion.getMvccVersion(),
 			newDDLRecordVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingDDLRecordVersion.getCtCollectionId(),
+			newDDLRecordVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDLRecordVersion.getRecordVersionId(),
 			newDDLRecordVersion.getRecordVersionId());
@@ -284,12 +289,13 @@ public class DDLRecordVersionPersistenceTest {
 
 	protected OrderByComparator<DDLRecordVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDLRecordVersion", "mvccVersion", true, "recordVersionId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "DDMStorageId", true, "recordSetId", true,
-			"recordSetVersion", true, "recordId", true, "version", true,
-			"displayIndex", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"DDLRecordVersion", "mvccVersion", true, "ctCollectionId", true,
+			"recordVersionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"DDMStorageId", true, "recordSetId", true, "recordSetVersion", true,
+			"recordId", true, "version", true, "displayIndex", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -575,6 +581,8 @@ public class DDLRecordVersionPersistenceTest {
 		DDLRecordVersion ddlRecordVersion = _persistence.create(pk);
 
 		ddlRecordVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddlRecordVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddlRecordVersion.setGroupId(RandomTestUtil.nextLong());
 

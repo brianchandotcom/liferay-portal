@@ -35,6 +35,9 @@ public class DDLRecordVersionTable extends BaseTable<DDLRecordVersionTable> {
 
 	public final Column<DDLRecordVersionTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DDLRecordVersionTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDLRecordVersionTable, Long> recordVersionId =
 		createColumn(
 			"recordVersionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

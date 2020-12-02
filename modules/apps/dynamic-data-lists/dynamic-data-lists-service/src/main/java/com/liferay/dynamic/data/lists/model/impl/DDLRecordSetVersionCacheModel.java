@@ -78,10 +78,12 @@ public class DDLRecordSetVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", recordSetVersionId=");
 		sb.append(recordSetVersionId);
 		sb.append(", groupId=");
@@ -125,6 +127,7 @@ public class DDLRecordSetVersionCacheModel
 			new DDLRecordSetVersionImpl();
 
 		ddlRecordSetVersionImpl.setMvccVersion(mvccVersion);
+		ddlRecordSetVersionImpl.setCtCollectionId(ctCollectionId);
 		ddlRecordSetVersionImpl.setRecordSetVersionId(recordSetVersionId);
 		ddlRecordSetVersionImpl.setGroupId(groupId);
 		ddlRecordSetVersionImpl.setCompanyId(companyId);
@@ -203,6 +206,8 @@ public class DDLRecordSetVersionCacheModel
 
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		recordSetVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -231,6 +236,8 @@ public class DDLRecordSetVersionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(recordSetVersionId);
 
@@ -296,6 +303,7 @@ public class DDLRecordSetVersionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long recordSetVersionId;
 	public long groupId;
 	public long companyId;

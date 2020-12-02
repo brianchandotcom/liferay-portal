@@ -129,6 +129,8 @@ public class DDLRecordSetVersionPersistenceTest {
 
 		newDDLRecordSetVersion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDLRecordSetVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDLRecordSetVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDLRecordSetVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -170,6 +172,9 @@ public class DDLRecordSetVersionPersistenceTest {
 		Assert.assertEquals(
 			existingDDLRecordSetVersion.getMvccVersion(),
 			newDDLRecordSetVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingDDLRecordSetVersion.getCtCollectionId(),
+			newDDLRecordSetVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDLRecordSetVersion.getRecordSetVersionId(),
 			newDDLRecordSetVersion.getRecordSetVersionId());
@@ -271,11 +276,11 @@ public class DDLRecordSetVersionPersistenceTest {
 
 	protected OrderByComparator<DDLRecordSetVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDLRecordSetVersion", "mvccVersion", true, "recordSetVersionId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "recordSetId", true,
-			"DDMStructureVersionId", true, "name", true, "description", true,
-			"version", true, "status", true, "statusByUserId", true,
+			"DDLRecordSetVersion", "mvccVersion", true, "ctCollectionId", true,
+			"recordSetVersionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true, "recordSetId",
+			true, "DDMStructureVersionId", true, "name", true, "description",
+			true, "version", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
 	}
 
@@ -575,6 +580,8 @@ public class DDLRecordSetVersionPersistenceTest {
 		DDLRecordSetVersion ddlRecordSetVersion = _persistence.create(pk);
 
 		ddlRecordSetVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddlRecordSetVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddlRecordSetVersion.setGroupId(RandomTestUtil.nextLong());
 

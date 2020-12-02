@@ -38,6 +38,9 @@ public class DDLRecordSetVersionTable
 	public final Column<DDLRecordSetVersionTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DDLRecordSetVersionTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDLRecordSetVersionTable, Long> recordSetVersionId =
 		createColumn(
 			"recordSetVersionId", Long.class, Types.BIGINT,

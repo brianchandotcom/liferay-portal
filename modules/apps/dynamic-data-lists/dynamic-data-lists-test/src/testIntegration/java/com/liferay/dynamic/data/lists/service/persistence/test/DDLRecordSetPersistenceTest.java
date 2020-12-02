@@ -127,6 +127,8 @@ public class DDLRecordSetPersistenceTest {
 
 		newDDLRecordSet.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDLRecordSet.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDLRecordSet.setUuid(RandomTestUtil.randomString());
 
 		newDDLRecordSet.setGroupId(RandomTestUtil.nextLong());
@@ -171,6 +173,9 @@ public class DDLRecordSetPersistenceTest {
 		Assert.assertEquals(
 			existingDDLRecordSet.getMvccVersion(),
 			newDDLRecordSet.getMvccVersion());
+		Assert.assertEquals(
+			existingDDLRecordSet.getCtCollectionId(),
+			newDDLRecordSet.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDLRecordSet.getUuid(), newDDLRecordSet.getUuid());
 		Assert.assertEquals(
@@ -314,13 +319,13 @@ public class DDLRecordSetPersistenceTest {
 
 	protected OrderByComparator<DDLRecordSet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDLRecordSet", "mvccVersion", true, "uuid", true, "recordSetId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "versionUserId", true, "versionUserName", true,
-			"createDate", true, "modifiedDate", true, "DDMStructureId", true,
-			"recordSetKey", true, "version", true, "name", true, "description",
-			true, "minDisplayRows", true, "scope", true, "lastPublishDate",
-			true);
+			"DDLRecordSet", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "recordSetId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "versionUserId", true,
+			"versionUserName", true, "createDate", true, "modifiedDate", true,
+			"DDMStructureId", true, "recordSetKey", true, "version", true,
+			"name", true, "description", true, "minDisplayRows", true, "scope",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -616,6 +621,8 @@ public class DDLRecordSetPersistenceTest {
 		DDLRecordSet ddlRecordSet = _persistence.create(pk);
 
 		ddlRecordSet.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddlRecordSet.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddlRecordSet.setUuid(RandomTestUtil.randomString());
 

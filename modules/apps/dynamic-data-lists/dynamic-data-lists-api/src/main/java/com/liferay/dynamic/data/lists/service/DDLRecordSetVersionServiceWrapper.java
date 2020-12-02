@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.service;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -34,8 +35,7 @@ public class DDLRecordSetVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetVersion
-			getLatestRecordSetVersion(long recordSetId)
+	public DDLRecordSetVersion getLatestRecordSetVersion(long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddlRecordSetVersionService.getLatestRecordSetVersion(
@@ -53,8 +53,7 @@ public class DDLRecordSetVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetVersion
-			getRecordSetVersion(long recordSetVersionId)
+	public DDLRecordSetVersion getRecordSetVersion(long recordSetVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddlRecordSetVersionService.getRecordSetVersion(
@@ -62,14 +61,11 @@ public class DDLRecordSetVersionServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.lists.model.DDLRecordSetVersion>
-				getRecordSetVersions(
-					long recordSetId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.lists.model.
-							DDLRecordSetVersion> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<DDLRecordSetVersion> getRecordSetVersions(
+			long recordSetId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DDLRecordSetVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddlRecordSetVersionService.getRecordSetVersions(
 			recordSetId, start, end, orderByComparator);

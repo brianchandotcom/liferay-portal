@@ -76,10 +76,12 @@ public class DDLRecordCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", recordId=");
@@ -126,6 +128,7 @@ public class DDLRecordCacheModel
 		DDLRecordImpl ddlRecordImpl = new DDLRecordImpl();
 
 		ddlRecordImpl.setMvccVersion(mvccVersion);
+		ddlRecordImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddlRecordImpl.setUuid("");
@@ -212,6 +215,8 @@ public class DDLRecordCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		recordId = objectInput.readLong();
@@ -244,6 +249,8 @@ public class DDLRecordCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -311,6 +318,7 @@ public class DDLRecordCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long recordId;
 	public long groupId;

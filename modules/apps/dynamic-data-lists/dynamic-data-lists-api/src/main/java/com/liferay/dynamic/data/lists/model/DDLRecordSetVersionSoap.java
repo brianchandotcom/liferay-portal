@@ -36,6 +36,7 @@ public class DDLRecordSetVersionSoap implements Serializable {
 		DDLRecordSetVersionSoap soapModel = new DDLRecordSetVersionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setRecordSetVersionId(model.getRecordSetVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -120,6 +121,14 @@ public class DDLRecordSetVersionSoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public long getRecordSetVersionId() {
@@ -251,6 +260,7 @@ public class DDLRecordSetVersionSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _recordSetVersionId;
 	private long _groupId;
 	private long _companyId;

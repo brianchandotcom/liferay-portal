@@ -16,7 +16,6 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {VIEWPORT_SIZES} from '../../app/config/constants/viewportSizes';
 import {config} from '../../app/config/index';
 import ImageService from '../../app/services/ImageService';
 import {useSelector} from '../../app/store/index';
@@ -107,23 +106,21 @@ export const ImageSelectorSize = ({
 
 	return (
 		<ClayForm.Group className="mb-3">
-			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-				<ClayForm.Group className="mb-2">
-					<label htmlFor={imageSizeSelectId}>
-						{Liferay.Language.get('resolution')}
-					</label>
-					<ClaySelectWithOption
-						className={'form-control form-control-sm'}
-						id={imageSizeSelectId}
-						name={imageSizeSelectId}
-						onChange={(event) =>
-							onImageSizeIdChanged(event.target.value)
-						}
-						options={imageSizes}
-						value={imageSizeId}
-					/>
-				</ClayForm.Group>
-			)}
+			<ClayForm.Group className="mb-2">
+				<label htmlFor={imageSizeSelectId}>
+					{Liferay.Language.get('resolution')}
+				</label>
+				<ClaySelectWithOption
+					className={'form-control form-control-sm'}
+					id={imageSizeSelectId}
+					name={imageSizeSelectId}
+					onChange={(event) =>
+						onImageSizeIdChanged(event.target.value)
+					}
+					options={imageSizes}
+					value={imageSizeId}
+				/>
+			</ClayForm.Group>
 
 			{imageSize.width && (
 				<div className="small text-secondary">

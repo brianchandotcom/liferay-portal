@@ -87,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SiteAdminPortletKeys.SITE_ADMIN,
+		"javax.portlet.name=" + SiteAdminPortletKeys.SITE_SETTINGS,
 		"mvc.command.name=/site_admin/edit_group"
 	},
 	service = MVCActionCommand.class

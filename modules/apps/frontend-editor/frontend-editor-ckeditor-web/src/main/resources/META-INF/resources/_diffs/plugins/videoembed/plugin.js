@@ -690,7 +690,13 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		},
 
 		onOkVideo(editor, html) {
-			editor.insertHtml(html);
+			const embedContent = this._generateEmbedContent(
+				editor,
+				'url',
+				html
+			);
+
+			editor.insertHtml(embedContent);
 		},
 
 		requires: 'widget',

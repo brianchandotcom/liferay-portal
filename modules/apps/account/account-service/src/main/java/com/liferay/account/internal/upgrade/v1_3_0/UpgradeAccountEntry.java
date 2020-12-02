@@ -14,7 +14,7 @@
 
 package com.liferay.account.internal.upgrade.v1_3_0;
 
-import com.liferay.account.internal.upgrade.v1_1_0.util.AccountEntryTable;
+import com.liferay.account.internal.upgrade.v1_3_0.util.AccountEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**

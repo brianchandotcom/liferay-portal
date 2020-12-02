@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+SiteAdminDisplayContext siteAdminDisplayContext = new SiteAdminDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
 List<Group> groups = (List<Group>)request.getAttribute(SiteAdminWebKeys.GROUP_ENTRIES);
 
 if (ListUtil.isEmpty(groups)) {

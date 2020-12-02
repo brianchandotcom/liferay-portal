@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+SiteAdminDisplayContext siteAdminDisplayContext = new SiteAdminDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
+SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContext = new SiteAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteAdminDisplayContext);
+
 Group group = siteAdminDisplayContext.getGroup();
 
 if (group != null) {
@@ -88,6 +92,11 @@ if (group != null) {
 				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
 				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
 				<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+
+				<%
+				request.setAttribute(SiteAdminDisplayContext.class.getName(), siteAdminDisplayContext);
+				request.setAttribute(SiteAdminManagementToolbarDisplayContext.class.getName(), siteAdminManagementToolbarDisplayContext);
+				%>
 
 				<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 			</aui:form>

@@ -16,6 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+SiteAdminDisplayContext siteAdminDisplayContext = (SiteAdminDisplayContext)request.getAttribute(SiteAdminDisplayContext.class.getName());
+
+SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContext = (SiteAdminManagementToolbarDisplayContext)request.getAttribute(SiteAdminManagementToolbarDisplayContext.class.getName());
+%>
+
 <liferay-ui:search-container
 	searchContainer="<%= siteAdminDisplayContext.getGroupSearch() %>"
 >

@@ -9,7 +9,13 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useContext, useMemo, useReducer} from 'react';
+import React, {
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+	useReducer,
+} from 'react';
 
 import ConnectionContext from './ConnectionContext';
 
@@ -56,12 +62,15 @@ export const useAddDataSetItems = () => {
 	const [, dispatch] = useContext(ChartStateContext);
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	return (payload) =>
-		dispatch({
-			payload,
-			type: ADD_DATA_SET_ITEMS,
-			validAnalyticsConnection,
-		});
+	return useCallback(
+		(payload) =>
+			dispatch({
+				payload,
+				type: ADD_DATA_SET_ITEMS,
+				validAnalyticsConnection,
+			}),
+		[dispatch, validAnalyticsConnection]
+	);
 };
 
 export const useChangeTimeSpanKey = () => {
@@ -130,7 +139,7 @@ export const useNextTimeSpan = () => {
 export const useSetLoading = () => {
 	const [, dispatch] = useContext(ChartStateContext);
 
-	return () => dispatch({type: SET_LOADING});
+	return useCallback(() => dispatch({type: SET_LOADING}), [dispatch]);
 };
 
 export const usePreviousTimeSpan = () => {

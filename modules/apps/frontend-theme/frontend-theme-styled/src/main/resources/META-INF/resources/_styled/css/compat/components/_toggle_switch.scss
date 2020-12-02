@@ -1,5 +1,0 @@
-@if $compat-toggle_switch {
-	label:not(.toggle-switch) .toggle-switch {
-		@extend .toggle-switch-check;
-	}
-}

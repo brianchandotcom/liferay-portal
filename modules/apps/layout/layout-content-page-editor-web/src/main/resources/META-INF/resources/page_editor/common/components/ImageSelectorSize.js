@@ -106,21 +106,23 @@ export const ImageSelectorSize = ({
 
 	return (
 		<ClayForm.Group className="mb-3">
-			<ClayForm.Group className="mb-2">
-				<label htmlFor={imageSizeSelectId}>
-					{Liferay.Language.get('resolution')}
-				</label>
-				<ClaySelectWithOption
-					className={'form-control form-control-sm'}
-					id={imageSizeSelectId}
-					name={imageSizeSelectId}
-					onChange={(event) =>
-						onImageSizeIdChanged(event.target.value)
-					}
-					options={imageSizes}
-					value={imageSizeId}
-				/>
-			</ClayForm.Group>
+			{onImageSizeIdChanged && (
+				<ClayForm.Group className="mb-2">
+					<label htmlFor={imageSizeSelectId}>
+						{Liferay.Language.get('resolution')}
+					</label>
+					<ClaySelectWithOption
+						className={'form-control form-control-sm'}
+						id={imageSizeSelectId}
+						name={imageSizeSelectId}
+						onChange={(event) =>
+							onImageSizeIdChanged(event.target.value)
+						}
+						options={imageSizes}
+						value={imageSizeId}
+					/>
+				</ClayForm.Group>
+			)}
 
 			{imageSize.width && (
 				<div className="small text-secondary">

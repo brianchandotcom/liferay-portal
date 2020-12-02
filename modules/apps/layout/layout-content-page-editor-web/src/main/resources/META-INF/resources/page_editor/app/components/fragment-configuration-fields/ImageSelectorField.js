@@ -14,16 +14,14 @@
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
+import {ImageSelectorSize} from '../../../common/components/ImageSelectorSize';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
-import ImageService from '../../services/ImageService';
-import {useDispatch, useSelector} from '../../store/index';
 import {useId} from '../../utils/useId';
 
 const IMAGE_SOURCES = {
@@ -39,28 +37,13 @@ const IMAGE_SOURCES = {
 };
 
 export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
-	const dispatch = useDispatch();
 	const imageSourceInputId = useId();
-
-	const [imageConfigurations, setImageConfigurations] = useState([]);
-
-	const [imageFileSize, setImageFileSize] = useState('');
 
 	const [imageSource, setImageSource] = useState(() =>
 		value.fieldId || value.mappedField
 			? IMAGE_SOURCES.mapping.value
 			: IMAGE_SOURCES.direct.value
 	);
-
-	const [imageWidth, setImageWidth] = useState('');
-
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
-
-	const {maxWidth, minWidth} = config.availableViewportSizes[
-		selectedViewportSize
-	];
 
 	const handleImageChanged = (image) => {
 		onValueSelect(field.name, image);
@@ -73,35 +56,6 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 			handleImageChanged({});
 		}
 	};
-
-	useEffect(() => {
-		const fileEntryId = value?.fileEntryId;
-
-		if (config.adaptiveMediaEnabled && fileEntryId > 0) {
-			ImageService.getAvailableImageConfigurations({
-				fileEntryId,
-				onNetworkStatus: dispatch,
-			}).then((availableImageConfigurations) =>
-				setImageConfigurations(availableImageConfigurations)
-			);
-		}
-	}, [dispatch, value.fileEntryId]);
-
-	useEffect(() => {
-		if (config.adaptiveMediaEnabled) {
-			imageConfigurations.forEach((imageConfiguration) => {
-				if (
-					(selectedViewportSize === VIEWPORT_SIZES.desktop &&
-						imageConfiguration.value === 'auto') ||
-					(imageConfiguration.width > minWidth &&
-						imageConfiguration.width <= maxWidth)
-				) {
-					setImageFileSize(imageConfiguration.size);
-					setImageWidth(imageConfiguration.width);
-				}
-			});
-		}
-	}, [imageConfigurations, maxWidth, minWidth, selectedViewportSize]);
 
 	return (
 		<>
@@ -119,12 +73,21 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 			</ClayForm.Group>
 
 			{imageSource === IMAGE_SOURCES.direct.value ? (
-				<ImageSelector
-					imageTitle={value.title}
-					label={field.label}
-					onClearButtonPressed={() => handleImageChanged({})}
-					onImageSelected={handleImageChanged}
-				/>
+				<>
+					<ImageSelector
+						imageTitle={value.title}
+						label={field.label}
+						onClearButtonPressed={() => handleImageChanged({})}
+						onImageSelected={handleImageChanged}
+					/>
+
+					{config.adaptiveMediaEnabled && value?.fileEntryId && (
+						<ImageSelectorSize
+							fileEntryId={value.fileEntryId}
+							imageSizeId="auto"
+						/>
+					)}
+				</>
 			) : (
 				<MappingSelector
 					fieldType={EDITABLE_TYPES.backgroundImage}
@@ -132,24 +95,6 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 					onMappingSelect={handleImageChanged}
 				/>
 			)}
-
-			{config.adaptiveMediaEnabled && value?.fileEntryId && imageWidth && (
-				<div className="page-editor__image-properties-panel__resolution-label">
-					<b>{Liferay.Language.get('width')}:</b>
-					<span className="ml-1">{imageWidth}px</span>
-				</div>
-			)}
-
-			{config.adaptiveMediaEnabled &&
-				value?.fileEntryId &&
-				imageFileSize && (
-					<div className="mb-3 page-editor__image-properties-panel__resolution-label">
-						<b>{Liferay.Language.get('file-size')}:</b>
-						<span className="ml-1">
-							{Number(imageFileSize).toFixed(2)}kB
-						</span>
-					</div>
-				)}
 		</>
 	);
 };

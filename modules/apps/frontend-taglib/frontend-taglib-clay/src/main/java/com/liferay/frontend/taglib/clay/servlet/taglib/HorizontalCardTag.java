@@ -112,9 +112,6 @@ public class HorizontalCardTag extends BaseCardTag {
 			cssClasses.add("form-check-card");
 			cssClasses.add("form-check-middle-left");
 		}
-		else {
-			cssClasses.add("card");
-		}
 
 		return super.processCssClasses(cssClasses);
 	}

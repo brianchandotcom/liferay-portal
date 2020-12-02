@@ -235,6 +235,20 @@ public class VerticalCardTag extends BaseCardTag {
 		return _flushVertical;
 	}
 
+	public Boolean isStickerShown() {
+		if (_showSticker == null) {
+			VerticalCard verticalCard = getVerticalCard();
+
+			if (verticalCard != null) {
+				return verticalCard.isStickerShown();
+			}
+
+			return true;
+		}
+
+		return _showSticker;
+	}
+
 	public void setFlushHorizontal(boolean flushHorizontal) {
 		_flushHorizontal = flushHorizontal;
 	}
@@ -261,6 +275,10 @@ public class VerticalCardTag extends BaseCardTag {
 	@Deprecated
 	public void setLabelStylesMap(Map<String, String> labelStylesMap) {
 		_labelStylesMap = labelStylesMap;
+	}
+
+	public void setShowSticker(Boolean showSticker) {
+		_showSticker = showSticker
 	}
 
 	public void setStickerCssClass(String stickerCssClass) {
@@ -313,6 +331,7 @@ public class VerticalCardTag extends BaseCardTag {
 		_imageSrc = null;
 		_labels = null;
 		_labelStylesMap = null;
+		_showSticker = null;
 		_stickerCssClass = null;
 		_stickerIcon = null;
 		_stickerImageAlt = null;
@@ -338,6 +357,7 @@ public class VerticalCardTag extends BaseCardTag {
 		props.put("imageAlt", getImageAlt());
 		props.put("imageSrc", getImageSrc());
 		props.put("labels", getLabels());
+		props.put("showSticker", isStickerShown());
 		props.put("stickerCssClass", getStickerCssClass());
 		props.put("stickerIcon", getStickerIcon());
 		props.put("stickerImageAlt", getStickerImageAlt());
@@ -461,49 +481,51 @@ public class VerticalCardTag extends BaseCardTag {
 			jspWriter.write("</div>");
 		}
 
-		StickerTag stickerTag = new StickerTag();
+		if (isStickerShown()) {
+			StickerTag stickerTag = new StickerTag();
 
-		String stickerCssClass = getStickerCssClass();
+			String stickerCssClass = getStickerCssClass();
 
-		if (Validator.isNotNull(stickerCssClass)) {
-			stickerTag.setCssClass(stickerCssClass);
-		}
-
-		String stickerIcon = getStickerIcon();
-		String stickerImageSrc = getStickerImageSrc();
-		String stickerLabel = getStickerLabel();
-
-		if (Validator.isNotNull(stickerIcon)) {
-			stickerTag.setIcon(stickerIcon);
-		}
-		else if (Validator.isNotNull(stickerImageSrc)) {
-			String stickerImageAlt = getStickerImageAlt();
-
-			if (Validator.isNotNull(stickerImageAlt)) {
-				stickerTag.setImageAlt(stickerImageAlt);
+			if (Validator.isNotNull(stickerCssClass)) {
+				stickerTag.setCssClass(stickerCssClass);
 			}
 
-			stickerTag.setImageSrc(stickerImageSrc);
+			String stickerIcon = getStickerIcon();
+			String stickerImageSrc = getStickerImageSrc();
+			String stickerLabel = getStickerLabel();
+
+			if (Validator.isNotNull(stickerIcon)) {
+				stickerTag.setIcon(stickerIcon);
+			}
+			else if (Validator.isNotNull(stickerImageSrc)) {
+				String stickerImageAlt = getStickerImageAlt();
+
+				if (Validator.isNotNull(stickerImageAlt)) {
+					stickerTag.setImageAlt(stickerImageAlt);
+				}
+
+				stickerTag.setImageSrc(stickerImageSrc);
+			}
+			else if (Validator.isNotNull(stickerLabel)) {
+				stickerTag.setLabel(stickerLabel);
+			}
+
+			String stickerStyle = getStickerStyle();
+
+			if (Validator.isNotNull(stickerStyle)) {
+				stickerTag.setDisplayType(stickerStyle);
+			}
+
+			stickerTag.setPosition("bottom-left");
+
+			String stickerShape = getStickerShape();
+
+			if (Validator.isNotNull(stickerShape)) {
+				stickerTag.setShape(stickerShape);
+			}
+
+			stickerTag.doTag(pageContext);
 		}
-		else if (Validator.isNotNull(stickerLabel)) {
-			stickerTag.setLabel(stickerLabel);
-		}
-
-		String stickerStyle = getStickerStyle();
-
-		if (Validator.isNotNull(stickerStyle)) {
-			stickerTag.setDisplayType(stickerStyle);
-		}
-
-		stickerTag.setPosition("bottom-left");
-
-		String stickerShape = getStickerShape();
-
-		if (Validator.isNotNull(stickerShape)) {
-			stickerTag.setShape(stickerShape);
-		}
-
-		stickerTag.doTag(pageContext);
 
 		if (isSelectable()) {
 			jspWriter.write("</div></label></div>");
@@ -548,17 +570,15 @@ public class VerticalCardTag extends BaseCardTag {
 
 		jspWriter.write("</span></p>");
 
-		jspWriter.write("<p class=\"card-subtitle\"><span class=\"");
-		jspWriter.write("text-truncate-inline\"><span class=\"");
-		jspWriter.write("text-truncate\">");
-
 		String subtitle = getSubtitle();
 
 		if (Validator.isNotNull(subtitle)) {
+			jspWriter.write("<p class=\"card-subtitle\"><span class=\"");
+			jspWriter.write("text-truncate-inline\"><span class=\"");
+			jspWriter.write("text-truncate\">");
 			jspWriter.write(subtitle);
+			jspWriter.write("</span></span></p>");
 		}
-
-		jspWriter.write("</span></span></p>");
 
 		List<LabelItem> labels = getLabels();
 
@@ -635,6 +655,7 @@ public class VerticalCardTag extends BaseCardTag {
 	private String _imageSrc;
 	private List<LabelItem> _labels;
 	private Map<String, String> _labelStylesMap;
+	private Boolean _showSticker;
 	private String _stickerCssClass;
 	private String _stickerIcon;
 	private String _stickerImageAlt;

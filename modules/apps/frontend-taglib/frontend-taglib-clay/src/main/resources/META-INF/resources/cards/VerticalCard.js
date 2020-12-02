@@ -40,6 +40,7 @@ export default function VerticalCard({
 	portletNamespace: _portletNamespace,
 	selectable,
 	selected: initialSelected,
+	showSticker,
 	stickerCssClass,
 	stickerIcon,
 	stickerImageAlt,
@@ -132,7 +133,7 @@ export default function VerticalCard({
 			}
 			selectable={selectable}
 			selected={selected}
-			stickerProps={stickerProps}
+			stickerProps={showSticker ? stickerProps : undefined}
 			symbol={symbol}
 			title={title}
 			{...otherProps}

@@ -278,11 +278,19 @@ public class UserCardTag extends BaseCardTag {
 			jspWriter.write("</span>");
 		}
 
-		jspWriter.write("</span></p><p class=\"card-subtitle\"><span class=\"");
-		jspWriter.write("text-truncate-inline\"><span class=\"text-truncate\"");
-		jspWriter.write(">");
-		jspWriter.write(getSubtitle());
-		jspWriter.write("</span></span></p></div>");
+		jspWriter.write("</span></p>");
+
+		String subtitle = getSubtitle();
+
+		if (Validator.isNotNull(subtitle)) {
+			jspWriter.write("<p class=\"card-subtitle\"><span class=\"");
+			jspWriter.write("text-truncate-inline\"><span class=\"");
+			jspWriter.write("text-truncate\">");
+			jspWriter.write(subtitle);
+			jspWriter.write("</span></span></p>");
+		}
+
+		jspWriter.write("</div>");
 
 		List<DropdownItem> actionDropdownItems = getActionDropdownItems();
 

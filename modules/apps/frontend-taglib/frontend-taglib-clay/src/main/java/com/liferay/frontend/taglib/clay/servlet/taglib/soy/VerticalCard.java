@@ -90,4 +90,8 @@ public interface VerticalCard extends BaseClayCard {
 		return null;
 	}
 
+	public default Boolean isStickerShown() {
+		return true;
+	}
+
 }

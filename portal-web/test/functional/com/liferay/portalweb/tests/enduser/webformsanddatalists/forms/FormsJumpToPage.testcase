@@ -469,6 +469,8 @@ definition {
 
 		var key_conditionRowNumber = "1";
 
+		var key_fieldColumnNumber = "1";
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD",
 			value1 = "Edit Label");

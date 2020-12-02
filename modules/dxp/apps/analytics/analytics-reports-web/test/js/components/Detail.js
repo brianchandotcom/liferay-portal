@@ -15,6 +15,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Detail from '../../../src/main/resources/META-INF/resources/js/components/Detail';
+import {ChartStateContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ChartStateContext';
 
 const mockOnCurrentPageChange = jest.fn(() => Promise.resolve({view: 'main'}));
 
@@ -433,16 +434,32 @@ describe('Detail', () => {
 
 	describe('Referral Detail', () => {
 		it('displays the referral detail according to API', async () => {
+			const testProps = {
+				pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
+				timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+				timeSpanKey: 'last-7-days',
+			};
+
 			const {getByText} = render(
-				<Detail
-					currentPage={mockCurrentPageReferral}
-					languageTag={'en-US'}
-					onCurrentPageChange={mockOnCurrentPageChange}
-					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
-					timeSpanOptions={mockTimeSpanOptions}
-					trafficShareDataProvider={mockTrafficShareDataProvider}
-					trafficVolumeDataProvider={mockTrafficVolumeDataProvider}
-				/>
+				<ChartStateContextProvider
+					publishDate={testProps.publishDate}
+					timeRange={testProps.timeRange}
+					timeSpanKey={testProps.timeSpanKey}
+				>
+					<Detail
+						currentPage={mockCurrentPageReferral}
+						languageTag={'en-US'}
+						onCurrentPageChange={mockOnCurrentPageChange}
+						onTrafficSourceNameChange={
+							mockOnTrafficSourceNameChange
+						}
+						timeSpanOptions={mockTimeSpanOptions}
+						trafficShareDataProvider={mockTrafficShareDataProvider}
+						trafficVolumeDataProvider={
+							mockTrafficVolumeDataProvider
+						}
+					/>
+				</ChartStateContextProvider>
 			);
 
 			await wait(() =>

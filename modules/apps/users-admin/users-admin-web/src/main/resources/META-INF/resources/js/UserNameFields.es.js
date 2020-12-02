@@ -13,8 +13,6 @@
  */
 
 import {PortletBase, createPortletURL} from 'frontend-js-web';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 
 /**
@@ -26,20 +24,14 @@ class UserNameFields extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		this._eventHandler.add(
-			dom.on(
-				this.languageIdSelectNode,
-				'change',
-				this._handleSelectChange.bind(this)
-			)
-		);
+		this.languageIdSelectNode.addEventListener('change', this._onSelectChange);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	created() {
-		this._eventHandler = new EventHandler();
+		this._onSelectChange = this._handleSelectChange.bind(this);
 
 		this._formDataCache = {};
 		this._maxLengthsCache = {};
@@ -53,7 +45,7 @@ class UserNameFields extends PortletBase {
 	detached() {
 		super.detached();
 
-		this._eventHandler.removeAllListeners();
+		this.languageIdSelectNode.removeEventListener('change', this._onSelectChange);
 	}
 
 	/**

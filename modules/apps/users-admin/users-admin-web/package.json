@@ -1,8 +1,6 @@
 {
 	"dependencies": {
 		"frontend-js-web": "*",
-		"metal-dom": "2.16.8",
-		"metal-events": "2.16.8",
 		"metal-state": "2.16.8"
 	},
 	"name": "users-admin-web",

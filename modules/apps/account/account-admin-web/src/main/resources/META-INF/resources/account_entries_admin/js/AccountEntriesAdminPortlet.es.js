@@ -13,17 +13,8 @@
  */
 
 import {PortletBase} from 'frontend-js-web';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 
 class AccountEntriesAdminPortlet extends PortletBase {
-
-	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this.eventHandler_ = new EventHandler();
-	}
 
 	/**
 	 * @inheritDoc
@@ -34,14 +25,14 @@ class AccountEntriesAdminPortlet extends PortletBase {
 		const typeSelect = this.one('#type');
 
 		if (typeSelect) {
-			this.updateVisibility_(typeSelect);
+			this._updateVisibility(typeSelect);
 
-			this.eventHandler_.add(
-				dom.on(typeSelect, 'change', (e) => {
-					this.updateVisibility_(e.currentTarget);
-				})
-			);
+			typeSelect.addEventListener('change', _handleTypeSelectChange);
 		}
+	}
+
+	_handleTypeSelectChange(event) {
+		this._updateVisibility(event.currentTarget);
 	}
 
 	/**
@@ -50,7 +41,7 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	 * @param {HTMLSelectElement} typeSelect
 	 * @private
 	 */
-	updateVisibility_(typeSelect) {
+	_updateVisibility(typeSelect) {
 		this.businessAccountOnlySection.classList.toggle(
 			'hide',
 			typeSelect.value === 'person'
@@ -62,7 +53,12 @@ class AccountEntriesAdminPortlet extends PortletBase {
 	 */
 	detached() {
 		super.detached();
-		this.eventHandler_.removeAllListeners();
+
+		const typeSelect = this.one('#type');
+
+		if (typeSelect) {
+			typeSelect.removeEventListener('change', _handleTypeSelectChange);
+		}
 	}
 }
 

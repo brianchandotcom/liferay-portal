@@ -953,32 +953,30 @@ definition {
 
 	@description = "This ensures that the document title can be displayed correctly in the different views."
 	@priority = "5"
-	test ViewDocumentsInDifferentViews {
+	test ViewDocumentInDifferentViews {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_2.docx,Document_3.docx");
 
-		for (var n : list "2,3") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-			LexiconCard.viewCardTitle(card = "Document_${n}");
+		LexiconCard.viewCardTitle(card = "Document_2");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			LexiconTable.viewTableEntryTitle(tableEntry = "Document_${n}");
+		LexiconTable.viewTableEntryTitle(tableEntry = "Document_2");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			LexiconList.viewListEntryTitleLink(listEntry = "Document_${n}");
+		LexiconList.viewListEntryTitleLink(listEntry = "Document_2");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_${n}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
 
-			DMDocument.viewCP(
-				dmDocumentFileName = "Document_${n}.docx",
-				dmDocumentTitle = "Document_${n}");
-		}
+		DMDocument.viewCP(
+			dmDocumentFileName = "Document_2.docx",
+			dmDocumentTitle = "Document_2");
 	}
 
 }

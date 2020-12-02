@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 /**
@@ -70,17 +71,20 @@ public class NestedFacetImpl extends FacetImpl implements NestedFacet {
 			return null;
 		}
 
-		TermsFilter nestedFilter = new TermsFilter(_filterField);
+		BooleanFilter booleanFilter = new BooleanFilter();
 
-		nestedFilter.addValue(_filterValue);
+		if (Validator.isNotNull(_filterField)) {
+			TermsFilter nestedFilter = new TermsFilter(_filterField);
+
+			nestedFilter.addValue(_filterValue);
+
+			booleanFilter.add(nestedFilter, BooleanClauseOccur.MUST);
+		}
 
 		TermsFilter nestedAggregationFilter = new TermsFilter(getFieldName());
 
 		nestedAggregationFilter.addValues(selections);
 
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(nestedFilter, BooleanClauseOccur.MUST);
 		booleanFilter.add(nestedAggregationFilter, BooleanClauseOccur.MUST);
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();

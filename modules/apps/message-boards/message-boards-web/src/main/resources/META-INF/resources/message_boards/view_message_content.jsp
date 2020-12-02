@@ -338,7 +338,7 @@ if (portletTitleBasedNavigation) {
 					);
 
 					if (messageContainer) {
-						messageContainer.append(response);
+						messageContainer.innerHTML += response;
 
 						runScriptsInElement.default(messageContainer.parentElement);
 

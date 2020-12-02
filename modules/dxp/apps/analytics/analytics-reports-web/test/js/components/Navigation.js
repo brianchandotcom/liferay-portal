@@ -53,6 +53,8 @@ const mockViewURLs = [
 	},
 ];
 
+const noop = () => {};
+
 describe('Navigation', () => {
 	beforeEach(() => {
 		fetch.mockResponse(JSON.stringify({}));
@@ -96,7 +98,7 @@ describe('Navigation', () => {
 						canonicalURL={testProps.canonicalURL}
 						endpoints={mockEndpoints}
 						languageTag={testProps.languageTag}
-						onSelectedLanguageClick={() => {}}
+						onSelectedLanguageClick={noop}
 						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}
 						pageTitle={testProps.pageTitle}
@@ -139,7 +141,7 @@ describe('Navigation', () => {
 						canonicalURL={testProps.canonicalURL}
 						endpoints={mockEndpoints}
 						languageTag={testProps.languageTag}
-						onSelectedLanguageClick={() => {}}
+						onSelectedLanguageClick={noop}
 						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}
 						pageTitle={testProps.pageTitle}
@@ -184,7 +186,7 @@ describe('Navigation', () => {
 						canonicalURL={testProps.canonicalURL}
 						endpoints={mockEndpoints}
 						languageTag={testProps.languageTag}
-						onSelectedLanguageClick={() => {}}
+						onSelectedLanguageClick={noop}
 						page={testProps.page}
 						pagePublishDate={testProps.pagePublishDate}
 						pageTitle={testProps.pageTitle}

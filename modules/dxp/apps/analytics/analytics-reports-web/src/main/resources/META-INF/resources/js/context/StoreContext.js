@@ -19,7 +19,9 @@ const INITIAL_STATE = {
 const ADD_HISTORICAL_WARNING = 'add-historical-warning';
 const ADD_WARNING = 'add-warning';
 
-export const StoreContext = createContext([INITIAL_STATE, () => {}]);
+const noop = () => {};
+
+export const StoreContext = createContext([INITIAL_STATE, noop]);
 
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === ADD_HISTORICAL_WARNING) {

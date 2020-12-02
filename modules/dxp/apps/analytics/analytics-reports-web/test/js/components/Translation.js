@@ -32,6 +32,8 @@ const mockViewURLs = [
 	},
 ];
 
+const noop = () => {};
+
 describe('Translation', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -54,7 +56,7 @@ describe('Translation', () => {
 			>
 				<Translation
 					defaultLanguage={testProps.defaultLanguage}
-					onSelectedLanguageClick={() => {}}
+					onSelectedLanguageClick={noop}
 					viewURLs={mockViewURLs}
 				/>
 			</ChartStateContextProvider>
@@ -79,7 +81,7 @@ describe('Translation', () => {
 			>
 				<Translation
 					defaultLanguage={testProps.defaultLanguage}
-					onSelectedLanguageClick={() => {}}
+					onSelectedLanguageClick={noop}
 					viewURLs={mockViewURLs}
 				/>
 			</ChartStateContextProvider>

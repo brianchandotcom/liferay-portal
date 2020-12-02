@@ -25,6 +25,8 @@ const MOCK_TITLE = '19 - Nov 25, 2020';
 
 const ITEMS_TO_SHOW = 5;
 
+const noop = () => {};
+
 export default function ReferralDetail({
 	currentPage,
 	languageTag,
@@ -43,9 +45,9 @@ export default function ReferralDetail({
 				<TimeSpanSelector
 					disabledNextTimeSpan={true}
 					disabledPreviousPeriodButton={true}
-					onNextTimeSpanClick={() => {}}
-					onPreviousTimeSpanClick={() => {}}
-					onTimeSpanChange={() => {}}
+					onNextTimeSpanClick={noop}
+					onPreviousTimeSpanClick={noop}
+					onTimeSpanChange={noop}
 					timeSpanKey={0}
 					timeSpanOptions={timeSpanOptions}
 				/>

@@ -15,6 +15,8 @@ import React from 'react';
 
 import TrafficSources from '../../../src/main/resources/META-INF/resources/js/components/TrafficSources';
 
+const noop = () => {};
+
 describe('TrafficSources', () => {
 	afterEach(cleanup);
 
@@ -68,7 +70,7 @@ describe('TrafficSources', () => {
 			<TrafficSources
 				dataProvider={mockTrafficSourcesDataProvider}
 				languageTag="en-US"
-				onTrafficSourceClick={() => {}}
+				onTrafficSourceClick={noop}
 			/>
 		);
 
@@ -145,7 +147,7 @@ describe('TrafficSources', () => {
 			<TrafficSources
 				dataProvider={mockTrafficSourcesDataProvider}
 				languageTag="en-US"
-				onTrafficSourceClick={() => {}}
+				onTrafficSourceClick={noop}
 			/>
 		);
 
@@ -217,7 +219,7 @@ describe('TrafficSources', () => {
 			<TrafficSources
 				dataProvider={mockTrafficSourcesDataProvider}
 				languageTag="en-US"
-				onTrafficSourceClick={() => {}}
+				onTrafficSourceClick={noop}
 			/>
 		);
 
@@ -270,7 +272,7 @@ describe('TrafficSources', () => {
 			<TrafficSources
 				dataProvider={mockTrafficSourcesDataProvider}
 				languageTag="en-US"
-				onTrafficSourceClick={() => {}}
+				onTrafficSourceClick={noop}
 			/>
 		);
 
@@ -320,7 +322,7 @@ describe('TrafficSources', () => {
 			<TrafficSources
 				dataProvider={mockTrafficSourcesDataProvider}
 				languageTag="en-US"
-				onTrafficSourceClick={() => {}}
+				onTrafficSourceClick={noop}
 			/>
 		);
 

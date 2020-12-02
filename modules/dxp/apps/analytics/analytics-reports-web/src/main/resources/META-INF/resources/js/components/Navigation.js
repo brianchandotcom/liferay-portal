@@ -19,13 +19,15 @@ import APIService from '../utils/APIService';
 import Detail from './Detail';
 import Main from './Main';
 
+const noop = () => {};
+
 export default function Navigation({
 	author,
 	canonicalURL,
 	endpoints,
 	languageTag,
 	namespace,
-	onSelectedLanguageClick = () => {},
+	onSelectedLanguageClick = noop,
 	page,
 	pagePublishDate,
 	pageTitle,

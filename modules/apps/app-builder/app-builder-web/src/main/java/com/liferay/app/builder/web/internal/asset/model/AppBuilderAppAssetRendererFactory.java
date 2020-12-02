@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
@@ -75,33 +74,6 @@ public class AppBuilderAppAssetRendererFactory
 	@Override
 	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
 		return getAssetEntry(getClassName(), assetEntryId);
-	}
-
-	@Override
-	public AssetEntry getAssetEntry(String className, long classPK)
-		throws PortalException {
-
-		DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(classPK);
-
-		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
-			classPK);
-
-		assetEntry.setGroupId(ddlRecord.getGroupId());
-		assetEntry.setCompanyId(ddlRecord.getCompanyId());
-		assetEntry.setUserId(ddlRecord.getUserId());
-		assetEntry.setUserName(ddlRecord.getUserName());
-		assetEntry.setCreateDate(ddlRecord.getCreateDate());
-		assetEntry.setClassNameId(
-			_portal.getClassNameId(
-				ResourceActionsUtil.getCompositeModelName(
-					AppBuilderApp.class.getName(), DDLRecord.class.getName())));
-		assetEntry.setClassPK(ddlRecord.getRecordId());
-
-		AppBuilderApp appBuilderApp = _getAppBuilderApp(ddlRecord);
-
-		assetEntry.setTitle(appBuilderApp.getName(LocaleUtil.getSiteDefault()));
-
-		return assetEntry;
 	}
 
 	@Override

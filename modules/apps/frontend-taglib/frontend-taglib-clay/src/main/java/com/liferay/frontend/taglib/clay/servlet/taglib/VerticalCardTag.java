@@ -278,7 +278,7 @@ public class VerticalCardTag extends BaseCardTag {
 	}
 
 	public void setShowSticker(Boolean showSticker) {
-		_showSticker = showSticker
+		_showSticker = showSticker;
 	}
 
 	public void setStickerCssClass(String stickerCssClass) {

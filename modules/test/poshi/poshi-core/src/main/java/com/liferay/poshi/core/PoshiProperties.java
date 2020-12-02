@@ -28,23 +28,7 @@ import java.util.List;
 public class PoshiProperties {
 
 	public static List<String> getPoshiPropertiesNames() {
-		List<String> poshiPropertyNames = new ArrayList<>();
-
-		String testCaseAvailablePropertyNames =
-			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
-
-		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
-			Collections.addAll(
-				poshiPropertyNames,
-				StringUtil.split(testCaseAvailablePropertyNames));
-		}
-
-		poshiPropertyNames.add("ignored");
-		poshiPropertyNames.add("known-issues");
-		poshiPropertyNames.add("priority");
-		poshiPropertyNames.add("test.run.environment");
-
-		return poshiPropertyNames;
+		return PoshiContext.getPoshiPropertyNames();
 	}
 
 	public static List<String> getRequiredPoshiPropertiesNames() {

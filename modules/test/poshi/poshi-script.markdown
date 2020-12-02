@@ -316,10 +316,7 @@ to help filter tests that get run, as well as denote additional logic that must
 be run outside of the test context before or after a test.
 
 The property variable names are typically separated periods (`.`) for multi-word
-names. Each property must first be listed in a `poshi-runner-ext.properties`
-file to the
-[`test.case.available.property.names`](https://github.com/liferay/com-liferay-poshi-runner/blob/6339925/poshi-runner/src/main/resources/poshi-runner.properties#L94)
-property to be used in Poshi.
+names.
 
 Note that because `property` assignments are for external use, there is no
 direct syntax to reference a `property` value. If referencing the property value

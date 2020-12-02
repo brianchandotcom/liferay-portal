@@ -200,11 +200,6 @@ Sets how groups of tests are organized; valid values are `sequential` or
 The `single` option sets one test per axis. The grouping of tests is printed to
 another properties file which is read by the CI infrastructure.
 
-### test.case.available.property.names
-
-Sets a comma-delimited list of properties that are available to set for tests
-within Poshi.
-
 ### test.case.required.property.names
 
 Sets a comma-delimited list of properties that are required to set for tests

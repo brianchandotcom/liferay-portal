@@ -144,9 +144,6 @@ public class PropsValues {
 	public static final String TEST_BATCH_RUN_TYPE = PropsUtil.get(
 		"test.batch.run.type");
 
-	public static final String TEST_CASE_AVAILABLE_PROPERTY_NAMES =
-		PropsUtil.get("test.case.available.property.names");
-
 	public static final String TEST_CASE_REQUIRED_PROPERTY_NAMES =
 		PropsUtil.get("test.case.required.property.names");
 

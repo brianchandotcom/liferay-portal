@@ -21,9 +21,9 @@ String eventName = (String)request.getAttribute(DLExternalVideoWebKeys.EVENT_NAM
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_external_video_preview_css"
+	outputKey="document_library_external_video_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/external_video_preview.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="lfr-form-content">

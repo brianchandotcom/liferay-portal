@@ -17,9 +17,9 @@
 <%@ include file="/preview/init.jsp" %>
 
 <liferay-util:html-top
-	outputKey="document_library_external_video_preview_css"
+	outputKey="document_library_external_video_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/document-library-external-video/css/external_video_preview.css") %>" rel="stylesheet" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/document-library-external-video/css/main.css") %>" rel="stylesheet" />
 </liferay-util:html-top>
 
 <div class="external-video-preview external-video-preview-framed preview-file">

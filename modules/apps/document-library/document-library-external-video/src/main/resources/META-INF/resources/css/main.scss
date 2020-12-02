@@ -1,16 +1,71 @@
-@import 'external_video_preview';
+@import 'atlas-variables';
 
-.preview-file {
-	.preview-file-container {
+.external-video-preview {
+	$component: &;
+	$video-max-width: 600px;
+	$video-max-width-sm: 360px;
+
+	font-size: 0.875rem;
+	max-width: $video-max-width;
+
+	&-placeholder {
 		align-items: center;
+		background-color: $gray-200;
 		display: flex;
 		justify-content: center;
-		overflow: auto;
-		position: relative;
-		text-align: center;
 
-		&.preview-file-max-height {
-			max-height: 480px;
+		.lexicon-icon {
+			color: $gray-400;
+			font-size: 2rem;
+		}
+
+		&-text {
+			bottom: 1rem;
+			color: $secondary;
+			font-weight: 600;
+			position: absolute;
+			text-align: center;
+			width: 100%;
+		}
+	}
+
+	&-aspect-ratio {
+		height: 0;
+		padding-bottom: 56.25%;
+		position: relative;
+
+		embed,
+		iframe,
+		object,
+		#{$component}-placeholder {
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+
+	&-sm {
+		max-width: $video-max-width-sm;
+	}
+
+	&-framed {
+		$border-width: 1px;
+		$padding: 1rem;
+
+		background-color: $white;
+		border: $border-width solid $secondary-l3;
+		border-radius: 0.25rem;
+		max-width: calc(
+			#{$padding * 2} + #{$video-max-width + ($border-width * 2)}
+		);
+		padding: $padding;
+
+		&#{$component}-sm {
+			max-width: calc(
+				#{$padding * 2} + #{$video-max-width-sm + ($border-width * 2)}
+			);
 		}
 	}
 }

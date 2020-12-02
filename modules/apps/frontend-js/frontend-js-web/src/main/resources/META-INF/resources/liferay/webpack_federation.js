@@ -56,10 +56,8 @@ Liferay.require = (moduleName) =>
 				}
 				else {
 					const message =
-						'Container ' +
-						containerId +
-						' was fetched but ' +
-						'did not define itself in Liferay.Webpack.Container';
+						`Container ${containerId} was fetched but did not ` +
+						`define itself in Liferay.Webpack.Container`;
 
 					console.warn(message);
 

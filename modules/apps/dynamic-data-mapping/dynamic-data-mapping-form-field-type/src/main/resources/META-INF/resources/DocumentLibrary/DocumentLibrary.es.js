@@ -231,6 +231,7 @@ const GuestUploadFile = ({
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend>
 					<ClayInput
+						disabled
 						type="text"
 						value={transformedFileEntryTitle || ''}
 					/>
@@ -439,15 +440,15 @@ const Main = ({
 	return (
 		<FieldBase
 			{...otherProps}
-			displayErrors={isSignedIn ? displayErrors : true}
+			displayErrors={allowGuestUsers || isSignedIn ? displayErrors : true}
 			errorMessage={getErrorMessages(errorMessage, isSignedIn)}
 			id={id}
 			name={name}
 			overMaximumRepetitionsLimit={
 				maximumRepetitions > 0 ? checkMaximumRepetitions() : false
 			}
-			readOnly={isSignedIn ? readOnly : true}
-			valid={isSignedIn ? valid : false}
+			readOnly={allowGuestUsers || isSignedIn ? readOnly : true}
+			valid={allowGuestUsers || isSignedIn ? valid : false}
 		>
 			{allowGuestUsers && !isSignedIn ? (
 				<GuestUploadFile

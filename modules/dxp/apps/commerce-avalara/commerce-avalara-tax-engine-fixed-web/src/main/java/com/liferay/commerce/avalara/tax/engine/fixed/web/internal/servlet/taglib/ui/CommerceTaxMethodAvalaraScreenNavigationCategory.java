@@ -14,12 +14,8 @@
 
 package com.liferay.commerce.avalara.tax.engine.fixed.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.avalara.tax.engine.fixed.internal.configuration.CommerceTaxAvalaraTypeConfiguration;
+import com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.percentage.PercentageFormatter;
-import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -28,7 +24,6 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Calvin Keum
  */
 @Component(
-	enabled = true,
+	enabled = false,
 	property = {
 		"screen.navigation.category.order:Integer=20",
 		"screen.navigation.entry.order:Integer=10"
@@ -118,20 +113,20 @@ public class CommerceTaxMethodAvalaraScreenNavigationCategory
 				_commerceTaxMethodService.getCommerceTaxMethod(
 					commerceTaxMethodId);
 
-			CommerceTaxAvalaraTypeConfiguration
-				commerceTaxAvalaraTypeConfiguration =
+			CommerceAvalaraConnectorConfiguration
+				commerceAvalaraConnectorConfiguration =
 					_configurationProvider.getConfiguration(
-						CommerceTaxAvalaraTypeConfiguration.class,
+						CommerceAvalaraConnectorConfiguration.class,
 						new ParameterMapSettingsLocator(
 							httpServletRequest.getParameterMap(),
 							new GroupServiceSettingsLocator(
 								commerceTaxMethod.getGroupId(),
-								CommerceTaxAvalaraTypeConfiguration.class.
+								CommerceAvalaraConnectorConfiguration.class.
 									getName())));
 
 			httpServletRequest.setAttribute(
-				CommerceTaxAvalaraTypeConfiguration.class.getName(),
-				commerceTaxAvalaraTypeConfiguration);
+				CommerceAvalaraConnectorConfiguration.class.getName(),
+				commerceAvalaraConnectorConfiguration);
 		}
 		catch (Exception exception) {
 			throw new IOException(exception);
@@ -142,15 +137,6 @@ public class CommerceTaxMethodAvalaraScreenNavigationCategory
 			"/avalara_settings.jsp");
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
-	)
-	private ModelResourcePermission<CommerceChannel>
-		_commerceChannelModelResourcePermission;
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;
 
@@ -158,13 +144,7 @@ public class CommerceTaxMethodAvalaraScreenNavigationCategory
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private CPTaxCategoryService _cpTaxCategoryService;
-
-	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private PercentageFormatter _percentageFormatter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.avalara.tax.engine.fixed.web)"

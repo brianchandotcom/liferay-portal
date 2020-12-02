@@ -17,21 +17,36 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceTaxAvalaraTypeConfiguration commerceTaxAvalaraTypeConfiguration = (CommerceTaxAvalaraTypeConfiguration)request.getAttribute(CommerceTaxAvalaraTypeConfiguration.class.getName());
+CommerceAvalaraConnectorConfiguration commerceAvalaraConnectorConfiguration = (CommerceAvalaraConnectorConfiguration)request.getAttribute(CommerceAvalaraConnectorConfiguration.class.getName());
 %>
 
-<portlet:actionURL name="/commerce_tax_methods/edit_commerce_tax_avalara" var="editCommerceTaxAvalaraActionURL" />
+<portlet:actionURL name="editCommerceAvalaraConnector" var="editCommerceAvalaraConnectorActionURL" />
 
-<commerce-ui:side-panel-content
-	title='<%= LanguageUtil.get(resourceBundle, "edit-avalara-settings") %>'
->
-	<aui:form action="<%= editCommerceTaxAvalaraActionURL %>" method="post" name="fm">
-		<commerce-ui:panel>
-			<%@ include file="/edit_avalara_settings.jspf" %>
-		</commerce-ui:panel>
+<aui:form action="<%= editCommerceAvalaraConnectorActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
-		</aui:button-row>
-	</aui:form>
-</commerce-ui:side-panel-content>
+	<liferay-ui:error exception="<%= CommerceAvalaraConnectionException.class %>" message="could-not-verify-the-connection-the-provided-credentials-are-not-correct" />
+
+	<commerce-ui:panel>
+		<%@ include file="/edit_avalara_settings.jspf" %>
+
+		<aui:button cssClass="btn-lg btn-secondary" onClick='<%= liferayPortletResponse.getNamespace() + "verifyConnection();" %>' type="submit" value="verify-connection" />
+	</commerce-ui:panel>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
+</aui:form>
+
+<aui:script>
+	Liferay.provide(window, '<portlet:namespace />verifyConnection', function (
+		evt
+	) {
+		const inputCmd = document.querySelector(
+			'#<portlet:namespace /><%= Constants.CMD %>'
+		);
+
+		inputCmd.value = 'verifyConnection';
+	});
+</aui:script>

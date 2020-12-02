@@ -14,19 +14,20 @@
 
 package com.liferay.commerce.avalara.tax.engine.fixed.web.internal.portlet.action;
 
-import com.liferay.commerce.avalara.tax.engine.fixed.internal.configuration.CommerceTaxAvalaraTypeConfiguration;
+import com.liferay.commerce.avalara.connector.CommerceAvalaraConnector;
+import com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,10 +39,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Calvin Keum
  */
 @Component(
-	enabled = true, immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_TAX_METHODS,
-		"mvc.command.name=/commerce_tax_methods/edit_commerce_tax_avalara"
+		"mvc.command.name=editCommerceAvalaraConnector"
 	},
 	service = MVCActionCommand.class
 )
@@ -55,8 +56,21 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.UPDATE)) {
-			_updateCommerceTaxAvalara(actionRequest);
+		try {
+			if (cmd.equals(Constants.UPDATE)) {
+				_updateCommerceTaxAvalara(actionRequest);
+			}
+			else if (cmd.equals("verifyConnection")) {
+				_updateCommerceTaxAvalara(actionRequest);
+				_verifyConnection(actionRequest);
+			}
+		}
+		catch (Throwable throwable) {
+			SessionErrors.add(actionRequest, throwable.getClass(), throwable);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
 
@@ -72,7 +86,7 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceTaxMethod.getGroupId(),
-				CommerceTaxAvalaraTypeConfiguration.class.getName()));
+				CommerceAvalaraConnectorConfiguration.class.getName()));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
@@ -104,11 +118,25 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 		modifiableSettings.store();
 	}
 
-	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
+	private void _verifyConnection(ActionRequest actionRequest)
+		throws Exception {
+
+		String accountNumber = ParamUtil.getString(
+			actionRequest, "accountNumber");
+
+		String licenseKey = ParamUtil.getString(actionRequest, "licenseKey");
+
+		String serviceURL = ParamUtil.getString(actionRequest, "serviceURL");
+
+		_commerceAvalaraConnector.verifyConnection(
+			accountNumber, licenseKey, serviceURL);
+	}
 
 	@Reference
-	private Portal _portal;
+	private CommerceAvalaraConnector _commerceAvalaraConnector;
+
+	@Reference
+	private CommerceTaxMethodService _commerceTaxMethodService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

@@ -14,16 +14,14 @@
  */
 --%>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 <aui:input name="commerceTaxMethodId" type="hidden" value='<%= ParamUtil.getLong(request, "commerceTaxMethodId") %>' />
 
-<aui:input id="avalara-account-number" label="account-number" name="accountNumber" value="<%= commerceTaxAvalaraTypeConfiguration.accountNumber() %>" />
+<aui:input id="avalara-account-number" ignoreRequestValue="<%= true %>" label="account-number" name="accountNumber" value="<%= commerceAvalaraConnectorConfiguration.accountNumber() %>" />
 
-<aui:input id="avalara-license-key" label="license-key" name="licenseKey" value="<%= commerceTaxAvalaraTypeConfiguration.licenseKey() %>" />
+<aui:input id="avalara-license-key" ignoreRequestValue="<%= true %>" label="license-key" name="licenseKey" value="<%= commerceAvalaraConnectorConfiguration.licenseKey() %>" />
 
-<aui:input id="avalara-service-url" label="service-url" name="serviceURL" value="<%= commerceTaxAvalaraTypeConfiguration.serviceURL() %>" />
+<aui:input id="avalara-service-url" ignoreRequestValue="<%= true %>" label="service-url" name="serviceURL" value="<%= commerceAvalaraConnectorConfiguration.serviceURL() %>" />
 
-<aui:input id="avalara-company-code" label="company-code" name="companyCode" value="<%= commerceTaxAvalaraTypeConfiguration.companyCode() %>" />
+<aui:input id="avalara-company-code" ignoreRequestValue="<%= true %>" label="company-code" name="companyCode" value="<%= commerceAvalaraConnectorConfiguration.companyCode() %>" />
 
-<aui:input id="avalara-disabled-document-recording" label="disable-document-recording" name="disabledDocumentRecording" type="toggle-switch" value="<%= commerceTaxAvalaraTypeConfiguration.disabledDocumentRecording() %>" />
+<aui:input id="avalara-disabled-document-recording" label="disable-document-recording" name="disabledDocumentRecording" type="toggle-switch" value="<%= commerceAvalaraConnectorConfiguration.disabledDocumentRecording() %>" />

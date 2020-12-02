@@ -2,4 +2,8 @@ Bundle-Name: Liferay Commerce Avalara Tax Engine Fixed Web
 Bundle-SymbolicName: com.liferay.commerce.avalara.tax.engine.fixed.web
 Bundle-Version: 1.0.0
 Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.avalara.lang),(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /commerce-avalara-tax-engine-fixed-web

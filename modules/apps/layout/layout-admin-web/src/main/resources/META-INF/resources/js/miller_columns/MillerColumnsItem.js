@@ -119,10 +119,7 @@ const getItemIndex = (item = {}, items) => {
 
 const noop = () => {};
 
-let timerId;
-
 const MillerColumnsItem = ({
-	columnsContainer,
 	item: {
 		actions = [],
 		active,
@@ -145,6 +142,7 @@ const MillerColumnsItem = ({
 	items,
 	actionHandlers = {},
 	namespace,
+	onDragEnd,
 	onItemDrop = noop,
 	onItemStayHover = noop,
 	rtl,
@@ -204,6 +202,7 @@ const MillerColumnsItem = ({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
+		end: onDragEnd,
 		isDragging: (monitor) => {
 			const movedItems = monitor.getItem().items;
 
@@ -272,39 +271,6 @@ const MillerColumnsItem = ({
 			}
 
 			setDropZone(dropZone);
-
-			if (Liferay.Browser.isSafari() && !Liferay.Browser.isChrome()) {
-				const throttleFunction = (func, delay) => {
-					if (timerId) {
-						return;
-					}
-
-					timerId = setTimeout(() => {
-						func();
-
-						timerId = undefined;
-					}, delay);
-				};
-
-				const scroll = () => {
-					const clientOffset = monitor.getClientOffset();
-					const containerRect = columnsContainer.current.getBoundingClientRect();
-
-					const hoverClientX = containerRect.right - clientOffset.x;
-
-					if (hoverClientX < ITEM_HOVER_BORDER_LIMIT) {
-						columnsContainer.current.scrollLeft += ref.current.getBoundingClientRect().width;
-					}
-					else if (
-						hoverClientX >
-						containerRect.width - ITEM_HOVER_BORDER_LIMIT
-					) {
-						columnsContainer.current.scrollLeft -= ref.current.getBoundingClientRect().width;
-					}
-				};
-
-				throttleFunction(scroll, 500);
-			}
 		},
 	});
 

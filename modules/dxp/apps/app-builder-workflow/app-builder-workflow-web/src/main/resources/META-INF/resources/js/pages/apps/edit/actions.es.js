@@ -25,7 +25,9 @@ export function buildLocalizedItems(defaultLanguageId) {
 }
 
 export function getAssigneeRoles() {
-	return getItem('/o/headless-admin-user/v1.0/roles').then(getItems);
+	return getItem('/o/headless-admin-user/v1.0/roles').then(({items}) =>
+		items.filter(({name}) => name !== 'Owner')
+	);
 }
 
 export function getDataDefinition(dataDefinitionId) {

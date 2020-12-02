@@ -25,8 +25,6 @@ public interface DLExternalVideo {
 
 	public String getIconURL();
 
-	public String getThumbnailURL();
-
 	public String getTitle();
 
 	public String getURL();

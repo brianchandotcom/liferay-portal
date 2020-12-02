@@ -21,11 +21,17 @@ import com.liferay.document.library.display.context.DLViewFileVersionDisplayCont
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
 import com.liferay.document.library.external.video.internal.helper.DLExternalVideoMetadataHelper;
-import com.liferay.document.library.external.video.internal.helper.DLExternalVideoMetadataHelperFactory;
 import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -76,13 +82,19 @@ public class DLExternalVideoDLDisplayContextFactory
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileEntry fileEntry) {
 
+		Object model = fileEntry.getModel();
+
+		if (!(model instanceof DLFileEntry)) {
+			return parentDLEditFileEntryDisplayContext;
+		}
+
 		DLExternalVideoMetadataHelper dlExternalVideoMetadataHelper =
-			_dlExternalVideoMetadataHelperFactory.
-				getDLExternalVideoMetadataHelper(fileEntry);
+			new DLExternalVideoMetadataHelper(
+				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+				(DLFileEntry)model, _dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter, _storageEngine);
 
-		if ((dlExternalVideoMetadataHelper != null) &&
-			dlExternalVideoMetadataHelper.isExternalVideo()) {
-
+		if (dlExternalVideoMetadataHelper.isExternalVideo()) {
 			return new DLExternalVideoDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, httpServletRequest,
 				httpServletResponse, fileEntry,
@@ -122,13 +134,19 @@ public class DLExternalVideoDLDisplayContextFactory
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
+		Object model = fileVersion.getModel();
+
+		if (!(model instanceof DLFileVersion)) {
+			return parentDLViewFileVersionDisplayContext;
+		}
+
 		DLExternalVideoMetadataHelper dlExternalVideoMetadataHelper =
-			_dlExternalVideoMetadataHelperFactory.
-				getDLExternalVideoMetadataHelper(fileVersion);
+			new DLExternalVideoMetadataHelper(
+				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+				(DLFileVersion)model, _dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter, _storageEngine);
 
-		if ((dlExternalVideoMetadataHelper != null) &&
-			dlExternalVideoMetadataHelper.isExternalVideo()) {
-
+		if (dlExternalVideoMetadataHelper.isExternalVideo()) {
 			return new DLExternalVideoDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileVersion, dlExternalVideoMetadataHelper,
@@ -153,18 +171,29 @@ public class DLExternalVideoDLDisplayContextFactory
 	}
 
 	@Reference
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLExternalVideoMetadataHelperFactory
-		_dlExternalVideoMetadataHelperFactory;
+	private DLExternalVideoResolver _dlExternalVideoResolver;
 
 	@Reference
-	private DLExternalVideoResolver _dlExternalVideoResolver;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.external.video)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.document.library.external.video.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.external.video.DLExternalVideo;
-import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
 import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -58,20 +57,18 @@ public class GetDLExternalVideoFieldsMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					DLExternalVideoConstants.DDM_FIELD_NAME_DESCRIPTION,
+					"DESCRIPTION",
 					GetterUtil.getString(dlExternalVideo.getDescription())
 				).put(
-					DLExternalVideoConstants.DDM_FIELD_NAME_HTML,
+					"HTML",
 					GetterUtil.getString(dlExternalVideo.getEmbeddableHTML())
 				).put(
-					DLExternalVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL,
+					"THUMBNAIL_URL",
 					GetterUtil.getString(dlExternalVideo.getThumbnailURL())
 				).put(
-					DLExternalVideoConstants.DDM_FIELD_NAME_TITLE,
-					GetterUtil.getString(dlExternalVideo.getTitle())
+					"TITLE", GetterUtil.getString(dlExternalVideo.getTitle())
 				).put(
-					DLExternalVideoConstants.DDM_FIELD_NAME_URL,
-					GetterUtil.getString(dlExternalVideo.getURL())
+					"URL", GetterUtil.getString(dlExternalVideo.getURL())
 				));
 		}
 	}

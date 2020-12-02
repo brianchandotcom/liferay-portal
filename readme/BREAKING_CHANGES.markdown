@@ -320,7 +320,7 @@ This change was made to remove deprecated legacy code from Portal and improve th
 #### What changed?
 
 The `minifier.enable` setting in `portal.properties` now defaults to
-`false`.  Instead of performing run-time minification of CSS and JS
+`false`. Instead of performing run-time minification of CSS and JS
 resources, we prepare pre-minified resources at build-time. There should
 be no user-visible changes in page styles or logic.
 

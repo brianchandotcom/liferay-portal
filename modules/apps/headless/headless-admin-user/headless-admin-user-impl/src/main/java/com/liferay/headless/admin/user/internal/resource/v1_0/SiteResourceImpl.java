@@ -54,7 +54,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				_groupService.getUserSitesGroups(
 					contextUser.getUserId(), pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				this::_toSite));
+				this::_toSite),
+			pagination, _groupService.getUserSitesGroupsCount());
 	}
 
 	@Override

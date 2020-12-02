@@ -146,7 +146,7 @@ export const ImageSelectorSize = ({
 
 ImageSelectorSize.propTypes = {
 	editableElement: PropTypes.object,
-	fileEntryId: PropTypes.string.isRequired,
+	fileEntryId: PropTypes.number.isRequired,
 	imageSizeId: PropTypes.string,
 	onImageSizeIdChanged: PropTypes.func.isRequired,
 };

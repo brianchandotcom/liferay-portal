@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.lucene.search.join.ScoreMode;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -72,6 +75,24 @@ public class AggregationFilteringFacetProcessorContext
 				queryBuilders.add(
 					rangeQuery(fieldName, RangeParserUtil.parserRange(value)));
 			}
+		}
+		else if (facet instanceof NestedFacet) {
+			NestedFacet nestedFacet = (NestedFacet)facet;
+
+			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+			boolQueryBuilder.must(
+				QueryBuilders.termsQuery(
+					nestedFacet.getFilterField(),
+					nestedFacet.getFilterValue()));
+
+			boolQueryBuilder.must(
+				QueryBuilders.termsQuery(
+					facet.getFieldName(), facet.getSelections()));
+
+			queryBuilders.add(
+				QueryBuilders.nestedQuery(
+					nestedFacet.getPath(), boolQueryBuilder, ScoreMode.Total));
 		}
 		else {
 			queryBuilders.add(

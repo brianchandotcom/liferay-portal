@@ -30,6 +30,7 @@ definition {
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}",
+			navTab = "${navTab}",
 			videoService = "${videoService}");
 
 		if (isSet(readingTime)) {

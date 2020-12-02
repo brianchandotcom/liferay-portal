@@ -763,6 +763,7 @@ definition {
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
 			entryContent = "video",
 			entryTitle = "Blogs Entry Title",
+			navTab = "URL",
 			videoService = "youtube");
 
 		Navigator.gotoPage(pageName = "Blogs Page");

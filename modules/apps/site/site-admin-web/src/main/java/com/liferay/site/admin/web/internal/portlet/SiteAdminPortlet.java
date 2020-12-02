@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.PendingBackgroundTaskException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -131,18 +129,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected Group getLiveGroup(PortletRequest portletRequest)
-		throws PortalException {
-
-		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
-
-		if (liveGroupId > 0) {
-			return groupLocalService.getGroup(liveGroupId);
-		}
-
-		return null;
-	}
-
 	protected PortletURL getSiteAdministrationURL(
 		ActionRequest actionRequest, Group group) {
 
@@ -186,9 +172,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		return false;
 	}
-
-	@Reference
-	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected GroupSearchProvider groupSearchProvider;

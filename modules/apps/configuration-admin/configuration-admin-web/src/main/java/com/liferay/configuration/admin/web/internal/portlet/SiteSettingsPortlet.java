@@ -59,14 +59,11 @@ public class SiteSettingsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		long groupId = ParamUtil.getLong(renderRequest, "groupId");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (groupId == 0) {
-			groupId = themeDisplay.getScopeGroupId();
-		}
+		long groupId = ParamUtil.getLong(
+			renderRequest, "groupId", themeDisplay.getScopeGroupId());
 
 		try {
 			GroupPermissionUtil.check(

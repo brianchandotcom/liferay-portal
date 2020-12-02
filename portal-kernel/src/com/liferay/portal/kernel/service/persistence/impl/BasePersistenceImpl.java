@@ -197,8 +197,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		ProjectionType projectionType = _getProjectionType(
 			tableNames, select.getExpressions());
 
-		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
-
 		FinderCache finderCache = getFinderCache();
 
 		FinderPath finderPath = new FinderPath(
@@ -206,7 +204,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			sb.getStrings(), new String[0],
 			projectionType == ProjectionType.MODELS);
 
-		Object[] arguments = _getArguments(scalarValues);
+		Object[] arguments = _getArguments(defaultASTNodeListener);
 
 		Object cacheResult = finderCache.getResult(finderPath, arguments);
 
@@ -221,6 +219,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				sb.toString(), true, tableNames);
+
+			List<Object> scalarValues =
+				defaultASTNodeListener.getScalarValues();
 
 			if (!scalarValues.isEmpty()) {
 				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -951,10 +952,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Deprecated
 	protected boolean finderCacheEnabled = true;
 
-	private Object[] _getArguments(List<Object> objects) {
+	private Object[] _getArguments(
+		DefaultASTNodeListener defaultASTNodeListener) {
+
 		List<Object> arguments = new ArrayList<>();
 
-		for (Object object : objects) {
+		for (Object object : defaultASTNodeListener.getScalarValues()) {
 			if (object instanceof Date) {
 				Date date = (Date)object;
 
@@ -963,6 +966,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			else {
 				arguments.add(object);
 			}
+		}
+
+		int start = defaultASTNodeListener.getStart();
+		int end = defaultASTNodeListener.getEnd();
+
+		if ((start != QueryUtil.ALL_POS) || (end != QueryUtil.ALL_POS)) {
+			arguments.add(start);
+			arguments.add(end);
 		}
 
 		return arguments.toArray(new Object[0]);

@@ -16,6 +16,8 @@ package com.liferay.app.builder.web.internal.portlet.action;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
+import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -73,6 +75,17 @@ public class UpdateDataRecordMVCResourceCommand
 			DataRecord.toDTO(
 				ParamUtil.getString(resourceRequest, "dataRecord")));
 
+		DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(
+			dataRecord.getId());
+
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
+			_appBuilderAppDataRecordLinkLocalService.
+				getDDLRecordAppBuilderAppDataRecordLink(dataRecord.getId());
+
+		updateAsset(
+			appBuilderAppDataRecordLink.getAppBuilderAppId(), ddlRecord,
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -91,6 +104,10 @@ public class UpdateDataRecordMVCResourceCommand
 
 		return Optional.of(dataRecord);
 	}
+
+	@Reference
+	private AppBuilderAppDataRecordLinkLocalService
+		_appBuilderAppDataRecordLinkLocalService;
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

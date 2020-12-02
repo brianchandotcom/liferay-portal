@@ -86,6 +86,13 @@ public class AddDataRecordMVCResourceCommand
 			appBuilderAppVersion.getAppBuilderAppVersionId(),
 			dataRecord.getId());
 
+		DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(
+			dataRecord.getId());
+
+		updateAsset(
+			appBuilderAppVersion.getAppBuilderAppId(), ddlRecord,
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -93,9 +100,7 @@ public class AddDataRecordMVCResourceCommand
 			themeDisplay.getUserId(),
 			ResourceActionsUtil.getCompositeModelName(
 				AppBuilderApp.class.getName(), DDLRecord.class.getName()),
-			dataRecord.getId(),
-			_ddlRecordLocalService.getDDLRecord(dataRecord.getId()),
-			new ServiceContext(),
+			dataRecord.getId(), ddlRecord, new ServiceContext(),
 			HashMapBuilder.<String, Serializable>put(
 				"plid", themeDisplay.getPlid()
 			).put(

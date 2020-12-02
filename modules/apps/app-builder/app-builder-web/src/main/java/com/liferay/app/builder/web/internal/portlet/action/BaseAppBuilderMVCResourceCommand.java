@@ -14,6 +14,11 @@
 
 package com.liferay.app.builder.web.internal.portlet.action;
 
+import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -22,9 +27,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Optional;
@@ -80,6 +88,32 @@ public abstract class BaseAppBuilderMVCResourceCommand<T>
 	protected abstract Optional<T> doTransactionalCommand(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception;
+
+	protected void updateAsset(
+			long appBuilderAppId, DDLRecord ddlRecord, long groupId,
+			long userId)
+		throws Exception {
+
+		AppBuilderApp appBuilderApp =
+			appBuilderAppLocalService.getAppBuilderApp(appBuilderAppId);
+
+		assetEntryLocalService.updateEntry(
+			userId, groupId, ddlRecord.getCreateDate(),
+			ddlRecord.getModifiedDate(),
+			ResourceActionsUtil.getCompositeModelName(
+				AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+			ddlRecord.getRecordId(), ddlRecord.getUuid(), 0, null, null, false,
+			false, null, null, ddlRecord.getCreateDate(), null,
+			ContentTypes.TEXT_PLAIN,
+			appBuilderApp.getName(LocaleUtil.getSiteDefault()),
+			StringPool.BLANK, null, null, null, 0, 0, null);
+	}
+
+	@Reference
+	protected AppBuilderAppLocalService appBuilderAppLocalService;
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
 	protected JSONFactory jsonFactory;

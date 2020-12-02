@@ -14,12 +14,23 @@
 
 package com.liferay.app.builder.workflow.web.internal.portlet.action;
 
+import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
+import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
+import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -63,6 +74,10 @@ public class UpdateDataRecordMVCResourceCommand
 		DataRecord dataRecord = _updateDataRecord(
 			resourceRequest, themeDisplay);
 
+		_updateAsset(
+			dataRecord, themeDisplay.getScopeGroupId(),
+			themeDisplay.getUserId());
+
 		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), null,
 			new String[] {ParamUtil.getString(resourceRequest, "taskName")},
@@ -100,6 +115,32 @@ public class UpdateDataRecordMVCResourceCommand
 		return Optional.of(dataRecord);
 	}
 
+	private void _updateAsset(DataRecord dataRecord, long groupId, long userId)
+		throws Exception {
+
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
+			_appBuilderAppDataRecordLinkLocalService.
+				getDDLRecordAppBuilderAppDataRecordLink(dataRecord.getId());
+
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.getAppBuilderApp(
+				appBuilderAppDataRecordLink.getAppBuilderAppId());
+
+		DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(
+			dataRecord.getId());
+
+		_assetEntryLocalService.updateEntry(
+			userId, groupId, ddlRecord.getCreateDate(),
+			ddlRecord.getModifiedDate(),
+			ResourceActionsUtil.getCompositeModelName(
+				AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+			ddlRecord.getRecordId(), ddlRecord.getUuid(), 0, null, null, false,
+			false, null, null, ddlRecord.getCreateDate(), null,
+			ContentTypes.TEXT_PLAIN,
+			appBuilderApp.getName(LocaleUtil.getSiteDefault()),
+			StringPool.BLANK, null, null, null, 0, 0, null);
+	}
+
 	private DataRecord _updateDataRecord(
 			ResourceRequest resourceRequest, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -114,6 +155,19 @@ public class UpdateDataRecordMVCResourceCommand
 			DataRecord.toDTO(
 				ParamUtil.getString(resourceRequest, "dataRecord")));
 	}
+
+	@Reference
+	private AppBuilderAppDataRecordLinkLocalService
+		_appBuilderAppDataRecordLinkLocalService;
+
+	@Reference
+	private AppBuilderAppLocalService _appBuilderAppLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;

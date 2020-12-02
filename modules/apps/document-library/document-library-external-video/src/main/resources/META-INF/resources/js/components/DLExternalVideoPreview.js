@@ -23,7 +23,7 @@ const DLExternalVideoPreview = ({error, framed, loading, small, videoHTML}) => {
 		<div
 			className={classNames('external-video-preview mt-4', {
 				['external-video-preview-framed']: framed,
-				['external-video-preview-small']: small,
+				['external-video-preview-sm']: small,
 			})}
 		>
 			{videoHTML && !error && !loading ? (

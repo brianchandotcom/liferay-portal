@@ -44,7 +44,7 @@
 		}
 	}
 
-	&-small {
+	&-sm {
 		max-width: $video-max-width;
 	}
 
@@ -57,7 +57,7 @@
 		border-radius: 0.25rem;
 		padding: $padding;
 
-		&#{$component}-small {
+		&#{$component}-sm {
 			max-width: calc(
 				#{$border-width * 2} + #{$padding * 2} + #{$video-max-width}
 			);

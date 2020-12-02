@@ -654,6 +654,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIDEO_URL</td>
+	<td>//input[contains(@id,'VideoURL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIRTUAL_HOST</td>
 	<td>//input[contains(@id,'virtualHostname') and contains(@class,'input-text')]</td>
 	<td></td>

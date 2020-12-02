@@ -167,9 +167,7 @@ export default function Chart({
 		languageTag,
 	]);
 
-	const title = useMemo(() => {
-		return dateFormatters.formatChartTitle([firstDate, lastDate]);
-	}, [dateFormatters, firstDate, lastDate]);
+	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 
 	const isMounted = useIsMounted();
 

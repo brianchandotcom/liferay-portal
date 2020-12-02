@@ -9,13 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {
-	createContext,
-	useCallback,
-	useContext,
-	useMemo,
-	useReducer,
-} from 'react';
+import React, {createContext, useCallback, useContext, useReducer} from 'react';
 
 import ConnectionContext from './ConnectionContext';
 
@@ -91,23 +85,21 @@ export function useDateTitle() {
 	const {histogram} = state.dataSet;
 	const {timeRange} = state;
 
-	return useMemo(() => {
-		if (histogram.length) {
-			const firstDateLabel = histogram[0].label;
-			const lastDateLabel = histogram[histogram.length - 1].label;
+	if (histogram.length) {
+		const firstDateLabel = histogram[0].label;
+		const lastDateLabel = histogram[histogram.length - 1].label;
 
-			return {
-				firstDate: new Date(firstDateLabel),
-				lastDate: new Date(lastDateLabel),
-			};
-		}
-		else {
-			return {
-				firstDate: new Date(timeRange.startDate),
-				lastDate: new Date(timeRange.endDate),
-			};
-		}
-	}, [histogram, timeRange]);
+		return {
+			firstDate: new Date(firstDateLabel),
+			lastDate: new Date(lastDateLabel),
+		};
+	}
+	else {
+		return {
+			firstDate: new Date(timeRange.startDate),
+			lastDate: new Date(timeRange.endDate),
+		};
+	}
 }
 
 export function useIsPreviousPeriodButtonDisabled() {
@@ -116,18 +108,16 @@ export function useIsPreviousPeriodButtonDisabled() {
 	const {histogram} = state.dataSet;
 	const {publishDate} = state;
 
-	return useMemo(() => {
-		if (histogram.length) {
-			const firstDateLabel = histogram[0].label;
+	if (histogram.length) {
+		const firstDateLabel = histogram[0].label;
 
-			const firstDate = new Date(firstDateLabel);
-			const publishedDate = new Date(publishDate);
+		const firstDate = new Date(firstDateLabel);
+		const publishedDate = new Date(publishDate);
 
-			return firstDate < publishedDate;
-		}
+		return firstDate < publishedDate;
+	}
 
-		return true;
-	}, [histogram, publishDate]);
+	return true;
 }
 
 export const useNextTimeSpan = () => {

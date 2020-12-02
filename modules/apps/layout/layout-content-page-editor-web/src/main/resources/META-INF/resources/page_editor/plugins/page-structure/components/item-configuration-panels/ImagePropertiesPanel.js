@@ -12,8 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
@@ -23,23 +22,14 @@ import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
 import selectLanguageId from '../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
-import ImageService from '../../../../app/services/ImageService';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
 import {setIn} from '../../../../app/utils/setIn';
 import {updateIn} from '../../../../app/utils/updateIn';
-import {useId} from '../../../../app/utils/useId';
 import {ImageSelector} from '../../../../common/components/ImageSelector';
 import {ImageSelectorDescription} from '../../../../common/components/ImageSelectorDescription';
+import {ImageSelectorSize} from '../../../../common/components/ImageSelectorSize';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
-
-const DEFAULT_IMAGE_SIZE_ID = 'auto';
-
-const DEFAULT_IMAGE_SIZE = {
-	size: null,
-	value: DEFAULT_IMAGE_SIZE_ID,
-	width: null,
-};
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
@@ -47,9 +37,6 @@ export function ImagePropertiesPanel({item}) {
 	const dispatch = useDispatch();
 	const editables = useSelector((state) => state.editables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
-	const [imageSizes, setImageSizes] = useState([]);
-	const imageSizeSelectId = useId();
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
@@ -65,12 +52,8 @@ export function ImagePropertiesPanel({item}) {
 		fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
 	const editableValue = editableValues[processorKey][editableId];
-
 	const editableConfig = editableValue.config || {};
-
-	const editableElement = editables
-		? editables[item.parentId]?.[item.itemId]?.element
-		: undefined;
+	const editableElement = editables?.[item.parentId]?.[item.itemId]?.element;
 
 	const editableContent = selectEditableValueContent(
 		{fragmentEntryLinks, languageId},
@@ -95,66 +78,7 @@ export function ImagePropertiesPanel({item}) {
 			  ''
 			: editableConfig.alt || '';
 
-	useEffect(() => {
-		const {maxWidth, minWidth} = config.availableViewportSizes[
-			selectedViewportSize
-		];
-
-		const configSize =
-			editableConfig.imageProperties?.[selectedViewportSize] ||
-			DEFAULT_IMAGE_SIZE;
-
-		setImageSize(configSize);
-
-		if (editableElement && configSize.value === DEFAULT_IMAGE_SIZE_ID) {
-			const setAutoSize = () => {
-				const autoSize =
-					imageSizes.find(
-						({width}) =>
-							(width <= maxWidth && width > minWidth) ||
-							width === editableElement.naturalWidth
-					) ||
-					imageSizes.find(
-						({value}) => value === DEFAULT_IMAGE_SIZE_ID
-					) ||
-					DEFAULT_IMAGE_SIZE;
-
-				setImageSize({
-					...autoSize,
-					width: autoSize.width || editableElement.naturalWidth,
-				});
-			};
-
-			if (editableElement.complete) {
-				setAutoSize();
-			}
-			else {
-				editableElement.addEventListener('load', setAutoSize);
-
-				return () => {
-					editableElement.removeEventListener('load', setAutoSize);
-				};
-			}
-		}
-	}, [
-		editableConfig.imageProperties,
-		editableElement,
-		imageSizes,
-		selectedViewportSize,
-	]);
-
-	useEffect(() => {
-		const fileEntryId = editableContent?.fileEntryId;
-
-		if (config.adaptiveMediaEnabled && fileEntryId > 0) {
-			ImageService.getAvailableImageConfigurations({
-				fileEntryId,
-				onNetworkStatus: dispatch,
-			}).then((availableImageSizes) => {
-				setImageSizes(availableImageSizes);
-			});
-		}
-	}, [dispatch, editableContent.fileEntryId]);
+	const imageSizeId = editableConfig.imageProperties?.[selectedViewportSize];
 
 	const handleImageChanged = (nextImage) => {
 		const nextEditableValue = {
@@ -257,42 +181,13 @@ export function ImagePropertiesPanel({item}) {
 				/>
 			)}
 
-			{config.adaptiveMediaEnabled && imageSizes?.length > 0 && (
-				<ClayForm.Group className="mb-2">
-					<label htmlFor={imageSizeSelectId}>
-						{Liferay.Language.get('resolution')}
-					</label>
-					<ClaySelectWithOption
-						className={'form-control form-control-sm'}
-						id={imageSizeSelectId}
-						name={imageSizeSelectId}
-						onChange={(event) =>
-							handleImageSizeChanged(event.target.value)
-						}
-						options={imageSizes}
-						value={
-							editableConfig.imageConfiguration?.[
-								selectedViewportSize
-							] || DEFAULT_IMAGE_SIZE_ID
-						}
-					/>
-				</ClayForm.Group>
-			)}
-
-			{config.adaptiveMediaEnabled && imageTitle && imageSize.width && (
-				<div className="page-editor__image-properties-panel__resolution-label">
-					<b>{Liferay.Language.get('width')}:</b>
-					<span className="ml-1">{imageSize.width}px</span>
-				</div>
-			)}
-
-			{config.adaptiveMediaEnabled && imageTitle && imageSize.size && (
-				<div className="mb-3 page-editor__image-properties-panel__resolution-label">
-					<b>{Liferay.Language.get('file-size')}:</b>
-					<span className="ml-1">
-						{Number(imageSize.size).toFixed(2)}kB
-					</span>
-				</div>
+			{config.adaptiveMediaEnabled && editableContent?.fileEntryId && (
+				<ImageSelectorSize
+					editableElement={editableElement}
+					fileEntryId={editableContent.fileEntryId}
+					imageSizeId={imageSizeId}
+					onImageSizeIdChanged={handleImageSizeChanged}
+				/>
 			)}
 
 			{selectedViewportSize === VIEWPORT_SIZES.desktop &&

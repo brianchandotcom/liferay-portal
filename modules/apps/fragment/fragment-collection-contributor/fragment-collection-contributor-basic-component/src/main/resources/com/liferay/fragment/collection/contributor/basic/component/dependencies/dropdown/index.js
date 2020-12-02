@@ -76,7 +76,7 @@ function isShown() {
 }
 
 function handleToggleClick(event) {
-	if (!toggleEditable.contains(event.target)) {
+	if (!toggleEditable.contains(event.target) || !editMode) {
 		toggleMenu();
 	}
 }

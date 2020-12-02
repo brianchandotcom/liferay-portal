@@ -544,6 +544,13 @@ definition {
 				navItem = "Web Content",
 				panel = "Link");
 
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertVisible(
+				key_append = "//img",
+				key_URL = "${baseURL}/en/web/test-site-name/w/web-content-title",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
 			PageEditor.clickPublish();
 		}
 
@@ -552,15 +559,15 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			var baseURL = PropsUtil.get("portal.url");
-
 			AssertVisible(
-				baseURL = "${baseURL}/en/web/test-site-name/w/web-content-title",
-				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
+				key_append = "/img",
+				key_URL = "${baseURL}/en/web/test-site-name/w/web-content-title",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			Click(
-				baseURL = "${baseURL}/en/web/test-site-name/w/web-content-title",
-				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
+				key_append = "/img",
+				key_URL = "${baseURL}/en/web/test-site-name/w/web-content-title",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
@@ -600,6 +607,11 @@ definition {
 				panel = "Link",
 				url = "https://liferay.com");
 
+			AssertVisible(
+				key_append = "//img",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
 			PageEditor.clickPublish();
 		}
 
@@ -609,12 +621,14 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertVisible(
-				baseURL = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
+				key_append = "/img",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			Click(
-				baseURL = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_IMAGE_LINK");
+				key_append = "/img",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
@@ -647,6 +661,11 @@ definition {
 
 			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
+			AssertVisible(
+				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
 			PageEditor.clickPublish();
 		}
 
@@ -655,9 +674,15 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com')]/img[contains(@src,'Document_1.jpg')]");
+			AssertVisible(
+				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
-			Click(locator1 = "//a[contains(@href,'https://liferay.com')]/img[contains(@src,'Document_1.jpg')]");
+			Click(
+				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}
@@ -687,6 +712,11 @@ definition {
 				target = "Blank",
 				url = "https://liferay.com");
 
+			AssertVisible(
+				key_append = "[contains(@target,'blank')][normalize-space(text())='Go Somewhere']",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
 			PageEditor.clickPublish();
 		}
 
@@ -695,11 +725,17 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'blank')][normalize-space(text())='Go Somewhere']");
+			AssertVisible(
+				key_append = "[contains(@target,'blank')][normalize-space(text())='Go Somewhere']",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
 		task ("Assert mapped URL work in view mode") {
-			Click(locator1 = "//a[contains(@href,'https://liferay.com') and contains(@target,'blank')][normalize-space(text())='Go Somewhere']");
+			Click(
+				key_append = "[contains(@target,'blank')][normalize-space(text())='Go Somewhere']",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -733,6 +769,11 @@ definition {
 
 			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
+			AssertVisible(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
 			PageEditor.clickPublish();
 		}
 
@@ -741,9 +782,15 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//a[contains(@href,'https://liferay.com')][normalize-space(text())='Heading Example']");
+			AssertVisible(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
-			Click(locator1 = "//a[contains(@href,'https://liferay.com')][normalize-space(text())='Heading Example']");
+			Click(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 		}

@@ -164,14 +164,6 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "parentGroupSearchContainerPrimaryKeys",
 			defaultParentGroupId);
 
-		Map<Locale, String> nameMap = null;
-		Map<Locale, String> descriptionMap = null;
-		int type = 0;
-		String friendlyURL = null;
-		boolean inheritContent = false;
-		boolean active = false;
-		boolean manualMembership = true;
-
 		int membershipRestriction =
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 
@@ -190,97 +182,55 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		Group liveGroup = null;
+		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
-		if (liveGroupId <= 0) {
-
-			// Add group
-
-			String name = ParamUtil.getString(actionRequest, "name");
-			nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name");
-			descriptionMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "description");
-			type = ParamUtil.getInteger(
-				actionRequest, "type", GroupConstants.TYPE_SITE_OPEN);
-			friendlyURL = ParamUtil.getString(
-				actionRequest, "groupFriendlyURL");
-			manualMembership = ParamUtil.getBoolean(
-				actionRequest, "manualMembership", true);
-			inheritContent = ParamUtil.getBoolean(
-				actionRequest, "inheritContent");
-			active = ParamUtil.getBoolean(actionRequest, "active", true);
-			long userId = _portal.getUserId(actionRequest);
-
-			if (Validator.isNotNull(name)) {
-				nameMap.put(LocaleUtil.getDefault(), name);
-			}
-
-			liveGroup = _groupService.addGroup(
-				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
-				descriptionMap, type, manualMembership, membershipRestriction,
-				friendlyURL, true, inheritContent, active, serviceContext);
-
-			LiveUsers.joinGroup(
-				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
-		}
-		else {
-
-			// Update group
-
-			liveGroup = _groupLocalService.getGroup(liveGroupId);
-
-			nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name", liveGroup.getNameMap());
-			descriptionMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name", liveGroup.getNameMap());
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(
 				actionRequest, "description", liveGroup.getDescriptionMap());
-			type = ParamUtil.getInteger(
-				actionRequest, "type", liveGroup.getType());
-			manualMembership = ParamUtil.getBoolean(
-				actionRequest, "manualMembership",
-				liveGroup.isManualMembership());
-			friendlyURL = ParamUtil.getString(
-				actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
-			inheritContent = ParamUtil.getBoolean(
-				actionRequest, "inheritContent", liveGroup.isInheritContent());
-			active = ParamUtil.getBoolean(
-				actionRequest, "active", liveGroup.isActive());
+		int type = ParamUtil.getInteger(
+			actionRequest, "type", liveGroup.getType());
+		boolean manualMembership = ParamUtil.getBoolean(
+			actionRequest, "manualMembership", liveGroup.isManualMembership());
+		String friendlyURL = ParamUtil.getString(
+			actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
+		boolean inheritContent = ParamUtil.getBoolean(
+			actionRequest, "inheritContent", liveGroup.isInheritContent());
+		boolean active = ParamUtil.getBoolean(
+			actionRequest, "active", liveGroup.isActive());
 
-			if (!liveGroup.isGuest() && !liveGroup.isOrganization()) {
-				UnicodeProperties unicodeProperties =
-					PropertiesParamUtil.getProperties(
-						actionRequest, "TypeSettingsProperties--");
+		if (!liveGroup.isGuest() && !liveGroup.isOrganization()) {
+			UnicodeProperties unicodeProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "TypeSettingsProperties--");
 
-				Locale defaultLocale = LocaleUtil.fromLanguageId(
-					unicodeProperties.getProperty("languageId"));
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				unicodeProperties.getProperty("languageId"));
 
-				_validateDefaultLocaleGroupName(nameMap, defaultLocale);
-			}
+			_validateDefaultLocaleGroupName(nameMap, defaultLocale);
+		}
 
-			liveGroup = _groupService.updateGroup(
-				liveGroupId, parentGroupId, nameMap, descriptionMap, type,
-				manualMembership, membershipRestriction, friendlyURL,
-				inheritContent, active, serviceContext);
+		liveGroup = _groupService.updateGroup(
+			liveGroupId, parentGroupId, nameMap, descriptionMap, type,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
 
-			if (type == GroupConstants.TYPE_SITE_OPEN) {
-				List<MembershipRequest> membershipRequests =
-					_membershipRequestLocalService.search(
-						liveGroupId, MembershipRequestConstants.STATUS_PENDING,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		if (type == GroupConstants.TYPE_SITE_OPEN) {
+			List<MembershipRequest> membershipRequests =
+				_membershipRequestLocalService.search(
+					liveGroupId, MembershipRequestConstants.STATUS_PENDING,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				for (MembershipRequest membershipRequest : membershipRequests) {
-					_membershipRequestService.updateStatus(
-						membershipRequest.getMembershipRequestId(),
-						themeDisplay.translate(
-							"your-membership-has-been-approved"),
-						MembershipRequestConstants.STATUS_APPROVED,
-						serviceContext);
+			for (MembershipRequest membershipRequest : membershipRequests) {
+				_membershipRequestService.updateStatus(
+					membershipRequest.getMembershipRequestId(),
+					themeDisplay.translate("your-membership-has-been-approved"),
+					MembershipRequestConstants.STATUS_APPROVED, serviceContext);
 
-					LiveUsers.joinGroup(
-						themeDisplay.getCompanyId(),
-						membershipRequest.getGroupId(),
-						new long[] {membershipRequest.getUserId()});
-				}
+				LiveUsers.joinGroup(
+					themeDisplay.getCompanyId(), membershipRequest.getGroupId(),
+					new long[] {membershipRequest.getUserId()});
 			}
 		}
 

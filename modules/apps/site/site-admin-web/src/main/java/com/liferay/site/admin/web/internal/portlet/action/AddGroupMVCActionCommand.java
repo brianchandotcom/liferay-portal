@@ -17,7 +17,6 @@ package com.liferay.site.admin.web.internal.portlet.action;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.MembershipRequest;
-import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -69,7 +66,6 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -174,8 +170,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-
 		long defaultParentGroupId = ParamUtil.getLong(
 			actionRequest, "parentGroupId",
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -183,14 +177,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 		long parentGroupId = ParamUtil.getLong(
 			actionRequest, "parentGroupSearchContainerPrimaryKeys",
 			defaultParentGroupId);
-
-		Map<Locale, String> nameMap = null;
-		Map<Locale, String> descriptionMap = null;
-		int type = 0;
-		String friendlyURL = null;
-		boolean inheritContent = false;
-		boolean active = false;
-		boolean manualMembership = true;
 
 		int membershipRestriction =
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
@@ -210,100 +196,33 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		Group liveGroup = null;
+		String name = ParamUtil.getString(actionRequest, "name");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		int type = ParamUtil.getInteger(
+			actionRequest, "type", GroupConstants.TYPE_SITE_OPEN);
+		String friendlyURL = ParamUtil.getString(
+			actionRequest, "groupFriendlyURL");
+		boolean manualMembership = ParamUtil.getBoolean(
+			actionRequest, "manualMembership", true);
+		boolean inheritContent = ParamUtil.getBoolean(
+			actionRequest, "inheritContent");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
+		long userId = _portal.getUserId(actionRequest);
 
-		if (liveGroupId <= 0) {
-
-			// Add group
-
-			String name = ParamUtil.getString(actionRequest, "name");
-			nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name");
-			descriptionMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "description");
-			type = ParamUtil.getInteger(
-				actionRequest, "type", GroupConstants.TYPE_SITE_OPEN);
-			friendlyURL = ParamUtil.getString(
-				actionRequest, "groupFriendlyURL");
-			manualMembership = ParamUtil.getBoolean(
-				actionRequest, "manualMembership", true);
-			inheritContent = ParamUtil.getBoolean(
-				actionRequest, "inheritContent");
-			active = ParamUtil.getBoolean(actionRequest, "active", true);
-			long userId = _portal.getUserId(actionRequest);
-
-			if (Validator.isNotNull(name)) {
-				nameMap.put(LocaleUtil.getDefault(), name);
-			}
-
-			liveGroup = _groupService.addGroup(
-				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
-				descriptionMap, type, manualMembership, membershipRestriction,
-				friendlyURL, true, inheritContent, active, serviceContext);
-
-			LiveUsers.joinGroup(
-				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
+		if (Validator.isNotNull(name)) {
+			nameMap.put(LocaleUtil.getDefault(), name);
 		}
-		else {
 
-			// Update group
+		Group liveGroup = _groupService.addGroup(
+			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+			descriptionMap, type, manualMembership, membershipRestriction,
+			friendlyURL, true, inheritContent, active, serviceContext);
 
-			liveGroup = _groupLocalService.getGroup(liveGroupId);
-
-			nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name", liveGroup.getNameMap());
-			descriptionMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "description", liveGroup.getDescriptionMap());
-			type = ParamUtil.getInteger(
-				actionRequest, "type", liveGroup.getType());
-			manualMembership = ParamUtil.getBoolean(
-				actionRequest, "manualMembership",
-				liveGroup.isManualMembership());
-			friendlyURL = ParamUtil.getString(
-				actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
-			inheritContent = ParamUtil.getBoolean(
-				actionRequest, "inheritContent", liveGroup.isInheritContent());
-			active = ParamUtil.getBoolean(
-				actionRequest, "active", liveGroup.isActive());
-
-			if (!liveGroup.isGuest() && !liveGroup.isOrganization()) {
-				UnicodeProperties unicodeProperties =
-					PropertiesParamUtil.getProperties(
-						actionRequest, "TypeSettingsProperties--");
-
-				Locale defaultLocale = LocaleUtil.fromLanguageId(
-					unicodeProperties.getProperty("languageId"));
-
-				ActionUtil.validateDefaultLocaleGroupName(
-					nameMap, defaultLocale);
-			}
-
-			liveGroup = _groupService.updateGroup(
-				liveGroupId, parentGroupId, nameMap, descriptionMap, type,
-				manualMembership, membershipRestriction, friendlyURL,
-				inheritContent, active, serviceContext);
-
-			if (type == GroupConstants.TYPE_SITE_OPEN) {
-				List<MembershipRequest> membershipRequests =
-					_membershipRequestLocalService.search(
-						liveGroupId, MembershipRequestConstants.STATUS_PENDING,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-				for (MembershipRequest membershipRequest : membershipRequests) {
-					_membershipRequestService.updateStatus(
-						membershipRequest.getMembershipRequestId(),
-						themeDisplay.translate(
-							"your-membership-has-been-approved"),
-						MembershipRequestConstants.STATUS_APPROVED,
-						serviceContext);
-
-					LiveUsers.joinGroup(
-						themeDisplay.getCompanyId(),
-						membershipRequest.getGroupId(),
-						new long[] {membershipRequest.getUserId()});
-				}
-			}
-		}
+		LiveUsers.joinGroup(
+			themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
 
 		boolean openGraphEnabled = ParamUtil.getBoolean(
 			actionRequest, "openGraphEnabled", true);
@@ -455,6 +374,8 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			Validator.isNull(
 				formTypeSettingsUnicodeProperties.getProperty(
 					PropsKeys.LOCALES))) {
+
+			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
 			throw new LocaleException(
 				LocaleException.TYPE_DEFAULT,

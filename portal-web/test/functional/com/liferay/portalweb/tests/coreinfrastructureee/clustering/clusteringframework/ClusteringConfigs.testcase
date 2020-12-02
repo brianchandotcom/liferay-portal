@@ -32,6 +32,7 @@ definition {
 	test StartupJDBCPING {
 		property app.server.types = "tomcat";
 		property cluster.jdbc.ping = "true";
+		property database.types = "mysql";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ClusteringConfigs#StartupJDBCPING";
 

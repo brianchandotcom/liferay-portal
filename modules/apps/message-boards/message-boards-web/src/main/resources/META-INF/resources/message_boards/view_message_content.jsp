@@ -338,7 +338,11 @@ if (portletTitleBasedNavigation) {
 					);
 
 					if (messageContainer) {
-						messageContainer.innerHTML += response;
+						messageContainer.appendChild(
+							document
+								.createRange()
+								.createContextualFragment(response)
+						);
 
 						runScriptsInElement.default(messageContainer.parentElement);
 

@@ -230,6 +230,17 @@ import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
+import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
+import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
+import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
+import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
+import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
+import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
+import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsPortletKeys;
+import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
+import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
+import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
@@ -5217,38 +5228,36 @@ public class DataFactory {
 	}
 
 	private String[] _getSearchPageColumns() {
-		String prefix = "com_liferay_portal_search_web";
-
 		StringBundler column1SB = new StringBundler(4);
 
-		column1SB.append(prefix);
-		column1SB.append("_search_bar_portlet_SearchBarPortlet,");
-		column1SB.append(prefix);
-		column1SB.append("_suggestions_portlet_SuggestionsPortlet,");
+		column1SB.append(SearchBarPortletKeys.SEARCH_BAR);
+		column1SB.append(",");
+		column1SB.append(SuggestionsPortletKeys.SUGGESTIONS);
+		column1SB.append(",");
 
 		StringBundler column2SB = new StringBundler(14);
 
-		column2SB.append(prefix);
-		column2SB.append("_site_facet_portlet_SiteFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_type_facet_portlet_TypeFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_tag_facet_portlet_TagFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_category_facet_portlet_CategoryFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_folder_facet_portlet_FolderFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_user_facet_portlet_UserFacetPortlet,");
-		column2SB.append(prefix);
-		column2SB.append("_modified_facet_portlet_ModifiedFacetPortlet,");
+		column2SB.append(SiteFacetPortletKeys.SITE_FACET);
+		column2SB.append(",");
+		column2SB.append(TypeFacetPortletKeys.TYPE_FACET);
+		column2SB.append(",");
+		column2SB.append(TagFacetPortletKeys.TAG_FACET);
+		column2SB.append(",");
+		column2SB.append(CategoryFacetPortletKeys.CATEGORY_FACET);
+		column2SB.append(",");
+		column2SB.append(FolderFacetPortletKeys.FOLDER_FACET);
+		column2SB.append(",");
+		column2SB.append(UserFacetPortletKeys.USER_FACET);
+		column2SB.append(",");
+		column2SB.append(ModifiedFacetPortletKeys.MODIFIED_FACET);
+		column2SB.append(",");
 
 		StringBundler column3SB = new StringBundler(4);
 
-		column3SB.append(prefix);
-		column3SB.append("_search_results_portlet_SearchResultsPortlet,");
-		column3SB.append(prefix);
-		column3SB.append("_search_options_portlet_SearchOptionsPortlet,");
+		column3SB.append(SearchResultsPortletKeys.SEARCH_RESULTS);
+		column3SB.append(",");
+		column3SB.append(SearchOptionsPortletKeys.SEARCH_OPTIONS);
+		column3SB.append(",");
 
 		return new String[] {
 			column1SB.toString(), column2SB.toString(), column3SB.toString()

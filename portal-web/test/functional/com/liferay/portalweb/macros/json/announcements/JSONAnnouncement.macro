@@ -39,10 +39,13 @@ definition {
 
 		if (!(isSet(expirationDate))) {
 			var displayDateMonth = DateUtil.getCurrentMonth();
+			var displayDateYear = DateUtil.getCurrentYear();
 			var expirationMonth = ${displayDateMonth} + 1;
 
 			if ("${expirationMonth}" == "13") {
-				var expirationMonth = "${expirationMonth} - 12";
+				var expirationMonth = ${expirationMonth} - 12;
+
+				var displayDateYear = ${displayDateYear} + 1;
 			}
 
 			var expirationDate = "${displayDateYear}%2D${expirationMonth}%2D${displayDateDay}";

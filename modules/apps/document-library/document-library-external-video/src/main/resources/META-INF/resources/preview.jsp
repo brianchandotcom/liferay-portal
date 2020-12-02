@@ -21,13 +21,13 @@ String embeddableHTML = (String)request.getAttribute(DLExternalVideoWebKeys.EMBE
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_external_video_preview_css"
+	outputKey="document_library_external_video_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div class="preview-file">
-	<div class="preview-file-container preview-file-max-height">
+<div class="external-video-preview external-video-preview-framed preview-file">
+	<div class="external-video-preview-aspect-ratio">
 		<%= embeddableHTML %>
 	</div>
 </div>

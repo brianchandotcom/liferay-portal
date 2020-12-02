@@ -113,10 +113,6 @@ public class ReactRendererUtil {
 
 		StringBundler dependenciesSB = new StringBundler(11);
 
-		dependenciesSB.append(npmResolvedPackageName);
-		dependenciesSB.append("/render.es as render");
-		dependenciesSB.append(placeholderId);
-		dependenciesSB.append(", ");
 		dependenciesSB.append(componentDescriptor.getModule());
 		dependenciesSB.append(" as renderFunction");
 		dependenciesSB.append(placeholderId);
@@ -134,9 +130,12 @@ public class ReactRendererUtil {
 
 		StringBundler javascriptSB = new StringBundler(13);
 
+		javascriptSB.append("Liferay.require('");
+		javascriptSB.append("portal-template-react-renderer-impl");
+		javascriptSB.append("').then(({render}) => {");
+
 		javascriptSB.append("render");
-		javascriptSB.append(placeholderId);
-		javascriptSB.append(".default(renderFunction");
+		javascriptSB.append("(renderFunction");
 		javascriptSB.append(placeholderId);
 		javascriptSB.append(".default, ");
 
@@ -162,6 +161,7 @@ public class ReactRendererUtil {
 		javascriptSB.append(", '");
 		javascriptSB.append(placeholderId);
 		javascriptSB.append("');");
+		javascriptSB.append("});");
 
 		if (componentDescriptor.isPositionInLine()) {
 			ScriptData scriptData = new ScriptData();

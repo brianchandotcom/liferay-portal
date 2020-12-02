@@ -22,8 +22,14 @@
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div class="preview-file">
-	<div class="preview-file-container preview-file-max-height">
+<liferay-util:html-top
+	outputKey="document_library_external_video_preview_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/document-library-external-video/css/external_video_preview.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
+<div class="external-video-preview-framed preview-file">
+	<div class="external-video-preview-aspect-ratio">
 		<iframe class="preview-file-video" frameborder="0" height="315" src="<%= (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_IFRAME_URL) %>" width="560">
 		</iframe>
 	</div>

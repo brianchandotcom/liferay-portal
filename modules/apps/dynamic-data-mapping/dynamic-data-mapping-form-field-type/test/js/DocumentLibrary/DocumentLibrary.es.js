@@ -189,4 +189,52 @@ describe('Field DocumentLibrary', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	it('shows guest upload field if allowGuestUsers property is enabled', () => {
+        const mockIsSignedIn = jest.fn();
+
+        Liferay.ThemeDisplay.isSignedIn = mockIsSignedIn;
+
+        render(
+            <DocumentLibraryWithProvider
+                {...defaultDocumentLibraryConfig}
+                allowGuestUsers={true}
+                value='{"id":"123"}'
+            />
+        );
+
+        act(() => {
+            jest.runAllTimers();
+        });
+
+        const guestUploadFileInput = document.getElementById(
+            'textFieldinputFileGuestUpload'
+        );
+
+        expect(guestUploadFileInput).not.toBe(null);
+    });
+
+    it('hide guest upload field if allowGuestUsers property is disabled', () => {
+        const mockIsSignedIn = jest.fn();
+
+        Liferay.ThemeDisplay.isSignedIn = mockIsSignedIn;
+
+        render(
+            <DocumentLibraryWithProvider
+                {...defaultDocumentLibraryConfig}
+                allowGuestUsers={false}
+                value='{"id":"123"}'
+            />
+        );
+
+        act(() => {
+            jest.runAllTimers();
+        });
+
+        const guestUploadFileInput = document.getElementById(
+            'textFieldinputFileGuestUpload'
+        );
+
+        expect(guestUploadFileInput).toBe(null);
+    });
 });

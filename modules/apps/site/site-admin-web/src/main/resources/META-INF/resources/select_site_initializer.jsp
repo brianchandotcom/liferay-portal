@@ -54,7 +54,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		/>
 	</liferay-ui:search-container>
 
-	<portlet:actionURL name="addGroup" var="addSiteURL">
+	<portlet:actionURL name="/site_admin/add_group" var="addSiteURL">
 		<portlet:param name="mvcPath" value="/select_layout_set_prototype_entry.jsp" />
 		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>

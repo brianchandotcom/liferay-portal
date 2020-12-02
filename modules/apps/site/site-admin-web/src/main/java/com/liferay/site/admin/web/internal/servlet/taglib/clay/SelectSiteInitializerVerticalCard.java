@@ -60,7 +60,8 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			() -> {
 				PortletURL addSiteURL = _renderResponse.createActionURL();
 
-				addSiteURL.setParameter(ActionRequest.ACTION_NAME, "addGroup");
+				addSiteURL.setParameter(
+					ActionRequest.ACTION_NAME, "/site_admin/add_group");
 
 				addSiteURL.setParameter(
 					"mvcPath", "/select_layout_set_prototype_entry.jsp");

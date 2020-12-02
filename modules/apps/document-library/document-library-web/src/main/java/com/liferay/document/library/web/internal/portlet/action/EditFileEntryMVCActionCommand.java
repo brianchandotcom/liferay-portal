@@ -1154,14 +1154,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (Validator.isNotNull(extension)) {
 			if (Validator.isNull(sourceFileName)) {
 				throw new FileNameExtensionException(
-					"A file entry already exists with file name " +
-						sourceFileName);
+					"The file name cannot be empty or without extension");
 			}
 
 			if (Validator.isNull(FileUtil.getExtension(sourceFileName))) {
 				throw new FileNameExtensionException(
-					"A file entry already exists with file name " +
-						sourceFileName);
+					"The file name cannot be empty or without extension");
 			}
 		}
 	}

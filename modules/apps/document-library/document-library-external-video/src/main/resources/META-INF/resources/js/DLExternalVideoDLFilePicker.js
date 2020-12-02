@@ -45,6 +45,7 @@ const DLExternalVideoDLFilePicker = ({
 
 			<DLExternalVideoPreview
 				error={error}
+				framed
 				loading={loading}
 				small
 				videoHTML={fields ? fields.HTML : externalVideoHTML}

@@ -18,10 +18,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const DLExternalVideoPreview = ({error, loading, small, videoHTML}) => {
+const DLExternalVideoPreview = ({error, framed, loading, small, videoHTML}) => {
 	return (
 		<div
 			className={classNames('external-video-preview mt-4', {
+				['external-video-preview-framed']: framed,
 				['external-video-preview-small']: small,
 			})}
 		>
@@ -54,6 +55,7 @@ const DLExternalVideoPreview = ({error, loading, small, videoHTML}) => {
 
 DLExternalVideoPreview.propTypes = {
 	error: PropTypes.string,
+	framed: PropTypes.bool,
 	loading: PropTypes.bool,
 	small: PropTypes.bool,
 	videoHTML: PropTypes.string,

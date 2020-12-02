@@ -184,7 +184,8 @@ public class DLFileEntryLocalServiceImpl
 
 		String extension = FileUtil.getExtension(sourceFileName);
 
-		String fileName = DLUtil.getSanitizedFileName(title, extension);
+		String fileName = DLValidatorUtil.fixName(
+			DLUtil.getSanitizedFileName(title, extension));
 
 		if (Validator.isNotNull(sourceFileName)) {
 			fileName = DLUtil.getSanitizedFileName(

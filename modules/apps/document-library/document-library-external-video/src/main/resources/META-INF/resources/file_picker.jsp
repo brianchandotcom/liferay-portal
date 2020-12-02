@@ -34,7 +34,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 
 	<p class="form-text"><liferay-ui:message key="video-url-help" /></p>
 
-	<div class="external-video-preview external-video-preview-sm mt-4">
+	<div class="external-video-preview external-video-preview-framed external-video-preview-sm mt-4">
 		<div class="external-video-preview-aspect-ratio">
 			<c:choose>
 				<c:when test="<%= dlExternalVideo != null %>">

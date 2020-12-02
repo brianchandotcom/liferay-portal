@@ -95,8 +95,6 @@ public class AccountEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", parentAccountEntryId=");
-		sb.append(parentAccountEntryId);
 		sb.append(", defaultBillingAddressId=");
 		sb.append(defaultBillingAddressId);
 		sb.append(", defaultShippingAddressId=");
@@ -105,10 +103,12 @@ public class AccountEntryCacheModel
 		sb.append(description);
 		sb.append(", domains=");
 		sb.append(domains);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", logoId=");
 		sb.append(logoId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", parentAccountEntryId=");
+		sb.append(parentAccountEntryId);
 		sb.append(", taxIdNumber=");
 		sb.append(taxIdNumber);
 		sb.append(", type=");
@@ -158,7 +158,6 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		accountEntryImpl.setParentAccountEntryId(parentAccountEntryId);
 		accountEntryImpl.setDefaultBillingAddressId(defaultBillingAddressId);
 		accountEntryImpl.setDefaultShippingAddressId(defaultShippingAddressId);
 
@@ -176,6 +175,8 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setDomains(domains);
 		}
 
+		accountEntryImpl.setLogoId(logoId);
+
 		if (name == null) {
 			accountEntryImpl.setName("");
 		}
@@ -183,7 +184,7 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setName(name);
 		}
 
-		accountEntryImpl.setLogoId(logoId);
+		accountEntryImpl.setParentAccountEntryId(parentAccountEntryId);
 
 		if (taxIdNumber == null) {
 			accountEntryImpl.setTaxIdNumber("");
@@ -220,16 +221,16 @@ public class AccountEntryCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		parentAccountEntryId = objectInput.readLong();
-
 		defaultBillingAddressId = objectInput.readLong();
 
 		defaultShippingAddressId = objectInput.readLong();
 		description = objectInput.readUTF();
 		domains = objectInput.readUTF();
-		name = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
+		name = objectInput.readUTF();
+
+		parentAccountEntryId = objectInput.readLong();
 		taxIdNumber = objectInput.readUTF();
 		type = objectInput.readUTF();
 
@@ -263,8 +264,6 @@ public class AccountEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(parentAccountEntryId);
-
 		objectOutput.writeLong(defaultBillingAddressId);
 
 		objectOutput.writeLong(defaultShippingAddressId);
@@ -283,6 +282,8 @@ public class AccountEntryCacheModel
 			objectOutput.writeUTF(domains);
 		}
 
+		objectOutput.writeLong(logoId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -290,7 +291,7 @@ public class AccountEntryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeLong(logoId);
+		objectOutput.writeLong(parentAccountEntryId);
 
 		if (taxIdNumber == null) {
 			objectOutput.writeUTF("");
@@ -317,13 +318,13 @@ public class AccountEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long parentAccountEntryId;
 	public long defaultBillingAddressId;
 	public long defaultShippingAddressId;
 	public String description;
 	public String domains;
-	public String name;
 	public long logoId;
+	public String name;
+	public long parentAccountEntryId;
 	public String taxIdNumber;
 	public String type;
 	public int status;

@@ -202,20 +202,6 @@ public interface AccountEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the parent account entry ID of this account entry.
-	 *
-	 * @return the parent account entry ID of this account entry
-	 */
-	public long getParentAccountEntryId();
-
-	/**
-	 * Sets the parent account entry ID of this account entry.
-	 *
-	 * @param parentAccountEntryId the parent account entry ID of this account entry
-	 */
-	public void setParentAccountEntryId(long parentAccountEntryId);
-
-	/**
 	 * Returns the default billing address ID of this account entry.
 	 *
 	 * @return the default billing address ID of this account entry
@@ -274,6 +260,20 @@ public interface AccountEntryModel
 	public void setDomains(String domains);
 
 	/**
+	 * Returns the logo ID of this account entry.
+	 *
+	 * @return the logo ID of this account entry
+	 */
+	public long getLogoId();
+
+	/**
+	 * Sets the logo ID of this account entry.
+	 *
+	 * @param logoId the logo ID of this account entry
+	 */
+	public void setLogoId(long logoId);
+
+	/**
 	 * Returns the name of this account entry.
 	 *
 	 * @return the name of this account entry
@@ -289,18 +289,18 @@ public interface AccountEntryModel
 	public void setName(String name);
 
 	/**
-	 * Returns the logo ID of this account entry.
+	 * Returns the parent account entry ID of this account entry.
 	 *
-	 * @return the logo ID of this account entry
+	 * @return the parent account entry ID of this account entry
 	 */
-	public long getLogoId();
+	public long getParentAccountEntryId();
 
 	/**
-	 * Sets the logo ID of this account entry.
+	 * Sets the parent account entry ID of this account entry.
 	 *
-	 * @param logoId the logo ID of this account entry
+	 * @param parentAccountEntryId the parent account entry ID of this account entry
 	 */
-	public void setLogoId(long logoId);
+	public void setParentAccountEntryId(long parentAccountEntryId);
 
 	/**
 	 * Returns the tax ID number of this account entry.

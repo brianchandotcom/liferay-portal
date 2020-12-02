@@ -50,14 +50,14 @@ public class AccountEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("parentAccountEntryId", getParentAccountEntryId());
 		attributes.put("defaultBillingAddressId", getDefaultBillingAddressId());
 		attributes.put(
 			"defaultShippingAddressId", getDefaultShippingAddressId());
 		attributes.put("description", getDescription());
 		attributes.put("domains", getDomains());
-		attributes.put("name", getName());
 		attributes.put("logoId", getLogoId());
+		attributes.put("name", getName());
+		attributes.put("parentAccountEntryId", getParentAccountEntryId());
 		attributes.put("taxIdNumber", getTaxIdNumber());
 		attributes.put("type", getType());
 		attributes.put("status", getStatus());
@@ -116,13 +116,6 @@ public class AccountEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long parentAccountEntryId = (Long)attributes.get(
-			"parentAccountEntryId");
-
-		if (parentAccountEntryId != null) {
-			setParentAccountEntryId(parentAccountEntryId);
-		}
-
 		Long defaultBillingAddressId = (Long)attributes.get(
 			"defaultBillingAddressId");
 
@@ -149,16 +142,23 @@ public class AccountEntryWrapper
 			setDomains(domains);
 		}
 
+		Long logoId = (Long)attributes.get("logoId");
+
+		if (logoId != null) {
+			setLogoId(logoId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
 		}
 
-		Long logoId = (Long)attributes.get("logoId");
+		Long parentAccountEntryId = (Long)attributes.get(
+			"parentAccountEntryId");
 
-		if (logoId != null) {
-			setLogoId(logoId);
+		if (parentAccountEntryId != null) {
+			setParentAccountEntryId(parentAccountEntryId);
 		}
 
 		String taxIdNumber = (String)attributes.get("taxIdNumber");

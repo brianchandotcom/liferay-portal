@@ -41,15 +41,15 @@ public class AccountEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setParentAccountEntryId(model.getParentAccountEntryId());
 		soapModel.setDefaultBillingAddressId(
 			model.getDefaultBillingAddressId());
 		soapModel.setDefaultShippingAddressId(
 			model.getDefaultShippingAddressId());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDomains(model.getDomains());
-		soapModel.setName(model.getName());
 		soapModel.setLogoId(model.getLogoId());
+		soapModel.setName(model.getName());
+		soapModel.setParentAccountEntryId(model.getParentAccountEntryId());
 		soapModel.setTaxIdNumber(model.getTaxIdNumber());
 		soapModel.setType(model.getType());
 		soapModel.setStatus(model.getStatus());
@@ -170,14 +170,6 @@ public class AccountEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getParentAccountEntryId() {
-		return _parentAccountEntryId;
-	}
-
-	public void setParentAccountEntryId(long parentAccountEntryId) {
-		_parentAccountEntryId = parentAccountEntryId;
-	}
-
 	public long getDefaultBillingAddressId() {
 		return _defaultBillingAddressId;
 	}
@@ -210,6 +202,14 @@ public class AccountEntrySoap implements Serializable {
 		_domains = domains;
 	}
 
+	public long getLogoId() {
+		return _logoId;
+	}
+
+	public void setLogoId(long logoId) {
+		_logoId = logoId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -218,12 +218,12 @@ public class AccountEntrySoap implements Serializable {
 		_name = name;
 	}
 
-	public long getLogoId() {
-		return _logoId;
+	public long getParentAccountEntryId() {
+		return _parentAccountEntryId;
 	}
 
-	public void setLogoId(long logoId) {
-		_logoId = logoId;
+	public void setParentAccountEntryId(long parentAccountEntryId) {
+		_parentAccountEntryId = parentAccountEntryId;
 	}
 
 	public String getTaxIdNumber() {
@@ -258,13 +258,13 @@ public class AccountEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _parentAccountEntryId;
 	private long _defaultBillingAddressId;
 	private long _defaultShippingAddressId;
 	private String _description;
 	private String _domains;
-	private String _name;
 	private long _logoId;
+	private String _name;
+	private long _parentAccountEntryId;
 	private String _taxIdNumber;
 	private String _type;
 	private int _status;

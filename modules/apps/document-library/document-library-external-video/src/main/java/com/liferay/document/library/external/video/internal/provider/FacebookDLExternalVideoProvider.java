@@ -66,11 +66,6 @@ public class FacebookDLExternalVideoProvider
 			}
 
 			@Override
-			public String getThumbnailURL() {
-				return null;
-			}
-
-			@Override
 			public String getTitle() {
 				return null;
 			}

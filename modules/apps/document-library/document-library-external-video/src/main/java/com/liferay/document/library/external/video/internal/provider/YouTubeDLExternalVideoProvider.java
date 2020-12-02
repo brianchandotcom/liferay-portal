@@ -99,11 +99,6 @@ public class YouTubeDLExternalVideoProvider
 				}
 
 				@Override
-				public String getThumbnailURL() {
-					return jsonObject.getString("thumbnail_url");
-				}
-
-				@Override
 				public String getTitle() {
 					return jsonObject.getString("title");
 				}

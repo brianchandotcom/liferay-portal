@@ -30,6 +30,7 @@ import {setIn} from '../../../../app/utils/setIn';
 import {updateIn} from '../../../../app/utils/updateIn';
 import {useId} from '../../../../app/utils/useId';
 import {ImageSelector} from '../../../../common/components/ImageSelector';
+import {ImageSelectorDescription} from '../../../../common/components/ImageSelectorDescription';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
 const DEFAULT_IMAGE_SIZE_ID = 'auto';
@@ -243,7 +244,6 @@ export function ImagePropertiesPanel({item}) {
 		<>
 			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
 				<ImageSelector
-					imageDescription={imageDescription}
 					imageTitle={imageTitle}
 					label={Liferay.Language.get('image')}
 					onClearButtonPressed={() => {
@@ -253,11 +253,6 @@ export function ImagePropertiesPanel({item}) {
 							url: '',
 						});
 					}}
-					onImageDescriptionChanged={
-						type === EDITABLE_TYPES.image
-							? handleImageDescriptionChanged
-							: null
-					}
 					onImageSelected={handleImageChanged}
 				/>
 			)}
@@ -299,6 +294,16 @@ export function ImagePropertiesPanel({item}) {
 					</span>
 				</div>
 			)}
+
+			{selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				type === EDITABLE_TYPES.image && (
+					<ImageSelectorDescription
+						imageDescription={imageDescription}
+						onImageDescriptionChanged={
+							handleImageDescriptionChanged
+						}
+					/>
+				)}
 		</>
 	);
 }

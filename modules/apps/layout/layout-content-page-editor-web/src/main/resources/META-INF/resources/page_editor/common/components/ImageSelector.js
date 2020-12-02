@@ -15,31 +15,18 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import {useId} from '../../app/utils/useId';
 import {openImageSelector} from '../../core/openImageSelector';
 
 export function ImageSelector({
-	imageDescription = '',
 	imageTitle = Liferay.Language.get('none'),
 	label,
 	onClearButtonPressed,
-	onImageDescriptionChanged = null,
 	onImageSelected,
 }) {
-	const [
-		imageDescriptionInputElement,
-		setImageDescriptionInputElement,
-	] = useState();
-	const imageDescriptionInputId = useId();
 	const imageTitleId = useId();
-
-	useEffect(() => {
-		if (imageDescriptionInputElement) {
-			imageDescriptionInputElement.value = imageDescription;
-		}
-	}, [imageDescription, imageDescriptionInputElement]);
 
 	return (
 		<>
@@ -84,31 +71,13 @@ export function ImageSelector({
 					</ClayButton>
 				</div>
 			</ClayButton.Group>
-			{onImageDescriptionChanged && (
-				<ClayForm.Group>
-					<label htmlFor={imageDescriptionInputId}>
-						{Liferay.Language.get('image-description')}
-					</label>
-					<ClayInput
-						id={imageDescriptionInputId}
-						onBlur={(event) => {
-							onImageDescriptionChanged(event.target.value);
-						}}
-						ref={setImageDescriptionInputElement}
-						sizing="sm"
-						type="text"
-					/>
-				</ClayForm.Group>
-			)}
 		</>
 	);
 }
 
 ImageSelector.propTypes = {
-	imageDescription: PropTypes.string,
 	imageTitle: PropTypes.string,
 	label: PropTypes.string,
 	onClearButtonPressed: PropTypes.func.isRequired,
-	onImageDescriptionChanged: PropTypes.func,
 	onImageSelected: PropTypes.func.isRequired,
 };

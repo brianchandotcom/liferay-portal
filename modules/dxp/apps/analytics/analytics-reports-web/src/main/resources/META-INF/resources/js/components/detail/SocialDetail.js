@@ -61,14 +61,6 @@ export default function SocialDetail({
 		changeTimeSpanKey({key: value});
 	};
 
-	const handlePreviousTimeSpanClick = () => {
-		previousTimeSpan();
-	};
-
-	const handleNextTimeSpanClick = () => {
-		nextTimeSpan();
-	};
-
 	return (
 		<div className="c-p-3 traffic-source-detail">
 			<div className="c-mb-3 c-mt-2">
@@ -77,8 +69,8 @@ export default function SocialDetail({
 					disabledPreviousPeriodButton={
 						isPreviousPeriodButtonDisabled
 					}
-					onNextTimeSpanClick={handleNextTimeSpanClick}
-					onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
+					onNextTimeSpanClick={nextTimeSpan}
+					onPreviousTimeSpanClick={previousTimeSpan}
 					onTimeSpanChange={handleTimeSpanChange}
 					timeSpanKey={chartState.timeSpanKey}
 					timeSpanOptions={timeSpanOptions}

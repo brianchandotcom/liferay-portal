@@ -10,6 +10,14 @@ $c: '.sidebar-container';
 	width: 422px;
 	z-index: 52;
 
+	.ddm-empty {
+		display: none;
+	}
+
+	.list-group-item:hover {
+		background-color: #f0f5ff;
+	}
+
 	.navbar-collapse {
 		padding-left: 16px;
 	}
@@ -28,13 +36,5 @@ $c: '.sidebar-container';
 
 	.sidebar-light {
 		background-color: #fff;
-	}
-
-	.list-group-item:hover {
-		background-color: #f0f5ff;
-	}
-
-	.ddm-empty {
-		display: none;
 	}
 }

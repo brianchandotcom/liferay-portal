@@ -2,9 +2,11 @@
 
 .external-video-preview {
 	$component: &;
-	$video-max-width: 360px;
+	$video-max-width: 600px;
+	$video-max-width-sm: 360px;
 
 	font-size: 0.875rem;
+	max-width: $video-max-width;
 
 	&-placeholder {
 		align-items: center;
@@ -45,7 +47,7 @@
 	}
 
 	&-sm {
-		max-width: $video-max-width;
+		max-width: $video-max-width-sm;
 	}
 
 	&-framed {
@@ -55,6 +57,9 @@
 		background-color: $white;
 		border: $border-width solid $secondary-l3;
 		border-radius: 0.25rem;
+		max-width: calc(
+			#{$padding * 2} + #{$video-max-width + ($border-width * 2)}
+		);
 		padding: $padding;
 
 		&#{$component}-sm {

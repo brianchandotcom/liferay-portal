@@ -31,12 +31,12 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.enabled: true
 xpack.security.http.ssl.enabled: true
-xpack.security.http.ssl.keystore.path: certs/localhost.p12
-xpack.security.http.ssl.truststore.path: certs/localhost.p12
-xpack.security.transport.ssl.certificate: certs/localhost/localhost.crt
-xpack.security.transport.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
+xpack.security.http.ssl.keystore.path: certs/elastic-certificates.p12
+xpack.security.http.ssl.truststore.path: certs/elastic-certificates.p12
+xpack.security.transport.ssl.certificate: certs/elastic-certificates.crt
+xpack.security.transport.ssl.certificate_authorities: [ "certs/ca.crt" ]
 xpack.security.transport.ssl.enabled: true
-xpack.security.transport.ssl.key: certs/localhost/localhost.key
+xpack.security.transport.ssl.key: certs/elastic-certificates.key
 xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
@@ -120,11 +120,11 @@ elasticsearch.ssl.alwaysPresentCertificate: true</echo>
 	<macrodef name="configure-kibana-x-pack-security-properties">
 		<sequential>
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.password: "${elastic.xpack.elastic.user.password}"
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca/ca.crt" ]
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca.crt" ]
 elasticsearch.username: "elastic"
-server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/localhost/localhost.crt
+server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/elastic-certificates.crt
 server.ssl.enabled: true
-server.ssl.key: ${elasticsearch.dir}-1/config/certs/localhost/localhost.key
+server.ssl.key: ${elasticsearch.dir}-1/config/certs/elastic-certificates.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000</echo>
 
@@ -177,7 +177,7 @@ httpSSLEnabled="true"
 networkHostAddresses=["https://localhost:9200"]
 password="${osgi.config.elastic.user.password}"
 truststorePassword="liferay"
-truststorePath="${elasticsearch.dir}-1/config/certs/localhost.p12"
+truststorePath="${elasticsearch.dir}-1/config/certs/elastic-certificates.p12"
 truststoreType="pkcs12"
 username="elastic"</echo>
 		</sequential>
@@ -276,10 +276,10 @@ truststoreType="pkcs12"</echo>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
 
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/localhost.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
 				</then>
 				<else>
 					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>

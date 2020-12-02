@@ -56,12 +56,6 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public String getAspectRatioCssClasses() {
-		return "aspect-ratio-item-center-middle " +
-			"aspect-ratio-item-vertical-fluid";
-	}
-
-	@Override
 	public String getCssClass() {
 		return "select-collection-action-option card-interactive " +
 			"card-interactive-secondary";
@@ -143,6 +137,11 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getTitle() {
 		return _infoListProvider.getLabel(themeDisplay.getLocale());
+	}
+
+	@Override
+	public Boolean isFlushHorizontal() {
+		return true;
 	}
 
 	private String _getClassName(InfoListProvider<?> infoListProvider) {

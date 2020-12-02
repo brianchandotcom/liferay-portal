@@ -59,12 +59,6 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public String getAspectRatioCssClasses() {
-		return "aspect-ratio-item-center-middle " +
-			"aspect-ratio-item-vertical-fluid";
-	}
-
-	@Override
 	public String getCssClass() {
 		return "select-collection-action-option card-interactive " +
 			"card-interactive-secondary";
@@ -159,6 +153,11 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
+	}
+
+	@Override
+	public Boolean isFlushHorizontal() {
+		return true;
 	}
 
 	private String _getAssetEntrySubtypeSubtypeLabel() {

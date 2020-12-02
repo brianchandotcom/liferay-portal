@@ -39,12 +39,6 @@ public class AssetRendererVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public String getAspectRatioCssClasses() {
-		return "aspect-ratio-item-center-middle " +
-			"aspect-ratio-item-vertical-fluid";
-	}
-
-	@Override
 	public String getElementClasses() {
 		return "card-interactive card-interactive-secondary";
 	}
@@ -77,6 +71,11 @@ public class AssetRendererVerticalCard implements VerticalCard {
 		return HtmlUtil.escape(
 			StringUtil.shorten(
 				_assetRenderer.getTitle(_themeDisplay.getLocale()), 60));
+	}
+
+	@Override
+	public Boolean isFlushHorizontal() {
+		return true;
 	}
 
 	@Override

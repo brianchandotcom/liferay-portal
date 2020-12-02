@@ -78,12 +78,6 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
-	public String getAspectRatioCssClasses() {
-		return "aspect-ratio-item-center-middle " +
-			"aspect-ratio-item-vertical-fluid";
-	}
-
-	@Override
 	public String getDefaultEventHandler() {
 		return BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER;
 	}
@@ -144,6 +138,11 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getTitle() {
 		return BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry);
+	}
+
+	@Override
+	public Boolean isFlushHorizontal() {
+		return true;
 	}
 
 	private final BlogsEntry _blogsEntry;

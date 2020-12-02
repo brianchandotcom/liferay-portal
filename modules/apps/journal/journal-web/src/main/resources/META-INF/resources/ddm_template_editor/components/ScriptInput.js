@@ -79,7 +79,7 @@ ScriptInput.propTypes = {
 function showInvalidFileError() {
 	openToast({
 		message: Liferay.Language.get(
-			'an-unexpected-error-ocurred-while-importing-the-script'
+			'an-unexpected-error-occurred-while-importing-the-script'
 		),
 		title: Liferay.Language.get('error'),
 		type: 'danger',

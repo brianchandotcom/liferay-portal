@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -19,6 +20,7 @@ import React from 'react';
 import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../app/components/fragment-configuration-fields/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../app/config/index';
 import {useSelector} from '../../../../app/store/index';
 import {ConfigurationFieldPropTypes} from '../../../../prop-types/index';
 
@@ -47,6 +49,8 @@ export const FieldSet = ({
 		selectedViewportSize === VIEWPORT_SIZES.desktop
 			? fields
 			: fields.filter((field) => field.responsive);
+
+	const availableLanguages = config.availableLanguages;
 
 	return (
 		availableFields.length > 0 && (
@@ -80,6 +84,7 @@ export const FieldSet = ({
 							visible && (
 								<div
 									className={classNames(
+										'autofit-row',
 										'page-editor__sidebar__fieldset__field',
 										{
 											'page-editor__sidebar__fieldset__field-small':
@@ -89,12 +94,42 @@ export const FieldSet = ({
 									)}
 									key={index}
 								>
-									<FieldComponent
-										disabled={fieldIsDisabled(item, field)}
-										field={field}
-										onValueSelect={onValueSelect}
-										value={fieldValue}
-									/>
+									<div className="autofit-col autofit-col-expand">
+										<FieldComponent
+											disabled={fieldIsDisabled(
+												item,
+												field
+											)}
+											field={field}
+											onValueSelect={onValueSelect}
+											value={fieldValue}
+										/>
+									</div>
+
+									{field.localizable && (
+										<div
+											className="align-self-end autofit-col ml-1 p-2"
+											data-title={Liferay.Language.get(
+												'localizable'
+											)}
+										>
+											<ClayIcon
+												className="page-editor__sidebar__fieldset__field__language"
+												symbol={
+													availableLanguages[
+														languageId
+													].languageIcon
+												}
+											/>
+											<span className="sr-only">
+												{
+													availableLanguages[
+														languageId
+													].languageLabel
+												}
+											</span>
+										</div>
+									)}
 								</div>
 							)
 						);

@@ -11,6 +11,10 @@
 		margin-bottom: $pageEditorSpacing;
 		width: 100%;
 
+		&__language {
+			margin: auto;
+		}
+
 		&-small {
 			width: calc(50% - 4px);
 		}

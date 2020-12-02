@@ -2796,7 +2796,7 @@ public class DataFactory {
 			layoutModels.add(
 				newLayoutModel(
 					groupId, "search", true, "1_2_columns_i",
-					_getSearchPageColumns()));
+					_SEARCH_LAYOUT_COLUMNS));
 		}
 
 		return layoutModels;
@@ -5227,43 +5227,6 @@ public class DataFactory {
 		return sb.toString();
 	}
 
-	private String[] _getSearchPageColumns() {
-		StringBundler column1SB = new StringBundler(4);
-
-		column1SB.append(SearchBarPortletKeys.SEARCH_BAR);
-		column1SB.append(",");
-		column1SB.append(SuggestionsPortletKeys.SUGGESTIONS);
-		column1SB.append(",");
-
-		StringBundler column2SB = new StringBundler(14);
-
-		column2SB.append(SiteFacetPortletKeys.SITE_FACET);
-		column2SB.append(",");
-		column2SB.append(TypeFacetPortletKeys.TYPE_FACET);
-		column2SB.append(",");
-		column2SB.append(TagFacetPortletKeys.TAG_FACET);
-		column2SB.append(",");
-		column2SB.append(CategoryFacetPortletKeys.CATEGORY_FACET);
-		column2SB.append(",");
-		column2SB.append(FolderFacetPortletKeys.FOLDER_FACET);
-		column2SB.append(",");
-		column2SB.append(UserFacetPortletKeys.USER_FACET);
-		column2SB.append(",");
-		column2SB.append(ModifiedFacetPortletKeys.MODIFIED_FACET);
-		column2SB.append(",");
-
-		StringBundler column3SB = new StringBundler(4);
-
-		column3SB.append(SearchResultsPortletKeys.SEARCH_RESULTS);
-		column3SB.append(",");
-		column3SB.append(SearchOptionsPortletKeys.SEARCH_OPTIONS);
-		column3SB.append(",");
-
-		return new String[] {
-			column1SB.toString(), column2SB.toString(), column3SB.toString()
-		};
-	}
-
 	private String _readFile(String resourceName) throws Exception {
 		List<String> lines = new ArrayList<>();
 
@@ -5283,6 +5246,23 @@ public class DataFactory {
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
+
+	private static final String[] _SEARCH_LAYOUT_COLUMNS = {
+		StringBundler.concat(
+			SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
+			SuggestionsPortletKeys.SUGGESTIONS, StringPool.COMMA),
+		StringBundler.concat(
+			SiteFacetPortletKeys.SITE_FACET, StringPool.COMMA,
+			TypeFacetPortletKeys.TYPE_FACET, StringPool.COMMA,
+			TagFacetPortletKeys.TAG_FACET, StringPool.COMMA,
+			CategoryFacetPortletKeys.CATEGORY_FACET, StringPool.COMMA,
+			FolderFacetPortletKeys.FOLDER_FACET, StringPool.COMMA,
+			UserFacetPortletKeys.USER_FACET, StringPool.COMMA,
+			ModifiedFacetPortletKeys.MODIFIED_FACET, StringPool.COMMA),
+		StringBundler.concat(
+			SearchResultsPortletKeys.SEARCH_RESULTS, StringPool.COMMA,
+			SearchOptionsPortletKeys.SEARCH_OPTIONS, StringPool.COMMA)
+	};
 
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();

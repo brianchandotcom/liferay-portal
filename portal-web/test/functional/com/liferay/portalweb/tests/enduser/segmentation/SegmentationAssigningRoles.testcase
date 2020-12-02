@@ -4,6 +4,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Segmentation";
+	property test.name.skip.portal.instance = "Test#Name";
 
 	setUp {
 		TestCase.setUpPortalInstance();

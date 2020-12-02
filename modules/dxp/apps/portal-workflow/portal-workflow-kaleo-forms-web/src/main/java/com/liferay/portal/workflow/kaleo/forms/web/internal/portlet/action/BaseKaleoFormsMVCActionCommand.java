@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -126,8 +127,13 @@ public abstract class BaseKaleoFormsMVCActionCommand
 					beforeReviewDDMFormFieldValue.getInstanceId());
 
 			if (actualDDMFormFieldValue == null) {
-				removedByReviewerDDMFormFieldValues.add(
-					beforeReviewDDMFormFieldValue);
+				DDMFormField ddmFormField =
+					beforeReviewDDMFormFieldValue.getDDMFormField();
+
+				if (!ddmFormField.isReadOnly()) {
+					removedByReviewerDDMFormFieldValues.add(
+						beforeReviewDDMFormFieldValue);
+				}
 			}
 			else {
 				List<DDMFormFieldValue>

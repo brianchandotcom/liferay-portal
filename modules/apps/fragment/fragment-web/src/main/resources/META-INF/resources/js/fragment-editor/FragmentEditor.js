@@ -58,14 +58,20 @@ const FragmentEditor = ({
 	const [html, setHtml] = useState(initialHTML);
 	const [js, setJs] = useState(initialJS);
 
+	const previousConfiguration =
+		usePrevious(configuration) || initialConfiguration;
+	const previousCss = usePrevious(css) || initialCSS;
+	const previousHtml = usePrevious(html) || initialHTML;
+	const previousJs = usePrevious(js) || initialJS;
+
 	const isMounted = useIsMounted();
 
 	const contentHasChanged = useCallback(() => {
 		return (
-			initialConfiguration !== configuration ||
-			initialCSS !== css ||
-			initialHTML !== html ||
-			initialJS !== js ||
+			previousConfiguration !== configuration ||
+			previousCss !== css ||
+			previousHtml !== html ||
+			previousJs !== js ||
 			cacheable !== isCacheable
 		);
 	}, [
@@ -73,10 +79,10 @@ const FragmentEditor = ({
 		configuration,
 		css,
 		html,
-		initialCSS,
-		initialConfiguration,
-		initialHTML,
-		initialJS,
+		previousCss,
+		previousConfiguration,
+		previousHtml,
+		previousJs,
 		isCacheable,
 		js,
 	]);

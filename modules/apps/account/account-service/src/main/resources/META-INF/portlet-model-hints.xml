@@ -10,20 +10,20 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="parentAccountEntryId" type="long" />
 		<field name="defaultBillingAddressId" type="long" />
 		<field name="defaultShippingAddressId" type="long" />
+		<field name="parentAccountEntryId" type="long" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="domains" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="logoId" type="long" />
 		<field name="name" type="String">
 			<hint name="max-length">100</hint>
 			<validator name="required" />
 		</field>
-		<field name="logoId" type="long" />
 		<field name="taxIdNumber" type="String" />
 		<field name="type" type="String" />
 		<field name="status" type="int" />

@@ -1,0 +1,36 @@
+definition {
+
+	macro validateURL {
+		Type(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${invalidURL}");
+
+		Pause(locator1 = "5000");
+
+		if (isSet(youtube)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+			Click(locator1 = "Button#YOUTUBE_PLAY");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_YOUTUBE_VIDEO_VALID",
+				value1 = "An error occurred. Please try again later.");
+		}
+
+		else if (isSet(facebook)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_FACEBOOK_VIDEO_VALID",
+				value1 = "Video Unavailable");
+		}
+
+		else {
+			AssertTextEquals(
+				locator1 = "Message#INFO_EXTERNAL_VIDEO_PREVIEW",
+				value1 = "Sorry, this platform is not supported.");
+		}
+	}
+
+}

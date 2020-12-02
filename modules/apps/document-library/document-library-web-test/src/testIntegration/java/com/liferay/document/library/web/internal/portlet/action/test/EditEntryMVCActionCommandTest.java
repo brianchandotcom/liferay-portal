@@ -19,35 +19,29 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.document.library.web.internal.util.MockActionRequest;
+import com.liferay.document.library.web.internal.util.MockActionResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 
 import java.util.AbstractMap;
-import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,8 +53,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
@@ -276,68 +268,5 @@ public class EditEntryMVCActionCommandTest {
 		filter = "component.name=com.liferay.document.library.web.internal.portlet.action.EditEntryMVCActionCommand"
 	)
 	private MVCActionCommand _mvcActionCommand;
-
-	private static class MockActionRequest
-		extends MockLiferayPortletActionRequest {
-
-		public MockActionRequest(
-			Company company, Group group, Map<String, String[]> parameters) {
-
-			_company = company;
-			_group = group;
-			_parameters = Collections.unmodifiableMap(parameters);
-		}
-
-		@Override
-		public Object getAttribute(String name) {
-			if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
-				try {
-					return _getThemeDisplay();
-				}
-				catch (PortalException portalException) {
-					throw new AssertionError(portalException);
-				}
-			}
-
-			return super.getAttribute(name);
-		}
-
-		@Override
-		public String getParameter(String name) {
-			String[] values = _parameters.get(name);
-
-			if (values == null) {
-				return StringPool.BLANK;
-			}
-
-			return values[0];
-		}
-
-		@Override
-		public Map<String, String[]> getParameterMap() {
-			return _parameters;
-		}
-
-		private ThemeDisplay _getThemeDisplay() throws PortalException {
-			ThemeDisplay themeDisplay = new ThemeDisplay();
-
-			themeDisplay.setCompany(_company);
-			themeDisplay.setPermissionChecker(
-				PermissionThreadLocal.getPermissionChecker());
-			themeDisplay.setRequest(new MockHttpServletRequest());
-			themeDisplay.setScopeGroupId(_group.getGroupId());
-			themeDisplay.setServerName("localhost");
-			themeDisplay.setServerPort(8080);
-			themeDisplay.setSiteGroupId(_group.getGroupId());
-			themeDisplay.setUser(TestPropsValues.getUser());
-
-			return themeDisplay;
-		}
-
-		private final Company _company;
-		private Group _group;
-		private final Map<String, String[]> _parameters;
-
-	}
 
 }

@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.web.internal.util.MockActionResponse;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -48,17 +48,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
-
-import java.io.Writer;
-
-import java.util.Map;
-
-import javax.portlet.MutableRenderParameters;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderURL;
-import javax.portlet.WindowState;
-import javax.portlet.annotations.PortletSerializable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -226,106 +215,5 @@ public class DLAdminDisplayContextTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	private static class MockActionResponse
-		extends MockLiferayPortletActionResponse {
-
-		@Override
-		public MockPortletURL createRenderURL() {
-			return new MockPortletURL();
-		}
-
-	}
-
-	private static class MockPortletURL implements PortletURL, RenderURL {
-
-		@Override
-		public void addProperty(String key, String value) {
-		}
-
-		@Override
-		public Appendable append(Appendable appendable) {
-			return null;
-		}
-
-		@Override
-		public Appendable append(Appendable appendable, boolean escapeXML) {
-			return null;
-		}
-
-		@Override
-		public String getFragmentIdentifier() {
-			return null;
-		}
-
-		@Override
-		public Map<String, String[]> getParameterMap() {
-			return null;
-		}
-
-		@Override
-		public PortletMode getPortletMode() {
-			return null;
-		}
-
-		@Override
-		public MutableRenderParameters getRenderParameters() {
-			return null;
-		}
-
-		@Override
-		public WindowState getWindowState() {
-			return null;
-		}
-
-		@Override
-		public void removePublicRenderParameter(String name) {
-		}
-
-		@Override
-		public void setBeanParameter(PortletSerializable portletSerializable) {
-		}
-
-		@Override
-		public void setFragmentIdentifier(String fragment) {
-		}
-
-		@Override
-		public void setParameter(String name, String value) {
-		}
-
-		@Override
-		public void setParameter(String name, String... values) {
-		}
-
-		@Override
-		public void setParameters(Map<String, String[]> map) {
-		}
-
-		@Override
-		public void setPortletMode(PortletMode portletMode) {
-		}
-
-		@Override
-		public void setProperty(String key, String value) {
-		}
-
-		@Override
-		public void setSecure(boolean secure) {
-		}
-
-		@Override
-		public void setWindowState(WindowState windowState) {
-		}
-
-		@Override
-		public void write(Writer writer) {
-		}
-
-		@Override
-		public void write(Writer writer, boolean escapeXML) {
-		}
-
-	}
 
 }

@@ -255,17 +255,17 @@ truststoreType="pkcs12"</echo>
 						</exec>
 
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="-c" />
+							<arg value="/c" />
 							<arg value="elasticsearch-keystore create" />
 						</exec>
 
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
-							<arg value="-c" />
+							<arg value="/c" />
 							<arg value="elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password" />
 						</exec>
 
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="liferay&#x0A;">
-							<arg value="-c" />
+							<arg value="/c" />
 							<arg value="elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password" />
 						</exec>
 					</then>

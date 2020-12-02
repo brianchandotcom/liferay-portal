@@ -18,9 +18,13 @@ import {getUrlPath} from '../util/utils';
 import Screen from './Screen';
 
 const INVALID_STATUS = 'Invalid status code';
-const REQUEST_ERROR = 'Request error';
-const REQUEST_TIMEOUT = 'Request timeout';
-const REQUEST_PREMATURE_TERMINATION = 'Request terminated prematurely';
+
+const FAILED_TO_FETCH_MSG = 'Failed to fetch';
+const NETWORK_ERROR_MSG = 'NetworkError when attempting to fetch resource.';
+const PREFLIGHT_ERROR_MSG = 'Preflight response is not successful';
+const REQUEST_ERROR_MSG = 'Request error';
+const REQUEST_TIMEOUT_MSG = 'Request timeout';
+const REQUEST_PREMATURE_TERMINATION_MSG = 'Request terminated prematurely';
 
 class RequestScreen extends Screen {
 
@@ -282,20 +286,23 @@ class RequestScreen extends Screen {
 				}),
 			new Promise((_, reject) => {
 				setTimeout(
-					() => reject(new Error(REQUEST_TIMEOUT)),
+					() => reject(new Error(REQUEST_TIMEOUT_MSG)),
 					this.timeout
 				);
 			}),
 		]).catch((reason) => {
 			switch (reason.message) {
-				case REQUEST_TIMEOUT:
+				case REQUEST_TIMEOUT_MSG:
 					reason.timeout = true;
 					break;
-				case REQUEST_PREMATURE_TERMINATION:
+				case REQUEST_PREMATURE_TERMINATION_MSG:
+				case FAILED_TO_FETCH_MSG:
+				case NETWORK_ERROR_MSG:
+				case PREFLIGHT_ERROR_MSG:
 					reason.requestError = true;
 					reason.requestPrematureTermination = true;
 					break;
-				case REQUEST_ERROR:
+				case REQUEST_ERROR_MSG:
 				default:
 					reason.requestError = true;
 					break;

@@ -27,10 +27,18 @@ function alignMenu() {
 		document.body;
 	const parentRect = parent.getBoundingClientRect();
 
-	menu.style.position = 'fixed';
-	menu.style.left = `${parentRect.left}px`;
 	menu.style.top = `${toggleRect.bottom}px`;
-	menu.style.width = `${parent.getBoundingClientRect().width}px`;
+
+	if (configuration.panelType === 'mega-menu') {
+		menu.style.left = `${parentRect.left}px`;
+		menu.style.width = `${parentRect.width}px`;
+	}
+	else if (configuration.panelType === 'regular') {
+		menu.style.width = '240px';
+	}
+	else if (configuration.panelType === 'full-width') {
+		menu.style.width = `${fragmentElement.getBoundingClientRect().width}px`;
+	}
 }
 
 function toggleMenu() {
@@ -49,19 +57,16 @@ function toggleMenu() {
 
 		toggle.setAttribute('aria-expanded', 'true');
 
-		if (configuration.panelType === 'mega-menu') {
-			alignMenu();
+		alignMenu();
 
-			window.addEventListener('resize', alignMenu);
-			window.addEventListener('scroll', alignMenu);
+		window.addEventListener('resize', alignMenu);
+		window.addEventListener('scroll', alignMenu);
 
-			// In edit mode, we align the dropdown menu every second when it has
-			// type mega menu and it's kept open to avoid aligning problems when
-			// opening product menu and sidebar
+		// In edit mode, we align the dropdown menu every second when it's kept
+		// open to avoid aligning problems when opening product menu or sidebar
 
-			if (editMode && configuration.keepOpen) {
-				alignMenuInterval = setInterval(alignMenu, 1000);
-			}
+		if (editMode && configuration.keepOpen) {
+			alignMenuInterval = setInterval(alignMenu, 1000);
 		}
 	}
 }

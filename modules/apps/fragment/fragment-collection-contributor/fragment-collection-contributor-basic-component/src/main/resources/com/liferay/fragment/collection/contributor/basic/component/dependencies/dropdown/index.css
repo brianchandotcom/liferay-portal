@@ -7,17 +7,7 @@
 	border-width: 0;
 	box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.3);
 	display: none;
-	left: 0;
 	min-width: 240px;
-	position: absolute;
-	top: 100%;
+	position: fixed;
 	z-index: 976;
-}
-
-.component-dropdown .dropdown-fragment-menu.dropdown-fragment-menu-regular {
-	width: 240px;
-}
-
-.component-dropdown .dropdown-fragment-menu.dropdown-fragment-menu-full {
-	width: 100%;
 }

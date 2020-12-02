@@ -211,6 +211,7 @@ definition {
 	@priority = "4"
 	test AssertSearchURLWhenModifyingPagination {
 		property custom.properties = "search.container.page.default.delta=10";
+		property portal.upstream = "quarantine";
 
 		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
 			JSONWebcontent.addWebContent(
@@ -300,6 +301,7 @@ definition {
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
 		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
 		property index.search.spell.checker.enabled = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Search#AssertSuggestionsCannotOfferInvalidWordsAsSuggestion";
 
 		JSONWebcontent.addBasicWebContentLocalized(
@@ -366,6 +368,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "quarantine";
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -1490,7 +1493,8 @@ definition {
 
 	@priority = "4"
 	test SearchUsingCustomFacet {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -2580,7 +2584,8 @@ definition {
 
 	@priority = "5"
 	test ViewSearchResultDetails {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Search#ViewSearchResultDetails";
 
 		ApplicationsMenu.gotoPortlet(
@@ -2646,6 +2651,8 @@ definition {
 
 	@priority = "4"
 	test ViewStagedAndLiveContentInSearchResults {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

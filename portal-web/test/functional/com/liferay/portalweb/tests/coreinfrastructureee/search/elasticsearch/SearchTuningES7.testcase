@@ -82,6 +82,8 @@ definition {
 	}
 
 	test AssertDeletedResultRanking {
+		property portal.upstream = "quarantine";
+
 		var content = "Article Article Article";
 
 		for (var title : list "Article 1,Article 2,Article 3") {
@@ -472,6 +474,8 @@ definition {
 	}
 
 	test EnableAndDisableResultRankings {
+		property portal.upstream = "quarantine";
+
 		var content = "Article Article Article Article";
 
 		for (var count : list "1,2,3,4") {
@@ -618,7 +622,8 @@ definition {
 	}
 
 	test PinAndHideResultsWithAliases {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WC",
@@ -738,6 +743,8 @@ definition {
 	}
 
 	test ReorderAddedResultsFromOtherSites {
+		property portal.upstream = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -818,7 +825,8 @@ definition {
 	}
 
 	test SearchWithSynonyms {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		for (var title : list "banana,red apple,citrus-orange,blue.berry!,\"xigua\"") {
 			JSONWebcontent.addWebContent(

@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Commerce Avalara Connector API
+Bundle-SymbolicName: com.liferay.commerce.avalara.connector.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.avalara.connector,\
+	com.liferay.commerce.avalara.connector.configuration,\
+	com.liferay.commerce.avalara.connector.constants,\
+	com.liferay.commerce.avalara.connector.exception
+Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.avalara.lang),(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

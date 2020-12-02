@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -21,7 +21,9 @@ import {ImageSelectorSize} from '../../../common/components/ImageSelectorSize';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
+import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
+import {useSelector} from '../../store/index';
 import {useId} from '../../utils/useId';
 
 const IMAGE_SOURCES = {
@@ -38,6 +40,10 @@ const IMAGE_SOURCES = {
 
 export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 	const imageSourceInputId = useId();
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	const [imageSource, setImageSource] = useState(() =>
 		value.fieldId || value.mappedField
@@ -59,27 +65,40 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 
 	return (
 		<>
-			<ClayForm.Group small>
-				<label htmlFor={imageSourceInputId}>
-					{Liferay.Language.get('image-source')}
-				</label>
+			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
+				<ClayForm.Group small>
+					<label htmlFor={imageSourceInputId}>
+						{Liferay.Language.get('image-source')}
+					</label>
 
-				<ClaySelectWithOption
-					id={imageSourceInputId}
-					onChange={handleSourceChanged}
-					options={Object.values(IMAGE_SOURCES)}
-					value={imageSource}
-				/>
-			</ClayForm.Group>
+					<ClaySelectWithOption
+						id={imageSourceInputId}
+						onChange={handleSourceChanged}
+						options={Object.values(IMAGE_SOURCES)}
+						value={imageSource}
+					/>
+				</ClayForm.Group>
+			)}
 
 			{imageSource === IMAGE_SOURCES.direct.value ? (
 				<>
-					<ImageSelector
-						imageTitle={value.title}
-						label={field.label}
-						onClearButtonPressed={() => handleImageChanged({})}
-						onImageSelected={handleImageChanged}
-					/>
+					{selectedViewportSize === VIEWPORT_SIZES.desktop ? (
+						<ImageSelector
+							imageTitle={value.title}
+							label={field.label}
+							onClearButtonPressed={() => handleImageChanged({})}
+							onImageSelected={handleImageChanged}
+						/>
+					) : (
+						<ClayForm.Group small>
+							<ClayInput
+								className="mb-2"
+								disabled
+								readOnly
+								value={value.title}
+							/>
+						</ClayForm.Group>
+					)}
 
 					{config.adaptiveMediaEnabled && value?.fileEntryId && (
 						<ImageSelectorSize

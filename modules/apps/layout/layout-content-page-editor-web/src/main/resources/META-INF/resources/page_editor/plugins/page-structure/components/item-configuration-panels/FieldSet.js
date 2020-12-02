@@ -48,7 +48,10 @@ export const FieldSet = ({
 	const availableFields =
 		selectedViewportSize === VIEWPORT_SIZES.desktop
 			? fields
-			: fields.filter((field) => field.responsive);
+			: fields.filter(
+					(field) =>
+						field.responsive || field.name === 'backgroundImage'
+			  );
 
 	const availableLanguages = config.availableLanguages;
 

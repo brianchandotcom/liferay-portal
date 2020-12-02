@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,6 +63,11 @@ public class TwitchDLExternalVideoProvider
 			@Override
 			public String getEmbeddableHTML() {
 				return StringUtil.replace(getTpl(), "{embedId}", twitchVideoId);
+			}
+
+			@Override
+			public String getIconURL() {
+				return _servletContext.getContextPath() + "/icons/twitch.png";
 			}
 
 			@Override
@@ -132,5 +138,10 @@ public class TwitchDLExternalVideoProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.external.video)"
+	)
+	private ServletContext _servletContext;
 
 }

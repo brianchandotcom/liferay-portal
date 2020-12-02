@@ -137,7 +137,7 @@ AUI.add(
 			_createNodeLink(data, template) {
 				var instance = this;
 
-				var className = 'layout-tree ';
+				var className = 'layout-tree text-truncate ';
 
 				data.cssClass = data.cssClass
 					? className + data.cssClass
@@ -159,7 +159,7 @@ AUI.add(
 					  )
 					: STR_EMPTY;
 
-				data.title = data.title ? data.title : STR_EMPTY;
+				data.title = data.title ? data.title : data.name;
 
 				data.url = data.url
 					? Liferay.Util.escapeHTML(data.url)

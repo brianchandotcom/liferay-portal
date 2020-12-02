@@ -59,6 +59,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 			<clay:content-col
 				containerElement="span"
+				cssClass="table-cell-content"
 			>
 				<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
 					{label}

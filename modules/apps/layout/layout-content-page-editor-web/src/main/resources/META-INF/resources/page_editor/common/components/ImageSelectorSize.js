@@ -79,7 +79,7 @@ export const ImageSelectorSize = ({
 				});
 			};
 
-			if (editableElement.complete) {
+			if (editableElement.complete || editableElement.tagName !== 'IMG') {
 				setAutoSize();
 			}
 			else {

@@ -29,6 +29,8 @@ public class GoogleDocsConstants {
 
 	public static final String DDM_FIELD_NAME_NAME = "NAME";
 
+	public static final String DDM_FIELD_NAME_TITLE = "TITLE";
+
 	public static final String DDM_FIELD_NAME_URL = "URL";
 
 	public static final String DDM_STRUCTURE_KEY_GOOGLE_DOCS = "GOOGLE_DOCS";

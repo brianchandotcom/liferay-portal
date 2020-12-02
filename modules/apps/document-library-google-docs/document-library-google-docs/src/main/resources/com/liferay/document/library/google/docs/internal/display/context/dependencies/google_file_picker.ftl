@@ -108,6 +108,7 @@ GoogleFilePicker.prototype = {
 					"ICON_URL": doc[googlePickerDoc.ICON_URL] || '',
 					"ID": doc[googlePickerDoc.ID],
 					"NAME": doc[googlePickerDoc.NAME],
+					"TITLE": doc[googlePickerDoc.NAME].replace(/\.[^.]*$/, ''),
 					"URL": doc[googlePickerDoc.URL] || ''
 				});
 		}

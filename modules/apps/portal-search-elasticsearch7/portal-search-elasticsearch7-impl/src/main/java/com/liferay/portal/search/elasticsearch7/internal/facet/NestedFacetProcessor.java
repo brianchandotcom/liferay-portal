@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.facet;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.Optional;
@@ -72,20 +73,26 @@ public class NestedFacetProcessor
 			termsAggregationBuilder.size(size);
 		}
 
-		TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
-			nestedFacet.getFilterField(), nestedFacet.getFilterValue());
+		AggregationBuilder aggregationBuilder = termsAggregationBuilder;
 
-		FilterAggregationBuilder filterAggregationBuilder =
-			AggregationBuilders.filter(
-				FacetUtil.getAggregationName(facet), termQueryBuilder);
+		if (Validator.isNotNull(nestedFacet.getFilterField())) {
+			TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
+				nestedFacet.getFilterField(), nestedFacet.getFilterValue());
 
-		filterAggregationBuilder.subAggregation(termsAggregationBuilder);
+			FilterAggregationBuilder filterAggregationBuilder =
+				AggregationBuilders.filter(
+					FacetUtil.getAggregationName(facet), termQueryBuilder);
+
+			filterAggregationBuilder.subAggregation(termsAggregationBuilder);
+
+			aggregationBuilder = filterAggregationBuilder;
+		}
 
 		NestedAggregationBuilder nestedAggregationBuilder =
 			AggregationBuilders.nested(
 				FacetUtil.getAggregationName(facet), nestedFacet.getPath());
 
-		nestedAggregationBuilder.subAggregation(filterAggregationBuilder);
+		nestedAggregationBuilder.subAggregation(aggregationBuilder);
 
 		return Optional.of(nestedAggregationBuilder);
 	}

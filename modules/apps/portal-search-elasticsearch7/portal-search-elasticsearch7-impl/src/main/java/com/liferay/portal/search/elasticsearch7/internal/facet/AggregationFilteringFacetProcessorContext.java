@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.ArrayList;
@@ -81,10 +82,12 @@ public class AggregationFilteringFacetProcessorContext
 
 			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
-			boolQueryBuilder.must(
-				QueryBuilders.termsQuery(
-					nestedFacet.getFilterField(),
-					nestedFacet.getFilterValue()));
+			if (Validator.isNotNull(nestedFacet.getFilterField())) {
+				boolQueryBuilder.must(
+					QueryBuilders.termsQuery(
+						nestedFacet.getFilterField(),
+						nestedFacet.getFilterValue()));
+			}
 
 			boolQueryBuilder.must(
 				QueryBuilders.termsQuery(

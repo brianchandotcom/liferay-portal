@@ -218,6 +218,15 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	public void setWorkersSize(int workersCoreSize, int workersMaxSize) {
+		if (workersCoreSize < 1) {
+			throw new IllegalArgumentException(
+				"To ensure FIFO, core pool size must be 1 or greater");
+		}
+		else if ((workersMaxSize <= 0) || (workersMaxSize < workersCoreSize)) {
+			throw new IllegalArgumentException(
+				"Maximum pool size must be greater than 0 and core pool size");
+		}
+
 		_workersCoreSize = workersCoreSize;
 
 		_workersMaxSize = workersMaxSize;

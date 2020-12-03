@@ -207,6 +207,12 @@ public class CTCollectionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_SArrayable() throws Exception {
+		_persistence.countByC_S(
+			RandomTestUtil.nextLong(), new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 

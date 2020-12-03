@@ -142,6 +142,7 @@ function DirectImagePanel({item}) {
 			: editableContent?.url;
 
 	const imageTitle =
+		editableContent?.title ||
 		editableConfig.imageTitle ||
 		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
@@ -162,12 +163,15 @@ function DirectImagePanel({item}) {
 			config: {
 				alt: {},
 				imageConfiguration: {},
-				imageTitle: nextImage.title || '',
 			},
-			[languageId]: config.adaptiveMediaEnabled
-				? nextImage
-				: nextImage.url,
+			[languageId]: nextImage.url,
 		};
+
+		if (config.adaptiveMediaEnabled) {
+			delete nextEditableValue.config.imageTitle;
+
+			nextEditableValue[languageId] = nextImage;
+		}
 
 		delete nextEditableValue.classNameId;
 		delete nextEditableValue.classPK;

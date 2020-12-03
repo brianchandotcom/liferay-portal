@@ -2174,7 +2174,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return _webDriver.navigate();
 	}
 
-	public boolean ocularImageValidation(String locator) {
+	public void ocularAssertElementImage(String locator) throws Exception {
 		ocularConfig();
 
 		WebElement webElement = getWebElement(locator);
@@ -2191,7 +2191,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		OcularResult ocularResult = sampleBuilder.compare();
 
-		return ocularResult.isEqualsImages();
+		if (!ocularResult.isEqualsImages()) {
+			throw new Exception(
+				"Actual element image does not match expected element image");
+		}
 	}
 
 	@Override

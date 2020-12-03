@@ -32,6 +32,7 @@
 
 			<react:component
 				module="js/MultiSelectCategory.es"
+				props="<%= collectionFilterFragmentRendererDisplayContext.getProps() %>"
 			/>
 		</div>
 	</c:when>

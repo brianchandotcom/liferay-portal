@@ -27,11 +27,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -102,6 +107,59 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		return dropdownItemListWrapper.build();
 	}
 
+	public Map<String, Object> getProps() {
+		if (_props != null) {
+			return _props;
+		}
+
+		_props = HashMapBuilder.<String, Object>put(
+			"assetCategories",
+			() -> {
+				List<AssetCategory> assetCategories =
+					(List<AssetCategory>)_httpServletRequest.getAttribute(
+						CollectionFilterFragmentRendererWebKeys.
+							ASSET_CATEGORIES);
+
+				if (assetCategories == null) {
+					return new ArrayList<>();
+				}
+
+				Stream<AssetCategory> stream = assetCategories.stream();
+
+				return stream.map(
+					assetCategory -> HashMapBuilder.put(
+						"id", String.valueOf(assetCategory.getCategoryId())
+					).put(
+						"label",
+						assetCategory.getTitle(_themeDisplay.getLanguageId())
+					).build()
+				).collect(
+					Collectors.toList()
+				);
+			}
+		).put(
+			"fragmentEntryLinkId",
+			String.valueOf(
+				GetterUtil.getLong(
+					_httpServletRequest.getAttribute(
+						CollectionFilterFragmentRendererWebKeys.
+							FRAGMENT_ENTRY_LINK_ID)))
+		).put(
+			"selectedAssetCategoryIds",
+			() -> {
+				long fragmentEntryLinkId = GetterUtil.getLong(
+					_httpServletRequest.getAttribute(
+						CollectionFilterFragmentRendererWebKeys.
+							FRAGMENT_ENTRY_LINK_ID));
+
+				return ParamUtil.getStringValues(
+					_httpServletRequest, "categoryId_" + fragmentEntryLinkId);
+			}
+		).build();
+
+		return _props;
+	}
+
 	public String getSelectedAssetCategoryTitle() {
 		long assetCategoryId = ParamUtil.get(
 			_httpServletRequest, _getParameterName(), 0);
@@ -143,6 +201,7 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		CollectionFilterFragmentRendererDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
+	private Map<String, Object> _props;
 	private final ThemeDisplay _themeDisplay;
 
 }

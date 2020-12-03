@@ -6,6 +6,12 @@
 					"label": "source",
 					"name": "source",
 					"type": "categoryTreeNodeSelector"
+				},
+				{
+					"defaultValue": false,
+					"label": "multiple-selection",
+					"name": "multipleSelection",
+					"type": "checkbox"
 				}
 			]
 		}

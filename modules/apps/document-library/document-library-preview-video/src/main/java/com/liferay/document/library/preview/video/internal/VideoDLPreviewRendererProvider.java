@@ -14,31 +14,19 @@
 
 package com.liferay.document.library.preview.video.internal;
 
-import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.external.video.DLExternalVideo;
+import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
-import com.liferay.document.library.preview.video.internal.constants.DLPreviewVideoWebKeys;
-import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Set;
 
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,8 +57,8 @@ public class VideoDLPreviewRendererProvider
 				_servletContext.getRequestDispatcher("/preview/view.jsp");
 
 			request.setAttribute(
-				DLPreviewVideoWebKeys.VIDEO_IFRAME_URL,
-				_getVideoEmbedURL(request, fileVersion));
+				DLExternalVideo.class.getName(),
+				_dlExternalVideoResolver.resolve(fileVersion.getFileEntry()));
 
 			requestDispatcher.include(request, response);
 		};
@@ -92,42 +80,8 @@ public class VideoDLPreviewRendererProvider
 		_videoProcessor = (VideoProcessor)dlProcessor;
 	}
 
-	private String _getVideoEmbedURL(
-			HttpServletRequest httpServletRequest, FileVersion fileVersion)
-		throws PortalException {
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
-
-		PortletURL getDLExternalVideoFieldsURL =
-			requestBackedPortletURLFactory.createRenderURL(
-				DLPortletKeys.DOCUMENT_LIBRARY);
-
-		try {
-			getDLExternalVideoFieldsURL.setWindowState(
-				LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-		}
-
-		getDLExternalVideoFieldsURL.setParameter(
-			"mvcRenderCommandName", "/document_library/embed_video");
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		getDLExternalVideoFieldsURL.setParameter(
-			"url",
-			_dlURLHelper.getPreviewURL(
-				fileVersion.getFileEntry(), fileVersion, themeDisplay,
-				StringPool.BLANK, false, true));
-
-		return getDLExternalVideoFieldsURL.toString();
-	}
-
 	@Reference
-	private DLURLHelper _dlURLHelper;
+	private DLExternalVideoResolver _dlExternalVideoResolver;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.video)"

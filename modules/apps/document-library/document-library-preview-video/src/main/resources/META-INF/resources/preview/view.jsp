@@ -24,7 +24,11 @@
 
 <div class="external-video-preview external-video-preview-framed preview-file">
 	<div class="external-video-preview-aspect-ratio">
-		<iframe class="preview-file-video" frameborder="0" height="315" src="<%= (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_IFRAME_URL) %>" width="560">
-		</iframe>
+
+		<%
+		DLExternalVideo dlExternalVideo = (DLExternalVideo)request.getAttribute(DLExternalVideo.class.getName());
+		%>
+
+		<%= dlExternalVideo.getEmbeddableHTML() %>
 	</div>
 </div>

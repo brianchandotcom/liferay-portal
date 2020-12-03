@@ -975,6 +975,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Questions Page");
+
 		for (var num : list "1,2,3") {
 			Questions.addQuestionByAPI(
 				bodyField = "Question Body ${num}",
@@ -983,7 +987,9 @@ definition {
 				titleField = "Question ${num}");
 		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Navigator.gotoPage(pageName = "Test Questions Page");
+
+		Portlet.addPG(portletName = "Questions");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
@@ -1011,7 +1017,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Navigator.gotoPage(pageName = "Test Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 

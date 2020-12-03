@@ -179,7 +179,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_FACEBOOK_VIDEO_VALID</td>
+	<td>ERROR_INVALID_FACEBOOK_VIDEO</td>
 	<td>//div[contains(@class,'pluginSkinLight')]//div</td>
 	<td></td>
 </tr>
@@ -229,7 +229,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_YOUTUBE_VIDEO_VALID</td>
+	<td>ERROR_INVALID_YOUTUBE_VIDEO</td>
 	<td>//div[contains(@class,'ytp-error-content-wrap')]//span</td>
 	<td></td>
 </tr>

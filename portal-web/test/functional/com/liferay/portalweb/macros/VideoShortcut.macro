@@ -14,7 +14,7 @@ definition {
 			Click(locator1 = "Button#YOUTUBE_PLAY");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_YOUTUBE_VIDEO_VALID",
+				locator1 = "Message#ERROR_INVALID_YOUTUBE_VIDEO",
 				value1 = "An error occurred. Please try again later.");
 		}
 
@@ -22,7 +22,7 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_FACEBOOK_VIDEO_VALID",
+				locator1 = "Message#ERROR_INVALID_FACEBOOK_VIDEO",
 				value1 = "Video Unavailable");
 		}
 

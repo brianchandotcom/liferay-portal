@@ -32,9 +32,6 @@ import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.result.CommerceSubscriptionStatusResult;
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -955,10 +952,6 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			item.setCurrency(
 				StringUtil.toUpperCase(commerceCurrency.getCode()));
 
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-
-			item.setDescription(cpDefinition.getShortDescription(languageId));
-
 			item.setName(commerceOrderItem.getName(languageId));
 
 			/*
@@ -1073,16 +1066,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
-		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
-
-		if (cpInstance == null) {
-			return null;
-		}
-
-		CPSubscriptionInfo cpSubscriptionInfo =
-			cpInstance.getCPSubscriptionInfo();
-
-		String subscriptionType = cpSubscriptionInfo.getSubscriptionType();
+		String subscriptionType = commerceOrderItem.getSubscriptionType();
 
 		if (subscriptionType.equals(CPConstants.MONTHLY_SUBSCRIPTION_TYPE)) {
 			subscriptionType = PayPalCommercePaymentMethodConstants.MONTH;
@@ -1110,9 +1094,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		PaymentDefinition paymentDefinition = new PaymentDefinition(
 			_getResource(locale, "payment-definition"),
 			PayPalCommercePaymentMethodConstants.PAYMENT_DEFINITION_REGULAR,
-			String.valueOf(cpSubscriptionInfo.getSubscriptionLength()),
+			String.valueOf(commerceOrderItem.getSubscriptionLength()),
 			subscriptionType,
-			String.valueOf(cpSubscriptionInfo.getMaxSubscriptionCycles()),
+			String.valueOf(commerceOrderItem.getMaxSubscriptionCycles()),
 			amount);
 
 		paymentDefinitions.add(paymentDefinition);
@@ -1122,7 +1106,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		String type = PayPalCommercePaymentMethodConstants.PLAN_FIXED;
 
-		if (cpSubscriptionInfo.getMaxSubscriptionCycles() == 0) {
+		if (commerceOrderItem.getMaxSubscriptionCycles() == 0) {
 			type = PayPalCommercePaymentMethodConstants.PLAN_INFINITE;
 		}
 

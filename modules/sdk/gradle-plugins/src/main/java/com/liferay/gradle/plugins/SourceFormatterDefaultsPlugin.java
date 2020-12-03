@@ -21,6 +21,15 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
+import com.pswidersk.gradle.python.PythonPlugin;
+import com.pswidersk.gradle.python.VenvTask;
+
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -36,12 +45,24 @@ import org.gradle.api.tasks.TaskProvider;
 public class SourceFormatterDefaultsPlugin
 	extends BaseDefaultsPlugin<SourceFormatterPlugin> {
 
+	public static final String CHECK_PYTHON_FORMATTING_TASK_NAME =
+		"checkPythonFormatting";
+
+	public static final String FORMAT_PYTHON_TASK_NAME = "formatPython";
+
 	public static final Plugin<Project> INSTANCE =
 		new SourceFormatterDefaultsPlugin();
+
+	public static final String PYTHON_BLACK_INSTALL_TASK_NAME =
+		"pythonBlackInstall";
 
 	@Override
 	protected void applyPluginDefaults(
 		final Project project, SourceFormatterPlugin sourceFormatterPlugin) {
+
+		// Plugins
+
+		GradleUtil.applyPlugin(project, PythonPlugin.class);
 
 		// Dependencies
 
@@ -50,6 +71,17 @@ public class SourceFormatterDefaultsPlugin
 			PortalTools.GROUP, _PORTAL_TOOL_NAME);
 
 		// Tasks
+
+		final TaskProvider<VenvTask> checkPythonFormattingTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, CHECK_PYTHON_FORMATTING_TASK_NAME, VenvTask.class);
+		final TaskProvider<VenvTask> formatPythonTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, FORMAT_PYTHON_TASK_NAME, VenvTask.class);
+		TaskProvider<VenvTask> pythonBlackInstallTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, PYTHON_BLACK_INSTALL_TASK_NAME,
+				VenvTask.class);
 
 		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider =
 			GradleUtil.fetchTaskProvider(
@@ -60,6 +92,20 @@ public class SourceFormatterDefaultsPlugin
 			GradleUtil.fetchTaskProvider(
 				project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
 				FormatSourceTask.class);
+
+		_configureTaskCheckPythonFormattingProvider(
+			project, checkPythonFormattingTaskProvider,
+			checkSourceFormattingTaskProvider, pythonBlackInstallTaskProvider);
+		_configureTaskCheckSourceFormattingProvider(
+			project, checkPythonFormattingTaskProvider,
+			checkSourceFormattingTaskProvider);
+		_configureTaskFormatPythonProvider(
+			project, formatPythonTaskProvider, formatSourceTaskProvider,
+			pythonBlackInstallTaskProvider);
+		_configureTaskFormatSourceProvider(
+			project, formatPythonTaskProvider, formatSourceTaskProvider);
+		_configureTaskPythonBlackInstallProvider(
+			pythonBlackInstallTaskProvider);
 
 		// Containers
 
@@ -85,8 +131,9 @@ public class SourceFormatterDefaultsPlugin
 				@Override
 				public void execute(NodePlugin nodePlugin) {
 					_configurePluginNode(
-						project, checkSourceFormattingTaskProvider,
-						formatSourceTaskProvider);
+						project, checkPythonFormattingTaskProvider,
+						checkSourceFormattingTaskProvider,
+						formatPythonTaskProvider, formatSourceTaskProvider);
 				}
 
 			});
@@ -99,7 +146,9 @@ public class SourceFormatterDefaultsPlugin
 
 	private void _configurePluginNode(
 		Project project,
+		TaskProvider<VenvTask> checkPythonFormattingTaskProvider,
 		TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider,
+		TaskProvider<VenvTask> formatPythonTaskProvider,
 		TaskProvider<FormatSourceTask> formatSourceTaskProvider) {
 
 		final TaskProvider<Task> packageRunCheckFormatTaskProvider =
@@ -111,6 +160,19 @@ public class SourceFormatterDefaultsPlugin
 				"skip.node.task");
 
 			if (!Boolean.parseBoolean(skipNodeTask)) {
+				checkPythonFormattingTaskProvider.configure(
+					new Action<VenvTask>() {
+
+						@Override
+						public void execute(
+							VenvTask checkPythonFormattingVenvTask) {
+
+							checkPythonFormattingVenvTask.mustRunAfter(
+								packageRunCheckFormatTaskProvider);
+						}
+
+					});
+
 				checkSourceFormattingTaskProvider.configure(
 					new Action<FormatSourceTask>() {
 
@@ -136,6 +198,17 @@ public class SourceFormatterDefaultsPlugin
 				"skip.node.task");
 
 			if (!Boolean.parseBoolean(skipNodeTask)) {
+				formatPythonTaskProvider.configure(
+					new Action<VenvTask>() {
+
+						@Override
+						public void execute(VenvTask formatPythonVenvTask) {
+							formatPythonVenvTask.mustRunAfter(
+								packageRunFormatTaskProvider);
+						}
+
+					});
+
 				formatSourceTaskProvider.configure(
 					new Action<FormatSourceTask>() {
 
@@ -148,6 +221,109 @@ public class SourceFormatterDefaultsPlugin
 					});
 			}
 		}
+	}
+
+	private void _configureTaskCheckPythonFormattingProvider(
+		final Project project,
+		TaskProvider<VenvTask> checkPythonFormattingTaskProvider,
+		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider,
+		final TaskProvider<VenvTask> pythonBlackInstallTaskProvider) {
+
+		checkPythonFormattingTaskProvider.configure(
+			new Action<VenvTask>() {
+
+				@Override
+				public void execute(VenvTask checkPythonFormattingVenvTask) {
+					checkPythonFormattingVenvTask.dependsOn(
+						pythonBlackInstallTaskProvider);
+
+					List<String> args = new ArrayList<>();
+
+					args.add("--check");
+					args.add("--fast");
+
+					String baseDir = GradleUtil.getTaskPrefixedProperty(
+						project.getPath(),
+						checkPythonFormattingVenvTask.getName(), "base.dir");
+
+					if (baseDir == null) {
+						FormatSourceTask checkSourceFormattingFormatSourceTask =
+							checkSourceFormattingTaskProvider.get();
+
+						File checkSourceFormattingBaseDir =
+							checkSourceFormattingFormatSourceTask.getBaseDir();
+
+						baseDir = checkSourceFormattingBaseDir.getPath();
+					}
+
+					args.add(baseDir);
+
+					checkPythonFormattingVenvTask.setArgs(args);
+
+					checkPythonFormattingVenvTask.setVenvExec("black");
+				}
+
+			});
+	}
+
+	private void _configureTaskCheckSourceFormattingProvider(
+		final Project project,
+		final TaskProvider<VenvTask> checkPythonFormattingTaskProvider,
+		TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider) {
+
+		checkSourceFormattingTaskProvider.configure(
+			new Action<FormatSourceTask>() {
+
+				@Override
+				public void execute(
+					FormatSourceTask checkSourceFormattingFormatSourceTask) {
+
+					checkSourceFormattingFormatSourceTask.finalizedBy(
+						checkPythonFormattingTaskProvider);
+				}
+
+			});
+	}
+
+	private void _configureTaskFormatPythonProvider(
+		final Project project, TaskProvider<VenvTask> formatPythonTaskProvider,
+		final TaskProvider<FormatSourceTask> formatSourceTaskProvider,
+		final TaskProvider<VenvTask> pythonBlackInstallTaskProvider) {
+
+		formatPythonTaskProvider.configure(
+			new Action<VenvTask>() {
+
+				@Override
+				public void execute(VenvTask formatPythonVenvTask) {
+					formatPythonVenvTask.dependsOn(
+						pythonBlackInstallTaskProvider);
+
+					List<String> args = new ArrayList<>();
+
+					args.add("--fast");
+
+					String baseDir = GradleUtil.getTaskPrefixedProperty(
+						project.getPath(), formatPythonVenvTask.getName(),
+						"base.dir");
+
+					if (baseDir == null) {
+						FormatSourceTask formatSourceTask =
+							formatSourceTaskProvider.get();
+
+						File formatSourceBaseDir =
+							formatSourceTask.getBaseDir();
+
+						baseDir = formatSourceBaseDir.getPath();
+					}
+
+					args.add(baseDir);
+
+					formatPythonVenvTask.setArgs(args);
+
+					formatPythonVenvTask.setVenvExec("black");
+				}
+
+			});
 	}
 
 	private void _configureTaskFormatSource(FormatSourceTask formatSourceTask) {
@@ -206,6 +382,38 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setShowStatusUpdates(
 				Boolean.parseBoolean(showStatusUpdates));
 		}
+	}
+
+	private void _configureTaskFormatSourceProvider(
+		final Project project,
+		final TaskProvider<VenvTask> formatPythonTaskProvider,
+		TaskProvider<FormatSourceTask> formatSourceTaskProvider) {
+
+		formatSourceTaskProvider.configure(
+			new Action<FormatSourceTask>() {
+
+				@Override
+				public void execute(FormatSourceTask formatSourceTask) {
+					formatSourceTask.finalizedBy(formatPythonTaskProvider);
+				}
+
+			});
+	}
+
+	private void _configureTaskPythonBlackInstallProvider(
+		TaskProvider<VenvTask> pythonBlackInstallTaskProvider) {
+
+		pythonBlackInstallTaskProvider.configure(
+			new Action<VenvTask>() {
+
+				@Override
+				public void execute(VenvTask pythonBlackInstallVenvTask) {
+					pythonBlackInstallVenvTask.setArgs(
+						Arrays.asList("install", "black"));
+					pythonBlackInstallVenvTask.setVenvExec("pip");
+				}
+
+			});
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

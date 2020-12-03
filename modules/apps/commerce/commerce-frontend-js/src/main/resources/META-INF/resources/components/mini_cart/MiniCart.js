@@ -112,11 +112,18 @@ function MiniCart({
 	}, [updateCartModel]);
 
 	useEffect(() => {
-		if (orderId && orderId !== 0 && isOpen) {
+		if (orderId && orderId !== 0) {
 			updateCartModel({orderId});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isOpen, orderId]);
+	}, [orderId]);
+
+	useEffect(() => {
+		if (isOpen) {
+			updateCartModel({orderId});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isOpen]);
 
 	useEffect(() => {
 		Liferay.on(CHANGE_ACCOUNT, resetCartState);

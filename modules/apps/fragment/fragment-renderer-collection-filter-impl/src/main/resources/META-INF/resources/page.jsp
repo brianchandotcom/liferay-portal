@@ -22,9 +22,18 @@
 
 <c:choose>
 	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isMultipleSelection() %>">
-		<react:component
-			module="js/MultiSelectCategory.es"
-		/>
+		<div>
+			<clay:button
+				cssClass="dropdown-toggle form-control-select text-left"
+				disabled="<%= true %>"
+				displayType="secondary"
+				label='<%= LanguageUtil.get(request, "select") %>'
+			/>
+
+			<react:component
+				module="js/MultiSelectCategory.es"
+			/>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<clay:dropdown-menu

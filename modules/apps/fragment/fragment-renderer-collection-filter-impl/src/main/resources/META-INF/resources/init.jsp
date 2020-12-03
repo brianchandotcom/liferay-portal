@@ -19,7 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionFilterFragmentRendererDisplayContext" %>
+<%@ page import="com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionFilterFragmentRendererDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <%
 CollectionFilterFragmentRendererDisplayContext collectionFilterFragmentRendererDisplayContext = new CollectionFilterFragmentRendererDisplayContext(request);

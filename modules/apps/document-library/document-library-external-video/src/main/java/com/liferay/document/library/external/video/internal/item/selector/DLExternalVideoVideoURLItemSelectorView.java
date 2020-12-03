@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
@@ -73,6 +74,10 @@ public class DLExternalVideoVideoURLItemSelectorView
 
 		servletRequest.setAttribute(
 			DLExternalVideoWebKeys.EVENT_NAME, itemSelectedEventName);
+
+		servletRequest.setAttribute(
+			DLExternalVideoWebKeys.RETURN_TYPE, ClassUtil.getClassName(
+				getSupportedItemSelectorReturnTypes().get(0)));
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

@@ -18,6 +18,7 @@
 
 <%
 String eventName = (String)request.getAttribute(DLExternalVideoWebKeys.EVENT_NAME);
+String returnType = (String)request.getAttribute(DLExternalVideoWebKeys.RETURN_TYPE);
 %>
 
 <liferay-util:html-top
@@ -56,6 +57,8 @@ String eventName = (String)request.getAttribute(DLExternalVideoWebKeys.EVENT_NAM
 						"getDLExternalVideoFieldsURL", getDLExternalVideoFieldsURL
 					).put(
 						"namespace", PortalUtil.getPortletNamespace(DLPortletKeys.DOCUMENT_LIBRARY)
+					).put(
+						"returnType", returnType
 					).build()
 				%>'
 			/>

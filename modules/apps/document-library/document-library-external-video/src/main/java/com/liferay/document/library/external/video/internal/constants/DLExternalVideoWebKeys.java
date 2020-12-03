@@ -25,4 +25,6 @@ public class DLExternalVideoWebKeys {
 
 	public static final String ON_FILE_PICK_CALLBACK = "ON_FILE_PICK_CALLBACK";
 
+	public static final String RETURN_TYPE = "RETURN_TYPE";
+
 }

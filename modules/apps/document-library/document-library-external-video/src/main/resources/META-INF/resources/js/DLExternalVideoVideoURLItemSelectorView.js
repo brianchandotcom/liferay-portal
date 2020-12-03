@@ -20,12 +20,11 @@ import DLExternalVideoInput from './components/DLExternalVideoInput';
 import DLExternalVideoPreview from './components/DLExternalVideoPreview';
 import {useDLExternalVideoFields} from './utils/hooks';
 
-const DL_VIDEO_EMBEDDABLE_RETURN_TYPE = 'com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType';
-
 const DLExternalVideoVideoURLItemSelectorView = ({
 	eventName,
 	getDLExternalVideoFieldsURL,
 	namespace,
+	returnType
 }) => {
 	const [url, setUrl] = useState('');
 	const {error, fields, loading} = useDLExternalVideoFields({
@@ -39,7 +38,7 @@ const DLExternalVideoVideoURLItemSelectorView = ({
 			onSubmit={() =>
 				Liferay.Util.getOpener().Liferay.fire(eventName, {
 					data: {
-						returnType: DL_VIDEO_EMBEDDABLE_RETURN_TYPE,
+						returnType: returnType,
 						value: fields.HTML,
 					},
 				})
@@ -64,6 +63,7 @@ DLExternalVideoVideoURLItemSelectorView.propTypes = {
 	eventName: PropTypes.string.isRequired,
 	getDLExternalVideoFieldsURL: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,
+	returnType: PropTypes.string.isRequired,
 };
 
 export default DLExternalVideoVideoURLItemSelectorView;

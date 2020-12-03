@@ -21,7 +21,7 @@ CommerceBOMAdminDisplayContext commerceBOMAdminDisplayContext = (CommerceBOMAdmi
 
 CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerceBOMFolder();
 
-renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
+renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 %>
 
 <liferay-frontend:screen-navigation

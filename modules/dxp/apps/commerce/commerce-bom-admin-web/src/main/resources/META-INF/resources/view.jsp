@@ -19,7 +19,7 @@
 <%
 CommerceBOMAdminDisplayContext commerceBOMAdminDisplayContext = (CommerceBOMAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-renderResponse.setTitle(LanguageUtil.get(request, "bill-of-materials"));
+renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 %>
 
 <liferay-frontend:management-bar

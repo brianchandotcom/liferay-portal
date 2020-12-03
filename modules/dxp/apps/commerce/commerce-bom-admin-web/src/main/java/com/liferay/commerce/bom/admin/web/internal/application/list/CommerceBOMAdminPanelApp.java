@@ -46,7 +46,7 @@ public class CommerceBOMAdminPanelApp extends BasePanelApp {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "bill-of-materials");
+		return LanguageUtil.get(resourceBundle, "shop-by-diagram");
 	}
 
 	@Override

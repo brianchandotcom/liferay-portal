@@ -4,8 +4,4 @@
 	<checkstyle>
 		<suppress checks="StaticVariableNameCheck" files="portal-security-service-access-policy-api/src/main/java/com/liferay/portal/security/service/access/policy/constants/SAPActionKeys\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-security-antisamy/src/main/java/com/liferay/portal/security/antisamy/internal/configuration/AntiSamyClassNameConfiguration\.java" />
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-security-antisamy/src/main/java/com/liferay/portal/security/antisamy/internal/configuration/AntiSamyConfiguration\.java" />
-	</source-check>
 </suppressions>

@@ -651,6 +651,15 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								<property name="skip.node.task" value="true" />
 							</then>
 						</if>
+
+						<if>
+							<not>
+								<matches pattern="\.py(${line.separator}|$)" string="${baseline.current.branch.file.names}" />
+							</not>
+							<then>
+								<property name="skip.format.python" value="true" />
+							</then>
+						</if>
 					</then>
 					<else>
 						<if>
@@ -762,6 +771,32 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 							<else>
 								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat">
 									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
+								</gradle-execute>
+							</else>
+						</if>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<isset property="skip.format.python" />
+					</not>
+					<then>
+						<if>
+							<and>
+								<isset property="source.auto.fix" />
+								<isfalse value="${source.auto.fix}" />
+							</and>
+							<then>
+								<gradle-execute dir="${project.dir}/modules" task=":checkPythonFormatting">
+									<arg value="--build-file=${project.dir}/modules/util.gradle" />
+									<arg value="-DcheckPythonFormatting.base.dir=.." />
+								</gradle-execute>
+							</then>
+							<else>
+								<gradle-execute dir="${project.dir}/modules" task=":formatPython">
+									<arg value="--build-file=${project.dir}/modules/util.gradle" />
+									<arg value="-DformatPython.base.dir=.." />
 								</gradle-execute>
 							</else>
 						</if>

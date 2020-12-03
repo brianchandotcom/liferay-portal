@@ -305,6 +305,12 @@
 						if (selectedItem.returnType === STR_VIDEO_HTML_RETURN_TYPE) {
 							instance._commitVideoHtmlValue(editor, videoSrc)
 						}
+						else {
+							editor.plugins.videoembed.onOkVideo(editor, {
+								type: 'video',
+								url: value,
+							});
+						}
 					}
 				}
 			}

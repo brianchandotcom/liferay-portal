@@ -10,9 +10,10 @@
  */
 
 import ClayList from '@clayui/list';
+import className from 'classnames';
 import {Align} from 'metal-position';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {
 	useChangeTimeSpanKey,
@@ -87,6 +88,16 @@ export default function SocialDetail({
 		}%`;
 	};
 
+	const [highlighted, setHighlighted] = useState(null);
+
+	function handleLegendMouseEnter(name) {
+		setHighlighted(name);
+	}
+
+	function handleLegendMouseLeave() {
+		setHighlighted(null);
+	}
+
 	return (
 		<div className="c-p-3 traffic-source-detail">
 			<div className="c-mb-3 c-mt-2">
@@ -148,8 +159,18 @@ export default function SocialDetail({
 				</ClayList.Item>
 				{referringSocialMedia.map(
 					({name, title, trafficAmount}, index) => {
+						const listItemClasses = className({
+							dim: highlighted && name !== highlighted,
+						});
+
 						return (
-							<ClayList.Item flex key={title}>
+							<ClayList.Item
+								className={listItemClasses}
+								flex
+								key={title}
+								onMouseOut={handleLegendMouseLeave}
+								onMouseOver={() => handleLegendMouseEnter(name)}
+							>
 								<ClayList.ItemField style={{width: '70px'}}>
 									<ClayList.ItemText>
 										<span className="c-mr-2">{title}</span>

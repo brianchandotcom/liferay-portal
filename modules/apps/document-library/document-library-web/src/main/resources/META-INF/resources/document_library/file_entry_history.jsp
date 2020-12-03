@@ -27,10 +27,7 @@
 		status = WorkflowConstants.STATUS_ANY;
 	}
 
-	List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
-
-	for (FileVersion fileVersion : fileVersions) {
-		request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+	for (FileVersion fileVersion : fileEntry.getFileVersions(status)) {
 	%>
 
 		<li class="list-group-item list-group-item-flex">
@@ -58,18 +55,8 @@
 			</clay:content-col>
 
 			<clay:content-col>
+
 				<%
-				ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-				FileVersion fileVersion = null;
-
-				if (row != null) {
-					fileVersion = (FileVersion)row.getObject();
-				}
-				else {
-					fileVersion = (FileVersion)request.getAttribute("info_panel.jsp-fileVersion");
-				}
-
 				DLViewFileEntryHistoryDisplayContext dlViewFileEntryHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileEntryHistoryDisplayContext(request, response, fileVersion);
 				%>
 

@@ -26,6 +26,7 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -65,18 +65,15 @@ public class PublicationsDisplayContext {
 		CTCollectionService ctCollectionService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
-		CTPreferencesLocalService ctPreferencesLocalService, Language language,
-		Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		CTPreferencesLocalService ctPreferencesLocalService,
+		HttpServletRequest httpServletRequest, Language language,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_ctCollectionService = ctCollectionService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
+		_httpServletRequest = httpServletRequest;
 		_language = language;
-
-		_portal = portal;
-
-		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
 
 		_renderRequest = renderRequest;
 
@@ -149,7 +146,10 @@ public class PublicationsDisplayContext {
 		String keywords = displayTerms.getKeywords();
 
 		int count = _ctCollectionService.getCTCollectionsCount(
-			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+			_themeDisplay.getCompanyId(),
+			new int[] {
+				WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_EXPIRED
+			},
 			keywords);
 
 		searchContainer.setTotal(count);
@@ -166,7 +166,10 @@ public class PublicationsDisplayContext {
 				Objects.equals(searchContainer.getOrderByType(), "asc"));
 
 		List<CTCollection> results = _ctCollectionService.getCTCollections(
-			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+			_themeDisplay.getCompanyId(),
+			new int[] {
+				WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_EXPIRED
+			},
 			keywords, searchContainer.getStart(), searchContainer.getEnd(),
 			orderByComparator);
 
@@ -175,6 +178,34 @@ public class PublicationsDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public String getStatusLabel(int status) {
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "published";
+		}
+		else if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return "out-of-date";
+		}
+		else if (status == WorkflowConstants.STATUS_DRAFT) {
+			return "in-progress";
+		}
+		else if (status == WorkflowConstants.STATUS_DENIED) {
+			return "failed";
+		}
+		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
+			return "scheduled";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public String getStatusStyle(int status) {
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return "warning";
+		}
+
+		return WorkflowConstants.getStatusStyle(status);
 	}
 
 	public List<NavigationItem> getViewNavigationItems() {
@@ -232,6 +263,10 @@ public class PublicationsDisplayContext {
 			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
 				jsonArray.put(
 					JSONUtil.put(
+						"disabled",
+						ctCollection.getStatus() ==
+							WorkflowConstants.STATUS_EXPIRED
+					).put(
 						"href",
 						PublicationsPortletURLUtil.getHref(
 							_renderResponse.createActionURL(),
@@ -322,6 +357,10 @@ public class PublicationsDisplayContext {
 			if (PropsValues.SCHEDULER_ENABLED) {
 				jsonArray.put(
 					JSONUtil.put(
+						"disabled",
+						ctCollection.getStatus() ==
+							WorkflowConstants.STATUS_EXPIRED
+					).put(
 						"href",
 						PublicationsPortletURLUtil.getHref(
 							_renderResponse.createRenderURL(),
@@ -339,6 +378,9 @@ public class PublicationsDisplayContext {
 
 			jsonArray.put(
 				JSONUtil.put(
+					"disabled",
+					ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED
+				).put(
 					"href",
 					PublicationsPortletURLUtil.getHref(
 						_renderResponse.createRenderURL(),
@@ -374,7 +416,6 @@ public class PublicationsDisplayContext {
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
-	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CTCollection> _searchContainer;

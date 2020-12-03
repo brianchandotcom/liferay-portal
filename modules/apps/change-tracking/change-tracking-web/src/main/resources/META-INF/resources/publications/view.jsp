@@ -58,9 +58,16 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 							<%= ctCollection.getName() %>
 						</div>
 
-						<div class="publication-description <%= (publicationsDisplayContext.getCtCollectionId() == ctCollection.getCtCollectionId()) ? "font-italic" : StringPool.BLANK %>">
-							<%= ctCollection.getDescription() %>
-						</div>
+						<c:if test="<%= Validator.isNotNull(ctCollection.getDescription()) %>">
+							<div class="publication-description <%= (publicationsDisplayContext.getCtCollectionId() == ctCollection.getCtCollectionId()) ? "font-italic" : StringPool.BLANK %>">
+								<%= ctCollection.getDescription() %>
+							</div>
+						</c:if>
+
+						<clay:label
+							displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+							label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
@@ -98,6 +105,16 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 						name="created"
 					>
 						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
+						name="status"
+					>
+						<clay:label
+							displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+							label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

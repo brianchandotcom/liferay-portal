@@ -85,8 +85,9 @@ public class PublicationsPortlet extends MVCPortlet {
 		PublicationsDisplayContext publicationsDisplayContext =
 			new PublicationsDisplayContext(
 				_ctCollectionService, _ctDisplayRendererRegistry,
-				_ctEntryLocalService, _ctPreferencesLocalService, _language,
-				_portal, renderRequest, renderResponse);
+				_ctEntryLocalService, _ctPreferencesLocalService,
+				_portal.getHttpServletRequest(renderRequest), _language,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.PUBLICATIONS_DISPLAY_CONTEXT, publicationsDisplayContext);

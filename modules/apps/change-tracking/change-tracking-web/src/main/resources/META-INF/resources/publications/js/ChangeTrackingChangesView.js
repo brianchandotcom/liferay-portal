@@ -34,6 +34,7 @@ class ChangeTrackingChangesView extends React.Component {
 			contextView,
 			ctCollectionId,
 			discardURL,
+			expired,
 			models,
 			namespace,
 			pathParam,
@@ -70,6 +71,7 @@ class ChangeTrackingChangesView extends React.Component {
 		this.contextView = contextView;
 		this.ctCollectionId = ctCollectionId;
 		this.discardURL = discardURL;
+		this.expired = expired;
 		this.models = models;
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
@@ -2019,6 +2021,18 @@ class ChangeTrackingChangesView extends React.Component {
 		else {
 			content = (
 				<div className="container-fluid container-fluid-max-xl">
+					{this.expired && (
+						<ClayAlert
+							displayType="warning"
+							spritemap={this.spritemap}
+							title={Liferay.Language.get('out-of-date')}
+						>
+							{Liferay.Language.get(
+								'this-publication-was-created-on-a-previous-liferay-version'
+							)}
+						</ClayAlert>
+					)}
+
 					<ClayBreadcrumb
 						ellipsisBuffer={1}
 						items={this.state.breadcrumbItems}

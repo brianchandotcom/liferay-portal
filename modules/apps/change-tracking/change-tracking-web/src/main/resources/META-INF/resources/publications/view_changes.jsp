@@ -39,8 +39,8 @@ portletDisplay.setShowBackIcon(true);
 							<span><%= HtmlUtil.escape(ctCollection.getName()) %></span>
 
 							<clay:label
-								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
-								label="<%= viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+								displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+								label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
 							/>
 						</div>
 
@@ -103,14 +103,64 @@ portletDisplay.setShowBackIcon(true);
 						/>
 					</li>
 				</c:when>
+				<c:when test="<%= ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED %>">
+					<li class="tbar-item tbar-item-expand text-left">
+						<div class="publication-name">
+							<span><%= HtmlUtil.escape(ctCollection.getName()) %></span>
+
+							<clay:label
+								displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+								label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+							/>
+						</div>
+
+						<div class="publication-description"><%= HtmlUtil.escape(ctCollection.getDescription()) %></div>
+					</li>
+					<li class="tbar-item">
+						<a class="btn btn-secondary btn-sm disabled" type="button">
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="calendar"
+								/>
+							</span>
+
+							<liferay-ui:message key="schedule" />
+						</a>
+					</li>
+					<li class="tbar-item">
+						<a class="btn btn-secondary btn-sm disabled" type="button">
+							<span class="inline-item inline-item-before">
+								<clay:icon
+									symbol="change"
+								/>
+							</span>
+
+							<liferay-ui:message key="publish" />
+						</a>
+					</li>
+					<li class="tbar-item">
+						<div class="dropdown">
+							<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
+								<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#ellipsis-v" />
+								</svg>
+							</button>
+						</div>
+
+						<react:component
+							module="publications/js/DropdownMenu"
+							props="<%= viewChangesDisplayContext.getDropdownReactData(permissionChecker) %>"
+						/>
+					</li>
+				</c:when>
 				<c:when test="<%= ctCollection.getStatus() == WorkflowConstants.STATUS_SCHEDULED %>">
 					<li class="tbar-item tbar-item-expand text-left">
 						<div class="publication-name">
 							<span><%= HtmlUtil.escape(ctCollection.getName()) %></span>
 
 							<clay:label
-								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
-								label="<%= viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+								displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+								label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
 							/>
 						</div>
 
@@ -159,8 +209,8 @@ portletDisplay.setShowBackIcon(true);
 							<span><%= HtmlUtil.escape(ctCollection.getName()) %></span>
 
 							<clay:label
-								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
-								label="<%= viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+								displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+								label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
 							/>
 						</div>
 

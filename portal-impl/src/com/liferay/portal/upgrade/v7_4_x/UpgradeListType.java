@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Pei-Jung Lan
@@ -34,20 +35,28 @@ public class UpgradeListType extends UpgradeProcess {
 		_addListType("phone-number", ListTypeConstants.ADDRESS_PHONE);
 	}
 
-	private void _addListType(String name, String type) {
-		StringBundler sb = new StringBundler(7);
+	private void _addListType(String name, String type) throws Exception {
+		StringBundler sb = new StringBundler(4);
 
-		sb.append("insert into ListType (listTypeId, name, type_) select ?, ");
-		sb.append("?, ? where not exists (select null from ListType where ");
-		sb.append("name = ");
+		sb.append("select * from ListType where name = ");
 		sb.append(StringUtil.quote(name));
 		sb.append("and type_ = ");
 		sb.append(StringUtil.quote(type));
-		sb.append(")");
 
-		String sql = sb.toString();
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
-		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return;
+			}
+		}
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"insert into ListType (listTypeId, name, type_) values (?, " +
+					"?, ?)")) {
+
 			ps.setLong(1, increment(ListType.class.getName()));
 			ps.setString(2, name);
 			ps.setString(3, type);

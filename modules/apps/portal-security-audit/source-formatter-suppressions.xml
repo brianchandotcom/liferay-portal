@@ -4,9 +4,4 @@
 	<checkstyle>
 		<suppress checks="GenericTypeCheck" files="portal-security-audit-storage-api/src/main/java/com/liferay/portal/security/audit/storage/comparator/AuditEventCreateDateComparator\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-security-audit-router/src/main/java/com/liferay/portal/security/audit/router/internal/configuration/CSVLogMessageFormatterConfiguration\.java" />
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-security-audit-router/src/main/java/com/liferay/portal/security/audit/router/internal/configuration/LoggingAuditMessageProcessorConfiguration\.java" />
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-security-audit-router/src/main/java/com/liferay/portal/security/audit/router/internal/configuration/PersistentAuditMessageProcessorConfiguration\.java" />
-	</source-check>
 </suppressions>

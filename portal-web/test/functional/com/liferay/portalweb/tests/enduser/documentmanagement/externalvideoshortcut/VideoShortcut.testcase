@@ -42,6 +42,51 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a video shortcut can be added with Facebook."
+	@priority = "5"
+	test AddFacebookCP {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutPreview = "https://www.facebook.com",
+			videoShortcutTitle = "Test Facebook Video Name",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.viewCP(videoShortcutTitle = "Test Facebook Video Name");
+	}
+
+	@description = "This ensures that a video shortcut can be added with Twitch."
+	@priority = "5"
+	test AddTwitchPG {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		VideoShortcut.addPG(
+			videoShortcutPreview = "https://player.twitch.tv",
+			videoShortcutTitle = "Test Twitch Video Name",
+			videoURL = "https://www.twitch.tv/videos/806178790");
+
+		VideoShortcut.viewPG(videoShortcutTitle = "Test Twitch Video Name");
+	}
+
+	@description = "This ensures that a video shortcut can be added with Vimeo."
+	@priority = "5"
+	test AddVimeoCP {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			extractedVideoShortcutTitle = "Air",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://player.vimeo.com",
+			videoShortcutTitle = "Test Vimeo Video Name",
+			videoURL = "https://vimeo.com/483035084");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.viewCP(videoShortcutTitle = "Test Vimeo Video Name");
+	}
+
 	@description = "It ensures that a message is displayed in the preview section When pasting an invalid URL."
 	@priority = "4"
 	test AddWithInvalidURL {
@@ -66,6 +111,23 @@ definition {
 		VideoShortcut.validateURL(
 			facebook = "true",
 			invalidURL = "https://www.facebook.com/Cristiano/videos/test");
+	}
+
+	@description = "This ensures that a video shortcut can be added with YouTube."
+	@priority = "5"
+	test AddYouTubePG {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		VideoShortcut.addPG(
+			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://www.youtube.com",
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		VideoShortcut.viewPG(
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutTitle = "Test YouTube Video Name");
 	}
 
 }

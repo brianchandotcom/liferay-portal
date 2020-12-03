@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -122,6 +123,12 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "select");
+	}
+
+	public boolean isMultipleSelection() {
+		return GetterUtil.getBoolean(
+			_httpServletRequest.getAttribute(
+				CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION));
 	}
 
 	private String _getParameterName() {

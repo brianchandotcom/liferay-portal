@@ -202,6 +202,16 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
 				fragmentEntryLink.getFragmentEntryLinkId());
 
+			boolean multipleSelection = GetterUtil.getBoolean(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getEditableValues(),
+					themeDisplay.getLocale(), "multipleSelection"));
+
+			httpServletRequest.setAttribute(
+				CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
+				multipleSelection);
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");
 

@@ -30,4 +30,6 @@ public class CollectionFilterFragmentRendererWebKeys {
 	public static final String FRAGMENT_ENTRY_LINK_ID =
 		"FRAGMENT_ENTRY_LINK_ID";
 
+	public static final String MULTIPLE_SELECTION = "MULTIPLE_SELECTION";
+
 }

@@ -21,10 +21,13 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -91,7 +95,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		setUpDLAppService();
 		setUpFileEntry();
+		setUpGroupLocalService();
 		setUpHtml();
+		setUpItemSelector();
 		setUpJSONFactory();
 		setUpJSONFactoryUtil();
 		setUpParamUtil();
@@ -187,6 +193,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
+
+		String itemSelectorURL = String.valueOf(
+			parameters.get("itemSelectorURL"));
+
+		Assert.assertThat(
+			itemSelectorURL,
+			CoreMatchers.containsString(
+				"param_folderId=" + _PRIVATE_FOLDER_ID));
 	}
 
 	@Test
@@ -245,6 +259,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(
 			createHttpServletRequest());
+		ddmFormFieldRenderingContext.setPortletNamespace(_PORTLET_NAMESPACE);
 		ddmFormFieldRenderingContext.setProperty("groupId", _GROUP_ID);
 		ddmFormFieldRenderingContext.setValue(
 			JSONUtil.put(
@@ -410,11 +425,47 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
+	protected void setUpGroupLocalService() throws Exception {
+		MemberMatcher.field(
+			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
+			"_groupLocalService"
+		).set(
+			_documentLibraryDDMFormFieldTemplateContextContributor,
+			_groupLocalService
+		);
+
+		Mockito.when(
+			_groupLocalService.fetchGroup(_GROUP_ID)
+		).thenReturn(
+			_group
+		);
+	}
+
 	protected void setUpHtml() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class, "html"
 		).set(
 			_documentLibraryDDMFormFieldTemplateContextContributor, _html
+		);
+	}
+
+	protected void setUpItemSelector() throws Exception {
+		MemberMatcher.field(
+			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
+			"_itemSelector"
+		).set(
+			_documentLibraryDDMFormFieldTemplateContextContributor,
+			_itemSelector
+		);
+
+		PowerMockito.when(
+			_itemSelector.getItemSelectorURL(
+				Mockito.eq(_requestBackedPortletURLFactory), Mockito.eq(_group),
+				Mockito.eq(_GROUP_ID),
+				Mockito.eq(_PORTLET_NAMESPACE + "selectDocumentLibrary"),
+				Mockito.any(FileItemSelectorCriterion.class))
+		).thenReturn(
+			new MockLiferayPortletURL()
 		);
 	}
 
@@ -469,14 +520,11 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	protected void setUpRequestBackedPortletURLFactoryUtil() {
 		PowerMockito.mockStatic(RequestBackedPortletURLFactoryUtil.class);
 
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			mockRequestBackedPortletURLFactory();
-
 		PowerMockito.when(
 			RequestBackedPortletURLFactoryUtil.create(
 				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
-			requestBackedPortletURLFactory
+			_requestBackedPortletURLFactory
 		);
 	}
 
@@ -510,6 +558,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
+	private static final String _PORTLET_NAMESPACE =
+		RandomTestUtil.randomString();
+
 	private static final long _PRIVATE_FOLDER_ID = RandomTestUtil.randomLong();
 
 	private static final long _REPOSITORY_ID = RandomTestUtil.randomLong();
@@ -524,11 +575,24 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	@Mock
 	private FileEntry _fileEntry;
 
+	@Mock
+	private Group _group;
+
+	@Mock
+	private GroupLocalService _groupLocalService;
+
 	private final Html _html = new HtmlImpl();
+
+	@Mock
+	private ItemSelector _itemSelector;
+
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 	@Mock
 	private PortletFileRepository _portletFileRepository;
+
+	private final RequestBackedPortletURLFactory
+		_requestBackedPortletURLFactory = mockRequestBackedPortletURLFactory();
 
 	@Mock
 	private ResourceBundle _resourceBundle;

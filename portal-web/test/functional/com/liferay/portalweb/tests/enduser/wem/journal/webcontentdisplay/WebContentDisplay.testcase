@@ -506,16 +506,35 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
+		var content = '''Hello World
+Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
+
 		WebContent.addStructuredPGViaWCD(
 			fieldLabelList = "Text,Text Box",
 			structureName = "WC Structure Name",
 			text = "WC WebContent Text",
-			textBox = "WC WebContent Text Box",
+			textBox = "${content}",
 			webContentTitle = "WC WebContent Title");
 
 		AssertElementPresent(locator1 = "//div[contains(@class,journal-content-article)]//dt[normalize-space(text())='Text']/following-sibling::dd[normalize-space(text())='WC WebContent Text']");
 
-		AssertElementPresent(locator1 = "//div[contains(@class,journal-content-article)]//dt[normalize-space(text())='Text Box']/following-sibling::dd[normalize-space(text())='WC WebContent Text Box']");
+		var actual = selenium.getHtmlNodeText("//div[contains(@class,journal-content-article)]//dt[normalize-space(text())='Text Box']/following-sibling::dd");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${content}");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.viewWithStructureCP(
+			fieldType = "Multiple Lines",
+			predefinedValue = "true",
+			webContentText = "${content}",
+			webContentTextFieldLabel = "Text Box");
 	}
 
 	@priority = "4"

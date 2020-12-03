@@ -910,4 +910,14 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro viewUploadFieldAsGuest {
+        FormFields.viewUploadLabel(
+            fieldLabel = "${fieldLabel}",
+            fieldName = "${fieldName}");
+
+        var key_fieldLabel = "${fieldLabel}";
+        var key_fieldName = "${fieldName}";
+
+        AssertElementPresent(locator1 = "FormFields#UPLOAD_FIELD_GUEST");
+    }
 }

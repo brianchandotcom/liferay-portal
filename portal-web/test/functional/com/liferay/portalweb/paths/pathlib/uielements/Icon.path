@@ -316,7 +316,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON</td>
-	<td>//*[contains(@class,'sidebar-header-actions')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[contains(@class,'sidebar-header-actions')]//button[contains(@class,'dropdown-toggle')] | //*[contains(@class,'sidebar-header')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -259,6 +259,16 @@ definition {
 			value1 = "${label}");
 	}
 
+	macro editFieldSetEntry {
+		var key_RowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+	}
+
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 
@@ -350,6 +360,14 @@ definition {
 
 	macro goToFieldsetsTab {
 		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+	}
+
+	macro gotoFirstFieldset {
+		var key_fieldLabel = "${fieldLabel}";
+
+		Click(
+			locator1 = "FormViewBuilder#FORM_FIELD_FIRST_ITEM",
+			value1 = "${fieldLabel}");
 	}
 
 	macro gotoRules {
@@ -480,6 +498,28 @@ definition {
 			value1 = "${ruleName}");
 	}
 
+	macro setUpFieldSet {
+		var key_fieldType = "${fieldType}";
+		var key_fieldSetName = "${fieldSetName}";
+		var key_fieldLabel = "${fieldLabel}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "${fieldLabel}");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "${fieldSetName}");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+	}
+
 	macro setUpFieldSetOptions {
 		var key_fieldType = "${fieldType}";
 		var key_fieldSetName = "${fieldSetName}";
@@ -556,6 +596,16 @@ definition {
 			locator1 = "FormViewBuilder#LOCALIZATION_LIST");
 	}
 
+	macro switchLocalizationForFieldSets {
+		Click(
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
+
+		Click(
+			key_localizationList = "${localizationName}",
+			locator1 = "FormViewBuilder#LOCALIZATION_LIST_FIELD_SET");
+	}
+
 	macro switchToAdvancedTab {
 		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
 	}
@@ -610,6 +660,12 @@ definition {
 		AssertElementPresent(
 			key_symbolName = "${symbolName}",
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+	}
+
+	macro validateLocalizationForFieldSet {
+		AssertElementPresent(
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
 	}
 
 	macro validateNoFieldLabel {
@@ -712,6 +768,14 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "${optionValue}");
+	}
+
+	macro validateTranslatedField {
+		var key_fieldLabel = "${fieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FORM_FIELD_FIRST_ITEM",
+			value1 = "${fieldLabel}");
 	}
 
 	macro validateUsedFormView {

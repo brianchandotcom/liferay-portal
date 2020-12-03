@@ -446,6 +446,45 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 2");
 	}
 
+	@description = "LRQA-60710 - Automate LPS-112665: As an App Admin, I want to define more than one Form View for one same step (concatenation of Forms)"
+	@priority = "4"
+	test DefineFormViewExceptions {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "My Form View",
+			objectName = "my custom object",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.addNewFormView();
+		AppBuilderWorkflow.assertRemoveFormViewButton(positionNumber = "1");
+		AppBuilderWorkflow.assertRemoveFormViewButton(positionNumber = "2");
+
+		AppBuilderWorkflow.removeFormView(positionNumber = "2");
+		AppBuilderWorkflow.assertRemoveFormViewButtonNotPresent();
+
+		AppBuilderWorkflow.addNewFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "2");
+		AppBuilderWorkflow.assertFormViewPresentOnListDisabled(formViewName = "My Form View");
+	}
+
 	@description = "Delete a step while creating a Workflow App"
 	@priority = "5"
 	test DeleteStep {

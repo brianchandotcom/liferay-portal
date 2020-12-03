@@ -81,11 +81,27 @@ definition {
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
+	macro assertFormViewPresentOnListDisabled {
+		AssertElementPresent(
+			key_itemName = "${formViewName}",
+			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM_DISABLED");
+	}
+
 	macro assertFormViewSelected {
 		AssertTextEquals(
 			key_positionNumber = "${positionNumber}",
 			locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT",
 			value1 = "${formViewName}");
+	}
+
+	macro assertRemoveFormViewButton {
+		AssertElementPresent(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#REMOVE_FORM_VIEW_BUTTON_SPECIFIC");
+	}
+
+	macro assertRemoveFormViewButtonNotPresent {
+		AssertElementNotPresent(locator1 = "AppBuilderWorkflow#REMOVE_FORM_VIEW_BUTTON_GENERAL");
 	}
 
 	macro assertStepNotPresent {
@@ -216,6 +232,12 @@ definition {
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
 				value1 = "sent you a ${assetType} entry in the workflow.");
 		}
+	}
+
+	macro removeFormView {
+		Click.javaScriptClick(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#REMOVE_FORM_VIEW_BUTTON_SPECIFIC");
 	}
 
 	macro saveApp {

@@ -85,6 +85,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_OR_TABLE_VIEW_ITEM_DISABLED</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'dropdown-item') and contains(text(),'${key_itemName}') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_STEP_BUTTON</td>
 	<td>//div[contains(@class,'arrow-plus-button')]</td>
 	<td></td>
@@ -142,6 +147,16 @@
 <tr>
 	<td>ADD_NEW_FORM_VIEW_BUTTON</td>
 	<td>//button//span[text()='Add New Form View']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_FORM_VIEW_BUTTON_GENERAL</td>
+	<td>//div[contains(@class,'step-form-view')]//button[contains(@title,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_FORM_VIEW_BUTTON_SPECIFIC</td>
+	<td>xpath=(//div[contains(@class,'step-form-view')]//button[contains(@title,'Remove')])[${key_positionNumber}]</td>
 	<td></td>
 </tr>
 <!--APP_RUNNING-->

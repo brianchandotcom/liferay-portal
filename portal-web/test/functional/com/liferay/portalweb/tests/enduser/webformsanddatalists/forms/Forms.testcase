@@ -4467,6 +4467,77 @@ definition {
 			uploadFileName = "Document_1.jpg");
 	}
 
+	@priority = "4"
+    test SubmitFormWithUploadFieldAsGuestUser {
+        property portal.acceptance = "false";
+        property portal.upstream = "true";
+        property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadFieldAsGuestUser";
+
+        Navigator.openURL();
+
+        ProductMenu.gotoPortlet(
+            category = "Content &amp; Data",
+            portlet = "Forms");
+
+        FormsAdminNavigator.gotoAddForm();
+
+        Form.editName();
+
+        Form.editDescription();
+
+        Form.gotoAddField(
+            fieldPositionNumber = "1",
+            fieldType = "Upload");
+
+        var uploadFieldName = FormFields.getFieldName();
+
+        Form.editFieldLabelMetal(fieldValue = "Upload Field");
+
+        FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+
+        Form.publishForm();
+
+        FormsAdminNavigator.gotoPublishCopyURLLink();
+
+        var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+            publishedFormPublicURL = "${publishedFormPublicURL}"
+        );
+
+        User.logoutPG();
+
+        Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+        FormPortlet.waitFormRenderer(text = "Submit");
+
+        FormFields.viewUploadFieldAsGuest(
+            fieldLabel = "Upload Field",
+            fieldName = "${uploadFieldName}");
+
+        UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+            key_fieldName = "${uploadFieldName}",
+            locator1 = "FormFields#UPLOAD_FIELD",
+            value1 = "Document -_.jpg");
+
+        FormPortlet.submitSuccessfully();
+
+        User.loginUserPG(
+            password = "test",
+            userEmailAddress = "test@liferay.com");
+
+        ProductMenu.gotoPortlet(
+            category = "Content &amp; Data",
+            portlet = "Forms");
+
+        FormsAdminNavigator.gotoViewEntries();
+
+        FormsAdminNavigator.gotoView();
+
+        FormsAdmin.viewUploadFile(
+            fieldLabel = "Upload Field",
+            fieldName = "${uploadFieldName}",
+            uploadFileName = "Document -_.jpg");
+    }
+
 	@description = "This is a use case for LPS-73322."
 	@priority = "4"
 	test SubmitWithRequiredDateField {

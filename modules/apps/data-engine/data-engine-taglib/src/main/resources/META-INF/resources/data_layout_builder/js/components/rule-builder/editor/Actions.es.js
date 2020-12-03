@@ -263,9 +263,11 @@ function Target({
 	action,
 	conditions,
 	dataProvider,
+	fieldSourcePage,
 	fields,
 	onChange,
 	pages,
+	source,
 	target,
 	...otherProps
 }) {
@@ -313,6 +315,12 @@ function Target({
 									value,
 								});
 								break;
+							case 'jump-to-page':
+								onChange({
+									source: source ?? fieldSourcePage,
+									value,
+								});
+								break;
 							default:
 								onChange({value});
 								break;
@@ -348,7 +356,7 @@ export function Actions({
 	functionsURL,
 	name,
 	pages,
-	state: {ifStatement},
+	state: {fieldSourcePage, ifStatement},
 }) {
 	const [modal, openModal] = useContext(ModalContext);
 
@@ -367,127 +375,134 @@ export function Actions({
 	return (
 		<Timeline.List>
 			<Timeline.Header title={name} />
-			{actions.map(({action, target, ...otherActionsProps}, index) => (
-				<Timeline.Item key={index}>
-					<Timeline.Panel
-						bottomContent={
-							<ActionBottomContent
-								action={action}
-								dataProviderInstanceParameterSettingsURL={
-									dataProviderInstanceParameterSettingsURL
-								}
-								fields={fields}
-								functionsURL={functionsURL}
-								onChange={({payload, type}) =>
-									dispatch({
+			{actions.map(
+				({action, source, target, ...otherActionsProps}, index) => (
+					<Timeline.Item key={index}>
+						<Timeline.Panel
+							bottomContent={
+								<ActionBottomContent
+									action={action}
+									dataProviderInstanceParameterSettingsURL={
+										dataProviderInstanceParameterSettingsURL
+									}
+									fields={fields}
+									functionsURL={functionsURL}
+									onChange={({payload, type}) =>
+										dispatch({
+											payload: {
+												...payload,
+												loc: index,
+											},
+											type,
+										})
+									}
+									target={target}
+									{...otherActionsProps}
+								/>
+							}
+							expression={expression}
+						>
+							<Timeline.FormGroupItem>
+								<FieldStateless
+									onChange={(event) =>
+										dispatch({
+											payload: {
+												loc: index,
+												value: event.value[0],
+											},
+											type: ACTIONS_TYPES.CHANGE_ACTION,
+										})
+									}
+									options={options}
+									placeholder={Liferay.Language.get(
+										'choose-an-option'
+									)}
+									showEmptyOption={false}
+									type="select"
+									value={[action]}
+								/>
+							</Timeline.FormGroupItem>
+							{action && (
+								<Target
+									action={action}
+									conditions={ifStatement.conditions}
+									dataProvider={dataProvider}
+									fieldSourcePage={fieldSourcePage}
+									fields={fields}
+									onChange={(event) =>
+										dispatch({
+											payload: {
+												...event,
+												loc: index,
+											},
+											type:
+												ACTIONS_TYPES.CHANGE_ACTION_TARGET,
+										})
+									}
+									pages={pages}
+									source={source}
+									target={target}
+								/>
+							)}
+						</Timeline.Panel>
+						{actions.length > 1 && (
+							<Timeline.ActionTrash
+								onClick={() => {
+									openModal({
 										payload: {
-											...payload,
-											loc: index,
+											body: (
+												<h4>
+													{Liferay.Language.get(
+														'are-you-sure-you-want-to-delete-this-action'
+													)}
+												</h4>
+											),
+											footer: [
+												null,
+												null,
+												<ClayButton.Group
+													key={3}
+													spaced
+												>
+													<ClayButton
+														displayType="secondary"
+														onClick={modal.onClose}
+													>
+														{Liferay.Language.get(
+															'dismiss'
+														)}
+													</ClayButton>
+													<ClayButton
+														onClick={() => {
+															dispatch({
+																payload: {
+																	loc: index,
+																},
+																type:
+																	ACTIONS_TYPES.DELETE_ACTION,
+															});
+															modal.onClose();
+														}}
+													>
+														{Liferay.Language.get(
+															'delete'
+														)}
+													</ClayButton>
+												</ClayButton.Group>,
+											],
+											header: Liferay.Language.get(
+												'delete-action'
+											),
+											size: 'sm',
 										},
-										type,
-									})
-								}
-								target={target}
-								{...otherActionsProps}
-							/>
-						}
-						expression={expression}
-					>
-						<Timeline.FormGroupItem>
-							<FieldStateless
-								onChange={(event) =>
-									dispatch({
-										payload: {
-											loc: index,
-											value: event.value[0],
-										},
-										type: ACTIONS_TYPES.CHANGE_ACTION,
-									})
-								}
-								options={options}
-								placeholder={Liferay.Language.get(
-									'choose-an-option'
-								)}
-								showEmptyOption={false}
-								type="select"
-								value={[action]}
-							/>
-						</Timeline.FormGroupItem>
-						{action && (
-							<Target
-								action={action}
-								conditions={ifStatement.conditions}
-								dataProvider={dataProvider}
-								fields={fields}
-								onChange={(event) =>
-									dispatch({
-										payload: {
-											...event,
-											loc: index,
-										},
-										type:
-											ACTIONS_TYPES.CHANGE_ACTION_TARGET,
-									})
-								}
-								pages={pages}
-								target={target}
+										type: 1,
+									});
+								}}
 							/>
 						)}
-					</Timeline.Panel>
-					{actions.length > 1 && (
-						<Timeline.ActionTrash
-							onClick={() => {
-								openModal({
-									payload: {
-										body: (
-											<h4>
-												{Liferay.Language.get(
-													'are-you-sure-you-want-to-delete-this-action'
-												)}
-											</h4>
-										),
-										footer: [
-											null,
-											null,
-											<ClayButton.Group key={3} spaced>
-												<ClayButton
-													displayType="secondary"
-													onClick={modal.onClose}
-												>
-													{Liferay.Language.get(
-														'dismiss'
-													)}
-												</ClayButton>
-												<ClayButton
-													onClick={() => {
-														dispatch({
-															payload: {
-																loc: index,
-															},
-															type:
-																ACTIONS_TYPES.DELETE_ACTION,
-														});
-														modal.onClose();
-													}}
-												>
-													{Liferay.Language.get(
-														'delete'
-													)}
-												</ClayButton>
-											</ClayButton.Group>,
-										],
-										header: Liferay.Language.get(
-											'delete-action'
-										),
-										size: 'sm',
-									},
-									type: 1,
-								});
-							}}
-						/>
-					)}
-				</Timeline.Item>
-			))}
+					</Timeline.Item>
+				)
+			)}
 			<Timeline.ItemAction>
 				<Timeline.IncrementButton
 					onClick={() => dispatch({type: ACTIONS_TYPES.ADD_ACTION})}

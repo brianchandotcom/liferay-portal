@@ -217,6 +217,7 @@ const reducer = (state, action) => {
 					field,
 					label: field.label,
 					repeatable: field.repeatable,
+					source: field.pageIndex,
 					type: 'field',
 					value,
 				};
@@ -229,6 +230,8 @@ const reducer = (state, action) => {
 
 			return {
 				...state,
+				fieldSourcePage:
+					typeof left.source === 'number' ? left.source : null,
 				ifStatement: {
 					actions,
 					conditions,
@@ -400,6 +403,7 @@ const init = ({
 	}
 
 	return {
+		fieldSourcePage: null,
 		ifStatement: {
 			actions: actions.map((action) =>
 				transformActions(action, dataProvider)

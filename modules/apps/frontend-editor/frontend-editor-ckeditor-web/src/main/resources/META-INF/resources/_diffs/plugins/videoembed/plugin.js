@@ -689,11 +689,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			});
 		},
 
-		onOkVideo(editor, html) {
-			const parsedHTML = new DOMParser().parseFromString(html, 'text/html');
-			const iFrame = parsedHTML.getElementsByTagName('iframe');
-			const url = iFrame[0].src;
-
+		onOkVideoHtml(editor, html, url) {
 			const embedContent = this._generateEmbedContent(
 				editor,
 				url,

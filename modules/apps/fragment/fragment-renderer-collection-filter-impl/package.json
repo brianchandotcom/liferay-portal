@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"react": "16.12.0"
+	},
+	"main": "js/MultiSelectCategory.es.js",
+	"name": "fragment-renderer-collection-filter-impl",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

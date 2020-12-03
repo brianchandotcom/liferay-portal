@@ -3694,6 +3694,35 @@ paths:
                     description:
                         ""
             tags: ["Document"]
+    "/asset-libraries/{assetLibraryId}/languages":
+        get:
+            # @review
+            description:
+                Retrieves the asset libraries languages.
+            operationId: getAssetLibraryLanguagesPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Language"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Language"
+                                type: array
+                    description:
+                        ""
+            tags: [ "Language" ]
     "/asset-libraries/{assetLibraryId}/structured-content-folders":
         get:
             operationId: getAssetLibraryStructuredContentFoldersPage

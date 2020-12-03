@@ -130,4 +130,218 @@ definition {
 			videoShortcutTitle = "Test YouTube Video Name");
 	}
 
+	@description = "This ensures that a video shortcut associated with a category can be searched."
+	@priority = "5"
+	test SearchForCategory {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Facebook Video",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			categoryName = "Category Name",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
+			vocabularyName = "Vocabulary Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			categoryName = "Category Name",
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084",
+			vocabularyName = "Vocabulary Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			categoryName = "Category Name",
+			videoShortcutTitle = "Test Twitch Video",
+			videoURL = "https://www.twitch.tv/videos/806178790",
+			vocabularyName = "Vocabulary Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Guest");
+
+		Search.searchCP(searchTerm = "Category");
+
+		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetType = "Document");
+		}
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Facebook Video",
+			searchAssetType = "Document");
+
+		Search.searchCP(searchTerm = "Name");
+
+		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetType = "Document");
+		}
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Facebook Video",
+			searchAssetType = "Document");
+
+		Search.searchCP(searchTerm = "Category Name");
+
+		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetType = "Document");
+		}
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Facebook Video",
+			searchAssetType = "Document");
+	}
+
+	@description = "This ensures that a video shortcut associated with a tag can be searched."
+	@priority = "5"
+	test SearchForTag {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Facebook Video",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			tagNameList = "tag name",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			tagNameList = "tag name",
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			tagNameList = "tag name",
+			videoShortcutTitle = "Test Twitch Video",
+			videoURL = "https://www.twitch.tv/videos/806178790");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Guest");
+
+		Search.searchCP(searchTerm = "tag");
+
+		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetType = "Document");
+		}
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Facebook Video",
+			searchAssetType = "Document");
+
+		Search.searchCP(searchTerm = "name");
+
+		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetType = "Document");
+		}
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Facebook Video",
+			searchAssetType = "Document");
+
+		Search.searchCP(searchTerm = "tag name");
+
+		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetType = "Document");
+		}
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Facebook Video",
+			searchAssetType = "Document");
+	}
+
+	@description = "This test covers LPS-123911. It ensures that a preview of the video can be shown when checking video shortcut from search result."
+	@priority = "4"
+	test ViewSearchResult {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		Navigator.gotoSitePage(
+			pageName = "Home",
+			siteName = "Guest");
+
+		Search.searchCP(searchTerm = "Test YouTube Video");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test YouTube Video",
+			searchAssetType = "Document");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test YouTube Video");
+
+		SearchPortlets.viewResultDetails(searchAssetTitle = "Test YouTube Video");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ASSET_DETAILS_IFRAME");
+
+		AssertVisible(locator1 = "SearchResults#ASSET_DETAILS_YOUTUBE_PREVIEW");
+
+		AssertElementPresent(locator1 = "Button#YOUTUBE_PLAY");
+	}
+
 }

@@ -15,6 +15,8 @@
 package com.liferay.layout.internal.search.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,15 +75,23 @@ public class LayoutCrawler {
 			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 				return EntityUtils.toString(httpResponse.getEntity());
 			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get layout content");
+			}
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get layout content", exception);
+			}
 		}
 
 		return StringPool.BLANK;
 	}
 
 	private static final String _USER_AGENT = "Liferay Page Crawler";
+
+	private static final Log _log = LogFactoryUtil.getLog(LayoutCrawler.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

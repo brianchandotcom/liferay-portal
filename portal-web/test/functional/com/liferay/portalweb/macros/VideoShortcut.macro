@@ -1,5 +1,101 @@
 definition {
 
+	macro addCP {
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "External Video Shortcut");
+
+		Type(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${videoURL}");
+
+		Pause(locator1 = "5000");
+
+		if (isSet(videoShortcutPreview)) {
+			AssertVisible(
+				key_videoShortcutPreview = "${videoShortcutPreview}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
+		}
+
+		if (isSet(extractedVideoShortcutTitle)) {
+			var titleText = selenium.getElementValue("TextInput#TITLE");
+
+			if ("${extractedVideoShortcutTitle}" == "${titleText}") {
+				echo("This is a correct title.");
+			}
+			else {
+				fail("FAIL!");
+			}
+		}
+
+		if (isSet(videoShortcutTitle)) {
+			PortletEntry.inputTitle(title = "${videoShortcutTitle}");
+		}
+
+		if (isSet(videoShortcutDescription)) {
+			PortletEntry.inputDescription(description = "${videoShortcutDescription}");
+		}
+
+		if (isSet(categoryName)) {
+			var key_categoryName = "${categoryName}";
+
+			Panel.expandPanel(panel = "Categorization");
+
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		if (isSet(tagNameList)) {
+			Panel.expandPanel(panel = "Categorization");
+
+			for (var tagName : list "${tagNameList}") {
+				AssetCategorization.addTag(tagName = "${tagName}");
+			}
+		}
+
+		PortletEntry.publish();
+	}
+
+	macro addPG {
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
+
+		Type(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${videoURL}");
+
+		Pause(locator1 = "5000");
+
+		if (isSet(videoShortcutPreview)) {
+			AssertVisible(
+				key_videoShortcutPreview = "${videoShortcutPreview}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
+		}
+
+		if (isSet(extractedVideoShortcutTitle)) {
+			var titleText = selenium.getElementValue("TextInput#TITLE");
+
+			if ("${extractedVideoShortcutTitle}" == "${titleText}") {
+				echo("This is a correct title.");
+			}
+			else {
+				fail("FAIL!");
+			}
+		}
+
+		if (isSet(videoShortcutTitle)) {
+			PortletEntry.inputTitle(title = "${videoShortcutTitle}");
+		}
+
+		if (isSet(videoShortcutDescription)) {
+			PortletEntry.inputDescription(description = "${videoShortcutDescription}");
+		}
+
+		AssertClick(
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
+	}
+
 	macro validateURL {
 		Type(
 			key_text = "Video URL",
@@ -30,6 +126,40 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#INFO_EXTERNAL_VIDEO_PREVIEW",
 				value1 = "Sorry, this platform is not supported.");
+		}
+	}
+
+	macro viewCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		LexiconEntry.gotoEntry(rowEntry = "${videoShortcutTitle}");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "${videoShortcutTitle}",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
+			value1 = "${videoShortcutTitle}");
+	}
+
+	macro viewPG {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertClick(
+			key_dmDocumentTitle = "${videoShortcutTitle}",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${videoShortcutTitle}");
+
+		DMDocument.expandInfo();
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${videoShortcutTitle}");
+
+		if (isSet(videoShortcutDescription)) {
+			var key_dmDocumentDescription = "${videoShortcutDescription}";
+
+			ScrollWebElementIntoView(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION");
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION",
+				value1 = "${videoShortcutDescription}");
 		}
 	}
 

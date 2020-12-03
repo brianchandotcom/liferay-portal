@@ -160,7 +160,10 @@ export default class Blogs {
 
 		if (urlOptions.length) {
 			urlOptions.forEach((option) => {
-				option.addEventListener(STR_CHANGE, this.urlOptions.bind(this));
+				option.addEventListener(
+					STR_CHANGE,
+					this._onChangeURLOptions.bind(this)
+				);
 			});
 		}
 	}

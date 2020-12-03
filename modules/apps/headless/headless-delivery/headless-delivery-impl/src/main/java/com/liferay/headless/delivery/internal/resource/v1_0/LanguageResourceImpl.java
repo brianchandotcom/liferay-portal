@@ -45,6 +45,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 
 	@Override
+	public Page<Language> getAssetLibraryLanguagesPage(Long assetLibraryId)
+		throws Exception {
+
+		return _getLanguagesPage(assetLibraryId);
+	}
+
+	@Override
 	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception {
 		return _getLanguagesPage(siteId);
 	}

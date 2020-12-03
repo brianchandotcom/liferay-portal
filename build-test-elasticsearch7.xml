@@ -147,6 +147,25 @@ xpack.ml.enabled: false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-pki-realm-settings">
+		<sequential>
+			<echo append="true" file="${elasticsearch.dir}-1/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
+xpack.security.transport.ssl.client_authentication: required
+xpack:
+  security:
+    authc:
+      realms:
+        pki:
+          pki1:
+            order: 0</echo>
+
+			<echo append="true" file="${elasticsearch.dir}-1/config/role_mapping.yml">${line.separator}superuser:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
+kibana_system:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-portal-remote-elasticsearch-osgi-properties">
 		<sequential>
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}productionModeEnabled="true"</echo>
@@ -285,25 +304,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>
 				</else>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="enable-pki-properties">
-		<sequential>
-			<echo append="true" file="${elasticsearch.dir}-1/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
-xpack.security.transport.ssl.client_authentication: required
-xpack:
-  security:
-    authc:
-      realms:
-        pki:
-          pki1:
-            order: 0</echo>
-
-			<echo append="true" file="${elasticsearch.dir}-1/config/role_mapping.yml">${line.separator}superuser:
-  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
-kibana_system:
-  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
 		</sequential>
 	</macrodef>
 
@@ -1239,7 +1239,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 						<antcall target="stop-elasticsearch" />
 
-						<enable-pki-properties />
+						<configure-pki-realm-settings />
 
 						<antcall target="start-elasticsearch-node" />
 

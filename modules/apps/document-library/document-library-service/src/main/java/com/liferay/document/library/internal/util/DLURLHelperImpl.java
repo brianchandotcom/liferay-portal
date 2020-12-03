@@ -22,7 +22,10 @@ import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
+import com.liferay.document.library.url.provider.DLFileVersionURLProvider;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,11 +48,15 @@ import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -71,6 +78,13 @@ public class DLURLHelperImpl implements DLURLHelper {
 	public String getDownloadURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		String url = _getDLFileVersionURLProviderURL(
+			fileVersion, themeDisplay, DLFileVersionURLProvider.Type.DOWNLOAD);
+
+		if (Validator.isNotNull(url)) {
+			return url;
+		}
 
 		String previewURL = getPreviewURL(
 			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
@@ -133,6 +147,14 @@ public class DLURLHelperImpl implements DLURLHelper {
 	public String getImagePreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
+
+		String url = _getDLFileVersionURLProviderURL(
+			fileVersion, themeDisplay,
+			DLFileVersionURLProvider.Type.IMAGE_PREVIEW);
+
+		if (Validator.isNotNull(url)) {
+			return url;
+		}
 
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
@@ -246,6 +268,13 @@ public class DLURLHelperImpl implements DLURLHelper {
 	public String getThumbnailSrc(
 		FileEntry fileEntry, FileVersion fileVersion,
 		ThemeDisplay themeDisplay) {
+
+		String url = _getDLFileVersionURLProviderURL(
+			fileVersion, themeDisplay, DLFileVersionURLProvider.Type.THUMBNAIL);
+
+		if (Validator.isNotNull(url)) {
+			return url;
+		}
 
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileEntry.getFileEntryId(), fileVersion.getFileVersionId(),
@@ -372,6 +401,27 @@ public class DLURLHelperImpl implements DLURLHelper {
 		return webDavURLSB.toString();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_dlFileVersionURLProviders =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DLFileVersionURLProvider.class, null,
+				(serviceReference, emitter) -> {
+					DLFileVersionURLProvider dlFileVersionURLProvider =
+						bundleContext.getService(serviceReference);
+
+					List<DLFileVersionURLProvider.Type> types =
+						dlFileVersionURLProvider.getTypes();
+
+					types.forEach(emitter::emit);
+				});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dlFileVersionURLProviders.close();
+	}
+
 	protected String getImageSrc(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString) {
@@ -395,11 +445,33 @@ public class DLURLHelperImpl implements DLURLHelper {
 		return thumbnailSrc;
 	}
 
+	private String _getDLFileVersionURLProviderURL(
+		FileVersion fileVersion, ThemeDisplay themeDisplay,
+		DLFileVersionURLProvider.Type type) {
+
+		DLFileVersionURLProvider dlURLProvider =
+			_dlFileVersionURLProviders.getService(type);
+
+		if (dlURLProvider != null) {
+			String url = dlURLProvider.getURL(fileVersion, themeDisplay);
+
+			if (Validator.isNotNull(url)) {
+				return url;
+			}
+		}
+
+		return null;
+	}
+
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	private ServiceTrackerMap
+		<DLFileVersionURLProvider.Type, DLFileVersionURLProvider>
+			_dlFileVersionURLProviders;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

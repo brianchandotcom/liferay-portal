@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-template-freemarker/src/main/java/com/liferay/portal/template/freemarker/internal/configuration/FreeMarkerEngineConfiguration\.java" />
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-template-velocity/src/main/java/com/liferay/portal/template/velocity/internal/configuration/VelocityEngineConfiguration\.java" />
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-template-xsl/src/main/java/com/liferay/portal/template/xsl/internal/configuration/XSLEngineConfiguration\.java" />
-	</source-check>
-</suppressions>

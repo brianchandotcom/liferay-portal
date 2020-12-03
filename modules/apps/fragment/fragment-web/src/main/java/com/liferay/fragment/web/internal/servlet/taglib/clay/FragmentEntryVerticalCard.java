@@ -49,7 +49,7 @@ public abstract class FragmentEntryVerticalCard
 
 	@Override
 	public String getIcon() {
-		return "code";
+		return fragmentEntry.getIcon();
 	}
 
 	@Override

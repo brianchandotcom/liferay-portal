@@ -282,6 +282,12 @@
 	<td>//head/title[contains(.,'${key_videoGenerationThumbnailResolution}')]</td>
 	<td></td>
 </tr>
+<!--VIDEO_SHORTCUT-->
+<tr>
+	<td>VIDEO_SHORTCUT_PREVIEW</td>
+	<td>//iframe[contains(@src,'${key_videoShortcutPreview}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

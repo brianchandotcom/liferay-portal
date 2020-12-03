@@ -58,7 +58,24 @@
 			</clay:content-col>
 
 			<clay:content-col>
-				<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
+				<%
+				ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+				FileVersion fileVersion = null;
+
+				if (row != null) {
+					fileVersion = (FileVersion)row.getObject();
+				}
+				else {
+					fileVersion = (FileVersion)request.getAttribute("info_panel.jsp-fileVersion");
+				}
+
+				DLViewFileEntryHistoryDisplayContext dlViewFileEntryHistoryDisplayContext = dlDisplayContextProvider.getDLViewFileEntryHistoryDisplayContext(request, response, fileVersion);
+				%>
+
+				<liferay-ui:menu
+					menu="<%= dlViewFileEntryHistoryDisplayContext.getMenu() %>"
+				/>
 			</clay:content-col>
 		</li>
 

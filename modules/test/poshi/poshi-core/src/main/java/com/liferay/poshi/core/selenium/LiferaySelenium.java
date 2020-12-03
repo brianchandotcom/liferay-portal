@@ -468,6 +468,8 @@ public interface LiferaySelenium {
 
 	public void stopLogger();
 
+	public void tripleClick(String locator);
+
 	public void type(String locator, String value) throws Exception;
 
 	public void typeAceEditor(String locator, String value);

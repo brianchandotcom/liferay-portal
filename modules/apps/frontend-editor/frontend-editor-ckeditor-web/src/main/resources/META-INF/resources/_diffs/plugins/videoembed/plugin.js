@@ -14,7 +14,7 @@
 
 if (!CKEDITOR.plugins.get('videoembed')) {
 	CKEDITOR.DEFAULT_LFR_EMBED_WIDGET_TPL =
-		'<div data-embed-url="{url}" class="embed-responsive embed-responsive-16by9">{content}<div class="embed-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
+		'<div data-embed-url="{url}" class="embed-responsive embed-responsive-16by9"><div data-embed-id="{url}">{content}</div><div class="embed-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
 
 	/**
 	 * Enum for supported embed alignments
@@ -690,9 +690,13 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		},
 
 		onOkVideo(editor, html) {
+			const parsedHTML = new DOMParser().parseFromString(html, 'text/html');
+			const iFrame = parsedHTML.getElementsByTagName('iframe');
+			const url = iFrame[0].src;
+
 			const embedContent = this._generateEmbedContent(
 				editor,
-				'url',
+				url,
 				html
 			);
 

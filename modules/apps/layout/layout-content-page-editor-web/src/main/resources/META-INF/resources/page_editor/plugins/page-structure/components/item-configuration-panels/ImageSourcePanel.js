@@ -147,7 +147,7 @@ function DirectImagePanel({item}) {
 		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
 	const imageDescription =
-		typeof editableConfig.alt === 'object'
+		typeof editableConfig.alt === 'object' && editableConfig.alt
 			? editableConfig.alt[languageId] ||
 			  editableConfig.alt[config.defaultLanguageId] ||
 			  ''
@@ -161,7 +161,7 @@ function DirectImagePanel({item}) {
 			...editableValue,
 
 			config: {
-				alt: {},
+				alt: {[languageId]: ''},
 				imageConfiguration: {},
 			},
 			[languageId]: nextImage.url,

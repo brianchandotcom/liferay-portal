@@ -245,13 +245,17 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		long folderId, HttpServletRequest httpServletRequest) {
 
 		if (_itemSelector == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		long groupId = GetterUtil.getLong(
 			ddmFormFieldRenderingContext.getProperty("groupId"));
 
 		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return StringPool.BLANK;
+		}
 
 		FileItemSelectorCriterion fileItemSelectorCriterion =
 			new FileItemSelectorCriterion();

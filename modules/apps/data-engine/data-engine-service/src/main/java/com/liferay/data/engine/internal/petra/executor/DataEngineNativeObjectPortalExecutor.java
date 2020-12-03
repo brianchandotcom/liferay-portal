@@ -23,6 +23,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
@@ -258,7 +259,7 @@ public class DataEngineNativeObjectPortalExecutor {
 						dataDefinitionKey =
 							dataEngineNativeObject.getClassName();
 						defaultDataLayout = new DataLayout();
-						storageType = "json";
+						storageType = StorageType.DEFAULT.getValue();
 					}
 				};
 			}

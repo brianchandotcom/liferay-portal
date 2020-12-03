@@ -58,8 +58,6 @@ definition {
 
 	@priority = "5"
 	test AddAndViewOtherCalendars {
-		property portal.upstream = "quarantine";
-
 		CalendarResource.add(calendarResourceName = "Calendar Resource Name");
 
 		Navigator.gotoPage(pageName = "Calendar Page");

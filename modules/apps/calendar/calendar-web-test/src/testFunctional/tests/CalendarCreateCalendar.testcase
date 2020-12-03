@@ -58,8 +58,6 @@ definition {
 
 	@priority = "4"
 	test AddCalendarToCurrentSiteCalendars {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.add(
@@ -77,8 +75,6 @@ definition {
 
 	@priority = "4"
 	test AddCalendarToMyCalendars {
-		property portal.upstream = "quarantine";
-
 		Calendar.add(
 			calendarName = "My Calendar Name",
 			calendarType = "My Calendars",
@@ -94,8 +90,6 @@ definition {
 
 	@priority = "4"
 	test AddUserCalendarToOtherCalendars {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -129,7 +123,6 @@ definition {
 	@priority = "5"
 	test ResizeAddedEventsViaEventBlock {
 		property portal.release = "false";
-		property portal.upstream = "quarantine";
 
 		CalendarNavigator.gotoView(viewType = "Day");
 

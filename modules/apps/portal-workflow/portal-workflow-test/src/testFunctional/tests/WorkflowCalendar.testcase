@@ -95,7 +95,6 @@ definition {
 	test ApproveEventWithInvitedUser {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName();
 
@@ -145,8 +144,6 @@ definition {
 	@description = "This is a use case for LPS-59572."
 	@priority = "3"
 	test DeleteAndRestoreEvent {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoView(viewType = "Week");
@@ -273,8 +270,6 @@ definition {
 
 	@priority = "4"
 	test RejectEventWithInvitedUser {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoView(viewType = "Week");
@@ -321,8 +316,6 @@ definition {
 
 	@priority = "3"
 	test ViewPendingStatusInEventDetails {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarScheduler.addEventToday(

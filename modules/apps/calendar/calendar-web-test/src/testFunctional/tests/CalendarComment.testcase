@@ -95,8 +95,6 @@ definition {
 
 	@priority = "4"
 	test AddToEventRegular {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();

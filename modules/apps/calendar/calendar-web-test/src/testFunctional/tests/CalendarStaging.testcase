@@ -64,8 +64,6 @@ definition {
 	@description = "This is a use case for LPS-52083."
 	@priority = "3"
 	test AddEvent {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");

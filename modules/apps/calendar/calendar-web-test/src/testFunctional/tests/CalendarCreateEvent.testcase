@@ -86,8 +86,7 @@ definition {
 
 	@priority = "5"
 	test AddAllDay {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -124,7 +123,6 @@ definition {
 	@priority = "3"
 	test AddAllDayWithRemindersEnabled {
 		property portal.release = "false";
-		property portal.upstream = "quarantine";
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -145,8 +143,6 @@ definition {
 
 	@priority = "3"
 	test AddAllDayWithTag {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
@@ -171,8 +167,6 @@ definition {
 
 	@priority = "3"
 	test AddAllDayWithUserInviteAccept {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -235,8 +229,6 @@ definition {
 	@description = "This is a use case for LPS-55163."
 	@priority = "4"
 	test AddAsPowerUserWhenSiteMemberNoViewPermissions {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
@@ -306,8 +298,6 @@ definition {
 	@description = "This is a use case for LPS-44540."
 	@priority = "5"
 	test AddEventTwiceViaMyCalendars {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title1");
@@ -515,8 +505,6 @@ definition {
 
 	@priority = "5"
 	test AddRepeatingMonthly2Times {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
@@ -535,8 +523,6 @@ definition {
 
 	@priority = "3"
 	test AddRepeatingRSVPYes {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
@@ -562,8 +548,6 @@ definition {
 
 	@priority = "4"
 	test AddRepeatingWeekly2Times {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.editTimeZonePacific();
@@ -602,8 +586,6 @@ definition {
 	@description = "This is a use case for LPS-56337."
 	@priority = "3"
 	test AddRepeatingWithEndDateBeforeStartDate {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Repeating Event");
@@ -618,8 +600,6 @@ definition {
 
 	@priority = "3"
 	test AddRepeatingWithRemindersEnabled {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
@@ -646,8 +626,6 @@ definition {
 
 	@priority = "3"
 	test AddRepeatingWithTag {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();
@@ -742,7 +720,6 @@ definition {
 	@priority = "4"
 	test AddRepeatingYearly {
 		property portal.release = "false";
-		property portal.upstream = "quarantine";
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -786,8 +763,6 @@ definition {
 
 	@priority = "4"
 	test AddViaScheduler {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		CalendarScheduler.addEventToday(
@@ -823,8 +798,6 @@ definition {
 
 	@priority = "4"
 	test AddWithRelatedAssetViaAssetPublisher {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -904,8 +877,6 @@ definition {
 	@description = "This is a use case for LPS-45616."
 	@priority = "4"
 	test CancelRepeatingDialog {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Non-Repeating Event 1");
@@ -1003,8 +974,6 @@ definition {
 
 	@priority = "4"
 	test InviteUsersAndViewResponse {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ApplicationsMenu.gotoPortlet(

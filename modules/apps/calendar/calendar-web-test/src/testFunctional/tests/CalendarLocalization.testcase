@@ -59,7 +59,6 @@ definition {
 	@description = "This is a use case for LPS-58649."
 	@priority = "3"
 	test EditLanguageSelectorAndViewEvent {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CalendarLocalization#EditLanguageSelectorAndViewEvent";
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -93,8 +92,6 @@ definition {
 	@description = "This is a use case for LPS-54786."
 	@priority = "3"
 	test ViewShowMoreLocalization {
-		property portal.upstream = "quarantine";
-
 		for (var eventNumber : list "1,2,3,4,5,6") {
 			CalendarNavigator.gotoAddEvent();
 

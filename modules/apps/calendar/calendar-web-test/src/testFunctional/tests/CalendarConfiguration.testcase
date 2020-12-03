@@ -75,8 +75,6 @@ definition {
 
 	@priority = "5"
 	test ConfigureDisplayTimeZone {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.editTimeZoneUTC();
@@ -144,8 +142,6 @@ definition {
 
 	@priority = "4"
 	test ConfigureEventsDisplaySettingsAndViewEvents {
-		property portal.upstream = "quarantine";
-
 		for (var eventNumber : list "1,2,3,4,5,6") {
 			CalendarNavigator.gotoAddEvent();
 
@@ -184,8 +180,6 @@ definition {
 
 	@priority = "4"
 	test View24hourTimeFormat {
-		property portal.upstream = "quarantine";
-
 		CalendarScheduler.viewFirstHour(firstHour = "12am");
 
 		CalendarScheduler.viewLastHour(lastHour = "11pm");
@@ -273,7 +267,6 @@ definition {
 
 	@priority = "5"
 	test ViewCalendarTimeZoneDefaults {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CalendarConfiguration#ViewCalendarTimeZoneDefaults";
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
@@ -303,8 +296,6 @@ definition {
 	@description = "This is a use case for LPS-51783."
 	@priority = "4"
 	test ViewEventDetailsAllDayWithModifiedUserTimeZone {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
@@ -336,8 +327,6 @@ definition {
 	@description = "This is a use case for LPS-51127."
 	@priority = "5"
 	test ViewWeekStartMonday {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Monday");

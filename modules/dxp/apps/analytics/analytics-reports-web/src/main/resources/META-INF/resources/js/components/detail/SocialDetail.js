@@ -27,6 +27,18 @@ import {numberFormat} from '../../utils/numberFormat';
 import TimeSpanSelector from '../TimeSpanSelector';
 import TotalCount from '../TotalCount';
 
+const SOCIAL_MEDIA_COLORS = {
+	facebook: '#4B9BFF',
+	instagram: '#FFB46E',
+	linkedin: '#7785FF',
+	others: '#6B6C7E',
+	pinterest: '#50D2A0',
+	snapchat: '#FFD76E',
+	tiktok: '#FF73C3',
+	twitter: '#5FC8FF',
+	youtube: '#FF5F5F',
+};
+
 export default function SocialDetail({
 	currentPage,
 	languageTag,
@@ -59,6 +71,21 @@ export default function SocialDetail({
 		const {value} = event.target;
 
 		changeTimeSpanKey({key: value});
+	};
+
+	const keyToHexColor = (name) => {
+		return SOCIAL_MEDIA_COLORS[name] ?? '#666666';
+	};
+
+	const keyToWidth = (index) => {
+		if (index === 0) {
+			return '100%';
+		}
+
+		return `${
+			(referringSocialMedia[index].traffic * 100) /
+			referringSocialMedia[0].traffic
+		}%`;
 	};
 
 	return (
@@ -120,16 +147,28 @@ export default function SocialDetail({
 						</ClayList.ItemTitle>
 					</ClayList.ItemField>
 				</ClayList.Item>
-				{referringSocialMedia.map(({title, traffic}) => {
+				{referringSocialMedia.map(({name, title, traffic}, index) => {
 					return (
 						<ClayList.Item flex key={title}>
-							<ClayList.ItemField expand>
+							<ClayList.ItemField style={{width: '70px'}}>
 								<ClayList.ItemText>
 									<span className="c-mr-2">{title}</span>
 								</ClayList.ItemText>
 							</ClayList.ItemField>
-							<ClayList.ItemField expand>
-								<span className="align-self-end">
+							<ClayList.ItemField
+								className="align-self-center"
+								expand
+							>
+								<div
+									style={{
+										backgroundColor: keyToHexColor(name),
+										height: '16px',
+										width: keyToWidth(index),
+									}}
+								/>
+							</ClayList.ItemField>
+							<ClayList.ItemField className="align-self-center">
+								<span className="align-self-end c-ml-2">
 									{numberFormat(languageTag, traffic)}
 								</span>
 							</ClayList.ItemField>

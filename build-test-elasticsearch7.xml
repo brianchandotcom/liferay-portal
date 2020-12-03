@@ -1467,17 +1467,12 @@ xpack.monitoring.collection.enabled: true</echo>
 			<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
 		</antelope:repeat>
 
-		<get-testcase-property property.name="elastic.xpack.enabled" />
-
-		<get-testcase-property property.name="pki.authentication.enabled" />
+		<condition property="kibana.running">
+			<socket port="5601" server="localhost" />
+		</condition>
 
 		<if>
-			<and>
-				<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-					<not>
-						<contains arg1="${pki.authentication.enabled}" arg2="true" />
-					</not>
-				</and>
+			<equals arg1="${kibana.running}" arg2="true" />
 			<then>
 				<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
 

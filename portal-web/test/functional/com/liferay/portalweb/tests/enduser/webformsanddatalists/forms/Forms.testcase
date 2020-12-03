@@ -4468,75 +4468,75 @@ definition {
 	}
 
 	@priority = "4"
-    test SubmitFormWithUploadFieldAsGuestUser {
-        property portal.acceptance = "false";
-        property portal.upstream = "true";
-        property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadFieldAsGuestUser";
+	test SubmitFormWithUploadFieldAsGuestUser {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadFieldAsGuestUser";
 
-        Navigator.openURL();
+		Navigator.openURL();
 
-        ProductMenu.gotoPortlet(
-            category = "Content &amp; Data",
-            portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
-        FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoAddForm();
 
-        Form.editName();
+		Form.editName();
 
-        Form.editDescription();
+		Form.editDescription();
 
-        Form.gotoAddField(
-            fieldPositionNumber = "1",
-            fieldType = "Upload");
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
 
-        var uploadFieldName = FormFields.getFieldName();
+		var uploadFieldName = FormFields.getFieldName();
 
-        Form.editFieldLabelMetal(fieldValue = "Upload Field");
+		Form.editFieldLabelMetal(fieldValue = "Upload Field");
 
-        FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
 
-        Form.publishForm();
+		Form.publishForm();
 
-        FormsAdminNavigator.gotoPublishCopyURLLink();
+		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-        var publishedFormPublicURL = Form.getPublishedFormPublicURL(
-            publishedFormPublicURL = "${publishedFormPublicURL}"
-        );
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
 
-        User.logoutPG();
+		User.logoutPG();
 
-        Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
-        FormPortlet.waitFormRenderer(text = "Submit");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
-        FormFields.viewUploadFieldAsGuest(
-            fieldLabel = "Upload Field",
-            fieldName = "${uploadFieldName}");
+		FormFields.viewUploadFieldAsGuest(
+			fieldLabel = "Upload Field",
+			fieldName = "${uploadFieldName}");
 
-        UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-            key_fieldName = "${uploadFieldName}",
-            locator1 = "FormFields#UPLOAD_FIELD",
-            value1 = "Document -_.jpg");
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document -_.jpg");
 
-        FormPortlet.submitSuccessfully();
+		FormPortlet.submitSuccessfully();
 
-        User.loginUserPG(
-            password = "test",
-            userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
-        ProductMenu.gotoPortlet(
-            category = "Content &amp; Data",
-            portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
-        FormsAdminNavigator.gotoViewEntries();
+		FormsAdminNavigator.gotoViewEntries();
 
-        FormsAdminNavigator.gotoView();
+		FormsAdminNavigator.gotoView();
 
-        FormsAdmin.viewUploadFile(
-            fieldLabel = "Upload Field",
-            fieldName = "${uploadFieldName}",
-            uploadFileName = "Document -_.jpg");
-    }
+		FormsAdmin.viewUploadFile(
+			fieldLabel = "Upload Field",
+			fieldName = "${uploadFieldName}",
+			uploadFileName = "Document -_.jpg");
+	}
 
 	@description = "This is a use case for LPS-73322."
 	@priority = "4"

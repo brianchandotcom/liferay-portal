@@ -60,20 +60,14 @@ export default function ReferralDetail({
 
 	const changeTimeSpanKey = useChangeTimeSpanKey();
 
-	const previousTimeSpan = usePreviousTimeSpan();
-
 	const nextTimeSpan = useNextTimeSpan();
+
+	const previousTimeSpan = usePreviousTimeSpan();
 
 	const handleTimeSpanChange = (event) => {
 		const {value} = event.target;
 
 		changeTimeSpanKey({key: value});
-	};
-	const handlePreviousTimeSpanClick = () => {
-		previousTimeSpan();
-	};
-	const handleNextTimeSpanClick = () => {
-		nextTimeSpan();
 	};
 
 	return (
@@ -84,8 +78,8 @@ export default function ReferralDetail({
 					disabledPreviousPeriodButton={
 						isPreviousPeriodButtonDisabled
 					}
-					onNextTimeSpanClick={handleNextTimeSpanClick}
-					onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
+					onNextTimeSpanClick={nextTimeSpan}
+					onPreviousTimeSpanClick={previousTimeSpan}
 					onTimeSpanChange={handleTimeSpanChange}
 					timeSpanKey={chartState.timeSpanKey}
 					timeSpanOptions={timeSpanOptions}

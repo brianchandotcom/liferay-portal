@@ -249,12 +249,6 @@ export default function Chart({
 
 		changeTimeSpanKey({key: value});
 	};
-	const handlePreviousTimeSpanClick = () => {
-		previousTimeSpan();
-	};
-	const handleNextTimeSpanClick = () => {
-		nextTimeSpan();
-	};
 
 	const legendFormatter =
 		dataSet &&
@@ -283,8 +277,8 @@ export default function Chart({
 						disabledPreviousPeriodButton={
 							isPreviousPeriodButtonDisabled
 						}
-						onNextTimeSpanClick={handleNextTimeSpanClick}
-						onPreviousTimeSpanClick={handlePreviousTimeSpanClick}
+						onNextTimeSpanClick={nextTimeSpan}
+						onPreviousTimeSpanClick={previousTimeSpan}
 						onTimeSpanChange={handleTimeSpanChange}
 						timeSpanKey={chartState.timeSpanKey}
 						timeSpanOptions={timeSpanOptions}

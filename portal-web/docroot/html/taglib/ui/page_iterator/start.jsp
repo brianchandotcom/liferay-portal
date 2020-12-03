@@ -278,7 +278,6 @@ if (forcePost && (portletURL != null)) {
 					<liferay-ui:message key="previous" />
 				</a>
 			</li>
-
 			<li class="<%= (cur != pages) ? "" : "disabled" %> page-item">
 				<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %> page-link" onclick="<%= ((cur != pages) && forcePost) ? _getOnClick(namespace, curParam, cur + 1) : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
 					<c:choose>
@@ -341,4 +340,6 @@ private String _getHREF(String formName, String curParam, int cur, String jsCall
 private String _getOnClick(String namespace, String curParam, int cur) {
 	return "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "','" + cur + "');";
 }
+%>
+
 %>

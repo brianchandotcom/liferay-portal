@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -82,23 +82,12 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 
 			{imageSource === IMAGE_SOURCES.direct.value ? (
 				<>
-					{selectedViewportSize === VIEWPORT_SIZES.desktop ? (
-						<ImageSelector
-							imageTitle={value.title}
-							label={field.label}
-							onClearButtonPressed={() => handleImageChanged({})}
-							onImageSelected={handleImageChanged}
-						/>
-					) : (
-						<ClayForm.Group small>
-							<ClayInput
-								className="mb-2"
-								disabled
-								readOnly
-								value={value.title}
-							/>
-						</ClayForm.Group>
-					)}
+					<ImageSelector
+						imageTitle={value.title}
+						label={field.label}
+						onClearButtonPressed={() => handleImageChanged({})}
+						onImageSelected={handleImageChanged}
+					/>
 
 					{config.adaptiveMediaEnabled && value?.fileEntryId && (
 						<ImageSelectorSize

@@ -245,20 +245,18 @@ function DirectImagePanel({item}) {
 
 	return (
 		<>
-			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-				<ImageSelector
-					imageTitle={imageTitle}
-					label={Liferay.Language.get('image')}
-					onClearButtonPressed={() => {
-						handleImageChanged({
-							fileEntryId: '',
-							title: '',
-							url: '',
-						});
-					}}
-					onImageSelected={handleImageChanged}
-				/>
-			)}
+			<ImageSelector
+				imageTitle={imageTitle}
+				label={Liferay.Language.get('image')}
+				onClearButtonPressed={() => {
+					handleImageChanged({
+						fileEntryId: '',
+						title: '',
+						url: '',
+					});
+				}}
+				onImageSelected={handleImageChanged}
+			/>
 
 			{config.adaptiveMediaEnabled && editableContent?.fileEntryId && (
 				<ImageSelectorSize

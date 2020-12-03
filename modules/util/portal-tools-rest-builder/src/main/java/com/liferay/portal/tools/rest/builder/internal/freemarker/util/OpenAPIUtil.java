@@ -79,10 +79,10 @@ public class OpenAPIUtil {
 			Map<String, Schema> allSchemas, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
+		Map<String, Schema> allExternalSchemas = new HashMap<>(allSchemas);
+
 		List<String> externalReferences =
 			OpenAPIParserUtil.getExternalReferences(openAPIYAML);
-
-		Map<String, Schema> allExternalSchemas = new HashMap<>();
 
 		Map<String, Schema> externalSchemas =
 			OpenAPIParserUtil.getExternalSchemas(openAPIYAML);
@@ -99,7 +99,7 @@ public class OpenAPIUtil {
 
 		queue.add(allExternalSchemas);
 
-		Map<String, Schema> map = null;
+		Map<String, Schema> map;
 
 		while ((map = queue.poll()) != null) {
 			for (Map.Entry<String, Schema> entry : map.entrySet()) {
@@ -110,23 +110,26 @@ public class OpenAPIUtil {
 				Items items = schema.getItems();
 
 				if (items != null) {
-					propertySchemas = items.getPropertySchemas();
+					if (items.getReference() != null) {
+						_addExternalReference(
+							allExternalSchemas, externalSchemas, queue,
+							items.getReference());
+					}
+					else {
+						propertySchemas = items.getPropertySchemas();
+					}
+				}
+				else if (schema.getAllOfSchemas() != null) {
+					List<Schema> allOfSchemas = schema.getAllOfSchemas();
+
+					queue.add(
+						Collections.singletonMap(
+							entry.getKey(), allOfSchemas.get(0)));
 				}
 				else if (schema.getReference() != null) {
-					String referenceName = OpenAPIParserUtil.getReferenceName(
+					_addExternalReference(
+						allExternalSchemas, externalSchemas, queue,
 						schema.getReference());
-
-					if (allSchemas.get(referenceName) == null) {
-						Schema externalSchema = externalSchemas.get(
-							referenceName);
-
-						Map<String, Schema> externalSchemaMap =
-							Collections.singletonMap(
-								referenceName, externalSchema);
-
-						allExternalSchemas.putAll(externalSchemaMap);
-						queue.add(externalSchemaMap);
-					}
 				}
 				else {
 					propertySchemas = schema.getPropertySchemas();
@@ -277,6 +280,24 @@ public class OpenAPIUtil {
 		}
 
 		return globalEnumSchemas;
+	}
+
+	private static void _addExternalReference(
+		Map<String, Schema> allExternalSchemas,
+		Map<String, Schema> externalSchemas, Queue<Map<String, Schema>> queue,
+		String reference) {
+
+		String referenceName = OpenAPIParserUtil.getReferenceName(reference);
+
+		if (allExternalSchemas.get(referenceName) == null) {
+			Schema externalSchema = externalSchemas.get(referenceName);
+
+			Map<String, Schema> externalSchemaMap = Collections.singletonMap(
+				referenceName, externalSchema);
+
+			allExternalSchemas.putAll(externalSchemaMap);
+			queue.add(externalSchemaMap);
+		}
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

@@ -14,12 +14,14 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
@@ -43,6 +45,8 @@ public class ResourceTestCaseOpenAPIParser {
 			ResourceOpenAPIParser.getJavaMethodSignatures(
 				configYAML, openAPIYAML, schemaName);
 
+		String version = _getVersion(openAPIYAML);
+
 		for (JavaMethodSignature resourceJavaMethodSignature :
 				resourceJavaMethodSignatures) {
 
@@ -55,7 +59,9 @@ public class ResourceTestCaseOpenAPIParser {
 					resourceJavaMethodSignature.getSchemaName(),
 					resourceJavaMethodSignature.getJavaMethodParameters(),
 					_getMethodName(resourceJavaMethodSignature),
-					resourceJavaMethodSignature.getReturnType()));
+					_getReturnType(
+						configYAML.getApiPackagePath(),
+						resourceJavaMethodSignature.getReturnType(), version)));
 		}
 
 		return javaMethodSignatures;
@@ -128,6 +134,47 @@ public class ResourceTestCaseOpenAPIParser {
 		}
 
 		return methodName;
+	}
+
+	private static String _getReturnType(
+		String apiPackage, String returnType, String version) {
+
+		String versionPackage = StringUtil.replace(version, '.', '_');
+
+		if (returnType.startsWith(
+				"com.liferay.portal.vulcan.pagination.Page<")) {
+
+			String itemType = returnType.substring(
+				returnType.indexOf("<") + 1, returnType.indexOf(">"));
+
+			if (itemType.contains(".") && !itemType.startsWith("java.lang") &&
+				!itemType.startsWith("com.liferay.portal.vulcan") &&
+				!itemType.startsWith(apiPackage)) {
+
+				return StringBundler.concat(
+					"com.liferay.portal.vulcan.pagination.Page<", apiPackage,
+					".dto.", versionPackage, ".",
+					itemType.substring(itemType.lastIndexOf(".") + 1), ">");
+			}
+		}
+		else if (returnType.contains(".") &&
+				 !returnType.startsWith("java.lang") &&
+				 !returnType.equals("javax.ws.rs.core.Response") &&
+				 !returnType.equals("com.liferay.portal.vulcan") &&
+				 !returnType.startsWith(apiPackage)) {
+
+			return StringBundler.concat(
+				apiPackage, ".dto.", versionPackage, ".",
+				returnType.substring(returnType.lastIndexOf(".") + 1));
+		}
+
+		return returnType;
+	}
+
+	private static String _getVersion(OpenAPIYAML openAPIYAML) {
+		Info info = openAPIYAML.getInfo();
+
+		return info.getVersion();
 	}
 
 }

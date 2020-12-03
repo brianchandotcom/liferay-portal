@@ -25,6 +25,10 @@ import ${configYAML.apiPackagePath}.client.problem.Problem;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
+<#list allExternalSchemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
+</#list>
+
 import java.io.File;
 
 import java.text.DateFormat;

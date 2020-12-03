@@ -495,8 +495,20 @@
 </tr>
 
 <tr>
+	<td>BUTTON_LOCALIZATION_FIELD_SET</td>
+	<td>//div[contains(@class, 'modal-header')]//button[contains(@class, 'dropdown-toggle btn btn-monospaced btn-secondary') and contains(@symbol, '${key_symbolName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>LOCALIZATION_LIST</td>
 	<td>//span[contains(@class, 'autofit-section') and contains(., '${key_localizationList}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>LOCALIZATION_LIST_FIELD_SET</td>
+	<td>xpath=(//span[contains(@class, 'autofit-section') and contains(., '${key_localizationList}')])[2]</td>
 	<td></td>
 </tr>
 
@@ -551,6 +563,12 @@
 <tr>
 	<td>FORM_FIELD_FIRST_ROW</td>
 	<td>//div[contains(@class,"placeholder row")]//div[contains(@data-ddm-field-page, "0") and contains(@data-ddm-field-row, "0")]//div[contains(@class, "ddm-target")]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FORM_FIELD_FIRST_ITEM</td>
+	<td>//div[contains(@class,"form-group") and contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 

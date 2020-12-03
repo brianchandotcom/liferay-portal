@@ -227,7 +227,7 @@ definition {
 	}
 
 	macro waitForItemPresentOnTable {
-		while (IsElementNotPresent(locator1 = "AppBuilder#ITEM_ON_THE_TABLE", value1 = "${itemName}")) {
+		while (IsElementNotPresent(key_itemName = "${itemName}", locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK")) {
 			Refresh();
 			Pause(locator1 = "3000");
 		}

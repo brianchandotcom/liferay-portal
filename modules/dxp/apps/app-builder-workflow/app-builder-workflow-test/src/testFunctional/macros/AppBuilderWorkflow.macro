@@ -26,6 +26,17 @@ definition {
 			locator1 = "AppBuilderWorkflow#STEP_CARD_ASSIGNEE_INFO");
 	}
 
+	macro assertAssignToOptionNotPresent {
+		Refresh();
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		AssertElementNotPresent(
+			key_menuItem = "Assign to",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 	macro assertButtonDisabled {
 		AssertVisible(
 			key_text = "${buttonName}",

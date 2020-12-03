@@ -34,6 +34,8 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "App Builder Workflow Site Name");
 
+		User.tearDownCP();
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
@@ -90,6 +92,124 @@ definition {
 		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test Test");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Administrator");
+	}
+
+	@description = "LRQA-60817 - Automate LPS-111007: As an App User, I want to assign an App entry (task) to an assignee using the App's Table View"
+	@priority = "4"
+	test AssignEntryToAnotherUser {
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.togglePasswordChangeRequired(
+			enableChangeRequired = "true",
+			passwordPolicyName = "Default Password Policy",
+			passwordPolicyPanel = "Password Changes");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea2@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+			assignee = "Portal Content Reviewer",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Portal Content Reviewer");
+		AppBuilderWorkflow.assertAssignToOptionNotPresent(itemName = "Content");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "userfn1 userln1",
+			itemName = "Content");
+
+		Refresh();
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "userfn1 userln1");
+		AppBuilderWorkflow.assignEntry(
+			assignee = "userfn2 userln2",
+			itemName = "Content");
+
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "userfn2 userln2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "userfn2 userln2");
 	}
 
 	@description = "Create a Basic Workflow App"

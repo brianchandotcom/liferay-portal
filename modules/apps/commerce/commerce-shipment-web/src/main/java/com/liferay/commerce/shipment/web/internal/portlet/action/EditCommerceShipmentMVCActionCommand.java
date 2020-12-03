@@ -140,6 +140,9 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateCommerceShipment(actionRequest);
 			}
+			else if (cmd.equals("address")) {
+				updateAddress(actionRequest);
+			}
 			else if (cmd.equals("addShipmentItems")) {
 				addCommerceShipmentItems(actionRequest);
 			}

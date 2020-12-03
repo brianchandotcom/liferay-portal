@@ -12,28 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router.internal.configuration;
+package com.liferay.portal.security.audit.router.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Brian Greenwald
- * @author Prathima Shreenath
+ * @author Shanon Mathai
  */
 @ExtendedObjectClassDefinition(category = "audit")
 @Meta.OCD(
-	id = "com.liferay.portal.security.audit.router.configuration.CSVLogMessageFormatterConfiguration",
+	id = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration",
 	localization = "content/Language",
-	name = "csv-log-message-formatter-configuration-name"
+	name = "persistent-audit-message-processor-configuration-name"
 )
-public interface CSVLogMessageFormatterConfiguration {
+public interface PersistentAuditMessageProcessorConfiguration {
 
-	@Meta.AD(
-		deflt = "additionalInfo|className|classPK|clientHost|clientIP|companyId|eventType|message|serverName|serverPort|sessionID|timestamp|userId|userName",
-		name = "columns", required = false
-	)
-	public String[] columns();
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	public boolean enabled();
 
 }

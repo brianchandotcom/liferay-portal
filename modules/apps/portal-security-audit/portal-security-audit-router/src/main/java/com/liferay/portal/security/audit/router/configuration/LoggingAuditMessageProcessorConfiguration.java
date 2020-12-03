@@ -12,24 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router.internal.configuration;
+package com.liferay.portal.security.audit.router.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Shanon Mathai
+ * @author Brian Greenwald
+ * @author Prathima Shreenath
  */
 @ExtendedObjectClassDefinition(category = "audit")
 @Meta.OCD(
-	id = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration",
+	id = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration",
 	localization = "content/Language",
-	name = "persistent-audit-message-processor-configuration-name"
+	name = "logging-audit-message-processor-configuration-name"
 )
-public interface PersistentAuditMessageProcessorConfiguration {
+public interface LoggingAuditMessageProcessorConfiguration {
 
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
+
+	@Meta.AD(
+		deflt = "CSV", name = "log-message-format",
+		optionValues = {"CSV", "JSON"}, required = false
+	)
+	public String logMessageFormat();
+
+	@Meta.AD(deflt = "false", name = "output-to-console", required = false)
+	public boolean outputToConsole();
 
 }

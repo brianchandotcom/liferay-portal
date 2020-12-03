@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.formatter.LogMessageFormatter;
-import com.liferay.portal.security.audit.router.internal.configuration.LoggingAuditMessageProcessorConfiguration;
+import com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

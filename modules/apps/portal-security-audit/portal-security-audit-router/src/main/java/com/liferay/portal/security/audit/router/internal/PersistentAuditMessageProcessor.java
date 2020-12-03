@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
-import com.liferay.portal.security.audit.router.internal.configuration.PersistentAuditMessageProcessorConfiguration;
+import com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration;
 
 import java.util.Map;
 

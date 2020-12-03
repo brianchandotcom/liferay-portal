@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplatePortletPreferences;
-import com.liferay.portal.template.velocity.internal.configuration.VelocityEngineConfiguration;
+import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;

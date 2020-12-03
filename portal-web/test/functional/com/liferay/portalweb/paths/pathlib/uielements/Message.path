@@ -179,11 +179,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_INVALID_FACEBOOK_VIDEO</td>
-	<td>//div[contains(@class,'pluginSkinLight')]//div</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_FIELD_REQUIRED</td>
 	<td>//div[@role='alert' and contains(.,'This field is required')] | //span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
 	<td></td>
@@ -196,6 +191,16 @@
 <tr>
 	<td>ERROR_FORM_VALIDATION</td>
 	<td>//div[contains(@class,'form-validator-stack')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_INVALID_FACEBOOK_VIDEO</td>
+	<td>//div[contains(@class,'pluginSkinLight')]//div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_INVALID_YOUTUBE_VIDEO</td>
+	<td>//div[contains(@class,'ytp-error-content-wrap')]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -226,11 +231,6 @@
 <tr>
 	<td>ERROR_SELECT_VALID_DATE_RANGE</td>
 	<td>//div[@role='alert' and contains(.,'Please select a valid date range.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ERROR_INVALID_YOUTUBE_VIDEO</td>
-	<td>//div[contains(@class,'ytp-error-content-wrap')]//span</td>
 	<td></td>
 </tr>
 <tr>

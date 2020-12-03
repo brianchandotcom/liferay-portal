@@ -77,7 +77,7 @@
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="status" />
+			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 
 		<!-- References -->

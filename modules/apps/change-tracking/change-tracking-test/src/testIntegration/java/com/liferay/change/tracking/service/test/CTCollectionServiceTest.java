@@ -191,7 +191,7 @@ public class CTCollectionServiceTest {
 		Assert.assertEquals(
 			0,
 			_ctCollectionService.getCTCollectionsCount(
-				_user.getCompanyId(), WorkflowConstants.STATUS_ANY, ""));
+				_user.getCompanyId(), null, ""));
 
 		_ctCollection = _ctCollectionService.addCTCollection(
 			_user.getCompanyId(), _user.getUserId(),
@@ -200,7 +200,7 @@ public class CTCollectionServiceTest {
 		Assert.assertEquals(
 			1,
 			_ctCollectionService.getCTCollectionsCount(
-				_user.getCompanyId(), WorkflowConstants.STATUS_ANY, ""));
+				_user.getCompanyId(), null, ""));
 
 		JournalFolder journalFolder = null;
 

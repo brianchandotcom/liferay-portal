@@ -93,8 +93,8 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 					'/commerce.commercecountry/get-shipping-commerce-countries',
 					{
 						companyId: <%= company.getCompanyId() %>,
-						end: -1,
-						start: -1,
+						shippingAllowed: true,
+						active: true,
 					},
 					callback
 				);

@@ -78,30 +78,31 @@ public class CTCollectionServiceUtil {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
-			long companyId, int status, int start, int end,
+			long companyId, int[] statuses, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTCollection>
 					orderByComparator) {
 
 		return getService().getCTCollections(
-			companyId, status, start, end, orderByComparator);
+			companyId, statuses, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
-			long companyId, int status, String keywords, int start, int end,
+			long companyId, int[] statuses, String keywords, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTCollection>
 					orderByComparator) {
 
 		return getService().getCTCollections(
-			companyId, status, keywords, start, end, orderByComparator);
+			companyId, statuses, keywords, start, end, orderByComparator);
 	}
 
 	public static int getCTCollectionsCount(
-		long companyId, int status, String keywords) {
+		long companyId, int[] statuses, String keywords) {
 
-		return getService().getCTCollectionsCount(companyId, status, keywords);
+		return getService().getCTCollectionsCount(
+			companyId, statuses, keywords);
 	}
 
 	/**

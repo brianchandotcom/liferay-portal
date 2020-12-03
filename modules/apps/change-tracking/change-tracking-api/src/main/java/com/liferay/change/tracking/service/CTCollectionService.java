@@ -72,17 +72,17 @@ public interface CTCollectionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getCTCollections(
-		long companyId, int status, int start, int end,
+		long companyId, int[] statuses, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getCTCollections(
-		long companyId, int status, String keywords, int start, int end,
+		long companyId, int[] statuses, String keywords, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCTCollectionsCount(
-		long companyId, int status, String keywords);
+		long companyId, int[] statuses, String keywords);
 
 	/**
 	 * Returns the OSGi service identifier.

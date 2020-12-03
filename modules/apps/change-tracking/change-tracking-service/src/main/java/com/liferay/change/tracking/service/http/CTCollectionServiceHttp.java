@@ -247,8 +247,8 @@ public class CTCollectionServiceHttp {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
-			HttpPrincipal httpPrincipal, long companyId, int status, int start,
-			int end,
+			HttpPrincipal httpPrincipal, long companyId, int[] statuses,
+			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTCollection>
 					orderByComparator) {
@@ -259,7 +259,7 @@ public class CTCollectionServiceHttp {
 				_getCTCollectionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, start, end, orderByComparator);
+				methodKey, companyId, statuses, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -285,7 +285,7 @@ public class CTCollectionServiceHttp {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
-			HttpPrincipal httpPrincipal, long companyId, int status,
+			HttpPrincipal httpPrincipal, long companyId, int[] statuses,
 			String keywords, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTCollection>
@@ -297,7 +297,7 @@ public class CTCollectionServiceHttp {
 				_getCTCollectionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, keywords, start, end,
+				methodKey, companyId, statuses, keywords, start, end,
 				orderByComparator);
 
 			Object returnObj = null;
@@ -323,7 +323,7 @@ public class CTCollectionServiceHttp {
 	}
 
 	public static int getCTCollectionsCount(
-		HttpPrincipal httpPrincipal, long companyId, int status,
+		HttpPrincipal httpPrincipal, long companyId, int[] statuses,
 		String keywords) {
 
 		try {
@@ -332,7 +332,7 @@ public class CTCollectionServiceHttp {
 				_getCTCollectionsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, keywords);
+				methodKey, companyId, statuses, keywords);
 
 			Object returnObj = null;
 
@@ -490,16 +490,16 @@ public class CTCollectionServiceHttp {
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _getCTCollectionsParameterTypes5 =
 		new Class[] {
-			long.class, int.class, int.class, int.class,
+			long.class, int[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCTCollectionsParameterTypes6 =
 		new Class[] {
-			long.class, int.class, String.class, int.class, int.class,
+			long.class, int[].class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCTCollectionsCountParameterTypes7 =
-		new Class[] {long.class, int.class, String.class};
+		new Class[] {long.class, int[].class, String.class};
 	private static final Class<?>[] _publishCTCollectionParameterTypes8 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _undoCTCollectionParameterTypes9 =

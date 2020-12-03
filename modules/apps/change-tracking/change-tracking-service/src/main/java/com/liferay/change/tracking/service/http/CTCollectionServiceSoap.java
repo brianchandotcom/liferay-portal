@@ -150,7 +150,7 @@ public class CTCollectionServiceSoap {
 
 	public static com.liferay.change.tracking.model.CTCollectionSoap[]
 			getCTCollections(
-				long companyId, int status, int start, int end,
+				long companyId, int[] statuses, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.change.tracking.model.CTCollection>
 						orderByComparator)
@@ -159,7 +159,7 @@ public class CTCollectionServiceSoap {
 		try {
 			java.util.List<com.liferay.change.tracking.model.CTCollection>
 				returnValue = CTCollectionServiceUtil.getCTCollections(
-					companyId, status, start, end, orderByComparator);
+					companyId, statuses, start, end, orderByComparator);
 
 			return com.liferay.change.tracking.model.CTCollectionSoap.
 				toSoapModels(returnValue);
@@ -173,7 +173,8 @@ public class CTCollectionServiceSoap {
 
 	public static com.liferay.change.tracking.model.CTCollectionSoap[]
 			getCTCollections(
-				long companyId, int status, String keywords, int start, int end,
+				long companyId, int[] statuses, String keywords, int start,
+				int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.change.tracking.model.CTCollection>
 						orderByComparator)
@@ -182,7 +183,8 @@ public class CTCollectionServiceSoap {
 		try {
 			java.util.List<com.liferay.change.tracking.model.CTCollection>
 				returnValue = CTCollectionServiceUtil.getCTCollections(
-					companyId, status, keywords, start, end, orderByComparator);
+					companyId, statuses, keywords, start, end,
+					orderByComparator);
 
 			return com.liferay.change.tracking.model.CTCollectionSoap.
 				toSoapModels(returnValue);
@@ -195,12 +197,12 @@ public class CTCollectionServiceSoap {
 	}
 
 	public static int getCTCollectionsCount(
-			long companyId, int status, String keywords)
+			long companyId, int[] statuses, String keywords)
 		throws RemoteException {
 
 		try {
 			int returnValue = CTCollectionServiceUtil.getCTCollectionsCount(
-				companyId, status, keywords);
+				companyId, statuses, keywords);
 
 			return returnValue;
 		}

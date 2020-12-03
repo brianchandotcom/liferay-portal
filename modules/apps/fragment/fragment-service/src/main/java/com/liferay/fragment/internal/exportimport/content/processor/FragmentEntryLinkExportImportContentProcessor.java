@@ -152,40 +152,41 @@ public class FragmentEntryLinkExportImportContentProcessor
 	private void _exportSiteNavigationMenu(
 			JSONObject configurationValueJSONObject,
 			boolean exportReferencedContent,
-			PortletDataContext portletDataContext, StagedModel stagedModel)
+			PortletDataContext portletDataContext,
+			StagedModel referrerStagedModel)
 		throws Exception {
 
 		long siteNavigationMenuId = configurationValueJSONObject.getLong(
 			"siteNavigationMenuId");
 
-		StagedModel modelToExport = null;
+		StagedModel stagedModel = null;
 
 		if (siteNavigationMenuId > 0) {
-			modelToExport =
+			stagedModel =
 				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
 					siteNavigationMenuId);
 		}
 		else {
-			modelToExport = _layoutLocalService.fetchLayout(
+			stagedModel = _layoutLocalService.fetchLayout(
 				configurationValueJSONObject.getLong(
 					"parentSiteNavigationMenuItemId"));
 		}
 
-		if (modelToExport == null) {
+		if (stagedModel == null) {
 			return;
 		}
 
 		if (exportReferencedContent) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, modelToExport,
+				portletDataContext, referrerStagedModel, stagedModel,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 		else {
 			Element entityElement = portletDataContext.getExportDataElement(
-				stagedModel);
+				referrerStagedModel);
 
 			portletDataContext.addReferenceElement(
-				stagedModel, entityElement, modelToExport,
+				referrerStagedModel, entityElement, stagedModel,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 		}
 	}

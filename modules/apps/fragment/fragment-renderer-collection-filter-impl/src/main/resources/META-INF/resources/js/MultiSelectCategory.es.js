@@ -111,10 +111,10 @@ MultiSelectCategory.propTypes = {
 	assetCategories: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
-			label: PropTypes.number.isRequired,
+			label: PropTypes.string.isRequired,
 		}).isRequired
 	),
 	assetVocabularyLabel: PropTypes.string.isRequired,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	selectedAssetCategoryIds: PropTypes.string.isRequired,
+	selectedAssetCategoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

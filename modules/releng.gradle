@@ -7,6 +7,7 @@ import com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransfor
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.Validator
 
 import groovy.io.FileType
@@ -1548,6 +1549,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 	}
 
 	List<Dependency> dependencies = new ArrayList<>()
+	Set<String> dependencyNotations = new TreeSet<>()
 
 	for (String artifactURL : artifactURLs) {
 		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
@@ -1568,7 +1570,36 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		dependencies.add(dependencyHandler.create(files(dir)))
 
 		logger.lifecycle "Added {}", jarFile.name
+
+		int x = artifactURL.lastIndexOf("/")
+
+		int y = artifactURL.lastIndexOf("/", x - 1)
+
+		int z = artifactURL.lastIndexOf("/", y - 1)
+
+		String dependencyName = artifactURL.substring(z + 1, y)
+		String dependencyVersion = artifactURL.substring(y + 1, x)
+
+		String baseURL = artifactURL.substring(0, z)
+
+		x = baseURL.indexOf("/content/")
+
+		y = baseURL.indexOf("/", x + 9)
+
+		z = baseURL.indexOf("/", y + 1)
+
+		String dependencyGroupPath = baseURL.substring(z + 1)
+
+		dependencyNotations.add dependencyGroupPath.replace('/' as char, '.' as char) + ":" + dependencyName + ":" + dependencyVersion
 	}
+
+	File versionsTxtFile = new File(portalArtifactsDir, "versions.txt")
+
+	versionsTxtFile.text = StringUtil.merge(dependencyNotations as String[], "\n")
+
+	DependencyHandler dependencyHandler = project.getDependencies()
+
+	dependencies.add(dependencyHandler.create(files(versionsTxtFile)))
 
 	portalArtifactsDir.eachFile {
 		File portalArtifactDir ->

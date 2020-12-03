@@ -41,8 +41,7 @@ export default function ReferralDetail({
 }) {
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	const {details} = currentPage.data;
-	const {referringDomains, referringPages} = details;
+	const {referringDomains, referringPages} = currentPage.data;
 
 	const dateFormatters = useMemo(() => dateFormat(languageTag), [
 		languageTag,
@@ -139,7 +138,7 @@ export default function ReferralDetail({
 				</ClayList.Item>
 				{referringPages
 					.slice(0, isExpanded ? 10 : ITEMS_TO_SHOW)
-					.map(({traffic, url}) => {
+					.map(({trafficAmount, url}) => {
 						return (
 							<ClayList.Item flex key={url}>
 								<ClayList.ItemField expand>
@@ -163,7 +162,10 @@ export default function ReferralDetail({
 								</ClayList.ItemField>
 								<ClayList.ItemField expand>
 									<span className="align-self-end">
-										{numberFormat(languageTag, traffic)}
+										{numberFormat(
+											languageTag,
+											trafficAmount
+										)}
 									</span>
 								</ClayList.ItemField>
 							</ClayList.Item>
@@ -210,7 +212,7 @@ export default function ReferralDetail({
 						</ClayList.ItemTitle>
 					</ClayList.ItemField>
 				</ClayList.Item>
-				{referringDomains.map(({traffic, url}) => {
+				{referringDomains.map(({trafficAmount, url}) => {
 					return (
 						<ClayList.Item flex key={url}>
 							<ClayList.ItemField expand>
@@ -234,7 +236,7 @@ export default function ReferralDetail({
 							</ClayList.ItemField>
 							<ClayList.ItemField expand>
 								<span className="align-self-end">
-									{numberFormat(languageTag, traffic)}
+									{numberFormat(languageTag, trafficAmount)}
 								</span>
 							</ClayList.ItemField>
 						</ClayList.Item>

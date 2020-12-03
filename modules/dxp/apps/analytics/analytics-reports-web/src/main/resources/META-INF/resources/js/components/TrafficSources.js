@@ -119,8 +119,10 @@ export default function TrafficSources({
 						<tbody>
 							{trafficSources.map((entry) => {
 								const hasDetails =
-									entry?.countryKeywords !== undefined ||
-									entry?.details !== undefined;
+									entry?.countryKeywords ||
+									(entry?.referringPages &&
+										entry?.referringDomains) ||
+									entry?.referringSocialMedia;
 
 								return (
 									<tr key={entry.name}>

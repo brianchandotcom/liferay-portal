@@ -46,8 +46,7 @@ export default function SocialDetail({
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
-	const {details} = currentPage.data;
-	const {referringSocialMedia} = details;
+	const {referringSocialMedia} = currentPage.data;
 
 	const dateFormatters = useMemo(() => dateFormat(languageTag), [
 		languageTag,
@@ -83,8 +82,8 @@ export default function SocialDetail({
 		}
 
 		return `${
-			(referringSocialMedia[index].traffic * 100) /
-			referringSocialMedia[0].traffic
+			(referringSocialMedia[index].trafficAmount * 100) /
+			referringSocialMedia[0].trafficAmount
 		}%`;
 	};
 
@@ -147,34 +146,41 @@ export default function SocialDetail({
 						</ClayList.ItemTitle>
 					</ClayList.ItemField>
 				</ClayList.Item>
-				{referringSocialMedia.map(({name, title, traffic}, index) => {
-					return (
-						<ClayList.Item flex key={title}>
-							<ClayList.ItemField style={{width: '70px'}}>
-								<ClayList.ItemText>
-									<span className="c-mr-2">{title}</span>
-								</ClayList.ItemText>
-							</ClayList.ItemField>
-							<ClayList.ItemField
-								className="align-self-center"
-								expand
-							>
-								<div
-									style={{
-										backgroundColor: keyToHexColor(name),
-										height: '16px',
-										width: keyToWidth(index),
-									}}
-								/>
-							</ClayList.ItemField>
-							<ClayList.ItemField className="align-self-center">
-								<span className="align-self-end c-ml-2">
-									{numberFormat(languageTag, traffic)}
-								</span>
-							</ClayList.ItemField>
-						</ClayList.Item>
-					);
-				})}
+				{referringSocialMedia.map(
+					({name, title, trafficAmount}, index) => {
+						return (
+							<ClayList.Item flex key={title}>
+								<ClayList.ItemField style={{width: '70px'}}>
+									<ClayList.ItemText>
+										<span className="c-mr-2">{title}</span>
+									</ClayList.ItemText>
+								</ClayList.ItemField>
+								<ClayList.ItemField
+									className="align-self-center"
+									expand
+								>
+									<div
+										style={{
+											backgroundColor: keyToHexColor(
+												name
+											),
+											height: '16px',
+											width: keyToWidth(index),
+										}}
+									/>
+								</ClayList.ItemField>
+								<ClayList.ItemField className="align-self-center">
+									<span className="align-self-end c-ml-2">
+										{numberFormat(
+											languageTag,
+											trafficAmount
+										)}
+									</span>
+								</ClayList.ItemField>
+							</ClayList.Item>
+						);
+					}
+				)}
 			</ClayList>
 		</div>
 	);

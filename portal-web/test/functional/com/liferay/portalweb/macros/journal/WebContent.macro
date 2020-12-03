@@ -2426,10 +2426,11 @@ definition {
 			}
 
 			if ("${fieldType}" == "Multiple Lines") {
-				AssertTextEquals(
-					key_fieldFieldLabel = "${webContentTextFieldLabel}",
-					locator1 = "DDMField#MULTIPLE_LINES",
-					value1 = "${webContentText}");
+				var actual = selenium.getHtmlNodeText("//label[normalize-space(text())='${webContentTextFieldLabel}']//following-sibling::textarea");
+
+				TestUtils.assertEquals(
+					actual = "${actual}",
+					expected = "${webContentText}");
 			}
 			else {
 				AssertTextEquals.assertValue(

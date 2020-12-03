@@ -799,11 +799,10 @@ public class RenderLayoutStructureDisplayContext {
 			String[] values = parameterMap.get(categoryIdParameterName);
 
 			if (ArrayUtil.isNotEmpty(values)) {
-				long assetCategoryId = GetterUtil.getLong(values[0]);
-
-				if (assetCategoryId != 0) {
-					assetCategoryIdsSet.add(new long[] {assetCategoryId});
-				}
+				assetCategoryIdsSet.add(
+					ArrayUtil.filter(
+						GetterUtil.getLongValues(values),
+						categoryId -> categoryId != 0));
 			}
 		}
 

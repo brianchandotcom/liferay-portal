@@ -230,11 +230,6 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testAddFileEntryEmptyFileName() throws Exception {
-		testAddFileEntryBasic("", _FILE_NAME, "txt", _FILE_NAME);
-	}
-
-	@Test
 	public void testAddFileEntryEmptyFileNameAndExtension() throws Exception {
 		testAddFileEntryBasic("", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
 	}
@@ -280,14 +275,6 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
-	}
-
-	@Test
-	public void testAddFileEntryTitleEqualToFileNamePlusExtension()
-		throws Exception {
-
-		testAddFileEntryBasic(
-			_STRIPPED_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test

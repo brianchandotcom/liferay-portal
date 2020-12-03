@@ -155,20 +155,6 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
-	public void testShouldFailIfDuplicateNameAndExtensionInFolder3()
-		throws Exception {
-
-		DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			DLAppServiceTestUtil.FILE_NAME,
-			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
-		DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			DLAppServiceTestUtil.STRIPPED_FILE_NAME,
-			DLAppServiceTestUtil.FILE_NAME, null);
-	}
-
-	@Test(expected = DuplicateFileEntryException.class)
 	public void testShouldFailIfDuplicateNameInFolder() throws Exception {
 		DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());

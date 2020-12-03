@@ -93,6 +93,9 @@ public class DisplaySettingsDisplayContext {
 	}
 
 	private JSONArray _getAvailableLanguagesJSONArray() {
+		JSONArray availableLanguagesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
 		Set<JSONObject> availableLanguagesJSONObjects = new TreeSet<>(
 			(jsonObject1, jsonObject2) -> {
 				String value1 = jsonObject1.getString("value");
@@ -116,7 +119,13 @@ public class DisplaySettingsDisplayContext {
 			}
 		}
 
-		return JSONFactoryUtil.createJSONArray(availableLanguagesJSONObjects);
+		for (JSONObject availableLanguageJSONObject :
+				availableLanguagesJSONObjects) {
+
+			availableLanguagesJSONArray.put(availableLanguageJSONObject);
+		}
+
+		return availableLanguagesJSONArray;
 	}
 
 	private JSONArray _getCurrentLanguagesJSONArray() {

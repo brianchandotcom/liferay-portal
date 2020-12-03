@@ -58,14 +58,14 @@ const SELECTOR_TRIGGER = `
 `;
 
 const TRIGGER_HIDE_EVENTS = [
-	'mouseleave',
+	'mouseout',
 	'mouseup',
 	'MSPointerUp',
 	'pointerup',
 	'touchend',
 ];
 const TRIGGER_SHOW_EVENTS = [
-	'mouseenter',
+	'mouseover',
 	'mouseup',
 	'MSPointerDown',
 	'pointerdown',
@@ -174,14 +174,14 @@ const TooltipProvider = () => {
 
 		const TOOLTIP_ENTER = delegate(
 			document.body,
-			'mouseenter',
+			'mouseover',
 			SELECTOR_TOOLTIP,
 			() => dispatch({target: state.target, type: 'show'})
 		);
 
 		const TOOLTIP_LEAVE = delegate(
 			document.body,
-			'mouseleave',
+			'mouseout',
 			SELECTOR_TOOLTIP,
 			() => dispatch({type: 'hide'})
 		);

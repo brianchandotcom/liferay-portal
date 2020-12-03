@@ -266,13 +266,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										<div class="tabbable">
 											<div class="tabbable-content">
 												<ul class="nav nav-tabs nav-tabs-default">
-													<li class="active">
-														<a href="javascript:;">
+													<li class="nav-item">
+														<a class="active nav-link" href="javascript:;">
 															<liferay-ui:message key="nodes" />
 														</a>
 													</li>
-													<li>
-														<a href="javascript:;">
+													<li class="nav-item">
+														<a class="nav-link" href="javascript:;">
 															<liferay-ui:message key="properties" />
 														</a>
 													</li>
@@ -290,13 +290,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											<div class="tabbable">
 												<div class="main-tab tabbable-content">
 													<ul class="nav nav-tabs">
-														<li class="active nav-item">
-															<a href="javascript:;">
+														<li class="nav-item">
+															<a class="active nav-link" href="javascript:;">
 																<liferay-ui:message key="diagram" />
 															</a>
 														</li>
 														<li class="nav-item">
-															<a href="javascript:;">
+															<a class="nav-link" href="javascript:;">
 																<liferay-ui:message key="source" />
 															</a>
 														</li>

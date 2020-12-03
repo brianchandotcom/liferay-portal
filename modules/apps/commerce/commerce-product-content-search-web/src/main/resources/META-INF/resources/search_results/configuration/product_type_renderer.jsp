@@ -27,8 +27,8 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 		for (CPType cpType : cpSearchResultsDisplayContext.getCPTypes()) {
 		%>
 
-			<li>
-				<a href="#<%= cpType.getName() %>"><%= cpType.getLabel(locale) %></a>
+			<li class="nav-item">
+				<a class="nav-link" href="#<%= cpType.getName() %>"><%= cpType.getLabel(locale) %></a>
 			</li>
 
 		<%

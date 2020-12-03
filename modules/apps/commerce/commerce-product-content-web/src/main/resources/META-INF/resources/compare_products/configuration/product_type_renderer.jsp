@@ -27,8 +27,8 @@ CPCompareContentDisplayContext cpCompareContentDisplayContext = (CPCompareConten
 		for (CPType cpType : cpCompareContentDisplayContext.getCPTypes()) {
 		%>
 
-			<li>
-				<a href="#<%= HtmlUtil.escape(cpType.getName()) %>"><%= HtmlUtil.escape(cpType.getLabel(locale)) %></a>
+			<li class="nav-item">
+				<a class="nav-link" href="#<%= HtmlUtil.escape(cpType.getName()) %>"><%= HtmlUtil.escape(cpType.getLabel(locale)) %></a>
 			</li>
 
 		<%

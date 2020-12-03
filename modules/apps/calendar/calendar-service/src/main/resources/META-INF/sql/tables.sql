@@ -64,7 +64,7 @@ create table CalendarNotificationTemplate (
 	modifiedDate DATE null,
 	calendarId LONG,
 	notificationType VARCHAR(75) null,
-	notificationTypeSettings VARCHAR(150) null,
+	notificationTypeSettings VARCHAR(200) null,
 	notificationTemplateType VARCHAR(75) null,
 	subject VARCHAR(75) null,
 	body TEXT null,

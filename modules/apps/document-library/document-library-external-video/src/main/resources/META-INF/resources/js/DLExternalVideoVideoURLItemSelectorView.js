@@ -24,7 +24,7 @@ const DLExternalVideoVideoURLItemSelectorView = ({
 	eventName,
 	getDLExternalVideoFieldsURL,
 	namespace,
-	returnType
+	returnType,
 }) => {
 	const [url, setUrl] = useState('');
 	const {error, fields, loading} = useDLExternalVideoFields({
@@ -38,7 +38,7 @@ const DLExternalVideoVideoURLItemSelectorView = ({
 			onSubmit={() =>
 				Liferay.Util.getOpener().Liferay.fire(eventName, {
 					data: {
-						returnType: returnType,
+						returnType,
 						value: fields.HTML,
 					},
 				})

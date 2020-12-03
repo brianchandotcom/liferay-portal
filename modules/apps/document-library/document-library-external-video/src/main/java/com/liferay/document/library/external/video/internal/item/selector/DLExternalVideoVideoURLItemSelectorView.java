@@ -76,7 +76,8 @@ public class DLExternalVideoVideoURLItemSelectorView
 			DLExternalVideoWebKeys.EVENT_NAME, itemSelectedEventName);
 
 		servletRequest.setAttribute(
-			DLExternalVideoWebKeys.RETURN_TYPE, ClassUtil.getClassName(
+			DLExternalVideoWebKeys.RETURN_TYPE,
+			ClassUtil.getClassName(
 				getSupportedItemSelectorReturnTypes().get(0)));
 
 		requestDispatcher.include(servletRequest, servletResponse);

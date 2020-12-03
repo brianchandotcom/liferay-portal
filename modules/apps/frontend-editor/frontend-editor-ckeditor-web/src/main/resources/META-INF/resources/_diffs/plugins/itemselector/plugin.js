@@ -107,6 +107,17 @@
 			}
 		},
 
+		_commitVideoHtmlValue(editor, html) {
+			const parsedHTML = new DOMParser().parseFromString(
+				html,
+				'text/html'
+			);
+			const iFrame = parsedHTML.getElementsByTagName('iframe');
+			const url = iFrame[0].src;
+
+			editor.plugins.videoembed.onOkVideoHtml(editor, html, url);
+		},
+
 		_commitVideoValue(value, node, extraStyles) {
 			var instance = this;
 
@@ -149,14 +160,6 @@
 				url: videoUrl,
 				width: videoWidth,
 			});
-		},
-
-		_commitVideoHtmlValue(editor, html) {
-			const parsedHTML = new DOMParser().parseFromString(html, 'text/html');
-			const iFrame = parsedHTML.getElementsByTagName('iframe');
-			const url = iFrame[0].src;
-
-			editor.plugins.videoembed.onOkVideoHtml(editor, html, url);
 		},
 
 		_getCommitMediaValueFn(value, editor, type) {
@@ -302,13 +305,16 @@
 						callback(videoSrc);
 					}
 					else {
-						if (selectedItem.returnType === STR_VIDEO_HTML_RETURN_TYPE) {
-							instance._commitVideoHtmlValue(editor, videoSrc)
+						if (
+							selectedItem.returnType ===
+							STR_VIDEO_HTML_RETURN_TYPE
+						) {
+							instance._commitVideoHtmlValue(editor, videoSrc);
 						}
 						else {
 							editor.plugins.videoembed.onOkVideo(editor, {
 								type: 'video',
-								url: value,
+								url: videoSrc,
 							});
 						}
 					}

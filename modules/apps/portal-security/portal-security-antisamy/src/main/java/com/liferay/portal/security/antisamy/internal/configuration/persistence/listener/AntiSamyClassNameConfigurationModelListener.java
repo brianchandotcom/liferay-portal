@@ -19,7 +19,7 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.security.antisamy.internal.configuration.AntiSamyClassNameConfiguration;
+import com.liferay.portal.security.antisamy.configuration.AntiSamyClassNameConfiguration;
 
 import java.net.URL;
 

@@ -228,21 +228,21 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 	@Override
 	public List<CTCollection> getCTCollections(
-		long companyId, int status, int start, int end,
+		long companyId, int[] statuses, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
+		if (statuses == null) {
 			return ctCollectionPersistence.filterFindByCompanyId(
 				companyId, start, end, orderByComparator);
 		}
 
 		return ctCollectionPersistence.filterFindByC_S(
-			companyId, status, start, end, orderByComparator);
+			companyId, statuses, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<CTCollection> getCTCollections(
-		long companyId, int status, String keywords, int start, int end,
+		long companyId, int[] statuses, String keywords, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -250,7 +250,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 		).from(
 			CTCollectionTable.INSTANCE
 		).where(
-			_getPredicate(companyId, status, keywords)
+			_getPredicate(companyId, statuses, keywords)
 		).orderBy(
 			CTCollectionTable.INSTANCE, orderByComparator
 		).limit(
@@ -262,13 +262,13 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 	@Override
 	public int getCTCollectionsCount(
-		long companyId, int status, String keywords) {
+		long companyId, int[] statuses, String keywords) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
 		).from(
 			CTCollectionTable.INSTANCE
 		).where(
-			_getPredicate(companyId, status, keywords)
+			_getPredicate(companyId, statuses, keywords)
 		);
 
 		Long count = ctCollectionPersistence.dslQuery(dslQuery);
@@ -431,14 +431,15 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 	}
 
 	private Predicate _getPredicate(
-		long companyId, int status, String keywords) {
+		long companyId, int[] statuses, String keywords) {
 
 		Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
 			companyId);
 
-		if (status != WorkflowConstants.STATUS_ANY) {
+		if (statuses != null) {
 			predicate = predicate.and(
-				CTCollectionTable.INSTANCE.status.eq(status));
+				CTCollectionTable.INSTANCE.status.in(
+					ArrayUtil.toArray(statuses)));
 		}
 
 		Predicate keywordsPredicate = null;

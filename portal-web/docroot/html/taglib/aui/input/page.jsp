@@ -25,27 +25,108 @@
 </c:if>
 
 <liferay-util:buffer
+	var="toggleSwitchLabelContent"
+>
+	<c:if test="<%= Validator.isNotNull(label) %>">
+		<span class="toggle-switch-label">
+			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+		</span>
+
+		<c:if test="<%= required && showRequiredLabel %>">
+			<span class="toggle-switch-text">
+				<liferay-ui:message key="required" />
+
+				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+			</span>
+		</c:if>
+	</c:if>
+</liferay-util:buffer>
+
+<liferay-util:buffer
+	var="toggleSwitchStartContent"
+>
+	<label <%= labelTag %>>
+		<c:if test='<%= inlineLabel.equals("left") %>'>
+			<%= toggleSwitchLabelContent %>
+		</c:if>
+
+		<span aria-hidden="true" class="toggle-switch-check-bar">
+</liferay-util:buffer>
+
+<liferay-util:buffer
+	var="toggleSwitchEndContent"
+>
+
+			<%
+			String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
+			String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
+			String iconOff = (String)dynamicAttributes.get("iconOff");
+			String iconOn = (String)dynamicAttributes.get("iconOn");
+			String labelOff = (String)dynamicAttributes.get("labelOff");
+			String labelOn = (String)dynamicAttributes.get("labelOn");
+
+			if (localizeLabel) {
+				if (Validator.isNotNull(labelOff)) {
+					labelOff = LanguageUtil.get(resourceBundle, labelOff);
+				}
+
+				if (Validator.isNotNull(labelOn)) {
+					labelOn = LanguageUtil.get(resourceBundle, labelOn);
+				}
+			}
+			%>
+
+			<span class="toggle-switch-bar">
+				<span class="toggle-switch-handle" data-label-off="<%= Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : StringPool.BLANK %>" data-label-on="<%= Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : StringPool.BLANK %>">
+					<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
+						<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> toggle-switch-icon <%= buttonIconOn %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
+						<span class="button-icon button-icon-off toggle-switch-icon <%= buttonIconOff %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(iconOn) %>">
+						<span class="toggle-switch-icon toggle-switch-icon-on <%= iconOn %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(iconOff) %>">
+						<span class="toggle-switch-icon toggle-switch-icon-off <%= iconOff %>"></span>
+					</c:if>
+				</span>
+			</span>
+		</span>
+
+		<c:if test='<%= inlineLabel.equals("right") %>'>
+			<%= toggleSwitchLabelContent %>
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+			<span class="toggle-switch-text-right"><%= pageContext.getAttribute("helpMessageContent") %></span>
+		</c:if>
+
+		<c:if test="<%= changesContext %>">
+			<span class="hide-accessible">(<liferay-ui:message key="changing-the-value-of-this-field-reloads-the-page" />)</span>
+		</c:if>
+	</label>
+</liferay-util:buffer>
+
+<liferay-util:buffer
 	var="labelContent"
 >
 	<c:if test="<%= Validator.isNotNull(label) %>">
-		<c:if test='<%= type.equals("toggle-switch") %>'>
-			<span class="toggle-switch-label">
-		</c:if>
+		<c:if test='<%= !type.equals("toggle-switch") %>'>
+			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
-		<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+			<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
+				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
 
-		<c:if test='<%= type.equals("toggle-switch") %>'>
-			</span>
-		</c:if>
+				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+			</c:if>
 
-		<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
-			<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
-
-			<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-		</c:if>
-
-		<c:if test='<%= Validator.isNotNull(helpMessage) && !type.equals("toggle-switch") %>'>
-			<%= pageContext.getAttribute("helpMessageContent") %>
+			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+				<%= pageContext.getAttribute("helpMessageContent") %>
+			</c:if>
 		</c:if>
 
 		<c:if test="<%= changesContext %>">
@@ -53,11 +134,9 @@
 		</c:if>
 	</c:if>
 
-	<c:if test='<%= type.equals("toggle-card") || type.equals("toggle-switch") %>'>
+	<c:if test='<%= type.equals("toggle-card") %>'>
 
 		<%
-		String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
-		String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
 		String iconOff = (String)dynamicAttributes.get("iconOff");
 		String iconOn = (String)dynamicAttributes.get("iconOn");
 
@@ -113,32 +192,6 @@
 					</div>
 				</div>
 			</div>
-		</c:if>
-
-		<c:if test='<%= type.equals("toggle-switch") %>'>
-			<span aria-hidden="true" class="toggle-switch-bar">
-				<span class="toggle-switch-handle" data-label-off="<%= Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : LanguageUtil.get(resourceBundle, "no") %>" data-label-on="<%= Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : LanguageUtil.get(resourceBundle, "yes") %>">
-					<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
-						<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> toggle-switch-icon <%= buttonIconOn %>"></span>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
-						<span class="button-icon button-icon-off toggle-switch-icon <%= buttonIconOff %>"></span>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(iconOn) %>">
-						<span class="toggle-switch-icon toggle-switch-icon-on <%= iconOn %>"></span>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(iconOff) %>">
-						<span class="toggle-switch-icon toggle-switch-icon-off <%= iconOff %>"></span>
-					</c:if>
-				</span>
-			</span>
-
-			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-				<span class="toggle-switch-text toggle-switch-text-right"><%= pageContext.getAttribute("helpMessageContent") %></span>
-			</c:if>
 		</c:if>
 	</c:if>
 </liferay-util:buffer>
@@ -234,7 +287,15 @@ boolean choiceField = checkboxField || radioField;
 		}
 		%>
 
+		<c:if test='<%= type.equals("toggle-switch") %>'>
+			<%= toggleSwitchStartContent %>
+		</c:if>
+
 		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="<%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> type="checkbox" <%= Validator.isNotNull(valueString) ? ("value=\"" + HtmlUtil.escapeAttribute(valueString)) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+
+		<c:if test='<%= type.equals("toggle-switch") %>'>
+			<%= toggleSwitchEndContent %>
+		</c:if>
 	</c:when>
 	<c:when test='<%= type.equals("radio") %>'>
 

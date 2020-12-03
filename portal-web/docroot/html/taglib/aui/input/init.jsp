@@ -42,6 +42,7 @@ boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAtt
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:inlineField")));
 java.lang.String inlineLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:inlineLabel"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:label"));
+java.lang.String labelCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:labelCssClass"));
 java.lang.String languageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:languageId"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:last")));
 boolean localized = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:localized")));

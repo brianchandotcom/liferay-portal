@@ -38,7 +38,7 @@ if (type.equals("assetCategories") || baseType.equals(Date.class.getName())) {
 	showForLabel = false;
 }
 
-if ((radioField || checkboxField) && Validator.isNull(inlineLabel)) {
+if ((radioField || checkboxField) && Validator.isNull(inlineLabel) && !type.equals("toggle-switch")) {
 	inlineLabel = "right";
 }
 
@@ -62,7 +62,17 @@ if (type.equals("toggle-card")) {
 }
 
 if (type.equals("toggle-switch")) {
-	fieldCssClass += " toggle-switch";
+	fieldCssClass += " toggle-switch-check";
+
+	if (Validator.isNotNull(labelCssClass)) {
+		labelCssClass += " ";
+	}
+
+	labelCssClass += "toggle-switch";
+
+	if (Validator.isNull(inlineLabel)) {
+		inlineLabel = "left";
+	}
 }
 
 boolean useInputWrapper = true;
@@ -81,5 +91,5 @@ if (inputWrapperClass.equals("boolean")) {
 	inputWrapperClass = "checkbox";
 }
 
-String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel, disabled);
+String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel, disabled, labelCssClass);
 %>

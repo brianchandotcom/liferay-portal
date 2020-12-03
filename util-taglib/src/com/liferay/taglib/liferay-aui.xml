@@ -787,6 +787,12 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>A CSS class for styling the label.</description>
+				<name>labelCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>languageId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

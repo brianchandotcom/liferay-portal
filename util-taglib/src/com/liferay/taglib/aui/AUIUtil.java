@@ -113,21 +113,41 @@ public class AUIUtil {
 		String baseType, boolean inlineField, boolean showForLabel,
 		String forLabel, boolean disabled) {
 
-		StringBundler sb = new StringBundler(6);
+		return buildLabel(
+			baseType, inlineField, showForLabel, forLabel, false,
+			StringPool.BLANK);
+	}
+
+	public static String buildLabel(
+		String baseType, boolean inlineField, boolean showForLabel,
+		String forLabel, boolean disabled, String labelCssClass) {
+
+		StringBundler sb = new StringBundler(10);
 
 		if (baseType.equals("boolean")) {
 			baseType = "checkbox";
 		}
 
 		if (baseType.equals("checkbox") || baseType.equals("radio")) {
-			if (inlineField) {
-				sb.append("class=\"");
-				sb.append(baseType);
-				sb.append("-inline\"");
+			sb.append("class=\"");
+			sb.append(labelCssClass);
+
+			if (disabled) {
+				sb.append(" disabled");
 			}
+
+			if (inlineField) {
+				sb.append(" ");
+				sb.append(baseType);
+				sb.append("-inline");
+			}
+
+			sb.append("\"");
 		}
 		else {
-			sb.append("class=\"control-label");
+			sb.append("class=\"");
+			sb.append(labelCssClass);
+			sb.append(" control-label");
 
 			if (disabled) {
 				sb.append(" disabled");

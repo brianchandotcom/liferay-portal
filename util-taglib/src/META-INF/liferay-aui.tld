@@ -773,6 +773,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description><![CDATA[A CSS class for styling the label.]]></description>
+			<name>labelCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>languageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

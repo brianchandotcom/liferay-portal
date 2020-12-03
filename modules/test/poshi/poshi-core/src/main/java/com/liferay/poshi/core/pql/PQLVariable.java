@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.core.pql;
 
-import com.liferay.poshi.core.PoshiProperties;
+import com.liferay.poshi.core.PoshiContext;
 
 import java.util.List;
 import java.util.Properties;
@@ -29,8 +29,7 @@ public class PQLVariable extends PQLValue {
 			return false;
 		}
 
-		List<String> poshiPropertyNames =
-			PoshiProperties.getPoshiPropertiesNames();
+		List<String> poshiPropertyNames = PoshiContext.getPoshiPropertyNames();
 
 		if (poshiPropertyNames.contains(variable)) {
 			return true;

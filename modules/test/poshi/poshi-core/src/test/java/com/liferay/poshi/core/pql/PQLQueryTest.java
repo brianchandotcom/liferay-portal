@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.core.pql;
 
+import com.liferay.poshi.core.PoshiContext;
+
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -34,6 +36,8 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Set<String> queries = new TreeSet<>();
 
@@ -87,6 +91,8 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
 
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
+
 		_validateGetPQLResultError(
 			"true ==", "Invalid query: true ==", properties);
 		_validateGetPQLResultError(
@@ -104,6 +110,8 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Set<String> queries = new TreeSet<>();
 
@@ -142,6 +150,8 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
 
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
+
 		_validateGetPQLResultError(
 			"AND true == true", "Invalid query: AND true == true", properties);
 		_validateGetPQLResultError(
@@ -166,6 +176,8 @@ public class PQLQueryTest extends TestCase {
 		Properties properties = new Properties();
 
 		properties.setProperty("portal.smoke", "true");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		_validateGetPQLResult(
 			"NOT portal.smoke == true", Boolean.FALSE, properties);
@@ -192,6 +204,8 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Set<String> queries = new TreeSet<>();
 

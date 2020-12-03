@@ -84,6 +84,10 @@ public class PoshiContext {
 		"**/*.prose", "**/*.testcase"
 	};
 
+	public static void addPoshiPropertyNames(Set<String> poshiPropertyNames) {
+		_poshiPropertyNames.addAll(poshiPropertyNames);
+	}
+
 	public static void clear() {
 		_commandElements.clear();
 		_commandSummaries.clear();
@@ -299,6 +303,32 @@ public class PoshiContext {
 		return _rootElements.get("path#" + namespace + "." + className);
 	}
 
+	public static List<String> getPoshiPropertyNames() {
+		List<String> poshiPropertyNames = new ArrayList<>(_poshiPropertyNames);
+
+		poshiPropertyNames.add("ignored");
+		poshiPropertyNames.add("known-issues");
+		poshiPropertyNames.add("priority");
+		poshiPropertyNames.add("test.run.environment");
+
+		return poshiPropertyNames;
+	}
+
+	public static List<String> getRequiredPoshiPropertyNames() {
+		List<String> requiredPoshiPropertyNames = new ArrayList<>();
+
+		String testCaseRequiredPropertyNames =
+			PropsValues.TEST_CASE_REQUIRED_PROPERTY_NAMES;
+
+		if (Validator.isNotNull(testCaseRequiredPropertyNames)) {
+			Collections.addAll(
+				requiredPoshiPropertyNames,
+				StringUtil.split(testCaseRequiredPropertyNames));
+		}
+
+		return requiredPoshiPropertyNames;
+	}
+
 	public static List<Element> getRootVarElements(
 		String classType, String className, String namespace) {
 
@@ -457,17 +487,6 @@ public class PoshiContext {
 
 		_testCaseNamespacedClassCommandName =
 			testCaseNamespacedClassCommandName;
-	}
-
-	protected static List<String> getPoshiPropertyNames() {
-		List<String> poshiPropertyNames = new ArrayList<>(_poshiPropertyNames);
-
-		poshiPropertyNames.add("ignored");
-		poshiPropertyNames.add("known-issues");
-		poshiPropertyNames.add("priority");
-		poshiPropertyNames.add("test.run.environment");
-
-		return poshiPropertyNames;
 	}
 
 	private static void _executePoshiFileCallables(

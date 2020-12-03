@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.core.pql;
 
+import com.liferay.poshi.core.PoshiContext;
+
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -34,6 +36,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Set<String> queries = new TreeSet<>();
 
@@ -89,6 +93,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
 
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
+
 		_validateGetPQLResultError(
 			"true ==", "Invalid value: true ==", properties);
 		_validateGetPQLResultError(
@@ -106,6 +112,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Set<String> queries = new TreeSet<>();
 
@@ -146,6 +154,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
 
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
+
 		_validateGetPQLResultError(
 			"AND true == true", "Invalid value: AND true == true", properties);
 		_validateGetPQLResultError(
@@ -170,6 +180,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		Properties properties = new Properties();
 
 		properties.setProperty("portal.smoke", "true");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		_validateGetPQLResult(
 			"NOT portal.smoke == true", Boolean.FALSE, properties);
@@ -196,6 +208,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
 		properties.setProperty("portal.smoke", "true");
 		properties.setProperty("priority", "5");
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Set<String> queries = new TreeSet<>();
 
@@ -399,6 +413,8 @@ public class PQLEntityFactoryTest extends TestCase {
 		Properties properties = new Properties();
 
 		properties.put("portal.smoke", pql);
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		_validateGetPQLResult("portal.smoke", expectedPQLResult, properties);
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.core.pql;
 
+import com.liferay.poshi.core.PoshiContext;
+
 import java.util.Properties;
 
 import junit.framework.TestCase;
@@ -70,6 +72,8 @@ public class PQLVariableTest extends TestCase {
 		Properties properties = new Properties();
 
 		properties.put("portal.smoke", pql);
+
+		PoshiContext.addPoshiPropertyNames(properties.stringPropertyNames());
 
 		Class<?> clazz = expectedPQLResult.getClass();
 

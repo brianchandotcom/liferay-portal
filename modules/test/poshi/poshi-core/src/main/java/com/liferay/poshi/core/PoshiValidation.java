@@ -838,7 +838,7 @@ public class PoshiValidation {
 		Element element, String filePath) {
 
 		List<String> requiredPropertyNames = new ArrayList<>(
-			PoshiProperties.getRequiredPoshiPropertiesNames());
+			PoshiContext.getRequiredPoshiPropertyNames());
 
 		List<Element> propertyElements = element.elements("property");
 

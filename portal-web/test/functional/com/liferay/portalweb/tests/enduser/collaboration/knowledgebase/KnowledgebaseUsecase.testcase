@@ -440,7 +440,8 @@ definition {
 		KBArticle.addCP(
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
 			kbArticleContent = "Knowledge Base Video Content",
-			kbArticleTitle = "Knowledge Base Article Title");
+			kbArticleTitle = "Knowledge Base Article Title",
+			navTab = "URL");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

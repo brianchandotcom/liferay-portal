@@ -142,11 +142,10 @@ definition {
 
 			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
 
-			Type(
-				locator1 = "CKEditor#VIDEO_URL",
-				value1 = "${embedVideo}");
-
-			Click(locator1 = "CKEditor#VIDEO_OK");
+			ItemSelector.addFromURL(
+				embedVideo = "${embedVideo}",
+				navTab = "${navTab}",
+				type = "Video");
 		}
 
 		if (isSet(kbArticleAttachment)) {

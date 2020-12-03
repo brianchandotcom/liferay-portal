@@ -14,7 +14,10 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.fragment.renderer.collection.filter.internal.display.context.CollectionFilterFragmentRendererDisplayContext" %>
 

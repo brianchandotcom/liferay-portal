@@ -20,10 +20,19 @@
 	<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>
 </p>
 
-<clay:dropdown-menu
-	cssClass="form-control form-control-select form-control-sm text-left"
-	displayType="secondary"
-	dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
-	label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
-	title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
-/>
+<c:choose>
+	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isMultipleSelection() %>">
+		<react:component
+			module="js/MultiSelectCategory.es"
+		/>
+	</c:when>
+	<c:otherwise>
+		<clay:dropdown-menu
+			cssClass="form-control form-control-select form-control-sm text-left"
+			displayType="secondary"
+			dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
+			label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
+			title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
+		/>
+	</c:otherwise>
+</c:choose>

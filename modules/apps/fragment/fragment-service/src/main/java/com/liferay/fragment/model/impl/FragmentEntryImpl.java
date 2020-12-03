@@ -62,6 +62,15 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getIcon() {
+		if (_icon == null) {
+			if (getType() == FragmentConstants.TYPE_REACT) {
+				_icon = "react";
+			}
+			else {
+				_icon = "code";
+			}
+		}
+
 		return _icon;
 	}
 
@@ -207,7 +216,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryImpl.class);
 
-	private String _icon = "code";
+	private String _icon;
 	private String _imagePreviewURL;
 
 }

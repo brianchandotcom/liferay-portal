@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-mobile-device-detection-fiftyonedegrees/src/main/java/com/liferay/portal/mobile/device/detection/fiftyonedegrees/internal/configuration/FiftyOneDegreesConfiguration\.java" />
-	</source-check>
-</suppressions>

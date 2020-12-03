@@ -39,7 +39,14 @@ export default function ReferralDetail({
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
 }) {
-	const [isExpanded, setIsExpanded] = useState(false);
+	const [isReferringPagesExpanded, setIsReferringPagesExpanded] = useState(
+		false
+	);
+
+	const [
+		isReferringDomainsExpanded,
+		setIsReferringDomainsExpanded,
+	] = useState(false);
 
 	const {referringDomains, referringPages} = currentPage.data;
 
@@ -137,7 +144,7 @@ export default function ReferralDetail({
 					</ClayList.ItemField>
 				</ClayList.Item>
 				{referringPages
-					.slice(0, isExpanded ? 10 : ITEMS_TO_SHOW)
+					.slice(0, isReferringPagesExpanded ? 10 : ITEMS_TO_SHOW)
 					.map(({trafficAmount, url}) => {
 						return (
 							<ClayList.Item flex key={url}>
@@ -173,19 +180,23 @@ export default function ReferralDetail({
 					})}
 			</ClayList>
 
-			<ClayButton
-				borderless
-				className="c-mb-4"
-				displayType="secondary"
-				onClick={() => setIsExpanded(!isExpanded)}
-				small
-			>
-				{isExpanded ? (
-					<span>{Liferay.Language.get('view-less')}</span>
-				) : (
-					<span>{Liferay.Language.get('view-more')}</span>
-				)}
-			</ClayButton>
+			{referringPages.length > 5 && (
+				<ClayButton
+					borderless
+					className="c-mb-4"
+					displayType="secondary"
+					onClick={() =>
+						setIsReferringPagesExpanded(!isReferringPagesExpanded)
+					}
+					small
+				>
+					{isReferringPagesExpanded ? (
+						<span>{Liferay.Language.get('view-less')}</span>
+					) : (
+						<span>{Liferay.Language.get('view-more')}</span>
+					)}
+				</ClayButton>
+			)}
 
 			<ClayList className="list-group-pages-list">
 				<ClayList.Item flex>
@@ -212,37 +223,62 @@ export default function ReferralDetail({
 						</ClayList.ItemTitle>
 					</ClayList.ItemField>
 				</ClayList.Item>
-				{referringDomains.map(({trafficAmount, url}) => {
-					return (
-						<ClayList.Item flex key={url}>
-							<ClayList.ItemField expand>
-								<ClayList.ItemText>
-									<ClayTooltipProvider>
-										<span
-											className="text-truncate-inline"
-											data-tooltip-align="top"
-											title={url}
-										>
-											<a
-												className="c-mr-2 text-primary text-truncate"
-												href={url}
-												target="_blank"
+				{referringDomains
+					.slice(0, isReferringDomainsExpanded ? 10 : ITEMS_TO_SHOW)
+					.map(({trafficAmount, url}) => {
+						return (
+							<ClayList.Item flex key={url}>
+								<ClayList.ItemField expand>
+									<ClayList.ItemText>
+										<ClayTooltipProvider>
+											<span
+												className="text-truncate-inline"
+												data-tooltip-align="top"
+												title={url}
 											>
-												{url}
-											</a>
-										</span>
-									</ClayTooltipProvider>
-								</ClayList.ItemText>
-							</ClayList.ItemField>
-							<ClayList.ItemField expand>
-								<span className="align-self-end">
-									{numberFormat(languageTag, trafficAmount)}
-								</span>
-							</ClayList.ItemField>
-						</ClayList.Item>
-					);
-				})}
+												<a
+													className="c-mr-2 text-primary text-truncate"
+													href={url}
+													target="_blank"
+												>
+													{url}
+												</a>
+											</span>
+										</ClayTooltipProvider>
+									</ClayList.ItemText>
+								</ClayList.ItemField>
+								<ClayList.ItemField expand>
+									<span className="align-self-end">
+										{numberFormat(
+											languageTag,
+											trafficAmount
+										)}
+									</span>
+								</ClayList.ItemField>
+							</ClayList.Item>
+						);
+					})}
 			</ClayList>
+
+			{referringDomains.length > 5 && (
+				<ClayButton
+					borderless
+					className="c-mb-4"
+					displayType="secondary"
+					onClick={() =>
+						setIsReferringDomainsExpanded(
+							!isReferringDomainsExpanded
+						)
+					}
+					small
+				>
+					{isReferringDomainsExpanded ? (
+						<span>{Liferay.Language.get('view-less')}</span>
+					) : (
+						<span>{Liferay.Language.get('view-more')}</span>
+					)}
+				</ClayButton>
+			)}
 		</div>
 	);
 }

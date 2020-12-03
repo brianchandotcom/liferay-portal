@@ -71,10 +71,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-changes"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="changeable-help" name="changeable" type="toggle-switch" value="<%= passwordPolicy.isChangeable() %>" />
+					<aui:input helpMessage="changeable-help" inlineLabel="right" labelCssClass="simple-toggle-switch" name="changeable" type="toggle-switch" value="<%= passwordPolicy.isChangeable() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />changeableSettings">
-						<aui:input helpMessage="change-required-help" name="changeRequired" type="toggle-switch" value="<%= passwordPolicy.isChangeRequired() %>" />
+						<aui:input helpMessage="change-required-help" inlineLabel="right" labelCssClass="simple-toggle-switch" name="changeRequired" type="toggle-switch" value="<%= passwordPolicy.isChangeRequired() %>" />
 
 						<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
 							<aui:option label="none" value="0" />
@@ -118,10 +118,10 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-syntax-checking"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" type="toggle-switch" value="<%= passwordPolicy.isCheckSyntax() %>" />
+					<aui:input helpMessage="enable-syntax-checking-help" inlineLabel="right" label="enable-syntax-checking" labelCssClass="simple-toggle-switch" name="checkSyntax" type="toggle-switch" value="<%= passwordPolicy.isCheckSyntax() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
-						<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" type="toggle-switch" value="<%= passwordPolicy.isAllowDictionaryWords() %>" />
+						<aui:input helpMessage="allow-dictionary-words-help" inlineLabel="right" labelCssClass="simple-toggle-switch" name="allowDictionaryWords" type="toggle-switch" value="<%= passwordPolicy.isAllowDictionaryWords() %>" />
 
 						<aui:input helpMessage="minimum-alpha-numeric-help" label="minimum-alpha-numeric" name="minAlphanumeric" />
 
@@ -153,7 +153,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-history"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" type="toggle-switch" value="<%= passwordPolicy.isHistory() %>" />
+					<aui:input helpMessage="enable-history-help" inlineLabel="right" label="enable-history" labelCssClass="simple-toggle-switch" name="history" type="toggle-switch" value="<%= passwordPolicy.isHistory() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />historySettings">
 						<aui:select helpMessage="history-count-help" name="historyCount">
@@ -182,7 +182,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="password-expiration"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" type="toggle-switch" value="<%= passwordPolicy.isExpireable() %>" />
+					<aui:input helpMessage="enable-expiration-help" inlineLabel="right" label="enable-expiration" labelCssClass="simple-toggle-switch" name="expireable" type="toggle-switch" value="<%= passwordPolicy.isExpireable() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
 						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
@@ -228,7 +228,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 				title="lockout"
 			>
 				<aui:fieldset>
-					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" type="toggle-switch" value="<%= passwordPolicy.isLockout() %>" />
+					<aui:input helpMessage="enable-lockout-help" inlineLabel="right" label="enable-lockout" labelCssClass="simple-toggle-switch" name="lockout" type="toggle-switch" value="<%= passwordPolicy.isLockout() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
 						<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />

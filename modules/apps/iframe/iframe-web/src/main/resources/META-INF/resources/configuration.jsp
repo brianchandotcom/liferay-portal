@@ -69,7 +69,7 @@ sb.append("\n");
 			>
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= iFramePortletInstanceConfiguration.relative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= iFramePortletInstanceConfiguration.src() %>" />
 
-				<aui:input label="relative-to-context-path" name="preferences--relative--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.relative() %>" />
+				<aui:input inlineLabel="right" label="relative-to-context-path" labelCssClass="simple-toggle-switch" name="preferences--relative--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.relative() %>" />
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
@@ -77,7 +77,7 @@ sb.append("\n");
 				collapsible="<%= true %>"
 				label="authenticate"
 			>
-				<aui:input label="authenticate" name="preferences--auth--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.auth() %>" />
+				<aui:input inlineLabel="right" label="authenticate" labelCssClass="simple-toggle-switch" name="preferences--auth--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.auth() %>" />
 
 				<div id="<portlet:namespace />authenticationOptions">
 					<div class="alert alert-info" id="<portlet:namespace />currentLoginMsg">
@@ -144,7 +144,7 @@ sb.append("\n");
 				collapsible="<%= true %>"
 				label="display-settings"
 			>
-				<aui:input helpMessage="resize-automatically-help" label="resize-automatically" name="preferences--resizeAutomatically--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>" />
+				<aui:input helpMessage="resize-automatically-help" inlineLabel="right" label="resize-automatically" labelCssClass="simple-toggle-switch" name="preferences--resizeAutomatically--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>" />
 
 				<div id="<portlet:namespace />displaySettings">
 					<aui:input name="preferences--heightMaximized--" type="text" value="<%= iFramePortletInstanceConfiguration.heightMaximized() %>">

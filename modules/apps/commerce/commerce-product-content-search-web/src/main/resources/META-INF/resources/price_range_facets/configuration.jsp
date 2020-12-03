@@ -41,7 +41,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 
 	<liferay-frontend:edit-form-body>
 		<aui:fieldset markupView="lexicon">
-			<aui:input checked="<%= cpPriceRangeFacetsDisplayContext.showInputRange() %>" label="show-input-range" name="preferences--showInputRange--" type="toggle-switch" />
+			<aui:input checked="<%= cpPriceRangeFacetsDisplayContext.showInputRange() %>" inlineLabel="right" label="show-input-range" labelCssClass="simple-toggle-switch" name="preferences--showInputRange--" type="toggle-switch" />
 
 			<aui:input helpMessage="ranges-json-array-help" label="ranges-json-array" name="preferences--rangesJSONArrayString--" type="textarea" value="<%= cpPriceRangeFacetsDisplayContext.getRangesJSONArrayString() %>" />
 		</aui:fieldset>

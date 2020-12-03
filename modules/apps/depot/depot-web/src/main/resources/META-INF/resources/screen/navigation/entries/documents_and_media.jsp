@@ -29,5 +29,5 @@ UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 	cssClass="panel-group-flush"
 	label='<%= LanguageUtil.get(request, "documents-and-media") %>'
 >
-	<aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}, false) %>' label="enable-directory-indexing" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled") %>' />
+	<aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}, false) %>' inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled") %>' />
 </liferay-frontend:fieldset>

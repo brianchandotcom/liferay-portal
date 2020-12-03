@@ -23,7 +23,7 @@ String feedType = (String)request.getAttribute("liferay-rss:rss-settings:feedTyp
 %>
 
 <div class="taglib-rss-settings">
-	<aui:input label="enable-rss-subscription" name="preferences--enableRss--" type="toggle-switch" value='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-rss:rss-settings:enabled")) %>' />
+	<aui:input inlineLabel="right" label="enable-rss-subscription" labelCssClass="simple-toggle-switch" name="preferences--enableRss--" type="toggle-switch" value='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-rss:rss-settings:enabled")) %>' />
 
 	<div id="<portlet:namespace />rssOptions">
 		<c:if test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-rss:rss-settings:nameEnabled")) %>'>

@@ -55,7 +55,7 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 		</div>
 	</div>
 
-	<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" label='<%= LanguageUtil.get(request, "override-discount") %>' name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
+	<aui:input helpMessage="override-discount-help" ignoreRequestValue="<%= true %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "override-discount") %>' labelCssClass="simple-toggle-switch" name="overrideDiscount" type="toggle-switch" value="<%= !discountDiscovery %>" />
 </c:if>
 
 <liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />

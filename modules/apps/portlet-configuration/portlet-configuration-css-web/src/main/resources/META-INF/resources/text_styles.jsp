@@ -33,9 +33,9 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 			<aui:option label="Verdana" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Verdana") %>' />
 		</aui:select>
 
-		<aui:input label="bold" name="fontBold" type="toggle-switch" value='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontWeight"), "bold") %>' />
+		<aui:input inlineLabel="right" label="bold" labelCssClass="simple-toggle-switch" name="fontBold" type="toggle-switch" value='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontWeight"), "bold") %>' />
 
-		<aui:input label="italic" name="fontItalic" type="toggle-switch" value='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontStyle"), "italic") %>' />
+		<aui:input inlineLabel="right" label="italic" labelCssClass="simple-toggle-switch" name="fontItalic" type="toggle-switch" value='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontStyle"), "italic") %>' />
 
 		<aui:select label="size" name="fontSize" showEmptyOption="<%= true %>">
 

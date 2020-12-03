@@ -75,7 +75,7 @@ if (commerceShippingMethod != null) {
 
 		<aui:input name="priority" />
 
-		<aui:input checked="<%= (commerceShippingMethod == null) ? false : commerceShippingMethod.isActive() %>" name="active" type="toggle-switch" />
+		<aui:input checked="<%= (commerceShippingMethod == null) ? false : commerceShippingMethod.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 	</commerce-ui:panel>
 
 	<aui:button-row>

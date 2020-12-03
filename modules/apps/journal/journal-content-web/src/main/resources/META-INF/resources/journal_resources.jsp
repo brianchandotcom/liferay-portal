@@ -94,6 +94,6 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="enable" />
 		</div>
 
-		<aui:input id='<%= refererPortletName + "enableViewCountIncrement" %>' label="view-count-increment" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+		<aui:input id='<%= refererPortletName + "enableViewCountIncrement" %>' inlineLabel="right" label="view-count-increment" labelCssClass="simple-toggle-switch" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 	</clay:sheet-section>
 </c:if>

@@ -37,7 +37,7 @@ CommerceWishList commerceWishList = commerceWishListDisplayContext.getCommerceWi
 		<aui:fieldset>
 			<aui:input name="name" />
 
-			<aui:input checked='<%= BeanParamUtil.getBoolean(commerceWishList, request, "defaultWishList") %>' label="default" name="defaultWishList" type="toggle-switch" />
+			<aui:input checked='<%= BeanParamUtil.getBoolean(commerceWishList, request, "defaultWishList") %>' inlineLabel="right" label="default" labelCssClass="simple-toggle-switch" name="defaultWishList" type="toggle-switch" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

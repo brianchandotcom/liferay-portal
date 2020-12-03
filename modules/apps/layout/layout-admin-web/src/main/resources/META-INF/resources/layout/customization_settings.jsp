@@ -70,7 +70,7 @@ if (selLayout != null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" label="customizable" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="toggle-switch" />
+		<aui:input checked="<%= selLayout.isCustomizable() %>" helpMessage="customizable-help" inlineLabel="right" label="customizable" labelCssClass="simple-toggle-switch" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="toggle-switch" />
 
 		<div class="customization-settings" id="<portlet:namespace />customizationSettingsOptions">
 

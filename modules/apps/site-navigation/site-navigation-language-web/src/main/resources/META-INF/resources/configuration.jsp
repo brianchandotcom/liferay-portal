@@ -45,7 +45,7 @@
 					/>
 				</div>
 
-				<aui:input name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset

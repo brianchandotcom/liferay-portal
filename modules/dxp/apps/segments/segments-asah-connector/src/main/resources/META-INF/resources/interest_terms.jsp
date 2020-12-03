@@ -16,4 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input helpMessage="enable-content-recommendation-help" label="enable-content-recommendation" name="TypeSettingsProperties--enableContentRecommendation--" type="toggle-switch" value="<%= enableContentRecommendation %>" />
+<aui:input helpMessage="enable-content-recommendation-help" inlineLabel="right" label="enable-content-recommendation" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--enableContentRecommendation--" type="toggle-switch" value="<%= enableContentRecommendation %>" />

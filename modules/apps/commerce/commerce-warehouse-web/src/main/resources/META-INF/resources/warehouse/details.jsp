@@ -38,5 +38,5 @@ CommerceInventoryWarehouse commerceInventoryWarehouse = commerceInventoryWarehou
 
 	<aui:input name="description" />
 
-	<aui:input checked="<%= (commerceInventoryWarehouse == null) ? false : commerceInventoryWarehouse.isActive() %>" name="active" type="toggle-switch" />
+	<aui:input checked="<%= (commerceInventoryWarehouse == null) ? false : commerceInventoryWarehouse.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 </aui:fieldset>

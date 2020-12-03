@@ -26,7 +26,7 @@
 	<liferay-ui:error key="stagingEnabled" message="staging-is-enabled-for-at-least-one-site-in-the-current-virtual-instance" />
 
 	<div class="form-group">
-		<aui:input label="" name="enablePublications" onClick='<%= liferayPortletResponse.getNamespace() + "updateSubmitRedirectToOverview()" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" />
+		<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enablePublications" onClick='<%= liferayPortletResponse.getNamespace() + "updateSubmitRedirectToOverview()" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" />
 	</div>
 </clay:sheet-section>
 

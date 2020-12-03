@@ -49,7 +49,7 @@ boolean enableAutoUpdate = commerceCurrencyConfiguration.enableAutoUpdate();
 
 					</aui:select>
 
-					<aui:input id="exchangeRateConfiguration--enableAutoUpdate--" name="exchangeRateConfiguration--enableAutoUpdate--" type="toggle-switch" value="<%= enableAutoUpdate %>" />
+					<aui:input id="exchangeRateConfiguration--enableAutoUpdate--" inlineLabel="right" labelCssClass="simple-toggle-switch" name="exchangeRateConfiguration--enableAutoUpdate--" type="toggle-switch" value="<%= enableAutoUpdate %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 

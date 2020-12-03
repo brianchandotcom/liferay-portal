@@ -82,7 +82,7 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 
 				<aui:input name="description" placeholder="description" />
 
-				<aui:input name="active" type="toggle-switch" value="<%= layoutPrototype.isActive() %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= layoutPrototype.isActive() %>" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

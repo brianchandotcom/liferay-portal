@@ -51,9 +51,9 @@
 
 				<aui:input label="max-num-of-tags" name="preferences--maxAssetTags--" type="text" value="<%= maxAssetTags %>" />
 
-				<aui:input label="show-unused-tags" name="preferences--showZeroAssetCount--" type="toggle-switch" value="<%= showZeroAssetCount %>" />
+				<aui:input inlineLabel="right" label="show-unused-tags" labelCssClass="simple-toggle-switch" name="preferences--showZeroAssetCount--" type="toggle-switch" value="<%= showZeroAssetCount %>" />
 
-				<aui:input name="preferences--showAssetCount--" type="toggle-switch" value="<%= showAssetCount %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--showAssetCount--" type="toggle-switch" value="<%= showAssetCount %>" />
 
 				<div class="<%= showAssetCount ? "" : "hide" %>" id="<portlet:namespace />assetCountOptions">
 					<aui:select helpMessage="asset-type-asset-count-help" label="asset-type" name="preferences--classNameId--">

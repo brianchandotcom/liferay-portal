@@ -44,9 +44,9 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getBillingAllowed() %>" name="billingAllowed" type="toggle-switch" />
+				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getShippingAllowed() %>" name="shippingAllowed" type="toggle-switch" />
+				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
 
 				<aui:input label="two-letter-iso-code" name="twoLettersISOCode" />
 
@@ -54,11 +54,11 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 
 				<aui:input name="numericISOCode" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getSubjectToVAT() %>" name="subjectToVAT" type="toggle-switch" />
+				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
 				<aui:input name="priority" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.isActive() %>" name="active" type="toggle-switch" />
+				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 
 				<c:if test="<%= commerceRegionsStarter != null %>">
 					<aui:input name="key" type="hidden" value="<%= commerceRegionsStarter.getKey() %>" />

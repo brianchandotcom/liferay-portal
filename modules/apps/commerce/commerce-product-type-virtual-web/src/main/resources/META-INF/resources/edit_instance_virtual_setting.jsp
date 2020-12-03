@@ -40,7 +40,7 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input checked="<%= override %>" name="override" type="toggle-switch" value="<%= override %>" />
+			<aui:input checked="<%= override %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="override" type="toggle-switch" value="<%= override %>" />
 		</aui:fieldset>
 
 		<div id="<portlet:namespace />cpDefinitionVirtualSettingContainer">

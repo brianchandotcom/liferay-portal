@@ -36,7 +36,7 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 	<div class="lfr-form-content">
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input checked="<%= commerceCountry.isChannelFilterEnabled() %>" label="enable-filter-channels" name="channelFilterEnabled" type="toggle-switch" value="<%= commerceCountry.isChannelFilterEnabled() %>" />
+				<aui:input checked="<%= commerceCountry.isChannelFilterEnabled() %>" inlineLabel="right" label="enable-filter-channels" labelCssClass="simple-toggle-switch" name="channelFilterEnabled" type="toggle-switch" value="<%= commerceCountry.isChannelFilterEnabled() %>" />
 
 				<c:choose>
 					<c:when test="<%= commerceChannels.isEmpty() %>">

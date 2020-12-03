@@ -69,11 +69,11 @@ if (deployed && oAuthEnabled) {
 			<clay:sheet-section>
 				<h3 class="sheet-subtitle"><liferay-ui:message key="general" /></h3>
 
-				<aui:input label="allow-the-use-of-sync" name="enabled" type="toggle-switch" value="<%= enabled %>" />
-				<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
+				<aui:input inlineLabel="right" label="allow-the-use-of-sync" labelCssClass="simple-toggle-switch" name="enabled" type="toggle-switch" value="<%= enabled %>" />
+				<aui:input inlineLabel="right" label="allow-users-to-sync-their-personal-sites" labelCssClass="simple-toggle-switch" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
 
 				<c:if test="<%= deployed %>">
-					<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="toggle-switch" value="<%= oAuthEnabled %>" />
+					<aui:input helpMessage="oauth-enabled-help" inlineLabel="right" label="oauth-enabled" labelCssClass="simple-toggle-switch" name="oAuthEnabled" type="toggle-switch" value="<%= oAuthEnabled %>" />
 				</c:if>
 			</clay:sheet-section>
 		</aui:fieldset>
@@ -81,7 +81,7 @@ if (deployed && oAuthEnabled) {
 		<clay:sheet-section>
 			<h3 class="sheet-subtitle"><liferay-ui:message key="desktop" /></h3>
 
-			<aui:input helpMessage="allow-lan-syncing-help" label="allow-lan-syncing" name="lanEnabled" type="toggle-switch" value="<%= lanEnabled %>" />
+			<aui:input helpMessage="allow-lan-syncing-help" inlineLabel="right" label="allow-lan-syncing" labelCssClass="simple-toggle-switch" name="lanEnabled" type="toggle-switch" value="<%= lanEnabled %>" />
 
 			<div class="form-group-autofit">
 				<div class="form-group-item">
@@ -118,7 +118,7 @@ if (deployed && oAuthEnabled) {
 			<clay:sheet-section>
 				<h3 class="sheet-subtitle"><liferay-ui:message key="mobile" /></h3>
 
-				<aui:input helpMessage="force-security-mode-help" label="force-security-mode" name="forceSecurityMode" type="toggle-switch" value="<%= forceSecurityMode %>" />
+				<aui:input helpMessage="force-security-mode-help" inlineLabel="right" label="force-security-mode" labelCssClass="simple-toggle-switch" name="forceSecurityMode" type="toggle-switch" value="<%= forceSecurityMode %>" />
 			</clay:sheet-section>
 		</aui:fieldset>
 

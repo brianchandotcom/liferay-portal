@@ -58,9 +58,9 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 						collapsible="<%= true %>"
 						label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'
 					>
-						<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
+						<aui:input disabled="<%= true %>" inlineLabel="right" label="regular-browsers" labelCssClass="simple-toggle-switch" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
 
-						<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault))) %>" />
+						<aui:input inlineLabel="right" label="mobile-devices" labelCssClass="simple-toggle-switch" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault))) %>" />
 					</liferay-frontend:fieldset>
 
 				<%

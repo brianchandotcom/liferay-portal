@@ -39,7 +39,7 @@
 	</div>
 
 	<aui:field-wrapper>
-		<aui:input label="localize-field-name" name="Property--localize-field-name--" type="toggle-switch" value="<%= propertyLocalizeFieldName %>" />
+		<aui:input inlineLabel="right" label="localize-field-name" labelCssClass="simple-toggle-switch" name="Property--localize-field-name--" type="toggle-switch" value="<%= propertyLocalizeFieldName %>" />
 
 		<div class="form-text">
 			<liferay-ui:message key="custom-field-localize-field-name-help" />
@@ -47,7 +47,7 @@
 	</aui:field-wrapper>
 
 	<aui:field-wrapper>
-		<aui:input label="visible-with-update-permission" name="Property--visible-with-update-permission--" type="toggle-switch" value="<%= propertyVisibleWithUpdatePermission %>" />
+		<aui:input inlineLabel="right" label="visible-with-update-permission" labelCssClass="simple-toggle-switch" name="Property--visible-with-update-permission--" type="toggle-switch" value="<%= propertyVisibleWithUpdatePermission %>" />
 
 		<div class="form-text">
 			<liferay-ui:message key="custom-field-visible-with-update-permission-help" />
@@ -55,7 +55,7 @@
 	</aui:field-wrapper>
 
 	<aui:field-wrapper>
-		<aui:input label="hidden" name="Property--hidden--" type="toggle-switch" value="<%= propertyHidden %>" />
+		<aui:input inlineLabel="right" label="hidden" labelCssClass="simple-toggle-switch" name="Property--hidden--" type="toggle-switch" value="<%= propertyHidden %>" />
 
 		<div class="form-text">
 			<liferay-ui:message key="custom-field-hidden-help" />
@@ -64,7 +64,7 @@
 
 	<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) %>">
 		<aui:field-wrapper>
-			<aui:input label="secret" name="Property--secret--" type="toggle-switch" value="<%= propertySecret %>" />
+			<aui:input inlineLabel="right" label="secret" labelCssClass="simple-toggle-switch" name="Property--secret--" type="toggle-switch" value="<%= propertySecret %>" />
 
 			<div class="form-text">
 				<liferay-ui:message key="custom-field-secret-help" />
@@ -78,7 +78,7 @@
 
 	<aui:field-wrapper>
 		<div class="<%= textInputTypeSearch ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeywordOrText">
-			<aui:input disabled="<%= !((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) ? true : false %>" id="searchableKeyWordOrText" label="searchable" name="searchable" type="toggle-switch" value="<%= (expandoColumn != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
+			<aui:input disabled="<%= !((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) ? true : false %>" id="searchableKeyWordOrText" inlineLabel="right" label="searchable" labelCssClass="simple-toggle-switch" name="searchable" type="toggle-switch" value="<%= (expandoColumn != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
 
 			<div class="form-text">
 				<liferay-ui:message key="custom-field-index-type-help" />
@@ -105,7 +105,7 @@
 		<div class="<%= !textInputTypeSearch ? "" : "hide" %>" id="<portlet:namespace />searchableAsKeyword">
 			<aui:input disabled="<%= !textInputTypeSearch ? false : true %>" id="indexTypeSearchableAsKeyword" name="Property--index-type--" type="hidden" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 
-			<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" disabled="<%= !textInputTypeSearch ? false : true %>" id="indexTypeSearchableAsKeywordToggleSwitch" label="searchable-as-keyword" name="searchable" type="toggle-switch" />
+			<aui:input checked="<%= (expandoColumn != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" disabled="<%= !textInputTypeSearch ? false : true %>" id="indexTypeSearchableAsKeywordToggleSwitch" inlineLabel="right" label="searchable-as-keyword" labelCssClass="simple-toggle-switch" name="searchable" type="toggle-switch" />
 
 			<div class="form-text">
 				<liferay-ui:message key="custom-field-index-type-help" />

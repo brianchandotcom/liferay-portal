@@ -28,7 +28,7 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 <liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 <liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
-<aui:input id="enableEmailSubscription" label="enable-email-subscription" name="preferences--emailAssetEntryAddedEnabled--" type="toggle-switch" value="<%= emailAssetEntryAddedEnabled %>" />
+<aui:input id="enableEmailSubscription" inlineLabel="right" label="enable-email-subscription" labelCssClass="simple-toggle-switch" name="preferences--emailAssetEntryAddedEnabled--" type="toggle-switch" value="<%= emailAssetEntryAddedEnabled %>" />
 
 <div class="<%= emailAssetEntryAddedEnabled ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />emailSubscriptionSettings">
 	<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />

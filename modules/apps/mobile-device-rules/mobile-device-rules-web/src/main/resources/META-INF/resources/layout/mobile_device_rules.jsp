@@ -49,7 +49,7 @@ long classPK = selLayout.getPlid();
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<aui:input label='<%= LanguageUtil.format(resourceBundle, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="toggle-switch" value="<%= mdrRuleGroupInstancesCount == 0 %>" />
+<aui:input inlineLabel="right" label='<%= LanguageUtil.format(resourceBundle, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' labelCssClass="simple-toggle-switch" name="inheritRuleGroupInstances" type="toggle-switch" value="<%= mdrRuleGroupInstancesCount == 0 %>" />
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<p class="text-muted">

@@ -80,14 +80,14 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 				</aui:select>
 
 				<div class="<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
-					<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
+					<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
 				</div>
 
-				<aui:input name="preferences--showCurrentPage--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--showCurrentPage--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>" />
 
-				<aui:input name="preferences--useHtmlTitle--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--useHtmlTitle--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
 
-				<aui:input name="preferences--showHiddenPages--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--showHiddenPages--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

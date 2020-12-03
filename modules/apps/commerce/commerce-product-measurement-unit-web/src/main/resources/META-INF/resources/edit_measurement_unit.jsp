@@ -63,7 +63,7 @@ else {
 
 				<aui:input name="key" />
 
-				<aui:input name="primary" type="toggle-switch" value="<%= primary %>" />
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="primary" type="toggle-switch" value="<%= primary %>" />
 
 				<%
 				String taglibLabel = "ratio-to-primary";

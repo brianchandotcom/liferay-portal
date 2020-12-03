@@ -90,7 +90,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 
 		<aui:input name="priority" />
 
-		<aui:input checked="<%= commercePriceModifier.isActive() %>" name="active" type="toggle-switch" />
+		<aui:input checked="<%= commercePriceModifier.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 	</commerce-ui:panel>
 
 	<commerce-ui:panel

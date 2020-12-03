@@ -21,7 +21,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 %>
 
 <aui:fieldset markupView="lexicon">
-	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isPaginate() %>" label="paginate" name="preferences--paginate--" type="toggle-switch" />
+	<aui:input checked="<%= cpPublisherConfigurationDisplayContext.isPaginate() %>" inlineLabel="right" label="paginate" labelCssClass="simple-toggle-switch" name="preferences--paginate--" type="toggle-switch" />
 
 	<aui:input helpMessage="maximum-number-of-products-to-display-if-pagination-is-disabled-otherwise-number-of-items-to-display-per-page" label="number-of-items-to-display" name="preferences--paginationDelta--" type="number" value="<%= cpPublisherConfigurationDisplayContext.getPaginationDelta() %>" />
 </aui:fieldset>

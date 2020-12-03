@@ -56,7 +56,7 @@ else {
 
 				<aui:input name="priority" />
 
-				<aui:input checked="<%= (commerceRegion == null) ? false : commerceRegion.isActive() %>" name="active" type="toggle-switch" />
+				<aui:input checked="<%= (commerceRegion == null) ? false : commerceRegion.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

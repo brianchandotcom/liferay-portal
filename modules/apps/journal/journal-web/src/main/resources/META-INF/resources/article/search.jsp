@@ -20,4 +20,4 @@
 JournalArticle article = journalDisplayContext.getArticle();
 %>
 
-<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
+<aui:input inlineLabel="right" label="searchable" labelCssClass="simple-toggle-switch" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />

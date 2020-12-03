@@ -120,7 +120,7 @@ if (vocabulary != null) {
 					</div>
 				</c:if>
 
-				<aui:input label="required" name='<%= "required" + index %>' type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
+				<aui:input inlineLabel="right" label="required" labelCssClass="simple-toggle-switch" name='<%= "required" + index %>' type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
 			</div>
 		</div>
 

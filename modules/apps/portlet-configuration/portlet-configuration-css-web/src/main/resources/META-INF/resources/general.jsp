@@ -25,7 +25,9 @@
 			"inputSelector", ".custom-title input"
 		).build()
 	%>'
+	inlineLabel="right"
 	label="use-custom-title"
+	labelCssClass="simple-toggle-switch"
 	name="useCustomTitle"
 	type="toggle-switch"
 />

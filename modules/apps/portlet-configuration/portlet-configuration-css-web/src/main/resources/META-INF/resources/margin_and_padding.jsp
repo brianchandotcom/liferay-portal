@@ -22,7 +22,7 @@
 		md="6"
 	>
 		<aui:fieldset label="padding">
-			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("padding") %>' data-inputselector=".same-padding" label="same-for-all" name="useForAllPadding" type="toggle-switch" />
+			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("padding") %>' data-inputselector=".same-padding" inlineLabel="right" label="same-for-all" labelCssClass="simple-toggle-switch" name="useForAllPadding" type="toggle-switch" />
 
 			<span class="field-row">
 				<aui:input inlineField="<%= true %>" label="top" name="paddingTop" value='<%= portletConfigurationCSSPortletDisplayContext.getPaddingProperty("top", "value") %>' />
@@ -68,7 +68,7 @@
 		md="6"
 	>
 		<aui:fieldset label="margin">
-			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("margin") %>' data-inputselector=".same-margin" label="same-for-all" name="useForAllMargin" type="toggle-switch" />
+			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("margin") %>' data-inputselector=".same-margin" inlineLabel="right" label="same-for-all" labelCssClass="simple-toggle-switch" name="useForAllMargin" type="toggle-switch" />
 
 			<span class="field-row">
 				<aui:input inlineField="<%= true %>" label="top" name="marginTop" value='<%= portletConfigurationCSSPortletDisplayContext.getMarginProperty("top", "value") %>' />

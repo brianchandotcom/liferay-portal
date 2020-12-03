@@ -20,4 +20,4 @@
 boolean groupMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.GROUP_MENTIONS_ENABLED));
 %>
 
-<aui:input checked="<%= groupMentionsEnabled %>" label='<%= LanguageUtil.get(resourceBundle, "allow-users-to-mention-other-users") %>' name="TypeSettingsProperties--mentionsEnabled--" type="toggle-switch" value="<%= groupMentionsEnabled %>" />
+<aui:input checked="<%= groupMentionsEnabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "allow-users-to-mention-other-users") %>' labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--mentionsEnabled--" type="toggle-switch" value="<%= groupMentionsEnabled %>" />

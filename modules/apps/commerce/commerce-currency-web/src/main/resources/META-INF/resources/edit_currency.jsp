@@ -82,7 +82,7 @@ if (Validator.isNotNull(backURL)) {
 
 				</aui:select>
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="primary" type="toggle-switch" value="<%= primary %>" />
+				<aui:input bean="<%= commerceCurrency %>" inlineLabel="right" labelCssClass="simple-toggle-switch" model="<%= CommerceCurrency.class %>" name="primary" type="toggle-switch" value="<%= primary %>" />
 
 				<%
 				String taglibLabel = "exchange-rate";
@@ -100,7 +100,7 @@ if (Validator.isNotNull(backURL)) {
 
 				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="priority" />
 
-				<aui:input bean="<%= commerceCurrency %>" checked="<%= (commerceCurrency == null) ? false : commerceCurrency.isActive() %>" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
+				<aui:input bean="<%= commerceCurrency %>" checked="<%= (commerceCurrency == null) ? false : commerceCurrency.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

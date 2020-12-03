@@ -60,28 +60,46 @@ searchContainer.setId("selectPublication");
 										<%= HtmlUtil.escape(ctCollection.getName()) %>
 									</div>
 
-									<div class="font-italic publication-description">
-										<%= HtmlUtil.escape(ctCollection.getDescription()) %>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<aui:a
-										cssClass="selector-button"
-										data='<%=
-											HashMapBuilder.<String, Object>put(
-												"ctcollectionid", ctCollection.getCtCollectionId()
-											).build()
-										%>'
-										href="javascript:;"
-									>
-										<div class="publication-name">
-											<%= HtmlUtil.escape(ctCollection.getName()) %>
-										</div>
-
-										<div class="publication-description">
+									<c:if test="<%= Validator.isNotNull(ctCollection.getDescription()) %>">
+										<div class="font-italic publication-description">
 											<%= HtmlUtil.escape(ctCollection.getDescription()) %>
 										</div>
-									</aui:a>
+									</c:if>
+
+									<clay:label
+										displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+										label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+									/>
+								</c:when>
+								<c:otherwise>
+									<div>
+										<aui:a
+											cssClass='<%= (ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED) ? "btn btn-link btn-unstyled disabled" : "selector-button" %>'
+											data='<%=
+												HashMapBuilder.<String, Object>put(
+													"ctcollectionid", ctCollection.getCtCollectionId()
+												).build()
+											%>'
+											href="javascript:;"
+										>
+											<div class="publication-name">
+												<%= HtmlUtil.escape(ctCollection.getName()) %>
+											</div>
+
+											<c:if test="<%= Validator.isNotNull(ctCollection.getDescription()) %>">
+												<div class="publication-description">
+													<%= HtmlUtil.escape(ctCollection.getDescription()) %>
+												</div>
+											</c:if>
+										</aui:a>
+									</div>
+
+									<div>
+										<clay:label
+											displayType="<%= publicationsDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+											label="<%= publicationsDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+										/>
+									</div>
 								</c:otherwise>
 							</c:choose>
 						</td>

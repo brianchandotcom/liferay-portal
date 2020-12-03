@@ -14,13 +14,29 @@
 
 package com.liferay.journal.uad.exporter;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Balázs Sáfrány-Kovalik
  */
 @Component(immediate = true, service = UADExporter.class)
 public class JournalArticleUADExporter extends BaseJournalArticleUADExporter {
+
+	@Override
+	protected String toXmlString(JournalArticle journalArticle) {
+		JournalArticle escapedJournalArticle =
+			(JournalArticle)journalArticle.clone();
+
+		escapedJournalArticle.setContent(
+			StringUtil.replace(
+				escapedJournalArticle.getContent(), "]]><",
+				"]]]]><![CDATA[><"));
+
+		return super.toXmlString(escapedJournalArticle);
+	}
+
 }

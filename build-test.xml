@@ -4842,6 +4842,56 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-renamed-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="true" name="delete.liferay.home" />
+		<attribute default="" name="testable.portal.started.marker.file" />
+
+		<sequential>
+			<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat" />
+			<var name="app.server.temp.dir" value="${app.server.parent.dir}/tomcat/temp" />
+			<var name="app.server.tomcat.classes.global.dir" value="${app.server.parent.dir}/tomcat/lib" />
+			<var name="app.server.tomcat.classes.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
+			<var name="app.server.tomcat.deploy.dir" value="${app.server.parent.dir}/tomcat/webapps" />
+			<var name="app.server.tomcat.lib.endorsed.dir" value="${app.server.parent.dir}/tomcat/lib/ext" />
+			<var name="app.server.tomcat.lib.global.dir" value="${app.server.parent.dir}/tomcat/lib/ext" />
+			<var name="app.server.tomcat.lib.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/lib" />
+			<var name="app.server.tomcat.lib.support.dir" value="${app.server.parent.dir}/tomcat/lib/ext" />
+			<var name="app.server.tomcat.log.dir" value="${app.server.parent.dir}/tomcat/logs" />
+			<var name="app.server.tomcat.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT" />
+			<var name="app.server.tomcat.temp.dir" value="${app.server.parent.dir}/tomcat/temp" />
+			<var name="app.server.tomcat.work.dir" value="${app.server.parent.dir}/tomcat/work" />
+			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat/bin" />
+			<var name="app.server.lib.endorsed.dir" value="${app.server.parent.dir}/tomcat/lib/ext" />
+			<var name="app.server.lib.global.dir" value="${app.server.parent.dir}/tomcat/lib/ext" />
+			<var name="app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/lib" />
+			<var name="app.server.lib.support.dir" value="${app.server.parent.dir}/tomcat/lib/ext" />
+			<var name="app.server.log.dir" value="${app.server.parent.dir}/tomcat/logs" />
+			<var name="app.server.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT" />
+			<var name="app.server.bin.dir" value="${app.server.parent.dir}/tomcat/bin" />
+			<var name="app.server.classes.global.dir" value="${app.server.parent.dir}/tomcat/lib" />
+			<var name="app.server.classes.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
+			<var name="app.server.deploy.dir" value="${app.server.parent.dir}/tomcat/webapps" />
+			<var name="app.server.dir" value="${app.server.parent.dir}/tomcat" />
+			<var name="app.server.work.dir" value="${app.server.parent.dir}/tomcat/work" />
+
+			<echo append="true" file="app.server.${user.name}.properties">
+				app.server.tomcat.dir=${app.server.tomcat.dir}
+				app.server.tomcat.bin.dir=${app.server.tomcat.bin.dir}
+				app.server.tomcat.classes.portal.dir=${app.server.tomcat.classes.portal.dir}
+				app.server.tomcat.lib.global.dir=${app.server.tomcat.lib.global.dir}
+				app.server.tomcat.lib.portal.dir=${app.server.tomcat.lib.portal.dir}
+			</echo>
+
+			<start-app-server-cmd
+				app.server.bin.dir="${app.server.bin.dir}"
+				delete.liferay.home="@{delete.liferay.home}"
+				test.docker.environment="${test.docker.environment}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-test-smtp-server">
 		<sequential>
 			<mirrors-get
@@ -5320,6 +5370,30 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-renamed-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="0" name="app.server.explicit.stop.count" />
+
+		<sequential>
+			<var name="app.server.bin.dir" value="${app.server.parent.dir}/tomcat/bin" />
+
+			<if>
+				<istrue value="${test.docker.environment}" />
+				<then>
+					<stop-app-server-docker-cmd
+						app.server.bin.dir="${app.server.bin.dir}"
+					/>
+				</then>
+				<else>
+					<stop-app-server-cmd
+						app.server.bin.dir="${app.server.bin.dir}"
+					/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

@@ -430,6 +430,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPLOAD_FIELD_GUEST</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='file']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPLOAD_PREDEFINED_VALUE</td>
 	<td>//div[@class='col-md-12']//button[contains(text(),'Select')]</td>
 	<td></td>

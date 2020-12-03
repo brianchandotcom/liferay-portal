@@ -40,7 +40,7 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 	<aui:validator name="required" />
 </aui:input>
 
-<div class="form-group input-text-wrapper text-default">
+<div class="form-group input-text-wrapper mb-2 text-default">
 	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">
 		<aui:icon cssClass="icon-monospaced" image="times-circle" markupView="lexicon" />
 	</div>
@@ -63,7 +63,13 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 	</aui:input>
 </div>
 
-<aui:button name="chooseLayout" value="choose" />
+<clay:button
+	cssClass="mb-4"
+	displayType="secondary"
+	id='<%= liferayPortletResponse.getNamespace() + "chooseLayout" %>'
+	label='<%= LanguageUtil.get(resourceBundle, "choose") %>'
+	small="<%= true %>"
+/>
 
 <%
 String eventName = liferayPortletResponse.getNamespace() + "selectLayout";

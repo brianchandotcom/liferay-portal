@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.util.AbstractMap;
@@ -253,12 +254,7 @@ public class EditEntryMVCActionCommandMultipleFilesTest {
 	}
 
 	private InputStream _getInputStream() {
-		Class<?> clazz = EditEntryMVCActionCommandMultipleFilesTest.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		return classLoader.getResourceAsStream(
-			"com/liferay/library/web/document/dependencies/test.jpg");
+		return new ByteArrayInputStream("test".getBytes());
 	}
 
 	private LiferayPortletConfig _getLiferayPortletConfig() {

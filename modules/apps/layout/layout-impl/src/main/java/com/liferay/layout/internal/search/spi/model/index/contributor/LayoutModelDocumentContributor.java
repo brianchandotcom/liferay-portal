@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
+import com.liferay.layout.internal.search.util.LayoutCrawler;
 import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -130,7 +132,8 @@ public class LayoutModelDocumentContributor
 				if ((httpServletRequest == null) ||
 					(httpServletResponse == null)) {
 
-					content = _getStagedContent(layout, locale);
+					content = _html.stripHtml(
+						_layoutCrawler.getLayoutContent(layout, locale));
 				}
 				else {
 					content =
@@ -213,7 +216,13 @@ public class LayoutModelDocumentContributor
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private Html _html;
+
+	@Reference
 	private LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;
+
+	@Reference
+	private LayoutCrawler _layoutCrawler;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

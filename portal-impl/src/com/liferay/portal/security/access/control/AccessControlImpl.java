@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.security.auth.AuthVerifierPipeline;
+import com.liferay.portal.servlet.filters.authverifier.AuthVerifierPipeline;
 
 import java.util.Map;
 

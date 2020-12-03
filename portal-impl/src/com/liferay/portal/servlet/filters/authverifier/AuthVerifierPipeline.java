@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.servlet.filters.authverifier;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

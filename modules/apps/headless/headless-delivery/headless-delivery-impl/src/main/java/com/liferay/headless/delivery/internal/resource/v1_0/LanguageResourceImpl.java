@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.delivery.dto.v1_0.Language;
 import com.liferay.headless.delivery.resource.v1_0.LanguageResource;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -43,6 +44,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = LanguageResource.class
 )
 public class LanguageResourceImpl extends BaseLanguageResourceImpl {
+
+	@Override
+	public Page<Language> getAssetLibraryLanguagesPage(Long assetLibraryId)
+		throws Exception {
+
+		return _getLanguagesPage(assetLibraryId);
+	}
 
 	@Override
 	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception {
@@ -125,6 +133,9 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private GroupService _groupService;

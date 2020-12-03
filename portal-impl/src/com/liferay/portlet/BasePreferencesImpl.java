@@ -166,23 +166,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		Preference preference = modifiedPreferences.get(key);
 
-		if (preference == null) {
-			preference = new Preference(key, value);
-
-			modifiedPreferences.put(key, preference);
-
-			return;
-		}
-
-		if (preference.isReadOnly()) {
+		if ((preference != null) && preference.isReadOnly()) {
 			throw new ReadOnlyException(key);
 		}
 
-		preference = (Preference)preference.clone();
-
-		modifiedPreferences.put(key, preference);
-
-		preference.setValues(new String[] {value});
+		modifiedPreferences.put(key, new Preference(key, value));
 	}
 
 	public void setValues(String key, String[] values)
@@ -198,23 +186,11 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 		Preference preference = modifiedPreferences.get(key);
 
-		if (preference == null) {
-			preference = new Preference(key, values);
-
-			modifiedPreferences.put(key, preference);
-
-			return;
-		}
-
-		if (preference.isReadOnly()) {
+		if ((preference != null) && preference.isReadOnly()) {
 			throw new ReadOnlyException(key);
 		}
 
-		preference = (Preference)preference.clone();
-
-		modifiedPreferences.put(key, preference);
-
-		preference.setValues(values);
+		modifiedPreferences.put(key, new Preference(key, values));
 	}
 
 	public int size() {

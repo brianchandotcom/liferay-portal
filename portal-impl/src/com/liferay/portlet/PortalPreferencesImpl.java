@@ -17,18 +17,22 @@ package com.liferay.portlet;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.simple.Element;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,11 +40,13 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ReadOnlyException;
 
@@ -51,7 +57,6 @@ import org.hibernate.StaleObjectStateException;
  * @author Alexander Chow
  */
 public class PortalPreferencesImpl
-	extends BasePreferencesImpl
 	implements Cloneable, PortalPreferences, Serializable {
 
 	public static final TransactionConfig SUPPORTS_TRANSACTION_CONFIG;
@@ -91,8 +96,10 @@ public class PortalPreferencesImpl
 		long ownerId, int ownerType, String xml,
 		Map<String, Preference> preferences, boolean signedIn) {
 
-		super(ownerId, ownerType, xml, preferences);
-
+		_ownerId = ownerId;
+		_ownerType = ownerType;
+		_originalXML = xml;
+		_originalPreferences = preferences;
 		_signedIn = signedIn;
 	}
 
@@ -145,12 +152,54 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
+	public Map<String, String[]> getMap() {
+		Map<String, Preference> preferences = getPreferences();
+
+		if (preferences.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String[]> map = new HashMap<>();
+
+		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
+			String key = entry.getKey();
+
+			Preference preference = entry.getValue();
+
+			map.put(key, getActualValues(preference.getValues()));
+		}
+
+		return map;
+	}
+
 	public long getMvccVersion() {
 		if (_portalPreferences == null) {
 			return -1;
 		}
 
 		return _portalPreferences.getMvccVersion();
+	}
+
+	public Enumeration<String> getNames() {
+		Map<String, Preference> preferences = getPreferences();
+
+		return Collections.enumeration(preferences.keySet());
+	}
+
+	public long getOwnerId() {
+		return _ownerId;
+	}
+
+	public int getOwnerType() {
+		return _ownerType;
+	}
+
+	public Map<String, Preference> getPreferences() {
+		if (_modifiedPreferences != null) {
+			return _modifiedPreferences;
+		}
+
+		return _originalPreferences;
 	}
 
 	@Override
@@ -167,7 +216,25 @@ public class PortalPreferencesImpl
 	public String getValue(String namespace, String key, String defaultValue) {
 		key = _encodeKey(namespace, key);
 
-		return super.getValue(key, defaultValue);
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		Map<String, Preference> preferences = getPreferences();
+
+		Preference preference = preferences.get(key);
+
+		if (preference == null) {
+			return defaultValue;
+		}
+
+		String[] values = preference.getValues();
+
+		if (isNull(values)) {
+			return defaultValue;
+		}
+
+		return getActualValue(values[0]);
 	}
 
 	@Override
@@ -181,7 +248,29 @@ public class PortalPreferencesImpl
 
 		key = _encodeKey(namespace, key);
 
-		return super.getValues(key, defaultValue);
+		return getValues(key, defaultValue);
+	}
+
+	public String[] getValues(String key, String[] def) {
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		Map<String, Preference> preferences = getPreferences();
+
+		Preference preference = preferences.get(key);
+
+		if (preference == null) {
+			return def;
+		}
+
+		String[] values = preference.getValues();
+
+		if (isNull(values)) {
+			return def;
+		}
+
+		return getActualValues(values);
 	}
 
 	@Override
@@ -194,18 +283,37 @@ public class PortalPreferencesImpl
 		return hashCode;
 	}
 
+	public boolean isReadOnly(String key) {
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		Map<String, Preference> preferences = getPreferences();
+
+		Preference preference = preferences.get(key);
+
+		if ((preference != null) && preference.isReadOnly()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public boolean isSignedIn() {
 		return _signedIn;
 	}
 
-	@Override
+	public void reset() {
+		_modifiedPreferences = null;
+	}
+
 	public void reset(final String key) throws ReadOnlyException {
 		if (isReadOnly(key)) {
 			throw new ReadOnlyException(key);
 		}
 
-		String[] values = super.getValues(key, null);
+		String[] values = getValues(key, (String[])null);
 
 		if (values == null) {
 			return;
@@ -271,6 +379,24 @@ public class PortalPreferencesImpl
 		_userId = userId;
 	}
 
+	public void setValue(String key, String value) throws ReadOnlyException {
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		value = getXMLSafeValue(value);
+
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+
+		Preference preference = modifiedPreferences.get(key);
+
+		if ((preference != null) && preference.isReadOnly()) {
+			throw new ReadOnlyException(key);
+		}
+
+		modifiedPreferences.put(key, new Preference(key, value));
+	}
+
 	@Override
 	public void setValue(String namespace, String key, final String value) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
@@ -286,7 +412,7 @@ public class PortalPreferencesImpl
 				return;
 			}
 
-			String[] oldValues = super.getValues(encodedKey, null);
+			String[] oldValues = getValues(encodedKey, (String[])null);
 
 			if ((oldValues != null) && (oldValues.length == 1) &&
 				value.equals(oldValues[0])) {
@@ -298,7 +424,7 @@ public class PortalPreferencesImpl
 
 				@Override
 				public Void call() throws ReadOnlyException {
-					PortalPreferencesImpl.super.setValue(encodedKey, value);
+					setValue(encodedKey, value);
 
 					return null;
 				}
@@ -343,7 +469,7 @@ public class PortalPreferencesImpl
 				return;
 			}
 
-			String[] oldValues = super.getValues(encodedKey, null);
+			String[] oldValues = getValues(encodedKey, (String[])null);
 
 			if (oldValues != null) {
 				Set<String> valuesSet = SetUtil.fromArray(values);
@@ -358,7 +484,7 @@ public class PortalPreferencesImpl
 
 				@Override
 				public Void call() throws ReadOnlyException {
-					PortalPreferencesImpl.super.setValues(encodedKey, values);
+					setValues(encodedKey, values);
 
 					return null;
 				}
@@ -382,7 +508,33 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	public void setValues(String key, String[] values)
+		throws ReadOnlyException {
+
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		values = getXMLSafeValues(values);
+
+		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+
+		Preference preference = modifiedPreferences.get(key);
+
+		if ((preference != null) && preference.isReadOnly()) {
+			throw new ReadOnlyException(key);
+		}
+
+		modifiedPreferences.put(key, new Preference(key, values));
+	}
+
 	@Override
+	public int size() {
+		Map<String, Preference> preferences = getPreferences();
+
+		return preferences.size();
+	}
+
 	public void store() throws IOException {
 		try {
 			if (_portalPreferences == null) {
@@ -407,6 +559,85 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	protected String getActualValue(String value) {
+		if ((value == null) || value.equals(_NULL_VALUE)) {
+			return null;
+		}
+
+		return XMLUtil.fromCompactSafe(value);
+	}
+
+	protected String[] getActualValues(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		if (values.length == 1) {
+			String actualValue = getActualValue(values[0]);
+
+			if (actualValue == null) {
+				return null;
+			}
+			else if (actualValue.equals(_NULL_ELEMENT)) {
+				return new String[] {null};
+			}
+			else {
+				return new String[] {actualValue};
+			}
+		}
+
+		String[] actualValues = new String[values.length];
+
+		for (int i = 0; i < actualValues.length; i++) {
+			actualValues[i] = getActualValue(values[i]);
+		}
+
+		return actualValues;
+	}
+
+	protected Map<String, Preference> getModifiedPreferences() {
+		if (_modifiedPreferences == null) {
+			_modifiedPreferences = new ConcurrentHashMap<>(
+				_originalPreferences);
+		}
+
+		return _modifiedPreferences;
+	}
+
+	protected Map<String, Preference> getOriginalPreferences() {
+		return _originalPreferences;
+	}
+
+	protected String getOriginalXML() {
+		return _originalXML;
+	}
+
+	protected String getXMLSafeValue(String value) {
+		if (value == null) {
+			return _NULL_VALUE;
+		}
+
+		return XMLUtil.toCompactSafe(value);
+	}
+
+	protected String[] getXMLSafeValues(String[] values) {
+		if (values == null) {
+			return new String[] {_NULL_VALUE};
+		}
+
+		if ((values.length == 1) && (values[0] == null)) {
+			return new String[] {_NULL_ELEMENT};
+		}
+
+		String[] xmlSafeValues = new String[values.length];
+
+		for (int i = 0; i < xmlSafeValues.length; i++) {
+			xmlSafeValues[i] = getXMLSafeValue(values[i]);
+		}
+
+		return xmlSafeValues;
+	}
+
 	protected boolean isCausedByStaleObjectException(Throwable throwable) {
 		Throwable causeThrowable = throwable.getCause();
 
@@ -427,10 +658,20 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
+	protected boolean isNull(String[] values) {
+		if (ArrayUtil.isEmpty(values) ||
+			((values.length == 1) && (getActualValue(values[0]) == null))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void retryableStore(Callable<?> callable, String key)
 		throws Throwable {
 
-		String[] originalValues = super.getValues(key, null);
+		String[] originalValues = getValues(key, (String[])null);
 
 		while (true) {
 			try {
@@ -478,6 +719,50 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	protected void setOriginalPreferences(
+		Map<String, Preference> originalPreferences) {
+
+		_originalPreferences = originalPreferences;
+	}
+
+	protected void setOriginalXML(String originalXML) {
+		_originalXML = originalXML;
+	}
+
+	protected String toXML() {
+		if ((_modifiedPreferences == null) && (_originalXML != null)) {
+			return _originalXML;
+		}
+
+		Map<String, Preference> preferences = getPreferences();
+
+		if ((preferences == null) || preferences.isEmpty()) {
+			return PortletConstants.DEFAULT_PREFERENCES;
+		}
+
+		Element portletPreferencesElement = new Element(
+			"portlet-preferences", false);
+
+		for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
+			Preference preference = entry.getValue();
+
+			Element preferenceElement = portletPreferencesElement.addElement(
+				"preference");
+
+			preferenceElement.addElement("name", preference.getName());
+
+			for (String value : preference.getValues()) {
+				preferenceElement.addElement("value", value);
+			}
+
+			if (preference.isReadOnly()) {
+				preferenceElement.addElement("read-only", Boolean.TRUE);
+			}
+		}
+
+		return portletPreferencesElement.toXMLString();
+	}
+
 	private String _encodeKey(String namespace, String key) {
 		if (Validator.isNull(namespace)) {
 			return key;
@@ -505,11 +790,20 @@ public class PortalPreferencesImpl
 			});
 	}
 
+	private static final String _NULL_ELEMENT = "NULL_ELEMENT";
+
+	private static final String _NULL_VALUE = "NULL_VALUE";
+
 	private static final String _RANDOM_KEY = "r";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesImpl.class);
 
+	private Map<String, Preference> _modifiedPreferences;
+	private Map<String, Preference> _originalPreferences;
+	private String _originalXML;
+	private final long _ownerId;
+	private final int _ownerType;
 	private com.liferay.portal.kernel.model.PortalPreferences
 		_portalPreferences;
 	private boolean _signedIn;

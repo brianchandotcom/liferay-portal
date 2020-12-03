@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,6 +49,7 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 import com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration;
+import com.liferay.translation.web.internal.constants.TranslationWebConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +104,12 @@ public class TranslateDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getAutoTranslateURL() {
+		return PortalUtil.getPortalURL(_httpServletRequest) +
+			Portal.PATH_MODULE +
+				TranslationWebConstants.AUTO_TRANSLATE_SERVLET_PATH;
 	}
 
 	public boolean getBooleanValue(

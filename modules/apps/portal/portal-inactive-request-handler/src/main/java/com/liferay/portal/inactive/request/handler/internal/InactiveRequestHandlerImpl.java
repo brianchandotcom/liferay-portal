@@ -16,7 +16,7 @@ package com.liferay.portal.inactive.request.handler.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.inactive.request.handler.internal.configuration.InactiveRequestHandlerConfiguration;
+import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

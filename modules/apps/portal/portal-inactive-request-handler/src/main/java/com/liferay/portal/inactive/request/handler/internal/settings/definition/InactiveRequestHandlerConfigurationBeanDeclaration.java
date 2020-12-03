@@ -14,7 +14,7 @@
 
 package com.liferay.portal.inactive.request.handler.internal.settings.definition;
 
-import com.liferay.portal.inactive.request.handler.internal.configuration.InactiveRequestHandlerConfiguration;
+import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

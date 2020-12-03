@@ -47,6 +47,7 @@ import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
+import com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,6 +72,7 @@ public class TranslateDisplayContext {
 	public TranslateDisplayContext(
 		List<String> availableSourceLanguageIds,
 		List<String> availableTargetLanguageIds, String className, long classPK,
+		FFAutoTranslateConfiguration ffAutoTranslateConfiguration,
 		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Object object,
 		InfoItemFieldValues sourceInfoItemFieldValues, String sourceLanguageId,
@@ -81,6 +83,7 @@ public class TranslateDisplayContext {
 		_availableTargetLanguageIds = availableTargetLanguageIds;
 		_className = className;
 		_classPK = classPK;
+		_ffAutoTranslateConfiguration = ffAutoTranslateConfiguration;
 		_infoForm = infoForm;
 		_liferayPortletResponse = liferayPortletResponse;
 		_object = object;
@@ -386,6 +389,16 @@ public class TranslateDisplayContext {
 		return true;
 	}
 
+	public boolean isAutoTranslateButtonVisible() {
+		if (_ffAutoTranslateConfiguration.enabled() &&
+			hasTranslationPermission()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPublishButtonDisabled() {
 		if (_isAvailableTargetLanguageIdsEmpty()) {
 			return true;
@@ -461,6 +474,7 @@ public class TranslateDisplayContext {
 	private final List<String> _availableTargetLanguageIds;
 	private final String _className;
 	private final long _classPK;
+	private final FFAutoTranslateConfiguration _ffAutoTranslateConfiguration;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoForm _infoForm;

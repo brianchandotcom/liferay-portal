@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-cache-multiple/src/main/java/com/liferay/portal/cache/multiple/internal/configuration/PortalCacheClusterConfiguration\.java" />
-	</source-check>
-</suppressions>

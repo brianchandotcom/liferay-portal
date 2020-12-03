@@ -392,31 +392,22 @@ public class DataEngineNativeObjectPortalExecutor {
 						column.getSQLType()));
 				dataDefinitionField.setRequired(!column.isNullAllowed());
 
-				if (Objects.equals(
-						dataDefinitionField.getFieldType(),
-						"checkbox_multiple") ||
-					Objects.equals(
-						dataDefinitionField.getFieldType(), "radio") ||
-					Objects.equals(
-						dataDefinitionField.getFieldType(), "select")) {
+				Map<String, Object> customProperties =
+					dataDefinitionField.getCustomProperties();
 
-					Map<String, Object> customProperties =
-						dataDefinitionField.getCustomProperties();
-
-					if (MapUtil.isEmpty((Map)customProperties.get("options"))) {
-						customProperties.put(
-							"options",
-							HashMapBuilder.<String, Object>put(
-								defaultLanguageId,
-								new String[] {
-									JSONUtil.put(
-										"label", "Option"
-									).put(
-										"value", "option"
-									).toJSONString()
-								}
-							).build());
-					}
+				if (MapUtil.isEmpty((Map)customProperties.get("options"))) {
+					customProperties.put(
+						"options",
+						HashMapBuilder.<String, Object>put(
+							defaultLanguageId,
+							new String[] {
+								JSONUtil.put(
+									"label", "Option"
+								).put(
+									"value", StringPool.BLANK
+								).toJSONString()
+							}
+						).build());
 				}
 
 				dataDefinitionFieldsList.add(dataDefinitionField);

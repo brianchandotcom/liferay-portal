@@ -155,7 +155,7 @@ export default class Blogs {
 		}
 
 		const urlOptions = document.querySelectorAll(
-			`input[name=${this._config.namespace}urlOptions]`
+			`#${this._config.namespace}urlOptions input`
 		);
 
 		if (urlOptions.length) {
@@ -260,7 +260,7 @@ export default class Blogs {
 			`${this._config.namespace}urlTitle`
 		);
 		const urlTitleInputLabel = document.querySelector(
-			`[for="${this._config.namespace}urlTitle]`
+			`[for="${this._config.namespace}urlTitle"]`
 		);
 
 		if (this._automaticURL()) {

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link;
 
+import com.liferay.portal.cache.multiple.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
-import com.liferay.portal.cache.multiple.internal.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Priority;
 

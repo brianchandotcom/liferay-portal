@@ -28,12 +28,15 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
@@ -80,8 +83,7 @@ public class SourceFormatterDefaultsPlugin
 				project, FORMAT_PYTHON_TASK_NAME, VenvTask.class);
 		TaskProvider<VenvTask> pythonBlackInstallTaskProvider =
 			GradleUtil.addTaskProvider(
-				project, PYTHON_BLACK_INSTALL_TASK_NAME,
-				VenvTask.class);
+				project, PYTHON_BLACK_INSTALL_TASK_NAME, VenvTask.class);
 
 		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider =
 			GradleUtil.fetchTaskProvider(
@@ -242,6 +244,12 @@ public class SourceFormatterDefaultsPlugin
 					args.add("--check");
 					args.add("--fast");
 
+					args.add("--force-exclude");
+					args.add(_PYTHON_FORCE_EXCLUDE);
+
+					args.add("--include");
+					args.add(_PYTHON_INCLUDE);
+
 					String baseDir = GradleUtil.getTaskPrefixedProperty(
 						project.getPath(),
 						checkPythonFormattingVenvTask.getName(), "base.dir");
@@ -278,8 +286,14 @@ public class SourceFormatterDefaultsPlugin
 				public void execute(
 					FormatSourceTask checkSourceFormattingFormatSourceTask) {
 
-					checkSourceFormattingFormatSourceTask.finalizedBy(
-						checkPythonFormattingTaskProvider);
+					if (_hasPythonFiles(
+							project,
+							checkSourceFormattingFormatSourceTask.
+								getBaseDir())) {
+
+						checkSourceFormattingFormatSourceTask.finalizedBy(
+							checkPythonFormattingTaskProvider);
+					}
 				}
 
 			});
@@ -301,6 +315,12 @@ public class SourceFormatterDefaultsPlugin
 					List<String> args = new ArrayList<>();
 
 					args.add("--fast");
+
+					args.add("--force-exclude");
+					args.add(_PYTHON_FORCE_EXCLUDE);
+
+					args.add("--include");
+					args.add(_PYTHON_INCLUDE);
 
 					String baseDir = GradleUtil.getTaskPrefixedProperty(
 						project.getPath(), formatPythonVenvTask.getName(),
@@ -394,7 +414,11 @@ public class SourceFormatterDefaultsPlugin
 
 				@Override
 				public void execute(FormatSourceTask formatSourceTask) {
-					formatSourceTask.finalizedBy(formatPythonTaskProvider);
+					if (_hasPythonFiles(
+							project, formatSourceTask.getBaseDir())) {
+
+						formatSourceTask.finalizedBy(formatPythonTaskProvider);
+					}
 				}
 
 			});
@@ -416,7 +440,28 @@ public class SourceFormatterDefaultsPlugin
 			});
 	}
 
+	private boolean _hasPythonFiles(Project project, File baseDir) {
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", baseDir);
+		args.put("includes", Arrays.asList("**/*.py", "**/*.pyi"));
+
+		FileTree fileTree = project.fileTree(args);
+
+		if (fileTree.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private static final String _PORTAL_TOOL_NAME =
 		"com.liferay.source.formatter";
+
+	private static final String _PYTHON_FORCE_EXCLUDE =
+		"\"/(\\.git|\\.gradle|bin|build|classes|node_modules|" +
+			"node_modules_cache|test-classes|tmp)/\"";
+
+	private static final String _PYTHON_INCLUDE = "\"\\.pyi?$\"";
 
 }

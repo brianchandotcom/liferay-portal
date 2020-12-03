@@ -114,7 +114,6 @@ export const FieldSet = ({
 											)}
 										>
 											<ClayIcon
-												className="page-editor__sidebar__fieldset__field__language"
 												symbol={
 													availableLanguages[
 														languageId

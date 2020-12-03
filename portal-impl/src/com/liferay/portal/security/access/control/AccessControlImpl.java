@@ -100,8 +100,17 @@ public class AccessControlImpl implements AccessControl {
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
 
-		AuthVerifierResult authVerifierResult =
-			_authVerifierPipeline.verifyRequest(accessControlContext);
+		AuthVerifierResult authVerifierResult = null;
+
+		if (_authVerifierPipeline != null) {
+			authVerifierResult = _authVerifierPipeline.verifyRequest(
+				accessControlContext);
+		}
+		else {
+			authVerifierResult =
+				com.liferay.portal.security.auth.AuthVerifierPipeline.
+					verifyRequest(accessControlContext);
+		}
 
 		Map<String, Object> authVerifierResultSettings =
 			authVerifierResult.getSettings();

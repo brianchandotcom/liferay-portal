@@ -346,6 +346,17 @@ public class DataEngineNativeObjectPortalExecutor {
 			List<DataDefinitionField> dataDefinitionFieldsList =
 				new ArrayList<>();
 
+			for (DataDefinitionField dataDefinitionField :
+					dataDefinitionFields) {
+
+				Map<String, Object> customProperties =
+					dataDefinitionField.getCustomProperties();
+
+				if (!(Boolean)customProperties.get("nativeField")) {
+					dataDefinitionFieldsList.add(dataDefinitionField);
+				}
+			}
+
 			for (DataEngineNativeObjectField dataEngineNativeObjectField :
 					dataEngineNativeObjectFields) {
 

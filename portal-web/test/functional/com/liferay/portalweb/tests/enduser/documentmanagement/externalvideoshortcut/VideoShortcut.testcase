@@ -49,13 +49,13 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
-		VideoShortcut.validaURL(invalidURL = "https://www.test.com/watch?v=8TnGFvSY-08");
+		VideoShortcut.validateURL(invalidURL = "https://www.test.com/watch?v=8TnGFvSY-08");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
-		VideoShortcut.validaURL(
+		VideoShortcut.validateURL(
 			invalidURL = "https://www.youtube.com/watch?v=test",
 			youtube = "true");
 
@@ -63,7 +63,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
-		VideoShortcut.validaURL(
+		VideoShortcut.validateURL(
 			facebook = "true",
 			invalidURL = "https://www.facebook.com/Cristiano/videos/test");
 	}

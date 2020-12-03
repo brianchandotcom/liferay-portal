@@ -208,7 +208,8 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 								@SuppressWarnings("unused")
 								public void doCall(CopySpec copySpec) {
 									copySpec.rename(
-										_getClosure(project, sourcePath));
+										_getDeployedFileNameClosure(
+											project, sourcePath));
 								}
 
 							};
@@ -279,7 +280,9 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
-	private Closure<String> _getClosure(Project project, Object sourcePath) {
+	private Closure<String> _getDeployedFileNameClosure(
+		Project project, Object sourcePath) {
+
 		return new Closure<String>(project) {
 
 			public String doCall(String fileName) {

@@ -135,7 +135,7 @@
 <!--CONTENT_VIDEO_LINK-->
 <tr>
 	<td>CONTENT_VIDEO_IMAGE</td>
-	<td>//span[contains(@class,'videoembed_icon')]</td>
+	<td>//span[contains(@class,'videoselector_icon')]</td>
 	<td></td>
 </tr>
 <tr>

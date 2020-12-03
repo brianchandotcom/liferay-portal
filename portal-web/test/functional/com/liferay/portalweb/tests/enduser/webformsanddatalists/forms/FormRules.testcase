@@ -159,8 +159,8 @@ definition {
 			actionRowNumber = "1");
 
 		FormRules.selectActionTarget(
-			actionTarget = "Total",
-			actionRowNumber = "1");
+			actionRowNumber = "1",
+			actionTarget = "Total");
 
 		FormRules.selectCalculateField(calculateFieldOption = "Numeric Field");
 
@@ -370,8 +370,8 @@ definition {
 			actionRowNumber = "1");
 
 		FormRules.selectActionTarget(
-			actionTarget = "Total",
-			actionRowNumber = "1");
+			actionRowNumber = "1",
+			actionTarget = "Total");
 
 		FormRules.selectCalculateField(calculateFieldOption = "Value");
 
@@ -495,8 +495,8 @@ definition {
 			actionRowNumber = "1");
 
 		FormRules.selectActionTarget(
-			actionTarget = "Total",
-			actionRowNumber = "1");
+			actionRowNumber = "1",
+			actionTarget = "Total");
 
 		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "ValueReference");
 

@@ -19,6 +19,11 @@
 	<td>//span[contains(@class,'d-inline-flex')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSET_DETAILS_YOUTUBE_PREVIEW</td>
+	<td>//div[contains(@class,'ytp-cued-thumbnail-overlay-image')]</td>
+	<td></td>
+</tr>
 <!--ASSET_TYPE_FACET-->
 <tr>
 	<td>ASSET_TYPE_FACET_ANY_ASSET</td>

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_DETAILS_IFRAME</td>
+	<td>//div[contains(@class,'preview-file-container')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_USER</td>
 	<td>//div[contains(.,'Assign User')]//iframe</td>
 	<td></td>

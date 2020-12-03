@@ -57,7 +57,8 @@ public class FileEntrySearchFixture {
 		else {
 			fileEntry = addFileEntryWithWorkflow(
 				fileEntryBlueprint.getUserId(), fileEntryBlueprint.getGroupId(),
-				fileEntryBlueprint.getTitle(), serviceContext);
+				fileEntryBlueprint.getFileName(), fileEntryBlueprint.getTitle(),
+				serviceContext);
 		}
 
 		_fileEntries.add(fileEntry);
@@ -113,13 +114,12 @@ public class FileEntrySearchFixture {
 	}
 
 	protected FileEntry addFileEntryWithWorkflow(
-		long userId, long groupId, String title,
+		long userId, long groupId, String fileName, String title,
 		ServiceContext serviceContext) {
 
 		try {
 			return DLAppTestUtil.addFileEntryWithWorkflow(
-				userId, groupId, 0, StringPool.BLANK, title, true,
-				serviceContext);
+				userId, groupId, 0, fileName, title, true, serviceContext);
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;

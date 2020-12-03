@@ -355,6 +355,8 @@ definition {
 	macro assignUserAsMemberCP {
 		var key_cardText = "${userScreenName}";
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		LexiconEntry.gotoAdd();
 
 		AssertVisible(locator1 = "Button#DONE");

@@ -60,6 +60,18 @@ definition {
 
 		App.toggleDeploy(deployOption = "${deployOption}");
 
+		if (isSet(menuOption) && isSet(siteOptionList)) {
+			App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
+
+			App.openProductMenuSiteOption();
+
+			for (var siteOption : list "${siteOptionList}") {
+				App.selectProductMenuSiteOption(siteOption = "${siteOption}");
+			}
+
+			App.openProductMenuSiteOption();
+		}
+
 		Button.click(button = "Done");
 
 		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
@@ -90,6 +102,18 @@ definition {
 		Button.click(button = "Deploy");
 
 		App.toggleDeploy(deployOption = "${deployOption}");
+
+		if (isSet(menuOption) && isSet(siteOptionList)) {
+			App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
+
+			App.openProductMenuSiteOption();
+
+			for (var siteOption : list "${siteOptionList}") {
+				App.selectProductMenuSiteOption(siteOption = "${siteOption}");
+			}
+
+			App.openProductMenuSiteOption();
+		}
 
 		Button.click(button = "Done");
 

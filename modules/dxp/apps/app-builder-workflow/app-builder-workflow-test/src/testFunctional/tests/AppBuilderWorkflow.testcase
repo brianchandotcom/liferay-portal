@@ -85,11 +85,10 @@ definition {
 
 		AppBuilderWorkflow.verifyAssignToOption(itemName = "Content");
 
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Content");
 
-		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test Test");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Administrator");
 	}
@@ -198,13 +197,13 @@ definition {
 
 		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
 
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "userfn1 userln1",
 			itemName = "Content");
 
 		Refresh();
 		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "userfn1 userln1");
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "userfn2 userln2",
 			itemName = "Content");
 
@@ -930,7 +929,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content");
 
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Content");
 
@@ -945,7 +944,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Content");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Content");
 
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Edited Content");
 
@@ -1045,11 +1044,10 @@ definition {
 
 		AppBuilderWorkflow.submit();
 		Refresh();
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Content");
 
-		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
 		AppBuilderAdmin.editItem(itemName = "Content");
 		FormViewBuilder.assertTextPresent(
 			fieldName = "Text",
@@ -1061,11 +1059,10 @@ definition {
 
 		AppBuilderWorkflow.submit();
 		Refresh();
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Content");
 
-		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
 		AppBuilderAdmin.editItem(itemName = "Content");
 		FormViewBuilder.assertTextPresent(
 			fieldName = "Text",
@@ -1412,7 +1409,7 @@ definition {
 		AppBuilderWorkflow.submit();
 		Refresh();
 
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Content");
 
@@ -1420,7 +1417,7 @@ definition {
 		AppBuilderWorkflow.submit();
 		Refresh();
 
-		AppBuilderWorkflow.assignEntry(
+		AppBuilderWorkflow.assignEntryThroughTableView(
 			assignee = "Test Test",
 			itemName = "Content");
 
@@ -1538,6 +1535,107 @@ definition {
 		FormViewBuilder.validatePredefinedText(
 			fieldName = "Text",
 			fieldValue = "Content From Standalone");
+	}
+
+	@description = "LRQA-61051 - Automate LPS-111006: As an App User, I want to my Workflowed App's notifications to redirect me to the App's entry (task) View instead of the "My Workflow Tasks""
+	@priority = "4"
+	test ViewWorkflowAppThroughNotifications_SiteMenuAndOtherUser {
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Workflow Site Name",
+			layoutName = "App Builder Workflow Test Page");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.togglePasswordChangeRequired(
+			enableChangeRequired = "true",
+			passwordPolicyName = "Default Password Policy",
+			passwordPolicyPanel = "Password Changes");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+			assignee = "Administrator",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			menuOption = "Site Menu",
+			objectName = "my custom object",
+			siteOptionList = "App Builder Workflow Site Name",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Workflow Test Page",
+			siteName = "App Builder Workflow Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "My Workflow App");
+
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderWorkflow.assignEntryThroughTableView(
+			assignee = "userfn userln",
+			itemName = "Content");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content");
 	}
 
 }

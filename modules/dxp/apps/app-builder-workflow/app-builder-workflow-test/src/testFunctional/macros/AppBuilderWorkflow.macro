@@ -127,7 +127,7 @@ definition {
 			locator1 = "AppBuilderWorkflow#STEP_CARD");
 	}
 
-	macro assignEntry {
+	macro assignEntryThroughTableView {
 		Click(
 			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -154,7 +154,7 @@ definition {
 
 		Button.click(button = "Done");
 
-		Refresh();
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "${assignee}");
 	}
 
 	macro changeDeploymentType {

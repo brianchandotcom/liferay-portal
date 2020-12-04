@@ -28,8 +28,9 @@ import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -99,8 +100,6 @@ public class GetCTEntryRenderDataMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 
 		CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
@@ -112,48 +111,73 @@ public class GetCTEntryRenderDataMVCResourceCommand
 			_ctDisplayRendererRegistry.getCTDisplayRenderer(
 				ctEntry.getModelClassNameId());
 
-		if (ctDisplayRenderer.hasContent()) {
-			jsonObject.put("hasContent", true);
+		String changeType = "modified";
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			changeType = "added";
 		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+			changeType = "deleted";
+		}
+
+		JSONObject jsonObject = JSONUtil.put(
+			"changeType", changeType
+		).put(
+			"content", ctDisplayRenderer.hasContent()
+		).put(
+			"versioned", ctDisplayRenderer.isVersioned()
+		);
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
 
 		T rightModel = null;
+		long rightCtCollectionId = ctCollection.getCtCollectionId();
+		CTSQLModeThreadLocal.CTSQLMode rightCTSQLMode = null;
+
+		String rightContent = null;
+		String rightRender = null;
 
 		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION) {
-			long ctCollectionId = ctCollection.getCtCollectionId();
-
 			if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
-					ctEntry);
+				rightCtCollectionId =
+					_ctEntryLocalService.getCTRowCTCollectionId(ctEntry);
 			}
 
-			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-				_ctDisplayRendererRegistry.getCTSQLMode(
-					ctCollectionId, ctEntry);
+			rightCTSQLMode = _ctDisplayRendererRegistry.getCTSQLMode(
+				rightCtCollectionId, ctEntry);
 
 			rightModel = _ctDisplayRendererRegistry.fetchCTModel(
-				ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
-				ctEntry.getModelClassPK());
+				rightCtCollectionId, rightCTSQLMode,
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
+				rightRender = _getData(
+					httpServletRequest, httpServletResponse,
+					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
+					rightCTSQLMode, rightModel, TYPE_AFTER);
+
 				jsonObject.put(
-					"rightRender",
-					_getData(
-						httpServletRequest, httpServletResponse, ctCollectionId,
-						ctDisplayRenderer, ctEntryId, ctSQLMode, rightModel,
-						TYPE_AFTER));
+					"rightRender", rightRender
+				).put(
+					"rightTitle",
+					StringBundler.concat(
+						_language.get(httpServletRequest, "publication"), ": ",
+						ctCollection.getName())
+				);
 
 				if (ctDisplayRenderer.hasContent()) {
-					String content = ctDisplayRenderer.getContent(
+					rightContent = ctDisplayRenderer.getContent(
 						_portal.getLiferayPortletRequest(resourceRequest),
 						_portal.getLiferayPortletResponse(resourceResponse),
 						rightModel);
 
-					if (content != null) {
-						jsonObject.put("rightContent", content);
+					if (rightContent != null) {
+						jsonObject.put("rightContent", rightContent);
 					}
 				}
 			}
@@ -162,27 +186,57 @@ public class GetCTEntryRenderDataMVCResourceCommand
 		if ((ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) &&
 			(rightModel != null) && ctDisplayRenderer.isVersioned()) {
 
-			T leftModel = ctDisplayRenderer.getPreviousVersion(rightModel);
+			T leftModel = null;
+
+			try (SafeClosable safeClosable1 =
+					CTCollectionThreadLocal.setCTCollectionId(
+						rightCtCollectionId);
+				SafeClosable safeClosable2 = CTSQLModeThreadLocal.setCTSQLMode(
+					rightCTSQLMode)) {
+
+				leftModel = ctDisplayRenderer.getPreviousVersion(rightModel);
+			}
 
 			if (leftModel != null) {
-				jsonObject.put(
-					"leftRender",
-					_getData(
-						httpServletRequest, httpServletResponse,
-						ctEntry.getCtCollectionId(), ctDisplayRenderer,
-						ctEntryId, CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-						leftModel, TYPE_AFTER));
+				String leftRender = _getData(
+					httpServletRequest, httpServletResponse,
+					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
+					rightCTSQLMode, leftModel, TYPE_AFTER);
+
+				jsonObject.put("leftRender", leftRender);
+
+				if (rightRender != null) {
+					jsonObject.put(
+						"unifiedRender",
+						DiffHtmlUtil.diff(
+							new UnsyncStringReader(leftRender),
+							new UnsyncStringReader(rightRender)));
+				}
 
 				if (ctDisplayRenderer.hasContent()) {
-					String content = ctDisplayRenderer.getPreviousContent(
+					String leftContent = ctDisplayRenderer.getPreviousContent(
 						_portal.getLiferayPortletRequest(resourceRequest),
 						_portal.getLiferayPortletResponse(resourceResponse),
 						rightModel, leftModel);
 
-					if (content != null) {
-						jsonObject.put("leftContent", content);
+					if (leftContent != null) {
+						jsonObject.put("leftContent", leftContent);
+
+						if (rightContent != null) {
+							jsonObject.put(
+								"unifiedContent",
+								DiffHtmlUtil.diff(
+									new UnsyncStringReader(leftContent),
+									new UnsyncStringReader(rightContent)));
+						}
 					}
 				}
+
+				jsonObject.put(
+					"leftTitle", ctDisplayRenderer.getVersionName(leftModel)
+				).put(
+					"rightTitle", ctDisplayRenderer.getVersionName(rightModel)
+				);
 			}
 		}
 		else if (ctEntry.getChangeType() !=
@@ -203,12 +257,24 @@ public class GetCTEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (leftModel != null) {
+				String leftRender = _getData(
+					httpServletRequest, httpServletResponse, ctCollectionId,
+					ctDisplayRenderer, ctEntryId, ctSQLMode, leftModel,
+					TYPE_BEFORE);
+
 				jsonObject.put(
-					"leftRender",
-					_getData(
-						httpServletRequest, httpServletResponse, ctCollectionId,
-						ctDisplayRenderer, ctEntryId, ctSQLMode, leftModel,
-						TYPE_BEFORE));
+					"leftRender", leftRender
+				).put(
+					"leftTitle", _language.get(httpServletRequest, "production")
+				);
+
+				if (rightRender != null) {
+					jsonObject.put(
+						"unifiedRender",
+						DiffHtmlUtil.diff(
+							new UnsyncStringReader(leftRender),
+							new UnsyncStringReader(rightRender)));
+				}
 			}
 		}
 

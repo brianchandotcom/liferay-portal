@@ -204,7 +204,7 @@ const ChangeTrackingDiscardView = ({
 						</div>
 					</div>
 				</ClayModal.Header>
-				<div>
+				<div className="publications-modal-body">
 					<ChangeTrackingRenderView
 						dataURL={viewEntry.dataURL}
 						spritemap={spritemap}

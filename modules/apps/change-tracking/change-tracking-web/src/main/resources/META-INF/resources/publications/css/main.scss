@@ -135,20 +135,65 @@
 		padding-right: 12px;
 		padding-top: 5px;
 	}
+
+	.publications-modal-body {
+		overflow-y: auto;
+	}
+
+	table.publications-render-view {
+		border-top: none;
+
+		td.publications-render-view-toolbar {
+			border-top: none;
+		}
+	}
 }
 
-table.publications-render-table {
+.publications-render-table {
+	.publications-key-td {
+		font-weight: 600;
+	}
+}
+
+table.publications-render-view {
+	border: 1px solid #e7e7ed;
 	border-collapse: collapse;
 	table-layout: fixed;
 	width: 100%;
 	word-wrap: break-word;
 
-	.publications-render-table-divider.table-divider {
-		text-align: center;
+	.publications-render-view-loading-wrapper {
+		height: 100%;
+		left: 0;
+		margin-top: 49px;
+		opacity: 1;
+		position: absolute;
+		width: 100%;
+		z-index: 10;
 	}
 
-	.publications-render-table-toolbar {
-		border-top: none;
+	.publications-render-view-divider.table-divider {
+		text-align: center;
+
+		td.publications-render-view-divider {
+			border: 1px solid #e7e7ed;
+		}
+
+		td.publications-render-view-divider:first-child {
+			padding-left: 24px;
+		}
+
+		td.publications-render-view-divider:last-child {
+			padding-left: 24px;
+		}
+	}
+
+	.publications-render-view-loading {
+		opacity: 0.5;
+	}
+
+	.publications-render-view-toolbar {
+		border: 1px solid #e7e7ed;
 		padding: 0;
 
 		.autofit-row {
@@ -182,8 +227,17 @@ table.publications-render-table {
 		}
 	}
 
-	td.publications-render-table-td {
+	td.publications-render-view-content {
+		border: 1px solid #e7e7ed;
+		vertical-align: top;
+	}
+
+	td.publications-render-view-content:first-child {
 		padding-left: 24px;
+	}
+
+	td.publications-render-view-content:last-child {
+		padding-right: 24px;
 	}
 }
 
@@ -276,10 +330,6 @@ table.publications-render-table {
 		}
 
 		.table {
-			button:hover {
-				cursor: pointer;
-			}
-
 			.cursor-pointer {
 				cursor: pointer;
 			}
@@ -299,18 +349,6 @@ table.publications-render-table {
 			.nav-item-expand {
 				flex-grow: 1;
 			}
-		}
-	}
-
-	.navigation-bar {
-		a:hover {
-			cursor: pointer;
-		}
-	}
-
-	.pagination-bar {
-		button:hover {
-			cursor: pointer;
 		}
 	}
 

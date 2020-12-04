@@ -154,6 +154,11 @@ public class DepotEntryVerticalCard
 		return true;
 	}
 
+	@Override
+	public Boolean isStickerShown() {
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotEntryVerticalCard.class);
 

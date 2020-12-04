@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaMetaAnnotationsCheck" files="portal-remote-http-tunnel-extender/src/main/java/com/liferay/portal/remote/http/tunnel/extender/internal/configuration/HttpTunnelExtenderConfiguration\.java" />
-	</source-check>
-</suppressions>

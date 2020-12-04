@@ -5946,14 +5946,17 @@ ${output.content}</echo>
 
 								<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-								<exec executable="/bin/bash">
-									<arg value="-c" />
-									<arg value="LIFERAY_CLEAN_OSGI_STATE=true" />
-								</exec>
+								<parallel>
+									<exec dir="${app.server.bin.dir}" executable="sh">
+										<arg value="catalina.sh" />
+										<arg value="run" />
+										<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
+									</exec>
 
-								<antcall inheritAll="false" target="start-app-server">
-									<param name="delete.liferay.home" value="false" />
-								</antcall>
+									<waitfor>
+										<http url="http://localhost:8080" />
+									</waitfor>
+								</parallel>
 
 								<antcall inheritAll="false" target="stop-app-server" />
 
@@ -5986,11 +5989,6 @@ ${output.content}</echo>
 											<propertyfile file="build.${env.HOSTNAME}.properties">
 												<entry key="liferay.home" value="${app.server.parent.dir}" />
 											</propertyfile>
-
-											<exec executable="/bin/bash">
-												<arg value="-c" />
-												<arg value="LIFERAY_CLEAN_OSGI_STATE=false" />
-											</exec>
 
 											<start-renamed-app-server />
 										</sequential>

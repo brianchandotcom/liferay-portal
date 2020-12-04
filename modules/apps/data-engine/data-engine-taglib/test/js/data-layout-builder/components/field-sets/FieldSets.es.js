@@ -14,6 +14,7 @@
 
 import {ClayModalProvider} from '@clayui/modal';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import * as DDMForm from 'dynamic-data-mapping-form-builder';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -49,6 +50,7 @@ let dataLayoutBuilderProps;
 let dispatch;
 let spySuccessToast;
 let spyErrorToast;
+let ddmFormSpy;
 
 export const FieldSetWrapper = ({
 	children,
@@ -71,22 +73,46 @@ export const FieldSetWrapper = ({
 
 describe('FieldSets', () => {
 	beforeEach(() => {
-		window.Liferay = {
-			...window.Liferay,
-			Loader: {
-				require: () => jest.fn(),
-			},
-		};
-
-		jest.useFakeTimers();
-		dispatch = jest.fn();
 		dataLayoutBuilderProps = getDataLayoutBuilderProps();
+		ddmFormSpy = jest
+			.spyOn(DDMForm, 'default')
+			.mockImplementation((props) => {
+				const state = {
+					...dataLayoutBuilderProps,
+					dispose: jest.fn(),
+					emit: jest.fn(),
+					getLayoutProvider: () => ({
+						getRules: jest.fn().mockImplementation(() => []),
+						on: jest.fn().mockImplementation(() => ({
+							removeListener: jest.fn(),
+						})),
+					}),
+				};
+
+				props.layoutProviderProps.onLoad(state);
+
+				return state;
+			});
+
+		dispatch = jest.fn();
+		jest.useFakeTimers();
+
 		spySuccessToast = jest
 			.spyOn(toast, 'successToast')
 			.mockImplementation(() => {});
 		spyErrorToast = jest
 			.spyOn(toast, 'errorToast')
 			.mockImplementation(() => {});
+
+		window.Liferay = {
+			...window.Liferay,
+			Loader: {
+				require: () => jest.fn(),
+			},
+			SideNavigation: {
+				instance: () => {},
+			},
+		};
 	});
 
 	afterEach(() => {
@@ -317,7 +343,9 @@ describe('FieldSets', () => {
 		expect(queryByText('save')).toBeFalsy();
 	});
 
-	xit('renders modal when click to edit a fieldset in the fieldset list', async () => {
+	it('renders modal when click to edit a fieldset in the fieldset list', async () => {
+		fetch.mockResponseOnce(JSON.stringify({}));
+
 		const {label, nestedDataDefinitionFields} = DATA_DEFINITION_FIELDSET;
 		const state = {
 			...defaultState,
@@ -347,6 +375,7 @@ describe('FieldSets', () => {
 			jest.runAllTimers();
 		});
 
+		expect(ddmFormSpy.mock.calls.length).toBe(1);
 		expect(document.querySelector('.fieldset-modal')).toBeTruthy();
 		expect(document.querySelector('.modal-title').textContent).toBe(
 			'edit-fieldset'
@@ -358,7 +387,6 @@ describe('FieldSets', () => {
 		expect(
 			document.querySelector('.dropdown.localizable-dropdown')
 		).toBeTruthy();
-
 		expect(queryByText('cancel')).toBeTruthy();
 		expect(queryByText('save')).toBeTruthy();
 	});

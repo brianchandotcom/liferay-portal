@@ -131,8 +131,7 @@ public class DLExternalVideoDLDisplayContextFactory
 
 			return new DLExternalVideoDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
-				httpServletResponse, fileVersion, dlExternalVideoMetadataHelper,
-				_servletContext);
+				httpServletResponse, fileVersion);
 		}
 
 		return parentDLViewFileVersionDisplayContext;

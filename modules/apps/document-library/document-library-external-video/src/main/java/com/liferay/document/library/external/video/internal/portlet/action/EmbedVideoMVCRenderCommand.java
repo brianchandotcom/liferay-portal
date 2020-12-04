@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.portlet.action;
+package com.liferay.document.library.external.video.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLProcessor;
@@ -24,7 +25,6 @@ import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,8 +53,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
-		"mvc.command.name=/document_library/embed_video"
+		"javax.portlet.name=" + DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO,
+		"mvc.command.name=/document_library_external_video/embed_video"
 	},
 	service = MVCRenderCommand.class
 )
@@ -75,10 +75,10 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 					FileEntry.class.getName(), fileEntry);
 
 				if (_isPreviewFailure(fileVersion)) {
-					return "/document_library/embed/error.jsp";
+					return "/embed/error.jsp";
 				}
 				else if (!_videoProcessor.hasVideo(fileVersion)) {
-					return "/document_library/embed/generating.jsp";
+					return "/embed/generating.jsp";
 				}
 				else {
 					String videoPosterURL = _getVideoPosterURL(
@@ -87,14 +87,15 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 							WebKeys.THEME_DISPLAY));
 
 					renderRequest.setAttribute(
-						DLWebKeys.PREVIEW_FILE_URLS,
+						DLExternalVideoWebKeys.PREVIEW_FILE_URLS,
 						_getPreviewFileURLs(
 							fileEntry, videoPosterURL, renderRequest));
 
 					renderRequest.setAttribute(
-						DLWebKeys.VIDEO_POSTER_URL, videoPosterURL);
+						DLExternalVideoWebKeys.VIDEO_POSTER_URL,
+						videoPosterURL);
 
-					return "/document_library/embed/video.jsp";
+					return "/embed/video.jsp";
 				}
 			}
 		}
@@ -102,7 +103,7 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 			_log.error(portalException, portalException);
 		}
 
-		return "/document_library/embed/error.jsp";
+		return "/embed/error.jsp";
 	}
 
 	@Reference(

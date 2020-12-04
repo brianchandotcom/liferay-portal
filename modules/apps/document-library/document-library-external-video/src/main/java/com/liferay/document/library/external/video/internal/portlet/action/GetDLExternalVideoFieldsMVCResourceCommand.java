@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.external.video.internal.portlet.action;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
 import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO,
 		"mvc.command.name=/document_library_external_video/get_dl_external_video_fields"
 	},
 	service = MVCResourceCommand.class

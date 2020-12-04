@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.external.video.internal.resolver;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
+import com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys;
 import com.liferay.document.library.external.video.internal.helper.DLExternalVideoMetadataHelper;
 import com.liferay.document.library.external.video.internal.helper.DLExternalVideoMetadataHelperFactory;
 import com.liferay.document.library.external.video.provider.DLExternalVideoProvider;
@@ -142,7 +142,7 @@ public class DLExternalVideoResolverImpl implements DLExternalVideoResolver {
 
 		PortletURL getEmbedVideoURL =
 			requestBackedPortletURLFactory.createRenderURL(
-				DLPortletKeys.DOCUMENT_LIBRARY);
+				DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO);
 
 		try {
 			getEmbedVideoURL.setWindowState(LiferayWindowState.POP_UP);
@@ -151,7 +151,8 @@ public class DLExternalVideoResolverImpl implements DLExternalVideoResolver {
 		}
 
 		getEmbedVideoURL.setParameter(
-			"mvcRenderCommandName", "/document_library/embed_video");
+			"mvcRenderCommandName",
+			"/document_library_external_video/embed_video");
 		getEmbedVideoURL.setParameter(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 

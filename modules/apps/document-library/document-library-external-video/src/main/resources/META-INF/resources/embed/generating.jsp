@@ -19,14 +19,14 @@
 <liferay-util:html-top
 	outputKey="document_library_external_video_embed_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/embed.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="video-embed-placeholder">
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<div class="video-embed-placeholder-text">
-		<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
+		<liferay-ui:message key="generating-video-preview-will-take-a-few-minutes" />
 	</div>
 </div>
 
@@ -34,7 +34,7 @@
 FileEntry fileEntry = (FileEntry)request.getAttribute(FileEntry.class.getName());
 %>
 
-<portlet:resourceURL id="/document_library/get_embed_video_status" var="getEmbedVideoStatusURL">
+<portlet:resourceURL id="/document_library_external_video/get_embed_video_status" var="getEmbedVideoStatusURL">
 	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 </portlet:resourceURL>
 
@@ -44,5 +44,5 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(FileEntry.class.getName())
 			"getEmbedVideoStatusURL", getEmbedVideoStatusURL
 		).build()
 	%>'
-	module="document_library/js/embed/generating"
+	module="js/embed/generating"
 />

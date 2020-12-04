@@ -51,7 +51,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 		</div>
 	</div>
 
-	<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" var="getDLExternalVideoFieldsURL" />
+	<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" portletName="<%= DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO %>" var="getDLExternalVideoFieldsURL" />
 
 	<react:component
 		module="js/DLExternalVideoDLFilePicker"
@@ -63,7 +63,7 @@ String onFilePickCallback = (String)request.getAttribute(DLExternalVideoWebKeys.
 			).put(
 				"getDLExternalVideoFieldsURL", getDLExternalVideoFieldsURL
 			).put(
-				"namespace", liferayPortletResponse.getNamespace()
+				"namespace", PortalUtil.getPortletNamespace(DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO)
 			).put(
 				"onFilePickCallback", onFilePickCallback
 			).build()

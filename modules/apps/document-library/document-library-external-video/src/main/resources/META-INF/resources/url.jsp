@@ -45,7 +45,7 @@ String eventName = (String)request.getAttribute(DLExternalVideoWebKeys.EVENT_NAM
 				</div>
 			</div>
 
-			<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" portletName="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" var="getDLExternalVideoFieldsURL" />
+			<liferay-portlet:resourceURL id="/document_library_external_video/get_dl_external_video_fields" portletName="<%= DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO %>" var="getDLExternalVideoFieldsURL" />
 
 			<react:component
 				module="js/DLExternalVideoVideoURLItemSelectorView"
@@ -55,7 +55,7 @@ String eventName = (String)request.getAttribute(DLExternalVideoWebKeys.EVENT_NAM
 					).put(
 						"getDLExternalVideoFieldsURL", getDLExternalVideoFieldsURL
 					).put(
-						"namespace", PortalUtil.getPortletNamespace(DLPortletKeys.DOCUMENT_LIBRARY)
+						"namespace", PortalUtil.getPortletNamespace(DLExternalVideoPortletKeys.DL_EXTERNAL_VIDEO)
 					).put(
 						"returnType", VideoEmbeddableHTMLItemSelectorReturnType.class.getName()
 					).build()

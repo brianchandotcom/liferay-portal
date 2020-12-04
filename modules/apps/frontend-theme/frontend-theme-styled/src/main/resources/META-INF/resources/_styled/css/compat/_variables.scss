@@ -10,11 +10,8 @@ $compat-modals: true !default;
 $compat-nav_tabs: true !default;
 $compat-navbar: true !default;
 $compat-navs: true !default;
-$compat-pager: true !default;
 $compat-pagination: true !default;
 $compat-panels: true !default;
-$compat-progress_bars: true !default;
-$compat-tables: true !default;
 $compat-toggle_switch: true !default;
 $compat-toolbar: true !default;
 $compat-user_icons: true !default;
@@ -134,19 +131,6 @@ $screen-sm-max: ($screen-md-min - 1) !default;
 $screen-xs-max: ($screen-sm-min - 1) !default;
 
 $grid-float-breakpoint: $screen-sm-min !default;
-
-// Pager
-
-$pager-bg: $pagination-bg !default;
-$pager-border: $pagination-border-color !default;
-$pager-border-radius: 15px !default;
-
-$pager-hover-bg: $pagination-hover-bg !default;
-
-$pager-active-bg: $pagination-active-bg !default;
-$pager-active-color: $pagination-active-color !default;
-
-$pager-disabled-color: $pagination-disabled-color !default;
 
 // Progress
 

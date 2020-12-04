@@ -35,7 +35,9 @@ definition {
 			var publicationsOrder = "1";
 		}
 
-		AssertElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_USER");
+		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_USER")) {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_SITE",

@@ -14,7 +14,6 @@
 
 package com.liferay.site.insurance.site.initializer.internal;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -384,7 +383,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
 			int displayDateMinute = calendar.get(Calendar.MINUTE);
 
-			JournalArticle article = _journalArticleLocalService.addArticle(
+			_journalArticleLocalService.addArticle(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				journalFolderMap.getOrDefault(
 					journalArticleJSONObject.getString("folder"),
@@ -404,24 +403,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
 				0, 0, 0, true, true, false, null, null, null, null,
 				_serviceContext);
-
-			long resourceClassNameId = _portal.getClassNameId(
-				JournalArticle.class);
-
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
-					_serviceContext.getScopeGroupId(), resourceClassNameId,
-					journalArticleJSONObject.getString("ddmStructureKey"));
-
-			long defaultLayoutPageTemplateEntryId =
-				_getDefaultLayoutPageTemplateEntryId(
-					resourceClassNameId, ddmStructure.getStructureId());
-
-			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				resourceClassNameId, article.getResourcePrimKey(),
-				defaultLayoutPageTemplateEntryId,
-				AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
 
 			_serviceContext.setAssetTagNames(null);
 		}
@@ -695,20 +676,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 
 		return zipWriter.getFile();
-	}
-
-	private long _getDefaultLayoutPageTemplateEntryId(
-		long classNameId, long classTypeId) {
-
-		LayoutPageTemplateEntry defaultAssetDisplayPage =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), classNameId, classTypeId);
-
-		if (defaultAssetDisplayPage == null) {
-			return 0;
-		}
-
-		return defaultAssetDisplayPage.getLayoutPageTemplateEntryId();
 	}
 
 	private String _getDynamicCollectionTypeSettings(

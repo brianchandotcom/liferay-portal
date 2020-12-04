@@ -455,6 +455,10 @@ public abstract class AccountEntryLocalServiceBaseImpl
 		groupLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 

@@ -126,6 +126,14 @@ public abstract class AccountEntryServiceBaseImpl
 	protected com.liferay.portal.kernel.service.GroupService groupService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationService
+		organizationService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 

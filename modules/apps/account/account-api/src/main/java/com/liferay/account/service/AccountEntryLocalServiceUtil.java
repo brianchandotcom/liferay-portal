@@ -420,6 +420,44 @@ public class AccountEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.account.model.AccountEntry>
+			getUserAccountEntries(
+				long userId, String keywords, Long parentAccountEntryId,
+				Integer status, String[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserAccountEntries(
+			userId, keywords, parentAccountEntryId, status, types, start, end);
+	}
+
+	public static java.util.List<com.liferay.account.model.AccountEntry>
+			getUserAccountEntries(
+				long userId, String keywords, Long parentAccountEntryId,
+				String[] types, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserAccountEntries(
+			userId, keywords, parentAccountEntryId, types, start, end);
+	}
+
+	public static int getUserAccountEntriesCount(
+			long userId, String keywords, Long parentAccountEntryId,
+			Integer status, String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserAccountEntriesCount(
+			userId, keywords, parentAccountEntryId, status, types);
+	}
+
+	public static int getUserAccountEntriesCount(
+			long userId, String keywords, Long parentAccountEntryId,
+			String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserAccountEntriesCount(
+			userId, keywords, parentAccountEntryId, types);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountEntry> search(
 			long companyId, String keywords,

@@ -45,6 +45,7 @@ const SelectLayout = ({
 	multiSelection,
 	namespace,
 	nodes,
+	selectedLayoutIds,
 }) => {
 	const [filter, setFilter] = useState();
 
@@ -134,6 +135,7 @@ const SelectLayout = ({
 						<Treeview
 							NodeComponent={Treeview.Card}
 							filter={filter}
+							initialSelectedNodeIds={selectedLayoutIds}
 							multiSelection={multiSelection}
 							nodes={nodes}
 							onSelectedNodesChange={handleSelectionChange}

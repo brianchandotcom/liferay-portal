@@ -15,8 +15,8 @@
 package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.data;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
-import com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.configuration.FiftyOneDegreesConfiguration;
 
 import java.io.IOException;
 import java.io.InputStream;

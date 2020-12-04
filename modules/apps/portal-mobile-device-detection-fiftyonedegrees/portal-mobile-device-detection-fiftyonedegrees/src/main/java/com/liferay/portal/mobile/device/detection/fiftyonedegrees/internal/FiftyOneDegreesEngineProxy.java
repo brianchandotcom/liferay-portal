@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
-import com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.configuration.FiftyOneDegreesConfiguration;
 
 import fiftyone.mobile.detection.Dataset;
 import fiftyone.mobile.detection.Match;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.configuration;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

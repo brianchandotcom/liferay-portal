@@ -205,7 +205,6 @@ public class AuthVerifierPipeline {
 	private void _rebuildConfiguration() {
 		Map<String, List<AuthVerifierConfiguration>>
 			excludeAuthVerifierConfigurations = new HashMap<>();
-
 		Map<String, List<AuthVerifierConfiguration>>
 			includeAuthVerifierConfigurations = new HashMap<>();
 

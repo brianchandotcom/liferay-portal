@@ -8,6 +8,27 @@
 <tr><td rowspan="1" colspan="3">MultiFactorAuthentication</td></tr>
 </thead>
 <tbody>
+<!--CUSTOM_MFA_VERIFICATION-->
+<tr>
+	<td>CUSTOM_MFA_TITLE</td>
+	<td>//h3[contains(.,'Please, write something for This MFA POC')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_MFA_DESCRIPTION</td>
+	<td>//label[contains(.,'Write something for This POC')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_MFA_VERIFY_FIELD</td>
+	<td>//input[contains(@name,'mfaPoc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_OTP_LINK</td>
+	<td>//a[contains(.,'Use Email One-Time Password.')]</td>
+	<td></td>
+</tr>
 <!--EMAIL_OTP_CONFIGURATION-->
 <tr>
 	<td>EMAIL_OTP_CONFIG_FIELD</td>
@@ -79,6 +100,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--CUSTOM_MFA_CONFIGURATION-->
+<tr>
+	<td>ORDER_FIELD</td>
+	<td>//input[contains(@name,'ranking')]</td>
 	<td></td>
 </tr>
 <!--IP_ADDRESS_CONFIGURATION-->

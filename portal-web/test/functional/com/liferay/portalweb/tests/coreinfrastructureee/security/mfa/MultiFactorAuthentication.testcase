@@ -1043,6 +1043,40 @@ definition {
 		AssertElementPresent(locator1 = "MultiFactorAuthentication#TOTP_FIELD");
 	}
 
+	@description = "This is a use case for LPS-101750"
+	@priority = "5"
+	test UseCustomMFAVerifier {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#UseCustomMFAVerifier";
+
+		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.multi.factor.authentication.poc.jar");
+
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.poc_1.0.0");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "MFA POC Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertTextEquals(
+			locator1 = "MultiFactorAuthentication#ORDER_FIELD",
+			value1 = "500");
+
+		MultiFactorAuthentication.configureOTP(
+			enableOTP = "true",
+			order = "50");
+
+		SignOut.signOut();
+
+		MultiFactorAuthentication.verifyCustomOTP(verificationText = "test_text");
+	}
+
 	@description = "This is a use case for LPS-118204"
 	@priority = "4"
 	test VerifyUIchangesInMFA {

@@ -37,11 +37,10 @@ import javax.servlet.http.HttpServletResponse;
 public class DLExternalVideoDLFilePicker implements DLFilePicker {
 
 	public DLExternalVideoDLFilePicker(
-		DLExternalVideo dlExternalVideo, HttpServletRequest httpServletRequest,
-		String onFilePickCallback, ServletContext servletContext) {
+		DLExternalVideo dlExternalVideo, String onFilePickCallback,
+		ServletContext servletContext) {
 
 		_dlExternalVideo = dlExternalVideo;
-		_httpServletRequest = httpServletRequest;
 		_onFilePickCallback = onFilePickCallback;
 		_servletContext = servletContext;
 	}
@@ -114,7 +113,6 @@ public class DLExternalVideoDLFilePicker implements DLFilePicker {
 	}
 
 	private final DLExternalVideo _dlExternalVideo;
-	private final HttpServletRequest _httpServletRequest;
 	private final String _onFilePickCallback;
 	private final ServletContext _servletContext;
 

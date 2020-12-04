@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
@@ -231,8 +230,5 @@ public class DLExternalVideoResolverImpl implements DLExternalVideoResolver {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -1,5 +1,4 @@
 dependencies {
-	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -24,7 +23,6 @@ dependencies {
 	testCompile project(":apps:journal:journal-api")
 	testCompile project(":apps:portal-search:portal-search-api")
 	testCompile project(":apps:portal-search:portal-search-test-util")
-	testCompile project(":apps:portal-template:portal-template-soy-api")
 	testCompile project(":apps:portal:portal-aop-api")
 	testCompile project(":apps:view-count:view-count-api")
 	testCompile project(":core:petra:petra-concurrent")

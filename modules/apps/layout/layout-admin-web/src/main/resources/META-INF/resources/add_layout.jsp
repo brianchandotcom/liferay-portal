@@ -103,6 +103,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 		<liferay-frontend:edit-form-footer>
 			<clay:button
+				id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
 				label="add"
 				type="submit"
 			/>
@@ -118,16 +119,17 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 <aui:script>
 	var form = document.<portlet:namespace />fm;
+	var addButton = document.getElementById('<portlet:namespace />addButton');
 
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (event.submitter.disabled) {
+		if (addButton.disabled) {
 			return;
 		}
 
-		event.submitter.disabled = true;
+		addButton.disabled = true;
 
 		var formData = new FormData();
 
@@ -180,7 +182,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 						type: 'danger',
 					});
 
-					event.submitter.disabled = false;
+					addButton.disabled = false;
 				}
 			});
 	});

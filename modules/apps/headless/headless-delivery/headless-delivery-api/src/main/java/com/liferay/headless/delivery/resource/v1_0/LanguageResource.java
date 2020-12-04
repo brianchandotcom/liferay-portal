@@ -47,6 +47,9 @@ public interface LanguageResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<Language> getAssetLibraryLanguagesPage(Long assetLibraryId)
+		throws Exception;
+
 	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception;
 
 	public default void setContextAcceptLanguage(

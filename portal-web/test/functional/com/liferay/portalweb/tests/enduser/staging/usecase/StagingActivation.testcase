@@ -37,8 +37,9 @@ definition {
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
+			groupName = "Site Name-staging",
 			layoutName = "Staging Test Page",
+			site = "false",
 			widgetName = "Documents and Media");
 
 		Navigator.gotoStagedSitePage(

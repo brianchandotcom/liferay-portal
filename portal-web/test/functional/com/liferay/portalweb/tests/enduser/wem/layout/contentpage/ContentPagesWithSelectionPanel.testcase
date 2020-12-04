@@ -35,6 +35,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121281. The data-lfr-priority can order the elements information of fragment with drop zone in Selection panel."
+	@priority = "4"
+	test CanOrderElementInfoOfFragmentWithDropZoneInSelectionPanel {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a fragment with drop zone and data-lfr-priority attribute") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-example">
+	<div class="section">
+		<p data-lfr-editable-id="01-title" data-lfr-editable-type="text" data-lfr-priority="1">
+			Title
+		</p>
+		<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="2"></lfr-drop-zone>
+	</div>
+	<div class="section">
+		<p data-lfr-editable-id="02-title" data-lfr-editable-type="text" data-lfr-priority="3">
+			Title
+		</p>
+		<lfr-drop-zone data-lfr-drop-zone-id="2" data-lfr-priority="4"></lfr-drop-zone>
+	</div>
+</div>
+		''';
+
+			var cssSnippet = '''
+.fragment-example {
+}
+		''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Assert elements information is organized in Selection panel") {
+			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			Pause(locator1 = "3000");
+
+			var n = "1";
+
+			for (var nodeName : list "Fragment Name,01-title,Drop Zone 1,02-title,Drop Zone 2") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-118271. Can change the order of the elements in page editor via Selection panel."
 	@priority = "5"
 	test ChangeOrderOfElementsViaSelectionPanel {

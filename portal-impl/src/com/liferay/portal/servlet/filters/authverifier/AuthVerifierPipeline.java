@@ -232,10 +232,11 @@ public class AuthVerifierPipeline {
 					urlsExclude, key -> new ArrayList<>());
 
 				List<AuthVerifierConfiguration>
-					excludeAuthVerifierConfiguration =
+					excludeAuthVerifierConfigurationList =
 						excludeAuthVerifierConfigurations.get(urlsExclude);
 
-				excludeAuthVerifierConfiguration.add(authVerifierConfiguration);
+				excludeAuthVerifierConfigurationList.add(
+					authVerifierConfiguration);
 			}
 
 			String[] urlsIncludes = StringUtil.split(
@@ -248,10 +249,11 @@ public class AuthVerifierPipeline {
 					urlsInclude, key -> new ArrayList<>());
 
 				List<AuthVerifierConfiguration>
-					includeAuthVerifierConfiguration =
+					includeAuthVerifierConfigurationList =
 						includeAuthVerifierConfigurations.get(urlsInclude);
 
-				includeAuthVerifierConfiguration.add(authVerifierConfiguration);
+				includeAuthVerifierConfigurationList.add(
+					authVerifierConfiguration);
 			}
 		}
 

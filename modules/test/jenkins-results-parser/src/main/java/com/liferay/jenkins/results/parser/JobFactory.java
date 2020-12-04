@@ -25,15 +25,6 @@ import java.util.Map;
  */
 public class JobFactory {
 
-	public static BasePortalReleaseJob newBasePortalReleaseJob(
-		String jobName, String testSuiteName, String portalBranchName,
-		String repositoryName, BasePortalReleaseJob.BuildProfile buildProfile) {
-
-		return (BasePortalReleaseJob)_newJob(
-			jobName, testSuiteName, portalBranchName, repositoryName,
-			buildProfile);
-	}
-
 	public static Job newJob(BuildData buildData) {
 		String portalUpstreamBranchName = null;
 
@@ -44,21 +35,22 @@ public class JobFactory {
 				portalBuildData.getPortalUpstreamBranchName();
 		}
 
-		return newJob(buildData.getJobName(), null, portalUpstreamBranchName);
+		return _newJob(
+			buildData.getJobName(), null, portalUpstreamBranchName, null, null);
 	}
 
 	public static Job newJob(String jobName) {
-		return newJob(jobName, null, null, null);
+		return _newJob(jobName, null, null, null, null);
 	}
 
 	public static Job newJob(String jobName, String testSuiteName) {
-		return newJob(jobName, testSuiteName, null, null);
+		return _newJob(jobName, testSuiteName, null, null, null);
 	}
 
 	public static Job newJob(
 		String jobName, String testSuiteName, String portalBranchName) {
 
-		return newJob(jobName, testSuiteName, portalBranchName, null);
+		return _newJob(jobName, testSuiteName, portalBranchName, null, null);
 	}
 
 	public static Job newJob(
@@ -99,7 +91,7 @@ public class JobFactory {
 
 	private static Job _newJob(
 		String jobName, String testSuiteName, String portalBranchName,
-		String repositoryName, BasePortalReleaseJob.BuildProfile buildProfile) {
+		String repositoryName, Job.BuildProfile buildProfile) {
 
 		String jobKey = jobName;
 

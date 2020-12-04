@@ -22,7 +22,7 @@ export const CheckboxField = ({field, onValueSelect, value}) => {
 	const [nextValue, setNextValue] = useState(!!value);
 
 	return (
-		<ClayForm.Group>
+		<ClayForm.Group className="mt-1">
 			<ClayCheckbox
 				aria-label={field.label}
 				checked={nextValue}

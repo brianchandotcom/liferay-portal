@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGN_SITE_ROLES_OPTION</td>
+	<td>//*[contains(@class,'assign-site-roles-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_SITE_ROLES_MODAL_TITLE</td>
+	<td>//*[contains(@class,'modal-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_INPUT</td>
 	<td>//div[@class='criterion'][1]//select[contains(@class, 'criterion-input')]</td>
 	<td></td>
@@ -59,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//*[contains(@aria-label,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_TAG_FIELD</td>
 	<td>//*[contains(@class,'form-control') and contains(@class,'input-group-inset') and contains(@class,'input-group-inset-after') and contains(@aria-label,'Search')]</td>
 	<td></td>
@@ -66,6 +81,11 @@
 <tr>
 	<td>SEGMENT_LIST</td>
 	<td>//*[@id='_com_liferay_segments_web_internal_portlet_SegmentsPortlet_segmentsEntriesSearchContainer']//td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_OPTIONS_MENU</td>
+	<td>//*[@id='qfkd____']</td>
 	<td></td>
 </tr>
 <tr>

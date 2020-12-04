@@ -31,6 +31,18 @@ definition {
 			value1 = "${criterionInputOption}");
 	}
 
+	macro clickAssignSiteRolesOption {
+		Click(locator1 = "Segmentation#SEGMENT_OPTIONS_MENU");
+
+		Click(locator1 = "Segmentation#ASSIGN_SITE_ROLES_OPTION");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextPresent(
+			locator1 = "Segmentation#ASSIGN_SITE_ROLES_MODAL_TITLE",
+			value1 = "Assign Site Roles");
+	}
+
 	macro deleteProperties {
 		Click(locator1 = "Segmentation#DELETE_SEGMENT");
 	}
@@ -51,6 +63,8 @@ definition {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Button#UPDATE");
 		}
+
+		Pause(locator1 = "3000");
 	}
 
 	macro fillProperty {

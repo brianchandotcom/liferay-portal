@@ -106,4 +106,59 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "When the user selects the Assign Site Roles option in the Segments Editor, it shows a dialog allowing user to assign/unassign site roles"
+	@priority = "5"
+	test AssignSiteRolesOptionEnabled {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesBySegment";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
+
+		Segmentation.enableAssingRolesBySegmentsCheckbox();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Screen Name");
+
+		Segmentation.fillTitle(titleField = "Segment test");
+
+		Segmentation.fillProperty(PropertyField = "test");
+
+		Button.clickSave();
+
+		Segmentation.clickAssignSiteRolesOption(segmentTitle = "Segment test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
+
+		Segmentation.enableAssingRolesBySegmentsCheckbox();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			portlet = "Segments");
+	}
+
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.preview.video.internal;
 
+import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.external.video.DLExternalVideo;
 import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -23,6 +24,7 @@ import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -41,16 +43,17 @@ public class VideoDLPreviewRendererProvider
 
 	@Override
 	public Set<String> getMimeTypes() {
-		return _videoProcessor.getVideoMimeTypes();
+		Set<String> mimeTypes = new HashSet<>();
+
+		mimeTypes.add(DLContentTypes.EXTERNAL_VIDEO);
+		mimeTypes.addAll(_videoProcessor.getVideoMimeTypes());
+
+		return mimeTypes;
 	}
 
 	@Override
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
-
-		if (!_videoProcessor.isVideoSupported(fileVersion)) {
-			return null;
-		}
 
 		return (request, response) -> {
 			RequestDispatcher requestDispatcher =

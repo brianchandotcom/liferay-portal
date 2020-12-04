@@ -17,8 +17,6 @@ package com.liferay.document.library.external.video.internal.display.context;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.external.video.internal.constants.DLExternalVideoConstants;
-import com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys;
-import com.liferay.document.library.external.video.internal.helper.DLExternalVideoMetadataHelper;
 import com.liferay.document.library.external.video.internal.util.DLExternalVideoUIItemsUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,15 +24,10 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
-import java.io.IOException;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,16 +41,11 @@ public class DLExternalVideoDLViewFileVersionDisplayContext
 	public DLExternalVideoDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileVersion fileVersion,
-		DLExternalVideoMetadataHelper dlExternalVideoMetadataHelper,
-		ServletContext servletContext) {
+		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
 		super(
 			_UUID, parentDLDisplayContext, httpServletRequest,
 			httpServletResponse, fileVersion);
-
-		_dlExternalVideoMetadataHelper = dlExternalVideoMetadataHelper;
-		_servletContext = servletContext;
 	}
 
 	@Override
@@ -117,31 +105,7 @@ public class DLExternalVideoDLViewFileVersionDisplayContext
 		return false;
 	}
 
-	@Override
-	public void renderPreview(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/preview.jsp");
-
-		if (_dlExternalVideoMetadataHelper.containsField(
-				DLExternalVideoConstants.DDM_FIELD_NAME_HTML)) {
-
-			request.setAttribute(
-				DLExternalVideoWebKeys.EMBEDDABLE_HTML,
-				_dlExternalVideoMetadataHelper.getFieldValue(
-					DLExternalVideoConstants.DDM_FIELD_NAME_HTML));
-		}
-
-		requestDispatcher.include(request, response);
-	}
-
 	private static final UUID _UUID = UUID.fromString(
 		"7deb426a-96b9-4db6-88ac-9afbc7fc2151");
-
-	private final DLExternalVideoMetadataHelper _dlExternalVideoMetadataHelper;
-	private final ServletContext _servletContext;
 
 }

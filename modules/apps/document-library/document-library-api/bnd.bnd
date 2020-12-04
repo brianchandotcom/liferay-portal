@@ -20,4 +20,5 @@ Export-Package:\
 	com.liferay.document.library.service.persistence,\
 	com.liferay.document.library.url.provider,\
 	com.liferay.document.library.util,\
-	com.liferay.document.library.versioning
+	com.liferay.document.library.versioning,\
+	com.liferay.document.library.video.renderer

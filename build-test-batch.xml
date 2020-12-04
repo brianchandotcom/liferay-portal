@@ -5930,91 +5930,66 @@ ${output.content}</echo>
 	</target>
 
 	<target name="portal-renamed-tomcat-in-path-jdk8">
-		<sequential>
-			<run-batch-test>
-				<test-action>
-					<database-test-run-test database.type="mysql" stop.app.server="true">
-						<test-action>
-							<sequential>
-								<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-									<param name="database.type" value="@{database.type}" />
-								</antcall>
+		<run-batch-test>
+			<test-action>
+				<database-test-run-test database.type="mysql" stop.app.server="true">
+					<test-action>
+						<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+							<param name="database.type" value="@{database.type}" />
+						</antcall>
 
-								<antcall inheritAll="false" target="prepare-portal-ext-properties">
-									<param name="database.type" value="@{database.type}" />
-								</antcall>
+						<antcall inheritAll="false" target="prepare-portal-ext-properties">
+							<param name="database.type" value="@{database.type}" />
+						</antcall>
 
-								<antcall inheritAll="false" target="prepare-system-ext-properties" />
+						<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-								<parallel>
-									<exec dir="${app.server.bin.dir}" executable="sh">
-										<arg value="catalina.sh" />
-										<arg value="run" />
-										<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
-									</exec>
+						<parallel>
+							<exec dir="${app.server.bin.dir}" executable="sh">
+								<arg value="catalina.sh" />
+								<arg value="run" />
+								<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
+							</exec>
 
-									<waitfor>
-										<http url="http://localhost:8080" />
-									</waitfor>
-								</parallel>
+							<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" >
+								<http url="http://localhost:8080/web/guest" />
+							</waitfor>
+						</parallel>
 
-								<antcall inheritAll="false" target="stop-app-server" />
+						<antcall inheritAll="false" target="stop-app-server" />
 
-								<local name="junit.failure.count" />
-								<local name="junit.failure.message" />
+						<local name="junit.failure.count" />
+						<local name="junit.failure.message" />
 
-								<trycatch property="junit.failure.message">
-									<try>
-										<sequential>
-											<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-												<param name="database.type" value="@{database.type}" />
-											</antcall>
+						<trycatch property="junit.failure.message">
+							<try>
+								<move
+									file="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}"
+									tofile="${app.server.parent.dir}/tomcat"
+								/>
 
-											<antcall inheritAll="false" target="prepare-portal-ext-properties">
-												<param name="database.type" value="@{database.type}" />
-												<param name="liferay.home" value="${app.server.parent.dir}" />
-											</antcall>
+								<start-renamed-app-server />
+							</try>
+							<finally>
+								<condition else="0" property="junit.failure.count" value="1">
+									<isset property="junit.failure.message" />
+								</condition>
 
-											<antcall inheritAll="false" target="prepare-system-ext-properties" />
+								<get-junit-failure-message-element />
 
-											<move
-												file="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}"
-												tofile="${app.server.parent.dir}/tomcat"
-											/>
+								<generate-backend-batch-junit-report junit.failure.count="${junit.failure.count}" junit.failure.message.element="${junit.failure.message.element}" test.class.name="portalStartupRenamedTomcatInPath" test.command.name="portalStartupRenamedTomcatInPath" />
+							</finally>
+						</trycatch>
 
-											<propertyfile file="app.server.${env.HOSTNAME}.properties">
-												<entry key="app.server.parent.dir" value="${app.server.parent.dir}" />
-											</propertyfile>
+						<stop-renamed-app-server />
+					</test-action>
+				</database-test-run-test>
+			</test-action>
 
-											<propertyfile file="build.${env.HOSTNAME}.properties">
-												<entry key="liferay.home" value="${app.server.parent.dir}" />
-											</propertyfile>
-
-											<start-renamed-app-server />
-										</sequential>
-									</try>
-									<finally>
-										<condition else="0" property="junit.failure.count" value="1">
-											<isset property="junit.failure.message" />
-										</condition>
-
-										<get-junit-failure-message-element />
-
-										<generate-backend-batch-junit-report junit.failure.count="${junit.failure.count}" junit.failure.message.element="${junit.failure.message.element}" test.class.name="portalStartupRenamedTomcatInPath" test.command.name="portalStartupRenamedTomcatInPath" />
-									</finally>
-								</trycatch>
-
-								<stop-renamed-app-server />
-							</sequential>
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<setup-test-environment />
-				</test-set-up>
-			</run-batch-test>
-		</sequential>
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
 	</target>
 
 	<target name="portal-second-startup-space-in-path-jdk8">

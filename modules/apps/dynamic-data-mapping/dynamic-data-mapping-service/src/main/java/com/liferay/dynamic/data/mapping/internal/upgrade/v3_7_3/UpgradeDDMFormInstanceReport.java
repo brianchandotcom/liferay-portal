@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -241,7 +243,7 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 	private JSONObject _processDDMFormValues(
 			JSONObject dataJSONObject, DDMFormValues ddmFormValues,
 			long formInstanceRecordId)
-		throws Exception, JSONException {
+		throws Exception {
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
@@ -266,22 +268,32 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 					);
 				}
 
-				JSONObject processedFieldJSONObject =
-					ddmFormFieldTypeReportProcessor.process(
-						ddmFormFieldValue,
-						_jsonFactory.createJSONObject(
-							fieldJSONObject.toJSONString()),
-						formInstanceRecordId,
-						DDMFormInstanceReportConstants.
-							EVENT_ADD_RECORD_VERSION);
+				try {
+					JSONObject processedFieldJSONObject =
+						ddmFormFieldTypeReportProcessor.process(
+							ddmFormFieldValue,
+							_jsonFactory.createJSONObject(
+								fieldJSONObject.toJSONString()),
+							formInstanceRecordId,
+							DDMFormInstanceReportConstants.
+								EVENT_ADD_RECORD_VERSION);
 
-				dataJSONObject.put(
-					ddmFormFieldValueName, processedFieldJSONObject);
+					dataJSONObject.put(
+						ddmFormFieldValueName, processedFieldJSONObject);
+				}
+				catch (JSONException jsonException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(jsonException, jsonException);
+					}
+				}
 			}
 		}
 
 		return dataJSONObject;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDDMFormInstanceReport.class);
 
 	private final DDMFormDeserializer _ddmFormDeserializer;
 	private DDMFormFieldTypeReportProcessorTracker

@@ -149,6 +149,10 @@ public class UpgradeDDMContent extends UpgradeProcess {
 					JSONObject fieldValueJSONObject = dataFieldValuesMap.get(
 						name);
 
+					if (fieldValueJSONObject == null) {
+						return;
+					}
+
 					JSONArray namesJSONArray = fieldValueJSONObject.names();
 
 					namesJSONArray.forEach(

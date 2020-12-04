@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.preview.video.internal;
+package com.liferay.document.library.external.video.internal.preview;
 
 import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.document.library.external.video.DLExternalVideo;
@@ -57,7 +57,7 @@ public class VideoDLPreviewRendererProvider
 
 		return (request, response) -> {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/preview/view.jsp");
+				_servletContext.getRequestDispatcher("/preview.jsp");
 
 			request.setAttribute(
 				DLExternalVideo.class.getName(),
@@ -87,7 +87,7 @@ public class VideoDLPreviewRendererProvider
 	private DLExternalVideoResolver _dlExternalVideoResolver;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.video)"
+		target = "(osgi.web.symbolicname=com.liferay.document.library.external.video)"
 	)
 	private ServletContext _servletContext;
 

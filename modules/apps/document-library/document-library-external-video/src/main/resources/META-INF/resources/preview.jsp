@@ -14,17 +14,21 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<liferay-util:html-top
+	outputKey="document_library_external_video_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
 
-<%@ page import="com.liferay.document.library.external.video.DLExternalVideo" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %>
+<div class="external-video-preview external-video-preview-framed preview-file">
+	<div class="external-video-preview-aspect-ratio">
 
-<liferay-frontend:defineObjects />
+		<%
+		DLExternalVideo dlExternalVideo = (DLExternalVideo)request.getAttribute(DLExternalVideo.class.getName());
+		%>
 
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+		<%= dlExternalVideo.getEmbeddableHTML() %>
+	</div>
+</div>

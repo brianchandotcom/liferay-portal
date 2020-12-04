@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Document Library Preview Video
-Bundle-SymbolicName: com.liferay.document.library.preview.video
-Bundle-Version: 3.0.0
-Web-ContextPath: /document-library-preview-video

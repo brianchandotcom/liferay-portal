@@ -181,7 +181,7 @@ public class JournalEditDDMStructuresDisplayContext {
 	public String getDefaultLanguageId() {
 		DDMForm ddmForm = getDDMForm();
 
-		if (ddmForm == null) {
+		if ((ddmForm == null) || (ddmForm.getDefaultLocale() == null)) {
 			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 		}
 

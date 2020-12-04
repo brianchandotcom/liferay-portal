@@ -17,7 +17,6 @@ import 'clay-button';
 import 'clay-label';
 
 import 'clay-dropdown';
-import ClayTooltip from 'clay-tooltip';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import dom from 'metal-dom';
@@ -47,8 +46,6 @@ class RuleList extends Component {
 				true
 			)
 		);
-
-		ClayTooltip.init();
 	}
 
 	disposeInternal() {

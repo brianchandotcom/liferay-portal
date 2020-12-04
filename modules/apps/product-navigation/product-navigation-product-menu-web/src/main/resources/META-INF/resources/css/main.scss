@@ -345,16 +345,6 @@ $product-menu-pages-administration-link-height: 72px;
 		display: block;
 	}
 
-	.list-group {
-		> .collapse,
-		> .collapsing {
-			> .list-group-item > .tabular-list-group {
-				margin-bottom: -10px;
-				margin-top: -10px;
-			}
-		}
-	}
-
 	.list-group-heading {
 		h1,
 		h2,

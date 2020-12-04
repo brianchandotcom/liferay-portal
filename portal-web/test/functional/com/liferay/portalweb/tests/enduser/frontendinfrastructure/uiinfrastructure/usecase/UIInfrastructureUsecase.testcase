@@ -85,7 +85,7 @@ definition {
 		AssertCssValue(
 			locator1 = "//ul[contains(@id,'controlMenu')]",
 			locator2 = "list-style",
-			value1 = "none outside none");
+			value1 = "outside none none");
 
 		takeScreenshot();
 
@@ -101,7 +101,7 @@ definition {
 		AssertCssValue(
 			locator1 = "//ul[contains(@id,'controlMenu')]",
 			locator2 = "list-style",
-			value1 = "none outside none");
+			value1 = "outside none none");
 
 		takeScreenshot();
 	}

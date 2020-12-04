@@ -30,6 +30,9 @@ public class ClaySamplePortletKeys {
 	public static final String MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT =
 		"MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT";
 
+	public static final String MULTI_SELECT_DISPLAY_CONTEXT =
+		"MULTI_SELECT_DISPLAY_CONTEXT";
+
 	public static final String NAVIGATION_BARS_DISPLAY_CONTEXT =
 		"NAVIGATION_BARS_DISPLAY_CONTEXT";
 

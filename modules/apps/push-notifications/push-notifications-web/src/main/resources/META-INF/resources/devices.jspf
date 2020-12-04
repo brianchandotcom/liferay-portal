@@ -100,7 +100,7 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
+				cssClass="autofit-col"
 				path="/push_notifications_device_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

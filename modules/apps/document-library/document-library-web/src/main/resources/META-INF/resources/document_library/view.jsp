@@ -150,15 +150,15 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 								</liferay-frontend:vertical-card>
 
 								<li class="display-descriptive entry-display-style list-group-item">
-									<div class="list-group-item-field"></div>
+									<div class="autofit-col"></div>
 
-									<div class="list-group-item-field">
+									<div class="autofit-col">
 										<div class="click-selector user-icon user-icon-square user-icon-xl">
 											<img alt="thumbnail" class="img-fluid rounded" src="<%= thumbnailSrc %>" />
 										</div>
 									</div>
 
-									<div class="list-group-item-content">
+									<div class="autofit-col autofit-col-expand">
 										<h5 class="text-default">
 											<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
 										</h5>
@@ -170,7 +170,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 										</h4>
 									</div>
 
-									<div class="list-group-item-field"></div>
+									<div class="autofit-col"></div>
 								</li>
 							</div>
 						</div>

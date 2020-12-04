@@ -506,7 +506,6 @@ public class VerticalCardTag extends BaseCardTag {
 			else if (Validator.isNotNull(stickerIcon)) {
 				stickerTag.setIcon(stickerIcon);
 			}
-
 			else if (Validator.isNotNull(stickerLabel)) {
 				stickerTag.setLabel(stickerLabel);
 			}

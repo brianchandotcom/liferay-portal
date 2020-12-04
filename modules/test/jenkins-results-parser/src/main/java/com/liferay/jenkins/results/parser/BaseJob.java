@@ -284,8 +284,7 @@ public abstract class BaseJob implements Job {
 
 		for (String batchName : rawBatchNames) {
 			BatchTestClassGroup batchTestClassGroup =
-				TestClassGroupFactory.newBatchTestClassGroup(
-					batchName, _getBatchBuildProfile(), this);
+				TestClassGroupFactory.newBatchTestClassGroup(batchName, this);
 
 			if (batchTestClassGroup.getAxisCount() <= 0) {
 				continue;
@@ -400,19 +399,6 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
-
-	private BatchTestClassGroup.BuildProfile _getBatchBuildProfile() {
-		BuildProfile buildProfile = getBuildProfile();
-
-		if (buildProfile == null) {
-			buildProfile = BuildProfile.PORTAL;
-		}
-
-		String buildProfileString = buildProfile.toString();
-
-		return BatchTestClassGroup.BuildProfile.valueOf(
-			buildProfileString.toUpperCase());
-	}
 
 	private final String _jobName;
 	private final Properties _jobProperties = new Properties();

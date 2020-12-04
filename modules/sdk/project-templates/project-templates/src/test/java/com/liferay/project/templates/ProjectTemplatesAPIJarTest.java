@@ -85,91 +85,24 @@ public class ProjectTemplatesAPIJarTest
 
 		Path classesPath = classesDir.toPath();
 
-		Set<String> classPaths = _getPaths(classesPath, ".class");
+		Set<String> classes = _getPaths(classesPath, ".class");
 
-		Assert.assertFalse(classPaths.isEmpty());
+		Assert.assertFalse(classes.isEmpty());
 
 		Set<String> javaPaths = _getPaths(sourcesDir.toPath(), ".java");
 
 		Assert.assertFalse(javaPaths.isEmpty());
 
-		for (String classPath : classPaths) {
-			if (!classPath.contains("$") &&
-				!_ignoreClassPaths.contains(classPath)) {
-
+		for (String clazz : classes) {
+			if (!clazz.contains("$") && !_ignoreJavaPaths.contains(clazz)) {
 				Assert.assertTrue(
-					"Missing class " + classPath,
-					javaPaths.contains(classPath));
+					"Missing class " + clazz, javaPaths.contains(clazz));
 			}
 		}
 
-		Map<String, Set<String>> tldClassPaths = _getTLDClassPaths(
-			"/taglib/tag/tag-class", classesPath);
+		_assertTLDClasses("/taglib/tag/tag-class", classesPath, classes);
 
-		Assert.assertFalse(tldClassPaths.isEmpty());
-
-		Set<Map.Entry<String, Set<String>>> tldEntries =
-			tldClassPaths.entrySet();
-
-		StringBuilder tldSb = new StringBuilder("");
-
-		tldEntries.forEach(
-			entry -> {
-				Set<String> tldClasses = entry.getValue();
-
-				Stream<String> stream = tldClasses.stream();
-
-				List<String> missingTLDClasses = stream.filter(
-					tldClass -> !classPaths.contains(tldClass)
-				).collect(
-					Collectors.toList()
-				);
-
-				if (!missingTLDClasses.isEmpty()) {
-					tldSb.append(entry.getKey() + "\n");
-
-					missingTLDClasses.forEach(
-						tldClass -> tldSb.append("\t" + tldClass + "\n"));
-				}
-			});
-
-		Assert.assertTrue(
-			"Missing TLD classes: " + tldSb.toString(),
-			Objects.equals("", tldSb.toString()));
-
-		Map<String, Set<String>> teiClassPaths = _getTLDClassPaths(
-			"/taglib/tag/tei-class", classesPath);
-
-		Assert.assertFalse(teiClassPaths.isEmpty());
-
-		Set<Map.Entry<String, Set<String>>> teiEntries =
-			teiClassPaths.entrySet();
-
-		StringBuilder teriSb = new StringBuilder("");
-
-		teiEntries.forEach(
-			entry -> {
-				Set<String> teiClasses = entry.getValue();
-
-				Stream<String> stream = teiClasses.stream();
-
-				List<String> missingTEIClasses = stream.filter(
-					teiClass -> !classPaths.contains(teiClass)
-				).collect(
-					Collectors.toList()
-				);
-
-				if (!missingTEIClasses.isEmpty()) {
-					teriSb.append(entry.getKey() + "\n");
-
-					missingTEIClasses.forEach(
-						teiClass -> teriSb.append("\t" + teiClass + "\n"));
-				}
-			});
-
-		Assert.assertTrue(
-			"Missing TEI classes: " + teriSb.toString(),
-			Objects.equals("", teriSb.toString()));
+		_assertTLDClasses("/taglib/tag/tei-class", classesPath, classes);
 
 		Set<Path> sevicesPaths = _getServicesPaths(classesDir.toPath());
 
@@ -196,12 +129,51 @@ public class ProjectTemplatesAPIJarTest
 
 			Assert.assertTrue(
 				"Missing service class " + servicePath,
-				classPaths.contains(servicePath));
+				classes.contains(servicePath));
 		}
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	private void _assertTLDClasses(
+			String filterPath, Path classesPath, Set<String> classes)
+		throws Exception {
+
+		Map<String, Set<String>> tldClassPaths = _getTLDClassPaths(
+			filterPath, classesPath);
+
+		Assert.assertFalse(tldClassPaths.isEmpty());
+
+		Set<Map.Entry<String, Set<String>>> tldEntries =
+			tldClassPaths.entrySet();
+
+		StringBuilder sb = new StringBuilder("");
+
+		tldEntries.forEach(
+			entry -> {
+				Set<String> tldClasses = entry.getValue();
+
+				Stream<String> stream = tldClasses.stream();
+
+				List<String> missingTLDClasses = stream.filter(
+					tldClass -> !classes.contains(tldClass)
+				).collect(
+					Collectors.toList()
+				);
+
+				if (!missingTLDClasses.isEmpty()) {
+					sb.append(entry.getKey() + "\n");
+
+					missingTLDClasses.forEach(
+						tldClass -> sb.append("\t" + tldClass + "\n"));
+				}
+			});
+
+		Assert.assertTrue(
+			"Missing TLD classes:\n" + sb.toString(),
+			Objects.equals("", sb.toString()));
+	}
 
 	private Set<String> _getPaths(Path sourcePath, String extension)
 		throws Exception {
@@ -344,7 +316,7 @@ public class ProjectTemplatesAPIJarTest
 	private static final String _RELEASE_API_JAR_SOURCES_FILE =
 		System.getProperty("releaseApiJarSourcesFile");
 
-	private static final List<String> _ignoreClassPaths = Arrays.asList(
+	private static final List<String> _ignoreJavaPaths = Arrays.asList(
 		"com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer",
 		"javax/servlet/http/NoBodyOutputStream",
 		"javax/servlet/http/NoBodyResponse",

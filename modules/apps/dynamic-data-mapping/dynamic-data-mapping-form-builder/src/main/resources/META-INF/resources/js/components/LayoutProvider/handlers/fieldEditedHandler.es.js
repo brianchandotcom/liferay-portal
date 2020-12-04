@@ -102,11 +102,19 @@ export const updateState = (props, state, propertyName, propertyValue) => {
 		propertyValue
 	);
 
+	const visitor = new PagesVisitor(pages);
+
+	let stateField = visitor.findField(
+		(field) => field.fieldName === previousFocusedFieldName
+	);
+
+	stateField = updateField(props, stateField, propertyName, propertyValue);
+
 	const newPages = updatePages(
 		props,
 		pages,
 		previousFocusedFieldName,
-		newFocusedField
+		stateField
 	);
 
 	return {

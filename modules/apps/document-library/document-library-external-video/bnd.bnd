@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Document Library External Video
-Bundle-SymbolicName: com.liferay.document.library.external.video
-Bundle-Version: 1.0.0
-Web-ContextPath: /document-library-external-video

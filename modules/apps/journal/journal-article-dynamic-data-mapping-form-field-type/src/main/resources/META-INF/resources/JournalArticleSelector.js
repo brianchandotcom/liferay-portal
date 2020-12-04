@@ -39,9 +39,7 @@ const JournalArticleSelector = ({
 		onChange('');
 	};
 
-	const handleFieldChanged = (event) => {
-		const selectedItem = event.selectedItem;
-
+	const handleFieldChanged = (selectedItem) => {
 		if (selectedItem && selectedItem.value) {
 			setArticle(JSON.parse(selectedItem.value));
 			onChange(selectedItem.value);

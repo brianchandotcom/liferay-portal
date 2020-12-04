@@ -25,24 +25,26 @@ exports[`EditApp renders 1`] = `
         >
           <button
             class="dropdown-toggle btn btn-monospaced btn-secondary"
-            symbol=""
+            symbol="en-US"
             type="button"
           >
             <span
               class="inline-item"
             >
               <svg
-                class="lexicon-icon lexicon-icon-"
+                class="lexicon-icon lexicon-icon-en-us"
                 role="presentation"
               >
                 <use
-                  xlink:href="#"
+                  xlink:href="#en-us"
                 />
               </svg>
             </span>
             <span
               class="btn-section"
-            />
+            >
+              en-US
+            </span>
           </button>
         </div>
         <li

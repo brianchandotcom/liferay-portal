@@ -34,6 +34,11 @@ public class TestClassGroupFactory {
 				(FunctionalBatchTestClassGroup)batchTestClassGroup);
 		}
 
+		if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			return new JUnitAxisTestClassGroup(
+				(JUnitBatchTestClassGroup)batchTestClassGroup);
+		}
+
 		return new AxisTestClassGroup(batchTestClassGroup);
 	}
 

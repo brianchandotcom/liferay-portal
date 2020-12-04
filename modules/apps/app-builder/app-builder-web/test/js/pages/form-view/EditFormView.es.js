@@ -124,7 +124,7 @@ describe('EditFormView', () => {
 		fireEvent.click(fieldDate);
 
 		expect(
-			dataLayoutBuilderProps.dispatchAction.mock.calls[1][0]
+			dataLayoutBuilderProps.dispatchAction.mock.calls[2][0]
 		).toStrictEqual({
 			payload: {
 				fieldTypeName: 'date',
@@ -132,7 +132,7 @@ describe('EditFormView', () => {
 			type: 'ADD_CUSTOM_OBJECT_FIELD',
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(2);
+		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(3);
 
 		const formName = queryByPlaceholderText('untitled-form-view');
 
@@ -141,7 +141,7 @@ describe('EditFormView', () => {
 		fireEvent.change(formName, {target: {value: 'My Form View'}});
 
 		expect(
-			dataLayoutBuilderProps.dispatchAction.mock.calls[2][0]
+			dataLayoutBuilderProps.dispatchAction.mock.calls[3][0]
 		).toStrictEqual({
 			payload: {
 				name: {
@@ -151,7 +151,7 @@ describe('EditFormView', () => {
 			type: 'UPDATE_DATA_LAYOUT_NAME',
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(3);
+		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(4);
 
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
 	});
@@ -317,7 +317,7 @@ describe('EditFormView', () => {
 			jest.runAllTimers();
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(1);
+		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(2);
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
 
 		expect(container.querySelector('.menu-indicator-enabled')).toBeFalsy();
@@ -345,7 +345,7 @@ describe('EditFormView', () => {
 		});
 
 		expect(
-			dataLayoutBuilderProps.dispatchAction.mock.calls[1][0]
+			dataLayoutBuilderProps.dispatchAction.mock.calls[2][0]
 		).toStrictEqual({
 			payload: {
 				fieldName: 'SelectFromList',
@@ -412,7 +412,7 @@ describe('EditFormView', () => {
 			jest.runAllTimers();
 		});
 
-		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(1);
+		expect(dataLayoutBuilderProps.dispatchAction.mock.calls.length).toBe(2);
 		expect(dataLayoutVisitorSpy.mock.calls.length).toBe(1);
 
 		const deleteButton = container.querySelector(

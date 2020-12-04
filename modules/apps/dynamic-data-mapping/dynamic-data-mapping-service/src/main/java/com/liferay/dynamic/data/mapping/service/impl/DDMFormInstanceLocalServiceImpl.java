@@ -30,10 +30,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -51,10 +53,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -567,7 +572,8 @@ public class DDMFormInstanceLocalServiceImpl
 	}
 
 	protected DDMFormValues getFormInstanceSettingsFormValues(
-		String serializedSettingsDDMFormValues) {
+			String serializedSettingsDDMFormValues)
+		throws PortalException {
 
 		DDMForm ddmForm = DDMFormFactory.create(DDMFormInstanceSettings.class);
 
@@ -579,7 +585,12 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormValuesDeserializerDeserializeResponse =
 				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
-		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+		DDMFormValues ddmFormValues =
+			ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
+
+		_removeWorkflowDefinitionVersion(ddmFormValues);
+
+		return ddmFormValues;
 	}
 
 	protected String getNextVersion(String version, boolean majorVersion) {
@@ -670,11 +681,21 @@ public class DDMFormInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String workflowDefinition = getWorkflowDefinition(
+		String workflowDefinitionName = getWorkflowDefinition(
 			settingsDDMFormValues);
 
-		if (workflowDefinition.equals("no-workflow")) {
-			workflowDefinition = "";
+		String workflowDefinition = "";
+
+		if (Validator.isNotNull(workflowDefinitionName) &&
+			!workflowDefinitionName.equals("no-workflow")) {
+
+			KaleoDefinition kaleoDefinition =
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					workflowDefinitionName, serviceContext);
+
+			workflowDefinition =
+				workflowDefinitionName + StringPool.AT +
+					kaleoDefinition.getVersion();
 		}
 
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
@@ -727,6 +748,28 @@ public class DDMFormInstanceLocalServiceImpl
 		}
 	}
 
+	private void _removeWorkflowDefinitionVersion(DDMFormValues ddmFormValues) {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(false);
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"workflowDefinition");
+
+		if (ListUtil.isNotEmpty(ddmFormFieldValues)) {
+			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+			UnlocalizedValue value =
+				(UnlocalizedValue)ddmFormFieldValue.getValue();
+
+			String workflowDefinition = value.getString(
+				value.getDefaultLocale());
+
+			value.addString(
+				value.getDefaultLocale(),
+				workflowDefinition.replaceAll("@\\d+", StringPool.BLANK));
+		}
+	}
+
 	private static final String _VERSION_DEFAULT = "1.0";
 
 	@Reference
@@ -748,6 +791,9 @@ public class DDMFormInstanceLocalServiceImpl
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+
+	@Reference
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 	@Reference
 	private MailService _mailService;

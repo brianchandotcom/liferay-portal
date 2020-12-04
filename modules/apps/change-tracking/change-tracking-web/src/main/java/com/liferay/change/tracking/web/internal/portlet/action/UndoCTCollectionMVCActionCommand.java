@@ -20,7 +20,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -110,21 +109,6 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(
 				actionRequest, PublicationLocalizedException.class.getName(),
 				publicationLocalizedException);
-
-			hideDefaultErrorMessage(actionRequest);
-		}
-		catch (SystemException systemException) {
-			Throwable throwable = systemException.getCause();
-
-			if (!(throwable instanceof PublicationLocalizedException)) {
-				throw systemException;
-			}
-
-			_log.error(throwable, throwable);
-
-			SessionErrors.add(
-				actionRequest, PublicationLocalizedException.class.getName(),
-				throwable);
 
 			hideDefaultErrorMessage(actionRequest);
 		}

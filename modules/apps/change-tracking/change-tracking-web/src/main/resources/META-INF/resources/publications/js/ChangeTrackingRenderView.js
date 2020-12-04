@@ -18,9 +18,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
-const ChangeTrackingRenderView = ({spritemap}) => {
+const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 	const CONTENT_SELECT_LEFT = 'CONTENT_SELECT_LEFT';
 	const CONTENT_SELECT_RIGHT = 'CONTENT_SELECT_RIGHT';
 	const CONTENT_SELECT_UNIFIED = 'CONTENT_SELECT_UNIFIED';
@@ -29,9 +30,19 @@ const ChangeTrackingRenderView = ({spritemap}) => {
 	const VIEW_TYPE_FULL = 'VIEW_TYPE_FULL';
 	const VIEW_TYPE_SPLIT = 'VIEW_TYPE_SPLIT';
 
+	const [columns, setColumns] = useState(2);
 	const [contentSelect, setContentSelect] = useState(CONTENT_SELECT_UNIFIED);
-	const [viewType, setViewType] = useState(VIEW_TYPE_FULL);
 	const [contentType, setContentType] = useState(CONTENT_TYPE_DISPLAY);
+	const [data, setData] = useState(null);
+	const [viewType, setViewType] = useState(VIEW_TYPE_FULL);
+
+	useEffect(() => {
+		fetch(dataURL).then(
+			(response) => response.json()
+		).then((json) => {
+			setData(json);
+		});
+	}, [data])
 
 	const getContentSelectTitle = (contentSelect) => {
 		if (contentSelect === CONTENT_SELECT_LEFT) {
@@ -105,6 +116,44 @@ const ChangeTrackingRenderView = ({spritemap}) => {
 		return elements;
 	};
 
+	const renderContentTable = () => {
+		if (!data) {
+			return '';
+		}
+		else if (contentType === CONTENT_TYPE_DATA) {
+			return (
+				<tr>
+				    {Object.prototype.hasOwnProperty.call(data, 'leftRender') && (
+					    <td className="publications-render-table-td">
+					        <div dangerouslySetInnerHTML={{__html: data.leftRender}} />
+					    </td>
+					)}
+				    {Object.prototype.hasOwnProperty.call(data, 'rightRender') && (
+					    <td className="publications-render-table-td">
+					        <div dangerouslySetInnerHTML={{__html: data.rightRender}} />
+					    </td>
+					)}
+				</tr>
+			);
+		}
+		else {
+			return (
+				<tr>
+					{Object.prototype.hasOwnProperty.call(data, 'leftContent') && (
+					    <td className="publications-render-table-td">
+					        <div dangerouslySetInnerHTML={{__html: data.leftContent}} />
+					    </td>
+					)}
+				    {Object.prototype.hasOwnProperty.call(data, 'rightContent') && (
+					    <td className="publications-render-table-td">
+					        <div dangerouslySetInnerHTML={{__html: data.rightContent}} />
+					    </td>
+					)}
+				</tr>
+			);
+		}
+	}
+
 	const renderDiffLegend = () => {
 		if (
 			contentSelect !== CONTENT_SELECT_UNIFIED ||
@@ -142,7 +191,7 @@ const ChangeTrackingRenderView = ({spritemap}) => {
 
 	const renderToolbar = () => {
 		return (
-			<td className="publications-render-table-toolbar">
+			<td className="publications-render-table-toolbar" colspan={columns}>
 				<div className="autofit-row">
 					<div className="autofit-col">
 						<ClayNavigationBar
@@ -227,11 +276,15 @@ const ChangeTrackingRenderView = ({spritemap}) => {
 			<table className="publications-render-table table">
 				<tr>{renderToolbar()}</tr>
 				<tr className="publications-render-table-divider table-divider">
-					<td className="publications-render-table-td">DIVIDER</td>
+					<td className="publications-render-table-td">
+						LEFT
+					</td>
+					<td className="publications-render-table-td">
+						RIGHT
+					</td>
 				</tr>
-				<tr>
-					<td className="publications-render-table-td">CONTENT</td>
-				</tr>
+
+				{renderContentTable()}
 			</table>
 		</div>
 	);

@@ -41,6 +41,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,6 +91,13 @@ public class ViewDiscardDisplayContext {
 					JSONFactoryUtil.createJSONArray();
 
 				for (CTEntry ctEntry : ctEntries) {
+					ResourceURL dataURL = _renderResponse.createResourceURL();
+
+					dataURL.setResourceID(
+						"/change_tracking/get_ct_entry_render_data");
+					dataURL.setParameter(
+						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
 					RenderURL viewURL = _renderResponse.createRenderURL();
 
 					viewURL.setParameter(
@@ -103,6 +111,8 @@ public class ViewDiscardDisplayContext {
 					ctEntriesJSONArray.put(
 						JSONUtil.put(
 							"ctEntryId", ctEntry.getCtEntryId()
+						).put(
+							"dataURL", dataURL.toString()
 						).put(
 							"description",
 							_ctDisplayRendererRegistry.getEntryDescription(

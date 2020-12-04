@@ -115,7 +115,7 @@ public class CTDisplayRendererRegistry {
 				modelClassNameId);
 
 		if (ctDisplayRenderer == null) {
-			ctDisplayRenderer = _getDefaultRenderer();
+			ctDisplayRenderer = getDefaultRenderer();
 		}
 
 		return ctDisplayRenderer;
@@ -148,6 +148,11 @@ public class CTDisplayRendererRegistry {
 		}
 
 		return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends BaseModel<T>> CTDisplayRenderer<T> getDefaultRenderer() {
+		return (CTDisplayRenderer<T>)_defaultCTDisplayRenderer;
 	}
 
 	public <T extends BaseModel<T>> String getEditURL(
@@ -354,7 +359,7 @@ public class CTDisplayRendererRegistry {
 				modelClassNameId);
 
 		if (ctDisplayRenderer == null) {
-			ctDisplayRenderer = _getDefaultRenderer();
+			ctDisplayRenderer = getDefaultRenderer();
 
 			ctDisplayRenderer.render(
 				new DisplayContextImpl<>(
@@ -388,7 +393,7 @@ public class CTDisplayRendererRegistry {
 				_log.warn(exception, exception);
 			}
 
-			ctDisplayRenderer = _getDefaultRenderer();
+			ctDisplayRenderer = getDefaultRenderer();
 
 			ctDisplayRenderer.render(
 				new DisplayContextImpl<>(
@@ -437,13 +442,6 @@ public class CTDisplayRendererRegistry {
 	protected void deactivate() {
 		_ctDisplayServiceTrackerMap.close();
 		_ctServiceServiceTrackerMap.close();
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T extends BaseModel<T>> CTDisplayRenderer<T>
-		_getDefaultRenderer() {
-
-		return (CTDisplayRenderer<T>)_defaultCTDisplayRenderer;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

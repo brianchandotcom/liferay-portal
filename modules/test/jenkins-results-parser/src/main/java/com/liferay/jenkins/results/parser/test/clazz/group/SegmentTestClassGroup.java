@@ -38,6 +38,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _axisTestClassGroups.get(segmentIndex);
 	}
 
+	public List<AxisTestClassGroup> getAxisTestClassGroups() {
+		return new ArrayList<>(_axisTestClassGroups);
+	}
+
 	public int getBatchIndex() {
 		List<SegmentTestClassGroup> segmentTestClassGroups =
 			_parentBatchTestClassGroup.getSegmentTestClassGroups();
@@ -47,10 +51,6 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 
 	public String getBatchName() {
 		return _parentBatchTestClassGroup.getBatchName();
-	}
-
-	public List<AxisTestClassGroup> getChildAxisTestClassGroups() {
-		return new ArrayList<>(_axisTestClassGroups);
 	}
 
 	public Integer getMaximumSlavesPerHost() {

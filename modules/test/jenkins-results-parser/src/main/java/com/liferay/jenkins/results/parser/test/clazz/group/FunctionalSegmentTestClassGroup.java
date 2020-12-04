@@ -40,9 +40,7 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		List<FunctionalAxisTestClassGroup> functionalAxisTestClassGroups =
 			new ArrayList<>();
 
-		for (AxisTestClassGroup axisTestClassGroup :
-				getChildAxisTestClassGroups()) {
-
+		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
 			if (!(axisTestClassGroup instanceof FunctionalAxisTestClassGroup)) {
 				continue;
 			}

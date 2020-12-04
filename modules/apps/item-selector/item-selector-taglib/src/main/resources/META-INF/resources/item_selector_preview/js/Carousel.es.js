@@ -17,6 +17,8 @@ import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
+import PreviewImage from './PreviewImage.es';
+
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>
 		<ClayButton
@@ -96,9 +98,9 @@ const Carousel = ({
 				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
 
-			<img
-				alt={currentItem.title}
+			<PreviewImage
 				src={currentItem.url || currentItem.base64}
+				title={currentItem.title}
 			/>
 
 			{showArrows && (

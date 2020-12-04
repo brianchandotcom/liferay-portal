@@ -140,9 +140,7 @@ definition {
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
 
-		AssertTextEquals(
-			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
-			value1 = "Changes Saved");
+		FragmentsEditor.waitForAutoSave();
 
 		Navigator.gotoBack();
 

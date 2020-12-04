@@ -1229,13 +1229,9 @@ definition {
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
 
-		AssertTextEquals(
-			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
-			value1 = "Changes Saved");
+		FragmentsEditor.waitForAutoSave();
 
-		Button.clickPublish();
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
+		FragmentsEditor.publish();
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
 			entry = "Fragment Name 2",
@@ -1243,9 +1239,7 @@ definition {
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">New Fragment Name</div>''');
 
-		AssertTextEquals(
-			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
-			value1 = "Changes Saved");
+		FragmentsEditor.waitForAutoSave();
 
 		Navigator.gotoBack();
 
@@ -1271,9 +1265,7 @@ definition {
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
 
-		AssertTextEquals(
-			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
-			value1 = "Changes Saved");
+		FragmentsEditor.waitForAutoSave();
 
 		Navigator.gotoBack();
 

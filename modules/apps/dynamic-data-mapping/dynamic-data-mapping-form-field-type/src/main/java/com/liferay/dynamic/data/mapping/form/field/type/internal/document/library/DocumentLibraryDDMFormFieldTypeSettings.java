@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 	rules = {
 		@DDMFormRule(
 			actions = {
+				"setVisible('dataType', false)",
 				"setVisible('predefinedValue', false)",
 				"setVisible('validation', false)"
 			},
@@ -84,5 +85,9 @@ public interface DocumentLibraryDDMFormFieldTypeSettings
 		properties = "showAsSwitcher=true", type = "checkbox"
 	)
 	public boolean allowGuestUsers();
+
+	@DDMFormField(predefinedValue = "document-library", required = true)
+	@Override
+	public String dataType();
 
 }

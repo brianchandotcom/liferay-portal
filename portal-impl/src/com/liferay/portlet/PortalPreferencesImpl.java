@@ -73,7 +73,7 @@ public class PortalPreferencesImpl
 	}
 
 	public PortalPreferencesImpl() {
-		this(0, 0, null, Collections.<String, Preference>emptyMap(), false);
+		this(0, 0, null, Collections.emptyMap(), false);
 	}
 
 	public PortalPreferencesImpl(
@@ -105,19 +105,17 @@ public class PortalPreferencesImpl
 
 	@Override
 	public PortalPreferencesImpl clone() {
-		String originalXML = getOriginalXML();
-
 		if (_portalPreferences == null) {
 			return new PortalPreferencesImpl(
-				getOwnerId(), getOwnerType(), originalXML,
-				new HashMap<>(getOriginalPreferences()), isSignedIn());
+				getOwnerId(), getOwnerType(), _originalXML,
+				new HashMap<>(_getOriginalPreferences()), isSignedIn());
 		}
 
-		if (Objects.equals(originalXML, _portalPreferences.getPreferences())) {
+		if (Objects.equals(_originalXML, _portalPreferences.getPreferences())) {
 			PortalPreferencesImpl portalPreferencesImpl =
 				new PortalPreferencesImpl(
-					getOwnerId(), getOwnerType(), originalXML,
-					new HashMap<>(getOriginalPreferences()), isSignedIn());
+					getOwnerId(), getOwnerType(), _originalXML,
+					new HashMap<>(_getOriginalPreferences()), isSignedIn());
 
 			portalPreferencesImpl._portalPreferences =
 				(com.liferay.portal.kernel.model.PortalPreferences)
@@ -144,7 +142,8 @@ public class PortalPreferencesImpl
 
 		if ((getOwnerId() == portalPreferencesImpl.getOwnerId()) &&
 			(getOwnerType() == portalPreferencesImpl.getOwnerType()) &&
-			getPreferences().equals(portalPreferencesImpl.getPreferences())) {
+			Objects.equals(
+				getPreferences(), portalPreferencesImpl.getPreferences())) {
 
 			return true;
 		}
@@ -166,7 +165,7 @@ public class PortalPreferencesImpl
 
 			Preference preference = entry.getValue();
 
-			map.put(key, getActualValues(preference.getValues()));
+			map.put(key, _getActualValues(preference.getValues()));
 		}
 
 		return map;
@@ -230,11 +229,11 @@ public class PortalPreferencesImpl
 
 		String[] values = preference.getValues();
 
-		if (isNull(values)) {
+		if (_isNull(values)) {
 			return defaultValue;
 		}
 
-		return getActualValue(values[0]);
+		return _getActualValue(values[0]);
 	}
 
 	@Override
@@ -248,10 +247,10 @@ public class PortalPreferencesImpl
 
 		key = _encodeKey(namespace, key);
 
-		return getValues(key, defaultValue);
+		return _getValues(key, defaultValue);
 	}
 
-	public String[] getValues(String key, String[] def) {
+	private String[] _getValues(String key, String[] def) {
 		if (key == null) {
 			throw new IllegalArgumentException();
 		}
@@ -266,11 +265,11 @@ public class PortalPreferencesImpl
 
 		String[] values = preference.getValues();
 
-		if (isNull(values)) {
+		if (_isNull(values)) {
 			return def;
 		}
 
-		return getActualValues(values);
+		return _getActualValues(values);
 	}
 
 	@Override
@@ -304,16 +303,12 @@ public class PortalPreferencesImpl
 		return _signedIn;
 	}
 
-	public void reset() {
-		_modifiedPreferences = null;
-	}
-
-	public void reset(final String key) throws ReadOnlyException {
+	public void reset(String key) throws ReadOnlyException {
 		if (isReadOnly(key)) {
 			throw new ReadOnlyException(key);
 		}
 
-		String[] values = getValues(key, (String[])null);
+		String[] values = _getValues(key, null);
 
 		if (values == null) {
 			return;
@@ -324,7 +319,7 @@ public class PortalPreferencesImpl
 			@Override
 			public Void call() {
 				Map<String, Preference> modifiedPreferences =
-					getModifiedPreferences();
+					_getModifiedPreferences();
 
 				modifiedPreferences.remove(key);
 
@@ -334,7 +329,7 @@ public class PortalPreferencesImpl
 		};
 
 		try {
-			retryableStore(callable, key);
+			_retryableStore(callable, key);
 		}
 		catch (ConcurrentModificationException
 					concurrentModificationException) {
@@ -384,9 +379,9 @@ public class PortalPreferencesImpl
 			throw new IllegalArgumentException();
 		}
 
-		value = getXMLSafeValue(value);
+		value = _getXMLSafeValue(value);
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+		Map<String, Preference> modifiedPreferences = _getModifiedPreferences();
 
 		Preference preference = modifiedPreferences.get(key);
 
@@ -412,7 +407,7 @@ public class PortalPreferencesImpl
 				return;
 			}
 
-			String[] oldValues = getValues(encodedKey, (String[])null);
+			String[] oldValues = _getValues(encodedKey, null);
 
 			if ((oldValues != null) && (oldValues.length == 1) &&
 				value.equals(oldValues[0])) {
@@ -432,7 +427,7 @@ public class PortalPreferencesImpl
 			};
 
 			if (_signedIn) {
-				retryableStore(callable, encodedKey);
+				_retryableStore(callable, encodedKey);
 			}
 			else {
 				callable.call();
@@ -469,7 +464,7 @@ public class PortalPreferencesImpl
 				return;
 			}
 
-			String[] oldValues = getValues(encodedKey, (String[])null);
+			String[] oldValues = _getValues(encodedKey, null);
 
 			if (oldValues != null) {
 				Set<String> valuesSet = SetUtil.fromArray(values);
@@ -492,7 +487,7 @@ public class PortalPreferencesImpl
 			};
 
 			if (_signedIn) {
-				retryableStore(callable, encodedKey);
+				_retryableStore(callable, encodedKey);
 			}
 			else {
 				callable.call();
@@ -515,9 +510,9 @@ public class PortalPreferencesImpl
 			throw new IllegalArgumentException();
 		}
 
-		values = getXMLSafeValues(values);
+		values = _getXMLSafeValues(values);
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+		Map<String, Preference> modifiedPreferences = _getModifiedPreferences();
 
 		Preference preference = modifiedPreferences.get(key);
 
@@ -559,7 +554,7 @@ public class PortalPreferencesImpl
 		}
 	}
 
-	protected String getActualValue(String value) {
+	private String _getActualValue(String value) {
 		if ((value == null) || value.equals(_NULL_VALUE)) {
 			return null;
 		}
@@ -567,13 +562,13 @@ public class PortalPreferencesImpl
 		return XMLUtil.fromCompactSafe(value);
 	}
 
-	protected String[] getActualValues(String[] values) {
+	private String[] _getActualValues(String[] values) {
 		if (values == null) {
 			return null;
 		}
 
 		if (values.length == 1) {
-			String actualValue = getActualValue(values[0]);
+			String actualValue = _getActualValue(values[0]);
 
 			if (actualValue == null) {
 				return null;
@@ -589,13 +584,13 @@ public class PortalPreferencesImpl
 		String[] actualValues = new String[values.length];
 
 		for (int i = 0; i < actualValues.length; i++) {
-			actualValues[i] = getActualValue(values[i]);
+			actualValues[i] = _getActualValue(values[i]);
 		}
 
 		return actualValues;
 	}
 
-	protected Map<String, Preference> getModifiedPreferences() {
+	private Map<String, Preference> _getModifiedPreferences() {
 		if (_modifiedPreferences == null) {
 			_modifiedPreferences = new ConcurrentHashMap<>(
 				_originalPreferences);
@@ -604,15 +599,11 @@ public class PortalPreferencesImpl
 		return _modifiedPreferences;
 	}
 
-	protected Map<String, Preference> getOriginalPreferences() {
+	private Map<String, Preference> _getOriginalPreferences() {
 		return _originalPreferences;
 	}
 
-	protected String getOriginalXML() {
-		return _originalXML;
-	}
-
-	protected String getXMLSafeValue(String value) {
+	private String _getXMLSafeValue(String value) {
 		if (value == null) {
 			return _NULL_VALUE;
 		}
@@ -620,7 +611,7 @@ public class PortalPreferencesImpl
 		return XMLUtil.toCompactSafe(value);
 	}
 
-	protected String[] getXMLSafeValues(String[] values) {
+	private String[] _getXMLSafeValues(String[] values) {
 		if (values == null) {
 			return new String[] {_NULL_VALUE};
 		}
@@ -632,13 +623,13 @@ public class PortalPreferencesImpl
 		String[] xmlSafeValues = new String[values.length];
 
 		for (int i = 0; i < xmlSafeValues.length; i++) {
-			xmlSafeValues[i] = getXMLSafeValue(values[i]);
+			xmlSafeValues[i] = _getXMLSafeValue(values[i]);
 		}
 
 		return xmlSafeValues;
 	}
 
-	protected boolean isCausedByStaleObjectException(Throwable throwable) {
+	private boolean _isCausedByStaleObjectException(Throwable throwable) {
 		Throwable causeThrowable = throwable.getCause();
 
 		while (throwable != causeThrowable) {
@@ -658,9 +649,9 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
-	protected boolean isNull(String[] values) {
+	private boolean _isNull(String[] values) {
 		if (ArrayUtil.isEmpty(values) ||
-			((values.length == 1) && (getActualValue(values[0]) == null))) {
+			((values.length == 1) && (_getActualValue(values[0]) == null))) {
 
 			return true;
 		}
@@ -668,10 +659,10 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
-	protected void retryableStore(Callable<?> callable, String key)
+	private void _retryableStore(Callable<?> callable, String key)
 		throws Throwable {
 
-		String[] originalValues = getValues(key, (String[])null);
+		String[] originalValues = _getValues(key, null);
 
 		while (true) {
 			try {
@@ -682,7 +673,7 @@ public class PortalPreferencesImpl
 				return;
 			}
 			catch (Exception exception) {
-				if (isCausedByStaleObjectException(exception)) {
+				if (_isCausedByStaleObjectException(exception)) {
 					com.liferay.portal.kernel.model.PortalPreferences
 						portalPreferences = _reload(
 							getOwnerId(), getOwnerType());
@@ -697,18 +688,17 @@ public class PortalPreferencesImpl
 
 					if (!Arrays.equals(
 							originalValues,
-							portalPreferencesImpl.getValues(
-								key, (String[])null))) {
+							portalPreferencesImpl._getValues(key, null))) {
 
 						throw new ConcurrentModificationException();
 					}
 
-					reset();
+					_modifiedPreferences = null;
 
-					setOriginalPreferences(
-						portalPreferencesImpl.getOriginalPreferences());
+					_originalPreferences =
+						portalPreferencesImpl._getOriginalPreferences();
 
-					setOriginalXML(portalPreferences.getPreferences());
+					_originalXML = portalPreferences.getPreferences();
 
 					_portalPreferences = portalPreferences;
 				}
@@ -717,16 +707,6 @@ public class PortalPreferencesImpl
 				}
 			}
 		}
-	}
-
-	protected void setOriginalPreferences(
-		Map<String, Preference> originalPreferences) {
-
-		_originalPreferences = originalPreferences;
-	}
-
-	protected void setOriginalXML(String originalXML) {
-		_originalXML = originalXML;
 	}
 
 	protected String toXML() {

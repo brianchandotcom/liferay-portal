@@ -38,8 +38,8 @@ public class StrictPortletPreferencesImpl
 	@Override
 	public Object clone() {
 		return new StrictPortletPreferencesImpl(
-			companyId, getOwnerId(), getOwnerType(), getPlid(), getPortletId(),
-			getOriginalXML(), getOriginalPreferences());
+			getCompanyId(), getOwnerId(), getOwnerType(), getPlid(),
+			getPortletId(), getOriginalXML(), getOriginalPreferences());
 	}
 
 }

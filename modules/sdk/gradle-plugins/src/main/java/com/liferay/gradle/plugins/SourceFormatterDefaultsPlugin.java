@@ -16,15 +16,25 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.python.PythonPlugin;
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
+import com.pswidersk.gradle.python.VenvTask;
+
+import java.io.File;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
@@ -52,12 +62,12 @@ public class SourceFormatterDefaultsPlugin
 		// Tasks
 
 		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider =
-			GradleUtil.fetchTaskProvider(
+			GradleUtil.getTaskProvider(
 				project,
 				SourceFormatterPlugin.CHECK_SOURCE_FORMATTING_TASK_NAME,
 				FormatSourceTask.class);
 		final TaskProvider<FormatSourceTask> formatSourceTaskProvider =
-			GradleUtil.fetchTaskProvider(
+			GradleUtil.getTaskProvider(
 				project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
 				FormatSourceTask.class);
 
@@ -85,6 +95,19 @@ public class SourceFormatterDefaultsPlugin
 				@Override
 				public void execute(NodePlugin nodePlugin) {
 					_configurePluginNode(
+						project, checkSourceFormattingTaskProvider,
+						formatSourceTaskProvider);
+				}
+
+			});
+
+		pluginContainer.withType(
+			PythonPlugin.class,
+			new Action<PythonPlugin>() {
+
+				@Override
+				public void execute(PythonPlugin pythonPlugin) {
+					_configurePluginPython(
 						project, checkSourceFormattingTaskProvider,
 						formatSourceTaskProvider);
 				}
@@ -150,6 +173,53 @@ public class SourceFormatterDefaultsPlugin
 		}
 	}
 
+	private void _configurePluginPython(
+		Project project,
+		TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider,
+		TaskProvider<FormatSourceTask> formatSourceTaskProvider) {
+
+		final TaskProvider<VenvTask> checkPythonFormattingTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, PythonPlugin.CHECK_PYTHON_FORMATTING_TASK_NAME,
+				VenvTask.class);
+		final TaskProvider<VenvTask> formatPythonTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, PythonPlugin.FORMAT_PYTHON_TASK_NAME, VenvTask.class);
+
+		checkSourceFormattingTaskProvider.configure(
+			new Action<FormatSourceTask>() {
+
+				@Override
+				public void execute(
+					FormatSourceTask checkSourceFormattingFormatSourceTask) {
+
+					if (_hasPythonFiles(
+							project,
+							checkSourceFormattingFormatSourceTask.
+								getBaseDir())) {
+
+						checkSourceFormattingFormatSourceTask.finalizedBy(
+							checkPythonFormattingTaskProvider);
+					}
+				}
+
+			});
+
+		formatSourceTaskProvider.configure(
+			new Action<FormatSourceTask>() {
+
+				@Override
+				public void execute(FormatSourceTask formatSourceTask) {
+					if (_hasPythonFiles(
+							project, formatSourceTask.getBaseDir())) {
+
+						formatSourceTask.finalizedBy(formatPythonTaskProvider);
+					}
+				}
+
+			});
+	}
+
 	private void _configureTaskFormatSource(FormatSourceTask formatSourceTask) {
 		Project project = formatSourceTask.getProject();
 
@@ -206,6 +276,21 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setShowStatusUpdates(
 				Boolean.parseBoolean(showStatusUpdates));
 		}
+	}
+
+	private boolean _hasPythonFiles(Project project, File baseDir) {
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", baseDir);
+		args.put("includes", Arrays.asList("**/*.py", "**/*.pyi"));
+
+		FileTree fileTree = project.fileTree(args);
+
+		if (fileTree.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

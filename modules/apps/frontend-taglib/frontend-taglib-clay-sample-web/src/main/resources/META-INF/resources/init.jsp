@@ -29,6 +29,7 @@ page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.contex
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleVerticalCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.MultiSelectDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %>
 
@@ -41,6 +42,7 @@ page import="java.util.List" %>
 
 <%
 CardsDisplayContext cardsDisplayContext = (CardsDisplayContext)request.getAttribute(ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT);
+MultiSelectDisplayContext multiSelectDisplayContext = (MultiSelectDisplayContext)request.getAttribute(ClaySamplePortletKeys.MULTI_SELECT_DISPLAY_CONTEXT);
 DropdownsDisplayContext dropdownsDisplayContext = (DropdownsDisplayContext)request.getAttribute(ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT);
 ManagementToolbarsDisplayContext managementToolbarsDisplayContext = (ManagementToolbarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT);
 NavigationBarsDisplayContext navigationBarsDisplayContext = (NavigationBarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT);

@@ -14,37 +14,21 @@
 
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.internal.search.util.LayoutCrawler;
-import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,68 +78,24 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		HttpServletRequest httpServletRequest = null;
-		HttpServletResponse httpServletResponse = null;
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) && (serviceContext.getRequest() != null)) {
-			httpServletRequest = DynamicServletRequest.addQueryString(
-				serviceContext.getRequest(), "p_l_id=" + layout.getPlid(),
-				false);
-			httpServletResponse = serviceContext.getResponse();
-		}
-
-		long[] segmentsExperienceIds = {SegmentsExperienceConstants.ID_DEFAULT};
-
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());
 
 		for (Locale locale : locales) {
-			try {
-				String content = StringPool.BLANK;
+			String content = _html.stripHtml(
+				_layoutCrawler.getLayoutContent(layout, locale));
 
-				if ((httpServletRequest == null) ||
-					(httpServletResponse == null)) {
-
-					content = _html.stripHtml(
-						_layoutCrawler.getLayoutContent(layout, locale));
-				}
-				else {
-					content =
-						LayoutPageTemplateStructureRenderUtil.
-							renderLayoutContent(
-								_fragmentRendererController, httpServletRequest,
-								httpServletResponse,
-								_layoutAdaptiveMediaProcessor,
-								layoutPageTemplateStructure,
-								FragmentEntryLinkConstants.VIEW,
-								new HashMap<>(), locale, segmentsExperienceIds);
-				}
-
-				if (Validator.isNull(content)) {
-					continue;
-				}
-
-				document.addText(
-					Field.getLocalizedName(locale, Field.CONTENT),
-					HtmlUtil.stripHtml(content));
+			if (Validator.isNull(content)) {
+				continue;
 			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
-			}
+
+			document.addText(
+				Field.getLocalizedName(locale, Field.CONTENT), content);
 		}
 	}
 
 	@Reference
-	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
 	private Html _html;
-
-	@Reference
-	private LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;
 
 	@Reference
 	private LayoutCrawler _layoutCrawler;

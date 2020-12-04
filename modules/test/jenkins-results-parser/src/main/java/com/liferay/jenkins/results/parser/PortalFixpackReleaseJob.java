@@ -20,10 +20,10 @@ package com.liferay.jenkins.results.parser;
 public class PortalFixpackReleaseJob extends BasePortalReleaseJob {
 
 	public PortalFixpackReleaseJob(
-		String jobName, String portalBranchName, BuildProfile buildProfile,
+		String jobName, BuildProfile buildProfile, String portalBranchName,
 		String testSuiteName) {
 
-		super(jobName, portalBranchName, buildProfile, testSuiteName);
+		super(jobName, buildProfile, portalBranchName, testSuiteName);
 	}
 
 }

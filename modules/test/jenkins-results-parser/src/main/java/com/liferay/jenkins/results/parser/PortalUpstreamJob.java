@@ -28,8 +28,8 @@ import java.util.Set;
 public class PortalUpstreamJob
 	extends PortalGitRepositoryJob implements BatchDependentJob {
 
-	public PortalUpstreamJob(String jobName) {
-		super(jobName);
+	public PortalUpstreamJob(String jobName, BuildProfile buildProfile) {
+		super(jobName, buildProfile);
 
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();

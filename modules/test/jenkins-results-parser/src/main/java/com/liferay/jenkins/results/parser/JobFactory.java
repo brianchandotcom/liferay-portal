@@ -93,7 +93,12 @@ public class JobFactory {
 		String jobName, String testSuiteName, String portalBranchName,
 		String repositoryName, Job.BuildProfile buildProfile) {
 
-		String jobKey = jobName;
+		if (buildProfile == null) {
+			buildProfile = Job.BuildProfile.PORTAL;
+		}
+
+		String jobKey = JenkinsResultsParserUtil.combine(
+			jobName, "-", buildProfile.toString());
 
 		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
 			jobKey = JenkinsResultsParserUtil.combine(
@@ -110,7 +115,7 @@ public class JobFactory {
 			jobName.equals("junit-test-csv-report")) {
 
 			PortalGitRepositoryJob portalGitRepositoryJob =
-				new PortalGitRepositoryJob(jobName) {
+				new PortalGitRepositoryJob(jobName, buildProfile) {
 
 					@Override
 					protected GitWorkingDirectory getNewGitWorkingDirectory() {
@@ -130,7 +135,8 @@ public class JobFactory {
 		if (jobName.equals("root-cause-analysis-tool")) {
 			_jobs.put(
 				jobKey,
-				new RootCauseAnalysisToolJob(jobName, portalBranchName));
+				new RootCauseAnalysisToolJob(
+					jobName, buildProfile, portalBranchName));
 
 			return _jobs.get(jobKey);
 		}
@@ -138,14 +144,15 @@ public class JobFactory {
 		if (jobName.equals("root-cause-analysis-tool-batch")) {
 			_jobs.put(
 				jobKey,
-				new RootCauseAnalysisToolBatchJob(jobName, portalBranchName));
+				new RootCauseAnalysisToolBatchJob(
+					jobName, buildProfile, portalBranchName));
 
 			return _jobs.get(jobKey);
 		}
 
 		if (jobName.startsWith("test-plugins-acceptance-pullrequest(")) {
 			PluginsGitRepositoryJob pluginsGitRepositoryJob =
-				new PluginsGitRepositoryJob(jobName);
+				new PluginsGitRepositoryJob(jobName, buildProfile);
 
 			_jobs.put(jobKey, pluginsGitRepositoryJob);
 
@@ -154,13 +161,14 @@ public class JobFactory {
 
 		if (jobName.startsWith("test-portal-acceptance-pullrequest(")) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
-				new PortalAcceptancePullRequestJob(jobName, testSuiteName);
+				new PortalAcceptancePullRequestJob(
+					jobName, buildProfile, testSuiteName);
 
 			if (_isCentralMergePullRequest(
 					portalAcceptancePullRequestJob.getGitWorkingDirectory())) {
 
 				portalAcceptancePullRequestJob = new CentralMergePullRequestJob(
-					jobName);
+					jobName, buildProfile);
 			}
 
 			_jobs.put(jobKey, portalAcceptancePullRequestJob);
@@ -171,7 +179,8 @@ public class JobFactory {
 		if (jobName.startsWith("test-portal-acceptance-upstream")) {
 			_jobs.put(
 				jobKey,
-				new PortalAcceptanceUpstreamJob(jobName, testSuiteName));
+				new PortalAcceptanceUpstreamJob(
+					jobName, buildProfile, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
@@ -180,7 +189,7 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalFixpackReleaseJob(
-					jobName, portalBranchName, buildProfile, testSuiteName));
+					jobName, buildProfile, portalBranchName, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
@@ -189,7 +198,7 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalHotfixReleaseJob(
-					jobName, portalBranchName, buildProfile, testSuiteName));
+					jobName, buildProfile, portalBranchName, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
@@ -198,26 +207,28 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new PortalReleaseJob(
-					jobName, portalBranchName, buildProfile, testSuiteName));
+					jobName, buildProfile, portalBranchName, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream(")) {
 			_jobs.put(
-				jobKey, new PortalTestSuiteUpstreamJob(jobName, testSuiteName));
+				jobKey,
+				new PortalTestSuiteUpstreamJob(
+					jobName, buildProfile, testSuiteName));
 
 			return _jobs.get(jobKey);
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(")) {
-			_jobs.put(jobKey, new SimpleJob(jobName));
+			_jobs.put(jobKey, new SimpleJob(jobName, buildProfile));
 
 			return _jobs.get(jobKey);
 		}
 
 		if (jobName.startsWith("test-portal-upstream(")) {
-			_jobs.put(jobKey, new PortalUpstreamJob(jobName));
+			_jobs.put(jobKey, new PortalUpstreamJob(jobName, buildProfile));
 
 			return _jobs.get(jobKey);
 		}
@@ -226,12 +237,13 @@ public class JobFactory {
 			_jobs.put(
 				jobKey,
 				new SubrepositoryAcceptancePullRequestJob(
-					jobName, testSuiteName, repositoryName));
+					jobName, buildProfile, testSuiteName, repositoryName));
 
 			return _jobs.get(jobKey);
 		}
 
-		_jobs.put(jobKey, new DefaultPortalJob(jobName, testSuiteName));
+		_jobs.put(
+			jobKey, new DefaultPortalJob(jobName, buildProfile, testSuiteName));
 
 		return _jobs.get(jobKey);
 	}

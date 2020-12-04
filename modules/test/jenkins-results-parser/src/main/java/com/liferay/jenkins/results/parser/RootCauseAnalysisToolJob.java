@@ -25,8 +25,10 @@ import java.util.Set;
 public class RootCauseAnalysisToolJob
 	extends BaseJob implements PortalTestClassJob {
 
-	public RootCauseAnalysisToolJob(String jobName, String portalBranchName) {
-		super(jobName);
+	public RootCauseAnalysisToolJob(
+		String jobName, BuildProfile buildProfile, String portalBranchName) {
+
+		super(jobName, buildProfile);
 
 		_jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();

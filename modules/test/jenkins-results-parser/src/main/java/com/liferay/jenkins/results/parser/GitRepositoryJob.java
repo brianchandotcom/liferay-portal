@@ -66,8 +66,8 @@ public abstract class GitRepositoryJob extends BaseJob {
 		this.gitRepositoryDir = gitRepositoryDir;
 	}
 
-	protected GitRepositoryJob(String jobName) {
-		super(jobName);
+	protected GitRepositoryJob(String jobName, BuildProfile buildProfile) {
+		super(jobName, buildProfile);
 	}
 
 	protected void checkGitRepositoryDir() {

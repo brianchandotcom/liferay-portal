@@ -96,9 +96,9 @@ public class SubrepositoryGitRepositoryJob
 	}
 
 	protected SubrepositoryGitRepositoryJob(
-		String jobName, String repositoryName) {
+		String jobName, BuildProfile buildProfile, String repositoryName) {
 
-		super(jobName);
+		super(jobName, buildProfile);
 
 		gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newSubrepositoryGitWorkingDirectory(

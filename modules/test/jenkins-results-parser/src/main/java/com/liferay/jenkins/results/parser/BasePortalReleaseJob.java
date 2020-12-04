@@ -33,19 +33,14 @@ public abstract class BasePortalReleaseJob
 	implements BatchDependentJob, PortalTestClassJob, TestSuiteJob {
 
 	public BasePortalReleaseJob(
-		String jobName, String portalBranchName, BuildProfile buildProfile,
+		String jobName, BuildProfile buildProfile, String portalBranchName,
 		String testSuiteName) {
 
-		super(jobName);
+		super(jobName, buildProfile);
 
 		_portalBranchName = portalBranchName;
-		this.buildProfile = buildProfile;
 
 		_testSuiteName = testSuiteName;
-
-		if (buildProfile == null) {
-			this.buildProfile = BuildProfile.PORTAL;
-		}
 
 		_jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
@@ -60,11 +55,6 @@ public abstract class BasePortalReleaseJob
 				"test.properties"));
 
 		readJobProperties();
-	}
-
-	@Override
-	public BuildProfile getBuildProfile() {
-		return buildProfile;
 	}
 
 	@Override
@@ -117,6 +107,9 @@ public abstract class BasePortalReleaseJob
 				JenkinsResultsParserUtil.getProperty(
 					jobProperties, "test.batch.names", false, _portalBranchName,
 					getTestSuiteName())));
+
+		BuildProfile buildProfile = getBuildProfile();
+
 		batchNames.addAll(
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(
@@ -134,6 +127,9 @@ public abstract class BasePortalReleaseJob
 				JenkinsResultsParserUtil.getProperty(
 					getJobProperties(), "test.batch.names.smoke", false,
 					_portalBranchName, getTestSuiteName())));
+
+		BuildProfile buildProfile = getBuildProfile();
+
 		dependentBatchNames.addAll(
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(
@@ -143,8 +139,6 @@ public abstract class BasePortalReleaseJob
 
 		return dependentBatchNames;
 	}
-
-	protected BuildProfile buildProfile;
 
 	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;
 	private final String _portalBranchName;

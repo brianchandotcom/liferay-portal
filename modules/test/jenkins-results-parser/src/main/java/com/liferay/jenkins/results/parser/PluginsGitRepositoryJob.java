@@ -57,8 +57,10 @@ public class PluginsGitRepositoryJob
 		return portalGitWorkingDirectory;
 	}
 
-	protected PluginsGitRepositoryJob(String jobName) {
-		super(jobName);
+	protected PluginsGitRepositoryJob(
+		String jobName, BuildProfile buildProfile) {
+
+		super(jobName, buildProfile);
 
 		getGitWorkingDirectory();
 

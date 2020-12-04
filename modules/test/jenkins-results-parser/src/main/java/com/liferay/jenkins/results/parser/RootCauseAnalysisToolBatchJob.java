@@ -22,9 +22,9 @@ import java.io.File;
 public class RootCauseAnalysisToolBatchJob extends RootCauseAnalysisToolJob {
 
 	public RootCauseAnalysisToolBatchJob(
-		String jobName, String portalBranchName) {
+		String jobName, BuildProfile buildProfile, String portalBranchName) {
 
-		super(jobName, portalBranchName);
+		super(jobName, buildProfile, portalBranchName);
 
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			getJenkinsGitWorkingDirectory();

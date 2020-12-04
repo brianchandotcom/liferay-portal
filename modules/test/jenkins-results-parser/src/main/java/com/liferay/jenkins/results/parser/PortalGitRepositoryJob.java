@@ -43,8 +43,10 @@ public abstract class PortalGitRepositoryJob
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
-	protected PortalGitRepositoryJob(String jobName) {
-		super(jobName);
+	protected PortalGitRepositoryJob(
+		String jobName, BuildProfile buildProfile) {
+
+		super(jobName, buildProfile);
 
 		gitWorkingDirectory = getNewGitWorkingDirectory();
 

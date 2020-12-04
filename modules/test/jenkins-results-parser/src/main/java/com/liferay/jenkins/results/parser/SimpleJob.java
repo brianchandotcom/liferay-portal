@@ -27,8 +27,8 @@ public class SimpleJob extends BaseJob {
 		return Collections.emptySet();
 	}
 
-	protected SimpleJob(String jobName) {
-		super(jobName);
+	protected SimpleJob(String jobName, BuildProfile buildProfile) {
+		super(jobName, buildProfile);
 	}
 
 	@Override

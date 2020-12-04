@@ -76,8 +76,10 @@ public class DefaultPortalJob
 		return _testSuiteName;
 	}
 
-	protected DefaultPortalJob(String jobName, String testSuiteName) {
-		super(jobName);
+	protected DefaultPortalJob(
+		String jobName, BuildProfile buildProfile, String testSuiteName) {
+
+		super(jobName, buildProfile);
 
 		_testSuiteName = testSuiteName;
 

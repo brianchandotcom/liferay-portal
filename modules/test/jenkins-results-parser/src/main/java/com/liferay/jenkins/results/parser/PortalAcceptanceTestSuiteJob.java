@@ -28,12 +28,20 @@ import java.util.Set;
 public abstract class PortalAcceptanceTestSuiteJob
 	extends PortalGitRepositoryJob implements BatchDependentJob, TestSuiteJob {
 
-	public PortalAcceptanceTestSuiteJob(String jobName) {
-		this(jobName, "default");
+	public PortalAcceptanceTestSuiteJob(
+		String jobName, BuildProfile buildProfile) {
+
+		this(jobName, buildProfile, null);
 	}
 
-	public PortalAcceptanceTestSuiteJob(String jobName, String testSuiteName) {
-		super(jobName);
+	public PortalAcceptanceTestSuiteJob(
+		String jobName, BuildProfile buildProfile, String testSuiteName) {
+
+		super(jobName, buildProfile);
+
+		if (testSuiteName == null) {
+			testSuiteName = "default";
+		}
 
 		_testSuiteName = testSuiteName;
 	}

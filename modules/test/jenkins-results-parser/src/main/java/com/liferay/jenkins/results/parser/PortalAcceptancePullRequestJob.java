@@ -25,14 +25,10 @@ import java.util.TreeSet;
 public class PortalAcceptancePullRequestJob
 	extends PortalAcceptanceTestSuiteJob {
 
-	public PortalAcceptancePullRequestJob(String jobName) {
-		this(jobName, "default");
-	}
-
 	public PortalAcceptancePullRequestJob(
-		String jobName, String testSuiteName) {
+		String jobName, BuildProfile buildProfile, String testSuiteName) {
 
-		super(jobName, testSuiteName);
+		super(jobName, buildProfile, testSuiteName);
 	}
 
 	@Override

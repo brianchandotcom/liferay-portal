@@ -19,8 +19,10 @@ package com.liferay.jenkins.results.parser;
  */
 public class CentralMergePullRequestJob extends PortalAcceptancePullRequestJob {
 
-	public CentralMergePullRequestJob(String url) {
-		super(url, "relevant");
+	public CentralMergePullRequestJob(
+		String jobName, BuildProfile buildProfile) {
+
+		super(jobName, buildProfile, "relevant");
 	}
 
 }

@@ -76,7 +76,7 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public BuildProfile getBuildProfile() {
-		return BuildProfile.PORTAL;
+		return _buildProfile;
 	}
 
 	@Override
@@ -269,8 +269,9 @@ public abstract class BaseJob implements Job {
 		}
 	}
 
-	protected BaseJob(String jobName) {
+	protected BaseJob(String jobName, BuildProfile buildProfile) {
 		_jobName = jobName;
+		_buildProfile = buildProfile;
 	}
 
 	protected List<BatchTestClassGroup> getBatchTestClassGroups(
@@ -400,6 +401,7 @@ public abstract class BaseJob implements Job {
 
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
 
+	private final BuildProfile _buildProfile;
 	private final String _jobName;
 	private final Properties _jobProperties = new Properties();
 

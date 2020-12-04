@@ -25,10 +25,10 @@ import java.util.TreeSet;
 public class PortalReleaseJob extends BasePortalReleaseJob {
 
 	public PortalReleaseJob(
-		String jobName, String portalBranchName, BuildProfile buildProfile,
+		String jobName, BuildProfile buildProfile, String portalBranchName,
 		String testSuiteName) {
 
-		super(jobName, portalBranchName, buildProfile, testSuiteName);
+		super(jobName, buildProfile, portalBranchName, testSuiteName);
 	}
 
 	public void setPortalReleaseRef(String portalReleaseRef) {
@@ -58,6 +58,9 @@ public class PortalReleaseJob extends BasePortalReleaseJob {
 				JenkinsResultsParserUtil.getProperty(
 					jobProperties, "test.batch.names.optional", false,
 					_portalReleaseRef)));
+
+		BuildProfile buildProfile = getBuildProfile();
+
 		batchNames.addAll(
 			getSetFromString(
 				JenkinsResultsParserUtil.getProperty(

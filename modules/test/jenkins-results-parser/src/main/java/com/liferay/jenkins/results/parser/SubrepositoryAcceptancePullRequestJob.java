@@ -24,9 +24,10 @@ public class SubrepositoryAcceptancePullRequestJob
 	extends SubrepositoryGitRepositoryJob implements TestSuiteJob {
 
 	public SubrepositoryAcceptancePullRequestJob(
-		String jobName, String testSuiteName, String repositoryName) {
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String repositoryName) {
 
-		super(jobName, repositoryName);
+		super(jobName, buildProfile, repositoryName);
 
 		_testSuiteName = testSuiteName;
 

@@ -12,36 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.cluster.multiple.internal.configuration;
+package com.liferay.portal.inactive.request.handler.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Michael C. Han
+ * @author Drew Brokke
  */
 @ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(
-	id = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
+	id = "com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration",
 	localization = "content/Language",
-	name = "cluster-executor-configuration-name"
+	name = "inactive-request-handler-configuration-name"
 )
-public interface ClusterExecutorConfiguration {
+public interface InactiveRequestHandlerConfiguration {
 
 	@Meta.AD(
-		deflt = "1000", name = "cluster-node-address-timeout", required = false
+		deflt = "false", id = "show.inactive.request.message",
+		name = "show-inactive-request-message", required = false
 	)
-	public long clusterNodeAddressTimeout();
-
-	@Meta.AD(deflt = "false", name = "debug-enabled", required = false)
-	public boolean debugEnabled();
-
-	@Meta.AD(
-		deflt = "access_key|connection_password|connection_username|secret_access_key",
-		description = "excluded-property-keys-help",
-		name = "excluded-property-keys", required = false
-	)
-	public String[] excludedPropertyKeys();
+	public boolean showInactiveRequestMessage();
 
 }

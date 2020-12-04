@@ -17,8 +17,8 @@ package com.liferay.portal.upload.internal.upgrade.v1_0_0;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.upload.constants.LegacyUploadServletRequestPropsKeys;
 import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
-import com.liferay.portal.upload.internal.constants.LegacyUploadServletRequestPropsKeys;
 
 /**
  * @author Pei-Jung Lan

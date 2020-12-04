@@ -17,9 +17,12 @@ package com.liferay.layout.internal.search.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.net.InetAddress;
@@ -29,9 +32,13 @@ import java.util.Locale;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,8 +62,12 @@ public class LayoutCrawler {
 
 			ThemeDisplay themeDisplay = new ThemeDisplay();
 
-			themeDisplay.setCompany(
-				_companyLocalService.getCompany(layout.getCompanyId()));
+			Company company = _companyLocalService.getCompany(
+				layout.getCompanyId());
+
+			themeDisplay.setCompany(company);
+
+			themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 			themeDisplay.setLayout(layout);
 			themeDisplay.setLayoutSet(layout.getLayoutSet());
 			themeDisplay.setLocale(locale);
@@ -68,7 +79,21 @@ public class LayoutCrawler {
 			HttpGet httpGet = new HttpGet(
 				_portal.getLayoutFullURL(layout, themeDisplay));
 
-			HttpResponse httpResponse = httpClient.execute(httpGet);
+			HttpClientContext httpContext = new HttpClientContext();
+
+			CookieStore cookieStore = new BasicCookieStore();
+
+			BasicClientCookie cookie = new BasicClientCookie(
+				CookieKeys.GUEST_LANGUAGE_ID, LocaleUtil.toLanguageId(locale));
+
+			cookie.setDomain(inetAddress.getHostName());
+
+			cookieStore.addCookie(cookie);
+
+			httpContext.setCookieStore(cookieStore);
+
+			HttpResponse httpResponse = httpClient.execute(
+				httpGet, httpContext);
 
 			StatusLine statusLine = httpResponse.getStatusLine();
 

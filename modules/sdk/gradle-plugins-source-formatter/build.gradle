@@ -19,7 +19,6 @@ copyGradleTestDependencies {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.44"
-	compile group: "com.pswidersk", name: "python-gradle-plugin", version: "1.2.1"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 	compileOnly group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.1070"

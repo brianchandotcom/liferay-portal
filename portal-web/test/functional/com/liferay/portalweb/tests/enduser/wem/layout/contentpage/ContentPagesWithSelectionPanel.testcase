@@ -374,6 +374,37 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121626. The elements information of Slider is organized in Selection panel."
+	@priority = "5"
+	test ViewElementInfoOrderOfSliderInSelectionPanel {
+		task ("Add a Slider fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Slider");
+		}
+
+		task ("Assert elements information is organized in Selection panel") {
+			PageEditor.clickConfigurableField(fragmentName = "Slider");
+
+			Pause(locator1 = "3000");
+
+			var n = "1";
+
+			for (var nodeName : list "Slider,01-01-title,01-02-subtitle,01-03-image,02-01-title,02-02-subtitle,02-03-image,03-01-title,03-02-subtitle,03-03-image") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-121281. The elements information of Tabs is organized in Selection panel."
 	@priority = "5"
 	test ViewElementInfoOrderOfTabsInSelectionPanel {

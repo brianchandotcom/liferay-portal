@@ -707,9 +707,24 @@ public abstract class BaseBuild implements Build {
 			repositoryName = topLevelBuild.getBaseGitRepositoryName();
 		}
 
+		Map<String, String> buildParameters = topLevelBuild.getParameters();
+
+		String buildProfile = buildParameters.get("TEST_PORTAL_BUILD_PROFILE");
+
+		if ((buildProfile == null) || !buildProfile.equals("dxp")) {
+			buildProfile = "portal";
+		}
+
+		String branchName = topLevelBuild.getBranchName();
+
+		if (branchName.startsWith("ee-")) {
+			buildProfile = "portal";
+		}
+
 		_job = JobFactory.newJob(
 			topLevelJobName, topLevelBuild.getTestSuiteName(),
-			topLevelBuild.getBranchName(), repositoryName);
+			topLevelBuild.getBranchName(), repositoryName,
+			Job.BuildProfile.valueOf(buildProfile.toUpperCase()));
 
 		return _job;
 	}

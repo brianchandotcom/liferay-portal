@@ -15,6 +15,7 @@
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect} from 'react';
 
+import customFields from '../../utils/formRendererCustomFields.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
@@ -119,6 +120,13 @@ export default ({children, dataLayoutBuilder}) => {
 		onDeleteDefinitionField,
 		saveAsFieldset,
 	]);
+
+	useEffect(() => {
+		dispatch({
+			payload: customFields,
+			type: DataLayoutBuilderActions.SET_FORM_RENDERER_CUSTOM_FIELDS,
+		});
+	}, [dispatch]);
 
 	return (
 		<DataLayoutBuilderContext.Provider

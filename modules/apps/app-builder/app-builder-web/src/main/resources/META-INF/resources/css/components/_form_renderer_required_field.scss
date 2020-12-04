@@ -1,0 +1,15 @@
+.form-renderer-required-field {
+	position: relative;
+
+	&__popover {
+		left: 0;
+		max-width: none;
+		right: 0;
+		top: 35px;
+		width: 100%;
+
+		&:not(.show) {
+			display: none;
+		}
+	}
+}

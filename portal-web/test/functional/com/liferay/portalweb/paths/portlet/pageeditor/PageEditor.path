@@ -737,7 +737,7 @@
 </tr>
 <tr>
 	<td>IMAGE_RESOLUTION_LABEL</td>
-	<td>//div[contains(@class,'image-properties-panel__resolution-label')][contains(.,'${key_resolutionLabel}')]</td>
+	<td>//div[contains(@class,'text-secondary')][contains(.,'${key_resolutionLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

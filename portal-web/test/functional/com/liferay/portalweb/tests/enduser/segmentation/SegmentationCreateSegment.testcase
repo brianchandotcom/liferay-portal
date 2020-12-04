@@ -110,7 +110,7 @@ definition {
 	@priority = "5"
 	test AssignSiteRolesOptionEnabled {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesBySegment";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#AssignSiteRolesOptionEnabled";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

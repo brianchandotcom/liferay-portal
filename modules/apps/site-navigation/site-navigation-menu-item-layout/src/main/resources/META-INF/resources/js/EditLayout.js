@@ -12,7 +12,11 @@
  * details.
  */
 
-export default function ({eventName, itemSelectorURL, namespace}) {
+export default function ({
+	eventName,
+	itemSelectorURL: initialItemSelectorURL,
+	namespace,
+}) {
 	const namespaceId = (id) => `${namespace}${id}`;
 
 	const groupIdInput = document.getElementById(namespaceId('groupId'));
@@ -34,20 +38,31 @@ export default function ({eventName, itemSelectorURL, namespace}) {
 		namespaceId('chooseLayout')
 	);
 
+	const itemSelectorURL = new URL(initialItemSelectorURL);
+
 	const onChooseLayoutButtonClick = () => {
 		Liferay.Util.openSelectionModal({
 			multiple: true,
 			onSelect: (selectedItem) => {
-				groupIdInput.value = selectedItem.groupId;
-				layoutUuidInput.value = selectedItem.id;
-				layoutNameInput.textContent = selectedItem.name;
-				privateLayoutInput.value = selectedItem.privateLayout;
+				if (selectedItem) {
+					groupIdInput.value = selectedItem.groupId;
+					layoutUuidInput.value = selectedItem.id;
+					layoutNameInput.textContent = selectedItem.name;
+					privateLayoutInput.value = selectedItem.privateLayout;
 
-				layoutItemRemoveButton.classList.remove('hide');
+					itemSelectorURL.searchParams.set(
+						`${Liferay.Util.getPortletNamespace(
+							Liferay.PortletKeys.ITEM_SELECTOR
+						)}layoutUuid`,
+						selectedItem.id
+					);
+
+					layoutItemRemoveButton.classList.remove('hide');
+				}
 			},
 			selectEventName: eventName,
 			title: Liferay.Language.get('select-layout'),
-			url: itemSelectorURL,
+			url: itemSelectorURL.href,
 		});
 	};
 

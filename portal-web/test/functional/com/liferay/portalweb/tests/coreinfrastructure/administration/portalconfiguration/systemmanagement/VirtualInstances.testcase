@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Portal Instances";
+	property testray.main.component.name = "Virtual Instances";
 
 	setUp {
 		TestCase.setUpPortalInstance();

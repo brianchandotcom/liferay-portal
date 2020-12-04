@@ -28,7 +28,6 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -98,22 +97,25 @@ public class ProjectTemplatesAPIJarTest
 			if (!classPath.contains("$") &&
 				!_ignoreClassPaths.contains(classPath)) {
 
-				Assert.assertTrue(javaPaths.contains(classPath));
+				Assert.assertTrue(
+					"Missing class " + classPath,
+					javaPaths.contains(classPath));
 			}
 		}
 
-		Map<String, List<String>> tldClassPaths = _getTLDClassPaths(
-			classesPath);
+		Map<String, Set<String>> tldClassPaths = _getTLDClassPaths(
+			"/taglib/tag/tag-class", classesPath);
 
 		Assert.assertFalse(tldClassPaths.isEmpty());
 
-		Set<Map.Entry<String, List<String>>> entries = tldClassPaths.entrySet();
+		Set<Map.Entry<String, Set<String>>> tldEntries =
+			tldClassPaths.entrySet();
 
-		StringBuilder sb = new StringBuilder("");
+		StringBuilder tldSb = new StringBuilder("");
 
-		entries.forEach(
+		tldEntries.forEach(
 			entry -> {
-				List<String> tldClasses = entry.getValue();
+				Set<String> tldClasses = entry.getValue();
 
 				Stream<String> stream = tldClasses.stream();
 
@@ -124,16 +126,50 @@ public class ProjectTemplatesAPIJarTest
 				);
 
 				if (!missingTLDClasses.isEmpty()) {
-					sb.append(entry.getKey() + "\n");
+					tldSb.append(entry.getKey() + "\n");
 
 					missingTLDClasses.forEach(
-						tldClass -> sb.append("\t" + tldClass + "\n"));
+						tldClass -> tldSb.append("\t" + tldClass + "\n"));
 				}
 			});
 
 		Assert.assertTrue(
-			"Missing TLD classes: " + sb.toString(),
-			Objects.equals("", sb.toString()));
+			"Missing TLD classes: " + tldSb.toString(),
+			Objects.equals("", tldSb.toString()));
+
+		Map<String, Set<String>> teiClassPaths = _getTLDClassPaths(
+			"/taglib/tag/tei-class", classesPath);
+
+		Assert.assertFalse(teiClassPaths.isEmpty());
+
+		Set<Map.Entry<String, Set<String>>> teiEntries =
+			teiClassPaths.entrySet();
+
+		StringBuilder teriSb = new StringBuilder("");
+
+		teiEntries.forEach(
+			entry -> {
+				Set<String> teiClasses = entry.getValue();
+
+				Stream<String> stream = teiClasses.stream();
+
+				List<String> missingTEIClasses = stream.filter(
+					teiClass -> !classPaths.contains(teiClass)
+				).collect(
+					Collectors.toList()
+				);
+
+				if (!missingTEIClasses.isEmpty()) {
+					teriSb.append(entry.getKey() + "\n");
+
+					missingTEIClasses.forEach(
+						teiClass -> teriSb.append("\t" + teiClass + "\n"));
+				}
+			});
+
+		Assert.assertTrue(
+			"Missing TEI classes: " + teriSb.toString(),
+			Objects.equals("", teriSb.toString()));
 
 		Set<Path> sevicesPaths = _getServicesPaths(classesDir.toPath());
 
@@ -158,7 +194,9 @@ public class ProjectTemplatesAPIJarTest
 		for (String serviceClassName : serviceClassNames) {
 			String servicePath = serviceClassName.replace(".", "/");
 
-			Assert.assertTrue(javaPaths.contains(servicePath));
+			Assert.assertTrue(
+				"Missing service class " + servicePath,
+				classPaths.contains(servicePath));
 		}
 	}
 
@@ -229,10 +267,11 @@ public class ProjectTemplatesAPIJarTest
 		return results;
 	}
 
-	private Map<String, List<String>> _getTLDClassPaths(Path sourcePath)
+	private Map<String, Set<String>> _getTLDClassPaths(
+			String xpathFilter, Path sourcePath)
 		throws Exception {
 
-		Map<String, List<String>> results = new HashMap<>();
+		Map<String, Set<String>> results = new HashMap<>();
 
 		Files.walkFileTree(
 			sourcePath,
@@ -247,7 +286,7 @@ public class ProjectTemplatesAPIJarTest
 
 					if (fileName.endsWith(".tld")) {
 						results.computeIfAbsent(
-							fileName, key -> new ArrayList<String>());
+							fileName, key -> new HashSet<String>());
 
 						try (FileInputStream fileInputStream =
 								new FileInputStream(path.toFile())) {
@@ -267,13 +306,13 @@ public class ProjectTemplatesAPIJarTest
 							XPath xPath = xPathFactory.newXPath();
 
 							XPathExpression xPathExpression = xPath.compile(
-								"/taglib/tag/tag-class");
+								xpathFilter);
 
 							NodeList nodeList =
 								(NodeList)xPathExpression.evaluate(
 									xmlDocument, XPathConstants.NODESET);
 
-							List<String> paths = results.get(fileName);
+							Set<String> paths = results.get(fileName);
 
 							for (int i = nodeList.getLength() - 1; i >= 0;
 								 i--) {

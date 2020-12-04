@@ -167,11 +167,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected BatchTestClassGroup(
-		String batchName, BuildProfile buildProfile,
-		PortalTestClassJob portalTestClassJob) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		this.batchName = batchName;
-		this.buildProfile = buildProfile;
 
 		portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
@@ -533,7 +531,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final List<AxisTestClassGroup> axisTestClassGroups =
 		new ArrayList<>();
 	protected final String batchName;
-	protected final BuildProfile buildProfile;
 	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
 	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
 	protected boolean includeStableTestSuite;

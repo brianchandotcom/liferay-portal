@@ -133,10 +133,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected FunctionalBatchTestClassGroup(
-		String batchName, BuildProfile buildProfile,
-		PortalTestClassJob portalTestClassJob) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, buildProfile, portalTestClassJob);
+		super(batchName, portalTestClassJob);
 
 		_portalTestClassJob = portalTestClassJob;
 

@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
@@ -61,10 +62,9 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected ModulesBatchTestClassGroup(
-		String batchName, BuildProfile buildProfile,
-		PortalTestClassJob portalTestClassJob) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, buildProfile, portalTestClassJob);
+		super(batchName, portalTestClassJob);
 
 		try {
 			File modulesDir = new File(
@@ -129,6 +129,9 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 							modulesDir));
 				}
 			}
+
+			Job.BuildProfile buildProfile =
+				portalTestClassJob.getBuildProfile();
 
 			excludesPathMatchers.addAll(
 				getPathMatchers(

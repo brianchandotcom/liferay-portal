@@ -418,10 +418,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected JUnitBatchTestClassGroup(
-		String batchName, BuildProfile buildProfile,
-		PortalTestClassJob portalTestClassJob) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, buildProfile, portalTestClassJob);
+		super(batchName, portalTestClassJob);
 
 		if (portalTestClassJob instanceof CentralMergePullRequestJob) {
 			_includeUnstagedTestClassFiles = true;

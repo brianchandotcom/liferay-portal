@@ -103,10 +103,9 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected PluginsBatchTestClassGroup(
-		String batchName, BuildProfile buildProfile,
-		PortalTestClassJob portalTestClassJob) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, buildProfile, portalTestClassJob);
+		super(batchName, portalTestClassJob);
 
 		Properties portalReleaseProperties =
 			JenkinsResultsParserUtil.getProperties(

@@ -23,8 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.template.soy.data.SoyDataFactory;
-import com.liferay.portal.template.soy.util.SoyRawData;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -36,7 +34,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -65,9 +62,7 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 			_log.error(exception, exception);
 		}
 
-		SoyRawData soyRawData = _soyDataFactory.createSoyRawData(html);
-
-		return Collections.singletonMap("html", soyRawData.getValue());
+		return Collections.singletonMap("html", html);
 	}
 
 	protected String renderCaptchaTag(
@@ -100,8 +95,5 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CaptchaDDMFormFieldTemplateContextContributor.class);
-
-	@Reference
-	private SoyDataFactory _soyDataFactory;
 
 }

@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.data.SoyDataFactory;
 import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Writer;
@@ -282,7 +281,7 @@ public class DDMFormEmailNotificationSender {
 		Map<String, Object> fieldMap = new HashMap<>();
 
 		fieldMap.put("label", labelString);
-		fieldMap.put("value", _soyDataFactory.createSoyRawData(sb.toString()));
+		fieldMap.put("value", sb.toString());
 
 		return fieldMap;
 	}
@@ -557,9 +556,6 @@ public class DDMFormEmailNotificationSender {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SoyDataFactory _soyDataFactory;
 
 	private UserLocalService _userLocalService;
 

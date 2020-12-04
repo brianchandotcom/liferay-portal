@@ -83,6 +83,11 @@ public class AddDataDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String dataDefinitionSring = ParamUtil.getString(
+			actionRequest, "dataDefinition");
+		String structureKey = ParamUtil.getString(
+			actionRequest, "structureKey");
+		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		DataDefinitionResource dataDefinitionResource =
@@ -92,10 +97,10 @@ public class AddDataDefinitionMVCActionCommand
 			).build();
 
 		DataDefinition dataDefinition = DataDefinition.toDTO(
-			ParamUtil.getString(actionRequest, "dataDefinition"));
+			dataDefinitionSring);
 
-		dataDefinition.setDefaultDataLayout(
-			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+		dataDefinition.setDataDefinitionKey(structureKey);
+		dataDefinition.setDefaultDataLayout(DataLayout.toDTO(dataLayout));
 
 		dataDefinitionResource.postSiteDataDefinitionByContentType(
 			groupId, "journal", dataDefinition);

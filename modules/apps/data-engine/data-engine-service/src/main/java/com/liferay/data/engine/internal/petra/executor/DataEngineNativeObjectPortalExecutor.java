@@ -352,7 +352,9 @@ public class DataEngineNativeObjectPortalExecutor {
 				Map<String, Object> customProperties =
 					dataDefinitionField.getCustomProperties();
 
-				if (!(Boolean)customProperties.get("nativeField")) {
+				if (!GetterUtil.getBoolean(
+						customProperties.get("nativeField"))) {
+
 					dataDefinitionFieldsList.add(dataDefinitionField);
 				}
 			}

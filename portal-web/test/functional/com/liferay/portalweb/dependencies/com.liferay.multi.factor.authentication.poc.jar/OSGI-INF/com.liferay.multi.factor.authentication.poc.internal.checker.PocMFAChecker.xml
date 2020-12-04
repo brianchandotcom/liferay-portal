@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.multi.factor.authentication.poc.internal.checker.PocMFAChecker" configuration-policy="optional" activate="activate" deactivate="deactivate" configuration-pid="com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration.scoped">
+  <reference name="_portal" interface="com.liferay.portal.kernel.util.Portal" field="_portal"/>
+  <reference name="_servletContext" interface="javax.servlet.ServletContext" target="(osgi.web.symbolicname=com.liferay.multi.factor.authentication.poc)" field="_servletContext"/>
+  <implementation class="com.liferay.multi.factor.authentication.poc.internal.checker.PocMFAChecker"/>
+</scr:component>

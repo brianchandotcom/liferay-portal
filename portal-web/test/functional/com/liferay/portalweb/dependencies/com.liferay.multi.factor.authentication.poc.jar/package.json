@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"base64-js": "^1.3.0"
+	},
+	"name": "com.liferay.multi.factor.authentication.poc",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

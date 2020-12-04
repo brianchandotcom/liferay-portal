@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -32,42 +31,68 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 public class DDMFormInstanceRecordTestUtil {
 
 	public static DDMFormInstanceRecord addDDMFormInstanceRecord(
+			DDMFormInstance ddmFormInstance, DDMFormValues ddmFormValues,
 			Group group, long userId)
 		throws Exception {
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("text");
-
-		DDMFormValues settingsDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
-
-		DDMFormInstance ddmFormInstance =
-			DDMFormInstanceTestUtil.addDDMFormInstance(
-				ddmForm, group, settingsDDMFormValues, userId);
-
 		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
 			userId, group.getGroupId(), ddmFormInstance.getFormInstanceId(),
-			settingsDDMFormValues, ServiceContextTestUtil.getServiceContext());
+			ddmFormValues, ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static DDMFormInstanceRecord addDDMFormInstanceRecordWithoutValues(
+			Group group, long userId)
+		throws Exception {
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(group, userId);
+
+		return addDDMFormInstanceRecord(
+			ddmFormInstance,
+			DDMFormValuesTestUtil.createDDMFormValues(
+				ddmFormInstance.getDDMForm()),
+			group, userId);
 	}
 
 	public static DDMFormInstanceRecord
-			addDDMFormInstanceRecordWithStatusByUserId(
+			addDDMFormInstanceRecordWithRandomValues(
+				DDMFormInstance ddmFormInstance, Group group, long userId)
+		throws Exception {
+
+		DDMForm ddmForm = ddmFormInstance.getDDMForm();
+
+		return addDDMFormInstanceRecord(
+			ddmFormInstance,
+			DDMFormValuesTestUtil.createDDMFormValuesWithRandomValues(ddmForm),
+			group, userId);
+	}
+
+	public static DDMFormInstanceRecord
+			addDDMFormInstanceRecordWithRandomValues(Group group, long userId)
+		throws Exception {
+
+		return addDDMFormInstanceRecordWithRandomValues(
+			DDMFormInstanceTestUtil.addDDMFormInstance(group, userId), group,
+			userId);
+	}
+
+	public static DDMFormInstanceRecord
+			addDDMFormInstanceRecordWithStatusByUserIdAndNoValues(
 				Group group, long statusByUserId, long userId)
 		throws Exception {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = addDDMFormInstanceRecord(
-			group, userId);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			addDDMFormInstanceRecordWithoutValues(group, userId);
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			ddmFormInstanceRecord.getFormInstanceRecordVersion();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return DDMFormInstanceRecordLocalServiceUtil.updateStatus(
 			statusByUserId,
 			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 	}
 
 }

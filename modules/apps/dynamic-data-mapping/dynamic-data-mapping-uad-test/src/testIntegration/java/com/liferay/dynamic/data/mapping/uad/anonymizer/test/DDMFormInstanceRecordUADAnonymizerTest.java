@@ -57,7 +57,7 @@ public class DDMFormInstanceRecordUADAnonymizerTest
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			DDMFormInstanceRecordTestUtil.
-				addDDMFormInstanceRecordWithStatusByUserId(
+				addDDMFormInstanceRecordWithStatusByUserIdAndNoValues(
 					_group, statusByUserId, userId);
 
 		_ddmFormInstanceRecords.add(ddmFormInstanceRecord);
@@ -84,7 +84,7 @@ public class DDMFormInstanceRecordUADAnonymizerTest
 		throws Exception {
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecordWithoutValues(
 				_group, userId);
 
 		if (deleteAfterTestRun) {

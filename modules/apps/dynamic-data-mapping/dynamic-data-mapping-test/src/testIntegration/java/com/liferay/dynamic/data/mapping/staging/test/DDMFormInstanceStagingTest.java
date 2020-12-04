@@ -15,18 +15,15 @@
 package com.liferay.dynamic.data.mapping.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceServiceUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormStagingTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -65,7 +62,9 @@ public class DDMFormInstanceStagingTest {
 	public void testFormCopiedWhenLocalStagingActivated() throws Exception {
 		_liveGroup = GroupTestUtil.addGroup();
 
-		_formInstance = createFormInstance(_liveGroup);
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				_liveGroup, TestPropsValues.getUserId());
 
 		DDMFormStagingTestUtil.enableLocalStaging(_liveGroup, true);
 
@@ -80,6 +79,8 @@ public class DDMFormInstanceStagingTest {
 			1,
 			DDMFormInstanceLocalServiceUtil.getFormInstancesCount(
 				_stagingGroup.getGroupId()));
+
+		DDMFormInstanceTestUtil.deleteDDMFormInstance(ddmFormInstance);
 	}
 
 	@Test
@@ -93,7 +94,9 @@ public class DDMFormInstanceStagingTest {
 		_remoteLiveGroup = GroupLocalServiceUtil.getGroup(
 			_remoteLiveGroup.getGroupId());
 
-		_formInstance = createFormInstance(_remoteStagingGroup);
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				_remoteStagingGroup, TestPropsValues.getUserId());
 
 		Assert.assertEquals(
 			1,
@@ -120,6 +123,8 @@ public class DDMFormInstanceStagingTest {
 			1,
 			DDMFormInstanceLocalServiceUtil.getFormInstancesCount(
 				_remoteLiveGroup.getGroupId()));
+
+		DDMFormInstanceTestUtil.deleteDDMFormInstance(ddmFormInstance);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -128,36 +133,16 @@ public class DDMFormInstanceStagingTest {
 
 		DDMFormStagingTestUtil.enableLocalStaging(_liveGroup, true);
 
-		_formInstance = DDMFormInstanceServiceUtil.addFormInstance(
+		DDMFormInstanceServiceUtil.addFormInstance(
 			_liveGroup.getGroupId(), null, null, null, null, null, null);
 	}
 
-	protected DDMFormInstance createFormInstance(Group group) throws Exception {
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DDMFormInstance.class.getName());
-
-		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
-			new DDMFormInstanceTestHelper(group);
-
-		return ddmFormInstanceTestHelper.addDDMFormInstance(_ddmStructure);
-	}
-
 	protected void setUpPermissionThreadLocal() throws Exception {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 	}
 
-	@DeleteAfterTestRun
-	private DDMStructure _ddmStructure;
-
-	@DeleteAfterTestRun
-	private DDMFormInstance _formInstance;
-
 	private Group _liveGroup;
-	private PermissionChecker _originalPermissionChecker;
 	private Group _remoteLiveGroup;
 
 	@DeleteAfterTestRun

@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.internal.security.permission.resource.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -23,7 +22,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -146,11 +145,6 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 	protected DDMFormInstance createFormInstance() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Test Structure");
 
-		DDMForm settingsDDMForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormValues settingsDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(settingsDDMForm);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId());
@@ -158,7 +152,9 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 		return DDMFormInstanceLocalServiceUtil.addFormInstance(
 			structure.getUserId(), structure.getGroupId(),
 			structure.getStructureId(), structure.getNameMap(),
-			structure.getNameMap(), settingsDDMFormValues, serviceContext);
+			structure.getNameMap(),
+			DDMFormInstanceTestUtil.createSettingsDDMFormValues(),
+			serviceContext);
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

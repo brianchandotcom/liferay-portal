@@ -16,11 +16,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -38,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -83,7 +82,9 @@ public class ShareFormInstanceMVCActionCommandTest {
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
 
-		DDMFormInstance ddmFormInstance = _createFormInstance();
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				_group, TestPropsValues.getUserId());
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(
@@ -121,16 +122,6 @@ public class ShareFormInstanceMVCActionCommandTest {
 			mockHttpServletResponse.getStatus());
 
 		Assert.assertTrue(jsonObject.has("errorMessage"));
-	}
-
-	private DDMFormInstance _createFormInstance() throws Exception {
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DDMFormInstance.class.getName());
-
-		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
-			new DDMFormInstanceTestHelper(_group);
-
-		return ddmFormInstanceTestHelper.addDDMFormInstance(_ddmStructure);
 	}
 
 	private LiferayPortletConfig _getLiferayPortletConfig() {
@@ -185,9 +176,6 @@ public class ShareFormInstanceMVCActionCommandTest {
 
 	@Inject
 	private DDMFormInstanceService _ddmFormInstanceService;
-
-	@DeleteAfterTestRun
-	private DDMStructure _ddmStructure;
 
 	@DeleteAfterTestRun
 	private Group _group;

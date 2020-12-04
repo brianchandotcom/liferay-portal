@@ -15,22 +15,19 @@
 package com.liferay.dynamic.data.mapping.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceRecordTestHelper;
-import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceRecordTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -47,13 +44,15 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -92,11 +91,16 @@ public class DDMFormInstanceRecordSearchTest {
 
 		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 
-		DDMFormInstance ddmFormInstance = addDDMFormInstance();
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-		_ddmFormInstanceRecordTestHelper = new DDMFormInstanceRecordTestHelper(
-			_group, ddmFormInstance);
-		_searchContext = getSearchContext(_group, _user, ddmFormInstance);
+		keyValuePairs.add(new KeyValuePair("name", "keyword"));
+		keyValuePairs.add(new KeyValuePair("description", "text"));
+
+		_ddmFormInstance = DDMFormInstanceTestUtil.addDDMFormInstance(
+			createDDMForm(keyValuePairs, LocaleUtil.US), _group,
+			_user.getUserId());
+
+		_searchContext = getSearchContext(_group, _user, _ddmFormInstance);
 	}
 
 	@Test
@@ -104,7 +108,8 @@ public class DDMFormInstanceRecordSearchTest {
 		User user = UserTestUtil.addGroupUser(
 			_group, RoleConstants.SITE_MEMBER);
 
-		addDDMFormInstanceRecord("Joe Bloggs", "Simple description");
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, "Simple description", "Joe Bloggs");
 
 		_searchContext.setKeywords("Simple description");
 		_searchContext.setUserId(user.getUserId());
@@ -116,7 +121,8 @@ public class DDMFormInstanceRecordSearchTest {
 	public void testBasicSearchWithGuestUser() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		addDDMFormInstanceRecord("Joe Bloggs", "Simple description");
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, "Simple description", "Joe Bloggs");
 
 		_searchContext.setKeywords("Simple description");
 
@@ -127,10 +133,13 @@ public class DDMFormInstanceRecordSearchTest {
 
 	@Test
 	public void testBasicSearchWithJustOneTerm() throws Exception {
-		addDDMFormInstanceRecord("Joe Bloggs", "Simple description");
-		addDDMFormInstanceRecord("Bloggs", "Another description example");
 		addDDMFormInstanceRecord(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			_ddmFormInstance, "Simple description", "Joe Bloggs");
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, "Another description example", "Bloggs");
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		assertSearch("example", 1);
 		assertSearch("description", 2);
@@ -138,10 +147,13 @@ public class DDMFormInstanceRecordSearchTest {
 
 	@Test
 	public void testExactPhrase() throws Exception {
-		addDDMFormInstanceRecord("Joe Bloggs", "Simple description");
-		addDDMFormInstanceRecord("Bloggs", "Another description example");
 		addDDMFormInstanceRecord(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			_ddmFormInstance, "Simple description", "Joe Bloggs");
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, "Another description example", "Bloggs");
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		assertSearch("\"Joe Bloggs\"", 1);
 		assertSearch("Bloggs", 2);
@@ -149,54 +161,34 @@ public class DDMFormInstanceRecordSearchTest {
 
 	@Test
 	public void testNonindexableField() throws Exception {
-		Locale[] locales = {LocaleUtil.US};
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			DDMFormTestUtil.createAvailableLocales(locales), locales[0]);
-
-		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
-			"name", true, false, false);
-
-		nameDDMFormField.setIndexType("keyword");
-
-		ddmForm.addDDMFormField(nameDDMFormField);
-
-		DDMFormField descriptionDDMFormField =
-			DDMFormTestUtil.createTextDDMFormField(
-				"description", true, false, false);
-
-		descriptionDDMFormField.setIndexType("");
-
-		ddmForm.addDDMFormField(descriptionDDMFormField);
-
-		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
-			new DDMFormInstanceTestHelper(_group);
-
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(DDMFormInstance.class), _group);
-
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.DEFAULT.toString());
+		keyValuePairs.add(new KeyValuePair("name", "keyword"));
+		keyValuePairs.add(new KeyValuePair("description", ""));
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				createDDMForm(keyValuePairs, LocaleUtil.US), _group,
+				_user.getUserId());
 
-		_ddmFormInstanceRecordTestHelper = new DDMFormInstanceRecordTestHelper(
-			_group, ddmFormInstance);
 		_searchContext = getSearchContext(_group, _user, ddmFormInstance);
 
-		addDDMFormInstanceRecord("Liferay", "Not indexable name");
+		addDDMFormInstanceRecord(
+			ddmFormInstance, "Not indexable name", "Liferay");
 
 		assertSearch("Liferay", 1);
 		assertSearch("Not indexable name", 0);
+
+		DDMFormInstanceTestUtil.deleteDDMFormInstance(ddmFormInstance);
 	}
 
 	@Test
 	public void testStopwords() throws Exception {
-		addDDMFormInstanceRecord(RandomTestUtil.randomString(), "Simple text");
 		addDDMFormInstanceRecord(
-			RandomTestUtil.randomString(), "Another description example");
+			_ddmFormInstance, "Simple text", RandomTestUtil.randomString());
+		addDDMFormInstanceRecord(
+			_ddmFormInstance, "Another description example",
+			RandomTestUtil.randomString());
 
 		assertSearch("Another The Example", 1);
 	}
@@ -219,56 +211,40 @@ public class DDMFormInstanceRecordSearchTest {
 		return searchContext;
 	}
 
-	protected DDMFormInstance addDDMFormInstance() throws Exception {
-		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
-			new DDMFormInstanceTestHelper(_group);
-
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(DDMFormInstance.class), _group);
-
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			createDDMForm(LocaleUtil.US), StorageType.DEFAULT.toString());
-
-		return ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
-	}
-
 	protected void addDDMFormInstanceRecord(
-			Map<Locale, String> name, Map<Locale, String> description)
+			DDMFormInstance ddmFormInstance, String description, String name)
 		throws Exception {
 
-		Locale[] locales = new Locale[name.size()];
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			LocaleUtil.US, name
+		).build();
 
-		Set<Locale> localesKeySet = name.keySet();
+		Set<Locale> localesKeySet = nameMap.keySet();
+
+		Locale[] locales = new Locale[nameMap.size()];
 
 		localesKeySet.toArray(locales);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(locales);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmFormInstance.getDDMForm(),
+			DDMFormValuesTestUtil.createAvailableLocales(locales), locales[0]);
 
 		DDMFormFieldValue nameDDMFormFieldValue =
-			createLocalizedDDMFormFieldValue("name", name);
+			createLocalizedDDMFormFieldValue("name", nameMap);
 
 		ddmFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
 
 		DDMFormFieldValue descriptionDDMFormFieldValue =
-			createLocalizedDDMFormFieldValue("description", description);
+			createLocalizedDDMFormFieldValue(
+				"description",
+				HashMapBuilder.put(
+					LocaleUtil.US, description
+				).build());
 
 		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
 
-		_ddmFormInstanceRecordTestHelper.addDDMFormInstanceRecord(
-			ddmFormValues);
-	}
-
-	protected void addDDMFormInstanceRecord(String name, String description)
-		throws Exception {
-
-		addDDMFormInstanceRecord(
-			HashMapBuilder.put(
-				LocaleUtil.US, name
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.US, description
-			).build());
+		DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+			ddmFormInstance, ddmFormValues, _group, _user.getUserId());
 	}
 
 	protected void assertSearch(String keywords, int length) throws Exception {
@@ -281,39 +257,17 @@ public class DDMFormInstanceRecordSearchTest {
 		Assert.assertEquals(length, result.getLength());
 	}
 
-	protected DDMForm createDDMForm(Locale... locales) {
+	protected DDMForm createDDMForm(
+		List<KeyValuePair> keyValuePairs, Locale... locales) {
+
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(locales), locales[0]);
 
-		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
-			"name", true, false, false);
-
-		nameDDMFormField.setIndexType("keyword");
-
-		ddmForm.addDDMFormField(nameDDMFormField);
-
-		DDMFormField descriptionDDMFormField =
-			DDMFormTestUtil.createTextDDMFormField(
-				"description", true, false, false);
-
-		descriptionDDMFormField.setIndexType("text");
-
-		ddmForm.addDDMFormField(descriptionDDMFormField);
+		keyValuePairs.forEach(
+			keyValuePair -> ddmForm.addDDMFormField(
+				_createDDMFormFieldWithCustomIndexType(keyValuePair)));
 
 		return ddmForm;
-	}
-
-	protected DDMFormValues createDDMFormValues(Locale... locales)
-		throws Exception {
-
-		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceRecordTestHelper.getDDMFormInstance();
-
-		DDMStructure ddmStructure = ddmFormInstance.getStructure();
-
-		return DDMFormValuesTestUtil.createDDMFormValues(
-			ddmStructure.getDDMForm(),
-			DDMFormValuesTestUtil.createAvailableLocales(locales), locales[0]);
 	}
 
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
@@ -329,7 +283,19 @@ public class DDMFormInstanceRecordSearchTest {
 			name, localizedValue);
 	}
 
-	private DDMFormInstanceRecordTestHelper _ddmFormInstanceRecordTestHelper;
+	private DDMFormField _createDDMFormFieldWithCustomIndexType(
+		KeyValuePair keyValuePair) {
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			keyValuePair.getKey(), true, false, false);
+
+		ddmFormField.setIndexType(keyValuePair.getValue());
+
+		return ddmFormField;
+	}
+
+	@DeleteAfterTestRun
+	private DDMFormInstance _ddmFormInstance;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -59,7 +59,7 @@ public class DDMFormInstanceUADDisplayTest
 	@Test
 	public void testGetTopLevelContainer() throws Exception {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecordWithoutValues(
 				_group, TestPropsValues.getUserId());
 
 		Assert.assertNull(
@@ -70,8 +70,8 @@ public class DDMFormInstanceUADDisplayTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		return DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
-			_group, userId);
+		return DDMFormInstanceRecordTestUtil.
+			addDDMFormInstanceRecordWithoutValues(_group, userId);
 	}
 
 	@Override

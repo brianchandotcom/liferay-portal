@@ -69,7 +69,7 @@ public class DDMFormInstanceUADExporterTest
 	@Override
 	protected DDMFormInstance addBaseModel(long userId) throws Exception {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecordWithoutValues(
 				_group, userId);
 
 		return ddmFormInstanceRecord.getFormInstance();

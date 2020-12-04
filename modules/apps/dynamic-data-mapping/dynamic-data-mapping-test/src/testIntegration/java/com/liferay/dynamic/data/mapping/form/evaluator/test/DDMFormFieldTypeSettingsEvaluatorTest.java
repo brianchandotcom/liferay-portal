@@ -38,14 +38,12 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -144,9 +142,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 			ddmFormFieldType.getDDMFormFieldTypeSettings());
 
 		DDMFormValues ddmFormValues =
-			DDMFormValuesTestUtil.createDDMFormValuesWithDefaultFieldValues(
-				ddmForm, SetUtil.fromArray(new Locale[] {LocaleUtil.US}),
-				LocaleUtil.US);
+			DDMFormValuesTestUtil.createDDMFormValuesWithDefaultValues(ddmForm);
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
@@ -242,9 +238,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 			ddmFormFieldType.getDDMFormFieldTypeSettings());
 
 		DDMFormValues ddmFormValues =
-			DDMFormValuesTestUtil.createDDMFormValuesWithDefaultFieldValues(
-				ddmForm, SetUtil.fromArray(new Locale[] {LocaleUtil.US}),
-				LocaleUtil.US);
+			DDMFormValuesTestUtil.createDDMFormValuesWithDefaultValues(ddmForm);
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();

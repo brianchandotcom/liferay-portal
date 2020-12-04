@@ -60,7 +60,7 @@ public class DDMFormInstanceRecordUADDisplayTest
 	@Test
 	public void testGetParentContainerId() throws Exception {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecordWithoutValues(
 				_group, TestPropsValues.getUserId());
 
 		Serializable parentContainerId = _uadDisplay.getParentContainerId(
@@ -77,8 +77,8 @@ public class DDMFormInstanceRecordUADDisplayTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		return DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
-			_group, userId);
+		return DDMFormInstanceRecordTestUtil.
+			addDDMFormInstanceRecordWithoutValues(_group, userId);
 	}
 
 	@Override

@@ -342,7 +342,9 @@ public class DDMFormInstanceReportLocalServiceTest
 		_ddmFormInstance = DDMFormInstanceLocalServiceUtil.addFormInstance(
 			ddmStructure.getUserId(), ddmStructure.getGroupId(),
 			ddmStructure.getStructureId(), ddmStructure.getNameMap(),
-			ddmStructure.getNameMap(), ddmFormValues, serviceContext);
+			ddmStructure.getNameMap(),
+			DDMFormInstanceTestUtil.createSettingsDDMFormValues(),
+			serviceContext);
 
 		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
 			_userId, group.getGroupId(), _ddmFormInstance.getFormInstanceId(),

@@ -81,12 +81,12 @@ public class WorkflowDefinitionsDataProviderTest extends PowerMockito {
 		WorkflowDefinition workflowDefinition1 = mock(WorkflowDefinition.class);
 
 		_setUpWorkflowDefinition(
-			workflowDefinition1, "definition1", 1, "Definition 1");
+			workflowDefinition1, "definition1", "Definition 1");
 
 		WorkflowDefinition workflowDefinition2 = mock(WorkflowDefinition.class);
 
 		_setUpWorkflowDefinition(
-			workflowDefinition2, "definition2", 2, "Definition 2");
+			workflowDefinition2, "definition2", "Definition 2");
 
 		when(
 			_workflowDefinitionManager.getActiveWorkflowDefinitions(
@@ -109,8 +109,8 @@ public class WorkflowDefinitionsDataProviderTest extends PowerMockito {
 		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>() {
 			{
 				add(new KeyValuePair("no-workflow", "No Workflow"));
-				add(new KeyValuePair("definition1@1", "Definition 1"));
-				add(new KeyValuePair("definition2@2", "Definition 2"));
+				add(new KeyValuePair("definition1", "Definition 1"));
+				add(new KeyValuePair("definition2", "Definition 2"));
 			}
 		};
 
@@ -193,19 +193,12 @@ public class WorkflowDefinitionsDataProviderTest extends PowerMockito {
 	}
 
 	private void _setUpWorkflowDefinition(
-		WorkflowDefinition workflowDefinition1, String name, int version,
-		String title) {
+		WorkflowDefinition workflowDefinition1, String name, String title) {
 
 		when(
 			workflowDefinition1.getName()
 		).thenReturn(
 			name
-		);
-
-		when(
-			workflowDefinition1.getVersion()
-		).thenReturn(
-			version
 		);
 
 		when(

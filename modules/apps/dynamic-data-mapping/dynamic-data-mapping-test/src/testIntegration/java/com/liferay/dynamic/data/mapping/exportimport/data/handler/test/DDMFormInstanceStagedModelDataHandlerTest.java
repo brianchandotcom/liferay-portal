@@ -15,17 +15,18 @@
 package com.liferay.dynamic.data.mapping.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,8 +50,8 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_formInstanceSettingsDDMFormValues =
-			DDMFormInstanceTestHelper.createFormInstanceSettingsDDMFormValues();
+		_settingsDDMFormValues =
+			DDMFormInstanceTestUtil.createSettingsDDMFormValues();
 	}
 
 	@Override
@@ -76,20 +77,18 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
-			new DDMFormInstanceTestHelper(group);
-
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			DDMStructure.class.getSimpleName());
 
 		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				ddmStructure, group, _settingsDDMFormValues,
+				TestPropsValues.getUserId());
 
-		return ddmFormInstanceTestHelper.updateFormInstance(
-			ddmFormInstance.getFormInstanceId(),
-			_formInstanceSettingsDDMFormValues);
+		return DDMFormInstanceTestUtil.updateDDMFormInstance(
+			ddmFormInstance.getFormInstanceId(), _settingsDDMFormValues);
 	}
 
 	@Override
@@ -116,10 +115,10 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 			(DDMFormInstance)importedStagedModel;
 
 		Assert.assertEquals(
-			_formInstanceSettingsDDMFormValues,
+			_settingsDDMFormValues,
 			importedFormInstance.getSettingsDDMFormValues());
 	}
 
-	private DDMFormValues _formInstanceSettingsDDMFormValues;
+	private DDMFormValues _settingsDDMFormValues;
 
 }

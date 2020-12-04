@@ -201,6 +201,10 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
+			if (ddmFormField == null) {
+				continue;
+			}
+
 			Value value = null;
 
 			if (ddmFormField.isLocalizable()) {

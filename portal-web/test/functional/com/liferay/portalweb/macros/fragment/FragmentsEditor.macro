@@ -90,4 +90,12 @@ definition {
 			value1 = "${content}");
 	}
 
+	macro waitForAutoSave {
+		Pause(locator1 = "1000");
+
+		AssertTextEquals(
+			locator1 = "FragmentEditor#AUTOSAVE_MESSAGE",
+			value1 = "Changes Saved");
+	}
+
 }

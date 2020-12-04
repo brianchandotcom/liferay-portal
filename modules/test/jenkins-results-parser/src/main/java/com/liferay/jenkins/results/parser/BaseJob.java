@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalSegmentTestClassGroup;
@@ -40,6 +41,20 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseJob implements Job {
+
+	@Override
+	public List<AxisTestClassGroup> getAxisTestClassGroups() {
+		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getBatchTestClassGroups()) {
+
+			axisTestClassGroups.addAll(
+				batchTestClassGroup.getAxisTestClassGroups());
+		}
+
+		return axisTestClassGroups;
+	}
 
 	@Override
 	public Set<String> getBatchNames() {

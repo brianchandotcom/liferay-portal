@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
@@ -25,6 +26,8 @@ import java.util.Set;
  * @author Michael Hashimoto
  */
 public interface Job {
+
+	public List<AxisTestClassGroup> getAxisTestClassGroups();
 
 	public Set<String> getBatchNames();
 

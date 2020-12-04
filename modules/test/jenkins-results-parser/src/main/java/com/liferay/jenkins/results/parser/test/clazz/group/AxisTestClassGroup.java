@@ -14,10 +14,32 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
 public class AxisTestClassGroup extends BaseTestClassGroup {
+
+	public String getAxisName() {
+		if (_segmentTestClassGroup != null) {
+			List<AxisTestClassGroup> axisTestClassGroups =
+				_segmentTestClassGroup.getAxisTestClassGroups();
+
+			return JenkinsResultsParserUtil.combine(
+				_segmentTestClassGroup.getSegmentName(), "/",
+				String.valueOf(axisTestClassGroups.indexOf(this)));
+		}
+
+		List<AxisTestClassGroup> axisTestClassGroups =
+			_batchTestClassGroup.getAxisTestClassGroups();
+
+		return JenkinsResultsParserUtil.combine(
+			_batchTestClassGroup.getBatchName(), "/",
+			String.valueOf(axisTestClassGroups.indexOf(this)));
+	}
 
 	public String getBatchName() {
 		return _batchTestClassGroup.getBatchName();

@@ -209,13 +209,10 @@ public class AuthVerifierPipeline {
 		Map<String, List<AuthVerifierConfiguration>>
 			includeAuthVerifierConfigurations = new HashMap<>();
 
-		boolean containsPortalPropertyPrefix = _filterProperties.containsKey(
-			"portal_property_prefix");
-
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				AuthVerifierTrackerCustomizer._authVerifierConfigurations) {
 
-			if (!containsPortalPropertyPrefix) {
+			if (!_filterProperties.containsKey("portal_property_prefix")) {
 				authVerifierConfiguration = _mergeAuthVerifierConfiguration(
 					authVerifierConfiguration, _filterProperties);
 

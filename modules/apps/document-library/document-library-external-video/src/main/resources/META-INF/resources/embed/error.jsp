@@ -19,7 +19,7 @@
 <liferay-util:html-top
 	outputKey="document_library_external_video_embed_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/embed.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="video-embed-placeholder">
@@ -28,6 +28,6 @@
 	/>
 
 	<div class="video-embed-placeholder-text">
-		<liferay-ui:message key="no-preview-available" />
+		<liferay-ui:message key="no-video-preview-available" />
 	</div>
 </div>

@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<String> previewFileURLs = (List<String>)request.getAttribute(DLWebKeys.PREVIEW_FILE_URLS);
-String videoPosterURL = (String)request.getAttribute(DLWebKeys.VIDEO_POSTER_URL);
+List<String> previewFileURLs = (List<String>)request.getAttribute(DLExternalVideoWebKeys.PREVIEW_FILE_URLS);
+String videoPosterURL = (String)request.getAttribute(DLExternalVideoWebKeys.VIDEO_POSTER_URL);
 %>
 
 <liferay-util:html-top
 	outputKey="document_library_external_video_embed_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/embed.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <video

@@ -26,9 +26,10 @@
 	<div class="external-video-preview-aspect-ratio">
 
 		<%
-		DLExternalVideo dlExternalVideo = (DLExternalVideo)request.getAttribute(DLExternalVideo.class.getName());
+		FileEntry fileEntry = (FileEntry)request.getAttribute(FileEntry.class.getName());
+		DLVideoRenderer dlVideoRenderer = (DLVideoRenderer)request.getAttribute(DLVideoRenderer.class.getName());
 		%>
 
-		<%= dlExternalVideo.getEmbeddableHTML() %>
+		<%= dlVideoRenderer.renderHTML(fileEntry, request) %>
 	</div>
 </div>

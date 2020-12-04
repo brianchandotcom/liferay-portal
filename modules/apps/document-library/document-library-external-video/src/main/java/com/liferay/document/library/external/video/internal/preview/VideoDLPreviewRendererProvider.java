@@ -15,13 +15,13 @@
 package com.liferay.document.library.external.video.internal.preview;
 
 import com.liferay.document.library.constants.DLContentTypes;
-import com.liferay.document.library.external.video.DLExternalVideo;
-import com.liferay.document.library.external.video.resolver.DLExternalVideoResolver;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.video.renderer.DLVideoRenderer;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.HashSet;
@@ -60,8 +60,10 @@ public class VideoDLPreviewRendererProvider
 				_servletContext.getRequestDispatcher("/preview.jsp");
 
 			request.setAttribute(
-				DLExternalVideo.class.getName(),
-				_dlExternalVideoResolver.resolve(fileVersion.getFileEntry()));
+				FileEntry.class.getName(), fileVersion.getFileEntry());
+
+			request.setAttribute(
+				DLVideoRenderer.class.getName(), _dlVideoRenderer);
 
 			requestDispatcher.include(request, response);
 		};
@@ -84,7 +86,7 @@ public class VideoDLPreviewRendererProvider
 	}
 
 	@Reference
-	private DLExternalVideoResolver _dlExternalVideoResolver;
+	private DLVideoRenderer _dlVideoRenderer;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.external.video)"

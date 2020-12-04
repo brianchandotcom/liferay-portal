@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.document.library.external.video.DLExternalVideo" %><%@
 page import="com.liferay.document.library.external.video.internal.constants.DLExternalVideoPortletKeys" %><%@
 page import="com.liferay.document.library.external.video.internal.constants.DLExternalVideoWebKeys" %><%@
+page import="com.liferay.document.library.video.renderer.DLVideoRenderer" %><%@
 page import="com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

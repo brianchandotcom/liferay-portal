@@ -127,8 +127,14 @@ $zIndexContent: 0;
 	&.menu-indicator-enabled {
 		top: 144px !important;
 
-		.data-layout-builder-sidebar .sidebar .sidebar-body {
-			height: calc(100vh - 248px);
+		.data-layout-builder-sidebar {
+			.sidebar .sidebar-body {
+				height: calc(100vh - 248px);
+			}
+
+			&.display-settings .sidebar .sidebar-body {
+				height: calc(100vh - (248px - #{$displaySettingsHeight}));
+			}
 		}
 	}
 }

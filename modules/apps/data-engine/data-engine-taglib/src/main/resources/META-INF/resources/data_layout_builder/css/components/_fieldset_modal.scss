@@ -1,10 +1,42 @@
+$modalSpaing: 293px;
+$sidebarBodySpacing: #{$modalSpaing} + 100px;
+
 body.has-control-menu .fieldset-modal {
 	.modal-body {
 		overflow-x: hidden;
 	}
 
-	.multi-panel-sidebar {
+	.data-engine-form-builder {
+		height: calc(100vh - #{$modalSpaing});
+		left: 0;
+		overflow-x: auto;
+		padding-bottom: 1.5rem;
+		padding-top: 1.5rem;
 		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.data-layout-builder-sidebar {
+		.sidebar .sidebar-body {
+			height: calc(100vh - #{$sidebarBodySpacing}) !important;
+		}
+
+		&.display-settings .sidebar .sidebar-body {
+			height: calc(
+				100vh - (#{$sidebarBodySpacing} - #{$displaySettingsHeight})
+			) !important;
+		}
+	}
+
+	.multi-panel-sidebar {
+		height: calc(100vh - 112px) !important;
+
+		&,
+		&-content {
+			height: calc(100vh - #{$modalSpaing}) !important;
+			position: absolute;
+		}
 
 		&,
 		&.menu-indicator-enabled {
@@ -20,10 +52,6 @@ body.has-control-menu .fieldset-modal {
 				margin-top: 4px;
 			}
 		}
-	}
-
-	.multi-panel-sidebar-content {
-		position: absolute;
 	}
 
 	.add-fieldset,

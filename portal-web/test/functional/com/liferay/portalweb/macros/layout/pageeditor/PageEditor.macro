@@ -1719,6 +1719,8 @@ definition {
 	macro getFileSizeOfSelectedImageResolution {
 		var key_resolutionLabel = "File Size";
 
+		WaitForElementPresent(locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
+
 		var fileSize = selenium.getText("PageEditor#IMAGE_RESOLUTION_LABEL");
 		var fileSize = StringUtil.extractFirst("${fileSize}", ".");
 		var fileSize = StringUtil.extractDigits("${fileSize}");
@@ -1728,6 +1730,8 @@ definition {
 
 	macro getWidthOfSelectedImageResolution {
 		var key_resolutionLabel = "Width";
+
+		WaitForElementPresent(locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 
 		var width = selenium.getText("PageEditor#IMAGE_RESOLUTION_LABEL");
 		var width = StringUtil.extractDigits("${width}");

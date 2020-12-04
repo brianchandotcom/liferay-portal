@@ -494,10 +494,7 @@ public class VerticalCardTag extends BaseCardTag {
 			String stickerImageSrc = getStickerImageSrc();
 			String stickerLabel = getStickerLabel();
 
-			if (Validator.isNotNull(stickerIcon)) {
-				stickerTag.setIcon(stickerIcon);
-			}
-			else if (Validator.isNotNull(stickerImageSrc)) {
+			if (Validator.isNotNull(stickerImageSrc)) {
 				String stickerImageAlt = getStickerImageAlt();
 
 				if (Validator.isNotNull(stickerImageAlt)) {
@@ -506,6 +503,10 @@ public class VerticalCardTag extends BaseCardTag {
 
 				stickerTag.setImageSrc(stickerImageSrc);
 			}
+			else if (Validator.isNotNull(stickerIcon)) {
+				stickerTag.setIcon(stickerIcon);
+			}
+
 			else if (Validator.isNotNull(stickerLabel)) {
 				stickerTag.setLabel(stickerLabel);
 			}

@@ -6802,15 +6802,13 @@ go</echo>
 
 				<ant dir="portal-kernel" target="install-portal-snapshot" />
 
-				<mirrors-get
-					dest="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.api.jar"
-					src="${baseline.jar.url}/com/liferay/com.liferay.analytics.demo.data.creator.api/${analytics.cloud.faro.data.creator.api}/com.liferay.analytics.demo.data.creator.api-${analytics.cloud.faro.data.creator.api}.jar"
-				/>
+				<gradle-execute dir="modules/apps/analytics/analytics-demo-data-creator-api" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
 
-				<mirrors-get
-					dest="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.impl.jar"
-					src="${baseline.jar.url}/com/liferay/com.liferay.analytics.demo.data.creator.impl/${analytics.cloud.faro.data.creator.impl}/com.liferay.analytics.demo.data.creator.impl-${analytics.cloud.faro.data.creator.impl}.jar"
-				/>
+				<gradle-execute dir="modules/apps/analytics/analytics-demo-data-creator-impl" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
 
 				<property location="${analytics.cloud.faro.data.csv}" name="analytics.cloud.faro.data.csv.file.path" />
 

@@ -195,11 +195,7 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"nodes", _getLayoutsJSONArray(selectedLayoutIds)
 		).put(
-			"pathThemeImages", _pathThemeImages
-		).put(
 			"selectedLayoutIds", selectedLayoutIds
-		).put(
-			"viewType", _viewType
 		).build();
 	}
 

@@ -299,4 +299,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121281. The elements information of Tabs is organized in Selection panel."
+	@priority = "5"
+	test ViewElementInfoOrderOfTabsInSelectionPanel {
+		task ("Add a Tabs fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("Assert elements information is organized in Selection panel") {
+			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+
+			Pause(locator1 = "3000");
+
+			var n = "1";
+
+			for (var nodeName : list "Tabs,title1,Drop Zone 1,title2,Drop Zone 2,title3,Drop Zone 3,title4,Drop Zone 4") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Change the Number of Tabs to 5") {
+			PageEditor.gotoStyle(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "5");
+		}
+
+		task ("Assert elements information is organized in Selection panel") {
+			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+
+			Pause(locator1 = "3000");
+
+			var n = "1";
+
+			for (var nodeName : list "Tabs,title1,Drop Zone 1,title2,Drop Zone 2,title3,Drop Zone 3,title4,Drop Zone 4,title5,Drop Zone 5") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Change the Number of Tabs to 3") {
+			PageEditor.gotoStyle(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "3");
+		}
+
+		task ("Assert elements information is organized in Selection panel") {
+			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+
+			Pause(locator1 = "3000");
+
+			var n = "1";
+
+			for (var nodeName : list "Tabs,title1,Drop Zone 1,title2,Drop Zone 2,title3,Drop Zone 3") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 }

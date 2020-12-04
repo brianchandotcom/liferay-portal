@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>EXTERNAL_VIDEO_IFRAME</td>
-	<td>//div[contains(@class,'external-video-preview-aspect-ratio')]//iframe</td>
+	<td>//div[contains(@class,'video-preview-aspect-ratio')]//iframe</td>
 	<td></td>
 </tr>
 <tr>

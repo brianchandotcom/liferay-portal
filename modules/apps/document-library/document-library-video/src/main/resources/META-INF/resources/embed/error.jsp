@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.document.library.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Alejandro Tardín
- */
-public class DLContentTypes {
+<liferay-util:html-top
+	outputKey="document_library_video_embed_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
 
-	public static final String VIDEO_EXTERNAL_SHORTCUT =
-		"application/vnd+liferay.video.external.shortcut+html";
+<div class="video-embed-placeholder">
+	<clay:icon
+		symbol="video"
+	/>
 
-}
+	<div class="video-embed-placeholder-text">
+		<liferay-ui:message key="no-video-preview-available" />
+	</div>
+</div>

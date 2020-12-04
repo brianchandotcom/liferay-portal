@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.document.library.constants;
+package com.liferay.document.library.video.internal.constants;
 
 /**
  * @author Alejandro Tardín
  */
-public class DLContentTypes {
+public class DLVideoPortletKeys {
 
-	public static final String VIDEO_EXTERNAL_SHORTCUT =
-		"application/vnd+liferay.video.external.shortcut+html";
+	public static final String DL_VIDEO =
+		"com_liferay_document_library_video_internal_portlet_DLVideoPortlet";
 
 }

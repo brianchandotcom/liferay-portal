@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.document.library.constants;
+package com.liferay.document.library.video.external.shortcut;
 
 /**
  * @author Alejandro Tardín
  */
-public class DLContentTypes {
+public interface DLVideoExternalShortcut {
 
-	public static final String VIDEO_EXTERNAL_SHORTCUT =
-		"application/vnd+liferay.video.external.shortcut+html";
+	public String getDescription();
+
+	public String getEmbeddableHTML();
+
+	public String getThumbnailURL();
+
+	public String getTitle();
+
+	public String getURL();
 
 }

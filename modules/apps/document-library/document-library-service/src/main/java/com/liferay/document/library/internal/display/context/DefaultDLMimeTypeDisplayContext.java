@@ -143,7 +143,7 @@ public class DefaultDLMimeTypeDisplayContext
 	}
 
 	private boolean _isMultimediaFileMimeType(String mimeType) {
-		if (Objects.equals(mimeType, DLContentTypes.EXTERNAL_VIDEO) ||
+		if (Objects.equals(mimeType, DLContentTypes.VIDEO_EXTERNAL_SHORTCUT) ||
 			_containsMimeType(
 				_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
 

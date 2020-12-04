@@ -135,22 +135,19 @@ public class ProjectTemplatesAPIJarTest
 			"Missing TLD classes: " + sb.toString(),
 			Objects.equals("", sb.toString()));
 
-		Set<Path> seviceFiles = _getServicesContent(
-			classesDir.toPath(), "META-INF/services/");
+		Set<Path> sevicesPaths = _getServicesPaths(classesDir.toPath());
 
-		Stream<Path> seviceFilesStream = seviceFiles.stream();
+		Stream<Path> seviceFilesStream = sevicesPaths.stream();
 
 		List<String> serviceClassNames = seviceFilesStream.map(
 			filePath -> {
-				List<String> contents = new ArrayList<>();
-
 				try {
-					contents.addAll(Files.readAllLines(filePath));
+					return Files.readAllLines(filePath);
 				}
 				catch (Exception exception) {
 				}
 
-				return contents;
+				return null;
 			}
 		).flatMap(
 			services -> services.stream()
@@ -158,8 +155,8 @@ public class ProjectTemplatesAPIJarTest
 			Collectors.toList()
 		);
 
-		for (String className : serviceClassNames) {
-			String servicePath = className.replace(".", "/");
+		for (String serviceClassName : serviceClassNames) {
+			String servicePath = serviceClassName.replace(".", "/");
 
 			Assert.assertTrue(javaPaths.contains(servicePath));
 		}
@@ -202,9 +199,7 @@ public class ProjectTemplatesAPIJarTest
 		return results;
 	}
 
-	private Set<Path> _getServicesContent(Path sourcePath, String pathFilter)
-		throws Exception {
-
+	private Set<Path> _getServicesPaths(Path sourcePath) throws Exception {
 		Set<Path> results = new HashSet<>();
 
 		Files.walkFileTree(
@@ -222,7 +217,7 @@ public class ProjectTemplatesAPIJarTest
 
 					String relativePath = relativeURI.getPath();
 
-					if (relativePath.contains(pathFilter)) {
+					if (relativePath.contains("META-INF/services/")) {
 						results.add(path);
 					}
 

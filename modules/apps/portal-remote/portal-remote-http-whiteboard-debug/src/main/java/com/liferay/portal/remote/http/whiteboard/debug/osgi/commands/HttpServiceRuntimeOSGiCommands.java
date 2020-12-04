@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.http.whiteboard.debug.internal.osgi.commands;
+package com.liferay.portal.remote.http.whiteboard.debug.osgi.commands;
 
 import com.liferay.petra.string.StringBundler;
 

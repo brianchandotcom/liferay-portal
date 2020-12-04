@@ -13,8 +13,8 @@ ${r"/>"}
 #set ($webContentData = $jsonFactoryUtil.createJSONObject($${variableData}))
 </#if>
 
-<#if webContentData?? && webContentData.title>
+${r"<#if"} webContentData?? && webContentData.title>
 	<a href="${getVariableReferenceCode(variableFriendlyUrl)}">
 		${r"${webContentData.title}"}
 	</a>
-</#if>
+${r"</#if>"}

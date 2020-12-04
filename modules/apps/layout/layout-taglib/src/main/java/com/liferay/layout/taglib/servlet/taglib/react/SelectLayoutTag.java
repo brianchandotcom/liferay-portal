@@ -68,10 +68,18 @@ public class SelectLayoutTag extends IncludeTag {
 		return _namespace;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getPathThemeImages() {
 		return _pathThemeImages;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getViewType() {
 		return _viewType;
 	}
@@ -131,6 +139,10 @@ public class SelectLayoutTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setPathThemeImages(String pathThemeImages) {
 		_pathThemeImages = pathThemeImages;
 	}
@@ -143,6 +155,10 @@ public class SelectLayoutTag extends IncludeTag {
 		_showHiddenLayouts = showHiddenLayouts;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setViewType(String viewType) {
 		_viewType = viewType;
 	}

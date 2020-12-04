@@ -296,9 +296,8 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>pathThemeImages</name>
-			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -316,7 +315,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>viewType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

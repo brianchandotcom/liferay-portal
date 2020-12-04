@@ -161,8 +161,9 @@ public class CTCollectionLocalServiceImpl
 							throw new SystemException(
 								StringBundler.concat(
 									"Unable to check conflicts for ",
-									ctCollection, " because service for ",
-									modelClassNameId, " is missing"));
+									ctCollection.getName(),
+									" because service for ", modelClassNameId,
+									" is missing"));
 						}
 
 						return new CTConflictChecker<>(
@@ -620,9 +621,9 @@ public class CTCollectionLocalServiceImpl
 		if (undoCTCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			throw new PublicationLocalizedException(
 				StringBundler.concat(
-					"Unable to undo ", undoCTCollection,
+					"Unable to undo ", undoCTCollection.getName(),
 					" because it is not published"),
-				"unable-to-undo-x-because-it-is-not-published",
+				"unable-to-revert-x-because-it-is-not-published",
 				undoCTCollection.getName());
 		}
 
@@ -631,10 +632,10 @@ public class CTCollectionLocalServiceImpl
 
 			throw new PublicationLocalizedException(
 				StringBundler.concat(
-					"Unable to undo ", undoCTCollection,
+					"Unable to undo ", undoCTCollection.getName(),
 					" because it is out of date with the current release"),
-				"unable-to-undo-x-because-it-is-out-of-date-with-the-current-" +
-					"release",
+				"unable-to-revert-x-because-it-is-out-of-date-with-the-" +
+					"current-release",
 				undoCTCollection.getName());
 		}
 
@@ -663,27 +664,30 @@ public class CTCollectionLocalServiceImpl
 		batchCounter -= publishedCTEntries.size();
 
 		for (CTEntry publishedCTEntry : publishedCTEntries) {
-			ctServiceCopiers.computeIfAbsent(
-				publishedCTEntry.getModelClassNameId(),
-				modelClassNameId -> {
-					CTService<?> ctService = _ctServiceRegistry.getCTService(
-						modelClassNameId);
+			if (ctServiceCopiers.get(publishedCTEntry.getModelClassNameId()) ==
+					null) {
 
-					if (ctService != null) {
-						return new CTServiceCopier<>(
-							ctService, undoCTCollection.getCtCollectionId(),
-							newCTCollection.getCtCollectionId());
-					}
+				CTService<?> ctService = _ctServiceRegistry.getCTService(
+					publishedCTEntry.getModelClassNameId());
 
-					throw new SystemException(
-						new PublicationLocalizedException(
-							StringBundler.concat(
-								"Unable to undo ", undoCTCollection,
-								" because service for ", modelClassNameId,
-								" is missing"),
-							"unable-to-undo-x-because-service-for-x-is-missing",
-							undoCTCollection.getName(), modelClassNameId));
-				});
+				if (ctService == null) {
+					throw new PublicationLocalizedException(
+						StringBundler.concat(
+							"Unable to undo ", undoCTCollection.getName(),
+							" because service for ",
+							publishedCTEntry.getModelClassNameId(),
+							" is missing"),
+						"unable-to-revert-x-because-service-for-x-is-missing",
+						undoCTCollection.getName(),
+						publishedCTEntry.getModelClassNameId());
+				}
+
+				ctServiceCopiers.put(
+					publishedCTEntry.getModelClassNameId(),
+					new CTServiceCopier<>(
+						ctService, undoCTCollection.getCtCollectionId(),
+						newCTCollection.getCtCollectionId()));
+			}
 
 			CTEntry ctEntry = ctEntryPersistence.create(++batchCounter);
 

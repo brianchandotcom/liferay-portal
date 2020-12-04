@@ -5945,15 +5945,17 @@ ${output.content}</echo>
 						<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
 						<parallel>
-							<exec dir="${app.server.bin.dir}" executable="sh">
-								<arg value="catalina.sh" />
-								<arg value="run" />
-								<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
-							</exec>
-
 							<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" >
 								<http url="http://localhost:8080/web/guest" />
 							</waitfor>
+
+							<daemons>
+								<exec dir="${app.server.bin.dir}" executable="sh">
+									<arg value="catalina.sh" />
+									<arg value="run" />
+									<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
+								</exec>
+							</daemons>
 						</parallel>
 
 						<antcall inheritAll="false" target="stop-app-server" />

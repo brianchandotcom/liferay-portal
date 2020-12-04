@@ -55,7 +55,6 @@ PortletURL portletURL = currentURLObj;
 	itemSelectorSaveEvent='<%= liferayPortletResponse.getNamespace() + "selectLayout" %>'
 	multiSelection="<%= true %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
 	privateLayout="<%= privateLayout %>"
 	showHiddenLayouts="<%= true %>"
 />

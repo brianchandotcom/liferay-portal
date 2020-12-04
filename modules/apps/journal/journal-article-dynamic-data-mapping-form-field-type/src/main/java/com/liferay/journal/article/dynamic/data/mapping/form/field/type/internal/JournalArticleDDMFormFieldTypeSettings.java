@@ -65,7 +65,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface JournalArticleDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(predefinedValue = "journal-article")
+	@DDMFormField(predefinedValue = "journal-article", required = true)
 	@Override
 	public String dataType();
 

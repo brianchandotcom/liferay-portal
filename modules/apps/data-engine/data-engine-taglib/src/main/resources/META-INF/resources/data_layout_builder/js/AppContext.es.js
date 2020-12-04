@@ -23,6 +23,7 @@ import {
 	DELETE_DATA_LAYOUT_FIELD,
 	DELETE_DATA_LAYOUT_RULE,
 	EDIT_CUSTOM_OBJECT_FIELD,
+	SET_FORM_RENDERER_CUSTOM_FIELDS,
 	SWITCH_SIDEBAR_PANEL,
 	UPDATE_APP_PROPS,
 	UPDATE_CONFIG,
@@ -332,6 +333,12 @@ const createReducer = (dataLayoutBuilder) => {
 						...editedFocusedCustomObjectField,
 						settingsContext,
 					},
+				};
+			}
+			case SET_FORM_RENDERER_CUSTOM_FIELDS: {
+				return {
+					...state,
+					customFields: action.payload,
 				};
 			}
 			case SWITCH_SIDEBAR_PANEL: {

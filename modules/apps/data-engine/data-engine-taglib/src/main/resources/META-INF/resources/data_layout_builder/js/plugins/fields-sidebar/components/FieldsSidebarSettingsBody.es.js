@@ -13,6 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {
 	EVENT_TYPES,
 	FormProvider,
@@ -25,13 +26,56 @@ import {EDIT_CUSTOM_OBJECT_FIELD} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
+function hasFocusedCustomObjectField(focusedCustomObjectField) {
+	return !!focusedCustomObjectField.settingsContext;
+}
+
+function getSettingsContext(focusedCustomObjectField, focusedField) {
+	if (hasFocusedCustomObjectField(focusedCustomObjectField)) {
+		return focusedCustomObjectField.settingsContext;
+	}
+
+	return focusedField.settingsContext;
+}
+
+/**
+ * This component will override the Column from Form Renderer and will
+ * check if field to be rendered has a custom field.
+ * If the field has a custom field, render it instead of children.
+ * @param {customFields} Object
+ *
+ * You can override fields passing as parameter the customFields:
+ * const customFields = {
+ *     required: (props) => <NewRequiredComponent {...props} />
+ * }
+ */
+const getColumn = (customFields = {}) => ({children, column, index}) => {
+	if (column.fields.length === 0) {
+		return null;
+	}
+
+	return (
+		<ClayLayout.Col key={index} md={column.size}>
+			{column.fields.map((field, index) => {
+				const customField = customFields[field.fieldName];
+
+				if (customField) {
+					return customField({children, field, index});
+				}
+
+				return children({field, index});
+			})}
+		</ClayLayout.Col>
+	);
+};
+
 export default function () {
 	const spritemap = useContext(ClayIconSpriteContext);
-
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [
 		{
 			config,
+			customFields,
 			dataLayout: {dataRules},
 			editingLanguageId,
 			focusedCustomObjectField,
@@ -41,14 +85,12 @@ export default function () {
 	] = useContext(AppContext);
 	const [activePage, setActivePage] = useState(0);
 
-	const {
-		settingsContext: customObjectFieldSettingsContext,
-	} = focusedCustomObjectField;
-	const {settingsContext: fieldSettingsContext} = focusedField;
-	const hasFocusedCustomObjectField = !!customObjectFieldSettingsContext;
-	const settingsContext = hasFocusedCustomObjectField
-		? customObjectFieldSettingsContext
-		: fieldSettingsContext;
+	const Column = useMemo(() => getColumn(customFields), [customFields]);
+
+	const settingsContext = getSettingsContext(
+		focusedCustomObjectField,
+		focusedField
+	);
 
 	const filteredSettingsContext = useMemo(
 		() =>
@@ -61,10 +103,13 @@ export default function () {
 	);
 
 	const dispatchEvent = (type, payload) => {
-		if (hasFocusedCustomObjectField && type === 'fieldEdited') {
+		if (
+			hasFocusedCustomObjectField(focusedCustomObjectField) &&
+			type === 'fieldEdited'
+		) {
 			dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
 		}
-		else if (!hasFocusedCustomObjectField) {
+		else if (!hasFocusedCustomObjectField(focusedCustomObjectField)) {
 			dataLayoutBuilder.dispatch(type, payload);
 		}
 	};
@@ -113,7 +158,7 @@ export default function () {
 					spritemap,
 				}}
 			>
-				{(props) => <Pages {...props} />}
+				{(props) => <Pages {...props} overrides={{Column}} />}
 			</FormProvider>
 		</form>
 	);

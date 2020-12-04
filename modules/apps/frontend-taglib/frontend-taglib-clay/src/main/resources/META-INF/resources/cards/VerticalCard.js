@@ -133,7 +133,7 @@ export default function VerticalCard({
 			}
 			selectable={selectable}
 			selected={selected}
-			stickerProps={showSticker ? stickerProps : undefined}
+			stickerProps={showSticker ? stickerProps : null}
 			symbol={symbol}
 			title={title}
 			{...otherProps}

@@ -112,10 +112,10 @@ const EditTableView = withRouter(({history}) => {
 
 		saveTableView(dataDefinition, {
 			...dataListView,
-			name: normalizeNames(
-				dataListView.name,
-				Liferay.Language.get('untitled-table-view')
-			),
+			name: normalizeNames({
+				defaultName: Liferay.Language.get('untitled-table-view'),
+				localizableValue: dataListView.name,
+			}),
 		})
 			.then(onSuccess)
 			.catch((error) => {

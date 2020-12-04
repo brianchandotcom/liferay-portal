@@ -26,6 +26,7 @@ import EditAppContext from './EditAppContext.es';
 export default withRouter(
 	({
 		currentStep,
+		defaultLanguageId,
 		editingLanguageId,
 		history,
 		match: {
@@ -86,12 +87,17 @@ export default withRouter(
 		const onDeploy = () => {
 			setDeploying(true);
 
+			if (!name[defaultLanguageId]) {
+				name[defaultLanguageId] = name[editingLanguageId];
+			}
+
 			const data = {
 				...app,
-				name: normalizeNames(
-					name,
-					Liferay.Language.get('untitled-app')
-				),
+				name: normalizeNames({
+					allowEmptyKeys: false,
+					defaultName: Liferay.Language.get('untitled-app'),
+					localizableValue: name,
+				}),
 			};
 
 			if (appId) {

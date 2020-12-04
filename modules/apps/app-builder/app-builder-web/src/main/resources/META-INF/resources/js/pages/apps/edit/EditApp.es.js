@@ -32,10 +32,9 @@ export default ({
 	},
 	scope,
 }) => {
-	const {
-		availableLanguageIds = [],
-		defaultLanguageId = '',
-	} = useDataDefinition(dataDefinitionId);
+	const {availableLanguageIds = [], defaultLanguageId} = useDataDefinition(
+		dataDefinitionId
+	);
 
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
@@ -46,9 +45,7 @@ export default ({
 			appDeployments: [],
 			dataLayoutId: null,
 			dataListViewId: null,
-			name: {
-				[defaultLanguageId]: '',
-			},
+			name: {},
 			scope,
 		},
 	});

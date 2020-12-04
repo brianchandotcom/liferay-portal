@@ -134,10 +134,10 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 			...state,
 			dataLayout: {
 				...dataLayout,
-				name: normalizeNames(
-					dataLayout.name,
-					Liferay.Language.get('untitled-form-view')
-				),
+				name: normalizeNames({
+					defaultName: Liferay.Language.get('untitled-form-view'),
+					localizableValue: dataLayout.name,
+				}),
 			},
 		})
 			.then(onSuccess)

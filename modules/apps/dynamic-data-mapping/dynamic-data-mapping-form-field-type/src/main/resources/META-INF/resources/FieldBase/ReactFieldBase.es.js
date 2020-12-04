@@ -155,8 +155,7 @@ function FieldBase({
 	}
 
 	if (text) {
-		fieldDetails +=
-			(typeof text === 'object' ? text.content : text) + '<br>';
+		fieldDetails += text + '<br>';
 	}
 
 	if (hasError) {

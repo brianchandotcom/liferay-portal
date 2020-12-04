@@ -66,6 +66,14 @@ definition {
 		VideoShortcut.validateURL(
 			facebook = "true",
 			invalidURL = "https://www.facebook.com/Cristiano/videos/test");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
+
+		VideoShortcut.validateURL(
+			invalidURL = "https://vimeo.com/test",
+			vimeo = "true");
 	}
 
 }

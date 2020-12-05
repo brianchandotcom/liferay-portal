@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -40,11 +41,16 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -80,6 +86,8 @@ public class DataLayoutUtil {
 
 		return new DataLayout() {
 			{
+				dataLayoutFields = _toDataLayoutFields(
+					ddmFormLayout.getDDMFormFields());
 				dataLayoutPages = _toDataLayoutPages(
 					ddmFormLayout.getDDMFormLayoutPages());
 				dataRules = _toDataRules(
@@ -125,6 +133,8 @@ public class DataLayoutUtil {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
+		ddmFormLayout.setDDMFormFields(
+			_toDDMFormFields(dataLayout.getDataLayoutFields()));
 		ddmFormLayout.setDDMFormLayoutPages(
 			_toDDMFormLayoutPages(
 				dataLayout.getDataLayoutPages(), ddmForm.getDefaultLocale()));
@@ -187,6 +197,21 @@ public class DataLayoutUtil {
 		).toArray(
 			new DataLayoutColumn[0]
 		);
+	}
+
+	private static Map<String, Object> _toDataLayoutFields(
+		List<DDMFormField> ddmFormFields) {
+
+		Map<String, Object> dataLayoutFields = new HashMap<>();
+
+		ddmFormFields.forEach(
+			ddmFormField -> dataLayoutFields.put(
+				ddmFormField.getName(),
+				HashMapBuilder.<String, Object>put(
+					"required", ddmFormField.isRequired()
+				).build()));
+
+		return dataLayoutFields;
 	}
 
 	private static DataLayoutPage _toDataLayoutPage(
@@ -296,6 +321,32 @@ public class DataLayoutUtil {
 		}
 
 		return dataRules;
+	}
+
+	private static List<DDMFormField> _toDDMFormFields(
+		Map<String, Object> dataLayoutFields) {
+
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
+
+		if (MapUtil.isEmpty(dataLayoutFields)) {
+			return ddmFormFields;
+		}
+
+		dataLayoutFields.forEach(
+			(key, value) -> {
+				DDMFormField ddmFormField = new DDMFormField();
+
+				ddmFormField.setName(key);
+
+				Map<String, Object> properties = (Map<String, Object>)value;
+
+				ddmFormField.setRequired(
+					GetterUtil.getBoolean(properties.get("required")));
+
+				ddmFormFields.add(ddmFormField);
+			});
+
+		return ddmFormFields;
 	}
 
 	private static DDMFormLayoutColumn _toDDMFormLayoutColumn(

@@ -19,6 +19,7 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentPortletInstanceConfiguration;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -34,6 +35,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -46,9 +48,12 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -188,6 +193,20 @@ public class CommerceCartContentDisplayContext {
 		return portletURL.toString();
 	}
 
+	public CommerceMoney getDiscountAmountCommerceMoney(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		if (Objects.equals(
+				getCommercePriceDisplayType(),
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+			return commerceOrderItem.getDiscountWithTaxAmountMoney();
+		}
+
+		return commerceOrderItem.getDiscountAmountMoney();
+	}
+
 	public String getDisplayStyle() {
 		return _commerceCartContentPortletInstanceConfiguration.displayStyle();
 	}
@@ -207,6 +226,20 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		return _displayStyleGroupId;
+	}
+
+	public CommerceMoney getFinalPriceCommerceMoney(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		if (Objects.equals(
+				getCommercePriceDisplayType(),
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+			return commerceOrderItem.getFinalPriceWithTaxAmountMoney();
+		}
+
+		return commerceOrderItem.getFinalPriceMoney();
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(
@@ -273,6 +306,34 @@ public class CommerceCartContentDisplayContext {
 		return _searchContainer;
 	}
 
+	public CommerceMoney getUnitPriceCommerceMoney(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		if (Objects.equals(
+				getCommercePriceDisplayType(),
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+			return commerceOrderItem.getUnitPriceWithTaxAmountMoney();
+		}
+
+		return commerceOrderItem.getUnitPriceMoney();
+	}
+
+	public CommerceMoney getUnitPromoPriceCommerceMoney(
+			CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		if (Objects.equals(
+				getCommercePriceDisplayType(),
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+			return commerceOrderItem.getPromoPriceWithTaxAmountMoney();
+		}
+
+		return commerceOrderItem.getPromoPriceMoney();
+	}
+
 	public boolean hasPermission(String actionId) throws PortalException {
 		if (_commerceOrder == null) {
 			return false;
@@ -300,6 +361,27 @@ public class CommerceCartContentDisplayContext {
 			commerceCartContentRequestHelper.getPermissionChecker(),
 			commerceCartContentRequestHelper.getScopeGroupId(),
 			CPActionKeys.VIEW_PRICE);
+	}
+
+	public boolean isUnitPromoPriceActive(CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		CommerceMoney unitPriceCommerceMoney = getUnitPriceCommerceMoney(
+			commerceOrderItem);
+		CommerceMoney unitPromoPriceCommerceMoney =
+			getUnitPromoPriceCommerceMoney(commerceOrderItem);
+
+		if (!unitPromoPriceCommerceMoney.isEmpty() &&
+			CommerceBigDecimalUtil.gt(
+				unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
+			CommerceBigDecimalUtil.lt(
+				unitPromoPriceCommerceMoney.getPrice(),
+				unitPriceCommerceMoney.getPrice())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isValidCommerceOrder() throws PortalException {

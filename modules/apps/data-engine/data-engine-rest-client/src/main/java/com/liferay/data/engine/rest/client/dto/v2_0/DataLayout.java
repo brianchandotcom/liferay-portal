@@ -78,6 +78,28 @@ public class DataLayout implements Cloneable, Serializable {
 
 	protected Long dataDefinitionId;
 
+	public Map<String, Object> getDataLayoutFields() {
+		return dataLayoutFields;
+	}
+
+	public void setDataLayoutFields(Map<String, Object> dataLayoutFields) {
+		this.dataLayoutFields = dataLayoutFields;
+	}
+
+	public void setDataLayoutFields(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			dataLayoutFieldsUnsafeSupplier) {
+
+		try {
+			dataLayoutFields = dataLayoutFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> dataLayoutFields;
+
 	public String getDataLayoutKey() {
 		return dataLayoutKey;
 	}

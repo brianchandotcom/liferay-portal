@@ -129,6 +129,10 @@ components:
                 dataDefinitionId:
                     format: int64
                     type: integer
+                dataLayoutFields:
+                    additionalProperties:
+                        type: object
+                    type: object
                 dataLayoutKey:
                     type: string
                 dataLayoutPages:

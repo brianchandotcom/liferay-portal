@@ -656,7 +656,7 @@ public class CTCollectionLocalServiceImpl
 			ctEntryPersistence.findByCTCollectionId(
 				undoCTCollection.getCtCollectionId());
 
-		Map<Long, CTServiceCopier> ctServiceCopiers = new HashMap<>();
+		Map<Long, CTServiceCopier<?>> ctServiceCopiers = new HashMap<>();
 
 		long batchCounter = counterLocalService.increment(
 			CTEntry.class.getName(), publishedCTEntries.size());
@@ -664,18 +664,17 @@ public class CTCollectionLocalServiceImpl
 		batchCounter -= publishedCTEntries.size();
 
 		for (CTEntry publishedCTEntry : publishedCTEntries) {
-			if (ctServiceCopiers.get(publishedCTEntry.getModelClassNameId()) ==
-					null) {
+			long modelClassNameId = publishedCTEntry.getModelClassNameId();
 
+			if (!ctServiceCopiers.containsKey(modelClassNameId)) {
 				CTService<?> ctService = _ctServiceRegistry.getCTService(
-					publishedCTEntry.getModelClassNameId());
+					modelClassNameId);
 
 				if (ctService == null) {
 					throw new PublicationLocalizedException(
 						StringBundler.concat(
 							"Unable to undo ", undoCTCollection.getName(),
-							" because service for ",
-							publishedCTEntry.getModelClassNameId(),
+							" because service for ", modelClassNameId,
 							" is missing"),
 						"unable-to-revert-x-because-service-for-x-is-missing",
 						undoCTCollection.getName(),
@@ -683,7 +682,7 @@ public class CTCollectionLocalServiceImpl
 				}
 
 				ctServiceCopiers.put(
-					publishedCTEntry.getModelClassNameId(),
+					modelClassNameId,
 					new CTServiceCopier<>(
 						ctService, undoCTCollection.getCtCollectionId(),
 						newCTCollection.getCtCollectionId()));
@@ -694,7 +693,7 @@ public class CTCollectionLocalServiceImpl
 			ctEntry.setCompanyId(newCTCollection.getCompanyId());
 			ctEntry.setUserId(newCTCollection.getUserId());
 			ctEntry.setCtCollectionId(newCTCollection.getCtCollectionId());
-			ctEntry.setModelClassNameId(publishedCTEntry.getModelClassNameId());
+			ctEntry.setModelClassNameId(modelClassNameId);
 			ctEntry.setModelClassPK(publishedCTEntry.getModelClassPK());
 			ctEntry.setModelMvccVersion(publishedCTEntry.getModelMvccVersion());
 
@@ -713,7 +712,9 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		try {
-			for (CTServiceCopier ctServiceCopier : ctServiceCopiers.values()) {
+			for (CTServiceCopier<?> ctServiceCopier :
+					ctServiceCopiers.values()) {
+
 				ctServiceCopier.copy();
 			}
 

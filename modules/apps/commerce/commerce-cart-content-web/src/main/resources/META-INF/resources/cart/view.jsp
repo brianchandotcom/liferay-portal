@@ -136,27 +136,18 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
-					<%
-					String commercePriceDisplayType = commerceCartContentDisplayContext.getCommercePriceDisplayType();
-					%>
-
 					<liferay-ui:search-container-column-text
 						name="price"
 					>
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
 							<%
-							CommerceMoney unitPriceCommerceMoney = commerceOrderItem.getUnitPriceMoney();
-							CommerceMoney unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceMoney();
-
-							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-								unitPriceCommerceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
-								unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceWithTaxAmountMoney();
-							}
+							CommerceMoney unitPriceCommerceMoney = commerceCartContentDisplayContext.getUnitPriceCommerceMoney(commerceOrderItem);
+							CommerceMoney unitPromoPriceCommerceMoney = commerceCartContentDisplayContext.getUnitPromoPriceCommerceMoney(commerceOrderItem);
 							%>
 
 							<c:choose>
-								<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) && CommerceBigDecimalUtil.lt(unitPromoPriceCommerceMoney.getPrice(), unitPriceCommerceMoney.getPrice()) %>">
+								<c:when test="<%= commerceCartContentDisplayContext.isUnitPromoPriceActive(commerceOrderItem) %>">
 									<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
 								</c:when>
 								<c:otherwise>
@@ -172,11 +163,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
 							<%
-							CommerceMoney discountAmountCommerceMoney = commerceOrderItem.getDiscountAmountMoney();
-
-							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-								discountAmountCommerceMoney = commerceOrderItem.getDiscountWithTaxAmountMoney();
-							}
+							CommerceMoney discountAmountCommerceMoney = commerceCartContentDisplayContext.getDiscountAmountCommerceMoney(commerceOrderItem);
 							%>
 
 							<%= HtmlUtil.escape(discountAmountCommerceMoney.format(locale)) %>
@@ -199,11 +186,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<c:if test="<%= commerceCartContentDisplayContext.hasViewPricePermission() %>">
 
 							<%
-							CommerceMoney finalPriceCommerceMoney = commerceOrderItem.getFinalPriceMoney();
-
-							if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-								finalPriceCommerceMoney = commerceOrderItem.getFinalPriceWithTaxAmountMoney();
-							}
+							CommerceMoney finalPriceCommerceMoney = commerceCartContentDisplayContext.getFinalPriceCommerceMoney(commerceOrderItem);
 							%>
 
 							<%= HtmlUtil.escape(finalPriceCommerceMoney.format(locale)) %>

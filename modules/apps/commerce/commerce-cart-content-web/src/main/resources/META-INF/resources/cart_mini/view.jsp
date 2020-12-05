@@ -154,27 +154,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</div>
 				</liferay-ui:search-container-column-text>
 
-				<%
-				String commercePriceDisplayType = commerceCartContentMiniDisplayContext.getCommercePriceDisplayType();
-				%>
-
 				<liferay-ui:search-container-column-text
 					name="price"
 				>
 					<c:if test="<%= commerceCartContentMiniDisplayContext.hasViewPricePermission() %>">
 
 						<%
-						CommerceMoney unitPriceCommerceMoney = commerceOrderItem.getUnitPriceMoney();
-						CommerceMoney unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceMoney();
-
-						if (commercePriceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-							unitPriceCommerceMoney = commerceOrderItem.getUnitPriceWithTaxAmountMoney();
-							unitPromoPriceCommerceMoney = commerceOrderItem.getPromoPriceWithTaxAmountMoney();
-						}
+						CommerceMoney unitPriceCommerceMoney = commerceCartContentMiniDisplayContext.getUnitPriceCommerceMoney(commerceOrderItem);
+						CommerceMoney unitPromoPriceCommerceMoney = commerceCartContentMiniDisplayContext.getUnitPromoPriceCommerceMoney(commerceOrderItem);
 						%>
 
 						<c:choose>
-							<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) && CommerceBigDecimalUtil.lt(unitPromoPriceCommerceMoney.getPrice(), unitPriceCommerceMoney.getPrice()) %>">
+							<c:when test="<%= commerceCartContentMiniDisplayContext.isUnitPromoPriceActive(commerceOrderItem) %>">
 								<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
 							</c:when>
 							<c:otherwise>

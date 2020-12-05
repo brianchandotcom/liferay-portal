@@ -342,13 +342,14 @@ public class ViewChangesDisplayContext {
 				return renderCTEntryURL.toString();
 			}
 		).put(
-			"renderDiffURL",
+			"renderDataURL",
 			() -> {
-				ResourceURL renderDiffURL = _renderResponse.createResourceURL();
+				ResourceURL renderDataURL = _renderResponse.createResourceURL();
 
-				renderDiffURL.setResourceID("/change_tracking/render_diff");
+				renderDataURL.setResourceID(
+					"/change_tracking/get_ct_entry_render_data");
 
-				return renderDiffURL.toString();
+				return renderDataURL.toString();
 			}
 		).put(
 			"rootDisplayClasses",

@@ -24,6 +24,8 @@ import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
+import ChangeTrackingRenderView from './ChangeTrackingRenderView';
+
 class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -39,7 +41,7 @@ class ChangeTrackingChangesView extends React.Component {
 			namespace,
 			pathParam,
 			renderCTEntryURL,
-			renderDiffURL,
+			renderDataURL,
 			rootDisplayClasses,
 			showHideableParam,
 			siteNames,
@@ -72,9 +74,10 @@ class ChangeTrackingChangesView extends React.Component {
 		this.ctCollectionId = ctCollectionId;
 		this.discardURL = discardURL;
 		this.expired = expired;
+		this.namespace = namespace;
 		this.models = models;
 		this.renderCTEntryURL = renderCTEntryURL;
-		this.renderDiffURL = renderDiffURL;
+		this.renderDataURL = renderDataURL;
 		this.rootDisplayClasses = rootDisplayClasses;
 		this.spritemap = spritemap;
 		this.userInfo = userInfo;
@@ -121,7 +124,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		let loading = false;
 
-		if (node.modelClassNameId) {
+		if (!node.ctEntryId && node.modelClassNameId) {
 			loading = true;
 		}
 
@@ -167,42 +170,39 @@ class ChangeTrackingChangesView extends React.Component {
 			!this.state.node.modelClassNameId ||
 			this.state.node.modelClassNameId !==
 				this.initialNode.modelClassNameId ||
-			this.state.node.modelClassPK !== this.initialNode.modelClassPK
+			this.state.node.modelClassPK !== this.initialNode.modelClassPK ||
+			this.state.node.ctEntryId
 		) {
 			return;
 		}
 
-		AUI().use('liferay-portlet-url', () => {
-			fetch(this._getRenderURL(this.state.node))
-				.then((response) => response.text())
-				.then((text) => {
-					if (
-						!this._isWithinApp(
-							new URLSearchParams(window.location.search)
-						)
-					) {
-						return;
-					}
+		fetch(this._getRenderURL(this.state.node))
+			.then((response) => response.text())
+			.then((text) => {
+				if (
+					!this._isWithinApp(
+						new URLSearchParams(window.location.search)
+					)
+				) {
+					return;
+				}
 
-					const dropdownItems = this._getDropdownItems(
-						this.state.node
-					);
+				const dropdownItems = this._getDropdownItems(this.state.node);
 
-					if (
-						this.state.node.modelClassNameId &&
-						this.state.node.modelClassNameId ===
-							this.initialNode.modelClassNameId &&
-						this.state.node.modelClassPK ===
-							this.initialNode.modelClassPK
-					) {
-						this.setState({
-							dropdownItems,
-							loading: false,
-							renderInnerHTML: {__html: text},
-						});
-					}
-				});
-		});
+				if (
+					this.state.node.modelClassNameId &&
+					this.state.node.modelClassNameId ===
+						this.initialNode.modelClassNameId &&
+					this.state.node.modelClassPK ===
+						this.initialNode.modelClassPK
+				) {
+					this.setState({
+						dropdownItems,
+						loading: false,
+						renderInnerHTML: {__html: text},
+					});
+				}
+			});
 	}
 
 	componentWillUnmount() {
@@ -624,12 +624,17 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getDiscardURL(node) {
-		const portletURL = Liferay.PortletURL.createURL(this.discardURL);
+		const discardURL = this._setParameter(
+			this.discardURL,
+			'modelClassNameId',
+			node.modelClassNameId.toString()
+		);
 
-		portletURL.setParameter('modelClassNameId', node.modelClassNameId);
-		portletURL.setParameter('modelClassPK', node.modelClassPK);
-
-		return portletURL.toString();
+		return this._setParameter(
+			discardURL,
+			'modelClassPK',
+			node.modelClassPK.toString()
+		);
 	}
 
 	_getDropdownItems(node) {
@@ -805,19 +810,24 @@ class ChangeTrackingChangesView extends React.Component {
 
 	_getRenderURL(node) {
 		if (node.ctEntryId) {
-			const portletURL = Liferay.PortletURL.createURL(this.renderDiffURL);
-
-			portletURL.setParameter('ctEntryId', node.ctEntryId);
-
-			return portletURL.toString();
+			return this._setParameter(
+				this.renderDataURL,
+				'ctEntryId',
+				node.ctEntryId.toString()
+			);
 		}
 
-		const portletURL = Liferay.PortletURL.createURL(this.renderCTEntryURL);
+		const renderURL = this._setParameter(
+			this.renderCTEntryURL,
+			'modelClassNameId',
+			node.modelClassNameId.toString()
+		);
 
-		portletURL.setParameter('modelClassNameId', node.modelClassNameId);
-		portletURL.setParameter('modelClassPK', node.modelClassPK);
-
-		return portletURL.toString();
+		return this._setParameter(
+			renderURL,
+			'modelClassPK',
+			node.modelClassPK.toString()
+		);
 	}
 
 	_getRootDisplayOptions() {
@@ -1294,7 +1304,13 @@ class ChangeTrackingChangesView extends React.Component {
 				showHideable,
 				viewType,
 			},
-			() => this._updateRenderContent(true, node, path)
+			() => {
+				if (!node.ctEntryId) {
+					this._updateRenderContent(true, node);
+				}
+
+				window.scrollTo(0, 0);
+			}
 		);
 	}
 
@@ -1307,13 +1323,10 @@ class ChangeTrackingChangesView extends React.Component {
 	_handlePopState(event) {
 		const state = event.state;
 
-		let pathname = window.location.pathname;
 		let search = window.location.search;
 
 		if (state) {
 			const index = state.path.indexOf('?');
-
-			pathname = state.path.substring(0, index);
 
 			if (index < 0) {
 				if (Liferay.SPA && Liferay.SPA.app) {
@@ -1390,9 +1403,7 @@ class ChangeTrackingChangesView extends React.Component {
 				showHideable,
 				viewType,
 			},
-			() => {
-				this._updateRenderContent(true, node, pathname + search);
-			}
+			() => node.ctEntryId || this._updateRenderContent(true, node)
 		);
 	}
 
@@ -1606,7 +1617,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderEntry() {
-		if (this.state.renderInnerHTML === null) {
+		if (!this.state.node.ctEntryId && this.state.renderInnerHTML === null) {
 			if (this.state.loading) {
 				return (
 					<span aria-hidden="true" className="loading-animation" />
@@ -1664,7 +1675,18 @@ class ChangeTrackingChangesView extends React.Component {
 						</div>
 					)}
 
-					<div dangerouslySetInnerHTML={this.state.renderInnerHTML} />
+					{this.state.node.ctEntryId && (
+						<ChangeTrackingRenderView
+							dataURL={this._getRenderURL(this.state.node)}
+							spritemap={this.spritemap}
+						/>
+					)}
+
+					{!this.state.node.ctEntryId && (
+						<div
+							dangerouslySetInnerHTML={this.state.renderInnerHTML}
+						/>
+					)}
 				</div>
 			</div>
 		);
@@ -1884,7 +1906,11 @@ class ChangeTrackingChangesView extends React.Component {
 		);
 	}
 
-	_updateRenderContent(loading, node, path) {
+	_setParameter(url, name, value) {
+		return url + '&' + this.namespace + name + '=' + value;
+	}
+
+	_updateRenderContent(loading, node) {
 		if (!node.modelClassNameId) {
 			this.setState({
 				dropdownItems: null,
@@ -1900,37 +1926,34 @@ class ChangeTrackingChangesView extends React.Component {
 				loading,
 			},
 			() => {
-				AUI().use('liferay-portlet-url', () => {
-					fetch(this._getRenderURL(node))
-						.then((response) => response.text())
-						.then((text) => {
-							if (
-								!this._isWithinApp(
-									new URLSearchParams(window.location.search)
-								)
-							) {
-								return;
-							}
+				fetch(this._getRenderURL(node))
+					.then((response) => response.text())
+					.then((text) => {
+						if (
+							!this._isWithinApp(
+								new URLSearchParams(window.location.search)
+							)
+						) {
+							return;
+						}
 
-							const dropdownItems = this._getDropdownItems(
-								this.state.node
-							);
+						const dropdownItems = this._getDropdownItems(
+							this.state.node
+						);
 
-							if (
-								this.state.node.modelClassNameId &&
-								this.state.node.modelClassNameId ===
-									node.modelClassNameId &&
-								this.state.node.modelClassPK ===
-									node.modelClassPK
-							) {
-								this.setState({
-									dropdownItems,
-									loading: false,
-									renderInnerHTML: {__html: text},
-								});
-							}
-						});
-				});
+						if (
+							this.state.node.modelClassNameId &&
+							this.state.node.modelClassNameId ===
+								node.modelClassNameId &&
+							this.state.node.modelClassPK === node.modelClassPK
+						) {
+							this.setState({
+								dropdownItems,
+								loading: false,
+								renderInnerHTML: {__html: text},
+							});
+						}
+					});
 			}
 		);
 	}

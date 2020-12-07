@@ -35,10 +35,7 @@ class FormBuilderWithLayoutProvider extends Component {
 
 		const LProvider = LayoutProvider;
 
-		const composeList = [
-			withMoveableFields,
-			withResizeableColumns,
-		];
+		const composeList = [withMoveableFields, withResizeableColumns];
 
 		if (layoutProviderProps.allowMultiplePages) {
 			composeList.push(withMultiplePages);

@@ -16,6 +16,9 @@ import {
 	FormSupport,
 	PagesVisitor,
 	RulesVisitor,
+	generateInstanceId,
+	generateName,
+	getRepeatedIndex,
 } from 'dynamic-data-mapping-form-renderer';
 import {openModal, openToast} from 'frontend-js-web';
 import Component from 'metal-jsx';

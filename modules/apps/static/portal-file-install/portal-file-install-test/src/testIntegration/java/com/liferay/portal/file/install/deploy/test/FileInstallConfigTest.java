@@ -20,6 +20,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -31,7 +33,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -127,6 +133,59 @@ public class FileInstallConfigTest {
 		Assert.assertArrayEquals(
 			new String[] {"testUntypedString", "testUntypedString2"},
 			(String[])properties.get("configUntypedStringArray"));
+	}
+
+	@Test
+	public void testConfigurationDeprecatedFileExtension() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testDummy");
+		String configurationPidDeprecated = _CONFIGURATION_PID_PREFIX.concat(
+			".testConfigurationDeprecatedFileExtension");
+
+		String content = "testKey=\"testValue\"";
+		String contentDeprecated = "testKeyDeprecated=\"testValueDeprecated\"";
+
+		_configurationPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			configurationPid.concat(".config"));
+
+		Path configPathDeprecated = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			configurationPidDeprecated.concat(".cfg"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.portal.file.install.internal.configuration." +
+						"ConfigurationFileInstaller",
+					Level.WARN)) {
+
+			Files.write(
+				configPathDeprecated,
+				contentDeprecated.getBytes(Charset.defaultCharset()));
+
+			_configuration = _createConfiguration(configurationPid, content);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			String actualWarningMessage = (String)loggingEvent.getMessage();
+
+			String expectedWarningMessage = StringBundler.concat(
+				"Unable to install .cfg file ", configPathDeprecated.toString(),
+				", please use .config file instead.");
+
+			Assert.assertEquals(expectedWarningMessage, actualWarningMessage);
+
+			Dictionary<String, Object> properties =
+				_configuration.getProperties();
+
+			Assert.assertNull(properties.get("testKeyDeprecated"));
+		}
+		finally {
+			Files.deleteIfExists(configPathDeprecated);
+		}
 	}
 
 	@Test

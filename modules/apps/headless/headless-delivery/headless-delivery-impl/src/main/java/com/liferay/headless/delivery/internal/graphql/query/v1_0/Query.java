@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.delivery.dto.v1_0.Language;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
@@ -50,6 +51,7 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.headless.delivery.resource.v1_0.LanguageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
@@ -193,6 +195,14 @@ public class Query {
 
 		_knowledgeBaseFolderResourceComponentServiceObjects =
 			knowledgeBaseFolderResourceComponentServiceObjects;
+	}
+
+	public static void setLanguageResourceComponentServiceObjects(
+		ComponentServiceObjects<LanguageResource>
+			languageResourceComponentServiceObjects) {
+
+		_languageResourceComponentServiceObjects =
+			languageResourceComponentServiceObjects;
 	}
 
 	public static void setMessageBoardAttachmentResourceComponentServiceObjects(
@@ -1364,6 +1374,23 @@ public class Query {
 			knowledgeBaseFolderResource -> new KnowledgeBaseFolderPage(
 				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
 					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {languages(siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the site's languages.")
+	public LanguagePage languages(
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_languageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			languageResource -> new LanguagePage(
+				languageResource.getSiteLanguagesPage(Long.valueOf(siteKey))));
 	}
 
 	/**
@@ -3960,6 +3987,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("LanguagePage")
+	public class LanguagePage {
+
+		public LanguagePage(Page languagePage) {
+			actions = languagePage.getActions();
+
+			facets = languagePage.getFacets();
+
+			items = languagePage.getItems();
+			lastPage = languagePage.getLastPage();
+			page = languagePage.getPage();
+			pageSize = languagePage.getPageSize();
+			totalCount = languagePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<Language> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("MessageBoardAttachmentPage")
 	public class MessageBoardAttachmentPage {
 
@@ -4738,6 +4803,19 @@ public class Query {
 		knowledgeBaseFolderResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(LanguageResource languageResource)
+		throws Exception {
+
+		languageResource.setContextAcceptLanguage(_acceptLanguage);
+		languageResource.setContextCompany(_company);
+		languageResource.setContextHttpServletRequest(_httpServletRequest);
+		languageResource.setContextHttpServletResponse(_httpServletResponse);
+		languageResource.setContextUriInfo(_uriInfo);
+		languageResource.setContextUser(_user);
+		languageResource.setGroupLocalService(_groupLocalService);
+		languageResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			MessageBoardAttachmentResource messageBoardAttachmentResource)
 		throws Exception {
@@ -4919,6 +4997,8 @@ public class Query {
 		_knowledgeBaseAttachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseFolderResource>
 		_knowledgeBaseFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<LanguageResource>
+		_languageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardAttachmentResource>
 		_messageBoardAttachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardMessageResource>

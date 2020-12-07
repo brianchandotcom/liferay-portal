@@ -3,6 +3,25 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="configure-elasticsearch-pki-realm-settings">
+		<sequential>
+			<echo append="true" file="${elasticsearch.dir}-1/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
+xpack.security.transport.ssl.client_authentication: required
+xpack:
+  security:
+    authc:
+      realms:
+        pki:
+          pki1:
+            order: 0</echo>
+
+			<echo append="true" file="${elasticsearch.dir}-1/config/role_mapping.yml">${line.separator}superuser:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
+kibana_system:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
@@ -144,25 +163,6 @@ cluster.name: LiferayElasticsearchClusterTwo
 http.port: 9202
 transport.port: 9500-9600
 xpack.ml.enabled: false</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-pki-realm-settings">
-		<sequential>
-			<echo append="true" file="${elasticsearch.dir}-1/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
-xpack.security.transport.ssl.client_authentication: required
-xpack:
-  security:
-    authc:
-      realms:
-        pki:
-          pki1:
-            order: 0</echo>
-
-			<echo append="true" file="${elasticsearch.dir}-1/config/role_mapping.yml">${line.separator}superuser:
-  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
-kibana_system:
-  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
 		</sequential>
 	</macrodef>
 
@@ -1172,7 +1172,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<generate-x-pack-security-certificates />
 
 				<if>
-					<equals arg1="${pki.authentication.enabled}" arg2="true" />
+					<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
 					<then>
 						<configure-elasticsearch-x-pack-pki-security-properties />
 					</then>
@@ -1232,13 +1232,13 @@ xpack.monitoring.collection.enabled: true</echo>
 				<start-x-pack-trial />
 
 				<if>
-					<equals arg1="${pki.authentication.enabled}" arg2="true" />
+					<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
 					<then>
 						<sleep seconds="10" />
 
 						<antcall target="stop-elasticsearch" />
 
-						<configure-pki-realm-settings />
+						<configure-elasticsearch-pki-realm-settings />
 
 						<antcall target="start-elasticsearch-node" />
 
@@ -1367,7 +1367,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 
-		<get-testcase-property property.name="pki.authentication.enabled" />
+		<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
@@ -1375,7 +1375,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<configure-kibana-properties />
 
 				<if>
-					<equals arg1="${pki.authentication.enabled}" arg2="true" />
+					<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
 					<then>
 						<configure-kibana-x-pack-pki-security-properties />
 					</then>

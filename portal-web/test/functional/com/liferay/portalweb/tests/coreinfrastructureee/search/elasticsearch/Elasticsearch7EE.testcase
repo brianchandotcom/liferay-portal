@@ -981,9 +981,9 @@ definition {
 	test XPackPkiAuthenticationSmokeTest {
 		property elastic.xpack.enabled = "true";
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
-		property pki.authentication.enabled = "true";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
+		property remote.elasticsearch.pki.authentication.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPKISmokeTest";
 
 		JSONLayout.addPublicLayout(

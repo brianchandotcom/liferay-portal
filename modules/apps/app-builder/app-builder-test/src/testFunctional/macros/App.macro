@@ -110,6 +110,14 @@ definition {
 		Button.clickNext();
 	}
 
+	macro selectWorkflow {
+		Click(
+			key_itemName = "${workflowName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
 	macro toggleDeploy {
 		Check.checkToggleSwitch(
 			key_deployOption = "${deployOption}",

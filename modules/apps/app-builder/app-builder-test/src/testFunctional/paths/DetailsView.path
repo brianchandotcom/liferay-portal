@@ -49,7 +49,7 @@
 
 <tr>
 	<td>BACK_TO_TABLE_VIEW</td>
-	<td>//div[contains(@class,'app-builder-control-menu')]//*[contains(@class,'lexicon-icon-angle-left')]</td>
+	<td>xpath=(//div[contains(@class,'app-builder-control-menu')] | //div[contains(@class,'control-menu')]//*[contains(@class,'lexicon-icon-angle-left')])</td>
 	<td></td>
 </tr>
 

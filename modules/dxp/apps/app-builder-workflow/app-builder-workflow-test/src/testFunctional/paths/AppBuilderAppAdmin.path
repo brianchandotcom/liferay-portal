@@ -69,6 +69,12 @@
 	<td>//a[contains(text(),'${key_workflowAppName}')]/ancestor::tr//td[3 and contains(text(),'${key_deploymentType}')]</td>
 	<td></td>
 </tr>
+<!--APP_RUNNING-->
+<tr>
+	<td>STANDARD_APP_RUNNIN_COLUMN</td>
+	<td>//table//th[text()='${key_columnName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

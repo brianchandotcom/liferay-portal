@@ -36,6 +36,8 @@ definition {
 
 		User.tearDownCP();
 
+		Workflow.tearDownWorkflowDefinitions();
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
@@ -858,6 +860,112 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Third App");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Fourth App");
+	}
+
+	@description = "LRQA-63035 - Automate LPS-105491: As an App Adm, I want my App's submissions to be able to trigger a Workflow process"
+	@priority = "5"
+	test StandardAppWithWorkflow {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilderWorkflow#StandardAppWithWorkflow";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
+		Workflow.saveDefinition();
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.selectObject(objectName = "my custom object");
+		App.selectFormView(formViewName = "My Form View");
+		App.selectTableView(tableViewName = "My Table View");
+		App.clickPrevious();
+		AppBuilderAdmin.setName(title = "Standard App With Workflow");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Single Approver");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "New Workflow");
+		App.selectWorkflow(workflowName = "Single Approver");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Deploy");
+
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.selectObject(objectName = "my custom object");
+		AppBuilderStandardApp.add(
+			appTitle = "Standard App Without Workflow",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Standard App With Workflow");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content With Workflow");
+
+		AppBuilderAdmin.save();
+		Refresh();
+		AppBuilderAppAdmin.assertColumnPresent(columnName = "Status");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Standard App Without Workflow");
+		AppBuilderAppAdmin.assertColumnPresent(columnName = "Status");
+		AppBuilderAdmin.viewItem(itemName = "Content With Workflow");
+		DetailsView.editEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Edited Content With Workflow");
+
+		AppBuilderAdmin.save();
+		Refresh();
+		DetailsView.backToTableView();
+		AppBuilderWorkflow.assertEntryInfoOnTableView(
+			entryName = "Edited Content With Workflow",
+			info = "Pending");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Standard App With Workflow");
+		AppBuilderAdmin.viewItem(itemName = "Edited Content With Workflow");
+		DetailsView.editEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Edited Again Content With Workflow");
+
+		AppBuilderAdmin.save();
+		Refresh();
+		DetailsView.backToTableView();
+		AppBuilderWorkflow.assertEntryInfoOnTableView(
+			entryName = "Edited Again Content With Workflow",
+			info = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Standard App With Workflow",
+			workflowAssetType = "App Builder Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Standard App With Workflow",
+			workflowAssetType = "App Builder Entry",
+			workflowTask = "Review");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "Standard App With Workflow");
+		AppBuilderWorkflow.assertEntryInfoOnTableView(
+			entryName = "Edited Again Content With Workflow",
+			info = "Approved");
 	}
 
 	@description = "Validete Form View in 'Read-Only' and 'Editable' mode'"

@@ -1,5 +1,11 @@
 definition {
 
+	macro assertColumnPresent {
+		AssertElementPresent(
+			key_columnName = "${columnName}",
+			locator1 = "AppBuilderAppAdmin#STANDARD_APP_RUNNIN_COLUMN");
+	}
+
 	macro assertCreateObjectShortLinkPresent {
 		AssertElementPresent(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
 	}

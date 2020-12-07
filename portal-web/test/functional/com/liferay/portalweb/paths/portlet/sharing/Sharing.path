@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>SHARED_CONTENT_ASSET_TYPE</td>
-	<td>//div[contains(@class,'card-title') and contains(.,'${key_assetType}')]</td>
+	<td>//p[contains(@class,'card-title') and contains(.,'${key_assetType}')]</td>
 	<td></td>
 </tr>
 <tr>

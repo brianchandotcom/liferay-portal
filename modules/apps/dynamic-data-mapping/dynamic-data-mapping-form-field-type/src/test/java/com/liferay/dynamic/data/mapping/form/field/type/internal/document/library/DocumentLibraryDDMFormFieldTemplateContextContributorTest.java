@@ -58,6 +58,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.ArgumentMatcher;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -251,6 +252,40 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals("New Title", parameters.get("fileEntryTitle"));
 	}
 
+	@Test
+	public void testGetParametersWithNullGroupShouldContainItemSelectorURL() {
+		mockGroupLocalServiceFetchGroup(null);
+
+		ThemeDisplay themeDisplay = mockThemeDisplay();
+
+		when(
+			themeDisplay.getScopeGroup()
+		).thenReturn(
+			_scopeGroup
+		);
+
+		when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			Boolean.TRUE
+		);
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			themeDisplay);
+
+		Map<String, Object> parameters = spy.getParameters(
+			new DDMFormField("field", "document_library"),
+			createDDMFormFieldRenderingContext());
+
+		String itemSelectorURL = String.valueOf(
+			parameters.get("itemSelectorURL"));
+
+		Assert.assertThat(
+			itemSelectorURL,
+			CoreMatchers.containsString(
+				"param_folderId=" + _PRIVATE_FOLDER_ID));
+	}
+
 	protected DDMFormFieldRenderingContext
 		createDDMFormFieldRenderingContext() {
 
@@ -309,6 +344,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 
 		return folder;
+	}
+
+	protected void mockGroupLocalServiceFetchGroup(Group group) {
+		PowerMockito.when(
+			_groupLocalService.fetchGroup(_GROUP_ID)
+		).thenReturn(
+			group
+		);
 	}
 
 	protected Repository mockRepository() {
@@ -434,11 +477,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			_groupLocalService
 		);
 
-		Mockito.when(
-			_groupLocalService.fetchGroup(_GROUP_ID)
-		).thenReturn(
-			_group
-		);
+		mockGroupLocalServiceFetchGroup(_group);
 	}
 
 	protected void setUpHtml() throws Exception {
@@ -460,7 +499,22 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		PowerMockito.when(
 			_itemSelector.getItemSelectorURL(
-				Mockito.eq(_requestBackedPortletURLFactory), Mockito.eq(_group),
+				Mockito.eq(_requestBackedPortletURLFactory),
+				Mockito.argThat(
+					new ArgumentMatcher<Group>() {
+
+						@Override
+						public boolean matches(Object object) {
+							Group group = (Group)object;
+
+							if ((group == _group) || (group == _scopeGroup)) {
+								return true;
+							}
+
+							return false;
+						}
+
+					}),
 				Mockito.eq(_GROUP_ID),
 				Mockito.eq(_PORTLET_NAMESPACE + "selectDocumentLibrary"),
 				Mockito.any(FileItemSelectorCriterion.class))
@@ -596,6 +650,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	@Mock
 	private ResourceBundle _resourceBundle;
+
+	@Mock
+	private Group _scopeGroup;
 
 	@Mock
 	private UserLocalService _userLocalService;

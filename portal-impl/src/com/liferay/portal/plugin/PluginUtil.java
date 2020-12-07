@@ -30,6 +30,12 @@ public class PluginUtil {
 	public static <P extends Plugin> List<P> restrictPlugins(
 		List<P> plugins, long companyId, long userId) {
 
+		return restrictPlugins(plugins, companyId, 0, userId);
+	}
+
+	public static <P extends Plugin> List<P> restrictPlugins(
+		List<P> plugins, long companyId, long groupId, long userId) {
+
 		List<P> visiblePlugins = new ArrayList<>(plugins.size());
 
 		for (P plugin : plugins) {
@@ -38,7 +44,7 @@ public class PluginUtil {
 					companyId, plugin.getPluginId(), plugin.getPluginType());
 
 			if (pluginSetting.isActive() &&
-				pluginSetting.hasPermission(userId)) {
+				pluginSetting.hasPermission(userId, groupId)) {
 
 				visiblePlugins.add(plugin);
 			}

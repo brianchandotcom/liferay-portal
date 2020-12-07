@@ -323,6 +323,10 @@ definition {
 	@description = "This test covers LPS-123911. It ensures that a preview of the video can be shown when checking video shortcut from search result."
 	@priority = "4"
 	test ViewSearchResult {
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.deletePage(pageName = "Documents and Media");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(

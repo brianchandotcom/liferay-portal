@@ -63,26 +63,24 @@ public interface Job {
 
 	public static enum BuildProfile {
 
-		DXP {
+		DXP("DXP", "dxp"), PORTAL("Portal", "portal");
 
-			private static final String _TEXT = "dxp";
-
-			@Override
-			public String toString() {
-				return _TEXT;
-			}
-
-		},
-		PORTAL {
-
-			private static final String _TEXT = "portal";
-
-			@Override
-			public String toString() {
-				return _TEXT;
-			}
-
+		public String toDisplayString() {
+			return _displayString;
 		}
+
+		@Override
+		public String toString() {
+			return _string;
+		}
+
+		private BuildProfile(String displayString, String string) {
+			_displayString = displayString;
+			_string = string;
+		}
+
+		private final String _displayString;
+		private final String _string;
 
 	}
 

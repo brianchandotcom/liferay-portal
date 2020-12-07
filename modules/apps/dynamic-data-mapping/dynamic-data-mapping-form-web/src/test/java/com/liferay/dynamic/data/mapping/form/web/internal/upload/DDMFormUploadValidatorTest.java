@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
-import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
@@ -56,16 +55,6 @@ public class DDMFormUploadValidatorTest {
 		_ddmFormUploadValidator.validateFileExtension("test.xml");
 	}
 
-	@Test(expected = FileNameException.class)
-	public void testInvalidFileName() throws Exception {
-		_ddmFormUploadValidator.validateFileName("test.pdf.jpg");
-	}
-
-	@Test(expected = FileNameException.class)
-	public void testInvalidFileName2() throws Exception {
-		_ddmFormUploadValidator.validateFileName("test/.jpg");
-	}
-
 	@Test(expected = FileSizeException.class)
 	public void testInvalidFileSize() throws Exception {
 		_ddmFormUploadValidator.validateFileSize(mockFile(26), "test.jpg");
@@ -74,11 +63,6 @@ public class DDMFormUploadValidatorTest {
 	@Test
 	public void testValidFileExtension() throws Exception {
 		_ddmFormUploadValidator.validateFileExtension("test.JpG");
-	}
-
-	@Test
-	public void testValidFileName() throws Exception {
-		_ddmFormUploadValidator.validateFileName("Test_Upload - Forms.jpg");
 	}
 
 	@Test

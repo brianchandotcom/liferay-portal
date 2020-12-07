@@ -25,6 +25,7 @@ import ClayTimePicker from '@clayui/time-picker';
 import React, {useState} from 'react';
 
 import ChangeTrackingBaseScheduleView from './ChangeTrackingBaseScheduleView';
+import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
 class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 	constructor(props) {
@@ -496,7 +497,19 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 						{getAlertFooter(viewConflict)}
 					</ClayAlert>
 				</ClayModal.Header>
-				<ClayModal.Body url={viewConflict.viewURL}></ClayModal.Body>
+
+				{viewConflict.dataURL && (
+					<div className="publications-modal-body">
+						<ChangeTrackingRenderView
+							dataURL={viewConflict.dataURL}
+							spritemap={spritemap}
+						/>
+					</div>
+				)}
+
+				{viewConflict.viewURL && (
+					<ClayModal.Body url={viewConflict.viewURL}></ClayModal.Body>
+				)}
 			</ClayModal>
 		);
 	};

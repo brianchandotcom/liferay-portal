@@ -51,6 +51,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -221,6 +222,8 @@ public class ViewConflictsDisplayContext {
 
 		if (ctEntry != null) {
 			jsonObject.put(
+				"dataURL", _getDataURL(_renderResponse, ctEntry)
+			).put(
 				"description",
 				_ctDisplayRendererRegistry.getEntryDescription(
 					_httpServletRequest, ctEntry)
@@ -280,13 +283,6 @@ public class ViewConflictsDisplayContext {
 
 				jsonObject.put("actions", actionsJSONArray);
 			}
-
-			String viewURL = _getViewURL(
-				_renderResponse, ctEntry,
-				conflictInfo.getSourcePrimaryKey() ==
-					conflictInfo.getTargetPrimaryKey());
-
-			jsonObject.put("viewURL", viewURL);
 		}
 		else {
 			T model = _ctDisplayRendererRegistry.fetchCTModel(
@@ -322,27 +318,14 @@ public class ViewConflictsDisplayContext {
 		return jsonObject;
 	}
 
-	private String _getViewURL(
-		RenderResponse renderResponse, CTEntry ctEntry, boolean viewDiff) {
+	private String _getDataURL(RenderResponse renderResponse, CTEntry ctEntry) {
+		ResourceURL dataURL = renderResponse.createResourceURL();
 
-		RenderURL viewURL = renderResponse.createRenderURL();
-
-		if (viewDiff) {
-			viewURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_diff");
-		}
-		else {
-			viewURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_entry");
-		}
-
-		viewURL.setParameter(
+		dataURL.setResourceID("/change_tracking/get_ct_entry_render_data");
+		dataURL.setParameter(
 			"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 
-		PublicationsPortletURLUtil.setWindowState(
-			viewURL, LiferayWindowState.POP_UP);
-
-		return viewURL.toString();
+		return dataURL.toString();
 	}
 
 	private <T extends BaseModel<T>> String _getViewURL(

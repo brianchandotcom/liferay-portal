@@ -178,7 +178,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		List<Theme> themes = getThemes(companyId);
 
-		themes = PluginUtil.restrictPlugins(themes, companyId, userId);
+		themes = PluginUtil.restrictPlugins(themes, companyId, groupId, userId);
 
 		Iterator<Theme> iterator = themes.iterator();
 

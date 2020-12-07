@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -418,6 +419,18 @@ public class DDMFormDisplayContext {
 		}
 
 		return _hasViewPermission;
+	}
+
+	public boolean isAutoRememberMe() {
+		String autoRememberMe = CookieKeys.getCookie(
+			PortalUtil.getHttpServletRequest(_renderRequest),
+			CookieKeys.REMEMBER_ME);
+
+		if ((autoRememberMe != null) && autoRememberMe.equals("true")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isAutosaveEnabled() throws PortalException {

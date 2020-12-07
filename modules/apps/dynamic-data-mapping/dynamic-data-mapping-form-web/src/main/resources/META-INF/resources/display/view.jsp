@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
+boolean autoRememberMe = ddmFormDisplayContext.isAutoRememberMe();
 
 long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 %>
@@ -299,8 +300,14 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						</c:choose>
 					}
 
+					<c:choose>
+						<c:when test="<%= autoRememberMe %>">
+							var autoRememberMe = true;
+						</c:when>
+					</c:choose>
+
 					<portlet:namespace />sessionIntervalId = setInterval(function () {
-						if (Liferay.Session) {
+						if (Liferay.Session || autoRememberMe) {
 							clearInterval(<portlet:namespace />sessionIntervalId);
 
 							<portlet:namespace />form = Liferay.component(

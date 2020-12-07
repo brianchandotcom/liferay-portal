@@ -21,6 +21,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {useFieldTypesResource} from '../hooks/useResource.es';
+import {ActionsProvider} from './PageRenderer/Actions.es';
 import Page from './PageRenderer/index';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
@@ -75,27 +76,29 @@ const Pages = React.forwardRef(
 						}
 					)}
 				>
-					{pages.map((page, index) => (
-						<Page
-							{...otherProps}
-							activePage={activePage}
-							cancelLabel={cancelLabel}
-							containerElement={containerElementRef}
-							editable={editable}
-							editingLanguageId={editingLanguageId}
-							fieldTypes={fieldTypes}
-							key={index}
-							page={page}
-							pageIndex={index}
-							pages={pages}
-							paginationMode={paginationMode}
-							readOnly={readOnly}
-							submitLabel={submitLabel}
-							total={pages.length}
-							view={view}
-							viewMode={viewMode}
-						/>
-					))}
+					<ActionsProvider>
+						{pages.map((page, index) => (
+							<Page
+								{...otherProps}
+								activePage={activePage}
+								cancelLabel={cancelLabel}
+								containerElement={containerElementRef}
+								editable={editable}
+								editingLanguageId={editingLanguageId}
+								fieldTypes={fieldTypes}
+								key={index}
+								page={page}
+								pageIndex={index}
+								pages={pages}
+								paginationMode={paginationMode}
+								readOnly={readOnly}
+								submitLabel={submitLabel}
+								total={pages.length}
+								view={view}
+								viewMode={viewMode}
+							/>
+						))}
+					</ActionsProvider>
 				</div>
 			</div>
 		);

@@ -20,6 +20,7 @@ import {PageProvider} from '../../hooks/usePage.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import * as EditablePageHeader from './EditablePageHeader.es';
+import * as EditorVariant from './EditorVariant.es';
 import {Layout} from './Layout.es';
 import * as MultiPages from './MultiPagesVariant.es';
 import * as Paginated from './PaginatedVariant.es';
@@ -180,8 +181,11 @@ const Renderer = ({
 	const variant = getVariant({page, pages, paginationMode, view, viewMode});
 	const variantComponents = LAYOUT_COMPONENTS_TYPES[variant] || {};
 
+	const formBuilderVariant = editable ? EditorVariant : {};
+
 	const Components = {
 		...DefaultVariant,
+		...formBuilderVariant,
 		...variantComponents,
 		...overrides,
 	};

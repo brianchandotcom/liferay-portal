@@ -162,7 +162,6 @@ class LayoutProvider extends Component {
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		const {availableLanguageIds = [editingLanguageId]} = this.props;
-		const {fieldHovered, focusedField} = this.state;
 		let {pages} = this.state;
 
 		const visitor = new PagesVisitor(pages);
@@ -184,8 +183,10 @@ class LayoutProvider extends Component {
 						defaultLanguageId,
 						editingLanguageId
 					),
-					hovered: fieldHovered.fieldName === field.fieldName,
-					selected: focusedField.fieldName === field.fieldName,
+					name: generateName(field.name, {
+						instanceId: field.instanceId || generateInstanceId(),
+						repeatedIndex: getRepeatedIndex(field.name),
+					}),
 					settingsContext: newSettingsContext,
 				};
 

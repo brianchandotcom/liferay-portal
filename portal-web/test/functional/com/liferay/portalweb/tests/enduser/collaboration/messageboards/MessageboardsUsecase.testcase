@@ -873,7 +873,7 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		AssertClick(
-			locator1 = "MessageBoards#THREAD_LIST_THREAD_UNREAD",
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "MB Thread Message Subject");
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");

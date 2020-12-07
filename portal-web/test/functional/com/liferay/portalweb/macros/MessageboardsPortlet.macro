@@ -311,12 +311,12 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#THREAD_LIST_THREAD_UNREAD",
+			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
 		if (isSet(mbThreadAttachment)) {
 			AssertClick(
-				locator1 = "MessageBoards#THREAD_LIST_THREAD_UNREAD",
+				locator1 = "MessageBoards#THREAD_LIST_THREAD",
 				value1 = "${threadSubject}");
 
 			AssertVisible(locator1 = "Link#MESSAGE_BOARDS_ATTACHMENT");

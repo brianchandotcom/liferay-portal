@@ -436,7 +436,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 		Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
 			companyId);
 
-		if (statuses != null) {
+		if (!ArrayUtil.isEmpty(statuses)) {
 			predicate = predicate.and(
 				CTCollectionTable.INSTANCE.status.in(
 					ArrayUtil.toArray(statuses)));

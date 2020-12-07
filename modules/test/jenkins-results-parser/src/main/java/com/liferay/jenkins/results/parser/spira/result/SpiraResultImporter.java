@@ -18,9 +18,6 @@ import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildFactory;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
@@ -41,34 +38,12 @@ public class SpiraResultImporter {
 		for (AxisTestClassGroup axisTestClassGroup :
 				job.getAxisTestClassGroups()) {
 
-			if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
-				FunctionalAxisTestClassGroup functionalAxisTestClassGroup =
-					(FunctionalAxisTestClassGroup)axisTestClassGroup;
+			for (TestClassGroup.TestClass testClass :
+					axisTestClassGroup.getTestClasses()) {
 
-				for (FunctionalBatchTestClassGroup.FunctionalTestClass
-						functionalTestClass :
-							functionalAxisTestClassGroup.
-								getFunctionalTestClasses()) {
-
-					spiraResults.add(
-						new FunctionalSpiraResult(
-							functionalAxisTestClassGroup, functionalTestClass));
-				}
-			}
-			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
-				JUnitAxisTestClassGroup jUnitAxisTestClassGroup =
-					(JUnitAxisTestClassGroup)axisTestClassGroup;
-
-				for (TestClassGroup.TestClass testClass :
-						axisTestClassGroup.getTestClasses()) {
-
-					spiraResults.add(
-						new JUnitSpiraResult(
-							jUnitAxisTestClassGroup, testClass));
-				}
-			}
-			else {
-				spiraResults.add(new BatchSpiraResult(axisTestClassGroup));
+				spiraResults.add(
+					SpiraResultFactory.newSpiraResult(
+						axisTestClassGroup, testClass));
 			}
 		}
 

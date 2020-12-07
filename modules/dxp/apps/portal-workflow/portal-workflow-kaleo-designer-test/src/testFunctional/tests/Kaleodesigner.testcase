@@ -791,6 +791,7 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -835,6 +836,7 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage";
 
 		var nodeScript = '''

@@ -154,7 +154,7 @@ public class DDMRESTDataProviderTest {
 
 		outputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"outputParameterPath", "nameCurrentValue;countryId"));
+				"outputParameterPath", "nameCurrentValue;name"));
 
 		outputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -317,7 +317,7 @@ public class DDMRESTDataProviderTest {
 
 		outputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"outputParameterPath", "nameCurrentValue;countryId"));
+				"outputParameterPath", "nameCurrentValue;name"));
 
 		outputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -361,7 +361,7 @@ public class DDMRESTDataProviderTest {
 
 		KeyValuePair actualKeyValuePair = expectedKeyValuePairs.get(0);
 
-		Assert.assertEquals("48", actualKeyValuePair.getKey());
+		Assert.assertEquals("brazil", actualKeyValuePair.getKey());
 		Assert.assertEquals("Brazil", actualKeyValuePair.getValue());
 
 		_ddmDataProviderInstanceLocalService.deleteDataProviderInstance(
@@ -418,7 +418,7 @@ public class DDMRESTDataProviderTest {
 
 		outputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"outputParameterPath", "nameCurrentValue;countryId"));
+				"outputParameterPath", "nameCurrentValue;name"));
 
 		outputParameters.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -462,7 +462,7 @@ public class DDMRESTDataProviderTest {
 
 		KeyValuePair actualKeyValuePair = expectedKeyValuePairs.get(0);
 
-		Assert.assertEquals("1", actualKeyValuePair.getKey());
+		Assert.assertEquals("canada", actualKeyValuePair.getKey());
 		Assert.assertEquals("Canada", actualKeyValuePair.getValue());
 
 		_ddmDataProviderInstanceLocalService.deleteDataProviderInstance(
@@ -472,10 +472,10 @@ public class DDMRESTDataProviderTest {
 	protected List<KeyValuePair> createKeyValuePairs() {
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-		keyValuePairs.add(new KeyValuePair("3", "France"));
-		keyValuePairs.add(new KeyValuePair("15", "Spain"));
-		keyValuePairs.add(new KeyValuePair("19", "United States"));
-		keyValuePairs.add(new KeyValuePair("48", "Brazil"));
+		keyValuePairs.add(new KeyValuePair("france", "France"));
+		keyValuePairs.add(new KeyValuePair("spain", "Spain"));
+		keyValuePairs.add(new KeyValuePair("united-states", "United States"));
+		keyValuePairs.add(new KeyValuePair("brazil", "Brazil"));
 
 		return keyValuePairs;
 	}

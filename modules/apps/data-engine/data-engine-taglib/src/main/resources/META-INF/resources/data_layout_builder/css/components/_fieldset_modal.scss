@@ -1,5 +1,5 @@
-$modalSpaing: 293px;
-$sidebarBodySpacing: #{$modalSpaing} + 100px;
+$modalSpacing: 293px;
+$sidebarBodySpacing: #{$modalSpacing} + 100px;
 
 body.has-control-menu .fieldset-modal {
 	.modal-body {
@@ -7,7 +7,7 @@ body.has-control-menu .fieldset-modal {
 	}
 
 	.data-engine-form-builder {
-		height: calc(100vh - #{$modalSpaing});
+		height: calc(100vh - #{$modalSpacing});
 		left: 0;
 		overflow-x: auto;
 		padding-bottom: 1.5rem;
@@ -34,7 +34,7 @@ body.has-control-menu .fieldset-modal {
 
 		&,
 		&-content {
-			height: calc(100vh - #{$modalSpaing}) !important;
+			height: calc(100vh - #{$modalSpacing}) !important;
 			position: absolute;
 		}
 

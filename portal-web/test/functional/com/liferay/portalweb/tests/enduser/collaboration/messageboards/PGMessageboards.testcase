@@ -785,7 +785,12 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoAccountSettings();
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "test");
 
 		User.editUserInformation(userEmailAddressEdit = "testadmin@liferay.com");
 

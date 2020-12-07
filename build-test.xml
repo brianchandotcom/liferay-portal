@@ -1012,16 +1012,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
-					public BatchTestClassGroup.BuildProfile getBatchBuildProfile() {
-						String buildProfile = project.getProperty("build.profile");
-
-						if ((buildProfile != null) && buildProfile.equals("dxp")) {
-							return BatchTestClassGroup.BuildProfile.DXP;
-						}
-
-						return BatchTestClassGroup.BuildProfile.PORTAL;
-					}
-
 					public String getBranchName() {
 						String branchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
 
@@ -1032,7 +1022,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						return branchName;
 					}
 
-					public Job.BuildProfile getJobBuildProfile() {
+					public Job.BuildProfile getBuildProfile() {
 						String buildProfile = project.getProperty("build.profile");
 
 						if ((buildProfile != null) && buildProfile.equals("dxp")) {
@@ -1090,9 +1080,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						return topLevelJobName;
 					}
 
-					Job job = JobFactory.newJob(getTopLevelJobName(), getTestSuite(), getBranchName(), getRepositoryName(), getJobBuildProfile());
+					Job job = JobFactory.newJob(getTopLevelJobName(), getTestSuite(), getBranchName(), getRepositoryName(), getBuildProfile());
 
-					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), getBatchBuildProfile(), job);
+					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
 					if (job.isSegmentEnabled()) {
 						SegmentTestClassGroup segmentTestClassGroup = batchTestClassGroup.getSegmentTestClassGroup(getSegmentID());
@@ -3210,18 +3200,20 @@ ${tomcat-gc-log}
 					import com.liferay.jenkins.results.parser.test.clazz.group.NPMTestBatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
-					try {
-						Job job = JobFactory.newJob(project.getProperty("top.level.job.name"));
-
-						BatchTestClassGroup.BuildProfile buildProfile = BatchTestClassGroup.BuildProfile.PORTAL;
-
+					public Job.BuildProfile getBuildProfile() {
 						String testPortalBuildProfile = project.getProperty("build.profile");
 
 						if ((testPortalBuildProfile != null) && testPortalBuildProfile.equals("dxp")) {
-							buildProfile = BatchTestClassGroup.BuildProfile.DXP;
+							return Job.BuildProfile.DXP;
 						}
 
-						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), buildProfile, job);
+						return Job.BuildProfile.PORTAL;
+					}
+
+					try {
+						Job job = JobFactory.newJob(project.getProperty("top.level.job.name"), null, null, null, getBuildProfile());
+
+						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
 						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup ||
 							batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {

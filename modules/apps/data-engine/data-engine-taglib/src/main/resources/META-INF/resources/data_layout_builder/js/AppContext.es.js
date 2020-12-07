@@ -28,6 +28,7 @@ import {
 	UPDATE_CONFIG,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
+	UPDATE_DATA_LAYOUT_FIELDS,
 	UPDATE_DATA_LAYOUT_NAME,
 	UPDATE_DATA_LAYOUT_RULE,
 	UPDATE_EDITING_DATA_DEFINITION_ID,
@@ -371,6 +372,17 @@ const createReducer = (dataLayoutBuilder) => {
 						dataRules: dataLayoutBuilder
 							.getLayoutProvider()
 							.getRules(),
+					},
+				};
+			}
+			case UPDATE_DATA_LAYOUT_FIELDS: {
+				const {dataLayoutFields} = action.payload;
+
+				return {
+					...state,
+					dataLayout: {
+						...state.dataLayout,
+						dataLayoutFields,
 					},
 				};
 			}

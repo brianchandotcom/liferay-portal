@@ -57,7 +57,7 @@ const getColumn = (customFields = {}) => ({children, column, index}) => {
 				const customField = customFields[field.fieldName];
 
 				if (customField) {
-					return customField({children, field, index});
+					return customField({AppContext, children, field, index});
 				}
 
 				return children({field, index});

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGES_SELECT_SPECIFIC_OPTION</td>
+	<td>//div[contains(@class,'listbox-${key_position}')]//select/option[normalize-space(text())='${key_optionValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
 	<td>//button[contains(@aria-label,'Transfer Item Left to Right')]</td>
 	<td></td>

@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,6 +57,20 @@ public class UpgradeCountry extends UpgradeProcess {
 				break;
 			}
 		}
+
+		if (!hasColumn("Country", "defaultLanguageId")) {
+			alter(
+				CountryTable.class,
+				new AlterTableAddColumn(
+					"defaultLanguageId", "VARCHAR(75) null"));
+		}
+
+		String defaultLanguageId = StringUtil.quote(
+			UpgradeProcessUtil.getDefaultLanguageId(defaultCompanyId));
+
+		runSQL(
+			"update Country set defaultLanguageId = " + defaultLanguageId +
+				" where defaultLanguageId is null");
 
 		if (!hasColumn("Country", "companyId")) {
 			alter(

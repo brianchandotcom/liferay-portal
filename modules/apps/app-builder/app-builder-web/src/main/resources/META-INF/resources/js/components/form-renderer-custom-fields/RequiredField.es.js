@@ -16,12 +16,24 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayRadio} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useEffect, useRef, useState} from 'react';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import isClickOutside from '../../utils/clickOutside.es';
 
-export default ({children, field, index}) => {
+export default ({AppContext, children, field, index}) => {
 	const [showPopover, setShowPopover] = useState(false);
+	const [
+		{
+			dataLayout: {dataLayoutFields},
+			focusedField: {fieldName: focusedFieldName},
+		},
+		dispatch,
+	] = useContext(AppContext);
+
+	const {required: requiredAtObjectLevel = true} =
+		dataLayoutFields[focusedFieldName] || {};
+
 	const popoverRef = useRef(null);
 	const triggerRef = useRef(null);
 
@@ -42,6 +54,20 @@ export default ({children, field, index}) => {
 
 		return () => window.removeEventListener('click', handler);
 	}, [popoverRef, triggerRef]);
+
+	const onSelectRequiredLevel = ({target: {value}}) => {
+		dataLayoutFields[focusedFieldName] = {
+			...dataLayoutFields[focusedFieldName],
+			required: value === 'object-level',
+		};
+
+		dispatch({
+			payload: {
+				dataLayoutFields,
+			},
+			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
+		});
+	};
 
 	return (
 		<div className="d-flex form-renderer-required-field justify-content-between">
@@ -70,19 +96,21 @@ export default ({children, field, index}) => {
 			>
 				<div className="mt-2">
 					<ClayRadio
-						disabled
-						label={Liferay.Language.get('only-for-this-form')}
-						name="required-level"
-						value="view-level"
-					/>
-
-					<ClayRadio
-						checked
+						defaultChecked={requiredAtObjectLevel}
 						label={Liferay.Language.get(
 							'for-all-forms-of-this-object'
 						)}
 						name="required-level"
+						onClick={onSelectRequiredLevel}
 						value="object-level"
+					/>
+
+					<ClayRadio
+						defaultChecked={!requiredAtObjectLevel}
+						label={Liferay.Language.get('only-for-this-form')}
+						name="required-level"
+						onClick={onSelectRequiredLevel}
+						value="view-level"
 					/>
 				</div>
 			</ClayPopover>

@@ -142,7 +142,7 @@ describe('EditFormView', () => {
 		// assert with required fields at Form View Level
 
 		expect(queryByText('Name')).toBeTruthy();
-		expect(container.querySelector('.reference-mark')).toBeFalsy();
+		expect(container.querySelector('.reference-mark')).toBeTruthy();
 
 		// assert with required fields at Object Level
 
@@ -156,7 +156,7 @@ describe('EditFormView', () => {
 		rerender(<EditFormViewWrapper />);
 
 		expect(queryByText('Name')).toBeTruthy();
-		expect(container.querySelector('.reference-mark')).toBeTruthy();
+		expect(container.querySelector('.reference-mark')).toBeFalsy();
 	});
 
 	it('renders as edit-form-view and make actions', async () => {

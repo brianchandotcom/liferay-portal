@@ -86,19 +86,20 @@ const getFieldTypes = ({
 		},
 		nested
 	) => {
-		const {ddmStructureId} = customProperties;
-		const {required: isLayoutRequired} = dataLayoutFields[name] || {};
-
 		if (fieldType === 'section') {
 			return;
 		}
 
+		const {ddmStructureId} = customProperties;
 		const fieldTypeSettings = fieldTypes.find(({name}) => {
 			return name === fieldType;
 		});
 
 		const isFieldGroup = fieldType === 'fieldset';
 		const isFieldSet = isFieldGroup && ddmStructureId;
+
+		const {required: requiredAtObjectLevel = true} =
+			dataLayoutFields[name] || {};
 
 		const FieldTypeLabel = isFieldSet
 			? Liferay.Language.get('fieldset')
@@ -149,7 +150,7 @@ const getFieldTypes = ({
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
 				(nestedField) => setDefinitionField(nestedField, true)
 			),
-			required: required && !isLayoutRequired,
+			required: required && requiredAtObjectLevel,
 		};
 
 		if (nested) {

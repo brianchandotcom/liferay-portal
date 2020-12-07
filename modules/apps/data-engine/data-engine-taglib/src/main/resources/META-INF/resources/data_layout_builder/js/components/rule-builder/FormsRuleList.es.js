@@ -100,7 +100,7 @@ const Operand = ({field, left, type, value}) => {
 			case 'option':
 				return left.field.options.find(
 					(option) => value === option.value
-				).label;
+				)?.label;
 			case 'field':
 				return field.label;
 			case 'list':

@@ -14,6 +14,7 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+import RulesSupport from '../../RuleBuilder/RulesSupport.es';
 import {getField} from '../util/fields.es';
 import handleFieldEdited from './fieldEditedHandler.es';
 
@@ -43,7 +44,7 @@ const handleFocusedFieldEvaluationEnded = (
 		return state;
 	}
 
-	state = {
+	let newState = {
 		...state,
 		focusedField: {
 			...focusedField,
@@ -55,13 +56,18 @@ const handleFocusedFieldEvaluationEnded = (
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields(({fieldName, value}) => {
-		state = handleFieldEdited(props, state, {
+		newState = handleFieldEdited(props, newState, {
 			propertyName: fieldName,
 			propertyValue: value,
 		});
 	});
 
-	return state;
+	return {
+		...newState,
+		rules: changedFieldType
+			? RulesSupport.formatRules(newState.pages, state.rules)
+			: state.rules,
+	};
 };
 
 export default handleFocusedFieldEvaluationEnded;

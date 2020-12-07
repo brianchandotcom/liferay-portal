@@ -238,7 +238,7 @@ export function Conditions({
 							readOnly={!left.value}
 							right={right}
 						/>
-						{right && (
+						{right && right.type && (
 							<FieldRight
 								fields={fields}
 								left={left}

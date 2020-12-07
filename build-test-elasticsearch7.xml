@@ -1164,8 +1164,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<configure-elasticsearch-properties />
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
-
-		<get-testcase-property property.name="pki.authentication.enabled" />
+		<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />

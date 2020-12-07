@@ -64,14 +64,9 @@ public class DispatchLogDisplayContext {
 	}
 
 	public DispatchLog getDispatchLog() throws PortalException {
-		long dispatchLogId = ParamUtil.getLong(
-			_dispatchRequestHelper.getRequest(), "dispatchLogId");
-
-		if (dispatchLogId == 0) {
-			return null;
-		}
-
-		return _dispatchLogService.getDispatchLog(dispatchLogId);
+		return _dispatchLogService.getDispatchLog(
+			ParamUtil.getLong(
+				_dispatchRequestHelper.getRequest(), "dispatchLogId"));
 	}
 
 	public DispatchTrigger getDispatchTrigger() {

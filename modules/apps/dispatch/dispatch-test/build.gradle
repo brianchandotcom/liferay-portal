@@ -1,6 +1,9 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	testIntegrationCompile project(":apps:dispatch:dispatch-api")
+	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

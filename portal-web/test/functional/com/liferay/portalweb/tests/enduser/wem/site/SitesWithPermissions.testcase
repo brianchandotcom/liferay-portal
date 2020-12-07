@@ -179,6 +179,10 @@ definition {
 				threadBody = "This is the message boards thread.",
 				threadSubject = "Thread");
 
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/home");
+
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",
 				replyCount = "0",

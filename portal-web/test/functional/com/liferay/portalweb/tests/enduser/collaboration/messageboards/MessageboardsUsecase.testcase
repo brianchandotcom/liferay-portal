@@ -74,6 +74,10 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
+
 		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.replyCP(
@@ -260,6 +264,8 @@ definition {
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
@@ -770,6 +776,8 @@ definition {
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
 
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",
@@ -807,6 +815,8 @@ definition {
 			source = "true",
 			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
 			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",

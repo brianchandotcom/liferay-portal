@@ -404,6 +404,8 @@ definition {
 
 		PortletEntry.publish();
 
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
 			replyCount = "0",

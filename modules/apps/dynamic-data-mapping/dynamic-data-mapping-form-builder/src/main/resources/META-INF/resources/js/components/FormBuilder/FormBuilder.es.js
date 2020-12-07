@@ -22,8 +22,6 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import {pageStructure} from '../../util/config.es';
-import withActionableFields from './withActionableFields.es';
-import withClickableFields from './withClickableFields.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
 import withMoveableFields from './withMoveableFields.es';
 import withMultiplePages from './withMultiplePages.es';
@@ -215,8 +213,6 @@ FormBuilderBase.PROPS = {
 };
 
 export default compose(
-	withActionableFields,
-	withClickableFields,
 	withEditablePageHeader,
 	withMoveableFields,
 	withMultiplePages,

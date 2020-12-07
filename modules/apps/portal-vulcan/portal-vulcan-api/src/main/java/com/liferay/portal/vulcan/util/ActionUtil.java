@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 
 import java.lang.annotation.Annotation;
@@ -31,11 +32,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -235,15 +240,6 @@ public class ActionUtil {
 		return HashMapBuilder.put(
 			"href",
 			() -> {
-				MultivaluedMap<String, String> pathParameters =
-					uriInfo.getPathParameters();
-
-				Set<Map.Entry<String, List<String>>> entrySet =
-					pathParameters.entrySet();
-
-				Stream<Map.Entry<String, List<String>>> stream =
-					entrySet.stream();
-
 				UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(uriInfo);
 
 				return uriBuilder.path(
@@ -251,19 +247,38 @@ public class ActionUtil {
 				).path(
 					clazz.getSuperclass(), methodName
 				).resolveTemplates(
-					stream.collect(
-						Collectors.toMap(
-							Map.Entry::getKey,
-							entry -> {
-								List<String> value = entry.getValue();
-
-								return value.get(0);
-							}))
+					_getParameterMap(clazz, id, methodName, uriInfo)
 				).toTemplate();
 			}
 		).put(
 			"method", httpMethodName
 		).build();
+	}
+
+	private static String _getFirstParameterFromPath(
+		Class<?> clazz, String methodName) {
+
+		Method[] methods = clazz.getMethods();
+
+		for (Method method : methods) {
+			if (Objects.equals(method.getName(), methodName)) {
+				Path path = method.getAnnotation(Path.class);
+
+				if (path == null) {
+					return null;
+				}
+
+				Matcher matcher = _pattern.matcher(path.value());
+
+				if (matcher.find()) {
+					return matcher.group(1);
+				}
+
+				return null;
+			}
+		}
+
+		return null;
 	}
 
 	private static String _getHttpMethodName(Class<?> clazz, Method method)
@@ -303,6 +318,36 @@ public class ActionUtil {
 		return null;
 	}
 
+	private static Map<String, Object> _getParameterMap(
+		Class<?> clazz, Long id, String methodName, UriInfo uriInfo) {
+
+		MultivaluedMap<String, String> pathParameters =
+			uriInfo.getPathParameters();
+
+		Set<Map.Entry<String, List<String>>> entrySet =
+			pathParameters.entrySet();
+
+		Stream<Map.Entry<String, List<String>>> stream = entrySet.stream();
+
+		Map<String, Object> parameterMap = stream.collect(
+			Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> {
+					List<String> value = entry.getValue();
+
+					return value.get(0);
+				}));
+
+		String firstParameter = _getFirstParameterFromPath(
+			clazz.getSuperclass(), methodName);
+
+		if (Validator.isNotNull(firstParameter)) {
+			parameterMap.put(firstParameter, id);
+		}
+
+		return parameterMap;
+	}
+
 	private static String _getVersion(UriInfo uriInfo) {
 		String version = "";
 
@@ -332,5 +377,7 @@ public class ActionUtil {
 
 		return false;
 	}
+
+	private static final Pattern _pattern = Pattern.compile("\\{(.*?)\\}");
 
 }

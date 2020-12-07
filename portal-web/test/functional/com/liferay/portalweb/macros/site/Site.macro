@@ -518,10 +518,10 @@ definition {
 
 			for (var currentSiteLanguage : list "${currentSiteLanguages}") {
 				if ("${currentSiteLanguage}" != "${defaultSiteLanguage}") {
-					Select(
+					DoubleClick(
+						key_optionValue = "${currentSiteLanguage}",
 						key_position = "right",
-						locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_FIELD",
-						value1 = "${currentSiteLanguage}");
+						locator1 = "SiteSettingsDisplaySettings#LANGUAGES_SELECT_SPECIFIC_OPTION");
 
 					Click(locator1 = "SiteSettingsDisplaySettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON");
 

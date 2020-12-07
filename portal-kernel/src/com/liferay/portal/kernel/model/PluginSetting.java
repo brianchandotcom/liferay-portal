@@ -76,6 +76,15 @@ public interface PluginSetting extends PersistedModel, PluginSettingModel {
 	public boolean hasPermission(long userId);
 
 	/**
+	 * Returns <code>true</code> if the user has permission to use this plugin
+	 *
+	 * @param userId the primary key of the user
+	 * @param groupId the primary key of the group
+	 * @return <code>true</code> if the user has permission to use this plugin
+	 */
+	public boolean hasPermission(long userId, long groupId);
+
+	/**
 	 * Returns <code>true</code> if the plugin has a role with the specified
 	 * name.
 	 *

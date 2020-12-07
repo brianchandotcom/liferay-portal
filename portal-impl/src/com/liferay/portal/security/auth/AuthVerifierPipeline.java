@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -568,9 +567,9 @@ public class AuthVerifierPipeline {
 		}
 
 		private static final List<AuthVerifierConfiguration>
-			_authVerifierConfigurations = new CopyOnWriteArrayList<>();
+			_authVerifierConfigurations = new ArrayList<>();
 		private static final List<AuthVerifierPipeline> _authVerifierPipelines =
-			new CopyOnWriteArrayList<>();
+			new ArrayList<>();
 
 	}
 

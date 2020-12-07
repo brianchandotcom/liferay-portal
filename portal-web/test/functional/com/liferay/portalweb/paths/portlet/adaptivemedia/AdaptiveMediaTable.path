@@ -61,7 +61,7 @@
 <!--IMAGE_INFO_DETAILS-->
 <tr>
 	<td>IMAGE_INFO_DETAILS_ADAPTED_IMAGES</td>
-	<td>//dl[contains(@class,'sidebar-block')]/dt[contains(.,'Adapted Images')]/following-sibling::dd[contains(.,'${key_numberOfAdaptedImages}')]</td>
+	<td>//dl[contains(@class,'sidebar-section')]/dt[contains(.,'Adapted Images')]/following-sibling::dd[contains(.,'${key_numberOfAdaptedImages}')]</td>
 	<td></td>
 </tr>
 </tbody>

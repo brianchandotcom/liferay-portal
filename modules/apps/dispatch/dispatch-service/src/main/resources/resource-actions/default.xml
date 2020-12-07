@@ -3,6 +3,23 @@
 
 <resource-action-mapping>
 	<model-resource>
+		<model-name>com.liferay.dispatch</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_dispatch_web_internal_portlet_DispatchPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>ADD_DISPATCH_TRIGGER</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_DISPATCH_TRIGGER</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.dispatch.model.DispatchTrigger</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_dispatch_web_internal_portlet_DispatchPortlet</portlet-name>

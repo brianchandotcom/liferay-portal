@@ -7,7 +7,6 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMUNITY</action-key>
-				<action-key>ADD_DISPATCH_TRIGGER</action-key>
 				<action-key>ADD_GENERAL_ANNOUNCEMENTS</action-key>
 				<action-key>ADD_LAYOUT_PROTOTYPE</action-key>
 				<action-key>ADD_LAYOUT_SET_PROTOTYPE</action-key>
@@ -25,9 +24,7 @@
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_DISPATCH_TRIGGER</action-key>
-			</guest-unsupported>
+			<guest-unsupported />
 		</permissions>
 	</portlet-resource>
 	<model-resource>

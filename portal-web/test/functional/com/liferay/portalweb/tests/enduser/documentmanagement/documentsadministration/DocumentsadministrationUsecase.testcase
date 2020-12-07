@@ -756,6 +756,8 @@ definition {
 
 		Pause(locator1 = "30000");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
 		var videoGenerationTimeCounter = "0";
 		var videoGenerationTimeMaxWaitTime = "6";
 
@@ -770,6 +772,8 @@ definition {
 		}
 
 		var videoPreviewThumbnailLink = selenium.getAttribute("//video@poster");
+
+		SelectFrameTop();
 
 		Navigator.openSpecificURL(url = "${videoPreviewThumbnailLink}");
 

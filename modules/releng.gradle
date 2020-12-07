@@ -1422,6 +1422,11 @@ private List<String> _getExcludes(File jarFile) {
 		excludes.add("**/node_modules/**")
 	}
 
+	excludes.add("/META-INF/custom-sql/**")
+	excludes.add("/META-INF/images/**")
+	excludes.add("/META-INF/sql/**")
+	excludes.add("/META-INF/versions/**")
+
 	return excludes
 }
 

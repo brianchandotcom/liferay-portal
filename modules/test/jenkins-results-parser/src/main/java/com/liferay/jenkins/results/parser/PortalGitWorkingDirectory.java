@@ -238,6 +238,33 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return _releaseProperties;
 	}
 
+	public Properties getTestProperties() {
+		if (_testProperties != null) {
+			return _testProperties;
+		}
+
+		_testProperties = JenkinsResultsParserUtil.getProperties(
+			new File(getWorkingDirectory(), "test.properties"),
+			new File(
+				getWorkingDirectory(),
+				JenkinsResultsParserUtil.combine(
+					"test.", System.getenv("HOSTNAME"), ".properties")),
+			new File(
+				getWorkingDirectory(),
+				JenkinsResultsParserUtil.combine(
+					"test.", System.getenv("HOST"), ".properties")),
+			new File(
+				getWorkingDirectory(),
+				JenkinsResultsParserUtil.combine(
+					"test.", System.getenv("COMPUTERNAME"), ".properties")),
+			new File(
+				getWorkingDirectory(),
+				JenkinsResultsParserUtil.combine(
+					"test.", System.getenv("user.name"), ".properties")));
+
+		return _testProperties;
+	}
+
 	protected PortalGitWorkingDirectory(
 			String upstreamBranchName, String workingDirectoryPath)
 		throws IOException {
@@ -294,6 +321,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	private Properties _releaseProperties;
+	private Properties _testProperties;
 
 	private static class Module {
 

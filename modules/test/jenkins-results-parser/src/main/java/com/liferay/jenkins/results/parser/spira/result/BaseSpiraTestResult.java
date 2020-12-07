@@ -19,7 +19,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseSpiraResult implements SpiraResult {
+public abstract class BaseSpiraTestResult implements SpiraTestResult {
 
 	@Override
 	public String getAxisName() {
@@ -31,7 +31,7 @@ public abstract class BaseSpiraResult implements SpiraResult {
 		System.out.println(getAxisName() + " " + getTestName());
 	}
 
-	protected BaseSpiraResult(AxisTestClassGroup axisTestClassGroup) {
+	protected BaseSpiraTestResult(AxisTestClassGroup axisTestClassGroup) {
 		_axisTestClassGroup = axisTestClassGroup;
 	}
 

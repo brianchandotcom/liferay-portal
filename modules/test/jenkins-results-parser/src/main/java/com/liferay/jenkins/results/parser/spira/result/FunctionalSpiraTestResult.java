@@ -14,35 +14,31 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
-import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 
 /**
  * @author Michael Hashimoto
  */
-public class JUnitSpiraResult extends BaseSpiraResult {
+public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
 
 	@Override
 	public String getTestName() {
-		String testName = String.valueOf(_testClass.getTestClassFile());
+		String testName = _functionalTestClass.getTestClassMethodName();
 
-		testName = testName.replaceAll(".*(com/.*)", "$1");
-
-		testName = testName.replaceAll("\\/", ".");
-		testName = testName.replaceAll(".class", "");
-
-		return testName;
+		return testName.replaceAll("[^\\.]+\\.(.*)", "$1");
 	}
 
-	protected JUnitSpiraResult(
-		JUnitAxisTestClassGroup jUnitAxisTestClassGroup,
-		TestClassGroup.TestClass testClass) {
+	protected FunctionalSpiraTestResult(
+		FunctionalAxisTestClassGroup axisTestClassGroup,
+		FunctionalBatchTestClassGroup.FunctionalTestClass functionalTestClass) {
 
-		super(jUnitAxisTestClassGroup);
+		super(axisTestClassGroup);
 
-		_testClass = testClass;
+		_functionalTestClass = functionalTestClass;
 	}
 
-	private final TestClassGroup.TestClass _testClass;
+	private final FunctionalBatchTestClassGroup.FunctionalTestClass
+		_functionalTestClass;
 
 }

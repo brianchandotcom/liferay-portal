@@ -25,22 +25,22 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
  */
 public class SpiraResultFactory {
 
-	public static SpiraResult newSpiraResult(
+	public static SpiraTestResult newSpiraTestResult(
 		AxisTestClassGroup axisTestClassGroup,
 		TestClassGroup.TestClass testClass) {
 
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
-			return new FunctionalSpiraResult(
+			return new FunctionalSpiraTestResult(
 				(FunctionalAxisTestClassGroup)axisTestClassGroup,
 				(FunctionalBatchTestClassGroup.FunctionalTestClass)testClass);
 		}
 
 		if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
-			return new JUnitSpiraResult(
+			return new JUnitSpiraTestResult(
 				(JUnitAxisTestClassGroup)axisTestClassGroup, testClass);
 		}
 
-		return new BatchSpiraResult(axisTestClassGroup);
+		return new BatchSpiraTestResult(axisTestClassGroup);
 	}
 
 }

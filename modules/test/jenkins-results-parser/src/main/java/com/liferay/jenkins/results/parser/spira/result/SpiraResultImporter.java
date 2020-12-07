@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.spira.result;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildFactory;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
@@ -28,12 +29,20 @@ import java.util.List;
  */
 public class SpiraResultImporter {
 
-	public static void record(String buildURL) {
+	public SpiraResultImporter(String buildURL) {
 		Build build = BuildFactory.newBuild(buildURL, null);
 
-		Job job = build.getJob();
+		if (!(build instanceof TopLevelBuild)) {
+			throw new RuntimeException("Invalid top level build" + buildURL);
+		}
 
-		List<SpiraResult> spiraResults = new ArrayList<>();
+		_topLevelBuild = (TopLevelBuild)build;
+	}
+
+	public void record() {
+		Job job = _topLevelBuild.getJob();
+
+		List<SpiraTestResult> spiraTestResults = new ArrayList<>();
 
 		for (AxisTestClassGroup axisTestClassGroup :
 				job.getAxisTestClassGroups()) {
@@ -41,15 +50,17 @@ public class SpiraResultImporter {
 			for (TestClassGroup.TestClass testClass :
 					axisTestClassGroup.getTestClasses()) {
 
-				spiraResults.add(
-					SpiraResultFactory.newSpiraResult(
+				spiraTestResults.add(
+					SpiraResultFactory.newSpiraTestResult(
 						axisTestClassGroup, testClass));
 			}
 		}
 
-		for (SpiraResult spiraResult : spiraResults) {
-			spiraResult.record();
+		for (SpiraTestResult spiraTestResult : spiraTestResults) {
+			spiraTestResult.record();
 		}
 	}
+
+	private final TopLevelBuild _topLevelBuild;
 
 }

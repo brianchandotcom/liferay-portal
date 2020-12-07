@@ -15,6 +15,7 @@
 package com.liferay.dispatch.web.internal.display.context;
 
 import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogService;
@@ -71,6 +72,23 @@ public class DispatchLogDisplayContext {
 
 	public DispatchTrigger getDispatchTrigger() {
 		return _dispatchRequestHelper.getDispatchTrigger();
+	}
+
+	public long getExecutionTimeMills() throws PortalException {
+		DispatchLog dispatchLog = getDispatchLog();
+
+		DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(
+			dispatchLog.getStatus());
+
+		Date startDate = dispatchLog.getStartDate();
+
+		if (dispatchTaskStatus == DispatchTaskStatus.IN_PROGRESS) {
+			return System.currentTimeMillis() - startDate.getTime();
+		}
+
+		Date endDate = dispatchLog.getEndDate();
+
+		return endDate.getTime() - startDate.getTime();
 	}
 
 	public String getOrderByCol() {

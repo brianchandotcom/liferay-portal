@@ -58,14 +58,15 @@ public class TalendProcess {
 		}
 
 		public Builder companyId(long companyId) {
-			_companyId = companyId;
+			_contextParams.add(
+				"--context_param companyId=".concat(String.valueOf(companyId)));
 
 			return this;
 		}
 
 		public Builder contextParam(String name, String value) {
 			if (Objects.equals(name, "JAVA_OPTS")) {
-				_jvmOptions.addAll(StringUtil.split(value, CharPool.SPACE));
+				_jvmOptions = StringUtil.split(value, CharPool.SPACE);
 
 				return this;
 			}
@@ -78,7 +79,14 @@ public class TalendProcess {
 		}
 
 		public Builder lastRunStartDate(Date lastRunStartDate) {
-			_lastRunStartDate = lastRunStartDate;
+			if (lastRunStartDate != null) {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+				_contextParams.add(
+					"--context_param lastRunStartDate=".concat(
+						simpleDateFormat.format(lastRunStartDate)));
+			}
 
 			return this;
 		}
@@ -94,6 +102,12 @@ public class TalendProcess {
 		public Builder talendArchive(TalendArchive talendArchive) {
 			_talendArchive = talendArchive;
 
+			_contextParams.add(
+				"--context=".concat(_talendArchive.getContextName()));
+			_contextParams.add(
+				"--context_param jobWorkDirectory=".concat(
+					_talendArchive.getJobDirectory()));
+
 			return this;
 		}
 
@@ -101,7 +115,9 @@ public class TalendProcess {
 			ProcessConfig.Builder processConfigBuilder =
 				new ProcessConfig.Builder();
 
-			processConfigBuilder.setArguments(_jvmOptions);
+			if (_jvmOptions != null) {
+				processConfigBuilder.setArguments(_jvmOptions);
+			}
 
 			ProcessConfig portalProcessConfig =
 				PortalClassPathUtil.getPortalProcessConfig();
@@ -130,40 +146,15 @@ public class TalendProcess {
 			return url.getPath();
 		}
 
-		private List<String> _getMainMethodArguments() {
-			List<String> arguments = new ArrayList<>(_contextParams);
-
-			arguments.add("--context=".concat(_talendArchive.getContextName()));
-			arguments.add(
-				"--context_param companyId=".concat(
-					String.valueOf(_companyId)));
-			arguments.add(
-				"--context_param jobWorkDirectory=".concat(
-					_talendArchive.getJobDirectory()));
-
-			if (_lastRunStartDate != null) {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-				arguments.add(
-					"--context_param lastRunStartDate=".concat(
-						simpleDateFormat.format(_lastRunStartDate)));
-			}
-
-			return arguments;
-		}
-
-		private long _companyId;
 		private final List<String> _contextParams = new ArrayList<>();
-		private final List<String> _jvmOptions = new ArrayList<>();
-		private Date _lastRunStartDate;
+		private List<String> _jvmOptions;
 		private Consumer<ProcessLog> _processLogConsumer;
 		private TalendArchive _talendArchive;
 
 	}
 
 	private TalendProcess(Builder builder) {
-		_mainMethodArguments = builder._getMainMethodArguments();
+		_mainMethodArguments = builder._contextParams;
 		_processConfig = builder._buildProcessConfig();
 	}
 

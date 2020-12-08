@@ -130,12 +130,14 @@ public class TalendProcess {
 			processConfigBuilder.setRuntimeClassPath(
 				StringBundler.concat(
 					_talendArchive.getClasspath(), File.pathSeparator,
-					_getBundleFilePath()));
+					_BUNDLE_FILE_PATH));
 
 			return processConfigBuilder.build();
 		}
 
-		private String _getBundleFilePath() {
+		private static final String _BUNDLE_FILE_PATH;
+
+		static {
 			ProtectionDomain protectionDomain =
 				Builder.class.getProtectionDomain();
 
@@ -143,7 +145,7 @@ public class TalendProcess {
 
 			URL url = codeSource.getLocation();
 
-			return url.getPath();
+			_BUNDLE_FILE_PATH = url.getPath();
 		}
 
 		private final List<String> _contextParams = new ArrayList<>();

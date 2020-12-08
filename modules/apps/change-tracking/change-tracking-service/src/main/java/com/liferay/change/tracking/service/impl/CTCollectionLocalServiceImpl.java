@@ -122,9 +122,9 @@ public class CTCollectionLocalServiceImpl
 
 		ctCollection.setCompanyId(companyId);
 		ctCollection.setUserId(userId);
+		ctCollection.setSchemaVersionId(ctSchemaVersion.getSchemaVersionId());
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
-		ctCollection.setSchemaVersionId(ctSchemaVersion.getSchemaVersionId());
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);

@@ -110,19 +110,23 @@ public class TalendProcess {
 
 			processConfigBuilder.setProcessLogConsumer(_processLogConsumer);
 
-			processConfigBuilder.setRuntimeClassPath(_getTalendClassPath());
+			processConfigBuilder.setRuntimeClassPath(
+				StringBundler.concat(
+					_talendArchive.getClasspath(), File.pathSeparator,
+					_getBundleFilePath()));
 
 			return processConfigBuilder.build();
 		}
 
-		private URL _getBundleURL() {
-			Class<? extends Builder> clazz = getClass();
-
-			ProtectionDomain protectionDomain = clazz.getProtectionDomain();
+		private String _getBundleFilePath() {
+			ProtectionDomain protectionDomain =
+				Builder.class.getProtectionDomain();
 
 			CodeSource codeSource = protectionDomain.getCodeSource();
 
-			return codeSource.getLocation();
+			URL url = codeSource.getLocation();
+
+			return url.getPath();
 		}
 
 		private List<String> _getMainMethodArguments() {
@@ -146,13 +150,6 @@ public class TalendProcess {
 			}
 
 			return arguments;
-		}
-
-		private String _getTalendClassPath() {
-			URL bundleURL = _getBundleURL();
-
-			return _talendArchive.getClasspath() + File.pathSeparator +
-				bundleURL.toString();
 		}
 
 		private long _companyId;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -41,11 +42,12 @@ public class UpgradeCountry extends UpgradeProcess {
 
 		String sql = StringBundler.concat(
 			"select User_.companyId, User_.userId from User_ join Company on ",
-			"User_.companyId = Company.companyId where User_.defaultUser = 1 ",
-			"and Company.webId = ",
+			"User_.companyId = Company.companyId where User_.defaultUser = ",
+			"[$TRUE$] and Company.webId = ",
 			StringUtil.quote(PropsValues.COMPANY_DEFAULT_WEB_ID));
 
-		try (PreparedStatement ps = connection.prepareStatement(sql);
+		try (PreparedStatement ps = connection.prepareStatement(
+				SQLTransformer.transform(sql));
 			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
@@ -116,8 +118,8 @@ public class UpgradeCountry extends UpgradeProcess {
 		}
 
 		runSQL(
-			"update Country set billingAllowed = 1 where billingAllowed is " +
-				"null");
+			"update Country set billingAllowed = [$TRUE$] where " +
+				"billingAllowed is null");
 
 		if (!hasColumn("Country", "groupFilterEnabled")) {
 			alter(
@@ -126,7 +128,7 @@ public class UpgradeCountry extends UpgradeProcess {
 		}
 
 		runSQL(
-			"update Country set groupFilterEnabled = 0 where " +
+			"update Country set groupFilterEnabled = [$FALSE$] where " +
 				"groupFilterEnabled is null");
 
 		if (!hasColumn("Country", "position")) {
@@ -142,8 +144,8 @@ public class UpgradeCountry extends UpgradeProcess {
 		}
 
 		runSQL(
-			"update Country set shippingAllowed = 1 where shippingAllowed is " +
-				"null");
+			"update Country set shippingAllowed = [$TRUE$] where " +
+				"shippingAllowed is null");
 
 		if (!hasColumn("Country", "subjectToVAT")) {
 			alter(
@@ -152,7 +154,8 @@ public class UpgradeCountry extends UpgradeProcess {
 		}
 
 		runSQL(
-			"update Country set subjectToVAT = 0 where subjectToVAT is null");
+			"update Country set subjectToVAT = [$FALSE$] where subjectToVAT " +
+				"is null");
 
 		if (!hasColumn("Country", "lastPublishDate")) {
 			alter(

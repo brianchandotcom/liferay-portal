@@ -53,8 +53,6 @@ public class TalendArchiveParserTest extends BaseTalendTestCase {
 		String jobMainClassFQN = talendArchive.getJobMainClassFQN();
 
 		Assert.assertTrue(jobMainClassFQN.endsWith(_JOB_NAME));
-
-		Assert.assertNotNull(talendArchive.getJVMOptions());
 	}
 
 	private static final String[] _CLASSPATH_ENTRIES = {

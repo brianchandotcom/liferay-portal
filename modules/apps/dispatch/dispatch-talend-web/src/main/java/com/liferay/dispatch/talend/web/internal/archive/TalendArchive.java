@@ -52,10 +52,6 @@ public class TalendArchive {
 		return _jobMainClassFQN;
 	}
 
-	public List<String> getJVMOptions() {
-		return _jvmOptions;
-	}
-
 	public static class Builder {
 
 		public TalendArchive build() {
@@ -90,12 +86,6 @@ public class TalendArchive {
 
 		public Builder jobMainClassFQN(String jobMainClassFQN) {
 			_jobMainClassFQN = jobMainClassFQN;
-
-			return this;
-		}
-
-		public Builder jvmOption(String jvmOption) {
-			_jvmOptions.add(jvmOption);
 
 			return this;
 		}
@@ -158,7 +148,6 @@ public class TalendArchive {
 		private String _jobDirectory;
 		private String _jobJARPath;
 		private String _jobMainClassFQN;
-		private List<String> _jvmOptions = new ArrayList<>();
 
 	}
 
@@ -169,7 +158,6 @@ public class TalendArchive {
 		_jobDirectory = builder._jobDirectory;
 		_jobJARPath = StringPool.PERIOD + builder._jobJARPath;
 		_jobMainClassFQN = builder._jobMainClassFQN;
-		_jvmOptions = builder._jvmOptions;
 	}
 
 	private final String _classpath;
@@ -178,6 +166,5 @@ public class TalendArchive {
 	private final String _jobDirectory;
 	private final String _jobJARPath;
 	private final String _jobMainClassFQN;
-	private final List<String> _jvmOptions;
 
 }

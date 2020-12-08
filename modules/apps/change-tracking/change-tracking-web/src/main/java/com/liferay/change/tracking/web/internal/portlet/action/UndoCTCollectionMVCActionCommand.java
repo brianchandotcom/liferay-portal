@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.exception.PublicationLocalizedException;
+import com.liferay.change.tracking.exception.CTLocalizedException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
@@ -102,13 +102,12 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 		}
-		catch (PublicationLocalizedException publicationLocalizedException) {
-			_log.error(
-				publicationLocalizedException, publicationLocalizedException);
+		catch (CTLocalizedException ctLocalizedException) {
+			_log.error(ctLocalizedException, ctLocalizedException);
 
 			SessionErrors.add(
-				actionRequest, PublicationLocalizedException.class.getName(),
-				publicationLocalizedException);
+				actionRequest, CTLocalizedException.class.getName(),
+				ctLocalizedException);
 
 			hideDefaultErrorMessage(actionRequest);
 		}

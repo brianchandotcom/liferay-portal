@@ -157,21 +157,21 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 </clay:container-fluid>
 
 <%
-PublicationLocalizedException publicationLocalizedException = null;
+CTLocalizedException ctLocalizedException = null;
 
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
-if ((portletRequest != null) && MultiSessionErrors.contains(portletRequest, PublicationLocalizedException.class.getName())) {
-	publicationLocalizedException = (PublicationLocalizedException)MultiSessionErrors.get(portletRequest, PublicationLocalizedException.class.getName());
+if ((portletRequest != null) && MultiSessionErrors.contains(portletRequest, CTLocalizedException.class.getName())) {
+	ctLocalizedException = (CTLocalizedException)MultiSessionErrors.get(portletRequest, CTLocalizedException.class.getName());
 }
 %>
 
-<c:if test="<%= publicationLocalizedException != null %>">
+<c:if test="<%= ctLocalizedException != null %>">
 	<aui:script>
 		Liferay.Util.openToast({
 			autoClose: 10000,
 			message:
-				'<%= HtmlUtil.escapeJS(publicationLocalizedException.formatMessage(resourceBundle)) %>',
+				'<%= HtmlUtil.escapeJS(ctLocalizedException.formatMessage(resourceBundle)) %>',
 			title: '<liferay-ui:message key="error" />:',
 			type: 'danger',
 		});

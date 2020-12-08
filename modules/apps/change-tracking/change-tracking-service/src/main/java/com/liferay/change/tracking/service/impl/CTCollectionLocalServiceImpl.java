@@ -20,7 +20,7 @@ import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
-import com.liferay.change.tracking.exception.PublicationLocalizedException;
+import com.liferay.change.tracking.exception.CTLocalizedException;
 import com.liferay.change.tracking.internal.CTEnclosureUtil;
 import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
@@ -619,7 +619,7 @@ public class CTCollectionLocalServiceImpl
 			ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 
 		if (undoCTCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			throw new PublicationLocalizedException(
+			throw new CTLocalizedException(
 				StringBundler.concat(
 					"Unable to undo ", undoCTCollection.getName(),
 					" because it is not published"),
@@ -630,7 +630,7 @@ public class CTCollectionLocalServiceImpl
 		if (!_ctSchemaVersionLocalService.isLatestSchemaVersion(
 				undoCTCollection.getSchemaVersionId())) {
 
-			throw new PublicationLocalizedException(
+			throw new CTLocalizedException(
 				StringBundler.concat(
 					"Unable to undo ", undoCTCollection.getName(),
 					" because it is out of date with the current release"),
@@ -671,7 +671,7 @@ public class CTCollectionLocalServiceImpl
 					modelClassNameId);
 
 				if (ctService == null) {
-					throw new PublicationLocalizedException(
+					throw new CTLocalizedException(
 						StringBundler.concat(
 							"Unable to undo ", undoCTCollection.getName(),
 							" because service for ", modelClassNameId,

@@ -31,7 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.change.tracking.constants.CTConstants" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionDescriptionException" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionNameException" %><%@
-page import="com.liferay.change.tracking.exception.PublicationLocalizedException" %><%@
+page import="com.liferay.change.tracking.exception.CTLocalizedException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
 page import="com.liferay.change.tracking.model.CTProcess" %><%@
 page import="com.liferay.change.tracking.web.internal.constants.CTPortletKeys" %><%@

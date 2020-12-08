@@ -24,9 +24,9 @@ import java.util.ResourceBundle;
 /**
  * @author Samuel Trong Tran
  */
-public class PublicationLocalizedException extends PortalException {
+public class CTLocalizedException extends PortalException {
 
-	public PublicationLocalizedException(
+	public CTLocalizedException(
 		String msg, String languageKey, Serializable... args) {
 
 		super(msg);
@@ -35,7 +35,7 @@ public class PublicationLocalizedException extends PortalException {
 		_args = args;
 	}
 
-	public PublicationLocalizedException(
+	public CTLocalizedException(
 		String msg, Throwable throwable, String languageKey,
 		Serializable... args) {
 

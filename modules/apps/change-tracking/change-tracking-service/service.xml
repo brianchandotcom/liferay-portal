@@ -254,6 +254,7 @@
 		<exception>CTCollectionDescription</exception>
 		<exception>CTCollectionName</exception>
 		<exception>CTEnclosure</exception>
+		<exception>CTLocalized</exception>
 		<exception>DuplicateCTEntry</exception>
 	</exceptions>
 </service-builder>

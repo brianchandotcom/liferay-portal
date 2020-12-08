@@ -15,7 +15,7 @@
 package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.dispatch.talend.web.internal.archive.exception.TalendArchiveException;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -30,8 +30,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author Igor Beslic
@@ -100,29 +103,23 @@ public class TalendArchiveParser {
 			String jobName, String jobExecutableJARPath)
 		throws IOException {
 
-		File explodedJARFile = _unzipFile(new File(jobExecutableJARPath));
-
-		String[] absolutePaths = FileUtil.find(
-			explodedJARFile.getAbsolutePath(), "**\\*.class", null);
-
-		if (absolutePaths.length == 1) {
-			return absolutePaths[0];
-		}
-
 		String mainClassSuffix = jobName + ".class";
 
-		for (String absolutePath : absolutePaths) {
-			if (!absolutePath.endsWith(mainClassSuffix)) {
-				continue;
+		try (ZipFile zipFile = new ZipFile(new File(jobExecutableJARPath))) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith(mainClassSuffix)) {
+					name = name.substring(0, name.length() - 6);
+
+					return StringUtil.replace(
+						name, CharPool.SLASH, CharPool.PERIOD);
+				}
 			}
-
-			String mainClassRelativePath = StringUtil.removeSubstring(
-				absolutePath, explodedJARFile.getAbsolutePath());
-
-			return StringUtil.replace(
-				mainClassRelativePath.substring(
-					1, mainClassRelativePath.lastIndexOf(StringPool.PERIOD)),
-				File.separator, StringPool.PERIOD);
 		}
 
 		throw new TalendArchiveException("Unable to determine job main class");

@@ -92,7 +92,7 @@ public class CTPublishBackgroundTaskExecutor
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ctCollectionId);
 
-		if (!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+		if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				ctCollection.getSchemaVersionId())) {
 
 			throw new IllegalArgumentException(

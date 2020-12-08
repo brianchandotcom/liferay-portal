@@ -95,7 +95,7 @@ public class ReleaseModelListener extends BaseModelListener<Release> {
 				));
 
 		if (!ctSchemaVersions.isEmpty() &&
-			!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+			!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				ctSchemaVersions.get(0), false)) {
 
 			_resetCTPreferences();

@@ -41,7 +41,7 @@ public class CTSchemaVersionLocalServiceImpl
 	extends CTSchemaVersionLocalServiceBaseImpl {
 
 	@Override
-	public CTSchemaVersion addLatestSchemaVersion(long companyId) {
+	public CTSchemaVersion addLatestCTSchemaVersion(long companyId) {
 		CTSchemaVersion ctSchemaVersion = ctSchemaVersionPersistence.create(
 			counterLocalService.increment(CTSchemaVersion.class.getName()));
 
@@ -63,23 +63,22 @@ public class CTSchemaVersionLocalServiceImpl
 	}
 
 	@Override
-	public CTSchemaVersion getLatestSchemaVersion(long companyId) {
+	public CTSchemaVersion getLatestCTSchemaVersion(long companyId) {
 		CTSchemaVersion ctSchemaVersion =
 			ctSchemaVersionPersistence.fetchByCompanyId_First(companyId, null);
 
 		if ((ctSchemaVersion == null) ||
-			!isLatestSchemaVersion(ctSchemaVersion, true)) {
+			!isLatestCTSchemaVersion(ctSchemaVersion, true)) {
 
 			ctSchemaVersion =
-				ctSchemaVersionLocalService.addLatestSchemaVersion(
-					companyId);
+				ctSchemaVersionLocalService.addLatestCTSchemaVersion(companyId);
 		}
 
 		return ctSchemaVersion;
 	}
 
 	@Override
-	public boolean isLatestSchemaVersion(
+	public boolean isLatestCTSchemaVersion(
 		CTSchemaVersion ctSchemaVersion, boolean strict) {
 
 		Map<String, Serializable> schemaContext =
@@ -121,7 +120,7 @@ public class CTSchemaVersionLocalServiceImpl
 	}
 
 	@Override
-	public boolean isLatestSchemaVersion(long ctSchemaVersionId) {
+	public boolean isLatestCTSchemaVersion(long ctSchemaVersionId) {
 		CTSchemaVersion ctSchemaVersion =
 			ctSchemaVersionPersistence.fetchByPrimaryKey(ctSchemaVersionId);
 
@@ -129,7 +128,7 @@ public class CTSchemaVersionLocalServiceImpl
 			return false;
 		}
 
-		return isLatestSchemaVersion(ctSchemaVersion, false);
+		return isLatestCTSchemaVersion(ctSchemaVersion, false);
 	}
 
 }

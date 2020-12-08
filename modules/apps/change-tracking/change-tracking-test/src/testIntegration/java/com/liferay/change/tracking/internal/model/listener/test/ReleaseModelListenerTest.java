@@ -78,7 +78,7 @@ public class ReleaseModelListenerTest {
 	@Test
 	public void testStalePublishIsRejected() throws Exception {
 		Assert.assertTrue(
-			_ctSchemaVersionLocalService.isLatestSchemaVersion(
+			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				_ctCollection.getSchemaVersionId()));
 
 		Assert.assertEquals(
@@ -88,7 +88,7 @@ public class ReleaseModelListenerTest {
 			ReleaseModelListenerTest.class.getSimpleName(), "1.1.0", "1.0.0");
 
 		Assert.assertFalse(
-			_ctSchemaVersionLocalService.isLatestSchemaVersion(
+			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				_ctCollection.getSchemaVersionId()));
 
 		CTPreferences ctPreferences =

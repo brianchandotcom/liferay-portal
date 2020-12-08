@@ -111,8 +111,8 @@ public class CTCollectionLocalServiceImpl
 
 		_validate(name, description);
 
-		CTSchemaVersion ctSchemaVersion =
-			_ctSchemaVersionLocalService.getLatestSchemaVersion(companyId);
+		CTSchemaVersion latestCTSchemaVersion =
+			_ctSchemaVersionLocalService.getLatestCTSchemaVersion(companyId);
 
 		long ctCollectionId = counterLocalService.increment(
 			CTCollection.class.getName());
@@ -122,7 +122,8 @@ public class CTCollectionLocalServiceImpl
 
 		ctCollection.setCompanyId(companyId);
 		ctCollection.setUserId(userId);
-		ctCollection.setSchemaVersionId(ctSchemaVersion.getSchemaVersionId());
+		ctCollection.setSchemaVersionId(
+			latestCTSchemaVersion.getSchemaVersionId());
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -427,7 +428,7 @@ public class CTCollectionLocalServiceImpl
 					ctCollection.getSchemaVersionId());
 
 			if ((ctSchemaVersion != null) &&
-				!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+				!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 					ctSchemaVersion, true)) {
 
 				_ctSchemaVersionLocalService.deleteCTSchemaVersion(
@@ -627,7 +628,7 @@ public class CTCollectionLocalServiceImpl
 				undoCTCollection.getName());
 		}
 
-		if (!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+		if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				undoCTCollection.getSchemaVersionId())) {
 
 			throw new CTLocalizedException(

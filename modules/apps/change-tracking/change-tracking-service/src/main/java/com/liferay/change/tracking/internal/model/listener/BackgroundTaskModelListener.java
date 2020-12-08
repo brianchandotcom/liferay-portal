@@ -54,7 +54,7 @@ public class BackgroundTaskModelListener
 			if (ctCollection != null) {
 				int status = WorkflowConstants.STATUS_DRAFT;
 
-				if (!_ctSchemaVersionLocalService.isLatestSchemaVersion(
+				if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 						ctCollection.getSchemaVersionId())) {
 
 					status = WorkflowConstants.STATUS_EXPIRED;

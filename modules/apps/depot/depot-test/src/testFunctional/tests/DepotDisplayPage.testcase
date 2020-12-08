@@ -418,6 +418,8 @@ definition {
 	@description = "This test ensures that a user can view the image using display page template with DM type from AL on a connect site."
 	@priority = "5"
 	test ViewImage {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -492,6 +494,8 @@ definition {
 	@description = "This test ensures that a user can view the web content using display page template with WC structure from AL on a connect site."
 	@priority = "5"
 	test ViewWC {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");

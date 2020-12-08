@@ -43,6 +43,8 @@ definition {
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveImage {
+		property portal.acceptance = "true";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.addCP(
@@ -132,6 +134,8 @@ definition {
 	@description = "This ensures that the approved WC article from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveWCArticle {
+		property portal.acceptance = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -891,6 +895,8 @@ definition {
 	@description = "This ensures that the workflow can be set in an asset library."
 	@priority = "5"
 	test Smoke {
+		property portal.acceptance = "true";
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(

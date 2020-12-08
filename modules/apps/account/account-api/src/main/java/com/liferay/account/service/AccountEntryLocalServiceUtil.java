@@ -422,40 +422,40 @@ public class AccountEntryLocalServiceUtil {
 
 	public static java.util.List<com.liferay.account.model.AccountEntry>
 			getUserAccountEntries(
-				long userId, String keywords, Long parentAccountEntryId,
+				long userId, Long parentAccountEntryId, String keywords,
 				Integer status, String[] types, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getUserAccountEntries(
-			userId, keywords, parentAccountEntryId, status, types, start, end);
+			userId, parentAccountEntryId, keywords, status, types, start, end);
 	}
 
 	public static java.util.List<com.liferay.account.model.AccountEntry>
 			getUserAccountEntries(
-				long userId, String keywords, Long parentAccountEntryId,
+				long userId, Long parentAccountEntryId, String keywords,
 				String[] types, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getUserAccountEntries(
-			userId, keywords, parentAccountEntryId, types, start, end);
+			userId, parentAccountEntryId, keywords, types, start, end);
 	}
 
 	public static int getUserAccountEntriesCount(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			Integer status, String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getUserAccountEntriesCount(
-			userId, keywords, parentAccountEntryId, status, types);
+			userId, parentAccountEntryId, keywords, status, types);
 	}
 
 	public static int getUserAccountEntriesCount(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getUserAccountEntriesCount(
-			userId, keywords, parentAccountEntryId, types);
+			userId, parentAccountEntryId, keywords, types);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult

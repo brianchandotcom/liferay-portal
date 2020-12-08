@@ -331,25 +331,25 @@ public interface AccountEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountEntry> getUserAccountEntries(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			Integer status, String[] types, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountEntry> getUserAccountEntries(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			String[] types, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserAccountEntriesCount(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			Integer status, String[] types)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserAccountEntriesCount(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			String[] types)
 		throws PortalException;
 

@@ -451,43 +451,43 @@ public class AccountEntryLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.account.model.AccountEntry>
 			getUserAccountEntries(
-				long userId, String keywords, Long parentAccountEntryId,
+				long userId, Long parentAccountEntryId, String keywords,
 				Integer status, String[] types, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.getUserAccountEntries(
-			userId, keywords, parentAccountEntryId, status, types, start, end);
+			userId, parentAccountEntryId, keywords, status, types, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.account.model.AccountEntry>
 			getUserAccountEntries(
-				long userId, String keywords, Long parentAccountEntryId,
+				long userId, Long parentAccountEntryId, String keywords,
 				String[] types, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.getUserAccountEntries(
-			userId, keywords, parentAccountEntryId, types, start, end);
+			userId, parentAccountEntryId, keywords, types, start, end);
 	}
 
 	@Override
 	public int getUserAccountEntriesCount(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			Integer status, String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.getUserAccountEntriesCount(
-			userId, keywords, parentAccountEntryId, status, types);
+			userId, parentAccountEntryId, keywords, status, types);
 	}
 
 	@Override
 	public int getUserAccountEntriesCount(
-			long userId, String keywords, Long parentAccountEntryId,
+			long userId, Long parentAccountEntryId, String keywords,
 			String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.getUserAccountEntriesCount(
-			userId, keywords, parentAccountEntryId, types);
+			userId, parentAccountEntryId, keywords, types);
 	}
 
 	@Override

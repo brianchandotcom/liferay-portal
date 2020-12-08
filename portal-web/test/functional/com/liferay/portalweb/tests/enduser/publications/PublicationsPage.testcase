@@ -120,6 +120,100 @@ definition {
 	}
 
 	@priority = "4"
+	test DiscardConflictingChangesOnContentPage {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PublicationsPage#DiscardConflictingChangesOnContentPage";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
+
+		Publications.createNewPublication(publicationsName = "Publication Name 1");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Separator");
+
+		PageEditor.addWidget(
+			portletName = "Web Content Display",
+			targetFragmentName = "Separator");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Refresh();
+
+		PageEditor.clickPublish();
+
+		Publications.createNewPublication(publicationsName = "Publication Name 2");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph");
+
+		PageEditor.gotoStyle(fragmentName = "Paragraph");
+
+		PageEditor.configureFragment(
+			alignment = "Right",
+			textColor = "Warning");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Paragraph");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content");
+
+		Refresh();
+
+		PageEditor.clickPublish();
+
+		Publications.gotoPublish(publicationsName = "Publication Name 2");
+
+		Publications.publishPublication(publicationsName = "Publication Name 2");
+
+		Publications.selectPublication(publicationsName = "Publication Name 1");
+
+		Publications.gotoPublish(publicationsName = "Publication Name 1");
+
+		Publications.discardPublications(
+			conflictingPublications = "true",
+			entryTitle = "Content Page Name",
+			publicationsCategory = "Page",
+			publicationsTitle = "Content Page Name");
+
+		Publications.discardPublications(
+			conflictingPublications = "true",
+			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+			publicationsCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+			publicationsTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
+
+		Publications.discardPublications(
+			conflictingPublications = "true",
+			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
+			publicationsCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
+			publicationsTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
+
+		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
+	}
+
+	@priority = "4"
 	test PublishDeletedPageWithTag {
 		property test.name.skip.portal.instance = "PublicationsPage#PublishDeletedPageWithTag";
 

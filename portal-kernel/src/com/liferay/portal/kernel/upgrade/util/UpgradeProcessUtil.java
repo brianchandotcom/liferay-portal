@@ -110,8 +110,8 @@ public class UpgradeProcessUtil {
 		int result = newSchemaVersion.compareTo(currentSchemaVersion);
 
 		if ((result > 0) &&
-			((newSchemaVersion.getMinor() > currentSchemaVersion.getMinor()) ||
-			 (newSchemaVersion.getMajor() > currentSchemaVersion.getMajor()))) {
+			((newSchemaVersion.getMajor() > currentSchemaVersion.getMajor()) ||
+			 (newSchemaVersion.getMinor() > currentSchemaVersion.getMinor()))) {
 
 			return true;
 		}

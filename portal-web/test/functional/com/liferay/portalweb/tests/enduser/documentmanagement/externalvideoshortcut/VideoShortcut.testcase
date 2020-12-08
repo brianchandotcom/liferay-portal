@@ -352,4 +352,37 @@ definition {
 		AssertElementPresent(locator1 = "Button#YOUTUBE_PLAY");
 	}
 
+	@description = "This test covers LPS-124246 and LPS-124309. It ensures that YouTube shortcut can be added with the invalid file name and the thumbnail can be displayed in AP."
+	@priority = "4"
+	test ViewThumbnailViaAP {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		VideoShortcut.addPG(
+			extractedVideoShortcutTitle = "RONALDINHO vs NEYMAR. ¿A quién eliges? Los disfrutamos. #MundoMaldini",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://www.youtube.com",
+			videoURL = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
+
+		VideoShortcut.viewPG(
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutTitle = "RONALDINHO vs NEYMAR. ¿A quién eliges? Los disfrutamos. #MundoMaldini");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Guest");
+
+		AssertVisible(
+			key_thumbnailName = "https://i.ytimg.com",
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+	}
+
 }

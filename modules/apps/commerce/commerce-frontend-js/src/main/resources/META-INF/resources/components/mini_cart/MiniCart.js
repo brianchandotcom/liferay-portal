@@ -120,7 +120,7 @@ function MiniCart({
 
 	useEffect(() => {
 		if (isOpen) {
-			updateCartModel({orderId});
+			updateCartModel({orderId: cartState.id});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isOpen]);

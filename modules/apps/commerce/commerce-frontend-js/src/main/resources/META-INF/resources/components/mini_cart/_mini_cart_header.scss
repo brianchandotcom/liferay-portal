@@ -28,6 +28,8 @@
 			}
 
 			.action {
+				font-size: 0.75rem;
+				font-weight: 500;
 				padding: 2px;
 
 				&:last-child {
@@ -72,8 +74,11 @@
 			height: 30px;
 			margin-left: 10px;
 			padding: 0;
-			text-transform: uppercase;
-			width: 33px;
+			width: 45px;
+
+			&:not(:hover) {
+				background-color: #fff;
+			}
 
 			&:hover {
 				border-color: transparent;

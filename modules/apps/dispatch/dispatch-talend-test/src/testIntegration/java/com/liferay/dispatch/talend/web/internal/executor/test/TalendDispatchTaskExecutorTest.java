@@ -43,6 +43,7 @@ import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -75,9 +76,13 @@ public class TalendDispatchTaskExecutorTest {
 
 		_addTalendExecutableFileEntry(dispatchTrigger);
 
+		Calendar calendar = Calendar.getInstance();
+
+		int year = calendar.get(Calendar.YEAR) + 1;
+
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), false, "* * * * * *", 5, 5,
-			2024, 11, 11, false, false, 4, 4, 2024, 0, 0,
+			year, 11, 11, false, false, 4, 4, year, 0, 0,
 			DispatchTaskClusterMode.SINGLE_NODE);
 
 		_simulateSchedulerEvent(dispatchTrigger.getDispatchTriggerId());

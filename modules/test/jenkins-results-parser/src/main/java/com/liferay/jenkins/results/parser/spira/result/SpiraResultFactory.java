@@ -14,16 +14,38 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Peter Yoo
  */
 public class SpiraResultFactory {
+
+	public static SpiraBuildResult newSpiraBuildResult(
+		TopLevelBuild topLevelBuild) {
+
+		String key = topLevelBuild.getBuildURL();
+
+		SpiraBuildResult spiraBuildResult = _spiraBuildResults.get(key);
+
+		if (spiraBuildResult != null) {
+			return spiraBuildResult;
+		}
+
+		spiraBuildResult = new DefaultSpiraBuildResult(topLevelBuild);
+
+		_spiraBuildResults.put(key, spiraBuildResult);
+
+		return spiraBuildResult;
+	}
 
 	public static SpiraTestResult newSpiraTestResult(
 		AxisTestClassGroup axisTestClassGroup,
@@ -42,5 +64,8 @@ public class SpiraResultFactory {
 
 		return new BatchSpiraTestResult(axisTestClassGroup);
 	}
+
+	private static final Map<String, SpiraBuildResult> _spiraBuildResults =
+		new HashMap<>();
 
 }

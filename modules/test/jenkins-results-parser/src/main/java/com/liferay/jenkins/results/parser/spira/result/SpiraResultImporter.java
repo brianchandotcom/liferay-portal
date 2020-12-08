@@ -37,6 +37,9 @@ public class SpiraResultImporter {
 		}
 
 		_topLevelBuild = (TopLevelBuild)build;
+
+		_spiraBuildResult = SpiraResultFactory.newSpiraBuildResult(
+			_topLevelBuild);
 	}
 
 	public void record() {
@@ -52,7 +55,7 @@ public class SpiraResultImporter {
 
 				spiraTestResults.add(
 					SpiraResultFactory.newSpiraTestResult(
-						axisTestClassGroup, testClass));
+						_spiraBuildResult, axisTestClassGroup, testClass));
 			}
 		}
 

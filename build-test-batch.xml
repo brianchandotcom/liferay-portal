@@ -5945,7 +5945,7 @@ ${output.content}</echo>
 						<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
 						<parallel>
-							<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" >
+							<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second">
 								<http url="http://localhost:8080/web/guest" />
 							</waitfor>
 
@@ -5970,7 +5970,9 @@ ${output.content}</echo>
 									tofile="${app.server.parent.dir}/tomcat"
 								/>
 
-								<start-renamed-app-server />
+								<start-renamed-app-server
+									delete.liferay.home="false"
+								/>
 							</try>
 							<finally>
 								<condition else="0" property="junit.failure.count" value="1">

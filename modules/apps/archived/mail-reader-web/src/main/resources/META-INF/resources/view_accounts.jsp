@@ -40,8 +40,8 @@ MailManager mailManager = MailManager.getInstance(request);
 			for (Account mailAccount : mailAccounts) {
 			%>
 
-				<li class="tab <%= (mailAccount.getAccountId() == accountId) ? "active" : "" %>">
-					<aui:a cssClass="folders-link" data-accountId="<%= mailAccount.getAccountId() %>" data-inboxFolderId="<%= mailAccount.getInboxFolderId() %>" href="javascript:;" label="<%= mailAccount.getAddress() %>" />
+				<li class="nav-item tab <%= (mailAccount.getAccountId() == accountId) ? "active" : "" %>">
+					<aui:a cssClass="folders-link nav-link" data-accountId="<%= mailAccount.getAccountId() %>" data-inboxFolderId="<%= mailAccount.getInboxFolderId() %>" href="javascript:;" label="<%= mailAccount.getAddress() %>" />
 				</li>
 
 			<%

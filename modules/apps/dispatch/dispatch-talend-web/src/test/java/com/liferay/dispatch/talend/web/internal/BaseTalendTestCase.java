@@ -14,20 +14,27 @@
 
 package com.liferay.dispatch.talend.web.internal;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URL;
 
 /**
  * @author Igor Beslic
  */
 public abstract class BaseTalendTestCase {
 
-	protected InputStream getTalendArchiveInputStream() {
-		Class<BaseTalendTestCase> clazz = BaseTalendTestCase.class;
+	protected InputStream getTalendArchiveInputStream() throws IOException {
+		URL url = BaseTalendTestCase.class.getResource("/jobInfo.properties");
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		String urlString = String.valueOf(url);
 
-		return classLoader.getResourceAsStream(
-			"tmp_talend_sample/etl-talend-context-printer-sample-1.0.zip");
+		URL zipURL = new URL(
+			urlString.substring(
+				"jar:".length(),
+				urlString.length() - "!/jobInfo.properties".length()));
+
+		return zipURL.openStream();
 	}
 
 }

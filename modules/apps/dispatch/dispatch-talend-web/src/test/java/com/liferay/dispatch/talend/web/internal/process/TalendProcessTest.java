@@ -32,6 +32,7 @@ import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +89,8 @@ public class TalendProcessTest {
 
 		TalendProcess talendProcess = talendProcessBuilder.build();
 
-		List<String> arguments = talendProcess.getMainMethodArguments();
+		List<String> arguments = Arrays.asList(
+			talendProcess.getMainMethodArguments());
 
 		Assert.assertEquals(
 			arguments.toString(), unicodeProperties.size() + 3,
@@ -137,7 +139,8 @@ public class TalendProcessTest {
 
 		talendProcess = talendProcessBuilder.build();
 
-		processConfigArguments = talendProcess.getMainMethodArguments();
+		processConfigArguments = Arrays.asList(
+			talendProcess.getMainMethodArguments());
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");

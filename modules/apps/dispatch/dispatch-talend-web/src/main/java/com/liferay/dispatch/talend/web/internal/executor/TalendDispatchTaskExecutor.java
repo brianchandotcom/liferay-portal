@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -79,8 +78,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				_localProcessExecutor.execute(
 					talendProcess.getProcessConfig(),
 					new TalendProcessCallable(
-						ArrayUtil.toStringArray(
-							talendProcess.getMainMethodArguments()),
+						talendProcess.getMainMethodArguments(),
 						talendArchive.getJobMainClassFQN()));
 
 			NoticeableFuture<Serializable> future =

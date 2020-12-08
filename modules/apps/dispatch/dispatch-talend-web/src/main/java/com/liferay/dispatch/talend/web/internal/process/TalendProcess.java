@@ -19,6 +19,7 @@ import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessE
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -48,18 +49,6 @@ import java.util.function.Consumer;
  */
 public class TalendProcess {
 
-	public static final String CONTEXT_PARM_COMPANY_ID_TPL =
-		"--context_param companyId=%d";
-
-	public static final String CONTEXT_PARM_JOB_WORK_DIRECTORY_TPL =
-		"--context_param jobWorkDirectory=%s";
-
-	public static final String CONTEXT_PARM_LAST_RUN_START_DATE_TPL =
-		"--context_param lastRunStartDate=%s";
-
-	public static final String CONTEXT_PARM_NAME_VALUE_TPL =
-		"--context_param %s=%s";
-
 	public List<String> getMainMethodArguments() {
 		return _mainMethodArguments;
 	}
@@ -88,7 +77,8 @@ public class TalendProcess {
 			}
 
 			_contextParams.add(
-				String.format(CONTEXT_PARM_NAME_VALUE_TPL, name, value));
+				StringBundler.concat(
+					"--context_param ", name, StringPool.EQUAL, value));
 
 			return this;
 		}
@@ -193,12 +183,12 @@ public class TalendProcess {
 		private List<String> _getMainMethodArguments() {
 			List<String> arguments = new ArrayList<>(_contextParams);
 
-			arguments.add("--context=" + _talendArchive.getContextName());
+			arguments.add("--context=".concat(_talendArchive.getContextName()));
 			arguments.add(
-				String.format(CONTEXT_PARM_COMPANY_ID_TPL, _companyId));
+				"--context_param companyId=".concat(
+					String.valueOf(_companyId)));
 			arguments.add(
-				String.format(
-					CONTEXT_PARM_JOB_WORK_DIRECTORY_TPL,
+				"--context_param jobWorkDirectory=".concat(
 					_talendArchive.getJobDirectory()));
 
 			if (_lastRunStartDate != null) {
@@ -206,8 +196,7 @@ public class TalendProcess {
 					"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 				arguments.add(
-					String.format(
-						CONTEXT_PARM_LAST_RUN_START_DATE_TPL,
+					"--context_param lastRunStartDate=".concat(
 						simpleDateFormat.format(_lastRunStartDate)));
 			}
 

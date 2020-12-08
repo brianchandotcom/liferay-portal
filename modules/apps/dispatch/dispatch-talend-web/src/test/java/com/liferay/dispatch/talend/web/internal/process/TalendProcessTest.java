@@ -18,6 +18,7 @@ import com.liferay.dispatch.talend.web.internal.BaseTalendTestCase;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParser;
 import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -82,21 +83,20 @@ public class TalendProcessTest extends BaseTalendTestCase {
 
 		Assert.assertTrue(
 			arguments.contains(
-				String.format(
-					TalendProcess.CONTEXT_PARM_COMPANY_ID_TPL, companyId)));
+				"--context_param companyId=".concat(
+					String.valueOf(companyId))));
 
 		Assert.assertTrue(
 			arguments.contains(
-				String.format(
-					TalendProcess.CONTEXT_PARM_JOB_WORK_DIRECTORY_TPL,
+				"--context_param jobWorkDirectory=".concat(
 					talendArchive.getJobDirectory())));
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
 			Assert.assertTrue(
 				arguments.contains(
-					String.format(
-						TalendProcess.CONTEXT_PARM_NAME_VALUE_TPL,
-						entry.getKey(), entry.getValue())));
+					StringBundler.concat(
+						"--context_param ", entry.getKey(), StringPool.EQUAL,
+						entry.getValue())));
 		}
 
 		Stream<String> stream = arguments.stream();
@@ -104,9 +104,7 @@ public class TalendProcessTest extends BaseTalendTestCase {
 		Assert.assertTrue(
 			stream.noneMatch(
 				argument -> argument.startsWith(
-					String.format(
-						TalendProcess.CONTEXT_PARM_LAST_RUN_START_DATE_TPL,
-						StringPool.BLANK))));
+					"--context_param lastRunStartDate=")));
 
 		ProcessConfig processConfig = talendProcess.getProcessConfig();
 
@@ -136,9 +134,7 @@ public class TalendProcessTest extends BaseTalendTestCase {
 		Assert.assertTrue(
 			stream.anyMatch(
 				argument -> argument.startsWith(
-					String.format(
-						TalendProcess.CONTEXT_PARM_LAST_RUN_START_DATE_TPL,
-						StringPool.BLANK))));
+					"--context_param lastRunStartDate=")));
 	}
 
 	private String _getLibraryPath() {

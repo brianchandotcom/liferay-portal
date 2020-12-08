@@ -26,7 +26,6 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -148,8 +147,5 @@ public class TalendDispatchTaskExecutorTest {
 
 	@Inject
 	private Props _props;
-
-	@Inject
-	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

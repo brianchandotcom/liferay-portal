@@ -45,11 +45,9 @@ public class UpgradeRegion extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
+			if (rs.next()) {
 				defaultCompanyId = rs.getLong(1);
 				defaultUserId = rs.getLong(2);
-
-				break;
 			}
 		}
 

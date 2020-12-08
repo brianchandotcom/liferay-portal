@@ -210,7 +210,10 @@ definition {
 			publicationsCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
 			publicationsTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
-		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
+		// Workaround LPS-124618
+
+		//AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
+
 	}
 
 	@priority = "4"

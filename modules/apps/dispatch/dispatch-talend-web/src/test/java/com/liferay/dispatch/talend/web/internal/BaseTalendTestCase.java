@@ -14,26 +14,12 @@
 
 package com.liferay.dispatch.talend.web.internal;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
-
 import java.io.InputStream;
 
 /**
  * @author Igor Beslic
  */
 public abstract class BaseTalendTestCase {
-
-	static {
-		ReflectionTestUtil.setFieldValue(
-			FileUtil.class, "_file", FileImpl.getInstance());
-		ReflectionTestUtil.setFieldValue(
-			FastDateFormatFactoryUtil.class, "_fastDateFormatFactory",
-			new FastDateFormatFactoryImpl());
-	}
 
 	protected InputStream getTalendArchiveInputStream() {
 		Class<BaseTalendTestCase> clazz = BaseTalendTestCase.class;

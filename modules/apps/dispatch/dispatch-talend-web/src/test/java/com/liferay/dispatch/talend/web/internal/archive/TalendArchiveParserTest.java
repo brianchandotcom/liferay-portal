@@ -16,16 +16,31 @@ package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.dispatch.talend.web.internal.BaseTalendTestCase;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
+import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Igor Beslic
  */
 public class TalendArchiveParserTest extends BaseTalendTestCase {
+
+	@BeforeClass
+	public static void setUpClass() {
+		ReflectionTestUtil.setFieldValue(
+			FileUtil.class, "_file", FileImpl.getInstance());
+		ReflectionTestUtil.setFieldValue(
+			FastDateFormatFactoryUtil.class, "_fastDateFormatFactory",
+			new FastDateFormatFactoryImpl());
+	}
 
 	@Test
 	public void testParse() {

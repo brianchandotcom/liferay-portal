@@ -64,6 +64,7 @@ public class SpiraResultImporter {
 		}
 	}
 
+	private final SpiraBuildResult _spiraBuildResult;
 	private final TopLevelBuild _topLevelBuild;
 
 }

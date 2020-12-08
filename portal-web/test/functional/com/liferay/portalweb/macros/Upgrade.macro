@@ -3248,10 +3248,9 @@ definition {
 				workflowStatus = "Approved");
 		}
 
-		WebContentUpgrade.viewWithStructureCP(
+		WebContent.viewWithStructureCP(
 			webContentTitle = "Web Content With Predefined Value",
-			webContentWebContent = "Web Content Title",
-			webContentWebContentFieldName = "WebContent");
+			webContentWebContent = "Web Content Title");
 	}
 
 	macro viewWebContextsCORS {

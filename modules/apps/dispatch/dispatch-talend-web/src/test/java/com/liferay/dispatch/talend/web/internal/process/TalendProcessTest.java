@@ -23,11 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.net.URL;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
+import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -35,12 +31,18 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Igor Beslic
  */
 public class TalendProcessTest extends BaseTalendTestCase {
+
+	@BeforeClass
+	public static void setUpClass() {
+		PortalClassPathUtil.initializeClassPaths(null);
+	}
 
 	@Test
 	public void testBuilder() throws Exception {
@@ -64,7 +66,6 @@ public class TalendProcessTest extends BaseTalendTestCase {
 		}
 
 		talendProcessBuilder.lastRunStartDate(null);
-		talendProcessBuilder.liferayLibGlobalDirectory(_getLibraryPath());
 
 		TalendArchiveParser talendArchiveParser = new TalendArchiveParser();
 
@@ -135,18 +136,6 @@ public class TalendProcessTest extends BaseTalendTestCase {
 			stream.anyMatch(
 				argument -> argument.startsWith(
 					"--context_param lastRunStartDate=")));
-	}
-
-	private String _getLibraryPath() {
-		Class<? extends TalendProcessTest> clazz = getClass();
-
-		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
-
-		CodeSource codeSource = protectionDomain.getCodeSource();
-
-		URL locationURL = codeSource.getLocation();
-
-		return locationURL.getPath();
 	}
 
 }

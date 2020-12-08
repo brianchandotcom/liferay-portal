@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
@@ -141,9 +139,6 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		talendProcessBuilder.lastRunStartDate(lastRunStateDate);
 
-		talendProcessBuilder.liferayLibGlobalDirectory(
-			_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR));
-
 		talendProcessBuilder.processLogConsumer(new TalendProcessLogger());
 
 		talendProcessBuilder.talendArchive(talendArchive);
@@ -174,10 +169,6 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	private final LocalProcessExecutor _localProcessExecutor =
 		new LocalProcessExecutor();
-
-	@Reference
-	private Props _props;
-
 	private final TalendArchiveParser _talendArchiveParser =
 		new TalendArchiveParser();
 

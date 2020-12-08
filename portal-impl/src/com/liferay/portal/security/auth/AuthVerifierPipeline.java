@@ -206,17 +206,13 @@ public class AuthVerifierPipeline {
 	private void _rebuildConfiguration() {
 		Map<String, List<AuthVerifierConfiguration>>
 			excludeAuthVerifierConfigurations = new HashMap<>();
-
 		Map<String, List<AuthVerifierConfiguration>>
 			includeAuthVerifierConfigurations = new HashMap<>();
-
-		boolean containsPortalPropertyPrefix = _filterProperties.containsKey(
-			"portal_property_prefix");
 
 		for (AuthVerifierConfiguration authVerifierConfiguration :
 				AuthVerifierTrackerCustomizer._authVerifierConfigurations) {
 
-			if (!containsPortalPropertyPrefix) {
+			if (!_filterProperties.containsKey("portal_property_prefix")) {
 				authVerifierConfiguration = _mergeAuthVerifierConfiguration(
 					authVerifierConfiguration, _filterProperties);
 
@@ -237,10 +233,11 @@ public class AuthVerifierPipeline {
 					urlsExclude, key -> new ArrayList<>());
 
 				List<AuthVerifierConfiguration>
-					excludeAuthVerifierConfiguration =
+					excludeAuthVerifierConfigurationList =
 						excludeAuthVerifierConfigurations.get(urlsExclude);
 
-				excludeAuthVerifierConfiguration.add(authVerifierConfiguration);
+				excludeAuthVerifierConfigurationList.add(
+					authVerifierConfiguration);
 			}
 
 			String[] urlsIncludes = StringUtil.split(
@@ -253,10 +250,11 @@ public class AuthVerifierPipeline {
 					urlsInclude, key -> new ArrayList<>());
 
 				List<AuthVerifierConfiguration>
-					includeAuthVerifierConfiguration =
+					includeAuthVerifierConfigurationList =
 						includeAuthVerifierConfigurations.get(urlsInclude);
 
-				includeAuthVerifierConfiguration.add(authVerifierConfiguration);
+				includeAuthVerifierConfigurationList.add(
+					authVerifierConfiguration);
 			}
 		}
 

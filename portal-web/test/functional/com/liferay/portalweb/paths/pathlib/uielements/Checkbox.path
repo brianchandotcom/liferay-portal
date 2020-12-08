@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT</td>
-	<td>//label[contains(.,'Allow Manual Membership Management')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Allow Manual Membership Management')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>ENABLE_AUTO_TAGGING</td>
-	<td>//label[contains(.,'Enable Auto Tagging')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable Auto Tagging')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION</td>
-	<td>//label[contains(.,'Enable propagation of changes')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable propagation of changes')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

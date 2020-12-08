@@ -340,7 +340,7 @@
 <!--CUSTOM_FIELDS-->
 <tr>
 	<td>CUSTOM_FIELDS_LABEL</td>
-	<td>//div/label[@class='control-label' and contains(.,'${key_customFieldName}')]</td>
+	<td>//div/label[contains(@class,'control-label') and contains(.,'${key_customFieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

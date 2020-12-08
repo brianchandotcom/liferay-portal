@@ -25,6 +25,7 @@ export function DetailsListElement(props) {
 	return (
 		<a
 			className={`detail-row d-table-row${highlightedModifierClass}`}
+			data-senna-off="true"
 			href={props.url && state.app.basePathUrl + props.url}
 			onFocus={() => actions.highlightDetail(props.number, true)}
 			onMouseOut={() => actions.highlightDetail(null)}

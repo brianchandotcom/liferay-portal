@@ -20,12 +20,12 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
- * @author Igor Beslic
+ * @author Shuyang Zhou
  */
-public abstract class BaseTalendTestCase {
+public class TalendArchiveUtil {
 
-	protected InputStream getTalendArchiveInputStream() throws IOException {
-		URL url = BaseTalendTestCase.class.getResource("/jobInfo.properties");
+	public static InputStream getInputStream() throws IOException {
+		URL url = TalendArchiveUtil.class.getResource("/jobInfo.properties");
 
 		String urlString = String.valueOf(url);
 

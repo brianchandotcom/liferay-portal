@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.talend.web.internal.process;
 
-import com.liferay.dispatch.talend.web.internal.BaseTalendTestCase;
+import com.liferay.dispatch.talend.web.internal.TalendArchiveUtil;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParser;
 import com.liferay.petra.process.ProcessConfig;
@@ -43,7 +43,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class TalendProcessTest extends BaseTalendTestCase {
+public class TalendProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -82,7 +82,7 @@ public class TalendProcessTest extends BaseTalendTestCase {
 		TalendArchiveParser talendArchiveParser = new TalendArchiveParser();
 
 		TalendArchive talendArchive = talendArchiveParser.parse(
-			getTalendArchiveInputStream());
+			TalendArchiveUtil.getInputStream());
 
 		talendProcessBuilder.talendArchive(talendArchive);
 

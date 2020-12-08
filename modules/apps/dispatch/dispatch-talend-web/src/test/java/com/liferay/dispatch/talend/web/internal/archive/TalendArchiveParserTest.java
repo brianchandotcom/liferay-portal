@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.talend.web.internal.archive;
 
-import com.liferay.dispatch.talend.web.internal.BaseTalendTestCase;
+import com.liferay.dispatch.talend.web.internal.TalendArchiveUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -32,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class TalendArchiveParserTest extends BaseTalendTestCase {
+public class TalendArchiveParserTest {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -48,7 +48,7 @@ public class TalendArchiveParserTest extends BaseTalendTestCase {
 		TalendArchiveParser talendArchiveParser = new TalendArchiveParser();
 
 		TalendArchive talendArchive = talendArchiveParser.parse(
-			getTalendArchiveInputStream());
+			TalendArchiveUtil.getInputStream());
 
 		Assert.assertNotNull(talendArchive);
 

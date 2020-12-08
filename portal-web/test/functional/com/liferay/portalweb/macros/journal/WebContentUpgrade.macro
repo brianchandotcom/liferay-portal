@@ -359,14 +359,18 @@ definition {
 		}
 
 		if (isSet(webContentImage)) {
+			if (!(isSet(webContentImageFieldLabel))) {
+				var webContentImageFieldLabel = "Image";
+			}
+
 			AssertTextEquals(
-				key_fieldFieldLabel = "Image",
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
 				locator1 = "TextInput#SELECTOR_INPUT",
 				value1 = "${webContentImage}");
 
 			AssertElementPresent(
-				key_fieldFieldLabel = "Image",
-				key_image = "${webContentImage}",
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				key_image = "/documents/",
 				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 		}
 

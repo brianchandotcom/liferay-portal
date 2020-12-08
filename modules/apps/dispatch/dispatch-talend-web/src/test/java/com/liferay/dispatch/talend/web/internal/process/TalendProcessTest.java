@@ -25,10 +25,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalClassPathUtil;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -100,12 +101,9 @@ public class TalendProcessTest extends BaseTalendTestCase {
 						entry.getValue())));
 		}
 
-		Stream<String> stream = arguments.stream();
-
-		Assert.assertTrue(
-			stream.noneMatch(
-				argument -> argument.startsWith(
-					"--context_param lastRunStartDate=")));
+		arguments.forEach(
+			argument -> Assert.assertFalse(
+				argument.startsWith("--context_param lastRunStartDate=")));
 
 		ProcessConfig processConfig = talendProcess.getProcessConfig();
 
@@ -130,12 +128,13 @@ public class TalendProcessTest extends BaseTalendTestCase {
 
 		processConfigArguments = talendProcess.getMainMethodArguments();
 
-		stream = processConfigArguments.stream();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 		Assert.assertTrue(
-			stream.anyMatch(
-				argument -> argument.startsWith(
-					"--context_param lastRunStartDate=")));
+			processConfigArguments.contains(
+				"--context_param lastRunStartDate=".concat(
+					simpleDateFormat.format(date))));
 	}
 
 }

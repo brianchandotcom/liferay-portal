@@ -46,7 +46,7 @@ import java.util.function.Consumer;
 /**
  * @author Igor Beslic
  */
-public interface TalendProcess {
+public class TalendProcess {
 
 	public static final String CONTEXT_PARM_COMPANY_ID_TPL =
 		"--context_param companyId=%d";
@@ -60,45 +60,18 @@ public interface TalendProcess {
 	public static final String CONTEXT_PARM_NAME_VALUE_TPL =
 		"--context_param %s=%s";
 
-	public List<String> getMainMethodArguments();
+	public List<String> getMainMethodArguments() {
+		return _mainMethodArguments;
+	}
 
-	public ProcessConfig getProcessConfig();
+	public ProcessConfig getProcessConfig() {
+		return _processConfig;
+	}
 
 	public static class Builder {
 
 		public TalendProcess build() {
-			ProcessConfig.Builder processConfigBuilder =
-				new ProcessConfig.Builder();
-
-			processConfigBuilder.setArguments(_jvmOptions);
-
-			processConfigBuilder.setBootstrapClassPath(
-				_getBootstrapClassPath());
-
-			processConfigBuilder.setProcessLogConsumer(_processLogConsumer);
-
-			processConfigBuilder.setRuntimeClassPath(_getTalendClassPath());
-
-			return new TalendProcess() {
-
-				@Override
-				public List<String> getMainMethodArguments() {
-					return _mainMethodArguments;
-				}
-
-				@Override
-				public ProcessConfig getProcessConfig() {
-					return _processConfig;
-				}
-
-				private final List<String> _jvmOptions =
-					Collections.unmodifiableList(Builder.this._jvmOptions);
-				private final List<String> _mainMethodArguments =
-					Collections.unmodifiableList(_getMainMethodArguments());
-				private final ProcessConfig _processConfig =
-					processConfigBuilder.build();
-
-			};
+			return new TalendProcess(this);
 		}
 
 		public Builder companyId(long companyId) {
@@ -144,6 +117,22 @@ public interface TalendProcess {
 			_talendArchive = talendArchive;
 
 			return this;
+		}
+
+		private ProcessConfig _buildProcessConfig() {
+			ProcessConfig.Builder processConfigBuilder =
+				new ProcessConfig.Builder();
+
+			processConfigBuilder.setArguments(_jvmOptions);
+
+			processConfigBuilder.setBootstrapClassPath(
+				_getBootstrapClassPath());
+
+			processConfigBuilder.setProcessLogConsumer(_processLogConsumer);
+
+			processConfigBuilder.setRuntimeClassPath(_getTalendClassPath());
+
+			return processConfigBuilder.build();
 		}
 
 		private String _createClasspath(
@@ -241,5 +230,13 @@ public interface TalendProcess {
 		private TalendArchive _talendArchive;
 
 	}
+
+	private TalendProcess(Builder builder) {
+		_mainMethodArguments = builder._getMainMethodArguments();
+		_processConfig = builder._buildProcessConfig();
+	}
+
+	private final List<String> _mainMethodArguments;
+	private final ProcessConfig _processConfig;
 
 }

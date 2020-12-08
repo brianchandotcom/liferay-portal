@@ -108,9 +108,6 @@ class ChangeTrackingChangesView extends React.Component {
 			};
 
 			if (node.modelClassNameId) {
-				state.modelClassNameId = node.modelClassNameId;
-				state.modelClassPK = node.modelClassPK;
-
 				this.initialNode = node;
 			}
 
@@ -190,28 +187,6 @@ class ChangeTrackingChangesView extends React.Component {
 					const dropdownItems = this._getDropdownItems(
 						this.state.node
 					);
-
-					const oldState = window.history.state;
-
-					if (
-						oldState &&
-						oldState.modelClassNameId &&
-						oldState.modelClassNameId ===
-							this.initialNode.modelClassNameId &&
-						oldState.modelClassPK === this.initialNode.modelClassPK
-					) {
-						window.history.replaceState(
-							{
-								dropdownItems,
-								modelClassNameId: oldState.modelClassNameId,
-								modelClassPK: oldState.modelClassPK,
-								path: oldState.path,
-								renderInnerHTML: {__html: text},
-								senna: true,
-							},
-							document.title
-						);
-					}
 
 					if (
 						this.state.node.modelClassNameId &&
@@ -1304,11 +1279,6 @@ class ChangeTrackingChangesView extends React.Component {
 			senna: true,
 		};
 
-		if (node.modelClassNameId) {
-			state.modelClassNameId = node.modelClassNameId;
-			state.modelClassPK = node.modelClassPK;
-		}
-
 		window.history.pushState(state, document.title, path);
 
 		this.setState(
@@ -1421,25 +1391,7 @@ class ChangeTrackingChangesView extends React.Component {
 				viewType,
 			},
 			() => {
-				if (!state || !state.renderInnerHTML) {
-					this._updateRenderContent(true, node, pathname + search);
-
-					return;
-				}
-
-				this.setState(
-					{
-						dropdownItems: state.dropdownItems,
-						renderInnerHTML: state.renderInnerHTML,
-					},
-					() => {
-						this._updateRenderContent(
-							false,
-							node,
-							pathname + search
-						);
-					}
-				);
+				this._updateRenderContent(true, node, pathname + search);
 			}
 		);
 	}
@@ -1963,30 +1915,6 @@ class ChangeTrackingChangesView extends React.Component {
 							const dropdownItems = this._getDropdownItems(
 								this.state.node
 							);
-
-							const oldState = window.history.state;
-
-							if (
-								oldState &&
-								oldState.modelClassNameId &&
-								oldState.modelClassNameId ===
-									node.modelClassNameId &&
-								oldState.modelClassPK === node.modelClassPK &&
-								oldState.path === path
-							) {
-								window.history.replaceState(
-									{
-										dropdownItems,
-										modelClassNameId:
-											oldState.modelClassNameId,
-										modelClassPK: oldState.modelClassPK,
-										path: oldState.path,
-										renderInnerHTML: {__html: text},
-										senna: true,
-									},
-									document.title
-								);
-							}
 
 							if (
 								this.state.node.modelClassNameId &&

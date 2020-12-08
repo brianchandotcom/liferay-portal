@@ -17,8 +17,10 @@ package com.liferay.dispatch.talend.web.internal.process;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessLog;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.io.File;
@@ -31,7 +33,6 @@ import java.security.ProtectionDomain;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -64,7 +65,7 @@ public class TalendProcess {
 
 		public Builder contextParam(String name, String value) {
 			if (Objects.equals(name, "JAVA_OPTS")) {
-				Collections.addAll(_jvmOptions, value.split("\\s"));
+				_jvmOptions.addAll(StringUtil.split(value, CharPool.SPACE));
 
 				return this;
 			}

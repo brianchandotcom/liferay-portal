@@ -32,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class TalendArchiveParserTest {
+public class TalendArchiveParserUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -45,9 +45,7 @@ public class TalendArchiveParserTest {
 
 	@Test
 	public void testParse() throws IOException {
-		TalendArchiveParser talendArchiveParser = new TalendArchiveParser();
-
-		TalendArchive talendArchive = talendArchiveParser.parse(
+		TalendArchive talendArchive = TalendArchiveParserUtil.parse(
 			TalendArchiveUtil.getInputStream());
 
 		Assert.assertNotNull(talendArchive);

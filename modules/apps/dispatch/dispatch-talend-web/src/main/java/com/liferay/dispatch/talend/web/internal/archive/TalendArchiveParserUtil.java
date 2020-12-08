@@ -42,9 +42,9 @@ import java.util.zip.ZipFile;
 /**
  * @author Igor Beslic
  */
-public class TalendArchiveParser {
+public class TalendArchiveParserUtil {
 
-	public TalendArchive parse(InputStream jobArchiveInputStream) {
+	public static TalendArchive parse(InputStream jobArchiveInputStream) {
 		try {
 			return _parse(jobArchiveInputStream);
 		}
@@ -55,7 +55,7 @@ public class TalendArchiveParser {
 		return null;
 	}
 
-	private File _getJobDirectory(InputStream jobArchiveInputStream)
+	private static File _getJobDirectory(InputStream jobArchiveInputStream)
 		throws IOException {
 
 		File tempFile = FileUtil.createTempFile(jobArchiveInputStream);
@@ -74,7 +74,7 @@ public class TalendArchiveParser {
 		}
 	}
 
-	private Path _getJobJarPath(String jobName, Path jobDirectoryPath)
+	private static Path _getJobJarPath(String jobName, Path jobDirectoryPath)
 		throws IOException {
 
 		AtomicReference<Path> pathReference = new AtomicReference<>();
@@ -111,7 +111,7 @@ public class TalendArchiveParser {
 			"Unable to determine job JAR directory for " + jobName);
 	}
 
-	private List<String> _getJobLibEntries(Path jobDirectoryPath)
+	private static List<String> _getJobLibEntries(Path jobDirectoryPath)
 		throws IOException {
 
 		List<String> paths = new ArrayList<>();
@@ -141,7 +141,7 @@ public class TalendArchiveParser {
 		return paths;
 	}
 
-	private String _getJobMainClassFQN(
+	private static String _getJobMainClassFQN(
 			String jobName, String jobExecutableJarPath)
 		throws IOException {
 
@@ -168,7 +168,9 @@ public class TalendArchiveParser {
 			"Unable to determine job main class");
 	}
 
-	private Properties _getJobProperties(File jobDirectory) throws IOException {
+	private static Properties _getJobProperties(File jobDirectory)
+		throws IOException {
+
 		Properties properties = new Properties();
 
 		try (InputStream inputStream = new FileInputStream(
@@ -180,7 +182,7 @@ public class TalendArchiveParser {
 		return properties;
 	}
 
-	private TalendArchive _parse(InputStream jobZIPInputStream)
+	private static TalendArchive _parse(InputStream jobZIPInputStream)
 		throws IOException {
 
 		File jobDirectory = _getJobDirectory(jobZIPInputStream);
@@ -213,6 +215,6 @@ public class TalendArchiveParser {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TalendArchiveParser.class);
+		TalendArchiveParserUtil.class);
 
 }

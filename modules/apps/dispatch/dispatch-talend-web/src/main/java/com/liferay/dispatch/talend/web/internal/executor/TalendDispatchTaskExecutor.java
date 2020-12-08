@@ -22,7 +22,7 @@ import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.repository.exception.DispatchRepositoryException;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
-import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParser;
+import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParserUtil;
 import com.liferay.dispatch.talend.web.internal.process.TalendProcess;
 import com.liferay.dispatch.talend.web.internal.process.TalendProcessCallable;
 import com.liferay.petra.concurrent.NoticeableFuture;
@@ -119,7 +119,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					dispatchTriggerId);
 		}
 
-		return _talendArchiveParser.parse(fileEntry.getContentStream());
+		return TalendArchiveParserUtil.parse(fileEntry.getContentStream());
 	}
 
 	private TalendProcess _getTalendProcess(
@@ -164,8 +164,5 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Reference
 	private ProcessExecutor _processExecutor;
-
-	private final TalendArchiveParser _talendArchiveParser =
-		new TalendArchiveParser();
 
 }

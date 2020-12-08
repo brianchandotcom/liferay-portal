@@ -35,20 +35,25 @@ public class TalendArchiveParserTest extends BaseTalendTestCase {
 
 		Assert.assertNotNull(talendArchive);
 
+		String jobDirectory = talendArchive.getJobDirectory();
+
+		Assert.assertNotNull(jobDirectory);
+
 		List<String> talendArchiveClasspathEntries =
 			talendArchive.getClasspathEntries();
 
 		Assert.assertNotNull(talendArchiveClasspathEntries);
 
 		for (String classpathEntry : _CLASSPATH_ENTRIES) {
+			classpathEntry = jobDirectory + classpathEntry;
+
 			Assert.assertTrue(
 				classpathEntry,
 				talendArchiveClasspathEntries.contains(classpathEntry));
 		}
 
-		Assert.assertNotNull(talendArchive.getJobDirectory());
-
-		Assert.assertEquals(_JOB_JAR_PATH, talendArchive.getJobJARPath());
+		Assert.assertEquals(
+			jobDirectory + _JOB_JAR_PATH, talendArchive.getJobJARPath());
 
 		String jobMainClassFQN = talendArchive.getJobMainClassFQN();
 
@@ -61,7 +66,7 @@ public class TalendArchiveParserTest extends BaseTalendTestCase {
 	};
 
 	private static final String _JOB_JAR_PATH =
-		"./etl_talend_context_printer_sample" +
+		"/etl_talend_context_printer_sample" +
 			"/etl_talend_context_printer_sample_1_0.jar";
 
 	private static final String _JOB_NAME = "context_printer_sample";

@@ -15,8 +15,6 @@
 package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -59,7 +57,7 @@ public class TalendArchive {
 		}
 
 		public Builder classpathEntry(String classpathEntry) {
-			_classpathEntries.add(_stripJobDirectory(classpathEntry));
+			_classpathEntries.add(classpathEntry);
 
 			return this;
 		}
@@ -73,13 +71,11 @@ public class TalendArchive {
 		public Builder jobDirectory(String jobDirectory) {
 			_jobDirectory = jobDirectory;
 
-			_stripJobDirectory();
-
 			return this;
 		}
 
 		public Builder jobJARPath(String jobJARPath) {
-			_jobJARPath = _stripJobDirectory(jobJARPath);
+			_jobJARPath = jobJARPath;
 
 			return this;
 		}
@@ -91,56 +87,17 @@ public class TalendArchive {
 		}
 
 		private String _buildClasspath() {
-			String parentDirectory = StringPool.PERIOD;
-
-			if (Validator.isNotNull(_jobDirectory)) {
-				parentDirectory = _jobDirectory;
-			}
-
 			StringBundler sb = new StringBundler(
-				(_classpathEntries.size() * 3) + 4);
-
-			sb.append(parentDirectory);
-			sb.append(File.pathSeparatorChar);
+				(_classpathEntries.size() * 2) + 1);
 
 			for (String classpathEntry : _classpathEntries) {
-				sb.append(parentDirectory);
 				sb.append(classpathEntry);
 				sb.append(File.pathSeparatorChar);
 			}
 
-			sb.append(parentDirectory);
 			sb.append(_jobJARPath);
 
 			return sb.toString();
-		}
-
-		private void _stripJobDirectory() {
-			List<String> classpathEntries = new ArrayList<>();
-
-			for (String classpathEntry : _classpathEntries) {
-				classpathEntries.add(_stripJobDirectory(classpathEntry));
-			}
-
-			if (classpathEntries.isEmpty()) {
-				return;
-			}
-
-			_classpathEntries = classpathEntries;
-
-			if (Validator.isNotNull(_jobJARPath)) {
-				_jobJARPath = _stripJobDirectory(_jobJARPath);
-			}
-		}
-
-		private String _stripJobDirectory(String directory) {
-			if (Validator.isNull(_jobDirectory) ||
-				!directory.startsWith(_jobDirectory)) {
-
-				return directory;
-			}
-
-			return directory.substring(_jobDirectory.length());
 		}
 
 		private List<String> _classpathEntries = new ArrayList<>();
@@ -156,7 +113,7 @@ public class TalendArchive {
 		_classpathEntries = builder._classpathEntries;
 		_contextName = builder._contextName;
 		_jobDirectory = builder._jobDirectory;
-		_jobJARPath = StringPool.PERIOD + builder._jobJARPath;
+		_jobJARPath = builder._jobJARPath;
 		_jobMainClassFQN = builder._jobMainClassFQN;
 	}
 

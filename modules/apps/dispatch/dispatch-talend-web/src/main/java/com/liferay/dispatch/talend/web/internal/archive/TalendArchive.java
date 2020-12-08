@@ -26,94 +26,40 @@ import java.util.List;
 /**
  * @author Igor Beslic
  */
-public interface TalendArchive {
+public class TalendArchive {
 
-	public String getClasspath();
+	public String getClasspath() {
+		return _classpath;
+	}
 
-	public List<String> getClasspathEntries();
+	public List<String> getClasspathEntries() {
+		return _classpathEntries;
+	}
 
-	public String getContextName();
+	public String getContextName() {
+		return _contextName;
+	}
 
-	public String getJobDirectory();
+	public String getJobDirectory() {
+		return _jobDirectory;
+	}
 
-	public String getJobJARPath();
+	public String getJobJARPath() {
+		return _jobJARPath;
+	}
 
-	public String getJobMainClassFQN();
+	public String getJobMainClassFQN() {
+		return _jobMainClassFQN;
+	}
 
-	public List<String> getJVMOptions();
+	public List<String> getJVMOptions() {
+		return _jvmOptions;
+	}
 
 	public static class Builder {
 
 		public TalendArchive build() {
-			return new TalendArchive() {
-
-				@Override
-				public String getClasspath() {
-					String parentDirectory = StringPool.PERIOD;
-
-					if (Validator.isNotNull(_jobDirectory)) {
-						parentDirectory = _jobDirectory;
-					}
-
-					StringBundler sb = new StringBundler(
-						(_classpathEntries.size() * 3) + 4);
-
-					sb.append(parentDirectory);
-					sb.append(File.pathSeparatorChar);
-
-					for (String classpathEntry : _classpathEntries) {
-						sb.append(parentDirectory);
-						sb.append(classpathEntry);
-						sb.append(File.pathSeparatorChar);
-					}
-
-					sb.append(parentDirectory);
-					sb.append(_jobJARPath);
-
-					return sb.toString();
-				}
-
-				@Override
-				public List<String> getClasspathEntries() {
-					return new ArrayList<>(_classpathEntries);
-				}
-
-				@Override
-				public String getContextName() {
-					return _contextName;
-				}
-
-				@Override
-				public String getJobDirectory() {
-					return _jobDirectory;
-				}
-
-				@Override
-				public String getJobJARPath() {
-					return StringPool.PERIOD + _jobJARPath;
-				}
-
-				@Override
-				public String getJobMainClassFQN() {
-					return _jobMainClassFQN;
-				}
-
-				@Override
-				public List<String> getJVMOptions() {
-					return new ArrayList<>(_jvmOptions);
-				}
-
-				private final List<String> _classpathEntries = new ArrayList<>(
-					Builder.this._classpathEntries);
-				private final String _contextName = Builder.this._contextName;
-				private final String _jobDirectory = Builder.this._jobDirectory;
-				private final String _jobJARPath = Builder.this._jobJARPath;
-				private final String _jobMainClassFQN =
-					Builder.this._jobMainClassFQN;
-				private final List<String> _jvmOptions = new ArrayList<>(
-					Builder.this._jvmOptions);
-
-			};
+			return new TalendArchive(this);
 		}
 
 		public Builder classpathEntry(String classpathEntry) {
@@ -154,6 +100,31 @@ public interface TalendArchive {
 			return this;
 		}
 
+		private String _buildClasspath() {
+			String parentDirectory = StringPool.PERIOD;
+
+			if (Validator.isNotNull(_jobDirectory)) {
+				parentDirectory = _jobDirectory;
+			}
+
+			StringBundler sb = new StringBundler(
+				(_classpathEntries.size() * 3) + 4);
+
+			sb.append(parentDirectory);
+			sb.append(File.pathSeparatorChar);
+
+			for (String classpathEntry : _classpathEntries) {
+				sb.append(parentDirectory);
+				sb.append(classpathEntry);
+				sb.append(File.pathSeparatorChar);
+			}
+
+			sb.append(parentDirectory);
+			sb.append(_jobJARPath);
+
+			return sb.toString();
+		}
+
 		private void _stripJobDirectory() {
 			List<String> classpathEntries = new ArrayList<>();
 
@@ -190,5 +161,23 @@ public interface TalendArchive {
 		private List<String> _jvmOptions = new ArrayList<>();
 
 	}
+
+	private TalendArchive(Builder builder) {
+		_classpath = builder._buildClasspath();
+		_classpathEntries = builder._classpathEntries;
+		_contextName = builder._contextName;
+		_jobDirectory = builder._jobDirectory;
+		_jobJARPath = StringPool.PERIOD + builder._jobJARPath;
+		_jobMainClassFQN = builder._jobMainClassFQN;
+		_jvmOptions = builder._jvmOptions;
+	}
+
+	private final String _classpath;
+	private final List<String> _classpathEntries;
+	private final String _contextName;
+	private final String _jobDirectory;
+	private final String _jobJARPath;
+	private final String _jobMainClassFQN;
+	private final List<String> _jvmOptions;
 
 }

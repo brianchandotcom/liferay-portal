@@ -15,22 +15,15 @@
 package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
-import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
-
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -89,12 +82,6 @@ public class TalendProcess {
 			return this;
 		}
 
-		public Builder liferayLibGlobalDirectory(String directory) {
-			_liferayLibGlobalDirectory = directory;
-
-			return this;
-		}
-
 		public Builder processLogConsumer(
 			Consumer<ProcessLog> processLogConsumer) {
 
@@ -115,59 +102,17 @@ public class TalendProcess {
 
 			processConfigBuilder.setArguments(_jvmOptions);
 
+			ProcessConfig portalProcessConfig =
+				PortalClassPathUtil.getPortalProcessConfig();
+
 			processConfigBuilder.setBootstrapClassPath(
-				_getBootstrapClassPath());
+				portalProcessConfig.getBootstrapClassPath());
 
 			processConfigBuilder.setProcessLogConsumer(_processLogConsumer);
 
 			processConfigBuilder.setRuntimeClassPath(_getTalendClassPath());
 
 			return processConfigBuilder.build();
-		}
-
-		private String _createClasspath(
-			Path dirPath, DirectoryStream.Filter<Path> filter) {
-
-			try (DirectoryStream<Path> directoryStream =
-					Files.newDirectoryStream(dirPath, filter)) {
-
-				StringBundler sb = new StringBundler();
-
-				directoryStream.forEach(
-					path -> {
-						sb.append(path);
-						sb.append(File.pathSeparator);
-					});
-
-				if (sb.index() > 0) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				return sb.toString();
-			}
-			catch (IOException ioException) {
-				throw new TalendProcessException(
-					"Unable to iterate " + dirPath, ioException);
-			}
-		}
-
-		private String _getBootstrapClassPath() {
-			if (Validator.isNull(_liferayLibGlobalDirectory)) {
-				throw new TalendProcessException(
-					"Liferay library global directory is required but not set");
-			}
-
-			return _createClasspath(
-				Paths.get(_liferayLibGlobalDirectory),
-				path -> {
-					String fileName = String.valueOf(path.getFileName());
-
-					if (fileName.startsWith("com.liferay.petra")) {
-						return true;
-					}
-
-					return false;
-				});
 		}
 
 		private URL _getBundleURL() {
@@ -214,7 +159,6 @@ public class TalendProcess {
 		private final List<String> _contextParams = new ArrayList<>();
 		private final List<String> _jvmOptions = new ArrayList<>();
 		private Date _lastRunStartDate;
-		private String _liferayLibGlobalDirectory;
 		private Consumer<ProcessLog> _processLogConsumer;
 		private TalendArchive _talendArchive;
 

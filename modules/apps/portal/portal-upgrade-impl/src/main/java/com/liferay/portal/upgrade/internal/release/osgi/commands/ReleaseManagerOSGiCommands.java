@@ -292,10 +292,11 @@ public class ReleaseManagerOSGiCommands {
 			Version currentSchemaVersion =
 				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
 
-			SortedMap<Version, UpgradeProcess> pendingUpgrades =
-				PortalUpgradeProcess.getPendingUpgrades(currentSchemaVersion);
+			SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
+				PortalUpgradeProcess.getPendingUpgradeProcesses(
+					currentSchemaVersion);
 
-			if (!pendingUpgrades.isEmpty()) {
+			if (!pendingUpgradeProcesses.isEmpty()) {
 				Version latestSchemaVersion =
 					PortalUpgradeProcess.getLatestSchemaVersion();
 
@@ -311,19 +312,21 @@ public class ReleaseManagerOSGiCommands {
 				if (listAllUpgrades) {
 					sb.append(StringPool.COLON);
 
-					for (SortedMap.Entry<Version, UpgradeProcess> upgrade :
-							pendingUpgrades.entrySet()) {
-
-						Version version = upgrade.getKey();
-						UpgradeProcess upgradeProcess = upgrade.getValue();
+					for (SortedMap.Entry<Version, UpgradeProcess> entry :
+							pendingUpgradeProcesses.entrySet()) {
 
 						sb.append(StringPool.NEW_LINE);
 						sb.append(StringPool.TAB);
+
+						UpgradeProcess upgradeProcess = entry.getValue();
+						Version version = entry.getKey();
+
 						sb.append(
 							_getPendingUpgradeInfo(
 								upgradeProcess.getClass(),
 								currentSchemaVersion.toString(),
 								version.toString()));
+
 						sb.append(StringPool.NEW_LINE);
 
 						currentSchemaVersion = version;

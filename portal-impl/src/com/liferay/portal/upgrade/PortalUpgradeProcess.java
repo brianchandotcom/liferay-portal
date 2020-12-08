@@ -63,7 +63,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return _upgradeProcesses.lastKey();
 	}
 
-	public static SortedMap<Version, UpgradeProcess> getPendingUpgrades(
+	public static SortedMap<Version, UpgradeProcess> getPendingUpgradeProcesses(
 		Version schemaVersion) {
 
 		return _upgradeProcesses.tailMap(schemaVersion, false);

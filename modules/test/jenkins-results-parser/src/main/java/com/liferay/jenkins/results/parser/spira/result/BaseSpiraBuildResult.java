@@ -14,11 +14,19 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
+import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
+import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
+import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PullRequest;
+import com.liferay.jenkins.results.parser.PullRequestBuild;
+import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
 import com.liferay.jenkins.results.parser.spira.SpiraRelease;
@@ -26,6 +34,8 @@ import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseProductVersion;
+
+import java.util.Date;
 
 /**
  * @author Michael Hashimoto
@@ -73,6 +83,24 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			_spiraProject, _spiraRelease);
 	}
 
+	protected String getPortalTestSuiteProperty(String propertyName) {
+		return JenkinsResultsParserUtil.getProperty(
+			_portalGitWorkingDirectory.getTestProperties(), propertyName,
+			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
+	}
+
+	protected String replaceEnvVars(String string) {
+		string = _replaceEnvVarsControllerBuild(string);
+		string = _replaceEnvVarsPluginsTopLevelBuild(string);
+		string = _replaceEnvVarsPortalAppReleaseTopLevelBuild(string);
+		string = _replaceEnvVarsPortalBranchInformationBuild(string);
+		string = _replaceEnvVarsPullRequestBuild(string);
+		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
+		string = _replaceEnvVarsTopLevelBuild(string);
+
+		return string;
+	}
+
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
 		Job job = _topLevelBuild.getJob();
 
@@ -87,19 +115,13 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			"master");
 	}
 
-	private String _getPortalTestSuiteProperty(String propertyName) {
-		return JenkinsResultsParserUtil.getProperty(
-			_portalGitWorkingDirectory.getTestProperties(), propertyName,
-			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
-	}
-
 	private SpiraProject _getSpiraProject() {
 		long start = System.currentTimeMillis();
 
 		String spiraProjectID = System.getenv("TEST_SPIRA_PROJECT_ID");
 
 		if ((spiraProjectID == null) || !spiraProjectID.matches("\\d+")) {
-			spiraProjectID = _getPortalTestSuiteProperty(
+			spiraProjectID = getPortalTestSuiteProperty(
 				"test.batch.spira.project.id");
 		}
 
@@ -141,10 +163,10 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			spiraReleasePath.matches("\\/.+")) {
 
 			spiraRelease = SpiraRelease.createSpiraReleaseByPath(
-				spiraProject, spiraReleasePath);
+				spiraProject, replaceEnvVars(spiraReleasePath));
 		}
 
-		spiraReleaseID = _getPortalTestSuiteProperty(
+		spiraReleaseID = getPortalTestSuiteProperty(
 			"test.batch.spira.release.id");
 
 		if ((spiraRelease == null) && (spiraReleaseID != null) &&
@@ -154,14 +176,14 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 				Integer.valueOf(spiraReleaseID));
 		}
 
-		spiraReleasePath = _getPortalTestSuiteProperty(
+		spiraReleasePath = getPortalTestSuiteProperty(
 			"test.batch.spira.release.path");
 
 		if ((spiraRelease == null) && (spiraReleasePath != null) &&
 			spiraReleasePath.matches("\\/.+")) {
 
 			spiraRelease = SpiraRelease.createSpiraReleaseByPath(
-				spiraProject, spiraReleasePath);
+				spiraProject, replaceEnvVars(spiraReleasePath));
 		}
 
 		if (spiraRelease != null) {
@@ -199,12 +221,13 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			!spiraReleaseBuildName.isEmpty()) {
 
 			spiraReleaseBuild = SpiraReleaseBuild.createSpiraReleaseBuild(
-				spiraProject, spiraRelease, spiraReleaseBuildName,
+				spiraProject, spiraRelease,
+				replaceEnvVars(spiraReleaseBuildName),
 				_getSpiraReleaseBuildDescription(),
 				_getSpiraReleaseBuildStatus(), _topLevelBuild.getStartTime());
 		}
 
-		spiraReleaseBuildID = _getPortalTestSuiteProperty(
+		spiraReleaseBuildID = getPortalTestSuiteProperty(
 			"test.batch.spira.build.id");
 
 		if ((spiraReleaseBuild == null) && (spiraReleaseBuildID != null) &&
@@ -214,14 +237,15 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 				Integer.valueOf(spiraReleaseBuildID));
 		}
 
-		spiraReleaseBuildName = _getPortalTestSuiteProperty(
+		spiraReleaseBuildName = getPortalTestSuiteProperty(
 			"test.batch.spira.build.name");
 
 		if ((spiraReleaseBuild == null) && (spiraReleaseBuildName != null) &&
 			!spiraReleaseBuildName.isEmpty()) {
 
 			spiraReleaseBuild = SpiraReleaseBuild.createSpiraReleaseBuild(
-				spiraProject, spiraRelease, spiraReleaseBuildName,
+				spiraProject, spiraRelease,
+				replaceEnvVars(spiraReleaseBuildName),
 				_getSpiraReleaseBuildDescription(),
 				_getSpiraReleaseBuildStatus(), _topLevelBuild.getStartTime());
 		}
@@ -246,7 +270,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		if ((spiraReleaseBuildDescription == null) ||
 			spiraReleaseBuildDescription.isEmpty()) {
 
-			spiraReleaseBuildDescription = _getPortalTestSuiteProperty(
+			spiraReleaseBuildDescription = getPortalTestSuiteProperty(
 				"test.batch.spira.build.description");
 		}
 
@@ -254,7 +278,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			spiraReleaseBuildDescription = "";
 		}
 
-		return spiraReleaseBuildDescription;
+		return replaceEnvVars(spiraReleaseBuildDescription);
 	}
 
 	private SpiraReleaseBuild.Status _getSpiraReleaseBuildStatus() {
@@ -300,10 +324,10 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 
 			spiraTestCaseFolder =
 				SpiraTestCaseFolder.createSpiraTestCaseFolderByPath(
-					spiraProject, spiraTestCaseFolderPath);
+					spiraProject, replaceEnvVars(spiraTestCaseFolderPath));
 		}
 
-		spiraTestCaseFolderID = _getPortalTestSuiteProperty(
+		spiraTestCaseFolderID = getPortalTestSuiteProperty(
 			"test.batch.spira.base.test.case.folder.id");
 
 		if ((spiraTestCaseFolder == null) && (spiraTestCaseFolderID != null) &&
@@ -313,7 +337,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 				Integer.valueOf(spiraTestCaseFolderID));
 		}
 
-		spiraTestCaseFolderPath = _getPortalTestSuiteProperty(
+		spiraTestCaseFolderPath = getPortalTestSuiteProperty(
 			"test.batch.spira.base.test.case.folder.path");
 
 		if ((spiraTestCaseFolder == null) &&
@@ -322,7 +346,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 
 			spiraTestCaseFolder =
 				SpiraTestCaseFolder.createSpiraTestCaseFolderByPath(
-					spiraProject, spiraTestCaseFolderPath);
+					spiraProject, replaceEnvVars(spiraTestCaseFolderPath));
 		}
 
 		if (spiraTestCaseFolder != null) {
@@ -344,6 +368,157 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		return SpiraTestCaseProductVersion.createSpiraTestCaseProductVersion(
 			spiraProject, SpiraTestCaseObject.class,
 			_portalGitWorkingDirectory.getMajorPortalVersion());
+	}
+
+	private String _replaceEnvVarsControllerBuild(String string) {
+		Build controllerBuild = _topLevelBuild.getControllerBuild();
+
+		if (controllerBuild == null) {
+			return string;
+		}
+
+		string = string.replace(
+			"$(jenkins.controller.build.url)", controllerBuild.getBuildURL());
+
+		string = string.replace(
+			"$(jenkins.controller.build.number)",
+			String.valueOf(controllerBuild.getBuildNumber()));
+
+		string = string.replace(
+			"$(jenkins.controller.build.start)",
+			JenkinsResultsParserUtil.toDateString(
+				new Date(controllerBuild.getStartTime()),
+				"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
+
+		string = string.replace(
+			"$(jenkins.controller.job.name)", controllerBuild.getJobName());
+
+		JenkinsMaster jenkinsMaster = controllerBuild.getJenkinsMaster();
+
+		return string.replace(
+			"$(jenkins.controller.master.hostname)", jenkinsMaster.getName());
+	}
+
+	private String _replaceEnvVarsPluginsTopLevelBuild(String string) {
+		if (!(_topLevelBuild instanceof PluginsTopLevelBuild)) {
+			return string;
+		}
+
+		PluginsTopLevelBuild pluginsTopLevelBuild =
+			(PluginsTopLevelBuild)_topLevelBuild;
+
+		return string.replace(
+			"$(plugin.name)", pluginsTopLevelBuild.getPluginName());
+	}
+
+	private String _replaceEnvVarsPortalAppReleaseTopLevelBuild(String string) {
+		if (!(_topLevelBuild instanceof PortalAppReleaseTopLevelBuild)) {
+			return string;
+		}
+
+		PortalAppReleaseTopLevelBuild portalAppReleaseTopLevelBuild =
+			(PortalAppReleaseTopLevelBuild)_topLevelBuild;
+
+		return string.replace(
+			"$(portal.app.name)",
+			portalAppReleaseTopLevelBuild.getPortalAppName());
+	}
+
+	private String _replaceEnvVarsPortalBranchInformationBuild(String string) {
+		Job job = _topLevelBuild.getJob();
+
+		Job.BuildProfile buildProfile = job.getBuildProfile();
+
+		string = string.replace(
+			"$(portal.profile)", buildProfile.toDisplayString());
+
+		string = string.replace(
+			"$(portal.version)",
+			_portalGitWorkingDirectory.getMajorPortalVersion());
+
+		if (!(_topLevelBuild instanceof PortalBranchInformationBuild)) {
+			return string;
+		}
+
+		PortalBranchInformationBuild portalBranchInformationBuild =
+			(PortalBranchInformationBuild)_topLevelBuild;
+
+		Build.BranchInformation portalBranchInformation =
+			portalBranchInformationBuild.getPortalBranchInformation();
+
+		string = string.replace(
+			"$(portal.branch.name)",
+			portalBranchInformation.getUpstreamBranchName());
+
+		string = string.replace(
+			"$(portal.repository)",
+			portalBranchInformation.getRepositoryName());
+
+		return string.replace(
+			"$(portal.sha)", portalBranchInformation.getSenderBranchSHA());
+	}
+
+	private String _replaceEnvVarsPullRequestBuild(String string) {
+		if (!(_topLevelBuild instanceof PullRequestBuild)) {
+			return string;
+		}
+
+		PullRequestBuild pullRequestBuild = (PullRequestBuild)_topLevelBuild;
+
+		PullRequest pullRequest = pullRequestBuild.getPullRequest();
+
+		string = string.replace(
+			"$(pull.request.number)", pullRequest.getNumber());
+
+		string = string.replace(
+			"$(pull.request.receiver.username)",
+			pullRequest.getReceiverUsername());
+
+		return string.replace(
+			"$(pull.request.sender.username)", pullRequest.getSenderUsername());
+	}
+
+	private String _replaceEnvVarsQAWebsitesTopLevelBuild(String string) {
+		if (!(_topLevelBuild instanceof QAWebsitesTopLevelBuild)) {
+			return string;
+		}
+
+		QAWebsitesTopLevelBuild qaWebsitesTopLevelBuild =
+			(QAWebsitesTopLevelBuild)_topLevelBuild;
+
+		return string.replace(
+			"$(qa.websites.project.name)",
+			JenkinsResultsParserUtil.join(
+				",", qaWebsitesTopLevelBuild.getProjectNames()));
+	}
+
+	private String _replaceEnvVarsTopLevelBuild(String string) {
+		string = string.replace(
+			"$(ci.test.suite)", _topLevelBuild.getTestSuiteName());
+
+		string = string.replace(
+			"$(jenkins.build.number)",
+			String.valueOf(_topLevelBuild.getBuildNumber()));
+
+		string = string.replace(
+			"$(jenkins.build.start)",
+			JenkinsResultsParserUtil.toDateString(
+				new Date(_topLevelBuild.getStartTime()), "yyyy-MM-dd[HH:mm:ss]",
+				"America/Los_Angeles"));
+
+		string = string.replace(
+			"$(jenkins.build.url)", _topLevelBuild.getBuildURL());
+
+		string = string.replace(
+			"$(jenkins.job.name)", _topLevelBuild.getJobName());
+
+		JenkinsMaster jenkinsMaster = _topLevelBuild.getJenkinsMaster();
+
+		string = string.replace(
+			"$(jenkins.master.hostname)", jenkinsMaster.getName());
+
+		return string.replace(
+			"$(jenkins.report.url)", _topLevelBuild.getJenkinsReportURL());
 	}
 
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;

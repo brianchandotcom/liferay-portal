@@ -128,33 +128,27 @@ public class AUIUtil {
 			baseType = "checkbox";
 		}
 
+		sb.append("class=\"");
+
 		if (baseType.equals("checkbox") || baseType.equals("radio")) {
-			sb.append("class=\"");
 			sb.append(labelCssClass);
 
-			if (disabled) {
-				sb.append(" disabled");
-			}
-
 			if (inlineField) {
-				sb.append(" ");
+				sb.append(StringPOOL.SPACE);
 				sb.append(baseType);
 				sb.append("-inline");
 			}
-
-			sb.append("\"");
 		}
 		else {
-			sb.append("class=\"");
 			sb.append(labelCssClass);
 			sb.append(" control-label");
-
-			if (disabled) {
-				sb.append(" disabled");
-			}
-
-			sb.append("\"");
 		}
+
+		if (disabled) {
+			sb.append(" disabled");
+		}
+
+		sb.append("\"");
 
 		if (showForLabel) {
 			sb.append(" for=\"");

@@ -65,7 +65,7 @@ if (type.equals("toggle-switch")) {
 	fieldCssClass += " toggle-switch-check";
 
 	if (Validator.isNotNull(labelCssClass)) {
-		labelCssClass += " ";
+		labelCssClass += StringPool.SPACE;
 	}
 
 	labelCssClass += "toggle-switch";

@@ -45,6 +45,8 @@ definition {
 	@description = "This ensures that a video shortcut can be added with Facebook."
 	@priority = "5"
 	test AddFacebookCP {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(
@@ -60,6 +62,8 @@ definition {
 	@description = "This ensures that a video shortcut can be added with Twitch."
 	@priority = "5"
 	test AddTwitchPG {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		VideoShortcut.addPG(
@@ -73,6 +77,8 @@ definition {
 	@description = "This ensures that a video shortcut can be added with Vimeo."
 	@priority = "5"
 	test AddVimeoCP {
+		property portal.acceptance = "true";
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(
@@ -124,6 +130,8 @@ definition {
 	@description = "This ensures that a video shortcut can be added with YouTube."
 	@priority = "5"
 	test AddYouTubePG {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		VideoShortcut.addPG(

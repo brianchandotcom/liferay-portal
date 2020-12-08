@@ -108,17 +108,18 @@ public class TalendProcessTest extends BaseTalendTestCase {
 						TalendProcess.CONTEXT_PARM_LAST_RUN_START_DATE_TPL,
 						StringPool.BLANK))));
 
-		List<String> jvmOptions = talendProcess.getJVMOptions();
-
-		Assert.assertEquals(jvmOptions.toString(), 3, jvmOptions.size());
-
-		Assert.assertTrue(jvmOptions.contains("-Xint"));
-		Assert.assertTrue(jvmOptions.contains("-Xms2G"));
-		Assert.assertTrue(jvmOptions.contains("-Xmx512M"));
-
 		ProcessConfig processConfig = talendProcess.getProcessConfig();
 
-		Assert.assertTrue(jvmOptions.containsAll(processConfig.getArguments()));
+		List<String> processConfigArguments = processConfig.getArguments();
+
+		Assert.assertEquals(
+			processConfigArguments.toString(), 3,
+			processConfigArguments.size());
+
+		Assert.assertTrue(processConfigArguments.contains("-Xint"));
+		Assert.assertTrue(processConfigArguments.contains("-Xms2G"));
+		Assert.assertTrue(processConfigArguments.contains("-Xmx512M"));
+
 		Assert.assertTrue(
 			Validator.isNotNull(processConfig.getRuntimeClassPath()));
 
@@ -128,9 +129,9 @@ public class TalendProcessTest extends BaseTalendTestCase {
 
 		talendProcess = talendProcessBuilder.build();
 
-		arguments = talendProcess.getMainMethodArguments();
+		processConfigArguments = talendProcess.getMainMethodArguments();
 
-		stream = arguments.stream();
+		stream = processConfigArguments.stream();
 
 		Assert.assertTrue(
 			stream.anyMatch(

@@ -787,6 +787,17 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro validateTranslatedLocalization {
+		Click(
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
+
+		AssertElementPresent(
+			key_localizationName = "${localizationName}",
+			key_statusName = "${statusName}",
+			locator1 = "FormViewBuilder#TRANSLATED_LIST_FIELD_SET");
+	}
+
 	macro validateUsedFormView {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_USED_FORM_VIEW");
 	}

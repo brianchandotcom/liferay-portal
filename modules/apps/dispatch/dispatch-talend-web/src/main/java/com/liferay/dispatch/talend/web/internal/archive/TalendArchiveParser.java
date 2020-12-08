@@ -46,8 +46,6 @@ public class TalendArchiveParser {
 			return _parse(jobArchiveInputStream);
 		}
 		catch (Throwable throwable) {
-			throwable.printStackTrace();
-
 			_log.error("Unable to parse Talend archive", throwable);
 		}
 

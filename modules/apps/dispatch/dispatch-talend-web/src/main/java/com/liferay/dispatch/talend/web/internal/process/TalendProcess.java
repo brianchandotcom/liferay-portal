@@ -60,8 +60,6 @@ public interface TalendProcess {
 	public static final String CONTEXT_PARM_NAME_VALUE_TPL =
 		"--context_param %s=%s";
 
-	public List<String> getJVMOptions();
-
 	public List<String> getMainMethodArguments();
 
 	public ProcessConfig getProcessConfig();
@@ -82,11 +80,6 @@ public interface TalendProcess {
 			processConfigBuilder.setRuntimeClassPath(_getTalendClassPath());
 
 			return new TalendProcess() {
-
-				@Override
-				public List<String> getJVMOptions() {
-					return _jvmOptions;
-				}
 
 				@Override
 				public List<String> getMainMethodArguments() {

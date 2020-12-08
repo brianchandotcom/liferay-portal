@@ -16,7 +16,6 @@ package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.Serializable;
 
@@ -28,10 +27,10 @@ import java.lang.reflect.Method;
 public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 	public TalendProcessCallable(
-		String[] mainMethodArgs, String mainMethodClassFQN) {
+		String[] mainMethodArgs, String jobMainClassFQN) {
 
-		_mainMethodArgs = ArrayUtil.clone(mainMethodArgs);
-		_mainMethodClassFQN = mainMethodClassFQN;
+		_mainMethodArgs = mainMethodArgs;
+		_jobMainClassFQN = jobMainClassFQN;
 	}
 
 	@Override
@@ -39,16 +38,14 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 		ClassLoader classLoader = TalendProcessCallable.class.getClassLoader();
 
 		try {
-			Class<?> talendJobClass = classLoader.loadClass(
-				_mainMethodClassFQN);
+			Class<?> talendJobClass = classLoader.loadClass(_jobMainClassFQN);
 
-			Method talendJobClassMainMethod = talendJobClass.getMethod(
+			Method mainMethod = talendJobClass.getMethod(
 				"main", String[].class);
 
-			talendJobClassMainMethod.setAccessible(true);
+			mainMethod.setAccessible(true);
 
-			talendJobClassMainMethod.invoke(
-				null, new Object[] {_mainMethodArgs});
+			mainMethod.invoke(null, new Object[] {_mainMethodArgs});
 		}
 		catch (Throwable throwable) {
 			throw new ProcessException(throwable);
@@ -59,7 +56,7 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 	private static final long serialVersionUID = 1L;
 
+	private final String _jobMainClassFQN;
 	private final String[] _mainMethodArgs;
-	private final String _mainMethodClassFQN;
 
 }

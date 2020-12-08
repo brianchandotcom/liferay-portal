@@ -25,7 +25,6 @@ import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParser;
 import com.liferay.dispatch.talend.web.internal.process.TalendProcess;
 import com.liferay.dispatch.talend.web.internal.process.TalendProcessCallable;
-import com.liferay.dispatch.talend.web.internal.process.TalendProcessLogger;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.local.LocalProcessExecutor;
@@ -138,8 +137,6 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				dispatchTrigger.getDispatchTriggerId());
 
 		talendProcessBuilder.lastRunStartDate(lastRunStateDate);
-
-		talendProcessBuilder.processLogConsumer(new TalendProcessLogger());
 
 		talendProcessBuilder.talendArchive(talendArchive);
 

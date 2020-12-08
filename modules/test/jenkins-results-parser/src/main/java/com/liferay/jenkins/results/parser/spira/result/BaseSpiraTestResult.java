@@ -27,14 +27,24 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 	}
 
 	@Override
+	public SpiraBuildResult getSpiraBuildResult() {
+		return _spiraBuildResult;
+	}
+
+	@Override
 	public void record() {
 		System.out.println(getAxisName() + " " + getTestName());
 	}
 
-	protected BaseSpiraTestResult(AxisTestClassGroup axisTestClassGroup) {
+	protected BaseSpiraTestResult(
+		SpiraBuildResult spiraBuildResult,
+		AxisTestClassGroup axisTestClassGroup) {
+
+		_spiraBuildResult = spiraBuildResult;
 		_axisTestClassGroup = axisTestClassGroup;
 	}
 
 	private final AxisTestClassGroup _axisTestClassGroup;
+	private final SpiraBuildResult _spiraBuildResult;
 
 }

@@ -35,10 +35,11 @@ public class JUnitSpiraTestResult extends BaseSpiraTestResult {
 	}
 
 	protected JUnitSpiraTestResult(
+		SpiraBuildResult spiraBuildResult,
 		JUnitAxisTestClassGroup jUnitAxisTestClassGroup,
 		TestClassGroup.TestClass testClass) {
 
-		super(jUnitAxisTestClassGroup);
+		super(spiraBuildResult, jUnitAxisTestClassGroup);
 
 		_testClass = testClass;
 	}

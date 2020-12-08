@@ -48,21 +48,24 @@ public class SpiraResultFactory {
 	}
 
 	public static SpiraTestResult newSpiraTestResult(
+		SpiraBuildResult spiraBuildResult,
 		AxisTestClassGroup axisTestClassGroup,
 		TestClassGroup.TestClass testClass) {
 
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
 			return new FunctionalSpiraTestResult(
+				spiraBuildResult,
 				(FunctionalAxisTestClassGroup)axisTestClassGroup,
 				(FunctionalBatchTestClassGroup.FunctionalTestClass)testClass);
 		}
 
 		if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 			return new JUnitSpiraTestResult(
-				(JUnitAxisTestClassGroup)axisTestClassGroup, testClass);
+				spiraBuildResult, (JUnitAxisTestClassGroup)axisTestClassGroup,
+				testClass);
 		}
 
-		return new BatchSpiraTestResult(axisTestClassGroup);
+		return new BatchSpiraTestResult(spiraBuildResult, axisTestClassGroup);
 	}
 
 	private static final Map<String, SpiraBuildResult> _spiraBuildResults =

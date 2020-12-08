@@ -26,8 +26,11 @@ public class BatchSpiraTestResult extends BaseSpiraTestResult {
 		return getAxisName();
 	}
 
-	protected BatchSpiraTestResult(AxisTestClassGroup axisTestClassGroup) {
-		super(axisTestClassGroup);
+	protected BatchSpiraTestResult(
+		SpiraBuildResult spiraBuildResult,
+		AxisTestClassGroup axisTestClassGroup) {
+
+		super(spiraBuildResult, axisTestClassGroup);
 	}
 
 }

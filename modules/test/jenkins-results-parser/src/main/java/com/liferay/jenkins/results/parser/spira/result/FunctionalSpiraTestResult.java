@@ -30,10 +30,11 @@ public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
 	}
 
 	protected FunctionalSpiraTestResult(
+		SpiraBuildResult spiraBuildResult,
 		FunctionalAxisTestClassGroup axisTestClassGroup,
 		FunctionalBatchTestClassGroup.FunctionalTestClass functionalTestClass) {
 
-		super(axisTestClassGroup);
+		super(spiraBuildResult, axisTestClassGroup);
 
 		_functionalTestClass = functionalTestClass;
 	}

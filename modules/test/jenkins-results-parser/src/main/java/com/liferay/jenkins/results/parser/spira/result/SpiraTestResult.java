@@ -21,6 +21,8 @@ public interface SpiraTestResult {
 
 	public String getAxisName();
 
+	public SpiraBuildResult getSpiraBuildResult();
+
 	public String getTestName();
 
 	public void record();

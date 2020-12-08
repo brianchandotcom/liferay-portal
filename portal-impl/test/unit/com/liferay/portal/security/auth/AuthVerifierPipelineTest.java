@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.UserImpl;
@@ -95,10 +96,15 @@ public class AuthVerifierPipelineTest {
 
 		accessControlContext.setRequest(mockHttpServletRequest);
 
+		AuthVerifierPipeline authVerifierPipeline = new AuthVerifierPipeline(
+			HashMapBuilder.put(
+				"portal_property_prefix", (Object)""
+			).build());
+
 		try {
 			Assert.assertSame(
 				authVerifierResult,
-				AuthVerifierPipeline.verifyRequest(accessControlContext));
+				authVerifierPipeline.verifyRequest(accessControlContext));
 		}
 		finally {
 			serviceRegistration.unregister();

@@ -56,9 +56,9 @@ public class CTSchemaVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.change.tracking.model.CTSchemaVersion
-		addLatestSchemaVersion(long companyId) {
+		addLatestCTSchemaVersion(long companyId) {
 
-		return getService().addLatestSchemaVersion(companyId);
+		return getService().addLatestCTSchemaVersion(companyId);
 	}
 
 	/**
@@ -281,9 +281,9 @@ public class CTSchemaVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.change.tracking.model.CTSchemaVersion
-		getLatestSchemaVersion(long companyId) {
+		getLatestCTSchemaVersion(long companyId) {
 
-		return getService().getLatestSchemaVersion(companyId);
+		return getService().getLatestCTSchemaVersion(companyId);
 	}
 
 	/**
@@ -305,15 +305,15 @@ public class CTSchemaVersionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static boolean isLatestSchemaVersion(
+	public static boolean isLatestCTSchemaVersion(
 		com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion,
 		boolean strict) {
 
-		return getService().isLatestSchemaVersion(ctSchemaVersion, strict);
+		return getService().isLatestCTSchemaVersion(ctSchemaVersion, strict);
 	}
 
-	public static boolean isLatestSchemaVersion(long ctSchemaVersionId) {
-		return getService().isLatestSchemaVersion(ctSchemaVersionId);
+	public static boolean isLatestCTSchemaVersion(long ctSchemaVersionId) {
+		return getService().isLatestCTSchemaVersion(ctSchemaVersionId);
 	}
 
 	/**

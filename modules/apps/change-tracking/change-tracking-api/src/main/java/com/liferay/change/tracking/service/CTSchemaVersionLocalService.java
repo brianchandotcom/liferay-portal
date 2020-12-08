@@ -75,7 +75,7 @@ public interface CTSchemaVersionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTSchemaVersion addCTSchemaVersion(CTSchemaVersion ctSchemaVersion);
 
-	public CTSchemaVersion addLatestSchemaVersion(long companyId);
+	public CTSchemaVersion addLatestCTSchemaVersion(long companyId);
 
 	/**
 	 * Creates a new ct schema version with the primary key. Does not add the ct schema version to the database.
@@ -240,7 +240,7 @@ public interface CTSchemaVersionLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTSchemaVersion getLatestSchemaVersion(long companyId);
+	public CTSchemaVersion getLatestCTSchemaVersion(long companyId);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -258,11 +258,11 @@ public interface CTSchemaVersionLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isLatestSchemaVersion(
+	public boolean isLatestCTSchemaVersion(
 		CTSchemaVersion ctSchemaVersion, boolean strict);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isLatestSchemaVersion(long ctSchemaVersionId);
+	public boolean isLatestCTSchemaVersion(long ctSchemaVersionId);
 
 	/**
 	 * Updates the ct schema version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

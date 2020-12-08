@@ -52,9 +52,9 @@ public class CTSchemaVersionLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTSchemaVersion
-		addLatestSchemaVersion(long companyId) {
+		addLatestCTSchemaVersion(long companyId) {
 
-		return _ctSchemaVersionLocalService.addLatestSchemaVersion(companyId);
+		return _ctSchemaVersionLocalService.addLatestCTSchemaVersion(companyId);
 	}
 
 	/**
@@ -297,9 +297,9 @@ public class CTSchemaVersionLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTSchemaVersion
-		getLatestSchemaVersion(long companyId) {
+		getLatestCTSchemaVersion(long companyId) {
 
-		return _ctSchemaVersionLocalService.getLatestSchemaVersion(companyId);
+		return _ctSchemaVersionLocalService.getLatestCTSchemaVersion(companyId);
 	}
 
 	/**
@@ -324,17 +324,17 @@ public class CTSchemaVersionLocalServiceWrapper
 	}
 
 	@Override
-	public boolean isLatestSchemaVersion(
+	public boolean isLatestCTSchemaVersion(
 		com.liferay.change.tracking.model.CTSchemaVersion ctSchemaVersion,
 		boolean strict) {
 
-		return _ctSchemaVersionLocalService.isLatestSchemaVersion(
+		return _ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 			ctSchemaVersion, strict);
 	}
 
 	@Override
-	public boolean isLatestSchemaVersion(long ctSchemaVersionId) {
-		return _ctSchemaVersionLocalService.isLatestSchemaVersion(
+	public boolean isLatestCTSchemaVersion(long ctSchemaVersionId) {
+		return _ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 			ctSchemaVersionId);
 	}
 

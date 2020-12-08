@@ -336,8 +336,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> organizationUser1AccountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
-				organizationUser1.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				organizationUser1.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -354,8 +354,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> organizationUser2AccountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
-				organizationUser2.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				organizationUser2.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -394,8 +394,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> businessUser1AccountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
-				businessUser1.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				businessUser1.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -411,8 +411,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> businessUser2AccountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
-				businessUser2.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				businessUser2.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -903,8 +903,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> userAccountEntries1 =
 			_accountEntryLocalService.getUserAccountEntries(
-				user1.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				user1.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -919,8 +919,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> userAccountEntries2 =
 			_accountEntryLocalService.getUserAccountEntries(
-				user2.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				user2.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -941,8 +941,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> userAccountEntries3 =
 			_accountEntryLocalService.getUserAccountEntries(
-				user3.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				user3.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -967,8 +967,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> userAccountEntries4 =
 			_accountEntryLocalService.getUserAccountEntries(
-				user4.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				user4.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -983,8 +983,8 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> userAccountEntries5 =
 			_accountEntryLocalService.getUserAccountEntries(
-				user5.getUserId(), null,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				user5.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 

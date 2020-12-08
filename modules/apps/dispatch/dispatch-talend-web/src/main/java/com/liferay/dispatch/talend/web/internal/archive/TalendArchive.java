@@ -15,10 +15,10 @@
 package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,10 +28,6 @@ public class TalendArchive {
 
 	public String getClasspath() {
 		return _classpath;
-	}
-
-	public List<String> getClasspathEntries() {
-		return _classpathEntries;
 	}
 
 	public String getContextName() {
@@ -56,8 +52,8 @@ public class TalendArchive {
 			return new TalendArchive(this);
 		}
 
-		public Builder classpathEntry(String classpathEntry) {
-			_classpathEntries.add(classpathEntry);
+		public Builder classpathEntries(List<String> classpathEntries) {
+			_classpathEntries = classpathEntries;
 
 			return this;
 		}
@@ -87,6 +83,10 @@ public class TalendArchive {
 		}
 
 		private String _buildClasspath() {
+			if (_classpathEntries == null) {
+				return StringPool.BLANK;
+			}
+
 			StringBundler sb = new StringBundler(
 				(_classpathEntries.size() * 2) + 1);
 
@@ -100,7 +100,7 @@ public class TalendArchive {
 			return sb.toString();
 		}
 
-		private List<String> _classpathEntries = new ArrayList<>();
+		private List<String> _classpathEntries;
 		private String _contextName;
 		private String _jobDirectory;
 		private String _jobJARPath;
@@ -110,7 +110,6 @@ public class TalendArchive {
 
 	private TalendArchive(Builder builder) {
 		_classpath = builder._buildClasspath();
-		_classpathEntries = builder._classpathEntries;
 		_contextName = builder._contextName;
 		_jobDirectory = builder._jobDirectory;
 		_jobJARPath = builder._jobJARPath;
@@ -118,7 +117,6 @@ public class TalendArchive {
 	}
 
 	private final String _classpath;
-	private final List<String> _classpathEntries;
 	private final String _contextName;
 	private final String _jobDirectory;
 	private final String _jobJARPath;

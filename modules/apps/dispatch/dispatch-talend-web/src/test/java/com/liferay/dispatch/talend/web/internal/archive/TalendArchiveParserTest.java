@@ -15,8 +15,9 @@
 package com.liferay.dispatch.talend.web.internal.archive;
 
 import com.liferay.dispatch.talend.web.internal.BaseTalendTestCase;
+import com.liferay.petra.string.StringBundler;
 
-import java.util.List;
+import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,18 +40,17 @@ public class TalendArchiveParserTest extends BaseTalendTestCase {
 
 		Assert.assertNotNull(jobDirectory);
 
-		List<String> talendArchiveClasspathEntries =
-			talendArchive.getClasspathEntries();
-
-		Assert.assertNotNull(talendArchiveClasspathEntries);
+		StringBundler sb = new StringBundler();
 
 		for (String classpathEntry : _CLASSPATH_ENTRIES) {
-			classpathEntry = jobDirectory + classpathEntry;
-
-			Assert.assertTrue(
-				classpathEntry,
-				talendArchiveClasspathEntries.contains(classpathEntry));
+			sb.append(jobDirectory);
+			sb.append(classpathEntry);
+			sb.append(File.pathSeparator);
 		}
+
+		String classpath = talendArchive.getClasspath();
+
+		Assert.assertTrue(classpath.startsWith(sb.toString()));
 
 		Assert.assertEquals(
 			jobDirectory + _JOB_JAR_PATH, talendArchive.getJobJARPath());

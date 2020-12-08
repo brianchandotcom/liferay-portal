@@ -137,6 +137,8 @@ public class TalendArchiveParser {
 
 			});
 
+		paths.sort(null);
+
 		return paths;
 	}
 
@@ -193,11 +195,8 @@ public class TalendArchiveParser {
 		talendArchiveBuilder.contextName(
 			(String)jobProperties.get("contextName"));
 
-		List<String> classPathEntries = _getJobLibEntries(jobDirectoryPath);
-
-		for (String classPathEntry : classPathEntries) {
-			talendArchiveBuilder.classpathEntry(classPathEntry);
-		}
+		talendArchiveBuilder.classpathEntries(
+			_getJobLibEntries(jobDirectoryPath));
 
 		talendArchiveBuilder.jobDirectory(jobDirectory.getAbsolutePath());
 

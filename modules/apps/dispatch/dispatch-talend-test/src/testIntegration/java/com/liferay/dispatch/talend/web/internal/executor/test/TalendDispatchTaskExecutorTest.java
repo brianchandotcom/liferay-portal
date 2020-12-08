@@ -26,14 +26,11 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -72,14 +69,10 @@ public class TalendDispatchTaskExecutorTest {
 
 	@Test
 	public void testExecute() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
-
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				user.getUserId(), "TalendDispatchTrigger", false, "talend",
-				new UnicodeProperties());
+				TestPropsValues.getUserId(), "TalendDispatchTrigger", false,
+				"talend", new UnicodeProperties());
 
 		_addTalendExecutableFileEntry(dispatchTrigger);
 

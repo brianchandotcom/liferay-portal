@@ -60,8 +60,6 @@ public class TalendArchiveParser {
 		File tempFile = FileUtil.createTempFile(jobArchiveInputStream);
 
 		try {
-			jobArchiveInputStream.close();
-
 			File tempFolder = _unzipFile(tempFile);
 
 			return tempFolder.getAbsolutePath();

@@ -76,15 +76,10 @@ public class TalendDispatchTaskExecutorTest {
 
 		User user = UserTestUtil.addUser(company);
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		unicodeProperties.put("user", "test@liferay.com");
-		unicodeProperties.put("password", "test");
-
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
 				user.getUserId(), "TalendDispatchTrigger", false, "talend",
-				unicodeProperties);
+				new UnicodeProperties());
 
 		_addTalendExecutableFileEntry(dispatchTrigger);
 

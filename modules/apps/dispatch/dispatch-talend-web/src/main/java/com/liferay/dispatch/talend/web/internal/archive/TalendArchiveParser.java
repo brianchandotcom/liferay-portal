@@ -58,7 +58,9 @@ public class TalendArchiveParser {
 		File tempFile = FileUtil.createTempFile(jobArchiveInputStream);
 
 		try {
-			File tempFolder = _unzipFile(tempFile);
+			File tempFolder = FileUtil.createTempFolder();
+
+			FileUtil.unzip(tempFile, tempFolder);
 
 			return tempFolder.getAbsolutePath();
 		}
@@ -165,14 +167,6 @@ public class TalendArchiveParser {
 			_getJobMainClassFQN(jobName, jobJARPath.toString()));
 
 		return talendArchiveBuilder.build();
-	}
-
-	private File _unzipFile(File archiveFile) throws IOException {
-		File tempFolder = FileUtil.createTempFolder();
-
-		FileUtil.unzip(archiveFile, tempFolder);
-
-		return tempFolder;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

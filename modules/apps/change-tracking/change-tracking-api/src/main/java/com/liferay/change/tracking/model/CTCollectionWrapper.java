@@ -48,9 +48,9 @@ public class CTCollectionWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("schemaVersionId", getSchemaVersionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("schemaVersionId", getSchemaVersionId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusDate", getStatusDate());
@@ -96,6 +96,12 @@ public class CTCollectionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long schemaVersionId = (Long)attributes.get("schemaVersionId");
+
+		if (schemaVersionId != null) {
+			setSchemaVersionId(schemaVersionId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -106,12 +112,6 @@ public class CTCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
-		}
-
-		Long schemaVersionId = (Long)attributes.get("schemaVersionId");
-
-		if (schemaVersionId != null) {
-			setSchemaVersionId(schemaVersionId);
 		}
 
 		Integer status = (Integer)attributes.get("status");

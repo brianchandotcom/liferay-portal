@@ -21,12 +21,12 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="schemaVersionId" type="long" />
 		<field name="name" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="max-length">200</hint>
 		</field>
-		<field name="schemaVersionId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusDate" type="Date" />

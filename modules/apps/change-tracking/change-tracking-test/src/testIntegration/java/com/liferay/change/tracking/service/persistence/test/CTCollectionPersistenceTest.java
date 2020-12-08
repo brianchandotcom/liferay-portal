@@ -132,11 +132,11 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCTCollection.setSchemaVersionId(RandomTestUtil.nextLong());
+
 		newCTCollection.setName(RandomTestUtil.randomString());
 
 		newCTCollection.setDescription(RandomTestUtil.randomString());
-
-		newCTCollection.setSchemaVersionId(RandomTestUtil.nextLong());
 
 		newCTCollection.setStatus(RandomTestUtil.nextInt());
 
@@ -167,13 +167,13 @@ public class CTCollectionPersistenceTest {
 			Time.getShortTimestamp(existingCTCollection.getModifiedDate()),
 			Time.getShortTimestamp(newCTCollection.getModifiedDate()));
 		Assert.assertEquals(
+			existingCTCollection.getSchemaVersionId(),
+			newCTCollection.getSchemaVersionId());
+		Assert.assertEquals(
 			existingCTCollection.getName(), newCTCollection.getName());
 		Assert.assertEquals(
 			existingCTCollection.getDescription(),
 			newCTCollection.getDescription());
-		Assert.assertEquals(
-			existingCTCollection.getSchemaVersionId(),
-			newCTCollection.getSchemaVersionId());
 		Assert.assertEquals(
 			existingCTCollection.getStatus(), newCTCollection.getStatus());
 		Assert.assertEquals(
@@ -239,8 +239,8 @@ public class CTCollectionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTCollection", "mvccVersion", true, "ctCollectionId", true,
 			"companyId", true, "userId", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
-			"schemaVersionId", true, "status", true, "statusByUserId", true,
+			"modifiedDate", true, "schemaVersionId", true, "name", true,
+			"description", true, "status", true, "statusByUserId", true,
 			"statusDate", true);
 	}
 
@@ -472,11 +472,11 @@ public class CTCollectionPersistenceTest {
 
 		ctCollection.setModifiedDate(RandomTestUtil.nextDate());
 
+		ctCollection.setSchemaVersionId(RandomTestUtil.nextLong());
+
 		ctCollection.setName(RandomTestUtil.randomString());
 
 		ctCollection.setDescription(RandomTestUtil.randomString());
-
-		ctCollection.setSchemaVersionId(RandomTestUtil.nextLong());
 
 		ctCollection.setStatus(RandomTestUtil.nextInt());
 

@@ -26,13 +26,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -52,7 +56,7 @@ public class TalendArchiveParser {
 		return null;
 	}
 
-	private String _getJobDirectory(InputStream jobArchiveInputStream)
+	private File _getJobDirectory(InputStream jobArchiveInputStream)
 		throws IOException {
 
 		File tempFile = FileUtil.createTempFile(jobArchiveInputStream);
@@ -62,7 +66,7 @@ public class TalendArchiveParser {
 
 			FileUtil.unzip(tempFile, tempFolder);
 
-			return tempFolder.getAbsolutePath();
+			return tempFolder;
 		}
 		finally {
 			if (tempFile != null) {
@@ -71,30 +75,69 @@ public class TalendArchiveParser {
 		}
 	}
 
-	private String _getJobJarName(String jobName, String jobRootDirectoryPath) {
-		String[] paths = FileUtil.find(jobRootDirectoryPath, "**\\*.jar", null);
+	private Path _getJobJarPath(String jobName, Path jobDirectoryPath)
+		throws IOException {
 
-		for (String path : paths) {
-			if (path.contains(jobName)) {
-				return path.substring(path.lastIndexOf(File.separator) + 1);
-			}
+		AtomicReference<Path> pathReference = new AtomicReference<>();
+
+		Files.walkFileTree(
+			jobDirectoryPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String path = filePath.toString();
+
+					if (path.endsWith(".jar") && path.contains(jobName)) {
+						pathReference.set(filePath);
+
+						return FileVisitResult.TERMINATE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		Path jobJarPath = pathReference.get();
+
+		if (jobJarPath != null) {
+			return jobJarPath;
 		}
 
 		throw new TalendArchiveException(
 			"Unable to determine job JAR directory for " + jobName);
 	}
 
-	private Path _getJobJARPath(String jobName, String jobDirectory) {
-		return Paths.get(
-			jobDirectory, jobName, _getJobJarName(jobName, jobDirectory));
-	}
+	private List<String> _getJobLibEntries(Path jobDirectoryPath)
+		throws IOException {
 
-	private List<String> _getJobLibEntries(String jobDirectory) {
-		Path libPath = Paths.get(jobDirectory, "lib");
+		List<String> paths = new ArrayList<>();
 
-		String[] paths = FileUtil.find(libPath.toString(), "**\\*.jar", null);
+		Files.walkFileTree(
+			jobDirectoryPath.resolve("lib"),
+			new SimpleFileVisitor<Path>() {
 
-		return Arrays.asList(paths);
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String path = filePath.toString();
+
+					if (path.endsWith(".jar")) {
+						paths.add(path);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return paths;
 	}
 
 	private String _getJobMainClassFQN(
@@ -123,15 +166,14 @@ public class TalendArchiveParser {
 		throw new TalendArchiveException("Unable to determine job main class");
 	}
 
-	private Properties _getJobProperties(String jobDirectory)
-		throws IOException {
-
+	private Properties _getJobProperties(File jobDirectory) throws IOException {
 		Properties properties = new Properties();
 
-		Path jobInfoPropertiesPath = Paths.get(
-			jobDirectory, "jobInfo.properties");
+		try (InputStream inputStream = new FileInputStream(
+				new File(jobDirectory, "jobInfo.properties"))) {
 
-		properties.load(new FileInputStream(jobInfoPropertiesPath.toFile()));
+			properties.load(inputStream);
+		}
 
 		return properties;
 	}
@@ -139,7 +181,9 @@ public class TalendArchiveParser {
 	private TalendArchive _parse(InputStream jobZIPInputStream)
 		throws IOException {
 
-		String jobDirectory = _getJobDirectory(jobZIPInputStream);
+		File jobDirectory = _getJobDirectory(jobZIPInputStream);
+
+		Path jobDirectoryPath = jobDirectory.toPath();
 
 		Properties jobProperties = _getJobProperties(jobDirectory);
 
@@ -149,17 +193,17 @@ public class TalendArchiveParser {
 		talendArchiveBuilder.contextName(
 			(String)jobProperties.get("contextName"));
 
-		List<String> classPathEntries = _getJobLibEntries(jobDirectory);
+		List<String> classPathEntries = _getJobLibEntries(jobDirectoryPath);
 
 		for (String classPathEntry : classPathEntries) {
 			talendArchiveBuilder.classpathEntry(classPathEntry);
 		}
 
-		talendArchiveBuilder.jobDirectory(jobDirectory);
+		talendArchiveBuilder.jobDirectory(jobDirectory.getAbsolutePath());
 
 		String jobName = (String)jobProperties.get("job");
 
-		Path jobJARPath = _getJobJARPath(jobName, jobDirectory);
+		Path jobJARPath = _getJobJarPath(jobName, jobDirectoryPath);
 
 		talendArchiveBuilder.jobJARPath(jobJARPath.toString());
 

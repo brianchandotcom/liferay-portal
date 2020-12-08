@@ -12,37 +12,31 @@
  * details.
  */
 
-import {BLOCK, DEFAULT, INPUT_STYLE} from './constants';
+export const UPDATE_AFTER = 500;
 
-export const generateOptions = ({
-	allowedQuantity = [],
+export const generateQuantityOptions = ({
+	allowedQuantities = [],
 	maxQuantity = 1,
 	minQuantity = 1,
 	multipleQuantity = 1,
 }) => {
-	if (allowedQuantity.length > 0) {
-		return allowedQuantity;
+	if (allowedQuantities.length > 0) {
+		return allowedQuantities.map((value) => ({
+			label: value.toString(),
+			value,
+		}));
 	}
-	else {
-		const quantitiesList = [];
-		for (let i = minQuantity; i <= maxQuantity; i++) {
-			quantitiesList.push(i * multipleQuantity);
-		}
 
-		return quantitiesList;
-	}
-};
+	const quantityOptions = [];
 
-export const getInputStyle = (inputSize) => {
-	switch (inputSize) {
-		case BLOCK:
-			return INPUT_STYLE.BLOCK;
-		case DEFAULT:
-			return INPUT_STYLE.DEFAULT;
-		default:
-			return {
-				display: BLOCK,
-				width: `${parseInt(inputSize, 10)}px`,
-			};
+	for (let i = minQuantity; i <= maxQuantity; i++) {
+		const value = i * multipleQuantity;
+
+		quantityOptions.push({
+			label: value.toString(),
+			value,
+		});
 	}
+
+	return quantityOptions;
 };

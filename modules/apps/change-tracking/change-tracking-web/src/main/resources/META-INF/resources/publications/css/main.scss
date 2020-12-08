@@ -1,9 +1,3 @@
-.portal-popup {
-	.publications-diff-no-border-top td {
-		border-top: none;
-	}
-}
-
 .publications-conflicts-container {
 	button.panel-header {
 		border-bottom-color: #a7a9bc;
@@ -59,24 +53,27 @@
 	}
 }
 
-.publications-diff-table-wrapper table {
-	border-collapse: collapse;
-	table-layout: fixed;
-	width: 100%;
-	word-wrap: break-word;
-
-	.publications-diff-td {
-		border-left: solid 1px #e7e7ed;
-		border-right: solid 1px #e7e7ed;
-		vertical-align: top;
-	}
-}
-
 .publications-discard-container {
 	padding-top: 48px;
 
 	.cursor-pointer {
 		cursor: pointer;
+	}
+}
+
+.publications-entry-table.table {
+	border-collapse: collapse;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
+
+	td.publications-entry-table-divider {
+		border-top: none;
+		text-align: center;
+	}
+
+	td.publications-entry-td {
+		vertical-align: top;
 	}
 }
 

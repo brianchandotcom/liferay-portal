@@ -328,28 +328,6 @@ public class CTDisplayRendererRegistry {
 	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,
-			CTEntry ctEntry, String type)
-		throws Exception {
-
-		CTSQLModeThreadLocal.CTSQLMode ctSQLMode = getCTSQLMode(
-			ctCollectionId, ctEntry);
-
-		T model = fetchCTModel(
-			ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
-			ctEntry.getModelClassPK());
-
-		if (model == null) {
-			return;
-		}
-
-		renderCTEntry(
-			httpServletRequest, httpServletResponse, ctCollectionId, ctSQLMode,
-			ctEntry.getCtEntryId(), model, ctEntry.getModelClassNameId(), type);
-	}
-
-	public <T extends BaseModel<T>> void renderCTEntry(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long ctCollectionId,
 			CTSQLModeThreadLocal.CTSQLMode ctSQLMode, long ctEntryId, T model,
 			long modelClassNameId, String type)
 		throws Exception {

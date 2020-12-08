@@ -15,17 +15,9 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
-
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,33 +28,12 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewEntryDisplayContext<T extends BaseModel<T>> {
 
 	public ViewEntryDisplayContext(
-		T baseModel, CTCollectionLocalService ctCollectionLocalService,
-		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
-		Language language, long modelClassNameId) {
+		T baseModel, CTDisplayRendererRegistry ctDisplayRendererRegistry,
+		long modelClassNameId) {
 
 		_baseModel = baseModel;
-		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
-		_ctEntry = ctEntry;
-		_language = language;
 		_modelClassNameId = modelClassNameId;
-	}
-
-	public String getDividerTitle(ResourceBundle resourceBundle) {
-		if (_ctEntry == null) {
-			return _language.get(resourceBundle.getLocale(), "production");
-		}
-
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			_ctEntry.getCtCollectionId());
-
-		if (ctCollection == null) {
-			return _language.get(resourceBundle, "publication");
-		}
-
-		return StringBundler.concat(
-			_language.get(resourceBundle, "publication"), " : ",
-			ctCollection.getName());
 	}
 
 	public void renderEntry(
@@ -70,33 +41,15 @@ public class ViewEntryDisplayContext<T extends BaseModel<T>> {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
-		long ctEntryId = 0;
-		String diffType = null;
-
-		if (_ctEntry != null) {
-			ctCollectionId = _ctEntry.getCtCollectionId();
-
-			ctSQLMode = _ctDisplayRendererRegistry.getCTSQLMode(
-				ctCollectionId, _ctEntry);
-
-			ctEntryId = _ctEntry.getCtEntryId();
-
-			diffType = CTEntryDiffDisplay.TYPE_AFTER;
-		}
-
 		_ctDisplayRendererRegistry.renderCTEntry(
-			httpServletRequest, httpServletResponse, ctCollectionId, ctSQLMode,
-			ctEntryId, _baseModel, _modelClassNameId, diffType);
+			httpServletRequest, httpServletResponse,
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, 0, _baseModel,
+			_modelClassNameId, null);
 	}
 
 	private final T _baseModel;
-	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
-	private final CTEntry _ctEntry;
-	private final Language _language;
 	private final long _modelClassNameId;
 
 }

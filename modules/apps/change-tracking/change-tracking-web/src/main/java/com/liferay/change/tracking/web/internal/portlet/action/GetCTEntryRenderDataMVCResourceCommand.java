@@ -68,10 +68,6 @@ import org.osgi.service.component.annotations.Reference;
 public class GetCTEntryRenderDataMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
-	public static final String TYPE_AFTER = "after";
-
-	public static final String TYPE_BEFORE = "before";
-
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -159,7 +155,7 @@ public class GetCTEntryRenderDataMVCResourceCommand
 				rightRender = _getData(
 					httpServletRequest, httpServletResponse,
 					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
-					rightCTSQLMode, rightModel, TYPE_AFTER);
+					rightCTSQLMode, rightModel, CTConstants.TYPE_AFTER);
 
 				jsonObject.put(
 					"rightRender", rightRender
@@ -201,7 +197,7 @@ public class GetCTEntryRenderDataMVCResourceCommand
 				String leftRender = _getData(
 					httpServletRequest, httpServletResponse,
 					rightCtCollectionId, ctDisplayRenderer, ctEntryId,
-					rightCTSQLMode, leftModel, TYPE_AFTER);
+					rightCTSQLMode, leftModel, CTConstants.TYPE_AFTER);
 
 				jsonObject.put("leftRender", leftRender);
 
@@ -260,7 +256,7 @@ public class GetCTEntryRenderDataMVCResourceCommand
 				String leftRender = _getData(
 					httpServletRequest, httpServletResponse, ctCollectionId,
 					ctDisplayRenderer, ctEntryId, ctSQLMode, leftModel,
-					TYPE_BEFORE);
+					CTConstants.TYPE_BEFORE);
 
 				jsonObject.put(
 					"leftRender", leftRender

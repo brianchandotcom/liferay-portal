@@ -21,7 +21,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -110,7 +109,7 @@ public class CTDocumentServlet extends HttpServlet {
 		long ctCollectionId = ctCollection.getCtCollectionId();
 
 		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			if (CTEntryDiffDisplay.TYPE_BEFORE.equals(type)) {
+			if (CTConstants.TYPE_BEFORE.equals(type)) {
 				ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 			}
 			else {

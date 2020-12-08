@@ -30,18 +30,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.io.File;
-import java.io.FileInputStream;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Calendar;
 import java.util.List;
@@ -74,7 +66,11 @@ public class TalendDispatchTaskExecutorTest {
 				TestPropsValues.getUserId(), "TalendDispatchTrigger", false,
 				"talend", new UnicodeProperties());
 
-		_addTalendExecutableFileEntry(dispatchTrigger);
+		_dispatchFileRepository.addFileEntry(
+			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
+			_TALEND_CONTEXT_PRINTER_SAMPLE_ZIP, 0, "application/zip",
+			TalendDispatchTaskExecutorTest.class.getResourceAsStream(
+				"/" + _TALEND_CONTEXT_PRINTER_SAMPLE_ZIP));
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -99,27 +95,6 @@ public class TalendDispatchTaskExecutorTest {
 			DispatchTaskStatus.valueOf(dispatchLog.getStatus()));
 	}
 
-	private void _addTalendExecutableFileEntry(DispatchTrigger dispatchTrigger)
-		throws Exception {
-
-		Path path = _getDispatchTestSamplePath();
-
-		File file = path.toFile();
-
-		Assert.assertTrue(file.toString(), file.exists());
-
-		_dispatchFileRepository.addFileEntry(
-			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
-			_TALEND_CONTEXT_PRINTER_SAMPLE_ZIP, 0, "application/zip",
-			new FileInputStream(file));
-	}
-
-	private Path _getDispatchTestSamplePath() {
-		return Paths.get(
-			_props.get(PropsKeys.LIFERAY_HOME), _TALEND_SAMPLES_TEMP_DIR,
-			_TALEND_CONTEXT_PRINTER_SAMPLE_ZIP);
-	}
-
 	private void _simulateSchedulerEvent(long dispatchTriggerId)
 		throws Exception {
 
@@ -134,8 +109,6 @@ public class TalendDispatchTaskExecutorTest {
 	private static final String _TALEND_CONTEXT_PRINTER_SAMPLE_ZIP =
 		"etl-talend-context-printer-sample-1.0.zip";
 
-	private static final String _TALEND_SAMPLES_TEMP_DIR = "tmp_talend_sample";
-
 	@Inject
 	private DispatchFileRepository _dispatchFileRepository;
 
@@ -149,8 +122,5 @@ public class TalendDispatchTaskExecutorTest {
 		filter = "destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME
 	)
 	private MessageListener _messageListener;
-
-	@Inject
-	private Props _props;
 
 }

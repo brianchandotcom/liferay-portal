@@ -54,9 +54,9 @@
 
 		<!-- Other fields -->
 
+		<column name="schemaVersionId" type="long" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
-		<column name="schemaVersionId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusDate" type="Date" />

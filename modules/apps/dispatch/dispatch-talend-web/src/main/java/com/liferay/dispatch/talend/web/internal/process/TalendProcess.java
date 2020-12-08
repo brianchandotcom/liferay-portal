@@ -41,8 +41,8 @@ import java.util.Objects;
  */
 public class TalendProcess {
 
-	public List<String> getMainMethodArguments() {
-		return _mainMethodArguments;
+	public String[] getMainMethodArguments() {
+		return _mainMethodArguments.toArray(new String[0]);
 	}
 
 	public ProcessConfig getProcessConfig() {

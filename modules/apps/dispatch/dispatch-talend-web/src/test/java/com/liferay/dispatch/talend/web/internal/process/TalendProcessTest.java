@@ -16,7 +16,7 @@ package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.dispatch.talend.web.internal.TalendArchiveUtil;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
-import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParser;
+import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParserUtil;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -80,9 +80,7 @@ public class TalendProcessTest {
 
 		talendProcessBuilder.lastRunStartDate(null);
 
-		TalendArchiveParser talendArchiveParser = new TalendArchiveParser();
-
-		TalendArchive talendArchive = talendArchiveParser.parse(
+		TalendArchive talendArchive = TalendArchiveParserUtil.parse(
 			TalendArchiveUtil.getInputStream());
 
 		talendProcessBuilder.talendArchive(talendArchive);

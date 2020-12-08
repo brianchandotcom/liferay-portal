@@ -143,12 +143,12 @@ public class TalendArchiveParser {
 	}
 
 	private String _getJobMainClassFQN(
-			String jobName, String jobExecutableJARPath)
+			String jobName, String jobExecutableJarPath)
 		throws IOException {
 
 		String mainClassSuffix = jobName + ".class";
 
-		try (ZipFile zipFile = new ZipFile(new File(jobExecutableJARPath))) {
+		try (ZipFile zipFile = new ZipFile(new File(jobExecutableJarPath))) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -202,12 +202,12 @@ public class TalendArchiveParser {
 
 		String jobName = (String)jobProperties.get("job");
 
-		Path jobJARPath = _getJobJarPath(jobName, jobDirectoryPath);
+		Path jobJarPath = _getJobJarPath(jobName, jobDirectoryPath);
 
-		talendArchiveBuilder.setJobJARPath(jobJARPath.toString());
+		talendArchiveBuilder.setJobJarPath(jobJarPath.toString());
 
 		talendArchiveBuilder.setJobMainClassFQN(
-			_getJobMainClassFQN(jobName, jobJARPath.toString()));
+			_getJobMainClassFQN(jobName, jobJarPath.toString()));
 
 		return talendArchiveBuilder.build();
 	}

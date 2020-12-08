@@ -14,17 +14,13 @@
 
 package com.liferay.dispatch.talend.web.internal;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * @author Igor Beslic
@@ -37,22 +33,6 @@ public abstract class BaseTalendTestCase {
 		ReflectionTestUtil.setFieldValue(
 			FastDateFormatFactoryUtil.class, "_fastDateFormatFactory",
 			new FastDateFormatFactoryImpl());
-	}
-
-	protected String getContent(InputStream inputStream) throws IOException {
-		StringBundler sb = new StringBundler();
-
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(inputStream))) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				sb.append(line);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	protected InputStream getTalendArchiveInputStream() {

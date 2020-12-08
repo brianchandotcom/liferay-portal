@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.talend.web.internal.archive;
 
-import com.liferay.dispatch.talend.web.internal.archive.exception.TalendArchiveException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -108,7 +107,7 @@ public class TalendArchiveParser {
 			return jobJarPath;
 		}
 
-		throw new TalendArchiveException(
+		throw new IllegalArgumentException(
 			"Unable to determine job JAR directory for " + jobName);
 	}
 
@@ -165,7 +164,8 @@ public class TalendArchiveParser {
 			}
 		}
 
-		throw new TalendArchiveException("Unable to determine job main class");
+		throw new IllegalArgumentException(
+			"Unable to determine job main class");
 	}
 
 	private Properties _getJobProperties(File jobDirectory) throws IOException {

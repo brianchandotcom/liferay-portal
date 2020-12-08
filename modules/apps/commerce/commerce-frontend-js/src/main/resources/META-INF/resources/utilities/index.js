@@ -87,6 +87,21 @@ export function getValueFromItem(item, fieldName) {
 	return item[fieldName];
 }
 
+export function gHash(string) {
+	let hash = 0;
+
+	if (string.length === 0) {
+		return hash;
+	}
+
+	[...string].forEach((char) => {
+		hash = (hash << 7) - hash + char.charCodeAt();
+		hash = hash & hash;
+	});
+
+	return hash;
+}
+
 export function excludeFromList(matchingList, againstList) {
 	const matcher = JSON.stringify(matchingList);
 

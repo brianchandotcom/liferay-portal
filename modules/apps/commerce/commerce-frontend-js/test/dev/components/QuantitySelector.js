@@ -17,12 +17,11 @@ import launcher from '../../../src/main/resources/META-INF/resources/components/
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('quantity-selector', 'quantity-selector', {
-	inputName: 'test-name',
-	orderQuantity: 1,
-	settings: {
-		maxQuantity: 29,
-		minQuantity: 1,
-	},
-	size: 'large',
-	spritemap: './assets/clay/icons.svg',
+	onUpdate: (quantity) =>
+		new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(quantity);
+			}, 0);
+		}),
+	spritemap: './assets/icons.svg',
 });

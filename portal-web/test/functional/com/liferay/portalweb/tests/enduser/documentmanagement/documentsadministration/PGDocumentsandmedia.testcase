@@ -1166,7 +1166,8 @@ definition {
 
 	@priority = "5"
 	test RemovePortlet {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

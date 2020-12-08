@@ -85,7 +85,7 @@ function CartItemsListActions({numberOfItems}) {
 						</ClayButton>
 
 						<ClayButton
-							className={'action'}
+							className={'action text-danger'}
 							disabled={!numberOfItems}
 							displayType={'link'}
 							onClick={askConfirmation}

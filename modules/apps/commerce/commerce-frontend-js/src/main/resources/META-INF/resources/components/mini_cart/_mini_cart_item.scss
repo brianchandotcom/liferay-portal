@@ -10,7 +10,7 @@
 	grid-template-areas:
 		'image info quantity price delete'
 		'errors errors errors errors errors';
-	grid-template-columns: min-content 32% auto minmax(min-content, 100px) min-content;
+	grid-template-columns: min-content auto 90px minmax(min-content, 100px) min-content;
 	overflow: hidden;
 	padding: 10px;
 	position: relative;
@@ -86,9 +86,18 @@
 		grid-area: quantity;
 
 		.quantity-selector {
-			.input-group-item {
-				flex-grow: unset;
-				width: unset;
+			font-size: 0.95rem;
+			height: unset;
+			padding: 0.25rem 0.8rem;
+		}
+
+		input[type='number'] {
+			padding: 0.25rem 0.5rem 0.25rem 0.8rem;
+
+			&::-webkit-inner-spin-button,
+			&::-webkit-outer-spin-button {
+				margin: 0;
+				opacity: 1;
 			}
 		}
 	}
@@ -106,13 +115,14 @@
 
 			&-value {
 				display: block;
-				font-size: 1.1em;
+				font-size: 0.9rem;
 				margin: 0;
 			}
 		}
 	}
 
 	&-delete {
+		font-size: 1rem;
 		grid-area: delete;
 		margin: 10px 0;
 	}

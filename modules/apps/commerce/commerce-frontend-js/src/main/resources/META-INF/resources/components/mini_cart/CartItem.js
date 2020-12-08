@@ -202,10 +202,9 @@ function CartItem({item: cartItem}) {
 
 			<div className={'mini-cart-item-quantity'}>
 				<QuantitySelector
+					onUpdate={updateItemQuantity}
 					quantity={quantity}
-					size={'small'}
 					spritemap={spritemap}
-					updateQuantity={updateItemQuantity}
 					{...settings}
 				/>
 			</div>
@@ -223,7 +222,10 @@ function CartItem({item: cartItem}) {
 					onClick={removeItem}
 					type={'button'}
 				>
-					<ClayIcon spritemap={spritemap} symbol={'times'} />
+					<ClayIcon
+						spritemap={spritemap}
+						symbol={'times-circle-full'}
+					/>
 				</button>
 			</div>
 

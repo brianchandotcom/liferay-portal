@@ -16,7 +16,6 @@ package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.petra.process.ProcessConfig;
-import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * @author Igor Beslic
@@ -91,14 +89,6 @@ public class TalendProcess {
 			return this;
 		}
 
-		public Builder processLogConsumer(
-			Consumer<ProcessLog> processLogConsumer) {
-
-			_processLogConsumer = processLogConsumer;
-
-			return this;
-		}
-
 		public Builder talendArchive(TalendArchive talendArchive) {
 			_talendArchive = talendArchive;
 
@@ -125,7 +115,8 @@ public class TalendProcess {
 			processConfigBuilder.setBootstrapClassPath(
 				portalProcessConfig.getBootstrapClassPath());
 
-			processConfigBuilder.setProcessLogConsumer(_processLogConsumer);
+			processConfigBuilder.setProcessLogConsumer(
+				portalProcessConfig.getProcessLogConsumer());
 
 			processConfigBuilder.setRuntimeClassPath(
 				StringBundler.concat(
@@ -150,7 +141,6 @@ public class TalendProcess {
 
 		private final List<String> _contextParams = new ArrayList<>();
 		private List<String> _jvmOptions;
-		private Consumer<ProcessLog> _processLogConsumer;
 		private TalendArchive _talendArchive;
 
 	}

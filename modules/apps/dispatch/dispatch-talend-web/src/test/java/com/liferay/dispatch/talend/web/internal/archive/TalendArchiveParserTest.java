@@ -23,6 +23,7 @@ import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -43,7 +44,7 @@ public class TalendArchiveParserTest extends BaseTalendTestCase {
 	}
 
 	@Test
-	public void testParse() {
+	public void testParse() throws IOException {
 		TalendArchiveParser talendArchiveParser = new TalendArchiveParser();
 
 		TalendArchive talendArchive = talendArchiveParser.parse(

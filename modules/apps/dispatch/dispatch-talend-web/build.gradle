@@ -1,7 +1,3 @@
-task deployDispatchSamples(type: Copy)
-
-File dispatchTestSamplesDeployDir = file("${buildDir}/../test-classes/unit/tmp_talend_sample")
-
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -22,47 +18,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-
-	testRuntime ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
-}
-
-deployDispatchSamples {
-
-	description = "Assembles the dispatch test sample files and deploys it to test classpath."
-	group "build"
-
-	destinationDir = dispatchTestSamplesDeployDir
-
-	if (!destinationDir.exists()) {
-		destinationDir.mkdir()
-	}
-
-	from configurations.testRuntime
-
-	include "*.zip"
-
-}
-
-test {
-	dependsOn {
-		configurations.testRuntime
-
-		deployDispatchSamples
-	}
-
-	doLast {
-		File destinationDir = dispatchTestSamplesDeployDir
-
-		if (destinationDir.exists()) {
-			for (File file: destinationDir.listFiles() ) {
-				file.delete();
-			}
-
-			destinationDir.delete();
-
-			logger.lifecycle "Removed Dispatch samples directory: {}", dispatchTestSamplesDeployDir
-		}
-
-	}
+	testRuntimeOnly ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
 }

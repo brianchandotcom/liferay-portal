@@ -38,8 +38,8 @@ public class TalendArchive {
 		return _jobDirectory;
 	}
 
-	public String getJobJARPath() {
-		return _jobJARPath;
+	public String getJobJarPath() {
+		return _jobJarPath;
 	}
 
 	public String getJobMainClassFQN() {
@@ -70,8 +70,8 @@ public class TalendArchive {
 			return this;
 		}
 
-		public Builder setJobJARPath(String jobJARPath) {
-			_jobJARPath = jobJARPath;
+		public Builder setJobJarPath(String jobJarPath) {
+			_jobJarPath = jobJarPath;
 
 			return this;
 		}
@@ -95,7 +95,7 @@ public class TalendArchive {
 				sb.append(File.pathSeparatorChar);
 			}
 
-			sb.append(_jobJARPath);
+			sb.append(_jobJarPath);
 
 			return sb.toString();
 		}
@@ -103,7 +103,7 @@ public class TalendArchive {
 		private List<String> _classpathEntries;
 		private String _contextName;
 		private String _jobDirectory;
-		private String _jobJARPath;
+		private String _jobJarPath;
 		private String _jobMainClassFQN;
 
 	}
@@ -112,14 +112,14 @@ public class TalendArchive {
 		_classpath = builder._buildClasspath();
 		_contextName = builder._contextName;
 		_jobDirectory = builder._jobDirectory;
-		_jobJARPath = builder._jobJARPath;
+		_jobJarPath = builder._jobJarPath;
 		_jobMainClassFQN = builder._jobMainClassFQN;
 	}
 
 	private final String _classpath;
 	private final String _contextName;
 	private final String _jobDirectory;
-	private final String _jobJARPath;
+	private final String _jobJarPath;
 	private final String _jobMainClassFQN;
 
 }

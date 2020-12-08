@@ -112,7 +112,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get pending upgrade information for Portal");
+					"Unable to get pending upgrade information for portal");
 			}
 		}
 

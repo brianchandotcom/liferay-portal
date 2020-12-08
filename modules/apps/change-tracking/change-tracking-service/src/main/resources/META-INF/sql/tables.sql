@@ -17,9 +17,9 @@ create table CTCollection (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	schemaVersionId LONG,
 	name VARCHAR(75) null,
 	description VARCHAR(200) null,
-	schemaVersionId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusDate DATE null

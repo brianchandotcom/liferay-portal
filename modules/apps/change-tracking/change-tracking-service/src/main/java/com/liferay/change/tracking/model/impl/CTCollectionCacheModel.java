@@ -91,12 +91,12 @@ public class CTCollectionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", schemaVersionId=");
+		sb.append(schemaVersionId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", schemaVersionId=");
-		sb.append(schemaVersionId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -131,6 +131,8 @@ public class CTCollectionCacheModel
 			ctCollectionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		ctCollectionImpl.setSchemaVersionId(schemaVersionId);
+
 		if (name == null) {
 			ctCollectionImpl.setName("");
 		}
@@ -145,7 +147,6 @@ public class CTCollectionCacheModel
 			ctCollectionImpl.setDescription(description);
 		}
 
-		ctCollectionImpl.setSchemaVersionId(schemaVersionId);
 		ctCollectionImpl.setStatus(status);
 		ctCollectionImpl.setStatusByUserId(statusByUserId);
 
@@ -172,10 +173,10 @@ public class CTCollectionCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
-		description = objectInput.readUTF();
 
 		schemaVersionId = objectInput.readLong();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -195,6 +196,8 @@ public class CTCollectionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(schemaVersionId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -209,8 +212,6 @@ public class CTCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeLong(schemaVersionId);
-
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -223,9 +224,9 @@ public class CTCollectionCacheModel
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public long schemaVersionId;
 	public String name;
 	public String description;
-	public long schemaVersionId;
 	public int status;
 	public long statusByUserId;
 	public long statusDate;

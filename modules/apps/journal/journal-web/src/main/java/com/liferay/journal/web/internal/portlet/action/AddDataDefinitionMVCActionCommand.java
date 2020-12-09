@@ -97,17 +97,8 @@ public class AddDataDefinitionMVCActionCommand
 		dataDefinition.setDefaultDataLayout(
 			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
 
-		try {
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				groupId, "journal", dataDefinition);
-		}
-		catch (DataDefinitionValidationException
-					dataDefinitionValidationException) {
-
-			SessionErrors.add(
-				actionRequest, dataDefinitionValidationException.getClass(),
-				dataDefinitionValidationException);
-		}
+		dataDefinitionResource.postSiteDataDefinitionByContentType(
+			groupId, "journal", dataDefinition);
 	}
 
 }

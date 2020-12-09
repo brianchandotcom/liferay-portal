@@ -15,25 +15,17 @@
 import React from 'react';
 
 import BasicInfoPanel from './BasicInfoPanel.es';
-import {Component} from './PluginContext.es';
 
 /**
  * Entry-point for "Properties" (sidebar pane) functionality.
  */
 export default class {
-	constructor({app, panel}) {
-		this.Component = Component(app);
+	constructor({panel}) {
 		this.title = panel.label;
 		this.url = panel.url;
 	}
 
 	renderSidebar() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<BasicInfoPanel url={this.url} />
-			</Component>
-		);
+		return <BasicInfoPanel url={this.url} />;
 	}
 }

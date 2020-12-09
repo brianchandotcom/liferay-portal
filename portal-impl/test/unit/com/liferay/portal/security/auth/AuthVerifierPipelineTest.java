@@ -30,14 +30,16 @@ import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockServletContext;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Peter Fellwock

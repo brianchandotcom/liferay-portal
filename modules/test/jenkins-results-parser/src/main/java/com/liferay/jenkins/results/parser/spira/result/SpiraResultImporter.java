@@ -30,6 +30,8 @@ import com.liferay.jenkins.results.parser.PortalGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.spira.SpiraProject;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
@@ -59,6 +61,8 @@ public class SpiraResultImporter {
 	}
 
 	public void record() {
+		_cacheSpiraTestCaseObjects();
+
 		Job job = _topLevelBuild.getJob();
 
 		List<SpiraTestResult> spiraTestResults = new ArrayList<>();
@@ -90,6 +94,29 @@ public class SpiraResultImporter {
 		_checkoutPluginsBranch();
 
 		_checkoutQAWebsitesBranch();
+	}
+
+	private void _cacheSpiraTestCaseObjects() {
+		if (_spiraTestCaseObjects != null) {
+			return;
+		}
+
+		long start = System.currentTimeMillis();
+
+		SpiraProject spiraProject = _spiraBuildResult.getSpiraProject();
+
+		_spiraTestCaseObjects = spiraProject.getSpiraTestCaseObjects(
+			Integer.valueOf(
+				JenkinsResultsParserUtil.getProperty(
+					_getBuildProperties(), "spira.test.case.count")),
+			_spiraBuildResult.getSpiraTestCaseProductVersion());
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Loaded ", String.valueOf(_spiraTestCaseObjects.size()),
+				" Spira Test Cases in ",
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start)));
 	}
 
 	private void _checkoutOSBFaroBranch() {
@@ -275,6 +302,7 @@ public class SpiraResultImporter {
 	}
 
 	private final SpiraBuildResult _spiraBuildResult;
+	private List<SpiraTestCaseObject> _spiraTestCaseObjects;
 	private final TopLevelBuild _topLevelBuild;
 
 }

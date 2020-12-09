@@ -138,7 +138,8 @@ public class OrganizationODataRetrieverTest {
 	public void testGetOrganizationsFilterByCountryAndRegion()
 		throws Exception {
 
-		Country country = _countryService.getCountryByName("spain");
+		Country country = _countryService.getCountryByName(
+			TestPropsValues.getCompanyId(), "spain");
 
 		List<Region> regions = _regionService.getRegions(
 			country.getCountryId());

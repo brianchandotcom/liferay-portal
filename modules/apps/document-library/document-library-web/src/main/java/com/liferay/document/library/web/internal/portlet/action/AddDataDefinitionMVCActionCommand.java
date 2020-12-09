@@ -79,7 +79,8 @@ public class AddDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultErrorMessage(actionRequest);
 
 			SessionErrors.add(
-				actionRequest, dataDefinitionValidationException.getClass());
+				actionRequest, dataDefinitionValidationException.getClass(),
+				dataDefinitionValidationException);
 		}
 	}
 

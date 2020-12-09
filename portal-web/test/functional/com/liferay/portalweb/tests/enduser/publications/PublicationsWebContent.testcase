@@ -36,8 +36,6 @@ definition {
 
 	@priority = "4"
 	test PublishExpiredWebContentViaWCD {
-		property test.name.skip.portal.instance = "PublicationsWebContent#PublishExpiredWebContentViaWCD";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
@@ -101,8 +99,6 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithCategory {
-		property test.name.skip.portal.instance = "PublicationsWebContent#PublishWebContentWithCategory";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
@@ -157,7 +153,6 @@ definition {
 	@priority = "4"
 	test PublishWebContentWithDMAndImageFields {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PublicationsWebContent#PublishWebContentWithDMAndImageFields";
 
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
@@ -272,8 +267,6 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithFriendlyURL {
-		property test.name.skip.portal.instance = "PublicationsWebContent#PublishWebContentWithFriendlyURL";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();

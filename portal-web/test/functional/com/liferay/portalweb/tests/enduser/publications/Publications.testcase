@@ -36,8 +36,6 @@ definition {
 
 	@priority = "5"
 	test ConflictingPublicationsAutomaticallyResolved {
-		property test.name.skip.portal.instance = "Publications#ConflictingPublicationsAutomaticallyResolved";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -123,8 +121,6 @@ definition {
 
 	@priority = "4"
 	test ConflictingPublicationsNeedManualResolution {
-		property test.name.skip.portal.instance = "Publications#ConflictingPublicationsNeedManualResolution";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -270,8 +266,6 @@ definition {
 
 	@priority = "4"
 	test DiscardSubsetsofChangesInPublication {
-		property test.name.skip.portal.instance = "Publications#DiscardSubsetsofChangesInPublication";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
@@ -387,8 +381,6 @@ definition {
 
 	@priority = "5"
 	test PublishParallelPublications {
-		property test.name.skip.portal.instance = "Publications#PublishParallelPublications";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -470,8 +462,6 @@ definition {
 
 	@priority = "5"
 	test RescheduleAndCancelScheduledPublication {
-		property test.name.skip.portal.instance = "Publications#RescheduleAndCancelScheduledPublication";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
@@ -503,8 +493,6 @@ definition {
 
 	@priority = "5"
 	test RevertPublicationAndPublishNow {
-		property test.name.skip.portal.instance = "Publications#RevertPublicationAndPublishNow";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();
@@ -570,8 +558,6 @@ definition {
 
 	@priority = "5"
 	test SchedulePublication {
-		property test.name.skip.portal.instance = "Publications#SchedulePublication";
-
 		Publications.createNewPublication(publicationsName = "Publication Name 1");
 
 		Navigator.openURL();
@@ -645,8 +631,6 @@ definition {
 
 	@priority = "5"
 	test SearchPublishedPublications {
-		property test.name.skip.portal.instance = "Publications#SearchPublishedPublications";
-
 		Publications.createNewPublication(publicationsName = "Apple");
 
 		Publications.createNewPublication(publicationsName = "Banana");

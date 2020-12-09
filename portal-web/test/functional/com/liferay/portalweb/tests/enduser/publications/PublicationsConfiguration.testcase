@@ -21,8 +21,6 @@ definition {
 
 	@priority = "5"
 	test CannotEnablePublicationsWhenStagingIsTurnedOn {
-		property test.name.skip.portal.instance = "PublicationsConfiguration#CannotEnablePublicationsWhenStagingIsTurnedOn";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -46,8 +44,6 @@ definition {
 
 	@priority = "5"
 	test EnableDisablePublications {
-		property test.name.skip.portal.instance = "PublicationsConfiguration#EnableDisablePublications";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -67,8 +63,6 @@ definition {
 
 	@priority = "5"
 	test EnablePublicationsAndGoToOverview {
-		property test.name.skip.portal.instance = "PublicationsConfiguration#EnablePublicationsAndGoToOverview";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",

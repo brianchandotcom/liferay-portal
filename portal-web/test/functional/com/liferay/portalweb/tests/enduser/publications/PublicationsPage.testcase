@@ -36,8 +36,6 @@ definition {
 
 	@priority = "4"
 	test ConflictingPublicationsNeedManualResolution {
-		property test.name.skip.portal.instance = "PublicationsPage#ConflictingPublicationsNeedManualResolution";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -122,7 +120,6 @@ definition {
 	@priority = "4"
 	test DiscardConflictingChangesOnContentPage {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PublicationsPage#DiscardConflictingChangesOnContentPage";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -218,8 +215,6 @@ definition {
 
 	@priority = "4"
 	test PublishDeletedPageWithTag {
-		property test.name.skip.portal.instance = "PublicationsPage#PublishDeletedPageWithTag";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -276,7 +271,6 @@ definition {
 	@priority = "4"
 	test PublishPrivateContentPageWithFragment {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PublicationsPage#PublishPrivateContentPageWithFragment";
 
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
@@ -347,8 +341,6 @@ definition {
 
 	@priority = "5"
 	test ViewPageFriendlyURLAfterRevertingPublication {
-		property test.name.skip.portal.instance = "PublicationsPage#ViewPageFriendlyURLAfterRevertingPublication";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

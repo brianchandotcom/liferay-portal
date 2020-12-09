@@ -37,7 +37,6 @@ definition {
 	@priority = "4"
 	test CheckoutAndCheckinDocumentInPublication {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "PublicationsDM#CheckoutAndCheckinDocumentInPublication";
 
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
@@ -91,8 +90,6 @@ definition {
 
 	@priority = "4"
 	test ConflictingPublicationsNeedManualResolution {
-		property test.name.skip.portal.instance = "PublicationsDM#ConflictingPublicationsNeedManualResolution";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -167,8 +164,6 @@ definition {
 
 	@priority = "4"
 	test PublishDocumentFolderWithEditedDocument {
-		property test.name.skip.portal.instance = "PublicationsDM#PublishDocumentFolderWithEditedDocument";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -255,8 +250,6 @@ definition {
 
 	@priority = "4"
 	test PublishDocumentWithNewDocumentType {
-		property test.name.skip.portal.instance = "PublicationsDM#PublishDocumentWithNewDocumentType";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();

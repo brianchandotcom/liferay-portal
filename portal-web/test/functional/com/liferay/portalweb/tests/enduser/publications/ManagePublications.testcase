@@ -36,8 +36,6 @@ definition {
 
 	@priority = "3"
 	test CancelPublicationCreation {
-		property test.name.skip.portal.instance = "PublicationsManagePublications#CancelPublicationCreation";
-
 		Publications.cancelPublicationCreation(publicationsName = "Publication Name");
 
 		AssertElementNotPresent(
@@ -47,8 +45,6 @@ definition {
 
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
-		property test.name.skip.portal.instance = "PublicationsManagePublications#CreateNewPublicationWithLongName";
-
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
 			publicationsName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
@@ -58,8 +54,6 @@ definition {
 
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
-		property test.name.skip.portal.instance = "PublicationsManagePublications#CreateNewPublicationWithoutName";
-
 		Publications.createNewPublication(gotoManagePublications = "true");
 
 		Alert.viewRequiredField();
@@ -67,8 +61,6 @@ definition {
 
 	@priority = "5"
 	test DeletePublication {
-		property test.name.skip.portal.instance = "PublicationsManagePublications#DeletePublication";
-
 		Publications.createNewPublication(
 			gotoManagePublications = "true",
 			publicationsDescription = "Publication Description",
@@ -88,8 +80,6 @@ definition {
 
 	@priority = "4"
 	test SwitchPublication {
-		property test.name.skip.portal.instance = "PublicationsManagePublications#SwitchPublication";
-
 		Publications.createNewPublication(publicationsName = "Publication Name");
 
 		Navigator.openURL();

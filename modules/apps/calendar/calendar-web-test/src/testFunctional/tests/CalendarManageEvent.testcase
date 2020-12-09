@@ -419,6 +419,8 @@ definition {
 	@description = "This is a use case for LPS-50026."
 	@priority = "4"
 	test EditRegularWithUserInvite {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(

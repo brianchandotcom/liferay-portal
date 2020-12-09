@@ -84,9 +84,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			NoticeableFuture<Serializable> future =
 				processChannel.getProcessNoticeableFuture();
 
-			while (!future.isDone()) {
-				Thread.yield();
-			}
+			future.get();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

@@ -19,7 +19,10 @@ import com.liferay.petra.process.ProcessException;
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import java.security.Permission;
 
 /**
  * @author Igor Beslic
@@ -35,6 +38,22 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 	@Override
 	public Serializable call() throws ProcessException {
+		RuntimeException runtimeException = new RuntimeException();
+
+		System.setSecurityManager(
+			new SecurityManager() {
+
+				@Override
+				public void checkExit(int status) {
+					throw runtimeException;
+				}
+
+				@Override
+				public void checkPermission(Permission perm) {
+				}
+
+			});
+
 		ClassLoader classLoader = TalendProcessCallable.class.getClassLoader();
 
 		try {
@@ -46,6 +65,15 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			mainMethod.setAccessible(true);
 
 			mainMethod.invoke(null, new Object[] {_mainMethodArgs});
+		}
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable causeThrowable = invocationTargetException.getCause();
+
+			if (causeThrowable == runtimeException) {
+				return null;
+			}
+
+			throw new ProcessException(causeThrowable);
 		}
 		catch (Throwable throwable) {
 			throw new ProcessException(throwable);

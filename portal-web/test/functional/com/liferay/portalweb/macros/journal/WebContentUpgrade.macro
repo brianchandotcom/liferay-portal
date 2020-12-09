@@ -309,53 +309,17 @@ definition {
 
 		if (isSet(webContentBoolean)) {
 			if ("${webContentBoolean}" == "true") {
-				FormFields.viewCheckboxChecked(fieldName = "Boolean");
+				AssertChecked(
+					key_fieldFieldLabel = "Boolean",
+					key_optionValue = "Boolean",
+					locator1 = "WCEditWebContent#SELECTION_OPTION");
 			}
 			else if ("${webContentBoolean}" == "false") {
-				FormFields.viewCheckboxNotChecked(fieldName = "Boolean");
+				AssertChecked(
+					key_fieldFieldLabel = "Boolean",
+					key_optionValue = "Boolean",
+					locator1 = "WCEditWebContent#SELECTION_OPTION");
 			}
-		}
-
-		if (isSet(webContentColor)) {
-			AssertTextEquals.assertValue(
-				key_fieldFieldLabel = "Color",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentColor}");
-		}
-
-		if (isSet(webContentDate)) {
-			AssertTextEquals(
-				attribute1 = "value",
-				key_fieldFieldLabel = "Date",
-				locator1 = "WCEditWebContent#DATE_INPUT",
-				value1 = "${webContentDate}");
-		}
-
-		if (isSet(webContentDecimal)) {
-			AssertTextEquals.assertValue(
-				key_fieldFieldLabel = "Decimal",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentDecimal}");
-		}
-
-		if (isSet(webContentDocumentsAndMedia)) {
-			AssertAttributeValue(
-				attribute1 = "value",
-				key_fieldFieldLabel = "${webContentDocumentsAndMediaFieldName}",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentDocumentsAndMedia}");
-		}
-
-		if (isSet(webContentHTML)) {
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "HTML",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			AssertTextEquals(
-				locator1 = "CKEditor#BODY",
-				value1 = "${webContentHTML}");
-
-			SelectFrameTop();
 		}
 
 		if (isSet(webContentImage)) {
@@ -372,101 +336,6 @@ definition {
 				key_fieldFieldLabel = "${webContentImageFieldLabel}",
 				key_image = "/documents/",
 				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
-		}
-
-		if (isSet(webContentInteger)) {
-			AssertTextEquals.assertValue(
-				key_fieldFieldLabel = "Integer",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentInteger}");
-		}
-
-		if (isSet(webContentLinkToPage)) {
-			AssertTextEquals(
-				key_fieldFieldLabel = "${webContentLinkToPageFieldName}",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentLinkToPage}");
-		}
-		if (isSet(webContentNumber)) {
-			AssertTextEquals.assertValue(
-				key_fieldFieldLabel = "Number",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentNumber}");
-		}
-
-		if (isSet(webContentRadio)) {
-			FormFields.viewRadioValue(
-				fieldName = "Radio",
-				fieldValue = "${webContentRadio}");
-		}
-
-		if (isSet(webContentSeparator)) {
-			AssertVisible(
-				key_fieldName = "Separator",
-				locator1 = "DDMField#SEPARATOR");
-		}
-
-		if (isSet(webContentSelect)) {
-			AssertSelectedLabel(
-				key_fieldLabel = "Select",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${webContentSelect}");
-		}
-
-		if (isSet(webContentText)) {
-			AssertTextEquals.assertValue(
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentText}");
-		}
-
-		if (isSet(webContentTextBox)) {
-			if (isSet(fieldName)) {
-				AssertTextEquals(
-					key_fieldName = "${fieldName}",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
-			}
-			else if (isSet(webContentTextBoxFieldName)) {
-				AssertTextEquals(
-					key_fieldName = "${webContentTextBoxFieldName}",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
-			}
-			else {
-				AssertTextEquals(
-					key_fieldName = "TextBox",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
-			}
-		}
-
-		if (isSet(webContentTextBox2)) {
-			var key_fieldName = "${fieldName2}";
-
-			AssertTextEquals(
-				locator1 = "DDMField#TEXT_BOX",
-				value1 = "${webContentTextBox2}");
-		}
-
-		if (isSet(webContentTextBoxList)) {
-			var count = "1";
-
-			for (var webContentTextBox : list "${webContentTextBoxList}") {
-				AssertTextEquals(
-					key_fieldName = "heading${count}",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
-
-				var count = ${count} + 1;
-			}
-		}
-
-		if (isSet(webContentWebContent)) {
-			AssertTextEquals(
-				key_fieldFieldLabel = "${webContentWebContentFieldName}",
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentWebContent}");
 		}
 	}
 

@@ -654,28 +654,11 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		String templateName = StringUtil.replaceFirst(
 			type, fieldNamespace.concat(StringPool.DASH), StringPool.BLANK);
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_TPL_PATH);
-		sb.append(StringUtil.toLowerCase(fieldNamespace));
-		sb.append(CharPool.SLASH);
-		sb.append(templateName);
-		sb.append(_TPL_EXT);
-
-		String resource = sb.toString();
-
-		URL url = getResource(resource);
-
-		if (url != null) {
-			templateResource = getTemplateResource(resource);
-		}
-
-		if (templateResource == null) {
-			throw new Exception("Unable to load template resource " + resource);
-		}
-
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
+			TemplateConstants.LANG_TYPE_FTL,
+			_updateTemplateResource(
+				fieldNamespace, templateName, templateResource),
+			false);
 
 		for (Map.Entry<String, Object> entry : freeMarkerContext.entrySet()) {
 			template.put(entry.getKey(), entry.getValue());
@@ -748,6 +731,34 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		Iterator<Locale> iterator = availableLocales.iterator();
 
 		return iterator.next();
+	}
+
+	private TemplateResource _updateTemplateResource(
+			String fieldNamespace, String templateName,
+			TemplateResource templateResource)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_TPL_PATH);
+		sb.append(StringUtil.toLowerCase(fieldNamespace));
+		sb.append(CharPool.SLASH);
+		sb.append(templateName);
+		sb.append(_TPL_EXT);
+
+		String resource = sb.toString();
+
+		URL url = getResource(resource);
+
+		if (url != null) {
+			return getTemplateResource(resource);
+		}
+		else if (!Objects.equals(fieldNamespace, "ddm")) {
+			return _updateTemplateResource(
+				"ddm", templateName, templateResource);
+		}
+
+		return templateResource;
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

@@ -83,7 +83,8 @@ $infoPanelSidebarDDColor: $secondary-l1;
 		}
 
 		&:not(.open) {
-			img, .video-preview {
+			img,
+			.video-preview {
 				left: 50%;
 				position: absolute;
 				top: 50%;

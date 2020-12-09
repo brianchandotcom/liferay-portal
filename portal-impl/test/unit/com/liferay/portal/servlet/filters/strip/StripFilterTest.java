@@ -18,8 +18,11 @@ import com.liferay.portal.cache.key.HashCodeHexStringCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.StringWriter;
 
@@ -29,6 +32,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -48,6 +52,17 @@ public class StripFilterTest {
 
 		cacheKeyGeneratorUtil.setDefaultCacheKeyGenerator(
 			new HashCodeHexStringCacheKeyGenerator());
+
+		_minifierEnabled = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.MINIFIER_ENABLED));
+
+		PropsUtil.set(PropsKeys.MINIFIER_ENABLED, "true");
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PropsUtil.set(
+			PropsKeys.MINIFIER_ENABLED, String.valueOf(_minifierEnabled));
 	}
 
 	@Test
@@ -418,5 +433,7 @@ public class StripFilterTest {
 
 		Assert.assertEquals(4, charBuffer.position());
 	}
+
+	private static boolean _minifierEnabled;
 
 }

@@ -27,7 +27,6 @@ import com.liferay.exportimport.resources.importer.internal.constants.ResourcesI
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -128,7 +127,6 @@ public class ImporterFactory {
 		else if ((resourcePaths != null) && !resourcePaths.isEmpty()) {
 			importer = getResourceImporter();
 
-			importer.setJournalConverter(_journalConverter);
 			importer.setResourcesDir(RESOURCES_DIR);
 		}
 		else if ((templatePaths != null) && !templatePaths.isEmpty()) {
@@ -138,13 +136,11 @@ public class ImporterFactory {
 
 			importer.setGroupId(group.getGroupId());
 
-			importer.setJournalConverter(_journalConverter);
 			importer.setResourcesDir(TEMPLATES_DIR);
 		}
 		else if (Validator.isNotNull(resourcesDir)) {
 			importer = getFileSystemImporter();
 
-			importer.setJournalConverter(_journalConverter);
 			importer.setResourcesDir(resourcesDir);
 		}
 
@@ -322,9 +318,6 @@ public class ImporterFactory {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private JournalConverter _journalConverter;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;

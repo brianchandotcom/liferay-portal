@@ -194,7 +194,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			}
 		}
 
-		return _journalConverter.getContent(ddmStructure, ddmFields);
+		return _journalConverter.getContent(
+			ddmStructure, ddmFields, ddmStructure.getGroupId());
 	}
 
 	private String _getTranslatedString(

@@ -379,7 +379,8 @@ public class JournalArticleExportImportContentProcessor
 			}
 		}
 
-		return _journalConverter.getContent(ddmStructure, fields);
+		return _journalConverter.getContent(
+			ddmStructure, fields, ddmStructure.getGroupId());
 	}
 
 	protected String replaceImportJournalArticleReferences(
@@ -453,7 +454,8 @@ public class JournalArticleExportImportContentProcessor
 			}
 		}
 
-		return _journalConverter.getContent(ddmStructure, fields);
+		return _journalConverter.getContent(
+			ddmStructure, fields, ddmStructure.getGroupId());
 	}
 
 	protected void validateJournalArticleReferences(String content)

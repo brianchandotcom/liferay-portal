@@ -89,12 +89,12 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country fetchCountry(long countryId) {
-		return countryPersistence.fetchByPrimaryKey(countryId);
+		return countryLocalService.fetchCountry(countryId);
 	}
 
 	@Override
 	public Country fetchCountryByA2(long companyId, String a2) {
-		return countryPersistence.fetchByC_A2(companyId, a2);
+		return countryLocalService.fetchCountryByA2(companyId, a2);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country fetchCountryByA3(long companyId, String a3) {
-		return countryPersistence.fetchByC_A3(companyId, a3);
+		return countryLocalService.fetchCountryByA3(companyId, a3);
 	}
 
 	/**
@@ -122,13 +122,13 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public List<Country> getCompanyCountries(long companyId) {
-		return countryPersistence.findByCompanyId(companyId);
+		return countryLocalService.getCompanyCountries(companyId);
 	}
 
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public List<Country> getCompanyCountries(long companyId, boolean active) {
-		return countryPersistence.findByC_Active(companyId, active);
+		return countryLocalService.getCompanyCountries(companyId, active);
 	}
 
 	@Override
@@ -181,14 +181,14 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country getCountry(long countryId) throws PortalException {
-		return countryPersistence.findByPrimaryKey(countryId);
+		return countryLocalService.getCountry(countryId);
 	}
 
 	@Override
 	public Country getCountryByA2(long companyId, String a2)
-		throws NoSuchCountryException {
+		throws PortalException {
 
-		return countryPersistence.findByC_A2(companyId, a2);
+		return countryLocalService.getCountryByA2(companyId, a2);
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country getCountryByA3(long companyId, String a3)
 		throws NoSuchCountryException {
 
-		return countryPersistence.findByC_A3(companyId, a3);
+		return countryLocalService.getCountryByA3(companyId, a3);
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country getCountryByName(long companyId, String name)
 		throws NoSuchCountryException {
 
-		return countryPersistence.findByC_Name(companyId, name);
+		return countryLocalService.getCountryByName(companyId, name);
 	}
 
 	/**

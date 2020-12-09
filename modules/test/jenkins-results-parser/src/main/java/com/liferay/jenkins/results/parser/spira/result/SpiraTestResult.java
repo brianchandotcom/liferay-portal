@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseType;
+
 /**
  * @author Michael Hashimoto
  */
@@ -22,6 +25,10 @@ public interface SpiraTestResult {
 	public String getAxisName();
 
 	public SpiraBuildResult getSpiraBuildResult();
+
+	public SpiraTestCaseObject getSpiraTestCaseObject();
+
+	public SpiraTestCaseType getSpiraTestCaseType();
 
 	public String getTestName();
 

@@ -19,9 +19,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions;
@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -108,11 +109,11 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
 				PortalUtil.getDefaultCompanyId(), getGroupFriendlyURL());
 
-			Folder folder = DLAppLocalServiceUtil.getFolder(
+			Folder folder = _dlAppLocalService.getFolder(
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				getFolderName());
 
-			fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			fileEntry = _dlAppLocalService.addFileEntry(
 				TestPropsValues.getUserId(), group.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_ILLEGAL_CHARACTERS,
 				ContentTypes.APPLICATION_MSWORD,
@@ -126,8 +127,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 		finally {
 			if (fileEntry != null) {
-				DLAppLocalServiceUtil.deleteFileEntry(
-					fileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
 			}
 		}
 	}
@@ -417,7 +417,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
 				PortalUtil.getDefaultCompanyId(), getGroupFriendlyURL());
 
-			Folder folder = DLAppLocalServiceUtil.getFolder(
+			Folder folder = _dlAppLocalService.getFolder(
 				TestPropsValues.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
 
@@ -428,7 +428,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					TestPropsValues.getGroupId());
 
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				_dlFileEntryTypeLocalService.addFileEntryType(
 					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
@@ -444,7 +444,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					ddmStructure.getStructureId(),
 				expectedDDDMFormValues);
 
-			fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			fileEntry = _dlAppLocalService.addFileEntry(
 				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
@@ -453,7 +453,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
 
-			FileEntry finalFileEntry = DLAppLocalServiceUtil.getFileEntry(
+			FileEntry finalFileEntry = _dlAppLocalService.getFileEntry(
 				fileEntry.getFileEntryId());
 
 			DLFileEntry finalDLFileEntryModel =
@@ -475,7 +475,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				FileVersion fileVersion = finalFileEntry.getLatestFileVersion();
 
 				DLFileEntryMetadata fileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+					_dlFileEntryMetadataLocalService.getFileEntryMetadata(
 						structure.getStructureId(),
 						fileVersion.getFileVersionId());
 
@@ -489,8 +489,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 		finally {
 			if (fileEntry != null) {
-				DLAppLocalServiceUtil.deleteFileEntry(
-					fileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
 			}
 		}
 	}
@@ -505,7 +504,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
 				PortalUtil.getDefaultCompanyId(), getGroupFriendlyURL());
 
-			Folder folder = DLAppLocalServiceUtil.getFolder(
+			Folder folder = _dlAppLocalService.getFolder(
 				TestPropsValues.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
 
@@ -516,7 +515,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					TestPropsValues.getGroupId());
 
 			DLFileEntryType initialDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				_dlFileEntryTypeLocalService.addFileEntryType(
 					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
@@ -532,7 +531,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					ddmStructure.getStructureId(),
 				expectedDDDMFormValues);
 
-			fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			fileEntry = _dlAppLocalService.addFileEntry(
 				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
@@ -541,7 +540,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
 
-			FileEntry finalFileEntry = DLAppLocalServiceUtil.getFileEntry(
+			FileEntry finalFileEntry = _dlAppLocalService.getFileEntry(
 				fileEntry.getFileEntryId());
 
 			DLFileEntry finalDLFileEntryModel =
@@ -559,8 +558,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 		finally {
 			if (fileEntry != null) {
-				DLAppLocalServiceUtil.deleteFileEntry(
-					fileEntry.getFileEntryId());
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
 			}
 		}
 	}
@@ -709,6 +707,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private static byte[] _testDeltaBytes;
 	private static byte[] _testFileBytes;
 	private static byte[] _testMetaBytes;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	private final Map<String, String> _lockMap = new HashMap<>();
 

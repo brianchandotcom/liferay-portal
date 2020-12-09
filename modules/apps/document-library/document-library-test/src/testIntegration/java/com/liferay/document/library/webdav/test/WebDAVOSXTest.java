@@ -157,6 +157,60 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
+	public void testChangeFileNameOSOnlyChangeFileName() throws Exception {
+		FileEntry fileEntry = null;
+
+		try {
+			assertCode(
+				HttpServletResponse.SC_CREATED,
+				servicePut(
+					_TEST_FILE_NAME_2, _testFileBytes,
+					getLock(_TEST_FILE_NAME_2)));
+
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE_2));
+
+			Folder folder = _dlAppLocalService.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			fileEntry = _dlAppLocalService.getFileEntry(
+				TestPropsValues.getGroupId(), folder.getFolderId(),
+				_TEST_FILE_TITLE_2);
+
+			Assert.assertEquals(_TEST_FILE_TITLE_2, fileEntry.getTitle());
+			Assert.assertEquals(_TEST_FILE_NAME_2, fileEntry.getFileName());
+
+			assertCode(
+				HttpServletResponse.SC_CREATED,
+				serviceCopyOrMove(
+					Method.MOVE, _TEST_FILE_NAME_2, _TEST_FILE_NAME_2_MOD));
+
+			assertCode(
+				HttpServletResponse.SC_NOT_FOUND,
+				serviceGet(_TEST_FILE_NAME_2));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2_MOD));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE_2));
+
+			fileEntry = _dlAppLocalService.getFileEntry(
+				TestPropsValues.getGroupId(), folder.getFolderId(),
+				_TEST_FILE_TITLE_2);
+
+			Assert.assertEquals(_TEST_FILE_TITLE_2, fileEntry.getTitle());
+			Assert.assertEquals(_TEST_FILE_NAME_2_MOD, fileEntry.getFileName());
+		}
+		finally {
+			if (fileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
+	}
+
+	@Test
 	public void testChangeTitleFromRepositoryDoNotChangeFileName()
 		throws Exception {
 
@@ -187,6 +241,11 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					getLock(_TEST_FILE_NAME_2)));
 
 			unlock(_TEST_FILE_NAME_2);
+
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE_2));
 
 			long fileEntryId = fileEntry.getFileEntryId();
 
@@ -893,6 +952,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private static final String _TEST_FILE_NAME = "Test.docx";
 
 	private static final String _TEST_FILE_NAME_2 = "Test2.docx";
+
+	private static final String _TEST_FILE_NAME_2_MOD = "Test2Mod.docx";
 
 	private static final String _TEST_FILE_NAME_ILLEGAL_CHARACTERS =
 		"Test/0.docx";

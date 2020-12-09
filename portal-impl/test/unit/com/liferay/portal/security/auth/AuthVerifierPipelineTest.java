@@ -30,16 +30,14 @@ import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockServletContext;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Peter Fellwock
@@ -97,8 +95,8 @@ public class AuthVerifierPipelineTest {
 		accessControlContext.setRequest(mockHttpServletRequest);
 
 		AuthVerifierPipeline authVerifierPipeline = new AuthVerifierPipeline(
-			HashMapBuilder.put(
-				"portal_property_prefix", (Object)""
+			HashMapBuilder.<String, Object>put(
+				"portal_property_prefix", ""
 			).build());
 
 		try {

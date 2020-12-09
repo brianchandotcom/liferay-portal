@@ -40,7 +40,7 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
 					<div class="tabbable">
 						<div class="tabbable-content">
-							<ul class="lfr-nav nav nav-tabs nav-tabs-default">
+							<ul class="lfr-nav nav nav-tabs">
 								<li class="nav-item">
 									<a class="active nav-link" href="javascript:;">
 										<liferay-ui:message key="fields" />

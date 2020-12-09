@@ -265,7 +265,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									<div class="property-builder-content" id="<portlet:namespace />propertyBuilderContent">
 										<div class="tabbable">
 											<div class="tabbable-content">
-												<ul class="nav nav-tabs nav-tabs-default">
+												<ul class="nav nav-tabs">
 													<li class="nav-item">
 														<a class="active nav-link" href="javascript:;">
 															<liferay-ui:message key="nodes" />

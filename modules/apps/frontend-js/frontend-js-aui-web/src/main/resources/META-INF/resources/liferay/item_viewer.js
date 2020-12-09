@@ -662,7 +662,7 @@ AUI.add(
 					Liferay.Util.getLexiconIconTpl('times') +
 					'</a>' +
 					'<h4 class="image-viewer-sidenav-header">' +
-					'<ul class="nav nav-tabs nav-tabs-default"></ul>' +
+					'<ul class="nav nav-tabs"></ul>' +
 					'</h4>' +
 					'</div>' +
 					'<div class="image-viewer-sidenav-body sidebar-body">' +

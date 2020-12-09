@@ -43,7 +43,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 			names="details,specs,skus"
 			param="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
 			refresh="<%= false %>"
-			type="tabs nav-tabs-default"
+			type="nav-tabs tabs"
 		>
 			<liferay-ui:section>
 				<dl>

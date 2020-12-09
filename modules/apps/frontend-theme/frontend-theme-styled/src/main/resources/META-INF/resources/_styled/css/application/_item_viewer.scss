@@ -73,53 +73,6 @@
 			color: #fff;
 		}
 	}
-
-	.nav-tabs-default {
-		> li {
-			padding-left: 20px;
-
-			&:first-child {
-				padding-left: 0;
-			}
-		}
-
-		> li:first-child > a {
-			padding-left: 0;
-		}
-
-		> li > a {
-			border-color: transparent;
-			color: #777;
-			padding-left: 0;
-			padding-right: 0;
-		}
-
-		> li > .active {
-			background-color: transparent;
-
-			&,
-			&:focus,
-			&:hover {
-				border-color: transparent;
-				color: #777;
-
-				@include media-breakpoint-up(sm) {
-					color: #fff;
-				}
-			}
-
-			&:after {
-				background-color: #65b6f0;
-				bottom: -10px;
-				content: '';
-				display: block;
-				height: 2px;
-				left: 0;
-				position: relative;
-				right: 0;
-			}
-		}
-	}
 }
 
 .image-viewer-sidenav-body {

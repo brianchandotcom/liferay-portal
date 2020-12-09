@@ -108,7 +108,7 @@ if (tabs1.equals("published")) {
 	</liferay-portlet:renderURL>
 
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav cssClass="kaleo-process-workflow-nav-tabs nav-bar-workflow nav-tabs nav-tabs-default">
+		<aui:nav cssClass="kaleo-process-workflow-nav-tabs nav-bar-workflow nav-tabs">
 			<liferay-portlet:renderURL var="viewPublishedURL">
 				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
 				<portlet:param name="tabs1" value="published" />

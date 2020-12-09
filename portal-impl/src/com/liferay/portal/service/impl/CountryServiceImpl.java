@@ -272,7 +272,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 				getPermissionChecker());
 		}
 
-		return countryLocalService.updateCountryGroupFilter(
+		return countryLocalService.updateCountryGroupFilterEnabled(
 			countryId, groupFilterEnabled);
 	}
 

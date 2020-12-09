@@ -74,18 +74,6 @@ public class UpgradeCountry extends UpgradeProcess {
 			"update Country set defaultLanguageId = " + defaultLanguageId +
 				" where defaultLanguageId is null");
 
-		if (!hasColumn("Country", "companyId")) {
-			alter(
-				CountryTable.class,
-				new AlterTableAddColumn("companyId", "LONG"));
-		}
-
-		if (defaultCompanyId > 0) {
-			runSQL(
-				"update Country set companyId = " + defaultCompanyId +
-					" where (companyId is null or companyId = 0)");
-		}
-
 		if (!hasColumn("Country", "userId")) {
 			alter(
 				CountryTable.class, new AlterTableAddColumn("userId", "LONG"));
@@ -165,6 +153,18 @@ public class UpgradeCountry extends UpgradeProcess {
 			alter(
 				CountryTable.class,
 				new AlterTableAddColumn("lastPublishDate", "DATE null"));
+		}
+
+		if (!hasColumn("Country", "companyId")) {
+			alter(
+				CountryTable.class,
+				new AlterTableAddColumn("companyId", "LONG"));
+		}
+
+		if (defaultCompanyId > 0) {
+			runSQL(
+				"update Country set companyId = " + defaultCompanyId +
+					" where (companyId is null or companyId = 0)");
 		}
 
 		if (!hasColumn("Country", "uuid_")) {

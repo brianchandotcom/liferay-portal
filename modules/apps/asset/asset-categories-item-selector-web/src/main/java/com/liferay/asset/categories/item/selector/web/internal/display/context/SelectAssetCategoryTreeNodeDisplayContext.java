@@ -63,10 +63,10 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		SearchContainer<AssetCategory> searchContainer = new SearchContainer<>(
 			_getPortletRequest(), _portletURL, null, "no-items-to-display");
 
-		List<AssetCategory> assetVocabularies = _getAssetCategories();
+		List<AssetCategory> assetCategories = _getAssetCategories();
 
-		searchContainer.setResults(assetVocabularies);
-		searchContainer.setTotal(assetVocabularies.size());
+		searchContainer.setResults(assetCategories);
+		searchContainer.setTotal(assetCategories.size());
 
 		return searchContainer;
 	}

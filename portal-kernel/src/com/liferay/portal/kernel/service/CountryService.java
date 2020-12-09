@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -117,6 +116,10 @@ public interface CountryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyCountriesCount(long companyId, boolean active);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Country> getCountries();
 
@@ -133,7 +136,7 @@ public interface CountryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByA2(long companyId, String a2)
-		throws NoSuchCountryException;
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
@@ -144,7 +147,7 @@ public interface CountryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByA3(long companyId, String a3)
-		throws NoSuchCountryException;
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
@@ -155,7 +158,7 @@ public interface CountryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByName(long companyId, String name)
-		throws NoSuchCountryException;
+		throws PortalException;
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
@@ -163,6 +166,10 @@ public interface CountryService extends BaseService {
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByName(String name) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByNumber(long companyId, String number)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -309,6 +309,10 @@ public class CountryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.CountrySoap[] getCountries()
 		throws RemoteException {
 
@@ -475,6 +479,24 @@ public class CountryServiceSoap {
 		try {
 			com.liferay.portal.kernel.model.Country returnValue =
 				CountryServiceUtil.getCountryByName(name);
+
+			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.CountrySoap
+			getCountryByNumber(long companyId, String number)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Country returnValue =
+				CountryServiceUtil.getCountryByNumber(companyId, number);
 
 			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(
 				returnValue);

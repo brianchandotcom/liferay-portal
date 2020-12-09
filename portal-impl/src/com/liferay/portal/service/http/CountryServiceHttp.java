@@ -642,7 +642,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA2(
 			HttpPrincipal httpPrincipal, long companyId, String a2)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -659,11 +659,10 @@ public class CountryServiceHttp {
 			}
 			catch (Exception exception) {
 				if (exception instanceof
-						com.liferay.portal.kernel.exception.
-							NoSuchCountryException) {
+						com.liferay.portal.kernel.exception.PortalException) {
 
-					throw (com.liferay.portal.kernel.exception.
-						NoSuchCountryException)exception;
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(
@@ -722,7 +721,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA3(
 			HttpPrincipal httpPrincipal, long companyId, String a3)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -739,11 +738,10 @@ public class CountryServiceHttp {
 			}
 			catch (Exception exception) {
 				if (exception instanceof
-						com.liferay.portal.kernel.exception.
-							NoSuchCountryException) {
+						com.liferay.portal.kernel.exception.PortalException) {
 
-					throw (com.liferay.portal.kernel.exception.
-						NoSuchCountryException)exception;
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(
@@ -802,7 +800,7 @@ public class CountryServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByName(
 			HttpPrincipal httpPrincipal, long companyId, String name)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -819,11 +817,10 @@ public class CountryServiceHttp {
 			}
 			catch (Exception exception) {
 				if (exception instanceof
-						com.liferay.portal.kernel.exception.
-							NoSuchCountryException) {
+						com.liferay.portal.kernel.exception.PortalException) {
 
-					throw (com.liferay.portal.kernel.exception.
-						NoSuchCountryException)exception;
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(
@@ -880,6 +877,46 @@ public class CountryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Country getCountryByNumber(
+			HttpPrincipal httpPrincipal, long companyId, String number)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CountryServiceUtil.class, "getCountryByNumber",
+				_getCountryByNumberParameterTypes23);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, number);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Country)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Country updateActive(
 			HttpPrincipal httpPrincipal, long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -887,7 +924,7 @@ public class CountryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CountryServiceUtil.class, "updateActive",
-				_updateActiveParameterTypes23);
+				_updateActiveParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, countryId, active);
@@ -930,7 +967,7 @@ public class CountryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CountryServiceUtil.class, "updateCountry",
-				_updateCountryParameterTypes24);
+				_updateCountryParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, countryId, a2, a3, active, billingAllowed, idd, name,
@@ -973,7 +1010,7 @@ public class CountryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CountryServiceUtil.class, "updateGroupFilterEnabled",
-				_updateGroupFilterEnabledParameterTypes25);
+				_updateGroupFilterEnabledParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, countryId, groupFilterEnabled);
@@ -1068,15 +1105,17 @@ public class CountryServiceHttp {
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _getCountryByNameParameterTypes22 =
 		new Class[] {String.class};
-	private static final Class<?>[] _updateActiveParameterTypes23 =
+	private static final Class<?>[] _getCountryByNumberParameterTypes23 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _updateActiveParameterTypes24 =
 		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _updateCountryParameterTypes24 =
+	private static final Class<?>[] _updateCountryParameterTypes25 =
 		new Class[] {
 			long.class, String.class, String.class, boolean.class,
 			boolean.class, String.class, String.class, String.class,
 			double.class, boolean.class, boolean.class, java.util.Map.class
 		};
-	private static final Class<?>[] _updateGroupFilterEnabledParameterTypes25 =
+	private static final Class<?>[] _updateGroupFilterEnabledParameterTypes26 =
 		new Class[] {long.class, boolean.class};
 
 }

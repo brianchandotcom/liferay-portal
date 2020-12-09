@@ -145,6 +145,10 @@ public class CountryServiceUtil {
 		return getService().getCompanyCountriesCount(companyId, active);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Country>
 		getCountries() {
 
@@ -170,7 +174,7 @@ public class CountryServiceUtil {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA2(
 			long companyId, String a2)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByA2(companyId, a2);
 	}
@@ -188,7 +192,7 @@ public class CountryServiceUtil {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA3(
 			long companyId, String a3)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByA3(companyId, a3);
 	}
@@ -206,7 +210,7 @@ public class CountryServiceUtil {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByName(
 			long companyId, String name)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByName(companyId, name);
 	}
@@ -220,6 +224,13 @@ public class CountryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByName(name);
+	}
+
+	public static com.liferay.portal.kernel.model.Country getCountryByNumber(
+			long companyId, String number)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCountryByNumber(companyId, number);
 	}
 
 	/**

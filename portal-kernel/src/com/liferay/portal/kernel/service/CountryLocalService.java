@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Country;
@@ -300,15 +299,15 @@ public interface CountryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByA3(long companyId, String a3)
-		throws NoSuchCountryException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByName(long companyId, String name)
-		throws NoSuchCountryException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByNumber(long companyId, String number)
-		throws NoSuchCountryException;
+		throws PortalException;
 
 	/**
 	 * Returns the country with the matching UUID and company.

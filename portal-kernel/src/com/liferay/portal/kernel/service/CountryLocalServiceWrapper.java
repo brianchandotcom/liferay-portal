@@ -394,7 +394,7 @@ public class CountryLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByA3(
 			long companyId, java.lang.String a3)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByA3(companyId, a3);
 	}
@@ -402,7 +402,7 @@ public class CountryLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByName(
 			long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByName(companyId, name);
 	}
@@ -410,7 +410,7 @@ public class CountryLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByNumber(
 			long companyId, java.lang.String number)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByNumber(companyId, number);
 	}

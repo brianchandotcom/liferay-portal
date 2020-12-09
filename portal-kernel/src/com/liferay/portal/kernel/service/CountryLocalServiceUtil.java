@@ -372,21 +372,21 @@ public class CountryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.Country getCountryByA3(
 			long companyId, String a3)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByA3(companyId, a3);
 	}
 
 	public static com.liferay.portal.kernel.model.Country getCountryByName(
 			long companyId, String name)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByName(companyId, name);
 	}
 
 	public static com.liferay.portal.kernel.model.Country getCountryByNumber(
 			long companyId, String number)
-		throws com.liferay.portal.kernel.exception.NoSuchCountryException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCountryByNumber(companyId, number);
 	}

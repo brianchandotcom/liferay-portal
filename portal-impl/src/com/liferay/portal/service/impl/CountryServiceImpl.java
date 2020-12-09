@@ -161,6 +161,10 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		return countryLocalService.getCompanyCountriesCount(companyId, active);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public List<Country> getCountries() {
 		return countryPersistence.findAll();

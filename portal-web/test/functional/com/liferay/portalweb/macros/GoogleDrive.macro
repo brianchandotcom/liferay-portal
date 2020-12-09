@@ -65,11 +65,11 @@ definition {
 
 		SelectFrameTop();
 
-		var key_dmDocumentTitle = "${googleDocName}";
+		var key_dmDocumentTitle = "${googleDocTitle}";
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaEntry#SELECTED_DOCUMENT_TITLE",
-			value1 = "${googleDocName}");
+			value1 = "${googleDocTitle}");
 	}
 
 }

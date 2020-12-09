@@ -802,7 +802,9 @@ definition {
 			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
-		GoogleDrive.selectDocument(googleDocName = "liferay.txt");
+		GoogleDrive.selectDocument(
+			googleDocName = "liferay.txt",
+			googleDocTitle = "liferay");
 
 		PortletEntry.publish();
 
@@ -1144,7 +1146,9 @@ definition {
 			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
-		GoogleDrive.selectDocument(googleDocName = "liferay.txt");
+		GoogleDrive.selectDocument(
+			googleDocName = "liferay.txt",
+			googleDocTitle = "liferay");
 
 		PortletEntry.publish();
 

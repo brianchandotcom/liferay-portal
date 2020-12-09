@@ -51,6 +51,10 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			"showAsSwitcher",
 			GetterUtil.getBoolean(ddmFormField.getProperty("showAsSwitcher"))
 		).put(
+			"showMaximumRepetitionsInfo",
+			GetterUtil.getBoolean(
+				ddmFormField.getProperty("showMaximumRepetitionsInfo"))
+		).put(
 			"value",
 			GetterUtil.getBoolean(ddmFormFieldRenderingContext.getValue())
 		).build();

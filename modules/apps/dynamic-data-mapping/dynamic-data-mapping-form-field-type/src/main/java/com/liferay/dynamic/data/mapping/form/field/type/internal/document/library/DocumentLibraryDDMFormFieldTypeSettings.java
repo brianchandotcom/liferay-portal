@@ -90,4 +90,11 @@ public interface DocumentLibraryDDMFormFieldTypeSettings
 	@Override
 	public String dataType();
 
+	@DDMFormField(
+		label = "%repeatable",
+		properties = {"showAsSwitcher=true", "showMaximumRepetitionsInfo=true"}
+	)
+	@Override
+	public boolean repeatable();
+
 }

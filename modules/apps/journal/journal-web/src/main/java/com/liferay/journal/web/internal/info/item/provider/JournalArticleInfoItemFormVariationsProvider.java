@@ -79,14 +79,16 @@ public class JournalArticleInfoItemFormVariationsProvider
 	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException {
 
-		if (_depotEntryLocalService == null) {
+		DepotEntryLocalService depotEntryLocalService = _depotEntryLocalService;
+
+		if (depotEntryLocalService == null) {
 			return _portal.getCurrentAndAncestorSiteGroupIds(groupId);
 		}
 
 		return ArrayUtil.append(
 			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
 			ListUtil.toLongArray(
-				_depotEntryLocalService.getGroupConnectedDepotEntries(
+				depotEntryLocalService.getGroupConnectedDepotEntries(
 					groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				DepotEntry::getGroupId));
 	}
@@ -98,7 +100,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private DepotEntryLocalService _depotEntryLocalService;
+	private volatile DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Portal _portal;

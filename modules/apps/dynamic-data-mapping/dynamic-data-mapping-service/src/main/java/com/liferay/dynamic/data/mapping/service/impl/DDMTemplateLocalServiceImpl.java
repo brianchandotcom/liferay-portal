@@ -1836,14 +1836,17 @@ public class DDMTemplateLocalServiceImpl
 
 	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
 		try {
-			if (_depotEntryLocalService == null) {
+			DepotEntryLocalService depotEntryLocalService =
+				_depotEntryLocalService;
+
+			if (depotEntryLocalService == null) {
 				return _portal.getAncestorSiteGroupIds(groupId);
 			}
 
 			return ArrayUtil.append(
 				_portal.getAncestorSiteGroupIds(groupId),
 				ListUtil.toLongArray(
-					_depotEntryLocalService.getGroupConnectedDepotEntries(
+					depotEntryLocalService.getGroupConnectedDepotEntries(
 						groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					DepotEntry::getGroupId));
 		}
@@ -1876,7 +1879,7 @@ public class DDMTemplateLocalServiceImpl
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private DepotEntryLocalService _depotEntryLocalService;
+	private volatile DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Portal _portal;

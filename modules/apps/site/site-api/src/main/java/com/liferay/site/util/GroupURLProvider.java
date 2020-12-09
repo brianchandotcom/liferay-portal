@@ -160,7 +160,10 @@ public class GroupURLProvider {
 		Group group, PortletRequest portletRequest) {
 
 		try {
-			if (_depotEntryLocalService == null) {
+			DepotEntryLocalService depotEntryLocalService =
+				_depotEntryLocalService;
+
+			if (depotEntryLocalService == null) {
 				return null;
 			}
 
@@ -171,7 +174,7 @@ public class GroupURLProvider {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/depot/view_depot_dashboard");
 
-			DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+			DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
 				group.getGroupId());
 
 			portletURL.setParameter(
@@ -196,7 +199,7 @@ public class GroupURLProvider {
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private DepotEntryLocalService _depotEntryLocalService;
+	private volatile DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Http _http;

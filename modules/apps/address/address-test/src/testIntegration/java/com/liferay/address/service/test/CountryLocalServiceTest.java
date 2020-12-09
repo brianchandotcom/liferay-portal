@@ -23,13 +23,12 @@ import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -69,24 +68,41 @@ public class CountryLocalServiceTest {
 		Assert.assertEquals(subjectToVAT, country.isSubjectToVAT());
 		Assert.assertEquals(zipRequired, country.isZipRequired());
 
+		Assert.assertNotNull(
+			_countryLocalService.fetchCountry(country.getCountryId()));
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		organization.setCountryId(country.getCountryId());
+
+		organization = _organizationLocalService.updateOrganization(
+			organization);
+
+		Assert.assertFalse(
+			ListUtil.isEmpty(
+				_organizationLocalService.search(
+					country.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+					null, null, country.getCountryId(), null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS)));
+
 		_countryLocalService.deleteCountry(country);
 
-		long countryId = country.getCountryId();
+		Assert.assertNull(
+			_countryLocalService.fetchCountry(country.getCountryId()));
 
-		Assert.assertNull(_countryLocalService.fetchCountry(countryId));
+		organization = _organizationLocalService.getOrganization(
+			organization.getOrganizationId());
+
+		Assert.assertEquals(0, organization.getCountryId());
 
 		Assert.assertTrue(
-			ListUtil.isEmpty(_regionService.getRegions(countryId)));
-
-		List<Organization> organizationList = _organizationLocalService.search(
-			country.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null,
-			countryId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (Organization organization : organizationList) {
-			Assert.assertEquals(0, organization.getCountryId());
-			Assert.assertEquals(0, organization.getRegionId());
-		}
+			ListUtil.isEmpty(
+				_organizationLocalService.search(
+					country.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+					null, null, country.getCountryId(), null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS)));
 	}
 
 	@Test
@@ -95,16 +111,24 @@ public class CountryLocalServiceTest {
 			true, RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			true, true, true);
 
+		boolean billingAllowed = false;
+		String number = String.valueOf(9999 + RandomTestUtil.nextInt());
+		int position = RandomTestUtil.randomInt();
+		boolean shippingAllowed = false;
+		boolean subjectToVAT = false;
+
 		Country updatedCountry = _countryLocalService.updateCountry(
 			country.getCountryId(), country.getA2(), country.getA3(),
-			country.isActive(), false, country.getIdd(), country.getName(),
-			"12345", 54321, false, false, null);
+			country.isActive(), billingAllowed, country.getIdd(),
+			country.getName(), number, position, shippingAllowed, subjectToVAT,
+			null);
 
-		Assert.assertEquals(false, updatedCountry.isBillingAllowed());
-		Assert.assertEquals("12345", updatedCountry.getNumber());
-		Assert.assertEquals(54321, updatedCountry.getPosition(), 0);
-		Assert.assertEquals(false, updatedCountry.isShippingAllowed());
-		Assert.assertEquals(false, updatedCountry.isSubjectToVAT());
+		Assert.assertEquals(billingAllowed, updatedCountry.isBillingAllowed());
+		Assert.assertEquals(number, updatedCountry.getNumber());
+		Assert.assertEquals(position, updatedCountry.getPosition(), 0);
+		Assert.assertEquals(
+			shippingAllowed, updatedCountry.isShippingAllowed());
+		Assert.assertEquals(subjectToVAT, updatedCountry.isSubjectToVAT());
 	}
 
 	private Country _addCountry(

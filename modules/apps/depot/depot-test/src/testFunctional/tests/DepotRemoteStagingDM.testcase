@@ -53,9 +53,11 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
-
 			Depot.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Remote Site");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
 			User.logoutPG();
 		}

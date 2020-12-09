@@ -2258,7 +2258,6 @@ definition {
 				webContentWebContent = "Web Content Title");
 
 			WebContent.viewWithStructureCP(
-				numericType = "Decimal",
 				predefinedValue = "true",
 				webContentNumeric = "0.5",
 				webContentNumericFieldLabel = "Decimal");

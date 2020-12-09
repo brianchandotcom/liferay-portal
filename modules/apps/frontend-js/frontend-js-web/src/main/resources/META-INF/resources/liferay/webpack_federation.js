@@ -12,15 +12,160 @@
  * details.
  */
 
-Liferay = window.Liferay || {};
+(function() {
+	const CONTAINERS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_CONTAINERS__');
+	const GET_MODULE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__');
 
-Liferay.Webpack = {
-	Container: {},
-	SharedScope: {},
-};
+	const containerRequests = {};
+	const sharedScope = {};
 
-Liferay.require = (moduleName) =>
-	new Promise((resolve, reject) => {
+	/**
+	 * Create a new container request
+	 */
+	function createContainerRequest(url, onLoadHandler) {
+		const script = document.createElement('script');
+
+		const containerRequest = {
+			// set if request failed
+			error: undefined,
+			// set to true if the .js file has been fetched from the server
+			fetched: false,
+			// set to the exported value (if error is set module is undefined)
+			module: undefined,
+			// set to the <script> DOM node while it is being retrieved (undefined after)
+			script,
+			// set to all people that needs to be notified once the <script> loads
+			subscribers: [],
+		};
+
+		script.src = url;
+		script.onload = () => onLoadHandler(containerRequest);
+
+		document.body.appendChild(script);
+
+		return containerRequest;
+	}
+
+	/**
+	 * Log messages if `explain resolutions` option is turned on.
+	 */
+	function explain(...things) {
+		// Until we get to the end of webpack 5 migration we will log all
+		// messages no matter what is configured. Once finished, we will only
+		// write when the old existing `explain resolutions` option is on.
+		console.log(...things);
+	}
+
+	/**
+	 * Fetch a container's module by path
+	 */
+	function fetch(containerId, path, resolve, reject) {
+		const url = '/o/' + containerId + '/__generated__/container.js';
+
+		explain('Fetching container', containerId, 'from', url);
+
+		containerRequests[containerId] = createContainerRequest(
+			url,
+			(containerRequest) => {
+				explain('Fetched container', containerId);
+
+				const container = getContainer(containerId);
+
+				if (container) {
+					explain('Initializing container', containerId);
+					Promise.resolve(
+						container.init(sharedScope)
+					)
+					.then(
+						() => container.get(path)
+					)
+					.then(
+						(moduleFactory) => {
+							finalizeContainerRequest(
+								containerRequest, moduleFactory());
+						}
+					);
+				}
+				else {
+					const message =
+						`Container ${containerId} was fetched but its script ` +
+						`failed to register with Liferay`;
+
+					console.warn(message);
+
+					finalizeContainerRequest(
+						containerRequest, new Error(message));
+				}
+			}
+		);
+
+
+		subscribeContainerRequest(
+			containerRequests[containerId], resolve, reject);
+	}
+
+	/**
+	 * Finalize an ongoing container request: set its result (error or module)
+	 * and notify all pending subscribers.
+	 */
+	function finalizeContainerRequest(containerRequest, result) {
+		const {script, subscribers} = containerRequest;
+
+		containerRequest.fetched = true;
+		containerRequest.script = undefined;
+		containerRequest.subscribers = undefined;
+
+		if(result instanceof Error) {
+			explain('Rejecting container', script.src, 'for', subscribers.length, 'subscribers');
+			containerRequest.error = result;
+			subscribers.forEach(({reject}) => reject(result));
+		} else {
+			explain('Resolving container', script.src, 'for', subscribers.length, 'subscribers');
+			containerRequest.module = result;
+			subscribers.forEach(({resolve}) => resolve(result));
+		}
+	};
+
+	/**
+	 * Get a defined container object
+	 */
+	function getContainer(containerId) {
+		return window[CONTAINERS_SYMBOL][containerId];
+	}
+
+	/**
+	 * Get a module (like require for webpack federation)
+	 */
+	function getModule(moduleName) {
+		return new Promise((resolve, reject) => {
+			const {containerId, path} = splitModuleName(moduleName);
+
+			const containerRequest = containerRequests[containerId];
+
+			if (!containerRequest) {
+				fetch(containerId, path, resolve, reject);
+			}
+			else {
+				const {error, module} = containerRequest;
+
+				if (error) {
+					explain('Rejecting fetched container', containerId, error);
+					reject(error);
+				} else if(module) {
+					explain('Resolving fetched container', containerId);
+					resolve(module);
+				} else {
+					explain('Subscribing to container request', containerId);
+					subscribeContainerRequest(containerRequest, resolve, reject);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Split a module name in its `containerId` and `path` parts
+	 */
+	function splitModuleName(moduleName) {
 		const i = moduleName.indexOf('/');
 
 		let containerId, path;
@@ -34,37 +179,17 @@ Liferay.require = (moduleName) =>
 			path = moduleName.substring(i + 1);
 		}
 
-		let container = Liferay.Webpack.Container[containerId];
+		return {containerId, path};
+	}
 
-		if (container) {
-			Promise.resolve(container.get(path)).then((module) =>
-				resolve(module())
-			);
-		}
-		else {
-			const script = document.createElement('script');
+	/**
+	 * Subscribe to a container request (to be notified when the <script>
+	 * finishes loading)
+	 */
+	function subscribeContainerRequest(containerRequest, resolve, reject) {
+		containerRequest.subscribers.push({reject, resolve});
+	}
 
-			script.src = '/o/' + containerId + '/__generated__/container.js';
-
-			script.onload = () => {
-				container = Liferay.Webpack.Container[containerId];
-
-				if (container) {
-					Promise.resolve(container.init(Liferay.Webpack.SharedScope))
-						.then(() => container.get(path))
-						.then((module) => resolve(module()));
-				}
-				else {
-					const message =
-						`Container ${containerId} was fetched but did not ` +
-						`define itself in Liferay.Webpack.Container`;
-
-					console.warn(message);
-
-					reject(new Error(message));
-				}
-			};
-
-			document.body.appendChild(script);
-		}
-	});
+	window[CONTAINERS_SYMBOL] = window[CONTAINERS_SYMBOL] || {};
+	window[GET_MODULE_SYMBOL] = getModule;
+})();

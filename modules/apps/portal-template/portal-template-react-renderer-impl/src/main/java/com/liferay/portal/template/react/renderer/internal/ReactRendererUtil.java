@@ -130,7 +130,9 @@ public class ReactRendererUtil {
 
 		StringBundler javascriptSB = new StringBundler(13);
 
-		javascriptSB.append("Liferay.require('");
+		javascriptSB.append("window[");
+		javascriptSB.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')");
+		javascriptSB.append("]('");
 		javascriptSB.append("portal-template-react-renderer-impl");
 		javascriptSB.append("').then(({render}) => {");
 

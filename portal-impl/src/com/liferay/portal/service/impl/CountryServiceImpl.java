@@ -232,6 +232,13 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
+	public Country getCountryByNumber(long companyId, String number)
+		throws PortalException {
+
+		return countryLocalService.getCountryByNumber(companyId, number);
+	}
+
+	@Override
 	public Country updateActive(long countryId, boolean active)
 		throws PortalException {
 

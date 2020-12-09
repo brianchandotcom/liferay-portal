@@ -138,6 +138,10 @@ public class TransactionConfig {
 		return _readOnly;
 	}
 
+	public boolean isStrictReadOnly() {
+		return _strictReadOnly;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
@@ -217,6 +221,16 @@ public class TransactionConfig {
 			return this;
 		}
 
+		public Builder setStrictReadOnly(boolean strictReadOnly) {
+			if (strictReadOnly) {
+				_readOnly = true;
+			}
+
+			_strictReadOnly = strictReadOnly;
+
+			return this;
+		}
+
 		public Builder setTimeout(int timeout) {
 			_timeout = timeout;
 
@@ -232,6 +246,7 @@ public class TransactionConfig {
 		private boolean _readOnly;
 		private Class<?>[] _rollbackForClasses = _EMPTY_CLASS_ARRAY;
 		private String[] _rollbackForClassNames = StringPool.EMPTY_ARRAY;
+		private boolean _strictReadOnly;
 		private int _timeout = TransactionDefinition.TIMEOUT_DEFAULT;
 
 	}
@@ -277,6 +292,7 @@ public class TransactionConfig {
 		_readOnly = builder._readOnly;
 		_rollbackForClassNames = builder._rollbackForClassNames;
 		_rollbackForClasses = builder._rollbackForClasses;
+		_strictReadOnly = builder._strictReadOnly;
 		_timeout = builder._timeout;
 	}
 
@@ -287,6 +303,7 @@ public class TransactionConfig {
 	private final boolean _readOnly;
 	private final Class<?>[] _rollbackForClasses;
 	private final String[] _rollbackForClassNames;
+	private final boolean _strictReadOnly;
 	private final int _timeout;
 
 }

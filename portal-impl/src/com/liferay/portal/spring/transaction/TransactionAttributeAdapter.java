@@ -29,7 +29,14 @@ public class TransactionAttributeAdapter
 	public TransactionAttributeAdapter(
 		TransactionAttribute transactionAttribute) {
 
+		this(transactionAttribute, false);
+	}
+
+	public TransactionAttributeAdapter(
+		TransactionAttribute transactionAttribute, boolean strictReadOnly) {
+
 		_transactionAttribute = transactionAttribute;
+		_strictReadOnly = strictReadOnly;
 	}
 
 	@Override
@@ -75,10 +82,16 @@ public class TransactionAttributeAdapter
 	}
 
 	@Override
+	public boolean isStrictReadOnly() {
+		return _strictReadOnly;
+	}
+
+	@Override
 	public boolean rollbackOn(Throwable throwable) {
 		return _transactionAttribute.rollbackOn(throwable);
 	}
 
 	private final TransactionAttribute _transactionAttribute;
+	private final boolean _strictReadOnly;
 
 }

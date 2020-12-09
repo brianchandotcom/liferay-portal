@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.transaction;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface TransactionAttribute {
 
 	public Isolation getIsolation();
@@ -24,6 +27,8 @@ public interface TransactionAttribute {
 	public Propagation getPropagation();
 
 	public boolean isReadOnly();
+
+	public boolean isStrictReadOnly();
 
 	public static class Builder {
 
@@ -49,9 +54,20 @@ public interface TransactionAttribute {
 			return this;
 		}
 
+		public Builder setStrictReadOnly(boolean strictReadOnly) {
+			if (strictReadOnly) {
+				_readOnly = true;
+			}
+
+			_strictReadOnly = strictReadOnly;
+
+			return this;
+		}
+
 		private Isolation _isolation = Isolation.DEFAULT;
 		private Propagation _propagation = Propagation.REQUIRED;
 		private boolean _readOnly;
+		private boolean _strictReadOnly;
 
 	}
 
@@ -73,15 +89,22 @@ public interface TransactionAttribute {
 			return _readOnly;
 		}
 
+		@Override
+		public boolean isStrictReadOnly() {
+			return _strictReadOnly;
+		}
+
 		private DefaultTransactionAttribute(Builder builder) {
 			_isolation = builder._isolation;
 			_propagation = builder._propagation;
 			_readOnly = builder._readOnly;
+			_strictReadOnly = builder._strictReadOnly;
 		}
 
 		private final Isolation _isolation;
 		private final Propagation _propagation;
 		private final boolean _readOnly;
+		private final boolean _strictReadOnly;
 
 	}
 

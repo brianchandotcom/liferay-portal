@@ -46,7 +46,8 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 					transactionConfig.getRollbackForClasses(),
 					transactionConfig.getRollbackForClassNames(),
 					transactionConfig.getNoRollbackForClasses(),
-					transactionConfig.getNoRollbackForClassNames())),
+					transactionConfig.getNoRollbackForClassNames()),
+				transactionConfig.isStrictReadOnly()),
 			callable::call);
 	}
 

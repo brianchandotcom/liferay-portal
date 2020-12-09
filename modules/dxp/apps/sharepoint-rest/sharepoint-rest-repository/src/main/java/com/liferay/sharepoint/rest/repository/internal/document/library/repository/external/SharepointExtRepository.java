@@ -29,6 +29,7 @@ import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
@@ -225,7 +227,8 @@ public class SharepointExtRepository implements ExtRepository {
 
 			return getExtRepositoryObject(
 				extRepositoryObjectType,
-				newExtRepositoryFolderKey + StringPool.SLASH + newTitle);
+				_getExtRepositoryObjectPath(
+					newExtRepositoryFolderKey, newTitle));
 		}
 		catch (UnirestException unirestException) {
 			throw new PortalException(unirestException);
@@ -586,7 +589,8 @@ public class SharepointExtRepository implements ExtRepository {
 
 			return getExtRepositoryObject(
 				extRepositoryObjectType,
-				newExtRepositoryFolderKey + StringPool.SLASH + newTitle);
+				_getExtRepositoryObjectPath(
+					newExtRepositoryFolderKey, newTitle));
 		}
 		catch (UnirestException unirestException) {
 			throw new PortalException(unirestException);
@@ -746,6 +750,22 @@ public class SharepointExtRepository implements ExtRepository {
 
 		return _sharepointServerResponseConverter.getExtRepositoryFolders(
 			jsonObject);
+	}
+
+	private String _getExtRepositoryObjectPath(
+		String extRepositoryFolderKey, String title) {
+
+		StringBundler sb = new StringBundler(4);
+
+		if (!StringUtil.startsWith(extRepositoryFolderKey, StringPool.SLASH)) {
+			sb.append(StringPool.SLASH);
+		}
+
+		sb.append(extRepositoryFolderKey);
+		sb.append(StringPool.SLASH);
+		sb.append(title);
+
+		return sb.toString();
 	}
 
 	private InputStream _getInputStream(SharepointModel sharepointModel)

@@ -123,6 +123,16 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		boolean multipleSelection = GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(), themeDisplay.getLocale(),
+				"multipleSelection"));
+
+		httpServletRequest.setAttribute(
+			CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
+			multipleSelection);
+
 		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
 			getConfiguration(fragmentRendererContext),
 			fragmentEntryLink.getEditableValues(), themeDisplay.getLocale(),
@@ -130,6 +140,18 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 		if (Validator.isNull(sourceObject) ||
 			!JSONUtil.isValid(sourceObject.toString())) {
+
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/page.jsp");
+
+			try {
+				requestDispatcher.include(
+					httpServletRequest, httpServletResponse);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to render collection filter fragment", exception);
+			}
 
 			return;
 		}
@@ -201,16 +223,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
 				fragmentEntryLink.getFragmentEntryLinkId());
-
-			boolean multipleSelection = GetterUtil.getBoolean(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues(),
-					themeDisplay.getLocale(), "multipleSelection"));
-
-			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
-				multipleSelection);
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");

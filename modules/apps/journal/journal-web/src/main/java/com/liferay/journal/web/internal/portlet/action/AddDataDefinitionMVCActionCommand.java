@@ -64,8 +64,8 @@ public class AddDataDefinitionMVCActionCommand
 							portletException.getCause();
 
 				SessionErrors.add(
-					actionRequest,
-					dataDefinitionValidationException.getClass());
+					actionRequest, dataDefinitionValidationException.getClass(),
+					dataDefinitionValidationException);
 			}
 			else {
 				throw portletException;
@@ -105,7 +105,8 @@ public class AddDataDefinitionMVCActionCommand
 					dataDefinitionValidationException) {
 
 			SessionErrors.add(
-				actionRequest, dataDefinitionValidationException.getClass());
+				actionRequest, dataDefinitionValidationException.getClass(),
+				dataDefinitionValidationException);
 		}
 	}
 

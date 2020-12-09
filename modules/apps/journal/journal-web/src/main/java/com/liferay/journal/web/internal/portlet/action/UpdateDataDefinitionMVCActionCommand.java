@@ -64,8 +64,8 @@ public class UpdateDataDefinitionMVCActionCommand
 							portletException.getCause();
 
 				SessionErrors.add(
-					actionRequest,
-					dataDefinitionValidationException.getClass());
+					actionRequest, dataDefinitionValidationException.getClass(),
+					dataDefinitionValidationException);
 			}
 			else {
 				throw portletException;

@@ -69,16 +69,15 @@ export default class Blogs {
 
 			this._bindUI();
 
-			const draftEntry = entry && entry.status === constants.STATUS_DRAFT;
+			const draftEntry = entry?.status === constants.STATUS_DRAFT;
 
-			const userEntry =
-				entry && entry.userId === themeDisplay.getUserId();
+			const userEntry = entry?.userId === themeDisplay.getUserId();
 
 			if (!entry || (userEntry && draftEntry)) {
 				this._initDraftSaveInterval();
 			}
 
-			const customDescriptionEnabled = entry && entry.customDescription;
+			const customDescriptionEnabled = entry?.customDescription;
 
 			this._customDescription = customDescriptionEnabled
 				? entry.description
@@ -268,9 +267,9 @@ export default class Blogs {
 
 		const entry = this._config.entry;
 
-		this._oldContent = entry ? entry.content : STR_BLANK;
-		this._oldSubtitle = entry ? entry.subtitle : STR_BLANK;
-		this._oldTitle = entry ? entry.title : STR_BLANK;
+		this._oldContent = entry?.content || STR_BLANK;
+		this._oldSubtitle = entry?.subtitle || STR_BLANK;
+		this._oldTitle = entry?.title || STR_BLANK;
 	}
 
 	_onChangeURLOptions() {
@@ -457,10 +456,9 @@ export default class Blogs {
 							}
 
 							if (saveStatus) {
-								const saveText =
-									entry && entry.pending
-										? strings.savedAtMessage
-										: strings.savedDraftAtMessage;
+								const saveText = entry?.pending
+									? strings.savedAtMessage
+									: strings.savedDraftAtMessage;
 
 								const now = saveText.replace(
 									/\{0\}/gim,

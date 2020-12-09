@@ -38,11 +38,13 @@ definition {
 		}
 
 		if (("${type}" == "Audio") || ("${type}" == "Video")) {
-			AssertElementPresent.pauseAssertVisible(
-				key_text = "Add",
-				locator1 = "Button#ANY_ENABLED");
+			if (!(isSet(dontAdd))) {
+				AssertElementPresent.pauseAssertVisible(
+					key_text = "Add",
+					locator1 = "Button#ANY_ENABLED");
 
-			Button.clickAdd();
+				Button.clickAdd();
+			}
 		}
 		else {
 			AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
@@ -114,13 +116,25 @@ definition {
 
 		Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
 
-		Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+		if (isSet(video)) {
+			Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_VIDEO");
+		}
+		else {
+			Click.clickNoMouseOver(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE");
+		}
 	}
 
 	macro gotoItemSelectorViaCKEditor {
-		Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
+		if (isSet(video)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
-		SelectFrame(value1 = "relative=top");
+			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
+		}
+		else {
+			Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
+
+			SelectFrame(value1 = "relative=top");
+		}
 	}
 
 	macro gotoItemSelectorViaSelectButton {

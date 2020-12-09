@@ -92,7 +92,8 @@ public class OrganizationFixture {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), getUserId());
 
-		Country country = _countryService.getCountryByName(countryName);
+		Country country = _countryService.getCountryByName(
+			_group.getCompanyId(), countryName);
 
 		Region region = _getRegion(regionName, country);
 

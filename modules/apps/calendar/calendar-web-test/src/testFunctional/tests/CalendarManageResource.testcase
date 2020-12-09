@@ -104,8 +104,6 @@ definition {
 	@description = "This is a use case for LPS-62410."
 	@priority = "4"
 	test ViewEventDateAndTimeInResourcesAvailability {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.gotoConfigureInvitations();

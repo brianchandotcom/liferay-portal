@@ -368,7 +368,8 @@ public class InfoDisplayContributorWrapper
 		if (Objects.equals(
 				infoDisplayFieldType,
 				InfoDisplayContributorFieldType.IMAGE.getValue()) ||
-			Objects.equals(infoDisplayFieldType, DDMFormFieldType.IMAGE)) {
+			Objects.equals(infoDisplayFieldType, DDMFormFieldType.IMAGE) ||
+			Objects.equals(infoDisplayFieldType, "image")) {
 
 			return ImageInfoFieldType.INSTANCE;
 		}

@@ -667,6 +667,18 @@
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>The SVG icon markup to use in toggle-switch.</description>
+				<name>buttonIconOff</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The SVG icon markup to use in toggle-switch.</description>
+				<name>buttonIconOn</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>Whether to reload the page when the value of the input changes. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>changesContext</name>
 				<inputType>boolean</inputType>
@@ -755,6 +767,18 @@
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>input-group-addon</defaultValue>
+			</attribute>
+			<attribute>
+				<description>The SVG icon markup to use in toggle-switch.</description>
+				<name>iconOff</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description>The SVG icon markup to use in toggle-switch.</description>
+				<name>iconOn</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<description>An ID for the component instance.</description>

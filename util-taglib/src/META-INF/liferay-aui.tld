@@ -646,6 +646,18 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[The SVG icon markup to use in toggle-switch.]]></description>
+			<name>buttonIconOff</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The SVG icon markup to use in toggle-switch.]]></description>
+			<name>buttonIconOn</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether to reload the page when the value of the input changes. The default value is <code>false</code>.]]></description>
 			<name>changesContext</name>
 			<required>false</required>
@@ -737,6 +749,18 @@
 		<attribute>
 			<description><![CDATA[A CSS class for styling the help message text. The default value is <code>input-group-addon</code>.]]></description>
 			<name>helpTextCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The SVG icon markup to use in toggle-switch.]]></description>
+			<name>iconOff</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The SVG icon markup to use in toggle-switch.]]></description>
+			<name>iconOn</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

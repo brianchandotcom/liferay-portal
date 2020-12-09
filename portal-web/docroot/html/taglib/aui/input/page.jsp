@@ -58,10 +58,6 @@
 >
 
 			<%
-			String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
-			String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
-			String iconOff = (String)dynamicAttributes.get("iconOff");
-			String iconOn = (String)dynamicAttributes.get("iconOn");
 			String labelOff = (String)dynamicAttributes.get("labelOff");
 			String labelOn = (String)dynamicAttributes.get("labelOn");
 			%>
@@ -135,9 +131,6 @@
 	<c:if test='<%= type.equals("toggle-card") %>'>
 
 		<%
-		String iconOff = (String)dynamicAttributes.get("iconOff");
-		String iconOn = (String)dynamicAttributes.get("iconOn");
-
 		String labelOff = (String)dynamicAttributes.get("labelOff");
 		String labelOn = (String)dynamicAttributes.get("labelOn");
 

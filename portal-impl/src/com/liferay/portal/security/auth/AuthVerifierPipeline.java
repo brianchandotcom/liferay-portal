@@ -37,6 +37,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,8 +47,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -176,14 +175,12 @@ public class AuthVerifierPipeline {
 				filterProperties.entrySet()) {
 
 			String propertyName = propertyEntry.getKey();
-			Object propertyValue = propertyEntry.getValue();
 
-			if (propertyName.startsWith(authVerifierPropertyName) &&
-				(propertyValue instanceof String)) {
+			if (propertyName.startsWith(authVerifierPropertyName)) {
 
 				mergedProperties.setProperty(
 					propertyName.substring(authVerifierPropertyName.length()),
-					(String)propertyValue);
+					String.valueOf(propertyEntry.getValue()));
 			}
 		}
 

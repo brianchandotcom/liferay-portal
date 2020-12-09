@@ -462,7 +462,8 @@ public class JournalArticleExportImportContentProcessor
 			Document document = SAXReaderUtil.read(content);
 
 			XPath xPath = SAXReaderUtil.createXPath(
-				"//dynamic-element[@type='ddm-journal-article']");
+				"//dynamic-element[@type='" + DDMFormFieldType.JOURNAL_ARTICLE +
+					"']");
 
 			List<Node> ddmJournalArticleNodes = xPath.selectNodes(document);
 

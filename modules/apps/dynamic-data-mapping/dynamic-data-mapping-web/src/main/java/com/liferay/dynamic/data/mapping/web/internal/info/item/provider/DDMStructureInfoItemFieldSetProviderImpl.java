@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.field.InfoFieldSet;
@@ -95,9 +96,12 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 	}
 
 	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
-		"checkbox", "ddm-date", "ddm-decimal", "ddm-image", "ddm-integer",
-		"ddm-number", "ddm-text-html", "image", "radio", "rich_text", "select",
-		"text", "textarea"
+		DDMFormFieldType.CHECKBOX, DDMFormFieldType.DATE,
+		DDMFormFieldType.DECIMAL, DDMFormFieldType.IMAGE,
+		DDMFormFieldType.INTEGER, DDMFormFieldType.NUMBER,
+		DDMFormFieldType.TEXT_HTML, "image", DDMFormFieldType.RADIO,
+		"rich_text", DDMFormFieldType.SELECT, DDMFormFieldType.TEXT,
+		DDMFormFieldType.TEXT_AREA
 	};
 
 	@Reference

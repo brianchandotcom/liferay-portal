@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.test.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,8 +48,9 @@ public class DDMFormTestUtil {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		DDMFormField ddmFormField = createDDMFormField(
-			fieldName, RandomTestUtil.randomString(), "ddm-documentlibrary",
-			"document-library", true, false, true);
+			fieldName, RandomTestUtil.randomString(),
+			DDMFormFieldType.DOCUMENT_LIBRARY, "document-library", true, false,
+			true);
 
 		ddmFormField.setDDMForm(ddmForm);
 		ddmFormField.setLocalizable(true);

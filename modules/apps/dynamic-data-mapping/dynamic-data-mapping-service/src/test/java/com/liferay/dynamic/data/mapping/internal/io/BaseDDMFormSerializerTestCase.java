@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.io;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -81,7 +82,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 	}
 
 	protected DDMFormField createHTMLDDMFormField(String name) {
-		DDMFormField ddmFormField = new DDMFormField(name, "ddm-text-html");
+		DDMFormField ddmFormField = new DDMFormField(
+			name, DDMFormFieldType.TEXT_HTML);
 
 		ddmFormField.setDataType("html");
 		ddmFormField.setFieldNamespace("ddm");

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.io;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -149,7 +150,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("date", ddmFormField.getDataType());
 		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
-		Assert.assertEquals("ddm-date", ddmFormField.getType());
+		Assert.assertEquals(DDMFormFieldType.DATE, ddmFormField.getType());
 		Assert.assertTrue(ddmFormField.isShowLabel());
 	}
 
@@ -180,7 +181,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("double", ddmFormField.getDataType());
 		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
-		Assert.assertEquals("ddm-decimal", ddmFormField.getType());
+		Assert.assertEquals(DDMFormFieldType.DECIMAL, ddmFormField.getType());
 	}
 
 	protected void testDefaultLocale(DDMForm ddmForm) {
@@ -191,7 +192,8 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("document-library", ddmFormField.getDataType());
 		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
-		Assert.assertEquals("ddm-documentlibrary", ddmFormField.getType());
+		Assert.assertEquals(
+			DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType());
 		Assert.assertTrue(ddmFormField.isShowLabel());
 	}
 
@@ -199,7 +201,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("html", ddmFormField.getDataType());
 		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
-		Assert.assertEquals("ddm-text-html", ddmFormField.getType());
+		Assert.assertEquals(DDMFormFieldType.TEXT_HTML, ddmFormField.getType());
 		Assert.assertFalse(ddmFormField.isReadOnly());
 		Assert.assertFalse(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());

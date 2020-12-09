@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -219,7 +220,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 				ddmForm.setDefaultLocale(currentLocale);
 
 				DDMFormField ddmFormField = new DDMFormField(
-					"date_an", "ddm-date");
+					"date_an", DDMFormFieldType.DATE);
 
 				ddmFormField.setDataType("date");
 

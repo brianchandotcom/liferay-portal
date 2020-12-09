@@ -28,6 +28,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -644,7 +645,7 @@ public class AssetHelperImpl implements AssetHelper {
 
 			String suffix = "String";
 
-			if (!fieldType.equals("ddm-date") &&
+			if (!fieldType.equals(DDMFormFieldType.DATE) &&
 				((sortType == Sort.DOUBLE_TYPE) ||
 				 (sortType == Sort.FLOAT_TYPE) || (sortType == Sort.INT_TYPE) ||
 				 (sortType == Sort.LONG_TYPE))) {
@@ -750,17 +751,18 @@ public class AssetHelperImpl implements AssetHelper {
 		if (fieldType.equals(Field.CREATE_DATE) ||
 			fieldType.equals(Field.EXPIRATION_DATE) ||
 			fieldType.equals(Field.PUBLISH_DATE) ||
-			fieldType.equals("ddm-date") || fieldType.equals("modifiedDate")) {
+			fieldType.equals(DDMFormFieldType.DATE) ||
+			fieldType.equals("modifiedDate")) {
 
 			sortType = Sort.LONG_TYPE;
 		}
 		else if (fieldType.equals(Field.PRIORITY) ||
-				 fieldType.equals("ddm-decimal") ||
-				 fieldType.equals("ddm-number")) {
+				 fieldType.equals(DDMFormFieldType.DECIMAL) ||
+				 fieldType.equals(DDMFormFieldType.NUMBER)) {
 
 			sortType = Sort.DOUBLE_TYPE;
 		}
-		else if (fieldType.equals("ddm-integer") ||
+		else if (fieldType.equals(DDMFormFieldType.INTEGER) ||
 				 fieldType.equals("viewCount")) {
 
 			sortType = Sort.INT_TYPE;

@@ -25,6 +25,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.helper.DDMFormInstanceTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -326,7 +327,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		List<DDMFormField> ddmFormFields = journalDDMForm.getDDMFormFields();
 
 		DDMFormField webContentFormField = new DDMFormField(
-			"WebContenttest", "ddm-journal-article");
+			"WebContenttest", DDMFormFieldType.JOURNAL_ARTICLE);
 
 		webContentFormField.setDataType("journal-article");
 		webContentFormField.setLocalizable(true);

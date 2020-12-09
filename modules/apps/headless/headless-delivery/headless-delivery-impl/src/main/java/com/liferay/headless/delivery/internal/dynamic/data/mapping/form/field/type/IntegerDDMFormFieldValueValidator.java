@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.dynamic.data.mapping.form.field.t
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=ddm-integer",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldType.INTEGER,
 	service = DDMFormFieldValueValidator.class
 )
 public class IntegerDDMFormFieldValueValidator

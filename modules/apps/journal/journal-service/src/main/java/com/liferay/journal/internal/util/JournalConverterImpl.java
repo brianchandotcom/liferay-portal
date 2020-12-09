@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -67,7 +67,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -81,28 +80,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = JournalConverter.class)
 public class JournalConverterImpl implements JournalConverter {
-
-	public JournalConverterImpl() {
-		_ddmTypesToJournalTypes = HashMapBuilder.put(
-			"checkbox", "boolean"
-		).put(
-			"ddm-documentlibrary", "document_library"
-		).put(
-			"ddm-image", "image"
-		).put(
-			"ddm-link-to-page", "link_to_layout"
-		).put(
-			"ddm-separator", "selection_break"
-		).put(
-			"ddm-text-html", "text_area"
-		).put(
-			"select", "list"
-		).put(
-			"text", "text"
-		).put(
-			"textarea", "text_box"
-		).build();
-	}
 
 	@Override
 	public String getContent(
@@ -671,13 +648,10 @@ public class JournalConverterImpl implements JournalConverter {
 		boolean multiple = GetterUtil.getBoolean(
 			ddmStructure.getFieldProperty(fieldName, "multiple"));
 
-		String type = _ddmTypesToJournalTypes.get(fieldType);
-
-		if (type == null) {
-			type = fieldType;
-		}
-
-		dynamicElementElement.addAttribute("type", type);
+		dynamicElementElement.addAttribute(
+			"type",
+			_convertFromDDMFieldTypeToJournalType(
+				fieldType, ddmStructure, fieldName));
 
 		dynamicElementElement.addAttribute("index-type", indexType);
 
@@ -822,6 +796,61 @@ public class JournalConverterImpl implements JournalConverter {
 		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
 	}
 
+	private String _convertFromDDMFieldTypeToJournalType(
+		String ddmFieldType, DDMStructure ddmStructure, String fieldName) {
+
+		String type = ddmFieldType;
+
+		if (Objects.equals(ddmFieldType, "text")) {
+			type = "text";
+
+			try {
+				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+					fieldName);
+
+				String displayStyle = (String)ddmFormField.getProperty(
+					"displayStyle");
+
+				if (Objects.equals(displayStyle, "multiline")) {
+					type = "text_box";
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get ddm form field for " + fieldName,
+						portalException);
+				}
+			}
+		}
+		else if (Objects.equals(ddmFieldType, "select")) {
+			type = "list";
+		}
+		else if (Objects.equals(ddmFieldType, "journal_article")) {
+			type = "ddm-journal-article";
+		}
+		else if (Objects.equals(ddmFieldType, "separator")) {
+			type = "selection_break";
+		}
+		else if (Objects.equals(ddmFieldType, "numeric")) {
+			type = "ddm-number";
+		}
+		else if (Objects.equals(ddmFieldType, "rich_text")) {
+			type = "text_area";
+		}
+		else if (Objects.equals(ddmFieldType, "date")) {
+			type = "ddm-date";
+		}
+		else if (Objects.equals(ddmFieldType, "color")) {
+			type = "ddm-color";
+		}
+		else if (Objects.equals(ddmFieldType, "geolocation")) {
+			type = "ddm-geolocation";
+		}
+
+		return type;
+	}
+
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		ResourceBundle classResourceBundle = ResourceBundleUtil.getBundle(
 			locale, "com.liferay.journal.lang");
@@ -832,8 +861,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
-
-	private final Map<String, String> _ddmTypesToJournalTypes;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

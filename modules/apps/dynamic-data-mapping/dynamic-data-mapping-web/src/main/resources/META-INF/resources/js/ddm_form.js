@@ -819,7 +819,13 @@ AUI.add(
 							predefinedValue = field.predefinedValue[locale];
 						}
 
-						if (type === 'select' && predefinedValue === '[""]') {
+						var localizationMap = instance.get('localizationMap');
+
+						if (
+							type === 'select' &&
+							(predefinedValue === '[""]' ||
+								!A.Object.isEmpty(localizationMap))
+						) {
 							predefinedValue = '';
 						}
 					}

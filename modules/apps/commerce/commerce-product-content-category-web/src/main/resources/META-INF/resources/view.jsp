@@ -30,6 +30,8 @@ assetCategoryList.add(assetCategory);
 	className="<%= CPCategoryContentPortlet.class.getName() %>"
 	contextObjects='<%=
 		HashMapBuilder.<String, Object>put(
+			"assetCategory", assetCategory
+		).put(
 			"cpCategoryContentDisplayContext", cpCategoryContentDisplayContext
 		).build()
 	%>'

@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRespo
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -1705,7 +1706,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		@Override
 		public String getFieldType() {
-			return DDMImpl.TYPE_DDM_DATE;
+			return DDMFormFieldType.DATE;
 		}
 
 		@Override

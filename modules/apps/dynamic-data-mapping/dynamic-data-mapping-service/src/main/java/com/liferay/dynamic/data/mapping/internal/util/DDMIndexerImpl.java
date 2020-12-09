@@ -300,7 +300,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 					String type = field.getType();
 
-					if (type.equals(DDMImpl.TYPE_SELECT)) {
+					if (type.equals(DDMFormFieldType.SELECT)) {
 						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 							valueString);
 
@@ -312,7 +312,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 						sb.append(StringPool.SPACE);
 					}
 					else {
-						if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
+						if (type.equals(DDMFormFieldType.TEXT_HTML)) {
 							valueString = HtmlUtil.extractText(valueString);
 						}
 
@@ -489,7 +489,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 				document.addGeoLocation(
 					name.concat("_geolocation"), latitude, longitude);
 			}
-			else if (type.equals(DDMImpl.TYPE_SELECT)) {
+			else if (type.equals(DDMFormFieldType.SELECT)) {
 				document.addKeyword(
 					_getSortableFieldName(name),
 					ArrayUtil.toStringArray(
@@ -500,7 +500,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 						JSONFactoryUtil.createJSONArray(valueString)));
 			}
 			else {
-				if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
+				if (type.equals(DDMFormFieldType.TEXT_HTML)) {
 					valueString = HtmlUtil.extractText(valueString);
 					sortableValueString = HtmlUtil.extractText(
 						sortableValueString);

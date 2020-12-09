@@ -808,11 +808,11 @@ definition {
 
 		PortletEntry.publish();
 
-		DMDocument.viewPG(dmDocumentTitle = "liferay.txt");
+		DMDocument.viewPG(dmDocumentTitle = "liferay");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.deletePG(dmDocumentTitle = "liferay.txt");
+		DMDocument.deletePG(dmDocumentTitle = "liferay");
 	}
 
 	@priority = "5"
@@ -1160,12 +1160,12 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.moveToFolderPG(
-			dmDocumentTitle = "liferay.txt",
+			dmDocumentTitle = "liferay",
 			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewPG(dmDocumentTitle = "liferay.txt");
+		DMDocument.viewPG(dmDocumentTitle = "liferay");
 	}
 
 	@priority = "5"

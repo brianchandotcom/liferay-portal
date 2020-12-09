@@ -73,11 +73,10 @@ public class SearchCTTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			SearchCTTest.class.getName(), SearchCTTest.class.getName());
-
-		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test

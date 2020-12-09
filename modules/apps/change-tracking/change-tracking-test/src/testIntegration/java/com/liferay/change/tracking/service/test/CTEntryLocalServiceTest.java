@@ -60,13 +60,11 @@ public class CTEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
-
 		_group = GroupTestUtil.addGroup();
-
 		_journalFolderClassNameId = _classNameLocalService.getClassNameId(
 			JournalFolder.class);
+		_journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
 	}
 
 	@Test

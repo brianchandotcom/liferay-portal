@@ -60,7 +60,9 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 					icon="categories"
 				/>
 
-				<%= assetCategory.getName() %>
+				<a href="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryURL(assetCategory.getCategoryId()) %>">
+					<b><%= HtmlUtil.escape(assetCategory.getName()) %></b>
+				</a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

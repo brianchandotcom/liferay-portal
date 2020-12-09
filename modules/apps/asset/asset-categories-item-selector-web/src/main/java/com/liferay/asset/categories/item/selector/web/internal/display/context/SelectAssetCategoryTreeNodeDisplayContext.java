@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -37,7 +38,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,6 +95,27 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		}
 
 		return null;
+	}
+
+	public String getAssetCategoryURL(long assetCategoryId)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		portletURL.setParameter(
+			"assetCategoryTreeNodeId", String.valueOf(assetCategoryId));
+		portletURL.setParameter(
+			"backURL",
+			ParamUtil.getString(
+				_httpServletRequest, "backURL",
+				PortalUtil.getCurrentURL(_httpServletRequest)));
+
+		return portletURL.toString();
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {

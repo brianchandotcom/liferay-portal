@@ -157,6 +157,119 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
+	public void testChangeTitleFromRepositoryDoNotChangeFileName()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			Folder folder = _dlAppLocalService.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId());
+
+			fileEntry = _dlAppLocalService.addFileEntry(
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				folder.getFolderId(), _TEST_FILE_NAME_2,
+				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2,
+				StringPool.BLANK, StringPool.BLANK, _testFileBytes,
+				serviceContext);
+
+			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME_2);
+
+			assertCode(
+				HttpServletResponse.SC_CREATED,
+				servicePut(
+					_TEST_FILE_NAME_2, _testFileBytes,
+					getLock(_TEST_FILE_NAME_2)));
+
+			unlock(_TEST_FILE_NAME_2);
+
+			long fileEntryId = fileEntry.getFileEntryId();
+
+			_dlAppLocalService.updateFileEntry(
+				TestPropsValues.getUserId(), fileEntryId, _TEST_FILE_NAME_2,
+				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2_MOD,
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MAJOR, _testFileBytes, serviceContext);
+
+			fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			Assert.assertEquals(_TEST_FILE_TITLE_2_MOD, fileEntry.getTitle());
+			Assert.assertEquals(_TEST_FILE_NAME_2, fileEntry.getFileName());
+
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2));
+			assertCode(
+				HttpServletResponse.SC_NOT_FOUND,
+				serviceGet(_TEST_FILE_TITLE_2));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE_2_MOD));
+		}
+		finally {
+			if (fileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
+	}
+
+	@Test
+	public void testChangeTitleFromWebDavDoNotChangeFileName()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			assertCode(
+				HttpServletResponse.SC_CREATED,
+				servicePut(
+					_TEST_FILE_NAME_2, _testFileBytes,
+					getLock(_TEST_FILE_NAME_2)));
+
+			Folder folder = _dlAppLocalService.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			fileEntry = _dlAppLocalService.getFileEntry(
+				TestPropsValues.getGroupId(), folder.getFolderId(),
+				_TEST_FILE_TITLE_2);
+
+			long fileEntryId = fileEntry.getFileEntryId();
+
+			_dlAppLocalService.updateFileEntry(
+				TestPropsValues.getUserId(), fileEntryId, _TEST_FILE_NAME_2,
+				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2_MOD,
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MAJOR, _testFileBytes,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId()));
+
+			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
+
+			fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			Assert.assertEquals(_TEST_FILE_TITLE_2_MOD, fileEntry.getTitle());
+			Assert.assertEquals(_TEST_FILE_NAME_2, fileEntry.getFileName());
+
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2));
+			assertCode(
+				HttpServletResponse.SC_NOT_FOUND,
+				serviceGet(_TEST_FILE_TITLE_2));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE_2_MOD));
+		}
+		finally {
+			if (fileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
+	}
+
+	@Test
 	public void testGetFileWithEscapedCharactersInFileName() throws Exception {
 		FileEntry fileEntry = null;
 
@@ -752,6 +865,10 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		"Test" + PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR + "0.docx";
 
 	private static final String _TEST_FILE_TITLE = "Test";
+
+	private static final String _TEST_FILE_TITLE_2 = "Test2";
+
+	private static final String _TEST_FILE_TITLE_2_MOD = "Test2Mod";
 
 	private static final String _TEST_META_NAME = "._Test.docx";
 

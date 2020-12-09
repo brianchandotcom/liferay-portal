@@ -13,6 +13,6 @@
  */
 
 module.exports = {
-	federation: true,
+	federation: 'js/index.federation.js',
 	preset: '@liferay/npm-scripts/src/presets/standard',
 };

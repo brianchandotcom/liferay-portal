@@ -233,7 +233,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
-	public Country setActive(long countryId, boolean active)
+	public Country updateActive(long countryId, boolean active)
 		throws PortalException {
 
 		if (!getPermissionChecker().isOmniadmin()) {
@@ -241,7 +241,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 				getPermissionChecker());
 		}
 
-		return countryLocalService.setActive(countryId, active);
+		return countryLocalService.updateActive(countryId, active);
 	}
 
 	@Override
@@ -263,7 +263,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	}
 
 	@Override
-	public Country updateCountryGroupFilterEnabled(
+	public Country updateGroupFilterEnabled(
 			long countryId, boolean groupFilterEnabled)
 		throws PortalException {
 
@@ -272,7 +272,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 				getPermissionChecker());
 		}
 
-		return countryLocalService.updateCountryGroupFilterEnabled(
+		return countryLocalService.updateGroupFilterEnabled(
 			countryId, groupFilterEnabled);
 	}
 

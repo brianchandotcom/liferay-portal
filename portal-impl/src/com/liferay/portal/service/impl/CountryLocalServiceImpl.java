@@ -224,7 +224,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Country setActive(long countryId, boolean active)
+	public Country updateActive(long countryId, boolean active)
 		throws PortalException {
 
 		Country country = countryPersistence.findByPrimaryKey(countryId);
@@ -261,7 +261,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Country updateCountryGroupFilterEnabled(
+	public Country updateGroupFilterEnabled(
 			long countryId, boolean groupFilterEnabled)
 		throws PortalException {
 

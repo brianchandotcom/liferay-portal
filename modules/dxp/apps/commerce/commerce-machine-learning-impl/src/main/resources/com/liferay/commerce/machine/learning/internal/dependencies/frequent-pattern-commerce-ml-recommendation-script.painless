@@ -1,7 +1,15 @@
-def res = _score / (double)doc.antecedentIdsLength.value;
+def res = 0;
 
-res *= _score / params.cpInstanceIds.size();
+if (_score == 0) {
+    return 0;
+}
 
-res *= doc.score.value;
+res = _score / (double)doc.antecedentIdsLength.value;
 
-return res * 100.0;
+res -= (1.0 - (_score / params.cpInstanceIds.size()));
+
+res /= 2;
+
+res += doc.score.value;
+
+return Math.max(0, res * 100.0);

@@ -3209,29 +3209,102 @@ definition {
 			portlet = "Web Content",
 			site = "${siteName}");
 
-		WebContentAdmin.viewEntryWorkflowStatus(
-			entry = "Web Content Title",
-			workflowStatus = "Approved");
+		for (var fieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box") {
+			WebContentAdmin.viewEntryWorkflowStatus(
+				entry = "${fieldName} Web Content",
+				workflowStatus = "Approved");
+		}
 
 		WebContentUpgrade.viewWithStructureCP(
 			webContentBoolean = "true",
+			webContentTitle = "Boolean Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
 			webContentDate = "10/10/2020",
-			webContentDecimal = "0.5",
-			webContentDocumentsAndMedia = "Document Title",
-			webContentDocumentsAndMediaFieldName = "Documents_and_Media",
-			webContentHTML = "This is a HTML field",
+			webContentTitle = "Date Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentNumeric = "0.5",
+			webContentNumericFieldLabel = "Decimal",
+			webContentTitle = "Decimal Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentTitle = "Documents and Media Web Content",
+			webContentUpload = "Document Title",
+			webContentUploadFieldLabel = "Documents and Media");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentRichText = "This is a HTML field",
+			webContentRichTextFieldLabel = "HTML",
+			webContentTitle = "HTML Web Content");
+
+		Navigator.gotoBack();
+
+		WebContentUpgrade.viewWithStructureCP(
 			webContentImage = "Document_1.jpg",
-			webContentInteger = "9",
-			webContentLinkToPage = "Welcome",
-			webContentLinkToPageFieldName = "Link_to_Page",
-			webContentNumber = "-1",
-			webContentRadio = "option 1",
-			webContentSelect = "option 2",
-			webContentSeparator = "true",
+			webContentTitle = "Image Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentNumeric = "9",
+			webContentNumericFieldLabel = "Integer",
+			webContentTitle = "Integer Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentNumeric = "-1",
+			webContentNumericFieldLabel = "Number",
+			webContentTitle = "Number Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentSingleSelection = "option 1",
+			webContentSingleSelectionFieldLabel = "Radio",
+			webContentTitle = "Radio Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentSelectFromList = "option 2",
+			webContentSeparatorFieldLabel = "Select",
+			webContentTitle = "Select Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",
-			webContentTextBox = "This is a Text Box field",
-			webContentTextBoxFieldName = "Text_Box",
-			webContentTitle = "Web Content Title");
+			webContentTitle = "Text Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			fieldType = "Multiple Lines",
+			webContentText = "This is a Text Box field",
+			webContentTextFieldLabel = "Text Box",
+			webContentTitle = "Text Box Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentLinkToPage = "Welcome",
+			webContentTitle = "Link to Page Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentSeparator = "true",
+			webContentTitle = "Separator Web Content");
 	}
 
 	macro viewWebContentWithPredefinedValueInWebContentField {

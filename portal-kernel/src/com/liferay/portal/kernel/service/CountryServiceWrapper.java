@@ -249,11 +249,11 @@ public class CountryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country setActive(
+	public com.liferay.portal.kernel.model.Country updateActive(
 			long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _countryService.setActive(countryId, active);
+		return _countryService.updateActive(countryId, active);
 	}
 
 	@Override
@@ -271,12 +271,11 @@ public class CountryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country
-			updateCountryGroupFilterEnabled(
-				long countryId, boolean groupFilterEnabled)
+	public com.liferay.portal.kernel.model.Country updateGroupFilterEnabled(
+			long countryId, boolean groupFilterEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _countryService.updateCountryGroupFilterEnabled(
+		return _countryService.updateGroupFilterEnabled(
 			countryId, groupFilterEnabled);
 	}
 

@@ -454,11 +454,11 @@ public class CountryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.model.Country setActive(
+	public static com.liferay.portal.kernel.model.Country updateActive(
 			long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().setActive(countryId, active);
+		return getService().updateActive(countryId, active);
 	}
 
 	/**
@@ -489,15 +489,6 @@ public class CountryLocalServiceUtil {
 			position, shippingAllowed, subjectToVAT, titleMap);
 	}
 
-	public static com.liferay.portal.kernel.model.Country
-			updateCountryGroupFilterEnabled(
-				long countryId, boolean groupFilterEnabled)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateCountryGroupFilterEnabled(
-			countryId, groupFilterEnabled);
-	}
-
 	public static com.liferay.portal.kernel.model.CountryLocalization
 			updateCountryLocalization(
 				com.liferay.portal.kernel.model.Country country,
@@ -516,6 +507,14 @@ public class CountryLocalServiceUtil {
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCountryLocalizations(country, titleMap);
+	}
+
+	public static com.liferay.portal.kernel.model.Country
+			updateGroupFilterEnabled(long countryId, boolean groupFilterEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateGroupFilterEnabled(
+			countryId, groupFilterEnabled);
 	}
 
 	public static CountryLocalService getService() {

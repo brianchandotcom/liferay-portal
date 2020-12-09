@@ -231,11 +231,11 @@ public class CountryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.Country setActive(
+	public static com.liferay.portal.kernel.model.Country updateActive(
 			long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().setActive(countryId, active);
+		return getService().updateActive(countryId, active);
 	}
 
 	public static com.liferay.portal.kernel.model.Country updateCountry(
@@ -251,11 +251,10 @@ public class CountryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Country
-			updateCountryGroupFilterEnabled(
-				long countryId, boolean groupFilterEnabled)
+			updateGroupFilterEnabled(long countryId, boolean groupFilterEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateCountryGroupFilterEnabled(
+		return getService().updateGroupFilterEnabled(
 			countryId, groupFilterEnabled);
 	}
 

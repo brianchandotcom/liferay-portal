@@ -880,14 +880,14 @@ public class CountryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.Country setActive(
+	public static com.liferay.portal.kernel.model.Country updateActive(
 			HttpPrincipal httpPrincipal, long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CountryServiceUtil.class, "setActive",
-				_setActiveParameterTypes23);
+				CountryServiceUtil.class, "updateActive",
+				_updateActiveParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, countryId, active);
@@ -965,15 +965,15 @@ public class CountryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Country
-			updateCountryGroupFilterEnabled(
+			updateGroupFilterEnabled(
 				HttpPrincipal httpPrincipal, long countryId,
 				boolean groupFilterEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CountryServiceUtil.class, "updateCountryGroupFilterEnabled",
-				_updateCountryGroupFilterEnabledParameterTypes25);
+				CountryServiceUtil.class, "updateGroupFilterEnabled",
+				_updateGroupFilterEnabledParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, countryId, groupFilterEnabled);
@@ -1068,18 +1068,15 @@ public class CountryServiceHttp {
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _getCountryByNameParameterTypes22 =
 		new Class[] {String.class};
-	private static final Class<?>[] _setActiveParameterTypes23 = new Class[] {
-		long.class, boolean.class
-	};
+	private static final Class<?>[] _updateActiveParameterTypes23 =
+		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _updateCountryParameterTypes24 =
 		new Class[] {
 			long.class, String.class, String.class, boolean.class,
 			boolean.class, String.class, String.class, String.class,
 			double.class, boolean.class, boolean.class, java.util.Map.class
 		};
-	private static final Class<?>[]
-		_updateCountryGroupFilterEnabledParameterTypes25 = new Class[] {
-			long.class, boolean.class
-		};
+	private static final Class<?>[] _updateGroupFilterEnabledParameterTypes25 =
+		new Class[] {long.class, boolean.class};
 
 }

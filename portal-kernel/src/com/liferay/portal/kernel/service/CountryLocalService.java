@@ -352,7 +352,7 @@ public interface CountryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public Country setActive(long countryId, boolean active)
+	public Country updateActive(long countryId, boolean active)
 		throws PortalException;
 
 	/**
@@ -375,16 +375,16 @@ public interface CountryLocalService
 			Map<String, String> titleMap)
 		throws PortalException;
 
-	public Country updateCountryGroupFilterEnabled(
-			long countryId, boolean groupFilterEnabled)
-		throws PortalException;
-
 	public CountryLocalization updateCountryLocalization(
 			Country country, String languageId, String title)
 		throws PortalException;
 
 	public List<CountryLocalization> updateCountryLocalizations(
 			Country country, Map<String, String> titleMap)
+		throws PortalException;
+
+	public Country updateGroupFilterEnabled(
+			long countryId, boolean groupFilterEnabled)
 		throws PortalException;
 
 }

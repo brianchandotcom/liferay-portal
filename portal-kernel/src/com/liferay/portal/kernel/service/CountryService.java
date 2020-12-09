@@ -171,7 +171,7 @@ public interface CountryService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public Country setActive(long countryId, boolean active)
+	public Country updateActive(long countryId, boolean active)
 		throws PortalException;
 
 	public Country updateCountry(
@@ -181,7 +181,7 @@ public interface CountryService extends BaseService {
 			Map<String, String> titleMap)
 		throws PortalException;
 
-	public Country updateCountryGroupFilterEnabled(
+	public Country updateGroupFilterEnabled(
 			long countryId, boolean groupFilterEnabled)
 		throws PortalException;
 

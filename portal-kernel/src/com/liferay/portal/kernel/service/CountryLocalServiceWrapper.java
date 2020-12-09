@@ -487,11 +487,11 @@ public class CountryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country setActive(
+	public com.liferay.portal.kernel.model.Country updateActive(
 			long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _countryLocalService.setActive(countryId, active);
+		return _countryLocalService.updateActive(countryId, active);
 	}
 
 	/**
@@ -526,16 +526,6 @@ public class CountryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country
-			updateCountryGroupFilterEnabled(
-				long countryId, boolean groupFilterEnabled)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _countryLocalService.updateCountryGroupFilterEnabled(
-			countryId, groupFilterEnabled);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.CountryLocalization
 			updateCountryLocalization(
 				com.liferay.portal.kernel.model.Country country,
@@ -555,6 +545,15 @@ public class CountryLocalServiceWrapper
 
 		return _countryLocalService.updateCountryLocalizations(
 			country, titleMap);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country updateGroupFilterEnabled(
+			long countryId, boolean groupFilterEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.updateGroupFilterEnabled(
+			countryId, groupFilterEnabled);
 	}
 
 	@Override

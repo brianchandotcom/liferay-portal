@@ -486,13 +486,13 @@ public class CountryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.CountrySoap setActive(
+	public static com.liferay.portal.kernel.model.CountrySoap updateActive(
 			long countryId, boolean active)
 		throws RemoteException {
 
 		try {
 			com.liferay.portal.kernel.model.Country returnValue =
-				CountryServiceUtil.setActive(countryId, active);
+				CountryServiceUtil.updateActive(countryId, active);
 
 			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(
 				returnValue);
@@ -505,13 +505,12 @@ public class CountryServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.CountrySoap
-			updateCountryGroupFilterEnabled(
-				long countryId, boolean groupFilterEnabled)
+			updateGroupFilterEnabled(long countryId, boolean groupFilterEnabled)
 		throws RemoteException {
 
 		try {
 			com.liferay.portal.kernel.model.Country returnValue =
-				CountryServiceUtil.updateCountryGroupFilterEnabled(
+				CountryServiceUtil.updateGroupFilterEnabled(
 					countryId, groupFilterEnabled);
 
 			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(

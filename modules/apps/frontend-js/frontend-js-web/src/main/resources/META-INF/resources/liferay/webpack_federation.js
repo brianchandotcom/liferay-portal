@@ -13,11 +13,17 @@
  */
 
 (function() {
+	const CONTAINER_REQUESTS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_CONTAINER_REQUESTS__');
 	const CONTAINERS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_CONTAINERS__');
 	const GET_MODULE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__');
+	const SHARED_SCOPE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_SHARED_SCOPE__');
 
-	const containerRequests = {};
-	const sharedScope = {};
+	window[CONTAINER_REQUESTS_SYMBOL] = window[CONTAINER_REQUESTS_SYMBOL] || {};
+	window[CONTAINERS_SYMBOL] = window[CONTAINERS_SYMBOL] || {};
+	window[SHARED_SCOPE_SYMBOL] = window[SHARED_SCOPE_SYMBOL] || {};
+
+	const containerRequests = window[CONTAINER_REQUESTS_SYMBOL];
+	const sharedScope = window[SHARED_SCOPE_SYMBOL];
 
 	/**
 	 * Create a new container request
@@ -72,7 +78,16 @@
 				const container = getContainer(containerId);
 
 				if (container) {
-					explain('Initializing container', containerId);
+					explain(
+						'Initializing container', containerId, '\n',
+						Object.entries(sharedScope).map(([name, data]) =>
+							`${name}: ` +
+							Object.entries(data).map(
+								([version, data]) => `(${version}: ${data.from})`
+                            )
+						).join('\n ')
+					);
+
 					Promise.resolve(
 						container.init(sharedScope)
 					)
@@ -190,6 +205,5 @@
 		containerRequest.subscribers.push({reject, resolve});
 	}
 
-	window[CONTAINERS_SYMBOL] = window[CONTAINERS_SYMBOL] || {};
 	window[GET_MODULE_SYMBOL] = getModule;
 })();

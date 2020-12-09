@@ -23,6 +23,7 @@ import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 const getMaskConfig = (dataType, symbols) => {
 	let config = {
 		allowLeadingZeroes: true,
+		allowNegative: true,
 		includeThousandsSeparator: false,
 		prefix: '',
 	};

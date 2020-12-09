@@ -2,5 +2,6 @@
 	"fragmentEntryKey": "dropdown",
 	"icon": "button",
 	"name": "dropdown",
+	"thumbnail": "dropdown.png",
 	"type": "component"
 }

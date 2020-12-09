@@ -49,20 +49,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		SpiraTestCaseType spiraTestCaseType,
 		List<SpiraCustomPropertyValue> spiraCustomPropertyValues) {
 
-		Set<SpiraCustomPropertyValue> spiraCustomPropertyValueSet =
-			new HashSet<>();
-
-		if (spiraCustomPropertyValues != null) {
-			spiraCustomPropertyValueSet.addAll(spiraCustomPropertyValues);
-		}
-
-		spiraCustomPropertyValueSet.add(
-			_getExecutionTypeSpiraCustomPropertyValue(spiraProject));
-
 		List<SpiraTestCaseObject> spiraTestCaseObjects =
 			_getSpiraTestCaseObjects(
 				spiraProject, testCasePath, spiraTestCaseType,
-				new ArrayList<>(spiraCustomPropertyValueSet));
+				spiraCustomPropertyValues);
 
 		if (!spiraTestCaseObjects.isEmpty()) {
 			SpiraTestCaseObject targetSpiraTestCaseObject = null;
@@ -121,7 +111,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		JSONArray customPropertiesJSONArray = new JSONArray();
 
 		for (SpiraCustomPropertyValue spiraCustomPropertyValue :
-				spiraCustomPropertyValueSet) {
+				spiraCustomPropertyValues) {
 
 			customPropertiesJSONArray.put(
 				spiraCustomPropertyValue.getCustomPropertyJSONObject());
@@ -614,19 +604,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	protected static final String KEY_ID = "TestCaseId";
 
-	private static SpiraCustomPropertyValue
-		_getExecutionTypeSpiraCustomPropertyValue(SpiraProject spiraProject) {
-
-		SpiraCustomProperty spiraCustomProperty =
-			SpiraCustomProperty.createSpiraCustomProperty(
-				spiraProject, SpiraTestCaseObject.class,
-				_CUSTOM_FIELD_EXECUTION_TYPE_KEY,
-				SpiraCustomProperty.Type.LIST);
-
-		return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
-			spiraCustomProperty, "Automatic");
-	}
-
 	private static List<SpiraTestCaseObject> _getSpiraTestCaseObjects(
 		SpiraProject spiraProject, String testCasePath,
 		SpiraTestCaseType spiraTestCaseType,
@@ -657,21 +634,13 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 					"TestCaseTypeId", spiraTestCaseType.getID()));
 		}
 
-		Set<SpiraCustomPropertyValue> spiraCustomPropertyValueSet =
-			new HashSet<>();
-
 		if (spiraCustomPropertyValues != null) {
-			spiraCustomPropertyValueSet.addAll(spiraCustomPropertyValues);
-		}
+			for (SpiraCustomPropertyValue spiraCustomPropertyValue :
+					spiraCustomPropertyValues) {
 
-		spiraCustomPropertyValueSet.add(
-			_getExecutionTypeSpiraCustomPropertyValue(spiraProject));
-
-		for (SpiraCustomPropertyValue spiraCustomPropertyValue :
-				spiraCustomPropertyValueSet) {
-
-			searchParameters.add(
-				new SearchQuery.SearchParameter(spiraCustomPropertyValue));
+				searchParameters.add(
+					new SearchQuery.SearchParameter(spiraCustomPropertyValue));
+			}
 		}
 
 		return getSpiraTestCaseObjects(
@@ -797,9 +766,6 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			}
 		}
 	}
-
-	private static final String _CUSTOM_FIELD_EXECUTION_TYPE_KEY =
-		"Execution Type";
 
 	private static final String _CUSTOM_FIELD_FILE_PATH_KEY = "File Path";
 

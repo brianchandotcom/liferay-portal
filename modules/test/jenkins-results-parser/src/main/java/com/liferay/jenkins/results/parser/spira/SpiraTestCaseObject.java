@@ -22,6 +22,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -440,6 +441,13 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		jsonObject.put("CustomProperties", customPropertiesJSONArray);
 
 		_updateJSONObject(jsonObject);
+	}
+
+	public void updateSpiraCustomPropertyValues(
+		SpiraCustomPropertyValue... spiraCustomPropertyValues) {
+
+		updateSpiraCustomPropertyValues(
+			Arrays.asList(spiraCustomPropertyValues));
 	}
 
 	public void updateSpiraTestCaseComponents(

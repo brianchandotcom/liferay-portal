@@ -60,12 +60,12 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("List modules pending to upgrade")
 	public String check() {
-		return _getPendingUpgradeInfo(false);
+		return _check(false);
 	}
 
 	@Descriptor("List all modules' pending upgrade steps")
 	public String checkAll() {
-		return _getPendingUpgradeInfo(true);
+		return _check(true);
 	}
 
 	@Descriptor("Execute upgrade for a specific module")
@@ -227,7 +227,21 @@ public class ReleaseManagerOSGiCommands {
 		executeAll(upgradeThrewExceptionBundleSymbolicNames);
 	}
 
-	private String _getPendingModulesUpgradesInfo(boolean listAllUpgrades) {
+	private String _check(boolean showUpgradeSteps) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_checkPortal(showUpgradeSteps));
+
+		if (sb.length() > 0) {
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.append(_checkModules(showUpgradeSteps));
+
+		return sb.toString();
+	}
+
+	private String _checkModules(boolean showUpgradeSteps) {
 		StringBundler sb = new StringBundler();
 
 		Set<String> bundleSymbolicNames =
@@ -263,11 +277,11 @@ public class ReleaseManagerOSGiCommands {
 				upgradeInfos.size() - 1);
 
 			sb.append(
-				_getPendingUpgradeInfo(
+				_getModulePendingUpgradeMessage(
 					bundleSymbolicName, currentSchemaVersion,
 					lastUpgradeInfo.getToSchemaVersionString()));
 
-			if (listAllUpgrades) {
+			if (showUpgradeSteps) {
 				sb.append(StringPool.COLON);
 
 				for (UpgradeInfo upgradeInfo : upgradeInfos) {
@@ -276,7 +290,7 @@ public class ReleaseManagerOSGiCommands {
 					sb.append(StringPool.NEW_LINE);
 					sb.append(StringPool.TAB);
 					sb.append(
-						_getPendingUpgradeInfo(
+						_getPendingUpgradeProcessMessage(
 							upgradeStep.getClass(),
 							upgradeInfo.getFromSchemaVersionString(),
 							upgradeInfo.getToSchemaVersionString()));
@@ -287,7 +301,7 @@ public class ReleaseManagerOSGiCommands {
 		return sb.toString();
 	}
 
-	private String _getPendingPortalUpgradesInfo(boolean listAllUpgrades) {
+	private String _checkPortal(boolean showUpgradeSteps) {
 		try (Connection connection = DataAccess.getConnection()) {
 			Version currentSchemaVersion =
 				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
@@ -303,13 +317,13 @@ public class ReleaseManagerOSGiCommands {
 				StringBundler sb = new StringBundler();
 
 				sb.append(
-					_getPendingUpgradeInfo(
+					_getModulePendingUpgradeMessage(
 						"Portal", currentSchemaVersion.toString(),
 						latestSchemaVersion.toString()));
 
 				sb.append(" (requires upgrade tool or auto upgrade)");
 
-				if (listAllUpgrades) {
+				if (showUpgradeSteps) {
 					sb.append(StringPool.COLON);
 
 					for (SortedMap.Entry<Version, UpgradeProcess> entry :
@@ -322,7 +336,7 @@ public class ReleaseManagerOSGiCommands {
 						Version version = entry.getKey();
 
 						sb.append(
-							_getPendingUpgradeInfo(
+							_getPendingUpgradeProcessMessage(
 								upgradeProcess.getClass(),
 								currentSchemaVersion.toString(),
 								version.toString()));
@@ -346,21 +360,23 @@ public class ReleaseManagerOSGiCommands {
 		return StringPool.BLANK;
 	}
 
-	private String _getPendingUpgradeInfo(boolean listAllUpgrades) {
-		StringBundler sb = new StringBundler(3);
+	private String _getModulePendingUpgradeMessage(
+		String moduleName, String currentSchemaVersion,
+		String finalSchemaVersion) {
 
-		sb.append(_getPendingPortalUpgradesInfo(listAllUpgrades));
+		StringBundler sb = new StringBundler(6);
 
-		if (sb.length() > 0) {
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.append(_getPendingModulesUpgradesInfo(listAllUpgrades));
+		sb.append("There are upgrade processes available for ");
+		sb.append(moduleName);
+		sb.append(" from ");
+		sb.append(currentSchemaVersion);
+		sb.append(" to ");
+		sb.append(finalSchemaVersion);
 
 		return sb.toString();
 	}
 
-	private String _getPendingUpgradeInfo(
+	private String _getPendingUpgradeProcessMessage(
 		Class<?> upgradeClass, String fromSchemaVersion,
 		String toSchemaVersion) {
 
@@ -383,22 +399,6 @@ public class ReleaseManagerOSGiCommands {
 		sb.append(StringPool.COLON);
 		sb.append(StringPool.SPACE);
 		sb.append(upgradeClass.getName());
-
-		return sb.toString();
-	}
-
-	private String _getPendingUpgradeInfo(
-		String moduleName, String currentSchemaVersion,
-		String finalSchemaVersion) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("There are upgrade processes available for ");
-		sb.append(moduleName);
-		sb.append(" from ");
-		sb.append(currentSchemaVersion);
-		sb.append(" to ");
-		sb.append(finalSchemaVersion);
 
 		return sb.toString();
 	}

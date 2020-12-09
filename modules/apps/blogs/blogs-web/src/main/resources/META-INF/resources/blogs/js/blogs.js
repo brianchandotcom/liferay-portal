@@ -12,6 +12,8 @@
  * details.
  */
 
+import EventListener from './utils/EventListener';
+
 const CSS_INVISIBLE = 'invisible';
 const STR_BLANK = '';
 const STR_CHANGE = 'change';
@@ -55,6 +57,8 @@ export default class Blogs {
 			this._rootNode = document.getElementById(
 				`${this._config.namespace}fm`
 			);
+
+			this._listeners = new EventListener();
 
 			this._bindUI();
 
@@ -108,6 +112,8 @@ export default class Blogs {
 	}
 
 	_bindUI() {
+		const listeners = this._listeners;
+
 		this._captionNode = this._rootNode.querySelector(
 			'.cover-image-caption'
 		);
@@ -124,7 +130,7 @@ export default class Blogs {
 		);
 
 		if (publishButton) {
-			publishButton.addEventListener(STR_CLICK, () => {
+			listeners.add(publishButton, STR_CLICK, () => {
 				this._beforePublishBtnClick();
 				this._checkImagesBeforeSave(false, false);
 			});
@@ -135,7 +141,7 @@ export default class Blogs {
 		);
 
 		if (saveButton) {
-			saveButton.addEventListener(STR_CLICK, () => {
+			listeners.add(saveButton, STR_CLICK, () => {
 				this._beforeSaveBtnClick();
 				this._checkImagesBeforeSave(true, false);
 			});
@@ -147,7 +153,8 @@ export default class Blogs {
 
 		if (customAbstractOptions.length) {
 			customAbstractOptions.forEach((option) => {
-				option.addEventListener(
+				listeners.add(
+					option,
 					STR_CHANGE,
 					this._configureAbstract.bind(this)
 				);
@@ -160,7 +167,8 @@ export default class Blogs {
 
 		if (urlOptions.length) {
 			urlOptions.forEach((option) => {
-				option.addEventListener(
+				listeners.add(
+					option,
 					STR_CHANGE,
 					this._onChangeURLOptions.bind(this)
 				);
@@ -579,13 +587,12 @@ export default class Blogs {
 		}
 	}
 
-	destructor() {
+	dispose() {
 		if (this._saveDraftTimer) {
 			clearInterval(this._saveDraftTimer);
 		}
 
-		// TODO: new A.EventHandle(instance._eventHandles).detach();
-
+		this._listeners.removeAll();
 	}
 
 	setCustomDescription(text) {

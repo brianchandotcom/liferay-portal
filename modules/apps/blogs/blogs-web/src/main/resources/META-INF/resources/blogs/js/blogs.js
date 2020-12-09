@@ -438,6 +438,9 @@ export default class Blogs {
 						const message = data;
 
 						if (message) {
+							saveStatus.classList.remove('hide');
+							saveStatus.hidden = false;
+
 							document.getElementById(
 								`${namespace}coverImageFileEntryId`
 							).value = message.coverImageFileEntryId;

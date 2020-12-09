@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -99,6 +100,60 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		_testDeltaBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_DELTA_DOCX);
 
 		servicePut(_TEST_FILE_NAME, _testFileBytes, getLock(_TEST_FILE_NAME));
+	}
+
+	@Test
+	public void testChangeFileNameChangeWebDavDocumentFileName()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);
+
+			assertCode(
+				HttpServletResponse.SC_CREATED,
+				servicePut(
+					_TEST_FILE_NAME, _testFileBytes, getLock(_TEST_FILE_NAME)));
+
+			unlock(_TEST_FILE_NAME);
+
+			Folder folder = _dlAppLocalService.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			fileEntry = _dlAppLocalService.getFileEntry(
+				TestPropsValues.getGroupId(), folder.getFolderId(),
+				_TEST_FILE_TITLE);
+
+			long fileEntryId = fileEntry.getFileEntryId();
+
+			_dlAppLocalService.updateFileEntry(
+				TestPropsValues.getUserId(), fileEntryId, _TEST_FILE_NAME_2,
+				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE,
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.MAJOR, _testFileBytes,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId()));
+
+			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
+
+			fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			Assert.assertEquals(_TEST_FILE_TITLE, fileEntry.getTitle());
+			Assert.assertEquals(_TEST_FILE_NAME_2, fileEntry.getFileName());
+
+			assertCode(
+				HttpServletResponse.SC_NOT_FOUND, serviceGet(_TEST_FILE_NAME));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2));
+			assertCode(HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE));
+		}
+		finally {
+			if (fileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
 	}
 
 	@Test

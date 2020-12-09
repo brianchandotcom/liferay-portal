@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.CountryIddException;
 import com.liferay.portal.kernel.exception.CountryNameException;
 import com.liferay.portal.kernel.exception.CountryNumberException;
 import com.liferay.portal.kernel.exception.DuplicateCountryException;
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
@@ -204,21 +203,21 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 	@Override
 	public Country getCountryByA3(long companyId, String a3)
-		throws NoSuchCountryException {
+		throws PortalException {
 
 		return countryPersistence.findByC_A3(companyId, a3);
 	}
 
 	@Override
 	public Country getCountryByName(long companyId, String name)
-		throws NoSuchCountryException {
+		throws PortalException {
 
 		return countryPersistence.findByC_Name(companyId, name);
 	}
 
 	@Override
 	public Country getCountryByNumber(long companyId, String number)
-		throws NoSuchCountryException {
+		throws PortalException {
 
 		return countryPersistence.findByC_Number(companyId, number);
 	}

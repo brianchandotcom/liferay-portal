@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -202,7 +201,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country getCountryByA3(long companyId, String a3)
-		throws NoSuchCountryException {
+		throws PortalException {
 
 		return countryLocalService.getCountryByA3(companyId, a3);
 	}
@@ -218,7 +217,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public Country getCountryByName(long companyId, String name)
-		throws NoSuchCountryException {
+		throws PortalException {
 
 		return countryLocalService.getCountryByName(companyId, name);
 	}

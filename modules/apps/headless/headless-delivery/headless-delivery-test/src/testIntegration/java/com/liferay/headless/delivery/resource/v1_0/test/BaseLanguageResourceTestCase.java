@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.Language;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -37,8 +39,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -56,6 +60,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +107,17 @@ public abstract class BaseLanguageResourceTestCase {
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
+
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 
 		_languageResource.setContextCompany(testCompany);
 
@@ -192,6 +208,71 @@ public abstract class BaseLanguageResourceTestCase {
 		Assert.assertEquals(regex, language.getCountryName());
 		Assert.assertEquals(regex, language.getId());
 		Assert.assertEquals(regex, language.getName());
+	}
+
+	@Test
+	public void testGetAssetLibraryLanguagesPage() throws Exception {
+		Page<Language> page = languageResource.getAssetLibraryLanguagesPage(
+			testGetAssetLibraryLanguagesPage_getAssetLibraryId());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long assetLibraryId =
+			testGetAssetLibraryLanguagesPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryLanguagesPage_getIrrelevantAssetLibraryId();
+
+		if ((irrelevantAssetLibraryId != null)) {
+			Language irrelevantLanguage =
+				testGetAssetLibraryLanguagesPage_addLanguage(
+					irrelevantAssetLibraryId, randomIrrelevantLanguage());
+
+			page = languageResource.getAssetLibraryLanguagesPage(
+				irrelevantAssetLibraryId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantLanguage),
+				(List<Language>)page.getItems());
+			assertValid(page);
+		}
+
+		Language language1 = testGetAssetLibraryLanguagesPage_addLanguage(
+			assetLibraryId, randomLanguage());
+
+		Language language2 = testGetAssetLibraryLanguagesPage_addLanguage(
+			assetLibraryId, randomLanguage());
+
+		page = languageResource.getAssetLibraryLanguagesPage(assetLibraryId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(language1, language2),
+			(List<Language>)page.getItems());
+		assertValid(page);
+	}
+
+	protected Language testGetAssetLibraryLanguagesPage_addLanguage(
+			Long assetLibraryId, Language language)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAssetLibraryLanguagesPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Long
+			testGetAssetLibraryLanguagesPage_getIrrelevantAssetLibraryId()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -730,6 +811,7 @@ public abstract class BaseLanguageResourceTestCase {
 	protected LanguageResource languageResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected Group testGroup;
 
 	protected class GraphQLField {

@@ -1379,6 +1379,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryLanguages(assetLibraryId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the asset libraries languages.")
+	public LanguagePage assetLibraryLanguages(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_languageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			languageResource -> new LanguagePage(
+				languageResource.getAssetLibraryLanguagesPage(
+					Long.valueOf(assetLibraryId))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {languages(siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the site's languages.")

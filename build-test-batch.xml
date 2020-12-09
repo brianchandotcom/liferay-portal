@@ -5960,18 +5960,33 @@ ${output.content}</echo>
 
 						<antcall inheritAll="false" target="stop-app-server" />
 
+						<var name="app.server.tomcat.dir.custom" value="${app.server.parent.dir}/tomcat" />
+
+						<move
+							file="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}"
+							tofile="${app.server.tomcat.dir.custom}"
+						/>
+
 						<local name="junit.failure.count" />
 						<local name="junit.failure.message" />
 
 						<trycatch property="junit.failure.message">
 							<try>
-								<move
-									file="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}"
-									tofile="${app.server.parent.dir}/tomcat"
-								/>
+								<parallel>
+									<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second">
+										<http url="http://localhost:8080/web/guest" />
+									</waitfor>
 
-								<start-renamed-app-server
-									delete.liferay.home="false"
+									<daemons>
+										<exec dir="${app.server.tomcat.dir.custom}/bin" executable="sh">
+											<arg value="catalina.sh" />
+											<arg value="run" />
+										</exec>
+									</daemons>
+								</parallel>
+
+								<stop-app-server-cmd
+									app.server.bin.dir="${app.server.tomcat.dir.custom}/bin"
 								/>
 							</try>
 							<finally>
@@ -5984,8 +5999,6 @@ ${output.content}</echo>
 								<generate-backend-batch-junit-report junit.failure.count="${junit.failure.count}" junit.failure.message.element="${junit.failure.message.element}" test.class.name="portalStartupRenamedTomcatInPath" test.command.name="portalStartupRenamedTomcatInPath" />
 							</finally>
 						</trycatch>
-
-						<stop-renamed-app-server />
 					</test-action>
 				</database-test-run-test>
 			</test-action>

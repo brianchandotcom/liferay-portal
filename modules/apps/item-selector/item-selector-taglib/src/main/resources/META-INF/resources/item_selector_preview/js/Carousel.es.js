@@ -18,6 +18,10 @@ import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
 import PreviewImage from './PreviewImage.es';
+import PreviewVideo from './PreviewVideo.es';
+
+const STR_VIDEO_HTML_RETURN_TYPE =
+	'com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType';
 
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>
@@ -98,10 +102,14 @@ const Carousel = ({
 				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
 
-			<PreviewImage
-				src={currentItem.url || currentItem.base64}
-				title={currentItem.title}
-			/>
+			{currentItem.returntype === STR_VIDEO_HTML_RETURN_TYPE ? (
+				<PreviewVideo html={currentItem.value} />
+			) : (
+				<PreviewImage
+					src={currentItem.url || currentItem.base64}
+					title={currentItem.title}
+				/>
+			)}
 
 			{showArrows && (
 				<Arrow direction="right" handleClick={handleClickNext} />

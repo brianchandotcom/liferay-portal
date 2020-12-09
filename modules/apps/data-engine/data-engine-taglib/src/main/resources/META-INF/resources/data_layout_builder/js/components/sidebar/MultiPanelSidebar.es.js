@@ -18,14 +18,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useIsMounted, useStateSafe} from 'frontend-js-react-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import AppContext from '../../AppContext.es';
-import useLazy from '../../hooks/useLazy.es';
 import useLoad from '../../hooks/useLoad.es';
-import usePlugins from '../../hooks/usePlugins.es';
 
-const {Suspense, useCallback, useContext, useEffect} = React;
+const {useContext, useEffect} = React;
 
 const CLASSNAME_INDICATORS = [
 	'.change-tracking-indicator',
@@ -47,65 +45,39 @@ export default function MultiPanelSidebar({
 	const [hasError, setHasError] = useStateSafe(false);
 	const isMounted = useIsMounted();
 	const load = useLoad();
-	const {getInstance, register} = usePlugins();
 
-	const panel = sidebarPanels[sidebarPanelId];
-	const promise = panel
-		? load(sidebarPanelId, panel.pluginEntryPoint)
-		: Promise.resolve();
+	const [panelComponents, setPanelComponents] = useState([]);
 
-	const app = {
-		dispatch,
-		panel,
-		sidebarOpen,
-		sidebarPanelId,
-	};
+	useEffect(() => {
+		const panelPromises = Object.values(sidebarPanels).map((sidebarPanel) =>
+			load(sidebarPanel.sidebarPanelId, sidebarPanel.pluginEntryPoint)
+				.then((Plugin) => {
+					const instance = new Plugin(
+						{
+							dispatch,
+							panel: sidebarPanel,
+							sidebarOpen: true,
+							sidebarPanelId: sidebarPanel.sidebarPanelId,
+						},
+						sidebarPanel
+					);
 
-	let registerPanel;
+					return {
+						Component: () => instance.renderSidebar(),
+						sidebarPanelId: sidebarPanel.sidebarPanelId,
+					};
+				})
+				.catch((error) => console.error(error))
+		);
 
-	if (sidebarPanelId) {
-		registerPanel = register(sidebarPanelId, promise, {app, panel});
-	}
+		setPanelComponents([]);
 
-	const togglePlugin = () => {
-		if (hasError) {
-			setHasError(false);
-		}
-
-		if (registerPanel) {
-			registerPanel.then((plugin) => {
-				if (
-					plugin &&
-					typeof plugin.activate === 'function' &&
-					isMounted()
-				) {
-					plugin.activate();
-				}
-				else if (!plugin) {
-					setHasError(true);
-				}
-			});
-		}
-	};
-
-	useEffect(
-		() => {
-			if (panel) {
-				togglePlugin(panel);
+		Promise.all(panelPromises).then((result) => {
+			if (isMounted()) {
+				setPanelComponents(result);
 			}
-			else if (sidebarPanelId) {
-				dispatch({
-					payload: {
-						sidebarOpen: false,
-						sidebarPanelId: null,
-					},
-					type: 'SWITCH_SIDEBAR_PANEL',
-				});
-			}
-		},
-		/* eslint-disable react-hooks/exhaustive-deps */
-		[panel, sidebarOpen, sidebarPanelId]
-	);
+		});
+	}, [isMounted, sidebarPanels, dispatch, load]);
 
 	const changeAlertClassName = (styleName) => {
 		const formBuilderMessage = document.querySelector(
@@ -149,20 +121,6 @@ export default function MultiPanelSidebar({
 			};
 		}
 	}, []);
-
-	const SidebarPanel = useLazy(
-		useCallback(({instance}) => {
-			if (typeof instance.renderSidebar === 'function') {
-				return instance.renderSidebar();
-			}
-			else if (typeof instance === 'function') {
-				return instance;
-			}
-			else {
-				return null;
-			}
-		}, [])
-	);
 
 	const handleClick = (panel) => {
 		const open =
@@ -321,12 +279,22 @@ export default function MultiPanelSidebar({
 								setHasError(true);
 							}}
 						>
-							<Suspense fallback={<ClayLoadingIndicator />}>
-								<SidebarPanel
-									getInstance={getInstance}
-									pluginId={sidebarPanelId}
-								/>
-							</Suspense>
+							{panelComponents.length === 0 && (
+								<ClayLoadingIndicator />
+							)}
+
+							{panelComponents.map((panel) => (
+								<div
+									className={classNames({
+										'd-none':
+											panel.sidebarPanelId !==
+											sidebarPanelId,
+									})}
+									key={panel.sidebarPanelId}
+								>
+									<panel.Component />
+								</div>
+							))}
 						</ErrorBoundary>
 					)}
 				</div>

@@ -93,6 +93,10 @@ public class CollectionFilterFragmentRendererDisplayContext {
 			(List<AssetCategory>)_httpServletRequest.getAttribute(
 				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES);
 
+		if (assetCategories == null) {
+			return dropdownItemListWrapper.build();
+		}
+
 		for (AssetCategory assetCategory : assetCategories) {
 			dropdownItemListWrapper.add(
 				dropdownItem -> {

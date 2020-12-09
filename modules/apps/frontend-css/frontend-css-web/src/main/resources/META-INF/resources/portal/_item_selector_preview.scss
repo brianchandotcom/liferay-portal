@@ -82,11 +82,13 @@ $infoPanelSidebarDDColor: $secondary-l1;
 			}
 		}
 
-		&:not(.open) img {
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			transform: translate(-50%, -50%);
+		&:not(.open) {
+			img, .video-preview {
+				left: 50%;
+				position: absolute;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
 		}
 	}
 

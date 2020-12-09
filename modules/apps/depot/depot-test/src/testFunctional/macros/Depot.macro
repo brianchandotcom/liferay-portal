@@ -664,6 +664,24 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro tearDownCP {
+		DepotNavigator.openDepotAdmin();
+
+		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			ClickNoError(
+				locator1 = "Icon#DELETE",
+				value1 = "Delete");
+
+			AssertConfirm(value1 = "Removing an asset library can affect sites that use the contents stored in it. Are you sure you want to continue removing this asset library?");
+
+			Alert.viewSuccessMessage();
+
+			Refresh();
+		}
+	}
+
 	macro view4LanguagesOrder {
 		AssertTextEquals.assertPartialText(
 			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_1",

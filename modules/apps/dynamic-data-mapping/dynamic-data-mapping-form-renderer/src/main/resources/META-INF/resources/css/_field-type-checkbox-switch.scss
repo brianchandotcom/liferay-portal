@@ -15,6 +15,23 @@
 	}
 }
 
+.ddm-info {
+	color: #6b6c7e;
+	display: flex;
+	font-size: 0.875rem;
+	font-weight: 400;
+	padding-top: 14px;
+
+	.ddm-info-text {
+		margin-left: 9px;
+	}
+
+	.ddm-tooltip {
+		color: #6b6c7e;
+		padding-left: 0;
+	}
+}
+
 .ddm-toggle-switch {
 	.toggle-switch-text {
 		font-size: 0.875rem;

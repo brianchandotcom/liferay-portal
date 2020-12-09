@@ -67,11 +67,12 @@ const Switcher = ({
 				</span>
 			</label>
 			{checked && showMaximumRepetitionsInfo && (
-				<div>
+				<div className="ddm-info">
 					<span className="ddm-tooltip">
 						<ClayIcon symbol="info-circle" />
 					</span>
 					<div
+						className="ddm-info-text"
 						dangerouslySetInnerHTML={{
 							__html: Liferay.Util.sub(
 								Liferay.Language.get(

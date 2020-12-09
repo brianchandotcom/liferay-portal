@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
 import com.liferay.jenkins.results.parser.spira.SpiraRelease;
 import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
@@ -38,5 +39,7 @@ public interface SpiraBuildResult {
 	public SpiraTestCaseFolder getSpiraTestCaseFolder();
 
 	public SpiraTestCaseProductVersion getSpiraTestCaseProductVersion();
+
+	public TopLevelBuild getTopLevelBuild();
 
 }

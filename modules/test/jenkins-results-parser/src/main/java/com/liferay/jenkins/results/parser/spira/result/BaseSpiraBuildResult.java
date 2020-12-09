@@ -73,6 +73,11 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		return _spiraTestCaseProductVersion;
 	}
 
+	@Override
+	public TopLevelBuild getTopLevelBuild() {
+		return _topLevelBuild;
+	}
+
 	protected BaseSpiraBuildResult(TopLevelBuild topLevelBuild) {
 		_topLevelBuild = topLevelBuild;
 

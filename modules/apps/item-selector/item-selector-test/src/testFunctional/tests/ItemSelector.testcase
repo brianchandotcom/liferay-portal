@@ -441,6 +441,90 @@ definition {
 		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
 	}
 
+	@description = "This ensures that a message is displayed in the preview section of the item selector when pasting an invalid URL."
+	@priority = "5"
+	test PreviewInvalidVideos {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://www.youtube.com/watch?v=test",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://www.youtube.com");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://vimeo.com/test",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://player.vimeo.com");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://www.facebook.com/Cristiano/videos/test",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://www.facebook.com");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://test.com/test",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://test.com/test");
+	}
+
+	@description = "This ensures that users can preview the supported videos in the item selector."
+	@priority = "5"
+	test PreviewSupportedVideos {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoAddEntry();
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://www.youtube.com");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://www.facebook.com/Cristiano/videos/1710977485745946",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://www.facebook.com");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://www.twitch.tv/videos/806178790",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://player.twitch.tv");
+
+		ItemSelector.addFromURL(
+			dontAdd = "true",
+			embedVideo = "https://vimeo.com/483035084",
+			navTab = "URL",
+			type = "Video");
+
+		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://player.vimeo.com");
+	}
+
 	@description = "This ensures that users can preview the SVG image in item selector."
 	@priority = "5"
 	test PreviewSVG {

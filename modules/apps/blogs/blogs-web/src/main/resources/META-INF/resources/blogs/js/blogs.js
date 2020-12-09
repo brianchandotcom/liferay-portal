@@ -33,6 +33,13 @@ const STRINGS = {
 	),
 };
 
+function nsObj(obj, namespace) {
+	return Object.entries(obj).reduce((memo, [key, value]) => ({
+		...memo,
+		[`${namespace}${key}`]: value,
+	}));
+}
+
 export default class Blogs {
 	constructor({
 		constants,
@@ -356,52 +363,50 @@ export default class Blogs {
 					`${namespace}assetTagNames`
 				);
 
-				const data = {
-					[`${namespace}allowPingbacks`]:
-						allowPingbacks && allowPingbacks.value,
-					[`${namespace}allowTrackbacks`]:
-						allowTrackbacks && allowTrackbacks.value,
-					[`${namespace}assetTagNames`]: assetTagNames
-						? assetTagNames.value
-						: '',
-					[`${namespace}cmd`]: constants.ADD,
-					[`${namespace}content`]: content,
-					[`${namespace}coverImageCaption`]: coverImageCaption,
-					[`${namespace}coverImageFileEntryCropRegion`]: document.getElementById(
-						`${namespace}coverImageFileEntryCropRegion`
-					).value,
-					[`${namespace}coverImageFileEntryId`]: document.getElementById(
-						`${namespace}coverImageFileEntryId`
-					).value,
-					[`${namespace}displayDateAmPm`]: document.getElementById(
-						`${namespace}displayDateAmPm`
-					).value,
-					[`${namespace}displayDateDay`]: document.getElementById(
-						`${namespace}displayDateDay`
-					).value,
-					[`${namespace}displayDateHour`]: document.getElementById(
-						`${namespace}displayDateHour`
-					).value,
-					[`${namespace}displayDateMinute`]: document.getElementById(
-						`${namespace}displayDateMinute`
-					).value,
-					[`${namespace}displayDateMonth`]: document.getElementById(
-						`${namespace}displayDateMonth`
-					).value,
-					[`${namespace}displayDateYear`]: document.getElementById(
-						`${namespace}displayDateYear`
-					).value,
-					[`${namespace}entryId`]: document.getElementById(
-						`${namespace}entryId`
-					).value,
-					[`${namespace}referringPortletResource`]: document.getElementById(
-						`${namespace}referringPortletResource`
-					).value,
-					[`${namespace}subtitle`]: subtitle,
-					[`${namespace}title`]: title,
-					[`${namespace}urlTitle`]: urlTitle,
-					[`${namespace}workflowAction`]: constants.ACTION_SAVE_DRAFT,
-				};
+				const data = nsObj(
+					{
+						allowPingbacks: allowPingbacks?.value,
+						allowTrackbacks: allowTrackbacks?.value,
+						assetTagNames: assetTagNames?.value || '',
+						cmd: constants.ADD,
+						content,
+						coverImageCaption,
+						coverImageFileEntryCropRegion: document.getElementById(
+							`${namespace}coverImageFileEntryCropRegion`
+						).value,
+						coverImageFileEntryId: document.getElementById(
+							`${namespace}coverImageFileEntryId`
+						).value,
+						displayDateAmPm: document.getElementById(
+							`${namespace}displayDateAmPm`
+						).value,
+						displayDateDay: document.getElementById(
+							`${namespace}displayDateDay`
+						).value,
+						displayDateHour: document.getElementById(
+							`${namespace}displayDateHour`
+						).value,
+						displayDateMinute: document.getElementById(
+							`${namespace}displayDateMinute`
+						).value,
+						displayDateMonth: document.getElementById(
+							`${namespace}displayDateMonth`
+						).value,
+						displayDateYear: document.getElementById(
+							`${namespace}displayDateYear`
+						).value,
+						entryId: document.getElementById(`${namespace}entryId`)
+							.value,
+						referringPortletResource: document.getElementById(
+							`${namespace}referringPortletResource`
+						).value,
+						subtitle,
+						title,
+						urlTitle,
+						workflowAction: constants.ACTION_SAVE_DRAFT,
+					},
+					namespace
+				);
 
 				const customAttributes = document.querySelectorAll(
 					`[name=${namespace}ExpandoAttribute`

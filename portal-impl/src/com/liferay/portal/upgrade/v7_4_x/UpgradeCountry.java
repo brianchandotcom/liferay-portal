@@ -83,7 +83,7 @@ public class UpgradeCountry extends UpgradeProcess {
 		if (defaultCompanyId > 0) {
 			runSQL(
 				"update Country set companyId = " + defaultCompanyId +
-					" where companyId is null");
+					" where (companyId is null or companyId = 0)");
 		}
 
 		if (!hasColumn("Country", "userId")) {
@@ -94,7 +94,7 @@ public class UpgradeCountry extends UpgradeProcess {
 		if (defaultUserId > 0) {
 			runSQL(
 				"update Country set userId = " + defaultUserId +
-					" where userId is null");
+					" where (userId is null or userId = 0)");
 		}
 
 		if (!hasColumn("Country", "userName")) {

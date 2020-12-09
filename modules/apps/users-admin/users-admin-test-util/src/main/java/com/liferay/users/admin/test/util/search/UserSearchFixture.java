@@ -101,7 +101,8 @@ public class UserSearchFixture {
 
 		String modelClassName = contact.getModelClassName();
 
-		Country country = CountryServiceUtil.getCountryByName("united-states");
+		Country country = CountryServiceUtil.getCountryByName(
+			user.getCompanyId(), "united-states");
 
 		long countryId = country.getCountryId();
 

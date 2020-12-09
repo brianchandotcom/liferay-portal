@@ -63,12 +63,7 @@ if (type.equals("toggle-card")) {
 
 if (type.equals("toggle-switch")) {
 	fieldCssClass += " toggle-switch-check";
-
-	if (Validator.isNotNull(labelCssClass)) {
-		labelCssClass += StringPool.SPACE;
-	}
-
-	labelCssClass += "toggle-switch";
+	labelCssClass += " toggle-switch";
 
 	if (Validator.isNull(inlineLabel)) {
 		inlineLabel = "left";

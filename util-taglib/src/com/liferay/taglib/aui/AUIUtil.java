@@ -134,7 +134,7 @@ public class AUIUtil {
 			sb.append(labelCssClass);
 
 			if (inlineField) {
-				sb.append(StringPOOL.SPACE);
+				sb.append(StringPool.SPACE);
 				sb.append(baseType);
 				sb.append("-inline");
 			}

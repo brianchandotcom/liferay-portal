@@ -64,34 +64,32 @@
 			String iconOn = (String)dynamicAttributes.get("iconOn");
 			String labelOff = (String)dynamicAttributes.get("labelOff");
 			String labelOn = (String)dynamicAttributes.get("labelOn");
-
-			if (localizeLabel) {
-				if (Validator.isNotNull(labelOff)) {
-					labelOff = LanguageUtil.get(resourceBundle, labelOff);
-				}
-
-				if (Validator.isNotNull(labelOn)) {
-					labelOn = LanguageUtil.get(resourceBundle, labelOn);
-				}
-			}
 			%>
 
 			<span class="toggle-switch-bar">
-				<span class="toggle-switch-handle" data-label-off="<%= Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : StringPool.BLANK %>" data-label-on="<%= Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : StringPool.BLANK %>">
+				<span class="toggle-switch-handle" data-label-off="<%= Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, labelOff)) : StringPool.BLANK %>" data-label-on="<%= Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, labelOn)) : StringPool.BLANK %>">
 					<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
-						<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> toggle-switch-icon <%= buttonIconOn %>"></span>
+						<span class="button-icon button-icon-on toggle-switch-icon">
+							<%= buttonIconOn %>
+						</span>
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
-						<span class="button-icon button-icon-off toggle-switch-icon <%= buttonIconOff %>"></span>
+						<span class="button-icon button-icon-off toggle-switch-icon">
+							<%= buttonIconOff %>
+						</span>
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(iconOn) %>">
-						<span class="toggle-switch-icon toggle-switch-icon-on <%= iconOn %>"></span>
+						<span class="toggle-switch-icon toggle-switch-icon-on">
+							<%= iconOn %>
+						</span>
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(iconOff) %>">
-						<span class="toggle-switch-icon toggle-switch-icon-off <%= iconOff %>"></span>
+						<span class="toggle-switch-icon toggle-switch-icon-off">
+							<%= iconOff %>
+						</span>
 					</c:if>
 				</span>
 			</span>

@@ -270,6 +270,42 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
+	public void testFileNameWithExtensionAndTitleWithoutExtension()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			assertCode(
+				HttpServletResponse.SC_CREATED,
+				servicePut(
+					_TEST_FILE_NAME_2, _testFileBytes,
+					getLock(_TEST_FILE_NAME_2)));
+
+			Folder folder = _dlAppLocalService.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			fileEntry = _dlAppLocalService.getFileEntry(
+				TestPropsValues.getGroupId(), folder.getFolderId(),
+				_TEST_FILE_TITLE_2);
+
+			Assert.assertEquals(_TEST_FILE_TITLE_2, fileEntry.getTitle());
+			Assert.assertEquals(_TEST_FILE_NAME_2, fileEntry.getFileName());
+
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_NAME_2));
+			assertCode(
+				HttpServletResponse.SC_OK, serviceGet(_TEST_FILE_TITLE_2));
+		}
+		finally {
+			if (fileEntry != null) {
+				_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
+			}
+		}
+	}
+
+	@Test
 	public void testGetFileWithEscapedCharactersInFileName() throws Exception {
 		FileEntry fileEntry = null;
 

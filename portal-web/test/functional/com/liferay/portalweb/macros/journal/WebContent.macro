@@ -2358,18 +2358,10 @@ definition {
 				var webContentNumericFieldLabel = "Numeric";
 			}
 
-			if ("${numericType}" == "Decimal") {
-				AssertTextEquals.assertValue(
-					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
-					locator1 = "WCEditWebContent#TEXT_INPUT",
-					value1 = "${webContentNumber}");
-			}
-			else {
-				AssertTextEquals.assertValue(
-					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
-					locator1 = "WCEditWebContent#TEXT_INPUT",
-					value1 = "${webContentNumber}");
-			}
+			AssertTextEquals.assertValue(
+				key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "${webContentNumber}");
 		}
 
 		if (isSet(webContentRichText)) {

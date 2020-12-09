@@ -601,7 +601,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		return classLoader.getResource(name);
 	}
 
-	protected TemplateResource getTemplateResource(String resource) {
+	protected TemplateResource getTemplateResource(String resource)
+		throws Exception {
+
 		Class<?> clazz = getClass();
 
 		try {
@@ -615,9 +617,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			_log.error(
 				"Unable to find template resource " + resource,
 				templateException);
-		}
 
-		return null;
+			throw new Exception("Unable to load template resource " + resource);
+		}
 	}
 
 	protected String processFTL(

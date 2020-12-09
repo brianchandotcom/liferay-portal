@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Portlet Bridge Soy API
-Bundle-SymbolicName: com.liferay.portal.portlet.bridge.soy.api
-Bundle-Version: 4.0.0
-Export-Package: com.liferay.portal.portlet.bridge.soy

@@ -341,3 +341,44 @@ we reduce server load and gain access to the latest minification
 technologies available within the frontend ecosystem.
 
 ---------------------------------------
+
+### SoyPortlet is no longer available
+- **Date:** 2020-Dec-9
+- **JIRA Ticket:** [LPS-122955](https://issues.liferay.com/browse/LPS-122955)
+
+#### What changed?
+
+The class `SoyPortlet` used to implement Portlet whose views are backed by
+Closure Templates (Soy) has been removed and is no longer available.
+
+#### Who is affected?
+
+Anyone using `SoyPortlet` as a base for their portlet developments.
+
+#### How should I update my code?
+
+We heavily recommend re-writing your Soy portlets using either a well
+established architecture such as `MVCPortlet` using JSPs or a particular frontend
+framework of your choice.
+
+As a temporary measure, you could alternatively copy all the necessary removed
+classes into you own. However, support for Soy templates is likely to be removed
+in this version as well so doing this might require a lot of work.
+
+#### Why was this change made?
+
+This is done as a way to simplify our frontend technical offering and better
+focus on proven technologies with high demand in the market.
+
+A further exploration and analysis of the different frontend options available
+can be found in [The State of Frontend Infrastructure](https://liferay.dev/blogs/-/blogs/the-state-of-frontend-infrastructure) including a rationale on why we're moving
+away from soy:
+
+> Liferay has invested several years into Soy believing it was the holy grail.
+> We believed the ability to compile Closure templates would provide us the
+> performance of JSP with the reusable components of other JavaScript
+> frameworks. While it came close to achieving some of those goals, we never
+> hit the performance we wanted and more importantly, it always felt like we
+> were the only people using this technology.
+
+---------------------------------------

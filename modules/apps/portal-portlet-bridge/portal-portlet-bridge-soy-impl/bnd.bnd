@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Portlet Bridge Soy Implementation
-Bundle-SymbolicName: com.liferay.portal.portlet.bridge.soy.impl
-Bundle-Version: 4.0.0
-Web-ContextPath: /portal-portlet-bridge-soy

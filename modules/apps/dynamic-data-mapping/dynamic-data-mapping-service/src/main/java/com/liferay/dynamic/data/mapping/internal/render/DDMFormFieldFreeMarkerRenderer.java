@@ -391,8 +391,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			sb.append(
 				processFTL(
 					httpServletRequest, httpServletResponse,
-					ddmFormField.getFieldNamespace(), ddmFormField.getType(),
-					mode, readOnly, freeMarkerContext));
+					ddmFormField.getFieldNamespace(),
+					_convertDDMFormFieldType(ddmFormField), mode, readOnly,
+					freeMarkerContext));
 
 			fieldRepetition--;
 		}
@@ -700,6 +701,24 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		template.processTemplate(writer);
 
 		return writer.toString();
+	}
+
+	private String _convertDDMFormFieldType(DDMFormField ddmFormField) {
+		if (Objects.equals(ddmFormField.getProperty("dataType"), "double")) {
+			return "decimal";
+		}
+		else if (Objects.equals(
+					ddmFormField.getProperty("dataType"), "integer")) {
+
+			return "integer";
+		}
+		else if (Objects.equals(
+					ddmFormField.getProperty("displayStyle"), "multiline")) {
+
+			return "textarea";
+		}
+
+		return ddmFormField.getType();
 	}
 
 	private Locale _getPreferredLocale(

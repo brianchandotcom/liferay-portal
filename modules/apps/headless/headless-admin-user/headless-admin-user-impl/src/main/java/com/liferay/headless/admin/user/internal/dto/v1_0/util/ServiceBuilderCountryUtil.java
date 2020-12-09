@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
-import com.liferay.portal.util.PortalInstances;
 
 import java.util.Optional;
 
@@ -27,24 +26,26 @@ import java.util.Optional;
  */
 public class ServiceBuilderCountryUtil {
 
-	public static Country toServiceBuilderCountry(String addressCountry) {
+	public static Country toServiceBuilderCountry(
+		long companyId, String addressCountry) {
+
 		try {
 			Country country = CountryServiceUtil.fetchCountryByA2(
-				PortalInstances.getDefaultCompanyId(), addressCountry);
+				companyId, addressCountry);
 
 			if (country != null) {
 				return country;
 			}
 
 			country = CountryServiceUtil.fetchCountryByA3(
-				PortalInstances.getDefaultCompanyId(), addressCountry);
+				companyId, addressCountry);
 
 			if (country != null) {
 				return country;
 			}
 
 			return CountryServiceUtil.getCountryByName(
-				PortalInstances.getDefaultCompanyId(), addressCountry);
+				companyId, addressCountry);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -55,11 +56,13 @@ public class ServiceBuilderCountryUtil {
 		return null;
 	}
 
-	public static long toServiceBuilderCountryId(String addressCountry) {
+	public static long toServiceBuilderCountryId(
+		long companyId, String addressCountry) {
+
 		return Optional.ofNullable(
 			addressCountry
 		).map(
-			ServiceBuilderCountryUtil::toServiceBuilderCountry
+			country -> toServiceBuilderCountry(companyId, country)
 		).map(
 			Country::getCountryId
 		).orElse(

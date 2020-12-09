@@ -252,7 +252,7 @@ public class OrganizationResourceImpl
 					postalAddresses,
 					_postalAddress ->
 						ServiceBuilderAddressUtil.toServiceBuilderAddress(
-							_postalAddress,
+							contextCompany.getCompanyId(), _postalAddress,
 							ListTypeConstants.ORGANIZATION_ADDRESS)),
 				Objects::nonNull)
 		).orElse(
@@ -266,7 +266,9 @@ public class OrganizationResourceImpl
 		).map(
 			Location::getAddressCountry
 		).map(
-			ServiceBuilderCountryUtil::toServiceBuilderCountryId
+			addressCountry ->
+				ServiceBuilderCountryUtil.toServiceBuilderCountryId(
+					contextCompany.getCompanyId(), addressCountry)
 		).orElse(
 			0L
 		);

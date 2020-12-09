@@ -509,9 +509,9 @@ public class JournalConverterImpl implements JournalConverter {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
 
-				Long classPK = jsonObject.getLong("classPK");
+				long classPK = jsonObject.getLong("classPK");
 
-				if (Validator.isNotNull(classPK)) {
+				if (classPK > 0) {
 					JournalArticle article =
 						_journalArticleLocalService.fetchLatestArticle(classPK);
 

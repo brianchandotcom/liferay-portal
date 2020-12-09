@@ -16,6 +16,11 @@ package com.liferay.fragment.internal.upgrade.v2_2_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+
+import java.util.Objects;
+
 /**
  * @author Alberto Chaparro
  */
@@ -23,7 +28,31 @@ public class UpgradeFragmentEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("drop index IX_62913C70 on FragmentEntry");
+		if (_tableHasIndex("FragmentEntry", "IX_62913C70")) {
+			runSQL("drop index IX_62913C70 on FragmentEntry");
+		}
+	}
+
+	private boolean _tableHasIndex(String tableName, String indexName)
+		throws Exception {
+
+		DatabaseMetaData metadata = connection.getMetaData();
+
+		try (ResultSet rs = metadata.getIndexInfo(
+				null, null, tableName, false, false)) {
+
+			while (rs.next()) {
+				String curIndexName = rs.getString("index_name");
+
+				if (Objects.equals(indexName, curIndexName)) {
+					return true;
+				}
+			}
+		}
+		catch (Exception exception) {
+		}
+
+		return false;
 	}
 
 }

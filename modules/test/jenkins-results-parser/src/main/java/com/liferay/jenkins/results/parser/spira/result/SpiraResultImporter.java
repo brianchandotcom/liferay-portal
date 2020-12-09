@@ -31,6 +31,7 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseComponent;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
@@ -39,7 +40,9 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -61,6 +64,7 @@ public class SpiraResultImporter {
 	}
 
 	public void record() {
+		_cacheSpiraTestCaseComponents();
 		_cacheSpiraTestCaseObjects();
 
 		Job job = _topLevelBuild.getJob();
@@ -94,6 +98,60 @@ public class SpiraResultImporter {
 		_checkoutPluginsBranch();
 
 		_checkoutQAWebsitesBranch();
+	}
+
+	private void _cacheSpiraTestCaseComponents() {
+		if (_spiraTestCaseComponents != null) {
+			return;
+		}
+
+		long start = System.currentTimeMillis();
+
+		Map<String, SpiraTestCaseComponent> spiraTestCaseComponentsMap =
+			new HashMap<>();
+
+		SpiraProject spiraProject = _spiraBuildResult.getSpiraProject();
+
+		for (SpiraTestCaseComponent spiraTestCaseComponent :
+				spiraProject.getSpiraTestCaseComponents()) {
+
+			spiraTestCaseComponentsMap.put(
+				spiraTestCaseComponent.getName(), spiraTestCaseComponent);
+		}
+
+		String componentNames = JenkinsResultsParserUtil.getProperty(
+			_spiraBuildResult.getPortalTestProperties(),
+			"testray.available.component.names");
+
+		if ((componentNames != null) && !componentNames.isEmpty()) {
+			for (String componentName : componentNames.split(",")) {
+				componentName = componentName.trim();
+
+				if (spiraTestCaseComponentsMap.containsKey(componentName)) {
+					continue;
+				}
+
+				SpiraTestCaseComponent spiraTestCaseComponent =
+					SpiraTestCaseComponent.createSpiraTestCaseComponent(
+						spiraProject, componentName);
+
+				System.out.println(
+					"Created component " + spiraTestCaseComponent.getName());
+
+				spiraTestCaseComponentsMap.put(
+					spiraTestCaseComponent.getName(), spiraTestCaseComponent);
+			}
+		}
+
+		_spiraTestCaseComponents = new ArrayList<>(
+			spiraTestCaseComponentsMap.values());
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Loaded ", String.valueOf(_spiraTestCaseComponents.size()),
+				" Spira Test Case Components in ",
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start)));
 	}
 
 	private void _cacheSpiraTestCaseObjects() {
@@ -302,6 +360,7 @@ public class SpiraResultImporter {
 	}
 
 	private final SpiraBuildResult _spiraBuildResult;
+	private List<SpiraTestCaseComponent> _spiraTestCaseComponents;
 	private List<SpiraTestCaseObject> _spiraTestCaseObjects;
 	private final TopLevelBuild _topLevelBuild;
 

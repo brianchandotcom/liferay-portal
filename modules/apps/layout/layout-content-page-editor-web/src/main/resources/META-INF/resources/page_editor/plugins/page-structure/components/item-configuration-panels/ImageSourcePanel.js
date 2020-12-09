@@ -163,6 +163,7 @@ function DirectImagePanel({item}) {
 			config: {
 				alt: {[languageId]: ''},
 				imageConfiguration: {},
+				imageTitle: nextImage.title,
 			},
 			[languageId]: nextImage.url,
 		};

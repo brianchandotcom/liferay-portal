@@ -468,10 +468,8 @@ export default class Blogs {
 							}
 						}
 						else {
-
-							//TODO: check saveStatus.hide(); === saveStatus.classList.add(CSS_INVISIBLE);
-
-							saveStatus.classList.add(CSS_INVISIBLE);
+							saveStatus.classList.add('hide');
+							saveStatus.hidden = true;
 						}
 
 						Liferay.Util.toggleDisabled(

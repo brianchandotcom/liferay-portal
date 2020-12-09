@@ -41,7 +41,11 @@ export default function MultiPanelSidebar({
 	sidebarPanels,
 	variant = 'dark',
 }) {
-	const [{sidebarOpen, sidebarPanelId}, dispatch] = useContext(AppContext);
+	const [, dispatch] = useContext(AppContext);
+	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
+		sidebarOpen: true,
+		sidebarPanelId: 'fields',
+	});
 	const [hasError, setHasError] = useStateSafe(false);
 	const isMounted = useIsMounted();
 	const load = useLoad();
@@ -102,12 +106,9 @@ export default function MultiPanelSidebar({
 					changeAlertClassName('data-engine-form-builder-messages');
 				}
 
-				dispatch({
-					payload: {
-						sidebarOpen: false,
-						sidebarPanelId: null,
-					},
-					type: 'SWITCH_SIDEBAR_PANEL',
+				setSidebarState({
+					sidebarOpen: false,
+					sidebarPanelId: null,
 				});
 			};
 
@@ -120,7 +121,7 @@ export default function MultiPanelSidebar({
 				sideNavigationListener.removeListener();
 			};
 		}
-	}, []);
+	}, [sidebarOpen]);
 
 	const handleClick = (panel) => {
 		const open =
@@ -142,12 +143,9 @@ export default function MultiPanelSidebar({
 			changeAlertClassName('data-engine-form-builder-messages');
 		}
 
-		dispatch({
-			payload: {
-				sidebarOpen: open,
-				sidebarPanelId: panel.sidebarPanelId,
-			},
-			type: 'SWITCH_SIDEBAR_PANEL',
+		setSidebarState({
+			sidebarOpen: open,
+			sidebarPanelId: panel.sidebarPanelId,
 		});
 	};
 
@@ -258,13 +256,10 @@ export default function MultiPanelSidebar({
 								block
 								displayType="secondary"
 								onClick={() => {
-									dispatch({
-										payload: {
-											sidebarOpen: false,
-											sidebarPanelId:
-												panels[0] && panels[0][0],
-										},
-										type: 'SWITCH_SIDEBAR_PANEL',
+									setSidebarState({
+										sidebarOpen: false,
+										sidebarPanelId:
+											panels[0] && panels[0][0],
 									});
 									setHasError(false);
 								}}

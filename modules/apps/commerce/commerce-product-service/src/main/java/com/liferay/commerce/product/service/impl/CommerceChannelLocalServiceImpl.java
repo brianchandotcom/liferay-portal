@@ -124,21 +124,23 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannelRelLocalService.deleteCommerceChannelRels(
 			commerceChannel.getCommerceChannelId());
 
-		// Group
-
-		Group group = getCommerceChannelGroup(
-			commerceChannel.getCommerceChannelId());
-
-		groupLocalService.deleteGroup(group);
-
 		// Resources
 
 		resourceLocalService.deleteResource(
 			commerceChannel, ResourceConstants.SCOPE_INDIVIDUAL);
 
+		// Group
+
+		Group group = getCommerceChannelGroup(
+			commerceChannel.getCommerceChannelId());
+
 		// Commerce channel
 
-		return commerceChannelPersistence.remove(commerceChannel);
+		commerceChannel = commerceChannelPersistence.remove(commerceChannel);
+
+		groupLocalService.deleteGroup(group);
+
+		return commerceChannel;
 	}
 
 	@Override

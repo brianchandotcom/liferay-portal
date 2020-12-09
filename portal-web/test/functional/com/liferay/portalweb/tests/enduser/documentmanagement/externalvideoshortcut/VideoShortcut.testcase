@@ -357,9 +357,11 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ASSET_DETAILS_IFRAME");
+		AssertVisible(
+			key_videoShortcutPreview = "https://www.youtube.com",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 
-		AssertVisible(locator1 = "SearchResults#ASSET_DETAILS_YOUTUBE_PREVIEW");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 		AssertElementPresent(locator1 = "Button#YOUTUBE_PLAY");
 	}

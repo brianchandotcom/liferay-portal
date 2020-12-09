@@ -36,11 +36,17 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseProductVersion;
 
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
  */
 public class BaseSpiraBuildResult implements SpiraBuildResult {
+
+	@Override
+	public Properties getPortalTestProperties() {
+		return _portalGitWorkingDirectory.getTestProperties();
+	}
 
 	@Override
 	public SpiraProject getSpiraProject() {

@@ -20,10 +20,14 @@ import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseProductVersion;
 
+import java.util.Properties;
+
 /**
  * @author Michael Hashimoto
  */
 public interface SpiraBuildResult {
+
+	public Properties getPortalTestProperties();
 
 	public SpiraProject getSpiraProject();
 

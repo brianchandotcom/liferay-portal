@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,8 +45,9 @@ public class RegionServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetRegions() {
-		Country countryJapan = _countryService.fetchCountryByA2("JP");
+	public void testGetRegions() throws Exception {
+		Country countryJapan = _countryService.fetchCountryByA2(
+			TestPropsValues.getCompanyId(), "JP");
 
 		Assert.assertNotNull(countryJapan);
 

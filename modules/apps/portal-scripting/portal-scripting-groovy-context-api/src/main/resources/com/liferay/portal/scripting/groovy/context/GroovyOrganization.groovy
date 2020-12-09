@@ -17,6 +17,7 @@ package com.liferay.portal.scripting.groovy.context;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
@@ -54,7 +55,8 @@ class GroovyOrganization {
 		site = site_;
 
 		regionId = RegionServiceUtil.fetchRegion(countryId, regionCode);
-		countryId = CountryServiceUtil.getCountryByName(countryName);
+		countryId = CountryServiceUtil.getCountryByName(
+				CompanyThreadLocal.getCompanyId(), countryName);
 	}
 
 	void create(GroovyScriptingContext groovyScriptingContext) {

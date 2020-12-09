@@ -37,6 +37,10 @@ public class UpgradeCountry extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-7.3.0-7.4.0-country.sql", false);
 
+		runSQL(
+			"update Country set number_ = 296 where a2 = " +
+				StringUtil.quote("KI") + " and number_ = 408");
+
 		long defaultCompanyId = 0;
 		long defaultUserId = 0;
 

@@ -103,8 +103,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Country fetchCountryByA2(String a2) {
-		return countryPersistence.fetchByC_A2(
-			PortalInstances.getDefaultCompanyId(), a2);
+		return fetchCountryByA2(PortalInstances.getDefaultCompanyId(), a2);
 	}
 
 	@Override
@@ -118,8 +117,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Country fetchCountryByA3(String a3) {
-		return countryPersistence.fetchByC_A3(
-			PortalInstances.getDefaultCompanyId(), a3);
+		return fetchCountryByA3(PortalInstances.getDefaultCompanyId(), a3);
 	}
 
 	@Override
@@ -167,7 +165,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public List<Country> getCountries() {
-		return countryPersistence.findAll();
+		return getCompanyCountries(PortalInstances.getDefaultCompanyId());
 	}
 
 	/**
@@ -177,7 +175,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public List<Country> getCountries(boolean active) {
-		return countryPersistence.findByActive(active);
+		return getCompanyCountries(
+			PortalInstances.getDefaultCompanyId(), active);
 	}
 
 	@Override
@@ -198,8 +197,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Country getCountryByA2(String a2) throws PortalException {
-		return countryPersistence.findByC_A2(
-			PortalInstances.getDefaultCompanyId(), a2);
+		return getCountryByA2(PortalInstances.getDefaultCompanyId(), a2);
 	}
 
 	@Override
@@ -215,8 +213,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Country getCountryByA3(String a3) throws PortalException {
-		return countryPersistence.findByC_A3(
-			PortalInstances.getDefaultCompanyId(), a3);
+		return getCountryByA3(PortalInstances.getDefaultCompanyId(), a3);
 	}
 
 	@Override
@@ -232,8 +229,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Country getCountryByName(String name) throws PortalException {
-		return countryPersistence.findByC_Name(
-			PortalInstances.getDefaultCompanyId(), name);
+		return getCountryByName(PortalInstances.getDefaultCompanyId(), name);
 	}
 
 	@Override

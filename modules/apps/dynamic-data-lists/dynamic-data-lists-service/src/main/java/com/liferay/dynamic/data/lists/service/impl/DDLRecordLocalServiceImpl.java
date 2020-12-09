@@ -770,7 +770,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getDDMStorageId(), ddmFormValues, serviceContext);
 
 			updateRecordVersion(
-				user, recordVersion, recordVersion.getVersion(), displayIndex,
+				user, recordVersion.getDDMStorageId(), recordVersion,
+				recordVersion.getVersion(), displayIndex,
 				recordVersion.getStatus(), serviceContext);
 		}
 
@@ -838,8 +839,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 		else {
 			updateRecordVersion(
-				user, ddlRecordVersion, ddlRecordVersion.getVersion(), 0,
-				status, serviceContext);
+				user, ddmStorageId, ddlRecordVersion,
+				ddlRecordVersion.getVersion(), 0, status, serviceContext);
 		}
 
 		record.setVersion(ddlRecordVersion.getVersion());
@@ -1164,11 +1165,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected void updateRecordVersion(
-		User user, DDLRecordVersion recordVersion, String version,
-		int displayIndex, int status, ServiceContext serviceContext) {
+		User user, long ddmStorageId, DDLRecordVersion recordVersion,
+		String version, int displayIndex, int status,
+		ServiceContext serviceContext) {
 
 		recordVersion.setUserId(user.getUserId());
 		recordVersion.setUserName(user.getFullName());
+		recordVersion.setDDMStorageId(ddmStorageId);
 		recordVersion.setVersion(version);
 		recordVersion.setDisplayIndex(displayIndex);
 		recordVersion.setStatus(status);

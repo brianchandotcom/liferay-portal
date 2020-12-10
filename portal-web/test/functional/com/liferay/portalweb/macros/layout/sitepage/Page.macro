@@ -379,7 +379,9 @@ definition {
 
 		ClickNoError(locator1 = "Home#PAGE");
 
-		MouseOver(locator1 = "Home#PAGE");
+		MouseOver(locator1 = "Home#SITE_NAME");
+
+		MouseOver(locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
 
 		AssertVisible(
 			key_childPageName = "${childPageName}",

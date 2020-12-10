@@ -128,7 +128,7 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private Role _toRole(long roleId) throws Exception {
-		com.liferay.portal.kernel.model.Role role = _roleLocalService.getRole(
+		com.liferay.portal.kernel.model.Role role = _roleLocalService.fetchRole(
 			roleId);
 
 		if (role == null) {

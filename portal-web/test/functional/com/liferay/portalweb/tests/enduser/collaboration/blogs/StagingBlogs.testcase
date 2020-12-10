@@ -662,6 +662,8 @@ definition {
 	test ViewBlogsAsAGuestAndSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -773,6 +775,8 @@ definition {
 			entryContent = "Blogs Entry Content 3",
 			entryExternalURL = "https://www.liferay.com",
 			entryTitle = "Blogs Entry Title 3");
+
+		Open(locator1 = "${portalURL}/web/site-name-staging/staging-blogs-page");
 
 		User.logoutPG();
 

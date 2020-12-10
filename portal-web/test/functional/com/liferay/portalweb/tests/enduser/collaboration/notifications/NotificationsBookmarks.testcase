@@ -66,6 +66,8 @@ definition {
 
 	@priority = "4"
 	test ViewWebsiteNotificationForNewBookmarkInFolder {
+		var portalURL = PropsUtil.get("portal.url");
+
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.addPG(
@@ -93,6 +95,8 @@ definition {
 		Bookmark.addPG(
 			bookmarkName = "Bookmark Name",
 			bookmarkURL = "https://www.liferay.com");
+
+		Open(locator1 = "${portalURL}/web/guest/bookmarks-page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -128,6 +132,8 @@ definition {
 
 	@priority = "4"
 	test ViewWebsiteNotificationForUpdatedBookmarkInFolder {
+		var portalURL = PropsUtil.get("portal.url");
+
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.addPG(
@@ -145,6 +151,8 @@ definition {
 		Bookmark.addPG(
 			bookmarkName = "Bookmark Name",
 			bookmarkURL = "https://www.liferay.com");
+
+		Open(locator1 = "${portalURL}/web/guest/bookmarks-page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -165,6 +173,8 @@ definition {
 			bookmarkNameEdit = "Bookmark Name Edit",
 			bookmarkURL = "https://www.liferay.com",
 			bookmarkURLEdit = "https://www.liferay.com");
+
+		Open(locator1 = "${portalURL}/web/guest/bookmarks-page");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 

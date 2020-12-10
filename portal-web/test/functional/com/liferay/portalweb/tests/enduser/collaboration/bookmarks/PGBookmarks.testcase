@@ -133,6 +133,8 @@ definition {
 
 	@priority = "5"
 	test DeleteFolderBookmark {
+		var portalURL = PropsUtil.get("portal.url");
+
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.addPG(
@@ -147,6 +149,8 @@ definition {
 			bookmarkDescription = "Test Bookmark Description",
 			bookmarkName = "Test Bookmark Name",
 			bookmarkURL = "https://www.liferay.com");
+
+		Open(locator1 = "${portalURL}/web/guest/bookmarks-page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -174,6 +178,8 @@ definition {
 
 	@priority = "5"
 	test EditFolderBookmark {
+		var portalURL = PropsUtil.get("portal.url");
+
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.addPG(
@@ -188,6 +194,8 @@ definition {
 			bookmarkDescription = "Test Bookmark Description",
 			bookmarkName = "Test Bookmark Name",
 			bookmarkURL = "https://www.liferay.com");
+
+		Open(locator1 = "${portalURL}/web/guest/bookmarks-page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 

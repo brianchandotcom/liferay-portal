@@ -1,5 +1,4 @@
 @component-name = "portal-workflow"
-@ignore = "true"
 definition {
 
 	property portal.release = "true";

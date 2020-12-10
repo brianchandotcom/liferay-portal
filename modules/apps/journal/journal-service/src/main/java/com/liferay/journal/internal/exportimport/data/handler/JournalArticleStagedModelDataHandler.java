@@ -16,6 +16,10 @@ package com.liferay.journal.internal.exportimport.data.handler;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
@@ -28,6 +32,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.exception.ExportImportRuntimeException;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -1101,6 +1106,37 @@ public class JournalArticleStagedModelDataHandler
 		}
 	}
 
+	protected void exportAssetCategories(
+			PortletDataContext portletDataContext, JournalArticle stagedModel)
+		throws PortletDataException {
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				ExportImportClassedModelUtil.getClassNameId(stagedModel),
+				_getClassPK(stagedModel));
+
+		for (AssetCategory assetCategory : assetCategories) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, assetCategory,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
+		}
+	}
+
+	protected void exportAssetTags(
+			PortletDataContext portletDataContext, JournalArticle stagedModel)
+		throws PortletDataException {
+
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			ExportImportClassedModelUtil.getClassNameId(stagedModel),
+			_getClassPK(stagedModel));
+
+		for (AssetTag assetTag : assetTags) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, assetTag,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
+		}
+	}
+
 	protected JournalArticle fetchExistingArticle(
 		String articleResourceUuid, long groupId, String articleId,
 		String newArticleId, boolean preloaded) {
@@ -1373,6 +1409,16 @@ public class JournalArticleStagedModelDataHandler
 				portletDataContext, article, friendlyURLEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
+	}
+
+	private long _getClassPK(JournalArticle article) {
+		if (article.isScheduled() &&
+			(article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
+
+			return article.getPrimaryKey();
+		}
+
+		return article.getResourcePrimKey();
 	}
 
 	private void _importAssetDisplayPage(
@@ -1667,8 +1713,14 @@ public class JournalArticleStagedModelDataHandler
 		JournalArticleStagedModelDataHandler.class);
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ChangesetCollectionLocalService _changesetCollectionLocalService;

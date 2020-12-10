@@ -1,12 +1,5 @@
 package ${apiPackagePath}.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 <#if stringUtil.equals(sessionTypeName, "Local")>
 /**
  * Provides the local service utility for ${entity.name}. This utility wraps
@@ -112,35 +105,9 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	</#if>
 
 	public static ${entity.name}${sessionTypeName}Service getService() {
-		<#if osgiModule>
-			return _serviceTracker.getService();
-		<#else>
-			if (_service == null) {
-				<#if validator.isNotNull(pluginName)>
-					_service = (${entity.name}${sessionTypeName}Service)PortletBeanLocatorUtil.locate(ServletContextUtil.getServletContextName(), ${entity.name}${sessionTypeName}Service.class.getName());
-				<#else>
-					_service = (${entity.name}${sessionTypeName}Service)PortalBeanLocatorUtil.locate(${entity.name}${sessionTypeName}Service.class.getName());
-				</#if>
-			}
-
-			return _service;
-		</#if>
+		return _service;
 	}
 
-	<#if osgiModule>
-		private static ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> _serviceTracker;
-
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(${entity.name}${sessionTypeName}Service.class);
-
-			ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> serviceTracker = new ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service>(bundle.getBundleContext(), ${entity.name}${sessionTypeName}Service.class, null);
-
-			serviceTracker.open();
-
-			_serviceTracker = serviceTracker;
-		}
-	<#else>
-		private static ${entity.name}${sessionTypeName}Service _service;
-	</#if>
+	private static volatile ${entity.name}${sessionTypeName}Service _service;
 
 }

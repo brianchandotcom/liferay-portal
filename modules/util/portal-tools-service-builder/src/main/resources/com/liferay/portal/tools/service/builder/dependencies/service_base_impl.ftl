@@ -1,6 +1,7 @@
 package ${packagePath}.service.base;
 
 import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
+import ${apiPackagePath}.service.${entity.name}${sessionTypeName}ServiceUtil;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -64,6 +65,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.sql.Blob;
 
 import java.util.ArrayList;
@@ -77,6 +80,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 <#if entity.hasEntityColumns()>
@@ -1553,33 +1557,40 @@ import org.osgi.service.component.annotations.Reference;
 					_useTempFile = true;
 				}
 			</#if>
-		}
-	</#if>
 
-	<#if dependencyInjectorDS && (lazyBlobExists || localizedEntityExists)>
-		@Activate
-		protected void activate() {
-			<#if localizedEntityExists>
-				<#assign localizedEntity = entity.localizedEntity />
-
-				registerListener(new ${localizedEntity.name}VersionServiceListener());
-			</#if>
-
-			<#if lazyBlobExists>
-				DB db = DBManagerUtil.getDB();
-
-				if ((db.getDBType() != DBType.DB2) &&
-					(db.getDBType() != DBType.MYSQL) &&
-					(db.getDBType() != DBType.MARIADB) &&
-					(db.getDBType() != DBType.SYBASE)) {
-
-					_useTempFile = true;
-				}
-			</#if>
+			_set${sessionTypeName}ServiceUtilService(${entity.variableName}${sessionTypeName}Service);
 		}
 	</#if>
 
 	<#if dependencyInjectorDS>
+		<#if lazyBlobExists || localizedEntityExists>
+			@Activate
+			protected void activate() {
+				<#if localizedEntityExists>
+					<#assign localizedEntity = entity.localizedEntity />
+
+					registerListener(new ${localizedEntity.name}VersionServiceListener());
+				</#if>
+
+				<#if lazyBlobExists>
+					DB db = DBManagerUtil.getDB();
+
+					if ((db.getDBType() != DBType.DB2) &&
+						(db.getDBType() != DBType.MYSQL) &&
+						(db.getDBType() != DBType.MARIADB) &&
+						(db.getDBType() != DBType.SYBASE)) {
+
+						_useTempFile = true;
+					}
+				</#if>
+			}
+		</#if>
+
+		@Deactivate
+		protected void deactivate() {
+			_set${sessionTypeName}ServiceUtilService(null);
+		}
+
 		@Override
 		public Class<?>[] getAopInterfaces() {
 			return new Class<?>[] {
@@ -1598,6 +1609,8 @@ import org.osgi.service.component.annotations.Reference;
 		@Override
 		public void setAopProxy(Object aopProxy) {
 			${entity.variableName}${sessionTypeName}Service = (${entity.name}${sessionTypeName}Service)aopProxy;
+
+			_set${sessionTypeName}ServiceUtilService(${entity.variableName}${sessionTypeName}Service);
 		}
 	<#else>
 		public void destroy() {
@@ -1608,6 +1621,8 @@ import org.osgi.service.component.annotations.Reference;
 					persistedModelLocalServiceRegistry.unregister("${apiPackagePath}.model.${entity.name}");
 				</#if>
 			</#if>
+
+			_set${sessionTypeName}ServiceUtilService(null);
 		}
 	</#if>
 
@@ -1981,6 +1996,19 @@ import org.osgi.service.component.annotations.Reference;
 			}
 		}
 	</#if>
+
+	private void _set${sessionTypeName}ServiceUtilService(${entity.name}${sessionTypeName}Service ${entity.variableName}${sessionTypeName}Service) {
+		try {
+			Field field = ${entity.name}${sessionTypeName}ServiceUtil.class.getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, ${entity.variableName}${sessionTypeName}Service);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
+		}
+	}
 
 	<#list referenceEntities as referenceEntity>
 		<#if referenceEntity.hasLocalService()>

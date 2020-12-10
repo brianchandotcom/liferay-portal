@@ -415,31 +415,27 @@ public class JournalConverterImpl implements JournalConverter {
 		String dataType, String type, Element dynamicContentElement,
 		Locale defaultLocale) {
 
-		Serializable serializable = null;
-
 		if (Objects.equals(DDMFormFieldType.DOCUMENT_LIBRARY, type) ||
 			Objects.equals(DDMFormFieldType.IMAGE, type)) {
 
-			serializable = _getFileEntryValue(
-				defaultLocale, dynamicContentElement);
-		}
-		else if (Objects.equals(DDMFormFieldType.JOURNAL_ARTICLE, type)) {
-			serializable = _getJournalArticleValue(
-				defaultLocale, dynamicContentElement);
-		}
-		else if (Objects.equals("link_to_layout", type)) {
-			serializable = _getLinkToLayoutValue(
-				defaultLocale, dynamicContentElement);
-		}
-		else if (Objects.equals(DDMFormFieldType.SELECT, type)) {
-			serializable = _getSelectValue(dynamicContentElement);
-		}
-		else {
-			serializable = FieldConstants.getSerializable(
-				dataType, dynamicContentElement.getText());
+			return _getFileEntryValue(defaultLocale, dynamicContentElement);
 		}
 
-		return serializable;
+		if (Objects.equals(DDMFormFieldType.JOURNAL_ARTICLE, type)) {
+			return _getJournalArticleValue(
+				defaultLocale, dynamicContentElement);
+		}
+
+		if (Objects.equals("link_to_layout", type)) {
+			return _getLinkToLayoutValue(defaultLocale, dynamicContentElement);
+		}
+
+		if (Objects.equals(DDMFormFieldType.SELECT, type)) {
+			return _getSelectValue(dynamicContentElement);
+		}
+
+		return FieldConstants.getSerializable(
+			dataType, dynamicContentElement.getText());
 	}
 
 	protected String[] splitFieldsDisplayValue(Field fieldsDisplayField) {
@@ -775,43 +771,45 @@ public class JournalConverterImpl implements JournalConverter {
 
 			long classPK = jsonObject.getLong("classPK");
 
-			if (classPK > 0) {
-				JournalArticle article =
-					_journalArticleLocalService.fetchLatestArticle(classPK);
+			if (classPK <= 0) {
+				return jsonObject.toString();
+			}
 
-				if (article != null) {
-					jsonObject.put("groupId", article.getGroupId());
+			JournalArticle article =
+				_journalArticleLocalService.fetchLatestArticle(classPK);
 
-					String title = article.getTitle(defaultLocale);
+			if (article != null) {
+				jsonObject.put("groupId", article.getGroupId());
 
-					if (article.isInTrash()) {
-						jsonObject.put(
-							"message",
-							LanguageUtil.get(
-								_getResourceBundle(defaultLocale),
-								"the-selected-web-content-was-moved-to-the-" +
-									"recycle-bin"));
-					}
+				String title = article.getTitle(defaultLocale);
 
-					jsonObject.put(
-						"title", title
-					).put(
-						"titleMap", article.getTitleMap()
-					).put(
-						"uuid", article.getUuid()
-					);
-				}
-				else {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to get article for  " + classPK);
-					}
-
+				if (article.isInTrash()) {
 					jsonObject.put(
 						"message",
 						LanguageUtil.get(
 							_getResourceBundle(defaultLocale),
-							"the-selected-web-content-was-deleted"));
+							"the-selected-web-content-was-moved-to-the-" +
+								"recycle-bin"));
 				}
+
+				jsonObject.put(
+					"title", title
+				).put(
+					"titleMap", article.getTitleMap()
+				).put(
+					"uuid", article.getUuid()
+				);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to get article for  " + classPK);
+				}
+
+				jsonObject.put(
+					"message",
+					LanguageUtil.get(
+						_getResourceBundle(defaultLocale),
+						"the-selected-web-content-was-deleted"));
 			}
 
 			return jsonObject.toString();

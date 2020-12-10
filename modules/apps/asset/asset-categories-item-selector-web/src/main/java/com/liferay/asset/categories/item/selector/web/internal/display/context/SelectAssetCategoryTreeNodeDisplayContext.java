@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -95,6 +96,17 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		}
 
 		return null;
+	}
+
+	public String getAssetCategoryTreeNodeType() {
+		if (_assetCategoryTreeNodeType != null) {
+			return _assetCategoryTreeNodeType;
+		}
+
+		_assetCategoryTreeNodeType = ParamUtil.get(
+			_httpServletRequest, "assetCategoryTreeNodeType", StringPool.BLANK);
+
+		return _assetCategoryTreeNodeType;
 	}
 
 	public String getAssetCategoryURL(long assetCategoryId)
@@ -200,6 +212,7 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 	}
 
 	private Long _assetCategoryTreeNodeId;
+	private String _assetCategoryTreeNodeType;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;

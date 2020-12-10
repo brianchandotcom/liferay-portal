@@ -116,6 +116,7 @@ public class TalendProcess {
 				portalProcessConfig.getBootstrapClassPath());
 			processConfigBuilder.setProcessLogConsumer(
 				portalProcessConfig.getProcessLogConsumer());
+
 			processConfigBuilder.setRuntimeClassPath(
 				StringBundler.concat(
 					_talendArchive.getClasspath(), File.pathSeparator,

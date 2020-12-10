@@ -44,6 +44,10 @@ const handleFocusedFieldEvaluationEnded = (
 		return state;
 	}
 
+	const {pages} = state;
+
+	const visitor = new PagesVisitor(pages);
+
 	let newState = {
 		...state,
 		focusedField: {
@@ -51,11 +55,21 @@ const handleFocusedFieldEvaluationEnded = (
 			instanceId: instanceId || focusedField.instanceId,
 			settingsContext,
 		},
+		pages: visitor.mapFields((field) => {
+			if (field.fieldName !== fieldName.value) {
+				return field;
+			}
+
+			return {
+				...field,
+				settingsContext,
+			};
+		}),
 	};
 
-	const visitor = new PagesVisitor(settingsContext.pages);
+	const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
 
-	visitor.mapFields(({fieldName, value}) => {
+	settingsContextVisitor.mapFields(({fieldName, value}) => {
 		newState = handleFieldEdited(props, newState, {
 			propertyName: fieldName,
 			propertyValue: value,

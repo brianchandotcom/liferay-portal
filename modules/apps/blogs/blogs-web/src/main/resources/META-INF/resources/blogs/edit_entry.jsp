@@ -158,7 +158,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 							int titleMaxLength = ModelHintsUtil.getMaxLength(BlogsEntry.class.getName(), "title");
 							%>
 
-							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" maxlength="<%= String.valueOf(titleMaxLength) %>" name="title" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeTitle(event.target.value)" %>' placeholder='<%= LanguageUtil.get(request, "title") + StringPool.BLANK + " *" %>' required="<%= true %>" showRequiredLabel="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(title) %>" />
+							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" maxlength="<%= String.valueOf(titleMaxLength) %>" name="title" placeholder='<%= LanguageUtil.get(request, "title") + StringPool.BLANK + " *" %>' required="<%= true %>" showRequiredLabel="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(title) %>" />
 						</div>
 
 						<div class="entry-subtitle">
@@ -418,14 +418,6 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 
 		if (blogs) {
 			blogs.setDescription(html);
-		}
-	}
-
-	function <portlet:namespace />onChangeTitle(title) {
-		var blogs = Liferay.component('<portlet:namespace />Blogs');
-
-		if (blogs) {
-			blogs.updateFriendlyURL(title);
 		}
 	}
 

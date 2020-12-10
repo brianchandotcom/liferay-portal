@@ -171,6 +171,14 @@ export default class Blogs {
 				);
 			});
 		}
+
+		const titleInput = this._getElement('title');
+
+		if (titleInput) {
+			listeners.add(titleInput, STR_CHANGE, (event) => {
+				this.updateFriendlyURL(event.target.value);
+			});
+		}
 	}
 
 	_checkImagesBeforeSave(draft, ajax) {

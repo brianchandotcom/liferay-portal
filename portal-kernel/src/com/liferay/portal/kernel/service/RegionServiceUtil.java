@@ -55,6 +55,12 @@ public class RegionServiceUtil {
 		return getService().addRegion(countryId, regionCode, name, active);
 	}
 
+	public static void deleteRegion(long regionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteRegion(regionId);
+	}
+
 	public static com.liferay.portal.kernel.model.Region fetchRegion(
 		long regionId) {
 
@@ -112,6 +118,57 @@ public class RegionServiceUtil {
 		getRegions(long countryId, boolean active) {
 
 		return getService().getRegions(countryId, active);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Region>
+		getRegions(
+			long countryId, boolean active, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.Region> orderByComparator) {
+
+		return getService().getRegions(
+			countryId, active, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Region>
+		getRegions(
+			long countryId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.Region> orderByComparator) {
+
+		return getService().getRegions(
+			countryId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Region>
+			getRegions(long companyId, String a2, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getRegions(companyId, a2, active);
+	}
+
+	public static int getRegionsCount(long countryId) {
+		return getService().getRegionsCount(countryId);
+	}
+
+	public static int getRegionsCount(long countryId, boolean active) {
+		return getService().getRegionsCount(countryId, active);
+	}
+
+	public static com.liferay.portal.kernel.model.Region updateActive(
+			long regionId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateActive(regionId, active);
+	}
+
+	public static com.liferay.portal.kernel.model.Region updateRegion(
+			long regionId, boolean active, String name, double position,
+			String regionCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateRegion(
+			regionId, active, name, position, regionCode);
 	}
 
 	public static RegionService getService() {

@@ -42,8 +42,11 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RegionLocalService;
+import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
+import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
+import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -134,10 +137,11 @@ public abstract class RegionLocalServiceBaseImpl
 	 *
 	 * @param region the region
 	 * @return the region that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Region deleteRegion(Region region) {
+	public Region deleteRegion(Region region) throws PortalException {
 		return regionPersistence.remove(region);
 	}
 
@@ -519,6 +523,47 @@ public abstract class RegionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the address local service.
+	 *
+	 * @return the address local service
+	 */
+	public com.liferay.portal.kernel.service.AddressLocalService
+		getAddressLocalService() {
+
+		return addressLocalService;
+	}
+
+	/**
+	 * Sets the address local service.
+	 *
+	 * @param addressLocalService the address local service
+	 */
+	public void setAddressLocalService(
+		com.liferay.portal.kernel.service.AddressLocalService
+			addressLocalService) {
+
+		this.addressLocalService = addressLocalService;
+	}
+
+	/**
+	 * Returns the address persistence.
+	 *
+	 * @return the address persistence
+	 */
+	public AddressPersistence getAddressPersistence() {
+		return addressPersistence;
+	}
+
+	/**
+	 * Sets the address persistence.
+	 *
+	 * @param addressPersistence the address persistence
+	 */
+	public void setAddressPersistence(AddressPersistence addressPersistence) {
+		this.addressPersistence = addressPersistence;
+	}
+
+	/**
 	 * Returns the country local service.
 	 *
 	 * @return the country local service
@@ -557,6 +602,67 @@ public abstract class RegionLocalServiceBaseImpl
 	 */
 	public void setCountryPersistence(CountryPersistence countryPersistence) {
 		this.countryPersistence = countryPersistence;
+	}
+
+	/**
+	 * Returns the organization local service.
+	 *
+	 * @return the organization local service
+	 */
+	public com.liferay.portal.kernel.service.OrganizationLocalService
+		getOrganizationLocalService() {
+
+		return organizationLocalService;
+	}
+
+	/**
+	 * Sets the organization local service.
+	 *
+	 * @param organizationLocalService the organization local service
+	 */
+	public void setOrganizationLocalService(
+		com.liferay.portal.kernel.service.OrganizationLocalService
+			organizationLocalService) {
+
+		this.organizationLocalService = organizationLocalService;
+	}
+
+	/**
+	 * Returns the organization persistence.
+	 *
+	 * @return the organization persistence
+	 */
+	public OrganizationPersistence getOrganizationPersistence() {
+		return organizationPersistence;
+	}
+
+	/**
+	 * Sets the organization persistence.
+	 *
+	 * @param organizationPersistence the organization persistence
+	 */
+	public void setOrganizationPersistence(
+		OrganizationPersistence organizationPersistence) {
+
+		this.organizationPersistence = organizationPersistence;
+	}
+
+	/**
+	 * Returns the organization finder.
+	 *
+	 * @return the organization finder
+	 */
+	public OrganizationFinder getOrganizationFinder() {
+		return organizationFinder;
+	}
+
+	/**
+	 * Sets the organization finder.
+	 *
+	 * @param organizationFinder the organization finder
+	 */
+	public void setOrganizationFinder(OrganizationFinder organizationFinder) {
+		this.organizationFinder = organizationFinder;
 	}
 
 	/**
@@ -682,6 +788,15 @@ public abstract class RegionLocalServiceBaseImpl
 		counterLocalService;
 
 	@BeanReference(
+		type = com.liferay.portal.kernel.service.AddressLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.AddressLocalService
+		addressLocalService;
+
+	@BeanReference(type = AddressPersistence.class)
+	protected AddressPersistence addressPersistence;
+
+	@BeanReference(
 		type = com.liferay.portal.kernel.service.CountryLocalService.class
 	)
 	protected com.liferay.portal.kernel.service.CountryLocalService
@@ -689,6 +804,18 @@ public abstract class RegionLocalServiceBaseImpl
 
 	@BeanReference(type = CountryPersistence.class)
 	protected CountryPersistence countryPersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.OrganizationLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@BeanReference(type = OrganizationPersistence.class)
+	protected OrganizationPersistence organizationPersistence;
+
+	@BeanReference(type = OrganizationFinder.class)
+	protected OrganizationFinder organizationFinder;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.UserLocalService.class

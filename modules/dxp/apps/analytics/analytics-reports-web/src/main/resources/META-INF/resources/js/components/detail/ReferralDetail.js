@@ -168,7 +168,7 @@ export default function ReferralDetail({
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 								<ClayList.ItemField expand>
-									<span className="align-self-end">
+									<span className="align-self-end font-weight-semi-bold text-dark">
 										{numberFormat(
 											languageTag,
 											trafficAmount
@@ -248,7 +248,7 @@ export default function ReferralDetail({
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 								<ClayList.ItemField expand>
-									<span className="align-self-end">
+									<span className="align-self-end font-weight-semi-bold text-dark">
 										{numberFormat(
 											languageTag,
 											trafficAmount

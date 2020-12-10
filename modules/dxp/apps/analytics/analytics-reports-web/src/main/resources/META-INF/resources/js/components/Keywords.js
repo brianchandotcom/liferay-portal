@@ -186,7 +186,7 @@ export default function Keywords({currentPage, languageTag}) {
 													data-tooltip-align="top"
 													title={keyword}
 												>
-													<span className="text-truncate">
+													<span className="text-secondary text-truncate">
 														{keyword}
 													</span>
 												</span>
@@ -194,7 +194,7 @@ export default function Keywords({currentPage, languageTag}) {
 										</ClayList.ItemText>
 									</ClayList.ItemField>
 									<ClayList.ItemField expand>
-										<span className="align-self-end">
+										<span className="align-self-end font-weight-semi-bold text-dark">
 											{numberFormat(
 												languageTag,
 												keywordValueType.name ===

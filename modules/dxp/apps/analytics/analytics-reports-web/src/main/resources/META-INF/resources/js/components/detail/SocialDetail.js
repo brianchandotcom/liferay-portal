@@ -173,7 +173,9 @@ export default function SocialDetail({
 							>
 								<ClayList.ItemField style={{width: '70px'}}>
 									<ClayList.ItemText>
-										<span className="c-mr-2">{title}</span>
+										<span className="c-mr-2 text-secondary">
+											{title}
+										</span>
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 								<ClayList.ItemField
@@ -191,7 +193,7 @@ export default function SocialDetail({
 									/>
 								</ClayList.ItemField>
 								<ClayList.ItemField className="align-self-center">
-									<span className="align-self-end c-ml-2">
+									<span className="align-self-end c-ml-2 font-weight-semi-bold text-dark">
 										{numberFormat(
 											languageTag,
 											trafficAmount

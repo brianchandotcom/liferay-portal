@@ -145,7 +145,7 @@ export default function TrafficSources({
 											></span>
 										</td>
 										<td
-											className="c-py-1 pie-chart-wrapper--legend--title text-secondary"
+											className="c-py-1 text-secondary"
 											onMouseOut={handleLegendMouseLeave}
 											onMouseOver={() =>
 												handleLegendMouseEnter(
@@ -155,7 +155,7 @@ export default function TrafficSources({
 										>
 											{entry.value > 0 && hasDetails ? (
 												<ClayButton
-													className="font-weight-semi-bold px-0 py-1 text-primary"
+													className="px-0 py-1 text-primary"
 													displayType="link"
 													onClick={() =>
 														onTrafficSourceClick(
@@ -177,7 +177,7 @@ export default function TrafficSources({
 												title={entry.title}
 											/>
 										</td>
-										<td className="font-weight-bold">
+										<td className="font-weight-semi-bold">
 											{entry.value !== undefined &&
 											!publishedToday
 												? numberFormat(

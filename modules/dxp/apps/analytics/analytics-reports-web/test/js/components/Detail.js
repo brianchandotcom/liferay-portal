@@ -253,6 +253,70 @@ describe('Detail', () => {
 		cleanup();
 	});
 
+	it('display 10 urls with view more button', async () => {
+		const testProps = {
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
+			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+			timeSpanKey: 'last-7-days',
+		};
+
+		const {getByText} = render(
+			<ChartStateContextProvider
+				publishDate={testProps.publishDate}
+				timeRange={testProps.timeRange}
+				timeSpanKey={testProps.timeSpanKey}
+			>
+				<Detail
+					currentPage={mockCurrentPageReferral}
+					languageTag={'en-US'}
+					onCurrentPageChange={mockOnCurrentPageChange}
+					onTrafficSourceNameChange={mockOnTrafficSourceNameChange}
+					timeSpanOptions={mockTimeSpanOptions}
+					trafficShareDataProvider={mockTrafficShareDataProvider}
+					trafficVolumeDataProvider={mockTrafficVolumeDataProvider}
+				/>
+			</ChartStateContextProvider>
+		);
+
+		await wait(() =>
+			expect(mockTrafficShareDataProvider).toHaveBeenCalled()
+		);
+		await wait(() =>
+			expect(mockTrafficVolumeDataProvider).toHaveBeenCalled()
+		);
+
+		const viewMoreButton = getByText('view-more');
+		userEvent.click(viewMoreButton);
+
+		expect(
+			getByText(
+				'https://www.liferay.com/resources/case-studies/excellus-case-study'
+			)
+		).toBeInTheDocument();
+		expect(
+			getByText(
+				'https://www.liferay.com/resources/case-studies/terres-inovia-case-study'
+			)
+		).toBeInTheDocument();
+		expect(
+			getByText(
+				'https://www.liferay.com/resources/case-studies/vodafone-business'
+			)
+		).toBeInTheDocument();
+		expect(
+			getByText(
+				'https://www.liferay.com/web/guest/resources/case-studies/agia'
+			)
+		).toBeInTheDocument();
+		expect(
+			getByText(
+				'https://www.liferay.com/resources/case-studies/vitality-case-study'
+			)
+		).toBeInTheDocument();
+
+		expect(getByText('view-less')).toBeInTheDocument();
+	});
+
 	describe('Organic Detail', () => {
 		it('displays the organic detail according to API', async () => {
 			const {getByText} = render(

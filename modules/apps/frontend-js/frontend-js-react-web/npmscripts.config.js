@@ -13,6 +13,9 @@
  */
 
 module.exports = {
-	federation: 'js/index.federation.js',
+	federation: {
+		disableOldBuild: true,
+		main: 'js/index.federation.js',
+	},
 	preset: '@liferay/npm-scripts/src/presets/standard',
 };

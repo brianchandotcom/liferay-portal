@@ -33,7 +33,7 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 		<clay:button
 			cssClass="asset-category-tree-node-selector"
 			data-category-tree-node-id="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeId() %>"
-			data-category-tree-node-type="Vocabulary"
+			data-category-tree-node-type="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeType() %>"
 			data-title="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeName() %>"
 			displayType="primary"
 			label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'

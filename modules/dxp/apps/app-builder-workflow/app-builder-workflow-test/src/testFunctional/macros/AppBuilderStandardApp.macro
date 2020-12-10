@@ -28,4 +28,8 @@ definition {
 		Click(locator1 = "AppBuilderStandardApp#BACK_BUTTON");
 	}
 
+	macro clickOnManageWorkflows{
+		Button.click(button = "Manage Workflows");
+	}
+
 }

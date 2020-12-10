@@ -45,6 +45,41 @@ definition {
 		}
 	}
 
+	@description = "LRQA-63083 - Automate LPS-105493: As an App Adm, I want create the workflow process of my App during the App deployment"
+	@priority = "5"
+	test GoToWorkflowPageThroughStandardAppSetup {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.selectObject(objectName = "my custom object");
+		App.selectFormView(formViewName = "My Form View");
+		App.selectTableView(tableViewName = "My Table View");
+		App.clickPrevious();
+		AppBuilderStandardApp.clickOnManageWorkflows();
+		SelectWindow.selectPopUp(locator1 = "null");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Process Builder");
+
+		Navigator.closeWindow();
+	}
+
 	@description = "Assign an entry (task) through the App's table view"
 	@priority = "5"
 	test AssignEntryThroughTableView {

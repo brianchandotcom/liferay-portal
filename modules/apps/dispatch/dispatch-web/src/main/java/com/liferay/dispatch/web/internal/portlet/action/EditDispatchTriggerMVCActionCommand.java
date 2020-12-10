@@ -19,6 +19,7 @@ import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerService;
+import com.liferay.dispatch.web.internal.security.permisison.resource.DispatchTriggerPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,14 +30,17 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -88,8 +92,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -124,11 +127,15 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected JSONObject runProcess(ActionRequest actionRequest) {
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+	protected JSONObject runProcess(ActionRequest actionRequest)
+		throws PortalException {
 
 		long dispatchTriggerId = ParamUtil.getLong(
 			actionRequest, "dispatchTriggerId");
+
+		_checkPermission(actionRequest, dispatchTriggerId);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			_sendMessage(dispatchTriggerId);
@@ -247,6 +254,18 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
+	}
+
+	private void _checkPermission(
+			ActionRequest actionRequest, long dispatchTriggerId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DispatchTriggerPermission.contains(
+			themeDisplay.getPermissionChecker(), dispatchTriggerId,
+			ActionKeys.UPDATE);
 	}
 
 	private void _sendMessage(long dispatchTriggerId) {

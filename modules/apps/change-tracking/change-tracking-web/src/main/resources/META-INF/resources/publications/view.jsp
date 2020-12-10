@@ -156,12 +156,17 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<liferay-ui:error exception="<%= CTLocalizedException.class %>">
+<%
+CTLocalizedException ctLocalizedException = null;
 
-	<%
-	CTLocalizedException ctLocalizedException = (CTLocalizedException)errorException;
-	%>
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
+if ((portletRequest != null) && MultiSessionErrors.contains(portletRequest, CTLocalizedException.class.getName())) {
+	ctLocalizedException = (CTLocalizedException)MultiSessionErrors.get(portletRequest, CTLocalizedException.class.getName());
+}
+%>
+
+<c:if test="<%= ctLocalizedException != null %>">
 	<aui:script>
 		Liferay.Util.openToast({
 			autoClose: 10000,
@@ -171,4 +176,4 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 			type: 'danger',
 		});
 	</aui:script>
-</liferay-ui:error>
+</c:if>

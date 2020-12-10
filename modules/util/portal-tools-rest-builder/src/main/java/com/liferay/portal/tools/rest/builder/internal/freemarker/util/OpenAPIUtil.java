@@ -79,7 +79,7 @@ public class OpenAPIUtil {
 			Map<String, Schema> allSchemas, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
-		Map<String, Schema> allExternalSchemas = new HashMap<>(allSchemas);
+		Map<String, Schema> allExternalSchemas = new HashMap<>();
 
 		Map<String, Schema> externalSchemas =
 			OpenAPIParserUtil.getExternalSchemas(openAPIYAML);

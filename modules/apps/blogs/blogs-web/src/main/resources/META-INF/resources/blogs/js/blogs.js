@@ -91,6 +91,14 @@ export default class Blogs {
 					`${namespace}emailEntryUpdatedCommentWrapper`
 				);
 			}
+
+			const editorName = `${namespace}contentEditor`;
+			const contentEditor = CKEDITOR.instances[editorName];
+
+
+			contentEditor.on('change', () => {
+				this.setDescription(window[editorName].getText());
+			});
 		});
 	}
 

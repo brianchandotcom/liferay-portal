@@ -170,7 +170,6 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 								contents="<%= content %>"
 								editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>'
 								name="contentEditor"
-								onChangeMethod="onChangeEditor"
 								placeholder="content"
 								required="<%= true %>"
 							>
@@ -411,16 +410,6 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="ajax" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
-
-<aui:script>
-	function <portlet:namespace />onChangeEditor(html) {
-		var blogs = Liferay.component('<portlet:namespace />Blogs');
-
-		if (blogs) {
-			blogs.setDescription(html);
-		}
-	}
-</aui:script>
 
 <%
 Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(

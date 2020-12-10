@@ -31,7 +31,7 @@ definition {
 	@description = "This is a use case for LPS-96391."
 	@priority = "5"
 	test ExportImportSiteWithEmbeddedWCDInFragment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property testray.component.names = "Content Pages,Site Administration";
 
 		JSONFragment.addFragmentCollection(

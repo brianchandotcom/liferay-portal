@@ -1095,9 +1095,9 @@ definition {
 			PortletEntry.publish();
 
 			for (var fieldName : list "LabelUFComunicado,ListaUFComunidado,msgTimeOut,TituloMobile,Titulo,InformativoFormularioCadastro,TituloProgramaMilhas,TexoBoxProgramaAmigo,InformeProgramaMilhas,FooterCadastro,BotaoCadastrar,FooterCadastroMobile,BotaoCadastrarMobile,InformeProgramaAmigo,BotaoQueroParticipar,BotaoQueroParticiparMobile,Nacionalidade,PrimeiroNome,TituloBanner,NomeDoMeio,Sobrenome,Email,EmailConfirma,Senha,ConfirmaSenha,CheckBox,DDI,CPF,passaporte,Celular,DataDeNascimento,Genero,paisDeResidencia,UF,CEP,Cidade,Bairro,Endereco,NumeroEndereco,Complemento,TextoBoxAmigo,ItemPais") {
-				AssertTextEquals.assertPartialText(
-					key_fieldName = "${fieldName}",
-					locator1 = "TextInput#SPECIFIC_FIELD_REQUIRED_ALERT",
+				AssertTextEquals(
+					key_fieldFieldLabel = "${fieldName}",
+					locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 					value1 = "This field is required.");
 			}
 		}
@@ -1573,7 +1573,8 @@ definition {
 			Button.clickPublish();
 
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				key_fieldFieldLabel = "Rich Text",
+				locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 				value1 = "This field is required.");
 		}
 
@@ -1581,7 +1582,8 @@ definition {
 			WebContent.clickMarginOfContentContainer();
 
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				key_fieldFieldLabel = "Rich Text",
+				locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 				value1 = "This field is required.");
 		}
 
@@ -1595,7 +1597,8 @@ definition {
 				fieldLabel = "Rich Text");
 
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				key_fieldFieldLabel = "Rich Text",
+				locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 				value1 = "This field is required.");
 		}
 
@@ -2036,9 +2039,9 @@ definition {
 
 		Button.clickPublish();
 
-		AssertTextEquals.assertPartialText(
-			key_fieldName = "Text",
-			locator1 = "TextInput#SPECIFIC_FIELD_REQUIRED_ALERT",
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 			value1 = "This field is required.");
 	}
 

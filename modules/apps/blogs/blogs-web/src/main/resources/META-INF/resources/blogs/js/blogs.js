@@ -83,8 +83,6 @@ export default class Blogs {
 				: STR_BLANK;
 			this._shortenDescription = !customDescriptionEnabled;
 
-			this.setDescription(window[`${namespace}contentEditor`].getText());
-
 			if (emailEntryUpdatedEnabled) {
 				Liferay.Util.toggleBoxes(
 					`${namespace}sendEmailEntryUpdated`,
@@ -95,6 +93,9 @@ export default class Blogs {
 			const editorName = `${namespace}contentEditor`;
 			const contentEditor = CKEDITOR.instances[editorName];
 
+			contentEditor.on('instanceReady', () => {
+				this.setDescription(window[editorName].getText());
+			});
 
 			contentEditor.on('change', () => {
 				this.setDescription(window[editorName].getText());

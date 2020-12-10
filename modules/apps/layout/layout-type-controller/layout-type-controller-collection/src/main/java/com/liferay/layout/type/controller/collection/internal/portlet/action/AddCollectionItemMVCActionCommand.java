@@ -29,11 +29,14 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuPortletKeys;
+import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.context.RequestContextMapper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,6 +70,9 @@ public class AddCollectionItemMVCActionCommand extends BaseMVCActionCommand {
 
 		hideDefaultSuccessMessage(actionRequest);
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
 		if ((assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_MANUAL) &&
 			Validator.isNotNull(className) && (classPK > 0)) {
@@ -78,7 +84,7 @@ public class AddCollectionItemMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest);
 
 			long[] segmentsEntryIds = GetterUtil.getLongValues(
-				actionRequest.getAttribute(SegmentsWebKeys.SEGMENTS_ENTRY_IDS),
+				_getSegmentsEntryIds(httpServletRequest),
 				new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 			for (long segmentsEntryId : segmentsEntryIds) {
@@ -88,11 +94,18 @@ public class AddCollectionItemMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		SessionMessages.add(
-			_portal.getHttpServletRequest(actionRequest),
-			"collectionItemAdded");
+		SessionMessages.add(httpServletRequest, "collectionItemAdded");
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	private long[] _getSegmentsEntryIds(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return _segmentsEntryRetriever.getSegmentsEntryIds(
+			_portal.getScopeGroupId(httpServletRequest),
+			_portal.getUserId(httpServletRequest),
+			_requestContextMapper.map(httpServletRequest));
 	}
 
 	@Reference
@@ -103,5 +116,11 @@ public class AddCollectionItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }

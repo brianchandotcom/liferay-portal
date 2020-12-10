@@ -49,7 +49,8 @@ import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationContr
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuPortletKeys;
-import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.context.RequestContextMapper;
 
 import java.io.IOException;
 
@@ -107,13 +108,11 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 		long collectionPK = GetterUtil.getLong(
 			layout.getTypeSettingsProperty("collectionPK"));
 
-		long[] segmentEntryIds = GetterUtil.getLongValues(
-			httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
-
 		try {
 			AssetListEntry assetListEntry =
 				_assetListEntryService.getAssetListEntry(collectionPK);
+
+			long[] segmentEntryIds = _getSegmentsEntryIds(httpServletRequest);
 
 			AssetEntryQuery assetEntryQuery =
 				_assetListAssetEntryProvider.getAssetEntryQuery(
@@ -266,6 +265,15 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 				PRODUCT_NAVIGATION_CONTROL_MENU);
 	}
 
+	private long[] _getSegmentsEntryIds(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return _segmentsEntryRetriever.getSegmentsEntryIds(
+			_portal.getScopeGroupId(httpServletRequest),
+			_portal.getUserId(httpServletRequest),
+			_requestContextMapper.map(httpServletRequest));
+	}
+
 	@Reference
 	private AssetHelper _assetHelper;
 
@@ -289,5 +297,11 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }

@@ -601,6 +601,11 @@ definition {
 			key_symbolName = "${symbolName}",
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
 
+		AssertElementPresent(
+			key_localizationName = "${localizationName}",
+			key_statusName = "${statusName}",
+			locator1 = "FormViewBuilder#TRANSLATED_LIST_FIELD_SET");
+
 		Click(
 			key_localizationList = "${localizationName}",
 			locator1 = "FormViewBuilder#LOCALIZATION_LIST_FIELD_SET");

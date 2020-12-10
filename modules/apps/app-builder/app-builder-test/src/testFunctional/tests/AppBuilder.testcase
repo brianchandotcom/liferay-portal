@@ -590,6 +590,72 @@ definition {
 			title = "Numeric Field - Table View Title");
 	}
 
+	@description = "Automate LPS-117199 Define translations when creating fieldsets"
+	@priority = "5"
+	test DefineTranslationForFieldSets {
+		property portal.acceptance = "true";
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.validateLocalization(symbolName = "es-ES");
+
+		FormViewBuilder.setUpFieldSet(
+			fieldLabel = "Name ES",
+			fieldSetName = "Field Set Spanish",
+			fieldType = "Text");
+
+		FormViewBuilder.editFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Edit");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "pt-BR",
+			statusName = "Not Translated",
+			symbolName = "es-ES");
+
+		FormViewBuilder.validateLocalizationForFieldSet(symbolName = "pt-BR");
+
+		FormViewBuilder.gotoFirstFieldset(fieldLabel = "Name ES");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Name BR");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Field Set Brazil");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.validateTranslatedField(fieldLabel = "Name BR");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set Spanish");
+
+		FormViewBuilder.setName(formViewName = "Translated Form");
+
+		FormViewBuilder.save();
+
+		Navigator.openURL();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "English (United States)");
+	}
+
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {

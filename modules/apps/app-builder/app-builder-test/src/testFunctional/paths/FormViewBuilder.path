@@ -513,6 +513,12 @@
 </tr>
 
 <tr>
+	<td>TRANSLATED_LIST_FIELD_SET</td>
+	<td>xpath=(//span[contains(@class,'autofit-col-expand') and contains (.,'${key_localizationName}')]/following-sibling::span[contains(@class,'autofit-col') and contains(.,'${key_statusName}')])[2]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>RULE_BUILDER_GO_BACK</td>
 	<td>//div[contains(@class, 'sidebar-header')]//button[contains(@class,'btn btn-secondary')]</td>
 	<td></td>

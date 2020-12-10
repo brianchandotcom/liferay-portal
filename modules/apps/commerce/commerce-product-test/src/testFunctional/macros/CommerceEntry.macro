@@ -382,6 +382,13 @@ definition {
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 	}
 
+	macro clickTableEntryEditButton {
+		Click(
+			key_entryName = "${entryName}",
+			key_table = "${table}",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+	}
+
 	macro createNewAccountGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

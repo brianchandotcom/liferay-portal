@@ -179,6 +179,14 @@ export default class Blogs {
 				this.updateFriendlyURL(event.target.value);
 			});
 		}
+
+		const descriptionInput = this._getElement('description');
+
+		if (descriptionInput) {
+			listeners.add(descriptionInput, STR_CHANGE, (event) => {
+				this.setCustomDescription(event.target.value);
+			});
+		}
 	}
 
 	_checkImagesBeforeSave(draft, ajax) {

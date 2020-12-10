@@ -457,12 +457,26 @@ definition {
 	test CreateObjectAndForm {
 		property portal.acceptance = "true";
 
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+
+		AppBuilderWorkflow.selectDataAndViewsCard();
+
+		AppBuilderWorkflow.clickOnSelectObject();
+
 		AppBuilderWorkflow.validatePlusButton();
 
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
+		AppBuilderWorkflow.addWorkflowNewObject(workflowObjectName = "my custom object");
+
+		SelectFrame(
+			key_title = "New Form View",
+			locator1 = "IFrame#MODAL_ANY");
 
 		FormViewBuilder.setUpTwoFieldSets(
 			fieldSetName = "Field Sets",

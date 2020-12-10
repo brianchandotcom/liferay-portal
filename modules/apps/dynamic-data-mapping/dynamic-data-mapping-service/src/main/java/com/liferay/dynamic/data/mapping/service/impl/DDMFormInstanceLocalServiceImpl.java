@@ -681,27 +681,27 @@ public class DDMFormInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String workflowDefinitionName = getWorkflowDefinition(
+		String workflowDefinition = getWorkflowDefinition(
 			settingsDDMFormValues);
 
-		String workflowDefinition = "";
+		String latestWorkflowDefinition = "";
 
-		if (Validator.isNotNull(workflowDefinitionName) &&
-			!workflowDefinitionName.equals("no-workflow")) {
+		if (Validator.isNotNull(workflowDefinition) &&
+			!workflowDefinition.equals("no-workflow")) {
 
 			KaleoDefinition kaleoDefinition =
 				_kaleoDefinitionLocalService.getKaleoDefinition(
-					workflowDefinitionName, serviceContext);
+					workflowDefinition, serviceContext);
 
-			workflowDefinition =
-				workflowDefinitionName + StringPool.AT +
+			latestWorkflowDefinition =
+				workflowDefinition + StringPool.AT +
 					kaleoDefinition.getVersion();
 		}
 
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			serviceContext.getUserId(), serviceContext.getCompanyId(),
 			formInstance.getGroupId(), DDMFormInstance.class.getName(),
-			formInstance.getFormInstanceId(), 0, workflowDefinition);
+			formInstance.getFormInstanceId(), 0, latestWorkflowDefinition);
 	}
 
 	protected void validate(

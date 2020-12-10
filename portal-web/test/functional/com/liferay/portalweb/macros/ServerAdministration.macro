@@ -140,6 +140,13 @@ definition {
 			locator1 = "ServerAdministrationScript#LANGUAGE_SELECT",
 			value1 = "${language}");
 
+		if ("${htmlOutput}" == "true") {
+			Select(
+				key_selectFieldLabel = "Output",
+				locator1 = "Select#ANY",
+				value1 = "HTML");
+		}
+
 		Type(
 			locator1 = "ServerAdministrationScript#SCRIPT_TEXT",
 			value1 = "${script}");

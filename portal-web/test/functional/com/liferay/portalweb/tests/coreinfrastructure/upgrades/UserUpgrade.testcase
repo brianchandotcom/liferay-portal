@@ -189,6 +189,60 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewAndEditUserAfterUpgrade720 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.0";
+
+		SignIn.signIn();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade721 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		SignIn.signIn();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade730 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.0";
+
+		SignIn.signIn();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
 	test ViewAndEditUserAfterUpgrade7110 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.1.10";
@@ -206,9 +260,43 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewAndEditUserAfterUpgrade7210 {
+		property data.archive.type = "data-archive-user";
+		property portal.version = "7.2.10";
+
+		SignIn.signIn();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
 	test ViewAndEditUserAfterUpgrade70106 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.0.10.6";
+
+		SignIn.signIn();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade72101 {
+		property data.archive.type = "data-archive-user";
+		property portal.version = "7.2.10.1";
 
 		SignIn.signIn();
 

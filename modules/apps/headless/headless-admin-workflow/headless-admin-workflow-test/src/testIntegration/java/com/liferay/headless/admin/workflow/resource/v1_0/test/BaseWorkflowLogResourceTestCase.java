@@ -182,6 +182,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		WorkflowLog workflowLog = randomWorkflowLog();
 
 		workflowLog.setCommentLog(regex);
+		workflowLog.setDescription(regex);
 		workflowLog.setPreviousState(regex);
 		workflowLog.setState(regex);
 
@@ -192,6 +193,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		workflowLog = WorkflowLogSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, workflowLog.getCommentLog());
+		Assert.assertEquals(regex, workflowLog.getDescription());
 		Assert.assertEquals(regex, workflowLog.getPreviousState());
 		Assert.assertEquals(regex, workflowLog.getState());
 	}
@@ -579,6 +581,14 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (workflowLog.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("person", additionalAssertFieldName)) {
 				if (workflowLog.getPerson() == null) {
 					valid = false;
@@ -761,6 +771,17 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowLog1.getDateCreated(),
 						workflowLog2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowLog1.getDescription(),
+						workflowLog2.getDescription())) {
 
 					return false;
 				}
@@ -991,6 +1012,14 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(workflowLog.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1089,6 +1118,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				commentLog = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				previousState = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

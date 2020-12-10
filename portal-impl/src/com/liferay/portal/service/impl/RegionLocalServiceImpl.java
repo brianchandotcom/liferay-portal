@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.RegionLocalServiceBaseImpl;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -61,6 +64,75 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	@Override
 	public void deleteCountryRegions(long countryId) {
 		regionPersistence.removeByCountryId(countryId);
+	}
+
+	@Override
+	public Region deleteRegion(long regionId) {
+		return null;
+	}
+
+	@Override
+	public Region deleteRegion(Region region) {
+		return null;
+	}
+
+	@Override
+	public Region fetchRegion(long countryId, String regionCode) {
+		return null;
+	}
+
+	@Override
+	public Region getRegion(long countryId, String regionCode) {
+		return null;
+	}
+
+	@Override
+	public List<Region> getRegions(long countryId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public List<Region> getRegions(
+		long countryId, boolean active, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public List<Region> getRegions(
+		long countryId, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public List<Region> getRegions(long companyId, String a2, boolean active) {
+		return null;
+	}
+
+	@Override
+	public int getRegionsCount(long countryId) {
+		return null;
+	}
+
+	@Override
+	public int getRegionsCount(long countryId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public Region updateActive(long regionId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public Region updateRegion(
+		long regionId, boolean active, String name, double position,
+		String regionCode) {
+
+		return null;
 	}
 
 	protected void validate(String name, String regionCode)

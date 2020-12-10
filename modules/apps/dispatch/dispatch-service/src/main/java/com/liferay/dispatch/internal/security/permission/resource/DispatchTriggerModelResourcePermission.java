@@ -17,6 +17,7 @@ package com.liferay.dispatch.internal.security.permission.resource;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -66,14 +67,9 @@ public class DispatchTriggerModelResourcePermission
 		PermissionChecker permissionChecker, DispatchTrigger dispatchTrigger,
 		String actionId) {
 
-		if (contains(
-				permissionChecker, dispatchTrigger.getDispatchTriggerId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, dispatchTrigger.getDispatchTriggerId(),
+			actionId);
 	}
 
 	@Override
@@ -106,16 +102,13 @@ public class DispatchTriggerModelResourcePermission
 		PermissionChecker permissionChecker, DispatchTrigger dispatchTrigger,
 		String actionId) {
 
-		if (permissionChecker.hasOwnerPermission(
-				dispatchTrigger.getCompanyId(), DispatchTrigger.class.getName(),
-				dispatchTrigger.getDispatchTriggerId(),
-				dispatchTrigger.getUserId(), actionId)) {
-
+		if (permissionChecker.isCompanyAdmin(dispatchTrigger.getCompanyId())) {
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			0, DispatchTrigger.class.getName(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			DispatchTrigger.class.getName(),
 			dispatchTrigger.getDispatchTriggerId(), actionId);
 	}
 

@@ -27,6 +27,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -79,8 +80,8 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		resourceLocalService.addResources(
-			user.getCompanyId(), 0, user.getUserId(),
-			DispatchTrigger.class.getName(),
+			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			user.getUserId(), DispatchTrigger.class.getName(),
 			dispatchTrigger.getDispatchTriggerId(), false, true, true);
 
 		return dispatchTrigger;

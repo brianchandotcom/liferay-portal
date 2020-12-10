@@ -420,13 +420,6 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 			blogs.setDescription(html);
 		}
 	}
-
-	<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
-		Liferay.Util.toggleBoxes(
-			'<portlet:namespace />sendEmailEntryUpdated',
-			'<portlet:namespace />emailEntryUpdatedCommentWrapper'
-		);
-	</c:if>
 </aui:script>
 
 <%
@@ -449,6 +442,8 @@ Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
 	"descriptionLength", PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH
 ).put(
 	"editEntryURL", editEntryURL
+).put(
+	"emailEntryUpdatedEnabled", (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()
 ).build();
 
 if (entry != null) {

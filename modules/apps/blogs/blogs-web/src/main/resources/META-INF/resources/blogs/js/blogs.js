@@ -45,6 +45,7 @@ export default class Blogs {
 		constants,
 		descriptionLength = 400,
 		editEntryURL,
+		emailEntryUpdatedEnabled,
 		entry,
 		namespace,
 		saveInterval = 30000,
@@ -82,9 +83,14 @@ export default class Blogs {
 				: STR_BLANK;
 			this._shortenDescription = !customDescriptionEnabled;
 
-			this.setDescription(
-				window[`${this._config.namespace}contentEditor`].getText()
-			);
+			this.setDescription(window[`${namespace}contentEditor`].getText());
+
+			if (emailEntryUpdatedEnabled) {
+				Liferay.Util.toggleBoxes(
+					`${namespace}sendEmailEntryUpdated`,
+					`${namespace}emailEntryUpdatedCommentWrapper`
+				);
+			}
 		});
 	}
 

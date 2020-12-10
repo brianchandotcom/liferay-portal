@@ -145,6 +145,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 
 <clay:container-fluid>
 	<liferay-ui:search-paginator
+		markupView="lexicon"
 		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
 	/>
 </clay:container-fluid>

@@ -2130,7 +2130,7 @@ public class DataFactory {
 			ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
 			ddmFieldModel.setStructureVersionId(structureVersionId);
 			ddmFieldModel.setFieldName(
-				nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
+				nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i - 1));
 			ddmFieldModel.setFieldType("string");
 			ddmFieldModel.setInstanceId(StringUtil.randomId());
 			ddmFieldModel.setLocalizable(true);

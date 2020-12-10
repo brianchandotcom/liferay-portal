@@ -24,10 +24,13 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,6 +75,19 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersShouldContainBlankSystemSettingsURL() {
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "checkbox"),
+				createDDMFormFieldRenderingContext());
+
+		String systemSettingsURL = String.valueOf(
+			parameters.get("systemSettingsURL"));
+
+		Assert.assertTrue(Validator.isBlank(systemSettingsURL));
+	}
+
+	@Test
 	public void testGetParametersShouldContainShowMaximumRepetitionsInfo() {
 		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
 
@@ -85,6 +101,31 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 			"showMaximumRepetitionsInfo");
 
 		Assert.assertTrue(showMaximumRepetitionsInfo);
+	}
+
+	@Test
+	public void testGetParametersShouldContainSystemSettingsURL() {
+		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
+
+		ddmFormField.setProperty("showMaximumRepetitionsInfo", true);
+
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, createDDMFormFieldRenderingContext());
+
+		String systemSettingsURL = String.valueOf(
+			parameters.get("systemSettingsURL"));
+
+		Assert.assertThat(
+			systemSettingsURL,
+			CoreMatchers.containsString(
+				"param_factoryPid=com.liferay.dynamic.data.mapping.form.web." +
+					"internal.configuration.DDMFormWebConfiguration"));
+		Assert.assertThat(
+			systemSettingsURL,
+			CoreMatchers.containsString(
+				"param_mvcRenderCommandName=/configuration_admin" +
+					"/edit_configuration"));
 	}
 
 	@Test

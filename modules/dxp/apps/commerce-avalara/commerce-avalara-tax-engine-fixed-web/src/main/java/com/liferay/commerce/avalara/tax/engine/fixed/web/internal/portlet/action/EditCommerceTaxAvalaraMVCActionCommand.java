@@ -123,9 +123,7 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 
 		String accountNumber = ParamUtil.getString(
 			actionRequest, "accountNumber");
-
 		String licenseKey = ParamUtil.getString(actionRequest, "licenseKey");
-
 		String serviceURL = ParamUtil.getString(actionRequest, "serviceURL");
 
 		_commerceAvalaraConnector.verifyConnection(

@@ -18,7 +18,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useIsMounted, useStateSafe} from 'frontend-js-react-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import AppContext from '../../AppContext.es';
 import useLoad from '../../hooks/useLoad.es';
@@ -49,29 +49,31 @@ export default function MultiPanelSidebar({
 	const [hasError, setHasError] = useStateSafe(false);
 	const isMounted = useIsMounted();
 	const load = useLoad();
+	const sidebarPanelsRef = useRef(sidebarPanels);
 
 	const [panelComponents, setPanelComponents] = useState([]);
 
 	useEffect(() => {
-		const panelPromises = Object.values(sidebarPanels).map((sidebarPanel) =>
-			load(sidebarPanel.sidebarPanelId, sidebarPanel.pluginEntryPoint)
-				.then((Plugin) => {
-					const instance = new Plugin(
-						{
-							dispatch,
-							panel: sidebarPanel,
-							sidebarOpen: true,
-							sidebarPanelId: sidebarPanel.sidebarPanelId,
-						},
-						sidebarPanel
-					);
+		const panelPromises = Object.values(sidebarPanelsRef.current).map(
+			(sidebarPanel) =>
+				load(sidebarPanel.sidebarPanelId, sidebarPanel.pluginEntryPoint)
+					.then((Plugin) => {
+						const instance = new Plugin(
+							{
+								dispatch,
+								panel: sidebarPanel,
+								sidebarOpen: true,
+								sidebarPanelId: sidebarPanel.sidebarPanelId,
+							},
+							sidebarPanel
+						);
 
-					return {
-						Component: () => instance.renderSidebar(),
-						sidebarPanelId: sidebarPanel.sidebarPanelId,
-					};
-				})
-				.catch((error) => console.error(error))
+						return {
+							Component: () => instance.renderSidebar(),
+							sidebarPanelId: sidebarPanel.sidebarPanelId,
+						};
+					})
+					.catch((error) => console.error(error))
 		);
 
 		setPanelComponents([]);
@@ -81,7 +83,7 @@ export default function MultiPanelSidebar({
 				setPanelComponents(result);
 			}
 		});
-	}, [isMounted, sidebarPanels, dispatch, load]);
+	}, [isMounted, dispatch, load]);
 
 	const changeAlertClassName = (styleName) => {
 		const formBuilderMessage = document.querySelector(

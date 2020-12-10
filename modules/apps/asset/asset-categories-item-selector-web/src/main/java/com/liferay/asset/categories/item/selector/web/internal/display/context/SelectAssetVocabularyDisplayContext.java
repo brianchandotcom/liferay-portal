@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.item.selector.web.internal.display.context;
 
+import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryTreeNodeConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
@@ -138,6 +139,9 @@ public class SelectAssetVocabularyDisplayContext {
 
 		portletURL.setParameter(
 			"assetCategoryTreeNodeId", String.valueOf(assetVocabularyId));
+		portletURL.setParameter(
+			"assetCategoryTreeNodeType",
+			AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY);
 		portletURL.setParameter(
 			"backURL",
 			ParamUtil.getString(

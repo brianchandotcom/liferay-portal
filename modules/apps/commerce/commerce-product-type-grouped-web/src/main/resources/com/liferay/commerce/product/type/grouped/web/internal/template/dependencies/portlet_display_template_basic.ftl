@@ -123,14 +123,14 @@
 			<div class="nav-tabs-centered">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item" role="presentation">
-						<a class="active nav-link" aria-controls="<@portlet.namespace />description" aria-expanded="true" data-toggle="tab" href="#<@portlet.namespace />description" role="tab">
+						<a aria-controls="<@portlet.namespace />description" aria-expanded="true" class="active nav-link" data-toggle="tab" href="#<@portlet.namespace />description" role="tab">
 							${languageUtil.get(resourceBundle, "description")}
 						</a>
 					</li>
 
 					<#if groupedCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" aria-controls="<@portlet.namespace />specification" aria-expanded="false" data-toggle="tab" href="#<@portlet.namespace />specification" role="tab">
+							<a aria-controls="<@portlet.namespace />specification" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<@portlet.namespace />specification" role="tab">
 								${languageUtil.get(resourceBundle, "specification-options")}
 							</a>
 						</li>
@@ -138,7 +138,7 @@
 
 					<#if cpAttachmentFileEntries?has_content>
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" aria-controls="<@portlet.namespace />attachments" aria-expanded="false" data-toggle="tab" href="#<@portlet.namespace />attachments" role="tab">
+							<a aria-controls="<@portlet.namespace />attachments" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<@portlet.namespace />attachments" role="tab">
 								${languageUtil.get(resourceBundle, "attachments")}
 							</a>
 						</li>

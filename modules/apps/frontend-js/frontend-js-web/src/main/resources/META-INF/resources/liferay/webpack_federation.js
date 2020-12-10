@@ -56,10 +56,9 @@
 	 * Log messages if `explain resolutions` option is turned on.
 	 */
 	function explain(...things) {
-		// Until we get to the end of webpack 5 migration we will log all
-		// messages no matter what is configured. Once finished, we will only
-		// write when the old existing `explain resolutions` option is on.
-		console.log(...things);
+		if (Liferay.EXPLAIN_RESOLUTIONS) {
+			console.log(...things);
+		}
 	}
 
 	/**

@@ -18,15 +18,22 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Alejandro Tardín
@@ -38,6 +45,26 @@ public class DLVideoExternalShortcutResolverTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader("Host", _HOST);
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
+	}
 
 	@Test
 	public void testResolveFromFacebook() {
@@ -68,8 +95,8 @@ public class DLVideoExternalShortcutResolverTest {
 			StringBundler.concat(
 				"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
 				"height=\"315\" src=\"https://player.twitch.tv",
-				"/?autoplay=false&video=VIDEO_ID&parent=\" scrolling=\"no\" ",
-				"width=\"560\" ></iframe>"),
+				"/?autoplay=false&video=VIDEO_ID&parent=", _HOST,
+				"\" scrolling=\"no\" width=\"560\" ></iframe>"),
 			_getEmbeddableHTML("https://www.twitch.tv/videos/VIDEO_ID"));
 	}
 
@@ -130,6 +157,8 @@ public class DLVideoExternalShortcutResolverTest {
 
 		return dlVideoExternalShortcut.getEmbeddableHTML();
 	}
+
+	private static final String _HOST = "localhost";
 
 	@Inject
 	private DLVideoExternalShortcutResolver _dlVideoExternalShortcutResolver;

@@ -20,7 +20,7 @@ package com.liferay.commerce.avalara.connector;
 public interface CommerceAvalaraConnector {
 
 	public void verifyConnection(
-			String accountNumber, String licenseKey, String serviceUrl)
+			String accountNumber, String licenseKey, String serviceURL)
 		throws Exception;
 
 }

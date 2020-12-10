@@ -36,12 +36,12 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 
 	@Override
 	public void verifyConnection(
-			String accountNumber, String licenseKey, String serviceUrl)
+			String accountNumber, String licenseKey, String serviceURL)
 		throws Exception {
 
 		try {
 			AvaTaxClient avaTaxClient = _getAvaTaxClient(
-				accountNumber, licenseKey, serviceUrl);
+				accountNumber, licenseKey, serviceURL);
 
 			PingResultModel pingResultModel = avaTaxClient.ping();
 
@@ -55,12 +55,12 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 	}
 
 	private AvaTaxClient _getAvaTaxClient(
-		String accountNumber, String licenseKey, String serviceUrl) {
+		String accountNumber, String licenseKey, String serviceURL) {
 
 		AvaTaxClient avaTaxClient = new AvaTaxClient(
 			CommerceAvalaraConstants.APP_MACHINE,
 			CommerceAvalaraConstants.APP_VERSION,
-			CommerceAvalaraConstants.MACHINE_NAME, serviceUrl);
+			CommerceAvalaraConstants.MACHINE_NAME, serviceURL);
 
 		StringBundler sb = new StringBundler(3);
 

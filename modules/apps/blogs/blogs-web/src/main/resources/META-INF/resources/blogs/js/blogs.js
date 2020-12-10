@@ -61,9 +61,7 @@ export default class Blogs {
 		};
 
 		AUI().use('liferay-form', () => {
-			this._rootNode = document.getElementById(
-				`${this._config.namespace}fm`
-			);
+			this._rootNode = this._getElement('fm');
 
 			this._listeners = new EventListener();
 
@@ -102,7 +100,7 @@ export default class Blogs {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
 		form.addRule(
-			document.getElementById(`${this._config.namespace}title`),
+			this._getElement('title'),
 			'required',
 			this._config.strings.titleRequiredAtPublish
 		);
@@ -111,10 +109,7 @@ export default class Blogs {
 	_beforeSaveBtnClick() {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
-		form.removeRule(
-			document.getElementById(`${this._config.namespace}title`),
-			'required'
-		);
+		form.removeRule(this._getElement('title'), 'required');
 	}
 
 	_bindUI() {
@@ -131,9 +126,7 @@ export default class Blogs {
 			this
 		);
 
-		const publishButton = document.getElementById(
-			`${this._config.namespace}publishButton`
-		);
+		const publishButton = this._getElement('publishButton');
 
 		if (publishButton) {
 			listeners.add(publishButton, STR_CLICK, () => {
@@ -142,9 +135,7 @@ export default class Blogs {
 			});
 		}
 
-		const saveButton = document.getElementById(
-			`${this._config.namespace}saveButton`
-		);
+		const saveButton = this._getElement('saveButton');
 
 		if (saveButton) {
 			listeners.add(saveButton, STR_CLICK, () => {
@@ -209,9 +200,7 @@ export default class Blogs {
 		this._shortenDescription = target.value === 'false';
 
 		if (this._shortenDescription) {
-			this._customDescription = document.getElementById(
-				`${this._config.namespace}description`
-			).value;
+			this._customDescription = this._getElement('description').value;
 
 			description = window[
 				`${this._config.namespace}contentEditor`
@@ -246,6 +235,10 @@ export default class Blogs {
 		return finalImages;
 	}
 
+	_getElement(id) {
+		return document.getElementById(`${this._config.namespace}${id}`);
+	}
+
 	_getPrincipalForm() {
 		return this._rootNode;
 	}
@@ -273,9 +266,7 @@ export default class Blogs {
 	}
 
 	_onChangeURLOptions() {
-		const urlTitleInput = document.getElementById(
-			`${this._config.namespace}urlTitle`
-		);
+		const urlTitleInput = this._getElement('urlTitle');
 		const urlTitleInputLabel = document.querySelector(
 			`[for="${this._config.namespace}urlTitle"]`
 		);
@@ -283,9 +274,7 @@ export default class Blogs {
 		if (this._automaticURL()) {
 			this._lastCustomURL = urlTitleInput.value;
 
-			const title = document.getElementById(
-				`${this._config.namespace}title`
-			).value;
+			const title = this._getElement('title').value;
 
 			this.updateFriendlyURL(title);
 
@@ -322,16 +311,14 @@ export default class Blogs {
 		const coverImageCaption = window[
 			`${namespace}coverImageCaptionEditor`
 		].getHTML();
-		const subtitle = document.getElementById(`${namespace}subtitle`).value;
-		const title = document.getElementById(`${namespace}title`).value;
+		const subtitle = this._getElement('subtitle').value;
+		const title = this._getElement('title').value;
 
 		const automaticURL = document.querySelector(
 			`input[name=${namespace}automaticURL]:checked`
 		).value;
 
-		const urlTitle = automaticURL
-			? ''
-			: document.getElementById(`${namespace}urlTitle`).value;
+		const urlTitle = automaticURL ? '' : this._getElement('urlTitle').value;
 
 		const form = this._getPrincipalForm();
 
@@ -347,20 +334,12 @@ export default class Blogs {
 			if (hasData && hasChanged) {
 				const strings = this._config.strings;
 
-				const saveStatus = document.getElementById(
-					`${namespace}saveStatus`
-				);
+				const saveStatus = this._getElement('saveStatus');
 
-				const allowPingbacks = document.getElementById(
-					`${namespace}allowPingbacks`
-				);
-				const allowTrackbacks = document.getElementById(
-					`${namespace}allowTrackbacks`
-				);
+				const allowPingbacks = this._getElement('allowPingbacks');
+				const allowTrackbacks = this._getElement('allowTrackbacks');
 
-				const assetTagNames = document.getElementById(
-					`${namespace}assetTagNames`
-				);
+				const assetTagNames = this._getElement('assetTagNames');
 
 				const data = nsObj(
 					{
@@ -370,34 +349,27 @@ export default class Blogs {
 						cmd: constants.ADD,
 						content,
 						coverImageCaption,
-						coverImageFileEntryCropRegion: document.getElementById(
-							`${namespace}coverImageFileEntryCropRegion`
+						coverImageFileEntryCropRegion: this._getElement(
+							'coverImageFileEntryCropRegion'
 						).value,
-						coverImageFileEntryId: document.getElementById(
-							`${namespace}coverImageFileEntryId`
+						coverImageFileEntryId: this._getElement(
+							'coverImageFileEntryId'
 						).value,
-						displayDateAmPm: document.getElementById(
-							`${namespace}displayDateAmPm`
-						).value,
-						displayDateDay: document.getElementById(
-							`${namespace}displayDateDay`
-						).value,
-						displayDateHour: document.getElementById(
-							`${namespace}displayDateHour`
-						).value,
-						displayDateMinute: document.getElementById(
-							`${namespace}displayDateMinute`
-						).value,
-						displayDateMonth: document.getElementById(
-							`${namespace}displayDateMonth`
-						).value,
-						displayDateYear: document.getElementById(
-							`${namespace}displayDateYear`
-						).value,
-						entryId: document.getElementById(`${namespace}entryId`)
+						displayDateAmPm: this._getElement('displayDateAmPm')
 							.value,
-						referringPortletResource: document.getElementById(
-							`${namespace}referringPortletResource`
+						displayDateDay: this._getElement('displayDateDay')
+							.value,
+						displayDateHour: this._getElement('displayDateHour')
+							.value,
+						displayDateMinute: this._getElement('displayDateMinute')
+							.value,
+						displayDateMonth: this._getElement('displayDateMonth')
+							.value,
+						displayDateYear: this._getElement('displayDateYear')
+							.value,
+						entryId: this._getElement('entryId').value,
+						referringPortletResource: this._getElement(
+							'referringPortletResource'
 						).value,
 						subtitle,
 						title,
@@ -416,7 +388,7 @@ export default class Blogs {
 				});
 
 				Liferay.Util.toggleDisabled(
-					document.getElementById(`${namespace}publishButton`),
+					this._getElement('publishButton'),
 					true
 				);
 
@@ -440,13 +412,10 @@ export default class Blogs {
 							saveStatus.classList.remove('hide');
 							saveStatus.hidden = false;
 
-							document.getElementById(
-								`${namespace}coverImageFileEntryId`
-							).value = message.coverImageFileEntryId;
+							this._getElement('coverImageFileEntryId').value =
+								message.coverImageFileEntryId;
 
-							document.getElementById(
-								`${namespace}entryId`
-							).value = message.entryId;
+							this._getElement('entryId').value = message.entryId;
 
 							if (message.content) {
 								this._updateContentImages(
@@ -474,9 +443,7 @@ export default class Blogs {
 						}
 
 						Liferay.Util.toggleDisabled(
-							document.getElementById(
-								`${namespace}publishButton`
-							),
+							this._getElement('publishButton'),
 							false
 						);
 					})
@@ -486,15 +453,13 @@ export default class Blogs {
 			}
 		}
 		else {
-			document.getElementById(
-				`${namespace}${constants.CMD}`
-			).value = entry ? constants.UPDATE : constants.ADD;
+			this._getElement(constants.CMD).value = entry
+				? constants.UPDATE
+				: constants.ADD;
 
-			document.getElementById(`${namespace}content`).value = content;
-			document.getElementById(
-				`${namespace}coverImageCaption`
-			).value = coverImageCaption;
-			document.getElementById(`${namespace}workflowAction`).value = draft
+			this._getElement('content').value = content;
+			this._getElement('coverImageCaption').value = coverImageCaption;
+			this._getElement('workflowAction').value = draft
 				? constants.ACTION_SAVE_DRAFT
 				: constants.ACTION_PUBLISH;
 
@@ -582,9 +547,7 @@ export default class Blogs {
 	}
 
 	_updateStatus(text) {
-		const saveStatus = document.getElementById(
-			`${this._config.namespace}saveStatus`
-		);
+		const saveStatus = this._getElement('saveStatus');
 
 		if (saveStatus) {
 			saveStatus.innerHTML = text;
@@ -610,9 +573,7 @@ export default class Blogs {
 			description = this._shorten(text);
 		}
 
-		const descriptionNode = document.getElementById(
-			`${this._config.namespace}description`
-		);
+		const descriptionNode = this._getElement('description');
 
 		descriptionNode.value = description;
 
@@ -639,9 +600,7 @@ export default class Blogs {
 	}
 
 	updateFriendlyURL(title) {
-		const urlTitleInput = document.getElementById(
-			`${this._config.namespace}urlTitle`
-		);
+		const urlTitleInput = this._getElement('urlTitle');
 
 		const friendlyURLEmpty = !urlTitleInput.value;
 

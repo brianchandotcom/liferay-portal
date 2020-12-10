@@ -46,7 +46,7 @@ public class DLVideoRendererImpl implements DLVideoRenderer {
 			_dlVideoExternalShortcutResolver.resolve(fileEntry);
 
 		if (dlVideoExternalShortcut != null) {
-			return dlVideoExternalShortcut.getEmbeddableHTML();
+			return dlVideoExternalShortcut.renderHTML(httpServletRequest);
 		}
 
 		return StringBundler.concat(

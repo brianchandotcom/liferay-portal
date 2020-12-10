@@ -24,6 +24,8 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -92,12 +94,6 @@ public class DLVideoExternalShortcutResolverImpl
 			}
 
 			@Override
-			public String getEmbeddableHTML() {
-				return dlVideoExternalShortcutMetadataHelper.getFieldValue(
-					DLVideoConstants.DDM_FIELD_NAME_HTML);
-			}
-
-			@Override
 			public String getThumbnailURL() {
 				return dlVideoExternalShortcutMetadataHelper.getFieldValue(
 					DLVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL);
@@ -113,6 +109,12 @@ public class DLVideoExternalShortcutResolverImpl
 			public String getURL() {
 				return dlVideoExternalShortcutMetadataHelper.getFieldValue(
 					DLVideoConstants.DDM_FIELD_NAME_URL);
+			}
+
+			@Override
+			public String renderHTML(HttpServletRequest httpServletRequest) {
+				return dlVideoExternalShortcutMetadataHelper.getFieldValue(
+					DLVideoConstants.DDM_FIELD_NAME_HTML);
 			}
 
 		};

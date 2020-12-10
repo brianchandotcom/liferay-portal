@@ -18,16 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,26 +41,6 @@ public class DLVideoExternalShortcutResolverTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addHeader("Host", _HOST);
-
-		serviceContext.setRequest(mockHttpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-	}
-
-	@After
-	public void tearDown() {
-		ServiceContextThreadLocal.popServiceContext();
-	}
-
 	@Test
 	public void testResolveFromFacebook() {
 		Assert.assertEquals(
@@ -76,7 +51,7 @@ public class DLVideoExternalShortcutResolverTest {
 				"href=https://www.facebook.com/watch/?v=VIDEO_ID&show_text=0&",
 				"width=560\" scrolling=\"no\" style=\"border: none; overflow: ",
 				"hidden;\" width=\"560\"></iframe>"),
-			_getEmbeddableHTML("https://www.facebook.com/watch/?v=VIDEO_ID"));
+			_renderHTML("https://www.facebook.com/watch/?v=VIDEO_ID"));
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
@@ -85,8 +60,7 @@ public class DLVideoExternalShortcutResolverTest {
 				"href=https://www.facebook.com/USER_ID/videos/VIDEO_ID&",
 				"show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
 				"none; overflow: hidden;\" width=\"560\"></iframe>"),
-			_getEmbeddableHTML(
-				"https://www.facebook.com/USER_ID/videos/VIDEO_ID"));
+			_renderHTML("https://www.facebook.com/USER_ID/videos/VIDEO_ID"));
 	}
 
 	@Test
@@ -97,7 +71,7 @@ public class DLVideoExternalShortcutResolverTest {
 				"height=\"315\" src=\"https://player.twitch.tv",
 				"/?autoplay=false&video=VIDEO_ID&parent=", _HOST,
 				"\" scrolling=\"no\" width=\"560\" ></iframe>"),
-			_getEmbeddableHTML("https://www.twitch.tv/videos/VIDEO_ID"));
+			_renderHTML("https://www.twitch.tv/videos/VIDEO_ID"));
 	}
 
 	@Test
@@ -108,22 +82,19 @@ public class DLVideoExternalShortcutResolverTest {
 			"/VIDEO_ID\" webkitallowfullscreen width=\"560\"></iframe>");
 
 		Assert.assertEquals(
-			expectedIframe, _getEmbeddableHTML("https://vimeo.com/VIDEO_ID"));
+			expectedIframe, _renderHTML("https://vimeo.com/VIDEO_ID"));
 		Assert.assertEquals(
 			expectedIframe,
-			_getEmbeddableHTML(
-				"https://vimeo.com/album/ALBUM_ID/video/VIDEO_ID"));
+			_renderHTML("https://vimeo.com/album/ALBUM_ID/video/VIDEO_ID"));
 		Assert.assertEquals(
 			expectedIframe,
-			_getEmbeddableHTML(
-				"https://vimeo.com/channels/CHANNEL_ID/VIDEO_ID"));
+			_renderHTML("https://vimeo.com/channels/CHANNEL_ID/VIDEO_ID"));
 		Assert.assertEquals(
 			expectedIframe,
-			_getEmbeddableHTML(
-				"https://vimeo.com/groups/GROUP_ID/videos/VIDEO_ID"));
+			_renderHTML("https://vimeo.com/groups/GROUP_ID/videos/VIDEO_ID"));
 		Assert.assertEquals(
 			expectedIframe,
-			_getEmbeddableHTML(
+			_renderHTML(
 				"https://vimeo.com/showcase/SHOWCASE_ID/video/VIDEO_ID"));
 	}
 
@@ -137,9 +108,9 @@ public class DLVideoExternalShortcutResolverTest {
 
 		Assert.assertEquals(
 			expectedIframe,
-			_getEmbeddableHTML("https://www.youtube.com/watch?v=VIDEO_ID"));
+			_renderHTML("https://www.youtube.com/watch?v=VIDEO_ID"));
 		Assert.assertEquals(
-			expectedIframe, _getEmbeddableHTML("https://youtu.be/VIDEO_ID"));
+			expectedIframe, _renderHTML("https://youtu.be/VIDEO_ID"));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -147,15 +118,19 @@ public class DLVideoExternalShortcutResolverTest {
 				"height=\"315\" frameborder=\"0\" ",
 				"src=\"https://www.youtube.com/embed",
 				"/VIDEO_ID?rel=0&start=61\" width=\"560\"></iframe>"),
-			_getEmbeddableHTML(
-				"https://www.youtube.com/watch?v=VIDEO_ID&t=61"));
+			_renderHTML("https://www.youtube.com/watch?v=VIDEO_ID&t=61"));
 	}
 
-	private String _getEmbeddableHTML(String url) {
+	private String _renderHTML(String url) {
 		DLVideoExternalShortcut dlVideoExternalShortcut =
 			_dlVideoExternalShortcutResolver.resolve(url);
 
-		return dlVideoExternalShortcut.getEmbeddableHTML();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader("Host", _HOST);
+
+		return dlVideoExternalShortcut.renderHTML(mockHttpServletRequest);
 	}
 
 	private static final String _HOST = "localhost";

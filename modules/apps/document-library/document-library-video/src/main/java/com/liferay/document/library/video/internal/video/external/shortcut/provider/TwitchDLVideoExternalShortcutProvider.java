@@ -20,8 +20,6 @@ import com.liferay.frontend.editor.embed.EditorEmbedProvider;
 import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,11 +58,6 @@ public class TwitchDLVideoExternalShortcutProvider
 			}
 
 			@Override
-			public String getEmbeddableHTML() {
-				return StringUtil.replace(getTpl(), "{embedId}", twitchVideoId);
-			}
-
-			@Override
 			public String getThumbnailURL() {
 				return null;
 			}
@@ -79,6 +72,13 @@ public class TwitchDLVideoExternalShortcutProvider
 				return url;
 			}
 
+			@Override
+			public String renderHTML(HttpServletRequest httpServletRequest) {
+				return StringUtil.replace(
+					_getTpl(_portal.getHost(httpServletRequest)), "{embedId}",
+					twitchVideoId);
+			}
+
 		};
 	}
 
@@ -89,12 +89,7 @@ public class TwitchDLVideoExternalShortcutProvider
 
 	@Override
 	public String getTpl() {
-		return StringBundler.concat(
-			"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
-			"height=\"315\" ",
-			"src=\"https://player.twitch.tv/?autoplay=false&video={embedId}",
-			"&parent=", _getHost(),
-			"\" scrolling=\"no\" width=\"560\" ></iframe>");
+		return _getTpl(StringPool.BLANK);
 	}
 
 	@Override
@@ -102,19 +97,12 @@ public class TwitchDLVideoExternalShortcutProvider
 		return new String[] {_urlPattern.pattern()};
 	}
 
-	private String _getHost() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-			if (httpServletRequest != null) {
-				return _portal.getHost(httpServletRequest);
-			}
-		}
-
-		return StringPool.BLANK;
+	private String _getTpl(String host) {
+		return StringBundler.concat(
+			"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
+			"height=\"315\" ",
+			"src=\"https://player.twitch.tv/?autoplay=false&video={embedId}",
+			"&parent=", host, "\" scrolling=\"no\" width=\"560\" ></iframe>");
 	}
 
 	private String _getTwitchVideoId(String url) {

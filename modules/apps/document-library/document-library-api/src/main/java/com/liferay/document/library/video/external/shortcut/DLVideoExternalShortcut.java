@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.video.external.shortcut;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Alejandro Tardín
  */
@@ -21,12 +23,12 @@ public interface DLVideoExternalShortcut {
 
 	public String getDescription();
 
-	public String getEmbeddableHTML();
-
 	public String getThumbnailURL();
 
 	public String getTitle();
 
 	public String getURL();
+
+	public String renderHTML(HttpServletRequest httpServletRequest);
 
 }

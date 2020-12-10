@@ -27,6 +27,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -53,11 +55,6 @@ public class FacebookDLVideoExternalShortcutProvider
 			}
 
 			@Override
-			public String getEmbeddableHTML() {
-				return StringUtil.replace(getTpl(), "{embedId}", url);
-			}
-
-			@Override
 			public String getThumbnailURL() {
 				return null;
 			}
@@ -70,6 +67,11 @@ public class FacebookDLVideoExternalShortcutProvider
 			@Override
 			public String getURL() {
 				return url;
+			}
+
+			@Override
+			public String renderHTML(HttpServletRequest httpServletRequest) {
+				return StringUtil.replace(getTpl(), "{embedId}", url);
 			}
 
 		};

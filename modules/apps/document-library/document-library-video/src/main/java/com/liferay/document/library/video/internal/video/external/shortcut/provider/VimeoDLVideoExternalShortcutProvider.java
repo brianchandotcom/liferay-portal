@@ -36,6 +36,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,12 +86,6 @@ public class VimeoDLVideoExternalShortcutProvider
 				}
 
 				@Override
-				public String getEmbeddableHTML() {
-					return StringUtil.replace(
-						getTpl(), "{embedId}", vimeoVideoId);
-				}
-
-				@Override
 				public String getThumbnailURL() {
 					return jsonObject.getString("thumbnail_url");
 				}
@@ -102,6 +98,14 @@ public class VimeoDLVideoExternalShortcutProvider
 				@Override
 				public String getURL() {
 					return url;
+				}
+
+				@Override
+				public String renderHTML(
+					HttpServletRequest httpServletRequest) {
+
+					return StringUtil.replace(
+						getTpl(), "{embedId}", vimeoVideoId);
 				}
 
 			};

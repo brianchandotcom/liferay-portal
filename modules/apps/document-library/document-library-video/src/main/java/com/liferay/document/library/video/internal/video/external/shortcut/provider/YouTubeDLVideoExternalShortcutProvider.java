@@ -37,6 +37,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -86,13 +88,6 @@ public class YouTubeDLVideoExternalShortcutProvider
 				}
 
 				@Override
-				public String getEmbeddableHTML() {
-					return StringUtil.replace(
-						_getTpl(_http.getParameter(url, "t", false)),
-						"{embedId}", youTubeVideoId);
-				}
-
-				@Override
 				public String getThumbnailURL() {
 					return jsonObject.getString("thumbnail_url");
 				}
@@ -105,6 +100,15 @@ public class YouTubeDLVideoExternalShortcutProvider
 				@Override
 				public String getURL() {
 					return url;
+				}
+
+				@Override
+				public String renderHTML(
+					HttpServletRequest httpServletRequest) {
+
+					return StringUtil.replace(
+						_getTpl(_http.getParameter(url, "t", false)),
+						"{embedId}", youTubeVideoId);
 				}
 
 			};

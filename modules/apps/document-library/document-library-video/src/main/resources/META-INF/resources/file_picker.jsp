@@ -38,7 +38,7 @@ String onFilePickCallback = (String)request.getAttribute(DLVideoWebKeys.ON_FILE_
 		<div class="video-preview-aspect-ratio">
 			<c:choose>
 				<c:when test="<%= dlVideoExternalShortcut != null %>">
-					<%= dlVideoExternalShortcut.getEmbeddableHTML() %>
+					<%= dlVideoExternalShortcut.renderHTML(request) %>
 				</c:when>
 				<c:otherwise>
 					<div class="video-preview-placeholder">
@@ -57,7 +57,7 @@ String onFilePickCallback = (String)request.getAttribute(DLVideoWebKeys.ON_FILE_
 		module="js/DLVideoExternalShortcutDLFilePicker"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"dlVideoExternalShortcutHTML", (dlVideoExternalShortcut != null) ? dlVideoExternalShortcut.getEmbeddableHTML() : ""
+				"dlVideoExternalShortcutHTML", (dlVideoExternalShortcut != null) ? dlVideoExternalShortcut.renderHTML(request) : ""
 			).put(
 				"dlVideoExternalShortcutURL", (dlVideoExternalShortcut != null) ? dlVideoExternalShortcut.getURL() : ""
 			).put(

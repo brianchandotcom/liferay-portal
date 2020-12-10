@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -65,7 +66,8 @@ public class GetDLVideoExternalShortcutFieldsMVCResourceCommand
 				).put(
 					DLVideoConstants.DDM_FIELD_NAME_HTML,
 					GetterUtil.getString(
-						dlVideoExternalShortcut.getEmbeddableHTML())
+						dlVideoExternalShortcut.renderHTML(
+							_portal.getHttpServletRequest(resourceRequest)))
 				).put(
 					DLVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL,
 					GetterUtil.getString(
@@ -82,5 +84,8 @@ public class GetDLVideoExternalShortcutFieldsMVCResourceCommand
 
 	@Reference
 	private DLVideoExternalShortcutResolver _dlVideoExternalShortcutResolver;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -843,7 +843,7 @@ public class JournalConverterImpl implements JournalConverter {
 				groupId, privateLayout, layoutId);
 
 			if (layout != null) {
-				jsonObject.put("label", layout.getName(defaultLocale));
+				jsonObject.put("name", layout.getName(defaultLocale));
 			}
 		}
 

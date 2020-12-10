@@ -59,12 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MBMailingListLocalServiceImpl
 	extends MBMailingListLocalServiceBaseImpl {
 
-	@Activate
-	public void activate() {
-		_unregister = _liferayJSONDeserializationWhitelist.register(
-			MailingListRequest.class.getName());
-	}
-
 	@Override
 	public MBMailingList addMailingList(
 			long userId, long groupId, long categoryId, String emailAddress,
@@ -122,11 +116,6 @@ public class MBMailingListLocalServiceImpl
 		}
 
 		return mailingList;
-	}
-
-	@Deactivate
-	public void deactivate() throws Exception {
-		_unregister.close();
 	}
 
 	@Override
@@ -231,6 +220,25 @@ public class MBMailingListLocalServiceImpl
 		}
 
 		return mailingList;
+	}
+
+	@Activate
+	protected void activate() {
+		_unregister = _liferayJSONDeserializationWhitelist.register(
+			MailingListRequest.class.getName());
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		try {
+			_unregister.close();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	protected String getSchedulerGroupName(MBMailingList mailingList) {

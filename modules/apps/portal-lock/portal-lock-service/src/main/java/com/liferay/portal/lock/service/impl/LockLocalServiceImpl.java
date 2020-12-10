@@ -445,7 +445,10 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
+		super.deactivate();
+
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
 		}

@@ -44,8 +44,9 @@ create table AccountGroup (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null,
-	description VARCHAR(75) null
+	defaultAccountGroup BOOLEAN,
+	description VARCHAR(75) null,
+	name VARCHAR(75) null
 );
 
 create table AccountGroupAccountEntryRel (

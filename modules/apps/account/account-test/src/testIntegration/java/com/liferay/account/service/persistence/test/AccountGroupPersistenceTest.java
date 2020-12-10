@@ -138,9 +138,11 @@ public class AccountGroupPersistenceTest {
 
 		newAccountGroup.setModifiedDate(RandomTestUtil.nextDate());
 
-		newAccountGroup.setName(RandomTestUtil.randomString());
+		newAccountGroup.setDefaultAccountGroup(RandomTestUtil.randomBoolean());
 
 		newAccountGroup.setDescription(RandomTestUtil.randomString());
+
+		newAccountGroup.setName(RandomTestUtil.randomString());
 
 		_accountGroups.add(_persistence.update(newAccountGroup));
 
@@ -170,10 +172,13 @@ public class AccountGroupPersistenceTest {
 			Time.getShortTimestamp(existingAccountGroup.getModifiedDate()),
 			Time.getShortTimestamp(newAccountGroup.getModifiedDate()));
 		Assert.assertEquals(
-			existingAccountGroup.getName(), newAccountGroup.getName());
+			existingAccountGroup.isDefaultAccountGroup(),
+			newAccountGroup.isDefaultAccountGroup());
 		Assert.assertEquals(
 			existingAccountGroup.getDescription(),
 			newAccountGroup.getDescription());
+		Assert.assertEquals(
+			existingAccountGroup.getName(), newAccountGroup.getName());
 	}
 
 	@Test
@@ -181,6 +186,14 @@ public class AccountGroupPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByC_D() throws Exception {
+		_persistence.countByC_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_D(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -219,8 +232,8 @@ public class AccountGroupPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"AccountGroup", "mvccVersion", true, "externalReferenceCode", true,
 			"accountGroupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"defaultAccountGroup", true, "description", true, "name", true);
 	}
 
 	@Test
@@ -518,9 +531,11 @@ public class AccountGroupPersistenceTest {
 
 		accountGroup.setModifiedDate(RandomTestUtil.nextDate());
 
-		accountGroup.setName(RandomTestUtil.randomString());
+		accountGroup.setDefaultAccountGroup(RandomTestUtil.randomBoolean());
 
 		accountGroup.setDescription(RandomTestUtil.randomString());
+
+		accountGroup.setName(RandomTestUtil.randomString());
 
 		_accountGroups.add(_persistence.update(accountGroup));
 

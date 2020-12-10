@@ -50,8 +50,9 @@ public class AccountGroupWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
+		attributes.put("defaultAccountGroup", isDefaultAccountGroup());
 		attributes.put("description", getDescription());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -107,16 +108,23 @@ public class AccountGroupWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
+		Boolean defaultAccountGroup = (Boolean)attributes.get(
+			"defaultAccountGroup");
 
-		if (name != null) {
-			setName(name);
+		if (defaultAccountGroup != null) {
+			setDefaultAccountGroup(defaultAccountGroup);
 		}
 
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 	}
 
@@ -148,6 +156,16 @@ public class AccountGroupWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the default account group of this account group.
+	 *
+	 * @return the default account group of this account group
+	 */
+	@Override
+	public boolean getDefaultAccountGroup() {
+		return model.getDefaultAccountGroup();
 	}
 
 	/**
@@ -240,6 +258,16 @@ public class AccountGroupWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this account group is default account group.
+	 *
+	 * @return <code>true</code> if this account group is default account group; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDefaultAccountGroup() {
+		return model.isDefaultAccountGroup();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -273,6 +301,16 @@ public class AccountGroupWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets whether this account group is default account group.
+	 *
+	 * @param defaultAccountGroup the default account group of this account group
+	 */
+	@Override
+	public void setDefaultAccountGroup(boolean defaultAccountGroup) {
+		model.setDefaultAccountGroup(defaultAccountGroup);
 	}
 
 	/**

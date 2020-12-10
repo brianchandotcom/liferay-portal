@@ -41,8 +41,9 @@ public class AccountGroupSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setName(model.getName());
+		soapModel.setDefaultAccountGroup(model.isDefaultAccountGroup());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setName(model.getName());
 
 		return soapModel;
 	}
@@ -160,12 +161,16 @@ public class AccountGroupSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getName() {
-		return _name;
+	public boolean getDefaultAccountGroup() {
+		return _defaultAccountGroup;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public boolean isDefaultAccountGroup() {
+		return _defaultAccountGroup;
+	}
+
+	public void setDefaultAccountGroup(boolean defaultAccountGroup) {
+		_defaultAccountGroup = defaultAccountGroup;
 	}
 
 	public String getDescription() {
@@ -176,6 +181,14 @@ public class AccountGroupSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private long _accountGroupId;
@@ -184,7 +197,8 @@ public class AccountGroupSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _name;
+	private boolean _defaultAccountGroup;
 	private String _description;
+	private String _name;
 
 }

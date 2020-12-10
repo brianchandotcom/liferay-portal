@@ -77,7 +77,7 @@ public class AccountGroupCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,10 +95,12 @@ public class AccountGroupCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
+		sb.append(", defaultAccountGroup=");
+		sb.append(defaultAccountGroup);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -142,18 +144,20 @@ public class AccountGroupCacheModel
 			accountGroupImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (name == null) {
-			accountGroupImpl.setName("");
-		}
-		else {
-			accountGroupImpl.setName(name);
-		}
+		accountGroupImpl.setDefaultAccountGroup(defaultAccountGroup);
 
 		if (description == null) {
 			accountGroupImpl.setDescription("");
 		}
 		else {
 			accountGroupImpl.setDescription(description);
+		}
+
+		if (name == null) {
+			accountGroupImpl.setName("");
+		}
+		else {
+			accountGroupImpl.setName(name);
 		}
 
 		accountGroupImpl.resetOriginalValues();
@@ -174,8 +178,10 @@ public class AccountGroupCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
+
+		defaultAccountGroup = objectInput.readBoolean();
 		description = objectInput.readUTF();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -205,18 +211,20 @@ public class AccountGroupCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
+		objectOutput.writeBoolean(defaultAccountGroup);
 
 		if (description == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
 		}
 	}
 
@@ -228,7 +236,8 @@ public class AccountGroupCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
+	public boolean defaultAccountGroup;
 	public String description;
+	public String name;
 
 }

@@ -55,6 +55,7 @@ const getRows = (rows, nestedFields) => {
 
 const FieldSet = ({
 	collapsible,
+	ddmStructureId,
 	label,
 	name,
 	nestedFields = [],
@@ -62,6 +63,7 @@ const FieldSet = ({
 	repeatable,
 	rows,
 	showLabel,
+	type,
 	...otherProps
 }) => {
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
@@ -71,11 +73,13 @@ const FieldSet = ({
 	return (
 		<FieldBase
 			{...otherProps}
+			ddmStructureId={ddmStructureId}
 			name={name}
 			readOnly={readOnly}
 			repeatable={collapsible ? false : repeatable}
 			required={false}
 			showLabel={false}
+			type={type}
 		>
 			<div className="ddm-field-types-fieldset__nested">
 				{showLabel && !collapsible && (

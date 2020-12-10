@@ -18,6 +18,7 @@ import com.liferay.headless.admin.workflow.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.RoleUtil;
+import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.WorkflowLogUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -158,6 +159,10 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 						contextAcceptLanguage.getPreferredLocale(), getClass()),
 					workflowLog.getComment());
 				dateCreated = workflowLog.getCreateDate();
+				description = WorkflowLogUtil.getDescription(
+					_language, contextAcceptLanguage.getPreferredLocale(),
+					_portal, _roleLocalService::fetchRole,
+					_userLocalService::fetchUser, workflowLog);
 				id = workflowLog.getWorkflowLogId();
 				person = CreatorUtil.toCreator(
 					_portal,

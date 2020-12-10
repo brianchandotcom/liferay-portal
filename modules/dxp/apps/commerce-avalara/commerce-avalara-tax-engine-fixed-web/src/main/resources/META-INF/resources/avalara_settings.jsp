@@ -20,7 +20,7 @@
 CommerceAvalaraConnectorConfiguration commerceAvalaraConnectorConfiguration = (CommerceAvalaraConnectorConfiguration)request.getAttribute(CommerceAvalaraConnectorConfiguration.class.getName());
 %>
 
-<portlet:actionURL name="editCommerceAvalaraConnector" var="editCommerceAvalaraConnectorActionURL" />
+<portlet:actionURL name="/commerce_tax_methods/edit_commerce_tax_avalara" var="editCommerceAvalaraConnectorActionURL" />
 
 <aui:form action="<%= editCommerceAvalaraConnectorActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

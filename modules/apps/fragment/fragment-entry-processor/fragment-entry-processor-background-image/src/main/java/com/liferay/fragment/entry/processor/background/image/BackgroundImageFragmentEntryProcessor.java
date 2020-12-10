@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.type.WebImage;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -147,17 +148,30 @@ public class BackgroundImageFragmentEntryProcessor
 			}
 
 			if (Validator.isNotNull(value)) {
+				long fileEntryId = 0;
+
 				if (JSONUtil.isValid(value)) {
 					JSONObject valueJSONObject =
 						JSONFactoryUtil.createJSONObject(value);
 
+					fileEntryId = valueJSONObject.getLong("fileEntryId");
+
 					value = valueJSONObject.getString("url", value);
 				}
 
-				element.attr(
-					"style",
-					"background-image: url(" + value +
-						"); background-size: cover");
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("background-image: url(");
+				sb.append(value);
+				sb.append("); background-size: cover;");
+
+				if (fileEntryId > 0) {
+					sb.append("--background-image-file-entry-id:");
+					sb.append(fileEntryId);
+					sb.append(StringPool.SEMICOLON);
+				}
+
+				element.attr("style", sb.toString());
 			}
 		}
 

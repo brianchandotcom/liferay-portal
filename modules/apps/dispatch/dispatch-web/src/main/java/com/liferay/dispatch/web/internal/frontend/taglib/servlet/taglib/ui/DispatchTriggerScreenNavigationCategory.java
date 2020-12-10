@@ -22,7 +22,6 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -92,12 +91,6 @@ public class DispatchTriggerScreenNavigationCategory
 			httpServletRequest, httpServletResponse,
 			"/trigger/dispatch_trigger.jsp");
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
-	)
-	private ModelResourcePermission<DispatchTrigger>
-		_dispatchTriggerModelResourcePermission;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

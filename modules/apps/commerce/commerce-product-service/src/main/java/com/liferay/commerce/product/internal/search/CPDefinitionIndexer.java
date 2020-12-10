@@ -17,6 +17,9 @@ package com.liferay.commerce.product.internal.search;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.media.CommerceMediaResolver;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -61,7 +64,6 @@ import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -757,10 +759,22 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		else if (!cpInstances.isEmpty()) {
 			CPInstance firstCPInstance = cpInstances.get(0);
 
-			BigDecimal lowestPrice = firstCPInstance.getPrice();
+			CommercePriceEntry commercePriceEntry =
+				_commercePriceEntryLocalService.
+					getInstanceBaseCommercePriceEntry(
+						firstCPInstance.getCPInstanceUuid(),
+						CommercePriceListConstants.TYPE_PRICE_LIST);
+
+			BigDecimal lowestPrice = commercePriceEntry.getPrice();
 
 			for (CPInstance cpInstance : cpInstances) {
-				BigDecimal price = cpInstance.getPrice();
+				commercePriceEntry =
+					_commercePriceEntryLocalService.
+						getInstanceBaseCommercePriceEntry(
+							cpInstance.getCPInstanceUuid(),
+							CommercePriceListConstants.TYPE_PRICE_LIST);
+
+				BigDecimal price = commercePriceEntry.getPrice();
 
 				if (lowestPrice.compareTo(price) < 0) {
 					lowestPrice = price;
@@ -868,7 +882,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	private CommerceMediaResolver _commerceMediaResolver;
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

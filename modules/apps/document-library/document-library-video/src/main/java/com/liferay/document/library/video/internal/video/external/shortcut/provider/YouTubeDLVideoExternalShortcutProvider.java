@@ -19,6 +19,7 @@ import com.liferay.document.library.video.external.shortcut.provider.DLVideoExte
 import com.liferay.frontend.editor.embed.EditorEmbedProvider;
 import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -87,7 +88,8 @@ public class YouTubeDLVideoExternalShortcutProvider
 				@Override
 				public String getEmbeddableHTML() {
 					return StringUtil.replace(
-						getTpl(), "{embedId}", youTubeVideoId);
+						_getTpl(_http.getParameter(url, "t", false)),
+						"{embedId}", youTubeVideoId);
 				}
 
 				@Override
@@ -121,11 +123,7 @@ public class YouTubeDLVideoExternalShortcutProvider
 
 	@Override
 	public String getTpl() {
-		return StringBundler.concat(
-			"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
-			"height=\"315\" frameborder=\"0\" ",
-			"src=\"https://www.youtube.com/embed/{embedId}?rel=0\" ",
-			"width=\"560\"></iframe>");
+		return _getTpl(StringPool.BLANK);
 	}
 
 	@Override
@@ -137,6 +135,19 @@ public class YouTubeDLVideoExternalShortcutProvider
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private String _getTpl(String start) {
+		String iframeSrc = "https://www.youtube.com/embed/{embedId}?rel=0";
+
+		if (Validator.isNotNull(start)) {
+			iframeSrc = _http.addParameter(iframeSrc, "start", start);
+		}
+
+		return StringBundler.concat(
+			"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
+			"height=\"315\" frameborder=\"0\" src=\"", iframeSrc,
+			"\" width=\"560\"></iframe>");
 	}
 
 	private String _getYouTubeVideoId(String url) {

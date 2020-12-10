@@ -93,7 +93,7 @@ public class DLVideoExternalShortcutResolverTest {
 				"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
 				"height=\"315\" frameborder=\"0\" ",
 				"src=\"https://www.youtube.com/embed",
-				"/VIDEO_ID?rel=0\" width=\"560\"></iframe>"),
+				"/VIDEO_ID?rel=0&start=61\" width=\"560\"></iframe>"),
 			dlVideoExternalShortcut.getEmbeddableHTML());
 	}
 

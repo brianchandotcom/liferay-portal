@@ -24,5 +24,5 @@
 				}
 			);
 		}
-	);
+	).catch(console.error);
 })();

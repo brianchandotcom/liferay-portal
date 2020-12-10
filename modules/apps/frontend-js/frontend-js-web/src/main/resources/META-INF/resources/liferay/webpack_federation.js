@@ -98,7 +98,8 @@
 							finalizeContainerRequest(
 								containerRequest, moduleFactory());
 						}
-					);
+					)
+					.catch(reject);
 				}
 				else {
 					const message =
@@ -112,7 +113,6 @@
 				}
 			}
 		);
-
 
 		subscribeContainerRequest(
 			containerRequests[containerId], resolve, reject);

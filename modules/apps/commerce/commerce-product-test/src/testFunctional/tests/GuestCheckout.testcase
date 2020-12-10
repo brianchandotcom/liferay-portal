@@ -1129,8 +1129,7 @@ definition {
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
 			productQuantity = "1",
-			productUnitPrice = "24",
-			shippingMethod = "Standard");
+			productUnitPrice = "24");
 	}
 
 	test GuestCheckoutWithShippableProduct {

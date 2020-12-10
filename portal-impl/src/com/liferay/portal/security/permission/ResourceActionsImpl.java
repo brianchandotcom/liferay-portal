@@ -583,6 +583,10 @@ public class ResourceActionsImpl implements ResourceActions {
 			Portlet portlet, ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
 
+		if (portlet == null) {
+			throw new IllegalArgumentException("Portlet must not be null");
+		}
+
 		String portletResourceName = PortletIdCodec.decodePortletName(
 			portlet.getPortletId());
 
@@ -679,7 +683,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		Set<String> resourceNames = new HashSet<>();
 
 		for (String source : sources) {
-			_read(classLoader, source, rootElement -> _read(rootElement, resourceNames));
+			_read(
+				classLoader, source,
+				rootElement -> _read(rootElement, resourceNames));
 		}
 
 		for (String resourceName : resourceNames) {
@@ -1201,10 +1207,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	private void _readPortletResource(Element rootElement, Portlet portlet)
 		throws ResourceActionsException {
-
-		if (portlet == null) {
-			throw new IllegalArgumentException("Portlet must not be null");
-		}
 
 		if (!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
 			return;

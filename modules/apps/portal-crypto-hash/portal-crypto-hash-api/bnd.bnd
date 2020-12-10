@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Crypto Hash API
+Bundle-SymbolicName: com.liferay.portal.crypto.hash.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.crypto.hash.flavor,\
+	com.liferay.portal.crypto.hash.generation.context,\
+	com.liferay.portal.crypto.hash.generation.context.salt,\
+	com.liferay.portal.crypto.hash.generation.response,\
+	com.liferay.portal.crypto.hash.processor,\
+	com.liferay.portal.crypto.hash.verification.context

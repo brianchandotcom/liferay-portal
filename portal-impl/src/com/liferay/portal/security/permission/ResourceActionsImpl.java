@@ -587,9 +587,6 @@ public class ResourceActionsImpl implements ResourceActions {
 			throw new IllegalArgumentException("Portlet must not be null");
 		}
 
-		String portletResourceName = PortletIdCodec.decodePortletName(
-			portlet.getPortletId());
-
 		if ((sources != null) &&
 			PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
 
@@ -599,6 +596,9 @@ public class ResourceActionsImpl implements ResourceActions {
 					rootElement -> _readPortletResource(rootElement, portlet));
 			}
 		}
+
+		String portletResourceName = PortletIdCodec.decodePortletName(
+			portlet.getPortletId());
 
 		resourceActionLocalService.checkResourceActions(
 			portletResourceName,

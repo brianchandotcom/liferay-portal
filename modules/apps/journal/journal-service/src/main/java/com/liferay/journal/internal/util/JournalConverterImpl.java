@@ -43,10 +43,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -537,9 +535,8 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected void updateDynamicContentValue(
-			Element dynamicContentElement, String fieldType, boolean multiple,
-			String fieldValue)
-		throws Exception {
+		Element dynamicContentElement, String fieldType, boolean multiple,
+		String fieldValue) {
 
 		if (DDMFormFieldType.CHECKBOX.equals(fieldType)) {
 			if (fieldValue.equals(Boolean.FALSE.toString())) {
@@ -547,47 +544,6 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			dynamicContentElement.addCDATA(fieldValue);
-		}
-		else if (DDMFormFieldType.LINK_TO_PAGE.equals(fieldType) &&
-				 Validator.isNotNull(fieldValue)) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fieldValue);
-
-			long groupId = jsonObject.getLong("groupId");
-
-			long layoutId = jsonObject.getLong("layoutId");
-
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
-
-			StringBundler sb = new StringBundler((groupId > 0) ? 5 : 3);
-
-			sb.append(layoutId);
-			sb.append(StringPool.AT);
-
-			if (privateLayout) {
-				Group group = _groupLocalService.fetchGroup(groupId);
-
-				if (group == null) {
-					sb.append("private");
-				}
-				else if (group.isUser()) {
-					sb.append("private-user");
-				}
-				else {
-					sb.append("private-group");
-				}
-			}
-			else {
-				sb.append("public");
-			}
-
-			if (groupId > 0) {
-				sb.append(StringPool.AT);
-				sb.append(groupId);
-			}
-
-			dynamicContentElement.addCDATA(sb.toString());
 		}
 		else if (DDMFormFieldType.SELECT.equals(fieldType) &&
 				 Validator.isNotNull(fieldValue)) {
@@ -896,9 +852,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

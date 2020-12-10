@@ -60,8 +60,9 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setUserId(user.getUserId());
 		accountGroup.setUserName(user.getFullName());
 
-		accountGroup.setName(name);
+		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setDescription(description);
+		accountGroup.setName(name);
 
 		return accountGroupPersistence.update(accountGroup);
 	}
@@ -102,6 +103,17 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasDefaultAccountGroup(long companyId) {
+		int count = accountGroupPersistence.countByC_D(companyId, true);
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public BaseModelSearchResult<AccountGroup> searchAccountGroups(
 		long companyId, String keywords, int start, int end,
 		OrderByComparator<AccountGroup> orderByComparator) {
@@ -122,8 +134,8 @@ public class AccountGroupLocalServiceImpl
 		AccountGroup accountGroup = accountGroupPersistence.fetchByPrimaryKey(
 			accountGroupId);
 
-		accountGroup.setName(name);
 		accountGroup.setDescription(description);
+		accountGroup.setName(name);
 
 		return accountGroupPersistence.update(accountGroup);
 	}

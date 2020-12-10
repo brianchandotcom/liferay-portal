@@ -36,4 +36,52 @@ public class DefaultAccountGroupException extends PortalException {
 		super(throwable);
 	}
 
+	public static class MustNotDeleteDefaultAccountGroup
+		extends DefaultAccountGroupException {
+
+		public MustNotDeleteDefaultAccountGroup(long accountGroupId) {
+			super(
+				String.format(
+					"The default account group %s cannot be deleted",
+					accountGroupId));
+
+			this.accountGroupId = accountGroupId;
+		}
+
+		public long accountGroupId;
+
+	}
+
+	public static class MustNotDuplicateDefaultAccountGroup
+		extends DefaultAccountGroupException {
+
+		public MustNotDuplicateDefaultAccountGroup(long companyId) {
+			super(
+				String.format(
+					"There is already a default account group for company %s",
+					companyId));
+
+			this.companyId = companyId;
+		}
+
+		public long companyId;
+
+	}
+
+	public static class MustNotUpdateDefaultAccountGroup
+		extends DefaultAccountGroupException {
+
+		public MustNotUpdateDefaultAccountGroup(long accountGroupId) {
+			super(
+				String.format(
+					"The default account group %s cannot be updated",
+					accountGroupId));
+
+			this.accountGroupId = accountGroupId;
+		}
+
+		public long accountGroupId;
+
+	}
+
 }

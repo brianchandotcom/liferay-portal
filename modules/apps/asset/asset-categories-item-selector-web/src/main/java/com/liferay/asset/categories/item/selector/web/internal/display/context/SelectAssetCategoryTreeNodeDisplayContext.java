@@ -242,15 +242,32 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 	}
 
 	private BreadcrumbEntry _getAssetVocabularyBreadcrumbEntry()
-		throws PortalException {
+		throws PortalException, PortletException {
+
+		long assetCategoryTreeNodeId = getAssetCategoryTreeNodeId();
+
+		long assetVocabularyId = assetCategoryTreeNodeId;
+
+		String assetCategoryTreeNodeType = getAssetCategoryTreeNodeType();
+
+		if (assetCategoryTreeNodeType.equals(
+				AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY)) {
+
+			AssetCategory assetCategory =
+				AssetCategoryServiceUtil.fetchCategory(assetCategoryTreeNodeId);
+
+			assetVocabularyId = assetCategory.getVocabularyId();
+		}
 
 		AssetVocabulary assetVocabulary =
-			AssetVocabularyServiceUtil.fetchVocabulary(
-				getAssetCategoryTreeNodeId());
+			AssetVocabularyServiceUtil.fetchVocabulary(assetVocabularyId);
 
 		if (assetVocabulary != null) {
 			return _createBreadcrumbEntry(
-				assetVocabulary.getTitle(_themeDisplay.getLocale()), null);
+				assetVocabulary.getTitle(_themeDisplay.getLocale()),
+				_getAssetCategoryTreeNodeURL(
+					assetVocabularyId,
+					AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY));
 		}
 
 		return null;

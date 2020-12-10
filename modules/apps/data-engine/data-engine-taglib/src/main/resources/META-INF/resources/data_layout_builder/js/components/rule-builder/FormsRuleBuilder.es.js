@@ -94,7 +94,9 @@ const FormsRuleBuilder = React.forwardRef(
 							value: field.fieldName,
 						});
 					}
-				}
+				},
+				true,
+				true
 			);
 
 			return fields;

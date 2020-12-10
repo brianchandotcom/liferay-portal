@@ -590,7 +590,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		String portletResourceName = PortletIdCodec.decodePortletName(
 			portlet.getPortletId());
 
-		if (sources != null) {
+		if ((sources != null) &&
+			PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
+
 			for (String source : sources) {
 				_read(
 					classLoader, source,
@@ -1207,10 +1209,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	private void _readPortletResource(Element rootElement, Portlet portlet)
 		throws ResourceActionsException {
-
-		if (!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
-			return;
-		}
 
 		String deployPortletName = PortletIdCodec.decodePortletName(
 			portlet.getPortletId());

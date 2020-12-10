@@ -36,10 +36,16 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
-			Click(
-				key_radioOption = "${shippingMethod}",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
+		subtotal = MathUtil.product("${productUnitPrice}", "${productQuantity}");
+
+		if (isSet(shippingMethod)) {
+			if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
+				Click(
+					key_radioOption = "${shippingMethod}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				Click(locator1 = "Button#CONTINUE");
+			}
 
 			if ("${shippingMethod}" == "Standard") {
 				deliveryValue = "15";
@@ -50,12 +56,6 @@ definition {
 				}
 			}
 
-			Click(locator1 = "Button#CONTINUE");
-		}
-
-		subtotal = MathUtil.product("${productUnitPrice}", "${productQuantity}");
-
-		if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 			total = MathUtil.sum("${subtotal}", "${deliveryValue}");
 		}
 		else {

@@ -434,7 +434,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeLinkToPageField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "string"
+			"dataType", "link-to-page"
 		).put(
 			"type", "link_to_layout"
 		);

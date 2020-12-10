@@ -264,7 +264,9 @@ function DirectImagePanel({item}) {
 					editableElement={editableElement}
 					fileEntryId={editableContent.fileEntryId}
 					imageSizeId={imageSizeId}
-					onImageSizeIdChanged={handleImageSizeChanged}
+					onImageSizeIdChanged={
+						type === EDITABLE_TYPES.image && handleImageSizeChanged
+					}
 				/>
 			)}
 

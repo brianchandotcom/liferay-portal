@@ -3674,11 +3674,9 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDLRecordSetModel ddlRecordSetModel) {
 
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				DDLRecordSet.class.getName(),
-				String.valueOf(ddlRecordSetModel.getRecordSetId()),
-				_ownerRoleModel.getRoleId(), _defaultUserId));
+		return newResourcePermissionModels(
+			DDLRecordSet.class.getName(),
+			String.valueOf(ddlRecordSetModel.getRecordSetId()), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

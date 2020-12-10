@@ -144,7 +144,6 @@ class ChangeTrackingChangesView extends React.Component {
 			children: this._filterHideableNodes(node.children, showHideable),
 			column: this.COLUMN_TITLE,
 			delta: 20,
-			dropdownItems: null,
 			filterClass,
 			loading,
 			node,
@@ -187,8 +186,6 @@ class ChangeTrackingChangesView extends React.Component {
 					return;
 				}
 
-				const dropdownItems = this._getDropdownItems(this.state.node);
-
 				if (
 					this.state.node.modelClassNameId &&
 					this.state.node.modelClassNameId ===
@@ -197,7 +194,6 @@ class ChangeTrackingChangesView extends React.Component {
 						this.initialNode.modelClassPK
 				) {
 					this.setState({
-						dropdownItems,
 						loading: false,
 						renderInnerHTML: {__html: text},
 					});
@@ -635,27 +631,6 @@ class ChangeTrackingChangesView extends React.Component {
 			'modelClassPK',
 			node.modelClassPK.toString()
 		);
-	}
-
-	_getDropdownItems(node) {
-		let dropdownItems = node.dropdownItems;
-
-		if (!dropdownItems) {
-			dropdownItems = [];
-		}
-		else {
-			dropdownItems = dropdownItems.slice(0);
-		}
-
-		if (this.activeCTCollection) {
-			dropdownItems.push({
-				href: this._getDiscardURL(node),
-				label: Liferay.Language.get('discard'),
-				symbolLeft: 'times-circle',
-			});
-		}
-
-		return dropdownItems;
 	}
 
 	_getModels(nodes) {
@@ -1235,6 +1210,10 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_handleNavigationUpdate(json) {
+		if (Liferay.SPA && Liferay.SPA.app) {
+			Liferay.SPA.app.skipLoadPopstate = true;
+		}
+
 		let filterClass = json.filterClass;
 
 		if (!filterClass) {
@@ -1616,6 +1595,51 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 	}
 
+	_renderDropdown() {
+		if (!this.state.node.modelClassNameId) {
+			return '';
+		}
+
+		let dropdownItems = this.state.node.dropdownItems;
+
+		if (!dropdownItems) {
+			dropdownItems = [];
+		}
+		else {
+			dropdownItems = dropdownItems.slice(0);
+		}
+
+		if (this.activeCTCollection) {
+			dropdownItems.push({
+				href: this._getDiscardURL(this.state.node),
+				label: Liferay.Language.get('discard'),
+				symbolLeft: 'times-circle',
+			});
+		}
+
+		if (dropdownItems.length === 0) {
+			return '';
+		}
+
+		return (
+			<div className="autofit-col">
+				<ClayDropDownWithItems
+					alignmentPosition={Align.BottomLeft}
+					items={dropdownItems}
+					spritemap={this.spritemap}
+					trigger={
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							small
+							spritemap={this.spritemap}
+							symbol="ellipsis-v"
+						/>
+					}
+				/>
+			</div>
+		);
+	}
+
 	_renderEntry() {
 		if (!this.state.node.ctEntryId && this.state.renderInnerHTML === null) {
 			if (this.state.loading) {
@@ -1646,24 +1670,7 @@ class ChangeTrackingChangesView extends React.Component {
 						)}
 					</div>
 
-					{this.state.dropdownItems &&
-						this.state.dropdownItems.length > 0 && (
-							<div className="autofit-col">
-								<ClayDropDownWithItems
-									alignmentPosition={Align.BottomLeft}
-									items={this.state.dropdownItems}
-									spritemap={this.spritemap}
-									trigger={
-										<ClayButtonWithIcon
-											displayType="unstyled"
-											small
-											spritemap={this.spritemap}
-											symbol="ellipsis-v"
-										/>
-									}
-								/>
-							</div>
-						)}
+					{this._renderDropdown()}
 				</div>
 				<div className="sheet-section">
 					{this.state.loading && (
@@ -1913,7 +1920,6 @@ class ChangeTrackingChangesView extends React.Component {
 	_updateRenderContent(loading, node) {
 		if (!node.modelClassNameId) {
 			this.setState({
-				dropdownItems: null,
 				loading: false,
 				renderInnerHTML: null,
 			});
@@ -1937,10 +1943,6 @@ class ChangeTrackingChangesView extends React.Component {
 							return;
 						}
 
-						const dropdownItems = this._getDropdownItems(
-							this.state.node
-						);
-
 						if (
 							this.state.node.modelClassNameId &&
 							this.state.node.modelClassNameId ===
@@ -1948,7 +1950,6 @@ class ChangeTrackingChangesView extends React.Component {
 							this.state.node.modelClassPK === node.modelClassPK
 						) {
 							this.setState({
-								dropdownItems,
 								loading: false,
 								renderInnerHTML: {__html: text},
 							});

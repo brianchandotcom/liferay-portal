@@ -89,15 +89,11 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 				Role role = RoleLocalServiceUtil.getRole(
 					getCompanyId(), roleName);
 
-				if (role.getType() == RoleConstants.TYPE_REGULAR) {
-					if (RoleLocalServiceUtil.hasUserRole(
-							userId, getCompanyId(), roleName, true)) {
-
-						return true;
-					}
-				}
-				else if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-							userId, groupId, roleName, true)) {
+				if (((role.getType() == RoleConstants.TYPE_REGULAR) &&
+					 RoleLocalServiceUtil.hasUserRole(
+						 userId, getCompanyId(), roleName, true)) ||
+					UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+						userId, groupId, roleName, true)) {
 
 					return true;
 				}

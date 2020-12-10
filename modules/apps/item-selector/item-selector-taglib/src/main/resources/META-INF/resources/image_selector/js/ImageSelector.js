@@ -23,7 +23,7 @@ const ImageSelector = ({
     imageURL,
     itemSelectorEventName,
 	itemSelectorURL,
-	maxFileSize = 0,
+	maxFileSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
     portletNamespace,
 	paramName,
 	validExtensions
@@ -85,7 +85,7 @@ const ImageSelector = ({
 									__html:
 										Liferay.Util.sub(
 											Liferay.Language.get('maximum-size-x'),
-											maxFileSize,
+											Liferay.Util.formatStorage(parseInt(maxFileSize)),
 										)
 									}}
 							></span>

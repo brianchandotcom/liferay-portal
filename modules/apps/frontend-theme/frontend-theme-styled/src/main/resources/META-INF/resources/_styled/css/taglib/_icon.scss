@@ -30,3 +30,24 @@ a.taglib-icon {
 .taglib-icon-label {
 	margin-left: 12px;
 }
+
+.icon-monospaced {
+	&,
+	&[class^='icon-'],
+	&[class*=' icon-'] {
+		color: inherit;
+		display: inline-block;
+		height: $icon-monospaced-size;
+		line-height: 34px;
+		text-align: center;
+		width: $icon-monospaced-size;
+	}
+
+	&.lexicon-icon {
+		padding: 8px;
+	}
+
+	.btn-monospaced > &:not(.lexicon-icon) {
+		padding: 0;
+	}
+}

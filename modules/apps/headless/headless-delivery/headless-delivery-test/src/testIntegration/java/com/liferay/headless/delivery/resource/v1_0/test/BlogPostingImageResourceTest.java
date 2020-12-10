@@ -50,11 +50,20 @@ public class BlogPostingImageResourceTest
 
 		BlogPostingImage blogPostingImage = randomBlogPostingImage();
 
-		blogPostingImage.setTitle("*,?");
-
 		try {
 			testPostSiteBlogPostingImage_addBlogPostingImage(
-				blogPostingImage, getMultipartFiles());
+				blogPostingImage,
+				HashMapBuilder.put(
+					"file",
+					() -> {
+						File tempFile = FileUtil.createTempFile("*,?", "txt");
+
+						FileUtil.write(
+							tempFile, TestDataConstants.TEST_BYTE_ARRAY);
+
+						return tempFile;
+					}
+				).build());
 
 			Assert.fail();
 		}

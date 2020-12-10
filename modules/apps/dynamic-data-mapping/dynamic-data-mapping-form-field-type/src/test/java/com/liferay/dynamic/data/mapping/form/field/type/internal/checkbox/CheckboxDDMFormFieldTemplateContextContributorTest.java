@@ -62,6 +62,22 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersShouldContainShowMaximumRepetitionsInfo() {
+		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
+
+		ddmFormField.setProperty("showMaximumRepetitionsInfo", true);
+
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, new DDMFormFieldRenderingContext());
+
+		boolean showMaximumRepetitionsInfo = (boolean)parameters.get(
+			"showMaximumRepetitionsInfo");
+
+		Assert.assertTrue(showMaximumRepetitionsInfo);
+	}
+
+	@Test
 	public void testGetPredefinedValueFalse() {
 		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
 

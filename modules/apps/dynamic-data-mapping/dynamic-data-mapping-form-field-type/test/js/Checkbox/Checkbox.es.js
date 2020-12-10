@@ -225,4 +225,40 @@ describe('Field Checkbox', () => {
 
 		expect(handleFieldEdited).toHaveBeenCalled();
 	});
+
+	describe('Maximum Repetitions Info', () => {
+		it('does not show the maximum repetitions info', () => {
+			const {container} = render(<CheckboxWithProvider value={true} />);
+
+			const ddmInfo = container.querySelector('.ddm-info');
+
+			expect(ddmInfo).toBeNull();
+		});
+
+		it('does not show the maximum repetitions info if the value is false', () => {
+			const {container} = render(
+				<CheckboxWithProvider
+					showMaximumRepetitionsInfo={true}
+					value={false}
+				/>
+			);
+
+			const ddmInfo = container.querySelector('.ddm-info');
+
+			expect(ddmInfo).toBeNull();
+		});
+
+		it('shows the maximum repetitions info', () => {
+			const {container} = render(
+				<CheckboxWithProvider
+					showMaximumRepetitionsInfo={true}
+					value={true}
+				/>
+			);
+
+			const ddmInfo = container.querySelector('.ddm-info');
+
+			expect(ddmInfo).not.toBeNull();
+		});
+	});
 });

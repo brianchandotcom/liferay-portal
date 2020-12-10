@@ -70,9 +70,23 @@ window.themeDisplay = {
 	isSignedIn: () => true,
 };
 
+const sub = function (string, data) {
+	if (
+		arguments.length > 2 ||
+		(typeof data !== 'object' && typeof data !== 'function')
+	) {
+		data = Array.prototype.slice.call(arguments, 1);
+	}
+
+	const REGEX_SUB = /\x$/g;
+
+	return string.replace(REGEX_SUB, data);
+};
+
 window.util = {
 	...window.util,
 	selectEntity: () => {},
+	sub,
 };
 
 const languageMap = {

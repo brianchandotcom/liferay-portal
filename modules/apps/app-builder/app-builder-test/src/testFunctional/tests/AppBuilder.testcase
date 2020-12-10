@@ -967,11 +967,15 @@ definition {
 
 		App.selectTableView(tableViewName = "My Table View 2");
 
+		Button.clickNext();
+
 		App.clickPrevious();
 
 		App.clickPrevious();
 
 		App.selectTableView(tableViewName = "My Table View 1");
+
+		Button.clickNext();
 
 		App.toggleDeploy(deployOption = "Widget");
 
@@ -1025,6 +1029,8 @@ definition {
 
 		App.selectTableView(tableViewName = "My Table View 2");
 
+		Button.clickNext();
+
 		App.saveApp();
 
 		Navigator.gotoSitePage(
@@ -1047,6 +1053,8 @@ definition {
 		App.clickNext();
 
 		App.selectTableView(tableViewName = "My Table View 1");
+
+		Button.clickNext();
 
 		App.saveApp();
 
@@ -1813,6 +1821,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_1}");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName_2}");
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
+		Button.clickNext();
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.openProductMenuPlaceItDropdown();
 		App.validateProductMenuPlaceItDropdownList(menuOption = "Applications");
@@ -1922,6 +1931,7 @@ definition {
 		AppBuilderAdmin.setName(title = "${myAppName_1}");
 		App.selectFormView(formViewName = "${myFormViewName_1}");
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
+		Button.clickNext();
 		App.toggleDeploy(deployOption = "Widget");
 		App.toggleDeploy(deployOption = "Standalone");
 		App.toggleDeploy(deployOption = "Product Menu");
@@ -2960,6 +2970,8 @@ definition {
 
 		App.selectTableView(tableViewName = "Table View Title");
 
+		Button.clickNext();
+
 		App.saveApp();
 
 		AppBuilderAdmin.openItem(itemName = "Test App C");
@@ -2968,6 +2980,8 @@ definition {
 
 		App.selectTableView(tableViewName = "Table View Title Two");
 
+		Button.clickNext();
+
 		App.saveApp();
 
 		AppBuilderAdmin.openItem(itemName = "Test App C");
@@ -2975,6 +2989,8 @@ definition {
 		App.selectFormView(formViewName = "Form View Title Two");
 
 		App.selectTableView(tableViewName = "Table View Title");
+
+		Button.clickNext();
 
 		App.saveApp();
 	}

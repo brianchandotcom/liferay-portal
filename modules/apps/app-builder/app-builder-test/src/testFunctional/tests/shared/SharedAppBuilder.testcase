@@ -843,6 +843,7 @@ definition {
 		AppBuilderAdmin.setName(title = "App Full");
 		App.selectFormView(formViewName = "My Form View");
 		App.selectTableView(tableViewName = "Table Full");
+		Button.clickNext();
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.clickDeploy();
 
@@ -850,6 +851,7 @@ definition {
 		AppBuilderAdmin.setName(title = "App Filtered");
 		App.selectFormView(formViewName = "My Form View");
 		App.selectTableView(tableViewName = "Table Filtered");
+		Button.clickNext();
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.clickDeploy();
 

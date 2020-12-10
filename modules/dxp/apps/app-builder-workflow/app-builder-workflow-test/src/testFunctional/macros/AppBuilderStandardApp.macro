@@ -5,6 +5,8 @@ definition {
 
 		App.selectTableView(tableViewName = "${tableViewName}");
 
+		Button.clickNext();
+
 		AppBuilderAdmin.setName(title = "${appTitle}");
 
 		App.toggleDeploy(deployOption = "${deployOption}");

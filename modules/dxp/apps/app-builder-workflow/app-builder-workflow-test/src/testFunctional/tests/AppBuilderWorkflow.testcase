@@ -70,7 +70,6 @@ definition {
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object");
 		App.selectFormView(formViewName = "My Form View");
 		App.selectTableView(tableViewName = "My Table View");
-		App.clickPrevious();
 		AppBuilderStandardApp.clickOnManageWorkflows();
 		SelectWindow.selectPopUp(locator1 = "null");
 		AssertTextEquals(
@@ -930,7 +929,6 @@ definition {
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object");
 		App.selectFormView(formViewName = "My Form View");
 		App.selectTableView(tableViewName = "My Table View");
-		App.clickPrevious();
 		AppBuilderAdmin.setName(title = "Standard App With Workflow");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Single Approver");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "New Workflow");

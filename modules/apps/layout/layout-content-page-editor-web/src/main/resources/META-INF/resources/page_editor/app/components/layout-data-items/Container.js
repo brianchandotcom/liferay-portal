@@ -137,6 +137,11 @@ const Container = React.forwardRef(
 			style.backgroundPosition = '50% 50%';
 			style.backgroundRepeat = 'no-repeat';
 			style.backgroundSize = 'cover';
+
+			if (backgroundImage?.fileEntryId) {
+				style['--background-image-file-entry-id'] =
+					backgroundImage.fileEntryId;
+			}
 		}
 
 		const content = (

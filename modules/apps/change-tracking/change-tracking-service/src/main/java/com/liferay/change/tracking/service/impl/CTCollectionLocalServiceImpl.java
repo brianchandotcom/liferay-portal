@@ -794,7 +794,10 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
+		super.deactivate();
+
 		_constraintResolverServiceTrackerMap.close();
 
 		_ctDisplayRendererServiceTrackerMap.close();

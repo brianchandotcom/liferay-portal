@@ -106,7 +106,10 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
+		super.deactivate();
+
 		_serviceTrackerMap.close();
 	}
 

@@ -227,8 +227,16 @@ public class MBMailingListLocalServiceImpl
 	}
 
 	@Deactivate
-	protected void deactivate() throws Exception {
-		_unregister.close();
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		try {
+			_unregister.close();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	protected String getSchedulerGroupName(MBMailingList mailingList) {

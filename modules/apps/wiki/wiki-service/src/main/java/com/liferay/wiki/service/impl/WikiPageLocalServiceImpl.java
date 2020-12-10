@@ -2258,7 +2258,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
+		super.deactivate();
+
 		_serviceTrackerMap.close();
 
 		_portalCache.removeAll();

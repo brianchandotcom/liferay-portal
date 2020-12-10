@@ -325,7 +325,10 @@ public class JournalContentSearchLocalServiceImpl
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
+		super.deactivate();
+
 		_serviceTrackerMap.close();
 	}
 

@@ -40,7 +40,7 @@
 			module: undefined,
 			// set to the <script> DOM node while it is being retrieved (undefined after)
 			script,
-			// set to all people that needs to be notified once the <script> loads
+			// set to an array of functions to be invoked once the <script> loads
 			subscribers: [],
 		};
 

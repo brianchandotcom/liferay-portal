@@ -251,11 +251,15 @@ const Main = ({
 
 		let repetitionsCounter = 0;
 
-		visitor.mapFields((field) => {
-			if (fieldName === field.fieldName) {
-				repetitionsCounter++;
-			}
-		});
+		visitor.mapFields(
+			(field) => {
+				if (fieldName === field.fieldName) {
+					repetitionsCounter++;
+				}
+			},
+			true,
+			true
+		);
 
 		return repetitionsCounter === maximumRepetitions;
 	};

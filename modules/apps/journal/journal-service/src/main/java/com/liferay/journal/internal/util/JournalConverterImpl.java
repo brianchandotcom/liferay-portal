@@ -420,169 +420,19 @@ public class JournalConverterImpl implements JournalConverter {
 		if (Objects.equals(DDMFormFieldType.DOCUMENT_LIBRARY, type) ||
 			Objects.equals(DDMFormFieldType.IMAGE, type)) {
 
-			JSONObject jsonObject = null;
-
-			try {
-				jsonObject = JSONFactoryUtil.createJSONObject(
-					dynamicContentElement.getText());
-			}
-			catch (JSONException jsonException) {
-				return StringPool.BLANK;
-			}
-
-			if (jsonObject == null) {
-				return StringPool.BLANK;
-			}
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-
-			if (Validator.isNull(uuid) || (groupId <= 0)) {
-				return StringPool.BLANK;
-			}
-
-			try {
-				if (!ExportImportThreadLocal.isImportInProcess()) {
-					FileEntry fileEntry =
-						_dlAppLocalService.getFileEntryByUuidAndGroupId(
-							uuid, groupId);
-
-					String title = fileEntry.getTitle();
-
-					if (fileEntry.isInTrash()) {
-						title = _trashHelper.getOriginalTitle(
-							fileEntry.getTitle());
-
-						jsonObject.put(
-							"message",
-							LanguageUtil.get(
-								_getResourceBundle(defaultLocale),
-								"the-selected-document-was-moved-to-the-" +
-									"recycle-bin"));
-					}
-
-					jsonObject.put("title", title);
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Unable to get file entry for UUID ", uuid,
-							" and group ID ", groupId));
-				}
-
-				jsonObject.put(
-					"message",
-					LanguageUtil.get(
-						_getResourceBundle(defaultLocale),
-						"the-selected-document-was-deleted"));
-			}
-
-			serializable = jsonObject.toString();
+			serializable = _getFileEntryValue(
+				defaultLocale, dynamicContentElement);
 		}
 		else if (Objects.equals(DDMFormFieldType.JOURNAL_ARTICLE, type)) {
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					dynamicContentElement.getText());
-
-				long classPK = jsonObject.getLong("classPK");
-
-				if (classPK > 0) {
-					JournalArticle article =
-						_journalArticleLocalService.fetchLatestArticle(classPK);
-
-					if (article != null) {
-						jsonObject.put("groupId", article.getGroupId());
-
-						String title = article.getTitle(defaultLocale);
-
-						if (article.isInTrash()) {
-							jsonObject.put(
-								"message",
-								LanguageUtil.get(
-									_getResourceBundle(defaultLocale),
-									"the-selected-web-content-was-moved-to-" +
-										"the-recycle-bin"));
-						}
-
-						jsonObject.put(
-							"title", title
-						).put(
-							"titleMap", article.getTitleMap()
-						).put(
-							"uuid", article.getUuid()
-						);
-					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to get article for  " + classPK);
-						}
-
-						jsonObject.put(
-							"message",
-							LanguageUtil.get(
-								_getResourceBundle(defaultLocale),
-								"the-selected-web-content-was-deleted"));
-					}
-				}
-
-				serializable = jsonObject.toString();
-			}
-			catch (JSONException jsonException) {
-				serializable = StringPool.BLANK;
-			}
+			serializable = _getJournalArticleValue(
+				defaultLocale, dynamicContentElement);
 		}
 		else if (Objects.equals("link_to_layout", type)) {
-			String[] values = StringUtil.split(
-				dynamicContentElement.getText(), CharPool.AT);
-
-			if (ArrayUtil.isEmpty(values)) {
-				return StringPool.BLANK;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			long layoutId = GetterUtil.getLong(values[0]);
-			boolean privateLayout = !Objects.equals(values[1], "public");
-
-			if (values.length > 2) {
-				long groupId = GetterUtil.getLong(values[2]);
-
-				jsonObject.put("groupId", groupId);
-
-				Layout layout = _layoutLocalService.fetchLayout(
-					groupId, privateLayout, layoutId);
-
-				if (layout != null) {
-					jsonObject.put("label", layout.getName(defaultLocale));
-				}
-			}
-
-			jsonObject.put(
-				"layoutId", layoutId
-			).put(
-				"privateLayout", privateLayout
-			);
-
-			serializable = jsonObject.toString();
+			serializable = _getLinkToLayoutValue(
+				defaultLocale, dynamicContentElement);
 		}
 		else if (Objects.equals(DDMFormFieldType.SELECT, type)) {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-			List<Element> optionElements = dynamicContentElement.elements(
-				"option");
-
-			if (!optionElements.isEmpty()) {
-				for (Element optionElement : optionElements) {
-					jsonArray.put(optionElement.getText());
-				}
-			}
-			else {
-				jsonArray.put(dynamicContentElement.getText());
-			}
-
-			serializable = jsonArray.toString();
+			serializable = _getSelectValue(dynamicContentElement);
 		}
 		else {
 			serializable = FieldConstants.getSerializable(
@@ -852,12 +702,185 @@ public class JournalConverterImpl implements JournalConverter {
 		return type;
 	}
 
+	private String _getFileEntryValue(
+		Locale defaultLocale, Element dynamicContentElement) {
+
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				dynamicContentElement.getText());
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
+
+		if (jsonObject == null) {
+			return StringPool.BLANK;
+		}
+
+		String uuid = jsonObject.getString("uuid");
+		long groupId = jsonObject.getLong("groupId");
+
+		if (Validator.isNull(uuid) || (groupId <= 0)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			if (!ExportImportThreadLocal.isImportInProcess()) {
+				FileEntry fileEntry =
+					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
+
+				String title = fileEntry.getTitle();
+
+				if (fileEntry.isInTrash()) {
+					title = _trashHelper.getOriginalTitle(fileEntry.getTitle());
+
+					jsonObject.put(
+						"message",
+						LanguageUtil.get(
+							_getResourceBundle(defaultLocale),
+							"the-selected-document-was-moved-to-the-recycle-" +
+								"bin"));
+				}
+
+				jsonObject.put("title", title);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get file entry for UUID ", uuid,
+						" and group ID ", groupId));
+			}
+
+			jsonObject.put(
+				"message",
+				LanguageUtil.get(
+					_getResourceBundle(defaultLocale),
+					"the-selected-document-was-deleted"));
+		}
+
+		return jsonObject.toString();
+	}
+
+	private String _getJournalArticleValue(
+		Locale defaultLocale, Element dynamicContentElement) {
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				dynamicContentElement.getText());
+
+			long classPK = jsonObject.getLong("classPK");
+
+			if (classPK > 0) {
+				JournalArticle article =
+					_journalArticleLocalService.fetchLatestArticle(classPK);
+
+				if (article != null) {
+					jsonObject.put("groupId", article.getGroupId());
+
+					String title = article.getTitle(defaultLocale);
+
+					if (article.isInTrash()) {
+						jsonObject.put(
+							"message",
+							LanguageUtil.get(
+								_getResourceBundle(defaultLocale),
+								"the-selected-web-content-was-moved-to-the-" +
+									"recycle-bin"));
+					}
+
+					jsonObject.put(
+						"title", title
+					).put(
+						"titleMap", article.getTitleMap()
+					).put(
+						"uuid", article.getUuid()
+					);
+				}
+				else {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to get article for  " + classPK);
+					}
+
+					jsonObject.put(
+						"message",
+						LanguageUtil.get(
+							_getResourceBundle(defaultLocale),
+							"the-selected-web-content-was-deleted"));
+				}
+			}
+
+			return jsonObject.toString();
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
+	}
+
+	private String _getLinkToLayoutValue(
+		Locale defaultLocale, Element dynamicContentElement) {
+
+		String[] values = StringUtil.split(
+			dynamicContentElement.getText(), CharPool.AT);
+
+		if (ArrayUtil.isEmpty(values)) {
+			return StringPool.BLANK;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		long layoutId = GetterUtil.getLong(values[0]);
+		boolean privateLayout = !Objects.equals(values[1], "public");
+
+		if (values.length > 2) {
+			long groupId = GetterUtil.getLong(values[2]);
+
+			jsonObject.put("groupId", groupId);
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				groupId, privateLayout, layoutId);
+
+			if (layout != null) {
+				jsonObject.put("label", layout.getName(defaultLocale));
+			}
+		}
+
+		jsonObject.put(
+			"layoutId", layoutId
+		).put(
+			"privateLayout", privateLayout
+		);
+
+		return jsonObject.toString();
+	}
+
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		ResourceBundle classResourceBundle = ResourceBundleUtil.getBundle(
 			locale, "com.liferay.journal.lang");
 
 		return new AggregateResourceBundle(
 			classResourceBundle, _portal.getResourceBundle(locale));
+	}
+
+	private String _getSelectValue(Element dynamicContentElement) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<Element> optionElements = dynamicContentElement.elements("option");
+
+		if (!optionElements.isEmpty()) {
+			for (Element optionElement : optionElements) {
+				jsonArray.put(optionElement.getText());
+			}
+		}
+		else {
+			jsonArray.put(dynamicContentElement.getText());
+		}
+
+		return jsonArray.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

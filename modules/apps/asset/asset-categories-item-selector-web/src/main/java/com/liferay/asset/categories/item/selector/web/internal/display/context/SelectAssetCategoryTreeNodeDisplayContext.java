@@ -139,11 +139,14 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 			AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY);
 	}
 
-	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {
+	public List<BreadcrumbEntry> getBreadcrumbEntries()
+		throws PortalException, PortletException {
+
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		breadcrumbEntries.add(_getAssetVocabulariesBreadcrumbEntry());
 		breadcrumbEntries.add(_getAssetVocabularyBreadcrumbEntry());
+		breadcrumbEntries.addAll(_getAssetCategoryBreadcrumbEntries());
 
 		return breadcrumbEntries;
 	}

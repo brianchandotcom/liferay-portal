@@ -35,11 +35,13 @@ public class BaseCardTag extends BaseContainerTag {
 			Map<String, String> dynamicAttributes =
 				_cardModel.getDynamicAttributes();
 
-			for (Map.Entry<String, String> entry :
-					dynamicAttributes.entrySet()) {
+			if (dynamicAttributes != null) {
+				for (Map.Entry<String, String> entry :
+						dynamicAttributes.entrySet()) {
 
-				setDynamicAttribute(
-					StringPool.BLANK, entry.getKey(), entry.getValue());
+					setDynamicAttribute(
+						StringPool.BLANK, entry.getKey(), entry.getValue());
+				}
 			}
 		}
 

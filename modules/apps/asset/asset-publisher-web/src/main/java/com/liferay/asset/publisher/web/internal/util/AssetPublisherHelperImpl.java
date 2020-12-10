@@ -65,7 +65,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.Serializable;
@@ -326,9 +328,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
 
 		if (selectionStyle.equals("asset-list") && (assetListEntry != null)) {
-			long[] segmentsEntryIds = GetterUtil.getLongValues(
-				portletRequest.getAttribute(
-					SegmentsWebKeys.SEGMENTS_ENTRY_IDS));
+			long[] segmentsEntryIds = _getSegmentsEntryIds(portletRequest);
 
 			String acClientUserId = GetterUtil.getString(
 				portletRequest.getAttribute(
@@ -1108,6 +1108,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		return assetEntryResults;
 	}
 
+	private long[] _getSegmentsEntryIds(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _segmentsEntryRetriever.getSegmentsEntryIds(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			_requestContextMapper.map(
+				_portal.getHttpServletRequest(portletRequest)));
+	}
+
 	private long[] _getSiteGroupIds(long[] groupIds) {
 		Set<Long> siteGroupIds = new LinkedHashSet<>();
 
@@ -1354,5 +1364,11 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }

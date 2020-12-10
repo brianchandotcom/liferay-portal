@@ -159,6 +159,21 @@
 	<td>xpath=(//div[contains(@class,'step-form-view')]//button[contains(@title,'Remove')])[${key_positionNumber}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CREATE_NEW_CUSTOM_OBJECT_BUTTON</td>
+	<td>//button[contains(@class,'btn btn-monospaced btn-secondary mr-2 nav-btn nav-btn-monospaced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_NEW_OBJECT_NAME_FIELD</td>
+	<td>//div[contains(@class, 'modal-content')]//div//input[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_CONTINUE</td>
+	<td>//button[contains(text(),'Continue')]</td>
+	<td></td>
+</tr>
 <!--APP_RUNNING-->
 <tr>
 	<td>SELECT_NEW_ASSIGNEE_BUTTON</td>

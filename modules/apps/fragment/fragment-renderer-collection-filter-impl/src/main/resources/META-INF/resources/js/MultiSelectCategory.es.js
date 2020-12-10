@@ -81,27 +81,26 @@ export default function MultiSelectCategory({
 	};
 
 	return (
-		<div>
-			<ClayDropDownWithItems
-				footerContent={
-					<ClayButton onClick={onApply} small>
-						{Liferay.Language.get('apply')}
-					</ClayButton>
-				}
-				items={items}
-				onSearchValueChange={setSearchValue}
-				searchValue={searchValue}
-				searchable={true}
-				trigger={
-					<ClayButton
-						className="dropdown-toggle form-control-select text-left"
-						displayType="secondary"
-					>
-						{Liferay.Language.get('select')}
-					</ClayButton>
-				}
-			/>
-		</div>
+		<ClayDropDownWithItems
+			footerContent={
+				<ClayButton onClick={onApply} small>
+					{Liferay.Language.get('apply')}
+				</ClayButton>
+			}
+			items={items}
+			onSearchValueChange={setSearchValue}
+			searchValue={searchValue}
+			searchable={true}
+			trigger={
+				<ClayButton
+					className="form-control-select form-control-sm text-left w-100"
+					displayType="secondary"
+					small
+				>
+					{Liferay.Language.get('select')}
+				</ClayButton>
+			}
+		/>
 	);
 }
 

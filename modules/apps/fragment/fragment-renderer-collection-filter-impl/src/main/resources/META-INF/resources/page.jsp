@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<p>
+<p class="font-weight-bold mb-1">
 	<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>
 </p>
 
@@ -24,10 +24,11 @@
 	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isMultipleSelection() %>">
 		<div>
 			<clay:button
-				cssClass="dropdown-toggle form-control-select text-left"
+				cssClass="dropdown-toggle form-control-select form-control-sm text-left w-100"
 				disabled="<%= true %>"
 				displayType="secondary"
 				label='<%= LanguageUtil.get(request, "select") %>'
+				small="<%= true %>"
 			/>
 
 			<react:component
@@ -38,7 +39,7 @@
 	</c:when>
 	<c:otherwise>
 		<clay:dropdown-menu
-			cssClass="form-control form-control-select form-control-sm text-left"
+			cssClass="form-control form-control-select form-control-sm text-left w-100"
 			displayType="secondary"
 			dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
 			label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"

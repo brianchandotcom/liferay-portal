@@ -12,17 +12,18 @@
  * details.
  */
 
-(function() {
+(function () {
 	const getModule = window[Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')];
 
-	getModule('frontend-js-react-web').then(
-		function(frontendJsReactWeb) {
+	getModule('frontend-js-react-web')
+		.then((frontendJsReactWeb) => {
 			Liferay.Loader.define(
-				"frontend-js-react-web@5.0.0/js/index.es", ['module'],
-				function (module) {
+				'frontend-js-react-web@5.0.0/js/index.es',
+				['module'],
+				(module) => {
 					module.exports = frontendJsReactWeb;
 				}
 			);
-		}
-	).catch(console.error);
+		})
+		.catch(console.error);
 })();

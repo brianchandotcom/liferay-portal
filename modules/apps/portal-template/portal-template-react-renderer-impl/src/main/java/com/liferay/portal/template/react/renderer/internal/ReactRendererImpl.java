@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -24,7 +23,6 @@ import java.io.Writer;
 
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,17 +41,10 @@ public class ReactRendererImpl implements ReactRenderer {
 		throws IOException {
 
 		ReactRendererUtil.renderReact(
-			componentDescriptor, data, httpServletRequest,
-			NPMResolvedPackageNameUtil.get(_servletContext), _portal, writer);
+			componentDescriptor, data, httpServletRequest, _portal, writer);
 	}
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.template.react.renderer.impl)",
-		unbind = "-"
-	)
-	private ServletContext _servletContext;
 
 }

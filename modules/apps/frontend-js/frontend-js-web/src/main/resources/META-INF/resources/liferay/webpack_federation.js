@@ -12,8 +12,10 @@
  * details.
  */
 
-(function() {
-	const CONTAINER_REQUESTS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_CONTAINER_REQUESTS__');
+(function () {
+	const CONTAINER_REQUESTS_SYMBOL = Symbol.for(
+		'__LIFERAY_WEBPACK_CONTAINER_REQUESTS__'
+	);
 	const CONTAINERS_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_CONTAINERS__');
 	const GET_MODULE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__');
 	const SHARED_SCOPE_SYMBOL = Symbol.for('__LIFERAY_WEBPACK_SHARED_SCOPE__');
@@ -32,15 +34,25 @@
 		const script = document.createElement('script');
 
 		const containerRequest = {
+
 			// set if request failed
+
 			error: undefined,
+
 			// set to true if the .js file has been fetched from the server
+
 			fetched: false,
+
 			// set to the exported value (if error is set module is undefined)
+
 			module: undefined,
+
 			// set to the <script> DOM node while it is being retrieved (undefined after)
+
 			script,
+
 			// set to an array of functions to be invoked once the <script> loads
+
 			subscribers: [],
 		};
 
@@ -57,6 +69,7 @@
 	 */
 	function explain(...things) {
 		if (Liferay.EXPLAIN_RESOLUTIONS) {
+			// eslint-disable-next-line no-console
 			console.log(...things);
 		}
 	}
@@ -64,7 +77,7 @@
 	/**
 	 * Fetch a container's module by path
 	 */
-	function fetch(containerId, path, resolve, reject) {
+	function fetchContainer(containerId, path, resolve, reject) {
 		const url = '/o/' + containerId + '/__generated__/container.js';
 
 		explain('Fetching container', containerId, 'from', url);
@@ -78,28 +91,30 @@
 
 				if (container) {
 					explain(
-						'Initializing container', containerId, '\n',
-						Object.entries(sharedScope).map(([name, data]) =>
-							`${name}: ` +
-							Object.entries(data).map(
-								([version, data]) => `(${version}: ${data.from})`
-                            )
-						).join('\n ')
+						'Initializing container',
+						containerId,
+						'\n',
+						Object.entries(sharedScope)
+							.map(
+								([name, data]) =>
+									`${name}: ` +
+									Object.entries(data).map(
+										([version, data]) =>
+											`(${version}: ${data.from})`
+									)
+							)
+							.join('\n ')
 					);
 
-					Promise.resolve(
-						container.init(sharedScope)
-					)
-					.then(
-						() => container.get(path)
-					)
-					.then(
-						(moduleFactory) => {
+					Promise.resolve(container.init(sharedScope))
+						.then(() => container.get(path))
+						.then((moduleFactory) => {
 							finalizeContainerRequest(
-								containerRequest, moduleFactory());
-						}
-					)
-					.catch(reject);
+								containerRequest,
+								moduleFactory()
+							);
+						})
+						.catch(reject);
 				}
 				else {
 					const message =
@@ -109,13 +124,18 @@
 					console.warn(message);
 
 					finalizeContainerRequest(
-						containerRequest, new Error(message));
+						containerRequest,
+						new Error(message)
+					);
 				}
 			}
 		);
 
 		subscribeContainerRequest(
-			containerRequests[containerId], resolve, reject);
+			containerRequests[containerId],
+			resolve,
+			reject
+		);
 	}
 
 	/**
@@ -129,16 +149,29 @@
 		containerRequest.script = undefined;
 		containerRequest.subscribers = undefined;
 
-		if(result instanceof Error) {
-			explain('Rejecting container', script.src, 'for', subscribers.length, 'subscribers');
+		if (result instanceof Error) {
+			explain(
+				'Rejecting container',
+				script.src,
+				'for',
+				subscribers.length,
+				'subscribers'
+			);
 			containerRequest.error = result;
 			subscribers.forEach(({reject}) => reject(result));
-		} else {
-			explain('Resolving container', script.src, 'for', subscribers.length, 'subscribers');
+		}
+		else {
+			explain(
+				'Resolving container',
+				script.src,
+				'for',
+				subscribers.length,
+				'subscribers'
+			);
 			containerRequest.module = result;
 			subscribers.forEach(({resolve}) => resolve(result));
 		}
-	};
+	}
 
 	/**
 	 * Get a defined container object
@@ -157,7 +190,7 @@
 			const containerRequest = containerRequests[containerId];
 
 			if (!containerRequest) {
-				fetch(containerId, path, resolve, reject);
+				fetchContainer(containerId, path, resolve, reject);
 			}
 			else {
 				const {error, module} = containerRequest;
@@ -165,12 +198,18 @@
 				if (error) {
 					explain('Rejecting fetched container', containerId, error);
 					reject(error);
-				} else if(module) {
+				}
+				else if (module) {
 					explain('Resolving fetched container', containerId);
 					resolve(module);
-				} else {
+				}
+				else {
 					explain('Subscribing to container request', containerId);
-					subscribeContainerRequest(containerRequest, resolve, reject);
+					subscribeContainerRequest(
+						containerRequest,
+						resolve,
+						reject
+					);
 				}
 			}
 		});

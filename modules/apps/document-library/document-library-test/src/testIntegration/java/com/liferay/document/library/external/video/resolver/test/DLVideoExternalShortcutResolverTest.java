@@ -41,52 +41,78 @@ public class DLVideoExternalShortcutResolverTest {
 
 	@Test
 	public void testResolveFromFacebook() {
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
-				"https://www.facebook.com/watch/?v=VIDEO_ID"));
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
+				"frameborder=\"0\" height=\"315\" ",
+				"src=\"https://www.facebook.com/plugins/video.php?height=315&",
+				"href=https://www.facebook.com/watch/?v=VIDEO_ID&show_text=0&",
+				"width=560\" scrolling=\"no\" style=\"border: none; overflow: ",
+				"hidden;\" width=\"560\"></iframe>"),
+			_getEmbeddableHTML("https://www.facebook.com/watch/?v=VIDEO_ID"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
+				"frameborder=\"0\" height=\"315\" ",
+				"src=\"https://www.facebook.com/plugins/video.php?height=315&",
+				"href=https://www.facebook.com/USER_ID/videos/VIDEO_ID&",
+				"show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
+				"none; overflow: hidden;\" width=\"560\"></iframe>"),
+			_getEmbeddableHTML(
 				"https://www.facebook.com/USER_ID/videos/VIDEO_ID"));
 	}
 
 	@Test
 	public void testResolveFromTwitch() {
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
-				"https://www.twitch.tv/videos/VIDEO_ID"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
+				"height=\"315\" src=\"https://player.twitch.tv",
+				"/?autoplay=false&video=VIDEO_ID&parent=\" scrolling=\"no\" ",
+				"width=\"560\" ></iframe>"),
+			_getEmbeddableHTML("https://www.twitch.tv/videos/VIDEO_ID"));
 	}
 
 	@Test
 	public void testResolveFromVimeo() {
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
-				"https://vimeo.com/VIDEO_ID"));
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
+		String expectedIframe = StringBundler.concat(
+			"<iframe allowfullscreen frameborder=\"0\" height=\"315\" ",
+			"mozallowfullscreen src=\"https://player.vimeo.com/video",
+			"/VIDEO_ID\" webkitallowfullscreen width=\"560\"></iframe>");
+
+		Assert.assertEquals(
+			expectedIframe, _getEmbeddableHTML("https://vimeo.com/VIDEO_ID"));
+		Assert.assertEquals(
+			expectedIframe,
+			_getEmbeddableHTML(
 				"https://vimeo.com/album/ALBUM_ID/video/VIDEO_ID"));
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
+		Assert.assertEquals(
+			expectedIframe,
+			_getEmbeddableHTML(
 				"https://vimeo.com/channels/CHANNEL_ID/VIDEO_ID"));
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
+		Assert.assertEquals(
+			expectedIframe,
+			_getEmbeddableHTML(
 				"https://vimeo.com/groups/GROUP_ID/videos/VIDEO_ID"));
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
+		Assert.assertEquals(
+			expectedIframe,
+			_getEmbeddableHTML(
 				"https://vimeo.com/showcase/SHOWCASE_ID/video/VIDEO_ID"));
 	}
 
 	@Test
 	public void testResolveFromYouTube() {
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
-				"https://www.youtube.com/watch?v=VIDEO_ID"));
-		Assert.assertNotNull(
-			_dlVideoExternalShortcutResolver.resolve(
-				"https://youtu.be/VIDEO_ID"));
+		String expectedIframe = StringBundler.concat(
+			"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
+			"height=\"315\" frameborder=\"0\" ",
+			"src=\"https://www.youtube.com/embed",
+			"/VIDEO_ID?rel=0\" width=\"560\"></iframe>");
 
-		DLVideoExternalShortcut dlVideoExternalShortcut =
-			_dlVideoExternalShortcutResolver.resolve(
-				"https://www.youtube.com/watch?v=VIDEO_ID&t=61");
+		Assert.assertEquals(
+			expectedIframe,
+			_getEmbeddableHTML("https://www.youtube.com/watch?v=VIDEO_ID"));
+		Assert.assertEquals(
+			expectedIframe, _getEmbeddableHTML("https://youtu.be/VIDEO_ID"));
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -94,7 +120,15 @@ public class DLVideoExternalShortcutResolverTest {
 				"height=\"315\" frameborder=\"0\" ",
 				"src=\"https://www.youtube.com/embed",
 				"/VIDEO_ID?rel=0&start=61\" width=\"560\"></iframe>"),
-			dlVideoExternalShortcut.getEmbeddableHTML());
+			_getEmbeddableHTML(
+				"https://www.youtube.com/watch?v=VIDEO_ID&t=61"));
+	}
+
+	private String _getEmbeddableHTML(String url) {
+		DLVideoExternalShortcut dlVideoExternalShortcut =
+			_dlVideoExternalShortcutResolver.resolve(url);
+
+		return dlVideoExternalShortcut.getEmbeddableHTML();
 	}
 
 	@Inject

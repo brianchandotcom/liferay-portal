@@ -528,6 +528,17 @@ definition {
 		PageEditor.closeSidebar(tabName = "Fragments and Widgets");
 	}
 
+	macro assertAutoImageResolution {
+		var currentSrc = selenium.getAttribute("${element}@currentSrc");
+
+		if (contains("${currentSrc}", "${adaptiveMediaName}")) {
+			echo("The auto image resolution is right.");
+		}
+		else {
+			fail("The auto image resolution is wrong.");
+		}
+	}
+
 	macro assertFragmentSidebarLoaded {
 		Pause(locator1 = "5000");
 

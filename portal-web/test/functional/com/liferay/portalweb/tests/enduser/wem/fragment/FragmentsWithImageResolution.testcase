@@ -187,6 +187,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122822. View auto image resolution for image mapped to web content."
+	@priority = "5"
+	test ViewAutoImageResolutionForImageMappedToWebContent {
+		task ("Add an Image Resolution with 2000px Max Width") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Adaptive Media");
+
+			AdaptiveMedia.addImageResolution(
+				imageName = "Large Image Resolution",
+				maxWidth = "2000");
+		}
+
+		task ("Add a web content structure with Image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Select an Image with width greater than 2000px in Image field") {
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "high_resolution_photo.jpg",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Card fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
+		}
+
+		task ("Map the Image field of web content to image editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Card",
+				id = "01-img");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Image");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the available image resolutions for image editable field") {
+			for (var adaptiveMediaName : list "Thumbnail-300x300,Preview-1000x0,large-image-resolution") {
+				AssertElementPresent(
+					id = "01-img",
+					key_adaptiveMediaName = "${adaptiveMediaName}",
+					key_fragmentName = "Card",
+					locator1 = "Fragment#AVAILABLE_ADAPTIVE_MEDIA");
+			}
+
+			PageEditor.viewFragmentEditableImage(
+				id = "01-img",
+				imageDescription = "Responsive Image",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Assert the Large Image Resolution is selected automatically") {
+			PageEditor.assertAutoImageResolution(
+				adaptiveMediaName = "large-image-resolution",
+				element = "//img[contains(@alt,'Responsive Image') and contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+		}
+	}
+
 	@description = "This is a test for LPS-113806. View auto image resolution when image resolution is greater than original image and original image is greater than viewport."
 	@priority = "4"
 	test ViewAutoImageResolutionWhenImageResolutionIsGreaterThanOriginalImageAndOriginalImageIsGreaterThanViewport {

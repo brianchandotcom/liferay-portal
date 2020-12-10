@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.talend.web.internal.frontend.taglib.servlet.taglib.ui;
 
+import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.constants.DispatchWebKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -80,6 +81,10 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, DispatchTrigger dispatchTrigger) {
+		if (!_omniadmin.isOmniadmin(user)) {
+			return false;
+		}
+
 		if (dispatchTrigger == null) {
 			return false;
 		}
@@ -130,6 +135,9 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Omniadmin _omniadmin;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.dispatch.talend.web)"

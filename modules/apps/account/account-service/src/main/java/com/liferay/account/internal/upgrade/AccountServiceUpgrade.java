@@ -61,7 +61,9 @@ public class AccountServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.1", "1.3.0",
 			new com.liferay.account.internal.upgrade.v1_3_0.
-				UpgradeAccountEntry());
+				UpgradeAccountEntry(),
+			new com.liferay.account.internal.upgrade.v1_3_0.
+				UpgradeAccountGroup());
 	}
 
 }

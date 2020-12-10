@@ -4374,6 +4374,10 @@ public class DataFactory {
 
 		ddmStructureLinkModel.setStructureLinkId(_counter.get());
 
+		// Audit fields
+
+		ddmStructureLinkModel.setCompanyId(_companyId);
+
 		// Other fields
 
 		ddmStructureLinkModel.setClassNameId(classNameId);

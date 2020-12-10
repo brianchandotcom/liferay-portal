@@ -13,3 +13,9 @@
  *
  */
 --%>
+
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
+
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.workflow.constants.WorkflowWebKeys" %>

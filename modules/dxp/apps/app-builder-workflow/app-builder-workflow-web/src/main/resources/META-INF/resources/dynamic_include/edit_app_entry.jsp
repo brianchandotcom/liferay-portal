@@ -15,3 +15,14 @@
 --%>
 
 <%@ include file="/dynamic_include/init.jsp" %>
+
+<div>
+	<react:component
+		module="js/pages/entry/activity/ActivitySection.es"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"workflowInstanceId", GetterUtil.getLong(request.getAttribute(WorkflowWebKeys.WORKFLOW_INSTANCE_ID))
+			).build()
+		%>'
+	/>
+</div>

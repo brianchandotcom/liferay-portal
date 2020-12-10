@@ -28,6 +28,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import WorkflowInfoBar from '../../components/workflow-info-bar/WorkflowInfoBar.es';
 import useDataLayouts from '../../hooks/useDataLayouts.es';
 import ReassignEntryModal from './ReassignEntryModal.es';
+import ActivitySection from './activity/ActivitySection.es';
 
 export default function ViewEntry({
 	history,
@@ -281,6 +282,12 @@ export default function ViewEntry({
 										</div>
 									)
 								)}
+
+							{workflowInfo?.instanceId && (
+								<ActivitySection
+									workflowInstanceId={workflowInfo.instanceId}
+								/>
+							)}
 						</div>
 					</div>
 				</div>

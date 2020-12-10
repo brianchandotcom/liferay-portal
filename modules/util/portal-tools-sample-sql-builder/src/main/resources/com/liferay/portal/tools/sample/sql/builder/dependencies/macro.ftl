@@ -56,6 +56,7 @@
 	_ddmStorageLinkId
 	_ddmStructureId
 	_entry
+	_ddmStructureVersionId = 0
 	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
@@ -65,7 +66,7 @@
 
 		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_entry, ddmFieldModels, ddmStorageLinkModel)>
 	<#else>
-		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId)>
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId, _ddmStructureVersionId)>
 
 		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_currentIndex, _entry, ddmStorageLinkModel)>
 

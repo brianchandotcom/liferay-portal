@@ -2102,13 +2102,15 @@ public class DataFactory {
 		List<DDMFieldModel> ddmFieldModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT + 1);
 
+		long structureVersionId = ddmStorageLinkModel.getStructureVersionId();
+
 		DDMFieldModel ddmFieldModel = new DDMFieldModelImpl();
 
 		ddmFieldModel.setFieldId(_counter.get());
 		ddmFieldModel.setCompanyId(_companyId);
 		ddmFieldModel.setParentFieldId(0);
 		ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel.setStructureVersionId(_defaultDLDDMStructureVersionId);
+		ddmFieldModel.setStructureVersionId(structureVersionId);
 		ddmFieldModel.setFieldName(StringPool.BLANK);
 		ddmFieldModel.setFieldType(StringPool.BLANK);
 		ddmFieldModel.setInstanceId(StringPool.BLANK);
@@ -2126,8 +2128,7 @@ public class DataFactory {
 			ddmFieldModel.setCompanyId(_companyId);
 			ddmFieldModel.setParentFieldId(0);
 			ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
-			ddmFieldModel.setStructureVersionId(
-				_defaultDLDDMStructureVersionId);
+			ddmFieldModel.setStructureVersionId(structureVersionId);
 			ddmFieldModel.setFieldName(
 				nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			ddmFieldModel.setFieldType("string");
@@ -2142,11 +2143,12 @@ public class DataFactory {
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
-		DDLRecordModel ddlRecordModel, long ddmStorageLinkId,
-		long structureId) {
+		DDLRecordModel ddlRecordModel, long ddmStorageLinkId, long structureId,
+		long structureVersionId) {
 
 		return newDDMStorageLinkModel(
-			ddmStorageLinkId, ddlRecordModel.getDDMStorageId(), structureId);
+			ddmStorageLinkId, ddlRecordModel.getDDMStorageId(), structureId,
+			structureVersionId);
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -2154,7 +2156,8 @@ public class DataFactory {
 		long structureId) {
 
 		return newDDMStorageLinkModel(
-			ddmStorageLinkId, _counter.get(), structureId);
+			ddmStorageLinkId, _counter.get(), structureId,
+			_defaultDLDDMStructureVersionId);
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -2178,30 +2181,6 @@ public class DataFactory {
 		ddmStorageLinkModel.setStructureId(structureId);
 		ddmStorageLinkModel.setStructureVersionId(
 			_defaultJournalDDMStructureVersionId);
-
-		return ddmStorageLinkModel;
-	}
-
-	public DDMStorageLinkModel newDDMStorageLinkModel(
-		long ddmStorageLinkId, long classPK, long structureId) {
-
-		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
-
-		// UUID
-
-		ddmStorageLinkModel.setUuid(SequentialUUID.generate());
-
-		// PK fields
-
-		ddmStorageLinkModel.setStorageLinkId(ddmStorageLinkId);
-
-		// Other fields
-
-		ddmStorageLinkModel.setClassNameId(getClassNameId(DDMContent.class));
-		ddmStorageLinkModel.setClassPK(classPK);
-		ddmStorageLinkModel.setStructureId(structureId);
-		ddmStorageLinkModel.setStructureVersionId(
-			_defaultDLDDMStructureVersionId);
 
 		return ddmStorageLinkModel;
 	}
@@ -4326,6 +4305,33 @@ public class DataFactory {
 		blogsEntryModel.setStatusDate(new Date());
 
 		return blogsEntryModel;
+	}
+
+	protected DDMStorageLinkModel newDDMStorageLinkModel(
+		long ddmStorageLinkId, long classPK, long structureId, long versionId) {
+
+		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
+
+		// UUID
+
+		ddmStorageLinkModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		ddmStorageLinkModel.setStorageLinkId(ddmStorageLinkId);
+
+		// Audit fields
+
+		ddmStorageLinkModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		ddmStorageLinkModel.setClassNameId(getClassNameId(DDMContent.class));
+		ddmStorageLinkModel.setClassPK(classPK);
+		ddmStorageLinkModel.setStructureId(structureId);
+		ddmStorageLinkModel.setStructureVersionId(versionId);
+
+		return ddmStorageLinkModel;
 	}
 
 	protected DDMStructureLayoutModel newDDMStructureLayoutModel(

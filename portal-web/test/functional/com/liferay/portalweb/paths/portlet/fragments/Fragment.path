@@ -279,6 +279,12 @@
 </tr>
 <!--FRAGMENT_EDITABLE_FIELD-->
 <tr>
+	<td>AVAILABLE_ADAPTIVE_MEDIA</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]/preceding-sibling::source[contains(@srcset,'${key_adaptiveMediaName}')]
+	</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
 	<td></td>

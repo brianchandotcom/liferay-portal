@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.item.selector.web.internal.display.context;
 
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
+import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryTreeNodeConstants;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
@@ -87,12 +88,29 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 	}
 
 	public String getAssetCategoryTreeNodeName() throws PortalException {
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyServiceUtil.fetchVocabulary(
-				getAssetCategoryTreeNodeId());
+		String assetCategoryTreeNodeType = getAssetCategoryTreeNodeType();
 
-		if (assetVocabulary != null) {
-			return assetVocabulary.getName();
+		if (assetCategoryTreeNodeType.equals(
+				AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY)) {
+
+			AssetCategory assetCategory =
+				AssetCategoryServiceUtil.fetchCategory(
+					getAssetCategoryTreeNodeId());
+
+			if (assetCategory != null) {
+				return assetCategory.getName();
+			}
+		}
+		else if (assetCategoryTreeNodeType.equals(
+					AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY)) {
+
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyServiceUtil.fetchVocabulary(
+					getAssetCategoryTreeNodeId());
+
+			if (assetVocabulary != null) {
+				return assetVocabulary.getName();
+			}
 		}
 
 		return null;

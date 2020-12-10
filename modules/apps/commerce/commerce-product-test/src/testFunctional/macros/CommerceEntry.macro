@@ -89,7 +89,7 @@ definition {
 				locator1 = "Button#SELECT",
 				value1 = "Select Site");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+			SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 			Click(
 				key_siteName = "${siteName}",

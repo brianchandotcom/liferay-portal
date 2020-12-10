@@ -34,6 +34,10 @@ definition {
 		property portal.acceptance = "false";
 		property testray.component.names = "Content Pages,Site Administration";
 
+		JSONFragment.addFragmentCollection(
+			groupName = "Test Site Name",
+			name = "Collection Name");
+
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
@@ -50,12 +54,15 @@ definition {
 
 		PortletEntry.publish();
 
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -71,7 +78,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
@@ -98,11 +107,15 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent New Title");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent New Content");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/new-site/test-content-page-name");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "New Site");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}

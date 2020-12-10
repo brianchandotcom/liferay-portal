@@ -36,7 +36,7 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+		if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 			Click(
 				key_radioOption = "${shippingMethod}",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
@@ -55,7 +55,7 @@ definition {
 
 		subtotal = MathUtil.product("${productUnitPrice}", "${productQuantity}");
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+		if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 			total = MathUtil.sum("${subtotal}", "${deliveryValue}");
 		}
 		else {
@@ -79,28 +79,22 @@ definition {
 	}
 
 	macro viewCheckoutOrderSummary {
-		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
+		if (IsElementPresent(key_label = "Shipping Address", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressName}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
 				value1 = "${addressName}");
-		}
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressAddress}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
 				value1 = "${addressAddress}");
-		}
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressCity}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
 				value1 = "${addressCity}");
-		}
 
-		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressCountry}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
@@ -135,12 +129,10 @@ definition {
 			value1 = "${subtotalValue}");
 
 		if (isSet(deliveryValue)) {
-			if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
-				AssertTextEquals.assertPartialText(
-					key_deliveryValue = "${deliveryValue}",
-					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY",
-					value1 = "${deliveryValue}");
-			}
+			AssertTextEquals.assertPartialText(
+				key_deliveryValue = "${deliveryValue}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY",
+				value1 = "${deliveryValue}");
 		}
 
 		if (isSet(taxValue)) {

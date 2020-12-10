@@ -47,7 +47,7 @@ export const useBackgroundImageMediaQueries = (elementId, backgroundImage) => {
 					.map((imageSize) => {
 						return `@media ${imageSize.mediaQuery} {
 							#${elementId} {
-								background-image: url(${imageSize.url});
+								background-image: url(${imageSize.url}) !important;
 							}
 						}`;
 					})

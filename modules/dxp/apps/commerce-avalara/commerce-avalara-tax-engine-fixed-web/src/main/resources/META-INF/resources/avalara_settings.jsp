@@ -26,7 +26,7 @@ CommerceAvalaraConnectorConfiguration commerceAvalaraConnectorConfiguration = (C
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<liferay-ui:error exception="<%= CommerceAvalaraConnectionException.class %>" message="could-not-verify-the-connection-the-provided-credentials-are-not-correct" />
+	<liferay-ui:error exception="<%= CommerceAvalaraConnectionException.class %>" message="the-connection-could-not-be-verified-because-the-provided-credentials-are-incorrect" />
 
 	<commerce-ui:panel>
 		<%@ include file="/edit_avalara_settings.jspf" %>

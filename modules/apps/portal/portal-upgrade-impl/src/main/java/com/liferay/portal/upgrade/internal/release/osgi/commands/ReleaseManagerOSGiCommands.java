@@ -108,7 +108,7 @@ public class ReleaseManagerOSGiCommands {
 		_upgradeExecutor.executeUpgradeInfos(
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
-				_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName),
+				_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName),
 				toVersionString),
 			null);
 
@@ -172,7 +172,7 @@ public class ReleaseManagerOSGiCommands {
 		sb.append(bundleSymbolicName);
 		sb.append(StringPool.SPACE);
 		sb.append(
-			_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName));
+			_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName));
 		sb.append(StringPool.NEW_LINE);
 
 		for (UpgradeInfo upgradeProcess : upgradeInfos) {
@@ -249,7 +249,7 @@ public class ReleaseManagerOSGiCommands {
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
 			String currentSchemaVersion =
-				_releaseManagerImpl.getCurrentSchemaVersion(bundleSymbolicName);
+				_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName);
 
 			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 				_releaseManagerImpl.getUpgradeInfos(bundleSymbolicName));

@@ -156,7 +156,7 @@ public class YouTubeDLVideoExternalShortcutProvider
 
 	private static final List<Pattern> _urlPatterns = Arrays.asList(
 		Pattern.compile(
-			"https?:\\/\\/(?:www\\.)?youtube\\.com\\/watch\\?v=(\\S*)$"),
+			"https?:\\/\\/(?:www\\.)?youtube\\.com\\/watch\\?v=([^?&]*)\\S*$"),
 		Pattern.compile("https?:\\/\\/(?:www\\.)?youtu\\.be\\/(\\S*)$"));
 
 	@Reference

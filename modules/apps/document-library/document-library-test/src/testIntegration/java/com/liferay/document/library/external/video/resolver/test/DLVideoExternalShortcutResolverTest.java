@@ -15,7 +15,9 @@
 package com.liferay.document.library.external.video.resolver.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -81,6 +83,18 @@ public class DLVideoExternalShortcutResolverTest {
 		Assert.assertNotNull(
 			_dlVideoExternalShortcutResolver.resolve(
 				"https://youtu.be/VIDEO_ID"));
+
+		DLVideoExternalShortcut dlVideoExternalShortcut =
+			_dlVideoExternalShortcutResolver.resolve(
+				"https://www.youtube.com/watch?v=VIDEO_ID&t=61");
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
+				"height=\"315\" frameborder=\"0\" ",
+				"src=\"https://www.youtube.com/embed",
+				"/VIDEO_ID?rel=0\" width=\"560\"></iframe>"),
+			dlVideoExternalShortcut.getEmbeddableHTML());
 	}
 
 	@Inject

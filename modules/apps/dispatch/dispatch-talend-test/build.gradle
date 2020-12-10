@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:dispatch:dispatch-api")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 
 	testIntegrationRuntime ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
 }

@@ -1,6 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.github.ignaciotcrespo", name: "frutilla", version: "0.7.1"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:commerce:commerce-api")
 	testIntegrationCompile project(":apps:commerce:commerce-inventory-api")

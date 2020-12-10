@@ -64,7 +64,9 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SearchContainer<AssetCategory> getAssetCategorySearchContainer() {
+	public SearchContainer<AssetCategory> getAssetCategorySearchContainer()
+		throws PortalException {
+
 		SearchContainer<AssetCategory> searchContainer = new SearchContainer<>(
 			_getPortletRequest(), _portletURL, null, "no-items-to-display");
 
@@ -175,13 +177,32 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		};
 	}
 
-	private List<AssetCategory> _getAssetCategories() {
-		int count = AssetCategoryServiceUtil.getVocabularyRootCategoriesCount(
-			_themeDisplay.getScopeGroupId(), getAssetCategoryTreeNodeId());
+	private List<AssetCategory> _getAssetCategories() throws PortalException {
+		String assetCategoryTreeNodeType = getAssetCategoryTreeNodeType();
 
-		return AssetCategoryServiceUtil.getVocabularyRootCategories(
-			_themeDisplay.getScopeGroupId(), getAssetCategoryTreeNodeId(), 0,
-			count, null);
+		if (assetCategoryTreeNodeType.equals(
+				AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY)) {
+
+			int count = AssetCategoryServiceUtil.getChildCategoriesCount(
+				getAssetCategoryTreeNodeId());
+
+			return AssetCategoryServiceUtil.getChildCategories(
+				getAssetCategoryTreeNodeId(), 0, count, null);
+		}
+		else if (assetCategoryTreeNodeType.equals(
+					AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY)) {
+
+			int count =
+				AssetCategoryServiceUtil.getVocabularyRootCategoriesCount(
+					_themeDisplay.getScopeGroupId(),
+					getAssetCategoryTreeNodeId());
+
+			return AssetCategoryServiceUtil.getVocabularyRootCategories(
+				_themeDisplay.getScopeGroupId(), getAssetCategoryTreeNodeId(),
+				0, count, null);
+		}
+
+		return new ArrayList<>();
 	}
 
 	private String _getAssetCategoryTreeNodeURL(

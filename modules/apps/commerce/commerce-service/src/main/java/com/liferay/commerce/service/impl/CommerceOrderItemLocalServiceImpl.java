@@ -1100,6 +1100,9 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 
 		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
+
+		_setSubscriptionInfo(commerceOrderItem, cpInstance);
+
 		commerceOrderItem.setShippable(cpDefinition.isShippable());
 		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
 		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
@@ -1502,6 +1505,52 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (commerceOrderItem.getWeight() <= 0) {
 			commerceOrderItem.setWidth(cpDefinition.getWeight());
+		}
+	}
+
+	private void _setSubscriptionInfo(
+			CommerceOrderItem commerceOrderItem, CPInstance cpInstance)
+		throws PortalException {
+
+		if (cpInstance.isOverrideSubscriptionInfo()) {
+			commerceOrderItem.setSubscriptionLength(
+				cpInstance.getSubscriptionLength());
+			commerceOrderItem.setSubscriptionType(
+				cpInstance.getSubscriptionType());
+			commerceOrderItem.setSubscriptionTypeSettings(
+				cpInstance.getSubscriptionTypeSettings());
+			commerceOrderItem.setMaxSubscriptionCycles(
+				cpInstance.getMaxSubscriptionCycles());
+			commerceOrderItem.setDeliverySubscriptionLength(
+				cpInstance.getDeliverySubscriptionLength());
+			commerceOrderItem.setDeliverySubscriptionType(
+				cpInstance.getDeliverySubscriptionType());
+			commerceOrderItem.setDeliverySubscriptionTypeSettings(
+				cpInstance.getDeliverySubscriptionTypeSettings());
+			commerceOrderItem.setDeliveryMaxSubscriptionCycles(
+				cpInstance.getDeliveryMaxSubscriptionCycles());
+		}
+		else {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(
+					cpInstance.getCPDefinitionId());
+
+			commerceOrderItem.setSubscriptionLength(
+				cpDefinition.getSubscriptionLength());
+			commerceOrderItem.setSubscriptionType(
+				cpDefinition.getSubscriptionType());
+			commerceOrderItem.setSubscriptionTypeSettings(
+				cpDefinition.getSubscriptionTypeSettings());
+			commerceOrderItem.setMaxSubscriptionCycles(
+				cpDefinition.getMaxSubscriptionCycles());
+			commerceOrderItem.setDeliverySubscriptionLength(
+				cpDefinition.getDeliverySubscriptionLength());
+			commerceOrderItem.setDeliverySubscriptionType(
+				cpDefinition.getDeliverySubscriptionType());
+			commerceOrderItem.setDeliverySubscriptionTypeSettings(
+				cpDefinition.getDeliverySubscriptionTypeSettings());
+			commerceOrderItem.setDeliveryMaxSubscriptionCycles(
+				cpDefinition.getDeliveryMaxSubscriptionCycles());
 		}
 	}
 

@@ -78,6 +78,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_PAGE_TITLE</td>
+	<td>//*[contains(@data-qa-id, 'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Edit')]</td>
 	<td></td>
@@ -100,6 +105,11 @@
 <tr>
 	<td>FIRST_ELEMENT_LISTED</td>
 	<td>(//*[contains(@class, 'text-truncate')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_ELEMENT_LISTED_LINK</td>
+	<td>((//*[contains(@class, 'lfr-portal-tooltip')])[4]</td>
 	<td></td>
 </tr>
 <tr>

@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -203,6 +205,47 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		}
 
 		return new ArrayList<>();
+	}
+
+	private List<BreadcrumbEntry> _getAssetCategoryBreadcrumbEntries()
+		throws PortalException, PortletException {
+
+		ArrayList<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		String assetCategoryTreeNodeType = getAssetCategoryTreeNodeType();
+
+		if (!assetCategoryTreeNodeType.equals(
+				AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY)) {
+
+			return breadcrumbEntries;
+		}
+
+		AssetCategory assetCategory = AssetCategoryServiceUtil.fetchCategory(
+			getAssetCategoryTreeNodeId());
+
+		if (assetCategory != null) {
+			List<AssetCategory> assetCategories = assetCategory.getAncestors();
+
+			Iterator<AssetCategory> iterator = ListUtil.reverseIterator(
+				assetCategories);
+
+			while (iterator.hasNext()) {
+				AssetCategory ancestorAssetCategory = iterator.next();
+
+				breadcrumbEntries.add(
+					_createBreadcrumbEntry(
+						ancestorAssetCategory.getTitle(
+							_themeDisplay.getLocale()),
+						getAssetCategoryURL(
+							ancestorAssetCategory.getCategoryId())));
+			}
+
+			breadcrumbEntries.add(
+				_createBreadcrumbEntry(
+					assetCategory.getTitle(_themeDisplay.getLocale()), null));
+		}
+
+		return breadcrumbEntries;
 	}
 
 	private String _getAssetCategoryTreeNodeURL(

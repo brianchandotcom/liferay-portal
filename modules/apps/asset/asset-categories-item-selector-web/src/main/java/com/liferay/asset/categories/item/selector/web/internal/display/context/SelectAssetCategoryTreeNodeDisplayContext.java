@@ -130,22 +130,9 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 	public String getAssetCategoryURL(long assetCategoryId)
 		throws PortletException {
 
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
-
-		portletURL.setParameter(
-			"assetCategoryTreeNodeId", String.valueOf(assetCategoryId));
-		portletURL.setParameter(
-			"backURL",
-			ParamUtil.getString(
-				_httpServletRequest, "backURL",
-				PortalUtil.getCurrentURL(_httpServletRequest)));
-
-		return portletURL.toString();
+		return _getAssetCategoryTreeNodeURL(
+			assetCategoryId,
+			AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY);
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {
@@ -195,6 +182,30 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		return AssetCategoryServiceUtil.getVocabularyRootCategories(
 			_themeDisplay.getScopeGroupId(), getAssetCategoryTreeNodeId(), 0,
 			count, null);
+	}
+
+	private String _getAssetCategoryTreeNodeURL(
+			long assetCategoryTreeNodeId, String assetCategoryTreeNodeType)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		portletURL.setParameter(
+			"assetCategoryTreeNodeId", String.valueOf(assetCategoryTreeNodeId));
+		portletURL.setParameter(
+			"assetCategoryTreeNodeType", assetCategoryTreeNodeType);
+		portletURL.setParameter(
+			"backURL",
+			ParamUtil.getString(
+				_httpServletRequest, "backURL",
+				PortalUtil.getCurrentURL(_httpServletRequest)));
+
+		return portletURL.toString();
 	}
 
 	private BreadcrumbEntry _getAssetVocabulariesBreadcrumbEntry() {

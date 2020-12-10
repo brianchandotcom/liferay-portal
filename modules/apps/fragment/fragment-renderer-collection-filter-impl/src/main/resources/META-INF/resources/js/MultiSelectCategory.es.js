@@ -19,7 +19,6 @@ import React, {useEffect, useState} from 'react';
 
 export default function MultiSelectCategory({
 	assetCategories,
-	assetVocabularyLabel,
 	fragmentEntryLinkId,
 	selectedAssetCategoryIds: initialSelectedCategoryIds,
 }) {
@@ -83,7 +82,6 @@ export default function MultiSelectCategory({
 
 	return (
 		<div>
-			<p className="font-weight-semi-bold mb-1">{assetVocabularyLabel}</p>
 			<ClayDropDownWithItems
 				footerContent={
 					<ClayButton onClick={onApply} small>
@@ -114,7 +112,6 @@ MultiSelectCategory.propTypes = {
 			label: PropTypes.string.isRequired,
 		}).isRequired
 	),
-	assetVocabularyLabel: PropTypes.string.isRequired,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	selectedAssetCategoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

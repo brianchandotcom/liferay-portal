@@ -33,7 +33,7 @@ export const ImageSelectorSize = ({
 	editableElement = null,
 	fileEntryId = DEFAULT_IMAGE_SIZE_ID,
 	imageSizeId,
-	onImageSizeIdChanged,
+	onImageSizeIdChanged = null,
 }) => {
 	const imageSizeSelectId = useId();
 	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
@@ -147,5 +147,5 @@ ImageSelectorSize.propTypes = {
 	editableElement: PropTypes.object,
 	fileEntryId: PropTypes.number.isRequired,
 	imageSizeId: PropTypes.string,
-	onImageSizeIdChanged: PropTypes.func.isRequired,
+	onImageSizeIdChanged: PropTypes.func,
 };

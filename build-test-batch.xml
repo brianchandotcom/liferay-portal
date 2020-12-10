@@ -5967,10 +5967,7 @@ ${output.content}</echo>
 							tofile="${app.server.tomcat.dir.custom}"
 						/>
 
-						<local name="junit.failure.count" />
-						<local name="junit.failure.message" />
-
-						<trycatch property="junit.failure.message">
+						<trycatch>
 							<try>
 								<parallel>
 									<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second">
@@ -5990,13 +5987,9 @@ ${output.content}</echo>
 								/>
 							</try>
 							<finally>
-								<condition else="0" property="junit.failure.count" value="1">
-									<isset property="junit.failure.message" />
-								</condition>
-
-								<get-junit-failure-message-element />
-
-								<generate-backend-batch-junit-report junit.failure.count="${junit.failure.count}" junit.failure.message.element="${junit.failure.message.element}" test.class.name="portalStartupRenamedTomcatInPath" test.command.name="portalStartupRenamedTomcatInPath" />
+								<ant dir="portal-kernel" inheritAll="false" target="test-class">
+									<property name="test.class" value="PortalLogAssertorTest" />
+								</ant>
 							</finally>
 						</trycatch>
 					</test-action>

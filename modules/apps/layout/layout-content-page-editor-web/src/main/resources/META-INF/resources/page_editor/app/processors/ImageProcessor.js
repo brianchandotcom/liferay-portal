@@ -65,12 +65,18 @@ function render(element, value, editableConfig = {}, languageId) {
 	}
 
 	if (image) {
-		const alt = value.alt || config.alt || image.alt;
-
-		image.alt =
-			typeof alt === 'object'
-				? alt[languageId] || alt[config.defaultLanguageId] || ''
-				: alt || '';
+		if (editableConfig.alt && typeof editableConfig.alt === 'object') {
+			image.alt =
+				editableConfig.alt[languageId] ||
+				editableConfig.alt[config.defaultLanguageId] ||
+				'';
+		}
+		else if (typeof editableConfig.alt === 'string') {
+			image.alt = editableConfig.alt;
+		}
+		else {
+			image.alt = '';
+		}
 
 		const link =
 			editableConfig[languageId] ||

@@ -52,31 +52,31 @@ public class TalendArchive {
 			return new TalendArchive(this);
 		}
 
-		public Builder setClasspathEntries(List<String> classpathEntries) {
+		public Builder classpathEntries(List<String> classpathEntries) {
 			_classpathEntries = classpathEntries;
 
 			return this;
 		}
 
-		public Builder setContextName(String contextName) {
+		public Builder contextName(String contextName) {
 			_contextName = contextName;
 
 			return this;
 		}
 
-		public Builder setJobDirectory(String jobDirectory) {
+		public Builder jobDirectory(String jobDirectory) {
 			_jobDirectory = jobDirectory;
 
 			return this;
 		}
 
-		public Builder setJobJarPath(String jobJarPath) {
+		public Builder jobJarPath(String jobJarPath) {
 			_jobJarPath = jobJarPath;
 
 			return this;
 		}
 
-		public Builder setJobMainClassFQN(String jobMainClassFQN) {
+		public Builder jobMainClassFQN(String jobMainClassFQN) {
 			_jobMainClassFQN = jobMainClassFQN;
 
 			return this;

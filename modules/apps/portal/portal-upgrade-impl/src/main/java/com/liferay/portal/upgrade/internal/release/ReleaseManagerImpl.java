@@ -74,7 +74,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		return _serviceTrackerMap.keySet();
 	}
 
-	public String getCurrentSchemaVersion(String bundleSymbolicName) {
+	public String getSchemaVersionString(String bundleSymbolicName) {
 		String currentSchemaVersion = "0.0.0";
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
@@ -218,7 +218,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 			List<List<UpgradeInfo>> upgradeInfosList =
 				releaseGraphManager.getUpgradeInfosList(
-					getCurrentSchemaVersion(bundleSymbolicName));
+					getSchemaVersionString(bundleSymbolicName));
 
 			List<UpgradeInfo> upgradeInfos = upgradeInfosList.get(0);
 
@@ -243,7 +243,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 		List<List<UpgradeInfo>> upgradeInfosList =
 			releaseGraphManager.getUpgradeInfosList(
-				getCurrentSchemaVersion(bundleSymbolicName));
+				getSchemaVersionString(bundleSymbolicName));
 
 		if (upgradeInfosList.size() == 1) {
 			return true;

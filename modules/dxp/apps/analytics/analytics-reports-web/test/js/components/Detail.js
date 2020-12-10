@@ -511,35 +511,45 @@ describe('Detail', () => {
 					'https://www.liferay.com/resources/ebooks/Becoming+a+Digital+Business-4+Common+Enterprise+Challenges+Conquered'
 				)
 			).toBeInTheDocument();
+			expect(getByText('125,461')).toBeInTheDocument();
 			expect(
 				getByText(
 					'https://www.liferay.com/resources/whitepapers/B2B+E-Commerce+RFP+Kit'
 				)
 			).toBeInTheDocument();
+			expect(getByText('85,485')).toBeInTheDocument();
 			expect(
 				getByText(
 					'https://www.liferay.com/resources/whitepapers/6+Tactics+to+Modernize+Your+Intranet'
 				)
 			).toBeInTheDocument();
+			expect(getByText('84,564')).toBeInTheDocument();
 			expect(
 				getByText(
 					'https://www.liferay.com/resources/case-studies/materion-case-study'
 				)
 			).toBeInTheDocument();
+			expect(getByText('5,846')).toBeInTheDocument();
 			expect(
 				getByText(
 					'https://www.liferay.com/web/l/a1-hrvatska-case-study'
 				)
 			).toBeInTheDocument();
+			expect(getByText('3,521')).toBeInTheDocument();
 
 			expect(getByText('view-more')).toBeInTheDocument();
 
 			expect(getByText('top-referring-domains')).toBeInTheDocument();
 			expect(getByText('http://youtube.com/')).toBeInTheDocument();
+			expect(getByText('17,985,230')).toBeInTheDocument();
 			expect(getByText('http://www.google.com/')).toBeInTheDocument();
+			expect(getByText('12,218,030')).toBeInTheDocument();
 			expect(getByText('http://microsoft.com/')).toBeInTheDocument();
+			expect(getByText('9,062,949')).toBeInTheDocument();
 			expect(getByText('http://linkedin.com/')).toBeInTheDocument();
+			expect(getByText('4,601,453')).toBeInTheDocument();
 			expect(getByText('https://www.liferay.com')).toBeInTheDocument();
+			expect(getByText('253,399')).toBeInTheDocument();
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);

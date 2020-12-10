@@ -533,7 +533,7 @@ public class JournalConverterImpl implements JournalConverter {
 				serializable = StringPool.BLANK;
 			}
 		}
-		else if (Objects.equals(DDMFormFieldType.LINK_TO_PAGE, type)) {
+		else if (Objects.equals("link_to_layout", type)) {
 			String[] values = StringUtil.split(
 				dynamicContentElement.getText(), CharPool.AT);
 

@@ -23,6 +23,8 @@ import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
+import {useBackgroundImageMediaQueries} from '../../utils/useBackgroundImageQueries';
+import {useId} from '../../utils/useId';
 
 const Row = React.forwardRef(
 	({children, className, item, withinTopper = false}, ref) => {
@@ -67,6 +69,13 @@ const Row = React.forwardRef(
 		} = itemConfig.styles;
 
 		const [backgroundImageValue, setBackgroundImageValue] = useState('');
+
+		const elementId = useId();
+
+		const backgroundImageMediaQueries = useBackgroundImageMediaQueries(
+			elementId,
+			backgroundImage
+		);
 
 		useEffect(() => {
 			loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
@@ -128,9 +137,11 @@ const Row = React.forwardRef(
 							: '']: textAlign,
 					}
 				)}
+				id={elementId}
 				ref={ref}
 				style={style}
 			>
+				<style>{backgroundImageMediaQueries}</style>
 				{children}
 			</ClayLayout.Row>
 		);

@@ -22,7 +22,6 @@ import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
 import {useId} from '../../utils/useId';
 
@@ -89,7 +88,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 						onImageSelected={handleImageChanged}
 					/>
 
-					{config.adaptiveMediaEnabled && value?.fileEntryId && (
+					{value?.fileEntryId && (
 						<ImageSelectorSize
 							fileEntryId={value.fileEntryId}
 							imageSizeId="auto"

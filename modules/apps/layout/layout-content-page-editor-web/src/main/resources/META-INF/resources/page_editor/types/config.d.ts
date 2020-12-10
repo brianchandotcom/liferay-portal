@@ -15,7 +15,6 @@
 import {LayoutTypes} from './LayoutTypes';
 
 export interface Config {
-	adaptiveMediaEnabled: boolean;
 	addFragmentCompositionURL: string;
 	addFragmentEntryLinkCommentURL: string;
 	addFragmentEntryLinkURL: string;

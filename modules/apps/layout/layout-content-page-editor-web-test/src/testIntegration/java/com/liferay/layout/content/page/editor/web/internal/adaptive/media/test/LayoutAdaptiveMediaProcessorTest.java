@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -50,7 +49,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -60,7 +58,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -70,10 +67,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Iterator;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -102,16 +97,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("adaptiveMediaEnabled", true);
-
-		_configurationProvider.saveSystemConfiguration(
-			_configurationBeanDeclaration.getConfigurationBeanClass(),
-			properties);
-
-		Thread.sleep(200);
-
 		_serviceContext = new ServiceContext();
 
 		_serviceContext.setScopeGroupId(_group.getGroupId());
@@ -133,17 +118,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 		_themeDisplay.setUser(TestPropsValues.getUser());
 
 		_addLayout();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("adaptiveMediaEnabled", false);
-
-		_configurationProvider.saveSystemConfiguration(
-			_configurationBeanDeclaration.getConfigurationBeanClass(),
-			properties);
 	}
 
 	@Test
@@ -328,14 +302,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject(
-		filter = "component.name=com.liferay.layout.content.page.editor.web.internal.settings.definition.FFLayoutContentPageEditorConfigurationBeanDeclaration"
-	)
-	private ConfigurationBeanDeclaration _configurationBeanDeclaration;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

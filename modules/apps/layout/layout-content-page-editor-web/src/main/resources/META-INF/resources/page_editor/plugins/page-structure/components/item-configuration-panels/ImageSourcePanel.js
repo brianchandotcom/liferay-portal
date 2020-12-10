@@ -168,11 +168,9 @@ function DirectImagePanel({item}) {
 			[languageId]: nextImage.url,
 		};
 
-		if (config.adaptiveMediaEnabled) {
-			delete nextEditableValue.config.imageTitle;
+		delete nextEditableValue.config.imageTitle;
 
-			nextEditableValue[languageId] = nextImage;
-		}
+		nextEditableValue[languageId] = nextImage;
 
 		delete nextEditableValue.classNameId;
 		delete nextEditableValue.classPK;
@@ -259,7 +257,7 @@ function DirectImagePanel({item}) {
 				onImageSelected={handleImageChanged}
 			/>
 
-			{config.adaptiveMediaEnabled && editableContent?.fileEntryId && (
+			{editableContent?.fileEntryId && (
 				<ImageSelectorSize
 					editableElement={editableElement}
 					fileEntryId={editableContent.fileEntryId}

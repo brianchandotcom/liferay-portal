@@ -14,6 +14,16 @@ definition {
 			value1 = "${workflowAppName}");
 	}
 
+	macro addWorkflowNewObject {
+		AppBuilderWorkflow.clickOnAddNewCustomObjectButton();
+
+		Type(
+			locator1 = "AppBuilderWorkflow#WORKFLOW_NEW_OBJECT_NAME_FIELD",
+			value1 = "${workflowObjectName}");
+
+		Click(locator1 = "AppBuilderWorkflow#BUTTON_CONTINUE");
+	}
+
 	macro assertAppUpdateAlertModal {
 		AssertElementPresent(locator1 = "AppBuilderWorkflow#APP_ALERT_MODAL_TITLE");
 		AssertElementPresent(locator1 = "AppBuilderWorkflow#APP_ALERT_MODAL_TEXT");
@@ -187,6 +197,10 @@ definition {
 		Button.click(button = "Add New Action");
 	}
 
+	macro clickOnAddNewCustomObjectButton {
+		Click(locator1 = "AppBuilderWorkflow#CREATE_NEW_CUSTOM_OBJECT_BUTTON");
+	}
+
 	macro clickOnSelectFormView {
 		Click(
 			key_positionNumber = "${positionNumber}",
@@ -280,6 +294,10 @@ definition {
 		Click(
 			key_objectName = "${objectName}",
 			locator1 = "AppBuilderWorkflow#OBJECT_ITEM");
+	}
+
+	macro selectRuleOption {
+		Click(locator1 = "AppBuilderWorkflow#")
 	}
 
 	macro selectStartStepDataAndViews {
@@ -383,7 +401,7 @@ definition {
 	}
 
 	macro validatePlusButton {
-		AssertElementPresent(locator1 = "AppBuilder#BUTTON_ADD");
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#CREATE_NEW_CUSTOM_OBJECT_BUTTON");
 	}
 
 	macro verifyAssignToOption {

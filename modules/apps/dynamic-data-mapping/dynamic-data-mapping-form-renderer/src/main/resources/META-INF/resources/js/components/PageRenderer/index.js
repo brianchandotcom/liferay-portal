@@ -17,6 +17,7 @@ import core from 'metal';
 import React from 'react';
 
 import {PageProvider} from '../../hooks/usePage.es';
+import {VariantsProvider} from '../../hooks/useVariants.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import * as EditablePageHeader from './EditablePageHeader.es';
@@ -210,51 +211,53 @@ const Renderer = ({
 		DDM_FORM_PORTLET_NAMESPACE === portletNamespace;
 
 	return (
-		<Components.Container
-			activePage={activePage}
-			editable={editable}
-			empty={empty}
-			page={page}
-			pageIndex={pageIndex}
-			pages={pages}
-			readOnly={readOnly}
-			showSubmitButton={showSubmitButton}
-			strings={strings}
-			submitLabel={submitLabel}
-		>
-			<Components.Page
+		<VariantsProvider components={Components}>
+			<Components.Container
 				activePage={activePage}
 				editable={editable}
 				empty={empty}
-				forceAriaUpdate={forceAriaUpdate}
-				header={
-					variant === LAYOUT_TYPES.SINGLE_PAGE ? null : (
-						<Header
-							description={page.description}
-							placeholder={page.placeholder}
-							title={page.title}
-						/>
-					)
-				}
-				invalidFormMessage={invalidFormMessage}
 				page={page}
 				pageIndex={pageIndex}
+				pages={pages}
+				readOnly={readOnly}
+				showSubmitButton={showSubmitButton}
+				strings={strings}
+				submitLabel={submitLabel}
 			>
-				{hasFieldRequired && isDDMFormPortletNamespace && (
-					<p aria-hidden="true" className="text-secondary">
-						<span className="c-mr-1 reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-						{Liferay.Language.get('indicates-required-fields')}
-					</p>
-				)}
-				<Layout
-					components={Components}
+				<Components.Page
+					activePage={activePage}
 					editable={editable}
-					rows={page.rows}
-				/>
-			</Components.Page>
-		</Components.Container>
+					empty={empty}
+					forceAriaUpdate={forceAriaUpdate}
+					header={
+						variant === LAYOUT_TYPES.SINGLE_PAGE ? null : (
+							<Header
+								description={page.description}
+								placeholder={page.placeholder}
+								title={page.title}
+							/>
+						)
+					}
+					invalidFormMessage={invalidFormMessage}
+					page={page}
+					pageIndex={pageIndex}
+				>
+					{hasFieldRequired && isDDMFormPortletNamespace && (
+						<p aria-hidden="true" className="text-secondary">
+							<span className="c-mr-1 reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
+							{Liferay.Language.get('indicates-required-fields')}
+						</p>
+					)}
+					<Layout
+						components={Components}
+						editable={editable}
+						rows={page.rows}
+					/>
+				</Components.Page>
+			</Components.Container>
+		</VariantsProvider>
 	);
 };
 

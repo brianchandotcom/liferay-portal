@@ -38,18 +38,7 @@ export const Container = ({
 );
 
 export const Column = forwardRef(
-	(
-		{
-			children,
-			className,
-			column,
-			index,
-			pageIndex,
-			rowIndex,
-			...otherProps
-		},
-		ref
-	) => {
+	({children, className, column, index, pageIndex, rowIndex}, ref) => {
 		const addr = {
 			'data-ddm-field-column': index,
 			'data-ddm-field-page': pageIndex,
@@ -63,7 +52,6 @@ export const Column = forwardRef(
 		return (
 			<ClayLayout.Col
 				{...addr}
-				{...otherProps}
 				className="col-ddm"
 				key={index}
 				md={column.size}

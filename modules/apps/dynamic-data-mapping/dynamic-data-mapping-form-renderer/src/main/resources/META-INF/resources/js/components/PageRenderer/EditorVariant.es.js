@@ -149,7 +149,14 @@ export const Column = ({
 	);
 };
 
-export const Page = ({activePage, empty, pageIndex}) => {
+export const Page = ({
+	activePage,
+	empty,
+	forceAriaUpdate,
+	header,
+	invalidFormMessage,
+	pageIndex,
+}) => {
 	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex: 0,
 		origin: DND_ORIGIN_TYPE.EMPTY,
@@ -158,7 +165,13 @@ export const Page = ({activePage, empty, pageIndex}) => {
 	});
 
 	return (
-		<DefaultVariant.Page activePage={activePage} pageIndex={pageIndex}>
+		<DefaultVariant.Page
+			activePage={activePage}
+			forceAriaUpdate={forceAriaUpdate}
+			header={header}
+			invalidFormMessage={invalidFormMessage}
+			pageIndex={pageIndex}
+		>
 			{empty && activePage === pageIndex && (
 				<ClayLayout.Row>
 					<ClayLayout.Col
@@ -186,6 +199,12 @@ export const Page = ({activePage, empty, pageIndex}) => {
 		</DefaultVariant.Page>
 	);
 };
+
+export const Row = ({children, index, row}) => (
+	<div className="position-relative" key={index}>
+		{row.columns.map((column, index) => children({column, index}))}
+	</div>
+);
 
 export const Rows = ({activePage, children, pageIndex, rows}) => {
 	if (!rows) {

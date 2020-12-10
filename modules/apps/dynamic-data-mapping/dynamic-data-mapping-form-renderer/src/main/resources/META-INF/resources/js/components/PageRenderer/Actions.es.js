@@ -88,25 +88,46 @@ const Actions = forwardRef(({activePage, children, expanded, field}, ref) => {
 		},
 	];
 
-	const handleFieldMouseEnter = () => {
-		setHoveredField(field.fieldName);
-	};
+	const handleFieldInteractions = (event) => {
+		event.stopPropagation();
 
-	const handleFieldMouseLeave = () => {
-		setHoveredField('');
-	};
+		if (ref.current?.contains(event.target)) {
+			return;
+		}
 
-	const handleFieldClick = () => {
-		dispatch({
-			payload: {activePage, fieldName: field.fieldName},
-			type: EVENT_TYPES.FIELD_CLICKED,
-		});
+		switch (event.type) {
+			case 'click':
+				dispatch({
+					payload: {activePage, fieldName: field.fieldName},
+					type: EVENT_TYPES.FIELD_CLICKED,
+				});
 
-		setActiveField(field.fieldName);
+				setActiveField(field.fieldName);
+
+				break;
+
+			case 'mouseover':
+				setHoveredField(field.fieldName);
+
+				break;
+
+			case 'mouseleave':
+				setHoveredField('');
+
+				break;
+
+			default:
+				break;
+		}
 	};
 
 	return (
-		<>
+		<div
+			className="row"
+			onClick={handleFieldInteractions}
+			onMouseLeave={handleFieldInteractions}
+			onMouseOver={handleFieldInteractions}
+		>
 			{expanded && (
 				<div className="ddm-field-actions-container" ref={ref}>
 					<span className="actions-label">{field.label}</span>
@@ -126,13 +147,11 @@ const Actions = forwardRef(({activePage, children, expanded, field}, ref) => {
 				</div>
 			)}
 
-			{React.cloneElement(children, {
-				onClick: handleFieldClick,
-				onMouseEnter: handleFieldMouseEnter,
-				onMouseLeave: handleFieldMouseLeave,
-			})}
-		</>
+			{children}
+		</div>
 	);
 });
+
+Actions.displayName = 'Actions';
 
 export default Actions;

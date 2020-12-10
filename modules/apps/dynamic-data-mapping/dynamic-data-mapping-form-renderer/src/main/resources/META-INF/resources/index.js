@@ -34,6 +34,7 @@ export {FieldStateless} from './js/components/Field/FieldStateless.es';
 export {PageProvider, usePage} from './js/hooks/usePage.es';
 export {useFieldTypesResource} from './js/hooks/useResource.es';
 export {FormProvider, FormNoopProvider, useForm} from './js/hooks/useForm.es';
+export {useVariants} from './js/hooks/useVariants.es';
 export {Layout} from './js/components/PageRenderer/Layout.es';
 export * as DefaultVariant from './js/components/PageRenderer/DefaultVariant.es';
 

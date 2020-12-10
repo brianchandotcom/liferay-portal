@@ -67,7 +67,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			dispatchTrigger.getDispatchTriggerId());
 
 		if (talendArchive == null) {
-			throw new PortalException("Unable to fetch talend archive");
+			throw new PortalException("Unable to fetch Talend archive");
 		}
 
 		TalendProcess talendProcess = _getTalendProcess(

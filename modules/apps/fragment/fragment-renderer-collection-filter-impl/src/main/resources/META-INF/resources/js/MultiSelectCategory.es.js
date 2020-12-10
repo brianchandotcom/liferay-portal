@@ -80,6 +80,21 @@ export default function MultiSelectCategory({
 		window.location.search = search;
 	};
 
+	let label = Liferay.Language.get('select');
+
+	if (selectedCategoryIds.length === 1) {
+		label =
+			assetCategories.find(
+				(category) => selectedCategoryIds[0] === category.id
+			)?.label || label;
+	}
+	else if (selectedCategoryIds.length > 1) {
+		label = Liferay.Util.sub(
+			Liferay.Language.get('x-selected'),
+			selectedCategoryIds.length
+		);
+	}
+
 	return (
 		<ClayDropDownWithItems
 			footerContent={
@@ -97,7 +112,7 @@ export default function MultiSelectCategory({
 					displayType="secondary"
 					small
 				>
-					{Liferay.Language.get('select')}
+					{label}
 				</ClayButton>
 			}
 		/>

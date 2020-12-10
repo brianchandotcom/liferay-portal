@@ -136,8 +136,9 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
+		<column name="defaultAccountGroup" type="boolean" />
 		<column name="description" type="String" />
+		<column name="name" type="String" />
 
 		<!-- Finder methods -->
 

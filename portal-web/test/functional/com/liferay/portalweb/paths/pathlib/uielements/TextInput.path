@@ -589,11 +589,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SPECIFIC_FIELD_REQUIRED_ALERT</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//div[@class='required']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>STREET_1</td>
 	<td>//div[label[contains(.,'Street 1')]]//input[@type='text']</td>
 	<td></td>

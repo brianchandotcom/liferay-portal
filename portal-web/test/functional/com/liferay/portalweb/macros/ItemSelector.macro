@@ -38,7 +38,7 @@ definition {
 		}
 
 		if (("${type}" == "Audio") || ("${type}" == "Video")) {
-			if ("${publish}" == "true") {
+			if (!(isSet(unpublish))) {
 				AssertElementPresent.pauseAssertVisible(
 					key_text = "Add",
 					locator1 = "Button#ANY_ENABLED");

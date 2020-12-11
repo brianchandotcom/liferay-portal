@@ -451,34 +451,34 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://www.youtube.com/watch?v=test",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.youtube.com");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://vimeo.com/test",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://player.vimeo.com");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://www.facebook.com/Cristiano/videos/test",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.facebook.com");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://test.com/test",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://test.com/test");
 	}
@@ -493,34 +493,34 @@ definition {
 		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://www.youtube.com");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://www.facebook.com/Cristiano/videos/1710977485745946",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://www.facebook.com");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://www.twitch.tv/videos/806178790",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://player.twitch.tv");
 
 		ItemSelector.addFromURL(
-			publish = "false",
 			embedVideo = "https://vimeo.com/483035084",
 			navTab = "URL",
-			type = "Video");
+			type = "Video",
+			unpublish = "true");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://player.vimeo.com");
 	}

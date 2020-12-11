@@ -94,19 +94,6 @@ public class UpgradeCountry extends UpgradeProcess {
 				"update Country set userId = " + defaultUserId +
 					" where (userId is null or userId = 0)");
 		}
-
-		runSQL(
-			"update Country set billingAllowed = [$TRUE$] where " +
-				"billingAllowed is null");
-		runSQL(
-			"update Country set groupFilterEnabled = [$FALSE$] where " +
-				"groupFilterEnabled is null");
-		runSQL(
-			"update Country set shippingAllowed = [$TRUE$] where " +
-				"shippingAllowed is null");
-		runSQL(
-			"update Country set subjectToVAT = [$FALSE$] where subjectToVAT " +
-				"is null");
 	}
 
 }

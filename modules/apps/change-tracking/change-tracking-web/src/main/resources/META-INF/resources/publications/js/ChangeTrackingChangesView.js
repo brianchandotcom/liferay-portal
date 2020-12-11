@@ -82,6 +82,8 @@ class ChangeTrackingChangesView extends React.Component {
 		this.spritemap = spritemap;
 		this.userInfo = userInfo;
 
+		this.renderCache = {};
+
 		this._populateModelInfo(siteNames, typeNames);
 
 		const pathState = this._getPathState(pathParam);
@@ -179,25 +181,26 @@ class ChangeTrackingChangesView extends React.Component {
 			.then((response) => response.text())
 			.then((text) => {
 				if (
-					!this._isWithinApp(
-						new URLSearchParams(window.location.search)
-					)
+					this.state.node.ctEntryId ||
+					!this.state.node.modelClassNameId ||
+					this.state.node.modelClassNameId !==
+						this.initialNode.modelClassNameId ||
+					this.state.node.modelClassPK !==
+						this.initialNode.modelClassPK
 				) {
 					return;
 				}
 
-				if (
-					this.state.node.modelClassNameId &&
-					this.state.node.modelClassNameId ===
-						this.initialNode.modelClassNameId &&
-					this.state.node.modelClassPK ===
-						this.initialNode.modelClassPK
-				) {
-					this.setState({
-						loading: false,
-						renderInnerHTML: {__html: text},
-					});
-				}
+				this.setState({
+					loading: false,
+					renderInnerHTML: {__html: text},
+				});
+
+				this.renderCache[
+					this.initialNode.modelClassNameId.toString() +
+						'-' +
+						this.initialNode.modelClassPK.toString()
+				] = {renderInnerHTML: {__html: text}};
 			});
 	}
 
@@ -1270,27 +1273,41 @@ class ChangeTrackingChangesView extends React.Component {
 
 		window.history.pushState(state, document.title, path);
 
-		this.setState(
-			{
-				breadcrumbItems,
-				children: this._filterHideableNodes(
-					node.children,
-					showHideable
-				),
-				filterClass,
-				node,
-				page: 1,
-				showHideable,
-				viewType,
-			},
-			() => {
-				if (!node.ctEntryId) {
-					this._updateRenderContent(true, node);
-				}
+		this.setState({
+			breadcrumbItems,
+			children: this._filterHideableNodes(node.children, showHideable),
+			filterClass,
+			node,
+			page: 1,
+			showHideable,
+			viewType,
+		});
 
-				window.scrollTo(0, 0);
+		if (!node.ctEntryId && node.modelClassNameId) {
+			const cachedData = this.renderCache[
+				node.modelClassNameId.toString() +
+					'-' +
+					node.modelClassPK.toString()
+			];
+
+			if (cachedData && cachedData.renderInnerHTML) {
+				this.setState({
+					loading: false,
+					renderInnerHTML: cachedData.renderInnerHTML,
+				});
 			}
-		);
+			else {
+				this._updateRenderContent(node);
+			}
+		}
+		else {
+			this.setState({
+				loading: false,
+				renderInnerHTML: null,
+			});
+		}
+
+		window.scrollTo(0, 0);
 	}
 
 	_handlePageChange(page) {
@@ -1369,21 +1386,39 @@ class ChangeTrackingChangesView extends React.Component {
 			showHideable = true;
 		}
 
-		this.setState(
-			{
-				breadcrumbItems,
-				children: this._filterHideableNodes(
-					node.children,
-					showHideable
-				),
-				filterClass,
-				node,
-				page: 1,
-				showHideable,
-				viewType,
-			},
-			() => node.ctEntryId || this._updateRenderContent(true, node)
-		);
+		this.setState({
+			breadcrumbItems,
+			children: this._filterHideableNodes(node.children, showHideable),
+			filterClass,
+			node,
+			page: 1,
+			showHideable,
+			viewType,
+		});
+
+		if (!node.ctEntryId && node.modelClassNameId) {
+			const cachedData = this.renderCache[
+				node.modelClassNameId.toString() +
+					'-' +
+					node.modelClassPK.toString()
+			];
+
+			if (cachedData && cachedData.renderInnerHTML) {
+				this.setState({
+					loading: false,
+					renderInnerHTML: cachedData.renderInnerHTML,
+				});
+			}
+			else {
+				this._updateRenderContent(node);
+			}
+		}
+		else {
+			this.setState({
+				loading: false,
+				renderInnerHTML: null,
+			});
+		}
 	}
 
 	_handleShowHideableToggle(showHideable) {
@@ -1685,7 +1720,15 @@ class ChangeTrackingChangesView extends React.Component {
 					{this.state.node.ctEntryId && (
 						<ChangeTrackingRenderView
 							dataURL={this._getRenderURL(this.state.node)}
+							getCache={() =>
+								this.renderCache[this.state.node.ctEntryId]
+							}
 							spritemap={this.spritemap}
+							updateCache={(data) => {
+								this.renderCache[
+									this.state.node.ctEntryId
+								] = data;
+							}}
 						/>
 					)}
 
@@ -1917,43 +1960,35 @@ class ChangeTrackingChangesView extends React.Component {
 		return url + '&' + this.namespace + name + '=' + value;
 	}
 
-	_updateRenderContent(loading, node) {
-		if (!node.modelClassNameId) {
-			this.setState({
-				loading: false,
-				renderInnerHTML: null,
-			});
-
-			return;
-		}
-
+	_updateRenderContent(node) {
 		this.setState(
 			{
-				loading,
+				loading: true,
 			},
 			() => {
 				fetch(this._getRenderURL(node))
 					.then((response) => response.text())
 					.then((text) => {
 						if (
-							!this._isWithinApp(
-								new URLSearchParams(window.location.search)
-							)
+							this.state.node.ctEntryId ||
+							!this.state.node.modelClassNameId ||
+							this.state.node.modelClassNameId !==
+								node.modelClassNameId ||
+							this.state.node.modelClassPK !== node.modelClassPK
 						) {
 							return;
 						}
 
-						if (
-							this.state.node.modelClassNameId &&
-							this.state.node.modelClassNameId ===
-								node.modelClassNameId &&
-							this.state.node.modelClassPK === node.modelClassPK
-						) {
-							this.setState({
-								loading: false,
-								renderInnerHTML: {__html: text},
-							});
-						}
+						this.setState({
+							loading: false,
+							renderInnerHTML: {__html: text},
+						});
+
+						this.renderCache[
+							node.modelClassNameId.toString() +
+								'-' +
+								node.modelClassPK.toString()
+						] = {renderInnerHTML: {__html: text}};
 					});
 			}
 		);

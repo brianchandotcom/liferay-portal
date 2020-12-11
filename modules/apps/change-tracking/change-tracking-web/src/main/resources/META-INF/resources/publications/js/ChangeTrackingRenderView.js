@@ -22,7 +22,12 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
+const ChangeTrackingRenderView = ({
+	dataURL,
+	getCache,
+	spritemap,
+	updateCache,
+}) => {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CONTENT_SELECT_LEFT = 'CONTENT_SELECT_LEFT';
@@ -35,91 +40,140 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 
 	const [contentSelect, setContentSelect] = useState(CONTENT_SELECT_UNIFIED);
 	const [contentType, setContentType] = useState(CONTENT_TYPE_DISPLAY);
-	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [renderData, setRenderData] = useState(null);
 	const [viewType, setViewType] = useState(VIEW_TYPE_FULL);
 
 	useEffect(() => {
-		setLoading(true);
+		const cache = getCache();
 
-		fetch(dataURL)
-			.then((response) => response.json())
-			.then((json) => {
-				let contentSelect = CONTENT_SELECT_UNIFIED;
-				let contentType = CONTENT_TYPE_DISPLAY;
-				let viewType = VIEW_TYPE_FULL;
+		if (cache && cache.changeType) {
+			let newContentSelect = CONTENT_SELECT_UNIFIED;
+			let newContentType = CONTENT_TYPE_DISPLAY;
+			let newViewType = VIEW_TYPE_FULL;
 
-				if (!json.content) {
-					contentType = CONTENT_TYPE_DATA;
-					viewType = VIEW_TYPE_FULL;
-				}
+			if (!cache.content) {
+				newContentType = CONTENT_TYPE_DATA;
+				newViewType = VIEW_TYPE_FULL;
+			}
 
-				if (!json.leftTitle) {
-					contentSelect = CONTENT_SELECT_RIGHT;
-				}
-				else if (!json.rightTitle) {
-					contentSelect = CONTENT_SELECT_LEFT;
-				}
+			if (!cache.leftTitle) {
+				newContentSelect = CONTENT_SELECT_RIGHT;
+			}
+			else if (!cache.rightTitle) {
+				newContentSelect = CONTENT_SELECT_LEFT;
+			}
 
-				setContentSelect(contentSelect);
-				setContentType(contentType);
-				setData(json);
-				setViewType(viewType);
+			setContentSelect(newContentSelect);
+			setContentType(newContentType);
+			setRenderData(cache);
+			setViewType(newViewType);
 
-				setLoading(false);
-			})
-			.catch(() => {
-				setData({
-					errorMessage: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
+			setLoading(false);
+		}
+		else {
+			setLoading(true);
+
+			const currentDataURL = dataURL;
+
+			fetch(dataURL)
+				.then((response) => response.json())
+				.then((json) => {
+					if (dataURL === currentDataURL) {
+						if (!json.changeType) {
+							setLoading(false);
+							setRenderData({
+								errorMessage: Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
+							});
+
+							return;
+						}
+
+						let newContentSelect = CONTENT_SELECT_UNIFIED;
+						let newContentType = CONTENT_TYPE_DISPLAY;
+						let newViewType = VIEW_TYPE_FULL;
+
+						if (!json.content) {
+							newContentType = CONTENT_TYPE_DATA;
+							newViewType = VIEW_TYPE_FULL;
+						}
+
+						if (!json.leftTitle) {
+							newContentSelect = CONTENT_SELECT_RIGHT;
+						}
+						else if (!json.rightTitle) {
+							newContentSelect = CONTENT_SELECT_LEFT;
+						}
+
+						setContentSelect(newContentSelect);
+						setContentType(newContentType);
+						setRenderData(json);
+						setViewType(newViewType);
+
+						setLoading(false);
+
+						updateCache(json);
+					}
+				})
+				.catch(() => {
+					setLoading(false);
+					setRenderData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
 				});
-			});
-	}, [dataURL]);
+		}
+	}, [getCache, dataURL, updateCache]);
 
 	const validData = () => {
-		if (data && data.changeType && !data.errorMessage) {
+		if (renderData && renderData.changeType && !renderData.errorMessage) {
 			return true;
 		}
 
 		return false;
 	};
 
-	const getContentSelectTitle = (contentSelect) => {
-		if (contentSelect === CONTENT_SELECT_LEFT) {
-			if (data.changeType === CHANGE_TYPE_ADDED && data.versioned) {
+	const getContentSelectTitle = (value) => {
+		if (value === CONTENT_SELECT_LEFT) {
+			if (
+				renderData.changeType === CHANGE_TYPE_ADDED &&
+				renderData.versioned
+			) {
 				return (
-					data.leftTitle +
+					renderData.leftTitle +
 					' (' +
 					Liferay.Language.get('previous') +
 					')'
 				);
 			}
 
-			return data.leftTitle;
+			return renderData.leftTitle;
 		}
-		else if (contentSelect === CONTENT_SELECT_RIGHT) {
+		else if (value === CONTENT_SELECT_RIGHT) {
 			if (
-				data.changeType === CHANGE_TYPE_ADDED &&
-				data.versioned &&
-				data.leftTitle
+				renderData.changeType === CHANGE_TYPE_ADDED &&
+				renderData.versioned &&
+				renderData.leftTitle
 			) {
 				return (
-					data.rightTitle +
+					renderData.rightTitle +
 					' (' +
 					Liferay.Language.get('current') +
 					')'
 				);
 			}
 
-			return data.rightTitle;
+			return renderData.rightTitle;
 		}
 
 		return Liferay.Language.get('unified');
 	};
 
 	const getContentSelectTooltip = () => {
-		if (data.changeType === CHANGE_TYPE_DELETED) {
+		if (renderData.changeType === CHANGE_TYPE_DELETED) {
 			return Liferay.Language.get(
 				'item-does-not-have-another-version-to-compare-against'
 			);
@@ -131,8 +185,8 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 	};
 
 	const getSplitViewTooltip = () => {
-		if (validData() && (!data.leftTitle || !data.rightTitle)) {
-			if (data.changeType === CHANGE_TYPE_DELETED) {
+		if (validData() && (!renderData.leftTitle || !renderData.rightTitle)) {
+			if (renderData.changeType === CHANGE_TYPE_DELETED) {
 				return Liferay.Language.get(
 					'item-does-not-have-another-version-to-compare-against'
 				);
@@ -169,7 +223,7 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 			</div>
 		);
 
-		if (!data.leftTitle || !data.rightTitle) {
+		if (!renderData.leftTitle || !renderData.rightTitle) {
 			elements.push(
 				<div className="autofit-col">
 					<div className="dropdown">
@@ -200,15 +254,15 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 
 		const items = [];
 
-		if (data.leftTitle && data.rightTitle) {
+		if (renderData.leftTitle && renderData.rightTitle) {
 			pushItem(items, CONTENT_SELECT_UNIFIED);
 		}
 
-		if (data.leftTitle) {
+		if (renderData.leftTitle) {
 			pushItem(items, CONTENT_SELECT_LEFT);
 		}
 
-		if (data.rightTitle) {
+		if (renderData.rightTitle) {
 			pushItem(items, CONTENT_SELECT_RIGHT);
 		}
 
@@ -239,17 +293,25 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 	const renderContentLeft = () => {
 		if (
 			contentType === CONTENT_TYPE_DATA &&
-			Object.prototype.hasOwnProperty.call(data, 'leftRender')
+			Object.prototype.hasOwnProperty.call(renderData, 'leftRender')
 		) {
-			return <div dangerouslySetInnerHTML={{__html: data.leftRender}} />;
+			return (
+				<div
+					dangerouslySetInnerHTML={{__html: renderData.leftRender}}
+				/>
+			);
 		}
 		else if (
 			contentType === CONTENT_TYPE_DISPLAY &&
-			Object.prototype.hasOwnProperty.call(data, 'leftContent')
+			Object.prototype.hasOwnProperty.call(renderData, 'leftContent')
 		) {
-			if (data.leftContent) {
+			if (renderData.leftContent) {
 				return (
-					<div dangerouslySetInnerHTML={{__html: data.leftContent}} />
+					<div
+						dangerouslySetInnerHTML={{
+							__html: renderData.leftContent,
+						}}
+					/>
 				);
 			}
 
@@ -275,18 +337,24 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 	const renderContentRight = () => {
 		if (
 			contentType === CONTENT_TYPE_DATA &&
-			Object.prototype.hasOwnProperty.call(data, 'rightRender')
+			Object.prototype.hasOwnProperty.call(renderData, 'rightRender')
 		) {
-			return <div dangerouslySetInnerHTML={{__html: data.rightRender}} />;
+			return (
+				<div
+					dangerouslySetInnerHTML={{__html: renderData.rightRender}}
+				/>
+			);
 		}
 		else if (
 			contentType === CONTENT_TYPE_DISPLAY &&
-			Object.prototype.hasOwnProperty.call(data, 'rightContent')
+			Object.prototype.hasOwnProperty.call(renderData, 'rightContent')
 		) {
-			if (data.rightContent) {
+			if (renderData.rightContent) {
 				return (
 					<div
-						dangerouslySetInnerHTML={{__html: data.rightContent}}
+						dangerouslySetInnerHTML={{
+							__html: renderData.rightContent,
+						}}
 					/>
 				);
 			}
@@ -313,26 +381,28 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 	const renderContentUnified = () => {
 		if (
 			contentType === CONTENT_TYPE_DATA &&
-			Object.prototype.hasOwnProperty.call(data, 'unifiedRender')
+			Object.prototype.hasOwnProperty.call(renderData, 'unifiedRender')
 		) {
 			return (
 				<div className="taglib-diff-html">
 					<div
-						dangerouslySetInnerHTML={{__html: data.unifiedRender}}
+						dangerouslySetInnerHTML={{
+							__html: renderData.unifiedRender,
+						}}
 					/>
 				</div>
 			);
 		}
 		else if (
 			contentType === CONTENT_TYPE_DISPLAY &&
-			Object.prototype.hasOwnProperty.call(data, 'unifiedContent')
+			Object.prototype.hasOwnProperty.call(renderData, 'unifiedContent')
 		) {
-			if (data.unifiedContent) {
+			if (renderData.unifiedContent) {
 				return (
 					<div className="taglib-diff-html">
 						<div
 							dangerouslySetInnerHTML={{
-								__html: data.unifiedContent,
+								__html: renderData.unifiedContent,
 							}}
 						/>
 					</div>
@@ -359,10 +429,10 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 	};
 
 	const renderContent = () => {
-		if (!data) {
+		if (!renderData) {
 			return (
 				<tr>
-					<td>
+					<td className="publications-render-view-content">
 						<span
 							aria-hidden="true"
 							className="loading-animation"
@@ -380,7 +450,7 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 							spritemap={spritemap}
 							title={Liferay.Language.get('error')}
 						>
-							{data.errorMessage}
+							{renderData.errorMessage}
 						</ClayAlert>
 					</td>
 				</tr>
@@ -457,10 +527,10 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 			return (
 				<tr className="publications-render-view-divider table-divider">
 					<td className="publications-render-view-divider">
-						{data.leftTitle}
+						{renderData.leftTitle}
 					</td>
 					<td className="publications-render-view-divider">
-						{data.rightTitle}
+						{renderData.rightTitle}
 					</td>
 				</tr>
 			);
@@ -469,21 +539,21 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 		let title = null;
 
 		if (contentSelect === CONTENT_SELECT_LEFT) {
-			title = data.leftTitle;
+			title = renderData.leftTitle;
 
-			if (data.changeType === CHANGE_TYPE_DELETED) {
+			if (renderData.changeType === CHANGE_TYPE_DELETED) {
 				title += ' (' + Liferay.Language.get('deleted') + ')';
 			}
 		}
 		else if (contentSelect === CONTENT_SELECT_RIGHT) {
-			title = data.rightTitle;
+			title = renderData.rightTitle;
 
-			if (data.changeType === CHANGE_TYPE_ADDED) {
+			if (renderData.changeType === CHANGE_TYPE_ADDED) {
 				title += ' (' + Liferay.Language.get('new') + ')';
 			}
 		}
 		else {
-			title = data.leftTitle + ' | ' + data.rightTitle;
+			title = renderData.leftTitle + ' | ' + renderData.rightTitle;
 		}
 
 		const className = 'publications-render-view-divider table-divider';
@@ -507,7 +577,10 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 		if (viewType === VIEW_TYPE_SPLIT) {
 			className = 'active';
 		}
-		else if (validData() && (!data.leftTitle || !data.rightTitle)) {
+		else if (
+			validData() &&
+			(!renderData.leftTitle || !renderData.rightTitle)
+		) {
 			className = 'disabled';
 		}
 
@@ -542,7 +615,7 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 								>
 									<ClayLink
 										className={
-											validData() && !data.content
+											validData() && !renderData.content
 												? 'nav-link btn-link disabled'
 												: 'nav-link'
 										}
@@ -551,7 +624,7 @@ const ChangeTrackingRenderView = ({dataURL, spritemap}) => {
 											setContentType(CONTENT_TYPE_DISPLAY)
 										}
 										title={
-											validData() && !data.content
+											validData() && !renderData.content
 												? Liferay.Language.get(
 														'item-does-not-have-a-content-display'
 												  )

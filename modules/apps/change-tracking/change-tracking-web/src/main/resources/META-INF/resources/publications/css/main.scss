@@ -227,6 +227,10 @@ table.publications-render-view {
 	td.publications-render-view-content {
 		border: 1px solid #e7e7ed;
 		vertical-align: top;
+
+		.loading-animation {
+			margin-top: 8px;
+		}
 	}
 
 	td.publications-render-view-content:first-child {

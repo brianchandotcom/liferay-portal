@@ -15,13 +15,60 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import AppContext from '../../../AppContext.es';
+import {
+	ADD_DATA_LAYOUT_RULE,
+	UPDATE_DATA_LAYOUT_RULE,
+} from '../../../actions.es';
 import RuleEditorModal from '../../../components/rules/RuleEditorModal.es';
 import RuleList from '../../../components/rules/RuleList.es';
 import Sidebar from '../../../components/sidebar/Sidebar.es';
+import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 
-export default function ({title}) {
+export const DataEngineRulesSidebar = ({title}) => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const {pages} = dataLayoutBuilder.getStore();
+
+	const [
+		{
+			config: {
+				ruleSettings: {functionsMetadata, functionsURL},
+			},
+			dataLayout: {dataRules},
+		},
+		dispatch,
+	] = useContext(AppContext);
+
+	return (
+		<RulesSidebar
+			dataRules={dataRules}
+			functionsMetadata={functionsMetadata}
+			functionsURL={functionsURL}
+			onClick={({dataRule, loc, rule}) => {
+				dispatch({
+					payload: {
+						dataRule,
+						loc,
+					},
+					type: rule ? UPDATE_DATA_LAYOUT_RULE : ADD_DATA_LAYOUT_RULE,
+				});
+			}}
+			pages={pages}
+			title={title}
+		/>
+	);
+};
+
+export const RulesSidebar = ({
+	dataRules,
+	functionsMetadata,
+	functionsURL,
+	onClick,
+	pages,
+	title,
+}) => {
 	const [rulesEditorState, setRulesEditorState] = useState({
 		isVisible: false,
 		rule: null,
@@ -65,16 +112,21 @@ export default function ({title}) {
 			</Sidebar.Header>
 			<Sidebar.Body>
 				<RuleList
+					dataRules={dataRules}
 					keywords={keywords}
 					toggleRulesEditorVisibility={toggleRulesEditorVisibility}
 				/>
 			</Sidebar.Body>
 
 			<RuleEditorModal
+				functionsMetadata={functionsMetadata}
+				functionsURL={functionsURL}
 				isVisible={rulesEditorState.isVisible}
+				onClick={onClick}
 				onClose={() => toggleRulesEditorVisibility()}
+				pages={pages}
 				rule={rulesEditorState.rule}
 			/>
 		</Sidebar>
 	);
-}
+};

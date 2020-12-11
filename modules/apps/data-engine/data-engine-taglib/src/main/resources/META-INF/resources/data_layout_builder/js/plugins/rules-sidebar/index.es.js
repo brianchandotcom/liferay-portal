@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import RulesSidebar from './components/RulesSidebar.es';
+import {DataEngineRulesSidebar} from './components/RulesSidebar.es';
 
 /**
  * Entry-point for "RulesSidebar" (sidebar panel) functionality.
@@ -25,6 +25,6 @@ export default class {
 	}
 
 	renderSidebar() {
-		return <RulesSidebar title={this.title} />;
+		return <DataEngineRulesSidebar title={this.title} />;
 	}
 }

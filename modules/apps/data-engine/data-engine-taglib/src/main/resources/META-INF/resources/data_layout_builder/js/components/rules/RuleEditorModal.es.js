@@ -18,11 +18,8 @@ import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
-import AppContext from '../../AppContext.es';
-import {ADD_DATA_LAYOUT_RULE, UPDATE_DATA_LAYOUT_RULE} from '../../actions.es';
-import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import {Editor} from '../rule-builder/editor/Editor.es';
 
@@ -55,24 +52,19 @@ function getFields(pages) {
 	return fields;
 }
 
-const RuleEditorModalContent = ({onClose, rule}) => {
+const RuleEditorModalContent = ({
+	functionsMetadata,
+	functionsURL,
+	onClick,
+	onClose,
+	pages,
+	rule,
+}) => {
 	const [invalidRule, setInvalidRule] = useState(true);
 
 	const [ruleName, setRuleName] = useState(
 		rule?.name[themeDisplay.getDefaultLanguageId()]
 	);
-
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const {pages} = dataLayoutBuilder.getStore();
-
-	const [
-		{
-			config: {
-				ruleSettings: {functionsMetadata, functionsURL},
-			},
-		},
-		dispatch,
-	] = useContext(AppContext);
 
 	/**
 	 * This reference is used for updating rule value without causing a re-render
@@ -151,17 +143,13 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 						<ClayButton
 							disabled={invalidRule || !ruleName}
 							onClick={() => {
-								dispatch({
-									payload: {
-										dataRule: {
-											...ruleRef.current,
-											name: ruleName,
-										},
-										loc: rule?.ruleEditedIndex,
+								onClick({
+									dataRule: {
+										...ruleRef.current,
+										name: ruleName,
 									},
-									type: rule
-										? UPDATE_DATA_LAYOUT_RULE
-										: ADD_DATA_LAYOUT_RULE,
+									loc: rule?.ruleEditedIndex,
+									rule,
 								});
 								onClose();
 							}}
@@ -175,7 +163,15 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 	);
 };
 
-const RuleEditorModal = ({isVisible, onClose: onCloseFn, rule}) => {
+const RuleEditorModal = ({
+	functionsMetadata,
+	functionsURL,
+	isVisible,
+	onClick,
+	onClose: onCloseFn,
+	pages,
+	rule,
+}) => {
 	const {observer, onClose} = useModal({
 		onClose: onCloseFn,
 	});
@@ -190,7 +186,14 @@ const RuleEditorModal = ({isVisible, onClose: onCloseFn, rule}) => {
 			observer={observer}
 			size="full-screen"
 		>
-			<RuleEditorModalContent onClose={onClose} rule={rule} />
+			<RuleEditorModalContent
+				functionsMetadata={functionsMetadata}
+				functionsURL={functionsURL}
+				onClick={onClick}
+				onClose={onClose}
+				pages={pages}
+				rule={rule}
+			/>
 		</ClayModal>
 	);
 };

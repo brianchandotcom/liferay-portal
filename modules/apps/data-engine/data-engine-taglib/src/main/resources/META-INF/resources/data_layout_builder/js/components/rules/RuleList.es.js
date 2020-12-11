@@ -14,19 +14,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import AppContext from '../../AppContext.es';
 import EmptyState from '../empty-state/EmptyState.es';
 import RuleItem from './RuleItem.es';
 
-export default ({keywords, toggleRulesEditorVisibility}) => {
-	const [
-		{
-			dataLayout: {dataRules},
-		},
-	] = useContext(AppContext);
-
+export default ({dataRules, keywords, toggleRulesEditorVisibility}) => {
 	const filteredDataRules = dataRules
 		.map((rule, index) => ({...rule, ruleEditedIndex: index}))
 		.filter(({name}) =>

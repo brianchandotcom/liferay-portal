@@ -426,11 +426,11 @@ definition {
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 	}
 
-	macro viewEmbedVideoPreview {
+	macro previewEmbeddedVideo {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		if (isSet(invalidembedVideoPreview)) {
-			if (contains("${invalidembedVideoPreview}", "youtube")) {
+		if (isSet(invalidURL)) {
+			if (contains("${invalidURL}", "youtube")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 				Click(locator1 = "Button#YOUTUBE_PLAY");
@@ -439,14 +439,14 @@ definition {
 					locator1 = "Message#ERROR_INVALID_YOUTUBE_VIDEO",
 					value1 = "An error occurred. Please try again later.");
 			}
-			else if (contains("${invalidembedVideoPreview}", "facebook")) {
+			else if (contains("${invalidURL}", "facebook")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR_INVALID_FACEBOOK_VIDEO",
 					value1 = "Video Unavailable");
 			}
-			else if (contains("${invalidembedVideoPreview}", "vimeo")) {
+			else if (contains("${invalidURL}", "vimeo")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 				AssertTextEquals.assertPartialText(
@@ -465,7 +465,7 @@ definition {
 				locator1 = "Button#ANY_ENABLED");
 
 			AssertVisible(
-				key_videoShortcutPreview = "${embedVideoPreview}",
+				key_videoShortcutPreview = "${validURL}",
 				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 		}
 

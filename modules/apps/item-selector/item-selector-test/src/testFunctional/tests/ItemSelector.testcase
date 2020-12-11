@@ -456,7 +456,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://www.youtube.com");
+		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.youtube.com");
 
 		ItemSelector.addFromURL(
 			dontAdd = "true",
@@ -464,7 +464,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://player.vimeo.com");
+		ItemSelector.previewEmbeddedVideo(invalidURL = "https://player.vimeo.com");
 
 		ItemSelector.addFromURL(
 			dontAdd = "true",
@@ -472,7 +472,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://www.facebook.com");
+		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.facebook.com");
 
 		ItemSelector.addFromURL(
 			dontAdd = "true",
@@ -480,7 +480,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(invalidembedVideoPreview = "https://test.com/test");
+		ItemSelector.previewEmbeddedVideo(invalidURL = "https://test.com/test");
 	}
 
 	@description = "This ensures that users can preview the supported videos in the item selector."
@@ -498,7 +498,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://www.youtube.com");
+		ItemSelector.previewEmbeddedVideo(validURL = "https://www.youtube.com");
 
 		ItemSelector.addFromURL(
 			dontAdd = "true",
@@ -506,7 +506,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://www.facebook.com");
+		ItemSelector.previewEmbeddedVideo(validURL = "https://www.facebook.com");
 
 		ItemSelector.addFromURL(
 			dontAdd = "true",
@@ -514,7 +514,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://player.twitch.tv");
+		ItemSelector.previewEmbeddedVideo(validURL = "https://player.twitch.tv");
 
 		ItemSelector.addFromURL(
 			dontAdd = "true",
@@ -522,7 +522,7 @@ definition {
 			navTab = "URL",
 			type = "Video");
 
-		ItemSelector.viewEmbedVideoPreview(embedVideoPreview = "https://player.vimeo.com");
+		ItemSelector.previewEmbeddedVideo(validURL = "https://player.vimeo.com");
 	}
 
 	@description = "This ensures that users can preview the SVG image in item selector."

@@ -4,46 +4,6 @@ definition {
 		Click(locator1 = "AppBuilderWorkflow#ADD_NEW_FORM_VIEW_BUTTON");
 	}
 
-	macro clickToCreateFormView {
-		Click.javaScriptClick(
-			key_positionNumber = "${positionNumber}",
-			locator1 = "AppBuilderWorkflow#CREATE_FORM_VIEW_BUTTON");
-
-		SelectFrame(
-			key_title = "New Form View",
-			locator1 = "IFrame#MODAL_ANY");
-	}
-
-	macro clickToCreateTableView {
-		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#CREATE_TABLE_VIEW_BUTTON");
-
-		SelectFrame(
-			key_title = "New Table View",
-			locator1 = "IFrame#MODAL_ANY");
-	}
-
-	macro createSimpleFormView {
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-		FormViewBuilder.setName(formViewName = "${formViewName}");
-		FormViewBuilder.save();
-	}
-
-	macro createSimpleTableView {
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
-		TableViewBuilder.setName(tableViewName = "${tableViewName}");
-		TableViewBuilder.save();
-	}
-
-	macro assertCreateFormViewButton {
-		AssertElementPresent(
-			key_positionNumber = "${positionNumber}",
-			locator1 = "AppBuilderWorkflow#CREATE_FORM_VIEW_BUTTON");
-	}
-
-	macro assertCreateTableViewButton {
-		AssertElementPresent(locator1 = "AppBuilderWorkflow#CREATE_TABLE_VIEW_BUTTON");
-	}
-
 	macro addNewStep {
 		Click(locator1 = "AppBuilderWorkflow#NEW_STEP_BUTTON");
 	}
@@ -89,6 +49,16 @@ definition {
 
 	macro assertButtonPresent {
 		Button.viewPresent(button = "${buttonName}");
+	}
+
+	macro assertCreateFormViewButton {
+		AssertElementPresent(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#CREATE_FORM_VIEW_BUTTON");
+	}
+
+	macro assertCreateTableViewButton {
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#CREATE_TABLE_VIEW_BUTTON");
 	}
 
 	macro assertEntryAppVersion {
@@ -145,12 +115,6 @@ definition {
 			value1 = "${formViewName}");
 	}
 
-	macro assertTableViewSelected {
-		AssertTextEquals(
-			locator1 = "AppBuilderWorkflow#SELECT_TABLE_VIEW_BUTTON_TEXT",
-			value1 = "${tableViewName}");
-	}
-
 	macro assertRemoveFormViewButton {
 		AssertElementPresent(
 			key_positionNumber = "${positionNumber}",
@@ -171,6 +135,12 @@ definition {
 		AssertElementPresent(
 			key_step = "${step}",
 			locator1 = "AppBuilderWorkflow#STEP_CARD");
+	}
+
+	macro assertTableViewSelected {
+		AssertTextEquals(
+			locator1 = "AppBuilderWorkflow#SELECT_TABLE_VIEW_BUTTON_TEXT",
+			value1 = "${tableViewName}");
 	}
 
 	macro assignEntryThroughTableView {
@@ -259,6 +229,36 @@ definition {
 
 	macro clickStepConfigurationBackButton {
 		Click(locator1 = "AppBuilderWorkflow#STEP_CONFIGURATION_BACK_BUTTON");
+	}
+
+	macro clickToCreateFormView {
+		Click.javaScriptClick(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#CREATE_FORM_VIEW_BUTTON");
+
+		SelectFrame(
+			key_title = "New Form View",
+			locator1 = "IFrame#MODAL_ANY");
+	}
+
+	macro clickToCreateTableView {
+		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#CREATE_TABLE_VIEW_BUTTON");
+
+		SelectFrame(
+			key_title = "New Table View",
+			locator1 = "IFrame#MODAL_ANY");
+	}
+
+	macro createSimpleFormView {
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+		FormViewBuilder.setName(formViewName = "${formViewName}");
+		FormViewBuilder.save();
+	}
+
+	macro createSimpleTableView {
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
+		TableViewBuilder.setName(tableViewName = "${tableViewName}");
+		TableViewBuilder.save();
 	}
 
 	macro defineActionName {

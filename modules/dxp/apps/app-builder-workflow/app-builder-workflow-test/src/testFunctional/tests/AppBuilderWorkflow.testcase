@@ -43,75 +43,6 @@ definition {
 		}
 	}
 
-	@description = "LRQA-63247 - Automate LPS-112672: As an App Admin, I want to create a new Form View for an existing Object in the Workflow App creation UX"
-	@priority = "5"
-	test CreateFormViewThroughWorkflowAppBuilder {
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "false",
-			isCreatingViaPlusIcon = "true");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Apps");
-
-		AppBuilderAppAdmin.goToWorkflowPoweredTab();
-		AppBuilderAppAdmin.clickOnPlusButton();
-		AppBuilderWorkflow.selectDataAndViewsCard();
-		AppBuilderWorkflow.clickOnSelectObject();
-		AppBuilderWorkflow.selectObject(objectName = "my custom object");
-		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
-		AppBuilderWorkflow.assertCreateFormViewButton(positionNumber = "1");
-		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "1");
-		AppBuilderWorkflow.createSimpleFormView(
-			fieldType = "Text",
-			formViewName = "My Form View");
-
-		AppBuilderWorkflow.assertFormViewSelected(
-			formViewName = "My Form View",
-			positionNumber = "1");
-	}
-
-	@description = "LRQA-63304 - Automate LPS-112673: As an App Admin, I want to create a new Table View for an existing Object in the Workflow App creation UX"
-	@priority = "5"
-	test CreateTableViewThroughWorkflowAppBuilder {
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFormView(
-			fieldType = "Text",
-			formViewName = "My Form View");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Apps");
-
-		AppBuilderAppAdmin.goToWorkflowPoweredTab();
-		AppBuilderAppAdmin.clickOnPlusButton();
-		AppBuilderWorkflow.selectDataAndViewsCard();
-		AppBuilderWorkflow.clickOnSelectObject();
-		AppBuilderWorkflow.selectObject(objectName = "my custom object");
-		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
-		AppBuilderWorkflow.selectFormView(formViewName = "My Form View");
-		AppBuilderWorkflow.clickOnSelectTableView();
-		AppBuilderWorkflow.assertCreateTableViewButton();
-		AppBuilderWorkflow.clickToCreateTableView();
-
-		AppBuilderWorkflow.createSimpleTableView(
-			fieldType = "Text",
-			tableViewName = "My Table View");
-
-		AppBuilderWorkflow.assertTableViewSelected(tableViewName = "My Table View");
-	}
-
 	@description = "Assign an entry (task) through the App's table view"
 	@priority = "5"
 	test AssignEntryThroughTableView {
@@ -492,6 +423,38 @@ definition {
 		Navigator.closeWindow();
 	}
 
+	@description = "LRQA-63247 - Automate LPS-112672: As an App Admin, I want to create a new Form View for an existing Object in the Workflow App creation UX"
+	@priority = "5"
+	test CreateFormViewThroughWorkflowAppBuilder {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
+		AppBuilderWorkflow.assertCreateFormViewButton(positionNumber = "1");
+		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "1");
+		AppBuilderWorkflow.createSimpleFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View",
+			positionNumber = "1");
+	}
+
 	@description = "LRQA-60385 - Automate LPS-110981: As an App Admin, I want to deploy an App with multiple workflow steps and one same Form View"
 	@priority = "5"
 	test CreateNewStepSecondaryActionAndAssignee {
@@ -632,6 +595,43 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 2");
+	}
+
+	@description = "LRQA-63304 - Automate LPS-112673: As an App Admin, I want to create a new Table View for an existing Object in the Workflow App creation UX"
+	@priority = "5"
+	test CreateTableViewThroughWorkflowAppBuilder {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
+		AppBuilderWorkflow.selectFormView(formViewName = "My Form View");
+		AppBuilderWorkflow.clickOnSelectTableView();
+		AppBuilderWorkflow.assertCreateTableViewButton();
+		AppBuilderWorkflow.clickToCreateTableView();
+
+		AppBuilderWorkflow.createSimpleTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.assertTableViewSelected(tableViewName = "My Table View");
 	}
 
 	@description = "LRQA-60710 - Automate LPS-112665: As an App Admin, I want to define more than one Form View for one same step (concatenation of Forms)"

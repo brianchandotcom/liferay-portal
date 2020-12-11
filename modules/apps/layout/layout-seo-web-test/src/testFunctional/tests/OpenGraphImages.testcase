@@ -425,8 +425,7 @@ definition {
 	@description = "This ensures that the HTTPS users can customize OG image tags and generate special tags."
 	@priority = "5"
 	test ViewImageWithMetaTags {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenGraphImages#ViewImageWithMetaTags";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");

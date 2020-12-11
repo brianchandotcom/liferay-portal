@@ -68,6 +68,7 @@ public class CPDefinitionAssetRendererFactory
 		setLinkable(true);
 		setPortletId(CPPortletKeys.CP_DEFINITIONS);
 		setSearchable(true);
+		setSelectable(false);
 	}
 
 	@Override

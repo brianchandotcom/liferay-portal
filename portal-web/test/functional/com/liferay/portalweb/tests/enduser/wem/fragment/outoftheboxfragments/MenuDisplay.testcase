@@ -28,6 +28,142 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120091. Can define displayed sublevels in Menu Display."
+	@priority = "5"
+	test DefineDisplayedSublevels {
+		task ("Add a parent widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page");
+		}
+
+		task ("Add a child widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page",
+				parentLayoutName = "Test Parent Page");
+		}
+
+		task ("Add a grand child content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Grand Child Page",
+				parentLayoutName = "Test Child Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Grand Child Page",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a great grand child content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Great Grand Child Page",
+				parentLayoutName = "Test Grand Child Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Great Grand Child Page",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Menu Display fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Menu Display",
+				dropTarget = "Header",
+				fragmentName = "Menu Display",
+				scope = "Master");
+		}
+
+		task ("Assert the Test Parent Page item is shown in Menu Display") {
+			AssertVisible(
+				key_pageName = "Test Parent Page",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Assert the Test Child Page, Test Grand Child Page and Test Great Grand Child Page items are shown in dropdown menu") {
+			MouseOver(
+				key_pageName = "Test Parent Page",
+				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
+
+			AssertVisible(
+				key_menuItem = "Test Child Page",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			AssertVisible(
+				key_itemName = "Test Grand Child Page",
+				key_parentItemName = "Test Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_CHILD_ITEM");
+
+			AssertVisible(
+				key_itemName = "Test Great Grand Child Page",
+				key_parentItemName = "Test Grand Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_CHILD_ITEM");
+		}
+
+		task ("Assert the All is shown in Sublevels field") {
+			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Sublevels",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "All");
+		}
+
+		task ("Select 1 in Sublevels field") {
+			PageEditor.editMenuDisplay(
+				panel = "General",
+				sublevels = "1");
+
+			PageEditor.clickManagementBar();
+		}
+
+		task ("Assert only the Test Child Page item is shown in dropdown menu") {
+			MouseOver(
+				key_pageName = "Test Parent Page",
+				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
+
+			AssertVisible(
+				key_menuItem = "Test Child Page",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			for (var itemName : list "Test Grand Child Page,Test Great Grand Child Page") {
+				AssertElementNotPresent(
+					key_menuItem = "${itemName}",
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
+		}
+
+		task ("Select 0 in Sublevels field") {
+			PageEditor.editMenuDisplay(
+				panel = "General",
+				sublevels = "0");
+		}
+
+		task ("Assert the child toggle is not shown") {
+			AssertElementNotPresent(
+				key_pageName = "Test Parent Page",
+				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
+		}
+	}
+
 	@description = "This is a test for LPS-120091. Can define Display Style of Menu Display."
 	@priority = "5"
 	test DefineDisplayStyle {

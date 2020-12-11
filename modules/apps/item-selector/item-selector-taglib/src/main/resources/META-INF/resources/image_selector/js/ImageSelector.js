@@ -15,13 +15,15 @@
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 const SelectFileButton = ({handleClick}) => (
 	<ClayButton displayType="secondary" onClick={handleClick}>
 		{Liferay.Language.get('select-file')}
 	</ClayButton>
 );
+
+const STR_IMAGE_SELECTED = 'coverImageSelected';
 
 const ImageSelector = ({
 	draggableImage,
@@ -35,8 +37,29 @@ const ImageSelector = ({
 	paramName,
 	validExtensions,
 }) => {
+	const [image, setImage] = useState({
+		fileEntryId: fileEntryId,
+		src: imageURL,
+	});
+
 	const handleSelectFileClick = () => {
-		console.log('¡');
+		Liferay.Util.openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					setImage({
+						fileEntryId: itemValue.fileEntryId || 0,
+						src: itemValue.url || '',
+					});
+
+					Liferay.fire(STR_IMAGE_SELECTED);
+				}
+			},
+			selectEventName: itemSelectorEventName,
+			title: Liferay.Language.get('select-file'),
+			url: itemSelectorURL,
+		});
 	};
 
 	return (
@@ -44,14 +67,14 @@ const ImageSelector = ({
 			className={classNames(
 				'drop-zone',
 				{'draggable-image': draggableImage !== 'none'},
-				{'drop-enabled': fileEntryId == 0},
+				{'drop-enabled': image.fileEntryId == 0},
 				'taglib-image-selector'
 			)}
 		>
 			<input
 				name={`${portletNamespace}${paramName}Id`}
 				type="hidden"
-				value={fileEntryId}
+				value={image.fileEntryId}
 			/>
 			<input
 				name={`${portletNamespace}${paramName}CropRegion`}
@@ -59,18 +82,18 @@ const ImageSelector = ({
 				value={cropRegion}
 			/>
 
-			{imageURL && (
+			{image.src && (
 				<div className="image-wrapper">
 					<img
 						alt={Liferay.Language.get('current-image')}
 						className="current-image"
 						id={`${portletNamespace}image`}
-						src={imageURL}
+						src={image.src}
 					/>
 				</div>
 			)}
 
-			{fileEntryId == 0 && (
+			{image.fileEntryId == 0 && (
 				<div className="browse-image-controls">
 					<div className="drag-drop-label">
 						{itemSelectorEventName && itemSelectorURL ? (

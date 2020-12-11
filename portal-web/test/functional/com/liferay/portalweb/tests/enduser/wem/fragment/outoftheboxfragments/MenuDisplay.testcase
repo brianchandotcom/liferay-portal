@@ -260,6 +260,107 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120091. Can define the item color styles in Menu Display."
+	@priority = "5"
+	test DefineItemColorStyles {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page");
+		}
+
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Menu Display fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Menu Display",
+				dropTarget = "Header",
+				fragmentName = "Menu Display",
+				scope = "Master");
+		}
+
+		task ("Define item color styles") {
+			PageEditor.editMenuDisplay(
+				hoveredItemColor = "Warning",
+				panel = "Styles",
+				selectedItemColor = "Success");
+
+			PageEditor.clickManagementBar();
+		}
+
+		task ("Assert the item color when hover on it") {
+			MouseOver(
+				key_pageName = "Test Widget Page",
+				locator1 = "Home#PAGE");
+
+			AssertCssValue(
+				key_pageName = "Test Widget Page",
+				locator1 = "Home#PAGE",
+				locator2 = "color",
+				value1 = "rgba(185, 80, 0, 1)");
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a page based on custom master page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Content Page");
+		}
+
+		task ("Assert the item color when hover on it") {
+			MouseOver(
+				key_pageName = "Test Widget Page",
+				locator1 = "Home#PAGE");
+
+			AssertCssValue(
+				key_pageName = "Test Widget Page",
+				locator1 = "Home#PAGE",
+				locator2 = "color",
+				value1 = "rgba(185, 80, 0, 1)");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the Test Content Page item color") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				key_pageName = "Test Content Page",
+				locator1 = "Home#PAGE",
+				locator2 = "color",
+				value1 = "rgba(40, 125, 60, 1)");
+		}
+
+		task ("Assert the item color when hover on it") {
+			for (var itemName : list "Test Widget Page,Test Content Page") {
+				MouseOver(
+					key_pageName = "${itemName}",
+					locator1 = "Home#PAGE");
+
+				AssertCssValue(
+					key_pageName = "${itemName}",
+					locator1 = "Home#PAGE",
+					locator2 = "color",
+					value1 = "rgba(185, 80, 0, 1)");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-120091. Can select a navigation menu from existing ones in Menu Display fragment."
 	@priority = "5"
 	test SelectNavigationMenuFromExistingOnes {

@@ -152,6 +152,52 @@ definition {
 		Click(locator1 = "Icon#EYE_PREVIEW");
 	}
 
+	macro previewEmbeddedVideo {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		if (isSet(invalidURL)) {
+			if (contains("${invalidURL}", "youtube")) {
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+				Click(locator1 = "Button#YOUTUBE_PLAY");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR_INVALID_YOUTUBE_VIDEO",
+					value1 = "An error occurred. Please try again later.");
+			}
+			else if (contains("${invalidURL}", "facebook")) {
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR_INVALID_FACEBOOK_VIDEO",
+					value1 = "Video Unavailable");
+			}
+			else if (contains("${invalidURL}", "vimeo")) {
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR_INVALID_VIMEO_VIDEO",
+					value1 = "The embed code for this video is not valid.");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "Message#INFO_EXTERNAL_VIDEO_PREVIEW",
+					value1 = "Sorry, this platform is not supported.");
+			}
+		}
+		else {
+			AssertElementPresent.pauseAssertVisible(
+				key_text = "Add",
+				locator1 = "Button#ANY_ENABLED");
+
+			AssertVisible(
+				key_videoShortcutPreview = "${validURL}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
+		}
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
 	macro searchBlogImages {
 		var key_imageFileName = "${imageFileName}";
 
@@ -424,52 +470,6 @@ definition {
 		AssertVisible(
 			key_imageFileName = "${imageFileName}",
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
-	}
-
-	macro previewEmbeddedVideo {
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		if (isSet(invalidURL)) {
-			if (contains("${invalidURL}", "youtube")) {
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
-
-				Click(locator1 = "Button#YOUTUBE_PLAY");
-
-				AssertTextEquals.assertPartialText(
-					locator1 = "Message#ERROR_INVALID_YOUTUBE_VIDEO",
-					value1 = "An error occurred. Please try again later.");
-			}
-			else if (contains("${invalidURL}", "facebook")) {
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
-
-				AssertTextEquals.assertPartialText(
-					locator1 = "Message#ERROR_INVALID_FACEBOOK_VIDEO",
-					value1 = "Video Unavailable");
-			}
-			else if (contains("${invalidURL}", "vimeo")) {
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
-
-				AssertTextEquals.assertPartialText(
-					locator1 = "Message#ERROR_INVALID_VIMEO_VIDEO",
-					value1 = "The embed code for this video is not valid.");
-			}
-			else {
-				AssertTextEquals(
-					locator1 = "Message#INFO_EXTERNAL_VIDEO_PREVIEW",
-					value1 = "Sorry, this platform is not supported.");
-			}
-		}
-		else {
-			AssertElementPresent.pauseAssertVisible(
-				key_text = "Add",
-				locator1 = "Button#ANY_ENABLED");
-
-			AssertVisible(
-				key_videoShortcutPreview = "${validURL}",
-				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
-		}
-
-		SelectFrameTop(value1 = "relative=top");
 	}
 
 	macro viewEverywhereFilterResults {

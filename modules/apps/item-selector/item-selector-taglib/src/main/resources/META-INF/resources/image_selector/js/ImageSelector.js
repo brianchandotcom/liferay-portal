@@ -12,9 +12,16 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+const SelectFileButton = ({handleClick}) => (
+	<ClayButton displayType="secondary" onClick={handleClick}>
+		{Liferay.Language.get('select-file')}
+	</ClayButton>
+);
 
 const ImageSelector = ({
 	draggableImage,
@@ -28,14 +35,8 @@ const ImageSelector = ({
 	paramName,
 	validExtensions,
 }) => {
-	const selectFileLink = ({namespace}) => {
-		return (
-			"<a class='browse-image btn btn-secondary' href='javascript:;' id='" +
-			`${namespace}browseImage` +
-			"'>" +
-			Liferay.Language.get('select-file') +
-			'</a>'
-		);
+	const handleSelectFileClick = () => {
+		console.log('¡');
 	};
 
 	return (
@@ -71,24 +72,31 @@ const ImageSelector = ({
 
 			{fileEntryId == 0 && (
 				<div className="browse-image-controls">
-					<div
-						className="drag-drop-label"
-						dangerouslySetInnerHTML={{
-							__html:
-								itemSelectorEventName && itemSelectorURL
-									? Liferay.Browser.isMobile()
-										? selectFileLink(portletNamespace)
-										: Liferay.Util.sub(
-												Liferay.Language.get(
-													'drag-and-drop-to-upload-or-x'
-												),
-												selectFileLink(portletNamespace)
-										  )
-									: Liferay.Language.get(
-											'drag-and-drop-to-upload'
-									  ),
-						}}
-					></div>
+					<div className="drag-drop-label">
+						{itemSelectorEventName && itemSelectorURL ? (
+							Liferay.Browser.isMobile() ? (
+								<SelectFileButton
+									handleClick={handleSelectFileClick}
+								/>
+							) : (
+								<>
+									<span
+										className="pr-1"
+										dangerouslySetInnerHTML={{
+											__html: Liferay.Language.get(
+												'drag-and-drop-to-upload-or'
+											),
+										}}
+									></span>
+									<SelectFileButton
+										handleClick={handleSelectFileClick}
+									/>
+								</>
+							)
+						) : (
+							Liferay.Language.get('drag-and-drop-to-upload')
+						)}
+					</div>
 					<div className="file-validation-info">
 						{validExtensions && <strong>{validExtensions}</strong>}
 

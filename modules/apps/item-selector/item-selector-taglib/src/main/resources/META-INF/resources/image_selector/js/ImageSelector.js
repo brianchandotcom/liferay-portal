@@ -93,6 +93,7 @@ const SelectFileButton = ({handleClick}) => (
 	</ClayButton>
 );
 
+const STR_IMAGE_DELETED = 'coverImageDeleted';
 const STR_IMAGE_SELECTED = 'coverImageSelected';
 
 const ImageSelector = ({
@@ -132,12 +133,15 @@ const ImageSelector = ({
 		});
 	};
 
-	const handleChangeImageClick = () => {
-		console.log('handleChangeImageClick');
-	};
-
 	const handleDeleteImageClick = () => {
-		console.log('handleDeleteImageClick');
+		setImage({
+			fileEntryId: 0,
+			src: '',
+		});
+
+		Liferay.fire(STR_IMAGE_DELETED, {
+			imageData: null,
+		});
 	};
 
 	return (
@@ -184,7 +188,7 @@ const ImageSelector = ({
 			{image.fileEntryId != 0 && (
 				<ChangeImageControls
 					handleClickDelete={handleDeleteImageClick}
-					handleClickPicture={handleChangeImageClick}
+					handleClickPicture={handleSelectFileClick}
 				/>
 			)}
 		</div>

@@ -391,9 +391,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			sb.append(
 				processFTL(
 					httpServletRequest, httpServletResponse,
-					ddmFormField.getFieldNamespace(),
-					_convertDDMFormFieldType(ddmFormField), mode, readOnly,
-					freeMarkerContext));
+					ddmFormField.getFieldNamespace(), _toType(ddmFormField),
+					mode, readOnly, freeMarkerContext));
 
 			fieldRepetition--;
 		}
@@ -688,24 +687,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		return writer.toString();
 	}
 
-	private String _convertDDMFormFieldType(DDMFormField ddmFormField) {
-		if (Objects.equals(ddmFormField.getProperty("dataType"), "double")) {
-			return "decimal";
-		}
-		else if (Objects.equals(
-					ddmFormField.getProperty("dataType"), "integer")) {
-
-			return "integer";
-		}
-		else if (Objects.equals(
-					ddmFormField.getProperty("displayStyle"), "multiline")) {
-
-			return "textarea";
-		}
-
-		return ddmFormField.getType();
-	}
-
 	private Locale _getPreferredLocale(
 		HttpServletRequest httpServletRequest, DDMFormField ddmFormField,
 		Locale locale) {
@@ -733,6 +714,24 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		Iterator<Locale> iterator = availableLocales.iterator();
 
 		return iterator.next();
+	}
+
+	private String _toType(DDMFormField ddmFormField) {
+		if (Objects.equals(ddmFormField.getProperty("dataType"), "double")) {
+			return "decimal";
+		}
+		else if (Objects.equals(
+					ddmFormField.getProperty("dataType"), "integer")) {
+
+			return "integer";
+		}
+		else if (Objects.equals(
+					ddmFormField.getProperty("displayStyle"), "multiline")) {
+
+			return "textarea";
+		}
+
+		return ddmFormField.getType();
 	}
 
 	private TemplateResource _updateTemplateResource(

@@ -521,7 +521,7 @@ export default class Blogs {
 		const captionNode = this._captionNode;
 
 		if (captionNode) {
-			captionNode.removeClass(CSS_INVISIBLE);
+			captionNode.classList.remove(CSS_INVISIBLE);
 		}
 	}
 

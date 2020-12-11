@@ -164,7 +164,7 @@ public class WorkflowTaskDisplayContext {
 			classPK, getTaskContentLocale());
 
 		if (title != null) {
-			return HtmlUtil.escape(title);
+			return title;
 		}
 
 		return getAssetType(workflowTask);

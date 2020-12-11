@@ -28,6 +28,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120091. Can define Display Style of Menu Display."
+	@priority = "5"
+	test DefineDisplayStyle {
+		task ("Add a parent widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page");
+		}
+
+		task ("Add a child widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page",
+				parentLayoutName = "Test Parent Page");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Menu Display fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Menu Display",
+				dropTarget = "Header",
+				fragmentName = "Menu Display",
+				scope = "Master");
+		}
+
+		task ("Assert the Test Parent Page and Test Content Page items are shown in Menu Display") {
+			for (var itemName : list "Test Parent Page,Test Content Page") {
+				AssertVisible(
+					key_pageName = "${itemName}",
+					locator1 = "Home#PAGE");
+			}
+		}
+
+		task ("Assert the Test Child Page item is shown in dropdown menu") {
+			MouseOver(
+				key_pageName = "Test Parent Page",
+				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
+
+			AssertVisible(
+				key_menuItem = "Test Child Page",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Assert the Horizontal is shown in Display Style field") {
+			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Display Style",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Horizontal");
+		}
+
+		task ("Select Stacked in Display Style field") {
+			PageEditor.editMenuDisplay(
+				displayStyle = "Stacked",
+				panel = "General");
+		}
+
+		task ("Assert Test Parent Page, Test Child Page and Test Content Page items are shown in Menu Display") {
+			for (var itemName : list "Test Parent Page,Test Child Page,Test Content Page") {
+				AssertVisible(
+					key_itemName = "${itemName}",
+					locator1 = "NavigationMenusWidget#LIST_MENU_ANY_ITEM");
+			}
+
+			AssertVisible(
+				key_itemName = "Test Child Page",
+				key_parentItemName = "Test Parent Page",
+				locator1 = "NavigationMenusWidget#LIST_MENU_CHILD_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-120091. Can select a navigation menu from existing ones in Menu Display fragment."
 	@priority = "5"
 	test SelectNavigationMenuFromExistingOnes {

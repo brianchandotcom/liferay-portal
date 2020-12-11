@@ -611,7 +611,10 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.validateLocalization(symbolName = "es-ES");
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+		FormViewBuilder.validateLocalizationForFieldSet(symbolName = "es-ES");
+		FormViewBuilder.cancelFieldSet();
 
 		FormViewBuilder.setUpFieldSet(
 			fieldLabel = "Name ES",
@@ -622,37 +625,10 @@ definition {
 			rowNumber = "1",
 			selectAction = "Edit");
 
-		FormViewBuilder.switchLocalizationForFieldSets(
-			localizationName = "pt-BR",
-			statusName = "Not Translated",
-			symbolName = "es-ES");
-
-		FormViewBuilder.validateLocalizationForFieldSet(symbolName = "pt-BR");
-
-		FormViewBuilder.gotoFirstFieldset(fieldLabel = "Name ES");
-
-		FormViewBuilder.setFieldLabel(fieldLabel = "Name BR");
-
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "Field Set Brazil");
-
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
-
-		FormViewBuilder.validateTranslatedField(fieldLabel = "Name BR");
-
-		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set Spanish");
-
-		FormViewBuilder.setName(formViewName = "Translated Form");
-
-		FormViewBuilder.save();
+		FormViewBuilder.validateLocalizationForFieldSet(symbolName = "es-ES");
 
 		Navigator.openURL();
-
 		Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "English (United States)");
 	}
 

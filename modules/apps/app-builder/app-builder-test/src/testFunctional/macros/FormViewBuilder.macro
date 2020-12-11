@@ -109,8 +109,12 @@ definition {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
 	}
 
+	macro cancelFieldSet {
+		Click(locator1 = "FormViewBuilder#RULE_OR_FIELD_SET_BUILDER_CANCEL_BUTTON");
+	}
+
 	macro cancelRule {
-		Click(locator1 = "FormViewBuilder#RULE_BUILDER_CANCEL_BUTTON");
+		Click(locator1 = "FormViewBuilder#RULE_OR_FIELD_SET_BUILDER_CANCEL_BUTTON");
 	}
 
 	macro checkSwitcher {

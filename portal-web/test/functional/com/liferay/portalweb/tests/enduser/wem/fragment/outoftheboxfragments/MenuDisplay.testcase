@@ -1,0 +1,124 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-120091. Can select a navigation menu from existing ones in Menu Display fragment."
+	@priority = "5"
+	test SelectNavigationMenuFromExistingOnes {
+		task ("Add a public widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Public Page");
+		}
+
+		task ("Add a private widget page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add an URL type item to navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				url = "https://www.liferay.com",
+				urlName = "Liferay");
+		}
+
+		task ("Assert the URL item in navigation menu") {
+			NavigationMenusAdmin.viewItem(itemName = "Liferay");
+		}
+
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Menu Display fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Menu Display",
+				dropTarget = "Header",
+				fragmentName = "Menu Display",
+				scope = "Master");
+		}
+
+		task ("Assert the Test Public Page is shown in Menu Display") {
+			AssertVisible(
+				key_pageName = "Test Public Page",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Assert the Public Pages Hierarchy is shown in Source field") {
+			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+
+			AssertElementPresent(
+				key_contentName = "Public Pages Hierarchy",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("Select Private Pages Hierarchy in Menu Display") {
+			PageEditor.editMenuDisplay(
+				panel = "General",
+				siteMenus = "Private Pages Hierarchy");
+		}
+
+		task ("Assert the Test Private Page is shown in Menu Display") {
+			AssertVisible(
+				key_pageName = "Test Private Page",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("Select Navigation Menu Name in Menu Display") {
+			PageEditor.editMenuDisplay(
+				panel = "General",
+				siteMenus = "Navigation Menu Name");
+		}
+
+		task ("Assert the Liferay is shown in Menu Display") {
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+		}
+	}
+
+}

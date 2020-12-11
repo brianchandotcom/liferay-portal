@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -136,40 +137,48 @@ public class AccountGroupLocalServiceTest {
 
 	@Test
 	public void testSearchAccountGroups() throws Exception {
-		for (int i = 0; i < 5; i++) {
-			_addAccountGroup();
-		}
+		List<AccountGroup> expectedAccountGroups =
+			_accountGroupLocalService.getAccountGroups(
+				TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create(
+					"AccountGroup", "name", true));
 
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(
 				TestPropsValues.getCompanyId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create(
+					"AccountGroup", "name", true));
 
-		Assert.assertEquals(5, baseModelSearchResult.getLength());
+		Assert.assertEquals(
+			expectedAccountGroups.size(), baseModelSearchResult.getLength());
+		Assert.assertEquals(
+			expectedAccountGroups, baseModelSearchResult.getBaseModels());
+	}
 
+	@Test
+	public void testSearchAccountGroupsWithKeywords() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
-		List<AccountGroup> expectedAccountGroups = Arrays.asList(
-			_addAccountGroup(keywords, RandomTestUtil.randomString()),
-			_addAccountGroup(RandomTestUtil.randomString(), keywords));
+		List<AccountGroup> expectedAccountGroups = new ArrayList<>();
 
-		baseModelSearchResult = _accountGroupLocalService.searchAccountGroups(
-			TestPropsValues.getCompanyId(), keywords, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		for (int i = 0; i < 5; i++) {
+			expectedAccountGroups.add(
+				_addAccountGroup(keywords + i, RandomTestUtil.randomString()));
+		}
 
-		Assert.assertEquals(
-			expectedAccountGroups.size(), baseModelSearchResult.getLength());
-
-		expectedAccountGroups = _accountGroupLocalService.getAccountGroups(
-			TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-
-		baseModelSearchResult = _accountGroupLocalService.searchAccountGroups(
-			TestPropsValues.getCompanyId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
+			_accountGroupLocalService.searchAccountGroups(
+				TestPropsValues.getCompanyId(), keywords, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create(
+					"AccountGroup", "name", true));
 
 		Assert.assertEquals(
 			expectedAccountGroups.size(), baseModelSearchResult.getLength());
+		Assert.assertEquals(
+			expectedAccountGroups, baseModelSearchResult.getBaseModels());
 	}
 
 	@Test

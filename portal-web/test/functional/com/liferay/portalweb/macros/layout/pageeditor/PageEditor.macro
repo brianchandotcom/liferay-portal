@@ -1776,6 +1776,22 @@ definition {
 				key_navItem = "Styles",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
 				value1 = "Styles");
+
+			if (isSet(hoveredItemColor)) {
+				PageEditor.selectColorSwatchItem(
+					colorSwatchItem = "${hoveredItemColor}",
+					fieldLabel = "Hovered Item Color");
+
+				Pause(locator1 = "3000");
+			}
+
+			if (isSet(selectedItemColor)) {
+				PageEditor.selectColorSwatchItem(
+					colorSwatchItem = "${selectedItemColor}",
+					fieldLabel = "Selected Item Color");
+
+				Pause(locator1 = "3000");
+			}
 		}
 
 		PageEditor.waitForAutoSave();

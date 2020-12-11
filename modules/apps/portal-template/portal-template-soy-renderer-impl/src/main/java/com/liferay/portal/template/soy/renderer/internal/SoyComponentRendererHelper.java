@@ -186,9 +186,16 @@ public class SoyComponentRendererHelper {
 			writer.append("\">");
 		}
 
-		_soyRenderer.renderSoy(
-			_httpServletRequest, writer,
-			_componentDescriptor.getTemplateNamespace(), _context);
+		String placeholder = (String)_context.get("__placeholder__");
+
+		if (Validator.isNotNull(placeholder)) {
+			writer.append(placeholder);
+		}
+		else {
+			writer.append("<div id=\"");
+			writer.append((String)_context.get("id"));
+			writer.append("\"></div>");
+		}
 
 		if (wrapper) {
 			writer.append("</div>");

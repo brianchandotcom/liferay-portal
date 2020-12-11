@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.exception.DefaultAccountGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -24,8 +25,12 @@ import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -97,6 +102,39 @@ public class AccountGroupLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteDefaultAccountGroup() throws Exception {
+		try {
+			_accountGroupLocalService.deleteAccountGroup(
+				_accountGroupLocalService.getDefaultAccountGroup(
+					TestPropsValues.getCompanyId()));
+		}
+		catch (ModelListenerException modelListenerException) {
+			Assert.assertTrue(
+				modelListenerException.getCause() instanceof
+					DefaultAccountGroupException.
+						MustNotDeleteDefaultAccountGroup);
+		}
+	}
+
+	@Test
+	public void testHasDefaultAccountGroupWhenCompanyIsCreated()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
+
+		Assert.assertTrue(
+			_accountGroupLocalService.hasDefaultAccountGroup(
+				company.getCompanyId()));
+
+		AccountGroup defaultAccountGroup =
+			_accountGroupLocalService.getDefaultAccountGroup(
+				company.getCompanyId());
+
+		Assert.assertEquals(
+			company.getCompanyId(), defaultAccountGroup.getCompanyId());
+	}
+
+	@Test
 	public void testSearchAccountGroups() throws Exception {
 		for (int i = 0; i < 5; i++) {
 			_addAccountGroup();
@@ -157,6 +195,25 @@ public class AccountGroupLocalServiceTest {
 			comparator, expectedAccountGroups, keywords, false);
 		_testSearchAccountGroupsWithPagination(
 			comparator, expectedAccountGroups, keywords, true);
+	}
+
+	@Test
+	public void testUpdateDefaultAccountGroup() throws Exception {
+		try {
+			AccountGroup accountGroup =
+				_accountGroupLocalService.getDefaultAccountGroup(
+					TestPropsValues.getCompanyId());
+
+			_accountGroupLocalService.updateAccountGroup(
+				accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+		}
+		catch (ModelListenerException modelListenerException) {
+			Assert.assertTrue(
+				modelListenerException.getCause() instanceof
+					DefaultAccountGroupException.
+						MustNotUpdateDefaultAccountGroup);
+		}
 	}
 
 	private AccountGroup _addAccountGroup() throws Exception {
@@ -229,5 +286,8 @@ public class AccountGroupLocalServiceTest {
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

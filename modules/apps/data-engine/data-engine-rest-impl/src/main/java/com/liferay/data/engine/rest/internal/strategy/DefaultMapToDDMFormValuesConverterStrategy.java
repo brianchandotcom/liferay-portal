@@ -47,20 +47,47 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 		DDMFormValues ddmFormValues, Locale locale) {
 
 		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
-			true);
+			false);
 
 		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
-			if (dataRecordValues.containsKey(entry.getKey())) {
-				List<DDMFormFieldValue> ddmFormFieldValues =
-					createDDMFormFieldValues(
-						dataRecordValues, entry.getValue(),
-						ddmForm.getDefaultLocale(), locale);
-
-				Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
-
-				stream.forEach(ddmFormValues::addDDMFormFieldValue);
-			}
+			addDDFormFieldValues(
+				dataRecordValues, ddmForm.getDefaultLocale(), entry.getValue(),
+				ddmFormValues, locale);
 		}
+	}
+
+	protected List<DDMFormFieldValue> addDDFormFieldValues(
+		Map<String, Object> dataRecordValues, Locale defaultLocale,
+		DDMFormField ddmFormField, DDMFormValues ddmFormValues, Locale locale) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		ddmFormFieldValues.addAll(
+			createDDMFormFieldValues(
+				dataRecordValues, ddmFormField, defaultLocale, locale));
+
+		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
+		stream.forEach(
+			ddmFormFieldValue -> {
+				List<DDMFormField> nestedDDMFormFields =
+					ddmFormField.getNestedDDMFormFields();
+
+				nestedDDMFormFields.forEach(
+					nestedDDMFormField -> {
+						List<DDMFormFieldValue> nestedDDMFormFieldValues =
+							addDDFormFieldValues(
+								dataRecordValues, defaultLocale,
+								nestedDDMFormField, ddmFormValues, locale);
+
+						nestedDDMFormFieldValues.forEach(
+							ddmFormFieldValue::addNestedDDMFormFieldValue);
+					});
+
+				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+			});
+
+		return ddmFormFieldValues;
 	}
 
 	protected List<DDMFormFieldValue> createDDMFormFieldValues(

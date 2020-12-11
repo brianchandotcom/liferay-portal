@@ -47,7 +47,10 @@ public class OrderEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"modifiedDate",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE)
+				locale -> Field.MODIFIED_DATE),
+			new DateTimeEntityField(
+				"orderDate", locale -> Field.getSortableFieldName("orderDate"),
+				locale -> "orderDate")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

@@ -115,6 +115,10 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
+		SitePages._addPageToNavigationMenu(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}");
+
 		Button.clickAdd();
 
 		SelectFrame.selectFrameTop();

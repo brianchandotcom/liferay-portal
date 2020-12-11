@@ -169,9 +169,21 @@ export default function pageLanguageUpdate({
 		)
 			.then((response) => response.json())
 			.then((response) => {
+				let previousField;
+				let repeatableIndex = 0;
+
 				const visitor = new PagesVisitor(response.pages);
 				const newPages = visitor.mapFields(
-					(field, index) => {
+					(field) => {
+						if (
+							(previousField &&
+								previousField.repeatable &&
+								previousField.fieldName !== field.fieldName) ||
+							!field.repeatable
+						) {
+							repeatableIndex = 0;
+						}
+
 						if (!field.localizedValue) {
 							field.localizedValue = {};
 						}
@@ -186,16 +198,20 @@ export default function pageLanguageUpdate({
 									[key]:
 										newDataRecordValues[field.fieldName][
 											key
-										][index],
+										][repeatableIndex],
 								};
 							});
 							field.localizedValue = values;
+
+							repeatableIndex++;
 						}
 						else if (newDataRecordValues[field.fieldName]) {
 							field.localizedValue = {
 								...newDataRecordValues[field.fieldName],
 							};
 						}
+
+						previousField = field;
 
 						return {
 							...field,

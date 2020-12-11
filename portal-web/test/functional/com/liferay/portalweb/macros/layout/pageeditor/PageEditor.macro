@@ -1756,6 +1756,20 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${displayStyle}");
 			}
+
+			if (isSet(sublevels)) {
+				Select(
+					key_fieldLabel = "Sublevels",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${sublevels}");
+
+				Pause(locator1 = "3000");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Sublevels",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${sublevels}");
+			}
 		}
 		else if ("${panel}" == "Styles") {
 			AssertClick(

@@ -61,6 +61,15 @@ public class DLVideoExternalShortcutResolverTest {
 				"show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
 				"none; overflow: hidden;\" width=\"560\"></iframe>"),
 			_renderHTML("https://www.facebook.com/USER_ID/videos/VIDEO_ID"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
+				"frameborder=\"0\" height=\"315\" ",
+				"src=\"https://www.facebook.com/plugins/video.php?height=315&",
+				"href=https://m.facebook.com/watch/?v=VIDEO_ID&",
+				"show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
+				"none; overflow: hidden;\" width=\"560\"></iframe>"),
+			_renderHTML("https://m.facebook.com/watch/?v=VIDEO_ID"));
 	}
 
 	@Test

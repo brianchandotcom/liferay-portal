@@ -118,7 +118,8 @@ public class FacebookDLVideoExternalShortcutProvider
 
 	private static final List<Pattern> _urlPatterns = Arrays.asList(
 		Pattern.compile(
-			"(https?:\\/\\/(?:www\\.)?facebook\\.com\\/watch\\/?\\?v=\\S*)"),
+			"(https?:\\/\\/(?:(www|m)\\.)?facebook\\.com\\/watch\\/?\\?" +
+				"v=\\S*)"),
 		Pattern.compile(
 			"(https?:\\/\\/(?:www\\.)?facebook\\.com\\/\\S*\\/videos\\/\\S*)"));
 

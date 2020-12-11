@@ -1695,6 +1695,53 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro editMenuDisplay {
+		var key_fragmentName = "Menu Display";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		AssertVisible(
+			key_sidebarButton = "Selection",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		if ("${panel}" == "General") {
+			AssertClick(
+				key_navItem = "General",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "General");
+
+			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			if (isSet(siteMenus)) {
+				NavItem.click(navItem = "Site Menus");
+
+				LexiconTable.clickTableEntryColumnLink(
+					columnName = "name",
+					tableEntry = "${siteMenus}");
+
+				Button.click(button = "Select This Level");
+
+				Pause(locator1 = "3000");
+
+				AssertElementPresent(
+					key_contentName = "${siteMenus}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+		}
+		else if ("${panel}" == "Styles") {
+			AssertClick(
+				key_navItem = "Styles",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Styles");
+		}
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro expandFragmentCollection {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

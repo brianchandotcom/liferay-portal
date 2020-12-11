@@ -72,6 +72,10 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteRegion(long regionId) {
+	}
+
+	@Override
 	public Region fetchRegion(long regionId) {
 		return regionPersistence.fetchByPrimaryKey(regionId);
 	}
@@ -116,6 +120,52 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 		return regionPersistence.findByC_A(
 			countryId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			_getOrderByComparator(countryId));
+	}
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Override
+	public List<Region> getRegions(
+		long countryId, boolean active, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
+
+		return null;
+	}
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Override
+	public List<Region> getRegions(
+		long countryId, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
+	public List<Region> getRegions(long companyId, String a2, boolean active) {
+		return null;
+	}
+
+	@Override
+	public int getRegionsCount(long countryId) {
+		return null;
+	}
+
+	@Override
+	public int getRegionsCount(long countryId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public Region updateActive(long regionId, boolean active) {
+		return null;
+	}
+
+	@Override
+	public Region updateRegion(
+		long regionId, boolean active, String name, double position,
+		String regionCode) {
+
+		return null;
 	}
 
 	private OrderByComparator<Region> _getOrderByComparator(long countryId) {

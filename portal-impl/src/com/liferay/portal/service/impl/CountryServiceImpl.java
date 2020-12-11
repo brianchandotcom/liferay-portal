@@ -23,11 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.CountryServiceBaseImpl;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,7 +36,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 			String a2, String a3, boolean active, boolean billingAllowed,
 			String idd, String name, String number, double position,
 			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			Map<String, String> titleMap, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -51,8 +48,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 		return countryLocalService.addCountry(
 			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, zipRequired, titleMap,
-			serviceContext);
+			shippingAllowed, subjectToVAT, zipRequired, serviceContext);
 	}
 
 	/**
@@ -74,7 +70,6 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 		return addCountry(
 			a2, a3, active, true, idd, name, number, 0, true, false, true,
-			Collections.singletonMap(PropsValues.COMPANY_DEFAULT_LOCALE, name),
 			serviceContext);
 	}
 
@@ -260,8 +255,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country updateCountry(
 			long countryId, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT,
-			Map<String, String> titleMap)
+			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -273,7 +267,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 		return countryLocalService.updateCountry(
 			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT, titleMap);
+			position, shippingAllowed, subjectToVAT);
 	}
 
 	@Override

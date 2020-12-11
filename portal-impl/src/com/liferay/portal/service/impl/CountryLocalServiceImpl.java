@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.CountryLocalServiceBaseImpl;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +47,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			String a2, String a3, boolean active, boolean billingAllowed,
 			String idd, String name, String number, double position,
 			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			Map<String, String> titleMap, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (fetchCountryByA2(serviceContext.getCompanyId(), a2) != null) {
@@ -235,8 +234,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	public Country updateCountry(
 			long countryId, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT,
-			Map<String, String> titleMap)
+			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws PortalException {
 
 		Country country = countryPersistence.findByPrimaryKey(countryId);

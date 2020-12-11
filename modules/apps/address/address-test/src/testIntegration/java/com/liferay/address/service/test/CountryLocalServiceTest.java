@@ -122,7 +122,7 @@ public class CountryLocalServiceTest {
 			country.getCountryId(), country.getA2(), country.getA3(),
 			country.isActive(), !billingAllowed, country.getIdd(),
 			country.getName(), number, position, !shippingAllowed,
-			!subjectToVAT, null);
+			!subjectToVAT);
 
 		Assert.assertEquals(billingAllowed, updatedCountry.isBillingAllowed());
 		Assert.assertEquals(number, updatedCountry.getNumber());
@@ -140,7 +140,7 @@ public class CountryLocalServiceTest {
 		return _countryLocalService.addCountry(
 			"aa", "aaa", true, billingAllowed, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), number, position, shippingAllowed,
-			subjectToVAT, zipRequired, null,
+			subjectToVAT, zipRequired,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

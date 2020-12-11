@@ -907,7 +907,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			String purchaseOrderNumber, BigDecimal subtotal,
 			BigDecimal shippingAmount, BigDecimal total,
 			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			BigDecimal totalWithTaxAmount, int paymentStatus,
+			int orderDateMonth, int orderDateDay, int orderDateYear,
+			int orderDateHour, int orderDateMinute, int orderStatus,
 			String advanceStatus, String externalReferenceCode,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
@@ -932,8 +934,33 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
 			subtotal, shippingAmount, total, subtotalWithTaxAmount,
 			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus,
-			orderStatus, advanceStatus, externalReferenceCode, commerceContext,
-			serviceContext);
+			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
+			orderDateMinute, orderStatus, advanceStatus, externalReferenceCode,
+			commerceContext, serviceContext);
+	}
+
+	@Override
+	public CommerceOrder upsertCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			String advanceStatus, String externalReferenceCode,
+			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceOrderService.upsertCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			billingAddressId, shippingAddressId, commercePaymentMethodKey,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingAmount, total, subtotalWithTaxAmount,
+			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus, 0, 0, 0,
+			0, 0, orderStatus, advanceStatus, externalReferenceCode,
+			commerceContext, serviceContext);
 	}
 
 	@Override

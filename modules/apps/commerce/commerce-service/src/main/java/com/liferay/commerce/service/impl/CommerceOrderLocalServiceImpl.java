@@ -183,7 +183,9 @@ public class CommerceOrderLocalServiceImpl
 			String purchaseOrderNumber, BigDecimal subtotal,
 			BigDecimal shippingAmount, BigDecimal total,
 			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			BigDecimal totalWithTaxAmount, int paymentStatus,
+			int orderDateMonth, int orderDateDay, int orderDateYear,
+			int orderDateHour, int orderDateMinute, int orderStatus,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -209,10 +211,13 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.create(
 			commerceOrderId);
 
+		Date now = new Date();
+
 		commerceOrder.setGroupId(groupId);
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(userId);
 		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setCreateDate(now);
 		commerceOrder.setCommerceAccountId(commerceAccountId);
 		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
 		commerceOrder.setBillingAddressId(billingAddressId);
@@ -228,6 +233,18 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingWithTaxAmount(shippingWithTaxAmount);
 		commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount);
 		commerceOrder.setPaymentStatus(paymentStatus);
+
+		Date orderDate = PortalUtil.getDate(
+			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
+			orderDateMinute, user.getTimeZone(), null);
+
+		if (orderDate != null) {
+			commerceOrder.setOrderDate(orderDate);
+		}
+		else {
+			commerceOrder.setOrderDate(now);
+		}
+
 		commerceOrder.setOrderStatus(orderStatus);
 		commerceOrder.setManuallyAdjusted(false);
 		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -245,6 +262,29 @@ public class CommerceOrderLocalServiceImpl
 			userId, CommerceOrder.class.getName(),
 			commerceOrder.getCommerceOrderId(), commerceOrder, serviceContext,
 			new HashMap<>());
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder addCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceOrderLocalService.addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			billingAddressId, shippingAddressId, commercePaymentMethodKey,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingAmount, total, subtotalWithTaxAmount,
+			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus, 0, 0, 0,
+			0, 0, orderStatus, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1642,7 +1682,9 @@ public class CommerceOrderLocalServiceImpl
 			String purchaseOrderNumber, BigDecimal subtotal,
 			BigDecimal shippingAmount, BigDecimal total,
 			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			BigDecimal totalWithTaxAmount, int paymentStatus,
+			int orderDateMonth, int orderDateDay, int orderDateYear,
+			int orderDateHour, int orderDateMinute, int orderStatus,
 			String advanceStatus, String externalReferenceCode,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
@@ -1670,6 +1712,11 @@ public class CommerceOrderLocalServiceImpl
 				totalWithTaxAmount, advanceStatus, externalReferenceCode,
 				commerceContext);
 
+			commerceOrderLocalService.updateOrderDate(
+				commerceOrder.getCommerceOrderId(), orderDateMonth,
+				orderDateDay, orderDateYear, orderDateHour, orderDateMinute,
+				serviceContext);
+
 			commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
 
@@ -1685,11 +1732,36 @@ public class CommerceOrderLocalServiceImpl
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
 			subtotal, shippingAmount, total, subtotalWithTaxAmount,
 			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus,
-			orderStatus, serviceContext);
+			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
+			orderDateMinute, orderStatus, serviceContext);
 
 		commerceOrder.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	@Override
+	public CommerceOrder upsertCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			String advanceStatus, String externalReferenceCode,
+			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException {
+
+		return commerceOrderLocalService.upsertCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			billingAddressId, shippingAddressId, commercePaymentMethodKey,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingAmount, total, subtotalWithTaxAmount,
+			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus, 0, 0, 0,
+			0, 0, orderStatus, advanceStatus, externalReferenceCode,
+			commerceContext, serviceContext);
 	}
 
 	@Override

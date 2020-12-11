@@ -76,7 +76,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "high_resolution_photo.jpg");
 		}
 
@@ -137,7 +137,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "high_resolution_photo.jpg");
 
 			WaitForElementPresent(
@@ -272,7 +272,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "high_resolution_photo.jpg");
 		}
 
@@ -304,7 +304,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "analytics-cloud-hero-image.png");
 
 			WaitForElementPresent(
@@ -367,7 +367,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "analytics-cloud-hero-image.png");
 
 			WaitForElementPresent(
@@ -443,7 +443,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "Commerce_White.jpg");
 		}
 
@@ -505,7 +505,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "high_resolution_photo.jpg");
 
 			WaitForElementPresent(
@@ -568,7 +568,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "Document_2.jpg");
 
 			WaitForElementPresent(
@@ -642,7 +642,7 @@ definition {
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
-				imageDescription = "Responsive Image",
+				imageDescription = "",
 				imageFileName = "analytics-cloud-hero-image.png");
 
 			WaitForElementPresent(

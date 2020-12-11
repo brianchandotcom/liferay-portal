@@ -3682,51 +3682,23 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDMStructureModel ddmStructureModel) {
 
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(3);
-
 		String name = _getResourcePermissionModelName(
 			DDMStructure.class.getName(),
 			getClassName(ddmStructureModel.getClassNameId()));
 		String primKey = String.valueOf(ddmStructureModel.getStructureId());
 
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, _guestRoleModel.getRoleId(), 0));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, _ownerRoleModel.getRoleId(),
-				ddmStructureModel.getUserId()));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, _userRoleModel.getRoleId(), 0));
-
-		return resourcePermissionModels;
+		return newResourcePermissionModels(name, primKey, _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDMTemplateModel ddmTemplateModel) {
-
-		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<>(3);
 
 		String name = _getResourcePermissionModelName(
 			DDMTemplate.class.getName(),
 			getClassName(ddmTemplateModel.getResourceClassNameId()));
 		String primKey = String.valueOf(ddmTemplateModel.getTemplateId());
 
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, _guestRoleModel.getRoleId(), 0));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, _ownerRoleModel.getRoleId(),
-				ddmTemplateModel.getUserId()));
-		resourcePermissionModels.add(
-			newResourcePermissionModel(
-				name, primKey, _userRoleModel.getRoleId(), 0));
-
-		return resourcePermissionModels;
+		return newResourcePermissionModels(name, primKey, _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

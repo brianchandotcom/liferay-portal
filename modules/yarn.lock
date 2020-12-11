@@ -8134,13 +8134,6 @@ incremental-dom-string@0.0.2:
   resolved "https://registry.yarnpkg.com/incremental-dom-string/-/incremental-dom-string-0.0.2.tgz#d4a6abd5916df6346aae022c9ffac5fb90458ae6"
   integrity sha512-vh6cTsw+fQNljhNg3/iDuawNjk79CS1sEqucal1DJY+aco/Mgpi+xjkUFMED41f6nzu1V0ialfC84wcW9nqZ2w==
 
-incremental-dom-string@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/incremental-dom-string/-/incremental-dom-string-0.0.3.tgz#19f039e17a02bb1c4446d2baddba2809168c02c4"
-  integrity sha512-reCFciYN6EjsnNLO5r3y+l/Wrf+PDHs1vRTOEPCUL68LdXhLy7xAd85Ei7UGYj9MyY/YJyJUxjeTZke6yXTuAw==
-  dependencies:
-    xss-filters "^1.2.7"
-
 incremental-dom-string@^0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/incremental-dom-string/-/incremental-dom-string-0.0.5.tgz#22be6b21f8c59c9c74518af6819f974bce1bf1dc"
@@ -10589,18 +10582,7 @@ metal-events@2.16.8, metal-events@^2.0.0, metal-events@^2.16.0, metal-events@^2.
   dependencies:
     metal "^2.16.8"
 
-metal-incremental-dom@2.16.8:
-  version "2.16.8"
-  resolved "https://registry.yarnpkg.com/metal-incremental-dom/-/metal-incremental-dom-2.16.8.tgz#45e15a3cd310c4704bb8ba2a0170a5fabcf9e773"
-  integrity sha512-i1MOlQlNfU7r64wb1o7vnRErbwoRuKilBCRL17xJIz4D7aeAd0DfRUz9c+3oa5KvMZWI1TO31gH2pOb9C8jAOQ==
-  dependencies:
-    incremental-dom "^0.5.1"
-    incremental-dom-string "0.0.3"
-    metal "^2.16.8"
-    metal-component "^2.16.8"
-    metal-dom "^2.16.8"
-
-metal-incremental-dom@^2.16.0, metal-incremental-dom@^2.16.8, metal-incremental-dom@^2.16.9:
+metal-incremental-dom@2.16.9, metal-incremental-dom@^2.16.0, metal-incremental-dom@^2.16.8, metal-incremental-dom@^2.16.9:
   version "2.16.9"
   resolved "https://registry.yarnpkg.com/metal-incremental-dom/-/metal-incremental-dom-2.16.9.tgz#151c6b9805f609433781e793a3ef4bea9c82cfb6"
   integrity sha512-iccRCytGadxT66UGFu559wRUTHi4nP7vp2gltn1RifL/e1BK/bGrR0KHT8oaeBNRToiA8Krqe5aMz4Eayu6Y1w==
@@ -10712,33 +10694,14 @@ metal-scrollspy@2.1.1:
     metal-position "^2.1.2"
     metal-state "^2.16.6"
 
-metal-soy-bundle@2.16.8:
-  version "2.16.8"
-  resolved "https://registry.yarnpkg.com/metal-soy-bundle/-/metal-soy-bundle-2.16.8.tgz#67f9e6775aacdc66f9446af4b48c573d647b236a"
-  integrity sha512-QMxPGGS12bltjtKCPaEdMol3D2GgNKU/kvS9h+mBYsPXJZCdD3BWfx7TnnBG8K7n7+gkOYwtlOzpjoGA8XHj/g==
-  dependencies:
-    metal-incremental-dom "^2.16.8"
-
-metal-soy-bundle@^2.16.8, metal-soy-bundle@^2.16.9:
+metal-soy-bundle@2.16.9, metal-soy-bundle@^2.16.9:
   version "2.16.9"
   resolved "https://registry.yarnpkg.com/metal-soy-bundle/-/metal-soy-bundle-2.16.9.tgz#e5ecc441b60f3ce3ed3ef2df3feeca93d03ef824"
   integrity sha512-I44mk07no/F5zDDRPmR5N3aV1PjaubyPl1wTQnSZqk6GjxcIRiQDG2j5GM+egDKCcTxupibCH+eEERztIUrDXQ==
   dependencies:
     metal-incremental-dom "^2.16.9"
 
-metal-soy@2.16.8:
-  version "2.16.8"
-  resolved "https://registry.yarnpkg.com/metal-soy/-/metal-soy-2.16.8.tgz#11d1fce0a54a6ce56cd92e2b50772d1658ac0171"
-  integrity sha512-1T2J8WUyKshNP1Jdk7nT4PU2GF9Xkd6Y9VLHjZY1zDpyD/CVd+lxQTz94VPq3mPEf/vGbJUV568yMEuljgUHMQ==
-  dependencies:
-    metal "^2.16.8"
-    metal-component "^2.16.8"
-    metal-dom "^2.16.8"
-    metal-incremental-dom "^2.16.8"
-    metal-soy-bundle "^2.16.8"
-    metal-state "^2.16.8"
-
-metal-soy@^2.0.0, metal-soy@^2.13.2, metal-soy@^2.16.0, metal-soy@^2.5.18:
+metal-soy@2.16.9, metal-soy@^2.0.0, metal-soy@^2.13.2, metal-soy@^2.16.0, metal-soy@^2.5.18:
   version "2.16.9"
   resolved "https://registry.yarnpkg.com/metal-soy/-/metal-soy-2.16.9.tgz#b8be82ceb05e3234a7ab40ee6165dcfe094c13ca"
   integrity sha512-RZyThJ1nRAreb7QsTeKfTuOX9Xj7PJaLOqt/y0oGDSPLWtAFElwVIgB/AvWKTCmOLski5z8Rr+zM3ydZB/AD8g==

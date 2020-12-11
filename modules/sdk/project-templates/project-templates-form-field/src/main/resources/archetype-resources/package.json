@@ -6,7 +6,7 @@
 		"clay-icon": "2.18.0",
 #end
 		"metal-component": "2.16.8",
-		"metal-soy": "2.16.8"#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}),
+		"metal-soy": "2.16.9"#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}),
 		"metal-state": "2.16.8"
 #end
 #end

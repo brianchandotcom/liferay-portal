@@ -14,6 +14,11 @@ alter table Country add shippingAllowed BOOLEAN;
 alter table Country add subjectToVAT BOOLEAN;
 alter table Country add lastPublishDate DATE null;
 
+update Country set billingAllowed = [$TRUE$];
+update Country set groupFilterEnabled = [$FALSE$];
+update Country set shippingAllowed = [$TRUE$];
+update Country set subjectToVAT = [$FALSE$];
+
 create table CountryLocalization (
 	mvccVersion LONG default 0 not null,
 	countryLocalizationId LONG not null primary key,

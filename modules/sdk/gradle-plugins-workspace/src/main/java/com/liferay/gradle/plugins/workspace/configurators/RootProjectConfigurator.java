@@ -42,6 +42,7 @@ import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import de.undercouch.gradle.tasks.download.Download;
+import de.undercouch.gradle.tasks.download.Verify;
 
 import groovy.lang.Closure;
 
@@ -156,6 +157,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String STOP_DOCKER_CONTAINER_TASK_NAME =
 		"stopDockerContainer";
+
+	public static final String VERIFY_BUNDLE_TASK_NAME = "verifyBundle";
 
 	/**
 	 * @deprecated As of 1.4.0, replaced by {@link
@@ -830,6 +833,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private Download _addTaskDownloadBundle(
 		final Project project, final WorkspaceExtension workspaceExtension) {
 
+		Verify verifyBundleTask = GradleUtil.addTask(
+			project, VERIFY_BUNDLE_TASK_NAME, Verify.class);
+
 		final Download download = GradleUtil.addTask(
 			project, DOWNLOAD_BUNDLE_TASK_NAME, Download.class);
 
@@ -926,6 +932,36 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+
+		String bundleChecksumMD5 = _getBundleChecksumMD5(project);
+
+		download.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					if (Objects.isNull(bundleChecksumMD5)) {
+						return;
+					}
+
+					List<File> downloadFileList = download.getOutputFiles();
+
+					if (downloadFileList.isEmpty()) {
+						return;
+					}
+
+					File[] downloadFiles = downloadFileList.toArray(
+						new File[0]);
+
+					_setupTaskVerifyBundle(
+						verifyBundleTask, bundleChecksumMD5, downloadFiles[0]);
+				}
+
+			});
+
+		if (!Objects.isNull(bundleChecksumMD5)) {
+			download.finalizedBy(verifyBundleTask);
+		}
 
 		return download;
 	}
@@ -1362,6 +1398,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		file.createNewFile();
 	}
 
+	private String _getBundleChecksumMD5(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
+		return workspaceExtension.getBundleChecksumMD5();
+	}
+
 	private String _getDockerContainerId(Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
@@ -1426,6 +1469,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			throw new GradleException(
 				"Unable to read template " + name, exception);
 		}
+	}
+
+	private void _setupTaskVerifyBundle(
+		Verify verifyBundleTask, String bundleChecksumMD5, File downloadFile) {
+
+		verifyBundleTask.src(downloadFile);
+
+		verifyBundleTask.algorithm("MD5");
+
+		verifyBundleTask.checksum(bundleChecksumMD5);
+
+		verifyBundleTask.setDescription("Verify Downloaded liferay bundle.");
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

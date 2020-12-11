@@ -80,6 +80,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_TABLE_VIEW_BUTTON_TEXT</td>
+	<td>//button[contains(@aria-labelledby,'table-view')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_OR_TABLE_VIEW_ITEM</td>
 	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'dropdown-item') and contains(text(),'${key_itemName}')]</td>
 	<td></td>
@@ -147,6 +152,16 @@
 <tr>
 	<td>ADD_NEW_FORM_VIEW_BUTTON</td>
 	<td>//button//span[text()='Add New Form View']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_FORM_VIEW_BUTTON</td>
+	<td>xpath=(//button[@title='New Form View'])[${key_positionNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_TABLE_VIEW_BUTTON</td>
+	<td>//button[@title='New Table View']</td>
 	<td></td>
 </tr>
 <tr>

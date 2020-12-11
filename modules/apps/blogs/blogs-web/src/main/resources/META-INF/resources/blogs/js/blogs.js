@@ -545,11 +545,7 @@ export default class Blogs {
 
 			if (tempImageId) {
 				const el = document.querySelector(
-
-					// TODO it´s working old `img[${attributeDataImageId}"=${tempImageId}"]`
-					// check`img[${attributeDataImageId}="${tempImageId}"]`
-
-					`img[${attributeDataImageId}"=${tempImageId}"]`
+					`img[${attributeDataImageId}="${tempImageId}"]`
 				);
 
 				if (el) {
@@ -567,9 +563,6 @@ export default class Blogs {
 						el.removeAttribute(attributeDataImageId);
 					}
 					else {
-
-						// TODO: check AUI_Element.replace === el.replaceWith
-
 						el.replaceWith(finalContentImages[i]);
 					}
 				}

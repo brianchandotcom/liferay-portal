@@ -75,17 +75,15 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	}
 
 	public String getSchemaVersionString(String bundleSymbolicName) {
-		String currentSchemaVersion = "0.0.0";
-
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
 		if ((release != null) &&
 			Validator.isNotNull(release.getSchemaVersion())) {
 
-			currentSchemaVersion = release.getSchemaVersion();
+			return release.getSchemaVersion();
 		}
 
-		return currentSchemaVersion;
+		return "0.0.0";
 	}
 
 	@Override

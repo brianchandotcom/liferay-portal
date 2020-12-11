@@ -25,7 +25,6 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-wish-list-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
-	compileOnly project(":apps:portal-template:portal-template-soy-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 }

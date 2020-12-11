@@ -629,7 +629,6 @@ prepareMajorIncrement {
 			"com.liferay.portal.mobile.device.detection.fiftyonedegrees": ":apps:portal-mobile-device-detection-fiftyonedegrees:portal-mobile-device-detection-fiftyonedegrees",
 			"com.liferay.portal.osgi.web.wab.generator": ":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api",
 			"com.liferay.portal.profile": ":apps:static:portal:portal-profile-api",
-			"com.liferay.portal.template.soy": ":apps:portal-template:portal-template-soy-api",
 			"com.liferay.portal.upgrade": ":apps:static:portal:portal-upgrade-api"
 		]
 

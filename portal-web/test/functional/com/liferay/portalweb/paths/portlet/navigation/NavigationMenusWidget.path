@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_MENU_ANY_ITEM</td>
+	<td>//div[contains(@class,'list-menu')]//a[contains(@class,'nav-item')][normalize-space(text())='${key_itemName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_NAVIGATION</td>
 	<td>//select[contains(@id,'selectSiteNavigationMenuType')]</td>
 	<td></td>

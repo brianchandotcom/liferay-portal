@@ -536,7 +536,10 @@ public class AccountEntryLocalServiceImpl
 
 		Predicate accountEntryPredicate =
 			AccountEntryTable.INSTANCE.accountEntryId.eq(
-				AccountEntryUserRelTable.INSTANCE.accountEntryId);
+				AccountEntryUserRelTable.INSTANCE.accountEntryId
+			).or(
+				AccountEntryTable.INSTANCE.userId.eq(userId)
+			);
 
 		if (ArrayUtil.isNotEmpty(organizationIds)) {
 			accountEntryPredicate = accountEntryPredicate.or(

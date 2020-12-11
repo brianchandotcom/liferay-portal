@@ -190,13 +190,12 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
+			dateValue = "01/01/2022",
 			dmDocumentDescription = "DM Document Type Contract Description",
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Type Contract Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			fieldName = "Date",
-			fieldValue = "01/01/2022",
-			numberField = "123");
+			numericField = "123");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

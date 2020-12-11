@@ -75,10 +75,15 @@ definition {
 			PortletEntry.inputDescription(description = "${dmDocumentDescription}");
 		}
 
-		if ("${fieldName}" == "Date") {
-			FormFields.editDate(
-				fieldName = "${fieldName}",
-				fieldValue = "${fieldValue}");
+		if (isSet(dateValue)) {
+			if (!(isSet(dateFieldLabel))) {
+				var dateFieldLabel = "Date";
+			}
+
+			Type(
+				key_fieldFieldLabel = "${dateFieldLabel}",
+				locator1 = "WCEditWebContent#DATE_INPUT",
+				value1 = "${dateValue}");
 		}
 
 		if (isSet(dmDocumentFileName)) {
@@ -110,12 +115,12 @@ definition {
 				value1 = "${textField}");
 		}
 
-		if (isSet(numberField)) {
-			var key_fieldLabel = "Numeric";
+		if (isSet(numericField)) {
+			var key_fieldName = "Numeric";
 
 			Type(
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${numberField}");
+				locator1 = "TextInput#NUMERIC",
+				value1 = "${numericField}");
 		}
 
 		if (isSet(validationError)) {

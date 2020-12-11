@@ -8,6 +8,13 @@ definition {
 		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
+	macro clickTableEntryColumnLink {
+		Click(
+			key_columnName = "${columnName}",
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+	}
+
 	macro clickTableEntryTitle {
 		Click(
 			key_tableEntry = "${tableEntry}",

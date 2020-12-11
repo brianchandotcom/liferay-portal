@@ -54,16 +54,34 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 						[languageId]: [],
 					};
 				}
-				else if (edited) {
+				else if (!repeatable && edited) {
 					dataRecordValues[fieldName] = {
 						[languageId]: [],
 						...localizedValue,
 					};
 				}
+				else if (repeatable) {
+					Object.keys(localizedValue).forEach((key) => {
+						dataRecordValues[fieldName] = {
+							...dataRecordValues[fieldName],
+							[key]: [],
+							[languageId]: [],
+						};
+					});
+				}
 			}
 
 			if (repeatable) {
-				dataRecordValues[fieldName][languageId].push(_value);
+				Object.keys(localizedValue).forEach((key) => {
+					if (edited && key === languageId) {
+						dataRecordValues[fieldName][key].push(_value);
+					}
+					else {
+						dataRecordValues[fieldName][key].push(
+							localizedValue[key]
+						);
+					}
+				});
 			}
 			else if (edited) {
 				dataRecordValues[fieldName] = {

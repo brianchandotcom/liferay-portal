@@ -38,15 +38,19 @@ function getFields(pages) {
 	const fields = [];
 	const visitor = new PagesVisitor(pages);
 
-	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-		if (field.type != 'fieldset') {
-			fields.push({
-				...field,
-				pageIndex,
-				value: field.fieldName,
-			});
-		}
-	});
+	visitor.mapFields(
+		(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+			if (field.type != 'fieldset') {
+				fields.push({
+					...field,
+					pageIndex,
+					value: field.fieldName,
+				});
+			}
+		},
+		true,
+		true
+	);
 
 	return fields;
 }

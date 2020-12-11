@@ -21,16 +21,13 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import AppContext from '../../../AppContext.es';
-import {EDIT_CUSTOM_OBJECT_FIELD} from '../../../actions.es';
-import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
-function hasFocusedCustomObjectField(focusedCustomObjectField) {
-	return !!focusedCustomObjectField.settingsContext;
-}
-
-function getSettingsContext(focusedCustomObjectField, focusedField) {
+function getSettingsContext(
+	hasFocusedCustomObjectField,
+	focusedCustomObjectField,
+	focusedField
+) {
 	if (hasFocusedCustomObjectField(focusedCustomObjectField)) {
 		return focusedCustomObjectField.settingsContext;
 	}
@@ -69,25 +66,23 @@ const getColumn = (customFields = {}) => ({children, column, index}) => {
 	);
 };
 
-export default function () {
+export default function ({
+	config,
+	customFields,
+	dataRules,
+	dispatchEvent,
+	editingLanguageId,
+	focusedCustomObjectField,
+	focusedField,
+	hasFocusedCustomObjectField,
+}) {
 	const spritemap = useContext(ClayIconSpriteContext);
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [
-		{
-			config,
-			customFields,
-			dataLayout: {dataRules},
-			editingLanguageId,
-			focusedCustomObjectField,
-			focusedField,
-		},
-		dispatch,
-	] = useContext(AppContext);
 	const [activePage, setActivePage] = useState(0);
 
 	const Column = useMemo(() => getColumn(customFields), [customFields]);
 
 	const settingsContext = getSettingsContext(
+		hasFocusedCustomObjectField,
 		focusedCustomObjectField,
 		focusedField
 	);
@@ -101,18 +96,6 @@ export default function () {
 			}),
 		[config, editingLanguageId, settingsContext]
 	);
-
-	const dispatchEvent = (type, payload) => {
-		if (
-			hasFocusedCustomObjectField(focusedCustomObjectField) &&
-			type === 'fieldEdited'
-		) {
-			dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
-		}
-		else if (!hasFocusedCustomObjectField(focusedCustomObjectField)) {
-			dataLayoutBuilder.dispatch(type, payload);
-		}
-	};
 
 	useEffect(() => {
 		if (activePage > filteredSettingsContext.pages.length - 1) {

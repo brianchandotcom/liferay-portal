@@ -17,20 +17,112 @@ import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';
+import {
+	EDIT_CUSTOM_OBJECT_FIELD,
+	dropLayoutBuilderField,
+} from '../../../actions.es';
 import Sidebar from '../../../components/sidebar/Sidebar.es';
+import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import FieldsSidebarBody from './FieldsSidebarBody.es';
 import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody.es';
 import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader.es';
 
-export default function ({title}) {
-	const [{focusedCustomObjectField, focusedField}] = useContext(AppContext);
-	const [keywords, setKeywords] = useState('');
+const sortFieldTypes = (fieldTypes) =>
+	fieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
+
+export const DataEngineFieldsSidebar = ({title}) => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const [
+		{
+			config,
+			customFields,
+			dataLayout,
+			editingLanguageId,
+			focusedCustomObjectField,
+			focusedField,
+		},
+		dispatch,
+	] = useContext(AppContext);
+
+	const hasFocusedCustomObjectField = (focusedCustomObjectField) => {
+		return !!focusedCustomObjectField.settingsContext;
+	};
 
 	const hasFocusedField = Object.keys(focusedField).length > 0;
-	const hasFocusedCustomObjectField =
-		Object.keys(focusedCustomObjectField).length > 0;
 
-	const displaySettings = hasFocusedCustomObjectField || hasFocusedField;
+	const displaySettings =
+		hasFocusedCustomObjectField(focusedCustomObjectField) ||
+		hasFocusedField;
+
+	const fieldTypes = sortFieldTypes(
+		dataLayoutBuilder.getFieldTypes().filter(({group}) => group === 'basic')
+	);
+
+	return (
+		<FieldsSidebar
+			config={config}
+			customFields={customFields}
+			dataLayout={dataLayout}
+			dispatchEvent={(type, payload) => {
+				if (
+					hasFocusedCustomObjectField(focusedCustomObjectField) &&
+					type === 'fieldEdited'
+				) {
+					dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
+				}
+				else if (
+					!hasFocusedCustomObjectField(focusedCustomObjectField)
+				) {
+					dataLayoutBuilder.dispatch(type, payload);
+				}
+			}}
+			displaySettings={displaySettings}
+			editingLanguageId={editingLanguageId}
+			fieldTypes={fieldTypes}
+			focusedCustomObjectField={focusedCustomObjectField}
+			focusedField={focusedField}
+			hasFocusedCustomObjectField={hasFocusedCustomObjectField}
+			onClick={() => {
+				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
+			}}
+			onDoubleClick={({name}) => {
+				const {activePage, pages} = dataLayoutBuilder.getStore();
+
+				dataLayoutBuilder.dispatch(
+					'fieldAdded',
+					dropLayoutBuilderField({
+						addedToPlaceholder: true,
+						dataLayoutBuilder,
+						fieldTypeName: name,
+						indexes: {
+							columnIndex: 0,
+							pageIndex: activePage,
+							rowIndex: pages[activePage].rows.length,
+						},
+					})
+				);
+			}}
+			title={title}
+		/>
+	);
+};
+
+export const FieldsSidebar = ({
+	config,
+	customFields,
+	dataLayout,
+	dispatchEvent,
+	displaySettings,
+	editingLanguageId,
+	fieldTypes,
+	focusedCustomObjectField,
+	focusedField,
+	hasFocusedCustomObjectField,
+	onClick,
+	onDoubleClick,
+	title,
+}) => {
+	const [keywords, setKeywords] = useState('');
 
 	return (
 		<Sidebar
@@ -40,7 +132,12 @@ export default function ({title}) {
 				<Sidebar.Title title={title} />
 
 				{displaySettings ? (
-					<FieldsSidebarSettingsHeader />
+					<FieldsSidebarSettingsHeader
+						fieldTypes={fieldTypes}
+						focusedCustomObjectField={focusedCustomObjectField}
+						focusedField={focusedField}
+						onClick={onClick}
+					/>
 				) : (
 					<ClayForm onSubmit={(event) => event.preventDefault()}>
 						<Sidebar.SearchInput
@@ -53,14 +150,28 @@ export default function ({title}) {
 
 			<Sidebar.Body>
 				{displaySettings ? (
-					<FieldsSidebarSettingsBody />
+					<FieldsSidebarSettingsBody
+						config={config}
+						customFields={customFields}
+						dataRules={dataLayout.dataRules}
+						dispatchEvent={dispatchEvent}
+						editingLanguageId={editingLanguageId}
+						focusedCustomObjectField={focusedCustomObjectField}
+						focusedField={focusedField}
+						hasFocusedCustomObjectField={
+							hasFocusedCustomObjectField
+						}
+					/>
 				) : (
 					<FieldsSidebarBody
+						allowFieldSets={config.allowFieldSets}
+						fieldTypes={fieldTypes}
 						keywords={keywords}
+						onDoubleClick={onDoubleClick}
 						setKeywords={setKeywords}
 					/>
 				)}
 			</Sidebar.Body>
 		</Sidebar>
 	);
-}
+};

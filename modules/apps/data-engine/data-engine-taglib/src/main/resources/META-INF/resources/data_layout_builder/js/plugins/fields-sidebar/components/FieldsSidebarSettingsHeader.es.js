@@ -16,15 +16,14 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import AppContext from '../../../AppContext.es';
-import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
-
-export default function () {
-	const [{fieldTypes, focusedCustomObjectField, focusedField}] = useContext(
-		AppContext
-	);
+export default function ({
+	fieldTypes,
+	focusedCustomObjectField,
+	focusedField,
+	onClick,
+}) {
 	let {settingsContext} = focusedField;
 
 	if (focusedCustomObjectField.settingsContext) {
@@ -38,11 +37,6 @@ export default function () {
 		return name === typeField.value;
 	});
 
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const handleFocusedFieldBlur = () => {
-		dataLayoutBuilder.dispatch('sidebarFieldBlurred');
-	};
-
 	if (!fieldType) {
 		return null;
 	}
@@ -53,7 +47,7 @@ export default function () {
 				className="mr-2"
 				displayType="secondary"
 				monospaced={false}
-				onClick={handleFocusedFieldBlur}
+				onClick={onClick}
 				symbol="angle-left"
 			/>
 

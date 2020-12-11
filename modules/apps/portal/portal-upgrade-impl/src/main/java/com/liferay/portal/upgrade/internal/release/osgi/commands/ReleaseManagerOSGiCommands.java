@@ -248,14 +248,14 @@ public class ReleaseManagerOSGiCommands {
 			_releaseManagerImpl.getBundleSymbolicNames();
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
-			String currentSchemaVersion =
+			String schemaVersionString =
 				_releaseManagerImpl.getSchemaVersionString(bundleSymbolicName);
 
 			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 				_releaseManagerImpl.getUpgradeInfos(bundleSymbolicName));
 
 			List<List<UpgradeInfo>> upgradeInfosList =
-				releaseGraphManager.getUpgradeInfosList(currentSchemaVersion);
+				releaseGraphManager.getUpgradeInfosList(schemaVersionString);
 
 			int size = upgradeInfosList.size();
 
@@ -263,7 +263,7 @@ public class ReleaseManagerOSGiCommands {
 				sb.append("There are ");
 				sb.append(size);
 				sb.append(" possible end nodes for ");
-				sb.append(currentSchemaVersion);
+				sb.append(schemaVersionString);
 				sb.append(StringPool.NEW_LINE);
 			}
 
@@ -278,7 +278,7 @@ public class ReleaseManagerOSGiCommands {
 
 			sb.append(
 				_getModulePendingUpgradeMessage(
-					bundleSymbolicName, currentSchemaVersion,
+					bundleSymbolicName, schemaVersionString,
 					lastUpgradeInfo.getToSchemaVersionString()));
 
 			if (showUpgradeSteps) {

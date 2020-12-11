@@ -5,7 +5,12 @@ definition {
 
 		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
+		if (!(isSet(auto))) {
+			var auto = "false";
+		}
+
 		JSONSitenavigationAPI._addSiteNavigationMenu(
+			auto = "${auto}",
 			groupId = "${groupId}",
 			siteNavigationMenuName = "${siteNavigationMenuName}");
 	}

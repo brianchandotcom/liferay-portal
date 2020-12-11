@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Helper function to add a site navigation menu via JSON"
 	macro _addSiteNavigationMenu {
-		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
+		Variables.assertDefined(parameterList = "${auto},${groupId},${siteNavigationMenuName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -10,7 +10,9 @@ definition {
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
 			  -u test@liferay.com:test \
 			  -d groupId=${groupId} \
-			  -d name=${siteNavigationMenuName}
+			  -d name=${siteNavigationMenuName} \
+			  -d type=0 \
+			  -d auto=${auto}
 			''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

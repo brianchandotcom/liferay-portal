@@ -333,7 +333,7 @@ definition {
 
 		Click(
 			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE_LINK");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",

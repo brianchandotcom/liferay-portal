@@ -705,7 +705,7 @@ definition {
 
 		Click(
 			key_card = "${depotName}",
-			locator1 = "Card#CARD_TITLE");
+			locator1 = "Card#CARD_TITLE_LINK");
 
 		if (isSet(noApplication)) {
 			for (var applicationList : list "${applicationList}") {

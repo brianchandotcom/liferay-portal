@@ -33,7 +33,7 @@ definition {
 			var key_card = "${depotName}";
 
 			Click(
-				locator1 = "Card#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE_LINK",
 				value1 = "${depotName}");
 		}
 
@@ -77,7 +77,7 @@ definition {
 			var key_card = "${depotName}";
 
 			Click(
-				locator1 = "Card#CARD_TITLE",
+				locator1 = "Card#CARD_TITLE_LINK",
 				value1 = "${depotName}");
 		}
 
@@ -98,7 +98,7 @@ definition {
 
 			Click(
 				key_card = "${otherDepotName}",
-				locator1 = "Card#CARD_TITLE");
+				locator1 = "Card#CARD_TITLE_LINK");
 
 			DepotNavigator.gotoPortlet(
 				depotName = "${otherDepotName}",

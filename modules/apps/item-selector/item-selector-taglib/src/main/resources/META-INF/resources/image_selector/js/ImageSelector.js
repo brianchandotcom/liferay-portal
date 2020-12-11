@@ -17,6 +17,55 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+const BrowseImageZone = ({
+	handleClick,
+	itemSelectorEventName,
+	itemSelectorURL,
+	maxFileSize,
+	validExtensions,
+}) => (
+	<div className="browse-image-controls">
+		<div className="drag-drop-label">
+			{itemSelectorEventName && itemSelectorURL ? (
+				Liferay.Browser.isMobile() ? (
+					<SelectFileButton handleClick={handleClick} />
+				) : (
+					<>
+						<span
+							className="pr-1"
+							dangerouslySetInnerHTML={{
+								__html: Liferay.Language.get(
+									'drag-and-drop-to-upload-or'
+								),
+							}}
+						></span>
+						<SelectFileButton handleClick={handleClick} />
+					</>
+				)
+			) : (
+				Liferay.Language.get('drag-and-drop-to-upload')
+			)}
+		</div>
+		<div className="file-validation-info">
+			{validExtensions && <strong>{validExtensions}</strong>}
+
+			{maxFileSize !== 0 && (
+				<span
+					className="pl-1"
+					dangerouslySetInnerHTML={{
+						__html: Liferay.Util.sub(
+							Liferay.Language.get('maximum-size-x'),
+							Liferay.Util.formatStorage(
+								parseInt(maxFileSize, 10)
+							)
+						),
+					}}
+				></span>
+			)}
+		</div>
+	</div>
+);
+
 const SelectFileButton = ({handleClick}) => (
 	<ClayButton displayType="secondary" onClick={handleClick}>
 		{Liferay.Language.get('select-file')}
@@ -38,7 +87,7 @@ const ImageSelector = ({
 	validExtensions,
 }) => {
 	const [image, setImage] = useState({
-		fileEntryId: fileEntryId,
+		fileEntryId,
 		src: imageURL,
 	});
 
@@ -94,50 +143,13 @@ const ImageSelector = ({
 			)}
 
 			{image.fileEntryId == 0 && (
-				<div className="browse-image-controls">
-					<div className="drag-drop-label">
-						{itemSelectorEventName && itemSelectorURL ? (
-							Liferay.Browser.isMobile() ? (
-								<SelectFileButton
-									handleClick={handleSelectFileClick}
-								/>
-							) : (
-								<>
-									<span
-										className="pr-1"
-										dangerouslySetInnerHTML={{
-											__html: Liferay.Language.get(
-												'drag-and-drop-to-upload-or'
-											),
-										}}
-									></span>
-									<SelectFileButton
-										handleClick={handleSelectFileClick}
-									/>
-								</>
-							)
-						) : (
-							Liferay.Language.get('drag-and-drop-to-upload')
-						)}
-					</div>
-					<div className="file-validation-info">
-						{validExtensions && <strong>{validExtensions}</strong>}
-
-						{maxFileSize !== 0 && (
-							<span
-								className="pl-1"
-								dangerouslySetInnerHTML={{
-									__html: Liferay.Util.sub(
-										Liferay.Language.get('maximum-size-x'),
-										Liferay.Util.formatStorage(
-											parseInt(maxFileSize, 10)
-										)
-									),
-								}}
-							></span>
-						)}
-					</div>
-				</div>
+				<BrowseImageZone
+					handleClick={handleSelectFileClick}
+					itemSelectorEventName={itemSelectorEventName}
+					itemSelectorURL={itemSelectorURL}
+					maxFileSize={maxFileSize}
+					validExtensions={validExtensions}
+				/>
 			)}
 		</div>
 	);

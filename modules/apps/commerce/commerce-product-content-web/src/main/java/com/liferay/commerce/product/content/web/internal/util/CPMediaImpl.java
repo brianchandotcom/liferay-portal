@@ -62,6 +62,18 @@ public class CPMediaImpl implements CPMedia {
 		_title = fileEntry.getTitle();
 	}
 
+	public CPMediaImpl(long groupId) throws PortalException {
+		String defaultUrl = CommerceMediaResolverUtil.getDefaultUrl(groupId);
+
+		_downloadUrl = defaultUrl;
+
+		_id = 0;
+		_mimeType = null;
+		_thumbnailUrl = defaultUrl;
+		_title = null;
+		_url = defaultUrl;
+	}
+
 	@Override
 	public String getDownloadUrl() {
 		return _downloadUrl;

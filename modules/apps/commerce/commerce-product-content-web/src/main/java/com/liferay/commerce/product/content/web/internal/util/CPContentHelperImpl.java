@@ -359,6 +359,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 			if (fileEntry != null) {
 				cpMedias.add(new CPMediaImpl(fileEntry, themeDisplay));
 			}
+			else {
+				cpMedias.add(new CPMediaImpl(themeDisplay.getCompanyGroupId()));
+			}
 		}
 
 		return cpMedias;

@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,12 +58,13 @@ public class UpgradeCountry extends UpgradeProcess {
 		}
 
 		long defaultCompanyId = 0;
+		String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.US);
 		long defaultUserId = 0;
 
 		String sql = StringBundler.concat(
-			"select User_.companyId, User_.userId from User_ join Company on ",
-			"User_.companyId = Company.companyId where User_.defaultUser = ",
-			"[$TRUE$] and Company.webId = ",
+			"select User_.companyId, User_.languageId, User_.userId from ",
+			"User_ join Company on User_.companyId = Company.companyId where ",
+			"User_.defaultUser = [$TRUE$] and Company.webId = ",
 			StringUtil.quote(PropsValues.COMPANY_DEFAULT_WEB_ID));
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -72,22 +73,21 @@ public class UpgradeCountry extends UpgradeProcess {
 
 			if (rs.next()) {
 				defaultCompanyId = rs.getLong(1);
-				defaultUserId = rs.getLong(2);
+				defaultLanguageId = rs.getString(2);
+				defaultUserId = rs.getLong(3);
 			}
 		}
-
-		String defaultLanguageId = StringUtil.quote(
-			UpgradeProcessUtil.getDefaultLanguageId(defaultCompanyId));
-
-		runSQL(
-			"update Country set defaultLanguageId = " + defaultLanguageId +
-				" where defaultLanguageId is null");
 
 		if (defaultCompanyId > 0) {
 			runSQL(
 				"update Country set companyId = " + defaultCompanyId +
 					" where (companyId is null or companyId = 0)");
 		}
+
+		runSQL(
+			"update Country set defaultLanguageId = " +
+				StringUtil.quote(defaultLanguageId) +
+					" where defaultLanguageId is null");
 
 		if (defaultUserId > 0) {
 			runSQL(

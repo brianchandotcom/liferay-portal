@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -66,6 +66,27 @@ const BrowseImageZone = ({
 	</div>
 );
 
+const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
+	<div className="change-image-controls">
+		<ClayButtonWithIcon
+			displayType="secondary"
+			monospaced
+			onClick={handleClickPicture}
+			symbol="picture"
+			title={Liferay.Language.get('change-image')}
+		/>
+
+		<ClayButtonWithIcon
+			className="ml-1"
+			displayType="secondary"
+			monospaced
+			onClick={handleClickDelete}
+			symbol="trash"
+			title={Liferay.Language.get('remove-image')}
+		/>
+	</div>
+);
+
 const SelectFileButton = ({handleClick}) => (
 	<ClayButton displayType="secondary" onClick={handleClick}>
 		{Liferay.Language.get('select-file')}
@@ -111,6 +132,14 @@ const ImageSelector = ({
 		});
 	};
 
+	const handleChangeImageClick = () => {
+		console.log('handleChangeImageClick');
+	};
+
+	const handleDeleteImageClick = () => {
+		console.log('handleDeleteImageClick');
+	};
+
 	return (
 		<div
 			className={classNames(
@@ -149,6 +178,13 @@ const ImageSelector = ({
 					itemSelectorURL={itemSelectorURL}
 					maxFileSize={maxFileSize}
 					validExtensions={validExtensions}
+				/>
+			)}
+
+			{image.fileEntryId != 0 && (
+				<ChangeImageControls
+					handleClickDelete={handleDeleteImageClick}
+					handleClickPicture={handleChangeImageClick}
 				/>
 			)}
 		</div>

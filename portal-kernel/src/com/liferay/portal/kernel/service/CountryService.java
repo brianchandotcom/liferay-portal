@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -56,7 +55,7 @@ public interface CountryService extends BaseService {
 			String a2, String a3, boolean active, boolean billingAllowed,
 			String idd, String name, String number, double position,
 			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			Map<String, String> titleMap, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -184,8 +183,7 @@ public interface CountryService extends BaseService {
 	public Country updateCountry(
 			long countryId, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT,
-			Map<String, String> titleMap)
+			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws PortalException;
 
 	public Country updateGroupFilterEnabled(

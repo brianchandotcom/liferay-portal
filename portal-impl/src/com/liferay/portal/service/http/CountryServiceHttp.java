@@ -55,7 +55,7 @@ public class CountryServiceHttp {
 			HttpPrincipal httpPrincipal, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
 			double position, boolean shippingAllowed, boolean subjectToVAT,
-			boolean zipRequired, java.util.Map<String, String> titleMap,
+			boolean zipRequired,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -66,7 +66,7 @@ public class CountryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, a2, a3, active, billingAllowed, idd, name, number,
-				position, shippingAllowed, subjectToVAT, zipRequired, titleMap,
+				position, shippingAllowed, subjectToVAT, zipRequired,
 				serviceContext);
 
 			Object returnObj = null;
@@ -961,7 +961,7 @@ public class CountryServiceHttp {
 			HttpPrincipal httpPrincipal, long countryId, String a2, String a3,
 			boolean active, boolean billingAllowed, String idd, String name,
 			String number, double position, boolean shippingAllowed,
-			boolean subjectToVAT, java.util.Map<String, String> titleMap)
+			boolean subjectToVAT)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -971,7 +971,7 @@ public class CountryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, countryId, a2, a3, active, billingAllowed, idd, name,
-				number, position, shippingAllowed, subjectToVAT, titleMap);
+				number, position, shippingAllowed, subjectToVAT);
 
 			Object returnObj = null;
 
@@ -1048,8 +1048,7 @@ public class CountryServiceHttp {
 	private static final Class<?>[] _addCountryParameterTypes0 = new Class[] {
 		String.class, String.class, boolean.class, boolean.class, String.class,
 		String.class, String.class, double.class, boolean.class, boolean.class,
-		boolean.class, java.util.Map.class,
-		com.liferay.portal.kernel.service.ServiceContext.class
+		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addCountryParameterTypes1 = new Class[] {
 		String.class, String.class, String.class, String.class, String.class,
@@ -1113,7 +1112,7 @@ public class CountryServiceHttp {
 		new Class[] {
 			long.class, String.class, String.class, boolean.class,
 			boolean.class, String.class, String.class, String.class,
-			double.class, boolean.class, boolean.class, java.util.Map.class
+			double.class, boolean.class, boolean.class
 		};
 	private static final Class<?>[] _updateGroupFilterEnabledParameterTypes26 =
 		new Class[] {long.class, boolean.class};

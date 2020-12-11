@@ -51,14 +51,12 @@ public class CountryLocalServiceWrapper
 			boolean billingAllowed, java.lang.String idd, java.lang.String name,
 			java.lang.String number, double position, boolean shippingAllowed,
 			boolean subjectToVAT, boolean zipRequired,
-			java.util.Map<java.lang.String, java.lang.String> titleMap,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.addCountry(
 			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, zipRequired, titleMap,
-			serviceContext);
+			shippingAllowed, subjectToVAT, zipRequired, serviceContext);
 	}
 
 	/**
@@ -516,13 +514,12 @@ public class CountryLocalServiceWrapper
 			long countryId, java.lang.String a2, java.lang.String a3,
 			boolean active, boolean billingAllowed, java.lang.String idd,
 			java.lang.String name, java.lang.String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT,
-			java.util.Map<java.lang.String, java.lang.String> titleMap)
+			boolean shippingAllowed, boolean subjectToVAT)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.updateCountry(
 			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT, titleMap);
+			position, shippingAllowed, subjectToVAT);
 	}
 
 	@Override

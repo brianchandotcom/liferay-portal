@@ -83,7 +83,7 @@ public interface CountryLocalService
 			String a2, String a3, boolean active, boolean billingAllowed,
 			String idd, String name, String number, double position,
 			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			Map<String, String> titleMap, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -370,8 +370,7 @@ public interface CountryLocalService
 	public Country updateCountry(
 			long countryId, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT,
-			Map<String, String> titleMap)
+			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws PortalException;
 
 	public CountryLocalization updateCountryLocalization(

@@ -39,14 +39,12 @@ public class CountryServiceUtil {
 			String a2, String a3, boolean active, boolean billingAllowed,
 			String idd, String name, String number, double position,
 			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			java.util.Map<String, String> titleMap,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCountry(
 			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, zipRequired, titleMap,
-			serviceContext);
+			shippingAllowed, subjectToVAT, zipRequired, serviceContext);
 	}
 
 	/**
@@ -252,13 +250,12 @@ public class CountryServiceUtil {
 	public static com.liferay.portal.kernel.model.Country updateCountry(
 			long countryId, String a2, String a3, boolean active,
 			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT,
-			java.util.Map<String, String> titleMap)
+			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCountry(
 			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT, titleMap);
+			position, shippingAllowed, subjectToVAT);
 	}
 
 	public static com.liferay.portal.kernel.model.Country

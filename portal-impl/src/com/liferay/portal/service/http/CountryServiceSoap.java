@@ -63,6 +63,29 @@ import java.rmi.RemoteException;
 @Deprecated
 public class CountryServiceSoap {
 
+	public static com.liferay.portal.kernel.model.CountrySoap addCountry(
+			String a2, String a3, boolean active, boolean billingAllowed,
+			String idd, String name, String number, double position,
+			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Country returnValue =
+				CountryServiceUtil.addCountry(
+					a2, a3, active, billingAllowed, idd, name, number, position,
+					shippingAllowed, subjectToVAT, zipRequired, serviceContext);
+
+			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
@@ -515,6 +538,28 @@ public class CountryServiceSoap {
 		try {
 			com.liferay.portal.kernel.model.Country returnValue =
 				CountryServiceUtil.updateActive(countryId, active);
+
+			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.CountrySoap updateCountry(
+			long countryId, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Country returnValue =
+				CountryServiceUtil.updateCountry(
+					countryId, a2, a3, active, billingAllowed, idd, name,
+					number, position, shippingAllowed, subjectToVAT);
 
 			return com.liferay.portal.kernel.model.CountrySoap.toSoapModel(
 				returnValue);

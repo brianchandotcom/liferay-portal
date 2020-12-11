@@ -1723,11 +1723,11 @@ definition {
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
 				value1 = "General");
 
-			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			if (isSet(siteMenus)) {
+				Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 				NavItem.click(navItem = "Site Menus");
 
 				LexiconTable.clickTableEntryColumnLink(
@@ -1741,6 +1741,20 @@ definition {
 				AssertElementPresent(
 					key_contentName = "${siteMenus}",
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+
+			if (isSet(displayStyle)) {
+				Select(
+					key_fieldLabel = "Display Style",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${displayStyle}");
+
+				Pause(locator1 = "3000");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Display Style",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${displayStyle}");
 			}
 		}
 		else if ("${panel}" == "Styles") {

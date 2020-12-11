@@ -20,4 +20,21 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to delete a Depot entry"
+	macro deleteDepot {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/depot.depotentry/delete-depot-entry \
+			-u test@liferay.com:test \
+			-d nameMap={"en_US": "${depotId}"} \
+		''';
+
+		echo("## Deleting a 'Depot' with the following info using JSONWS:");
+
+		echo("## * ID: ${depotId}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 }

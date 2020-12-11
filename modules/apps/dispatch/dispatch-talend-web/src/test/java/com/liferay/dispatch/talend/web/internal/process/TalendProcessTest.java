@@ -66,7 +66,7 @@ public class TalendProcessTest {
 
 		talendProcessBuilder.companyId(companyId);
 
-		talendProcessBuilder.contextParam("JAVA_OPTS", "Xint -Xms2G -Xmx512M");
+		talendProcessBuilder.contextParam("JAVA_OPTS", "-Xint -Xms2G -Xmx512M");
 
 		UnicodeProperties unicodeProperties =
 			RandomTestUtil.randomUnicodeProperties(

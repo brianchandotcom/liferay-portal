@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -67,28 +68,43 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Region deleteRegion(long regionId) {
-		return null;
+	public Region deleteRegion(long regionId) throws PortalException {
+		Region region = regionPersistence.fetchByPrimaryKey(regionId);
+
+		return deleteRegion(region);
 	}
 
 	@Override
-	public Region deleteRegion(Region region) {
-		return null;
+	public Region deleteRegion(Region region) throws PortalException {
+
+		// Region
+
+		regionPersistence.remove(region);
+
+		// Address
+
+		addressLocalService.deleteRegionAddresses(region.getRegionId());
+
+		return region;
 	}
 
 	@Override
 	public Region fetchRegion(long countryId, String regionCode) {
-		return null;
+		return regionPersistence.fetchByC_R(countryId, regionCode);
 	}
 
 	@Override
-	public Region getRegion(long countryId, String regionCode) {
-		return null;
+	public Region getRegion(long countryId, String regionCode)
+		throws PortalException {
+
+		return regionPersistence.findByC_R(countryId, regionCode);
 	}
 
 	@Override
-	public List<Region> getRegions(long countryId, boolean active) {
-		return null;
+	public List<Region> getRegions(long countryId, boolean active)
+		throws PortalException {
+
+		return regionPersistence.findByC_A(countryId, active);
 	}
 
 	@Override
@@ -96,7 +112,8 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		long countryId, boolean active, int start, int end,
 		OrderByComparator<Region> orderByComparator) {
 
-		return null;
+		return regionPersistence.findByC_A(
+			countryId, active, start, end, orderByComparator);
 	}
 
 	@Override
@@ -104,35 +121,56 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		long countryId, int start, int end,
 		OrderByComparator<Region> orderByComparator) {
 
-		return null;
+		return regionPersistence.findByCountryId(
+			countryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<Region> getRegions(long companyId, String a2, boolean active) {
-		return null;
+	public List<Region> getRegions(long companyId, String a2, boolean active)
+		throws PortalException {
+
+		Country country = countryPersistence.findByC_A2(companyId, a2);
+
+		return regionPersistence.findByC_A(country.getCompanyId(), active);
 	}
 
 	@Override
 	public int getRegionsCount(long countryId) {
-		return null;
+		return regionPersistence.countByCountryId(countryId);
 	}
 
 	@Override
 	public int getRegionsCount(long countryId, boolean active) {
-		return null;
+		return regionPersistence.countByC_A(countryId, active);
 	}
 
 	@Override
-	public Region updateActive(long regionId, boolean active) {
-		return null;
+	public Region updateActive(long regionId, boolean active)
+		throws PortalException {
+
+		Region region = regionPersistence.findByPrimaryKey(regionId);
+
+		region.setActive(active);
+
+		return regionPersistence.update(region);
 	}
 
 	@Override
 	public Region updateRegion(
-		long regionId, boolean active, String name, double position,
-		String regionCode) {
+			long regionId, boolean active, String name, double position,
+			String regionCode)
+		throws PortalException {
 
-		return null;
+		validate(name, regionCode);
+
+		Region region = regionPersistence.findByPrimaryKey(regionId);
+
+		region.setActive(active);
+		region.setName(name);
+		region.setPosition(position);
+		region.setRegionCode(regionCode);
+
+		return regionPersistence.update(region);
 	}
 
 	protected void validate(String name, String regionCode)

@@ -473,6 +473,20 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetUserAccountEntriesByAccountEntryOwnership()
+		throws Exception {
+
+		User accountEntryOwner = UserTestUtil.addUser();
+
+		_testGetUserAccountEntries(
+			accountEntryOwner,
+			Collections.singletonList(
+				_addUserAccountEntry(
+					accountEntryOwner.getUserId(),
+					RandomTestUtil.randomString(), null, null)));
+	}
+
+	@Test
 	public void testGetUserAccountEntriesByOrganizationMembership()
 		throws Exception {
 

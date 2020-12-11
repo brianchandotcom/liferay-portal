@@ -20,10 +20,9 @@ import classNames from 'classnames';
 import {useIsMounted, useStateSafe} from 'frontend-js-react-web';
 import React, {useRef, useState} from 'react';
 
-import AppContext from '../../AppContext.es';
 import useLoad from '../../hooks/useLoad.es';
 
-const {useContext, useEffect} = React;
+const {useEffect} = React;
 
 const CLASSNAME_INDICATORS = [
 	'.change-tracking-indicator',
@@ -37,11 +36,11 @@ const CLASSNAME_INDICATORS = [
 const swallow = [(value) => value, (_error) => undefined];
 
 export default function MultiPanelSidebar({
+	createPlugin,
 	panels,
 	sidebarPanels,
 	variant = 'dark',
 }) {
-	const [, dispatch] = useContext(AppContext);
 	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
 		sidebarOpen: true,
 		sidebarPanelId: 'fields',
@@ -59,12 +58,11 @@ export default function MultiPanelSidebar({
 				load(sidebarPanel.sidebarPanelId, sidebarPanel.pluginEntryPoint)
 					.then((Plugin) => {
 						const instance = new Plugin(
-							{
-								dispatch,
+							createPlugin({
 								panel: sidebarPanel,
 								sidebarOpen: true,
 								sidebarPanelId: sidebarPanel.sidebarPanelId,
-							},
+							}),
 							sidebarPanel
 						);
 
@@ -83,7 +81,8 @@ export default function MultiPanelSidebar({
 				setPanelComponents(result);
 			}
 		});
-	}, [isMounted, dispatch, load]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isMounted, load]);
 
 	const changeAlertClassName = (styleName) => {
 		const formBuilderMessage = document.querySelector(

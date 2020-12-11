@@ -53,7 +53,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Activities Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_portletName = "Activities",
 			locator1 = "Portlet#BODY",
 			value1 = "There are no recent activities.");
@@ -104,7 +104,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Activities Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_portletName = "Activities",
 			locator1 = "Portlet#BODY",
 			value1 = "There are no recent activities.");
@@ -118,7 +118,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Activities Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_portletName = "Activities",
 			locator1 = "Portlet#BODY",
 			value1 = "There are no recent activities.");

@@ -163,14 +163,9 @@ function DirectImagePanel({item}) {
 			config: {
 				alt: {[languageId]: ''},
 				imageConfiguration: {},
-				imageTitle: nextImage.title,
 			},
-			[languageId]: nextImage.url,
+			[languageId]: nextImage,
 		};
-
-		delete nextEditableValue.config.imageTitle;
-
-		nextEditableValue[languageId] = nextImage;
 
 		delete nextEditableValue.classNameId;
 		delete nextEditableValue.classPK;

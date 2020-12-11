@@ -103,6 +103,11 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public AccountGroup getDefaultAccountGroup(long companyId) {
+		return accountGroupPersistence.fetchByC_D_First(companyId, true, null);
+	}
+
+	@Override
 	public boolean hasDefaultAccountGroup(long companyId) {
 		int count = accountGroupPersistence.countByC_D(companyId, true);
 

@@ -35,6 +35,10 @@
 
 		const containerRequest = {
 
+			// set to the container's exported object
+
+			container: undefined,
+
 			// set if request failed
 
 			error: undefined,
@@ -43,9 +47,9 @@
 
 			fetched: false,
 
-			// set to the exported value (if error is set module is undefined)
+			// set to the exported values of each module (undefined if error set)
 
-			module: undefined,
+			modules: undefined,
 
 			// set to the <script> DOM node while it is being retrieved (undefined after)
 
@@ -75,25 +79,31 @@
 	}
 
 	/**
-	 * Fetch a container's module by path
+	 * Fetch a container
 	 */
-	function fetchContainer(containerId, path, resolve, reject) {
+	function fetchContainer(callId, containerId, resolve, reject) {
+		if (containerRequests[containerId]) {
+			throw new Error(
+				`A request is already registered for container ${containerId}`
+			);
+		}
+
 		const url = '/o/' + containerId + '/__generated__/container.js';
 
-		explain('Fetching container', containerId, 'from', url);
+		explain(callId, 'Fetching container from URL', url);
 
 		containerRequests[containerId] = createContainerRequest(
 			url,
 			(containerRequest) => {
-				explain('Fetched container', containerId);
+				explain(callId, 'Fetched container');
 
 				const container = getContainer(containerId);
 
 				if (container) {
 					explain(
-						'Initializing container',
-						containerId,
-						'\n',
+						callId,
+						'Initializing container with scope:\n',
+						'   ',
 						Object.entries(sharedScope)
 							.map(
 								([name, data]) =>
@@ -103,17 +113,17 @@
 											`(${version}: ${data.from})`
 									)
 							)
-							.join('\n ')
+							.join('\n     ')
 					);
 
 					Promise.resolve(container.init(sharedScope))
-						.then(() => container.get(path))
-						.then((moduleFactory) => {
+						.then(() =>
 							finalizeContainerRequest(
+								callId,
 								containerRequest,
-								moduleFactory()
-							);
-						})
+								container
+							)
+						)
 						.catch(reject);
 				}
 				else {
@@ -124,12 +134,15 @@
 					console.warn(message);
 
 					finalizeContainerRequest(
+						callId,
 						containerRequest,
 						new Error(message)
 					);
 				}
 			}
 		);
+
+		explain(callId, 'Subscribing to container request');
 
 		subscribeContainerRequest(
 			containerRequests[containerId],
@@ -139,10 +152,10 @@
 	}
 
 	/**
-	 * Finalize an ongoing container request: set its result (error or module)
-	 * and notify all pending subscribers.
+	 * Finalize an ongoing container request: set its result (error or
+	 * container object) and notify all pending subscribers.
 	 */
-	function finalizeContainerRequest(containerRequest, result) {
+	function finalizeContainerRequest(callId, containerRequest, result) {
 		const {script, subscribers} = containerRequest;
 
 		containerRequest.fetched = true;
@@ -151,24 +164,31 @@
 
 		if (result instanceof Error) {
 			explain(
+				callId,
 				'Rejecting container',
 				script.src,
 				'for',
 				subscribers.length,
 				'subscribers'
 			);
+
 			containerRequest.error = result;
+
 			subscribers.forEach(({reject}) => reject(result));
 		}
 		else {
 			explain(
+				callId,
 				'Resolving container',
 				script.src,
 				'for',
 				subscribers.length,
 				'subscribers'
 			);
-			containerRequest.module = result;
+
+			containerRequest.container = result;
+			containerRequest.modules = {};
+
 			subscribers.forEach(({resolve}) => resolve(result));
 		}
 	}
@@ -180,37 +200,83 @@
 		return window[CONTAINERS_SYMBOL][containerId];
 	}
 
+	let NEXT_CALL_ID = 1;
+
 	/**
 	 * Get a module (like require for webpack federation)
 	 */
 	function getModule(moduleName) {
+		const caller = `[${new Error().stack.split('\n')[1]}]`;
+		const callId = `[${NEXT_CALL_ID++}]`;
+
+		explain(callId, 'Getting module', moduleName, 'for', caller);
+
 		return new Promise((resolve, reject) => {
 			const {containerId, path} = splitModuleName(moduleName);
 
-			const containerRequest = containerRequests[containerId];
+			const resolveModule = () => {
+				const containerRequest = containerRequests[containerId];
+				const {modules} = containerRequest;
+				const module = modules[path];
 
-			if (!containerRequest) {
-				fetchContainer(containerId, path, resolve, reject);
-			}
-			else {
-				const {error, module} = containerRequest;
+				if (module) {
+					explain(callId, 'Resolving cached module');
 
-				if (error) {
-					explain('Rejecting fetched container', containerId, error);
-					reject(error);
-				}
-				else if (module) {
-					explain('Resolving fetched container', containerId);
 					resolve(module);
 				}
 				else {
-					explain('Subscribing to container request', containerId);
+					const {container} = containerRequest;
+
+					explain(callId, 'Getting module from container');
+
+					Promise.resolve(container.get(path))
+						.then((moduleFactory) => {
+							const module = moduleFactory();
+
+							modules[path] = module;
+
+							return module;
+						})
+						.then((module) => {
+							explain(callId, 'Resolving module');
+
+							resolve(module);
+						})
+						.catch(reject);
+				}
+			};
+
+			const containerRequest = containerRequests[containerId];
+
+			if (containerRequest) {
+				const {fetched} = containerRequest;
+
+				if (!fetched) {
+					explain(callId, 'Subscribing to container request');
+
 					subscribeContainerRequest(
 						containerRequest,
-						resolve,
+						resolveModule,
 						reject
 					);
+
+					return;
 				}
+
+				const {error} = containerRequest;
+
+				if (error) {
+					explain(callId, 'Rejecting with error', error);
+
+					reject(error);
+
+					return;
+				}
+
+				resolveModule();
+			}
+			else {
+				fetchContainer(callId, containerId, resolveModule, reject);
 			}
 		});
 	}

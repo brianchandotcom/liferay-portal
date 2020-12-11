@@ -133,6 +133,18 @@ public class EditableValuesTransformerUtilTest {
 	}
 
 	@Test
+	public void testGetEditableValuesWithoutExperience() throws Exception {
+		String editableValues = _read(
+			"fragment_entry_link_editable_values_without_experience.json");
+
+		Assert.assertEquals(
+			_objectMapper.readTree(editableValues),
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
+	}
+
+	@Test
 	public void testGetFreeMarkerEditableValues() throws Exception {
 		String editableValues = _read(
 			"fragment_entry_link_free_marker_editable_values.json");

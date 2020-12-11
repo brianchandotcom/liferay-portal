@@ -86,10 +86,10 @@ public class DLVideoExternalShortcutDLDisplayContextFactory
 
 			return new DLVideoExternalShortcutDLEditFileEntryDisplayContext(
 				parentDLEditFileEntryDisplayContext, httpServletRequest,
-				httpServletResponse, fileEntry,
+				httpServletResponse,
 				_getDLVideoExternalShortcut(
 					dlVideoExternalShortcutMetadataHelper),
-				_servletContext);
+				fileEntry, _servletContext);
 		}
 
 		return parentDLEditFileEntryDisplayContext;

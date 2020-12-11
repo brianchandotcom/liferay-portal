@@ -53,8 +53,8 @@ public class DLVideoExternalShortcutDLEditFileEntryDisplayContext
 	public DLVideoExternalShortcutDLEditFileEntryDisplayContext(
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileEntry fileEntry,
-		DLVideoExternalShortcut dlVideoExternalShortcut,
+		HttpServletResponse httpServletResponse,
+		DLVideoExternalShortcut dlVideoExternalShortcut, FileEntry fileEntry,
 		ServletContext servletContext) {
 
 		super(

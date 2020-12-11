@@ -173,7 +173,7 @@ const setDataDefinitionFields = (
 	dataLayout
 ) => {
 	const {dataDefinitionFields} = dataDefinition;
-	const {dataLayoutPages} = dataLayout;
+	const {dataLayoutFields, dataLayoutPages} = dataLayout;
 
 	const {pages} = dataLayoutBuilder.getStore();
 	const visitor = new PagesVisitor(pages);
@@ -182,6 +182,11 @@ const setDataDefinitionFields = (
 
 	visitor.mapFields((field) => {
 		const definitionField = dataLayoutBuilder.getDataDefinitionField(field);
+		const dataLayoutField = dataLayoutFields[definitionField.name] || {};
+
+		if (dataLayoutField && dataLayoutField.required) {
+			definitionField.required = false;
+		}
 
 		newFields.push(definitionField);
 	});

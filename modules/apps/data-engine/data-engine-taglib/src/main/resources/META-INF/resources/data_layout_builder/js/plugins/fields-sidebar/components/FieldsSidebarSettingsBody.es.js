@@ -46,21 +46,41 @@ function getSettingsContext(
  *     required: (props) => <NewRequiredComponent {...props} />
  * }
  */
-const getColumn = (customFields = {}) => ({children, column, index}) => {
+const getColumn = (customFields = {}, dataLayoutBuilder) => ({
+	children,
+	column,
+	index,
+}) => {
 	if (column.fields.length === 0) {
 		return null;
 	}
 
 	return (
 		<ClayLayout.Col key={index} md={column.size}>
-			{column.fields.map((field, index) => {
-				const customField = customFields[field.fieldName];
+			{column.fields.map((field, fieldIndex) => {
+				const {fieldName} = field;
+				const CustomField = customFields[fieldName];
 
-				if (customField) {
-					return customField({AppContext, children, field, index});
+				if (CustomField) {
+					return (
+						<div
+							className="ddm-field"
+							data-field-name={fieldName}
+							key={fieldIndex}
+						>
+							<CustomField
+								AppContext={AppContext}
+								dataLayoutBuilder={dataLayoutBuilder}
+								field={field}
+								index={fieldIndex}
+							>
+								{children}
+							</CustomField>
+						</div>
+					);
 				}
 
-				return children({field, index});
+				return children({field, index: fieldIndex});
 			})}
 		</ClayLayout.Col>
 	);
@@ -79,7 +99,10 @@ export default function ({
 	const spritemap = useContext(ClayIconSpriteContext);
 	const [activePage, setActivePage] = useState(0);
 
-	const Column = useMemo(() => getColumn(customFields), [customFields]);
+	const Column = useMemo(() => getColumn(customFields, dataLayoutBuilder), [
+		customFields,
+		dataLayoutBuilder,
+	]);
 
 	const settingsContext = getSettingsContext(
 		hasFocusedCustomObjectField,

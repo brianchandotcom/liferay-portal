@@ -13,29 +13,58 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayRadio} from '@clayui/form';
+import ClayForm, {ClayRadio, ClayToggle} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {DataLayoutBuilderActions} from 'data-engine-taglib';
+import {
+	DataDefinitionUtils,
+	DataLayoutBuilderActions,
+} from 'data-engine-taglib';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import isClickOutside from '../../utils/clickOutside.es';
 
-export default ({AppContext, children, field, index}) => {
+export default ({AppContext, dataLayoutBuilder}) => {
+	const popoverRef = useRef(null);
+	const triggerRef = useRef(null);
 	const [showPopover, setShowPopover] = useState(false);
 	const [
 		{
+			dataDefinition,
 			dataLayout: {dataLayoutFields},
 			focusedField: {fieldName: focusedFieldName},
 		},
 		dispatch,
 	] = useContext(AppContext);
 
-	const {required: requiredAtObjectLevel = true} =
-		dataLayoutFields[focusedFieldName] || {};
+	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
+		dataDefinition,
+		focusedFieldName
+	);
 
-	const popoverRef = useRef(null);
-	const triggerRef = useRef(null);
+	const {required = false} = dataLayoutFields[focusedFieldName] || {};
+	const objectLevelRequired = required && dataDefinitionField.required;
+
+	const onToggleRequired = (value) => {
+		dispatch({
+			payload: {
+				dataLayoutFields: {
+					...dataLayoutFields,
+					[focusedFieldName]: {
+						...dataLayoutFields[focusedFieldName],
+						required: value,
+					},
+				},
+			},
+			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
+		});
+
+		dataLayoutBuilder.dispatch('fieldEdited', {
+			fieldName: focusedFieldName,
+			propertyName: 'required',
+			propertyValue: value,
+		});
+	};
 
 	useEffect(() => {
 		const handler = ({target}) => {
@@ -55,28 +84,20 @@ export default ({AppContext, children, field, index}) => {
 		return () => window.removeEventListener('click', handler);
 	}, [popoverRef, triggerRef]);
 
-	const onSelectRequiredLevel = ({target: {value}}) => {
-		dataLayoutFields[focusedFieldName] = {
-			...dataLayoutFields[focusedFieldName],
-			required: value === 'object-level',
-		};
-
-		dispatch({
-			payload: {
-				dataLayoutFields,
-			},
-			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
-		});
-	};
-
 	return (
 		<div className="d-flex form-renderer-required-field justify-content-between">
-			{children({field, index})}
+			<ClayForm.Group className="form-renderer-required-field__toggle">
+				<ClayToggle
+					label={Liferay.Language.get('required-field')}
+					onToggle={onToggleRequired}
+					toggled={required}
+				/>
+			</ClayForm.Group>
 
 			<ClayTooltipProvider>
 				<ClayButtonWithIcon
 					borderless
-					disabled={!field.value}
+					disabled={!required}
 					displayType="secondary"
 					onClick={() => setShowPopover(!showPopover)}
 					ref={triggerRef}
@@ -96,21 +117,20 @@ export default ({AppContext, children, field, index}) => {
 			>
 				<div className="mt-2">
 					<ClayRadio
-						defaultChecked={requiredAtObjectLevel}
+						defaultChecked={!objectLevelRequired}
+						label={Liferay.Language.get('only-for-this-form')}
+						name="required-level"
+						value="view-level"
+					/>
+
+					<ClayRadio
+						defaultChecked={objectLevelRequired}
+						disabled
 						label={Liferay.Language.get(
 							'for-all-forms-of-this-object'
 						)}
 						name="required-level"
-						onClick={onSelectRequiredLevel}
 						value="object-level"
-					/>
-
-					<ClayRadio
-						defaultChecked={!requiredAtObjectLevel}
-						label={Liferay.Language.get('only-for-this-form')}
-						name="required-level"
-						onClick={onSelectRequiredLevel}
-						value="view-level"
 					/>
 				</div>
 			</ClayPopover>

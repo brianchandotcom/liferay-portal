@@ -1,6 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
-	testIntegrationCompile group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-1"
+	testIntegrationCompile group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"

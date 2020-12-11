@@ -53,7 +53,9 @@ definition {
 				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
 		}
 		else if ("${type}" == "List") {
-			NavItem.click(navItem = "${itemName}");
+			Click(
+				key_itemName = "${itemName}",
+				locator1 = "NavigationMenusWidget#LIST_MENU_ANY_ITEM");
 		}
 	}
 

@@ -242,14 +242,15 @@ body .ddm-user-view-content {
 	}
 }
 
-.liferay-ddm-form-field-paragraph,
-.liferay-ddm-form-field-tip {
-	color: #5b7b86;
+.liferay-ddm-form-field-paragraph {
+	color: #272833;
+	font-size: 14px;
 	line-height: 16px;
 }
 
-.liferay-ddm-form-field-paragraph {
-	font-size: 14px;
+.liferay-ddm-form-field-tip {
+	color: #5b7b86;
+	line-height: 16px;
 }
 
 .liferay-ddm-form-field-options .form-control-feedback {

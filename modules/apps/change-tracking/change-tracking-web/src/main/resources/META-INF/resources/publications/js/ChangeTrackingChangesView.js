@@ -21,7 +21,6 @@ import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
-import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
@@ -40,7 +39,6 @@ class ChangeTrackingChangesView extends React.Component {
 			models,
 			namespace,
 			pathParam,
-			renderCTEntryURL,
 			renderDataURL,
 			rootDisplayClasses,
 			showHideableParam,
@@ -76,7 +74,6 @@ class ChangeTrackingChangesView extends React.Component {
 		this.expired = expired;
 		this.namespace = namespace;
 		this.models = models;
-		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDataURL = renderDataURL;
 		this.rootDisplayClasses = rootDisplayClasses;
 		this.spritemap = spritemap;
@@ -112,10 +109,6 @@ class ChangeTrackingChangesView extends React.Component {
 				senna: true,
 			};
 
-			if (node.modelClassNameId) {
-				this.initialNode = node;
-			}
-
 			window.history.replaceState(state, document.title);
 		}
 
@@ -123,12 +116,6 @@ class ChangeTrackingChangesView extends React.Component {
 		params.delete(this.PARAM_SHOW_HIDEABLE);
 
 		this.basePath = pathname + '?' + params.toString();
-
-		let loading = false;
-
-		if (!node.ctEntryId && node.modelClassNameId) {
-			loading = true;
-		}
 
 		let showHideable = showHideableParam;
 
@@ -147,10 +134,8 @@ class ChangeTrackingChangesView extends React.Component {
 			column: this.COLUMN_TITLE,
 			delta: 20,
 			filterClass,
-			loading,
 			node,
 			page: 1,
-			renderInnerHTML: null,
 			showHideable,
 			sortDirectionClass: 'order-arrow-down-active',
 			viewType,
@@ -165,43 +150,6 @@ class ChangeTrackingChangesView extends React.Component {
 		if (Liferay.SPA && Liferay.SPA.app) {
 			Liferay.SPA.app.skipLoadPopstate = true;
 		}
-
-		if (
-			!this.initialNode ||
-			!this.state.node.modelClassNameId ||
-			this.state.node.modelClassNameId !==
-				this.initialNode.modelClassNameId ||
-			this.state.node.modelClassPK !== this.initialNode.modelClassPK ||
-			this.state.node.ctEntryId
-		) {
-			return;
-		}
-
-		fetch(this._getRenderURL(this.state.node))
-			.then((response) => response.text())
-			.then((text) => {
-				if (
-					this.state.node.ctEntryId ||
-					!this.state.node.modelClassNameId ||
-					this.state.node.modelClassNameId !==
-						this.initialNode.modelClassNameId ||
-					this.state.node.modelClassPK !==
-						this.initialNode.modelClassPK
-				) {
-					return;
-				}
-
-				this.setState({
-					loading: false,
-					renderInnerHTML: {__html: text},
-				});
-
-				this.renderCache[
-					this.initialNode.modelClassNameId.toString() +
-						'-' +
-						this.initialNode.modelClassPK.toString()
-				] = {renderInnerHTML: {__html: text}};
-			});
 	}
 
 	componentWillUnmount() {
@@ -786,7 +734,7 @@ class ChangeTrackingChangesView extends React.Component {
 		return this.userInfo[node.userId.toString()].portraitURL;
 	}
 
-	_getRenderURL(node) {
+	_getRenderDataURL(node) {
 		if (node.ctEntryId) {
 			return this._setParameter(
 				this.renderDataURL,
@@ -795,14 +743,14 @@ class ChangeTrackingChangesView extends React.Component {
 			);
 		}
 
-		const renderURL = this._setParameter(
-			this.renderCTEntryURL,
+		const renderDataURL = this._setParameter(
+			this.renderDataURL,
 			'modelClassNameId',
 			node.modelClassNameId.toString()
 		);
 
 		return this._setParameter(
-			renderURL,
+			renderDataURL,
 			'modelClassPK',
 			node.modelClassPK.toString()
 		);
@@ -1038,21 +986,15 @@ class ChangeTrackingChangesView extends React.Component {
 			const cells = [];
 
 			if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
-				let descriptionMarkup = '';
-
-				if (node.description) {
-					descriptionMarkup = (
-						<div className="publication-description">
-							{node.description}
-						</div>
-					);
-				}
-
 				cells.push(
 					<ClayTable.Cell>
 						<div className="publication-name">{node.title}</div>
 
-						{descriptionMarkup}
+						{node.description && (
+							<div className="publication-description">
+								{node.description}
+							</div>
+						)}
 					</ClayTable.Cell>
 				);
 			}
@@ -1242,7 +1184,6 @@ class ChangeTrackingChangesView extends React.Component {
 			this.contextView.errorMessage
 		) {
 			this.setState({
-				renderInnerHTML: null,
 				viewType,
 			});
 
@@ -1282,30 +1223,6 @@ class ChangeTrackingChangesView extends React.Component {
 			showHideable,
 			viewType,
 		});
-
-		if (!node.ctEntryId && node.modelClassNameId) {
-			const cachedData = this.renderCache[
-				node.modelClassNameId.toString() +
-					'-' +
-					node.modelClassPK.toString()
-			];
-
-			if (cachedData && cachedData.renderInnerHTML) {
-				this.setState({
-					loading: false,
-					renderInnerHTML: cachedData.renderInnerHTML,
-				});
-			}
-			else {
-				this._updateRenderContent(node);
-			}
-		}
-		else {
-			this.setState({
-				loading: false,
-				renderInnerHTML: null,
-			});
-		}
 
 		window.scrollTo(0, 0);
 	}
@@ -1360,7 +1277,6 @@ class ChangeTrackingChangesView extends React.Component {
 			this.contextView.errorMessage
 		) {
 			this.setState({
-				renderInnerHTML: null,
 				viewType,
 			});
 
@@ -1395,30 +1311,6 @@ class ChangeTrackingChangesView extends React.Component {
 			showHideable,
 			viewType,
 		});
-
-		if (!node.ctEntryId && node.modelClassNameId) {
-			const cachedData = this.renderCache[
-				node.modelClassNameId.toString() +
-					'-' +
-					node.modelClassPK.toString()
-			];
-
-			if (cachedData && cachedData.renderInnerHTML) {
-				this.setState({
-					loading: false,
-					renderInnerHTML: cachedData.renderInnerHTML,
-				});
-			}
-			else {
-				this._updateRenderContent(node);
-			}
-		}
-		else {
-			this.setState({
-				loading: false,
-				renderInnerHTML: null,
-			});
-		}
 	}
 
 	_handleShowHideableToggle(showHideable) {
@@ -1676,67 +1568,45 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderEntry() {
-		if (!this.state.node.ctEntryId && this.state.renderInnerHTML === null) {
-			if (this.state.loading) {
-				return (
-					<span aria-hidden="true" className="loading-animation" />
-				);
-			}
-
+		if (!this.state.node.modelClassNameId) {
 			return '';
 		}
 
 		return (
-			<div
-				className={
-					this.state.loading
-						? 'sheet publications-sheet-loading'
-						: 'sheet'
-				}
-			>
+			<div className="sheet">
 				<div className="autofit-row sheet-title">
 					<div className="autofit-col autofit-col-expand">
 						<h2>{this.state.node.title} </h2>
 
-						{this.state.node.description && (
-							<div className="entry-description">
-								{this.state.node.description}
-							</div>
-						)}
+						<div className="entry-description">
+							{this.state.node.description
+								? this.state.node.description
+								: this.state.node.typeName}
+						</div>
 					</div>
 
 					{this._renderDropdown()}
 				</div>
 				<div className="sheet-section">
-					{this.state.loading && (
-						<div className="publications-loading-animation-wrapper">
-							<span
-								aria-hidden="true"
-								className="loading-animation"
-							/>
-						</div>
-					)}
-
-					{this.state.node.ctEntryId && (
-						<ChangeTrackingRenderView
-							dataURL={this._getRenderURL(this.state.node)}
-							getCache={() =>
-								this.renderCache[this.state.node.ctEntryId]
-							}
-							spritemap={this.spritemap}
-							updateCache={(data) => {
-								this.renderCache[
-									this.state.node.ctEntryId
-								] = data;
-							}}
-						/>
-					)}
-
-					{!this.state.node.ctEntryId && (
-						<div
-							dangerouslySetInnerHTML={this.state.renderInnerHTML}
-						/>
-					)}
+					<ChangeTrackingRenderView
+						ctEntry={this.state.node.ctEntryId ? true : false}
+						dataURL={this._getRenderDataURL(this.state.node)}
+						getCache={() =>
+							this.renderCache[
+								this.state.node.modelClassNameId.toString() +
+									'-' +
+									this.state.node.modelClassPK.toString()
+							]
+						}
+						spritemap={this.spritemap}
+						updateCache={(data) => {
+							this.renderCache[
+								this.state.node.modelClassNameId.toString() +
+									'-' +
+									this.state.node.modelClassPK.toString()
+							] = data;
+						}}
+					/>
 				</div>
 			</div>
 		);
@@ -1958,40 +1828,6 @@ class ChangeTrackingChangesView extends React.Component {
 
 	_setParameter(url, name, value) {
 		return url + '&' + this.namespace + name + '=' + value;
-	}
-
-	_updateRenderContent(node) {
-		this.setState(
-			{
-				loading: true,
-			},
-			() => {
-				fetch(this._getRenderURL(node))
-					.then((response) => response.text())
-					.then((text) => {
-						if (
-							this.state.node.ctEntryId ||
-							!this.state.node.modelClassNameId ||
-							this.state.node.modelClassNameId !==
-								node.modelClassNameId ||
-							this.state.node.modelClassPK !== node.modelClassPK
-						) {
-							return;
-						}
-
-						this.setState({
-							loading: false,
-							renderInnerHTML: {__html: text},
-						});
-
-						this.renderCache[
-							node.modelClassNameId.toString() +
-								'-' +
-								node.modelClassPK.toString()
-						] = {renderInnerHTML: {__html: text}};
-					});
-			}
-		);
 	}
 
 	render() {

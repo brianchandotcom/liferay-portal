@@ -321,7 +321,7 @@ public class ViewConflictsDisplayContext {
 	private String _getDataURL(RenderResponse renderResponse, CTEntry ctEntry) {
 		ResourceURL dataURL = renderResponse.createResourceURL();
 
-		dataURL.setResourceID("/change_tracking/get_ct_entry_render_data");
+		dataURL.setResourceID("/change_tracking/get_entry_render_data");
 		dataURL.setParameter(
 			"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 

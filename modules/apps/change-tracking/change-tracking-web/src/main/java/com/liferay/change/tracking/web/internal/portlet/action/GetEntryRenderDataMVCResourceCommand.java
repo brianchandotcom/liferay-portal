@@ -21,6 +21,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.DisplayContextImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -63,11 +64,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/get_ct_entry_render_data"
+		"mvc.command.name=/change_tracking/get_entry_render_data"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetCTEntryRenderDataMVCResourceCommand
+public class GetEntryRenderDataMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -76,9 +77,20 @@ public class GetCTEntryRenderDataMVCResourceCommand
 		throws Exception {
 
 		try {
+			long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
+
+			if (ctEntryId > 0) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					_getCTEntryRenderDataJSONObject(
+						resourceRequest, resourceResponse, ctEntryId));
+
+				return;
+			}
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_getCTEntryRenderDataJSONObject(
+				_getProductionRenderDataJSONObject(
 					resourceRequest, resourceResponse));
 		}
 		catch (PortalException portalException) {
@@ -95,10 +107,9 @@ public class GetCTEntryRenderDataMVCResourceCommand
 	}
 
 	private <T extends BaseModel<T>> JSONObject _getCTEntryRenderDataJSONObject(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			long ctEntryId)
 		throws Exception {
-
-		long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 
 		CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
 
@@ -310,6 +321,50 @@ public class GetCTEntryRenderDataMVCResourceCommand
 		return jsonObject;
 	}
 
+	private <T extends BaseModel<T>> JSONObject
+			_getProductionRenderDataJSONObject(
+				ResourceRequest resourceRequest,
+				ResourceResponse resourceResponse)
+		throws Exception {
+
+		long modelClassNameId = ParamUtil.getLong(
+			resourceRequest, "modelClassNameId");
+		long modelClassPK = ParamUtil.getLong(resourceRequest, "modelClassPK");
+
+		T model = _ctDisplayRendererRegistry.fetchCTModel(
+			modelClassNameId, modelClassPK);
+
+		if (model == null) {
+			model = _basePersistenceRegistry.fetchBaseModel(
+				modelClassNameId, modelClassPK);
+		}
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
+
+		JSONObject jsonObject = JSONUtil.put(
+			"changeType", "production"
+		).put(
+			"leftTitle",
+			_language.get(
+				_portal.getHttpServletRequest(resourceRequest), "production")
+		);
+
+		jsonObject.put(
+			"leftRender",
+			_getRender(
+				httpServletRequest, httpServletResponse,
+				CTConstants.CT_COLLECTION_ID_PRODUCTION,
+				_ctDisplayRendererRegistry.getCTDisplayRenderer(
+					modelClassNameId),
+				0, CTSQLModeThreadLocal.CTSQLMode.DEFAULT, model,
+				CTConstants.TYPE_BEFORE));
+
+		return jsonObject;
+	}
+
 	private <T extends BaseModel<T>> String _getRender(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,
@@ -361,7 +416,10 @@ public class GetCTEntryRenderDataMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetCTEntryRenderDataMVCResourceCommand.class);
+		GetEntryRenderDataMVCResourceCommand.class);
+
+	@Reference
+	private BasePersistenceRegistry _basePersistenceRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

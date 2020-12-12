@@ -327,27 +327,12 @@ public class ViewChangesDisplayContext {
 		).put(
 			"pathParam", ParamUtil.getString(_renderRequest, "path")
 		).put(
-			"renderCTEntryURL",
-			() -> {
-				ResourceURL renderCTEntryURL =
-					_renderResponse.createResourceURL();
-
-				renderCTEntryURL.setResourceID(
-					"/change_tracking/render_ct_entry");
-
-				renderCTEntryURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-
-				return renderCTEntryURL.toString();
-			}
-		).put(
 			"renderDataURL",
 			() -> {
 				ResourceURL renderDataURL = _renderResponse.createResourceURL();
 
 				renderDataURL.setResourceID(
-					"/change_tracking/get_ct_entry_render_data");
+					"/change_tracking/get_entry_render_data");
 
 				return renderDataURL.toString();
 			}

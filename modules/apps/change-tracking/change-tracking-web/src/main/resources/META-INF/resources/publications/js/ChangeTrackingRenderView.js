@@ -30,6 +30,7 @@ const ChangeTrackingRenderView = ({
 }) => {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
+	const CHANGE_TYPE_PRODUCTION = 'production';
 	const CONTENT_SELECT_LEFT = 'CONTENT_SELECT_LEFT';
 	const CONTENT_SELECT_RIGHT = 'CONTENT_SELECT_RIGHT';
 	const CONTENT_SELECT_UNIFIED = 'CONTENT_SELECT_UNIFIED';
@@ -38,142 +39,183 @@ const ChangeTrackingRenderView = ({
 	const VIEW_TYPE_FULL = 'VIEW_TYPE_FULL';
 	const VIEW_TYPE_SPLIT = 'VIEW_TYPE_SPLIT';
 
-	const [contentSelect, setContentSelect] = useState(CONTENT_SELECT_UNIFIED);
-	const [contentType, setContentType] = useState(CONTENT_TYPE_DISPLAY);
 	const [loading, setLoading] = useState(false);
-	const [renderData, setRenderData] = useState(null);
-	const [viewType, setViewType] = useState(VIEW_TYPE_FULL);
+	const [state, setState] = useState({
+		contentSelect: CONTENT_SELECT_UNIFIED,
+		contentType: CONTENT_TYPE_DISPLAY,
+		renderData: null,
+		viewType: VIEW_TYPE_FULL,
+	});
 
 	useEffect(() => {
-		const cache = getCache();
+		let cachedData = null;
 
-		if (cache && cache.changeType) {
-			let newContentSelect = CONTENT_SELECT_UNIFIED;
-			let newContentType = CONTENT_TYPE_DISPLAY;
-			let newViewType = VIEW_TYPE_FULL;
+		if (getCache) {
+			cachedData = getCache();
+		}
 
-			if (!cache.content) {
-				newContentType = CONTENT_TYPE_DATA;
-				newViewType = VIEW_TYPE_FULL;
+		if (cachedData && cachedData.changeType) {
+			if (cachedData.changeType === CHANGE_TYPE_PRODUCTION) {
+				setState({
+					contentSelect: CONTENT_SELECT_LEFT,
+					contentType: CONTENT_TYPE_DATA,
+					renderData: cachedData,
+					viewType: VIEW_TYPE_FULL,
+				});
+
+				setLoading(false);
+
+				return;
 			}
 
-			if (!cache.leftTitle) {
-				newContentSelect = CONTENT_SELECT_RIGHT;
-			}
-			else if (!cache.rightTitle) {
-				newContentSelect = CONTENT_SELECT_LEFT;
+			const newState = {
+				contentSelect: CONTENT_SELECT_UNIFIED,
+				contentType: CONTENT_TYPE_DISPLAY,
+				renderData: cachedData,
+				viewType: VIEW_TYPE_FULL,
+			};
+
+			if (!cachedData.content) {
+				newState.contentType = CONTENT_TYPE_DATA;
+				newState.viewType = VIEW_TYPE_FULL;
 			}
 
-			setContentSelect(newContentSelect);
-			setContentType(newContentType);
-			setRenderData(cache);
-			setViewType(newViewType);
+			if (!cachedData.leftTitle) {
+				newState.contentSelect = CONTENT_SELECT_RIGHT;
+			}
+			else if (!cachedData.rightTitle) {
+				newState.contentSelect = CONTENT_SELECT_LEFT;
+			}
+
+			setState(newState);
 
 			setLoading(false);
+
+			return;
 		}
-		else {
-			setLoading(true);
 
-			const currentDataURL = dataURL;
+		setLoading(true);
 
-			fetch(dataURL)
-				.then((response) => response.json())
-				.then((json) => {
-					if (dataURL === currentDataURL) {
-						if (!json.changeType) {
-							setLoading(false);
-							setRenderData({
-								errorMessage: Liferay.Language.get(
-									'an-unexpected-error-occurred'
-								),
-							});
-
-							return;
-						}
-
-						let newContentSelect = CONTENT_SELECT_UNIFIED;
-						let newContentType = CONTENT_TYPE_DISPLAY;
-						let newViewType = VIEW_TYPE_FULL;
-
-						if (!json.content) {
-							newContentType = CONTENT_TYPE_DATA;
-							newViewType = VIEW_TYPE_FULL;
-						}
-
-						if (!json.leftTitle) {
-							newContentSelect = CONTENT_SELECT_RIGHT;
-						}
-						else if (!json.rightTitle) {
-							newContentSelect = CONTENT_SELECT_LEFT;
-						}
-
-						setContentSelect(newContentSelect);
-						setContentType(newContentType);
-						setRenderData(json);
-						setViewType(newViewType);
-
-						setLoading(false);
-
-						updateCache(json);
-					}
-				})
-				.catch(() => {
+		fetch(dataURL)
+			.then((response) => response.json())
+			.then((json) => {
+				if (!json.changeType) {
 					setLoading(false);
-					setRenderData({
+					setState({
+						renderData: {
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						},
+					});
+
+					return;
+				}
+
+				if (updateCache) {
+					updateCache(json);
+				}
+
+				const newState = {
+					contentSelect: CONTENT_SELECT_UNIFIED,
+					contentType: CONTENT_TYPE_DISPLAY,
+					renderData: json,
+					viewType: VIEW_TYPE_FULL,
+				};
+
+				if (!json.content) {
+					newState.contentType = CONTENT_TYPE_DATA;
+					newState.viewType = VIEW_TYPE_FULL;
+				}
+
+				if (!json.leftTitle) {
+					newState.contentSelect = CONTENT_SELECT_RIGHT;
+				}
+				else if (!json.rightTitle) {
+					newState.contentSelect = CONTENT_SELECT_LEFT;
+				}
+
+				setState(newState);
+
+				setLoading(false);
+			})
+			.catch(() => {
+				setLoading(false);
+				setState({
+					renderData: {
 						errorMessage: Liferay.Language.get(
 							'an-unexpected-error-occurred'
 						),
-					});
+					},
 				});
-		}
+			});
 	}, [getCache, dataURL, updateCache]);
 
-	const validData = () => {
-		if (renderData && renderData.changeType && !renderData.errorMessage) {
-			return true;
-		}
+	const setContentSelect = (contentSelect) => {
+		setState({
+			contentSelect,
+			contentType: state.contentType,
+			renderData: state.renderData,
+			viewType: state.viewType,
+		});
+	};
 
-		return false;
+	const setContentType = (contentType) => {
+		setState({
+			contentSelect: state.contentSelect,
+			contentType,
+			renderData: state.renderData,
+			viewType: state.viewType,
+		});
+	};
+
+	const setViewType = (viewType) => {
+		setState({
+			contentSelect: state.contentSelect,
+			contentType: state.contentType,
+			renderData: state.renderData,
+			viewType,
+		});
 	};
 
 	const getContentSelectTitle = (value) => {
 		if (value === CONTENT_SELECT_LEFT) {
 			if (
-				renderData.changeType === CHANGE_TYPE_ADDED &&
-				renderData.versioned
+				state.renderData.changeType === CHANGE_TYPE_ADDED &&
+				state.renderData.versioned
 			) {
 				return (
-					renderData.leftTitle +
+					state.renderData.leftTitle +
 					' (' +
 					Liferay.Language.get('previous') +
 					')'
 				);
 			}
 
-			return renderData.leftTitle;
+			return state.renderData.leftTitle;
 		}
 		else if (value === CONTENT_SELECT_RIGHT) {
 			if (
-				renderData.changeType === CHANGE_TYPE_ADDED &&
-				renderData.versioned &&
-				renderData.leftTitle
+				state.renderData.changeType === CHANGE_TYPE_ADDED &&
+				state.renderData.versioned &&
+				state.renderData.leftTitle
 			) {
 				return (
-					renderData.rightTitle +
+					state.renderData.rightTitle +
 					' (' +
 					Liferay.Language.get('current') +
 					')'
 				);
 			}
 
-			return renderData.rightTitle;
+			return state.renderData.rightTitle;
 		}
 
 		return Liferay.Language.get('unified');
 	};
 
 	const getContentSelectTooltip = () => {
-		if (renderData.changeType === CHANGE_TYPE_DELETED) {
+		if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
 			return Liferay.Language.get(
 				'item-does-not-have-another-version-to-compare-against'
 			);
@@ -185,8 +227,8 @@ const ChangeTrackingRenderView = ({
 	};
 
 	const getSplitViewTooltip = () => {
-		if (validData() && (!renderData.leftTitle || !renderData.rightTitle)) {
-			if (renderData.changeType === CHANGE_TYPE_DELETED) {
+		if (!state.renderData.leftTitle || !state.renderData.rightTitle) {
+			if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
 				return Liferay.Language.get(
 					'item-does-not-have-another-version-to-compare-against'
 				);
@@ -200,116 +242,31 @@ const ChangeTrackingRenderView = ({
 		return Liferay.Language.get('split-view');
 	};
 
-	const renderContentSelect = () => {
-		if (!validData() || viewType !== VIEW_TYPE_FULL) {
-			return '';
-		}
-
-		const pushItem = (items, key) => {
-			items.push({
-				active: contentSelect === key,
-				label: getContentSelectTitle(key),
-				onClick: () => {
-					setContentSelect(key);
-				},
-			});
-		};
-
-		const elements = [];
-
-		elements.push(
-			<div className="autofit-col row-divider">
-				<div />
-			</div>
-		);
-
-		if (!renderData.leftTitle || !renderData.rightTitle) {
-			elements.push(
-				<div className="autofit-col">
-					<div className="dropdown">
-						<ClayTooltipProvider>
-							<ClayButton
-								borderless
-								className="disabled"
-								data-tooltip-align="top"
-								displayType="secondary"
-								title={getContentSelectTooltip()}
-							>
-								{getContentSelectTitle(contentSelect)}
-
-								<span className="inline-item inline-item-after">
-									<ClayIcon
-										spritemap={spritemap}
-										symbol="caret-bottom"
-									/>
-								</span>
-							</ClayButton>
-						</ClayTooltipProvider>
-					</div>
-				</div>
-			);
-
-			return elements;
-		}
-
-		const items = [];
-
-		if (renderData.leftTitle && renderData.rightTitle) {
-			pushItem(items, CONTENT_SELECT_UNIFIED);
-		}
-
-		if (renderData.leftTitle) {
-			pushItem(items, CONTENT_SELECT_LEFT);
-		}
-
-		if (renderData.rightTitle) {
-			pushItem(items, CONTENT_SELECT_RIGHT);
-		}
-
-		elements.push(
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					items={items}
-					spritemap={spritemap}
-					trigger={
-						<ClayButton borderless displayType="secondary">
-							{getContentSelectTitle(contentSelect)}
-
-							<span className="inline-item inline-item-after">
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="caret-bottom"
-								/>
-							</span>
-						</ClayButton>
-					}
-				/>
-			</div>
-		);
-
-		return elements;
-	};
-
 	const renderContentLeft = () => {
 		if (
-			contentType === CONTENT_TYPE_DATA &&
-			Object.prototype.hasOwnProperty.call(renderData, 'leftRender')
+			state.contentType === CONTENT_TYPE_DATA &&
+			Object.prototype.hasOwnProperty.call(state.renderData, 'leftRender')
 		) {
 			return (
 				<div
-					dangerouslySetInnerHTML={{__html: renderData.leftRender}}
+					dangerouslySetInnerHTML={{
+						__html: state.renderData.leftRender,
+					}}
 				/>
 			);
 		}
 		else if (
-			contentType === CONTENT_TYPE_DISPLAY &&
-			Object.prototype.hasOwnProperty.call(renderData, 'leftContent')
+			state.contentType === CONTENT_TYPE_DISPLAY &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'leftContent'
+			)
 		) {
-			if (renderData.leftContent) {
+			if (state.renderData.leftContent) {
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html: renderData.leftContent,
+							__html: state.renderData.leftContent,
 						}}
 					/>
 				);
@@ -336,24 +293,32 @@ const ChangeTrackingRenderView = ({
 
 	const renderContentRight = () => {
 		if (
-			contentType === CONTENT_TYPE_DATA &&
-			Object.prototype.hasOwnProperty.call(renderData, 'rightRender')
+			state.contentType === CONTENT_TYPE_DATA &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'rightRender'
+			)
 		) {
 			return (
 				<div
-					dangerouslySetInnerHTML={{__html: renderData.rightRender}}
+					dangerouslySetInnerHTML={{
+						__html: state.renderData.rightRender,
+					}}
 				/>
 			);
 		}
 		else if (
-			contentType === CONTENT_TYPE_DISPLAY &&
-			Object.prototype.hasOwnProperty.call(renderData, 'rightContent')
+			state.contentType === CONTENT_TYPE_DISPLAY &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'rightContent'
+			)
 		) {
-			if (renderData.rightContent) {
+			if (state.renderData.rightContent) {
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html: renderData.rightContent,
+							__html: state.renderData.rightContent,
 						}}
 					/>
 				);
@@ -378,31 +343,127 @@ const ChangeTrackingRenderView = ({
 		);
 	};
 
+	const renderContentSelect = () => {
+		if (state.viewType !== VIEW_TYPE_FULL) {
+			return '';
+		}
+
+		const pushItem = (items, key) => {
+			items.push({
+				active: state.contentSelect === key,
+				label: getContentSelectTitle(key),
+				onClick: () => {
+					setContentSelect(key);
+				},
+			});
+		};
+
+		const elements = [];
+
+		elements.push(
+			<div className="autofit-col row-divider">
+				<div />
+			</div>
+		);
+
+		if (!state.renderData.leftTitle || !state.renderData.rightTitle) {
+			elements.push(
+				<div className="autofit-col">
+					<div className="dropdown">
+						<ClayTooltipProvider>
+							<ClayButton
+								borderless
+								className="disabled"
+								data-tooltip-align="top"
+								displayType="secondary"
+								title={getContentSelectTooltip()}
+							>
+								{getContentSelectTitle(state.contentSelect)}
+
+								<span className="inline-item inline-item-after">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="caret-bottom"
+									/>
+								</span>
+							</ClayButton>
+						</ClayTooltipProvider>
+					</div>
+				</div>
+			);
+
+			return elements;
+		}
+
+		const items = [];
+
+		if (state.renderData.leftTitle && state.renderData.rightTitle) {
+			pushItem(items, CONTENT_SELECT_UNIFIED);
+		}
+
+		if (state.renderData.leftTitle) {
+			pushItem(items, CONTENT_SELECT_LEFT);
+		}
+
+		if (state.renderData.rightTitle) {
+			pushItem(items, CONTENT_SELECT_RIGHT);
+		}
+
+		elements.push(
+			<div className="autofit-col">
+				<ClayDropDownWithItems
+					items={items}
+					spritemap={spritemap}
+					trigger={
+						<ClayButton borderless displayType="secondary">
+							{getContentSelectTitle(state.contentSelect)}
+
+							<span className="inline-item inline-item-after">
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="caret-bottom"
+								/>
+							</span>
+						</ClayButton>
+					}
+				/>
+			</div>
+		);
+
+		return elements;
+	};
+
 	const renderContentUnified = () => {
 		if (
-			contentType === CONTENT_TYPE_DATA &&
-			Object.prototype.hasOwnProperty.call(renderData, 'unifiedRender')
+			state.contentType === CONTENT_TYPE_DATA &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'unifiedRender'
+			)
 		) {
 			return (
 				<div className="taglib-diff-html">
 					<div
 						dangerouslySetInnerHTML={{
-							__html: renderData.unifiedRender,
+							__html: state.renderData.unifiedRender,
 						}}
 					/>
 				</div>
 			);
 		}
 		else if (
-			contentType === CONTENT_TYPE_DISPLAY &&
-			Object.prototype.hasOwnProperty.call(renderData, 'unifiedContent')
+			state.contentType === CONTENT_TYPE_DISPLAY &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'unifiedContent'
+			)
 		) {
-			if (renderData.unifiedContent) {
+			if (state.renderData.unifiedContent) {
 				return (
 					<div className="taglib-diff-html">
 						<div
 							dangerouslySetInnerHTML={{
-								__html: renderData.unifiedContent,
+								__html: state.renderData.unifiedContent,
 							}}
 						/>
 					</div>
@@ -428,66 +489,10 @@ const ChangeTrackingRenderView = ({
 		);
 	};
 
-	const renderContent = () => {
-		if (!renderData) {
-			return (
-				<tr>
-					<td className="publications-render-view-content">
-						<span
-							aria-hidden="true"
-							className="loading-animation"
-						/>
-					</td>
-				</tr>
-			);
-		}
-		else if (!validData()) {
-			return (
-				<tr>
-					<td>
-						<ClayAlert
-							displayType="danger"
-							spritemap={spritemap}
-							title={Liferay.Language.get('error')}
-						>
-							{renderData.errorMessage}
-						</ClayAlert>
-					</td>
-				</tr>
-			);
-		}
-
-		return (
-			<tr className={loading ? 'publications-render-view-loading' : ''}>
-				{(contentSelect === CONTENT_SELECT_LEFT ||
-					viewType === VIEW_TYPE_SPLIT) && (
-					<td className="publications-render-view-content">
-						{renderContentLeft()}
-					</td>
-				)}
-
-				{(contentSelect === CONTENT_SELECT_RIGHT ||
-					viewType === VIEW_TYPE_SPLIT) && (
-					<td className="publications-render-view-content">
-						{renderContentRight()}
-					</td>
-				)}
-
-				{contentSelect === CONTENT_SELECT_UNIFIED &&
-					viewType === VIEW_TYPE_FULL && (
-						<td className="publications-render-view-content">
-							{renderContentUnified()}
-						</td>
-					)}
-			</tr>
-		);
-	};
-
 	const renderDiffLegend = () => {
 		if (
-			!validData() ||
-			contentSelect !== CONTENT_SELECT_UNIFIED ||
-			viewType !== VIEW_TYPE_FULL
+			state.contentSelect !== CONTENT_SELECT_UNIFIED ||
+			state.viewType !== VIEW_TYPE_FULL
 		) {
 			return '';
 		}
@@ -520,17 +525,14 @@ const ChangeTrackingRenderView = ({
 	};
 
 	const renderDividers = () => {
-		if (!validData()) {
-			return '';
-		}
-		else if (viewType === VIEW_TYPE_SPLIT) {
+		if (state.viewType === VIEW_TYPE_SPLIT) {
 			return (
 				<tr className="publications-render-view-divider table-divider">
 					<td className="publications-render-view-divider">
-						{renderData.leftTitle}
+						{state.renderData.leftTitle}
 					</td>
 					<td className="publications-render-view-divider">
-						{renderData.rightTitle}
+						{state.renderData.rightTitle}
 					</td>
 				</tr>
 			);
@@ -538,22 +540,25 @@ const ChangeTrackingRenderView = ({
 
 		let title = null;
 
-		if (contentSelect === CONTENT_SELECT_LEFT) {
-			title = renderData.leftTitle;
+		if (state.contentSelect === CONTENT_SELECT_LEFT) {
+			title = state.renderData.leftTitle;
 
-			if (renderData.changeType === CHANGE_TYPE_DELETED) {
+			if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
 				title += ' (' + Liferay.Language.get('deleted') + ')';
 			}
 		}
-		else if (contentSelect === CONTENT_SELECT_RIGHT) {
-			title = renderData.rightTitle;
+		else if (state.contentSelect === CONTENT_SELECT_RIGHT) {
+			title = state.renderData.rightTitle;
 
-			if (renderData.changeType === CHANGE_TYPE_ADDED) {
+			if (state.renderData.changeType === CHANGE_TYPE_ADDED) {
 				title += ' (' + Liferay.Language.get('new') + ')';
 			}
 		}
 		else {
-			title = renderData.leftTitle + ' | ' + renderData.rightTitle;
+			title =
+				state.renderData.leftTitle +
+				' | ' +
+				state.renderData.rightTitle;
 		}
 
 		const className = 'publications-render-view-divider table-divider';
@@ -572,130 +577,194 @@ const ChangeTrackingRenderView = ({
 	};
 
 	const renderToolbar = () => {
-		let className = '';
-
-		if (viewType === VIEW_TYPE_SPLIT) {
-			className = 'active';
-		}
-		else if (
-			validData() &&
-			(!renderData.leftTitle || !renderData.rightTitle)
-		) {
-			className = 'disabled';
+		if (state.renderData.changeType === CHANGE_TYPE_PRODUCTION) {
+			return '';
 		}
 
 		let columns = 1;
 
-		if (validData() && viewType === VIEW_TYPE_SPLIT) {
+		if (state.viewType === VIEW_TYPE_SPLIT) {
 			columns = 2;
 		}
 
-		return (
-			<td className="publications-render-view-toolbar" colSpan={columns}>
-				{validData() && loading && (
-					<div className="publications-render-view-loading-wrapper">
-						<span
-							aria-hidden="true"
-							className="loading-animation"
-						/>
-					</div>
-				)}
+		let splitViewClassName = '';
 
-				<div className="autofit-row">
-					<div className="autofit-col">
-						<ClayTooltipProvider>
-							<ClayNavigationBar
-								spritemap={spritemap}
-								triggerLabel={Liferay.Language.get('display')}
-							>
-								<ClayNavigationBar.Item
-									active={
-										contentType === CONTENT_TYPE_DISPLAY
-									}
+		if (state.viewType === VIEW_TYPE_SPLIT) {
+			splitViewClassName = 'active';
+		}
+		else if (
+			!state.renderData.leftTitle ||
+			!state.renderData.rightTitle
+		) {
+			splitViewClassName = 'disabled';
+		}
+
+		return (
+			<tr className={loading ? 'publications-render-view-loading' : ''}>
+				<td
+					className="publications-render-view-toolbar"
+					colSpan={columns}
+				>
+					<div className="autofit-row">
+						<div className="autofit-col">
+							<ClayTooltipProvider>
+								<ClayNavigationBar
+									spritemap={spritemap}
+									triggerLabel={Liferay.Language.get(
+										'display'
+									)}
 								>
-									<ClayLink
+									<ClayNavigationBar.Item
+										active={
+											state.contentType ===
+											CONTENT_TYPE_DISPLAY
+										}
+									>
+										<ClayLink
+											className={
+												!state.renderData.content
+													? 'nav-link btn-link disabled'
+													: 'nav-link'
+											}
+											displayType="unstyled"
+											onClick={() =>
+												setContentType(
+													CONTENT_TYPE_DISPLAY
+												)
+											}
+											title={
+												!state.renderData.content
+													? Liferay.Language.get(
+															'item-does-not-have-a-content-display'
+													  )
+													: ''
+											}
+										>
+											{Liferay.Language.get('display')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+									<ClayNavigationBar.Item
+										active={
+											state.contentType ===
+											CONTENT_TYPE_DATA
+										}
+									>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+											onClick={() =>
+												setContentType(
+													CONTENT_TYPE_DATA
+												)
+											}
+										>
+											{Liferay.Language.get('data')}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+								</ClayNavigationBar>
+							</ClayTooltipProvider>
+						</div>
+						<div className="autofit-col row-divider">
+							<div />
+						</div>
+						<div className="autofit-col">
+							<ClayTooltipProvider>
+								<ClayButton.Group>
+									<ClayButtonWithIcon
+										borderless
 										className={
-											validData() && !renderData.content
-												? 'nav-link btn-link disabled'
-												: 'nav-link'
-										}
-										displayType="unstyled"
-										onClick={() =>
-											setContentType(CONTENT_TYPE_DISPLAY)
-										}
-										title={
-											validData() && !renderData.content
-												? Liferay.Language.get(
-														'item-does-not-have-a-content-display'
-												  )
+											state.viewType === VIEW_TYPE_FULL
+												? 'active'
 												: ''
 										}
-									>
-										{Liferay.Language.get('display')}
-									</ClayLink>
-								</ClayNavigationBar.Item>
-								<ClayNavigationBar.Item
-									active={contentType === CONTENT_TYPE_DATA}
-								>
-									<ClayLink
-										className="nav-link"
-										displayType="unstyled"
+										data-tooltip-align="top"
+										displayType="secondary"
 										onClick={() =>
-											setContentType(CONTENT_TYPE_DATA)
+											setViewType(VIEW_TYPE_FULL)
 										}
-									>
-										{Liferay.Language.get('data')}
-									</ClayLink>
-								</ClayNavigationBar.Item>
-							</ClayNavigationBar>
-						</ClayTooltipProvider>
-					</div>
-					<div className="autofit-col row-divider">
-						<div />
-					</div>
-					<div className="autofit-col">
-						<ClayTooltipProvider>
-							<ClayButton.Group>
-								<ClayButtonWithIcon
-									borderless
-									className={
-										viewType === VIEW_TYPE_FULL
-											? 'active'
-											: ''
-									}
-									data-tooltip-align="top"
-									displayType="secondary"
-									onClick={() => setViewType(VIEW_TYPE_FULL)}
-									spritemap={spritemap}
-									symbol="web-content"
-									title={Liferay.Language.get('full-view')}
-								/>
-								<ClayButtonWithIcon
-									borderless
-									className={className}
-									data-tooltip-align="top"
-									displayType="secondary"
-									onClick={() => setViewType(VIEW_TYPE_SPLIT)}
-									spritemap={spritemap}
-									symbol="product-menu-open"
-									title={getSplitViewTooltip()}
-								/>
-							</ClayButton.Group>
-						</ClayTooltipProvider>
-					</div>
+										spritemap={spritemap}
+										symbol="web-content"
+										title={Liferay.Language.get(
+											'full-view'
+										)}
+									/>
+									<ClayButtonWithIcon
+										borderless
+										className={splitViewClassName}
+										data-tooltip-align="top"
+										displayType="secondary"
+										onClick={() =>
+											setViewType(VIEW_TYPE_SPLIT)
+										}
+										spritemap={spritemap}
+										symbol="product-menu-open"
+										title={getSplitViewTooltip()}
+									/>
+								</ClayButton.Group>
+							</ClayTooltipProvider>
+						</div>
 
-					{renderContentSelect()}
-					{renderDiffLegend()}
-				</div>
-			</td>
+						{renderContentSelect()}
+						{renderDiffLegend()}
+					</div>
+				</td>
+			</tr>
 		);
 	};
 
+	if (!state.renderData) {
+		if (loading) {
+			return (
+				<div>
+					<span aria-hidden="true" className="loading-animation" />
+				</div>
+			);
+		}
+
+		return '';
+	}
+	else if (!state.renderData.changeType || state.renderData.errorMessage) {
+		return (
+			<ClayAlert
+				displayType="danger"
+				spritemap={spritemap}
+				title={Liferay.Language.get('error')}
+			>
+				{state.renderData.errorMessage
+					? state.renderData.errorMessage
+					: Liferay.Language.get('an-unexpected-error-occurred')}
+			</ClayAlert>
+		);
+	}
+
 	return (
 		<table className="publications-render-view table">
-			<tr>{renderToolbar()}</tr>
+			{renderToolbar()}
+
 			{renderDividers()}
-			{renderContent()}
+
+			<tr className={loading ? 'publications-render-view-loading' : ''}>
+				{(state.contentSelect === CONTENT_SELECT_LEFT ||
+					state.viewType === VIEW_TYPE_SPLIT) && (
+					<td className="publications-render-view-content">
+						{renderContentLeft()}
+					</td>
+				)}
+
+				{(state.contentSelect === CONTENT_SELECT_RIGHT ||
+					state.viewType === VIEW_TYPE_SPLIT) && (
+					<td className="publications-render-view-content">
+						{renderContentRight()}
+					</td>
+				)}
+
+				{state.contentSelect === CONTENT_SELECT_UNIFIED &&
+					state.viewType === VIEW_TYPE_FULL && (
+						<td className="publications-render-view-content">
+							{renderContentUnified()}
+						</td>
+					)}
+			</tr>
 		</table>
 	);
 };

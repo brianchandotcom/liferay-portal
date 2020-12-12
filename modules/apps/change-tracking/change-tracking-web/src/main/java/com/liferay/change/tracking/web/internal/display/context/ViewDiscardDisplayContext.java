@@ -91,7 +91,7 @@ public class ViewDiscardDisplayContext {
 					ResourceURL dataURL = _renderResponse.createResourceURL();
 
 					dataURL.setResourceID(
-						"/change_tracking/get_ct_entry_render_data");
+						"/change_tracking/get_entry_render_data");
 					dataURL.setParameter(
 						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 

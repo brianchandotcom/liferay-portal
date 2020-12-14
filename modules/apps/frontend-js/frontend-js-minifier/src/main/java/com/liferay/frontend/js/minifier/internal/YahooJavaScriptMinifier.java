@@ -37,12 +37,14 @@ import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Carlos Sierra Andrés
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	configurationPid = "com.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = JavaScriptMinifier.class
 )
+@Deprecated
 public class YahooJavaScriptMinifier implements JavaScriptMinifier {
 
 	@Override

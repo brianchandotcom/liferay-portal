@@ -16,7 +16,9 @@ package com.liferay.portal.minifier;
 
 /**
  * @author Carlos Sierra Andrés
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface JavaScriptMinifier {
 
 	public String compress(String resourceName, String content);

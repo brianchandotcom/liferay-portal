@@ -31,7 +31,9 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Roberto Díaz
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class MinifierUtil {
 
 	public static String minifyCss(String content) {

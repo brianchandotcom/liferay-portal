@@ -296,10 +296,8 @@ definition {
 			locator1 = "AppBuilderWorkflow#OBJECT_ITEM");
 	}
 
-	macro selectRuleOption {
-		Click(
-			locator1 = "AppBuilderWorkflow#",
-			step = "Start");
+	macro selectStartStepDataAndViews {
+		AppBuilderWorkflow.selectStep(step = "Start");
 
 		AppBuilderWorkflow.selectDataAndViewsCard();
 

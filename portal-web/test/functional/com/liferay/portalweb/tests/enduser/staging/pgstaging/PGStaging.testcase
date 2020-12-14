@@ -644,7 +644,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
-		ItemSelector.addFromURL(
+		ItemSelector.addImageFromURL(
 			imageSourceURL = "${dmDocumentURL}",
 			navTab = "URL");
 

@@ -1566,10 +1566,9 @@ definition {
 	macro uploadAudio {
 		Click.pauseClickAt(locator1 = "WCEditWebContent#AUDIO_BUTTON");
 
-		ItemSelector.addFromURL(
-			imageSourceURL = "${dmDocumentURL}",
-			navTab = "${navTab}",
-			type = "Audio");
+		ItemSelector.addAudioFromURL(
+			audioSourceURL = "${dmDocumentURL}",
+			navTab = "${navTab}");
 
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = "content",
@@ -1583,10 +1582,9 @@ definition {
 	macro uploadVideo {
 		Click.pauseClickAt(locator1 = "WCEditWebContent#VIDEO_BUTTON");
 
-		ItemSelector.addFromURL(
-			imageSourceURL = "${dmDocumentURL}",
+		ItemSelector.addVideoFromURL(
 			navTab = "${navTab}",
-			type = "Video");
+			videoSourceURL = "${dmDocumentURL}");
 
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = "content",

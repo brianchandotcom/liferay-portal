@@ -39,7 +39,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 
-		ItemSelector.addFromURL(
+		ItemSelector.addImageFromURL(
 			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.png",
 			navTab = "URL");
 
@@ -450,35 +450,31 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://www.youtube.com/watch?v=test",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://www.youtube.com/watch?v=test");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.youtube.com");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://vimeo.com/test",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://vimeo.com/test");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://player.vimeo.com");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://www.facebook.com/Cristiano/videos/test",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://www.facebook.com/Cristiano/videos/test");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://www.facebook.com");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://test.com/test",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://test.com/test");
 
 		ItemSelector.previewEmbeddedVideo(invalidURL = "https://test.com/test");
 	}
@@ -492,35 +488,31 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://www.youtube.com");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://www.facebook.com/Cristiano/videos/1710977485745946",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://www.facebook.com");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://www.twitch.tv/videos/806178790",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://www.twitch.tv/videos/806178790");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://player.twitch.tv");
 
-		ItemSelector.addFromURL(
-			embedVideo = "https://vimeo.com/483035084",
+		ItemSelector.addVideoFromURL(
 			navTab = "URL",
-			type = "Video",
-			unpublish = "true");
+			unpublish = "true",
+			videoSourceURL = "https://vimeo.com/483035084");
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://player.vimeo.com");
 	}

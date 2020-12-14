@@ -1219,7 +1219,7 @@ definition {
 				navTab = "Documents and Media");
 		}
 		else if (isSet(imageSourceURL)) {
-			ItemSelector.addFromURL(
+			ItemSelector.addImageFromURL(
 				imageSourceURL = "${imageSourceURL}",
 				navTab = "URL");
 		}
@@ -1354,7 +1354,7 @@ definition {
 								uploadFileName = "${uploadFileName}");
 						}
 						else if (isSet(imageSourceURL)) {
-							ItemSelector.addFromURL(
+							ItemSelector.addImageFromURL(
 								imageSourceURL = "${imageSourceURL}",
 								navTab = "URL");
 						}

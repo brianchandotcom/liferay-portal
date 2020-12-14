@@ -497,7 +497,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
-		ItemSelector.addFromURL(
+		ItemSelector.addImageFromURL(
 			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
 			navTab = "URL");
 

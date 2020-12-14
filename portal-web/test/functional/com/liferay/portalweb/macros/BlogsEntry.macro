@@ -46,10 +46,9 @@ definition {
 
 			Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_VIDEO");
 
-			ItemSelector.addFromURL(
-				embedVideo = "${embedVideo}",
+			ItemSelector.addVideoFromURL(
 				navTab = "${navTab}",
-				type = "Video");
+				videoSourceURL = "${embedVideo}");
 		}
 	}
 

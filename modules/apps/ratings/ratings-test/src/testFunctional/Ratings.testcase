@@ -309,6 +309,8 @@ definition {
 	@description = "This is a use case for LPS-96470."
 	@priority = "3"
 	test ExportImportSiteWithCommentsAndRatingsUnderBlogsEntry {
+		property custom.properties = "default.layout.template.id=1_column";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -412,6 +414,8 @@ definition {
 
 	@priority = "5"
 	test RateAndEditWikiPageComment {
+		property custom.properties = "default.layout.template.id=1_column";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Wiki Test Page");

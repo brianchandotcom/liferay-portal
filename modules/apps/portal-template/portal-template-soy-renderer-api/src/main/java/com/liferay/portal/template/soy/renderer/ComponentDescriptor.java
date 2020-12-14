@@ -20,7 +20,9 @@ import java.util.Set;
 
 /**
  * @author Iván Zaera Avellón
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class ComponentDescriptor {
 
 	public ComponentDescriptor(String templateNamespace, String module) {

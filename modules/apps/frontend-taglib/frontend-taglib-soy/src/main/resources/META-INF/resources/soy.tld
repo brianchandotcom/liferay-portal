@@ -10,6 +10,7 @@
 	<short-name>soy</short-name>
 	<uri>http://liferay.com/tld/soy</uri>
 	<tag>
+		<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 		<name>component-renderer</name>
 		<tag-class>com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag</tag-class>
 		<body-content>empty</body-content>
@@ -64,6 +65,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 		<name>template-renderer</name>
 		<tag-class>com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag</tag-class>
 		<body-content>empty</body-content>

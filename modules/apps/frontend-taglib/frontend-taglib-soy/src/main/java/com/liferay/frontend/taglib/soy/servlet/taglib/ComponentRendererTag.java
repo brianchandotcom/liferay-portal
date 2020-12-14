@@ -16,7 +16,9 @@ package com.liferay.frontend.taglib.soy.servlet.taglib;
 
 /**
  * @author Chema Balsas
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class ComponentRendererTag extends TemplateRendererTag {
 
 	@Override

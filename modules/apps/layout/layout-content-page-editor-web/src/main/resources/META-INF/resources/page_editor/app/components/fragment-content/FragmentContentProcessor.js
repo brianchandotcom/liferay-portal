@@ -106,6 +106,7 @@ export default function FragmentContentProcessor({
 							},
 						},
 						fragmentEntryLinkId,
+						languageId,
 						segmentsExperienceId,
 					})
 				);

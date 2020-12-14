@@ -310,6 +310,7 @@ export default {
 	updateEditableValues({
 		editableValues,
 		fragmentEntryLinkId,
+		languageId,
 		onNetworkStatus,
 	}) {
 		return serviceFetch(
@@ -318,6 +319,7 @@ export default {
 				body: {
 					editableValues: JSON.stringify(editableValues),
 					fragmentEntryLinkId,
+					languageId,
 				},
 			},
 			onNetworkStatus,

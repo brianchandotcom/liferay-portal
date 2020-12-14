@@ -181,6 +181,7 @@ function DirectImagePanel({item}) {
 					nextEditableValue
 				),
 				fragmentEntryLinkId,
+				languageId,
 				segmentsExperienceId,
 			})
 		);

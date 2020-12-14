@@ -94,8 +94,8 @@ export default function EditableLinkPanel({item}) {
 						[item.editableId]: {...editableValue, config},
 					},
 				},
-
 				fragmentEntryLinkId: item.fragmentEntryLinkId,
+				languageId,
 				segmentsExperienceId,
 			})
 		);

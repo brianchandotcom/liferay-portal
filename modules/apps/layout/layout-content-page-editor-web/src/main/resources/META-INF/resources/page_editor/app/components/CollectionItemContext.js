@@ -96,10 +96,10 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		classPK,
 		context.collectionItemIndex,
 		dispatch,
+		fragmentEntryLink.editableValues,
 		fragmentEntryLink.fragmentEntryLinkId,
 		languageId,
 		segmentsExperienceId,
-		fragmentEntryLink.editableValues,
 	]);
 
 	if (context.collectionItemIndex != null) {

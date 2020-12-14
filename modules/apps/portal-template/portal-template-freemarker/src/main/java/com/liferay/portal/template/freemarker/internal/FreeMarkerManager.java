@@ -107,7 +107,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
@@ -372,7 +371,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(ComponentContext componentContext) {
 		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class,
@@ -724,8 +722,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private BeansWrapper _defaultBeanWrapper;
 	private Class<?> _entryClass;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
-	private volatile FreeMarkerEngineConfiguration
-		_freeMarkerEngineConfiguration;
+	private FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
 
 	@Reference
 	private FreeMarkerTemplateResourceCache _freeMarkerTemplateResourceCache;

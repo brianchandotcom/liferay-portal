@@ -77,7 +77,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 		JSONObject fileEntryJSONObject = JSONUtil.put(
 			"defaultSource", previewURL
 		).put(
-			"fileEntryId", fileEntry.getFileEntryId()
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
 		);
 
 		JSONArray sourcesJSONArray = JSONFactoryUtil.createJSONArray();

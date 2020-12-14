@@ -54,9 +54,9 @@ public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
 		throws Exception {
 
 		JSONObject fileEntryJSONObject = JSONUtil.put(
-			"fileEntryId", fileEntry.getFileEntryId()
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
 		).put(
-			"groupId", fileEntry.getGroupId()
+			"groupId", String.valueOf(fileEntry.getGroupId())
 		).put(
 			"title", fileEntry.getTitle()
 		).put(

@@ -55,7 +55,7 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolver
 		throws Exception {
 
 		JSONObject fileEntryJSONObject = JSONUtil.put(
-			"fileEntryId", fileEntry.getFileEntryId());
+			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 		String previewURL = null;
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -100,9 +102,17 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		for (AssetCategory assetCategory : assetCategories) {
 			dropdownItemListWrapper.add(
 				dropdownItem -> {
-					dropdownItem.setHref(
-						HttpUtil.addParameter(
-							url, parameterName, assetCategory.getCategoryId()));
+					if (!Objects.equals(
+							ParamUtil.getString(
+								_httpServletRequest, "p_l_mode"),
+							Constants.EDIT)) {
+
+						dropdownItem.setHref(
+							HttpUtil.addParameter(
+								url, parameterName,
+								assetCategory.getCategoryId()));
+					}
+
 					dropdownItem.setLabel(
 						assetCategory.getTitle(_themeDisplay.getLanguageId()));
 				});

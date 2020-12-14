@@ -81,24 +81,17 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, DispatchTrigger dispatchTrigger) {
-		if (!_omniadmin.isOmniadmin(user)) {
-			return false;
-		}
-
-		if (dispatchTrigger == null) {
-			return false;
-		}
-
-		if (Objects.equals(
+		if ((dispatchTrigger == null) ||
+			!Objects.equals(
 				dispatchTrigger.getTaskExecutorType(),
 				TalendDispatchTaskExecutor.
-					DISPATCH_TASK_EXECUTOR_TYPE_TALEND) &&
-			!dispatchTrigger.isSystem()) {
+					DISPATCH_TASK_EXECUTOR_TYPE_TALEND) ||
+			!_omniadmin.isOmniadmin(user)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

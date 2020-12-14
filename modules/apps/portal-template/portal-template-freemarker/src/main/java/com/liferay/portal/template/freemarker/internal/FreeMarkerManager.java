@@ -573,12 +573,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	protected void render(
-			String templateId, Writer writer, Callable<Void> callable)
+			String templateId, Writer writer, boolean restricted,
+			Callable<Void> callable)
 		throws Exception {
 
 		long timeout = _freeMarkerEngineConfiguration.asyncRenderTimeout();
 
-		if (timeout <= 0) {
+		if ((timeout <= 0) || !restricted) {
 			callable.call();
 
 			return;

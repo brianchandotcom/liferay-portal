@@ -70,6 +70,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 
 		_configuration = configuration;
 		_templateResourceCache = templateResourceCache;
+		_restricted = restricted;
 		_beansWrapper = beansWrapper;
 		_freeMarkerManager = freeMarkerManager;
 
@@ -142,7 +143,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 		throws Exception {
 
 		_freeMarkerManager.render(
-			templateResource.getTemplateId(), writer,
+			templateResource.getTemplateId(), writer, _restricted,
 			() -> {
 				TemplateResourceThreadLocal.setTemplateResource(
 					TemplateConstants.LANG_TYPE_FTL, templateResource);
@@ -196,6 +197,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 	private final BeansWrapper _beansWrapper;
 	private final Configuration _configuration;
 	private final FreeMarkerManager _freeMarkerManager;
+	private final boolean _restricted;
 	private final TemplateResourceCache _templateResourceCache;
 
 	private class CachableDefaultMapAdapter

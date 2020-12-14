@@ -17,7 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -112,7 +112,7 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 			return null;
 		}
 
-		_ddmStructure = DDMStructureServiceUtil.getStructure(
+		_ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			dlFileEntryType.getDataDefinitionId());
 
 		return _ddmStructure;

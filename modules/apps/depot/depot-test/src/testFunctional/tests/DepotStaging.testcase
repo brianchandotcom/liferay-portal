@@ -40,9 +40,11 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
 
-			Depot.tearDownCP();
+			JSONDepot.deleteDepot(depotName = "Remote Depot");
+
+			Site.tearDownCP();
 
 			User.logoutPG();
 		}

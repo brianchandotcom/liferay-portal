@@ -206,6 +206,16 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		if (_article == null) {
+			DDMFormValuesFactory ddmFormValuesFactory =
+				_getDDMFormValuesFactory();
+
+			DDMFormValues ddmFormValues = ddmFormValuesFactory.create(
+				_httpServletRequest, ddmStructure.getDDMForm());
+
+			if (ddmFormValues != null) {
+				return ddmFormValues;
+			}
+
 			return _ddmFormValues;
 		}
 

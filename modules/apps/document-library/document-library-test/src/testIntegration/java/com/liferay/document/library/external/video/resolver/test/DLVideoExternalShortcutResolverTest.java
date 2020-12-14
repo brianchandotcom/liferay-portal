@@ -120,6 +120,16 @@ public class DLVideoExternalShortcutResolverTest {
 			_renderHTML("https://www.youtube.com/watch?v=VIDEO_ID"));
 		Assert.assertEquals(
 			expectedIframe, _renderHTML("https://youtu.be/VIDEO_ID"));
+		Assert.assertEquals(
+			expectedIframe,
+			_renderHTML(
+				"https://www.youtube.com/watch?v=VIDEO_ID&ab_channel=" +
+					"CHANNEL_ID"));
+		Assert.assertEquals(
+			expectedIframe,
+			_renderHTML(
+				"https://www.youtube.com/watch?feature=player_embedded&v=" +
+					"VIDEO_ID"));
 
 		Assert.assertEquals(
 			StringBundler.concat(

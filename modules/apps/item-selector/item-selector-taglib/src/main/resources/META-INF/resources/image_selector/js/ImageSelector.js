@@ -12,10 +12,16 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
+const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Liferay.Language.get(
+	'select-file'
+)}</button>`;
+const STR_IMAGE_DELETED = 'coverImageDeleted';
+const STR_IMAGE_SELECTED = 'coverImageSelected';
 
 const BrowseImageZone = ({
 	handleClick,
@@ -25,22 +31,22 @@ const BrowseImageZone = ({
 	validExtensions,
 }) => (
 	<div className="browse-image-controls">
-		<div className="drag-drop-label">
+		<div className="drag-drop-label" onClick={handleClick}>
 			{itemSelectorEventName && itemSelectorURL ? (
 				Liferay.Browser.isMobile() ? (
-					<SelectFileButton handleClick={handleClick} />
+					SELECT_FILE_BUTTON
 				) : (
-					<>
-						<span
-							className="pr-1"
-							dangerouslySetInnerHTML={{
-								__html: Liferay.Language.get(
-									'drag-and-drop-to-upload-or'
+					<span
+						className="pr-1"
+						dangerouslySetInnerHTML={{
+							__html: Liferay.Util.sub(
+								Liferay.Language.get(
+									'drag-and-drop-to-upload-or-x'
 								),
-							}}
-						></span>
-						<SelectFileButton handleClick={handleClick} />
-					</>
+								SELECT_FILE_BUTTON
+							),
+						}}
+					></span>
 				)
 			) : (
 				Liferay.Language.get('drag-and-drop-to-upload')
@@ -87,15 +93,6 @@ const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
 	</div>
 );
 
-const SelectFileButton = ({handleClick}) => (
-	<ClayButton displayType="secondary" onClick={handleClick}>
-		{Liferay.Language.get('select-file')}
-	</ClayButton>
-);
-
-const STR_IMAGE_DELETED = 'coverImageDeleted';
-const STR_IMAGE_SELECTED = 'coverImageSelected';
-
 const ImageSelector = ({
 	draggableImage,
 	cropRegion,
@@ -113,24 +110,26 @@ const ImageSelector = ({
 		src: imageURL,
 	});
 
-	const handleSelectFileClick = () => {
-		Liferay.Util.openSelectionModal({
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					const itemValue = JSON.parse(selectedItem.value);
+	const handleSelectFileClick = (event) => {
+		if (event.target.tagName === 'BUTTON') {
+			Liferay.Util.openSelectionModal({
+				onSelect: (selectedItem) => {
+					if (selectedItem) {
+						const itemValue = JSON.parse(selectedItem.value);
 
-					setImage({
-						fileEntryId: itemValue.fileEntryId || 0,
-						src: itemValue.url || '',
-					});
+						setImage({
+							fileEntryId: itemValue.fileEntryId || 0,
+							src: itemValue.url || '',
+						});
 
-					Liferay.fire(STR_IMAGE_SELECTED);
-				}
-			},
-			selectEventName: itemSelectorEventName,
-			title: Liferay.Language.get('select-file'),
-			url: itemSelectorURL,
-		});
+						Liferay.fire(STR_IMAGE_SELECTED);
+					}
+				},
+				selectEventName: itemSelectorEventName,
+				title: Liferay.Language.get('select-file'),
+				url: itemSelectorURL,
+			});
+		}
 	};
 
 	const handleDeleteImageClick = () => {

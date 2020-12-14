@@ -339,6 +339,9 @@ public class DDMHelperImpl implements DDMHelper {
 							publicStore));
 				}
 			}
+			else {
+				ddmFormField.setRequired(!optional);
+			}
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}

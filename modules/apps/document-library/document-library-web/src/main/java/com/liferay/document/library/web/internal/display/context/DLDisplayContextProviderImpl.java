@@ -27,6 +27,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -163,9 +164,10 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					httpServletRequest, httpServletResponse, fileShortcut,
-					_dlMimeTypeDisplayContext, resourceBundle, _storageEngine,
-					_dlTrashHelper, dlPreviewRendererProvider,
-					_versioningStrategy, _dlURLHelper);
+					_ddmFormValuesToMapConverter, _dlMimeTypeDisplayContext,
+					resourceBundle, _storageEngine, _dlTrashHelper,
+					dlPreviewRendererProvider, _versioningStrategy,
+					_dlURLHelper);
 
 			for (DLDisplayContextFactory dlDisplayContextFactory :
 					_dlDisplayContextFactories) {
@@ -201,9 +203,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				httpServletRequest, httpServletResponse, fileVersion,
-				_dlMimeTypeDisplayContext, resourceBundle, _storageEngine,
-				_dlTrashHelper, dlPreviewRendererProvider, _versioningStrategy,
-				_dlURLHelper);
+				_ddmFormValuesToMapConverter, _dlMimeTypeDisplayContext,
+				resourceBundle, _storageEngine, _dlTrashHelper,
+				dlPreviewRendererProvider, _versioningStrategy, _dlURLHelper);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -244,6 +246,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		_dlDisplayContextFactories.close();
 		_dlPreviewRendererProviders.close();
 	}
+
+	@Reference
+	private DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
 
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;

@@ -25,6 +25,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -107,6 +108,14 @@ public class BaseDLViewFileVersionDisplayContext
 	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		return parentDisplayContext.getToolbarItems();
+	}
+
+	@Override
+	public Map<String, Object> getValues(
+			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
+		throws PortalException {
+
+		return parentDisplayContext.getValues(ddmFormValues, ddmStructure);
 	}
 
 	@Override

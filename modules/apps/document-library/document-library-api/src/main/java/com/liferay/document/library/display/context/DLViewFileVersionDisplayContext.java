@@ -24,6 +24,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +60,10 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 	public Menu getMenu() throws PortalException;
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
+
+	public Map<String, Object> getValues(
+			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
+		throws PortalException;
 
 	public default boolean hasCustomThumbnail() {
 		return false;

@@ -59,62 +59,36 @@ public class VimeoDLVideoExternalShortcutProvider
 			return null;
 		}
 
-		try {
-			Http.Options options = new Http.Options();
+		final JSONObject jsonObject = _getEmbedJSONObject(url);
 
-			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-			options.setLocation("https://vimeo.com/api/oembed.json?url=" + url);
+		return new DLVideoExternalShortcut() {
 
-			String responseJSON = _http.URLtoString(options);
-
-			Http.Response response = options.getResponse();
-
-			final JSONObject jsonObject;
-
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				jsonObject = JSONFactoryUtil.createJSONObject();
-			}
-			else {
-				jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+			@Override
+			public String getDescription() {
+				return jsonObject.getString("description");
 			}
 
-			return new DLVideoExternalShortcut() {
+			@Override
+			public String getThumbnailURL() {
+				return jsonObject.getString("thumbnail_url");
+			}
 
-				@Override
-				public String getDescription() {
-					return jsonObject.getString("description");
-				}
+			@Override
+			public String getTitle() {
+				return jsonObject.getString("title");
+			}
 
-				@Override
-				public String getThumbnailURL() {
-					return jsonObject.getString("thumbnail_url");
-				}
+			@Override
+			public String getURL() {
+				return url;
+			}
 
-				@Override
-				public String getTitle() {
-					return jsonObject.getString("title");
-				}
+			@Override
+			public String renderHTML(HttpServletRequest httpServletRequest) {
+				return StringUtil.replace(getTpl(), "{embedId}", vimeoVideoId);
+			}
 
-				@Override
-				public String getURL() {
-					return url;
-				}
-
-				@Override
-				public String renderHTML(
-					HttpServletRequest httpServletRequest) {
-
-					return StringUtil.replace(
-						getTpl(), "{embedId}", vimeoVideoId);
-				}
-
-			};
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return null;
-		}
+		};
 	}
 
 	@Override
@@ -140,6 +114,35 @@ public class VimeoDLVideoExternalShortcutProvider
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private JSONObject _getEmbedJSONObject(String url) {
+		try {
+			Http.Options options = new Http.Options();
+
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+			options.setLocation("https://vimeo.com/api/oembed.json?url=" + url);
+
+			String responseJSON = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			final JSONObject jsonObject;
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				jsonObject = JSONFactoryUtil.createJSONObject();
+			}
+			else {
+				jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+			}
+
+			return jsonObject;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return null;
+		}
 	}
 
 	private String _getVimeoVideoId(String url) {

@@ -60,64 +60,38 @@ public class YouTubeDLVideoExternalShortcutProvider
 			return null;
 		}
 
-		try {
-			Http.Options options = new Http.Options();
+		JSONObject jsonObject = _getEmbedJSONObject(url);
 
-			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-			options.setLocation(
-				"https://www.youtube.com/oembed?format=json&url=" + url);
+		return new DLVideoExternalShortcut() {
 
-			String responseJSON = _http.URLtoString(options);
-
-			Http.Response response = options.getResponse();
-
-			final JSONObject jsonObject;
-
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				jsonObject = JSONFactoryUtil.createJSONObject();
-			}
-			else {
-				jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+			@Override
+			public String getDescription() {
+				return null;
 			}
 
-			return new DLVideoExternalShortcut() {
+			@Override
+			public String getThumbnailURL() {
+				return jsonObject.getString("thumbnail_url");
+			}
 
-				@Override
-				public String getDescription() {
-					return null;
-				}
+			@Override
+			public String getTitle() {
+				return jsonObject.getString("title");
+			}
 
-				@Override
-				public String getThumbnailURL() {
-					return jsonObject.getString("thumbnail_url");
-				}
+			@Override
+			public String getURL() {
+				return url;
+			}
 
-				@Override
-				public String getTitle() {
-					return jsonObject.getString("title");
-				}
+			@Override
+			public String renderHTML(HttpServletRequest httpServletRequest) {
+				return StringUtil.replace(
+					_getTpl(_http.getParameter(url, "t", false)), "{embedId}",
+					youTubeVideoId);
+			}
 
-				@Override
-				public String getURL() {
-					return url;
-				}
-
-				@Override
-				public String renderHTML(
-					HttpServletRequest httpServletRequest) {
-
-					return StringUtil.replace(
-						_getTpl(_http.getParameter(url, "t", false)),
-						"{embedId}", youTubeVideoId);
-				}
-
-			};
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return null;
-		}
+		};
 	}
 
 	@Override
@@ -139,6 +113,36 @@ public class YouTubeDLVideoExternalShortcutProvider
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private JSONObject _getEmbedJSONObject(String url) {
+		try {
+			Http.Options options = new Http.Options();
+
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+			options.setLocation(
+				"https://www.youtube.com/oembed?format=json&url=" + url);
+
+			String responseJSON = _http.URLtoString(options);
+
+			Http.Response response = options.getResponse();
+
+			final JSONObject jsonObject;
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				jsonObject = JSONFactoryUtil.createJSONObject();
+			}
+			else {
+				jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+			}
+
+			return jsonObject;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return JSONFactoryUtil.createJSONObject();
+		}
 	}
 
 	private String _getTpl(String start) {

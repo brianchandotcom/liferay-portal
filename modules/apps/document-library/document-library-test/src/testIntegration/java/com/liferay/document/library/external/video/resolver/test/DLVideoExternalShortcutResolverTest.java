@@ -17,10 +17,16 @@ package com.liferay.document.library.external.video.resolver.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
+import com.liferay.frontend.editor.embed.EditorEmbedProvider;
+import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -40,6 +46,47 @@ public class DLVideoExternalShortcutResolverTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testResolveFromAnEditorEmbedProvider() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<EditorEmbedProvider>
+			editorEmbedProviderServiceRegistration = registry.registerService(
+				EditorEmbedProvider.class,
+				new EditorEmbedProvider() {
+
+					@Override
+					public String getId() {
+						return "test";
+					}
+
+					@Override
+					public String getTpl() {
+						return "<iframe>{embedId}</iframe>";
+					}
+
+					@Override
+					public String[] getURLSchemes() {
+						return new String[] {
+							"http:\\/\\/test\\.example\\/(.*)"
+						};
+					}
+
+				},
+				HashMapBuilder.<String, Object>put(
+					"type", EditorEmbedProviderTypeConstants.VIDEO
+				).build());
+
+		try {
+			Assert.assertEquals(
+				"<iframe>VIDEO_ID</iframe>",
+				_renderHTML("http://test.example/VIDEO_ID"));
+		}
+		finally {
+			editorEmbedProviderServiceRegistration.unregister();
+		}
+	}
 
 	@Test
 	public void testResolveFromFacebook() {

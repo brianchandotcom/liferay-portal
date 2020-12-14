@@ -13,6 +13,7 @@
  */
 
 import {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -22,6 +23,7 @@ function QuantitySelector({
 	componentId,
 	disabled,
 	forceDropdown,
+	large,
 	name,
 	onUpdate,
 	quantity,
@@ -52,12 +54,12 @@ function QuantitySelector({
 		}
 	};
 
-	const timeout = useRef();
+	const keypressDebounce = useRef();
 
 	const willUpdate = useCallback(() => {
-		clearTimeout(timeout.current);
+		clearTimeout(keypressDebounce.current);
 
-		timeout.current = setTimeout(
+		keypressDebounce.current = setTimeout(
 			() => {
 				onUpdate(selectedQuantity);
 			},
@@ -68,30 +70,32 @@ function QuantitySelector({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(willUpdate, [selectedQuantity]);
 
+	const commonProps = {
+		className: classnames({
+			'quantity-selector': true,
+			'form-control-lg': large
+		}),
+		'data-component-id': componentId,
+		disabled,
+		name,
+		onChange,
+		value: selectedQuantity,
+	};
+
 	return (
 		<>
 			{isDropdown ? (
 				<ClaySelectWithOption
-					className={'quantity-selector'}
-					data-component-id={componentId}
-					disabled={disabled}
-					name={name}
-					onChange={onChange}
 					options={generateQuantityOptions(optionSettings)}
-					value={selectedQuantity}
+					{...commonProps}
 				/>
 			) : (
 				<ClayInput
-					className={'quantity-selector'}
-					data-component-id={componentId}
-					disabled={disabled}
 					max={optionSettings.maxQuantity}
 					min={optionSettings.minQuantity}
-					name={name}
-					onChange={onChange}
 					step={optionSettings.multipleQuantity}
 					type={'number'}
-					value={selectedQuantity}
+					{...commonProps}
 				/>
 			)}
 		</>
@@ -102,6 +106,7 @@ QuantitySelector.defaultProps = {
 	allowedQuantities: [],
 	disabled: false,
 	forceDropdown: false,
+	large: false,
 	maxQuantity: 99,
 	minQuantity: 1,
 	multipleQuantity: 1,
@@ -114,6 +119,7 @@ QuantitySelector.propTypes = {
 	componentId: PropTypes.string,
 	disabled: PropTypes.bool,
 	forceDropdown: PropTypes.bool,
+	large: PropTypes.bool,
 	maxQuantity: PropTypes.number,
 	minQuantity: PropTypes.number,
 	multipleQuantity: PropTypes.number,

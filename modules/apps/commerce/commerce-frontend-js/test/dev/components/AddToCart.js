@@ -16,26 +16,32 @@ import launcher from '../../../src/main/resources/META-INF/resources/components/
 
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
-launcher('add_to_cart', 'add-to-cart', {
-	accountId: 43936, //48323,
-	addToCartButton: {
-		disabled: false,
-		rtl: true,
-	},
-	channelId: 41005, //43940,
-	currencyCode: 'USD',
-	orderId: 43939,
-	orderQuantity: Array.from({length: 99}, (_, i) => i + 1),
-	productId: 43939, //43657, // "Mount"   no"43630",
-
-	settings: {
-		allowedQuantity: [],
-
-		// allowedQuantity: [2, 4, 6667, 3, 44, 1],
-
-		maxQuantity: 23,
-		minQuantity: 1,
-	},
-	skuId: 43712, //43657,
-	spritemap: './assets/icons.svg',
-});
+for (let i = 1; i <= 15; i++) {
+	launcher('add_to_cart', 'add-to-cart-' + i, {
+		channel: {
+			id: 41005,
+			currencyCode: 'USD',
+		},
+		cpInstance: {
+			accountId: 43936,
+			isInCart: false,
+			options: '[]',
+			skuId: 43712
+		},
+		quantity: 1,
+		settings: {
+			block: false,
+			disabled: false,
+			iconOnly: false,
+			withQuantity: /* false, */ {
+				allowedQuantities: [],
+				forceDropdown: true,
+				maxQuantity: 99,
+				minQuantity: 1,
+				multipleQuantity: 1,
+			},
+		},
+		orderId: 43939,
+		spritemap: './assets/icons.svg',
+	});
+}

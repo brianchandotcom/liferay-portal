@@ -18,9 +18,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
 import {
-	ADD_TO_ORDER,
-	CHANGE_ACCOUNT,
-	CHANGE_ORDER,
+	CURRENT_ACCOUNT_UPDATED,
+	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
 import MiniCartContext from './MiniCartContext';
@@ -102,12 +101,10 @@ function MiniCart({
 	}, [cartViews]);
 
 	useEffect(() => {
-		Liferay.on(ADD_TO_ORDER, updateCartModel);
-		Liferay.on(CHANGE_ORDER, updateCartModel);
+		Liferay.on(CURRENT_ORDER_UPDATED, updateCartModel);
 
 		return () => {
-			Liferay.detach(ADD_TO_ORDER, updateCartModel);
-			Liferay.detach(CHANGE_ORDER, updateCartModel);
+			Liferay.detach(CURRENT_ORDER_UPDATED, updateCartModel);
 		};
 	}, [updateCartModel]);
 
@@ -126,10 +123,10 @@ function MiniCart({
 	}, [isOpen]);
 
 	useEffect(() => {
-		Liferay.on(CHANGE_ACCOUNT, resetCartState);
+		Liferay.on(CURRENT_ACCOUNT_UPDATED, resetCartState);
 
 		return () => {
-			Liferay.detach(CHANGE_ACCOUNT, resetCartState);
+			Liferay.detach(CURRENT_ACCOUNT_UPDATED, resetCartState);
 		};
 	}, [resetCartState]);
 

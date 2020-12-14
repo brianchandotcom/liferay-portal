@@ -12,116 +12,169 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
-const AddToCartButton = (props) => {
-	const quantityMarkerRef = useRef(null);
-	const [markerStatus, setMarkerStatus] = useState('');
+import ServiceProvider from '../../ServiceProvider/index';
+import {
+	CP_INSTANCE_CHANGED,
+	CURRENT_ORDER_UPDATED,
+	PRODUCT_REMOVED_FROM_CART
+} from '../../utilities/eventsDefinitions';
+import {showErrorNotification} from '../../utilities/notifications';
+import WrapperWithQuantity from './WrapperWithQuantity';
 
-	const onButtonClick = () => {
-		props.updateQuantity('button', null);
+function AddToCartButton({
+	channel,
+	cpInstance,
+	orderId,
+	quantity,
+	settings,
+	spritemap,
+}) {
+	const CartResource = ServiceProvider.DeliveryCartAPI('v1');
+
+	const [catalogItem, updateCatalogItem] = useState(cpInstance);
+	const [currentCartId, setCurrentCartId] = useState(orderId);
+
+	const add = () => {
+		const toCartItem = {
+			options: catalogItem.options,
+			quantity: quantity,
+			skuId: catalogItem.skuId
+		};
+
+		return currentCartId
+			? CartResource.createItemByCartId(currentCartId, toCartItem)
+			: CartResource.createCartByChannelId(channel.id, {
+				accountId: catalogItem.accountId,
+				cartItems: [toCartItem],
+				currencyCode: channel.currencyCode,
+			}).then(({id}) => Promise.resolve(id));
 	};
 
-	useEffect(() => {
-		const _handleMarkerAnimation = () => {
-			setMarkerStatus(null);
-			quantityMarkerRef.current?.removeEventListener(
-				'animationend',
-				_handleMarkerAnimation
-			);
-		};
-		if (props.isQuantityEmpty) {
-			setMarkerStatus('adding');
+	const remove = useCallback(({skuId: removedSkuId}) => {
+		if (removedSkuId === catalogItem.skuId) {
+			updateCatalogItem({ ...catalogItem, isInCart: false});
 		}
-		else {
-			setMarkerStatus('incrementing');
-		}
-		quantityMarkerRef.current?.addEventListener(
-			'animationend',
-			_handleMarkerAnimation
-		);
-	}, [props.isQuantityEmpty]);
+	}, [catalogItem.skuId]);
 
-	let markerStatusClass = '';
-	if (markerStatus === 'adding') {
-		markerStatusClass = 'adding';
-	}
-	else if (markerStatus === 'incrementing') {
-		markerStatusClass = 'incrementing';
-	}
-	else if (!props.isQuantityEmpty) {
-		markerStatusClass = 'active';
-	}
+	const reset = useCallback((cpInstance) =>
+		CartResource.getItemById(cpInstance.cpInstanceId)
+			.then(() => updateCatalogItem({
+				...catalogItem,
+				...cpInstance,
+				isInCart: true,
+			}))
+			.catch(() => updateCatalogItem({
+				...catalogItem,
+				...cpInstance,
+				isInCart: false,
+			})),
+		[catalogItem]
+	);
+
+	useEffect(() => {
+		Liferay.on(CP_INSTANCE_CHANGED, reset);
+		Liferay.on(PRODUCT_REMOVED_FROM_CART, remove);
+
+
+		return () => {
+			Liferay.detach(CP_INSTANCE_CHANGED, reset);
+			Liferay.detach(PRODUCT_REMOVED_FROM_CART, remove);
+		}
+	}, [remove, reset]);
 
 	return (
-		<div className="add-to-cart add-to-cart-block">
-			{props.iconOnly ? (
-				<ClayButtonWithIcon
-					block={props.block}
-					disabled={props.disabled}
-					onClick={onButtonClick}
-					symbol={props.cartSymbol}
-				/>
-			) : (
-				<ClayButton
-					block={props.block}
-					className={classnames(
-						'btn-add-to-cart',
-						props.rtl ? 'rtl' : 'trl',
-						props.size === 'small' && 'btn-sm',
-						props.size === 'large' && 'btn-lg'
-					)}
-					disabled={props.disabledProp}
-					onClick={onButtonClick}
-				>
-					{props.buttonTextContent}
+		<>
+			<ClayButton
+				block={settings.iconOnly ? false : settings.block}
+				className={classnames({
+					'btn-add-to-cart': true,
+					'btn-lg': !settings.block,
+					'icon-only': settings.iconOnly,
+					'is-added': catalogItem.isInCart,
+				})}
+				disabled={settings.disabled || !catalogItem.accountId}
+				displayType={'primary'}
+				onClick={() => add()
+						.then((orderId) => {
+							const orderDidChange =
+								orderId && orderId !== currentCartId;
 
-					<span
-						className={classnames(
-							'add-to-cart-icon-container inline-item',
-							!props.isQuantityEmpty && 'active',
-							props.rtl ? 'mr-2' : 'ml-2'
-						)}
-					>
-						<span className="add-to-cart-icon">
-							<ClayIcon symbol={props.cartSymbol} />
+							Liferay.fire(CURRENT_ORDER_UPDATED, {
+								orderId: orderDidChange ? orderId : currentCartId
+							});
+
+							updateCatalogItem({...catalogItem, isInCart: true});
+
+							if (orderDidChange) {
+								setCurrentCartId(orderId);
+							}
+						})
+						.catch(showErrorNotification)}
+			>
+				{!settings.iconOnly && (
+					<span className={'text-truncate-inline'}>
+						<span className={'text-truncate'}>
+							{Liferay.Language.get('add-to-cart')}
 						</span>
-						<span
-							className={classnames(
-								'add-to-cart-quantity-marker',
-								markerStatusClass
-							)}
-							ref={quantityMarkerRef}
-						></span>
 					</span>
-				</ClayButton>
-			)}
-		</div>
+				)}
+
+				<span className={'cart-icon'}>
+					<ClayIcon
+						spritemap={spritemap}
+						symbol={'shopping-cart'}
+					/>
+				</span>
+			</ClayButton>
+		</>
 	);
-};
+}
 
 AddToCartButton.defaultProps = {
-	block: false,
-	buttonTextContent: Liferay.Language.get('add-to-cart'),
-	cartSymbol: 'shopping-cart',
-	disabled: false,
-	iconOnly: false,
-	rtl: false,
+	cpInstance: {
+		accountId: null,
+		isInCart: false,
+		options: '[]',
+	},
+	orderId: 0,
+	quantity: 1,
+	settings: {
+		block: false,
+		iconOnly: false,
+		withQuantity: false,
+	},
 };
 
 AddToCartButton.propTypes = {
-	block: PropTypes.bool,
-	buttonTextContent: PropTypes.string,
-	cartSymbol: PropTypes.string,
-	disabled: PropTypes.bool,
-	iconOnly: PropTypes.bool,
-	isQuantityEmpty: PropTypes.bool,
-	rtl: PropTypes.bool,
-	updateQuantity: PropTypes.func,
+	channel: PropTypes.shape({
+		/**
+		 * The currency is currently always
+		 * one and the same per single channel
+		 */
+		currencyCode: PropTypes.string.isRequired,
+		id: PropTypes.number.isRequired,
+	}),
+	cpInstance: PropTypes.shape({
+		accountId: PropTypes.number,
+		isInCart: PropTypes.bool,
+		options: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+		quantity: PropTypes.number,
+		skuId: PropTypes.number.isRequired,
+	}).isRequired,
+	orderId: PropTypes.number,
+	quantity: PropTypes.number,
+	settings: PropTypes.shape({
+		block: PropTypes.bool,
+		disabled: PropTypes.bool,
+		iconOnly: PropTypes.bool,
+	}),
+	spritemap: PropTypes.string,
 };
 
 export default AddToCartButton;

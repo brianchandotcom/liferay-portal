@@ -189,6 +189,43 @@ definition {
 		}
 	}
 
+	macro addFieldsets {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		DoubleClick(
+			key_fieldName = "${fieldsetsName}",
+			locator1 = "Sidebar#ADD_FIELD_NAME");
+
+		Pause(locator1 = "3000");
+
+		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Basic");
+		}
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldsetsLabel}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldsetsLabel}");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "${fieldsetsLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldsetsLabel}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro addRepeatableField {
 		var key_fieldName = "${fieldName}";
 

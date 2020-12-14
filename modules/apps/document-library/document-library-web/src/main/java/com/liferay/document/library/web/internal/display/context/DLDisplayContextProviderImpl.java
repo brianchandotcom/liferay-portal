@@ -69,8 +69,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				httpServletRequest, httpServletResponse, dlFileEntryType,
-				_dlValidator, _storageEngine);
+				httpServletRequest, httpServletResponse,
+				_ddmFormValuesToMapConverter, dlFileEntryType, _dlValidator,
+				_storageEngine);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -91,8 +92,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				httpServletRequest, httpServletResponse, _dlValidator,
-				fileEntry, _storageEngine);
+				httpServletRequest, httpServletResponse,
+				_ddmFormValuesToMapConverter, _dlValidator, fileEntry,
+				_storageEngine);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {

@@ -14,11 +14,7 @@
 
 import './FieldSet.scss';
 
-import {
-	Layout,
-	getRepeatedIndex,
-	useVariants,
-} from 'dynamic-data-mapping-form-renderer';
+import {Layout, getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
 import React, {useMemo} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -68,8 +64,6 @@ const FieldSet = ({
 }) => {
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 
-	const {components} = useVariants();
-
 	return (
 		<FieldBase
 			{...otherProps}
@@ -103,14 +97,12 @@ const FieldSet = ({
 						title={label}
 					>
 						<Layout
-							components={components}
 							editable={type === 'fieldset' && !ddmStructureId}
 							rows={getRows(rows, nestedFields)}
 						/>
 					</Panel>
 				) : (
 					<Layout
-						components={components}
 						editable={type === 'fieldset' && !ddmStructureId}
 						rows={getRows(rows, nestedFields)}
 					/>

@@ -17,7 +17,6 @@ import core from 'metal';
 import React from 'react';
 
 import {PageProvider} from '../../hooks/usePage.es';
-import {VariantsProvider} from '../../hooks/useVariants.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import * as EditablePageHeader from './EditablePageHeader.es';
@@ -27,6 +26,7 @@ import * as MultiPages from './MultiPagesVariant.es';
 import * as Paginated from './PaginatedVariant.es';
 import * as SuccessPage from './SuccessVariant.es';
 import * as Tabbed from './TabbedVariant.es';
+import {VariantsProvider} from './VariantsContext.es';
 import * as Wizard from './WizardVariant.es';
 
 const LAYOUT_TYPES = {

@@ -48,6 +48,14 @@ definition {
 				key_pageName = "${pageName}",
 				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
 
+			while (IsElementNotPresent(key_pageName = "${pageName}", locator1 = "NavigationMenusWidget#OPEN_DROPDOWN_MENU")) {
+				Pause(locator1 = "3000");
+
+				MouseOver(
+					key_pageName = "${pageName}",
+					locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
+			}
+
 			Click(
 				key_itemName = "${itemName}",
 				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");

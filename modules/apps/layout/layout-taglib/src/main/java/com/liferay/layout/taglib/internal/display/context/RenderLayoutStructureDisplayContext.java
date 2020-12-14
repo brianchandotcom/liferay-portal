@@ -782,8 +782,11 @@ public class RenderLayoutStructureDisplayContext {
 
 		Set<long[]> assetCategoryIdsSet = new HashSet<>();
 
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
 		Map<String, String[]> parameterMap =
-			_httpServletRequest.getParameterMap();
+			originalHttpServletRequest.getParameterMap();
 
 		Set<String> parameterNames = parameterMap.keySet();
 

@@ -11,7 +11,6 @@
 		"codemirror": "^5.52.2",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
-		"metal-dom": "2.16.8",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

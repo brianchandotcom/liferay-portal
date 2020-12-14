@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"metal-dom": "2.16.8"
-	},
 	"name": "frontend-js-collapse-support-web",
 	"private": true,
 	"scripts": {

@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 export default function MultiSelectCategory({
 	assetCategories,
@@ -67,17 +67,24 @@ export default function MultiSelectCategory({
 		type: 'checkbox',
 	}));
 
+	const editMode = useMemo(
+		() => document.body.classList.contains('has-edit-mode-menu'),
+		[]
+	);
+
 	const onApply = () => {
-		const queryParamName = `categoryId_${fragmentEntryLinkId}`;
-		const search = new URLSearchParams(window.location.search);
+		if (!editMode) {
+			const queryParamName = `categoryId_${fragmentEntryLinkId}`;
+			const search = new URLSearchParams(window.location.search);
 
-		search.delete(queryParamName);
+			search.delete(queryParamName);
 
-		selectedCategoryIds.forEach((id) => {
-			search.append(queryParamName, id);
-		});
+			selectedCategoryIds.forEach((id) => {
+				search.append(queryParamName, id);
+			});
 
-		window.location.search = search;
+			window.location.search = search;
+		}
 	};
 
 	let label = Liferay.Language.get('select');

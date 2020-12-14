@@ -121,74 +121,65 @@ const mockCurrentPageReferral = {
 		referringDomains: [
 			{
 				trafficAmount: 17985230,
-				url: 'http://youtube.com/',
+				url: 'http://foo.example.com',
 			},
 			{
 				trafficAmount: 12218030,
-				url: 'http://www.google.com/',
+				url: 'http://bar.example.com',
 			},
 			{
 				trafficAmount: 9062949,
-				url: 'http://microsoft.com/',
+				url: 'http://baz.example.com',
 			},
 			{
 				trafficAmount: 4601453,
-				url: 'http://linkedin.com/',
+				url: 'http://qux.example.com',
 			},
 			{
 				trafficAmount: 253399,
-				url: 'https://www.liferay.com',
+				url: 'http://fred.example.com',
 			},
 		],
 		referringPages: [
 			{
 				trafficAmount: 125461,
-				url:
-					'https://www.liferay.com/resources/ebooks/Becoming+a+Digital+Business-4+Common+Enterprise+Challenges+Conquered',
+				url: 'http://one.example.com',
 			},
 			{
 				trafficAmount: 85485,
-				url:
-					'https://www.liferay.com/resources/whitepapers/B2B+E-Commerce+RFP+Kit',
+				url: 'http://two.example.com',
 			},
 			{
 				trafficAmount: 84564,
-				url:
-					'https://www.liferay.com/resources/whitepapers/6+Tactics+to+Modernize+Your+Intranet',
+				url: 'http://three.example.com',
 			},
 			{
 				trafficAmount: 5846,
-				url:
-					'https://www.liferay.com/resources/case-studies/materion-case-study',
+				url: 'http://four.example.com',
 			},
 			{
 				trafficAmount: 3521,
-				url: 'https://www.liferay.com/web/l/a1-hrvatska-case-study',
+				url: 'http://five.example.com',
 			},
 			{
 				trafficAmount: 2513,
-				url:
-					'https://www.liferay.com/resources/case-studies/excellus-case-study',
+				url: 'http://six.example.com',
 			},
 			{
 				trafficAmount: 2200,
-				url:
-					'https://www.liferay.com/resources/case-studies/terres-inovia-case-study',
+				url: 'http://seven.example.com',
 			},
 			{
 				trafficAmount: 1230,
-				url:
-					'https://www.liferay.com/resources/case-studies/vodafone-business',
+				url: 'http://eight.example.com',
 			},
 			{
 				trafficAmount: 1100,
-				url:
-					'https://www.liferay.com/web/guest/resources/case-studies/agia',
+				url: 'http://nine.example.com',
 			},
 			{
 				trafficAmount: 100,
-				url:
-					'https://www.liferay.com/resources/case-studies/vitality-case-study',
+				url: 'http://ten.example.com',
 			},
 		],
 		share: 90,
@@ -253,7 +244,7 @@ describe('Detail', () => {
 		cleanup();
 	});
 
-	it('display 10 urls with view more button', async () => {
+	it('displays 10 urls when clicking on the view more button', async () => {
 		const testProps = {
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
@@ -288,31 +279,11 @@ describe('Detail', () => {
 		const viewMoreButton = getByText('view-more');
 		userEvent.click(viewMoreButton);
 
-		expect(
-			getByText(
-				'https://www.liferay.com/resources/case-studies/excellus-case-study'
-			)
-		).toBeInTheDocument();
-		expect(
-			getByText(
-				'https://www.liferay.com/resources/case-studies/terres-inovia-case-study'
-			)
-		).toBeInTheDocument();
-		expect(
-			getByText(
-				'https://www.liferay.com/resources/case-studies/vodafone-business'
-			)
-		).toBeInTheDocument();
-		expect(
-			getByText(
-				'https://www.liferay.com/web/guest/resources/case-studies/agia'
-			)
-		).toBeInTheDocument();
-		expect(
-			getByText(
-				'https://www.liferay.com/resources/case-studies/vitality-case-study'
-			)
-		).toBeInTheDocument();
+		expect(getByText('http://six.example.com')).toBeInTheDocument();
+		expect(getByText('http://seven.example.com')).toBeInTheDocument();
+		expect(getByText('http://eight.example.com')).toBeInTheDocument();
+		expect(getByText('http://nine.example.com')).toBeInTheDocument();
+		expect(getByText('http://ten.example.com')).toBeInTheDocument();
 
 		expect(getByText('view-less')).toBeInTheDocument();
 	});
@@ -570,49 +541,29 @@ describe('Detail', () => {
 			expect(getByText('278,256')).toBeInTheDocument();
 
 			expect(getByText('top-referring-pages')).toBeInTheDocument();
-			expect(
-				getByText(
-					'https://www.liferay.com/resources/ebooks/Becoming+a+Digital+Business-4+Common+Enterprise+Challenges+Conquered'
-				)
-			).toBeInTheDocument();
+			expect(getByText('http://one.example.com')).toBeInTheDocument();
 			expect(getByText('125,461')).toBeInTheDocument();
-			expect(
-				getByText(
-					'https://www.liferay.com/resources/whitepapers/B2B+E-Commerce+RFP+Kit'
-				)
-			).toBeInTheDocument();
+			expect(getByText('http://two.example.com')).toBeInTheDocument();
 			expect(getByText('85,485')).toBeInTheDocument();
-			expect(
-				getByText(
-					'https://www.liferay.com/resources/whitepapers/6+Tactics+to+Modernize+Your+Intranet'
-				)
-			).toBeInTheDocument();
+			expect(getByText('http://three.example.com')).toBeInTheDocument();
 			expect(getByText('84,564')).toBeInTheDocument();
-			expect(
-				getByText(
-					'https://www.liferay.com/resources/case-studies/materion-case-study'
-				)
-			).toBeInTheDocument();
+			expect(getByText('http://four.example.com')).toBeInTheDocument();
 			expect(getByText('5,846')).toBeInTheDocument();
-			expect(
-				getByText(
-					'https://www.liferay.com/web/l/a1-hrvatska-case-study'
-				)
-			).toBeInTheDocument();
+			expect(getByText('http://five.example.com')).toBeInTheDocument();
 			expect(getByText('3,521')).toBeInTheDocument();
 
 			expect(getByText('view-more')).toBeInTheDocument();
 
 			expect(getByText('top-referring-domains')).toBeInTheDocument();
-			expect(getByText('http://youtube.com/')).toBeInTheDocument();
+			expect(getByText('http://foo.example.com')).toBeInTheDocument();
 			expect(getByText('17,985,230')).toBeInTheDocument();
-			expect(getByText('http://www.google.com/')).toBeInTheDocument();
+			expect(getByText('http://bar.example.com')).toBeInTheDocument();
 			expect(getByText('12,218,030')).toBeInTheDocument();
-			expect(getByText('http://microsoft.com/')).toBeInTheDocument();
+			expect(getByText('http://baz.example.com')).toBeInTheDocument();
 			expect(getByText('9,062,949')).toBeInTheDocument();
-			expect(getByText('http://linkedin.com/')).toBeInTheDocument();
+			expect(getByText('http://qux.example.com')).toBeInTheDocument();
 			expect(getByText('4,601,453')).toBeInTheDocument();
-			expect(getByText('https://www.liferay.com')).toBeInTheDocument();
+			expect(getByText('http://fred.example.com')).toBeInTheDocument();
 			expect(getByText('253,399')).toBeInTheDocument();
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);

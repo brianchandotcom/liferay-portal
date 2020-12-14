@@ -1,11 +1,6 @@
 .form-renderer-required-field {
 	position: relative;
 
-	&__toggle .toggle-switch-label {
-		margin-left: 8px;
-		font-size: 14px;
-	}
-
 	&__popover {
 		left: 0;
 		max-width: none;
@@ -16,5 +11,10 @@
 		&:not(.show) {
 			display: none;
 		}
+	}
+
+	&__toggle .toggle-switch-label {
+		font-size: 14px;
+		margin-left: 8px;
 	}
 }

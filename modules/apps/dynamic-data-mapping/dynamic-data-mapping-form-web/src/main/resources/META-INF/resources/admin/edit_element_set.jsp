@@ -51,7 +51,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field">
 		<clay:container-fluid
-			cssClass="toolbar"
+			cssClass="d-flex justify-content-between toolbar"
 		>
 			<ul class="navbar-nav toolbar-group-field"></ul>
 			<ul class="navbar-nav toolbar-group-field">

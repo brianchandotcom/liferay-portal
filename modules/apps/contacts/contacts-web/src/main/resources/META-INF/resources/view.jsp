@@ -90,7 +90,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 			<aui:input name="type" type="hidden" value="" />
 
 			<clay:row>
-				<aui:col cssClass="toolbar" width="<%= 100 %>">
+				<aui:col cssClass="d-flex justify-content-between toolbar" width="<%= 100 %>">
 					<div class="filter-container">
 						<clay:row>
 							<aui:col cssClass="contact-group-filter form-inline">

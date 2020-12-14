@@ -56,7 +56,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 	<nav class="hide management-bar management-bar-light navbar navbar-expand-md toolbar-group-field" id="<portlet:namespace />managementToolbar">
 		<clay:container-fluid
-			cssClass="autosave-bar toolbar"
+			cssClass="autosave-bar d-flex justify-content-between toolbar"
 		>
 			<div class="autosave-feedback-container navbar-form navbar-form-autofit navbar-overlay toolbar-group-content">
 				<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>

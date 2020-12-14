@@ -157,7 +157,7 @@ definition {
 	}
 
 	@priority = "4"
-	test EditSubstructureDefaultValues {
+	test EditStructureDefaultValuesForFieldsets {
 		property testray.component.names = "Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -166,11 +166,11 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name1");
+			structureName = "WC Structure 1");
 
 		DataEngine.addFields(fieldNameList = "Text,Rich Text,Image,Upload");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name1");
+		WebContentStructures.saveCP(structureName = "WC Structure 1");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -178,27 +178,27 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		WebContentStructures.addName(structureName = "2");
+		WebContentStructures.addName(structureName = "WC Structure 2");
 
 		Navigator.gotoSidebarTab(tabName = "Properties");
 
 		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
 
-		WebContentStructures.addSubstructure(
-			parentStructureName = "WC Structure Name1",
-			structureName = "2");
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "WC Structure 1",
+			fieldsetsName = "WC Structure 1");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name1");
+		WebContentStructures.saveCP(structureName = "WC Structure 1");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.editStructureDefaultValuesCP(structureName = "2");
+		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure 2");
 
 		WebContent.addWithStructureCP(webContentText = "Edited Text Field");
 

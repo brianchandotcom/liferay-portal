@@ -16,10 +16,7 @@ package com.liferay.document.library.video.internal.video.external.shortcut.prov
 
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.provider.DLVideoExternalShortcutProvider;
-import com.liferay.frontend.editor.embed.EditorEmbedProvider;
-import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,12 +32,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO,
-	service = {DLVideoExternalShortcutProvider.class, EditorEmbedProvider.class}
-)
+@Component(service = DLVideoExternalShortcutProvider.class)
 public class TwitchDLVideoExternalShortcutProvider
-	implements DLVideoExternalShortcutProvider, EditorEmbedProvider {
+	implements DLVideoExternalShortcutProvider {
 
 	@Override
 	public DLVideoExternalShortcut getDLVideoExternalShortcut(String url) {
@@ -80,21 +74,6 @@ public class TwitchDLVideoExternalShortcutProvider
 			}
 
 		};
-	}
-
-	@Override
-	public String getId() {
-		return "twitch";
-	}
-
-	@Override
-	public String getTpl() {
-		return _getTpl(StringPool.BLANK);
-	}
-
-	@Override
-	public String[] getURLSchemes() {
-		return new String[] {_urlPattern.pattern()};
 	}
 
 	private String _getTpl(String host) {

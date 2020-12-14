@@ -16,10 +16,7 @@ package com.liferay.document.library.video.internal.video.external.shortcut.prov
 
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.provider.DLVideoExternalShortcutProvider;
-import com.liferay.frontend.editor.embed.EditorEmbedProvider;
-import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -33,7 +30,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,12 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "type=" + EditorEmbedProviderTypeConstants.VIDEO,
-	service = {DLVideoExternalShortcutProvider.class, EditorEmbedProvider.class}
-)
+@Component(service = DLVideoExternalShortcutProvider.class)
 public class YouTubeDLVideoExternalShortcutProvider
-	implements DLVideoExternalShortcutProvider, EditorEmbedProvider {
+	implements DLVideoExternalShortcutProvider {
 
 	@Override
 	public DLVideoExternalShortcut getDLVideoExternalShortcut(String url) {
@@ -90,27 +83,6 @@ public class YouTubeDLVideoExternalShortcutProvider
 			}
 
 		};
-	}
-
-	@Override
-	public String getId() {
-		return "youtube";
-	}
-
-	@Override
-	public String getTpl() {
-		return _getTpl(StringPool.BLANK);
-	}
-
-	@Override
-	public String[] getURLSchemes() {
-		Stream<Pattern> stream = _urlPatterns.stream();
-
-		return stream.map(
-			Pattern::pattern
-		).toArray(
-			String[]::new
-		);
 	}
 
 	private JSONObject _getEmbedJSONObject(String url) {

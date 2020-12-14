@@ -55,14 +55,19 @@ public class SiteParamConverterProvider
 		MultivaluedMap<String, String> multivaluedMap =
 			_uriInfo.getPathParameters();
 
+		String parameterType = null;
 		Long siteId = null;
 
 		if (multivaluedMap.containsKey("assetLibraryId")) {
+			parameterType = "asset library";
+
 			siteId = getDepotGroupId(
 				multivaluedMap.getFirst("assetLibraryId"),
 				_company.getCompanyId());
 		}
 		else {
+			parameterType = "site";
+
 			siteId = getGroupId(
 				_company.getCompanyId(), multivaluedMap.getFirst("siteId"));
 		}
@@ -71,8 +76,14 @@ public class SiteParamConverterProvider
 			return siteId;
 		}
 
-		throw new NotFoundException(
-			"Unable to get a valid site with ID " + parameter);
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append("Unable to get a valid ");
+		sb.append(parameterType);
+		sb.append(" with ID ");
+		sb.append(parameter);
+
+		throw new NotFoundException(sb.toString());
 	}
 
 	@Override

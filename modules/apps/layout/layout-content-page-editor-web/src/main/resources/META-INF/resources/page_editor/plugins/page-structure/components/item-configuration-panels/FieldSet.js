@@ -72,6 +72,7 @@ export const FieldSet = ({
 
 						const fieldValue = field.localizable
 							? values[field.name][languageId] ||
+							  values[field.name][config.defaultLanguageId] ||
 							  field.defaultValue
 							: values[field.name] || field.defaultValue;
 

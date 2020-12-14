@@ -40,7 +40,7 @@ public class CaptchaDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetParameters() throws Exception {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("<div><div class=\"taglib-captcha\"><img alt=\"Text to ");
 		sb.append("Identify\" src=\"captcha\"><label>Text Verification");

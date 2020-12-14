@@ -209,14 +209,8 @@ public class JournalEditArticleDisplayContext {
 			DDMFormValuesFactory ddmFormValuesFactory =
 				_getDDMFormValuesFactory();
 
-			DDMFormValues ddmFormValues = ddmFormValuesFactory.create(
+			return ddmFormValuesFactory.create(
 				_httpServletRequest, ddmStructure.getDDMForm());
-
-			if (ddmFormValues != null) {
-				return ddmFormValues;
-			}
-
-			return _ddmFormValues;
 		}
 
 		String content = _article.getContent();

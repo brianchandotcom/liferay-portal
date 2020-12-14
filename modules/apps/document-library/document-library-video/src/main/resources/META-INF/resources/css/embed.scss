@@ -1,4 +1,5 @@
 @import 'atlas-variables';
+@import 'video_placeholder';
 
 video {
 	background-color: $black;
@@ -8,25 +9,7 @@ video {
 }
 
 .video-embed-placeholder {
-	align-items: center;
-	background-color: $gray-200;
-	display: flex;
+	@include video-placeholder;
 	height: 100vh;
-	justify-content: center;
 	position: relative;
-
-	.lexicon-icon {
-		color: $gray-400;
-		font-size: 2rem;
-	}
-
-	&-text {
-		bottom: 1rem;
-		color: $secondary;
-		font-size: 0.875rem;
-		font-weight: 600;
-		position: absolute;
-		text-align: center;
-		width: 100%;
-	}
 }

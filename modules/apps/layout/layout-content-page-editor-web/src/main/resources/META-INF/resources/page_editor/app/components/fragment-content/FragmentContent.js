@@ -21,7 +21,6 @@ import setFragmentEditables from '../../actions/setFragmentEditables';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import FragmentService from '../../services/FragmentService';
 import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -94,6 +93,7 @@ const FragmentContent = ({
 
 	const defaultContent = useGetContent(
 		fragmentEntryLink,
+		languageId,
 		segmentsExperienceId
 	);
 	const [content, setContent] = useState(defaultContent);
@@ -126,56 +126,30 @@ const FragmentContent = ({
 		if (!isProcessorEnabled()) {
 			fragmentElement.innerHTML = defaultContent;
 
-			const hasLocalizable =
-				fragmentEntryLink.configuration?.fieldSets?.some((fieldSet) =>
-					fieldSet.fields.some((field) => field.localizable)
-				) ?? false;
+			Promise.all(
+				getAllEditables(fragmentElement).map((editable) =>
+					resolveEditableValue(
+						editableValues,
+						editable.editableId,
+						editable.editableValueNamespace,
+						languageId,
+						getFieldValue
+					).then(([value, editableConfig]) => {
+						editable.processor.render(
+							editable.element,
+							value,
+							editableConfig,
+							languageId
+						);
 
-			const processEditables = () => {
-				Promise.all(
-					getAllEditables(fragmentElement).map((editable) =>
-						resolveEditableValue(
-							editableValues,
-							editable.editableId,
-							editable.editableValueNamespace,
-							languageId,
-							getFieldValue
-						).then(([value, editableConfig]) => {
-							editable.processor.render(
-								editable.element,
-								value,
-								editableConfig,
-								languageId
-							);
-
-							editable.element.classList.add(
-								'page-editor__editable'
-							);
-						})
-					)
-				).then(() => {
-					if (isMounted() && fragmentElement) {
-						setContent(fragmentElement.innerHTML);
-					}
-				});
-			};
-
-			if (hasLocalizable) {
-				FragmentService.renderFragmentEntryLinkContent({
-					fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
-					languageId,
-					onNetworkStatus: dispatch,
-					segmentsExperienceId,
-				}).then(({content}) => {
-					if (isMounted()) {
-						fragmentElement.innerHTML = content;
-						processEditables();
-					}
-				});
-			}
-			else {
-				processEditables();
-			}
+						editable.element.classList.add('page-editor__editable');
+					})
+				)
+			).then(() => {
+				if (isMounted() && fragmentElement) {
+					setContent(fragmentElement.innerHTML);
+				}
+			});
 		}
 
 		return () => {

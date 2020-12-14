@@ -213,7 +213,7 @@ public class ProductResourceImpl
 		_updateProduct(cpDefinition, product);
 
 		if (!Validator.isBlank(product.getExternalReferenceCode())) {
-			_cpDefinitionService.updateCPDefinitionExternalReferenceCode(
+			_cpDefinitionService.updateExternalReferenceCode(
 				cpDefinition.getCPDefinitionId(),
 				product.getExternalReferenceCode());
 		}

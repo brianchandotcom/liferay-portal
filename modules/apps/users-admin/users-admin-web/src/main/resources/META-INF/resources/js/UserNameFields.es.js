@@ -24,7 +24,10 @@ class UserNameFields extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.languageIdSelectNode.addEventListener('change', this._onSelectChange);
+		this.languageIdSelectNode.addEventListener(
+			'change',
+			this._onSelectChange
+		);
 	}
 
 	/**
@@ -45,7 +48,10 @@ class UserNameFields extends PortletBase {
 	detached() {
 		super.detached();
 
-		this.languageIdSelectNode.removeEventListener('change', this._onSelectChange);
+		this.languageIdSelectNode.removeEventListener(
+			'change',
+			this._onSelectChange
+		);
 	}
 
 	/**

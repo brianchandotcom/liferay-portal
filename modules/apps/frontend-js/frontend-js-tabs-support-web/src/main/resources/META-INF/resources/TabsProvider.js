@@ -13,7 +13,6 @@
  */
 
 import {delegate} from 'frontend-js-web';
-import dom from 'metal-dom';
 
 const CssClass = {
 	ACTIVE: 'active',
@@ -69,13 +68,17 @@ class TabsProvider {
 
 		this._transitioning = true;
 
-		panel.addEventListener(this._transitionEndEvent, () => {
-			panel.classList.remove(CssClass.ACTIVE);
+		panel.addEventListener(
+			this._transitionEndEvent,
+			() => {
+				panel.classList.remove(CssClass.ACTIVE);
 
-			this._transitioning = false;
+				this._transitioning = false;
 
-			Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
-		}, {once: true});
+				Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
+			},
+			{once: true}
+		);
 	};
 
 	show = ({panel, trigger}) => {

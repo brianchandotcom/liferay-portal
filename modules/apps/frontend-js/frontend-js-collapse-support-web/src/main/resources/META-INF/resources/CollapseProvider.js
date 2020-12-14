@@ -13,7 +13,6 @@
  */
 
 import {delegate} from 'frontend-js-web';
-import dom from 'metal-dom';
 
 const CssClass = {
 	COLLAPSE: 'collapse',
@@ -101,7 +100,9 @@ class CollapseProvider {
 			onHidden();
 		}
 		else {
-			panel.addEventListener(this._transitionEndEvent, onHidden, {once: true});
+			panel.addEventListener(this._transitionEndEvent, onHidden, {
+				once: true,
+			});
 
 			panel.classList.add(CssClass.COLLAPSING);
 			panel.style[dimension] = 0;
@@ -170,7 +171,9 @@ class CollapseProvider {
 			onShown();
 		}
 		else {
-			panel.addEventListener(this._transitionEndEvent, onShown, {once: true});
+			panel.addEventListener(this._transitionEndEvent, onShown, {
+				once: true,
+			});
 
 			const capitalizedDimension =
 				dimension[0].toUpperCase() + dimension.slice(1);

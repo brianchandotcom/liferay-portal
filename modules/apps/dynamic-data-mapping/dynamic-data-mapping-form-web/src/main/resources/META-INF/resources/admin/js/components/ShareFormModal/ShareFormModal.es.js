@@ -17,8 +17,6 @@ import {
 	convertToFormData,
 	makeFetch,
 } from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 import Component, {Config} from 'metal-jsx';
 
 import Email from './Email.es';
@@ -26,21 +24,20 @@ import Link from './Link.es';
 
 class ShareFormModal extends Component {
 	attached() {
-		this._eventHandler.add(
-			dom.on(
-				'.nav-item > .lfr-ddm-share-url-button',
+		const shareURLButton = document.querySelector(
+			'.nav-item > .lfr-ddm-share-url-button'
+		);
+
+		if (shareURLButton) {
+			shareURLButton.addEventListener(
 				'click',
 				this._handleShareButtonClicked.bind(this)
-			)
-		);
+			);
+		}
 	}
 
 	close() {
 		this.refs.shareFormModalRef.emit('hide');
-	}
-
-	created() {
-		this._eventHandler = new EventHandler();
 	}
 
 	disposeInternal() {
@@ -51,7 +48,17 @@ class ShareFormModal extends Component {
 		}
 
 		super.disposeInternal();
-		this._eventHandler.removeAllListeners();
+
+		const shareURLButton = document.querySelector(
+			'.nav-item > .lfr-ddm-share-url-button'
+		);
+
+		if (shareURLButton) {
+			shareURLButton.removeEventListener(
+				'click',
+				this._handleShareButtonClicked
+			);
+		}
 	}
 
 	open() {

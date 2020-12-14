@@ -26,7 +26,6 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import {openModal} from 'frontend-js-web';
-import dom from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import Component, {Fragment} from 'metal-jsx';
@@ -49,8 +48,10 @@ class Sidebar extends Component {
 	attached() {
 		this._bindDragAndDrop();
 
-		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown, false)
+		document.addEventListener(
+			'mousedown',
+			this._handleDocumentMouseDown,
+			false
 		);
 	}
 
@@ -154,6 +155,11 @@ class Sidebar extends Component {
 	disposeInternal() {
 		super.disposeInternal();
 
+		document.removeEventListener(
+			'mousedown',
+			this._handleDocumentMouseDown
+		);
+
 		this._eventHandler.removeAllListeners();
 		this.disposeDragAndDrop();
 	}
@@ -207,16 +213,23 @@ class Sidebar extends Component {
 			return;
 		}
 
-		container.addEventListener(transitionEnd, () => {
-			if (this._isEditMode()) {
-				const firstInput = this.element.querySelector('input');
+		container.addEventListener(
+			transitionEnd,
+			() => {
+				if (this._isEditMode()) {
+					const firstInput = this.element.querySelector('input');
 
-				if (firstInput && !container.contains(document.activeElement)) {
-					firstInput.focus();
-					selectText(firstInput);
+					if (
+						firstInput &&
+						!container.contains(document.activeElement)
+					) {
+						firstInput.focus();
+						selectText(firstInput);
+					}
 				}
-			}
-		}, {once: true});
+			},
+			{once: true}
+		);
 
 		this.setState({
 			activeTab: 0,
@@ -594,8 +607,10 @@ class Sidebar extends Component {
 		) {
 			this.close();
 
-			this.refs.container.addEventListener(transitionEnd, () =>
-				this.dispatchFieldBlurred(), {once: true}
+			this.refs.container.addEventListener(
+				transitionEnd,
+				() => this.dispatchFieldBlurred(),
+				{once: true}
 			);
 
 			if (!this._isModalElement(target)) {
@@ -754,10 +769,14 @@ class Sidebar extends Component {
 
 		this.close();
 
-		this.refs.container.addEventListener(transitionEnd, () => {
-			this.dispatchFieldBlurred();
-			this.open();
-		}, {once: true});
+		this.refs.container.addEventListener(
+			transitionEnd,
+			() => {
+				this.dispatchFieldBlurred();
+				this.open();
+			},
+			{once: true}
+		);
 	}
 
 	_handleSettingsFieldBlurred({fieldInstance, value}) {

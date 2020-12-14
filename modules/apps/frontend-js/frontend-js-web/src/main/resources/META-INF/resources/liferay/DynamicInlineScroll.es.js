@@ -13,8 +13,6 @@
  */
 
 import core from 'metal';
-import dom from 'metal-dom';
-import {EventHandler} from 'metal-events';
 
 import PortletBase from './PortletBase.es';
 import {delegate} from './delegate/delegate.es';
@@ -26,13 +24,6 @@ import {delegate} from './delegate/delegate.es';
  * @extends {Component}
  */
 class DynamicInlineScroll extends PortletBase {
-
-	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this.eventHandler_ = new EventHandler();
-	}
 
 	/**
 	 * @inheritDoc
@@ -57,7 +48,13 @@ class DynamicInlineScroll extends PortletBase {
 		super.detached();
 
 		this.inlineScrollEventHandler_.dispose();
-		this.eventHandler_.removeAllListeners();
+
+		const listItem = document.createElement('li');
+
+		listItem.removeEventListener(
+			'click',
+			this.handleListItemClick_.bind(this)
+		);
 	}
 
 	/**
@@ -79,8 +76,9 @@ class DynamicInlineScroll extends PortletBase {
 		listElement.appendChild(listItem);
 		listElement.setAttribute('data-page-index', pageIndex);
 
-		this.eventHandler_.add(
-			dom.on(listItem, 'click', this.handleListItemClick_.bind(this))
+		listItem.addEventListener(
+			'click',
+			this.handleListItemClick_.bind(this)
 		);
 	}
 

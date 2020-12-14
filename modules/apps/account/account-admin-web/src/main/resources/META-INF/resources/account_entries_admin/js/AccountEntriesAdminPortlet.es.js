@@ -27,7 +27,7 @@ class AccountEntriesAdminPortlet extends PortletBase {
 		if (typeSelect) {
 			this._updateVisibility(typeSelect);
 
-			typeSelect.addEventListener('change', _handleTypeSelectChange);
+			typeSelect.addEventListener('change', this._handleTypeSelectChange);
 		}
 	}
 
@@ -57,7 +57,10 @@ class AccountEntriesAdminPortlet extends PortletBase {
 		const typeSelect = this.one('#type');
 
 		if (typeSelect) {
-			typeSelect.removeEventListener('change', _handleTypeSelectChange);
+			typeSelect.removeEventListener(
+				'change',
+				this._handleTypeSelectChange
+			);
 		}
 	}
 }

@@ -32,7 +32,6 @@ import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
 import {delegate} from 'frontend-js-web';
 import core from 'metal';
-import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
@@ -72,18 +71,15 @@ class Form extends Component {
 		const dependencies = [
 			this._createEditor('nameEditor').then((editor) => {
 				this._eventHandler.add(
-					dom.on(
-						editor.element.$,
+					editor.element.$.addEventListener(
 						'keydown',
 						this._handleNameEditorKeydown
 					),
-					dom.on(
-						editor.element.$,
+					editor.element.$.addEventListener(
 						'keyup',
 						this._handleNameEditorCopyAndPaste
 					),
-					dom.on(
-						editor.element.$,
+					editor.element.$.addEventListener(
 						'keypress',
 						this._handleNameEditorCopyAndPaste
 					)
@@ -174,33 +170,52 @@ class Form extends Component {
 			}
 		);
 
-		this._eventHandler.add(
-			dom.on(
-				`#addFieldButton`,
+		const addFieldButton = document.getElementById('addFieldButton');
+
+		if (addFieldButton) {
+			addFieldButton.addEventListener(
 				'click',
 				this._handleAddFieldButtonClicked.bind(this)
-			),
-			dom.on(
-				'.forms-navigation-bar li',
+			);
+		}
+
+		const formsNavbarListItems = document.querySelector(
+			'.forms-navigation-bar li'
+		);
+
+		if (formsNavbarListItems) {
+			formsNavbarListItems.addEventListener(
 				'click',
 				this._handleFormNavClicked
-			),
-			dom.on(
-				'.lfr-ddm-preview-button',
+			);
+		}
+
+		const previewButton = document.querySelector('.lfr-ddm-preview-button');
+
+		if (previewButton) {
+			previewButton.addEventListener(
 				'click',
 				this._handlePreviewButtonClicked.bind(this)
-			),
-			dom.on(
-				'.lfr-ddm-save-button',
+			);
+		}
+
+		const saveButton = document.querySelector('.lfr-ddm-save-button');
+
+		if (saveButton) {
+			saveButton.addEventListener(
 				'click',
 				this._handleSaveButtonClicked.bind(this)
-			),
-			dom.on(
-				'.lfr-ddm-publish-button',
+			);
+		}
+
+		const publishButton = document.querySelector('.lfr-ddm-publish-button');
+
+		if (publishButton) {
+			publishButton.addEventListener(
 				'click',
 				this._handlePublishButtonClicked.bind(this)
-			)
-		);
+			);
+		}
 
 		this._backButtonClickEventHandler = delegate(
 			document.body,
@@ -311,6 +326,53 @@ class Form extends Component {
 		this._backButtonClickEventHandler.dispose();
 
 		this._eventHandler.removeAllListeners();
+
+		const addFieldButton = document.getElementById('addFieldButton');
+
+		if (addFieldButton) {
+			addFieldButton.removeEventListener(
+				'click',
+				this._handleAddFieldButtonClicked.bind(this)
+			);
+		}
+
+		const formsNavbarListItems = document.querySelector(
+			'.forms-navigation-bar li'
+		);
+
+		if (formsNavbarListItems) {
+			formsNavbarListItems.removeEventListener(
+				'click',
+				this._handleFormNavClicked
+			);
+		}
+
+		const previewButton = document.querySelector('.lfr-ddm-preview-button');
+
+		if (previewButton) {
+			previewButton.removeEventListener(
+				'click',
+				this._handlePreviewButtonClicked.bind(this)
+			);
+		}
+
+		const saveButton = document.querySelector('.lfr-ddm-save-button');
+
+		if (saveButton) {
+			saveButton.removeEventListener(
+				'click',
+				this._handleSaveButtonClicked.bind(this)
+			);
+		}
+
+		const publishButton = document.querySelector('.lfr-ddm-publish-button');
+
+		if (publishButton) {
+			publishButton.removeEventListener(
+				'click',
+				this._handlePublishButtonClicked.bind(this)
+			);
+		}
 
 		if (this._translationManagerHandles) {
 			this._translationManagerHandles.forEach((handle) =>

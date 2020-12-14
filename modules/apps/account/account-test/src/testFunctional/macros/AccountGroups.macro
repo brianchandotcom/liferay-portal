@@ -14,11 +14,13 @@ definition {
 			PortletEntry.selectAll();
 		}
 		else {
-			Search.searchCP(searchTerm = "${assigneeName}");
+			for (var assigneeName : list "${assigneeNames}") {
+				Search.searchCP(searchTerm = "${assigneeName}");
 
-			Check(
-				key_tableEntry = "${assigneeName}",
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+				Check(
+					key_tableEntry = "${assigneeName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
 		}
 
 		SelectFrameTop();

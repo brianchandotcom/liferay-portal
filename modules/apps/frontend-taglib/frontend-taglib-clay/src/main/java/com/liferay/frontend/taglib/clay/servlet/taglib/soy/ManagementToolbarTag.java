@@ -24,6 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -139,6 +140,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 				setShowResultsBar(true);
 			}
 		}
+
+		context.put("__placeholder__", _getPlaceholder());
 
 		return super.doStartTag();
 	}
@@ -435,6 +438,17 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setViewTypeItems(
 				managementToolbarDisplayContext.getViewTypeItems());
 		}
+	}
+
+	private String _getPlaceholder() {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<div id=\"");
+		sb.append(getComponentId());
+		sb.append("\"><nav class=\"management-bar management-bar-light ");
+		sb.append("navbar navbar-expand-md\"></nav></div>");
+
+		return sb.toString();
 	}
 
 	private Map<String, Object> _getSearchData(String searchActionURL) {

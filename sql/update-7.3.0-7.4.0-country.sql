@@ -1,4 +1,4 @@
-update Country set number_ = 296 where a2 = 'KI' and number_ = 408;
+update Country set number_ = '296' where a2 = 'KI' and number_ = '408';
 
 alter table Country add uuid_ VARCHAR(75) null;
 alter table Country add defaultLanguageId VARCHAR(75) null;

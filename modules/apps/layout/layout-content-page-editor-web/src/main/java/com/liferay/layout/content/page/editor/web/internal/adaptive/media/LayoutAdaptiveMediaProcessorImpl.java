@@ -253,7 +253,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 		LayoutAdaptiveMediaProcessorImpl.class);
 
 	private static final Pattern _cssPropertyPattern = Pattern.compile(
-		"--background-image-file-entry-id:(\\d+);");
+		"--background-image-file-entry-id:\\s*(\\d+);");
 
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

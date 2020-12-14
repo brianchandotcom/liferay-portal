@@ -67,6 +67,8 @@ definition {
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
 	test DeleteImageInDepot {
+		property portal.acceptance = "true";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
 		DMDocument.addCP(
@@ -231,6 +233,8 @@ definition {
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
 	test EditDocumentInDepot {
+		property portal.acceptance = "true";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
 		DMDocument.addCP(

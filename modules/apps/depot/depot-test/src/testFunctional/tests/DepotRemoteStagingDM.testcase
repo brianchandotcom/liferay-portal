@@ -68,6 +68,7 @@ definition {
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	test DeleteImageInDepot {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteImageInDepot";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");

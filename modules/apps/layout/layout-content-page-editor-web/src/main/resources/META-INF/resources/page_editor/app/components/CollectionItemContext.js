@@ -65,12 +65,14 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 
 	const {className, classPK} = context.collectionItem || {};
 
-	const hasLocalizable =
-		fragmentEntryLink.configuration?.fieldSets?.some((fieldSet) =>
-			fieldSet.fields.some((field) => field.localizable)
-		) ?? false;
+	const fieldSets = fragmentEntryLink.configuration?.fieldSets;
 
 	useEffect(() => {
+		const hasLocalizable =
+			fieldSets?.some((fieldSet) =>
+				fieldSet.fields.some((field) => field.localizable)
+			) ?? false;
+
 		if (context.collectionItemIndex != null || hasLocalizable) {
 			FragmentService.renderFragmentEntryLinkContent({
 				collectionItemClassName: className,
@@ -91,11 +93,11 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			});
 		}
 	}, [
-		hasLocalizable,
 		className,
 		classPK,
 		context.collectionItemIndex,
 		dispatch,
+		fieldSets,
 		fragmentEntryLink.editableValues,
 		fragmentEntryLink.fragmentEntryLinkId,
 		languageId,

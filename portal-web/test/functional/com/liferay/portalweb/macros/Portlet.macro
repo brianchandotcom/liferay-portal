@@ -269,7 +269,13 @@ definition {
 				Click(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 			}
 			else {
-				MouseOver.mouseOverNotVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+				MouseOver.mouseOverInvisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+				while (IsNotVisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON")) {
+					Pause(locator1 = "3000");
+
+					MouseOver.mouseOverInvisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+				}
 
 				Click.waitForMenuToggleJSClick(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 			}

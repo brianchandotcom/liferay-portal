@@ -137,11 +137,12 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				redirect = _portal.getLayoutFullURL(draftLayout, themeDisplay);
 			}
 
-			redirect = _removeCategoryParameters(httpServletRequest, redirect);
+			redirect = _removeAssetCategoryParameters(
+				httpServletRequest, redirect);
 
 			redirect = _http.setParameter(
 				redirect, "p_l_back_url",
-				_removeCategoryParameters(
+				_removeAssetCategoryParameters(
 					httpServletRequest, themeDisplay.getURLCurrent()));
 
 			return _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
@@ -212,7 +213,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 		return false;
 	}
 
-	private String _removeCategoryParameters(
+	private String _removeAssetCategoryParameters(
 		HttpServletRequest httpServletRequest, String url) {
 
 		Map<String, String[]> parameterMap =

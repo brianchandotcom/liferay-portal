@@ -14,17 +14,13 @@
 
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import domAlign from 'dom-align';
-import React, {useContext, useLayoutEffect, useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
-import {useResizeObserver} from '../../hooks/useResizeObserver.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 import Actions, {useActions} from './Actions.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import {Placeholder} from './Placeholder.es';
-
-const ACTIONS_CONTAINER_OFFSET = [14, 1];
 
 export const Column = ({
 	activePage,
@@ -50,17 +46,6 @@ export const Column = ({
 		parentField,
 		rowIndex,
 	});
-
-	const contentRect = useResizeObserver(columnRef);
-
-	useLayoutEffect(() => {
-		if (actionsRef.current && columnRef.current) {
-			domAlign(actionsRef.current, columnRef.current, {
-				offset: ACTIONS_CONTAINER_OFFSET,
-				points: ['bl', 'tl'],
-			});
-		}
-	}, [activeField, contentRect, hoveredField]);
 
 	if (column.fields.length === 0 && activePage === pageIndex) {
 		return (
@@ -89,6 +74,7 @@ export const Column = ({
 	return (
 		<Actions
 			activePage={activePage}
+			columnRef={columnRef}
 			expanded={isFieldSelected}
 			field={firstField}
 			ref={actionsRef}

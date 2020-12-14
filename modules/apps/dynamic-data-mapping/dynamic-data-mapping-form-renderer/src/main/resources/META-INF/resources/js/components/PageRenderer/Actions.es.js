@@ -14,16 +14,19 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import domAlign from 'dom-align';
 import React, {
 	createContext,
 	forwardRef,
 	useContext,
 	useEffect,
+	useLayoutEffect,
 	useState,
 } from 'react';
 
 import {EVENT_TYPES} from '../../actions/eventTypes.es';
 import {useForm} from '../../hooks/useForm.es';
+import {useResizeObserver} from '../../hooks/useResizeObserver.es';
 
 const ActionsContext = createContext({
 	activeField: '',
@@ -64,93 +67,116 @@ export const useActions = () => {
 
 ActionsContext.displayName = 'ActionsContext';
 
-const Actions = forwardRef(({activePage, children, expanded, field}, ref) => {
-	const {setActiveField, setHoveredField} = useActions();
+const ACTIONS_CONTAINER_OFFSET = [14, 1];
 
-	const dispatch = useForm();
+const Actions = forwardRef(
+	({activePage, children, columnRef, expanded, field}, actionsRef) => {
+		const {
+			activeField,
+			hoveredField,
+			setActiveField,
+			setHoveredField,
+		} = useActions();
 
-	const DROPDOWN_ACTIONS = [
-		{
-			label: Liferay.Language.get('duplicate'),
-			onClick: () =>
-				dispatch({
-					payload: {activePage, fieldName: field.fieldName},
-					type: EVENT_TYPES.FIELD_DUPLICATED,
-				}),
-		},
-		{
-			label: Liferay.Language.get('delete'),
-			onClick: () =>
-				dispatch({
-					payload: {activePage, fieldName: field.fieldName},
-					type: EVENT_TYPES.FIELD_DELETED,
-				}),
-		},
-	];
+		const dispatch = useForm();
 
-	const handleFieldInteractions = (event) => {
-		event.stopPropagation();
+		const contentRect = useResizeObserver(columnRef);
 
-		if (ref.current?.contains(event.target)) {
-			return;
-		}
-
-		switch (event.type) {
-			case 'click':
-				dispatch({
-					payload: {activePage, fieldName: field.fieldName},
-					type: EVENT_TYPES.FIELD_CLICKED,
+		useLayoutEffect(() => {
+			if (actionsRef.current && columnRef.current) {
+				domAlign(actionsRef.current, columnRef.current, {
+					offset: ACTIONS_CONTAINER_OFFSET,
+					points: ['bl', 'tl'],
 				});
+			}
+		}, [actionsRef, activeField, columnRef, contentRect, hoveredField]);
 
-				setActiveField(field.fieldName);
+		const DROPDOWN_ACTIONS = [
+			{
+				label: Liferay.Language.get('duplicate'),
+				onClick: () =>
+					dispatch({
+						payload: {activePage, fieldName: field.fieldName},
+						type: EVENT_TYPES.FIELD_DUPLICATED,
+					}),
+			},
+			{
+				label: Liferay.Language.get('delete'),
+				onClick: () =>
+					dispatch({
+						payload: {activePage, fieldName: field.fieldName},
+						type: EVENT_TYPES.FIELD_DELETED,
+					}),
+			},
+		];
 
-				break;
+		const handleFieldInteractions = (event) => {
+			event.stopPropagation();
 
-			case 'mouseover':
-				setHoveredField(field.fieldName);
+			if (actionsRef.current?.contains(event.target)) {
+				return;
+			}
 
-				break;
+			switch (event.type) {
+				case 'click':
+					dispatch({
+						payload: {activePage, fieldName: field.fieldName},
+						type: EVENT_TYPES.FIELD_CLICKED,
+					});
 
-			case 'mouseleave':
-				setHoveredField('');
+					setActiveField(field.fieldName);
 
-				break;
+					break;
 
-			default:
-				break;
-		}
-	};
+				case 'mouseover':
+					setHoveredField(field.fieldName);
 
-	return (
-		<div
-			className="row"
-			onClick={handleFieldInteractions}
-			onMouseLeave={handleFieldInteractions}
-			onMouseOver={handleFieldInteractions}
-		>
-			{expanded && (
-				<div className="ddm-field-actions-container" ref={ref}>
-					<span className="actions-label">{field.label}</span>
+					break;
 
-					<ClayDropDownWithItems
-						className="dropdown-action"
-						items={DROPDOWN_ACTIONS}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('actions')}
-								data-title={Liferay.Language.get('actions')}
-								displayType="unstyled"
-								symbol="ellipsis-v"
-							/>
-						}
-					/>
-				</div>
-			)}
+				case 'mouseleave':
+					setHoveredField('');
 
-			{children}
-		</div>
-	);
-});
+					break;
+
+				default:
+					break;
+			}
+		};
+
+		return (
+			<div
+				className="row"
+				onClick={handleFieldInteractions}
+				onMouseLeave={handleFieldInteractions}
+				onMouseOver={handleFieldInteractions}
+			>
+				{expanded && (
+					<div
+						className="ddm-field-actions-container"
+						ref={actionsRef}
+					>
+						<span className="actions-label">{field.label}</span>
+
+						<ClayDropDownWithItems
+							className="dropdown-action"
+							items={DROPDOWN_ACTIONS}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('actions')}
+									data-title={Liferay.Language.get('actions')}
+									displayType="unstyled"
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					</div>
+				)}
+
+				{children}
+			</div>
+		);
+	}
+);
 
 Actions.displayName = 'Actions';
 

@@ -67,25 +67,26 @@ public class DispatchTriggerModelResourcePermission
 		PermissionChecker permissionChecker, DispatchTrigger dispatchTrigger,
 		String actionId) {
 
-		return contains(
-			permissionChecker, dispatchTrigger.getDispatchTriggerId(),
-			actionId);
+		if (permissionChecker.isCompanyAdmin(dispatchTrigger.getCompanyId())) {
+			return true;
+		}
+
+		return permissionChecker.hasPermission(
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			DispatchTrigger.class.getName(),
+			dispatchTrigger.getDispatchTriggerId(), actionId);
 	}
 
 	@Override
 	public boolean contains(
-		PermissionChecker permissionChecker, long dispatchTriggerId,
-		String actionId) {
+			PermissionChecker permissionChecker, long dispatchTriggerId,
+			String actionId)
+		throws PortalException {
 
-		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.fetchDispatchTrigger(
-				dispatchTriggerId);
-
-		if (dispatchTrigger == null) {
-			return false;
-		}
-
-		return _contains(permissionChecker, dispatchTrigger, actionId);
+		return contains(
+			permissionChecker,
+			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId),
+			actionId);
 	}
 
 	@Override
@@ -96,20 +97,6 @@ public class DispatchTriggerModelResourcePermission
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
 		return null;
-	}
-
-	private boolean _contains(
-		PermissionChecker permissionChecker, DispatchTrigger dispatchTrigger,
-		String actionId) {
-
-		if (permissionChecker.isCompanyAdmin(dispatchTrigger.getCompanyId())) {
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			DispatchTrigger.class.getName(),
-			dispatchTrigger.getDispatchTriggerId(), actionId);
 	}
 
 	@Reference

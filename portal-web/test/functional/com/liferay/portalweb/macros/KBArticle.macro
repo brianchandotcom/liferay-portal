@@ -1153,9 +1153,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 
-			AssertElementPresent(
-				key_service = "youtube",
-				locator1 = "CKEditor#VIDEO_BUTTON_PLAY");
+			AssertElementPresent(locator1 = "CKEditor#VIDEO_BUTTON_PLAY");
 		}
 
 		if (isSet(kbChildArticleTitle)) {

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +98,23 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@Test
+	public void testGetPanelAppsShowsExportAndImportAndStagingInTheStagingCategoryForADepotGroup()
+		throws Exception {
+
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+
+		Assert.assertEquals(panelApps.toString(), 3, panelApps.size());
+
+		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.EXPORT);
+		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.IMPORT);
+		_assertPanelAppsContain(
+			panelApps, StagingProcessesPortletKeys.STAGING_PROCESSES);
+	}
+
+	@Test
 	public void testGetPanelAppsShowsOnlyDocumentsAndMediaAndWebContentInTheContentCategoryForADepotGroup()
 		throws Exception {
 
@@ -113,21 +131,6 @@ public class DepotPanelAppControllerTest {
 		_assertPanelAppsContain(
 			panelApps,
 			"com_liferay_translation_web_internal_portlet_TranslationPortlet");
-	}
-
-	@Test
-	public void testGetPanelAppsShowsOnlyExportAndIMportInTheStagingCategoryForADepotGroup()
-		throws Exception {
-
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
-			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
-
-		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
-
-		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.EXPORT);
-		_assertPanelAppsContain(panelApps, ExportImportPortletKeys.IMPORT);
 	}
 
 	@Test

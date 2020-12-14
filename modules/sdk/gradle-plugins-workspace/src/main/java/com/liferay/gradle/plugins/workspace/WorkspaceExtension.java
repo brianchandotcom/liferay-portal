@@ -295,6 +295,10 @@ public class WorkspaceExtension {
 		_bundleCacheDir = bundleCacheDir;
 	}
 
+	public void setBundleChecksumMD5(Object bundleChecksumMD5) {
+		_bundleChecksumMD5 = bundleChecksumMD5;
+	}
+
 	public void setBundleDistRootDirName(Object bundleDistRootDirName) {
 		_bundleDistRootDirName = bundleDistRootDirName;
 	}
@@ -321,10 +325,6 @@ public class WorkspaceExtension {
 
 	public void setBundleUrl(Object bundleUrl) {
 		_bundleUrl = bundleUrl;
-	}
-
-	public void setBundleUrlChecksumMD5(Object bundleChecksumMD5) {
-		_bundleChecksumMD5 = bundleChecksumMD5;
 	}
 
 	public void setConfigsDir(Object configsDir) {

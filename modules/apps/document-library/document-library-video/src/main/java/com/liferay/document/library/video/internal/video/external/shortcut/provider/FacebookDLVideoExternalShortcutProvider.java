@@ -18,7 +18,6 @@ import com.liferay.document.library.video.external.shortcut.DLVideoExternalShort
 import com.liferay.document.library.video.external.shortcut.provider.DLVideoExternalShortcutProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -71,9 +70,15 @@ public class FacebookDLVideoExternalShortcutProvider
 			@Override
 			public String renderHTML(HttpServletRequest httpServletRequest) {
 				try {
-					return StringUtil.replace(
-						_getTpl(), "{embedId}",
-						URLEncoder.encode(url, StringPool.UTF8));
+					return StringBundler.concat(
+						"<iframe allowFullScreen=\"true\" allowTransparency=",
+						"\"true\" frameborder=\"0\" height=\"315\" ",
+						"src=\"https://www.facebook.com/plugins/video.php?",
+						"height=315&href=",
+						URLEncoder.encode(url, StringPool.UTF8),
+						"&show_text=0&width=560\" scrolling=\"no\" ",
+						"style=\"border: none; overflow: hidden;\" ",
+						"width=\"560\"></iframe>");
 				}
 				catch (UnsupportedEncodingException
 							unsupportedEncodingException) {
@@ -83,16 +88,6 @@ public class FacebookDLVideoExternalShortcutProvider
 			}
 
 		};
-	}
-
-	private String _getTpl() {
-		return StringBundler.concat(
-			"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
-			"frameborder=\"0\" height=\"315\" ",
-			"src=\"https://www.facebook.com/plugins/video.php?",
-			"height=315&href={embedId}&show_text=0&width=560\" ",
-			"scrolling=\"no\" style=\"border: none; overflow: hidden;\" ",
-			"width=\"560\"></iframe>");
 	}
 
 	private boolean _matches(String url) {

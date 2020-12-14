@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
@@ -77,9 +76,19 @@ public class YouTubeDLVideoExternalShortcutProvider
 
 			@Override
 			public String renderHTML(HttpServletRequest httpServletRequest) {
-				return StringUtil.replace(
-					_getTpl(_http.getParameter(url, "t", false)), "{embedId}",
-					youTubeVideoId);
+				String iframeSrc =
+					"https://www.youtube.com/embed/" + youTubeVideoId +
+						"?rel=0";
+				String start = _http.getParameter(url, "t", false);
+
+				if (Validator.isNotNull(start)) {
+					iframeSrc = _http.addParameter(iframeSrc, "start", start);
+				}
+
+				return StringBundler.concat(
+					"<iframe allow=\"autoplay; encrypted-media\" ",
+					"allowfullscreen height=\"315\" frameborder=\"0\" ",
+					"src=\"", iframeSrc, "\" width=\"560\"></iframe>");
 			}
 
 		};
@@ -111,19 +120,6 @@ public class YouTubeDLVideoExternalShortcutProvider
 		catch (Exception exception) {
 			return JSONFactoryUtil.createJSONObject();
 		}
-	}
-
-	private String _getTpl(String start) {
-		String iframeSrc = "https://www.youtube.com/embed/{embedId}?rel=0";
-
-		if (Validator.isNotNull(start)) {
-			iframeSrc = _http.addParameter(iframeSrc, "start", start);
-		}
-
-		return StringBundler.concat(
-			"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
-			"height=\"315\" frameborder=\"0\" src=\"", iframeSrc,
-			"\" width=\"560\"></iframe>");
 	}
 
 	private String _getYouTubeVideoId(String url) {

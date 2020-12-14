@@ -18,7 +18,6 @@ import com.liferay.document.library.video.external.shortcut.DLVideoExternalShort
 import com.liferay.document.library.video.external.shortcut.provider.DLVideoExternalShortcutProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
@@ -68,20 +67,16 @@ public class TwitchDLVideoExternalShortcutProvider
 
 			@Override
 			public String renderHTML(HttpServletRequest httpServletRequest) {
-				return StringUtil.replace(
-					_getTpl(_portal.getHost(httpServletRequest)), "{embedId}",
-					twitchVideoId);
+				return StringBundler.concat(
+					"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
+					"height=\"315\" ",
+					"src=\"https://player.twitch.tv/?autoplay=false&video=",
+					twitchVideoId, "&parent=",
+					_portal.getHost(httpServletRequest),
+					"\" scrolling=\"no\" width=\"560\" ></iframe>");
 			}
 
 		};
-	}
-
-	private String _getTpl(String host) {
-		return StringBundler.concat(
-			"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
-			"height=\"315\" ",
-			"src=\"https://player.twitch.tv/?autoplay=false&video={embedId}",
-			"&parent=", host, "\" scrolling=\"no\" width=\"560\" ></iframe>");
 	}
 
 	private String _getTwitchVideoId(String url) {

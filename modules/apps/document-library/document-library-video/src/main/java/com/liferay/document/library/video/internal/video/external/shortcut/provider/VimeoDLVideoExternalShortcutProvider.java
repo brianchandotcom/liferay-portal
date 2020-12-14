@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
@@ -77,7 +76,11 @@ public class VimeoDLVideoExternalShortcutProvider
 
 			@Override
 			public String renderHTML(HttpServletRequest httpServletRequest) {
-				return StringUtil.replace(_getTpl(), "{embedId}", vimeoVideoId);
+				return StringBundler.concat(
+					"<iframe allowfullscreen frameborder=\"0\" height=\"315\" ",
+					"mozallowfullscreen src=\"https://player.vimeo.com/video/",
+					vimeoVideoId, "\" webkitallowfullscreen ",
+					"width=\"560\"></iframe>");
 			}
 
 		};
@@ -108,14 +111,6 @@ public class VimeoDLVideoExternalShortcutProvider
 		catch (Exception exception) {
 			return null;
 		}
-	}
-
-	private String _getTpl() {
-		return StringBundler.concat(
-			"<iframe allowfullscreen frameborder=\"0\" height=\"315\" ",
-			"mozallowfullscreen ",
-			"src=\"https://player.vimeo.com/video/{embedId}\" ",
-			"webkitallowfullscreen width=\"560\"></iframe>");
 	}
 
 	private String _getVimeoVideoId(String url) {

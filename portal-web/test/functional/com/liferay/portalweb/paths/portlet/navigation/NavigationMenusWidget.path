@@ -43,6 +43,11 @@
 	<td>//a[contains(@aria-labelledby,'SiteNavigationMenuPortlet')][normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OPEN_DROPDOWN_MENU</td>
+	<td>//a[contains(@class,'dropdown-toggle')][contains(.,'${key_pageName}')]/parent::li[contains(@class,'open')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

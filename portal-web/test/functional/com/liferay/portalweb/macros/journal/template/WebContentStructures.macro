@@ -64,24 +64,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro addSubstructure {
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		var key_ddlDataDefinitionName = "${parentStructureName}";
-
-		AssertClickNoError(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${parentStructureName}");
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro copyCP {
 		var key_ddlDataDefinitionName = "${structureName}";
 

@@ -372,7 +372,65 @@ focus on proven technologies with high demand in the market.
 
 A further exploration and analysis of the different frontend options available
 can be found in [The State of Frontend Infrastructure](https://liferay.dev/blogs/-/blogs/the-state-of-frontend-infrastructure) including a rationale on why we're moving
-away from soy:
+away from Soy:
+
+> Liferay has invested several years into Soy believing it was the holy grail.
+> We believed the ability to compile Closure templates would provide us the
+> performance of JSP with the reusable components of other JavaScript
+> frameworks. While it came close to achieving some of those goals, we never
+> hit the performance we wanted and more importantly, it always felt like we
+> were the only people using this technology.
+
+---------------------------------------
+
+### Server-side Closure Templates (Soy) Support has been removed
+- **Date:** 2020-Dec-14
+- **JIRA Ticket:** [LPS-122956](https://issues.liferay.com/browse/LPS-122956)
+
+#### What changed?
+
+The following modules and the classes they exported to allow Soy rendering
+server-side have been removed:
+- `portal-template-soy-api`
+- `portal-template-soy-impl`
+- `portal-template-soy-context-contributor`
+
+To simplify the migration, the following modules remain available in a deprecated
+deprecated fashion providing only client-side initialization of previous Soy
+components:
+- `portal-template-soy-renderer-api`
+- `portal-template-soy-renderer-impl`
+
+#### Who is affected?
+
+Anyone directly using removed classes like `SoyContext`, `SoyHTMLData`... or
+declaring `TemplateContextContributor` using `LANG_TYPE_SOY` as the value for
+the `lang.type` attribute.
+
+Developers using our Soy `ComponentRenderer` to initialize Soy components.
+
+#### How should I update my code?
+
+There is no replacement for the removed Soy support. If you fall under the first
+scenario, we recommend switching to a different supported template language and
+rewrite your templates and components.
+
+If you're using `ComponentRenderer`, the only difference should be that your
+components no longer produce markup server-side. If this is important to you, a
+temporary workaround has been added. You can manually generate a version of the
+markup you want to render server-side and pass it as a `__placeholder__` property
+in your `context` parameter. Keep in mind that `ComponentRenderer` is deprecated
+and will go away in the future, so we kindly recommend that you rewrite your
+component using a different technology.
+
+#### Why was this change made?
+
+This is done as a way to simplify our frontend technical offering and better
+focus on proven technologies with high demand in the market.
+
+A further exploration and analysis of the different frontend options available
+can be found in [The State of Frontend Infrastructure](https://liferay.dev/blogs/-/blogs/the-state-of-frontend-infrastructure) including a rationale on why we're moving
+away from Soy:
 
 > Liferay has invested several years into Soy believing it was the holy grail.
 > We believed the ability to compile Closure templates would provide us the

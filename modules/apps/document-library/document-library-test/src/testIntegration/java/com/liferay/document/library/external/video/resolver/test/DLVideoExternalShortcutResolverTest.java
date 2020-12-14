@@ -113,31 +113,31 @@ public class DLVideoExternalShortcutResolverTest {
 			"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
 			"height=\"315\" frameborder=\"0\" ",
 			"src=\"https://www.youtube.com/embed",
-			"/VIDEO_ID?rel=0\" width=\"560\"></iframe>");
+			"/IxNczRyywXY?rel=0\" width=\"560\"></iframe>");
 
 		Assert.assertEquals(
 			expectedIframe,
-			_renderHTML("https://www.youtube.com/watch?v=VIDEO_ID"));
+			_renderHTML("https://www.youtube.com/watch?v=IxNczRyywXY"));
 		Assert.assertEquals(
-			expectedIframe, _renderHTML("https://youtu.be/VIDEO_ID"));
+			expectedIframe, _renderHTML("https://youtu.be/IxNczRyywXY"));
 		Assert.assertEquals(
 			expectedIframe,
 			_renderHTML(
-				"https://www.youtube.com/watch?v=VIDEO_ID&ab_channel=" +
+				"https://www.youtube.com/watch?v=IxNczRyywXY&ab_channel=" +
 					"CHANNEL_ID"));
 		Assert.assertEquals(
 			expectedIframe,
 			_renderHTML(
 				"https://www.youtube.com/watch?feature=player_embedded&v=" +
-					"VIDEO_ID"));
+					"IxNczRyywXY"));
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<iframe allow=\"autoplay; encrypted-media\" allowfullscreen ",
 				"height=\"315\" frameborder=\"0\" ",
 				"src=\"https://www.youtube.com/embed",
-				"/VIDEO_ID?rel=0&start=61\" width=\"560\"></iframe>"),
-			_renderHTML("https://www.youtube.com/watch?v=VIDEO_ID&t=61"));
+				"/IxNczRyywXY?rel=0&start=61\" width=\"560\"></iframe>"),
+			_renderHTML("https://www.youtube.com/watch?v=IxNczRyywXY&t=61"));
 	}
 
 	private String _renderHTML(String url) {

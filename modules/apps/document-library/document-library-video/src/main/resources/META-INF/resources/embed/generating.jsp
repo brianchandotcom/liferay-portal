@@ -31,11 +31,11 @@
 </div>
 
 <%
-FileEntry fileEntry = (FileEntry)request.getAttribute(FileEntry.class.getName());
+FileVersion fileVersion = (FileVersion)request.getAttribute(FileVersion.class.getName());
 %>
 
 <portlet:resourceURL id="/document_library_video/get_embed_video_status" var="getEmbedVideoStatusURL">
-	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+	<portlet:param name="fileVersionId" value="<%= String.valueOf(fileVersion.getFileVersionId()) %>" />
 </portlet:resourceURL>
 
 <liferay-frontend:component

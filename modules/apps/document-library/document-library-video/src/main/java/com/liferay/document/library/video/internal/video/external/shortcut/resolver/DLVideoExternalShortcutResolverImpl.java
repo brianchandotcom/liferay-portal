@@ -22,7 +22,7 @@ import com.liferay.document.library.video.internal.helper.DLVideoExternalShortcu
 import com.liferay.document.library.video.internal.helper.DLVideoExternalShortcutMetadataHelperFactory;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,11 +40,11 @@ public class DLVideoExternalShortcutResolverImpl
 	implements DLVideoExternalShortcutResolver {
 
 	@Override
-	public DLVideoExternalShortcut resolve(FileEntry fileEntry) {
+	public DLVideoExternalShortcut resolve(FileVersion fileVersion) {
 		DLVideoExternalShortcutMetadataHelper
 			dlVideoExternalShortcutMetadataHelper =
 				_dlVideoExternalShortcutMetadataHelperFactory.
-					getDLVideoExternalShortcutMetadataHelper(fileEntry);
+					getDLVideoExternalShortcutMetadataHelper(fileVersion);
 
 		if (dlVideoExternalShortcutMetadataHelper != null) {
 			return _getDLVideoExternalShortcut(

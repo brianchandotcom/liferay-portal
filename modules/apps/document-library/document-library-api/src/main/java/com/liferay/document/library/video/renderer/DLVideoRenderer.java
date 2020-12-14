@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.video.renderer;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface DLVideoRenderer {
 
 	public String renderHTML(
-		FileEntry fileEntry, HttpServletRequest httpServletRequest);
+		FileVersion fileVersion, HttpServletRequest httpServletRequest);
 
 }

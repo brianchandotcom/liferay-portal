@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.HashSet;
@@ -59,8 +58,7 @@ public class DLVideoDLPreviewRendererProvider
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/preview.jsp");
 
-			request.setAttribute(
-				FileEntry.class.getName(), fileVersion.getFileEntry());
+			request.setAttribute(FileVersion.class.getName(), fileVersion);
 
 			request.setAttribute(
 				DLVideoRenderer.class.getName(), _dlVideoRenderer);

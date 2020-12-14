@@ -22,7 +22,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -40,10 +40,10 @@ public class DLVideoRendererImpl implements DLVideoRenderer {
 
 	@Override
 	public String renderHTML(
-		FileEntry fileEntry, HttpServletRequest httpServletRequest) {
+		FileVersion fileVersion, HttpServletRequest httpServletRequest) {
 
 		DLVideoExternalShortcut dlVideoExternalShortcut =
-			_dlVideoExternalShortcutResolver.resolve(fileEntry);
+			_dlVideoExternalShortcutResolver.resolve(fileVersion);
 
 		if (dlVideoExternalShortcut != null) {
 			return dlVideoExternalShortcut.renderHTML(httpServletRequest);
@@ -51,12 +51,12 @@ public class DLVideoRendererImpl implements DLVideoRenderer {
 
 		return StringBundler.concat(
 			"<iframe height=\"315\" frameborder=\"0\" src=\"",
-			_getEmbedVideoURL(fileEntry, httpServletRequest), "&",
+			_getEmbedVideoURL(fileVersion, httpServletRequest), "&",
 			"\" width=\"560\"></iframe>");
 	}
 
 	private String _getEmbedVideoURL(
-		FileEntry fileEntry, HttpServletRequest httpServletRequest) {
+		FileVersion fileVersion, HttpServletRequest httpServletRequest) {
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
@@ -74,7 +74,7 @@ public class DLVideoRendererImpl implements DLVideoRenderer {
 		getEmbedVideoURL.setParameter(
 			"mvcRenderCommandName", "/document_library_video/embed_video");
 		getEmbedVideoURL.setParameter(
-			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			"fileVersionId", String.valueOf(fileVersion.getFileVersionId()));
 
 		return getEmbedVideoURL.toString();
 	}

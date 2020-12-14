@@ -17,6 +17,7 @@ package com.liferay.document.library.item.selector.web.internal;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -47,9 +48,11 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws PortalException {
+
 		return _dlVideoRenderer.renderHTML(
-			fileEntry, themeDisplay.getRequest());
+			fileEntry.getFileVersion(), themeDisplay.getRequest());
 	}
 
 	@Reference

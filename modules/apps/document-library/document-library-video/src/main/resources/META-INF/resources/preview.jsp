@@ -28,9 +28,9 @@
 		<%
 		DLVideoRenderer dlVideoRenderer = (DLVideoRenderer)request.getAttribute(DLVideoRenderer.class.getName());
 
-		FileEntry fileEntry = (FileEntry)request.getAttribute(FileEntry.class.getName());
+		FileVersion fileVersion = (FileVersion)request.getAttribute(FileVersion.class.getName());
 		%>
 
-		<%= dlVideoRenderer.renderHTML(fileEntry, request) %>
+		<%= dlVideoRenderer.renderHTML(fileVersion, request) %>
 	</div>
 </div>

@@ -15,14 +15,14 @@
 package com.liferay.document.library.video.external.shortcut.resolver;
 
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 /**
  * @author Alejandro Tardín
  */
 public interface DLVideoExternalShortcutResolver {
 
-	public DLVideoExternalShortcut resolve(FileEntry fileEntry);
+	public DLVideoExternalShortcut resolve(FileVersion fileVersion);
 
 	public DLVideoExternalShortcut resolve(String url);
 

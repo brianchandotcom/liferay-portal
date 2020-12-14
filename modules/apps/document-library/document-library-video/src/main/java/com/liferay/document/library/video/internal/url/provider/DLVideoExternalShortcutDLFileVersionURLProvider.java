@@ -15,12 +15,10 @@
 package com.liferay.document.library.video.internal.url.provider;
 
 import com.liferay.document.library.url.provider.DLFileVersionURLProvider;
-import com.liferay.document.library.video.internal.constants.DLVideoConstants;
-import com.liferay.document.library.video.internal.helper.DLVideoExternalShortcutMetadataHelper;
-import com.liferay.document.library.video.internal.helper.DLVideoExternalShortcutMetadataHelperFactory;
+import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
+import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,26 +40,17 @@ public class DLVideoExternalShortcutDLFileVersionURLProvider
 
 	@Override
 	public String getURL(FileVersion fileVersion, ThemeDisplay themeDisplay) {
-		DLVideoExternalShortcutMetadataHelper
-			dlVideoExternalShortcutMetadataHelper =
-				_dlVideoExternalShortcutMetadataHelperFactory.
-					getDLVideoExternalShortcutMetadataHelper(fileVersion);
+		DLVideoExternalShortcut dlVideoExternalShortcut =
+			_dlVideoExternalShortcutResolver.resolve(fileVersion);
 
-		if (dlVideoExternalShortcutMetadataHelper != null) {
-			String thumbnailURL =
-				dlVideoExternalShortcutMetadataHelper.getFieldValue(
-					DLVideoConstants.DDM_FIELD_NAME_THUMBNAIL_URL);
-
-			if (Validator.isNotNull(thumbnailURL)) {
-				return thumbnailURL;
-			}
+		if (dlVideoExternalShortcut != null) {
+			return dlVideoExternalShortcut.getThumbnailURL();
 		}
 
 		return null;
 	}
 
 	@Reference
-	private DLVideoExternalShortcutMetadataHelperFactory
-		_dlVideoExternalShortcutMetadataHelperFactory;
+	private DLVideoExternalShortcutResolver _dlVideoExternalShortcutResolver;
 
 }

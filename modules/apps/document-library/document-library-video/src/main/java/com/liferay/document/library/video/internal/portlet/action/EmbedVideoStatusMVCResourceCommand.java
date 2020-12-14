@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -73,12 +72,10 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private int _getEmbedVideoStatus(ResourceRequest resourceRequest) {
 		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				ParamUtil.getLong(resourceRequest, "fileEntryId"));
+			FileVersion fileVersion = _dlAppLocalService.getFileVersion(
+				ParamUtil.getLong(resourceRequest, "fileVersionId"));
 
-			if (fileEntry != null) {
-				FileVersion fileVersion = fileEntry.getFileVersion();
-
+			if (fileVersion != null) {
 				if (_isPreviewFailure(fileVersion)) {
 					return HttpServletResponse.SC_SERVICE_UNAVAILABLE;
 				}

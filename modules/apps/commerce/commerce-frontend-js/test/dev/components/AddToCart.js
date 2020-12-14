@@ -19,15 +19,16 @@ import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 for (let i = 1; i <= 15; i++) {
 	launcher('add_to_cart', 'add-to-cart-' + i, {
 		channel: {
-			id: 41005,
 			currencyCode: 'USD',
+			id: 41005,
 		},
 		cpInstance: {
 			accountId: 43936,
 			isInCart: false,
 			options: '[]',
-			skuId: 43712
+			skuId: 43712,
 		},
+		orderId: 43939,
 		quantity: 1,
 		settings: {
 			block: false,
@@ -41,7 +42,6 @@ for (let i = 1; i <= 15; i++) {
 				multipleQuantity: 1,
 			},
 		},
-		orderId: 43939,
 		spritemap: './assets/icons.svg',
 	});
 }

@@ -1,15 +1,9 @@
-.quantity-selector {
-	margin: 0 auto;
-	.quantitySelect {
-		width: 7rem;
-	}
-	.simple {
-		&.input-group {
-			flex-wrap: nowrap;
-		}
+input[type='number'].quantity-selector {
+	padding: 0.25rem 0.5rem 0.25rem 1rem;
 
-		.quantity-selector-input {
-			margin: 0 auto;
-		}
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		margin: 0;
+		opacity: 1;
 	}
 }

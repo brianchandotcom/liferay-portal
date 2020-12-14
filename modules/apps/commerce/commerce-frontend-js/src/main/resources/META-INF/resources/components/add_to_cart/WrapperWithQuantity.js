@@ -18,24 +18,22 @@ import React, {useState} from 'react';
 
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 
-function WrapperWithQuantity({
-	AddToCartButton,
-	...props
-}) {
+function WrapperWithQuantity({AddToCartButton, ...props}) {
 	const [currentQuantity, setCurrentQuantity] = useState();
 
 	return (
-		<div className={classnames({
-			'add-to-cart': true,
-			'align-items-center': true,
-			'd-flex': true,
-			'flex-column': props.settings.block,
-		})}>
+		<div
+			className={classnames({
+				'add-to-cart': true,
+				'align-items-center': true,
+				'd-flex': true,
+				'flex-column': props.settings.block,
+			})}
+		>
 			<QuantitySelector
 				{...props.settings.withQuantity}
 				disabled={
-					props.settings.disabled ||
-					!props?.cpInstance.accountId
+					props.settings.disabled || !props?.cpInstance.accountId
 				}
 				large={!props.settings.block}
 				onUpdate={setCurrentQuantity}

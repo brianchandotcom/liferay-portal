@@ -72,8 +72,8 @@ function QuantitySelector({
 
 	const commonProps = {
 		className: classnames({
+			'form-control-lg': large,
 			'quantity-selector': true,
-			'form-control-lg': large
 		}),
 		'data-component-id': componentId,
 		disabled,

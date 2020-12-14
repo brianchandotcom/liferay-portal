@@ -19,15 +19,17 @@ import AddToCartButton from './AddToCartButton';
 import WrapperWithQuantity from './WrapperWithQuantity';
 
 function AddToCart(props) {
-	return !props?.settings?.withQuantity
-		? <AddToCartButton {...props} />
-		: <WrapperWithQuantity AddToCartButton={AddToCartButton} {...props} />
+	return !props?.settings?.withQuantity ? (
+		<AddToCartButton {...props} />
+	) : (
+		<WrapperWithQuantity AddToCartButton={AddToCartButton} {...props} />
+	);
 }
 
 AddToCart.defaultProps = {
 	settings: {
-		withQuantity: false
-	}
+		withQuantity: false,
+	},
 };
 
 AddToCart.propTypes = {
@@ -45,7 +47,7 @@ AddToCart.propTypes = {
 				name: PropTypes.string,
 				onUpdate: PropTypes.func,
 				quantity: PropTypes.number,
-			})
+			}),
 		]),
 	}),
 };

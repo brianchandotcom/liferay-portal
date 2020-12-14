@@ -1,131 +1,97 @@
 .add-to-cart {
-	margin: 0.5rem 0;
-	&-block {
-		input {
-			width: 60px;
-		}
-
-		select {
-			width: 80px;
-		}
-	}
-
-	&-icon-container {
-		position: relative;
-	}
-
-	&-inline {
-		display: flex;
-
-		input {
-			width: 70px;
-		}
-
-		select {
-			width: 90px;
-		}
-
-		.input-group,
-		.form-control {
-			height: 100%;
-		}
-	}
-}
-
-.add-to-cart-icon-container {
-	opacity: 0.4;
-	position: relative;
-	transition: opacity 0.1s ease-in;
-
-	&.active {
-		opacity: 1;
-	}
-}
-
-.add-to-cart-icon {
-	display: inline-flex;
-}
-
-.add-to-cart-quantity-marker {
-	background: white;
-	border-radius: 50%;
-	height: 6px;
-	opacity: 0.6;
-	position: absolute;
-	right: -6px;
-	top: -9px;
-	transform: scale(0);
-	transform-origin: 50%;
-	transition: opacity 0.2s ease-in,
-		transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	width: 6px;
-	z-index: 1;
-	opacity: 0.5;
-	transform: scale(1);
-
-	&.active {
-		opacity: 1;
-		transform: scale(1);
-	}
-
-	&.adding {
-		animation-duration: 0.3s;
-		animation-fill-mode: both;
-		animation-name: addToCartBounceIn;
-		opacity: 1;
-	}
-
-	&.incrementing {
-		animation-duration: 0.3s;
-		animation-fill-mode: both;
-		animation-name: addToCartBounce;
-		opacity: 1;
+	.quantity-selector {
+		margin: 0.6rem;
+		max-width: 6.125rem;
 	}
 }
 
 .btn-add-to-cart {
-	&-block {
-		margin-top: $spacer;
+	border: 0;
+	min-width: 3.5rem;
+	white-space: nowrap;
+
+	.cart-icon {
+		display: inline-block;
+		margin: 0 0.6rem;
+		opacity: 0.3;
+		position: relative;
+
+		.rtl & {
+			transform: rotateY(180deg);
+		}
 	}
 
-	&-inline {
-		margin-left: $spacer;
+	&.btn-block {
+		.text-truncate-inline {
+			max-width: calc(100% - 24px);
+		}
 	}
-	&.rtl {
-		direction: rtl;
-	}
-	&.trl {
-		direction: rtl;
-	}
-}
 
-@keyframes addToCartBounceIn {
-	0% {
-		animation-timing-function: ease-out;
-		transform: scale(0);
-	}
-	70% {
-		animation-timing-function: ease-in;
-		transform: scale(1.3);
-	}
-	100% {
-		animation-timing-function: ease-out;
-		transform: scale(1);
-	}
-}
+	&.icon-only {
+		.cart-icon {
+			margin: 0;
+			transform: translateX(-0.15rem);
 
-@keyframes addToCartBounce {
-	0%,
-	100% {
-		animation-timing-function: ease-out;
-		transform: scale(1);
+			.rtl & {
+				transform: translateX(0.15rem);
+			}
+		}
 	}
-	10% {
-		animation-timing-function: ease-in;
-		transform: scale(0.8);
-	}
-	70% {
-		animation-timing-function: ease-in;
-		transform: scale(1.7);
+
+	&.is-added {
+		.cart-icon {
+			opacity: 1;
+
+			&::after,
+			&::before {
+				content: '⬤';
+				font-size: 0.6rem;
+				height: 100%;
+				left: 80%;
+				position: absolute;
+				top: -15%;
+				transform-origin: 50% 25%;
+				width: 100%;
+			}
+
+			&::after {
+				opacity: 0;
+			}
+
+			&::before {
+				animation: addToCartBounceIn 0.2s ease-out 1 forwards;
+			}
+
+			@keyframes addToCartBounceIn {
+				0% {
+					animation-timing-function: ease-out;
+					transform: scale(0);
+				}
+				70% {
+					animation-timing-function: ease-in;
+					transform: scale(1.3);
+				}
+				100% {
+					animation-timing-function: ease-out;
+					transform: scale(1);
+				}
+			}
+		}
+
+		&:active .cart-icon::after {
+			animation: addToCartBounce 0.2s ease-out 1 none;
+
+			@keyframes addToCartBounce {
+				0%,
+				100% {
+					opacity: 0;
+					transform: scale(1);
+				}
+				50% {
+					opacity: 1;
+					transform: scale(1.5);
+				}
+			}
+		}
 	}
 }

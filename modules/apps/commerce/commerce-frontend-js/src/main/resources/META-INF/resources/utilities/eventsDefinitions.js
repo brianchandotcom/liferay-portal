@@ -14,11 +14,11 @@
 
 export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
 export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
-export const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
-export const CURRENT_ORDER_UPDATED = 'current-order-updated';
 export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
 export const CP_INSTANCE_CHANGED = 'product-instance-changed';
+export const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
+export const CURRENT_ORDER_UPDATED = 'current-order-updated';
 export const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';
 export const CURRENT_PRODUCT_UPDATED = 'current-product-updated';
 export const DATASET_ACTION_PERFORMED = 'data-set-action-performed';
@@ -35,11 +35,11 @@ export const UPDATE_DATASET_DISPLAY = 'update-data-set-display';
 export default {
 	AUTOCOMPLETE_VALUE_UPDATED,
 	CART_PRODUCT_QUANTITY_CHANGED,
-	CURRENT_ACCOUNT_UPDATED,
-	CURRENT_ORDER_UPDATED,
 	CLOSE_MODAL,
 	CLOSE_SIDE_PANEL,
 	CP_INSTANCE_CHANGED,
+	CURRENT_ACCOUNT_UPDATED,
+	CURRENT_ORDER_UPDATED,
 	CURRENT_PRODUCT_STATUS_CHANGED,
 	CURRENT_PRODUCT_UPDATED,
 	DATASET_ACTION_PERFORMED,

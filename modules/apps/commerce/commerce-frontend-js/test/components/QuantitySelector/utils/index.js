@@ -12,7 +12,7 @@
  * details.
  */
 
-import * as Utils from '../../../src/main/resources/META-INF/resources/components/quantity_selector/utils/index';
+import * as Utils from '../../../../src/main/resources/META-INF/resources/components/quantity_selector/utils';
 
 describe('QuantitySelector Util -> generateQuantityOptions', () => {
 	it('returns allowedQuantities, if non-empty, as formatted options', () => {

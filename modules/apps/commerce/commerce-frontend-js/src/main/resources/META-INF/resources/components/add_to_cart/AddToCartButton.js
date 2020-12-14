@@ -22,10 +22,9 @@ import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CP_INSTANCE_CHANGED,
 	CURRENT_ORDER_UPDATED,
-	PRODUCT_REMOVED_FROM_CART
+	PRODUCT_REMOVED_FROM_CART,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
-import WrapperWithQuantity from './WrapperWithQuantity';
 
 function AddToCartButton({
 	channel,
@@ -43,49 +42,56 @@ function AddToCartButton({
 	const add = () => {
 		const toCartItem = {
 			options: catalogItem.options,
-			quantity: quantity,
-			skuId: catalogItem.skuId
+			quantity,
+			skuId: catalogItem.skuId,
 		};
 
 		return currentCartId
 			? CartResource.createItemByCartId(currentCartId, toCartItem)
 			: CartResource.createCartByChannelId(channel.id, {
-				accountId: catalogItem.accountId,
-				cartItems: [toCartItem],
-				currencyCode: channel.currencyCode,
-			}).then(({id}) => Promise.resolve(id));
+					accountId: catalogItem.accountId,
+					cartItems: [toCartItem],
+					currencyCode: channel.currencyCode,
+			  }).then(({id}) => Promise.resolve(id));
 	};
 
-	const remove = useCallback(({skuId: removedSkuId}) => {
-		if (removedSkuId === catalogItem.skuId) {
-			updateCatalogItem({ ...catalogItem, isInCart: false});
-		}
-	}, [catalogItem.skuId]);
-
-	const reset = useCallback((cpInstance) =>
-		CartResource.getItemById(cpInstance.cpInstanceId)
-			.then(() => updateCatalogItem({
-				...catalogItem,
-				...cpInstance,
-				isInCart: true,
-			}))
-			.catch(() => updateCatalogItem({
-				...catalogItem,
-				...cpInstance,
-				isInCart: false,
-			})),
+	const remove = useCallback(
+		({skuId: removedSkuId}) => {
+			if (removedSkuId === catalogItem.skuId) {
+				updateCatalogItem({...catalogItem, isInCart: false});
+			}
+		},
 		[catalogItem]
+	);
+
+	const reset = useCallback(
+		(cpInstance) =>
+			CartResource.getItemById(cpInstance.cpInstanceId)
+				.then(() =>
+					updateCatalogItem({
+						...catalogItem,
+						...cpInstance,
+						isInCart: true,
+					})
+				)
+				.catch(() =>
+					updateCatalogItem({
+						...catalogItem,
+						...cpInstance,
+						isInCart: false,
+					})
+				),
+		[CartResource, catalogItem]
 	);
 
 	useEffect(() => {
 		Liferay.on(CP_INSTANCE_CHANGED, reset);
 		Liferay.on(PRODUCT_REMOVED_FROM_CART, remove);
 
-
 		return () => {
 			Liferay.detach(CP_INSTANCE_CHANGED, reset);
 			Liferay.detach(PRODUCT_REMOVED_FROM_CART, remove);
-		}
+		};
 	}, [remove, reset]);
 
 	return (
@@ -100,13 +106,16 @@ function AddToCartButton({
 				})}
 				disabled={settings.disabled || !catalogItem.accountId}
 				displayType={'primary'}
-				onClick={() => add()
+				onClick={() =>
+					add()
 						.then((orderId) => {
 							const orderDidChange =
 								orderId && orderId !== currentCartId;
 
 							Liferay.fire(CURRENT_ORDER_UPDATED, {
-								orderId: orderDidChange ? orderId : currentCartId
+								orderId: orderDidChange
+									? orderId
+									: currentCartId,
 							});
 
 							updateCatalogItem({...catalogItem, isInCart: true});
@@ -115,7 +124,8 @@ function AddToCartButton({
 								setCurrentCartId(orderId);
 							}
 						})
-						.catch(showErrorNotification)}
+						.catch(showErrorNotification)
+				}
 			>
 				{!settings.iconOnly && (
 					<span className={'text-truncate-inline'}>
@@ -126,10 +136,7 @@ function AddToCartButton({
 				)}
 
 				<span className={'cart-icon'}>
-					<ClayIcon
-						spritemap={spritemap}
-						symbol={'shopping-cart'}
-					/>
+					<ClayIcon spritemap={spritemap} symbol={'shopping-cart'} />
 				</span>
 			</ClayButton>
 		</>
@@ -153,6 +160,7 @@ AddToCartButton.defaultProps = {
 
 AddToCartButton.propTypes = {
 	channel: PropTypes.shape({
+
 		/**
 		 * The currency is currently always
 		 * one and the same per single channel

@@ -16,11 +16,11 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
-import QuantitySelector from '../../src/main/resources/META-INF/resources/components/quantity_selector/QuantitySelector';
-import * as Utils from '../../src/main/resources/META-INF/resources/components/quantity_selector/utils/index';
+import QuantitySelector from '../../../src/main/resources/META-INF/resources/components/quantity_selector/QuantitySelector';
+import * as Utils from '../../../src/main/resources/META-INF/resources/components/quantity_selector/utils';
 
 jest.mock(
-	'../../src/main/resources/META-INF/resources/components/quantity_selector/utils/index'
+	'../../../src/main/resources/META-INF/resources/components/quantity_selector/utils/index'
 );
 
 describe('QuantitySelector', () => {
@@ -260,6 +260,28 @@ describe('QuantitySelector', () => {
 					timeout: Utils.UPDATE_AFTER,
 				}
 			);
+		});
+
+		it('updates the quantity to the default of minQuantity if defined and if input value is empty', async () => {
+			const onUpdateSpy = jest.fn();
+
+			const defaultProps = {
+				minQuantity: 5,
+				quantity: 1,
+			};
+
+			const Component = render(
+				<QuantitySelector onUpdate={onUpdateSpy} {...defaultProps} />
+			);
+
+			const element = Component.container.querySelector('input');
+			const updatedValue = '';
+
+			await act(async () => {
+				fireEvent.change(element, {target: {value: updatedValue}});
+			});
+
+			expect(element.value).toEqual(defaultProps.minQuantity.toString());
 		});
 
 		it('disables the input element if required via prop', () => {

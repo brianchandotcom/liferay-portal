@@ -12,22 +12,16 @@
  * details.
  */
 
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 export function useResizeObserver(targetRef) {
 	const [contentRect, setContentRect] = useState({});
-	const resizeObserver = useRef(null);
 
 	useEffect(() => {
-		if ('ResizeObserver' in window) {
-			observe(ResizeObserver);
-		}
-		else {
-			throw new Error('ResizeObserver is not supported');
-		}
+		let resizeObserver;
 
-		function observe(ResizeObserver) {
-			resizeObserver.current = new ResizeObserver((entries) => {
+		if ('ResizeObserver' in window) {
+			resizeObserver = new ResizeObserver((entries) => {
 				const {
 					bottom,
 					height,
@@ -36,21 +30,24 @@ export function useResizeObserver(targetRef) {
 					top,
 					width,
 				} = entries[0].contentRect;
+
 				setContentRect({bottom, height, left, right, top, width});
 			});
+
 			if (targetRef.current) {
-				resizeObserver.current.observe(targetRef.current);
+				resizeObserver.observe(targetRef.current);
 			}
 		}
-
-		return disconnect;
-	}, [targetRef]);
-
-	function disconnect() {
-		if (resizeObserver.current) {
-			resizeObserver.current.disconnect();
+		else {
+			throw new Error('ResizeObserver is not supported');
 		}
-	}
+
+		return () => {
+			if (resizeObserver) {
+				resizeObserver.disconnect();
+			}
+		};
+	}, [targetRef]);
 
 	return contentRect;
 }

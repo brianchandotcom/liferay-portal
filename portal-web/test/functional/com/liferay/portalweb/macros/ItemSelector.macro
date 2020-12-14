@@ -30,69 +30,6 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
-	macro addFromURL {
-		var key_imageSourceURL = "${imageSourceURL}";
-		var key_navTab = "${navTab}";
-
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		if (isSet(wikiAdmin)) {
-			AssertElementNotPresent(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB");
-		}
-		else {
-			AssertClick(
-				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-				value1 = "URL");
-		}
-
-		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
-		AssertElementNotPresent(locator1 = "ItemSelector#URL_IMAGE_PREVIEW");
-
-		AssertVisible(
-			key_text = "Add",
-			locator1 = "Button#ANY_DISABLED");
-
-		if (isSet(embedVideo)) {
-			Type(
-				locator1 = "TextInput#VIDEO_URL",
-				value1 = "${embedVideo}");
-		}
-		else {
-			Type(
-				locator1 = "TextInput#URL",
-				value1 = "${imageSourceURL}");
-
-			AssertTextEquals(
-				locator1 = "TextInput#URL",
-				value1 = "${imageSourceURL}");
-		}
-
-		if (("${type}" == "Audio") || ("${type}" == "Video")) {
-			if (!(isSet(unpublish))) {
-				AssertElementPresent.pauseAssertVisible(
-					key_text = "Add",
-					locator1 = "Button#ANY_ENABLED");
-
-				Button.clickAdd();
-			}
-		}
-		else {
-			AssertElementPresent.pauseAssertVisible(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
-
-			if (IsElementPresent(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE")) {
-				Click(locator1 = "ItemSelector#URL_IMAGE_EXAMPLE");
-			}
-
-			MouseOver(
-				key_text = "Add",
-				locator1 = "Button#ANY");
-
-			Button.clickAdd();
-		}
-
-		SelectFrameTop(value1 = "relative=top");
-	}
-
 	macro addImageFromURL {
 		var key_imageSourceURL = "${imageSourceURL}";
 		var key_navTab = "${navTab}";

@@ -635,8 +635,9 @@ public abstract class BasePriceListResourceTestCase {
 		_beanUtilsBean.copyProperties(
 			expectedPatchPriceList, randomPatchPriceList);
 
-		PriceList getPriceList = priceListResource.getPriceList(
-			patchPriceList.getId());
+		PriceList getPriceList =
+			priceListResource.getPriceListByExternalReferenceCode(
+				patchPriceList.getExternalReferenceCode());
 
 		assertEquals(expectedPatchPriceList, getPriceList);
 		assertValid(getPriceList);

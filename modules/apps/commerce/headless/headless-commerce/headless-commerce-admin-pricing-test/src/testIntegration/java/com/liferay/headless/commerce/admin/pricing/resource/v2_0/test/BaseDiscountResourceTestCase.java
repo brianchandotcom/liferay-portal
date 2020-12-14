@@ -628,8 +628,9 @@ public abstract class BaseDiscountResourceTestCase {
 		_beanUtilsBean.copyProperties(
 			expectedPatchDiscount, randomPatchDiscount);
 
-		Discount getDiscount = discountResource.getDiscount(
-			patchDiscount.getId());
+		Discount getDiscount =
+			discountResource.getDiscountByExternalReferenceCode(
+				patchDiscount.getExternalReferenceCode());
 
 		assertEquals(expectedPatchDiscount, getDiscount);
 		assertValid(getDiscount);

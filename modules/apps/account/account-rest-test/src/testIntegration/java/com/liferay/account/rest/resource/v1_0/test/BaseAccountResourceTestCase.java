@@ -614,7 +614,8 @@ public abstract class BaseAccountResourceTestCase {
 
 		_beanUtilsBean.copyProperties(expectedPatchAccount, randomPatchAccount);
 
-		Account getAccount = accountResource.getAccount(patchAccount.getId());
+		Account getAccount = accountResource.getAccountByExternalReferenceCode(
+			patchAccount.getExternalReferenceCode());
 
 		assertEquals(expectedPatchAccount, getAccount);
 		assertValid(getAccount);

@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-120091. Can define displayed sublevels in Menu Display."
 	@priority = "5"
 	test DefineDisplayedSublevels {
+		property portal.acceptance = "true";
+
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -183,6 +185,8 @@ definition {
 	@description = "This is a test for LPS-120091. Can define Display Style of Menu Display."
 	@priority = "5"
 	test DefineDisplayStyle {
+		property portal.acceptance = "true";
+
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -287,6 +291,8 @@ definition {
 	@description = "This is a test for LPS-120091. Can define the item color styles in Menu Display."
 	@priority = "5"
 	test DefineItemColorStyles {
+		property portal.acceptance = "true";
+
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -529,6 +535,8 @@ definition {
 	@description = "This is a test for LPS-120091. Can select a navigation menu from existing ones in Menu Display fragment."
 	@priority = "5"
 	test SelectNavigationMenuFromExistingOnes {
+		property portal.acceptance = "true";
+
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

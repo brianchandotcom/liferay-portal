@@ -37,10 +37,8 @@ import com.liferay.document.library.web.internal.display.context.util.JSPRendere
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -60,7 +58,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -77,7 +74,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileShortcut fileShortcut,
-			DDMFormValuesToMapConverter ddmFormValuesToMapConverter,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			ResourceBundle resourceBundle, StorageEngine storageEngine,
 			DLTrashHelper dlTrashHelper,
@@ -87,15 +83,14 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		this(
 			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
-			ddmFormValuesToMapConverter, dlMimeTypeDisplayContext,
-			resourceBundle, storageEngine, dlTrashHelper,
-			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
+			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
+			dlTrashHelper, dlPreviewRendererProvider, versioningStrategy,
+			dlURLHelper);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileVersion fileVersion,
-		DDMFormValuesToMapConverter ddmFormValuesToMapConverter,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashHelper dlTrashHelper,
@@ -103,10 +98,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
-			httpServletRequest, fileVersion, null, ddmFormValuesToMapConverter,
-			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
-			dlTrashHelper, dlPreviewRendererProvider, versioningStrategy,
-			dlURLHelper);
+			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
+			resourceBundle, storageEngine, dlTrashHelper,
+			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
 	}
 
 	@Override
@@ -234,17 +228,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public Map<String, Object> getValues(
-			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
-		throws PortalException {
-
-		return _ddmFormValuesToMapConverter.convert(
-			ddmFormValues,
-			DDMStructureLocalServiceUtil.getStructure(
-				ddmStructure.getStructureId()));
-	}
-
-	@Override
 	public boolean hasCustomThumbnail() {
 		if (_dlPreviewRendererProvider != null) {
 			DLPreviewRenderer dlPreviewRenderer =
@@ -337,7 +320,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		FileShortcut fileShortcut,
-		DDMFormValuesToMapConverter ddmFormValuesToMapConverter,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashHelper dlTrashHelper,
@@ -346,7 +328,6 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		try {
 			_fileVersion = fileVersion;
-			_ddmFormValuesToMapConverter = ddmFormValuesToMapConverter;
 			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 			_resourceBundle = resourceBundle;
 			_storageEngine = storageEngine;
@@ -495,7 +476,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultDLViewFileVersionDisplayContext.class);
 
-	private final DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
 	private List<DDMStructure> _ddmStructures;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final DLPortletInstanceSettingsHelper

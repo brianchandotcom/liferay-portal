@@ -35,6 +35,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLViewFil
 page import="com.liferay.document.library.web.internal.display.context.FolderActionDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.search.DDMStructureRowChecker" %><%@
 page import="com.liferay.document.library.web.internal.util.DLAssetHelperUtil" %><%@
+page import="com.liferay.document.library.web.internal.util.DataRecordValuesUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.RepositoryClassDefinitionUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter" %><%@

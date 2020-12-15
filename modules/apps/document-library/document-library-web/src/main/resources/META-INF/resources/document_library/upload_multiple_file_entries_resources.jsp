@@ -194,7 +194,7 @@ else {
 									<liferay-data-engine:data-layout-renderer
 										containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
 										dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-										dataRecordValues="<%= dlEditFileEntryDisplayContext.getValues(ddmFormValues, ddmStructure) %>"
+										dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
 										namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"
 									/>
 								</div>

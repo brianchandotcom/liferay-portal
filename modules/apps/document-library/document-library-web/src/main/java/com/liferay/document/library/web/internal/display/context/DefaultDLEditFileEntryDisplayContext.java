@@ -26,10 +26,8 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -41,7 +39,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,25 +53,22 @@ public class DefaultDLEditFileEntryDisplayContext
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		DDMFormValuesToMapConverter ddmFormValuesToMapConverter,
 		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
 		StorageEngine storageEngine) {
 
 		this(
-			httpServletRequest, ddmFormValuesToMapConverter, dlFileEntryType,
-			dlValidator, null, storageEngine);
+			httpServletRequest, dlFileEntryType, dlValidator, null,
+			storageEngine);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		DDMFormValuesToMapConverter ddmFormValuesToMapConverter,
-		DLValidator dlValidator, FileEntry fileEntry,
-		StorageEngine storageEngine) {
+		HttpServletResponse httpServletResponse, DLValidator dlValidator,
+		FileEntry fileEntry, StorageEngine storageEngine) {
 
 		this(
-			httpServletRequest, ddmFormValuesToMapConverter,
-			(DLFileEntryType)null, dlValidator, fileEntry, storageEngine);
+			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,
+			storageEngine);
 	}
 
 	@Override
@@ -134,17 +128,6 @@ public class DefaultDLEditFileEntryDisplayContext
 	@Override
 	public UUID getUuid() {
 		return _UUID;
-	}
-
-	@Override
-	public Map<String, Object> getValues(
-			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
-		throws PortalException {
-
-		return _ddmFormValuesToMapConverter.convert(
-			ddmFormValues,
-			DDMStructureLocalServiceUtil.getStructure(
-				ddmStructure.getStructureId()));
 	}
 
 	@Override
@@ -248,13 +231,11 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	private DefaultDLEditFileEntryDisplayContext(
-		HttpServletRequest httpServletRequest,
-		DDMFormValuesToMapConverter ddmFormValuesToMapConverter,
-		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
-		FileEntry fileEntry, StorageEngine storageEngine) {
+		HttpServletRequest httpServletRequest, DLFileEntryType dlFileEntryType,
+		DLValidator dlValidator, FileEntry fileEntry,
+		StorageEngine storageEngine) {
 
 		try {
-			_ddmFormValuesToMapConverter = ddmFormValuesToMapConverter;
 			_dlValidator = dlValidator;
 			_fileEntry = fileEntry;
 			_storageEngine = storageEngine;
@@ -323,7 +304,6 @@ public class DefaultDLEditFileEntryDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"63326141-02F6-42B5-AE38-ABC73FA72BB5");
 
-	private final DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
 	private final DLFileEntryType _dlFileEntryType;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLValidator _dlValidator;

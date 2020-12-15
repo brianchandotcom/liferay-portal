@@ -459,7 +459,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<liferay-data-engine:data-layout-renderer
 										containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 										dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-										dataRecordValues="<%= dlViewFileVersionDisplayContext.getValues(ddmFormValues, ddmStructure) %>"
+										dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
 										namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"
 										readOnly="<%= true %>"
 									/>
@@ -526,7 +526,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								<liferay-data-engine:data-layout-renderer
 									containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 									dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-									dataRecordValues="<%= dlViewFileVersionDisplayContext.getValues(ddmFormValues, ddmStructure) %>"
+									dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
 									namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"
 									readOnly="<%= true %>"
 								/>

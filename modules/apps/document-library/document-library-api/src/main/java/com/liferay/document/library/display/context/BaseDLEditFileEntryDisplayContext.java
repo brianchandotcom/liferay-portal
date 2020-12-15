@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,14 +102,6 @@ public class BaseDLEditFileEntryDisplayContext
 	@Override
 	public String getSaveButtonLabel() throws PortalException {
 		return parentDisplayContext.getSaveButtonLabel();
-	}
-
-	@Override
-	public Map<String, Object> getValues(
-			DDMFormValues ddmFormValues, DDMStructure ddmStructure)
-		throws PortalException {
-
-		return parentDisplayContext.getValues(ddmFormValues, ddmStructure);
 	}
 
 	@Override

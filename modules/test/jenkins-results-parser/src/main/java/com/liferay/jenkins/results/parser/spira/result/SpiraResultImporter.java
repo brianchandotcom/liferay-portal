@@ -17,11 +17,15 @@ package com.liferay.jenkins.results.parser.spira.result;
 import com.liferay.jenkins.results.parser.AnalyticsCloudBranchInformationBuild;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildFactory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
+import com.liferay.jenkins.results.parser.JenkinsMaster;
+import com.liferay.jenkins.results.parser.JenkinsNode;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.JenkinsSlave;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.LocalGitBranch;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
@@ -30,6 +34,7 @@ import com.liferay.jenkins.results.parser.PortalGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.spira.SpiraAutomationHost;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseComponent;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
@@ -64,6 +69,7 @@ public class SpiraResultImporter {
 	}
 
 	public void record() {
+		_cacheSpiraAutomationHosts();
 		_cacheSpiraTestCaseComponents();
 		_cacheSpiraTestCaseObjects();
 
@@ -102,6 +108,62 @@ public class SpiraResultImporter {
 		_checkoutPluginsBranch();
 
 		_checkoutQAWebsitesBranch();
+	}
+
+	private void _cacheSpiraAutomationHosts() {
+		if (_spiraAutomationHosts != null) {
+			return;
+		}
+
+		long start = System.currentTimeMillis();
+
+		Map<String, SpiraAutomationHost> spiraAutomationHostMap =
+			new HashMap<>();
+
+		SpiraProject spiraProject = _spiraBuildResult.getSpiraProject();
+
+		for (SpiraAutomationHost spiraAutomationHost :
+				spiraProject.getSpiraAutomationHosts()) {
+
+			spiraAutomationHostMap.put(
+				spiraAutomationHost.getName(), spiraAutomationHost);
+		}
+
+		for (AxisBuild axisBuild : _topLevelBuild.getDownstreamAxisBuilds()) {
+			JenkinsSlave jenkinsSlave = axisBuild.getJenkinsSlave();
+
+			if ((jenkinsSlave != null) &&
+				!spiraAutomationHostMap.containsKey(jenkinsSlave.getName())) {
+
+				SpiraAutomationHost spiraAutomationHost =
+					_getSpiraAutomationHost(jenkinsSlave);
+
+				spiraAutomationHostMap.put(
+					spiraAutomationHost.getName(), spiraAutomationHost);
+			}
+
+			JenkinsMaster jenkinsMaster = axisBuild.getJenkinsMaster();
+
+			if ((jenkinsMaster != null) &&
+				!spiraAutomationHostMap.containsKey(jenkinsMaster.getName())) {
+
+				SpiraAutomationHost spiraAutomationHost =
+					_getSpiraAutomationHost(jenkinsMaster);
+
+				spiraAutomationHostMap.put(
+					spiraAutomationHost.getName(), spiraAutomationHost);
+			}
+		}
+
+		_spiraAutomationHosts = new ArrayList<>(
+			spiraAutomationHostMap.values());
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Loaded ", String.valueOf(_spiraAutomationHosts.size()),
+				" Spira Automation Hosts in ",
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start)));
 	}
 
 	private void _cacheSpiraTestCaseComponents() {
@@ -363,6 +425,14 @@ public class SpiraResultImporter {
 			"master");
 	}
 
+	private SpiraAutomationHost _getSpiraAutomationHost(
+		JenkinsNode jenkinsNode) {
+
+		return SpiraAutomationHost.createSpiraAutomationHost(
+			_spiraBuildResult.getSpiraProject(), jenkinsNode);
+	}
+
+	private List<SpiraAutomationHost> _spiraAutomationHosts;
 	private final SpiraBuildResult _spiraBuildResult;
 	private List<SpiraTestCaseComponent> _spiraTestCaseComponents;
 	private List<SpiraTestCaseObject> _spiraTestCaseObjects;

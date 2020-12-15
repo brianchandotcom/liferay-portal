@@ -12,6 +12,4 @@
  * details.
  */
 
-// render API
-
 export {default as render} from './render.es';

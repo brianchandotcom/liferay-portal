@@ -2681,6 +2681,83 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
 	}
 
+	@description = "Automate LPS-122695 Use fieldsets with translations in Form View of an Object"
+	@priority = "5"
+	test TranslationsForFormViewObject {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setUpFieldSet(
+			fieldLabel = "Name English",
+			fieldSetName = "Field Set English",
+			fieldType = "Text");
+
+		FormViewBuilder.editFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Edit");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "pt-BR",
+			statusName = "Not Translated",
+			symbolName = "en-US");
+
+		FormViewBuilder.gotoFirstFieldset(fieldLabel = "Name English");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Name Brazil");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Field Set Brazil");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.validateTranslatedField(fieldLabel = "Name Brazil");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "es-ES",
+			statusName = "Not Translated",
+			symbolName = "pt-BR");
+
+		FormViewBuilder.validateTranslatedField(fieldLabel = "Name English");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "pt-BR",
+			statusName = "Translated",
+			symbolName = "es-ES");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Name Brazil");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Field Set Brazil");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "es-ES",
+			symbolName = "pt-BR");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Name English");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "en-US",
+			symbolName = "es-ES");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Field Set English");
+
+		FormViewBuilder.setName(formViewName = "Translated Form");
+
+		FormViewBuilder.save();
+	}
+
 	@description = "Unpublish and Republish an App"
 	@priority = "5"
 	test UnpublishAndRepublish {

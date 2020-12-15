@@ -21,8 +21,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
-import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.constants.CollectionFilterFragmentRendererWebKeys;
+import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration.FFFragmentRendererCollectionAssetCategoryFilterConfiguration;
+import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.constants.CollectionAssetCategoryFilterFragmentRendererWebKeys;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration",
 	service = FragmentRenderer.class
 )
-public class CollectionFilterFragmentRenderer implements FragmentRenderer {
+public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -144,7 +144,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				"multipleSelection"));
 
 		httpServletRequest.setAttribute(
-			CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
+			CollectionAssetCategoryFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
 			multipleSelection);
 
 		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
@@ -202,11 +202,11 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 						assetCategoryTreeNodeId);
 
 				httpServletRequest.setAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY,
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORY,
 					assetCategory);
 
 				httpServletRequest.removeAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
 			}
 			else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
 				assetCategories =
@@ -223,19 +223,19 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 						assetCategoryTreeNodeId);
 
 				httpServletRequest.setAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
 					assetVocabulary);
 
 				httpServletRequest.removeAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORY);
 			}
 
 			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
 				assetCategories);
 
 			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 			RequestDispatcher requestDispatcher =
@@ -253,12 +253,12 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 	protected void activate(Map<String, Object> properties) {
 		_ffFragmentRendererCollectionFilterConfiguration =
 			ConfigurableUtil.createConfigurable(
-				FFFragmentRendererCollectionFilterConfiguration.class,
+				FFFragmentRendererCollectionAssetCategoryFilterConfiguration.class,
 				properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CollectionFilterFragmentRenderer.class);
+		CollectionAssetCategoryFilterFragmentRenderer.class);
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
@@ -266,7 +266,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
 
-	private volatile FFFragmentRendererCollectionFilterConfiguration
+	private volatile FFFragmentRendererCollectionAssetCategoryFilterConfiguration
 		_ffFragmentRendererCollectionFilterConfiguration;
 
 	@Reference

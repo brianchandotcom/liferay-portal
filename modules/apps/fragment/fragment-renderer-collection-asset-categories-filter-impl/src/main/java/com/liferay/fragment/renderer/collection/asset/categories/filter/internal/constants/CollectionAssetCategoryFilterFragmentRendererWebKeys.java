@@ -12,22 +12,24 @@
  * details.
  */
 
-package com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+package com.liferay.fragment.renderer.collection.asset.categories.filter.internal.constants;
 
 /**
  * @author Rubén Pulido
  */
-@ExtendedObjectClassDefinition(generateUI = false)
-@Meta.OCD(
-	id = "com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration"
-)
-public interface FFFragmentRendererCollectionFilterConfiguration {
+public class CollectionAssetCategoryFilterFragmentRendererWebKeys {
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean enabled();
+	public static final String ASSET_CATEGORIES = "ASSET_CATEGORIES";
+
+	public static final String ASSET_CATEGORY = "ASSET_CATEGORY";
+
+	public static final String ASSET_VOCABULARY = "ASSET_VOCABULARY";
+
+	public static final String CATEGORY_ID = "categoryId";
+
+	public static final String FRAGMENT_ENTRY_LINK_ID =
+		"FRAGMENT_ENTRY_LINK_ID";
+
+	public static final String MULTIPLE_SELECTION = "MULTIPLE_SELECTION";
 
 }

@@ -71,6 +71,10 @@ public class SpiraResultImporter {
 
 		List<SpiraTestResult> spiraTestResults = new ArrayList<>();
 
+		spiraTestResults.add(
+			SpiraResultFactory.newSpiraTestResult(
+				_spiraBuildResult, null, null));
+
 		for (AxisTestClassGroup axisTestClassGroup :
 				job.getAxisTestClassGroups()) {
 

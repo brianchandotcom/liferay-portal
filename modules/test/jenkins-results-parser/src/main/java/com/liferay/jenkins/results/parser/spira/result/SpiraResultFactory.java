@@ -52,6 +52,10 @@ public class SpiraResultFactory {
 		AxisTestClassGroup axisTestClassGroup,
 		TestClassGroup.TestClass testClass) {
 
+		if (axisTestClassGroup == null) {
+			return new TopLevelSpiraTestResult(spiraBuildResult);
+		}
+
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
 			return new FunctionalAxisSpiraTestResult(
 				spiraBuildResult,

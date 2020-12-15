@@ -22,8 +22,12 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
+import com.liferay.jenkins.results.parser.PortalFixpackRelease;
+import com.liferay.jenkins.results.parser.PortalFixpackReleaseBuild;
 import com.liferay.jenkins.results.parser.PortalGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalRelease;
+import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
@@ -45,8 +49,49 @@ import java.util.Properties;
 public class BaseSpiraBuildResult implements SpiraBuildResult {
 
 	@Override
+	public PortalFixpackRelease getPortalFixpackRelease() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (!(topLevelBuild instanceof PortalFixpackReleaseBuild)) {
+			return null;
+		}
+
+		PortalFixpackReleaseBuild portalFixpackReleaseBuild =
+			(PortalFixpackReleaseBuild)topLevelBuild;
+
+		return portalFixpackReleaseBuild.getPortalFixpackRelease();
+	}
+
+	@Override
+	public PortalRelease getPortalRelease() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (!(topLevelBuild instanceof PortalReleaseBuild)) {
+			return null;
+		}
+
+		PortalReleaseBuild portalReleaseBuild =
+			(PortalReleaseBuild)topLevelBuild;
+
+		return portalReleaseBuild.getPortalRelease();
+	}
+
+	@Override
 	public Properties getPortalTestProperties() {
 		return _portalGitWorkingDirectory.getTestProperties();
+	}
+
+	@Override
+	public PullRequest getPullRequest() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (!(topLevelBuild instanceof PullRequestBuild)) {
+			return null;
+		}
+
+		PullRequestBuild pullRequestBuild = (PullRequestBuild)topLevelBuild;
+
+		return pullRequestBuild.getPullRequest();
 	}
 
 	@Override
@@ -555,13 +600,11 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	private String _replaceEnvVarsPullRequestBuild(String string) {
-		if (!(_topLevelBuild instanceof PullRequestBuild)) {
+		PullRequest pullRequest = getPullRequest();
+
+		if (pullRequest == null) {
 			return string;
 		}
-
-		PullRequestBuild pullRequestBuild = (PullRequestBuild)_topLevelBuild;
-
-		PullRequest pullRequest = pullRequestBuild.getPullRequest();
 
 		string = string.replace(
 			"$(pull.request.number)", pullRequest.getNumber());

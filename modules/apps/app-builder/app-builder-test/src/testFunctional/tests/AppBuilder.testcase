@@ -592,6 +592,67 @@ definition {
 
 	@description = "Automate LPS-117199 Define translations when creating fieldsets"
 	@priority = "5"
+	test DefineTranslationCreatedFieldSets {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setUpFieldSet(
+			fieldLabel = "Name EN",
+			fieldSetName = "Field Set English",
+			fieldType = "Text");
+
+		FormViewBuilder.editFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Edit");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "pt-BR",
+			statusName = "Not Translated",
+			symbolName = "en-US");
+
+		FormViewBuilder.validateLocalizationForFieldSet(symbolName = "pt-BR");
+
+		FormViewBuilder.gotoFirstFieldset(fieldLabel = "Name EN");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Name BR");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Field Set Brazil");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.validateTranslatedField(fieldLabel = "Name BR");
+
+		FormViewBuilder.validateTranslatedLocalization(
+			localizationName = "pt-BR",
+			statusName = "Translated",
+			symbolName = "pt-BR");
+
+		Click(
+			key_symbolName = "pt-BR",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
+
+		FormViewBuilder.validateTranslatedLocalization(
+			localizationName = "en-US",
+			statusName = "Default",
+			symbolName = "pt-BR");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
+
+		FormViewBuilder.setName(formViewName = "Translated Form");
+
+		FormViewBuilder.save();
+	}
+
+	@description = "Automate LPS-117199 Define translations when creating fieldsets"
+	@priority = "5"
 	test DefineTranslationForFieldSets {
 		property portal.acceptance = "true";
 

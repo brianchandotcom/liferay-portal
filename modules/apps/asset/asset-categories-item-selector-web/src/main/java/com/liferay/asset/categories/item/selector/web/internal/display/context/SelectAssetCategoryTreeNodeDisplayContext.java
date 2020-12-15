@@ -70,7 +70,8 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		throws PortalException {
 
 		SearchContainer<AssetCategory> searchContainer = new SearchContainer<>(
-			_getPortletRequest(), _portletURL, null, "no-items-to-display");
+			_getPortletRequest(), _portletURL, null,
+			"there-are-no-items-to-display");
 
 		List<AssetCategory> assetCategories = _getAssetCategories();
 

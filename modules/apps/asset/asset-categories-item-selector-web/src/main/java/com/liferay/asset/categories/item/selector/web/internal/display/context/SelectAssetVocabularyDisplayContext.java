@@ -71,7 +71,8 @@ public class SelectAssetVocabularyDisplayContext {
 
 		SearchContainer<AssetVocabulary> searchContainer =
 			new SearchContainer<>(
-				_getPortletRequest(), _portletURL, null, "no-items-to-display");
+				_getPortletRequest(), _portletURL, null,
+				"there-are-no-items-to-display");
 
 		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies();
 

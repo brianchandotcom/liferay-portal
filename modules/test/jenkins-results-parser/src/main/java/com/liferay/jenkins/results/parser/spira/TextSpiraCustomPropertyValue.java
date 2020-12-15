@@ -23,6 +23,16 @@ public class TextSpiraCustomPropertyValue
 	extends SpiraCustomPropertyValue<String> {
 
 	@Override
+	public JSONObject getCustomPropertyJSONObject() {
+		JSONObject customPropertyJSONObject =
+			super.getCustomPropertyJSONObject();
+
+		customPropertyJSONObject.put("StringValue", getValue());
+
+		return customPropertyJSONObject;
+	}
+
+	@Override
 	public String getValue() {
 		return jsonObject.optString("StringValue");
 	}
@@ -40,16 +50,6 @@ public class TextSpiraCustomPropertyValue
 
 		jsonObject.put("Definition", getDefinitionJSONObject());
 		jsonObject.put("StringValue", stringValue);
-	}
-
-	@Override
-	protected JSONObject getCustomPropertyJSONObject() {
-		JSONObject customPropertyJSONObject =
-			super.getCustomPropertyJSONObject();
-
-		customPropertyJSONObject.put("StringValue", getValue());
-
-		return customPropertyJSONObject;
 	}
 
 	@Override

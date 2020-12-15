@@ -333,6 +333,10 @@
 	.form-builder-page-header {
 		padding-right: 62px;
 		position: relative;
+
+		.form-control {
+			background-color: transparent;
+		}
 	}
 
 	.form-builder-pages-header {

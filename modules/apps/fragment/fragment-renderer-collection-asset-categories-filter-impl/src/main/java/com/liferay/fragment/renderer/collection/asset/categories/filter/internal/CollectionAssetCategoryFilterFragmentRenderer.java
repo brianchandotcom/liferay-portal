@@ -111,7 +111,7 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!_ffFragmentRendererCollectionFilterConfiguration.enabled()) {
+		if (!_ffFragmentRendererCollectionAssetCategoryFilterConfiguration.enabled()) {
 			return false;
 		}
 
@@ -251,7 +251,7 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ffFragmentRendererCollectionFilterConfiguration =
+		_ffFragmentRendererCollectionAssetCategoryFilterConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFFragmentRendererCollectionAssetCategoryFilterConfiguration.class,
 				properties);
@@ -267,7 +267,7 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 	private AssetVocabularyService _assetVocabularyService;
 
 	private volatile FFFragmentRendererCollectionAssetCategoryFilterConfiguration
-		_ffFragmentRendererCollectionFilterConfiguration;
+		_ffFragmentRendererCollectionAssetCategoryFilterConfiguration;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

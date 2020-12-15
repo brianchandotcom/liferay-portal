@@ -19,7 +19,7 @@
 		position: relative;
 
 		embed,
-		iframe:not(#{$component}-dl),
+		iframe:not([data-video-liferay]),
 		object {
 			background-color: $black;
 		}

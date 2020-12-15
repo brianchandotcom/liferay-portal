@@ -650,7 +650,7 @@
 </tr>
 <tr>
 	<td>VIDEO_URL</td>
-	<td>//input[contains(@id,'VideoURL')]</td>
+	<td>//input[contains(@id,'VideoExternalShortcutURL')]</td>
 	<td></td>
 </tr>
 <tr>

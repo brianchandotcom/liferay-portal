@@ -75,9 +75,9 @@ public class AccountEntryUsersScreenNavigationCategory
 			return false;
 		}
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				accountEntryDisplay.getType(),
-				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
 
 			return false;
 		}

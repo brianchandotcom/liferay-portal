@@ -26,12 +26,14 @@ definition {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
+			depotName = "${depotName}",
 			embedVideo = "${embedVideo}",
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}",
 			navTab = "${navTab}",
-			videoService = "${videoService}");
+			videoService = "${videoService}",
+			videoShortcutTitle = "${videoShortcutTitle}");
 
 		if (isSet(readingTime)) {
 			var key_readingTime = "${readingTime}";

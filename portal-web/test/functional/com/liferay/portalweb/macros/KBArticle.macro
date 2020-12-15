@@ -142,9 +142,16 @@ definition {
 
 			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
 
-			ItemSelector.addVideoFromURL(
-				navTab = "${navTab}",
-				videoSourceURL = "${embedVideo}");
+			if ("${navTab}" == "Documents and Media") {
+				ItemSelector.addVideoFromDM(
+					navTab = "${navTab}",
+					videoShortcutTitle = "${videoShortcutTitle}");
+			}
+			else {
+				ItemSelector.addVideoFromURL(
+					navTab = "${navTab}",
+					videoSourceURL = "${embedVideo}");
+			}
 		}
 
 		if (isSet(kbArticleAttachment)) {
@@ -1147,13 +1154,20 @@ definition {
 		if (isSet(embedVideo)) {
 			Pause(locator1 = "5000");
 
-			AssertElementPresent(
-				key_service = "youtube",
-				locator1 = "BlogsEntry#CONTENT_VIDEO");
+			if ("${service}" == "twitch") {
+				AssertVisible(
+					key_service = "${service}",
+					locator1 = "BlogsEntry#CONTENT_VIDEO");
+			}
+			else {
+				AssertElementPresent(
+					key_service = "youtube",
+					locator1 = "BlogsEntry#CONTENT_VIDEO");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
+				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 
-			AssertElementPresent(locator1 = "CKEditor#VIDEO_BUTTON_PLAY");
+				AssertElementPresent(locator1 = "CKEditor#VIDEO_BUTTON_PLAY");
+			}
 		}
 
 		if (isSet(kbChildArticleTitle)) {

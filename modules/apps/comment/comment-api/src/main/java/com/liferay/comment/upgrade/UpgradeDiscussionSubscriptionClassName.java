@@ -60,14 +60,12 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 	public UpgradeDiscussionSubscriptionClassName(
 		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
-		String oldSubscriptionClassName, DeletionMode deletionMode,
+		String oldSubscriptionClassName,
 		UnsafeFunction<String, Boolean, Exception> customFunction) {
 
-		_classNameLocalService = classNameLocalService;
-		_subscriptionLocalService = subscriptionLocalService;
-		_oldSubscriptionClassName = oldSubscriptionClassName;
-		_deletionMode = deletionMode;
-		_customFunction = customFunction;
+		this(
+			classNameLocalService, subscriptionLocalService,
+			oldSubscriptionClassName, null, customFunction);
 	}
 
 	/**
@@ -90,15 +88,13 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		 */
 		@Deprecated
 		ADD_NEW,
-		CUSTOM, DELETE_OLD, UPDATE
+		DELETE_OLD, UPDATE
 
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if ((_deletionMode == DeletionMode.CUSTOM) &&
-			(_customFunction != null)) {
-
+		if (_customFunction != null) {
 			_customFunction.apply(_oldSubscriptionClassName);
 		}
 		else if (_deletionMode == DeletionMode.DELETE_OLD) {
@@ -107,6 +103,19 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		else {
 			_updateSubscriptions();
 		}
+	}
+
+	private UpgradeDiscussionSubscriptionClassName(
+		ClassNameLocalService classNameLocalService,
+		SubscriptionLocalService subscriptionLocalService,
+		String oldSubscriptionClassName, DeletionMode deletionMode,
+		UnsafeFunction<String, Boolean, Exception> customFunction) {
+
+		_classNameLocalService = classNameLocalService;
+		_subscriptionLocalService = subscriptionLocalService;
+		_oldSubscriptionClassName = oldSubscriptionClassName;
+		_deletionMode = deletionMode;
+		_customFunction = customFunction;
 	}
 
 	private void _deleteSubscriptions() throws Exception {

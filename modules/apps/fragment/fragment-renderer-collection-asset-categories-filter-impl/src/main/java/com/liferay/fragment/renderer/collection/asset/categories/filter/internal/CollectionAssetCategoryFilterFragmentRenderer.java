@@ -288,7 +288,7 @@ public class CollectionAssetCategoryFilterFragmentRenderer
 	private JSONFactory _jsonFactory;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.collection.filter.impl)"
+		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.collection.asset.categories.filter.impl)"
 	)
 	private ServletContext _servletContext;
 

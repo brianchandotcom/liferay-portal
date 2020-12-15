@@ -340,14 +340,14 @@ definition {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.viewCP(
-			orgName = "Liferay, Inc.",
+			orgName = "Liferay DXP, Inc.",
 			orgType = "Organization");
 
 		Navigator.gotoBack();
 
 		Organization.gotoCP(
-			orgName = "Liferay, Inc.",
-			searchToken = "Liferay, Inc.");
+			orgName = "Liferay DXP, Inc.",
+			searchToken = "Liferay DXP, Inc.");
 
 		User.searchCP(searchTerm = "Test DLC 1");
 
@@ -371,9 +371,9 @@ definition {
 			portlet = "Sites");
 
 		AssertTextEquals.assertPartialText(
-			key_siteName = "Liferay, Inc.",
+			key_siteName = "Liferay DXP, Inc.",
 			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Liferay, Inc.");
+			value1 = "Liferay DXP, Inc.");
 	}
 
 	macro viewSampleDataEnabledInPropertiesFile {

@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Fragment Renderer Collection Filter Implementation
-Bundle-SymbolicName: com.liferay.fragment.renderer.collection.filter.impl
+Bundle-Name: Liferay Fragment Renderer Collection Asset Categories Filter Implementation
+Bundle-SymbolicName: com.liferay.fragment.renderer.collection.asset.categories.filter.impl
 Bundle-Version: 1.0.0
-Web-ContextPath: /fragment-renderer-collection-filter-impl
+Web-ContextPath: /fragment-renderer-collection-asset-categories-filter-impl

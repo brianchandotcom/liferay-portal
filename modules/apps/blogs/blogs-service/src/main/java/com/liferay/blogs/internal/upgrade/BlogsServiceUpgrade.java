@@ -22,14 +22,24 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +72,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDiscussionSubscriptionClassName(
 				_classNameLocalService, _subscriptionLocalService,
 				BlogsEntry.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.CUSTOM,
+				_retainGroupSubscriptions()));
 
 		registry.register(
 			"1.1.3", "2.0.0",
@@ -76,8 +87,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDiscussionSubscriptionClassName(
 				_classNameLocalService, _subscriptionLocalService,
 				BlogsEntry.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.
-					DELETE_OLD));
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.CUSTOM,
+				_retainGroupSubscriptions()));
 
 		registry.register(
 			"2.0.1", "2.1.0",
@@ -95,11 +106,51 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.blogs.internal.upgrade.v2_1_1.UpgradeBlogsEntry());
 	}
 
+	private UnsafeFunction<String, Boolean, Exception>
+		_retainGroupSubscriptions() {
+
+		return className -> {
+			List<Group> groups = _groupLocalService.getGroups(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			List<Long> groupIds = new ArrayList<>();
+
+			for (Group group : groups) {
+				groupIds.add(group.getGroupId());
+			}
+
+			DynamicQuery dynamicQuery =
+				_subscriptionLocalService.dynamicQuery();
+
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"classNameId",
+					_classNameLocalService.getClassNameId(className)));
+
+			List<Subscription> subscriptions =
+				_subscriptionLocalService.dynamicQuery(dynamicQuery);
+
+			for (Subscription subscription : subscriptions) {
+				if (groupIds.contains(subscription.getClassPK())) {
+					continue;
+				}
+
+				_subscriptionLocalService.deleteSubscription(
+					subscription.getSubscriptionId());
+			}
+
+			return true;
+		};
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

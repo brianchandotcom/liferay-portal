@@ -16,6 +16,7 @@ package com.liferay.comment.upgrade;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -51,10 +52,22 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode) {
 
+		this(
+			classNameLocalService, subscriptionLocalService,
+			oldSubscriptionClassName, deletionMode, null);
+	}
+
+	public UpgradeDiscussionSubscriptionClassName(
+		ClassNameLocalService classNameLocalService,
+		SubscriptionLocalService subscriptionLocalService,
+		String oldSubscriptionClassName, DeletionMode deletionMode,
+		UnsafeFunction<String, Boolean, Exception> customFunction) {
+
 		_classNameLocalService = classNameLocalService;
 		_subscriptionLocalService = subscriptionLocalService;
 		_oldSubscriptionClassName = oldSubscriptionClassName;
 		_deletionMode = deletionMode;
+		_customFunction = customFunction;
 	}
 
 	/**
@@ -77,13 +90,18 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		 */
 		@Deprecated
 		ADD_NEW,
-		DELETE_OLD, UPDATE
+		CUSTOM, DELETE_OLD, UPDATE
 
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (_deletionMode == DeletionMode.DELETE_OLD) {
+		if ((_deletionMode == DeletionMode.CUSTOM) &&
+			(_customFunction != null)) {
+
+			_customFunction.apply(_oldSubscriptionClassName);
+		}
+		else if (_deletionMode == DeletionMode.DELETE_OLD) {
 			_deleteSubscriptions();
 		}
 		else {
@@ -125,6 +143,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 	}
 
 	private final ClassNameLocalService _classNameLocalService;
+	private final UnsafeFunction<String, Boolean, Exception> _customFunction;
 	private final DeletionMode _deletionMode;
 	private final String _oldSubscriptionClassName;
 	private final SubscriptionLocalService _subscriptionLocalService;

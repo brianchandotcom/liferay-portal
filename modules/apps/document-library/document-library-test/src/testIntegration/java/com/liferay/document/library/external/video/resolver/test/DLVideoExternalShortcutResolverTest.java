@@ -115,6 +115,9 @@ public class DLVideoExternalShortcutResolverTest {
 			expectedIframe,
 			_renderHTML(
 				"https://vimeo.com/showcase/SHOWCASE_ID/video/VIDEO_ID"));
+		Assert.assertEquals(
+			expectedIframe,
+			_renderHTML("https://player.vimeo.com/video/VIDEO_ID"));
 	}
 
 	@Test

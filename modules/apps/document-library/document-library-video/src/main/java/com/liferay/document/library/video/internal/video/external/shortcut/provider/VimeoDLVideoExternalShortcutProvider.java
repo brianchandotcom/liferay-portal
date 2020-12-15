@@ -165,7 +165,8 @@ public class VimeoDLVideoExternalShortcutProvider
 		Pattern.compile(
 			"https?:\\/\\/(?:www\\.)?vimeo\\.com\\/groups\\/.*\\/videos" +
 				"\\/(\\S*)"),
-		Pattern.compile("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/(\\S*)$"));
+		Pattern.compile("https?:\\/\\/(?:www\\.)?vimeo\\.com\\/(\\S*)$"),
+		Pattern.compile("https?:\\/\\/player\\.vimeo\\.com\\/video\\/(\\S*)$"));
 
 	@Reference
 	private Http _http;

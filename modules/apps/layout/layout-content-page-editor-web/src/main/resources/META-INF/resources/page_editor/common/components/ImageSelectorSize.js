@@ -135,7 +135,10 @@ export const ImageSelectorSize = ({
 						onChange={(event) =>
 							onImageSizeIdChanged(event.target.value)
 						}
-						options={imageSizes}
+						options={imageSizes.map(({label, value}) => ({
+							label,
+							value,
+						}))}
 						value={imageSizeId || DEFAULT_IMAGE_SIZE_ID}
 					/>
 				</ClayForm.Group>

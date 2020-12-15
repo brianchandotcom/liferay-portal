@@ -120,8 +120,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			requestJSONObject.put("RunnerStackTrace", result.getDescription());
 			requestJSONObject.put(
 				"RunnerTestName", spiraTestCaseObject.getName());
-			requestJSONObject.put(
-				"StartDate", PathSpiraArtifact.toDateString(calendar));
+			requestJSONObject.put("StartDate", toDateString(calendar));
 			requestJSONObject.put(
 				"TestRunFormatId", result.getRunnerFormatID());
 
@@ -162,13 +161,9 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
 
 			for (int i = 0; i < responseJSONArray.length(); i++) {
-				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
-					i);
-
-				responseJSONObject.put(
-					SpiraProject.KEY_ID, spiraProject.getID());
-
-				spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
+				spiraTestCaseRuns.add(
+					new SpiraTestCaseRun(
+						spiraProject, responseJSONArray.getJSONObject(i)));
 			}
 
 			return spiraTestCaseRuns;
@@ -576,7 +571,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 				@Override
 				public SpiraTestCaseRun apply(JSONObject jsonObject) {
-					return new SpiraTestCaseRun(jsonObject);
+					return new SpiraTestCaseRun(spiraProject, jsonObject);
 				}
 
 			},
@@ -639,8 +634,10 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 	}
 
-	private SpiraTestCaseRun(JSONObject jsonObject) {
+	private SpiraTestCaseRun(SpiraProject spiraProject, JSONObject jsonObject) {
 		super(jsonObject);
+
+		jsonObject.put(spiraProject.getKeyID(), spiraProject.getID());
 
 		cacheSpiraArtifact(SpiraTestCaseRun.class, this);
 	}

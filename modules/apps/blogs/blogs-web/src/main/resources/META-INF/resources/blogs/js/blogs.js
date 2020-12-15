@@ -353,11 +353,7 @@ export default class Blogs {
 		const subtitle = this._getElementById('subtitle').value;
 		const title = this._getElementById('title').value;
 
-		const automaticURL = document.querySelector(
-			`input[name=${namespace}automaticURL]:checked`
-		).value;
-
-		const urlTitle = automaticURL ? '' : this._getElementById('urlTitle').value;
+		const urlTitle = this._automaticURL() ? '' : this._getElementById('urlTitle').value;
 
 		const form = this._rootNode;
 

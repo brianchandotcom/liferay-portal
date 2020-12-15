@@ -137,6 +137,7 @@ export const Column = ({
 
 export const Page = ({
 	activePage,
+	children,
 	empty,
 	forceAriaUpdate,
 	header,
@@ -158,7 +159,7 @@ export const Page = ({
 			invalidFormMessage={invalidFormMessage}
 			pageIndex={pageIndex}
 		>
-			{empty && activePage === pageIndex && (
+			{empty && activePage === pageIndex ? (
 				<ClayLayout.Row>
 					<ClayLayout.Col
 						className="col-ddm col-empty last-col lfr-initial-col mb-4 mt-5"
@@ -181,6 +182,8 @@ export const Page = ({
 						</div>
 					</ClayLayout.Col>
 				</ClayLayout.Row>
+			) : (
+				children
 			)}
 		</DefaultVariant.Page>
 	);

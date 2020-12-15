@@ -205,6 +205,16 @@
 	<td>//a//span[contains(text(),'${key_entryName}')]/ancestor::tr//span[contains(text(),'${key_info}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OPEN_FORM_VIEW_DATA</td>
+	<td>//body/div[@id='senna_surface1-screen_3']/div[@id='wrapper']/div[@id='content-wrapper']/div[@id='content']/div[@id='main-content']/div[1]/div[1]/div[1]/section[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/button[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_TABLE_VIEW_DATA</td>
+	<td>//body/div[@id='senna_surface1-screen_3']/div[@id='wrapper']/div[@id='content-wrapper']/div[@id='content']/div[@id='main-content']/div[1]/div[1]/div[1]/section[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[2]/button[1]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

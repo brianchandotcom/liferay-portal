@@ -84,8 +84,9 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(
 					getClass(),
-					"/com/liferay/fragment/renderer/collection/filter" +
-						"/internal/dependencies/configuration.json"));
+					"/com/liferay/fragment/renderer/collection/asset" +
+						"/categories/filter/internal/dependencies" +
+							"/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
 				jsonObject, resourceBundle);

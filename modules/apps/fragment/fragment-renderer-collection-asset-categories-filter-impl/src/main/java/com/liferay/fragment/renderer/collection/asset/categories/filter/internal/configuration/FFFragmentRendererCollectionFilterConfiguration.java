@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration"
+	id = "com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration"
 )
 public interface FFFragmentRendererCollectionFilterConfiguration {
 

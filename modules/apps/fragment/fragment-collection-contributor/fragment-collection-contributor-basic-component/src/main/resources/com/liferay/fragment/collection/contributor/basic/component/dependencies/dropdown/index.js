@@ -15,6 +15,9 @@
 const toggle = fragmentElement.querySelector('.dropdown-fragment-toggle');
 const toggleEditable = toggle.querySelector('[data-lfr-editable-id]');
 const menu = fragmentElement.querySelector('.dropdown-fragment-menu');
+const withinMasterLayout = fragmentElement.parentElement.classList.contains(
+	'page-editor__fragment-content--master'
+);
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 let alignMenuInterval;
@@ -121,7 +124,7 @@ function handleWindowEvent() {
 }
 
 function main() {
-	if (configuration.keepOpen && editMode) {
+	if (configuration.keepOpen && editMode && !withinMasterLayout) {
 		toggleMenu();
 	}
 	else if (configuration.displayOnHover) {

@@ -64,6 +64,20 @@ definition {
 		else {
 			var key_assetTitle = "${assetTitle}";
 
+			if (isSet(depotName)) {
+				AssertClick(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Sites and Libraries");
+
+				AssertClick(
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Asset Library");
+
+				LexiconCard.clickCard(card = "${depotName}");
+			}
+
 			Click(
 				key_assetTitle = "${assetTitle}",
 				locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX");

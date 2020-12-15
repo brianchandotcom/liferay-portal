@@ -353,7 +353,9 @@ export default class Blogs {
 		const subtitle = this._getElementById('subtitle').value;
 		const title = this._getElementById('title').value;
 
-		const urlTitle = this._automaticURL() ? '' : this._getElementById('urlTitle').value;
+		const urlTitle = this._automaticURL()
+			? ''
+			: this._getElementById('urlTitle').value;
 
 		if (draft && ajax) {
 			const hasData =
@@ -394,10 +396,12 @@ export default class Blogs {
 							.value,
 						displayDateHour: this._getElementById('displayDateHour')
 							.value,
-						displayDateMinute: this._getElementById('displayDateMinute')
-							.value,
-						displayDateMonth: this._getElementById('displayDateMonth')
-							.value,
+						displayDateMinute: this._getElementById(
+							'displayDateMinute'
+						).value,
+						displayDateMonth: this._getElementById(
+							'displayDateMonth'
+						).value,
 						displayDateYear: this._getElementById('displayDateYear')
 							.value,
 						entryId: this._getElementById('entryId').value,
@@ -417,7 +421,7 @@ export default class Blogs {
 				);
 
 				customAttributes.forEach((item) => {
-					data[item.getAttribute('name')] = item.value;
+					bodyData[item.getAttribute('name')] = item.value;
 				});
 
 				Liferay.Util.toggleDisabled(
@@ -445,10 +449,12 @@ export default class Blogs {
 							saveStatus.classList.remove('hide');
 							saveStatus.hidden = false;
 
-							this._getElementById('coverImageFileEntryId').value =
-								message.coverImageFileEntryId;
+							this._getElementById(
+								'coverImageFileEntryId'
+							).value = message.coverImageFileEntryId;
 
-							this._getElementById('entryId').value = message.entryId;
+							this._getElementById('entryId').value =
+								message.entryId;
 
 							if (message.content) {
 								this._updateContentImages(

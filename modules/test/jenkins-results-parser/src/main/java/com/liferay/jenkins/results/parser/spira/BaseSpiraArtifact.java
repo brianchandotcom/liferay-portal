@@ -40,6 +40,19 @@ import org.json.JSONObject;
  */
 public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
+	public static String fixStringForJSON(String string) {
+		int maxJSONStringSize = 2048;
+
+		if (string.length() > maxJSONStringSize) {
+			string = string.substring(0, maxJSONStringSize);
+		}
+
+		string = string.replace("/", "\\/");
+		string = string.replace("\"", "\\\"");
+
+		return string;
+	}
+
 	public static int getArtifactTypeID(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
@@ -56,6 +69,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
 		return (String)_getClassField(spiraArtifactClass, "KEY_ID");
+	}
+
+	public static String toDateString(Calendar calendar) {
+		return JenkinsResultsParserUtil.combine(
+			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
 	@Override
@@ -351,11 +369,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 					(IndentLevelSpiraArtifact)spiraArtifact);
 			}
 		}
-	}
-
-	protected static String toDateString(Calendar calendar) {
-		return JenkinsResultsParserUtil.combine(
-			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
 	protected BaseSpiraArtifact(JSONObject jsonObject) {

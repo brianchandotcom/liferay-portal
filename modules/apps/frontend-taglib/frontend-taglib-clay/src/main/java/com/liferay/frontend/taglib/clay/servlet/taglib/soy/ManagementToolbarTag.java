@@ -141,7 +141,19 @@ public class ManagementToolbarTag extends BaseClayTag {
 			}
 		}
 
-		context.put("__placeholder__", _getPlaceholder());
+		String id = (String)context.get("id");
+
+		if (Validator.isNull(id)) {
+			id = getComponentId();
+
+			if (Validator.isNull(id)) {
+				id = StringUtil.randomId();
+			}
+
+			setId(id);
+		}
+
+		context.put("__placeholder__", _getPlaceholder(id));
 
 		return super.doStartTag();
 	}
@@ -440,11 +452,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 		}
 	}
 
-	private String _getPlaceholder() {
+	private String _getPlaceholder(String id) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("<div id=\"");
-		sb.append(getComponentId());
+		sb.append(id);
 		sb.append("\"><nav class=\"management-bar management-bar-light ");
 		sb.append("navbar navbar-expand-md\"></nav></div>");
 

@@ -16,7 +16,7 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {config} from '../../app/config/index';
+import {useGlobalContext} from '../../app/components/GlobalContext';
 import ImageService from '../../app/services/ImageService';
 import {useSelector} from '../../app/store/index';
 import {useId} from '../../app/utils/useId';
@@ -42,11 +42,9 @@ export const ImageSelectorSize = ({
 		(state) => state.selectedViewportSize
 	);
 
-	useEffect(() => {
-		const {maxWidth, minWidth} = config.availableViewportSizes[
-			selectedViewportSize
-		];
+	const globalContext = useGlobalContext();
 
+	useEffect(() => {
 		const computedImageSize =
 			imageSizes.find((imageSize) => imageSize.value === imageSizeId) ||
 			DEFAULT_IMAGE_SIZE;
@@ -55,31 +53,39 @@ export const ImageSelectorSize = ({
 		// computed real image size based on current viewport and the image
 		// HTMLElement.
 
-		if (
-			editableElement &&
-			computedImageSize.value === DEFAULT_IMAGE_SIZE_ID
-		) {
+		if (computedImageSize.value === DEFAULT_IMAGE_SIZE_ID) {
 			const setAutoSize = () => {
-				editableElement.removeEventListener('load', setAutoSize);
+				editableElement?.removeEventListener('load', setAutoSize);
 
 				const autoSize =
-					imageSizes.find(
-						({width}) =>
-							(width <= maxWidth && width > minWidth) ||
-							width === editableElement.naturalWidth
-					) ||
-					imageSizes.find(
-						({value}) => value === DEFAULT_IMAGE_SIZE_ID
-					) ||
+					imageSizes.find(({mediaQuery}) => {
+						const globalWindow = globalContext.window;
+
+						return mediaQuery
+							? globalWindow.matchMedia(mediaQuery).matches
+							: true;
+					}) ||
+					imageSizes.find(({value}) => {
+						return value === DEFAULT_IMAGE_SIZE_ID;
+					}) ||
 					DEFAULT_IMAGE_SIZE;
 
 				setImageSize({
 					...autoSize,
-					width: autoSize.width || editableElement.naturalWidth,
+					width:
+						autoSize.width ||
+						editableElement?.naturalWidth ||
+						editableElement?.getBoundingClientRect().width ||
+						globalContext.document.body.getBoundingClientRect()
+							.width,
 				});
 			};
 
-			if (editableElement.complete || editableElement.tagName !== 'IMG') {
+			if (
+				!editableElement ||
+				editableElement.complete ||
+				editableElement.tagName !== 'IMG'
+			) {
 				setAutoSize();
 			}
 			else {
@@ -93,7 +99,13 @@ export const ImageSelectorSize = ({
 		else {
 			setImageSize(computedImageSize);
 		}
-	}, [editableElement, imageSizeId, imageSizes, selectedViewportSize]);
+	}, [
+		editableElement,
+		globalContext,
+		imageSizeId,
+		imageSizes,
+		selectedViewportSize,
+	]);
 
 	useEffect(() => {
 		ImageService.getAvailableImageConfigurations({

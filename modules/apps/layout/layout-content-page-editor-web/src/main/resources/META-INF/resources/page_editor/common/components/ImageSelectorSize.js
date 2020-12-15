@@ -100,7 +100,12 @@ export const ImageSelectorSize = ({
 			fileEntryId,
 			onNetworkStatus: () => {},
 		}).then((availableImageSizes) => {
-			setImageSizes(availableImageSizes);
+			setImageSizes(
+				[...availableImageSizes].sort(
+					(imageSizeA, imageSizeB) =>
+						imageSizeA.width - imageSizeB.width
+				)
+			);
 		});
 	}, [fileEntryId]);
 

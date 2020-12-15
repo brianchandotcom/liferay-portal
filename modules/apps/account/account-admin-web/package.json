@@ -1,12 +1,9 @@
 {
 	"dependencies": {
 		"frontend-js-web": "*",
-		"metal-path-parser": "1.0.4",
-		"metal-router": "3.6.3",
-		"metal-state": "2.16.8",
-		"senna": "2.7.9"
+		"metal-state": "2.16.8"
 	},
-	"name": "portal-portlet-bridge-soy-impl",
+	"name": "account-admin-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

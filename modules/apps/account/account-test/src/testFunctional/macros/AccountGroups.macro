@@ -63,7 +63,7 @@ definition {
 		if ("${removeType}" == "Toolbar Remove Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${accountGroupName}");
 
-			ClickNoError(locator1 = "ManagementBar#REMOVE");
+			ClickNoError.clickNoMouseOver(locator1 = "ManagementBar#REMOVE");
 
 			AssertConfirm(value1 = "Are you sure you want to remove the selected accounts?");
 

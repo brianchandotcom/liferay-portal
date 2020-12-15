@@ -38,7 +38,20 @@ export const Container = ({
 );
 
 export const Column = forwardRef(
-	({children, className, column, index, pageIndex, rowIndex}, ref) => {
+	(
+		{
+			children,
+			className,
+			column,
+			index,
+			onClick,
+			onMouseLeave,
+			onMouseOver,
+			pageIndex,
+			rowIndex,
+		},
+		ref
+	) => {
 		const addr = {
 			'data-ddm-field-column': index,
 			'data-ddm-field-page': pageIndex,
@@ -55,6 +68,9 @@ export const Column = forwardRef(
 				className="col-ddm"
 				key={index}
 				md={column.size}
+				onClick={onClick}
+				onMouseLeave={onMouseLeave}
+				onMouseOver={onMouseOver}
 				ref={ref}
 			>
 				{column.fields.length > 0 && (
@@ -76,6 +92,8 @@ export const Column = forwardRef(
 		);
 	}
 );
+
+Column.displayName = 'DefaultVariant.Column';
 
 export const Page = ({
 	activePage,

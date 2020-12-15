@@ -18,7 +18,7 @@ import React, {useContext, useRef} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
-import Actions, {useActions} from './Actions.es';
+import {Actions, ActionsControls, useActions} from './Actions.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import {Placeholder} from './Placeholder.es';
 
@@ -72,7 +72,7 @@ export const Column = ({
 	};
 
 	return (
-		<Actions
+		<ActionsControls
 			activePage={activePage}
 			columnRef={columnRef}
 			expanded={isFieldSelected}
@@ -96,6 +96,12 @@ export const Column = ({
 				ref={columnRef}
 				rowIndex={rowIndex}
 			>
+				<Actions
+					activePage={activePage}
+					expanded={isFieldSelected}
+					field={firstField}
+				/>
+
 				<div
 					className={classNames(
 						'ddm-resize-handle ddm-resize-handle-left',
@@ -131,7 +137,7 @@ export const Column = ({
 					{...addr}
 				/>
 			</DefaultVariant.Column>
-		</Actions>
+		</ActionsControls>
 	);
 };
 
@@ -188,12 +194,6 @@ export const Page = ({
 		</DefaultVariant.Page>
 	);
 };
-
-export const Row = ({children, index, row}) => (
-	<div className="position-relative" key={index}>
-		{row.columns.map((column, index) => children({column, index}))}
-	</div>
-);
 
 export const Rows = ({activePage, children, pageIndex, rows}) => {
 	if (!rows) {

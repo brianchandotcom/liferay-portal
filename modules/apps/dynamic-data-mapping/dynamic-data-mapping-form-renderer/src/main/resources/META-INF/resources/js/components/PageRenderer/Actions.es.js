@@ -67,10 +67,10 @@ export const useActions = () => {
 
 ActionsContext.displayName = 'ActionsContext';
 
-const ACTIONS_CONTAINER_OFFSET = [14, 1];
+const ACTIONS_CONTAINER_OFFSET = [-2, 1];
 
-const Actions = forwardRef(
-	({activePage, children, columnRef, expanded, field}, actionsRef) => {
+export const ActionsControls = forwardRef(
+	({activePage, children, columnRef, field}, actionsRef) => {
 		const {
 			activeField,
 			hoveredField,
@@ -90,25 +90,6 @@ const Actions = forwardRef(
 				});
 			}
 		}, [actionsRef, activeField, columnRef, contentRect, hoveredField]);
-
-		const DROPDOWN_ACTIONS = [
-			{
-				label: Liferay.Language.get('duplicate'),
-				onClick: () =>
-					dispatch({
-						payload: {activePage, fieldName: field.fieldName},
-						type: EVENT_TYPES.FIELD_DUPLICATED,
-					}),
-			},
-			{
-				label: Liferay.Language.get('delete'),
-				onClick: () =>
-					dispatch({
-						payload: {activePage, fieldName: field.fieldName},
-						type: EVENT_TYPES.FIELD_DELETED,
-					}),
-			},
-		];
 
 		const handleFieldInteractions = (event) => {
 			event.stopPropagation();
@@ -143,13 +124,39 @@ const Actions = forwardRef(
 			}
 		};
 
+		return React.cloneElement(children, {
+			onClick: handleFieldInteractions,
+			onMouseLeave: handleFieldInteractions,
+			onMouseOver: handleFieldInteractions,
+		});
+	}
+);
+
+export const Actions = forwardRef(
+	({activePage, children, expanded, field}, actionsRef) => {
+		const dispatch = useForm();
+
+		const DROPDOWN_ACTIONS = [
+			{
+				label: Liferay.Language.get('duplicate'),
+				onClick: () =>
+					dispatch({
+						payload: {activePage, fieldName: field.fieldName},
+						type: EVENT_TYPES.FIELD_DUPLICATED,
+					}),
+			},
+			{
+				label: Liferay.Language.get('delete'),
+				onClick: () =>
+					dispatch({
+						payload: {activePage, fieldName: field.fieldName},
+						type: EVENT_TYPES.FIELD_DELETED,
+					}),
+			},
+		];
+
 		return (
-			<div
-				className="row"
-				onClick={handleFieldInteractions}
-				onMouseLeave={handleFieldInteractions}
-				onMouseOver={handleFieldInteractions}
-			>
+			<>
 				{expanded && (
 					<div
 						className="ddm-field-actions-container"
@@ -173,11 +180,10 @@ const Actions = forwardRef(
 				)}
 
 				{children}
-			</div>
+			</>
 		);
 	}
 );
 
+ActionsControls.displayName = 'ActionsControls';
 Actions.displayName = 'Actions';
-
-export default Actions;

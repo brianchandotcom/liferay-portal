@@ -14,20 +14,18 @@
 
 package com.liferay.layout.admin.kernel.util;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.registry.collections.ServiceRegistrationMapImpl;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Eduardo García
@@ -60,23 +58,33 @@ public class SitemapURLProviderRegistryUtil {
 	}
 
 	private SitemapURLProviderRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+		_sitemapURLProvidersServiceTrackerMap =
+			ServiceTrackerCollections.openSingleValueMap(
+				SitemapURLProvider.class, null,
+				(serviceReference, emitter) -> {
+					Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(
-			SitemapURLProvider.class,
-			new SitemapURLProviderServiceTrackerCustomizer());
+					SitemapURLProvider sitemapURLProvider = registry.getService(
+						serviceReference);
 
-		_serviceTracker.open();
+					emitter.emit(sitemapURLProvider.getClassName());
+				});
 	}
 
 	private SitemapURLProvider _getSitemapURLProvider(String className) {
-		return _sitemapURLProviders.get(className);
+		return _sitemapURLProvidersServiceTrackerMap.getService(className);
 	}
 
 	private List<SitemapURLProvider> _getSitemapURLProviders() {
-		Collection<SitemapURLProvider> values = _sitemapURLProviders.values();
+		Set<String> keySet = _sitemapURLProvidersServiceTrackerMap.keySet();
 
-		return ListUtil.fromCollection(values);
+		Stream<String> stream = keySet.stream();
+
+		return stream.map(
+			key -> _sitemapURLProvidersServiceTrackerMap.getService(key)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private void _register(SitemapURLProvider sitemapURLProvider) {
@@ -103,48 +111,7 @@ public class SitemapURLProviderRegistryUtil {
 
 	private final ServiceRegistrationMap<SitemapURLProvider>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<SitemapURLProvider, SitemapURLProvider>
-		_serviceTracker;
-	private final Map<String, SitemapURLProvider> _sitemapURLProviders =
-		new ConcurrentHashMap<>();
-
-	private class SitemapURLProviderServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<SitemapURLProvider, SitemapURLProvider> {
-
-		@Override
-		public SitemapURLProvider addingService(
-			ServiceReference<SitemapURLProvider> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			SitemapURLProvider sitemapURLProvider = registry.getService(
-				serviceReference);
-
-			_sitemapURLProviders.put(
-				sitemapURLProvider.getClassName(), sitemapURLProvider);
-
-			return sitemapURLProvider;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<SitemapURLProvider> serviceReference,
-			SitemapURLProvider sitemapURLProvider) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<SitemapURLProvider> serviceReference,
-			SitemapURLProvider sitemapURLProvider) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_sitemapURLProviders.remove(sitemapURLProvider.getClassName());
-		}
-
-	}
+	private final ServiceTrackerMap<String, SitemapURLProvider>
+		_sitemapURLProvidersServiceTrackerMap;
 
 }

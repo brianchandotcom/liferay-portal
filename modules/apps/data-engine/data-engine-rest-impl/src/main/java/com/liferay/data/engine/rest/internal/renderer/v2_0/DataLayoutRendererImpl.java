@@ -63,12 +63,13 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		return _ddmFormRenderer.render(
 			ddmForm, ddmStructureLayout.getDDMFormLayout(),
 			_toDDMFormRenderingContext(
-				dataLayoutId, dataLayoutRendererContext, ddmForm));
+				ddmStructure.getGroupId(), dataLayoutId,
+				dataLayoutRendererContext, ddmForm));
 	}
 
 	private DDMFormRenderingContext _toDDMFormRenderingContext(
-		Long dataLayoutId, DataLayoutRendererContext dataLayoutRendererContext,
-		DDMForm ddmForm) {
+		long groupId, Long dataLayoutId,
+		DataLayoutRendererContext dataLayoutRendererContext, DDMForm ddmForm) {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
@@ -80,6 +81,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 				dataLayoutRendererContext.getDataRecordValues(), ddmForm,
 				null));
 		ddmFormRenderingContext.setDDMStructureLayoutId(dataLayoutId);
+		ddmFormRenderingContext.setGroupId(groupId);
 		ddmFormRenderingContext.setHttpServletRequest(
 			dataLayoutRendererContext.getHttpServletRequest());
 		ddmFormRenderingContext.setHttpServletResponse(

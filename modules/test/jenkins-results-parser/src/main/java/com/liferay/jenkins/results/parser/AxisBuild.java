@@ -44,7 +44,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -121,6 +123,11 @@ public class AxisBuild extends BaseBuild {
 		catch (MalformedURLException malformedURLException) {
 			return null;
 		}
+	}
+
+	public String getAxisName() {
+		return JenkinsResultsParserUtil.combine(
+			getJobVariant(), "/", getAxisNumber());
 	}
 
 	public String getAxisNumber() {
@@ -417,12 +424,28 @@ public class AxisBuild extends BaseBuild {
 		return startTime;
 	}
 
+	public TestResult getTestResult(String testName) {
+		if (_testResults.containsKey(testName)) {
+			return _testResults.get(testName);
+		}
+
+		for (TestResult testResult : getTestResults(null)) {
+			if (testName.equals(testResult.getTestName())) {
+				return testResult;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
-		String status = getStatus();
-
-		if (!status.equals("completed")) {
+		if (!isCompleted()) {
 			return Collections.emptyList();
+		}
+
+		if (!_testResults.isEmpty()) {
+			return new ArrayList<>(_testResults.values());
 		}
 
 		JSONObject testReportJSONObject = getTestReportJSONObject(true);
@@ -434,8 +457,14 @@ public class AxisBuild extends BaseBuild {
 			return Collections.emptyList();
 		}
 
-		return getTestResults(
+		List<TestResult> testResults = getTestResults(
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);
+
+		for (TestResult testResult : testResults) {
+			_testResults.put(testResult.getTestName(), testResult);
+		}
+
+		return testResults;
 	}
 
 	@Override
@@ -648,5 +677,7 @@ public class AxisBuild extends BaseBuild {
 		"\\s*\\[echo\\] startTime: (?<startTime>[^\\n]+)");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
+
+	private final Map<String, TestResult> _testResults = new TreeMap<>();
 
 }

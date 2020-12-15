@@ -21,8 +21,6 @@ import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConsta
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -139,8 +137,6 @@ public class VimeoDLVideoExternalShortcutProvider
 			return jsonObject;
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
-
 			return null;
 		}
 	}
@@ -156,9 +152,6 @@ public class VimeoDLVideoExternalShortcutProvider
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		VimeoDLVideoExternalShortcutProvider.class);
 
 	private static final List<Pattern> _urlPatterns = Arrays.asList(
 		Pattern.compile(

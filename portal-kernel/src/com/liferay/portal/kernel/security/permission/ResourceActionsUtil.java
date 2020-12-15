@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.List;
 import java.util.Locale;
@@ -277,12 +278,32 @@ public class ResourceActionsUtil {
 		return getResourceActions().isRootModelResource(modelResource);
 	}
 
+	public static void populateModelResources(
+			ClassLoader classLoader, String... sources)
+		throws ResourceActionsException {
+
+		getResourceActions().populateModelResources(classLoader, sources);
+	}
+
+	public static void populateModelResources(Document document)
+		throws ResourceActionsException {
+
+		getResourceActions().populateModelResources(document);
+	}
+
 	public static void populatePortletResource(
 			Portlet portlet, ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
 
 		getResourceActions().populatePortletResource(
 			portlet, classLoader, sources);
+	}
+
+	public static void populatePortletResources(
+			ClassLoader classLoader, String... sources)
+		throws ResourceActionsException {
+
+		getResourceActions().populatePortletResources(classLoader, sources);
 	}
 
 	public static void read(ClassLoader classLoader, String source)

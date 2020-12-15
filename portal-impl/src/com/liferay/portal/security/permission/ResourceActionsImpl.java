@@ -579,6 +579,54 @@ public class ResourceActionsImpl implements ResourceActions {
 		return false;
 	}
 
+	public void populateModelResources(
+			ClassLoader classLoader, String... sources)
+		throws ResourceActionsException {
+
+		if (sources == null) {
+			return;
+		}
+
+		Set<String> modelResourceNames = new HashSet<>();
+
+		for (String source : sources) {
+			_read(
+				classLoader, source,
+				rootElement -> _readModelResources(
+					rootElement, modelResourceNames));
+		}
+
+		for (String modelResourceName : modelResourceNames) {
+			resourceActionLocalService.checkResourceActions(
+				modelResourceName, getModelResourceActions(modelResourceName));
+		}
+	}
+
+	public void populateModelResources(Document document)
+		throws ResourceActionsException {
+
+		DocumentType documentType = document.getDocumentType();
+
+		String publicId = GetterUtil.getString(documentType.getPublicId());
+
+		if (publicId.equals(
+				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Please update document to use the 6.1.0 format");
+			}
+		}
+
+		Set<String> modelResourceNames = new HashSet<>();
+
+		_readModelResources(document.getRootElement(), modelResourceNames);
+
+		for (String modelResourceName : modelResourceNames) {
+			resourceActionLocalService.checkResourceActions(
+				modelResourceName, getModelResourceActions(modelResourceName));
+		}
+	}
+
 	public void populatePortletResource(
 			Portlet portlet, ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
@@ -603,6 +651,32 @@ public class ResourceActionsImpl implements ResourceActions {
 		resourceActionLocalService.checkResourceActions(
 			portletResourceName,
 			_getPortletResourceActions(portletResourceName, portlet));
+	}
+
+	public void populatePortletResources(
+			ClassLoader classLoader, String... sources)
+		throws ResourceActionsException {
+
+		if ((sources == null) ||
+			!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
+
+			return;
+		}
+
+		Set<String> portletResourceNames = new HashSet<>();
+
+		for (String source : sources) {
+			_read(
+				classLoader, source,
+				rootElement -> _readPortletResources(
+					rootElement, portletResourceNames));
+		}
+
+		for (String portletResourceName : portletResourceNames) {
+			resourceActionLocalService.checkResourceActions(
+				portletResourceName,
+				getModelResourceActions(portletResourceName));
+		}
 	}
 
 	@Override

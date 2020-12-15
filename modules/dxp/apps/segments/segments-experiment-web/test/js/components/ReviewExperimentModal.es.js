@@ -69,9 +69,9 @@ const experiment = {
 	description: '',
 	editable: true,
 	goal: {
-		label: 'click',
-		target: 'click',
-		value: '#element',
+		label: 'Click',
+		target: 'element',
+		value: 'click',
 	},
 	name: 'Experiment name',
 	segmentsEntryName: 'Experience Segment',

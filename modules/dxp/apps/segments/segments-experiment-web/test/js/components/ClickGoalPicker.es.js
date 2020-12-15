@@ -18,7 +18,7 @@ import ClickGoalPicker from '../../../src/main/resources/META-INF/resources/js/c
 import {segmentsExperiment} from '../fixtures.es';
 import renderApp from '../renderApp.es';
 
-describe('Segments Experiments with Click Goal', () => {
+describe('ClickGoalPicker', () => {
 	afterEach(cleanup);
 
 	it('Experiment renders when goal value is click', () => {
@@ -31,14 +31,16 @@ describe('Segments Experiments with Click Goal', () => {
 		};
 
 		const {getByText} = renderApp({
-			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsExperiment: experiment,
 		});
 
-		getByText(experiment.name);
-		getByText('review-and-run-test');
+		expect(getByText(experiment.name)).toBeInTheDocument();
+		expect(getByText('review-and-run-test')).toBeInTheDocument();
+		expect(getByText('click-goal-description')).toBeInTheDocument();
+		expect(getByText('element-id')).toBeInTheDocument();
 	});
 
-	it('User clicks in set element button, the button turns from default to active mode', () => {
+	it('User clicks in select clickable element button, the button turns from default to active mode', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {
@@ -51,7 +53,7 @@ describe('Segments Experiments with Click Goal', () => {
 			<ClickGoalPicker segmentsExperiment={experiment} />
 		);
 
-		const setElementButton = getByText('set-element');
+		const setElementButton = getByText('select-clickable-element');
 		userEvent.click(setElementButton);
 
 		const clickGoalRoot = document.body.querySelector(
@@ -74,11 +76,13 @@ describe('Segments Experiments with Click Goal', () => {
 		);
 
 		expect(experiment.status.label).toBe('Draft');
-		getByText(
-			'a-clickable-element-on-the-page-must-be-selected-to-be-measured'
+
+		const selectClickableElementButton = getByText(
+			'select-clickable-element'
 		);
-		const setElementButton = getByText('set-element');
-		expect(setElementButton.attributes['disabled']).toBe(undefined);
+		expect(selectClickableElementButton.attributes['disabled']).toBe(
+			undefined
+		);
 	});
 
 	it('The user can edit a selected click target element in a draft experiment', () => {
@@ -86,7 +90,7 @@ describe('Segments Experiments with Click Goal', () => {
 			...segmentsExperiment,
 			goal: {
 				label: 'Click',
-				target: '#myButtonId',
+				target: 'myButtonId',
 				value: 'click',
 			},
 		};
@@ -96,28 +100,27 @@ describe('Segments Experiments with Click Goal', () => {
 		);
 
 		expect(experiment.status.label).toBe('Draft');
-		const editElement = getByText('edit-element');
+		const editElement = getByText('change-clickable-element');
 		expect(editElement.attributes['disabled']).toBe(undefined);
 	});
 
-	it('When the user set element as click target, then the element is set as the click target and the id of the element as a link', () => {
+	it('When the user select element as click target, then the element is select as the click target and the id of the element displays inside the input', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {
 				label: 'Click',
-				target: '#myButtonId',
+				target: 'myButtonId',
 				value: 'click',
 			},
 		};
 
-		const {getByText} = render(
+		const {getByLabelText} = render(
 			<ClickGoalPicker target={experiment.goal.target} />
 		);
 
-		const targetElement = getByText(experiment.goal.target);
-		expect(targetElement.attributes['href'].value).toBe(
-			experiment.goal.target
-		);
+		const input = getByLabelText('element-id');
+		expect(input).toBeInTheDocument();
+		expect(input.value).toBe(experiment.goal.target);
 	});
 
 	test.todo(

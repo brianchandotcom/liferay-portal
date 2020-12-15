@@ -289,7 +289,7 @@ describe('Review and Run test', () => {
 
 		userEvent.click(reviewAndRunTestButton);
 
-		getByText('an-element-needs-to-be-set');
+		getByText('an-element-needs-to-be-selected');
 	});
 
 	it('Error messages appears when the user clicks in review and run and there is only the control variant created', async () => {

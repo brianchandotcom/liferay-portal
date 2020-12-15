@@ -2535,6 +2535,12 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-template-freemarker-osgi-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -8666,6 +8672,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<prepare-portal-elasticsearch-osgi-configuration />
 
 		<prepare-portal-search-osgi-configuration/>
+
+		<prepare-portal-template-freemarker-osgi-configuration />
 	</target>
 
 	<target name="prepare-patching-tool">

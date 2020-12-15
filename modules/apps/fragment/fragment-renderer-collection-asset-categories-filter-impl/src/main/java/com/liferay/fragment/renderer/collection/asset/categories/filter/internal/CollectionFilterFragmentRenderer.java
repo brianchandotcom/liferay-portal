@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.renderer.collection.filter.internal;
+package com.liferay.fragment.renderer.collection.asset.categories.filter.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -21,8 +21,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
-import com.liferay.fragment.renderer.collection.filter.internal.constants.CollectionFilterFragmentRendererWebKeys;
+import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration;
+import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.constants.CollectionFilterFragmentRendererWebKeys;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

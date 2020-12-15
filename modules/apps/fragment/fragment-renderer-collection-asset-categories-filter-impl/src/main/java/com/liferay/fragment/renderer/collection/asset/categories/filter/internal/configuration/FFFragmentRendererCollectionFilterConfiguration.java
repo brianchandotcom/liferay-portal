@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.renderer.collection.filter.internal.configuration;
+package com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

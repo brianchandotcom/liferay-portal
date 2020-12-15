@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.fragment.renderer.collection.filter.internal.display.context;
+package com.liferay.fragment.renderer.collection.asset.categories.filter.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.fragment.renderer.collection.filter.internal.constants.CollectionFilterFragmentRendererWebKeys;
+import com.liferay.fragment.renderer.collection.asset.categories.filter.internal.constants.CollectionFilterFragmentRendererWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;

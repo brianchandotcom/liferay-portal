@@ -173,8 +173,10 @@ const Form = React.forwardRef(
 		useEffect(() => {
 			let onHandle;
 
-			if (containerRef.current) {
-				const form = getFormNode(containerRef.current);
+			const container = containerRef.current;
+
+			if (container) {
+				const form = getFormNode(container);
 
 				if (form) {
 					onHandle = Liferay.on(
@@ -196,8 +198,8 @@ const Form = React.forwardRef(
 					onHandle.detach();
 				}
 
-				if (containerRef.current) {
-					const form = getFormNode(containerRef.current);
+				if (container) {
+					const form = getFormNode(container);
 
 					if (form) {
 						form.removeEventListener('submit', handleFormSubmitted);

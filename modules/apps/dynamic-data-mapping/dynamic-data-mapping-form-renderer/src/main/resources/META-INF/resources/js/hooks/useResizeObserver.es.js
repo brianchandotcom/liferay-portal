@@ -37,16 +37,9 @@ export function useResizeObserver(targetRef) {
 			if (targetRef.current) {
 				resizeObserver.observe(targetRef.current);
 			}
-		}
-		else {
-			throw new Error('ResizeObserver is not supported');
-		}
 
-		return () => {
-			if (resizeObserver) {
-				resizeObserver.disconnect();
-			}
-		};
+			return () => resizeObserver.disconnect();
+		}
 	}, [targetRef]);
 
 	return contentRect;

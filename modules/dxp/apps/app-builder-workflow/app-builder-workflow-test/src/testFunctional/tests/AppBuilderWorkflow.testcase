@@ -767,7 +767,7 @@ definition {
 	@priority = "5"
 	test EditFormAndTableView {
 		property portal.acceptance = "true";
-		
+
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
@@ -817,8 +817,8 @@ definition {
 		TableViewBuilder.save();
 
 		AppBuilderWorkflow.assertTableViewSelected(
-			tableViewName = "Table Edit",
-			positionNumber = "1");
+			positionNumber = "1",
+			tableViewName = "Table Edit");
 
 		AppBuilderWorkflow.openFormView();
 
@@ -845,8 +845,8 @@ definition {
 		AppBuilderAdmin.cancel();
 
 		AppBuilderWorkflow.assertTableViewSelected(
-			tableViewName = "Table Edit",
-			positionNumber = "1");
+			positionNumber = "1",
+			tableViewName = "Table Edit");
 	}
 
 	@description = "Filter and order the apps created using App Builder"

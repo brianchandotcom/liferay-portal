@@ -62,13 +62,13 @@ public class RichTextDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext, "value")
 		).putAll(
 			_getEditorConfiguration(
-				ddmFormField.getType(), ddmFormFieldRenderingContext)
+				ddmFormFieldRenderingContext, ddmFormField.getType())
 		).build();
 	}
 
 	private Map<String, Object> _getEditorConfiguration(
-		String ddmFormFieldType,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		String ddmFormFieldType) {
 
 		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();

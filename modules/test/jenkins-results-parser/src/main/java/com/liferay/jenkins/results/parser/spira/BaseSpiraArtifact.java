@@ -105,6 +105,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	@Override
+	public String getKeyID() {
+		return getKeyID(getClass());
+	}
+
+	@Override
 	public String getName() {
 		return jsonObject.getString("Name");
 	}

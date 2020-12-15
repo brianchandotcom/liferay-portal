@@ -1425,6 +1425,18 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean isCompleted() {
+		String result = getResult();
+		String status = getStatus();
+
+		if ((result == null) || (status == null)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isFromArchive() {
 		return fromArchive;
 	}

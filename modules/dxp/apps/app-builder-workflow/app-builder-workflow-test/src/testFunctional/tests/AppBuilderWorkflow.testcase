@@ -763,6 +763,92 @@ definition {
 			info = "Completed");
 	}
 
+	@description = "LRQA-63476 - Automate LPS-111683: As an App Admin, I want to view and edit existing Form and Table Views during my App creation experience"
+	@priority = "5"
+	test EditFormAndTableView {
+		property portal.acceptance = "true";
+		
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "My Form View",
+			objectName = "my custom object",
+			tableViewName = "My Table View");
+
+		AppBuilderWorkflow.openFormView();
+
+		SelectFrame(
+			key_title = "Edit Form View",
+			locator1 = "IFrame#MODAL_ANY");
+
+		FormViewBuilder.setName(formViewName = "Form Edit");
+
+		FormViewBuilder.save();
+
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "Form Edit",
+			positionNumber = "1");
+
+		AppBuilderWorkflow.openTableView();
+
+		SelectFrame(
+			key_title = "Edit Table View",
+			locator1 = "IFrame#MODAL_ANY");
+
+		TableViewBuilder.setName(tableViewName = "Table Edit");
+
+		TableViewBuilder.save();
+
+		AppBuilderWorkflow.assertTableViewSelected(
+			tableViewName = "Table Edit",
+			positionNumber = "1");
+
+		AppBuilderWorkflow.openFormView();
+
+		SelectFrame(
+			key_title = "Edit Form View",
+			locator1 = "IFrame#MODAL_ANY");
+
+		FormViewBuilder.setName(formViewName = "Form Edit Again");
+
+		AppBuilderAdmin.cancel();
+
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "Form Edit",
+			positionNumber = "1");
+
+		AppBuilderWorkflow.openTableView();
+
+		SelectFrame(
+			key_title = "Edit Table View",
+			locator1 = "IFrame#MODAL_ANY");
+
+		TableViewBuilder.setName(tableViewName = "Table Edit Again");
+
+		AppBuilderAdmin.cancel();
+
+		AppBuilderWorkflow.assertTableViewSelected(
+			tableViewName = "Table Edit",
+			positionNumber = "1");
+	}
+
 	@description = "Filter and order the apps created using App Builder"
 	@priority = "5"
 	test FilterAndOrderStandardApps {

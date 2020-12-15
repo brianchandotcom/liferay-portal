@@ -71,17 +71,16 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
-		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
-			true);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
 		for (DDMFormField ddmFormLayoutDDMFormField :
 				ddmFormLayout.getDDMFormFields()) {
 
-			DDMFormField ddmFormDDMFormField = ddmFormFields.get(
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
 				ddmFormLayoutDDMFormField.getName());
 
-			ddmFormDDMFormField.setRequired(
-				ddmFormLayoutDDMFormField.isRequired());
+			ddmFormField.setRequired(ddmFormLayoutDDMFormField.isRequired());
 		}
 
 		return doCreate(ddmForm, ddmFormLayout, ddmFormRenderingContext);

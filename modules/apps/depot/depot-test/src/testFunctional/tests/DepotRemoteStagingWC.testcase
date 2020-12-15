@@ -162,7 +162,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementNotPresent(
+		AssertNotVisible(
 			key_imageTitle = "Document_2.jpg",
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}

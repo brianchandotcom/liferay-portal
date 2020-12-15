@@ -374,7 +374,7 @@ export default class Blogs {
 
 				const assetTagNames = this._getElementById('assetTagNames');
 
-				const data = nsObj(
+				const bodyData = nsObj(
 					{
 						allowPingbacks: allowPingbacks?.value,
 						allowTrackbacks: allowTrackbacks?.value,
@@ -427,7 +427,7 @@ export default class Blogs {
 
 				this._updateStatus(strings.saveDraftMessage);
 
-				const body = new URLSearchParams(data);
+				const body = new URLSearchParams(bodyData);
 
 				Liferay.Util.fetch(this._config.editEntryURL, {
 					body,

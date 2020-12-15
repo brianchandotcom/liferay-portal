@@ -411,32 +411,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 					FreeMarkerManager.class.getName());
 
 			_timeoutTemplateCounters = new ConcurrentHashMap<>();
-
-			try {
-				_threadLocalsField = ReflectionUtil.getDeclaredField(
-					Thread.class, "threadLocals");
-
-				Class<?> threadLocalMapClass = _threadLocalsField.getType();
-
-				_createInheritedMapMethod = ReflectionUtil.getDeclaredMethod(
-					ThreadLocal.class, "createInheritedMap",
-					threadLocalMapClass);
-
-				_tableField = ReflectionUtil.getDeclaredField(
-					threadLocalMapClass, "table");
-				_sizeField = ReflectionUtil.getDeclaredField(
-					threadLocalMapClass, "size");
-				_thresholdField = ReflectionUtil.getDeclaredField(
-					threadLocalMapClass, "threshold");
-
-				Class<?> tableFieldType = _tableField.getType();
-
-				_entryClass = tableFieldType.getComponentType();
-			}
-			catch (Exception exception) {
-				throw new IllegalStateException(
-					"Unable to get declared field", exception);
-			}
 		}
 	}
 
@@ -602,7 +576,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		Object threadLocals = _cloneThreadLocals(currentThread);
+		Object threadLocals = ThreadLocalUtil._cloneThreadLocals(currentThread);
 
 		NoticeableFuture<?> noticeableFuture =
 			_noticeableExecutorService.submit(
@@ -612,14 +586,14 @@ public class FreeMarkerManager extends BaseTemplateManager {
 					thread.setContextClassLoader(contextClassLoader);
 
 					try {
-						_threadLocalsField.set(thread, threadLocals);
+						ThreadLocalUtil._setThreadLocals(thread, threadLocals);
 
 						callable.call();
 					}
 					finally {
 						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-						_threadLocalsField.set(thread, null);
+						ThreadLocalUtil._setThreadLocals(thread, null);
 					}
 
 					return null;
@@ -638,41 +612,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 			_log.error(errorMessage, timeoutException);
 
-			_tableField.set(threadLocals, Array.newInstance(_entryClass, 0));
-			_sizeField.set(threadLocals, 0);
-			_thresholdField.set(threadLocals, 0);
+			ThreadLocalUtil._clearThreadLocals(threadLocals);
 		}
 	}
 
 	@Reference(unbind = "-")
 	protected void setSingleVMPool(SingleVMPool singleVMPool) {
 		_singleVMPool = singleVMPool;
-	}
-
-	private Object _cloneThreadLocals(Thread thread) throws Exception {
-		Object threadLocals = _threadLocalsField.get(thread);
-
-		Object table = _tableField.get(threadLocals);
-
-		int length = Array.getLength(table);
-
-		try {
-			_tableField.set(
-				threadLocals, Array.newInstance(_entryClass, length));
-
-			Object clonedThreadLocals = _createInheritedMapMethod.invoke(
-				null, threadLocals);
-
-			System.arraycopy(
-				table, 0, _tableField.get(clonedThreadLocals), 0, length);
-
-			_sizeField.set(clonedThreadLocals, _sizeField.get(threadLocals));
-
-			return clonedThreadLocals;
-		}
-		finally {
-			_tableField.set(threadLocals, table);
-		}
 	}
 
 	private String _getMacroLibrary() {
@@ -718,9 +664,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	private volatile int _bundleTrackingCount = -2;
 	private Configuration _configuration;
-	private Method _createInheritedMapMethod;
 	private BeansWrapper _defaultBeanWrapper;
-	private Class<?> _entryClass;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
 
@@ -735,16 +679,94 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private BeansWrapper _restrictedBeanWrapper;
 	private ServiceRegistration<PortalExecutorConfig> _serviceRegistration;
 	private SingleVMPool _singleVMPool;
-	private Field _sizeField;
-	private Field _tableField;
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
 	private TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
-	private Field _threadLocalsField;
-	private Field _thresholdField;
 	private Map<String, AtomicInteger> _timeoutTemplateCounters;
+
+	private static class ThreadLocalUtil {
+
+		private static void _clearThreadLocals(Object threadLocals)
+			throws Exception {
+
+			_tableField.set(threadLocals, Array.newInstance(_ENTRY_CLASS, 0));
+			_sizeField.set(threadLocals, 0);
+			_thresholdField.set(threadLocals, 0);
+		}
+
+		private static Object _cloneThreadLocals(Thread thread)
+			throws Exception {
+
+			Object threadLocals = _threadLocalsField.get(thread);
+
+			Object table = _tableField.get(threadLocals);
+
+			int length = Array.getLength(table);
+
+			try {
+				_tableField.set(
+					threadLocals, Array.newInstance(_ENTRY_CLASS, length));
+
+				Object clonedThreadLocals = _createInheritedMapMethod.invoke(
+					null, threadLocals);
+
+				System.arraycopy(
+					table, 0, _tableField.get(clonedThreadLocals), 0, length);
+
+				_sizeField.set(
+					clonedThreadLocals, _sizeField.get(threadLocals));
+
+				return clonedThreadLocals;
+			}
+			finally {
+				_tableField.set(threadLocals, table);
+			}
+		}
+
+		private static void _setThreadLocals(Thread thread, Object threadLocals)
+			throws Exception {
+
+			_threadLocalsField.set(thread, threadLocals);
+		}
+
+		private static final Class<?> _ENTRY_CLASS;
+
+		private static final Method _createInheritedMapMethod;
+		private static final Field _sizeField;
+		private static final Field _tableField;
+		private static final Field _threadLocalsField;
+		private static final Field _thresholdField;
+
+		static {
+			try {
+				_threadLocalsField = ReflectionUtil.getDeclaredField(
+					Thread.class, "threadLocals");
+
+				Class<?> threadLocalMapClass = _threadLocalsField.getType();
+
+				_createInheritedMapMethod = ReflectionUtil.getDeclaredMethod(
+					ThreadLocal.class, "createInheritedMap",
+					threadLocalMapClass);
+
+				_tableField = ReflectionUtil.getDeclaredField(
+					threadLocalMapClass, "table");
+				_sizeField = ReflectionUtil.getDeclaredField(
+					threadLocalMapClass, "size");
+				_thresholdField = ReflectionUtil.getDeclaredField(
+					threadLocalMapClass, "threshold");
+
+				Class<?> tableFieldType = _tableField.getType();
+
+				_ENTRY_CLASS = tableFieldType.getComponentType();
+			}
+			catch (Exception exception) {
+				throw new ExceptionInInitializerError(exception);
+			}
+		}
+
+	}
 
 	private class ServletContextInvocationHandler implements InvocationHandler {
 

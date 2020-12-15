@@ -14,13 +14,17 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TestClassResult;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomProperty;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomPropertyValue;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseComponent;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 import com.liferay.poshi.core.PoshiContext;
@@ -38,7 +42,45 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Michael Hashimoto
  */
-public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
+public class FunctionalAxisSpiraTestResult extends BaseAxisSpiraTestResult {
+
+	@Override
+	public Integer getDuration() {
+		TestResult testResult = getTestResult();
+
+		if (testResult != null) {
+			return (int)testResult.getDuration();
+		}
+
+		return super.getDuration();
+	}
+
+	@Override
+	public List<TestResult> getFailedTestResults() {
+		List<TestResult> failedTestResults = new ArrayList<>();
+
+		TestResult testResult = getTestResult();
+
+		if ((testResult != null) && testResult.isFailing()) {
+			failedTestResults.add(testResult);
+		}
+
+		return failedTestResults;
+	}
+
+	public String getPoshiPropertyValue(String propertyName) {
+		Properties poshiProperties =
+			PoshiContext.getNamespacedClassCommandNameProperties(
+				_functionalTestClass.getTestClassMethodName());
+
+		if ((poshiProperties == null) ||
+			!poshiProperties.containsKey(propertyName)) {
+
+			return null;
+		}
+
+		return poshiProperties.getProperty(propertyName);
+	}
 
 	@Override
 	public SpiraTestCaseObject getSpiraTestCaseObject() {
@@ -61,7 +103,7 @@ public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
 					Integer.valueOf(priority)));
 		}
 
-		String teamName = _getTeamName();
+		String teamName = getTeamName();
 
 		if ((teamName != null) && !teamName.isEmpty()) {
 			SpiraCustomProperty spiraCustomProperty =
@@ -105,50 +147,21 @@ public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
 		return spiraTestCaseObject;
 	}
 
-	@Override
-	public String getTestName() {
-		String testName = _functionalTestClass.getTestClassMethodName();
+	public SpiraTestCaseRun.Status getSpiraTestCaseRunStatus() {
+		TestResult testResult = getTestResult();
 
-		return testName.replaceAll("[^\\.]+\\.(.*)", "$1");
-	}
+		if (testResult != null) {
+			if (testResult.isFailing()) {
+				return SpiraTestCaseRun.Status.FAILED;
+			}
 
-	protected FunctionalSpiraTestResult(
-		SpiraBuildResult spiraBuildResult,
-		FunctionalAxisTestClassGroup axisTestClassGroup,
-		FunctionalBatchTestClassGroup.FunctionalTestClass functionalTestClass) {
-
-		super(spiraBuildResult, axisTestClassGroup);
-
-		_functionalTestClass = functionalTestClass;
-	}
-
-	private String _getComponentNames() {
-		return _getPoshiPropertyValue("testray.component.names");
-	}
-
-	private String _getMainComponentName() {
-		return _getPoshiPropertyValue("testray.main.component.name");
-	}
-
-	private String _getPoshiPropertyValue(String propertyName) {
-		Properties poshiProperties =
-			PoshiContext.getNamespacedClassCommandNameProperties(
-				_functionalTestClass.getTestClassMethodName());
-
-		if ((poshiProperties == null) ||
-			!poshiProperties.containsKey(propertyName)) {
-
-			return null;
+			return SpiraTestCaseRun.Status.PASSED;
 		}
 
-		return poshiProperties.getProperty(propertyName);
+		return super.getSpiraTestCaseRunStatus();
 	}
 
-	private String _getPriority() {
-		return _getPoshiPropertyValue("priority");
-	}
-
-	private String _getTeamName() {
+	public String getTeamName() {
 		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
 
 		String teamNames = JenkinsResultsParserUtil.getProperty(
@@ -189,6 +202,60 @@ public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
 		return null;
 	}
 
+	public String getTestClassMethodName() {
+		return _functionalTestClass.getTestClassMethodName();
+	}
+
+	public TestClassResult getTestClassResult() {
+		TestResult testResult = getTestResult();
+
+		if (testResult == null) {
+			return null;
+		}
+
+		return testResult.getTestClassResult();
+	}
+
+	@Override
+	public String getTestName() {
+		String testName = _functionalTestClass.getTestClassMethodName();
+
+		return testName.replaceAll("[^\\.]+\\.(.*)", "$1");
+	}
+
+	public TestResult getTestResult() {
+		if (_testResult != null) {
+			return _testResult;
+		}
+
+		AxisBuild axisBuild = getAxisBuild();
+
+		return _testResult = axisBuild.getTestResult(
+			_functionalTestClass.getTestClassMethodName());
+	}
+
+	protected FunctionalAxisSpiraTestResult(
+		SpiraBuildResult spiraBuildResult,
+		FunctionalAxisTestClassGroup axisTestClassGroup,
+		FunctionalBatchTestClassGroup.FunctionalTestClass functionalTestClass) {
+
+		super(spiraBuildResult, axisTestClassGroup);
+
+		_functionalTestClass = functionalTestClass;
+	}
+
+	private String _getComponentNames() {
+		return getPoshiPropertyValue("testray.component.names");
+	}
+
+	private String _getMainComponentName() {
+		return getPoshiPropertyValue("testray.main.component.name");
+	}
+
+	private String _getPriority() {
+		return getPoshiPropertyValue("priority");
+	}
+
 	private boolean _isSpiraPropertyUpdateEnabled() {
 		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
 
@@ -210,5 +277,6 @@ public class FunctionalSpiraTestResult extends BaseSpiraTestResult {
 
 	private final FunctionalBatchTestClassGroup.FunctionalTestClass
 		_functionalTestClass;
+	private TestResult _testResult;
 
 }

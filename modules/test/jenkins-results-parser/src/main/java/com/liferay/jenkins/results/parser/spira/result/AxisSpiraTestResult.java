@@ -14,23 +14,24 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
-import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.AxisBuild;
+import com.liferay.jenkins.results.parser.TestResult;
+
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
  */
-public class BatchSpiraTestResult extends BaseSpiraTestResult {
+public interface AxisSpiraTestResult extends SpiraTestResult {
 
-	@Override
-	public String getTestName() {
-		return getAxisName();
-	}
+	public AxisBuild getAxisBuild();
 
-	protected BatchSpiraTestResult(
-		SpiraBuildResult spiraBuildResult,
-		AxisTestClassGroup axisTestClassGroup) {
+	public String getAxisName();
 
-		super(spiraBuildResult, axisTestClassGroup);
-	}
+	public String getBatchName();
+
+	public List<TestResult> getCommonFailedTestResults();
+
+	public List<TestResult> getFailedTestResults();
 
 }

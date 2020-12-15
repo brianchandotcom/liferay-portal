@@ -14,7 +14,10 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.spira.SpiraAutomationHost;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseType;
 
 /**
@@ -22,11 +25,21 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseType;
  */
 public interface SpiraTestResult {
 
-	public String getAxisName();
+	public Build getBuild();
+
+	public Integer getDuration();
+
+	public String getPortalSHA();
+
+	public SpiraAutomationHost getSpiraAutomationHost();
 
 	public SpiraBuildResult getSpiraBuildResult();
 
 	public SpiraTestCaseObject getSpiraTestCaseObject();
+
+	public SpiraTestCaseRun.RunnerFormat getSpiraTestCaseRunRunnerFormat();
+
+	public SpiraTestCaseRun.Status getSpiraTestCaseRunStatus();
 
 	public SpiraTestCaseType getSpiraTestCaseType();
 

@@ -267,7 +267,6 @@ public class DataEngineNativeObjectPortalExecutor {
 						availableLanguageIds = new String[] {defaultLanguageId};
 						dataDefinitionKey =
 							dataEngineNativeObject.getClassName();
-						defaultDataLayout = new DataLayout();
 						storageType = StorageType.DEFAULT.getValue();
 					}
 				};
@@ -297,9 +296,25 @@ public class DataEngineNativeObjectPortalExecutor {
 				).build());
 
 			if (Validator.isNull(dataDefinition.getId())) {
-				dataDefinitionResource.postSiteDataDefinitionByContentType(
-					_portal.getSiteGroupId(company.getGroupId()),
-					"native-object", dataDefinition);
+				dataDefinition =
+					dataDefinitionResource.postSiteDataDefinitionByContentType(
+						_portal.getSiteGroupId(company.getGroupId()),
+						"native-object", dataDefinition);
+
+				DataLayout dataLayout = new DataLayout();
+
+				dataLayout.setName(dataDefinition.getName());
+
+				DataLayoutResource dataLayoutResource =
+					DataLayoutResource.builder(
+					).checkPermissions(
+						false
+					).user(
+						GuestOrUserUtil.getGuestOrUser(companyId)
+					).build();
+
+				dataLayoutResource.postDataDefinitionDataLayout(
+					dataDefinition.getId(), dataLayout);
 			}
 			else {
 				dataDefinitionResource.putDataDefinition(

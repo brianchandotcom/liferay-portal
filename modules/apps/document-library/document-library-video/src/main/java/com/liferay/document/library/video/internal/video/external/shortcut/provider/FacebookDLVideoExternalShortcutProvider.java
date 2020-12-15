@@ -135,6 +135,7 @@ public class FacebookDLVideoExternalShortcutProvider
 			"(https?:\\/\\/(?:(www|m)\\.)?facebook\\.com\\/watch\\/?\\?" +
 				"v=\\S*)"),
 		Pattern.compile(
-			"(https?:\\/\\/(?:www\\.)?facebook\\.com\\/\\S*\\/videos\\/\\S*)"));
+			"(https?:\\/\\/(?:www\\.)?facebook\\.com\\/\\S*\\/videos\\/\\S*)"),
+		Pattern.compile("(https?:\\/\\/fb\\.watch\\/\\S*)"));
 
 }

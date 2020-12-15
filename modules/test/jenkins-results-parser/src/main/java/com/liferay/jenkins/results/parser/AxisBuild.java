@@ -424,6 +424,23 @@ public class AxisBuild extends BaseBuild {
 		return startTime;
 	}
 
+	public TestClassResult getTestClassResult(String testClassName) {
+		if (_testClassResults.containsKey(testClassName)) {
+			return _testClassResults.get(testClassName);
+		}
+
+		if (!isCompleted()) {
+			return null;
+		}
+
+		for (TestClassResult testClassResult : getTestClassResults()) {
+			_testClassResults.put(
+				testClassResult.getClassName(), testClassResult);
+		}
+
+		return _testClassResults.get(testClassName);
+	}
+
 	public TestResult getTestResult(String testName) {
 		if (_testResults.containsKey(testName)) {
 			return _testResults.get(testName);
@@ -678,6 +695,8 @@ public class AxisBuild extends BaseBuild {
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
 
+	private final Map<String, TestClassResult> _testClassResults =
+		new TreeMap<>();
 	private final Map<String, TestResult> _testResults = new TreeMap<>();
 
 }

@@ -48,27 +48,28 @@ public class DLVideoExternalShortcutResolverTest {
 				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
 				"frameborder=\"0\" height=\"315\" ",
 				"src=\"https://www.facebook.com/plugins/video.php?height=315&",
-				"href=https://www.facebook.com/watch/?show_text=0&v=VIDEO_ID&",
-				"width=560\" scrolling=\"no\" style=\"border: none; overflow: ",
-				"hidden;\" width=\"560\"></iframe>"),
+				"href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3DVIDEO_ID",
+				"&show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
+				"none; overflow: hidden;\" width=\"560\"></iframe>"),
 			_renderHTML("https://www.facebook.com/watch/?v=VIDEO_ID"));
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
 				"frameborder=\"0\" height=\"315\" ",
 				"src=\"https://www.facebook.com/plugins/video.php?height=315&",
-				"href=https://www.facebook.com/USER_ID/videos/VIDEO_ID&",
-				"show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
-				"none; overflow: hidden;\" width=\"560\"></iframe>"),
+				"href=https%3A%2F%2Fwww.facebook.com%2FUSER_ID%2Fvideos%2F",
+				"VIDEO_ID&show_text=0&width=560\" scrolling=\"no\" ",
+				"style=\"border: none; overflow: hidden;\" width=\"560\">",
+				"</iframe>"),
 			_renderHTML("https://www.facebook.com/USER_ID/videos/VIDEO_ID"));
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<iframe allowFullScreen=\"true\" allowTransparency=\"true\" ",
 				"frameborder=\"0\" height=\"315\" ",
 				"src=\"https://www.facebook.com/plugins/video.php?height=315&",
-				"href=https://m.facebook.com/watch/?show_text=0&v=VIDEO_ID&",
-				"width=560\" scrolling=\"no\" style=\"border: none; overflow: ",
-				"hidden;\" width=\"560\"></iframe>"),
+				"href=https%3A%2F%2Fm.facebook.com%2Fwatch%2F%3Fv%3DVIDEO_ID&",
+				"show_text=0&width=560\" scrolling=\"no\" style=\"border: ",
+				"none; overflow: hidden;\" width=\"560\"></iframe>"),
 			_renderHTML("https://m.facebook.com/watch/?v=VIDEO_ID"));
 	}
 

@@ -19,7 +19,12 @@ import com.liferay.document.library.video.external.shortcut.provider.DLVideoExte
 import com.liferay.frontend.editor.embed.EditorEmbedProvider;
 import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.UnsupportedEncodingException;
+
+import java.net.URLEncoder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +76,16 @@ public class FacebookDLVideoExternalShortcutProvider
 
 			@Override
 			public String renderHTML(HttpServletRequest httpServletRequest) {
-				return StringUtil.replace(getTpl(), "{embedId}", url);
+				try {
+					return StringUtil.replace(
+						getTpl(), "{embedId}",
+						URLEncoder.encode(url, StringPool.UTF8));
+				}
+				catch (UnsupportedEncodingException
+							unsupportedEncodingException) {
+
+					return null;
+				}
 			}
 
 		};

@@ -87,8 +87,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDiscussionSubscriptionClassName(
 				_classNameLocalService, _subscriptionLocalService,
 				BlogsEntry.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.CUSTOM,
-				_retainGroupSubscriptions()));
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
 			"2.0.1", "2.1.0",

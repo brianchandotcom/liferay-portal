@@ -141,23 +141,30 @@ public class FreeMarkerTemplate extends BaseTemplate {
 			TemplateResource templateResource, Writer writer)
 		throws Exception {
 
-		TemplateResourceThreadLocal.setTemplateResource(
-			TemplateConstants.LANG_TYPE_FTL, templateResource);
+		_freeMarkerManager.render(
+			templateResource.getTemplateId(), writer,
+			() -> {
+				TemplateResourceThreadLocal.setTemplateResource(
+					TemplateConstants.LANG_TYPE_FTL, templateResource);
 
-		try {
-			Template template = _configuration.getTemplate(
-				getTemplateResourceUUID(templateResource),
-				TemplateConstants.DEFAUT_ENCODING);
+				try {
+					Template template = _configuration.getTemplate(
+						getTemplateResourceUUID(templateResource),
+						TemplateConstants.DEFAUT_ENCODING);
 
-			template.setObjectWrapper(_beansWrapper);
+					template.setObjectWrapper(_beansWrapper);
 
-			template.process(
-				new CachableDefaultMapAdapter(context, _beansWrapper), writer);
-		}
-		finally {
-			TemplateResourceThreadLocal.setTemplateResource(
-				TemplateConstants.LANG_TYPE_FTL, null);
-		}
+					template.process(
+						new CachableDefaultMapAdapter(context, _beansWrapper),
+						writer);
+				}
+				finally {
+					TemplateResourceThreadLocal.setTemplateResource(
+						TemplateConstants.LANG_TYPE_FTL, null);
+				}
+
+				return null;
+			});
 	}
 
 	@Override

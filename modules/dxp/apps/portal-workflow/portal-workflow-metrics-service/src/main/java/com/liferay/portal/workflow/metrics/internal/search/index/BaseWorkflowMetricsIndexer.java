@@ -31,6 +31,7 @@ import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.script.Scripts;
@@ -171,7 +172,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 	}
 
 	protected void updateDocuments(
-		long companyId, Map<String, Object> fieldsMap, Query query) {
+		long companyId, Map<String, Object> fieldsMap, Query filterQuery) {
 
 		if (searchEngineAdapter == null) {
 			return;
@@ -219,9 +220,12 @@ public abstract class BaseWorkflowMetricsIndexer {
 				sb.append(";");
 			});
 
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
-				query, scripts.script(sb.toString()), getIndexName(companyId));
+				booleanQuery.addFilterQueryClauses(filterQuery),
+				scripts.script(sb.toString()), getIndexName(companyId));
 
 		if (PortalRunMode.isTestMode()) {
 			updateByQueryDocumentRequest.setRefresh(true);

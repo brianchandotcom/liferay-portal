@@ -37,9 +37,9 @@ public class TwitchDLVideoExternalShortcutProvider
 
 	@Override
 	public DLVideoExternalShortcut getDLVideoExternalShortcut(String url) {
-		String twitchVideoId = _getTwitchVideoId(url);
+		String videoQueryParam = _getVideoQueryParam(url);
 
-		if (Validator.isNull(twitchVideoId)) {
+		if (videoQueryParam == null) {
 			return null;
 		}
 
@@ -70,8 +70,8 @@ public class TwitchDLVideoExternalShortcutProvider
 				return StringBundler.concat(
 					"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
 					"height=\"315\" ",
-					"src=\"https://player.twitch.tv/?autoplay=false&video=",
-					twitchVideoId, "&parent=",
+					"src=\"https://player.twitch.tv/?autoplay=false&",
+					videoQueryParam, "&parent=",
 					_portal.getHost(httpServletRequest),
 					"\" scrolling=\"no\" width=\"560\" ></iframe>");
 			}
@@ -79,8 +79,8 @@ public class TwitchDLVideoExternalShortcutProvider
 		};
 	}
 
-	private String _getTwitchVideoId(String url) {
-		Matcher matcher = _urlPattern.matcher(url);
+	private String _getTwitchVideoId(Pattern pattern, String url) {
+		Matcher matcher = pattern.matcher(url);
 
 		if (matcher.matches()) {
 			return matcher.group(1);
@@ -89,7 +89,25 @@ public class TwitchDLVideoExternalShortcutProvider
 		return null;
 	}
 
-	private static final Pattern _urlPattern = Pattern.compile(
+	private String _getVideoQueryParam(String url) {
+		String twitchVideoId = _getTwitchVideoId(_videoURLPattern, url);
+
+		if (Validator.isNull(twitchVideoId)) {
+			twitchVideoId = _getTwitchVideoId(_channelURLPattern, url);
+
+			if (Validator.isNull(twitchVideoId)) {
+				return null;
+			}
+
+			return "channel=" + twitchVideoId;
+		}
+
+		return "video=" + twitchVideoId;
+	}
+
+	private static final Pattern _channelURLPattern = Pattern.compile(
+		"https?:\\/\\/(?:www\\.)?twitch\\.tv\\/(\\S*)$");
+	private static final Pattern _videoURLPattern = Pattern.compile(
 		"https?:\\/\\/(?:www\\.)?twitch\\.tv\\/videos\\/(\\S*)$");
 
 	@Reference

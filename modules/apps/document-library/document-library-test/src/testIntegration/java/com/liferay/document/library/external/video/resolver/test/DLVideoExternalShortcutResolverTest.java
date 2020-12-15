@@ -138,6 +138,13 @@ public class DLVideoExternalShortcutResolverTest {
 				"/?autoplay=false&video=VIDEO_ID&parent=", _HOST,
 				"\" scrolling=\"no\" width=\"560\" ></iframe>"),
 			_renderHTML("https://www.twitch.tv/videos/VIDEO_ID"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<iframe allowfullscreen=\"true\" frameborder=\"0\" ",
+				"height=\"315\" src=\"https://player.twitch.tv",
+				"/?autoplay=false&channel=CHANNEL_ID&parent=", _HOST,
+				"\" scrolling=\"no\" width=\"560\" ></iframe>"),
+			_renderHTML("https://www.twitch.tv/CHANNEL_ID"));
 	}
 
 	@Test

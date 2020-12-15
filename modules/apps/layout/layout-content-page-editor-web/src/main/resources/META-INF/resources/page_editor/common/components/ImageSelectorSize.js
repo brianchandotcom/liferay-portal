@@ -136,7 +136,7 @@ export const ImageSelectorSize = ({
 							onImageSizeIdChanged(event.target.value)
 						}
 						options={imageSizes}
-						value={imageSizeId}
+						value={imageSizeId || DEFAULT_IMAGE_SIZE_ID}
 					/>
 				</ClayForm.Group>
 			)}

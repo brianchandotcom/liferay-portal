@@ -291,6 +291,14 @@ definition {
 		}
 	}
 
+	macro openFormView {
+		Click(locator1 = "AppBuilderWorkflow#OPEN_FORM_VIEW_DATA");
+	}
+
+	macro openTableView {
+		Click(locator1 = "AppBuilderWorkflow#OPEN_TABLE_VIEW_DATA");
+	}
+
 	macro removeFormView {
 		Click.javaScriptClick(
 			key_positionNumber = "${positionNumber}",

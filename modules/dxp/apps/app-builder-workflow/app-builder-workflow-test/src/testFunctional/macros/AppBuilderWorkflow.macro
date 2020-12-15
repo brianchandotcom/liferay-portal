@@ -4,6 +4,20 @@ definition {
 		Click(locator1 = "AppBuilderWorkflow#ADD_NEW_FORM_VIEW_BUTTON");
 	}
 
+	macro addNewObject {
+		AppBuilderWorkflow.clickOnAddNewCustomObjectButton();
+
+		Type(
+			locator1 = "AppBuilderWorkflow#NEW_OBJECT_NAME_FIELD",
+			value1 = "${objectName}");
+
+		Click(locator1 = "AppBuilderWorkflow#BUTTON_CONTINUE");
+
+		SelectFrame(
+			key_title = "New Form View",
+			locator1 = "IFrame#MODAL_ANY");
+	}
+
 	macro addNewStep {
 		Click(locator1 = "AppBuilderWorkflow#NEW_STEP_BUTTON");
 	}
@@ -12,16 +26,6 @@ definition {
 		Type(
 			locator1 = "AppBuilderWorkflow#WORKFLOW_APP_NAME_FIELD",
 			value1 = "${workflowAppName}");
-	}
-
-	macro addWorkflowNewObject {
-		AppBuilderWorkflow.clickOnAddNewCustomObjectButton();
-
-		Type(
-			locator1 = "AppBuilderWorkflow#WORKFLOW_NEW_OBJECT_NAME_FIELD",
-			value1 = "${workflowObjectName}");
-
-		Click(locator1 = "AppBuilderWorkflow#BUTTON_CONTINUE");
 	}
 
 	macro assertAppUpdateAlertModal {
@@ -113,6 +117,12 @@ definition {
 			key_positionNumber = "${positionNumber}",
 			locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT",
 			value1 = "${formViewName}");
+	}
+
+	macro assertObjectSelected {
+		AssertTextEquals(
+			locator1 = "AppBuilderWorkflow#SELECT_CUSTOM_OBJECT_BUTTON_TEXT",
+			value1 = "${objectName}");
 	}
 
 	macro assertRemoveFormViewButton {

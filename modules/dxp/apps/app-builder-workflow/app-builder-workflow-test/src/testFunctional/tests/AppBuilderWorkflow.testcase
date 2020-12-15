@@ -452,7 +452,7 @@ definition {
 			step = "2");
 	}
 
-	@description = "Create an Object and Form during Workflow App Creation"
+	@description = "LRQA-63174 - Automate LPS-111511: As an App Admin, I want to create a new Object and Form during the Workflow App creation experience"
 	@priority = "5"
 	test CreateObjectAndForm {
 		property portal.acceptance = "true";
@@ -472,11 +472,7 @@ definition {
 
 		AppBuilderWorkflow.validatePlusButton();
 
-		AppBuilderWorkflow.addWorkflowNewObject(workflowObjectName = "my custom object");
-
-		SelectFrame(
-			key_title = "New Form View",
-			locator1 = "IFrame#MODAL_ANY");
+		AppBuilderWorkflow.addNewObject(objectName = "my custom object");
 
 		FormViewBuilder.setUpTwoFieldSets(
 			fieldSetName = "Field Sets",
@@ -521,9 +517,14 @@ definition {
 
 		FormViewBuilder.ruleSave();
 
-		FormViewBuilder.setName(formViewName = "Form One");
+		FormViewBuilder.setName(formViewName = "My Form View");
 
 		FormViewBuilder.save();
+
+		AppBuilderWorkflow.assertObjectSelected(objectName = "my custom object");
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View",
+			positionNumber = "1");
 	}
 
 	@description = "Create an App through the 'Apps' portlet"

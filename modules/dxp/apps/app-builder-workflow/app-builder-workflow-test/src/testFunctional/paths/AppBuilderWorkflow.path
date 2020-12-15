@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CUSTOM_OBJECT_BUTTON_TEXT</td>
+	<td>//button[contains(@aria-labelledby,'select-object-label')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FORM_VIEW_BUTTON</td>
 	<td>xpath=(//button[contains(@aria-labelledby,'form-view')])[${key_positionNumber}]</td>
 	<td></td>
@@ -165,7 +170,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WORKFLOW_NEW_OBJECT_NAME_FIELD</td>
+	<td>NEW_OBJECT_NAME_FIELD</td>
 	<td>//div[contains(@class, 'modal-content')]//div//input[contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>

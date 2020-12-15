@@ -50,7 +50,8 @@ public class DLVideoRendererImpl implements DLVideoRenderer {
 		}
 
 		return StringBundler.concat(
-			"<iframe height=\"315\" frameborder=\"0\" src=\"",
+			"<iframe class=\"video-preview-dl\" height=\"315\" ",
+			"frameborder=\"0\" src=\"",
 			_getEmbedVideoURL(fileVersion, httpServletRequest), "&",
 			"\" width=\"560\"></iframe>");
 	}

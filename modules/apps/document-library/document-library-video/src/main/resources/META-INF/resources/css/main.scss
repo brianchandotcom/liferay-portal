@@ -19,7 +19,7 @@
 		position: relative;
 
 		embed,
-		iframe,
+		iframe:not(#{$component}-dl),
 		object {
 			background-color: $black;
 		}

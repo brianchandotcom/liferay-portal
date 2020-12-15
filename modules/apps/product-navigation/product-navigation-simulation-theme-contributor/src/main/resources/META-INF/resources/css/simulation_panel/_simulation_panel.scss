@@ -226,7 +226,7 @@
 	overflow: auto;
 	position: fixed;
 	right: 320px;
-	top: 68px;
+	top: 56px;
 	z-index: 500;
 
 	.modal-content {
@@ -237,7 +237,7 @@
 		position: absolute;
 
 		&.autosize {
-			margin-top: 68px;
+			margin-top: 56px;
 			position: fixed;
 		}
 	}

@@ -12,26 +12,6 @@
 		display: block;
 	}
 
-	.product-menu.sidebar {
-		.sidebar-header {
-			padding-bottom: 0.7rem;
-			padding-top: 0.7rem;
-		}
-	}
-
-	.product-menu.sidebar .sidebar-body,
-	.lfr-has-simulation-panel .lfr-simulation-device {
-		top: 3.5rem;
-	}
-
-	.product-menu.sidebar .lfr-applications-menu .sidebar-body {
-		top: 0;
-	}
-
-	.product-menu .add-application-panel .panel-body {
-		padding-bottom: 0.01rem;
-	}
-
 	.lfr-page-layouts.row .list-unstyled {
 		display: flex;
 		flex-wrap: wrap;

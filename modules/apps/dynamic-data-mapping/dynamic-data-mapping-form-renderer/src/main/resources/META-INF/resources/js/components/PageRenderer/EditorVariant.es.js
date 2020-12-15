@@ -61,6 +61,7 @@ export const Column = ({
 	const firstField = column.fields[0];
 	const rootParentField = parentField.root ?? firstField;
 	const isFieldSetOrGroup = firstField.type === 'fieldset';
+	const isFieldSet = isFieldSetOrGroup && firstField.ddmStructureId;
 	const isFieldSelected =
 		firstField.fieldName === activeField ||
 		firstField.fieldName === hoveredField;
@@ -100,6 +101,7 @@ export const Column = ({
 					activePage={activePage}
 					expanded={isFieldSelected}
 					field={firstField}
+					isFieldSet={isFieldSet}
 				/>
 
 				<div

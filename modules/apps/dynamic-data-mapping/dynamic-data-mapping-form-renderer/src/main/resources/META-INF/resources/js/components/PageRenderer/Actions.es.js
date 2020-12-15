@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import classNames from 'classnames';
 import domAlign from 'dom-align';
 import React, {
 	createContext,
@@ -133,7 +134,7 @@ export const ActionsControls = forwardRef(
 );
 
 export const Actions = forwardRef(
-	({activePage, children, expanded, field}, actionsRef) => {
+	({activePage, children, expanded, field, isFieldSet}, actionsRef) => {
 		const dispatch = useForm();
 
 		const DROPDOWN_ACTIONS = [
@@ -159,7 +160,9 @@ export const Actions = forwardRef(
 			<>
 				{expanded && (
 					<div
-						className="ddm-field-actions-container"
+						className={classNames('ddm-field-actions-container', {
+							'ddm-fieldset': isFieldSet,
+						})}
 						ref={actionsRef}
 					>
 						<span className="actions-label">{field.label}</span>

@@ -64,7 +64,7 @@ export default class Blogs {
 		AUI().use('liferay-form', () => {
 			this._rootNode = this._getElement('fm');
 
-			this._listeners = new EventListener();
+			this._events = new EventListener();
 
 			this._bindUI();
 
@@ -142,7 +142,7 @@ export default class Blogs {
 	}
 
 	_bindUI() {
-		const listeners = this._listeners;
+		const events = this._events;
 
 		this._captionNode = this._rootNode.querySelector(
 			'.cover-image-caption'
@@ -158,7 +158,7 @@ export default class Blogs {
 		const publishButton = this._getElement('publishButton');
 
 		if (publishButton) {
-			listeners.add(publishButton, STR_CLICK, () => {
+			events.add(publishButton, STR_CLICK, () => {
 				this._beforePublishBtnClick();
 				this._checkImagesBeforeSave(false, false);
 			});
@@ -167,7 +167,7 @@ export default class Blogs {
 		const saveButton = this._getElement('saveButton');
 
 		if (saveButton) {
-			listeners.add(saveButton, STR_CLICK, () => {
+			events.add(saveButton, STR_CLICK, () => {
 				this._beforeSaveBtnClick();
 				this._checkImagesBeforeSave(true, false);
 			});
@@ -179,7 +179,7 @@ export default class Blogs {
 
 		if (customAbstractOptions.length) {
 			customAbstractOptions.forEach((option) => {
-				listeners.add(
+				events.add(
 					option,
 					STR_CHANGE,
 					this._configureAbstract.bind(this)
@@ -193,7 +193,7 @@ export default class Blogs {
 
 		if (urlOptions.length) {
 			urlOptions.forEach((option) => {
-				listeners.add(
+				events.add(
 					option,
 					STR_CHANGE,
 					this._onChangeURLOptions.bind(this)
@@ -204,7 +204,7 @@ export default class Blogs {
 		const titleInput = this._getElement('title');
 
 		if (titleInput) {
-			listeners.add(titleInput, STR_CHANGE, (event) => {
+			events.add(titleInput, STR_CHANGE, (event) => {
 				this.updateFriendlyURL(event.target.value);
 			});
 		}
@@ -212,7 +212,7 @@ export default class Blogs {
 		const descriptionInput = this._getElement('description');
 
 		if (descriptionInput) {
-			listeners.add(descriptionInput, STR_CHANGE, (event) => {
+			events.add(descriptionInput, STR_CHANGE, (event) => {
 				this.setCustomDescription(event.target.value);
 			});
 		}
@@ -597,7 +597,7 @@ export default class Blogs {
 			clearInterval(this._saveDraftTimer);
 		}
 
-		this._listeners.removeAll();
+		this._events.removeAll();
 	}
 
 	setCustomDescription(text) {

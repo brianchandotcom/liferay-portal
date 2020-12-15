@@ -14,16 +14,16 @@
 
 export default class EventListener {
 	constructor() {
-		this._removeListeners = [];
+		this._events = [];
 	}
 
 	add(target, ...rest) {
 		target.addEventListener(...rest);
-		this._removeListeners.push(() => target.removeEventListener(...rest));
+		this._events.push(() => target.removeEventListener(...rest));
 	}
 
 	removeAll() {
-		this._removeListeners.forEach((removeListener) => removeListener());
-		this._removeListeners = [];
+		this._events.forEach((removeListener) => removeListener());
+		this._events = [];
 	}
 }

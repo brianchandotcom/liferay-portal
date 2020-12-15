@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration",
 	service = FragmentRenderer.class
 )
-public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRenderer {
+public class CollectionAssetCategoryFilterFragmentRenderer
+	implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -111,7 +112,9 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!_ffFragmentRendererCollectionAssetCategoryFilterConfiguration.enabled()) {
+		if (!_ffFragmentRendererCollectionAssetCategoryFilterConfiguration.
+				enabled()) {
+
 			return false;
 		}
 
@@ -144,7 +147,8 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 				"multipleSelection"));
 
 		httpServletRequest.setAttribute(
-			CollectionAssetCategoryFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
+			CollectionAssetCategoryFilterFragmentRendererWebKeys.
+				MULTIPLE_SELECTION,
 			multipleSelection);
 
 		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
@@ -202,11 +206,13 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 						assetCategoryTreeNodeId);
 
 				httpServletRequest.setAttribute(
-					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORY,
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.
+						ASSET_CATEGORY,
 					assetCategory);
 
 				httpServletRequest.removeAttribute(
-					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.
+						ASSET_VOCABULARY);
 			}
 			else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
 				assetCategories =
@@ -223,19 +229,23 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 						assetCategoryTreeNodeId);
 
 				httpServletRequest.setAttribute(
-					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.
+						ASSET_VOCABULARY,
 					assetVocabulary);
 
 				httpServletRequest.removeAttribute(
-					CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+					CollectionAssetCategoryFilterFragmentRendererWebKeys.
+						ASSET_CATEGORY);
 			}
 
 			httpServletRequest.setAttribute(
-				CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.
+					ASSET_CATEGORIES,
 				assetCategories);
 
 			httpServletRequest.setAttribute(
-				CollectionAssetCategoryFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.
+					FRAGMENT_ENTRY_LINK_ID,
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 			RequestDispatcher requestDispatcher =
@@ -253,7 +263,8 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 	protected void activate(Map<String, Object> properties) {
 		_ffFragmentRendererCollectionAssetCategoryFilterConfiguration =
 			ConfigurableUtil.createConfigurable(
-				FFFragmentRendererCollectionAssetCategoryFilterConfiguration.class,
+				FFFragmentRendererCollectionAssetCategoryFilterConfiguration.
+					class,
 				properties);
 	}
 
@@ -266,8 +277,9 @@ public class CollectionAssetCategoryFilterFragmentRenderer implements FragmentRe
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
 
-	private volatile FFFragmentRendererCollectionAssetCategoryFilterConfiguration
-		_ffFragmentRendererCollectionAssetCategoryFilterConfiguration;
+	private volatile
+		FFFragmentRendererCollectionAssetCategoryFilterConfiguration
+			_ffFragmentRendererCollectionAssetCategoryFilterConfiguration;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

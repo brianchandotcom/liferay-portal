@@ -59,11 +59,13 @@ public class CollectionAssetCategoryFilterFragmentRendererDisplayContext {
 	public String getAssetCategoryTreeNodeTitle() {
 		AssetCategory assetCategory =
 			(AssetCategory)_httpServletRequest.getAttribute(
-				CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.
+					ASSET_CATEGORY);
 
 		AssetVocabulary assetVocabulary =
 			(AssetVocabulary)_httpServletRequest.getAttribute(
-				CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.
+					ASSET_VOCABULARY);
 
 		if ((assetCategory == null) && (assetVocabulary == null)) {
 			return StringPool.BLANK;
@@ -93,7 +95,8 @@ public class CollectionAssetCategoryFilterFragmentRendererDisplayContext {
 
 		List<AssetCategory> assetCategories =
 			(List<AssetCategory>)_httpServletRequest.getAttribute(
-				CollectionAssetCategoryFilterFragmentRendererWebKeys.ASSET_CATEGORIES);
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.
+					ASSET_CATEGORIES);
 
 		if (assetCategories == null) {
 			return dropdownItemListWrapper.build();
@@ -200,15 +203,17 @@ public class CollectionAssetCategoryFilterFragmentRendererDisplayContext {
 	public boolean isMultipleSelection() {
 		return GetterUtil.getBoolean(
 			_httpServletRequest.getAttribute(
-				CollectionAssetCategoryFilterFragmentRendererWebKeys.MULTIPLE_SELECTION));
+				CollectionAssetCategoryFilterFragmentRendererWebKeys.
+					MULTIPLE_SELECTION));
 	}
 
 	private String _getParameterName() {
 		Long fragmentEntryLinkId = (Long)_httpServletRequest.getAttribute(
-			CollectionAssetCategoryFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID);
+			CollectionAssetCategoryFilterFragmentRendererWebKeys.
+				FRAGMENT_ENTRY_LINK_ID);
 
-		return CollectionAssetCategoryFilterFragmentRendererWebKeys.CATEGORY_ID + "_" +
-			   fragmentEntryLinkId;
+		return CollectionAssetCategoryFilterFragmentRendererWebKeys.
+			CATEGORY_ID + "_" + fragmentEntryLinkId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

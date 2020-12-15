@@ -59,6 +59,33 @@ definition {
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Facebook Video Name");
 	}
 
+	@description = "This test ensures that a user is able to embed an external video in a KB article."
+	@priority = "5"
+	test AddKBArticleWithEmbeddedVideo {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Twitch Video Name",
+			videoURL = "https://www.twitch.tv/videos/806178790");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test Twitch Video Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			service = "twitch");
+	}
+
 	@description = "This ensures that a video shortcut can be added with Twitch."
 	@priority = "5"
 	test AddTwitchPG {

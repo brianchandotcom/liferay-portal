@@ -51,7 +51,7 @@ const getRows = (rows, nestedFields) => {
 
 const FieldSet = ({
 	collapsible,
-	ddmStructureId,
+	editable,
 	label,
 	name,
 	nestedFields = [],
@@ -67,7 +67,6 @@ const FieldSet = ({
 	return (
 		<FieldBase
 			{...otherProps}
-			ddmStructureId={ddmStructureId}
 			name={name}
 			readOnly={readOnly}
 			repeatable={collapsible ? false : repeatable}
@@ -97,13 +96,13 @@ const FieldSet = ({
 						title={label}
 					>
 						<Layout
-							editable={type === 'fieldset' && !ddmStructureId}
+							editable={editable}
 							rows={getRows(rows, nestedFields)}
 						/>
 					</Panel>
 				) : (
 					<Layout
-						editable={type === 'fieldset' && !ddmStructureId}
+						editable={editable}
 						rows={getRows(rows, nestedFields)}
 					/>
 				)}

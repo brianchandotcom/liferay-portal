@@ -683,7 +683,7 @@ const ChangeTrackingRenderView = ({
 											setViewType(VIEW_TYPE_FULL)
 										}
 										spritemap={spritemap}
-										symbol="web-content"
+										symbol="full-view"
 										title={Liferay.Language.get(
 											'full-view'
 										)}
@@ -697,7 +697,7 @@ const ChangeTrackingRenderView = ({
 											setViewType(VIEW_TYPE_SPLIT)
 										}
 										spritemap={spritemap}
-										symbol="product-menu-open"
+										symbol="split-view"
 										title={getSplitViewTooltip()}
 									/>
 								</ClayButton.Group>

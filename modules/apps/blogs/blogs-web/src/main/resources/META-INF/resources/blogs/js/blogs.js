@@ -238,11 +238,9 @@ export default class Blogs {
 	}
 
 	_configureAbstract(event) {
-		const target = event.target;
-
 		let description = this._customDescription;
 
-		this._shortenDescription = target.value === 'false';
+		this._shortenDescription = event.target.value === 'false';
 
 		if (this._shortenDescription) {
 			this._customDescription = this._getElementById('description').value;
@@ -282,10 +280,6 @@ export default class Blogs {
 
 	_getElementById(id) {
 		return document.getElementById(`${this._config.namespace}${id}`);
-	}
-
-	_getPrincipalForm() {
-		return this._rootNode;
 	}
 
 	_getTempImages() {
@@ -365,7 +359,7 @@ export default class Blogs {
 
 		const urlTitle = automaticURL ? '' : this._getElementById('urlTitle').value;
 
-		const form = this._getPrincipalForm();
+		const form = this._rootNode;
 
 		if (draft && ajax) {
 			const hasData =

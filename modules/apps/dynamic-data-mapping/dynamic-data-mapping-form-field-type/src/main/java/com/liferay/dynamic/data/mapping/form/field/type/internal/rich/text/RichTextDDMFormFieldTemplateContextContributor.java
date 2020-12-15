@@ -61,19 +61,18 @@ public class RichTextDDMFormFieldTemplateContextContributor
 			DDMFormFieldTypeUtil.getPropertyValue(
 				ddmFormFieldRenderingContext, "value")
 		).putAll(
-			_getEditorConfiguration(
-				ddmFormFieldRenderingContext, ddmFormField.getType())
+			_getData(ddmFormFieldRenderingContext, ddmFormField.getType())
 		).build();
 	}
 
-	private Map<String, Object> _getEditorConfiguration(
+	private Map<String, Object> _getData(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		String ddmFormFieldType) {
 
 		HttpServletRequest httpServletRequest =
 			ddmFormFieldRenderingContext.getHttpServletRequest();
 
-		EditorConfiguration richTextEditorConfiguration =
+		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				StringPool.BLANK, ddmFormFieldType, "ckeditor_classic",
 				HashMapBuilder.<String, Object>put(
@@ -86,7 +85,7 @@ public class RichTextDDMFormFieldTemplateContextContributor
 					WebKeys.THEME_DISPLAY),
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 
-		return richTextEditorConfiguration.getData();
+		return editorConfiguration.getData();
 	}
 
 }

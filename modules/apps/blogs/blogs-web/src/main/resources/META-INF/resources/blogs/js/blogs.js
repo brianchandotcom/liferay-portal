@@ -355,8 +355,6 @@ export default class Blogs {
 
 		const urlTitle = this._automaticURL() ? '' : this._getElementById('urlTitle').value;
 
-		const form = this._rootNode;
-
 		if (draft && ajax) {
 			const hasData =
 				content !== STR_BLANK && (draft || title !== STR_BLANK);
@@ -498,7 +496,7 @@ export default class Blogs {
 				? constants.ACTION_SAVE_DRAFT
 				: constants.ACTION_PUBLISH;
 
-			submitForm(form);
+			submitForm(this._rootNode);
 		}
 	}
 

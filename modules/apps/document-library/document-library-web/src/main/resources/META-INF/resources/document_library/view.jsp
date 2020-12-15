@@ -251,7 +251,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					uploadable: <%= dlViewDisplayContext.isUploadable() %>,
 					uploadURL: '<%= dlViewDisplayContext.getUploadURL() %>',
 					viewFileEntryTypeURL:
-						'<%= dlViewDisplayContext.getViewFileEntryURL() %>',
+						'<%= dlViewDisplayContext.getViewFileEntryTypeURL() %>',
 					viewFileEntryURL: '<%= dlViewDisplayContext.getViewFileEntryURL() %>',
 				}),
 				{

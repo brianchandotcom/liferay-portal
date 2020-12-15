@@ -113,6 +113,10 @@ public abstract class BaseTemplate implements Template {
 		return context.isEmpty();
 	}
 
+	public boolean isRestricted() {
+		return _restricted;
+	}
+
 	@Override
 	public Set<String> keySet() {
 		return context.keySet();

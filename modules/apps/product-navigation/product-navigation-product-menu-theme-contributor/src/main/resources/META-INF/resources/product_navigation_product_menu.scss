@@ -147,7 +147,7 @@
 }
 
 .product-menu {
-	&.light {
+	&.sidebar-inverse {
 		.sidebar-header {
 			color: $white;
 			font-size: 14px;
@@ -161,7 +161,11 @@
 
 		.sidebar-body {
 			border-left: 1px solid $gray-300;
-			top: 0;
+			top: $product-menu-header-height;
+
+			@include media-breakpoint-up(sm) {
+				top: $product-menu-header-desktop-height;
+			}
 		}
 	}
 

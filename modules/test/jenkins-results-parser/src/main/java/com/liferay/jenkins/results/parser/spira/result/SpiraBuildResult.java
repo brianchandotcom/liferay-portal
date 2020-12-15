@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.spira.SpiraRelease;
 import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseProductVersion;
+import com.liferay.jenkins.results.parser.spira.SpiraTestSet;
 
 import java.util.Properties;
 
@@ -39,6 +40,8 @@ public interface SpiraBuildResult {
 	public SpiraTestCaseFolder getSpiraTestCaseFolder();
 
 	public SpiraTestCaseProductVersion getSpiraTestCaseProductVersion();
+
+	public SpiraTestSet getSpiraTestSet();
 
 	public TopLevelBuild getTopLevelBuild();
 

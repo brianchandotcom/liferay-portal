@@ -34,6 +34,7 @@ import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseProductVersion;
+import com.liferay.jenkins.results.parser.spira.SpiraTestSet;
 
 import java.util.Date;
 import java.util.Properties;
@@ -74,6 +75,11 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	@Override
+	public SpiraTestSet getSpiraTestSet() {
+		return _spiraTestSet;
+	}
+
+	@Override
 	public TopLevelBuild getTopLevelBuild() {
 		return _topLevelBuild;
 	}
@@ -89,6 +95,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		_spiraTestCaseFolder = _getSpiraTestCaseFolder(_spiraProject);
 		_spiraTestCaseProductVersion = _getSpiraTestCaseProductVersion(
 			_spiraProject);
+		_spiraTestSet = _getSpiraTestSet(_spiraProject);
 
 		_spiraReleaseBuild = _getSpiraReleaseBuild(
 			_spiraProject, _spiraRelease);
@@ -381,6 +388,80 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			_portalGitWorkingDirectory.getMajorPortalVersion());
 	}
 
+	private SpiraTestSet _getSpiraTestSet(SpiraProject spiraProject) {
+		long start = System.currentTimeMillis();
+
+		SpiraTestSet spiraTestSet = null;
+
+		String spiraTestSetID = System.getenv("TEST_SPIRA_TEST_SET_ID");
+
+		if ((spiraTestSetID != null) && spiraTestSetID.matches("\\d+")) {
+			spiraTestSet = spiraProject.getSpiraTestSetByID(
+				Integer.valueOf(spiraTestSetID));
+		}
+
+		String spiraTestSetPath = System.getenv("TEST_SPIRA_TEST_SET_PATH");
+
+		if ((spiraTestSet == null) && (spiraTestSetPath != null) &&
+			spiraTestSetPath.matches("\\/.+")) {
+
+			spiraTestSet = SpiraTestSet.createSpiraTestSetByPath(
+				spiraProject, replaceEnvVars(spiraTestSetPath),
+				_getSpiraTestSetDescription());
+		}
+
+		spiraTestSetID = getPortalTestSuiteProperty(
+			"test.batch.spira.test.set.id");
+
+		if ((spiraTestSet == null) && (spiraTestSetID != null) &&
+			spiraTestSetID.matches("\\d+")) {
+
+			spiraTestSet = spiraProject.getSpiraTestSetByID(
+				Integer.valueOf(spiraTestSetID));
+		}
+
+		spiraTestSetPath = getPortalTestSuiteProperty(
+			"test.batch.spira.test.set.path");
+
+		if ((spiraTestSet == null) && (spiraTestSetPath != null) &&
+			spiraTestSetPath.matches("\\/.+")) {
+
+			spiraTestSet = SpiraTestSet.createSpiraTestSetByPath(
+				spiraProject, replaceEnvVars(spiraTestSetPath),
+				_getSpiraTestSetDescription());
+		}
+
+		if (spiraTestSet != null) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Spira Test Set created in ",
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start)));
+
+			return spiraTestSet;
+		}
+
+		return null;
+	}
+
+	private String _getSpiraTestSetDescription() {
+		String spiraTestSetDescription = System.getenv(
+			"TEST_SPIRA_TEST_SET_DESCRIPTION");
+
+		if ((spiraTestSetDescription == null) ||
+			spiraTestSetDescription.isEmpty()) {
+
+			spiraTestSetDescription = getPortalTestSuiteProperty(
+				"test.batch.spira.test.set.description");
+		}
+
+		if (spiraTestSetDescription == null) {
+			spiraTestSetDescription = "";
+		}
+
+		return replaceEnvVars(spiraTestSetDescription);
+	}
+
 	private String _replaceEnvVarsControllerBuild(String string) {
 		Build controllerBuild = _topLevelBuild.getControllerBuild();
 
@@ -456,6 +537,10 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 
 		Build.BranchInformation portalBranchInformation =
 			portalBranchInformationBuild.getPortalBranchInformation();
+
+		if (portalBranchInformation == null) {
+			return string;
+		}
 
 		string = string.replace(
 			"$(portal.branch.name)",
@@ -538,6 +623,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	private final SpiraReleaseBuild _spiraReleaseBuild;
 	private final SpiraTestCaseFolder _spiraTestCaseFolder;
 	private final SpiraTestCaseProductVersion _spiraTestCaseProductVersion;
+	private final SpiraTestSet _spiraTestSet;
 	private final TopLevelBuild _topLevelBuild;
 
 }

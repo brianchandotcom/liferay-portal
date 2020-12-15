@@ -14,16 +14,16 @@
 
 module.exports = {
 	federation: {
-		disableOldBuild: true,
 		bridges: {
-			'classnames': '__classnames',
-			'formik': '__formik',
+			classnames: '__classnames',
+			formik: '__formik',
 			'prop-types': '__propTypes',
-			'react': '__react',
+			react: '__react',
 			'react-dnd': '__reactDnd',
 			'react-dnd-html5-backend': '__reactDndHtml5Backend',
-			'react-dom': '__reactDom'
+			'react-dom': '__reactDom',
 		},
+		disableOldBuild: true,
 		main: 'js/index.federation.js',
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',

@@ -15,7 +15,7 @@
 module.exports = {
 	federation: {
 		bridges: {
-			'@clayui/icon': '__clayui_icon'
+			'@clayui/icon': '__clayui_icon',
 		},
 		main: 'index.federation.js',
 	},

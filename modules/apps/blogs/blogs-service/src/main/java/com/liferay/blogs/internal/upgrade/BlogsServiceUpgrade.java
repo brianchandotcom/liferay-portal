@@ -72,8 +72,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDiscussionSubscriptionClassName(
 				_classNameLocalService, _subscriptionLocalService,
 				BlogsEntry.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.CUSTOM,
-				_retainGroupSubscriptions()));
+				_deleteUnusedBlogsEntrySubscriptions()));
 
 		registry.register(
 			"1.1.3", "2.0.0",
@@ -106,7 +105,7 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	private UnsafeFunction<String, Boolean, Exception>
-		_retainGroupSubscriptions() {
+		_deleteUnusedBlogsEntrySubscriptions() {
 
 		return className -> {
 			List<Group> groups = _groupLocalService.getGroups(

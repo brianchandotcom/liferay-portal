@@ -20,14 +20,15 @@ import {createPortal} from 'react-dom';
 import RawDOM from '../../common/components/RawDOM';
 import {config} from '../config/index';
 
-const GlobalContext = React.createContext({document, window});
+const GlobalContext = React.createContext([{document, window}, () => {}]);
 
-export default function GlobalContextProvider({children, useIframe}) {
+export function GlobalContextFrame({children, useIframe}) {
 	const [baseElement, setBaseElement] = useState(null);
 	const localContext = useMemo(() => ({document, window}), []);
 	const [iframeContext, setIFrameContext] = useState(null);
 	const [iframeElement, setIframeElement] = useState(null);
 	const isMounted = useIsMounted();
+	const [, setGlobalContext] = useContext(GlobalContext);
 
 	useEffect(() => {
 		let timeoutId = null;
@@ -127,18 +128,30 @@ export default function GlobalContextProvider({children, useIframe}) {
 		);
 	}
 
+	useEffect(() => {
+		setGlobalContext(context);
+	}, [context, setGlobalContext]);
+
 	return (
-		<GlobalContext.Provider value={context}>
+		<>
 			{content}
 			<RawDOM TagName="iframe" elementRef={setIframeElement} />
-		</GlobalContext.Provider>
+		</>
 	);
 }
 
-GlobalContextProvider.propTypes = {
+GlobalContextFrame.propTypes = {
 	useIframe: PropTypes.bool,
 };
 
+export const GlobalContextProvider = ({children}) => (
+	<GlobalContext.Provider value={useState({document, window})}>
+		{children}
+	</GlobalContext.Provider>
+);
+
 export function useGlobalContext() {
-	return useContext(GlobalContext);
+	const [globalContext] = useContext(GlobalContext);
+
+	return globalContext;
 }

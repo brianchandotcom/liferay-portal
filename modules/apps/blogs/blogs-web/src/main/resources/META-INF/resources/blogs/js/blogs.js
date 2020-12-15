@@ -62,7 +62,7 @@ export default class Blogs {
 		};
 
 		AUI().use('liferay-form', () => {
-			this._rootNode = this._getElement('fm');
+			this._rootNode = this._getElementById('fm');
 
 			this._events = new EventListener();
 
@@ -116,7 +116,7 @@ export default class Blogs {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
 		form.addRule(
-			this._getElement('title'),
+			this._getElementById('title'),
 			'required',
 			this._config.strings.titleRequiredAtPublish
 		);
@@ -125,7 +125,7 @@ export default class Blogs {
 	_beforeSaveBtnClick() {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
-		form.removeRule(this._getElement('title'), 'required');
+		form.removeRule(this._getElementById('title'), 'required');
 	}
 
 	_bindEditor() {
@@ -155,7 +155,7 @@ export default class Blogs {
 			this
 		);
 
-		const publishButton = this._getElement('publishButton');
+		const publishButton = this._getElementById('publishButton');
 
 		if (publishButton) {
 			events.add(publishButton, STR_CLICK, () => {
@@ -164,7 +164,7 @@ export default class Blogs {
 			});
 		}
 
-		const saveButton = this._getElement('saveButton');
+		const saveButton = this._getElementById('saveButton');
 
 		if (saveButton) {
 			events.add(saveButton, STR_CLICK, () => {
@@ -201,7 +201,7 @@ export default class Blogs {
 			});
 		}
 
-		const titleInput = this._getElement('title');
+		const titleInput = this._getElementById('title');
 
 		if (titleInput) {
 			events.add(titleInput, STR_CHANGE, (event) => {
@@ -209,7 +209,7 @@ export default class Blogs {
 			});
 		}
 
-		const descriptionInput = this._getElement('description');
+		const descriptionInput = this._getElementById('description');
 
 		if (descriptionInput) {
 			events.add(descriptionInput, STR_CHANGE, (event) => {
@@ -245,7 +245,7 @@ export default class Blogs {
 		this._shortenDescription = target.value === 'false';
 
 		if (this._shortenDescription) {
-			this._customDescription = this._getElement('description').value;
+			this._customDescription = this._getElementById('description').value;
 
 			description = window[
 				`${this._config.namespace}contentEditor`
@@ -280,7 +280,7 @@ export default class Blogs {
 		return finalImages;
 	}
 
-	_getElement(id) {
+	_getElementById(id) {
 		return document.getElementById(`${this._config.namespace}${id}`);
 	}
 
@@ -311,7 +311,7 @@ export default class Blogs {
 	}
 
 	_onChangeURLOptions() {
-		const urlTitleInput = this._getElement('urlTitle');
+		const urlTitleInput = this._getElementById('urlTitle');
 		const urlTitleInputLabel = document.querySelector(
 			`[for="${this._config.namespace}urlTitle"]`
 		);
@@ -319,7 +319,7 @@ export default class Blogs {
 		if (this._automaticURL()) {
 			this._lastCustomURL = urlTitleInput.value;
 
-			const title = this._getElement('title').value;
+			const title = this._getElementById('title').value;
 
 			this.updateFriendlyURL(title);
 
@@ -356,14 +356,14 @@ export default class Blogs {
 		const coverImageCaption = window[
 			`${namespace}coverImageCaptionEditor`
 		].getHTML();
-		const subtitle = this._getElement('subtitle').value;
-		const title = this._getElement('title').value;
+		const subtitle = this._getElementById('subtitle').value;
+		const title = this._getElementById('title').value;
 
 		const automaticURL = document.querySelector(
 			`input[name=${namespace}automaticURL]:checked`
 		).value;
 
-		const urlTitle = automaticURL ? '' : this._getElement('urlTitle').value;
+		const urlTitle = automaticURL ? '' : this._getElementById('urlTitle').value;
 
 		const form = this._getPrincipalForm();
 
@@ -379,12 +379,12 @@ export default class Blogs {
 			if (hasData && hasChanged) {
 				const strings = this._config.strings;
 
-				const saveStatus = this._getElement('saveStatus');
+				const saveStatus = this._getElementById('saveStatus');
 
-				const allowPingbacks = this._getElement('allowPingbacks');
-				const allowTrackbacks = this._getElement('allowTrackbacks');
+				const allowPingbacks = this._getElementById('allowPingbacks');
+				const allowTrackbacks = this._getElementById('allowTrackbacks');
 
-				const assetTagNames = this._getElement('assetTagNames');
+				const assetTagNames = this._getElementById('assetTagNames');
 
 				const data = nsObj(
 					{
@@ -394,26 +394,26 @@ export default class Blogs {
 						cmd: constants.ADD,
 						content,
 						coverImageCaption,
-						coverImageFileEntryCropRegion: this._getElement(
+						coverImageFileEntryCropRegion: this._getElementById(
 							'coverImageFileEntryCropRegion'
 						).value,
-						coverImageFileEntryId: this._getElement(
+						coverImageFileEntryId: this._getElementById(
 							'coverImageFileEntryId'
 						).value,
-						displayDateAmPm: this._getElement('displayDateAmPm')
+						displayDateAmPm: this._getElementById('displayDateAmPm')
 							.value,
-						displayDateDay: this._getElement('displayDateDay')
+						displayDateDay: this._getElementById('displayDateDay')
 							.value,
-						displayDateHour: this._getElement('displayDateHour')
+						displayDateHour: this._getElementById('displayDateHour')
 							.value,
-						displayDateMinute: this._getElement('displayDateMinute')
+						displayDateMinute: this._getElementById('displayDateMinute')
 							.value,
-						displayDateMonth: this._getElement('displayDateMonth')
+						displayDateMonth: this._getElementById('displayDateMonth')
 							.value,
-						displayDateYear: this._getElement('displayDateYear')
+						displayDateYear: this._getElementById('displayDateYear')
 							.value,
-						entryId: this._getElement('entryId').value,
-						referringPortletResource: this._getElement(
+						entryId: this._getElementById('entryId').value,
+						referringPortletResource: this._getElementById(
 							'referringPortletResource'
 						).value,
 						subtitle,
@@ -433,7 +433,7 @@ export default class Blogs {
 				});
 
 				Liferay.Util.toggleDisabled(
-					this._getElement('publishButton'),
+					this._getElementById('publishButton'),
 					true
 				);
 
@@ -457,10 +457,10 @@ export default class Blogs {
 							saveStatus.classList.remove('hide');
 							saveStatus.hidden = false;
 
-							this._getElement('coverImageFileEntryId').value =
+							this._getElementById('coverImageFileEntryId').value =
 								message.coverImageFileEntryId;
 
-							this._getElement('entryId').value = message.entryId;
+							this._getElementById('entryId').value = message.entryId;
 
 							if (message.content) {
 								this._updateContentImages(
@@ -488,7 +488,7 @@ export default class Blogs {
 						}
 
 						Liferay.Util.toggleDisabled(
-							this._getElement('publishButton'),
+							this._getElementById('publishButton'),
 							false
 						);
 					})
@@ -498,13 +498,13 @@ export default class Blogs {
 			}
 		}
 		else {
-			this._getElement(constants.CMD).value = entry
+			this._getElementById(constants.CMD).value = entry
 				? constants.UPDATE
 				: constants.ADD;
 
-			this._getElement('content').value = content;
-			this._getElement('coverImageCaption').value = coverImageCaption;
-			this._getElement('workflowAction').value = draft
+			this._getElementById('content').value = content;
+			this._getElementById('coverImageCaption').value = coverImageCaption;
+			this._getElementById('workflowAction').value = draft
 				? constants.ACTION_SAVE_DRAFT
 				: constants.ACTION_PUBLISH;
 
@@ -585,7 +585,7 @@ export default class Blogs {
 	}
 
 	_updateStatus(text) {
-		const saveStatus = this._getElement('saveStatus');
+		const saveStatus = this._getElementById('saveStatus');
 
 		if (saveStatus) {
 			saveStatus.innerHTML = text;
@@ -611,7 +611,7 @@ export default class Blogs {
 			description = this._shorten(text);
 		}
 
-		const descriptionNode = this._getElement('description');
+		const descriptionNode = this._getElementById('description');
 
 		descriptionNode.value = description;
 
@@ -638,7 +638,7 @@ export default class Blogs {
 	}
 
 	updateFriendlyURL(title) {
-		const urlTitleInput = this._getElement('urlTitle');
+		const urlTitleInput = this._getElementById('urlTitle');
 
 		const friendlyURLEmpty = !urlTitleInput.value;
 

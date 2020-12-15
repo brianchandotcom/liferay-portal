@@ -29,12 +29,7 @@ import {EVENT_TYPES} from '../../actions/eventTypes.es';
 import {useForm} from '../../hooks/useForm.es';
 import {useResizeObserver} from '../../hooks/useResizeObserver.es';
 
-const ActionsContext = createContext({
-	activeField: '',
-	hoveredField: '',
-	setActiveField: () => {},
-	setHoveredField: () => {},
-});
+const ActionsContext = createContext({});
 
 /**
  * ActionsContext is responsible for store which field is being hovered or active
@@ -71,7 +66,7 @@ ActionsContext.displayName = 'ActionsContext';
 const ACTIONS_CONTAINER_OFFSET = [-2, 1];
 
 export const ActionsControls = forwardRef(
-	({activePage, children, columnRef, field}, actionsRef) => {
+	({activePage, children, columnRef, editable, field}, actionsRef) => {
 		const {
 			activeField,
 			hoveredField,
@@ -95,7 +90,7 @@ export const ActionsControls = forwardRef(
 		const handleFieldInteractions = (event) => {
 			event.stopPropagation();
 
-			if (actionsRef.current?.contains(event.target)) {
+			if (actionsRef.current?.contains(event.target) && !editable) {
 				return;
 			}
 

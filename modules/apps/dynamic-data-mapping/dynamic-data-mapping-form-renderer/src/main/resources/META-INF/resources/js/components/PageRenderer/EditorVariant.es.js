@@ -27,6 +27,7 @@ export const Column = ({
 	allowNestedFields,
 	children,
 	column,
+	editable,
 	index,
 	pageIndex,
 	rowIndex,
@@ -47,7 +48,7 @@ export const Column = ({
 		rowIndex,
 	});
 
-	if (column.fields.length === 0 && activePage === pageIndex) {
+	if (editable && column.fields.length === 0 && activePage === pageIndex) {
 		return (
 			<Placeholder
 				columnIndex={index}
@@ -76,6 +77,7 @@ export const Column = ({
 		<ActionsControls
 			activePage={activePage}
 			columnRef={columnRef}
+			editable={editable}
 			expanded={isFieldSelected}
 			field={firstField}
 			ref={actionsRef}
@@ -86,8 +88,8 @@ export const Column = ({
 						isFieldSetOrGroup &&
 						overTarget &&
 						!rootParentField.ddmStructureId,
-					hovered: firstField.fieldName === hoveredField,
-					selected: firstField.fieldName === activeField,
+					hovered: editable && firstField.fieldName === hoveredField,
+					selected: editable && firstField.fieldName === activeField,
 					'target-over targetOver':
 						!rootParentField.ddmStructureId && overTarget,
 				})}
@@ -97,18 +99,20 @@ export const Column = ({
 				ref={columnRef}
 				rowIndex={rowIndex}
 			>
-				<Actions
-					activePage={activePage}
-					expanded={isFieldSelected}
-					field={firstField}
-					isFieldSet={isFieldSet}
-				/>
+				{editable && (
+					<Actions
+						activePage={activePage}
+						expanded={isFieldSelected}
+						field={firstField}
+						isFieldSet={isFieldSet}
+					/>
+				)}
 
 				<div
 					className={classNames(
 						'ddm-resize-handle ddm-resize-handle-left',
 						{
-							hide: !isFieldSelected,
+							hide: !isFieldSelected || !editable,
 						}
 					)}
 					{...addr}
@@ -133,7 +137,7 @@ export const Column = ({
 					className={classNames(
 						'ddm-resize-handle ddm-resize-handle-right',
 						{
-							hide: !isFieldSelected,
+							hide: !isFieldSelected || !editable,
 						}
 					)}
 					{...addr}
@@ -146,6 +150,7 @@ export const Column = ({
 export const Page = ({
 	activePage,
 	children,
+	editable,
 	empty,
 	forceAriaUpdate,
 	header,
@@ -167,7 +172,7 @@ export const Page = ({
 			invalidFormMessage={invalidFormMessage}
 			pageIndex={pageIndex}
 		>
-			{empty && activePage === pageIndex ? (
+			{editable && empty && activePage === pageIndex ? (
 				<ClayLayout.Row>
 					<ClayLayout.Col
 						className="col-ddm col-empty last-col lfr-initial-col mb-4 mt-5"
@@ -197,14 +202,14 @@ export const Page = ({
 	);
 };
 
-export const Rows = ({activePage, children, pageIndex, rows}) => {
+export const Rows = ({activePage, children, editable, pageIndex, rows}) => {
 	if (!rows) {
 		return null;
 	}
 
 	return rows.map((row, index) => (
 		<div key={index}>
-			{index === 0 && activePage === pageIndex && (
+			{editable && index === 0 && activePage === pageIndex && (
 				<Placeholder
 					isRow
 					pageIndex={pageIndex}
@@ -215,7 +220,7 @@ export const Rows = ({activePage, children, pageIndex, rows}) => {
 
 			{children({index, row})}
 
-			{activePage === pageIndex && (
+			{editable && activePage === pageIndex && (
 				<Placeholder
 					isRow
 					pageIndex={pageIndex}
